@@ -1,2 +1,2 @@
 # angelprotocol-web-app
-Monorepo for all userfacing things
+Monorepo for all things user-facing.
