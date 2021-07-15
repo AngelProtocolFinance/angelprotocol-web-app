@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import logo from './tca-logo.png';
 import './App.css';
+import { ConnectTerraButton } from './components/ConnectTerraButton';
+
+import { useWallet } from '@terra-money/wallet-provider';
 
 function App() {
+  const { status, network, wallets } = useWallet();
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <ConnectTerraButton />
       </header>
+      <div>
+        <section>
+          <pre>
+            {JSON.stringify(status)}
+          </pre>
+          <pre>
+            {JSON.stringify(network)}
+          </pre>
+          <pre>
+            {JSON.stringify(wallets)}
+          </pre>
+        </section>
+      </div>
     </div>
   );
 }
