@@ -1,2 +1,2 @@
 # angelprotocol-web-app
-Monorepo for all things user-facing.
+Repo for Angel Protocol's React web app.
