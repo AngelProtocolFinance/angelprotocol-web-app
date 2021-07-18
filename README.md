@@ -2,6 +2,15 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setup
+### Requirements
+- Node 16.5.0
+- Yarn
+
+### Getting Started
+1. `git clone git@github.com:AngelProtocolFinance/angelprotocol-web-app.git`
+2. `cd angelprotocol-web-app`
+3. `./bin/setup`
 ## Available Scripts
 
 In the project directory, you can run:
