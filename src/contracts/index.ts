@@ -5,6 +5,9 @@ export default {
     },
     handleMessages: {
       depositDonor: { increment: {} },
-    }
+    },
+    queryMessages: {
+      getBalance: { get_count: {} }
+    },
   },
 };
