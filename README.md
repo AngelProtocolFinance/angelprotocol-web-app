@@ -29,6 +29,15 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `yarn lint`
+
+Lints the codebase using [`ESlint`](https://eslint.org). Errors and warnings are shown in your terminal, and can be shown in your text editor with the appropriate plugin.
+
+### `yarn lint:fix`
+
+Runs `yarn lint` with the `--fix` flag allowing [`ESlint`](https://eslint.org) to fix the issue automatically where possible.
+###
+
 ### `yarn eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
