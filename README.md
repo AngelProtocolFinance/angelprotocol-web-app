@@ -7,6 +7,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - Node 16.5.0
 - Yarn
 
+### Recommended Local Development Tools
+- Node version manager: https://github.com/nodenv/nodenv
+- Node version installer: https://github.com/nodenv/node-build
 ### Getting Started
 1. `git clone git@github.com:AngelProtocolFinance/angelprotocol-web-app.git`
 2. `cd angelprotocol-web-app`
