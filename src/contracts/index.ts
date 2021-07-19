@@ -1,4 +1,4 @@
-export default {
+const contracts = {
   AngelProtocolIndexFund: {
     address: {
       localterra: "terra18vd8fpwxzck93qlwghaj6arh4p7c5n896xzem5",
@@ -11,3 +11,5 @@ export default {
     },
   },
 };
+
+export default contracts;
