@@ -6,29 +6,31 @@ import contracts from "./contracts";
 
 import {
   useConnectedWallet,
-	UserDenied,
-	CreateTxFailed,
-	TxFailed,
-	Timeout,
-	TxUnspecifiedError } from "@terra-money/wallet-provider";
+  UserDenied,
+  CreateTxFailed,
+  TxFailed,
+  Timeout,
+  TxUnspecifiedError,
+} from "@terra-money/wallet-provider";
 import {
   CreateTxOptions,
   MsgExecuteContract,
   StdFee,
-  LCDClient } from "@terra-money/terra.js";
+  LCDClient,
+} from "@terra-money/terra.js";
 
 function App() {
   const connectedWallet = useConnectedWallet();
 
-  const currentNetwork = 'localterra' // TODO: should be:
+  const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
 
   const queryTx = async () => {
-		if (!connectedWallet) return
+    if (!connectedWallet) return;
 
     const terra = new LCDClient({
       URL: connectedWallet.network.lcd,
-      chainID: connectedWallet.network.chainID
+      chainID: connectedWallet.network.chainID,
     });
 
     const result = await terra.wasm.contractQuery(
@@ -37,10 +39,10 @@ function App() {
     );
 
     console.log(result);
-  }
+  };
 
   const postTx = async () => {
-		if (!connectedWallet) return; // TODO: should be:
+    if (!connectedWallet) return; // TODO: should be:
     // const currentNetwork = connectedWallet.network.name
 
     const execute = new MsgExecuteContract(
@@ -95,7 +97,10 @@ function App() {
         >
           Post Tx
         </button>
-        <button disabled={!connectedWallet || !connectedWallet.availablePost} onClick={queryTx}> 
+        <button
+          disabled={!connectedWallet || !connectedWallet.availablePost}
+          onClick={queryTx}
+        >
           Query
         </button>
       </div>

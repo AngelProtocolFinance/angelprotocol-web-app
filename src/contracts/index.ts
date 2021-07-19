@@ -7,7 +7,7 @@ export default {
       depositDonor: { increment: {} },
     },
     queryMessages: {
-      getBalance: { get_count: {} }
+      getBalance: { get_count: {} },
     },
   },
 };
