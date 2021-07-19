@@ -1,31 +1,36 @@
-import React from 'react';
-import logo from './tca-logo.png';
-import './App.css';
-import { ConnectTerraButton } from './components/ConnectTerraButton';
-import contracts from './contracts';
+import React from "react";
+import logo from "./tca-logo.png";
+import "./App.css";
+import { ConnectTerraButton } from "./components/ConnectTerraButton";
+import contracts from "./contracts";
 
 import {
   useConnectedWallet,
-	UserDenied,
-	CreateTxFailed,
-	TxFailed,
-	Timeout,
-	TxUnspecifiedError } from '@terra-money/wallet-provider';
-import { CreateTxOptions, MsgExecuteContract, StdFee } from '@terra-money/terra.js';
+  UserDenied,
+  CreateTxFailed,
+  TxFailed,
+  Timeout,
+  TxUnspecifiedError,
+} from "@terra-money/wallet-provider";
+import {
+  CreateTxOptions,
+  MsgExecuteContract,
+  StdFee,
+} from "@terra-money/terra.js";
 
 function App() {
   const connectedWallet = useConnectedWallet();
   console.log(JSON.stringify(connectedWallet));
 
   const postTx = async () => {
-		if (!connectedWallet) return
-    const currentNetwork = 'localterra' // TODO: should be:
+    if (!connectedWallet) return;
+    const currentNetwork = "localterra"; // TODO: should be:
     // const currentNetwork = connectedWallet.network.name
 
     const execute = new MsgExecuteContract(
       connectedWallet.terraAddress,
       contracts.AngelProtocolIndexFund.address[currentNetwork],
-      contracts.AngelProtocolIndexFund.handleMessages.depositDonor,
+      contracts.AngelProtocolIndexFund.handleMessages.depositDonor
     );
 
     const txOptions: CreateTxOptions = {
@@ -38,28 +43,28 @@ function App() {
       console.log(result);
     } catch (error) {
       if (error instanceof UserDenied) {
-        console.log('User Denied')
+        console.log("User Denied");
       } else if (error instanceof CreateTxFailed) {
-        console.log('Create Tx Failed')
-        console.log(error.message)
-        console.log(error.tx)
+        console.log("Create Tx Failed");
+        console.log(error.message);
+        console.log(error.tx);
       } else if (error instanceof TxFailed) {
-        console.log('Tx Failed')
-        console.log(error.txhash)
-        console.log(error.message)
-        console.log(error.raw_message)
-        console.log(error.tx)
+        console.log("Tx Failed");
+        console.log(error.txhash);
+        console.log(error.message);
+        console.log(error.raw_message);
+        console.log(error.tx);
       } else if (error instanceof Timeout) {
-        console.log('Timeout')
-        console.log(error.message)
+        console.log("Timeout");
+        console.log(error.message);
       } else if (error instanceof TxUnspecifiedError) {
-        console.log(error.message)
-        console.log(error.tx)
+        console.log(error.message);
+        console.log(error.tx);
       } else {
-        console.log(String(error))
+        console.log(String(error));
       }
     }
-	};
+  };
 
   return (
     <div className="App">
@@ -68,7 +73,10 @@ function App() {
         <ConnectTerraButton />
       </header>
       <div>
-        <button disabled={!connectedWallet || !connectedWallet.availablePost} onClick={postTx}> 
+        <button
+          disabled={!connectedWallet || !connectedWallet.availablePost}
+          onClick={postTx}
+        >
           Post Tx
         </button>
       </div>
