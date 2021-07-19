@@ -9,6 +9,6 @@ test("renders learn react link", () => {
       <App />
     </TestWalletProvider>
   );
-  const linkElement = screen.getByText(/post tx/i);
+  const linkElement = screen.getByText(/donate/i);
   expect(linkElement).toBeInTheDocument();
 });
