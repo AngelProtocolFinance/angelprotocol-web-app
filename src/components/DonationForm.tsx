@@ -16,7 +16,13 @@ import {
   StdFee,
 } from "@terra-money/terra.js";
 
-export function DonationForm() {
+interface DonationFormProps {
+  pushTransactionStatus: any;
+}
+
+export function DonationForm(props: DonationFormProps) {
+  const { pushTransactionStatus } = props;
+
   const [amountToDonate, setAmountToDonate] = useState("");
   const connectedWallet = useConnectedWallet();
 
@@ -40,28 +46,31 @@ export function DonationForm() {
 
     try {
       const result = await connectedWallet.post(txOptions);
+      pushTransactionStatus(
+        `Transaction success with txhash: ${result.result.txhash}`
+      );
       console.log(result);
     } catch (error) {
       if (error instanceof UserDenied) {
-        console.log("User Denied");
+        pushTransactionStatus("User Denied");
       } else if (error instanceof CreateTxFailed) {
-        console.log("Create Tx Failed");
-        console.log(error.message);
-        console.log(error.tx);
+        pushTransactionStatus("Create Tx Failed");
+        pushTransactionStatus(error.message);
+        pushTransactionStatus(error.tx);
       } else if (error instanceof TxFailed) {
-        console.log("Tx Failed");
-        console.log(error.txhash);
-        console.log(error.message);
-        console.log(error.raw_message);
-        console.log(error.tx);
+        pushTransactionStatus("Tx Failed");
+        pushTransactionStatus(error.txhash);
+        pushTransactionStatus(error.message);
+        pushTransactionStatus(error.raw_message);
+        pushTransactionStatus(error.tx);
       } else if (error instanceof Timeout) {
-        console.log("Timeout");
-        console.log(error.message);
+        pushTransactionStatus("Timeout");
+        pushTransactionStatus(error.message);
       } else if (error instanceof TxUnspecifiedError) {
-        console.log(error.message);
-        console.log(error.tx);
+        pushTransactionStatus(error.message);
+        pushTransactionStatus(error.tx);
       } else {
-        console.log(String(error));
+        pushTransactionStatus(String(error));
       }
     }
   };
