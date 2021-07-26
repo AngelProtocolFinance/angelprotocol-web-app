@@ -1,0 +1,45 @@
+name: JavaScript
+
+on:
+  push:
+
+jobs:
+  lint:
+    name: "Lint codebase"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint codebase
+        run: yarn run lint
+        
+  test:
+    name: "Test codebase"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Test codebase
+        run: yarn run test
