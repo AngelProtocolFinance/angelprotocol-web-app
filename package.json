@@ -25,7 +25,9 @@
     "test": "craco test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "eslintConfig": {
     "extends": [
@@ -38,7 +40,17 @@
     ],
     "rules": {
       "prettier/prettier": "error"
-    }
+    },
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
+    ]
   },
   "browserslist": {
     "production": [
@@ -54,6 +66,12 @@
   },
   "devDependencies": {
     "@peculiar/webcrypto": "^1.1.7",
+    "@storybook/addon-actions": "^6.3.6",
+    "@storybook/addon-essentials": "^6.3.6",
+    "@storybook/addon-links": "^6.3.6",
+    "@storybook/node-logger": "^6.3.6",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.3.6",
     "eslint-config-prettier": "^8.3.0",
     "postcss": "^7",
     "prettier": "^2.3.2",
