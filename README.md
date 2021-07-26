@@ -49,7 +49,6 @@ Lints the codebase using [`ESlint`](https://eslint.org). Errors and warnings are
 ### `yarn lint:fix`
 
 Runs `yarn lint` with the `--fix` flag allowing [`ESlint`](https://eslint.org) to fix the issue automatically where possible.
-###
 
 ### `yarn eject`
 
