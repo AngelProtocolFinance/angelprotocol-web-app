@@ -1,20 +1,27 @@
 # angelprotocol-web-app
+
 Repo for Angel Protocol's React web app.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Setup
+
 ### Requirements
+
 - Node 16.5.0
 - Yarn
 
 ### Recommended Local Development Tools
+
 - Node version manager: https://github.com/nodenv/nodenv
 - Node version installer: https://github.com/nodenv/node-build
+
 ### Getting Started
+
 1. `git clone git@github.com:AngelProtocolFinance/angelprotocol-web-app.git`
 2. `cd angelprotocol-web-app`
 3. `./bin/setup`
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -41,6 +48,18 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `yarn storybook`
+
+Runs [Storybook](https://storybook.js.org).
+Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
+
+Storybook provides a sandbox to develop components in isolation.
+
+### `yarn build-storybook`
+
+Builds [Storybook](https://storybook.js.org) for static hosting.
+Outputs to `storybook-static/`.
 
 ### `yarn lint`
 
