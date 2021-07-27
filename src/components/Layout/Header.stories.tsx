@@ -5,10 +5,19 @@ import Header from "./Header";
 export default {
   title: "Layout/Header",
   component: Header,
-  argTypes: {},
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = () => <Header />;
+const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
 
-export const Standard = Template.bind({});
-Standard.args = {};
+export const ConnectedWallet = Template.bind({});
+ConnectedWallet.args = {
+  wallet: { terraAddress: "123" },
+  onConnect: () => {},
+  onDisconnect: () => {},
+};
+
+export const DisconnectedWallet = Template.bind({});
+DisconnectedWallet.args = {
+  onConnect: () => {},
+  onDisconnect: () => {},
+};
