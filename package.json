@@ -16,6 +16,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
@@ -73,6 +74,7 @@
     "@storybook/node-logger": "^6.3.6",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.6",
+    "@types/react-router-dom": "^5.1.8",
     "eslint-config-prettier": "^8.3.0",
     "postcss": "^7",
     "prettier": "^2.3.2",
