@@ -1,4 +1,3 @@
-import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import Header from "./Header";
@@ -9,7 +8,7 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
+const Template: ComponentStory<typeof Header> = () => <Header />;
 
 export const Standard = Template.bind({});
 Standard.args = {};
