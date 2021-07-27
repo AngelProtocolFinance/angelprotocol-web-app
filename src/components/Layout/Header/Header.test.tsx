@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Header from "./Header";
+import Header from ".";
 
 describe("Without user", () => {
   test("Renders 'connect wallet'", () => {

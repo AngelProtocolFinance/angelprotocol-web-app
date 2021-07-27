@@ -8,9 +8,7 @@ const WalletDetails = ({ wallet }: WalletProps) => {
   if (wallet && wallet.terraAddress) {
     return (
       <>
-        <li>
-          <a href="#">{wallet.terraAddress}</a>
-        </li>
+        <li className="mr-4">{wallet.terraAddress}</li>
         <li>
           <a href="#">Disconnect Wallet</a>
         </li>
@@ -36,8 +34,11 @@ interface HeaderProps {
 const Header = ({ wallet, onConnect, onDisconnect }: HeaderProps) => {
   return (
     <header>
-      <nav>
-        <ul>
+      <nav className="container mx-auto flex justify-between items-center h-16 px-4">
+        <a href="/" className="font-bold text-base">
+          AngelProtocol
+        </a>
+        <ul className="flex font-regular text-base">
           <WalletDetails wallet={wallet} />
         </ul>
       </nav>
