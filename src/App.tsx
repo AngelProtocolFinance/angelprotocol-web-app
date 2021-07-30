@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import logo from "./tca-logo.png";
 import "./App.css";
 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import Dashboard from "pages/Dashboard";
 import { ConnectTerraButton } from "./components/ConnectTerraButton";
 import { DonationForm } from "./components/DonationForm";
 import { CurrentBalance } from "./components/CurrentBalance";
 import { TransactionsStatuses } from "./components/TransactionsStatuses";
 
-function App() {
+const ExampleApp = () => {
   // TODO (borodanov): remove 'any', create type for transactionStatus
   const [transactionsStatuses, setTransactionsStatuses] = useState<any[]>([]);
 
@@ -29,6 +32,17 @@ function App() {
       </div>
     </div>
   );
-}
+};
+
+const App = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={ExampleApp} />
+        <Route path="/dashboard" component={Dashboard} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;
