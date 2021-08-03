@@ -3,11 +3,11 @@ const Footer = () => {
 
   return (
     <footer>
-      <nav className="container mx-auto flex justify-between items-center h-16 px-4 bg-footer">
-        <a href="/" className="font-sans text-xs uppercase text-white">
+      <nav className="container mx-auto flex justify-between items-center h-16 px-4 bg-footer fixed bottom-0">
+        <a href="/" className="font-sans text-small uppercase text-white">
           Copyright 2021 angelprotocol. All rights reserved.
         </a>
-        <ul className="flex font-montserrat text-base">
+        <ul className="flex font-montserrat text-mid">
           <li className="mr-4">
             <a href="#" className="uppercase text-white">
               About Us
