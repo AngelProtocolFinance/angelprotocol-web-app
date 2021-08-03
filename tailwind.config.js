@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {},
     fontFamily: {
-      "montserrat": ["Montserrat", "serif"]
+      montserrat: ["Montserrat", "serif"],
     },
     backgroundColor: (theme) => ({
       ...theme("colors"),
-      "footer": "#262729",
+      footer: "#262729",
     }),
     fontSize: {
       small: ["9px", "11px"],
-      mid: ["16px", "19px"]
+      mid: ["16px", "19px"],
     },
   },
   variants: {
