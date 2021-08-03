@@ -3,7 +3,7 @@ import Footer from ".";
 
 test("renders Footer", () => {
   render(<Footer />);
-  const linkElements = ["About Us", "About UNSDGs", "Donate Now", "For Charities"].map(
+  const linkElements = ["About Us", "About UNSDGs", "For Charities", "Donate Now"].map(
     (text) => {
       return screen.getByText(text);
     }
