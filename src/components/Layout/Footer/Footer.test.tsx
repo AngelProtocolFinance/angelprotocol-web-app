@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import Footer from ".";
 
 test("renders Footer", () => {
-  render(<Footer />);
+  render(<Footer hasMenu={true} />);
   const linkElements = [
     "About Us",
     "About UNSDGs",
