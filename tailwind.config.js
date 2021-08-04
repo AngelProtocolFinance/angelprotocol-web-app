@@ -2,17 +2,16 @@ module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   darkMode: false, // or "media" or "class"
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "angel-protocol-dark-blue": "#262729",
+      },
+    },
     fontFamily: {
       montserrat: ["Montserrat", "serif"],
     },
-    backgroundColor: (theme) => ({
-      ...theme("colors"),
-      footer: "#262729",
-    }),
     fontSize: {
-      small: ["9px", "11px"],
-      mid: ["16px", "19px"],
+      "2xs": ["9px", "11px"],
     },
   },
   variants: {
