@@ -8,7 +8,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: 'montserrat, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+      serif: 'montserrat, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
     },
     fontSize: {
       "2xs": ["0.56rem", "0.7rem"],
