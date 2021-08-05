@@ -8,7 +8,8 @@ module.exports = {
       },
     },
     fontFamily: {
-      serif: 'montserrat, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
+      serif:
+        'montserrat, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
     },
     fontSize: {
       "2xs": ["0.56rem", "0.7rem"],
