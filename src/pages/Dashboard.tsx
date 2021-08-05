@@ -9,12 +9,12 @@ const Dashboard = () => {
   return (
     <>
       <Header onConnect={() => {}} onDisconnect={() => {}} />
-      <section className="container mx-auto flex-auto px-4">
+      <section className="container mx-auto flex-auto px-10">
         {charityCategories.map((category) => {
           return <CharityCategory {...category} key={category.title} />;
         })}
       </section>
-      <Footer />
+      <Footer hasMenu={true} />
     </>
   );
 };
