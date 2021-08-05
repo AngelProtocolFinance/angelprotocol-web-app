@@ -14,7 +14,7 @@ const Dashboard = () => {
           return <CharityCategory {...category} key={category.title} />;
         })}
       </section>
-      <Footer />
+      <Footer hasMenu={true} />
     </div>
   );
 };
