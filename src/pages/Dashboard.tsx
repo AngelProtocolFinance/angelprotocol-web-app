@@ -7,15 +7,15 @@ const fixtureData = require("components/CharityCategory/CharityCategory.fixture.
 const Dashboard = () => {
   const charityCategories = Array(6).fill(fixtureData);
   return (
-    <>
-      <Header onConnect={() => {}} onDisconnect={() => {}} />
+    <div className="bg-blue-400">
+      <Header hasMenu={true} onConnect={() => {}} onDisconnect={() => {}} />
       <section className="container mx-auto flex-auto px-4">
         {charityCategories.map((category) => {
           return <CharityCategory {...category} key={category.title} />;
         })}
       </section>
       <Footer />
-    </>
+    </div>
   );
 };
 
