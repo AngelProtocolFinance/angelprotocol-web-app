@@ -8,10 +8,10 @@ module.exports = {
       },
     },
     fontFamily: {
-      montserrat: ["Montserrat", "serif"],
+      sans: 'montserrat, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
     },
     fontSize: {
-      "2xs": ["9px", "11px"],
+      "2xs": ["0.56rem", "0.7rem"],
     },
   },
   variants: {

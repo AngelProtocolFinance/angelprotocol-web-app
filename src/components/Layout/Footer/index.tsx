@@ -10,7 +10,7 @@ const Footer = ({ hasMenu }: FooterProps) => {
           Copyright 2021 angelprotocol. All rights reserved.
         </a>
         {hasMenu && (
-          <ul className="flex font-montserrat text-base">
+          <ul className="flex font-serif text-base">
             <li className="mr-4">
               <a href="#" className="uppercase text-white">
                 About Us
