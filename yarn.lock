@@ -12163,6 +12163,11 @@ raw-loader@^4.0.2:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
+react-accessible-dropdown-menu-hook@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-accessible-dropdown-menu-hook/-/react-accessible-dropdown-menu-hook-2.3.1.tgz#70ec48e59043ce439d9cc026e34f01e55385b78f"
+  integrity sha512-vqX48mfFlifAV543m6biWf12Jx3ROGQol9UMrjtwq2HRMd7y1FNWA8cJg5bHQbet/YvyHkuQ/nh1iT3AHOMaaQ==
+
 react-app-polyfill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-2.0.0.tgz#a0bea50f078b8a082970a9d853dc34b6dcc6a3cf"

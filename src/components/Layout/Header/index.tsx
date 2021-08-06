@@ -19,14 +19,18 @@ const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
             <img
               src="assets/images/angelprotocol-horiz-wht.png"
               alt="AngelProtocol"
-              width="50"
+              width="150"
             />
           </a>
-          {hasMenu && <NavMenu />}
+          {hasMenu && (
+            <div className="flex font-sans text-base w-9/12">
+              <NavMenu />
+            </div>
+          )}
         </div>
         <div className="w-2/6 container mx-auto flex justify-end items-center">
           <ul className="flex font-regular text-base text-white">
-            <ConnectTerraButton></ConnectTerraButton>
+            <ConnectTerraButton />
           </ul>
         </div>
       </nav>
