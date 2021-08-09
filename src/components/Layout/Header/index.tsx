@@ -17,6 +17,12 @@ const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
         <div className="container mx-auto flex justify-between items-center w-4/6">
           <a href="/" className="font-bold text-base">
             <img
+              // TODO (borodanov to cheng): possibly better to import images programmatically
+              // and store them in the component folder
+              // but I could be wrong
+              // import logo from "./angelprotocol-horiz-wht.png";
+              // ...
+              //   src={logo}
               src="assets/images/angelprotocol-horiz-wht.png"
               alt="AngelProtocol"
               width="150"
