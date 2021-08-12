@@ -9,6 +9,7 @@ describe("Without user", () => {
       <TestWalletProvider>
         <Header
           // TODO (borodanov to cheng): fix hasMenu is missing
+          hasMenu={true}
           wallet={undefined}
           onConnect={() => {}}
           onDisconnect={() => {}}
@@ -33,6 +34,7 @@ describe("With user", () => {
       >
         <Header
           // TODO (borodanov to cheng): fix hasMenu is missing
+          hasMenu={true}
           wallet={{ terraAddress: "123" }}
           onConnect={() => {}}
           onDisconnect={() => {}}
