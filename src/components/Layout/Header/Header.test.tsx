@@ -8,7 +8,6 @@ describe("Without user", () => {
     render(
       <TestWalletProvider>
         <Header
-          // TODO (borodanov to cheng): fix hasMenu is missing
           hasMenu={true}
           wallet={undefined}
           onConnect={() => {}}
@@ -24,19 +23,17 @@ describe("Without user", () => {
 
 describe("With user", () => {
   test("Renders wallet address", () => {
-    const walletAddress = "123";
     render(
       <TestWalletProvider
         walletStatus={WalletStatus.WALLET_CONNECTED}
         walletInfo={{
           connectType: ConnectType.CHROME_EXTENSION,
-          terraAddress: walletAddress,
+          terraAddress: "123",
         }}
       >
         <Header
-          // TODO (borodanov to cheng): fix hasMenu is missing
           hasMenu={true}
-          wallet={{ terraAddress: walletAddress }}
+          wallet={{ terraAddress: "123" }}
           onConnect={() => {}}
           onDisconnect={() => {}}
         />
