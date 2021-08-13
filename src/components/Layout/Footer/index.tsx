@@ -12,7 +12,7 @@ const Footer = ({ hasMenu }: FooterProps) => {
           Copyright 2021 angelprotocol. All rights reserved.
         </a>
         {hasMenu && (
-          <div className="flex font-sans text-base w-9/12 justify-end">
+          <div className="flex font-sans text-base justify-end">
             <NavMenu />
           </div>
         )}

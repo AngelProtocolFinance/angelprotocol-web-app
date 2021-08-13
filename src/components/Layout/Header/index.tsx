@@ -1,5 +1,6 @@
 import NavMenu from "../NavMenu";
 import { ConnectTerraButton } from "../../ConnectTerraButton";
+import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
 
 interface HeaderProps {
   hasMenu: boolean;
@@ -13,20 +14,10 @@ interface HeaderProps {
 const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
   return (
     <header>
-      <nav className="container mx-auto flex justify-between items-center h-16 px-10 my-5">
+      <nav className="container mx-auto flex justify-between items-center h-16 my-5">
         <div className="container mx-auto flex justify-between items-center w-4/6">
           <a href="/" className="font-bold text-base">
-            <img
-              // TODO (borodanov to cheng): possibly better to import images programmatically
-              // and store them in the component folder
-              // but I could be wrong
-              // import logo from "./angelprotocol-horiz-wht.png";
-              // ...
-              //   src={logo}
-              src="assets/images/angelprotocol-horiz-wht.png"
-              alt="AngelProtocol"
-              width="150"
-            />
+            <img src={logo} alt="AngelProtocol" width="150" />
           </a>
           {hasMenu && (
             <div className="flex font-sans text-base w-9/12">

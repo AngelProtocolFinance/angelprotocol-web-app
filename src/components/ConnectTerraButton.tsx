@@ -1,4 +1,6 @@
+import { useState } from "react";
 import useDropdownMenu from "react-accessible-dropdown-menu-hook";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import {
   useWallet,
@@ -17,6 +19,7 @@ export function ConnectTerraButton() {
     wallets,
   } = useWallet();
   const { buttonProps, isOpen } = useDropdownMenu(5);
+  const [textToCopy, setTextToCopy] = useState("");
 
   switch (status) {
     case WalletStatus.INITIALIZING:
@@ -46,12 +49,7 @@ export function ConnectTerraButton() {
           {wallets.length > 0 && (
             <div className="flex justify-between items-center ml-5">
               <p>{wallets[0].terraAddress.substr(0, 15) + "..."}</p>
-              <span
-                className="mx-2"
-                onClick={() => onCopyAddress(wallets[0].terraAddress)}
-              >
-                <img src="assets/images/copy.png" alt="AngelProtocol" />
-              </span>
+              <CopyToClipboard text={textToCopy} />
               <div className="flex justify-between items-center">
                 <button {...buttonProps}>
                   <img src="assets/images/more.png" alt="AngelProtocol" />
@@ -72,19 +70,4 @@ export function ConnectTerraButton() {
         </div>
       );
   }
-}
-
-function onCopyAddress(terraAddress: string) {
-  console.log("address => ", terraAddress);
-  const selBox = document.createElement("textarea");
-  selBox.style.position = "fixed";
-  selBox.style.left = "0";
-  selBox.style.top = "0";
-  selBox.style.opacity = "0";
-  selBox.value = terraAddress;
-  document.body.appendChild(selBox);
-  selBox.focus();
-  selBox.select();
-  document.execCommand("copy");
-  document.body.removeChild(selBox);
 }
