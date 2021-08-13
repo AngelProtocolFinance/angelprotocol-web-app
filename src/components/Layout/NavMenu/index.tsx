@@ -1,6 +1,6 @@
 const NavMenu = () => {
   return (
-    <ul className="flex font-montserrat text-base w-9/12">
+    <ul className="flex">
       <li className="mr-4">
         <a href="#" className="uppercase text-white">
           About Us

@@ -1,3 +1,5 @@
+import NavMenu from "../NavMenu";
+
 interface FooterProps {
   hasMenu: boolean;
 }
@@ -10,28 +12,9 @@ const Footer = ({ hasMenu }: FooterProps) => {
           Copyright 2021 angelprotocol. All rights reserved.
         </a>
         {hasMenu && (
-          <ul className="flex font-serif text-base">
-            <li className="mr-4">
-              <a href="#" className="uppercase text-white">
-                About Us
-              </a>
-            </li>
-            <li className="mr-4">
-              <a href="#" className="uppercase text-white">
-                Donate Now
-              </a>
-            </li>
-            <li className="mr-4">
-              <a href="#" className="uppercase text-white">
-                For Charities
-              </a>
-            </li>
-            <li>
-              <a href="#" className="uppercase text-white">
-                About UNSDGs
-              </a>
-            </li>
-          </ul>
+          <div className="flex font-sans text-base justify-end">
+            <NavMenu />
+          </div>
         )}
       </nav>
     </footer>
