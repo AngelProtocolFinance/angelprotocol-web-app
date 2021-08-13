@@ -23,17 +23,18 @@ describe("Without user", () => {
 
 describe("With user", () => {
   test("Renders wallet address", () => {
+    const walletAddress = "123";
     render(
       <TestWalletProvider
         walletStatus={WalletStatus.WALLET_CONNECTED}
         walletInfo={{
           connectType: ConnectType.CHROME_EXTENSION,
-          terraAddress: "123",
+          terraAddress: walletAddress,
         }}
       >
         <Header
           hasMenu={true}
-          wallet={{ terraAddress: "123" }}
+          wallet={{ terraAddress: walletAddress }}
           onConnect={() => {}}
           onDisconnect={() => {}}
         />
