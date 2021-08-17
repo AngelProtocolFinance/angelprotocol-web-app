@@ -7,7 +7,7 @@ const fixtureData = require("components/CharityCategory/CharityCategory.fixture.
 const Dashboard = () => {
   const charityCategories = Array(6).fill(fixtureData);
   return (
-    <div className="bg-gradient-to-b from-header-color to-footer-color">
+    <div className="bg-gradient-to-b from-thin-blue to-black-blue">
       <Header hasMenu={true} onConnect={() => {}} onDisconnect={() => {}} />
       <section className="container mx-auto flex-auto px-4">
         {charityCategories.map((category) => {
