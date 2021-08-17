@@ -8,7 +8,7 @@ module.exports = {
         "thin-blue": "#54A3D9",
         "black-blue": "#252626",
         "leaf-green": "#88B752",
-        "orange": "#F59700",
+        orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
         "failed-red": "#EE4444",
@@ -25,7 +25,6 @@ module.exports = {
       serif:
         'montserrat, ui-serif, Georgia, Cambria, "Times New Roman", Times, serif',
     },
-    
   },
   variants: {
     extend: {},
