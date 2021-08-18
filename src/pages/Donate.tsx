@@ -1,11 +1,15 @@
 import { useState } from "react";
+import YouTube, { Options } from "react-youtube";
+
+import { CharityInfo } from "components/CharityInfo";
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
 import { DonationForm } from "components/DonationForm";
-import YouTube, { Options } from "react-youtube";
+import { DonationInfo } from "components/DonationInfo";
 
 const Donate = () => {
   const [isDonate, setIsDonate] = useState(false);
+  const title = "women for women international";
   const opts: Options = {
     height: "320",
     width: "480",
@@ -18,19 +22,22 @@ const Donate = () => {
   const onReady = (event: any) => {
     event.target.pauseVideo();
   };
+  const toggleDonate = () => {
+    setIsDonate(!isDonate);
+  };
   return (
-    <div className="bg-gradient-to-b from-thin-blue to-black-blue">
-      <Header hasMenu={true} onConnect={() => {}} onDisconnect={() => {}} />
+    <div className="bg-gradient-to-b from-thin-blue to-black-blue px-5">
+      <Header hasMenu={false} onConnect={() => {}} onDisconnect={() => {}} />
       <section className="container mx-auto flex-auto py-5">
         <div className="flex flex-row justify-between pb-5">
-          <div className="overflow-hidden w-4/6 h-80">
+          <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
             <img
               src="https://via.placeholder.com/960x320"
               alt="banner"
-              className="rounded-lg"
+              className="rounded-lg h-full w-auto"
             />
           </div>
-          <div>
+          <div className="lg:block hidden">
             <YouTube
               videoId="2g811Eo7K8U"
               opts={opts}
@@ -40,46 +47,19 @@ const Donate = () => {
           </div>
         </div>
         <div className="flex flex-row text-white font-sans h-3/5">
-          <div className="leftbar w-1/5 overflow-y-auto">
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">headquarters</p>
-              <span className="text-xl">Anytown, Country, Country</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">Annual Avg overhead</p>
-              <span className="text-xl">$14M</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">Annual Avg donations</p>
-              <span className="text-xl">$10M</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm"># Of employees</p>
-              <span className="text-xl">4,600</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">navigator rating</p>
-              <span className="text-xl text-leaf-green">85/100</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">impact rating</p>
-              <span className="text-xl text-leaf-green">94/100</span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">leadership rating</p>
-              <span className="uppercase text-xl text-orange">
-                comming soon
-              </span>
-            </div>
-            <div className="total-info-item mb-4">
-              <p className="uppercase text-sm">culture rating</p>
-              <span className="uppercase text-xl text-orange">N/A</span>
-            </div>
+          <div className="lg:block hidden">
+            <CharityInfo />
           </div>
-          <div className="px-10 w-3/5">
-            <h1 className="uppercase text-5xl mb-6 leading-none">
-              women for women international
+          <div className="lg:px-10 lg:w-3/5 md:w-2/3 md:pr-10 w-full">
+            <h1 className="uppercase md:text-5xl text-4xl font-bold mb-6 leading-none">
+              {title}
             </h1>
+            <div className="md:hidden block">
+              <DonationInfo
+                isDonate={isDonate}
+                onToggleDonation={toggleDonate}
+              />
+            </div>
             <div className="overflow-y-auto">
               {isDonate ? (
                 <DonationForm pushTransactionStatus={pushTransactionStatus} />
@@ -129,59 +109,8 @@ const Donate = () => {
               )}
             </div>
           </div>
-          <div className="rightbar w-1/5 overflow-y-auto divide-grey-300 divide-y pr-5">
-            <div className="mb-2">
-              {!isDonate ? (
-                <button
-                  className="uppercase bg-orange rounded-xl w-56 h-12 d-flex justify-center items-center mb-4"
-                  onClick={() => {
-                    setIsDonate(true);
-                  }}
-                >
-                  DONATE NOW
-                </button>
-              ) : (
-                <button
-                  className="uppercase bg-yellow-blue rounded-xl w-56 h-12 d-flex justify-center items-center mb-4"
-                  onClick={() => {
-                    setIsDonate(false);
-                  }}
-                >
-                  BACK TO CHARITY
-                </button>
-              )}
-              <button className="uppercase bg-thin-blue rounded-xl w-56 h-12 d-flex justify-center items-center mb-2">
-                VISIT SITE
-              </button>
-            </div>
-            <div className="donation-info mt-2 pt-2">
-              <div className="donation-info-item mb-4">
-                <p className="uppercase">Total donations</p>
-                <span className="text-4xl">$4.200</span>
-              </div>
-              <div className="donation-info-item mb-4">
-                <p className="uppercase">Angel ranking this week</p>
-                <span className="text-xl">
-                  <span className="text-leaf-green">&#9650;</span> #300
-                </span>
-              </div>
-              <div className="donation-info-item mb-4">
-                <p className="uppercase">Angel ranking last week</p>
-                <span className="text-xl">#498</span>
-              </div>
-              <div className="donation-info-item mb-4">
-                <p className="uppercase">Donations per month</p>
-                <span className="text-xl">
-                  <span className="text-leaf-green">&#9650;</span> 48.9
-                </span>
-              </div>
-              <div className="donation-info-item mb-4">
-                <p className="uppercase">AVG. donation</p>
-                <span className="text-xl">
-                  <span className="text-dark-red">&#9660;</span> $57.7
-                </span>
-              </div>
-            </div>
+          <div className="rightbar lg:w-1/5 md:w-1/3 md:block hidden overflow-y-auto divide-grey-300 pr-5">
+            <DonationInfo isDonate={isDonate} onToggleDonation={toggleDonate} />
           </div>
         </div>
       </section>
