@@ -209,7 +209,7 @@ export function DonationForm(props: DonationFormProps) {
               value={percentage}
               onChange={onSliderChange}
               onAfterChange={onAfterChange}
-              className="w-full h-4 my-3"
+              className="w-full h-4 my-3 ml-2"
             />
             <div className="flex justify-between items-center text-xs">
               <span>0%</span>
