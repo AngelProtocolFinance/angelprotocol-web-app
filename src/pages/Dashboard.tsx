@@ -1,8 +1,7 @@
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
 import CharityCategory from "components/CharityCategory";
-
-const fixtureData = require("components/CharityCategory/CharityCategory.fixture.json");
+import fixtureData from "components/CharityCategory/CharityCategory.fixture.json";
 
 const Dashboard = () => {
   const charityCategories = Array(6).fill(fixtureData);

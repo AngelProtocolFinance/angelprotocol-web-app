@@ -14,7 +14,7 @@ interface HeaderProps {
 const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
   return (
     <header>
-      <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
+      <nav className="mx-auto flex justify-between items-center h-16 mt-5">
         <div className="container mx-auto flex justify-between items-center w-4/6">
           <a href="/" className="font-bold text-base">
             <img src={logo} alt="AngelProtocol" width="150" />
