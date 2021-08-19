@@ -46,7 +46,7 @@ export function DonationForm(props: DonationFormProps) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
-  let isSubmitDonation = false;
+  const [isSubmitDonation, setIsSubmitDonation] = useState(false);
 
   const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
@@ -71,7 +71,7 @@ export function DonationForm(props: DonationFormProps) {
   const onAfterChange = (value: any) => {};
 
   const donate = async () => {
-    isSubmitDonation = true;
+    setIsSubmitDonation(true);
     if (!connectedWallet) return; // TODO (borodanov): should be:
     // const currentNetwork = connectedWallet.network.name
 
