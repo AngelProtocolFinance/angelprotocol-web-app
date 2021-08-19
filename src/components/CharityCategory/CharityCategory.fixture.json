@@ -3,31 +3,37 @@
   "description": "End poverty in all forms everywhere.",
   "cards": [
     {
+      "id": 1,
       "title": "Example 1",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"
     },
     {
+      "id": 2,
       "title": "Example 2",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"
     },
     {
+      "id": 3,
       "title": "Example 3",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"
     },
     {
+      "id": 4,
       "title": "Example 4",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"
     },
     {
+      "id": 5,
       "title": "Example 5",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"
     },
     {
+      "id": 6,
       "title": "Example 6",
       "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "backgroundImageUrl": "https://via.placeholder.com/300x150"

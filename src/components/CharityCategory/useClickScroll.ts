@@ -1,19 +1,19 @@
 import React, { useRef, useState } from "react";
 
 export default function useClickScroll() {
+  const [down, setDown] = useState<Boolean>(false);
   const startRef = useRef<number>(0);
   const scrollLefRef = useRef<number>(0);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const { current: slider } = sliderRef;
-  const [down, setDown] = useState<Boolean>(false);
 
   function handleMouseDown(e: React.MouseEvent) {
-    if (!slider) {
+    if (!sliderRef.current) {
       return;
     }
+
     setDown(true);
-    startRef.current = e.pageX - slider.offsetLeft;
-    scrollLefRef.current = slider.scrollLeft;
+    startRef.current = e.pageX - sliderRef.current.offsetLeft;
+    scrollLefRef.current = sliderRef.current.scrollLeft;
   }
 
   function handleMouseLeave() {
@@ -25,19 +25,19 @@ export default function useClickScroll() {
   }
 
   function handleMouseMove(e: React.MouseEvent) {
-    if (!down || !slider) return;
+    if (!down || !sliderRef.current) return;
     e.preventDefault();
-    const x = e.pageX - slider.offsetLeft;
+    const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startRef.current) * 3; //scroll-fast
-    slider.scrollLeft = scrollLefRef.current - walk;
+    sliderRef.current.scrollLeft = scrollLefRef.current - walk;
   }
 
   return {
-    ref: sliderRef,
-    onMouseDown: handleMouseDown,
-    onMouseLeave: handleMouseLeave,
-    onMouseUp: handleMouseUp,
-    onMouseMove: handleMouseMove,
     isDown: down,
+    ref: sliderRef,
+    handleMouseDown,
+    handleMouseLeave,
+    handleMouseUp,
+    handleMouseMove,
   };
 }
