@@ -3,6 +3,12 @@ module.exports = {
   darkMode: false, // or "media" or "class"
   theme: {
     extend: {
+      gridTemplateRows: {
+        dashboard: "auto 1fr auto",
+      },
+      gridTemplateColumns: {
+        charity: "auto 1fr",
+      },
       colors: {
         "white-grey": "#FAFAFA",
         "thin-blue": "#54A3D9",
