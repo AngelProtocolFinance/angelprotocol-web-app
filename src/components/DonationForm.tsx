@@ -1,11 +1,7 @@
 import { useState } from "react";
-import contracts from "../contracts";
 import Slider from "rc-slider";
-import Modal from "react-modal";
-import { FaFacebookSquare } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
-
+import { ShareModal } from "components/ShareModal";
+import contracts from "../contracts";
 import "rc-slider/assets/index.css";
 
 import {
@@ -48,9 +44,10 @@ export function DonationForm(props: DonationFormProps) {
   const [amountTyped, setAmountTyped] = useState(0);
   const [percentage, setPercentage] = useState(0);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
+  let isSubmitDonation = false;
 
-  let isSuccess = false;
   const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
 
@@ -74,6 +71,7 @@ export function DonationForm(props: DonationFormProps) {
   const onAfterChange = (value: any) => {};
 
   const donate = async () => {
+    isSubmitDonation = true;
     if (!connectedWallet) return; // TODO (borodanov): should be:
     // const currentNetwork = connectedWallet.network.name
 
@@ -93,9 +91,9 @@ export function DonationForm(props: DonationFormProps) {
       pushTransactionStatus(
         `Transaction success with txhash: ${result.result.txhash}`
       );
-      console.log(result);
-      isSuccess = true;
+      setIsSuccess(true);
     } catch (error) {
+      setIsSuccess(false);
       if (error instanceof UserDenied) {
         pushTransactionStatus("User Denied");
       } else if (error instanceof CreateTxFailed) {
@@ -205,7 +203,7 @@ export function DonationForm(props: DonationFormProps) {
         <div className="flex items-center w-full my-2">
           <div className="w-2/5 mr-5">
             <p className="text-xs">
-              Percentage<span className="text-sm text-dark-red-color">*</span>
+              Percentage<span className="text-sm text-dark-red">*</span>
             </p>
             <Slider
               value={percentage}
@@ -218,86 +216,43 @@ export function DonationForm(props: DonationFormProps) {
               <span>100%</span>
             </div>
           </div>
-          <p className="text-xl text-thin-blue-color">{percentage}%</p>
+          <p className="text-xl text-thin-blue">{percentage}%</p>
         </div>
       </div>
       <div className="button-area">
-        {connectedWallet && connectedWallet.availablePost ? (
+        {isSubmitDonation ? (
           isSuccess ? (
             <div className="success-area">
-              <button className="uppercase bg-leaf-green-color rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
+              <button className="uppercase bg-leaf-green rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
                 Success
               </button>
-              <span className="text-leaf-green-color text-md mx-4">
+              <span className="text-leaf-green text-md mx-4">
                 Thank you for your donation!
               </span>
               <button
-                className="uppercase bg-thin-blue-color rounded-xl w-48 h-12 d-flex justify-center items-center mb-4"
+                className="uppercase bg-thin-blue rounded-xl w-48 h-12 d-flex justify-center items-center mb-4"
                 onClick={openShareModal}
               >
                 Share
               </button>
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeShareModal}
-                contentLabel="Example Modal"
-                style={customStyles}
-              >
-                <div className="flex justify-center">
-                  <div className="p-4  mx-auto">
-                    <div className="flex justify-end">
-                      <button
-                        onClick={closeShareModal}
-                        className="text-xl justify-end"
-                      >
-                        X
-                      </button>
-                    </div>
-                    <p className="text-5xl uppercase text-thin-blue-color mb-6 text-center font-bold">
-                      let the world know!
-                    </p>
-                    <div className="rounded-xl bg-white-grey-color p-3 w-2/3 flex justify-center mx-auto">
-                      <span className="text-grey text-sm">
-                        I just donated $xxx on @Angel Protocol! Every gift is
-                        invested to provide sustainable funding for non-profits:
-                        Give once, give forever. Please join me in providing
-                        charities with financial freedom:
-                        https://app.angelprotocol.io
-                      </span>
-                    </div>
-                    <div className="flex justify-center my-5 text-3xl text-thin-blue-color">
-                      <div className="flex justify-center items-center rounded-full border-thin-blue-color p-2 border-2 border-solid mx-1">
-                        <FaTwitter />
-                      </div>
-                      <div className="flex justify-center items-center rounded-full border-thin-blue-color p-2 border-2 border-solid mx-1">
-                        <FaLinkedin />
-                      </div>
-                      <div className="flex justify-center items-center rounded-full border-thin-blue-color p-2 border-2 border-solid mx-1">
-                        <FaFacebookSquare />
-                      </div>
-                    </div>
-                    <div className="flex justify-center mx-auto mt-2">
-                      <button className="uppercase bg-thin-blue-color rounded-xl w-48 h-12 d-flex justify-center items-center mb-4">
-                        Share
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </Modal>
+              <ShareModal
+                modalIsOpen={modalIsOpen}
+                closeShareModal={closeShareModal}
+              />
             </div>
           ) : (
             <div className="failed-area">
-              <button className="uppercase bg-failed-red-color rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
+              <button className="uppercase bg-failed-red rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
                 Declined
               </button>
-              <span className="text-failed-red-color text-md mx-4">
+              <span className="text-failed-red text-md mx-4">
                 Something went wrong. Please try again in a few minutes
               </span>
             </div>
           )
         ) : (
           <button
-            className="uppercase bg-orange-color rounded-xl w-56 h-12 d-flex justify-center items-center mb-4"
+            className="uppercase bg-orange rounded-xl w-56 h-12 d-flex justify-center items-center mb-4"
             disabled={!connectedWallet || !connectedWallet.availablePost}
             onClick={donate}
           >

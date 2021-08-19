@@ -29,7 +29,9 @@ const ExampleApp = () => {
       <div>
         <TransactionsStatuses transactionsStatuses={transactionsStatuses} />
         <CurrentBalance />
-        <DonationForm pushTransactionStatus={pushTransactionStatus} />
+        <div className="w-2/5 m-auto text-left">
+          <DonationForm pushTransactionStatus={pushTransactionStatus} />
+        </div>
       </div>
     </div>
   );
