@@ -18,10 +18,6 @@
     -o-user-drag: none;
     user-drag: none;
   }
-
-  .grabbable {
-    cursor: grab;
-  }
 }
 
 body {

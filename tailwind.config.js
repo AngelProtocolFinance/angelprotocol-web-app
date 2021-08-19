@@ -9,6 +9,10 @@ module.exports = {
       gridTemplateColumns: {
         charity: "auto 1fr",
       },
+      cursor: {
+        grab: "grab",
+        grabbing: "grabbing",
+      },
       colors: {
         "white-grey": "#FAFAFA",
         "thin-blue": "#54A3D9",
