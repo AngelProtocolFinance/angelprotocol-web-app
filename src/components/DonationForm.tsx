@@ -46,7 +46,7 @@ export function DonationForm(props: DonationFormProps) {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
-  let isSubmitDonation = false;
+  const [isSubmitDonation, setIsSubmitDonation] = useState(false);
 
   const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
@@ -71,7 +71,7 @@ export function DonationForm(props: DonationFormProps) {
   const onAfterChange = (value: any) => {};
 
   const donate = async () => {
-    isSubmitDonation = true;
+    setIsSubmitDonation(true);
     if (!connectedWallet) return; // TODO (borodanov): should be:
     // const currentNetwork = connectedWallet.network.name
 
@@ -209,7 +209,7 @@ export function DonationForm(props: DonationFormProps) {
               value={percentage}
               onChange={onSliderChange}
               onAfterChange={onAfterChange}
-              className="w-full h-4 my-3"
+              className="w-full h-4 my-3 ml-2"
             />
             <div className="flex justify-between items-center text-xs">
               <span>0%</span>
