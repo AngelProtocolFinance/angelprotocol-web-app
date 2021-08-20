@@ -1,50 +1,50 @@
-import { ConnectType, WalletStatus } from "@terra-money/wallet-provider";
+import { ReactNode } from "react";
+import {
+  NetworkInfo,
+  StaticWalletProvider,
+} from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
-import TestWalletProvider from "test/helpers/TestWalletProvider";
-import Header from ".";
+import { MemoryRouter } from "react-router-dom";
+import Header from "./index";
 
-describe("Without user", () => {
-  test("Renders 'connect wallet'", () => {
+const testnet: NetworkInfo = {
+  name: "testnet",
+  chainID: "tequila-0004",
+  lcd: "https://tequila-lcd.terra.dev",
+};
+
+type WrapProps = {
+  children: ReactNode;
+};
+
+const Wrapper = ({ children }: WrapProps) => (
+  <MemoryRouter>
+    <StaticWalletProvider defaultNetwork={testnet}>
+      {children};
+    </StaticWalletProvider>
+  </MemoryRouter>
+);
+
+describe("Header renders nav menu depending on the option", () => {
+  test("header has nav menu", () => {
     render(
-      <TestWalletProvider>
-        <Header
-          hasMenu={true}
-          wallet={undefined}
-          onConnect={() => {}}
-          onDisconnect={() => {}}
-        />
-      </TestWalletProvider>
+      <Wrapper>
+        <Header hasMenu={true} />;
+      </Wrapper>
     );
 
-    const connectWalletEl = screen.getByText("Connect Chrome Extension");
-    expect(connectWalletEl).toBeInTheDocument();
+    const navEl = screen.getByRole("list");
+    expect(navEl).toBeInTheDocument();
   });
-});
 
-describe("With user", () => {
-  test("Renders wallet address", () => {
-    const walletAddress = "123";
+  test("header don't have menu", () => {
     render(
-      <TestWalletProvider
-        walletStatus={WalletStatus.WALLET_CONNECTED}
-        walletInfo={{
-          connectType: ConnectType.CHROME_EXTENSION,
-          terraAddress: walletAddress,
-        }}
-      >
-        <Header
-          hasMenu={true}
-          wallet={{ terraAddress: walletAddress }}
-          onConnect={() => {}}
-          onDisconnect={() => {}}
-        />
-      </TestWalletProvider>
+      <Wrapper>
+        <Header hasMenu={false} />;
+      </Wrapper>
     );
 
-    const walletAddressEl = screen.getByText("123...");
-    expect(walletAddressEl).toBeInTheDocument();
-
-    const disconnectWalletEl = screen.getByText("Disconnect");
-    expect(disconnectWalletEl).toBeInTheDocument();
+    const navEl = screen.queryByRole("list");
+    expect(navEl).toBeNull();
   });
 });
