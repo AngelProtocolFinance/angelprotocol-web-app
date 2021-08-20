@@ -4,6 +4,7 @@ import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
 
 interface HeaderProps {
   hasMenu: boolean;
+  hasTitle?: boolean;
   wallet?: {
     terraAddress: string;
   };
@@ -11,7 +12,13 @@ interface HeaderProps {
   onDisconnect: () => void;
 }
 
-const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
+const Header = ({
+  hasMenu,
+  hasTitle = false,
+  wallet,
+  onConnect,
+  onDisconnect,
+}: HeaderProps) => {
   return (
     <header>
       <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
@@ -29,6 +36,15 @@ const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
           <ul className="flex font-regular text-base text-white">
             <ConnectTerraButton />
           </ul>
+          {hasTitle ? (
+            <p className="text-bold text-white font-lg uppercase">
+              give once, give forever
+            </p>
+          ) : (
+            <ul className="flex font-regular text-base text-white">
+              <ConnectTerraButton />
+            </ul>
+          )}
         </div>
       </nav>
     </header>

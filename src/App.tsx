@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Dashboard from "pages/Dashboard";
 import Donate from "pages/Donate";
+import Login from "pages/Login";
 import { ConnectTerraButton } from "./components/ConnectTerraButton";
 import { DonationForm } from "./components/DonationForm";
 import { CurrentBalance } from "./components/CurrentBalance";
@@ -44,6 +45,7 @@ const App = () => {
         <Route exact path="/" component={ExampleApp} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/donate" component={Donate} />
+        <Route path="/login" component={Login} />
       </Switch>
     </Router>
   );
