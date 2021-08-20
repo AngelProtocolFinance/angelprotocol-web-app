@@ -9,8 +9,8 @@ const NavMenu = () => {
   return (
     <ul className="flex">
       <li className="mr-4">
-        <NavLink to="/about" {...linkStyles}>
-          About
+        <NavLink to="/login" {...linkStyles}>
+          Login
         </NavLink>
       </li>
       <li className="mr-4">

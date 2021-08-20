@@ -32,6 +32,7 @@ const Login = () => {
               onChange={enterPassword}
             />
             <img
+              alt=""
               src={isShowPassword ? eyeIcon : eyeSlashIcon}
               width="16px"
               onClick={() => setIsShowPassword(!isShowPassword)}

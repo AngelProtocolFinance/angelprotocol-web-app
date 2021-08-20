@@ -1,6 +1,6 @@
 import NavMenu from "../NavMenu";
 import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 
 type HeaderProps = {
@@ -8,8 +8,6 @@ type HeaderProps = {
   hasTitle: boolean;
 };
 const Header = ({ hasMenu, hasTitle }: HeaderProps) => {
-  const history = useHistory();
-  console.log(history);
   return (
     <header>
       <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
@@ -29,9 +27,9 @@ const Header = ({ hasMenu, hasTitle }: HeaderProps) => {
               give once, give forever
             </p>
           ) : (
-            <ul className="flex font-regular text-base text-white">
+            <div className="flex font-regular text-base text-white">
               <TerraConnector />
-            </ul>
+            </div>
           )}
         </div>
       </nav>

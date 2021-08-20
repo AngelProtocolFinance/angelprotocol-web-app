@@ -1,5 +1,5 @@
 import "./App.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import Donate from "pages/Donate";
 import Header from "components/Layout/Header";
@@ -11,9 +11,15 @@ import Login from "pages/Login";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 
 const App = () => {
+  const location = useLocation();
+  const inLogin = /login/.test(location.pathname);
+  const appColor = inLogin
+    ? "bg-blue-400"
+    : "bg-gradient-to-b from-thin-blue to-black-blue";
+
   return (
-    <div className="grid grid-rows-app bg-gradient-to-b from-thin-blue to-black-blue">
-      <Header hasMenu={true} hasTitle={true} />
+    <div className={`grid grid-rows-app ${appColor}`}>
+      <Header hasMenu={true} hasTitle={inLogin} />
       <Switch>
         <Route path="/test" component={TerraConnector} />
         <Route path="/about" component={About} />
@@ -23,7 +29,7 @@ const App = () => {
         <Route path="/login" component={Login} />
         <Route exact path="/" component={Home} />
       </Switch>
-      <Footer hasMenu={true} />
+      <Footer hasMenu={!inLogin} />
     </div>
   );
 };

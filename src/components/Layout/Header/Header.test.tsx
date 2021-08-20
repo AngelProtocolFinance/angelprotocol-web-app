@@ -26,25 +26,58 @@ const Wrapper = ({ children }: WrapProps) => (
 );
 
 describe("Header renders nav menu depending on the option", () => {
-  test("header has nav menu", () => {
+  test("header has title and menu", () => {
     render(
       <Wrapper>
-        <Header hasMenu={true} />;
+        <Header hasMenu={true} hasTitle={true} />;
       </Wrapper>
     );
 
     const navEl = screen.getByRole("list");
     expect(navEl).toBeInTheDocument();
-  });
 
-  test("header don't have menu", () => {
+    const titleEL = screen.getByText(/give/i);
+    expect(titleEL).toBeInTheDocument();
+  });
+  test("header has menu and no title", () => {
     render(
       <Wrapper>
-        <Header hasMenu={false} />;
+        <Header hasMenu={true} hasTitle={false} />;
+      </Wrapper>
+    );
+
+    const navEl = screen.getByRole("list");
+    expect(navEl).toBeInTheDocument();
+
+    const titleEL = screen.queryByText(/give/i);
+    expect(titleEL).toBeNull();
+  });
+
+  test("header has title and no menu", () => {
+    render(
+      <Wrapper>
+        <Header hasMenu={false} hasTitle={true} />;
       </Wrapper>
     );
 
     const navEl = screen.queryByRole("list");
     expect(navEl).toBeNull();
+
+    const titleEL = screen.getByText(/give/i);
+    expect(titleEL).toBeInTheDocument();
+  });
+
+  test("header no menu and title", () => {
+    render(
+      <Wrapper>
+        <Header hasMenu={false} hasTitle={false} />;
+      </Wrapper>
+    );
+
+    const navEl = screen.queryByRole("list");
+    expect(navEl).toBeNull();
+
+    const titleEL = screen.queryByText(/give/i);
+    expect(titleEL).toBeNull();
   });
 });
