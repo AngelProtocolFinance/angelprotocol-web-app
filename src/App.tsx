@@ -13,7 +13,7 @@ import TerraConnector from "components/TerraConnector/TerraConnector";
 const App = () => {
   return (
     <div className="grid grid-rows-app bg-gradient-to-b from-thin-blue to-black-blue">
-      <Header hasMenu={true} />
+      <Header hasMenu={true} hasTitle={true} />
       <Switch>
         <Route path="/test" component={TerraConnector} />
         <Route path="/about" component={About} />
