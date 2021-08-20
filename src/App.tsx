@@ -5,6 +5,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Dashboard from "pages/Dashboard";
+import Donate from "pages/Donate";
 import { ConnectTerraButton } from "./components/ConnectTerraButton";
 import { DonationForm } from "./components/DonationForm";
 import { CurrentBalance } from "./components/CurrentBalance";
@@ -28,7 +29,9 @@ const ExampleApp = () => {
       <div>
         <TransactionsStatuses transactionsStatuses={transactionsStatuses} />
         <CurrentBalance />
-        <DonationForm pushTransactionStatus={pushTransactionStatus} />
+        <div className="w-2/5 m-auto text-left">
+          <DonationForm pushTransactionStatus={pushTransactionStatus} />
+        </div>
       </div>
     </div>
   );
@@ -40,6 +43,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={ExampleApp} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/donate" component={Donate} />
       </Switch>
     </Router>
   );

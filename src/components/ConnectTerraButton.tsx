@@ -1,4 +1,6 @@
 import useDropdownMenu from "react-accessible-dropdown-menu-hook";
+import copyIcon from "../assets/images/copy.png";
+import moreIcon from "../assets/images/more.png";
 
 import {
   useWallet,
@@ -50,21 +52,23 @@ export function ConnectTerraButton() {
                 className="mx-2"
                 onClick={() => onCopyAddress(wallets[0].terraAddress)}
               >
-                <img src="assets/images/copy.png" alt="AngelProtocol" />
+                <img src={copyIcon} alt="AngelProtocol" />
               </span>
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center relative">
                 <button {...buttonProps}>
-                  <img src="assets/images/more.png" alt="AngelProtocol" />
+                  <img src={moreIcon} alt="AngelProtocol" />
                 </button>
                 <div
                   className={
                     isOpen
-                      ? "block p-5 absolute top-16 right-5 bg-white text-black rounded-md"
-                      : "hidden p-5 absolute top-16 right-5 bg-white text-black rounded-md"
+                      ? "block p-5 absolute right-0 top-10 bg-white text-black rounded-md"
+                      : "hidden p-5 absolute right-0 top-10 bg-white text-black rounded-md"
                   }
                   role="menu"
                 >
-                  <a onClick={() => disconnect()}>Disconnect</a>
+                  <a href="#" onClick={() => disconnect()}>
+                    Disconnect
+                  </a>
                 </div>
               </div>
             </div>
@@ -75,7 +79,6 @@ export function ConnectTerraButton() {
 }
 
 function onCopyAddress(terraAddress: string) {
-  console.log("address => ", terraAddress);
   const selBox = document.createElement("textarea");
   selBox.style.position = "fixed";
   selBox.style.left = "0";
