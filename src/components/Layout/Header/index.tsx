@@ -33,11 +33,8 @@ const Header = ({
           )}
         </div>
         <div className="w-2/6 container mx-auto flex justify-end items-center">
-          <ul className="flex font-regular text-base text-white">
-            <ConnectTerraButton />
-          </ul>
           {hasTitle ? (
-            <p className="text-bold text-white font-lg uppercase">
+            <p className="font-bold text-white font-lg uppercase">
               give once, give forever
             </p>
           ) : (
