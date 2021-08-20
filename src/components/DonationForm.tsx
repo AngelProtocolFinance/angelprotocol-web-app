@@ -23,19 +23,6 @@ interface DonationFormProps {
   pushTransactionStatus: any;
 }
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    maxWidth: "30%",
-    minHeight: "300px",
-  },
-};
-
 export function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
 
@@ -59,9 +46,17 @@ export function DonationForm(props: DonationFormProps) {
     setIsOpen(false);
   }
 
-  const setAmount = (event: any) => {
-    setAmountToDonate(event.target.value);
+  const onChangeAmount = () => {};
+
+  const setAmount = (value: any) => {
+    setAmountToDonate(value);
     setIsTypingAmount(false);
+  };
+
+  const selectInputAmount = () => {
+    console.log("select input amount");
+    setIsTypingAmount(true);
+    setAmountToDonate(0);
   };
 
   const onSliderChange = (value: any) => {
@@ -123,53 +118,73 @@ export function DonationForm(props: DonationFormProps) {
       <p className="text-xl">Choose the amount of your donation:</p>
       <div className="options-amount mt-4 mb-6">
         <div className="flex justify-between w-3/5">
-          <div className="option-amount w-max">
+          <div
+            className="option-amount w-max cursor-pointer"
+            onClick={() => setAmount(5)}
+          >
             <input
               type="radio"
               name="amount"
               value={5}
               className="mr-1"
-              onChange={setAmount}
+              onChange={onChangeAmount}
+              checked={amountToDonate == 5 && !isTypingAmount}
             />
             $5
           </div>
-          <div className="option-amount w-max">
+          <div
+            className="option-amount w-max cursor-pointer"
+            onClick={() => setAmount(20)}
+          >
             <input
               type="radio"
               name="amount"
               value={20}
               className="mr-1"
-              onChange={setAmount}
+              onChange={onChangeAmount}
+              checked={amountToDonate == 20 && !isTypingAmount}
             />
             $20
           </div>
-          <div className="option-amount w-max">
+          <div
+            className="option-amount w-max cursor-pointer"
+            onClick={() => setAmount(50)}
+          >
             <input
               type="radio"
               name="amount"
               value={50}
               className="mr-1"
-              onChange={setAmount}
+              onChange={onChangeAmount}
+              checked={amountToDonate == 50 && !isTypingAmount}
             />
             $50
           </div>
-          <div className="option-amount">
+          <div
+            className="option-amount cursor-pointer"
+            onClick={() => setAmount(100)}
+          >
             <input
               type="radio"
               name="amount"
               value={100}
               className="mr-1"
-              onChange={setAmount}
+              onChange={onChangeAmount}
+              checked={amountToDonate == 100 && !isTypingAmount}
             />
             $100
           </div>
-          <div className="option-amount">
+          <div
+            className="option-amount cursor-pointer"
+            onClick={() => setAmount(1000)}
+          >
             <input
               type="radio"
               name="amount"
               value={1000}
               className="mr-1"
-              onChange={setAmount}
+              onChange={onChangeAmount}
+              checked={amountToDonate == 1000 && !isTypingAmount}
             />
             $1000
           </div>
@@ -177,17 +192,17 @@ export function DonationForm(props: DonationFormProps) {
         <div className="mt-4 flex items-center">
           <input
             type="radio"
-            name="amount"
             value=""
             className="mr-2"
-            onChange={() => setIsTypingAmount(true)}
+            onChange={() => selectInputAmount()}
+            checked={isTypingAmount}
           />
           <div className="rounded-md h-10 border-gray-300 p-2 bg-white">
             <input
               className="border-transparent outline-none text-black"
               type="number"
               placeholder="Other Amount"
-              name="amount"
+              name="amountValue"
               value={amountTyped}
               onChange={(e) => setAmountTyped(parseInt(e.target.value))}
               disabled={!isTypingAmount}
