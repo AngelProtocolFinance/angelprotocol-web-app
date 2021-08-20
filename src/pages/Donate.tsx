@@ -2,8 +2,6 @@ import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "components/CharityInfo";
-import Header from "components/Layout/Header";
-import Footer from "components/Layout/Footer";
 import { DonationForm } from "components/DonationForm";
 import { DonationInfo } from "components/DonationInfo";
 
