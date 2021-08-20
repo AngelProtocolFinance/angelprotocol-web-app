@@ -66,7 +66,9 @@ export function ConnectTerraButton() {
                   }
                   role="menu"
                 >
-                  <a onClick={() => disconnect()}>Disconnect</a>
+                  <a href="#" onClick={() => disconnect()}>
+                    Disconnect
+                  </a>
                 </div>
               </div>
             </div>
