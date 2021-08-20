@@ -86,19 +86,7 @@ export function DonationInfo({
         isOpen={modalIsOpen}
         onRequestClose={closeInfoModal}
         contentLabel="Example Modal"
-        style={{
-          content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            maxWidth: "80%",
-            minHeight: "300px",
-            borderRadius: "20px",
-          },
-        }}
+        className="absolute inset-1/2 bottom-auto right-auto max-w-4/5 min-h-modal rounded-3xl bg-white transform -translate-x-1/2 -translate-y-1/2"
       >
         <div className="flex justify-center">
           <div className="p-4 mx-auto text-thin-blue">

@@ -12,18 +12,7 @@ export function ShareModal({ modalIsOpen, closeShareModal }: ShareModalProps) {
       isOpen={modalIsOpen}
       onRequestClose={closeShareModal}
       contentLabel="Example Modal"
-      style={{
-        content: {
-          top: "50%",
-          left: "50%",
-          right: "auto",
-          bottom: "auto",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          maxWidth: "30%",
-          minHeight: "300px",
-        },
-      }}
+      className="absolute inset-1/2 bottom-auto right-auto max-w-md min-h-modal rounded-3xl bg-white transform -translate-x-1/2 -translate-y-1/2"
     >
       <div className="flex justify-center">
         <div className="p-4  mx-auto">
@@ -32,11 +21,14 @@ export function ShareModal({ modalIsOpen, closeShareModal }: ShareModalProps) {
               X
             </button>
           </div>
+          <p className="text-5xl uppercase text-thin-blue mb-2 text-center font-bold">
+            let the
+          </p>
           <p className="text-5xl uppercase text-thin-blue mb-6 text-center font-bold">
-            let the world know!
+            world know!
           </p>
           <div className="rounded-xl bg-white-grey p-3 w-2/3 flex justify-center mx-auto">
-            <span className="text-grey text-sm">
+            <span className="text-gray-400 text-sm">
               I just donated $xxx on @Angel Protocol! Every gift is invested to
               provide sustainable funding for non-profits: Give once, give
               forever. Please join me in providing charities with financial
@@ -55,7 +47,7 @@ export function ShareModal({ modalIsOpen, closeShareModal }: ShareModalProps) {
             </div>
           </div>
           <div className="flex justify-center mx-auto mt-2">
-            <button className="uppercase bg-thin-blue rounded-xl w-48 h-12 d-flex justify-center items-center mb-4">
+            <button className="uppercase bg-thin-blue rounded-xl w-48 h-12 d-flex justify-center items-center mb-4 text-white font-bold">
               Share
             </button>
           </div>
