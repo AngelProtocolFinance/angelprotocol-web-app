@@ -5,6 +5,7 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import Dashboard from "pages/Dashboard";
+import Charity from "pages/Charity";
 import { ConnectTerraButton } from "./components/ConnectTerraButton";
 import { DonationForm } from "./components/DonationForm";
 import { CurrentBalance } from "./components/CurrentBalance";
@@ -40,6 +41,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={ExampleApp} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/charity/:title" component={Charity} />
       </Switch>
     </Router>
   );
