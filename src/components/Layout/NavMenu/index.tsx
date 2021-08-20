@@ -1,25 +1,32 @@
+import { NavLink } from "react-router-dom";
+
+const linkStyles = {
+  className: "uppercase text-white",
+  activeClassName: "font-bold",
+};
+
 const NavMenu = () => {
   return (
     <ul className="flex">
       <li className="mr-4">
-        <a href="#" className="uppercase text-white">
-          About Us
-        </a>
+        <NavLink to="/about" {...linkStyles}>
+          About
+        </NavLink>
       </li>
       <li className="mr-4">
-        <a href="#" className="uppercase text-white">
+        <NavLink to="/donate" {...linkStyles}>
           Donate Now
-        </a>
+        </NavLink>
       </li>
       <li className="mr-4">
-        <a href="#" className="uppercase text-white">
+        <NavLink to="/dashboard" {...linkStyles}>
           For Charities
-        </a>
+        </NavLink>
       </li>
       <li>
-        <a href="#" className="uppercase text-white">
+        <NavLink to="/about-unsdgs" {...linkStyles}>
           About UNSDGs
-        </a>
+        </NavLink>
       </li>
     </ul>
   );

@@ -26,8 +26,8 @@ const Donate = () => {
     setIsDonate(!isDonate);
   };
   return (
-    <div className="bg-gradient-to-b from-thin-blue to-black-blue px-5">
-      <Header hasMenu={false} onConnect={() => {}} onDisconnect={() => {}} />
+    <div className="container mx-auto">
+      {/* <Header hasMenu={false} onConnect={() => {}} onDisconnect={() => {}} /> */}
       <section className="container mx-auto flex-auto py-5">
         <div className="flex flex-row justify-between pb-5">
           <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
@@ -114,7 +114,7 @@ const Donate = () => {
           </div>
         </div>
       </section>
-      <Footer hasMenu={true} />
+      {/* <Footer hasMenu={true} /> */}
     </div>
   );
 };

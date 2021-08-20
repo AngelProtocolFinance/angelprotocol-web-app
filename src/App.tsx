@@ -1,51 +1,28 @@
-import React, { useState } from "react";
-import logo from "./tca-logo.png";
 import "./App.css";
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { Switch, Route } from "react-router-dom";
 import Dashboard from "pages/Dashboard";
 import Donate from "pages/Donate";
-import { ConnectTerraButton } from "./components/ConnectTerraButton";
-import { DonationForm } from "./components/DonationForm";
-import { CurrentBalance } from "./components/CurrentBalance";
-import { TransactionsStatuses } from "./components/TransactionsStatuses";
-
-const ExampleApp = () => {
-  // TODO (borodanov): remove 'any', create type for transactionStatus
-  const [transactionsStatuses, setTransactionsStatuses] = useState<any[]>([]);
-
-  // TODO (borodanov): remove 'any'
-  const pushTransactionStatus = (status: any) => {
-    setTransactionsStatuses([...transactionsStatuses, status]);
-  };
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <ConnectTerraButton />
-      </header>
-      <div>
-        <TransactionsStatuses transactionsStatuses={transactionsStatuses} />
-        <CurrentBalance />
-        <div className="w-2/5 m-auto text-left">
-          <DonationForm pushTransactionStatus={pushTransactionStatus} />
-        </div>
-      </div>
-    </div>
-  );
-};
+import Header from "components/Layout/Header";
+import Footer from "components/Layout/Footer";
+import Home from "pages/Home";
+import About from "pages/About";
+import Goals from "pages/Goals";
+import Login from "pages/Login";
 
 const App = () => {
   return (
-    <Router>
+    <div className="grid grid-rows-app bg-gradient-to-b from-thin-blue to-black-blue">
+      <Header hasMenu={true} onConnect={() => {}} onDisconnect={() => {}} />
       <Switch>
-        <Route exact path="/" component={ExampleApp} />
+        <Route path="/about" component={About} />
+        <Route path="/about-unsdgs" component={Goals} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/donate" component={Donate} />
+        <Route path="/login" component={Login} />
+        <Route exact path="/" component={Home} />
       </Switch>
-    </Router>
+      <Footer hasMenu={true} />
+    </div>
   );
 };
 

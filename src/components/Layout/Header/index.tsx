@@ -1,24 +1,25 @@
 import NavMenu from "../NavMenu";
 import { ConnectTerraButton } from "../../ConnectTerraButton";
 import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   hasMenu: boolean;
   wallet?: {
     terraAddress: string;
   };
-  onConnect: () => void;
-  onDisconnect: () => void;
+  onConnect?: () => void;
+  onDisconnect?: () => void;
 }
 
 const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
   return (
     <header>
-      <nav className="mx-auto flex justify-between items-center h-16 mt-5">
+      <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
         <div className="container mx-auto flex justify-between items-center w-4/6">
-          <a href="/" className="font-bold text-base">
+          <Link to="/">
             <img src={logo} alt="AngelProtocol" width="150" />
-          </a>
+          </Link>
           {hasMenu && (
             <div className="flex font-sans text-base w-9/12">
               <NavMenu />

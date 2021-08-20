@@ -1,5 +1,3 @@
-import Header from "components/Layout/Header";
-import Footer from "components/Layout/Footer";
 import CharityCategory from "components/CharityCategory";
 import fixtureData from "components/CharityCategory/CharityCategory.fixture.json";
 const charityCategories = Array(6)
@@ -8,15 +6,12 @@ const charityCategories = Array(6)
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-rows-dashboard bg-gradient-to-b from-thin-blue to-black-blue px-5">
-      <Header hasMenu={true} onConnect={() => {}} onDisconnect={() => {}} />
-
+    <div className="container mx-auto grid grid-rows-dashboard px-5">
       <section className="flex-auto">
         {charityCategories.map((category) => {
           return <CharityCategory {...category} key={category.id} />;
         })}
       </section>
-      <Footer hasMenu={true} />
     </div>
   );
 };
