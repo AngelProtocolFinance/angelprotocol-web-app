@@ -1,7 +1,11 @@
-import { PropType } from "./types";
 import no_provery_img from "../../assets/images/unsdg-no-poverty.png";
 
-export default function CategoryCard({ title, description }: PropType) {
+export type propType = {
+  title: string;
+  description: string;
+};
+
+export default function CategoryCard({ title, description }: propType) {
   return (
     <div className="w-60 text-white p-1 pt-6 border-t border-white border-opacity-40">
       <img

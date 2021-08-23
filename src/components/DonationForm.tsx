@@ -54,7 +54,6 @@ export function DonationForm(props: DonationFormProps) {
   };
 
   const selectInputAmount = () => {
-    console.log("select input amount");
     setIsTypingAmount(true);
     setAmountToDonate(0);
   };
@@ -112,8 +111,6 @@ export function DonationForm(props: DonationFormProps) {
       }
     }
   };
-
-  console.log(typeof amountToDonate);
 
   return (
     <div>

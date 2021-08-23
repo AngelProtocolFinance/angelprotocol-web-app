@@ -1,14 +1,14 @@
 import "./App.css";
 import { Switch, Route, useLocation } from "react-router-dom";
-import Dashboard from "pages/Dashboard";
-import Donate from "pages/Donate";
+import TerraConnector from "components/TerraConnector/TerraConnector";
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
+import Donate from "pages/Donate";
+import Dashboard from "pages/Dashboard";
 import Home from "pages/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
-import TerraConnector from "components/TerraConnector/TerraConnector";
 
 const App = () => {
   const location = useLocation();
