@@ -17,10 +17,11 @@ const LoginTest = () => {
   async function authenticate(event: any) {
     event.preventDefault();
     const API_URL =
-      "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-portal-login?password=";
+      "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-portal-login";
     try {
-      const response: any = await fetch(`${API_URL}${password}`, {
+      const response: any = await fetch(`${API_URL}`, {
         method: "POST",
+        body: JSON.stringify({ password: password }),
       });
 
       const data: { accessToken: string } = await response.json();
