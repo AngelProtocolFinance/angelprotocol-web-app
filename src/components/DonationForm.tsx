@@ -54,7 +54,6 @@ export function DonationForm(props: DonationFormProps) {
   };
 
   const selectInputAmount = () => {
-    console.log("select input amount");
     setIsTypingAmount(true);
     setAmountToDonate(0);
   };
@@ -128,7 +127,7 @@ export function DonationForm(props: DonationFormProps) {
               value={5}
               className="mr-1"
               onChange={onChangeAmount}
-              checked={amountToDonate == 5 && !isTypingAmount}
+              checked={amountToDonate === 5 && !isTypingAmount}
             />
             $5
           </div>
@@ -142,7 +141,7 @@ export function DonationForm(props: DonationFormProps) {
               value={20}
               className="mr-1"
               onChange={onChangeAmount}
-              checked={amountToDonate == 20 && !isTypingAmount}
+              checked={amountToDonate === 20 && !isTypingAmount}
             />
             $20
           </div>
@@ -156,7 +155,7 @@ export function DonationForm(props: DonationFormProps) {
               value={50}
               className="mr-1"
               onChange={onChangeAmount}
-              checked={amountToDonate == 50 && !isTypingAmount}
+              checked={amountToDonate === 50 && !isTypingAmount}
             />
             $50
           </div>
@@ -170,7 +169,7 @@ export function DonationForm(props: DonationFormProps) {
               value={100}
               className="mr-1"
               onChange={onChangeAmount}
-              checked={amountToDonate == 100 && !isTypingAmount}
+              checked={amountToDonate === 100 && !isTypingAmount}
             />
             $100
           </div>
@@ -184,7 +183,7 @@ export function DonationForm(props: DonationFormProps) {
               value={1000}
               className="mr-1"
               onChange={onChangeAmount}
-              checked={amountToDonate == 1000 && !isTypingAmount}
+              checked={amountToDonate === 1000 && !isTypingAmount}
             />
             $1000
           </div>
