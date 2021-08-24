@@ -3,8 +3,20 @@ module.exports = {
   darkMode: false, // or "media" or "class"
   theme: {
     extend: {
+      gridTemplateRows: {
+        dashboard: "auto 1fr auto",
+        app: "auto 1fr auto",
+      },
+      gridTemplateColumns: {
+        charity: "auto 1fr",
+      },
+      cursor: {
+        grab: "grab",
+        grabbing: "grabbing",
+      },
       colors: {
         "white-grey": "#FAFAFA",
+        "grey-light": "#f5f5f5",
         "thin-blue": "#54A3D9",
         "black-blue": "#252626",
         "leaf-green": "#88B752",
@@ -19,6 +31,7 @@ module.exports = {
       },
       fontSize: {
         "2xs": ["0.56rem", "0.7rem"],
+        "4.5xl": "2.625rem",
       },
       maxWidth: {
         "4/5": "80%",

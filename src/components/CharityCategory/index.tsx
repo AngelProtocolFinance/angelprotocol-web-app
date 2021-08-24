@@ -1,4 +1,6 @@
 import CharityCard from "../CharityCard";
+import CategoryCard from "../CategoryCard/CategoryCard";
+import useClickScroll from "./useClickScroll";
 
 interface CharityCategoryProps {
   title: string;
@@ -11,15 +13,30 @@ const CharityCategory = ({
   description,
   cards,
 }: CharityCategoryProps) => {
+  const {
+    isDown,
+    ref,
+    handleMouseLeave,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+  } = useClickScroll();
+
   return (
-    <section className="flex flex-row my-8">
-      <div className="w-48 flex-none">
-        <h1 className="font-bold text-lg">{title}</h1>
-        <p className="text-base">{description}</p>
-      </div>
-      <section className="flex flex-row mx-4 overflow-x-scroll">
+    <section className="grid grid-cols-charity h-52">
+      <CategoryCard title={title} description={description} />
+      <section
+        ref={ref}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        onMouseMove={handleMouseMove}
+        className={`flex flex-row ${
+          isDown ? "cursor-grabbing" : "cursor-grab"
+        } overflow-x-scroll scroll-hidden`}
+      >
         {cards.map((card) => {
-          return <CharityCard {...card} key={card.title} />;
+          return <CharityCard {...card} key={card.id} />;
         })}
       </section>
     </section>

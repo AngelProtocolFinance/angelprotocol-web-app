@@ -1,24 +1,20 @@
 import NavMenu from "../NavMenu";
-import { ConnectTerraButton } from "../../ConnectTerraButton";
 import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
+import { Link } from "react-router-dom";
+import TerraConnector from "components/TerraConnector/TerraConnector";
 
-interface HeaderProps {
+type HeaderProps = {
   hasMenu: boolean;
-  wallet?: {
-    terraAddress: string;
-  };
-  onConnect: () => void;
-  onDisconnect: () => void;
-}
-
-const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
+  hasTitle: boolean;
+};
+const Header = ({ hasMenu, hasTitle }: HeaderProps) => {
   return (
     <header>
       <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
         <div className="container mx-auto flex justify-between items-center w-4/6">
-          <a href="/" className="font-bold text-base">
+          <Link to="/">
             <img src={logo} alt="AngelProtocol" width="150" />
-          </a>
+          </Link>
           {hasMenu && (
             <div className="flex font-sans text-base w-9/12">
               <NavMenu />
@@ -26,9 +22,15 @@ const Header = ({ hasMenu, wallet, onConnect, onDisconnect }: HeaderProps) => {
           )}
         </div>
         <div className="w-2/6 container mx-auto flex justify-end items-center">
-          <ul className="flex font-regular text-base text-white">
-            <ConnectTerraButton />
-          </ul>
+          {hasTitle ? (
+            <p className="font-bold text-white font-lg uppercase">
+              give once, give forever
+            </p>
+          ) : (
+            <div className="flex font-regular text-base text-white">
+              <TerraConnector />
+            </div>
+          )}
         </div>
       </nav>
     </header>

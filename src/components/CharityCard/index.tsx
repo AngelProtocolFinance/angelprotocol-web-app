@@ -10,10 +10,16 @@ const CharityCard = ({
   backgroundImageUrl,
 }: CharityCardProps) => {
   return (
-    <article className="w-64 h-48 ml-4 flex-none">
-      <img className="rounded-lg" src={backgroundImageUrl} />
-      <h1 className="font-bold text-lg">{title}</h1>
-      <p className="text-sm">{description}</p>
+    <article className="w-64 h-48 ml-4 flex-none ">
+      <img
+        className="rounded-lg img-no-drag"
+        src={backgroundImageUrl}
+        alt="charity banner"
+      />
+      <h1 className="font-bold text-base uppercase text-grey-light font-bold mt-1">
+        {title}
+      </h1>
+      <p className="text-xs text-grey-light">{description}</p>
     </article>
   );
 };
