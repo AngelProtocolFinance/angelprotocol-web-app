@@ -9,7 +9,6 @@ import Home from "pages/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
-import LoginTest from "pages/LoginTest";
 
 const App = () => {
   const location = useLocation();
@@ -28,7 +27,6 @@ const App = () => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/donate" component={Donate} />
         <Route path="/login" component={Login} />
-        <Route path="/login-test" component={LoginTest} />
         <Route exact path="/" component={Home} />
       </Switch>
       <Footer hasMenu={!inLogin} />
