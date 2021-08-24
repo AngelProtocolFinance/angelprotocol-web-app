@@ -16,10 +16,10 @@ const CharityCard = ({
         src={backgroundImageUrl}
         alt="charity banner"
       />
-      <h1 className="font-bold text-base uppercase text-grey-light font-bold mt-1">
+      <h1 className="font-bold text-base uppercase text-light-grey font-bold mt-1">
         {title}
       </h1>
-      <p className="text-xs text-grey-light">{description}</p>
+      <p className="text-xs text-light-grey">{description}</p>
     </article>
   );
 };
