@@ -1,18 +1,14 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import Footer from ".";
 
 test("renders Footer", () => {
-  render(<Footer hasMenu={true} />);
-  const linkElements = [
-    "About Us",
-    "About UNSDGs",
-    "For Charities",
-    "Donate Now",
-  ].map((text) => {
-    return screen.getByText(text);
-  });
-
-  linkElements.forEach((el) => {
-    expect(el).toBeInTheDocument();
-  });
+  render(
+    <MemoryRouter>
+      <Footer hasMenu={true} />
+    </MemoryRouter>
+  );
+  //changed to list only for list items often change
+  const navListEl = screen.getByRole("list");
+  expect(navListEl).toBeInTheDocument();
 });

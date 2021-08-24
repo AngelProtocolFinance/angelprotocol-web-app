@@ -1,32 +1,83 @@
+import { ReactNode } from "react";
+import {
+  NetworkInfo,
+  StaticWalletProvider,
+} from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
-import Header from ".";
+import { MemoryRouter } from "react-router-dom";
+import Header from "./index";
 
-describe("Without user", () => {
-  test("Renders 'connect wallet'", () => {
+const testnet: NetworkInfo = {
+  name: "testnet",
+  chainID: "tequila-0004",
+  lcd: "https://tequila-lcd.terra.dev",
+};
+
+type WrapProps = {
+  children: ReactNode;
+};
+
+const Wrapper = ({ children }: WrapProps) => (
+  <MemoryRouter>
+    <StaticWalletProvider defaultNetwork={testnet}>
+      {children};
+    </StaticWalletProvider>
+  </MemoryRouter>
+);
+
+describe("Header renders nav menu depending on the option", () => {
+  test("header has title and menu", () => {
     render(
-      <Header wallet={undefined} onConnect={() => {}} onDisconnect={() => {}} />
+      <Wrapper>
+        <Header hasMenu={true} hasTitle={true} />;
+      </Wrapper>
     );
 
-    const connectWalletEl = screen.getByText("Connect Wallet");
+    const navEl = screen.getByRole("list");
+    expect(navEl).toBeInTheDocument();
 
-    expect(connectWalletEl).toBeInTheDocument();
+    const titleEL = screen.getByText(/give/i);
+    expect(titleEL).toBeInTheDocument();
   });
-});
-
-describe("With user", () => {
-  test("Renders wallet address", () => {
+  test("header has menu and no title", () => {
     render(
-      <Header
-        wallet={{ terraAddress: "123" }}
-        onConnect={() => {}}
-        onDisconnect={() => {}}
-      />
+      <Wrapper>
+        <Header hasMenu={true} hasTitle={false} />;
+      </Wrapper>
     );
 
-    const walletAddressEl = screen.getByText("123");
-    expect(walletAddressEl).toBeInTheDocument();
+    const navEl = screen.getByRole("list");
+    expect(navEl).toBeInTheDocument();
 
-    const disconnectWalletEl = screen.getByText("Disconnect Wallet");
-    expect(disconnectWalletEl).toBeInTheDocument();
+    const titleEL = screen.queryByText(/give/i);
+    expect(titleEL).toBeNull();
+  });
+
+  test("header has title and no menu", () => {
+    render(
+      <Wrapper>
+        <Header hasMenu={false} hasTitle={true} />;
+      </Wrapper>
+    );
+
+    const navEl = screen.queryByRole("list");
+    expect(navEl).toBeNull();
+
+    const titleEL = screen.getByText(/give/i);
+    expect(titleEL).toBeInTheDocument();
+  });
+
+  test("header no menu and title", () => {
+    render(
+      <Wrapper>
+        <Header hasMenu={false} hasTitle={false} />;
+      </Wrapper>
+    );
+
+    const navEl = screen.queryByRole("list");
+    expect(navEl).toBeNull();
+
+    const titleEL = screen.queryByText(/give/i);
+    expect(titleEL).toBeNull();
   });
 });
