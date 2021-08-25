@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TCAAuthProcess } from "aws-settings.config";
 
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
@@ -10,31 +11,6 @@ const Login = () => {
   const enterPassword = (event: any) => {
     setPassword(event.target.value);
   };
-
-  // TCA Portal Authentication Process
-  async function authenticate(event: any) {
-    event.preventDefault();
-    const API_URL =
-      "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-portal-login";
-
-    try {
-      const response: any = await fetch(`${API_URL}`, {
-        method: "POST",
-        body: JSON.stringify({ password: password }),
-      });
-
-      const data: { accessToken: string; errorMessage: string } =
-        await response.json();
-
-      if (data.accessToken) {
-        console.log("Access Token: ", data.accessToken);
-      } else {
-        console.log("Error Message: ", data.errorMessage);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   return (
     <section className="container mx-auto my-auto flex-auto my-10 lg:w-1/4 w-1/2 h-fixed-content-height">
@@ -68,7 +44,10 @@ const Login = () => {
           <button
             className="bg-orange text-center w-48 h-16 rounded-xl uppercase text-md font-bold text-white"
             disabled={!password}
-            onClick={authenticate}
+            onClick={(event) => {
+              event.preventDefault();
+              TCAAuthProcess(password);
+            }}
           >
             enter
           </button>
