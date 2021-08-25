@@ -25,7 +25,7 @@ const App = () => {
         <Route path="/about" component={About} />
         <Route path="/about-unsdgs" component={Goals} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/donate" component={Donate} />
+        <Route path="/donate/:charityId" component={Donate} />
         <Route path="/login" component={Login} />
         <Route exact path="/" component={Home} />
       </Switch>
