@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
+import { BrowserRouter } from "react-router-dom";
 
 const localterra = {
   name: "localterra",
@@ -32,12 +33,14 @@ const walletConnectChainIds: Record<number, NetworkInfo> = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <WalletProvider
-      defaultNetwork={localterra}
-      walletConnectChainIds={walletConnectChainIds}
-    >
-      <App />
-    </WalletProvider>
+    <BrowserRouter>
+      <WalletProvider
+        defaultNetwork={localterra}
+        walletConnectChainIds={walletConnectChainIds}
+      >
+        <App />
+      </WalletProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
