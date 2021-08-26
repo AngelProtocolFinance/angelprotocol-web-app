@@ -38,11 +38,7 @@ const CharityCategory = ({
         } overflow-x-scroll scroll-hidden`}
       >
         {cards.map((card) => {
-          return (
-            <Link to={`/donate/${card.id}`}>
-              <CharityCard {...card} key={card.id} />
-            </Link>
-          );
+          return <CharityCard {...card} key={card.id} />;
         })}
       </section>
     </section>
