@@ -9,8 +9,11 @@ import Home from "pages/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
+import { routes } from "./types/types";
+import useAppBackground from "hooks/useBackground";
 
 const App = () => {
+  const appBackround = useAppBackground();
   const location = useLocation();
   const inLogin = /login/.test(location.pathname);
   const appColor = inLogin
@@ -18,16 +21,16 @@ const App = () => {
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
   return (
-    <div className={`grid grid-rows-app ${appColor}`}>
+    <div className={`grid grid-rows-app ${appBackround}`}>
       <Header hasMenu={true} hasTitle={inLogin} />
       <Switch>
-        <Route path="/test" component={TerraConnector} />
-        <Route path="/about" component={About} />
-        <Route path="/about-unsdgs" component={Goals} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/donate" component={Donate} />
-        <Route path="/login" component={Login} />
-        <Route exact path="/" component={Home} />
+        <Route path={routes.test} component={TerraConnector} />
+        <Route path={routes.about} component={About} />
+        <Route path={routes.about_unsdgs} component={Goals} />
+        <Route path={routes.dashboard} component={Dashboard} />
+        <Route path={routes.donate} component={Donate} />
+        <Route path={routes.login} component={Login} />
+        <Route exact path={routes.home} component={Home} />
       </Switch>
       <Footer hasMenu={!inLogin} />
     </div>

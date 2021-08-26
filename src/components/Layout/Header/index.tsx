@@ -2,6 +2,8 @@ import NavMenu from "../NavMenu";
 import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
 import { Link } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
+import { useLocation } from "react-router-dom";
+import Logo from "components/Logo/Logo";
 
 type HeaderProps = {
   hasMenu: boolean;
@@ -13,7 +15,7 @@ const Header = ({ hasMenu, hasTitle }: HeaderProps) => {
       <nav className="container mx-auto flex justify-between items-center h-16 mt-5">
         <div className="container mx-auto flex justify-between items-center w-4/6">
           <Link to="/">
-            <img src={logo} alt="AngelProtocol" width="150" />
+            <Logo />
           </Link>
           {hasMenu && (
             <div className="flex font-sans text-base w-9/12">
