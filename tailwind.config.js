@@ -40,8 +40,8 @@ module.exports = {
         modal: "300px",
       },
       inset: {
-        "12": "12px",
-        "69": "69px",
+        12: "12px",
+        69: "69px",
       },
     },
     fontFamily: {
