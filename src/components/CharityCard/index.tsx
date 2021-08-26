@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import NewTextBadge from "../TextBadge/newTextBadge";
 
 interface CharityCardProps {
@@ -11,6 +12,20 @@ const CharityCard = ({
   description,
   backgroundImageUrl,
 }: CharityCardProps) => {
+  // Simple logic for the date
+  const oldDate = new Date(2021, 8, 13);
+  const newDate = new Date(2021, 8, 27);
+  const dateDiff = newDate.getDate() - oldDate.getDate(); //Difference in days
+  const [isCharityNew, setIsCharityNew] = useState(false);
+
+  useEffect(() => {
+    if (dateDiff <= 14) {
+      setIsCharityNew(true);
+    } else {
+      setIsCharityNew(false);
+    }
+  }, [dateDiff]);
+
   return (
     <article className="relative w-64 h-48 ml-4 flex-none ">
       <a href={`/donate/${title}`}>
@@ -23,7 +38,7 @@ const CharityCard = ({
           {title}
         </h1>
         <p className="text-xs text-grey-light">{description}</p>
-        <NewTextBadge />
+        {isCharityNew ? <NewTextBadge /> : null}
       </a>
     </article>
   );
