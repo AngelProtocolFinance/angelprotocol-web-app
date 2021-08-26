@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TCAAuthProcess } from "aws-settings.config";
 
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
@@ -43,6 +44,10 @@ const Login = () => {
           <button
             className="bg-orange text-center w-48 h-16 rounded-xl uppercase text-md font-bold text-white"
             disabled={!password}
+            onClick={(event) => {
+              event.preventDefault();
+              TCAAuthProcess(password);
+            }}
           >
             enter
           </button>
