@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import CharityCard from "../CharityCard";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import useClickScroll from "./useClickScroll";
@@ -36,7 +38,11 @@ const CharityCategory = ({
         } overflow-x-scroll scroll-hidden`}
       >
         {cards.map((card) => {
-          return <CharityCard {...card} key={card.id} />;
+          return (
+            <Link to={`/donate/${card.id}`}>
+              <CharityCard {...card} key={card.id} />
+            </Link>
+          );
         })}
       </section>
     </section>
