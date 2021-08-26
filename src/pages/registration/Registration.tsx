@@ -3,11 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const Registration = () => {
   const [isResume, setIsResume] = useState(false);
-  const [regRefer, setRegRefer] = useState("");
 
-  const changeRefer = (event: any) => {
-    setRegRefer(event.target.value);
-  };
   return (
     <div>
       <div>
@@ -41,17 +37,23 @@ const Registration = () => {
               const errors = { refer: "" };
               if (!values.refer) {
                 errors.refer = "Please enter your registration reference.";
+                return errors;
               }
-              return errors;
+              return {};
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+            onSubmit={(values, { setSubmitting, setFieldError }) => {
+              alert(JSON.stringify(values, null, 2));
+              setSubmitting(true);
+              // API integration.
+              // set error
+              setFieldError(
+                "refer",
+                "Can`t find a registration file with this reference!"
+              );
+              setSubmitting(false);
             }}
           >
-            {({ isSubmitting }) => (
+            {({ values, isSubmitting }) => (
               <div>
                 <Form>
                   <div className="flex items-center justify-center mb-2">
@@ -60,8 +62,7 @@ const Registration = () => {
                         type="text"
                         className="outline-none border-none w-full px-3"
                         placeholder="Enter your registration reference"
-                        onChange={changeRefer}
-                        value={regRefer}
+                        value={values.refer}
                         name="refer"
                       />
                     </div>
