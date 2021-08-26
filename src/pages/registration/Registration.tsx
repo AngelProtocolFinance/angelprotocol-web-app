@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const Registration = () => {
   const [isResume, setIsResume] = useState(false);
@@ -34,23 +35,53 @@ const Registration = () => {
       </div>
       {isResume && (
         <div className="">
-          <div className="flex items-center justify-center mb-2">
-            <div className="mr-5 rounded-md bg-white flex items-center w-2/5 text-black py-2">
-              <input
-                type="text"
-                className="outline-none border-none w-full px-3"
-                placeholder="Enter your registration reference"
-                onChange={changeRefer}
-                value={regRefer}
-              />
-            </div>
-            <button className="bg-orange w-48 h-12 rounded-xl uppercase text-md font-bold text-white">
-              Resume
-            </button>
-          </div>
-          <p className="text-md">
-            Can't find a registration file with this reference!
-          </p>
+          <Formik
+            initialValues={{ refer: "" }}
+            validate={(values) => {
+              const errors = { refer: "" };
+              if (!values.refer) {
+                errors.refer = "Please enter your registration reference.";
+              }
+              return errors;
+            }}
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                alert(JSON.stringify(values, null, 2));
+                setSubmitting(false);
+              }, 400);
+            }}
+          >
+            {({ isSubmitting }) => (
+              <div>
+                <Form>
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="mr-5 rounded-md bg-white flex items-center w-2/5 text-black py-2">
+                      <Field
+                        type="text"
+                        className="outline-none border-none w-full px-3"
+                        placeholder="Enter your registration reference"
+                        onChange={changeRefer}
+                        value={regRefer}
+                        name="refer"
+                      />
+                    </div>
+                    <button
+                      className="bg-orange w-48 h-12 rounded-xl uppercase text-md font-bold text-white"
+                      type="submit"
+                      disabled={isSubmitting}
+                    >
+                      Resume
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    className="text-md"
+                    name="refer"
+                    component="div"
+                  />
+                </Form>
+              </div>
+            )}
+          </Formik>
         </div>
       )}
     </div>
