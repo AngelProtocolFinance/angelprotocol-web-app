@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import CharityCard from "../CharityCard";
 import CategoryCard from "../CategoryCard/CategoryCard";
 import useClickScroll from "./useClickScroll";

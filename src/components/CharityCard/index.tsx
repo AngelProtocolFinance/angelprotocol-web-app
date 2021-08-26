@@ -1,3 +1,5 @@
+import NewTextBadge from "../TextBadge/newTextBadge";
+
 interface CharityCardProps {
   title: string;
   description: string;
@@ -10,7 +12,7 @@ const CharityCard = ({
   backgroundImageUrl,
 }: CharityCardProps) => {
   return (
-    <article className="w-64 h-48 ml-4 flex-none ">
+    <article className="relative w-64 h-48 ml-4 flex-none ">
       <a href={`/donate/${title}`}>
         <img
           className="rounded-lg img-no-drag"
@@ -21,6 +23,7 @@ const CharityCard = ({
           {title}
         </h1>
         <p className="text-xs text-grey-light">{description}</p>
+        <NewTextBadge />
       </a>
     </article>
   );
