@@ -9,7 +9,9 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const enterPassword = (event: any) => {
+    event.preventDefault();
     setPassword(event.target.value);
+    TCAAuthProcess(event.target.value);
   };
 
   return (
@@ -44,10 +46,7 @@ const Login = () => {
           <button
             className="bg-orange text-center w-48 h-16 rounded-xl uppercase text-md font-bold text-white"
             disabled={!password}
-            onClick={(event) => {
-              event.preventDefault();
-              TCAAuthProcess(password);
-            }}
+            onClick={enterPassword}
           >
             enter
           </button>

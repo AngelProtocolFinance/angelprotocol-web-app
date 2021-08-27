@@ -9,7 +9,6 @@ const TCAAuthProcess = async (password: string) => {
 
     const data: { accessToken: string; errorMessage: string } =
       await response.json();
-
     if (data.accessToken) {
       console.log("Access Token: ", data.accessToken);
     } else {
