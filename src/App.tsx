@@ -9,17 +9,18 @@ import Home from "pages/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
+import Register from "pages/registration/index";
 
 const App = () => {
   const location = useLocation();
-  const inLogin = /login/.test(location.pathname);
+  const inLogin = /(login)|(register)/.test(location.pathname);
   const appColor = inLogin
-    ? "bg-blue-400"
+    ? "bg-gradient-to-b from-thin-blue to-thin-grey"
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
   return (
     <div className={`grid grid-rows-app ${appColor}`}>
-      <Header hasMenu={true} hasTitle={inLogin} />
+      <Header hasMenu={!inLogin} hasTitle={inLogin} />
       <Switch>
         <Route path="/test" component={TerraConnector} />
         <Route path="/about" component={About} />
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/donate" component={Donate} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         <Route exact path="/" component={Home} />
       </Switch>
       <Footer hasMenu={!inLogin} />
