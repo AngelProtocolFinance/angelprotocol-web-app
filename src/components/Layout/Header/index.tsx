@@ -1,8 +1,6 @@
 import NavMenu from "../NavMenu";
-import logo from "../../../assets/images/angelprotocol-horiz-wht.png";
 import { Link } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
-import { useLocation } from "react-router-dom";
 import Logo from "components/Logo/Logo";
 
 type HeaderProps = {
