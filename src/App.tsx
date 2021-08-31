@@ -9,15 +9,19 @@ import Home from "pages/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
+<<<<<<< HEAD
 import { routes } from "./types/types";
 import useAppBackground from "hooks/useBackground";
+=======
+import Register from "pages/registration/index";
+>>>>>>> main
 
 const App = () => {
   const appBackround = useAppBackground();
   const location = useLocation();
-  const inLogin = /login/.test(location.pathname);
+  const inLogin = /(login)|(register)/.test(location.pathname);
   const appColor = inLogin
-    ? "bg-blue-400"
+    ? "bg-gradient-to-b from-thin-blue to-thin-grey"
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
   return (
