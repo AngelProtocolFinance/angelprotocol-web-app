@@ -12,7 +12,6 @@ const testnet: NetworkInfo = {
   chainID: "tequila-0004",
   lcd: "https://tequila-lcd.terra.dev",
 };
-
 // NOTE(davidlumley): Via https://github.com/terra-money/wallet-provider/issues/6
 //                    TestWalletProvider takes two optional args: walletStatus, and walletInfo
 //                    which can be used to set the state.

@@ -1,4 +1,5 @@
 // TCA Member's Login Auth Process
+// after check useRequest hook, remove it
 const TCAAuthProcess = async (password: string) => {
   const url = process.env.REACT_APP_AWS_TCA_LOGIN_URL;
   try {

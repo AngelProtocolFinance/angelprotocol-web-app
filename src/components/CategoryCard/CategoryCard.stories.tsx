@@ -1,5 +1,4 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-
 import CategoryCard from "./CategoryCard";
 
 export default {

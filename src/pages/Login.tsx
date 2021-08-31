@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-// import { TCAAuthProcess } from "aws-settings.config";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 import useRequest from "hooks/useRequest";
 import { API_URLS } from "constants/urls";
@@ -8,6 +9,7 @@ import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 
 const Login = () => {
+  const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
@@ -17,10 +19,16 @@ const Login = () => {
     body: {},
     onSuccess: (data: any) => {
       setLoading(false);
+      if (data.accessToken) {
+        localStorage.setItem("token", data.accessToken);
+        history.push("/donate");
+      } else {
+        toast.error(data.errorMessage);
+      }
       return data;
     },
     onFailed: (err: any) => {
-      console.log(err);
+      toast.error(err);
       setLoading(false);
     },
   });
@@ -45,11 +53,10 @@ const Login = () => {
             }
             return {};
           }}
-          onSubmit={async (values, { setSubmitting, setFieldError }) => {
+          onSubmit={async (values, { setSubmitting }) => {
             setLoading(true);
             setSubmitting(true);
-            const res = await doRequest({ password: values.password });
-            console.log("response => ", res);
+            await doRequest({ body: { password: values.password } });
             setSubmitting(false);
           }}
         >
@@ -98,6 +105,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };
