@@ -1,18 +1,29 @@
 import { useState } from "react";
-import { TCAAuthProcess } from "aws-settings.config";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+// import { TCAAuthProcess } from "aws-settings.config";
 
+import useRequest from "hooks/useRequest";
+import { API_URLS } from "constants/urls";
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
 
-  const enterPassword = (event: any) => {
-    event.preventDefault();
-    setPassword(event.target.value);
-    TCAAuthProcess(event.target.value);
-  };
+  const { doRequest, errors } = useRequest({
+    url: API_URLS["TCA_login"],
+    method: "post",
+    body: {},
+    onSuccess: (data: any) => {
+      setLoading(false);
+      return data;
+    },
+    onFailed: (err: any) => {
+      console.log(err);
+      setLoading(false);
+    },
+  });
 
   return (
     <section className="container mx-auto my-auto flex-auto my-10 lg:w-1/4 w-1/2 h-fixed-content-height">
@@ -24,38 +35,65 @@ const Login = () => {
           <p className="text-md">Access Restricted to</p>
           <p className="text-lg font-bold">Terra Charity Alliance Members</p>
         </div>
-        <div className="my-10 text-start">
-          <p className="text-sm text-gray-400 font-bold">Password</p>
-          <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-            <input
-              type={isShowPassword ? "text" : "password"}
-              name="password"
-              className="text-md mr-1 bg-gray-200 outline-none border-none w-4/5"
-              value={password}
-              onChange={enterPassword}
-            />
-            <img
-              alt=""
-              src={isShowPassword ? eyeIcon : eyeSlashIcon}
-              width="16px"
-              onClick={() => setIsShowPassword(!isShowPassword)}
-            />
-          </div>
-        </div>
+        <Formik
+          initialValues={{ password: "" }}
+          validate={(values) => {
+            const errors = { password: "" };
+            if (!values.password) {
+              errors.password = "Please enter password.";
+              return errors;
+            }
+            return {};
+          }}
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
+            setLoading(true);
+            setSubmitting(true);
+            const res = await doRequest({ password: values.password });
+            console.log("response => ", res);
+            setSubmitting(false);
+          }}
+        >
+          {({ values, isSubmitting }) => (
+            <Form className="text-center">
+              <div className="my-10 text-left">
+                <p className="text-sm text-gray-400 font-bold mb-1">Password</p>
+                <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                  <Field
+                    type={isShowPassword ? "text" : "password"}
+                    className="outline-none border-none w-full px-3 bg-gray-200"
+                    placeholder="Enter your password."
+                    value={values.password}
+                    name="password"
+                  />
+                  <img
+                    alt=""
+                    src={isShowPassword ? eyeIcon : eyeSlashIcon}
+                    width="16px"
+                    onClick={() => setIsShowPassword(!isShowPassword)}
+                  />
+                </div>
+                <ErrorMessage
+                  className="text-sm text-failed-red"
+                  name="password"
+                  component="div"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white"
+                disabled={loading || isSubmitting}
+              >
+                enter
+              </button>
+            </Form>
+          )}
+        </Formik>
+
         <div className="text-center my-10">
-          <button
-            className="bg-orange text-center w-48 h-16 rounded-xl uppercase text-md font-bold text-white"
-            disabled={!password}
-            onClick={enterPassword}
-          >
-            enter
-          </button>
-        </div>
-        <div className="text-center my-10">
-          <p className="text-thin-blue font-bold text-xl uppercase">
+          <p className="text-thin-blue font-bold text-md uppercase">
             learn more about
           </p>
-          <p className="text-thin-blue font-bold text-xl uppercase">
+          <p className="text-thin-blue font-bold text-md uppercase">
             angel protocol
           </p>
         </div>
