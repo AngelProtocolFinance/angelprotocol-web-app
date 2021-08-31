@@ -9,6 +9,7 @@ const useRequest = ({ url, method, body, onSuccess, onFailed }) => {
     try {
       setErrors(null);
       const response = await axios[props.method || method](props.url || url, {
+        headers: { "Access-Control-Allow-Origin": "*" },
         ...(props.body || body),
         ...props,
       });
