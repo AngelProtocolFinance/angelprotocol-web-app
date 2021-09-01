@@ -11,6 +11,6 @@ test("renders HOME at first load", () => {
       </TestWalletProvider>
     </MemoryRouter>
   );
-  const h1Heading = screen.getByRole("heading");
-  expect(h1Heading).toHaveTextContent("HOME");
+  const h1Heading = screen.getByText(/simplified endowments/i);
+  expect(h1Heading).toBeInTheDocument();
 });
