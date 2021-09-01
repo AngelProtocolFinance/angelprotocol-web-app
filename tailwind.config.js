@@ -34,18 +34,20 @@ module.exports = {
         "4.5xl": "2.625rem",
       },
       fontFamily: {
-        serif: ["Montserrat", "serif"],
-        sans: ["Open Sans", "sans-serif"],
+        heading: ["Montserrat", "serif"],
+        body: ["Open Sans", "sans-serif"],
       },
       height: {
         "fixed-content-height": "calc(100vh - 9.25rem);",
         "donate-content-height": "calc(100% - 7.5rem)",
-        100: "28rem",
-        160: "52rem",
+        info: "28rem",
+        banner: "52rem",
+        specs: "52rem",
       },
       gridTemplateRows: {
         dashboard: "auto 1fr auto",
         app: "1fr auto",
+        specs: "auto 1fr",
       },
       gridTemplateColumns: {
         charity: "auto 1fr",

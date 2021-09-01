@@ -15,12 +15,12 @@ export default function Info() {
   };
 
   return (
-    <section className="grid grid-cols-2 h-100 items-center justify-items-end">
+    <section className="grid grid-cols-2 h-info items-center justify-items-end">
       <div className="justify-self-center">
         <YouTube videoId="Tv2ECcdPqzY" opts={opts} onReady={onReady} />
       </div>
       <article className="justify-self-start max-w-2xl">
-        <h3 className="text-2xl font-semibold text-blue-accent font-sans mb-3">
+        <h3 className="text-2xl font-semibold text-blue-accent font-body mb-3">
           Endowments are the future of giving
         </h3>
         <p className="text-angel-grey mb-3 leading-relaxed">

@@ -42,7 +42,7 @@ const Donate = () => {
           />
         </div>
       </div>
-      <div className="flex flex-row text-white font-sans h-3/5">
+      <div className="flex flex-row text-white font-body h-3/5">
         <div className="lg:block hidden">
           <CharityInfo />
         </div>

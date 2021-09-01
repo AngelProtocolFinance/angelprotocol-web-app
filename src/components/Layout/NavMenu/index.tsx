@@ -14,7 +14,7 @@ const NavMenu = ({ parentStyles }: propTypes) => {
   };
 
   return (
-    <ul className={parentStyles + " flex font-sans text-base "}>
+    <ul className={parentStyles + " flex font-body text-base "}>
       <li className="mr-4">
         <NavLink to={routes.registration} {...linkStyles}>
           Register

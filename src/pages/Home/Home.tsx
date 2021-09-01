@@ -1,6 +1,7 @@
 import Banner from "./Banner";
 import Highlights from "./Highlights";
 import Info from "./Info";
+import Process from "./Process";
 import Specs from "./Specs";
 
 export default function Home() {
@@ -10,6 +11,7 @@ export default function Home() {
       <Info />
       <Highlights />
       <Specs />
+      <Process />
     </div>
   );
 }

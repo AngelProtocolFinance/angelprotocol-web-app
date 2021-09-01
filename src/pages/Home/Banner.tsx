@@ -2,7 +2,7 @@ import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 
 export default function Banner() {
   return (
-    <section className="grid items-center bg-banner bg-no-repeat w-full bg-cover h-160">
+    <section className="grid items-center bg-banner bg-no-repeat w-full bg-cover h-banner">
       <div className="container mx-auto  grid grid-cols-banner items-center">
         <section className="max-w-3xl pl-5">
           <h1 className="text-5xl text-white leading-normal ">
