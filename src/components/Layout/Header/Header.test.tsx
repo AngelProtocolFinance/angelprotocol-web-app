@@ -15,69 +15,43 @@ const testnet: NetworkInfo = {
 
 type WrapProps = {
   children: ReactNode;
+  initialEntries: string[];
 };
 
-const Wrapper = ({ children }: WrapProps) => (
-  <MemoryRouter>
+const Wrapper = ({ children, initialEntries }: WrapProps) => (
+  <MemoryRouter initialEntries={initialEntries}>
     <StaticWalletProvider defaultNetwork={testnet}>
       {children};
     </StaticWalletProvider>
   </MemoryRouter>
 );
 
-describe("Header renders nav menu depending on the option", () => {
-  test("header has title and menu", () => {
+describe("Header renders nav depending on route", () => {
+  test("header shows connect button when not in /login route", () => {
     render(
-      <Wrapper>
-        <Header hasMenu={true} hasTitle={true} />;
+      <Wrapper initialEntries={["/"]}>
+        <Header />;
       </Wrapper>
     );
 
-    const navEl = screen.getByRole("list");
-    expect(navEl).toBeInTheDocument();
-
-    const titleEL = screen.getByText(/give/i);
-    expect(titleEL).toBeInTheDocument();
-  });
-  test("header has menu and no title", () => {
-    render(
-      <Wrapper>
-        <Header hasMenu={true} hasTitle={false} />;
-      </Wrapper>
-    );
-
-    const navEl = screen.getByRole("list");
+    const navEl = screen.getByRole("button");
     expect(navEl).toBeInTheDocument();
 
     const titleEL = screen.queryByText(/give/i);
     expect(titleEL).toBeNull();
   });
-
-  test("header has title and no menu", () => {
+  test("header doesn't show connect button but shows title instead", () => {
     render(
-      <Wrapper>
-        <Header hasMenu={false} hasTitle={true} />;
+      <Wrapper initialEntries={["/login"]}>
+        <Header />;
       </Wrapper>
     );
 
-    const navEl = screen.queryByRole("list");
+    screen.debug();
+    const navEl = screen.queryByText("button");
     expect(navEl).toBeNull();
 
     const titleEL = screen.getByText(/give/i);
     expect(titleEL).toBeInTheDocument();
-  });
-
-  test("header no menu and title", () => {
-    render(
-      <Wrapper>
-        <Header hasMenu={false} hasTitle={false} />;
-      </Wrapper>
-    );
-
-    const navEl = screen.queryByRole("list");
-    expect(navEl).toBeNull();
-
-    const titleEL = screen.queryByText(/give/i);
-    expect(titleEL).toBeNull();
   });
 });

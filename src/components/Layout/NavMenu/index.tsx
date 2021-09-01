@@ -6,12 +6,16 @@ const linkStyles = {
   activeClassName: "font-bold",
 };
 
-const NavMenu = () => {
+type propTypes = {
+  parentStyles?: string;
+};
+
+const NavMenu = ({ parentStyles }: propTypes) => {
   return (
-    <ul className="flex">
+    <ul className={parentStyles + " flex font-sans text-base "}>
       <li className="mr-4">
-        <NavLink to={routes.login} {...linkStyles}>
-          Login
+        <NavLink to={routes.registration} {...linkStyles}>
+          Register
         </NavLink>
       </li>
       <li className="mr-4">
