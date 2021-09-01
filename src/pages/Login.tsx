@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <section className="container mx-auto my-auto flex-auto my-10 lg:w-1/4 w-1/2 h-fixed-content-height">
+    <section className="container mx-auto px-5 my-auto flex-auto my-10 lg:w-1/4 w-1/2 h-fixed-content-height">
       <div className="login-form absolute min-w-dm inset-1/2 bottom-auto right-auto rounded-3xl bg-white transform -translate-x-1/2 -translate-y-1/2 w-96 md:w-2/5 lg:w-1/3 max-w-lg p-10">
         <p className="header-title text-4.5xl font-bold uppercase text-thin-blue mt-10 text-center">
           Private access

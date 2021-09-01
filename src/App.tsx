@@ -1,6 +1,5 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-import TerraConnector from "components/TerraConnector/TerraConnector";
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
 import Donate from "pages/Donate";
@@ -10,17 +9,18 @@ import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
 import { routes } from "./types/types";
-import useAppBackground from "hooks/useBackground";
+import useAppBackground from "hooks/useAppBackground";
 import Register from "pages/registration/index";
+import Test from "pages/Test";
 
 const App = () => {
   const appBackround = useAppBackground();
 
   return (
-    <div className={`grid grid-rows-app ${appBackround}`}>
+    <div className={`relative grid grid-rows-app ${appBackround}`}>
       <Header />
       <Switch>
-        <Route path={routes.test} component={TerraConnector} />
+        <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />
         <Route path={routes.about_unsdgs} component={Goals} />
         <Route path={routes.dashboard} component={Dashboard} />

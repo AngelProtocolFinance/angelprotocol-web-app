@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       gridTemplateRows: {
         dashboard: "auto 1fr auto",
-        app: "auto 1fr auto",
+        app: "1fr auto",
       },
       gridTemplateColumns: {
         charity: "auto 1fr",
