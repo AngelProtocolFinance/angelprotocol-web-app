@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         banner:
-          "linear-gradient(rgba(63, 169, 245, 0.5),rgba(63, 169, 245, 0.5)), url('./assets/images/home-banner.jpg')",
+          "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
       },
 
       cursor: {
@@ -40,6 +40,7 @@ module.exports = {
       height: {
         "fixed-content-height": "calc(100vh - 9.25rem);",
         "donate-content-height": "calc(100% - 7.5rem)",
+        100: "28rem",
         160: "52rem",
       },
       gridTemplateRows: {

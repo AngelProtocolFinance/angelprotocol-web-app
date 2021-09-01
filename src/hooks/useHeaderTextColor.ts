@@ -5,7 +5,7 @@ export default function useHeaderTextColor() {
   const location = useLocation();
   switch (location.pathname) {
     case routes.home: {
-      return "text-black";
+      return "text-angel-grey";
     }
     default: {
       return "text-white";
