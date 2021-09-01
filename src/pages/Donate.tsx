@@ -24,7 +24,7 @@ const Donate = () => {
     setIsDonate(!isDonate);
   };
   return (
-    <section className="container mx-auto flex-auto p-5">
+    <section className="container mx-auto flex-auto p-5 pt-28">
       <div className="flex flex-row justify-between pb-5">
         <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
           <img

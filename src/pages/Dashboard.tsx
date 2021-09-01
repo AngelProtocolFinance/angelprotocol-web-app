@@ -6,7 +6,7 @@ const charityCategories = Array(6)
 
 const Dashboard = () => {
   return (
-    <div className="container mx-auto grid grid-rows-dashboard px-5">
+    <div className="container mx-auto grid grid-rows-dashboard pt-28 px-5">
       <section className="flex-auto">
         {charityCategories.map((category) => {
           return <CharityCategory {...category} key={category.id} />;

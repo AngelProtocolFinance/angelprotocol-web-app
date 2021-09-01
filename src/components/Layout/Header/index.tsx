@@ -3,12 +3,14 @@ import { Link, Route, Switch } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 import Logo from "components/Logo/Logo";
 import useHeaderTextColor from "../../../hooks/useHeaderTextColor";
+import useHeaderBg from "./useHeaderBg";
 
 const Header = () => {
   const textColor = useHeaderTextColor();
+  const bgColor = useHeaderBg();
   return (
-    <header className="fixed w-full bg-blue-400">
-      <nav className="container mx-auto flex justify-between items-center mt-5 px-5">
+    <header className={`grid fixed w-full ${bgColor} h-24`}>
+      <nav className="container mx-auto flex justify-between items-center px-5">
         <Link to="/">
           <Logo />
         </Link>

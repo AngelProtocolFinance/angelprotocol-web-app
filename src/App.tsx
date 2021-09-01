@@ -1,10 +1,9 @@
-import "./App.css";
 import { Switch, Route } from "react-router-dom";
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
-import Home from "pages/Home";
+import Home from "pages/Home/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
@@ -17,7 +16,7 @@ const App = () => {
   const appBackround = useAppBackground();
 
   return (
-    <div className={`relative grid grid-rows-app ${appBackround}`}>
+    <div className={`grid grid-rows-app ${appBackround}`}>
       <Header />
       <Switch>
         <Route path={routes.test} component={Test} />
