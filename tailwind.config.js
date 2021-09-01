@@ -50,6 +50,7 @@ module.exports = {
       gridTemplateColumns: {
         charity: "auto 1fr",
         banner: "1fr auto",
+        highlight: "auto 1fr",
       },
       maxWidth: {
         "4/5": "80%",
