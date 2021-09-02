@@ -6,6 +6,8 @@ module.exports = {
       backgroundImage: {
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
+        process:
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/home-process.webp')",
       },
 
       cursor: {
@@ -15,7 +17,7 @@ module.exports = {
       colors: {
         "angel-blue": "#3FA9F5",
         "thin-blue": "#54A3D9",
-        "blue-accent": "#3385bD",
+        "blue-accent": "#3385BD",
         "angel-grey": "#4F5F6F",
         "grey-accent": "#ADB7BE",
         "white-grey": "#FAFAFA",
@@ -41,6 +43,7 @@ module.exports = {
         "fixed-content-height": "calc(100vh - 9.25rem);",
         "donate-content-height": "calc(100% - 7.5rem)",
         info: "28rem",
+        process: "36rem",
         banner: "52rem",
         specs: "52rem",
       },

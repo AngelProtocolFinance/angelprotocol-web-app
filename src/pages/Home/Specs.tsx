@@ -32,16 +32,16 @@ const specs = [
 
 export default function Specs() {
   return (
-    <section className="h-specs grid grid-rows-specs justify-items-center mt-20 font-semibold text-blue-accent">
-      <h2 className="text-3xl max-w-5xl text-center">
+    <section className="h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent">
+      <h3 className="font-semibold text-3xl max-w-5xl text-center">
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
-      </h2>
+      </h3>
       <ul className="grid grid-cols-2 grid-rows-2 items-start justify-items-center gap-16 mt-16">
         {specs.map(({ id, heading, icon, text }) => (
           <li key={id} className="grid grid-cols-highlight  items-start">
             <img src={icon} alt="" className="w-28" />
-            <article className="pl-3 max-w-sm">
+            <article className="pl-6 max-w-sm">
               <h3 className="font-bold text-angel-grey text-2xl ">{heading}</h3>
               <p className="text-angel-grey font-heading font-light">{text}</p>
             </article>
