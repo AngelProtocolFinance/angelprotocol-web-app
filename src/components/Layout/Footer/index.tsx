@@ -6,18 +6,66 @@ import {
 
 import { FaTelegramPlane } from "react-icons/fa";
 
+const Footer = () => {
+  return (
+    <footer className="grid grid-cols-2 justify-items-center p-5 py-10 bg-blue-accent">
+      <section className="grid justify-items-center content-center">
+        <ul className="flex">
+          {links.map(({ id, Icon, color, link }) => {
+            return (
+              <li key={id}>
+                <a href={link} className={`text-${color} block m-2`}>
+                  <Icon className="w-8 h-8" />
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="font-body text-xs font-semibold uppercase text-white">
+          Copyright 2021 angelprotocol. All rights reserved.
+        </p>
+      </section>
+      <section className="max-w-2xl">
+        <p className="text-white-grey font-semibold text-xl mb-2">
+          Angel Protocol creates sustainable income streams for charities. And
+          we're just starting!{" "}
+          <span className="block font-normal text-lg">
+            Subscribe to our newsletter to get the latest updates.
+          </span>
+        </p>
+        <form className="">
+          <input
+            className="p-2 rounded-sm w-72 text-blue-accent mb-3 font-semibold"
+            type="email"
+            required
+            placeholder="Email"
+          />
+          <button
+            type="button"
+            className="block bg-angel-orange px-5 py-1 uppercase rounded-sm shadow-md"
+          >
+            Suscribe
+          </button>
+        </form>
+      </section>
+    </footer>
+  );
+};
+
+export default Footer;
+
 const links = [
   {
     id: 1,
     Icon: AiOutlineTwitter,
     link: "https://twitter.com/angelprotocol",
-    color: "blue-400",
+    color: "gray-50",
   },
   {
     id: 2,
     Icon: FaTelegramPlane,
     link: "https://t.me/angelprotocoI",
-    color: "blue-300",
+    color: "blue-50",
   },
   {
     id: 3,
@@ -32,29 +80,6 @@ const links = [
     color: "gray-800",
   },
 ];
-
-const Footer = () => {
-  return (
-    <footer className="grid justify-items-center p-5">
-      <ul className="flex">
-        {links.map(({ id, Icon, color, link }) => {
-          return (
-            <li key={id}>
-              <a href={link} className={`text-${color} block m-2`}>
-                <Icon className="w-8 h-8" />
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-      <p className="font-body text-xs uppercase text-angel-grey">
-        Copyright 2021 angelprotocol. All rights reserved.
-      </p>
-    </footer>
-  );
-};
-
-export default Footer;
 
 /**
  * <nav className="container mx-auto flex justify-between items-center h-16 inset-x-0 bottom-0 object-bottom">

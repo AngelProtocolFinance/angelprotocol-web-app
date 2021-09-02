@@ -9,7 +9,7 @@ export default function Portal() {
         </h3>
         <Link
           to="/contact"
-          className="text-center bg-angel-orange text-2xl py-2 px-5 rounded-sm text-white-grey font-semibold"
+          className="text-center bg-angel-orange text-2xl py-2 px-5 rounded-sm text-white-grey font-semibold shadow-md"
         >
           I want to know more!
         </Link>
