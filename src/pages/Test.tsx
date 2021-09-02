@@ -1,11 +1,12 @@
-import svgLogo from "../assets/images/ap-full-blu.svg";
-
-const Test = () => {
+export default function Test() {
   return (
-    <div>
-      <img src={svgLogo} alt="" />
+    <div className="flex justify-center items-center px-5">
+      <form>
+        <input />
+        <button type="button" className="text-white block">
+          submit
+        </button>
+      </form>
     </div>
   );
-};
-
-export default Test;
+}
