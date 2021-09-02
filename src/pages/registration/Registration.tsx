@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useHistory } from "react-router-dom";
 
 const Registration = () => {
+  const history = useHistory();
   const [isResume, setIsResume] = useState(false);
 
   return (
@@ -22,7 +24,10 @@ const Registration = () => {
         </span>
       </div>
       <div className="mb-2">
-        <button className="bg-orange w-48 h-12 rounded-xl uppercase text-md font-bold text-white mb-7">
+        <button
+          className="bg-orange w-48 h-12 rounded-xl uppercase text-md font-bold text-white mb-7"
+          onClick={() => history.push("/register/detail")}
+        >
           Start
         </button>
         <div className="cursor-pointer" onClick={() => setIsResume(true)}>
@@ -75,7 +80,7 @@ const Registration = () => {
                     </button>
                   </div>
                   <ErrorMessage
-                    className="text-md"
+                    className="text-md text-failed-red"
                     name="refer"
                     component="div"
                   />
