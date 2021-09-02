@@ -3,6 +3,30 @@ import setupIcon from "assets/icons/rocket.svg";
 import lowCostIcon from "assets/icons/piggy_bank.svg";
 import mgmtIcon from "assets/icons/gear.svg";
 
+export default function Specs() {
+  return (
+    <section className="h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent">
+      <h3 className="font-semibold text-3xl max-w-5xl text-center">
+        Angel Protocol enables your charity to thrive from decentralized
+        financial products, without the complexity
+      </h3>
+      <ul className="grid grid-cols-2 grid-rows-2 items-start justify-items-center gap-16 mt-16">
+        {specs.map(({ id, heading, icon, text }) => (
+          <li key={id} className="grid grid-cols-highlight  items-start">
+            <img src={icon} alt="" className="w-28" />
+            <article className="pl-6 max-w-sm">
+              <h3 className="font-bold text-angel-grey text-2xl mb-1">
+                {heading}
+              </h3>
+              <p className="text-angel-grey font-heading font-light">{text}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 const specs = [
   {
     id: 1,
@@ -29,27 +53,3 @@ const specs = [
     text: "Your endowment is automatically leveraging the highest yield, low-risk decentralized financial products. There’s no need for a fund manager and we provide the investment policy. Your charity dashboard will provide all the information you need.",
   },
 ];
-
-export default function Specs() {
-  return (
-    <section className="h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent">
-      <h3 className="font-semibold text-3xl max-w-5xl text-center">
-        Angel Protocol enables your charity to thrive from decentralized
-        financial products, without the complexity
-      </h3>
-      <ul className="grid grid-cols-2 grid-rows-2 items-start justify-items-center gap-16 mt-16">
-        {specs.map(({ id, heading, icon, text }) => (
-          <li key={id} className="grid grid-cols-highlight  items-start">
-            <img src={icon} alt="" className="w-28" />
-            <article className="pl-6 max-w-sm">
-              <h3 className="font-bold text-angel-grey text-2xl mb-1">
-                {heading}
-              </h3>
-              <p className="text-angel-grey font-heading font-light">{text}</p>
-            </article>
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}

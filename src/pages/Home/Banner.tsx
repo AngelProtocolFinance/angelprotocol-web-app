@@ -11,9 +11,6 @@ export default function Banner() {
               have funding forever
             </span>
           </h1>
-          <p className="text-2xl text-white font-medium mt-2">
-            Angel Protocol creates sustainable income streams for charities
-          </p>
         </section>
         <img src={wingImage} alt="" className="w-80" />
       </div>
