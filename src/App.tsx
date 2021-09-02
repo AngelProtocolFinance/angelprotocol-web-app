@@ -11,6 +11,7 @@ import { routes } from "./types/types";
 import useAppBackground from "hooks/useAppBackground";
 import Register from "pages/registration/index";
 import Test from "pages/Test";
+import Contact from "pages/Contact";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -26,6 +27,7 @@ const App = () => {
         <Route path={routes.donate} component={Donate} />
         <Route path={routes.login} component={Login} />
         <Route path={routes.registration} component={Register} />
+        <Route path={routes.contact} component={Contact} />
         <Route exact path={routes.home} component={Home} />
       </Switch>
       <Footer />

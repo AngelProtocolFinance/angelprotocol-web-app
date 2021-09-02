@@ -42,7 +42,9 @@ export default function Specs() {
           <li key={id} className="grid grid-cols-highlight  items-start">
             <img src={icon} alt="" className="w-28" />
             <article className="pl-6 max-w-sm">
-              <h3 className="font-bold text-angel-grey text-2xl ">{heading}</h3>
+              <h3 className="font-bold text-angel-grey text-2xl mb-1">
+                {heading}
+              </h3>
               <p className="text-angel-grey font-heading font-light">{text}</p>
             </article>
           </li>

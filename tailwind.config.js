@@ -8,6 +8,8 @@ module.exports = {
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
         process:
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/home-process.webp')",
+        portal:
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/teamwork.webp')",
       },
 
       cursor: {
@@ -15,6 +17,7 @@ module.exports = {
         grabbing: "grabbing",
       },
       colors: {
+        "angel-orange": "#FAAC2E",
         "angel-blue": "#3FA9F5",
         "thin-blue": "#54A3D9",
         "blue-accent": "#3385BD",

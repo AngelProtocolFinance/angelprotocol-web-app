@@ -6,5 +6,6 @@ export enum routes {
   about_unsdgs = "/about-unsdgs",
   dashboard = "/dashboard",
   donate = "/donate",
+  contact = "/contact",
   test = "/test",
 }

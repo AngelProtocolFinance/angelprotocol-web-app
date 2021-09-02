@@ -7,7 +7,7 @@ export default function Banner() {
         <section className="max-w-3xl pl-5">
           <h1 className="text-5xl text-white leading-normal ">
             Simplified endowments that empower charities to{" "}
-            <span className="block font-extrabold text-yellow-400">
+            <span className="block font-extrabold text-angel-orange">
               have funding forever
             </span>
           </h1>
