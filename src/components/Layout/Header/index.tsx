@@ -4,12 +4,17 @@ import TerraConnector from "components/TerraConnector/TerraConnector";
 import Logo from "components/Logo/Logo";
 import useHeaderTextColor from "../../../hooks/useHeaderTextColor";
 import useHeaderBg from "./useHeaderBg";
+import useScrollShadow from "./useScrollShadow";
 
 const Header = () => {
+  const shadowRef = useScrollShadow();
   const textColor = useHeaderTextColor();
   const bgColor = useHeaderBg();
   return (
-    <header className={`grid fixed w-full ${bgColor} h-24`}>
+    <header
+      ref={shadowRef}
+      className={`grid fixed w-full ${bgColor} h-24 z-10 transition-shadow`}
+    >
       <nav className="container mx-auto flex justify-between items-center px-5">
         <Link to="/">
           <Logo />

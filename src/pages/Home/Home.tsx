@@ -3,6 +3,7 @@ import Highlights from "./Highlights";
 import Info from "./Info";
 import Process from "./Process";
 import Specs from "./Specs";
+import Testimonials from "./Testimonials";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Highlights />
       <Specs />
       <Process />
+      <Testimonials />
     </div>
   );
 }

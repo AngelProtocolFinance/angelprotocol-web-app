@@ -39,7 +39,7 @@ export default function Process() {
               key={id}
               className="grid content-start justify-items-center max-w-xs"
             >
-              <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg">
+              <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg backdrop-blur-xl">
                 <img src={icon} alt="" className="w-14 m-8" />
                 <span className="text-xs absolute top-1 -right-6 bg-white py-2 px-4 rounded-full shadow-md">
                   {toolkit}
