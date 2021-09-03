@@ -12,13 +12,16 @@ import useAppBackground from "hooks/useAppBackground";
 import Register from "pages/registration/index";
 import Test from "pages/Test";
 import Contact from "pages/Contact";
+import HeaderColorProvider from "contexts/HeaderColorProvider";
 
 const App = () => {
   const appBackround = useAppBackground();
 
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
-      <Header />
+      <HeaderColorProvider>
+        <Header />
+      </HeaderColorProvider>
       <Switch>
         <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />

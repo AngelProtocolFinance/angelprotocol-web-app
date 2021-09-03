@@ -2,14 +2,13 @@ import NavMenu from "../NavMenu";
 import { Link, Route, Switch } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 import Logo from "components/Logo/Logo";
-import useHeaderTextColor from "../../../hooks/useHeaderTextColor";
-import useHeaderBg from "./useHeaderBg";
 import useScrollShadow from "./useScrollShadow";
+import { useHeaderColors } from "contexts/HeaderColorProvider";
 
 const Header = () => {
   const shadowRef = useScrollShadow();
-  const textColor = useHeaderTextColor();
-  const bgColor = useHeaderBg();
+  const { bgColor, textColor } = useHeaderColors();
+
   return (
     <header
       ref={shadowRef}

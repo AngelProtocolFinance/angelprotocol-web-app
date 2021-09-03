@@ -1,11 +1,10 @@
-import {
-  useConnectedWallet,
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+/*
   UserDenied,
   CreateTxFailed,
   TxFailed,
   Timeout,
-  TxUnspecifiedError,
-} from "@terra-money/wallet-provider";
+  TxUnspecifiedError, */
 
 import {
   LCDClient,

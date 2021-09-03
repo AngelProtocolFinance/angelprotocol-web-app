@@ -1,4 +1,4 @@
-import useHeaderTextColor from "hooks/useHeaderTextColor";
+import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { NavLink } from "react-router-dom";
 import { routes } from "types/types";
 
@@ -7,7 +7,7 @@ type propTypes = {
 };
 
 const NavMenu = ({ parentStyles }: propTypes) => {
-  const textColor = useHeaderTextColor();
+  const { textColor } = useHeaderColors();
   const linkStyles = {
     className: `uppercase ${textColor}`,
     activeClassName: "font-bold",
