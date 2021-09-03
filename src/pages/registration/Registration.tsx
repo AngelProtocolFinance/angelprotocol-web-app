@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
+import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
   const history = useHistory();
@@ -8,11 +9,12 @@ const Registration = () => {
 
   return (
     <div>
+      <div className="rounded-xl mb-5">
+        <img src={banner1} width="100%" className="rounded-xl" />
+      </div>
       <div>
         <span className="text-2xl font-bold">
-          Thank you for registering, we'd love to have you on board! You're just
-          steps away from bringing all the benefits of endowments to your
-          organization.
+          Thank you for registering, we'd love to have you on board!
         </span>
       </div>
       <div className="my-10">
