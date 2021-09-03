@@ -1,4 +1,4 @@
-//supporters icons
+//supporters icons , is there a way to condense this x_x?
 import alice from "assets/icons/sponsors/alice.png";
 import apollo from "assets/icons/sponsors/apollo.png";
 import astral from "assets/icons/sponsors/astral.png";
@@ -18,6 +18,21 @@ import spaar from "assets/icons/sponsors/spaar.png";
 import spar from "assets/icons/sponsors/spar.png";
 import starterra from "assets/icons/sponsors/starterra.png";
 import talis from "assets/icons/sponsors/talis.png";
+
+export default function Sponsors() {
+  return (
+    <section className="grid content-start justify-items-center h-96 bg-light-grey">
+      <h3 className="text-2xl text-angel-grey font-bold my-10">SUPPORTED BY</h3>
+      <ul className="flex justify-center flex-wrap gap-3 max-w-3xl">
+        {supporterIcons.map((icon, index) => (
+          <li key={index}>
+            <img src={icon} className="w-16" />
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
 const supporterIcons = [
   alice,
@@ -40,18 +55,3 @@ const supporterIcons = [
   starterra,
   talis,
 ];
-
-export default function Sponsors() {
-  return (
-    <section className="grid content-start justify-items-center h-96 bg-light-grey">
-      <h3 className="text-2xl text-angel-grey font-bold my-10">SUPPORTED BY</h3>
-      <ul className="flex justify-center flex-wrap gap-3 max-w-3xl">
-        {supporterIcons.map((icon) => (
-          <li>
-            <img src={icon} className="w-16" />
-          </li>
-        ))}
-      </ul>
-    </section>
-  );
-}
