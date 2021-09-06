@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or "media" or "class"
   theme: {
     extend: {
+      backgroundImage: theme => ({
+        'banner-charity': "url('assets/images/banner-charity.jpg')",
+      }),
       gridTemplateRows: {
         dashboard: "auto 1fr auto",
         app: "auto 1fr auto",

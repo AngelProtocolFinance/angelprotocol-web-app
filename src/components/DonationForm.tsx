@@ -225,7 +225,7 @@ export function DonationForm(props: DonationFormProps) {
               onAfterChange={onAfterChange}
               className="w-full h-4 my-3 ml-2"
             />
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-between items-center text-xs ml-2 -mr-2">
               <span>0%</span>
               <span>100%</span>
             </div>
