@@ -2,11 +2,7 @@ import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { NavLink } from "react-router-dom";
 import { routes } from "types/types";
 
-type propTypes = {
-  parentStyles?: string;
-};
-
-const NavMenu = ({ parentStyles }: propTypes) => {
+const NavMenu = () => {
   const { textColor } = useHeaderColors();
   const linkStyles = {
     className: `uppercase ${textColor}`,
@@ -14,7 +10,7 @@ const NavMenu = ({ parentStyles }: propTypes) => {
   };
 
   return (
-    <ul className={parentStyles + " flex font-body text-base "}>
+    <ul className={`w-9/12 ml-5 ${textColor} flex font-body text-base `}>
       <li className="mr-4">
         <NavLink to={routes.registration} {...linkStyles}>
           Register

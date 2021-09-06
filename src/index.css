@@ -3,6 +3,17 @@
 @tailwind utilities;
 
 @layer utilities {
+  .box-delay-1 {
+    animation-delay: 300ms;
+  }
+  .box-delay-2 {
+    animation-delay: 600ms;
+  }
+
+  .maintain-aspect {
+    aspect-ratio: 1/1;
+  }
+
   .scroll-hidden {
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none;

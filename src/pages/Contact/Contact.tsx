@@ -1,14 +1,11 @@
-import Loader from "components/Loader/Loader";
+import BlockLoader from "components/Loader/BlockLoader";
+import LineLoader from "components/Loader/LineLoader";
 import useHBSTCreator from "hooks/useHBSTCreator";
 
 export default function Contact() {
   const { isLoading, error } = useHBSTCreator();
 
-  let form = (
-    <div className="my-12">
-      <Loader dimension={"12"} />
-    </div>
-  );
+  let form = <BlockLoader size={20} thickness={4} color={"angel-blue"} />;
 
   //hbst form style needs to be set at 100% when transfer is done
   if (!isLoading) {
@@ -18,7 +15,7 @@ export default function Contact() {
   if (error) {
     form = (
       <div className="container grid place-items-center text-2xl text-center text-red-400 h-96">
-        {"Error loading contact form"}
+        {error}
       </div>
     );
   }

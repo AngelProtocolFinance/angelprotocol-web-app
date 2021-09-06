@@ -19,7 +19,7 @@ const Header = () => {
           <Logo />
         </Link>
 
-        <NavMenu parentStyles={`w-9/12 ml-5 ${textColor}`} />
+        <NavMenu />
         <div className="w-2/6 container mx-auto flex justify-end items-center">
           <Switch>
             <Route path="/login">

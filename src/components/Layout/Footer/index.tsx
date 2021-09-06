@@ -1,3 +1,4 @@
+import Subscriber from "components/Subscriber/Subscriber";
 import {
   AiOutlineTwitter,
   AiFillYoutube,
@@ -33,20 +34,7 @@ const Footer = () => {
             Subscribe to our newsletter to get the latest updates.
           </span>
         </p>
-        <form className="">
-          <input
-            className="p-2 rounded-sm w-72 text-blue-accent mb-3 font-semibold"
-            type="email"
-            required
-            placeholder="Email"
-          />
-          <button
-            type="button"
-            className="block bg-angel-orange px-5 py-1 uppercase rounded-sm shadow-md"
-          >
-            Suscribe
-          </button>
-        </form>
+        <Subscriber />
       </section>
     </footer>
   );

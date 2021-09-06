@@ -65,13 +65,19 @@ module.exports = {
       maxWidth: {
         "4/5": "80%",
       },
+      minWidth: {
+        36: "36",
+      },
       minHeight: {
         modal: "300px",
+        10: "10",
       },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["disabled"],
+    },
   },
   plugins: [],
 };
