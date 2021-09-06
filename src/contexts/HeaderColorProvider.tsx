@@ -11,31 +11,29 @@ interface Colors {
   textColor: String;
 }
 
-//default color
-let colors = {
+const defaultColor = {
   bgColor: "bg-blue-400",
   textColor: "text-white",
 };
 
-const colorContext = createContext<Colors>(colors);
+const colorContext = createContext<Colors>(defaultColor);
 
 export default function HeaderColorProvider(props: propType) {
   const location = useLocation();
-  switch (location.pathname) {
-    case routes.home: {
-      colors = {
-        bgColor: "bg-white",
-        textColor: "text-angel-grey",
-      };
-      break;
+  const colors = (() => {
+    switch (location.pathname) {
+      case routes.contact:
+      case routes.home: {
+        return {
+          bgColor: "bg-white",
+          textColor: "text-angel-grey",
+        };
+      }
+      default: {
+        return defaultColor;
+      }
     }
-    default: {
-      colors = {
-        bgColor: "bg-blue-400",
-        textColor: "text-white",
-      };
-    }
-  }
+  })();
 
   return (
     <colorContext.Provider value={colors}>

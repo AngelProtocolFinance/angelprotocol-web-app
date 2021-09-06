@@ -11,7 +11,7 @@ import { routes } from "./types/types";
 import useAppBackground from "hooks/useAppBackground";
 import Register from "pages/registration/index";
 import Test from "pages/Test";
-import Contact from "pages/Contact";
+import Contact from "pages/Contact/Contact";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 
 const App = () => {

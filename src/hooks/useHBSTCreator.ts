@@ -5,17 +5,19 @@ interface HubspotWindow extends Window {
 }
 
 type Error = null | String;
+const scriptURL = "https://js-eu1.hsforms.net/forms/shell.js";
+const portalId = "24900163";
+const formId = "d87f00e4-6501-46f7-bc0d-cc518ff3654a";
 
-export default function useHubspotForm(formId: String) {
+export default function useHBSTCreator() {
   const isCreatedRef = useRef<Boolean>(false);
   const [error, setError] = useState<Error>(null);
   const [scriptLoading, setScriptLoading] = useState(true);
   const [creating, setCreating] = useState(true);
 
   useEffect(() => {
-    // If cachedScripts array already includes src that means another instance ...
     const script = document.createElement("script");
-    script.src = "https://js-eu1.hsforms.net/forms/shell.js";
+    script.src = scriptURL;
     script.async = true;
 
     // Script event listener callbacks for load and error
@@ -24,21 +26,21 @@ export default function useHubspotForm(formId: String) {
       setCreating(true);
       const hubspotWindow: HubspotWindow = window;
       if (hubspotWindow.hbspt && !isCreatedRef.current) {
-        console.log("creates new");
         hubspotWindow.hbspt.forms.create({
           region: "eu1",
-          portalId: "24900163",
-          formId: "6593339e-cc5d-4375-bd06-560a8c88879c",
-          target: "#container",
+          target: "#hbst",
+          portalId,
+          formId,
         });
         isCreatedRef.current = true;
-        setCreating(false);
       }
+      setCreating(false);
     }
 
     function handleScriptError() {
       setScriptLoading(false);
-      setError("Error loading script");
+      //Script loading may fail if internet connection is interrupted
+      setError("Error loading contact form");
     }
 
     script.addEventListener("load", handleScriptLoad);
@@ -55,7 +57,7 @@ export default function useHubspotForm(formId: String) {
   }, []);
 
   return {
-    loading: scriptLoading || creating,
+    isLoading: scriptLoading || creating,
     error,
   };
 }

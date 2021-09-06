@@ -7,6 +7,7 @@ export default function useAppBackground() {
     case routes.login: {
       return "bg-blue-400";
     }
+    case routes.contact:
     case routes.home: {
       return "bg-white";
     }
