@@ -12,10 +12,10 @@ export default function Home() {
     <div className="pt-24">
       {/* <Banner /> */}
       <div className="grid place-items-center bg-green-400">filler</div>
-      <Info />
-      {/* <Highlights />
+      {/* <Info /> */}
+      {/* <Highlights />*/}
       <Specs />
-      <Process />
+      {/* <Process />
       <Testimonials />
       <Portal />
       <Sponsors /> */}

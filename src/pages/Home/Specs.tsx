@@ -5,20 +5,25 @@ import mgmtIcon from "assets/icons/gear.svg";
 
 export default function Specs() {
   return (
-    <section className="h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent">
-      <h3 className="font-semibold text-3xl max-w-5xl text-center">
+    <section className="h-auto lg:h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent px-10 pb-10 lg:pb-0">
+      <h3 className="font-semibold text-2xl text-sm:3xl max-w-5xl text-center">
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
       </h3>
-      <ul className="grid grid-cols-2 grid-rows-2 items-start justify-items-center gap-16 mt-16">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 items-start justify-items-center gap-16 mt-16">
         {specs.map(({ id, heading, icon, text }) => (
-          <li key={id} className="grid grid-cols-highlight  items-start">
-            <img src={icon} alt="" className="w-28" />
-            <article className="pl-6 max-w-sm">
-              <h3 className="font-bold text-angel-grey text-2xl mb-1">
+          <li
+            key={id}
+            className="grid justify-items-center lg:grid-cols-highlight  items-start"
+          >
+            <img src={icon} alt="" className="w-28 mb-4 lg:mb-0" />
+            <article className="lg:pl-6 max-w-sm mt-2 lg:mt-0">
+              <h3 className="text-center lg:text-left font-bold text-angel-grey text-2xl mb-1">
                 {heading}
               </h3>
-              <p className="text-angel-grey font-heading font-light">{text}</p>
+              <p className="text-center lg:text-left text-angel-grey font-heading font-light">
+                {text}
+              </p>
             </article>
           </li>
         ))}
