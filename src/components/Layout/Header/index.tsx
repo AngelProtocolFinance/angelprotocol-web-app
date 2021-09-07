@@ -2,16 +2,13 @@ import NavMenu from "../NavMenu";
 import { Link, Route, Switch } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 import Logo from "components/Logo/Logo";
-import useScrollShadow from "./useScrollShadow";
 import { useHeaderColors } from "contexts/HeaderColorProvider";
 
 const Header = () => {
-  const shadowRef = useScrollShadow();
   const { bgColor, textColor } = useHeaderColors();
 
   return (
     <header
-      ref={shadowRef}
       className={`grid fixed w-full ${bgColor} h-24 z-10 transition-shadow`}
     >
       <nav className="container mx-auto flex justify-between items-center px-5">

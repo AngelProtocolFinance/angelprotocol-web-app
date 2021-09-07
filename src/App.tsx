@@ -1,5 +1,4 @@
 import { Switch, Route } from "react-router-dom";
-import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
@@ -13,6 +12,8 @@ import Register from "pages/registration/index";
 import Test from "pages/Test";
 import Contact from "pages/Contact/Contact";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
+import TCA from "pages/TCA/TCA";
+import Head from "components/Head/Head";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -20,7 +21,7 @@ const App = () => {
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
       <HeaderColorProvider>
-        <Header />
+        <Head />
       </HeaderColorProvider>
       <Switch>
         <Route path={routes.test} component={Test} />
@@ -31,6 +32,7 @@ const App = () => {
         <Route path={routes.login} component={Login} />
         <Route path={routes.registration} component={Register} />
         <Route path={routes.contact} component={Contact} />
+        <Route path={routes.tca} component={TCA} />
         <Route exact path={routes.home} component={Home} />
       </Switch>
       <Footer />

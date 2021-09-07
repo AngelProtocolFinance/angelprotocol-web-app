@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 export default function Logo() {
   const location = useLocation();
   switch (location.pathname) {
+    case routes.contact:
     case routes.home:
       return <img src={blueLogo} alt="" width="150" />;
     default:

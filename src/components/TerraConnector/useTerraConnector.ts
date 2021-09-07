@@ -15,6 +15,8 @@ export default function useTerraConnector() {
     wallets,
   } = useWallet();
 
+  console.log(availableConnectTypes, availableInstallTypes);
+
   const isInstallable = availableInstallTypes.includes(
     ConnectType.CHROME_EXTENSION
   );

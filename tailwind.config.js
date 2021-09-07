@@ -56,11 +56,13 @@ module.exports = {
         dashboard: "auto 1fr auto",
         app: "1fr auto",
         specs: "auto 1fr",
+        wallet: "auto 1fr 1fr",
       },
       gridTemplateColumns: {
         charity: "auto 1fr",
         banner: "1fr auto",
         highlight: "auto 1fr",
+        nav: "auto 1fr auto",
       },
       maxWidth: {
         "4/5": "80%",

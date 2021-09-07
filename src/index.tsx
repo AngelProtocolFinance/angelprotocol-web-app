@@ -35,7 +35,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <WalletProvider
-        defaultNetwork={localterra}
+        defaultNetwork={testnet}
         walletConnectChainIds={walletConnectChainIds}
       >
         <App />

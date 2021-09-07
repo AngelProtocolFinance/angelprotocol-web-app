@@ -10,25 +10,27 @@ const NavMenu = () => {
   };
 
   return (
-    <ul className={`w-9/12 ml-5 ${textColor} flex font-body text-base `}>
+    <ul
+      className={`${textColor} justify-self-end flex font-body text-base mr-3`}
+    >
       <li className="mr-4">
-        <NavLink to={routes.registration} {...linkStyles}>
-          Register
-        </NavLink>
-      </li>
-      <li className="mr-4">
-        <NavLink to={routes.donate} {...linkStyles}>
+        <NavLink to={routes.tca} {...linkStyles}>
           Donate Now
         </NavLink>
       </li>
       <li className="mr-4">
         <NavLink to={routes.dashboard} {...linkStyles}>
-          For Charities
+          Charities
+        </NavLink>
+      </li>
+      <li className="mr-4">
+        <NavLink to={routes.about_unsdgs} {...linkStyles}>
+          UNSDGs
         </NavLink>
       </li>
       <li>
-        <NavLink to={routes.about_unsdgs} {...linkStyles}>
-          About UNSDGs
+        <NavLink to={routes.registration} {...linkStyles}>
+          Register
         </NavLink>
       </li>
     </ul>
