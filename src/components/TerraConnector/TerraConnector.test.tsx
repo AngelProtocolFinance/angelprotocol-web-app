@@ -12,7 +12,6 @@ const testnet: NetworkInfo = {
   chainID: "tequila-0004",
   lcd: "https://tequila-lcd.terra.dev",
 };
-
 describe("Renders text according to wallet status", () => {
   test("wallet is initializing'", () => {
     render(
