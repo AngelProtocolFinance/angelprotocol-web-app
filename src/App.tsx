@@ -25,6 +25,7 @@ const App = () => {
         <Head />
       </HeaderColorProvider>
       <div className="pt-28 grid place-items-center">app</div>
+
       {/* <Switch>
         <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />
@@ -37,7 +38,7 @@ const App = () => {
         <Route path={routes.tca} component={TCA} />
         <Route exact path={routes.home} component={Home} />
       </Switch> */}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

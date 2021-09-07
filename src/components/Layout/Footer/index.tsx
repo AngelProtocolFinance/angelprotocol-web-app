@@ -9,8 +9,18 @@ import { FaTelegramPlane } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="grid grid-cols-2 justify-items-center p-5 py-10 bg-blue-accent">
-      <section className="grid justify-items-center content-center">
+    <footer className="grid grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 justify-items-center p-5 py-10 bg-blue-accent">
+      <section className="max-w-2xl lg:order-2">
+        <p className="text-center lg:text-left text-white-grey font-semibold text-xl mb-2">
+          Angel Protocol creates sustainable income streams for charities. And
+          we're just starting!{" "}
+          <span className="text-center lg:text-left block font-normal text-lg">
+            Subscribe to our newsletter to get the latest updates.
+          </span>
+        </p>
+        <Subscriber />
+      </section>
+      <section className="grid justify-items-center content-center lg:order-1">
         <ul className="flex">
           {links.map(({ id, Icon, color, link }) => {
             return (
@@ -22,19 +32,9 @@ const Footer = () => {
             );
           })}
         </ul>
-        <p className="font-body text-xs font-semibold uppercase text-white">
+        <p className="font-body text-xs font-semibold uppercase text-white text-center">
           Copyright 2021 angelprotocol. All rights reserved.
         </p>
-      </section>
-      <section className="max-w-2xl">
-        <p className="text-white-grey font-semibold text-xl mb-2">
-          Angel Protocol creates sustainable income streams for charities. And
-          we're just starting!{" "}
-          <span className="block font-normal text-lg">
-            Subscribe to our newsletter to get the latest updates.
-          </span>
-        </p>
-        <Subscriber />
       </section>
     </footer>
   );

@@ -22,7 +22,10 @@ export default function Subscriber() {
       {({ isSubmitting, status, resetForm }) => (
         <>
           {renderModal(status, resetForm)}
-          <Form autoComplete="off">
+          <Form
+            autoComplete="off"
+            className="flex flex-col items-center lg:items-start"
+          >
             <span>{status}</span>
             <Field
               disabled={isSubmitting}
