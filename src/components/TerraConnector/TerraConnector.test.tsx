@@ -71,6 +71,6 @@ describe("Renders text according to wallet status", () => {
       </StaticWalletProvider>
     );
     screen.debug();
-    expect(screen.getByRole('heading')).toHaveTextContent(/terra1235/i);
+    expect(screen.getByRole("heading")).toHaveTextContent(/terra1235/i);
   });
 });
