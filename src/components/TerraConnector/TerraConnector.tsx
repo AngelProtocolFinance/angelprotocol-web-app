@@ -68,9 +68,9 @@ export default function TerraConnector() {
                   }
                   role="menu"
                 >
-                  <p className="text-base text-thin-blue mb-1 text-center">
+                  <h3 className="text-base text-thin-blue mb-1 text-center">
                     {wallets[0].terraAddress.substr(0, 15) + "..."}
-                  </p>
+                  </h3>
                   <button
                     className="uppercase bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
                     onClick={handleCopy(wallets[0].terraAddress)}

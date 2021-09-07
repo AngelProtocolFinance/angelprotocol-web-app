@@ -1,4 +1,3 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useEffect } from "react";
@@ -12,7 +11,7 @@ const ConfirmEmail = () => {
   return (
     <div>
       <div className="rounded-xl mb-5">
-        <img src={banner2} width="100%" className="rounded-xl" />
+        <img src={banner2} width="100%" className="rounded-xl" alt="" />
       </div>
       <div>
         <span className="text-2xl font-bold">Hi {firstName}!</span>

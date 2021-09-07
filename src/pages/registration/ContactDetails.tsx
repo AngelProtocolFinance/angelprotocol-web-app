@@ -209,7 +209,7 @@ const ContactDetails = () => {
                       />
                     </div>
                   </div>
-                  {values.orgRule == "other" && (
+                  {values.orgRule === "other" && (
                     <div className="items-center justify-center mb-4">
                       <div className="text-left">
                         <span className="text-md text-left">
