@@ -15,10 +15,11 @@ export default function Home() {
       {/* <Info /> */}
       {/* <Highlights />*/}
       {/* <Specs /> */}
-      <Process />
-      {/* <Testimonials /> */}
+      {/* <Process /> */}
+      <Testimonials />
       {/* <Portal /> */}
       {/* <Sponsors /> */}
+      <div className="grid place-items-center bg-green-400">filler</div>
     </div>
   );
 }
