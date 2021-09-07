@@ -15,7 +15,7 @@ import PrivacyPolicy from "pages/PrivacyPolicy";
 const App = () => {
   const location = useLocation();
   const inLogin = /(login)|(register)/.test(location.pathname);
-  const appColor = inLogin
+  const appColor = /(login)/.test(location.pathname)
     ? "bg-gradient-to-b from-thin-blue to-thin-grey"
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
