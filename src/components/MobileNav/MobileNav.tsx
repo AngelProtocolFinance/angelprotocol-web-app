@@ -2,8 +2,8 @@ import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { NavLink } from "react-router-dom";
 import { routes } from "types/types";
 
-const NavMenu = () => {
-  const { textColor } = useHeaderColors();
+export default function MobileNav() {
+  const { textColor, bgColor } = useHeaderColors();
   const linkStyles = {
     className: `uppercase ${textColor}`,
     activeClassName: "font-bold",
@@ -11,19 +11,19 @@ const NavMenu = () => {
 
   return (
     <ul
-      className={`${textColor} hidden md:flex justify-self-end  font-body text-base mr-2`}
+      className={`${textColor} ${bgColor} md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
     >
-      <li className="mr-4">
+      <li className="mb-2">
         <NavLink to={routes.tca} {...linkStyles}>
           Donate Now
         </NavLink>
       </li>
-      <li className="mr-4">
+      <li className="mb-2">
         <NavLink to={routes.dashboard} {...linkStyles}>
           Charities
         </NavLink>
       </li>
-      <li className="mr-4">
+      <li className="mb-2">
         <NavLink to={routes.about_unsdgs} {...linkStyles}>
           UNSDGs
         </NavLink>
@@ -35,6 +35,4 @@ const NavMenu = () => {
       </li>
     </ul>
   );
-};
-
-export default NavMenu;
+}

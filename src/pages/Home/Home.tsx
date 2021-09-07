@@ -9,15 +9,15 @@ import Testimonials from "./Testimonials";
 
 export default function Home() {
   return (
-    <div className="pt-24">
-      <Banner />
+    <div className="pt-24 bg-green-300">
+      {/* <Banner />
       <Info />
       <Highlights />
       <Specs />
       <Process />
       <Testimonials />
       <Portal />
-      <Sponsors />
+      <Sponsors /> */}
     </div>
   );
 }

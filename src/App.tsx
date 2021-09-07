@@ -14,6 +14,7 @@ import Contact from "pages/Contact/Contact";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 import TCA from "pages/TCA/TCA";
 import Head from "components/Head/Head";
+import MobileNav from "components/MobileNav/MobileNav";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -23,7 +24,8 @@ const App = () => {
       <HeaderColorProvider>
         <Head />
       </HeaderColorProvider>
-      <Switch>
+      <div className="pt-28 grid place-items-center">app</div>
+      {/* <Switch>
         <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />
         <Route path={routes.about_unsdgs} component={Goals} />
@@ -34,8 +36,8 @@ const App = () => {
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.tca} component={TCA} />
         <Route exact path={routes.home} component={Home} />
-      </Switch>
-      <Footer />
+      </Switch> */}
+      {/* <Footer /> */}
     </div>
   );
 };
