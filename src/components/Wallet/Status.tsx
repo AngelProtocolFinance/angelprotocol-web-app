@@ -7,7 +7,7 @@ export default function Status() {
   if (status === WalletStatus.INITIALIZING) {
     return (
       <div className="justify-self-start">
-        <LineLoader color={"angel-grey"} size="4" spacing="2" />
+        <LineLoader color={"angel-grey"} size="2" spacing="1" />
       </div>
     );
   } else {

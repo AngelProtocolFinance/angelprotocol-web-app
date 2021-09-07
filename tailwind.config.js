@@ -50,6 +50,7 @@ module.exports = {
         info: "28rem",
         process: "36rem",
         banner: "52rem",
+        "banner-sm": "35rem",
         specs: "52rem",
       },
       gridTemplateRows: {
@@ -57,6 +58,7 @@ module.exports = {
         app: "1fr auto",
         specs: "auto 1fr",
         wallet: "auto 1fr 1fr",
+        "2a": "repeat(2,auto)",
       },
       gridTemplateColumns: {
         charity: "auto 1fr",
@@ -73,6 +75,9 @@ module.exports = {
       minHeight: {
         modal: "300px",
         10: "10",
+      },
+      width: {
+        video: "30rem",
       },
     },
   },

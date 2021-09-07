@@ -9,10 +9,11 @@ import Testimonials from "./Testimonials";
 
 export default function Home() {
   return (
-    <div className="pt-24 bg-green-300">
-      {/* <Banner />
+    <div className="pt-24">
+      {/* <Banner /> */}
+      <div className="grid place-items-center bg-green-400">filler</div>
       <Info />
-      <Highlights />
+      {/* <Highlights />
       <Specs />
       <Process />
       <Testimonials />

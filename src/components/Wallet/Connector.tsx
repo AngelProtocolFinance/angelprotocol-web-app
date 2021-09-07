@@ -4,6 +4,7 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { useHeaderColors } from "contexts/HeaderColorProvider";
+import { IoMdWallet } from "react-icons/io";
 
 export default function Connector() {
   const { textColor } = useHeaderColors();
@@ -27,8 +28,9 @@ export default function Connector() {
     return (
       <button
         onClick={handleClick}
-        className={`bg-${bgColor} py-1 px-2 rounded-sm shadow-sm uppercase text-sm font-semibold ${textColor}`}
+        className={`bg-${bgColor} py-1 px-2 rounded-sm shadow-sm uppercase text-sm font-semibold ${textColor} flex items-center`}
       >
+        <IoMdWallet className="text-lg mr-1" />{" "}
         {isConnected ? "Disconnect" : "Connect"}
       </button>
     );

@@ -6,6 +6,7 @@ import Wallet from "components/Wallet/Wallet";
 import NavMenu from "components/Layout/NavMenu";
 import MobileNav from "components/MobileNav/MobileNav";
 import { useState } from "react";
+import { FiMenu } from "react-icons/fi";
 
 const Head = () => {
   const [navShown, showNav] = useState(false);
@@ -28,7 +29,7 @@ const Head = () => {
         <NavMenu />
         <Wallet />
         <button className="block md:hidden ml-5" onClick={toggleNav}>
-          menu
+          <FiMenu className="text-2xl" />
         </button>
         {navShown && <MobileNav />}
       </nav>

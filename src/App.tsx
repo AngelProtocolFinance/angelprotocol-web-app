@@ -24,10 +24,9 @@ const App = () => {
       <HeaderColorProvider>
         <Head />
       </HeaderColorProvider>
-      <div className="pt-28 grid place-items-center">app</div>
 
-      {/* <Switch>
-        <Route path={routes.test} component={Test} />
+      <Switch>
+        {/* <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />
         <Route path={routes.about_unsdgs} component={Goals} />
         <Route path={routes.dashboard} component={Dashboard} />
@@ -35,9 +34,9 @@ const App = () => {
         <Route path={routes.login} component={Login} />
         <Route path={routes.registration} component={Register} />
         <Route path={routes.contact} component={Contact} />
-        <Route path={routes.tca} component={TCA} />
+        <Route path={routes.tca} component={TCA} /> */}
         <Route exact path={routes.home} component={Home} />
-      </Switch> */}
+      </Switch>
       <Footer />
     </div>
   );
