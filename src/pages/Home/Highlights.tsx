@@ -4,13 +4,18 @@ import secureLogo from "assets/icons/secure.svg";
 
 export default function Highlights() {
   return (
-    <ul className="h-60 bg-blue-accent w-full grid grid-cols-3 place-items-center">
+    <ul className="h-auto lg:h-60 bg-blue-accent w-full grid grid-cols-1 sm:grid-cols-3 place-items-center gap-10 lg:gap-0 px-5 py-8 lg:py-0">
       {highlights.map(({ id, heading, icon, text }) => (
-        <li key={id} className="grid grid-cols-highlight max-w-xs items-center">
+        <li
+          key={id}
+          className="grid grid-cols-1 justify-items-center lg:grid-cols-highlight max-w-xs items-center mb-10 sm:mb-0"
+        >
           <img src={icon} alt="" className="w-28" />
-          <article className="pl-3">
-            <h3 className="font-bold text-white text-lg">{heading}</h3>
-            <p className="text-white-grey">{text}</p>
+          <article className="lg:pl-3">
+            <h3 className="font-bold text-white text-lg text-center lg:text-left my-3 lg:my-0">
+              {heading}
+            </h3>
+            <p className="text-white-grey text-center lg:text-left">{text}</p>
           </article>
         </li>
       ))}
