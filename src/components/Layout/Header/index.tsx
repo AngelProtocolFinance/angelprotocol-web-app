@@ -12,6 +12,7 @@ type HeaderProps = {
   hasMenu: boolean;
   hasTitle: boolean;
 };
+
 const Header = ({ hasMenu, hasTitle }: HeaderProps) => {
   const [isOpenSearch, setOpenSearch] = useState(false);
   const [isOpenTerraMenu, setOpenTerraMenu] = useState(true);

@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Registration from "pages/registration/Registration";
 import ContactDetails from "pages/registration/ContactDetails";
 import ConfirmEmail from "pages/registration/ConfirmEmail";

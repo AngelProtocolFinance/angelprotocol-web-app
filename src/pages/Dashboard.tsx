@@ -7,6 +7,7 @@ const charityCategories = Array(6)
 
 const Dashboard = () => {
   const title = "17 UNTIED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)";
+
   return (
     <div className="container mx-auto grid grid-rows-dashboard px-5">
       <div className="opacity-10 absolute inset-0 bg-no-repeat bg-banner-charity bg-cover h-72 z-10"></div>

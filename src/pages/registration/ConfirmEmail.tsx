@@ -6,7 +6,6 @@ const ConfirmEmail = () => {
   const history = useHistory();
   const firstName = "First Name";
   const charity = "Charity Name";
-  useEffect(() => {});
 
   return (
     <div>

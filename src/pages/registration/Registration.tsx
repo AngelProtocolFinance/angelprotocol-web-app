@@ -1,5 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
+
 import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {

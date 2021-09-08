@@ -25,6 +25,8 @@ interface DonationFormProps {
 
 export function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
+  const currentNetwork = "localterra"; // TODO: should be:
+  // const currentNetwork = connectedWallet.network.name
 
   const [isTypingAmount, setIsTypingAmount] = useState(false);
   const [amountToDonate, setAmountToDonate] = useState(0);
@@ -34,9 +36,6 @@ export function DonationForm(props: DonationFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
   const [isSubmitDonation, setIsSubmitDonation] = useState(false);
-
-  const currentNetwork = "localterra"; // TODO: should be:
-  // const currentNetwork = connectedWallet.network.name
 
   function openShareModal() {
     setIsOpen(true);

@@ -25,7 +25,6 @@ const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    // check if token was expired.
     if (!inLogin) {
       if (token) {
         const decoded_data: any = jwt_decode(token);
