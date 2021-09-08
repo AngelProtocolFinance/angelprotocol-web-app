@@ -12,7 +12,7 @@ interface Colors {
 }
 
 const defaultColor = {
-  bgColor: "bg-blue-400",
+  bgColor: "bg-blue-accent",
   textColor: "text-white",
 };
 

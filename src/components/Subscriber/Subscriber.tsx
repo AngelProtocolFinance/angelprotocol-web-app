@@ -28,6 +28,7 @@ export default function Subscriber() {
           >
             <span>{status}</span>
             <Field
+              placeholder="Email"
               disabled={isSubmitting}
               autoComplete="off"
               type="text"
@@ -37,7 +38,7 @@ export default function Subscriber() {
             />
             <ErrorMessage
               name="email"
-              className="text-sm text-red-200 mt-1"
+              className="text-sm text-yellow-300 font-semibold mt-1"
               component="div"
             />
             <button
