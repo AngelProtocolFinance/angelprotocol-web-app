@@ -11,6 +11,7 @@ import About from "pages/About";
 import Goals from "pages/Goals";
 import Login from "pages/Login";
 import Register from "pages/registration/index";
+import PrivacyPolicy from "pages/PrivacyPolicy";
 import { useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
@@ -18,7 +19,7 @@ const App = () => {
   const location = useLocation();
   const history = useHistory();
   const inLogin = /(login)|(register)/.test(location.pathname);
-  const appColor = inLogin
+  const appColor = /(login)/.test(location.pathname)
     ? "bg-gradient-to-b from-thin-blue to-thin-grey"
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
@@ -47,6 +48,7 @@ const App = () => {
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/donate/:charityId" component={Donate} />
         <Route path="/login" component={Login} />
+        <Route path="/privacy-policy" component={PrivacyPolicy} />
         <Route path="/register" component={Register} />
         <Route exact path="/" component={Home} />
       </Switch>
