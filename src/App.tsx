@@ -1,7 +1,7 @@
 import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Home from "pages/Home/Home";
-import Login from "pages/Login";
+import Login from "pages/Login/Login";
 import { routes } from "./types/types";
 import useAppBackground from "hooks/useAppBackground";
 import Contact from "pages/Contact/Contact";
