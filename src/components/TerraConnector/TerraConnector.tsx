@@ -62,7 +62,7 @@ export default function TerraConnector() {
                   onAnimationEnd={() => setAnimation(false)}
                   src={copyIcon}
                   alt="Copy Wallet Address"
-                  title="Copy Wallet Address"
+                  title="Copy Terra Wallet Address"
                 />
               </span>
               <div className="flex justify-between items-center relative">
