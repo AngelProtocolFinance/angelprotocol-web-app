@@ -35,6 +35,7 @@ const App = () => {
     const token = localStorage.getItem("token");
     // check if token was expired.
     if (!inLogin && !inHome) {
+      //TODO: guard should only work when user tries to go to donate page
       if (token) {
         const decoded_data: any = jwt_decode(token);
         if (decoded_data.exp * 1000 <= Date.now()) {
