@@ -1,9 +1,11 @@
+import { useState } from "react";
 import copyIcon from "assets/images/copy.png";
 import moreIcon from "assets/images/more.png";
 import useCopyAddress from "./useCopyAddress";
 import useTerraConnector from "./useTerraConnector";
 
 export default function TerraConnector() {
+  const [animation, setAnimation] = useState(false);
   const { buttonProps, isOpen, handleCopy } = useCopyAddress();
   const {
     status,
@@ -51,14 +53,21 @@ export default function TerraConnector() {
             <div className="flex justify-between items-center ml-1">
               <p>{wallets[0].terraAddress.substr(0, 15) + "..."}</p>
               <span
-                className="mx-2"
+                className="mx-2 cursor-pointer"
                 onClick={handleCopy(wallets[0].terraAddress)}
               >
-                <img src={copyIcon} alt="AngelProtocol" />
+                <img
+                  className={`${animation && "animate-iconPing"}`}
+                  onClick={() => setAnimation(true)}
+                  onAnimationEnd={() => setAnimation(false)}
+                  src={copyIcon}
+                  alt="Copy Wallet Address"
+                  title="Copy Wallet Address"
+                />
               </span>
               <div className="flex justify-between items-center relative">
                 <button {...buttonProps}>
-                  <img src={moreIcon} alt="AngelProtocol" />
+                  <img src={moreIcon} alt="More Options" title="More Options" />
                 </button>
                 <div
                   className={
