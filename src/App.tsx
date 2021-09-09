@@ -23,11 +23,12 @@ const App = () => {
   const appBackround = useAppBackground();
 
   const inLogin = location.pathname === routes.login;
+  const inHome = location.pathname === routes.home;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     // check if token was expired.
-    if (!inLogin) {
+    if (!inLogin && !inHome) {
       if (token) {
         const decoded_data: any = jwt_decode(token);
         if (decoded_data.exp * 1000 <= Date.now()) {
