@@ -18,7 +18,7 @@ const NavMenu = () => {
           Donate Now
         </NavLink>
       </li>
-      <li className="mr-4">
+      {/* <li className="mr-4">
         <NavLink to="/dashboard" {...linkStyles}>
           For Charities
         </NavLink>
@@ -27,7 +27,7 @@ const NavMenu = () => {
         <NavLink to="/about-unsdgs" {...linkStyles}>
           About UNSDGs
         </NavLink>
-      </li>
+      </li> */}
     </ul>
   );
 };
