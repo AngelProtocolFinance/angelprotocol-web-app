@@ -11,6 +11,9 @@ export default function useAppBackground() {
     case routes.home: {
       return "bg-white";
     }
+    case routes.login: {
+      return "bg-gradient-to-b from-thin-blue to-thin-grey";
+    }
     default: {
       return "bg-gradient-to-b from-thin-blue to-black-blue";
     }

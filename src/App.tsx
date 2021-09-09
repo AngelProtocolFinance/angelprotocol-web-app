@@ -1,4 +1,5 @@
-import { Switch, Route } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import Footer from "components/Layout/Footer";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
@@ -13,9 +14,30 @@ import Contact from "pages/Contact/Contact";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 import TCA from "pages/TCA/TCA";
 import Head from "components/Head/Head";
+import { useEffect } from "react";
+import jwt_decode from "jwt-decode";
 
 const App = () => {
+  const history = useHistory();
+  const location = useLocation();
   const appBackround = useAppBackground();
+
+  const inLogin = location.pathname === routes.login;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // check if token was expired.
+    if (!inLogin) {
+      if (token) {
+        const decoded_data: any = jwt_decode(token);
+        if (decoded_data.exp * 1000 <= Date.now()) {
+          history.replace(routes.login);
+        }
+      } else {
+        history.replace(routes.login);
+      }
+    }
+  }, []);
 
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
@@ -32,6 +54,7 @@ const App = () => {
         <Route path={routes.registration} component={Register} />
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.tca} component={TCA} />
+        <Route path={`${routes.donate}/charityId`} component={Donate} />
         <Route exact path={routes.home} component={Home} />
       </Switch>
       <Footer />

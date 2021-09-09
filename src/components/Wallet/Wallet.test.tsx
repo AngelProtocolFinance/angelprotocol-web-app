@@ -20,6 +20,7 @@ describe("Renders text according to wallet status", () => {
         <Wallet />
       </StaticWalletProvider>
     );
+
     //only div loaders are present during initialization
     const connectButtonEl = screen.queryByRole("button");
     expect(connectButtonEl).toBeNull();

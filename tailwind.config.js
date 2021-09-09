@@ -79,6 +79,10 @@ module.exports = {
       width: {
         video: "30rem",
       },
+      inset: {
+        12: "12px",
+        69: "69px",
+      },
     },
   },
   variants: {

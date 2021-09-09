@@ -13,7 +13,7 @@ export default function Installer() {
     return (
       <button
         className={`text-${textColor} flex py-1 px-2 rounded-sm uppercase text-sm font-semibold border-2 border-${textColor}`}
-        onClick={() => install}
+        onClick={() => install(ConnectType.CHROME_EXTENSION)}
       >
         <IoMdWallet className="text-lg mr-1" />
         Install
