@@ -9,12 +9,10 @@ import Login from "pages/Login";
 import { routes } from "./types/types";
 import useAppBackground from "hooks/useAppBackground";
 import Register from "pages/registration/index";
-import Test from "pages/Test";
 import Contact from "pages/Contact/Contact";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 import TCA from "pages/TCA/TCA";
 import Head from "components/Head/Head";
-import MobileNav from "components/MobileNav/MobileNav";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -26,7 +24,6 @@ const App = () => {
       </HeaderColorProvider>
 
       <Switch>
-        <Route path={routes.test} component={Test} />
         <Route path={routes.about} component={About} />
         <Route path={routes.about_unsdgs} component={Goals} />
         <Route path={routes.dashboard} component={Dashboard} />

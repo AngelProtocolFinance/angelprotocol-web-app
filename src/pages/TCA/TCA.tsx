@@ -1,5 +1,4 @@
 import Donator from "components/Donator/Donator";
-import Wallet from "components/Wallet/Wallet";
 
 export default function TCA() {
   return (
