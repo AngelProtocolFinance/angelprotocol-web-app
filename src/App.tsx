@@ -1,6 +1,12 @@
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Switch, Route, useLocation, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+  useHistory,
+} from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 import Header from "components/Layout/Header";
 import Footer from "components/Layout/Footer";
@@ -41,15 +47,16 @@ const App = () => {
     <div className={`grid grid-rows-app ${appColor}`}>
       <Header hasMenu={!inLogin} hasTitle={inLogin} />
       <Switch>
-        <Route path="/test" component={TerraConnector} />
-        <Route path="/about" component={About} />
-        <Route path="/about-unsdgs" component={Goals} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/donate/:charityId" component={Donate} />
-        <Route path="/login" component={Login} />
-        <Route path="/privacy-policy" component={PrivacyPolicy} />
-        <Route path="/register" component={Register} />
+        <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+        <Route exact path="/test" component={TerraConnector} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/about-unsdgs" component={Goals} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/donate" component={Donate} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <Route exact path="/" component={Home} />
+        <Redirect from="*" to="/donate" />
       </Switch>
       <Footer hasMenu={!inLogin} />
     </div>
