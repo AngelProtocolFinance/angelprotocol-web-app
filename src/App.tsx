@@ -1,5 +1,11 @@
 import "react-toastify/dist/ReactToastify.css";
-import { Switch, Route, useHistory, useLocation } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+  Redirect,
+} from "react-router-dom";
 import Footer from "components/Layout/Footer";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
@@ -38,7 +44,7 @@ const App = () => {
         history.replace(routes.login);
       }
     }
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
@@ -47,6 +53,7 @@ const App = () => {
       </HeaderColorProvider>
 
       <Switch>
+        <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
         <Route path={routes.about} component={About} />
         <Route path={routes.about_unsdgs} component={Goals} />
         <Route path={routes.dashboard} component={Dashboard} />
@@ -57,6 +64,7 @@ const App = () => {
         <Route path={routes.tca} component={TCA} />
         <Route path={`${routes.donate}/charityId`} component={Donate} />
         <Route exact path={routes.home} component={Home} />
+        <Redirect from="*" to={routes.donate} />
       </Switch>
       <Footer />
     </div>
