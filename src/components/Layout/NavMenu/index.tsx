@@ -14,7 +14,7 @@ const NavMenu = () => {
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to="/donate" {...linkStyles}>
+        <NavLink to="/donate/1" {...linkStyles}>
           Donate Now
         </NavLink>
       </li>

@@ -1,8 +1,11 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or "media" or "class"
+  darkMode: false,
   theme: {
     extend: {
+      backgroundImage: (theme) => ({
+        "banner-charity": "url('assets/images/banner-charity.jpg')",
+      }),
       gridTemplateRows: {
         dashboard: "auto 1fr auto",
         app: "auto 1fr auto",
