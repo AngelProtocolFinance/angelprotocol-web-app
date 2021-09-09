@@ -5,15 +5,13 @@ export default function useAppBackground() {
   const location = useLocation();
   switch (location.pathname) {
     case routes.login: {
-      return "bg-blue-400";
+      return "bg-gradient-to-b from-thin-blue to-thin-grey";
     }
     case routes.contact:
     case routes.home: {
       return "bg-white";
     }
-    case routes.login: {
-      return "bg-gradient-to-b from-thin-blue to-thin-grey";
-    }
+
     default: {
       return "bg-gradient-to-b from-thin-blue to-black-blue";
     }

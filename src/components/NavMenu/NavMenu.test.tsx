@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import NavMenu from ".";
+import NavMenu from "./NavMenu";
 
 test("renders NavMenu", () => {
   render(

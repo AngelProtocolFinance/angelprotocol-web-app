@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
 import Logo from "components/Logo/Logo";
+import Wallet from "components/Wallet/Wallet";
+import MobileNav from "components/MobileNav/MobileNav";
 import useScrollShadow from "./useScrollShadow";
 import { useHeaderColors } from "contexts/HeaderColorProvider";
-import Wallet from "components/Wallet/Wallet";
-import NavMenu from "components/Layout/NavMenu";
-import MobileNav from "components/MobileNav/MobileNav";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
+import NavMenu from "components/NavMenu/NavMenu";
 
 const Head = () => {
   const [navShown, showNav] = useState(false);

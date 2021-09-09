@@ -20,17 +20,7 @@ export default function MobileNav() {
       </li>
       <li className="mb-2">
         <NavLink to={routes.dashboard} {...linkStyles}>
-          Charities
-        </NavLink>
-      </li>
-      <li className="mb-2">
-        <NavLink to={routes.about_unsdgs} {...linkStyles}>
-          UNSDGs
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to={routes.registration} {...linkStyles}>
-          Register
+          Contact
         </NavLink>
       </li>
     </ul>
