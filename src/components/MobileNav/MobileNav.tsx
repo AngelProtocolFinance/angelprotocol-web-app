@@ -19,7 +19,7 @@ export default function MobileNav() {
         </NavLink>
       </li>
       <li className="mb-2">
-        <NavLink to={routes.dashboard} {...linkStyles}>
+        <NavLink to={routes.contact} {...linkStyles}>
           Contact
         </NavLink>
       </li>

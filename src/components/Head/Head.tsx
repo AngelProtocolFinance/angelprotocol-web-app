@@ -11,7 +11,7 @@ import NavMenu from "components/NavMenu/NavMenu";
 const Head = () => {
   const [navShown, showNav] = useState(false);
   const shadowRef = useScrollShadow();
-  const { bgColor } = useHeaderColors();
+  const { bgColor, textColor } = useHeaderColors();
 
   function toggleNav() {
     showNav((prevState) => !prevState);
@@ -29,7 +29,7 @@ const Head = () => {
         <NavMenu />
         <Wallet />
         <button className="block md:hidden ml-5" onClick={toggleNav}>
-          <FiMenu className="text-2xl" />
+          <FiMenu className={`text-2xl text-${textColor}`} />
         </button>
         {navShown && <MobileNav />}
       </nav>
