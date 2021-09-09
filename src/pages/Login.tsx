@@ -21,7 +21,7 @@ const Login = () => {
       setLoading(false);
       if (data.accessToken) {
         localStorage.setItem("token", data.accessToken);
-        history.push("/donate");
+        history.push("/donate/1");
       } else {
         toast.error(data.errorMessage);
       }

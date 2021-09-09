@@ -24,13 +24,12 @@ const App = () => {
   const location = useLocation();
   const history = useHistory();
   const inLogin = /(login)|(register)/.test(location.pathname);
-  const appColor = inLogin
+  const appColor = /(login)/.test(location.pathname)
     ? "bg-gradient-to-b from-thin-blue to-thin-grey"
     : "bg-gradient-to-b from-thin-blue to-black-blue";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    // check if token was expired.
     if (!inLogin) {
       if (token) {
         const decoded_data: any = jwt_decode(token);
