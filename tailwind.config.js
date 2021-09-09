@@ -1,6 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or "media" or "class"
+  darkMode: false,
   theme: {
     extend: {
       backgroundImage: {
@@ -12,6 +12,8 @@ module.exports = {
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/teamwork.webp')",
         contact:
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/volunteers.webp')",
+        "banner-charity":
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
       },
 
       cursor: {

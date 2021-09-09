@@ -1,7 +1,7 @@
 export enum routes {
   home = "/",
   login = "/login",
-  registration = "/registration",
+  register = "/register",
   about = "/about",
   about_unsdgs = "/about-unsdgs",
   dashboard = "/dashboard",

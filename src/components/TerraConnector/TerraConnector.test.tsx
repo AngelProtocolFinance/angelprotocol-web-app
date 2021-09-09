@@ -12,6 +12,7 @@ const testnet: NetworkInfo = {
   chainID: "tequila-0004",
   lcd: "https://tequila-lcd.terra.dev",
 };
+
 describe("Renders text according to wallet status", () => {
   test("wallet is initializing'", () => {
     render(
@@ -36,7 +37,7 @@ describe("Renders text according to wallet status", () => {
     );
     screen.debug();
     const connectButtonEl = screen.getByRole("button");
-    expect(connectButtonEl).toHaveTextContent(/connect chrome extension/i);
+    expect(connectButtonEl).toHaveTextContent(/connect/i);
   });
 
   test("wallet is not installed", () => {
@@ -70,7 +71,6 @@ describe("Renders text according to wallet status", () => {
       </StaticWalletProvider>
     );
     screen.debug();
-    const connectButtonEl = screen.getByText(/terra1235/i);
-    expect(connectButtonEl).toBeInTheDocument();
+    expect(screen.getByRole("heading")).toHaveTextContent(/terra1235/i);
   });
 });

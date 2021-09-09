@@ -27,7 +27,8 @@ interface DonationFormProps {
 export function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
-
+  const currentNetwork = "localterra"; // TODO: should be:
+  // const currentNetwork = connectedWallet.network.name
   const [isTypingAmount, setIsTypingAmount] = useState(false);
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [amountTyped, setAmountTyped] = useState(0);
@@ -36,9 +37,6 @@ export function DonationForm(props: DonationFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
   const [isSubmitDonation, setIsSubmitDonation] = useState(false);
-
-  const currentNetwork = "localterra"; // TODO: should be:
-  // const currentNetwork = connectedWallet.network.name
 
   function openShareModal() {
     setIsOpen(true);
@@ -221,7 +219,7 @@ export function DonationForm(props: DonationFormProps) {
               onAfterChange={handleSlideEnd}
               className="w-full h-4 my-3 ml-2"
             />
-            <div className="flex justify-between items-center text-xs">
+            <div className="flex justify-between items-center text-xs ml-2 -mr-2">
               <span>0%</span>
               <span>100%</span>
             </div>

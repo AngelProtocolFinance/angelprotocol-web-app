@@ -3,6 +3,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import TerraConnector from "components/TerraConnector/TerraConnector";
 import Logo from "components/Logo/Logo";
 import { useHeaderColors } from "contexts/HeaderColorProvider";
+import Search from "components/Search/Search";
 
 const Header = () => {
   const { bgColor, textColor } = useHeaderColors();
@@ -18,6 +19,7 @@ const Header = () => {
 
         <NavMenu />
         <div className="w-2/6 container mx-auto flex justify-end items-center">
+          <Search />
           <Switch>
             <Route path="/login">
               <p className={`font-bold text-${textColor} font-lg uppercase`}>

@@ -12,7 +12,7 @@ const useRequest = ({ url, method, body, onSuccess, onFailed }: any) => {
       });
 
       onSuccess(await response.json());
-    } catch (error) {
+    } catch (error: any) {
       setErrors(error);
       onFailed(error);
     }

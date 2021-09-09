@@ -1,13 +1,11 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import {
-  ConnectType,
   NetworkInfo,
   StaticWalletProvider,
-  WalletStatus,
 } from "@terra-money/wallet-provider";
 
 import { MemoryRouter } from "react-router-dom";
-import Header from ".";
+import Header from "./index";
 
 const testnet: NetworkInfo = {
   name: "testnet",

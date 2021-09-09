@@ -32,7 +32,7 @@ const App = () => {
         <Route path={routes.dashboard} component={Dashboard} />
         <Route path={routes.donate} component={Donate} />
         <Route path={routes.login} component={Login} />
-        <Route path={routes.registration} component={Register} />
+        <Route path={routes.register} component={Register} />
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.tca} component={TCA} />
         <Route path={`${routes.donate}/:charityId`} component={Donate} />
