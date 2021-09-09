@@ -4,6 +4,7 @@ import Status from "./Status";
 
 export default function Wallet() {
   return (
+    //only one renders at a time
     <>
       <Status />
       <Installer />

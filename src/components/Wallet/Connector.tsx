@@ -14,7 +14,6 @@ export default function Connector() {
     ConnectType.CHROME_EXTENSION
   );
   const isConnected = status === WalletStatus.WALLET_CONNECTED;
-  const bgColor = isConnected ? "red-400" : "angel-orange";
 
   function handleClick() {
     if (isConnected) {
@@ -28,7 +27,7 @@ export default function Connector() {
     return (
       <button
         onClick={handleClick}
-        className={`bg-${bgColor} py-1 px-2 rounded-sm shadow-sm uppercase text-sm font-semibold ${textColor} flex items-center`}
+        className={`text-${textColor} flex py-1 px-2 rounded-sm uppercase text-sm font-semibold border-2 border-${textColor}`}
       >
         <IoMdWallet className="text-lg mr-1" />{" "}
         {isConnected ? "Disconnect" : "Connect"}

@@ -7,13 +7,13 @@ interface propType {
 }
 
 interface Colors {
-  bgColor: String;
-  textColor: String;
+  bgColor: string;
+  textColor: string;
 }
 
 const defaultColor = {
-  bgColor: "bg-blue-accent",
-  textColor: "text-white",
+  bgColor: "blue-accent",
+  textColor: "white",
 };
 
 const colorContext = createContext<Colors>(defaultColor);
@@ -25,8 +25,8 @@ export default function HeaderColorProvider(props: propType) {
       case routes.contact:
       case routes.home: {
         return {
-          bgColor: "bg-white",
-          textColor: "text-angel-grey",
+          bgColor: "white",
+          textColor: "angel-grey",
         };
       }
       default: {

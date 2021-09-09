@@ -12,10 +12,11 @@ export default function Installer() {
   if (isInstallable) {
     return (
       <button
-        className={`${textColor} bg-angel-orange py-1 px-2 rounded-sm shadow-sm uppercase text-sm font-semibold`}
+        className={`text-${textColor} flex py-1 px-2 rounded-sm uppercase text-sm font-semibold border-2 border-${textColor}`}
         onClick={() => install}
       >
-        <IoMdWallet className="text-lg mr-1" /> Install Extension
+        <IoMdWallet className="text-lg mr-1" />
+        Install
       </button>
     );
   } else {

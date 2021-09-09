@@ -5,13 +5,13 @@ import { routes } from "types/types";
 const NavMenu = () => {
   const { textColor } = useHeaderColors();
   const linkStyles = {
-    className: `uppercase ${textColor}`,
+    className: `uppercase text-${textColor}`,
     activeClassName: "font-bold",
   };
 
   return (
     <ul
-      className={`${textColor} hidden md:flex justify-self-end  font-body text-base mr-2`}
+      className={`text-${textColor} hidden md:flex justify-self-end  font-body text-base mr-3`}
     >
       <li className="mr-4">
         <NavLink to={routes.tca} {...linkStyles}>

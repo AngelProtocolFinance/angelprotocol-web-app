@@ -7,7 +7,7 @@ export default function Contact() {
   let form = (
     <div className="my-10 flex flex-col items-center">
       <p className="mb-3 text-blue-accent">contact form is loading</p>
-      <BlockLoader size={20} thickness={4} color={"blue-accent"} />
+      <BlockLoader size="20" thickness="4" color={"blue-accent"} />
     </div>
   );
 

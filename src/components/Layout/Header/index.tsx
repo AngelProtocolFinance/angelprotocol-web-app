@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <header
-      className={`grid fixed w-full ${bgColor} h-24 z-10 transition-shadow`}
+      className={`grid fixed w-full bg-${bgColor} h-24 z-10 transition-shadow`}
     >
       <nav className="container mx-auto flex justify-between items-center px-5">
         <Link to="/">
@@ -20,12 +20,12 @@ const Header = () => {
         <div className="w-2/6 container mx-auto flex justify-end items-center">
           <Switch>
             <Route path="/login">
-              <p className={`font-bold ${textColor} font-lg uppercase`}>
+              <p className={`font-bold text-${textColor} font-lg uppercase`}>
                 give once, give forever
               </p>
             </Route>
             <Route path="/">
-              <div className={`flex font-regular text-base ${textColor} `}>
+              <div className={`flex font-regular text-base text-${textColor} `}>
                 <TerraConnector />
               </div>
             </Route>
