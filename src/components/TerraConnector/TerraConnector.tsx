@@ -57,7 +57,9 @@ export default function TerraConnector() {
                 onClick={handleCopy(wallets[0].terraAddress)}
               >
                 <img
-                  className={`${animation && "animate-iconPing"}`}
+                  className={`${
+                    animation && "animate-iconPing"
+                  } cursor-pointer`}
                   onClick={() => setAnimation(true)}
                   onAnimationEnd={() => setAnimation(false)}
                   src={copyIcon}
