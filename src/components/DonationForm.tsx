@@ -37,6 +37,9 @@ export function DonationForm(props: DonationFormProps) {
   const connectedWallet = useConnectedWallet();
   const [isSubmitDonation, setIsSubmitDonation] = useState(false);
 
+  const currentNetwork = "localterra"; // TODO: should be:
+  // const currentNetwork = connectedWallet.network.name
+
   function openShareModal() {
     setIsOpen(true);
   }
