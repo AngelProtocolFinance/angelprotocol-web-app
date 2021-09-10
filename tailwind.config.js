@@ -90,8 +90,7 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ["disabled", "active"],
-      textColor: ["active"],
+      backgroundColor: ["disabled"],
     },
   },
   plugins: [],
