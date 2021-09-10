@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Home from "pages/Home/Home";
 import Login from "pages/Login/Login";
 import Contact from "pages/Contact/Contact";
@@ -12,6 +12,7 @@ import HeaderColorProvider from "contexts/HeaderColorProvider";
 
 const App = () => {
   const appBackround = useAppBackground();
+  const location = useLocation();
 
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
@@ -20,10 +21,12 @@ const App = () => {
       </HeaderColorProvider>
 
       <Switch>
+        <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.login} component={Login} />
         <Route path={routes.tca} component={TCA} />
         <Route exact path={routes.home} component={Home} />
+        <Redirect from="*" to={routes.home} />
       </Switch>
       <Footer />
     </div>
