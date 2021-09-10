@@ -18,6 +18,7 @@ import {
   MsgExecuteContract,
   StdFee,
 } from "@terra-money/terra.js";
+import useSlider from "hooks/useSlider";
 
 interface DonationFormProps {
   pushTransactionStatus: any;
@@ -25,11 +26,12 @@ interface DonationFormProps {
 
 export function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
+  const { percentage, handleSlide, handleSlideEnd } = useSlider();
 
   const [isTypingAmount, setIsTypingAmount] = useState(false);
   const [amountToDonate, setAmountToDonate] = useState(0);
   const [amountTyped, setAmountTyped] = useState(0);
-  const [percentage, setPercentage] = useState(0);
+
   const [modalIsOpen, setIsOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const connectedWallet = useConnectedWallet();
@@ -57,12 +59,6 @@ export function DonationForm(props: DonationFormProps) {
     setIsTypingAmount(true);
     setAmountToDonate(0);
   };
-
-  const onSliderChange = (value: any) => {
-    setPercentage(value);
-  };
-
-  const onAfterChange = (value: any) => {};
 
   const donate = async () => {
     setIsSubmitDonation(true);
@@ -221,8 +217,8 @@ export function DonationForm(props: DonationFormProps) {
             </p>
             <Slider
               value={percentage}
-              onChange={onSliderChange}
-              onAfterChange={onAfterChange}
+              onChange={handleSlide}
+              onAfterChange={handleSlideEnd}
               className="w-full h-4 my-3 ml-2"
             />
             <div className="flex justify-between items-center text-xs">

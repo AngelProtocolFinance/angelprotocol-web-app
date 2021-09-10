@@ -20,7 +20,9 @@ export default {
 const Template: ComponentStory<typeof TerraConnector> = (args) => {
   return (
     <StaticWalletProvider defaultNetwork={testnet} {...args}>
-      <TerraConnector />
+      <div style={{ background: "black", width: "20rem", display: "flex" }}>
+        <TerraConnector />
+      </div>
     </StaticWalletProvider>
   );
 };
@@ -37,6 +39,7 @@ NotConnected.args = {
 export const Connected = Template.bind({});
 Connected.args = {
   status: WalletStatus.WALLET_CONNECTED,
+  availableConnectTypes: [ConnectType.CHROME_EXTENSION],
   wallets: [
     {
       connectType: ConnectType.CHROME_EXTENSION,
