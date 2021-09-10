@@ -1,4 +1,3 @@
-import Search from "components/Search/Search";
 import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { NavLink } from "react-router-dom";
 import { routes } from "types/types";

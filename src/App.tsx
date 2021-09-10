@@ -1,6 +1,6 @@
 import "react-toastify/dist/ReactToastify.css";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
-import Footer from "components/Layout/Footer";
+import Footer from "components/Footer/Footer";
 import useAppBackground from "hooks/useAppBackground";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
