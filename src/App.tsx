@@ -1,5 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Home from "pages/Home/Home";
 import Login from "pages/Login/Login";
 import Contact from "pages/Contact/Contact";
@@ -12,6 +12,7 @@ import HeaderColorProvider from "contexts/HeaderColorProvider";
 
 const App = () => {
   const appBackround = useAppBackground();
+  const location = useLocation();
 
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
