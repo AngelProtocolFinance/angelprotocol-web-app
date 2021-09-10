@@ -67,11 +67,7 @@ export default function TerraConnector() {
               </span>
               <div className="flex justify-between items-center relative">
                 <button {...buttonProps}>
-                  <img
-                    src={moreIcon}
-                    alt="More Options"
-                    title="More Options"
-                  />
+                  <img src={moreIcon} alt="More Options" title="More Options" />
                 </button>
                 <div
                   className={
