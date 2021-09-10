@@ -27,7 +27,7 @@ export default function Connector() {
     return (
       <button
         onClick={handleClick}
-        className={`text-${textColor} flex py-1 px-2 rounded-sm uppercase text-sm font-semibold border-2 border-${textColor}`}
+        className={`text-${textColor} hover:text-opacity-75 flex py-1 px-2 rounded-sm uppercase text-sm font-semibold border-2 border-${textColor} hover:border-opacity-75`}
       >
         <IoMdWallet className="text-lg mr-1" />{" "}
         {isConnected ? "Disconnect" : "Connect"}
