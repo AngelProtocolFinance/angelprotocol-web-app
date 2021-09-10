@@ -26,7 +26,7 @@ const App = () => {
         <Route path={routes.login} component={Login} />
         <Route path={routes.tca} component={TCA} />
         <Route exact path={routes.home} component={Home} />
-        <Redirect from="*" to="/donate" />
+        <Redirect from="*" to={routes.home} />
       </Switch>
       <Footer />
     </div>
