@@ -1,19 +1,14 @@
-import copyIcon from "../../assets/images/copy.png";
-import moreIcon from "../../assets/images/more.png";
-import useCopyAddress from "./useCopyAddress";
+import Wallet from "components/Wallet/Wallet";
 import useTerraConnector from "./useTerraConnector";
 
 export default function TerraConnector() {
-  const { buttonProps, isOpen, handleCopy } = useCopyAddress();
   const {
     status,
-    wallets,
     WalletStatus,
     isInstallable,
     isConnectible,
     handleConnect,
     handleInstall,
-    handleDisconnect,
   } = useTerraConnector();
 
   switch (status) {
@@ -27,43 +22,24 @@ export default function TerraConnector() {
       return (
         <div>
           {isConnectible && (
-            <button onClick={handleConnect}>Connect Chrome Extension</button>
+            <button
+              className="uppercase bg-orange rounded-xl w-40 h-8 d-flex justify-center items-center text-sm"
+              onClick={handleConnect}
+            >
+              Connect Wallet
+            </button>
           )}
           {isInstallable && (
-            <button onClick={handleInstall}>Install Chrome Extension</button>
+            <button
+              className="uppercase bg-leaf-green rounded-xl w-40 h-8 d-flex justify-center items-center text-sm"
+              onClick={handleInstall}
+            >
+              Install Wallet
+            </button>
           )}
         </div>
       );
     case WalletStatus.WALLET_CONNECTED:
-      return (
-        <div>
-          {wallets.length > 0 && (
-            <div className="flex justify-between items-center ml-5">
-              <p>{wallets[0].terraAddress.substr(0, 15) + "..."}</p>
-              <span
-                className="mx-2"
-                onClick={handleCopy(wallets[0].terraAddress)}
-              >
-                <img src={copyIcon} alt="AngelProtocol" />
-              </span>
-              <div className="flex justify-between items-center relative">
-                <button {...buttonProps}>
-                  <img src={moreIcon} alt="AngelProtocol" />
-                </button>
-                <div
-                  className={
-                    isOpen
-                      ? "block p-5 absolute right-0 top-10 bg-white text-black rounded-md"
-                      : "hidden p-5 absolute right-0 top-10 bg-white text-black rounded-md"
-                  }
-                  role="menu"
-                >
-                  <button onClick={handleDisconnect}>Disconnect</button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
+      return <Wallet />;
   }
 }
