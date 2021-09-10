@@ -47,6 +47,9 @@ module.exports = {
         12: "12px",
         69: "69px",
       },
+      animation: {
+        iconPing: "ping 100ms",
+      },
     },
     fontFamily: {
       serif:
