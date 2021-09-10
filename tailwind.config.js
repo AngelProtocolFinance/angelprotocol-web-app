@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or "media" or "class"
   theme: {
     extend: {
+      animation: {
+        iconPing: "ping 100ms",
+      },
       backgroundImage: {
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
@@ -87,7 +90,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      backgroundColor: ["disabled"],
+      backgroundColor: ["disabled", "active"],
+      textColor: ["active"],
     },
   },
   plugins: [],

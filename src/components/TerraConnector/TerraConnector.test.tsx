@@ -5,7 +5,7 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
-import Wallet from "./Wallet";
+import TerraConnector from "./TerraConnector";
 
 const testnet: NetworkInfo = {
   name: "testnet",
@@ -17,13 +17,12 @@ describe("Renders text according to wallet status", () => {
   test("wallet is initializing'", () => {
     render(
       <StaticWalletProvider defaultNetwork={testnet}>
-        <Wallet />
+        <TerraConnector />
       </StaticWalletProvider>
     );
-
-    //only div loaders are present during initialization
-    const connectButtonEl = screen.queryByRole("button");
-    expect(connectButtonEl).toBeNull();
+    screen.debug();
+    const connectButtonEl = screen.getByRole("button");
+    expect(connectButtonEl).toHaveTextContent(/initializing/i);
   });
 
   test("wallet is not connected'", () => {
@@ -33,9 +32,10 @@ describe("Renders text according to wallet status", () => {
         status={WalletStatus.WALLET_NOT_CONNECTED}
         availableConnectTypes={[ConnectType.CHROME_EXTENSION]}
       >
-        <Wallet />
+        <TerraConnector />
       </StaticWalletProvider>
     );
+    screen.debug();
     const connectButtonEl = screen.getByRole("button");
     expect(connectButtonEl).toHaveTextContent(/connect/i);
   });
@@ -47,9 +47,10 @@ describe("Renders text according to wallet status", () => {
         status={WalletStatus.WALLET_NOT_CONNECTED}
         availableInstallTypes={[ConnectType.CHROME_EXTENSION]}
       >
-        <Wallet />
+        <TerraConnector />
       </StaticWalletProvider>
     );
+    screen.debug();
     const connectButtonEl = screen.getByRole("button");
     expect(connectButtonEl).toHaveTextContent(/install/i);
   });
@@ -59,15 +60,17 @@ describe("Renders text according to wallet status", () => {
       <StaticWalletProvider
         defaultNetwork={testnet}
         status={WalletStatus.WALLET_CONNECTED}
-        availableConnectTypes={[ConnectType.CHROME_EXTENSION]}
+        wallets={[
+          {
+            connectType: ConnectType.CHROME_EXTENSION,
+            terraAddress: "terra1235",
+          },
+        ]}
       >
-        <Wallet />
+        <TerraConnector />
       </StaticWalletProvider>
     );
-
     screen.debug();
-
-    const connectButtonEl = screen.getByRole("button");
-    expect(connectButtonEl).toHaveTextContent(/disconnect/i);
+    expect(screen.getByRole("heading")).toHaveTextContent(/terra1235/i);
   });
 });
