@@ -9,9 +9,8 @@ const Dashboard = () => {
   const title = "17 UNTIED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)";
 
   return (
-    <div className="container mx-auto grid grid-rows-dashboard px-5">
-      <div className="opacity-10 absolute inset-0 bg-no-repeat bg-banner-charity bg-cover h-72 z-10"></div>
-      <div className="text-center text-white my-10 z-30">
+    <div className="grid grid-rows-dashboard pt-24">
+      <div className="grid content-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover h-72">
         <p className="uppercase text-2xl xl:text-4xl">
           we categorize our charities based on the
         </p>
@@ -23,7 +22,7 @@ const Dashboard = () => {
           learn more
         </button>
       </div>
-      <section className="flex-auto">
+      <section className="flex-auto container mx-auto px-5 mt-5">
         {charityCategories.map((category) => {
           return <CharityCategory {...category} key={category.id} />;
         })}
