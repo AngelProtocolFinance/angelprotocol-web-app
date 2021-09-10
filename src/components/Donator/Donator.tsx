@@ -18,7 +18,9 @@ export default function Donator() {
         />
       </div>
 
-      <button className="bg-angel-orange py-1 px-">Donate</button>
+      <button className="bg-angel-orange hover:bg-orange rounded-sm py-1 px-2">
+        Donate
+      </button>
     </form>
   );
 }
