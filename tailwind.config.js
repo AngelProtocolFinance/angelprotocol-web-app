@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {
+      animation: {
+        iconPing: "ping 100ms",
+      },
       backgroundImage: {
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
