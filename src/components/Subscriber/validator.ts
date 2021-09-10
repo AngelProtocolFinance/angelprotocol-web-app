@@ -7,9 +7,9 @@ type Errors = {
 export default function validator(values: Values) {
   const errors: Errors = { email: undefined };
   if (!values.email) {
-    errors.email = "email is required";
+    errors.email = "Email is required.";
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "email is invalid";
+    errors.email = "Email is invalid.";
   } else {
     return {};
   }

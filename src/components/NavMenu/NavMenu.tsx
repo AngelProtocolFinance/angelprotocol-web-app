@@ -5,8 +5,8 @@ import { routes } from "types/types";
 const NavMenu = () => {
   const { textColor } = useHeaderColors();
   const linkStyles = {
-    className: `uppercase text-${textColor} py-1 border-b border-transparent`,
-    activeClassName: "border-current",
+    className: `uppercase text-${textColor} hover:text-opacity-75`,
+    activeClassName: "font-bold",
   };
 
   return (

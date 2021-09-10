@@ -44,7 +44,7 @@ export default function useLogin() {
   function validator(values: Values) {
     const errors = { password: "" };
     if (!values.password) {
-      errors.password = "please enter your password.";
+      errors.password = "Please enter your password.";
     } else {
       return {};
     }
