@@ -15,7 +15,7 @@ export default function MobileNav() {
     >
       <li className="mb-2">
         <NavLink to={routes.tca} {...linkStyles}>
-          Donate Now
+          Donate
         </NavLink>
       </li>
       <li className="mb-2">

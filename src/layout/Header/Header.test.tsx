@@ -5,7 +5,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Header from "./index";
+import Header from "./Header";
 
 const testnet: NetworkInfo = {
   name: "testnet",
@@ -34,8 +34,8 @@ describe("Header renders nav depending on route", () => {
       </Wrapper>
     );
 
-    const navEl = screen.getByRole("button");
-    expect(navEl).toBeInTheDocument();
+    const terraConnectorEl = screen.getByText(/initializing/i);
+    expect(terraConnectorEl).toBeInTheDocument();
 
     const titleEL = screen.queryByText(/give/i);
     expect(titleEL).toBeNull();
@@ -48,7 +48,7 @@ describe("Header renders nav depending on route", () => {
     );
 
     screen.debug();
-    const navEl = screen.queryByText("button");
+    const navEl = screen.queryByText(/initializing/i);
     expect(navEl).toBeNull();
 
     const titleEL = screen.getByText(/give/i);

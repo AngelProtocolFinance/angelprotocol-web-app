@@ -1,20 +1,26 @@
-import filterImg from "assets/images/filter.png";
-import searchImg from "assets/images/search.png";
+import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { useState } from "react";
+import { BsFilterRight } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
 export default function Search() {
+  const { textColor } = useHeaderColors();
   const [isOpenSearch, setOpenSearch] = useState(false);
+  function toggleSearch() {
+    setOpenSearch((prevState) => !prevState);
+  }
+
   return (
-    <div className="flex flex-row search-bar items-center">
-      <img src={filterImg} className="w-5 h-5 mr-2" />
-      <img
-        className="w-5 h-5 mr-1"
-        src={searchImg}
-        onClick={() => setOpenSearch(!isOpenSearch)}
-      />
+    <div className="flex flex-row items-center">
+      <BsFilterRight className={`text-${textColor} text-xl`} />
+      <button onClick={toggleSearch}>
+        <FiSearch className={`text-${textColor} text-xl mx-2`} />
+      </button>
       {isOpenSearch && (
-        <div className="rounded-xl h-8 border-gray-300 p-1 bg-white mr-1">
+        <div
+          className={`rounded-xl h-8 border border-${textColor} p-1 bg-white mr-1`}
+        >
           <input
-            className="border-transparent outline-none text-black w-52 pl-1"
+            className={`tex-sm md:text-base text-${textColor} outline-none text-black w-52 pl-1`}
             type="text"
             placeholder="Search"
             name="searchkey"

@@ -5,7 +5,7 @@ import {
 } from "@terra-money/wallet-provider";
 
 import { MemoryRouter } from "react-router-dom";
-import Header from "./index";
+import Header from "./Header";
 
 const testnet: NetworkInfo = {
   name: "testnet",

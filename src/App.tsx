@@ -10,10 +10,10 @@ import Goals from "pages/Goals";
 import Login from "pages/Login/Login";
 import Register from "pages/registration/index";
 import Contact from "pages/Contact/Contact";
+import TCA from "pages/TCA/TCA";
 import { routes } from "./types/types";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
-import TCA from "pages/TCA/TCA";
-import Head from "components/Head/Head";
+import Header from "./layout/Header/Header";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -22,7 +22,7 @@ const App = () => {
   return (
     <div className={`grid grid-rows-app ${appBackround}`}>
       <HeaderColorProvider>
-        <Head />
+        <Header />
       </HeaderColorProvider>
 
       <Switch>
