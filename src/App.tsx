@@ -19,7 +19,6 @@ import jwt_decode from "jwt-decode";
 // import About from "pages/About";
 // import Goals from "pages/Goals";
 // import Register from "pages/registration/index";
-// import PrivacyPolicy from "pages/PrivacyPolicy";
 
 const App = () => {
   const location = useLocation();
