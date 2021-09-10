@@ -5,7 +5,7 @@ import {
   StaticWalletProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
-import TerraConnector from "./TerraConnector";
+import Wallet from "./Wallet";
 
 const testnet: NetworkInfo = {
   name: "testnet",
@@ -13,27 +13,18 @@ const testnet: NetworkInfo = {
   lcd: "https://tequila-lcd.terra.dev",
 };
 export default {
-  title: "Components/Terra Connector",
-  component: TerraConnector,
-} as ComponentMeta<typeof TerraConnector>;
+  title: "Components/Wallet",
+  component: Wallet,
+} as ComponentMeta<typeof Wallet>;
 
-const Template: ComponentStory<typeof TerraConnector> = (args) => {
+const Template: ComponentStory<typeof Wallet> = (args) => {
   return (
     <StaticWalletProvider defaultNetwork={testnet} {...args}>
       <div style={{ background: "black", width: "20rem", display: "flex" }}>
-        <TerraConnector />
+        <Wallet />
       </div>
     </StaticWalletProvider>
   );
-};
-
-export const Initializing = Template.bind({});
-Initializing.args = {};
-
-export const NotConnected = Template.bind({});
-NotConnected.args = {
-  status: WalletStatus.WALLET_NOT_CONNECTED,
-  availableConnectTypes: [ConnectType.CHROME_EXTENSION],
 };
 
 export const Connected = Template.bind({});
@@ -46,10 +37,4 @@ Connected.args = {
       terraAddress: "terra1235",
     },
   ],
-};
-
-export const NeedsInstall = Template.bind({});
-NeedsInstall.args = {
-  status: WalletStatus.WALLET_NOT_CONNECTED,
-  availableInstallTypes: [ConnectType.CHROME_EXTENSION],
 };
