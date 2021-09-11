@@ -22,18 +22,22 @@ const Footer = () => {
       </section>
       <section className="grid justify-items-center content-center lg:order-1">
         <ul className="flex">
-          {links.map(({ id, Icon, color, link }) => {
+          {links.map(({ id, Icon, color, link, title }) => {
             return (
               <li key={id}>
-                <a href={link} className={`text-${color} block m-2`}>
-                  <Icon className="w-8 h-8" />
+                <a
+                  href={link}
+                  target="_blank"
+                  className={`text-${color} hover:text-opacity-75 block m-2`}
+                >
+                  <Icon className="w-8 h-8" title={title} />
                 </a>
               </li>
             );
           })}
         </ul>
         <p className="font-body text-xs uppercase text-white text-center">
-          Copyright 2021 angelprotocol. All rights reserved.
+          Copyright 2021 Angel Protocol. All rights reserved.
         </p>
       </section>
     </footer>
@@ -48,24 +52,28 @@ const links = [
     Icon: AiOutlineTwitter,
     link: "https://twitter.com/angelprotocol",
     color: "gray-50",
+    title: "Twitter",
   },
   {
     id: 2,
     Icon: FaTelegramPlane,
     link: "https://t.me/angelprotocoI",
     color: "blue-50",
+    title: "Telegram",
   },
   {
     id: 3,
     Icon: AiFillYoutube,
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
     color: "red-600",
+    title: "YouTube",
   },
   {
     id: 4,
     Icon: AiFillMediumSquare,
     link: "https://angelprotocol.medium.com/",
     color: "gray-800",
+    title: "Medium",
   },
 ];
 

@@ -1,6 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or "media" or "class"
+  darkMode: false,
   theme: {
     extend: {
       animation: {
@@ -85,6 +85,9 @@ module.exports = {
       inset: {
         12: "12px",
         69: "69px",
+      },
+      animation: {
+        iconPing: "ping 100ms",
       },
     },
   },
