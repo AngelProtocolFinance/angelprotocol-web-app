@@ -24,8 +24,7 @@ interface DonationFormProps {
   pushTransactionStatus: any;
 }
 
-// remove default keyword here
-export default function DonationForm(props: DonationFormProps) {
+export function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
 

@@ -1,5 +1,4 @@
-// import Donator from "components/Donator/Donator";
-import Donator from "components/DonationForm";
+import Donator from "components/Donator/Donator";
 import { useGetToken, useSetToken } from "contexts/AuthProvider";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { Redirect } from "react-router";
@@ -24,7 +23,7 @@ export default function TCA() {
 
   return (
     <div className="pt-24 grid place-items-center">
-      <Donator pushTransactionStatus={"pushTransactionStatus"} />
+      <Donator />
     </div>
   );
 }
