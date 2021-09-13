@@ -37,9 +37,6 @@ export function DonationForm(props: DonationFormProps) {
   const connectedWallet = useConnectedWallet();
   const [isSubmitDonation, setIsSubmitDonation] = useState(false);
 
-  // const currentNetwork = "localterra"; // TODO: should be:
-  // const currentNetwork = connectedWallet.network.name
-
   function openShareModal() {
     setIsOpen(true);
   }
@@ -62,7 +59,7 @@ export function DonationForm(props: DonationFormProps) {
 
   const donate = async () => {
     setIsSubmitDonation(true);
-    if (!connectedWallet) return; // TODO (borodanov): should be:
+    if (!connectedWallet) return;
     const currentNetwork = connectedWallet.network.name;
 
     const execute = new MsgExecuteContract(

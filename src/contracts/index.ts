@@ -1,32 +1,32 @@
-interface Iincrement {
+interface incrementConfig {
   increment: any;
 }
 
-interface Iget_count {
+interface get_countConfig {
   get_count: any;
 }
 
-interface Iaddresses {
+interface addressesConfig {
   [key: string]: string;
 }
 
-interface IhandleMessages {
-  depositDonor: Iincrement;
+interface handleMessagesConfig {
+  depositDonor: incrementConfig;
 }
 
-interface IqueryMessages {
-  getBalance: Iget_count;
+interface queryMessagesConfig {
+  getBalance: get_countConfig;
 }
 
-interface IAngelProtocolIndexFund {
+interface AngelProtocolIndexFundConfig {
   AngelProtocolIndexFund: {
-    address: Iaddresses;
-    handleMessages: IhandleMessages;
-    queryMessages: IqueryMessages;
+    address: addressesConfig;
+    handleMessages: handleMessagesConfig;
+    queryMessages: queryMessagesConfig;
   };
 }
 
-const contracts: IAngelProtocolIndexFund = {
+const contracts: AngelProtocolIndexFundConfig = {
   AngelProtocolIndexFund: {
     address: {
       localterra: "terra18vd8fpwxzck93qlwghaj6arh4p7c5n896xzem5",
