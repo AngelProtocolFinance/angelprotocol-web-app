@@ -16,7 +16,7 @@ const localterra = {
 
 const testnet = {
   name: "testnet",
-  chainID: "tequila-0004",
+  chainID: "bombay-10",
   lcd: "https://tequila-lcd.terra.dev",
 };
 
