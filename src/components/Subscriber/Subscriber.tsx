@@ -1,10 +1,13 @@
 import LineLoader from "components/Loader/LineLoader";
-import Modal from "components/Modal/Modal";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import ErrorPopup from "./ErrorPopup";
+import Announcer from "./Announcer";
 import handleSubscribe from "./handleSubscribe";
-import SuccessPopup from "./SuccessPopup";
-import validator from "./validator";
+import { subscriberSchema } from "./subscriberSchema";
+
+export enum Status {
+  success = "success",
+  failed = "failed",
+}
 
 export type Handler = () => void;
 
@@ -16,17 +19,16 @@ export default function Subscriber() {
   return (
     <Formik
       initialValues={{ email: "" }}
-      validate={validator}
+      validationSchema={subscriberSchema}
       onSubmit={handleSubscribe}
     >
       {({ isSubmitting, status, resetForm }) => (
         <>
-          {renderModal(status, resetForm)}
+          <Announcer status={status} resetForm={resetForm} />
           <Form
             autoComplete="off"
             className="flex flex-col items-center lg:items-start"
           >
-            <span>{status}</span>
             <Field
               placeholder="Email"
               disabled={isSubmitting}
@@ -47,7 +49,7 @@ export default function Subscriber() {
               className="block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-sm shadow-md w-36 h-10"
             >
               {isSubmitting ? (
-                <LineLoader color="thin-grey" size={"4"} spacing={"2"} />
+                <LineLoader color="white" size={"4"} spacing={"2"} />
               ) : (
                 "Subscribe"
               )}
@@ -57,37 +59,4 @@ export default function Subscriber() {
       )}
     </Formik>
   );
-}
-
-function renderModal(status: string, resetForm: Handler) {
-  switch (status) {
-    case "success":
-      return (
-        <Modal
-          render={(closeModal) => (
-            <SuccessPopup
-              clickHandler={() => {
-                resetForm();
-                closeModal();
-              }}
-            />
-          )}
-        />
-      );
-    case "failed":
-      return (
-        <Modal
-          render={(closeModal) => (
-            <ErrorPopup
-              clickHandler={() => {
-                resetForm();
-                closeModal();
-              }}
-            />
-          )}
-        />
-      );
-    default:
-      return null;
-  }
 }

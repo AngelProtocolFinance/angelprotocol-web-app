@@ -7,7 +7,7 @@ type Props = {
 
 export default function ErrorPopup({ clickHandler }: Props) {
   return (
-    <div className="bg-white-grey w-72 rounded-sm shadow-lg">
+    <div className="fixed bg-white-grey w-72 rounded-sm shadow-lg">
       <div className="bg-red-700 text-white font-semibold p-2 flex items-center">
         <AiFillWarning className="mr-2" /> Error
       </div>
