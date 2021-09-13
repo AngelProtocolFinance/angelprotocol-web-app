@@ -24,7 +24,8 @@ interface DonationFormProps {
   pushTransactionStatus: any;
 }
 
-export function DonationForm(props: DonationFormProps) {
+// remove default keyword here
+export default function DonationForm(props: DonationFormProps) {
   const { pushTransactionStatus } = props;
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
 
@@ -37,7 +38,7 @@ export function DonationForm(props: DonationFormProps) {
   const connectedWallet = useConnectedWallet();
   const [isSubmitDonation, setIsSubmitDonation] = useState(false);
 
-  const currentNetwork = "localterra"; // TODO: should be:
+  // const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
 
   function openShareModal() {
@@ -63,7 +64,7 @@ export function DonationForm(props: DonationFormProps) {
   const donate = async () => {
     setIsSubmitDonation(true);
     if (!connectedWallet) return; // TODO (borodanov): should be:
-    // const currentNetwork = connectedWallet.network.name
+    const currentNetwork = connectedWallet.network.name;
 
     const execute = new MsgExecuteContract(
       connectedWallet.terraAddress,
