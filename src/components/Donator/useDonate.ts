@@ -22,7 +22,8 @@ export default function useDonate() {
       return;
     }
 
-    //what is the right amout of fee??
+    //ust balance is not enough, also cancel transaction
+
     try {
       const indexFund = new Indexfund(
         connectedWallet.terraAddress,
