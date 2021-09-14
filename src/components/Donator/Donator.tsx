@@ -1,25 +1,10 @@
+import Announcer from "./Announcer";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import useUSTBalance from "hooks/useUSTBalance";
 import { donatorSchema } from "./donatorSchema";
 import useDonate from "./useDonate";
 
-export interface Values {
-  amount: string;
-}
-
-export enum Status {
-  success = "success",
-  canceled = "cancelled",
-  failed = "failed",
-}
-
-export interface ErrorMsg {
-  status: Status;
-  message: string;
-}
-
 export default function Donator() {
-  const { handleDonate, UST_balance, network } = useDonate();
+  const { result, setResult, handleDonate, UST_balance, network } = useDonate();
 
   return (
     <Formik
@@ -27,45 +12,47 @@ export default function Donator() {
       onSubmit={handleDonate}
       validationSchema={donatorSchema}
     >
-      {({ isSubmitting, status }) => {
+      {({ isSubmitting }) => {
         return (
-          <Form className="flex flex-col items-center bg-white rounded-sm shadow-md p-2 h-60">
-            <div>
-              <p>Network: {network.toUpperCase()}</p>
-              <p>Balance: {UST_balance} UST</p>
-              <p>{status?.message}</p>
-            </div>
-            <p className="text-center my-5">Specify donation amount</p>
-            <div className="border mb-1">
-              <label
-                htmlFor="amount"
-                className="bg-blue-400 text-angel-grey text-lg p-2 rounded-sm ml-1"
-              >
-                UST :
-              </label>
+          <>
+            <Announcer resetResult={setResult} result={result} />
+            <Form className="flex flex-col items-center bg-white rounded-sm shadow-md p-2 h-60">
+              <div>
+                <p>Network: {network.toUpperCase()}</p>
+                <p>Balance: {UST_balance} UST</p>
+              </div>
+              <p className="text-center my-5">Specify donation amount</p>
+              <div className="border mb-1">
+                <label
+                  htmlFor="amount"
+                  className="bg-blue-400 text-angel-grey text-lg p-2 rounded-sm ml-1"
+                >
+                  UST :
+                </label>
 
-              <Field
-                className="bg-transparent text-lg focus:outline-none text-angel-grey pl-2 p-2"
-                id="amount"
+                <Field
+                  className="bg-transparent text-lg focus:outline-none text-angel-grey pl-2 p-2"
+                  id="amount"
+                  name="amount"
+                  autoComplete="off"
+                  type="text"
+                />
+              </div>
+              <ErrorMessage
                 name="amount"
-                autoComplete="off"
-                type="text"
+                className="text-xs self-start text-red-400 pl-2"
+                component="div"
               />
-            </div>
-            <ErrorMessage
-              name="amount"
-              className="text-xs self-start text-red-400 pl-2"
-              component="div"
-            />
 
-            <button
-              disabled={isSubmitting}
-              type="submit"
-              className="disabled:bg-angel-grey bg-angel-orange py-1 px-2 rounded-sm shadow-md mt-4"
-            >
-              Donate
-            </button>
-          </Form>
+              <button
+                disabled={isSubmitting}
+                type="submit"
+                className="disabled:bg-angel-grey bg-angel-orange py-1 px-2 rounded-sm shadow-md mt-4"
+              >
+                Donate
+              </button>
+            </Form>
+          </>
         );
       }}
     </Formik>

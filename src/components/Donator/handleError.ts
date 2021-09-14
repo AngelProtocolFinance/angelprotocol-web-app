@@ -4,20 +4,20 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-dev/wallet-types";
-import { Status, ErrorMsg } from "./Donator";
+import { Status, Result } from "./types";
 
-export default function handleError(error: unknown): ErrorMsg {
+export default function handleError(error: unknown): Result {
   if (error instanceof UserDenied) {
-    return { status: Status.canceled, message: "Transaction aborted" };
+    return { status: Status.error, message: "Transaction aborted" };
   } else if (error instanceof CreateTxFailed) {
-    return { status: Status.failed, message: "Transaction Failed" };
+    return { status: Status.error, message: "Transaction error" };
   } else if (error instanceof Timeout) {
-    return { status: Status.failed, message: "Transaction timeout" };
+    return { status: Status.error, message: "Transaction timeout" };
   } else if (error instanceof TxUnspecifiedError) {
-    return { status: Status.failed, message: "Unknown error occured" };
+    return { status: Status.error, message: "Unknown error occured" };
   } else {
     return {
-      status: Status.failed,
+      status: Status.error,
       message: "Unknown error occured",
     };
   }

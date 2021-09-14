@@ -7,6 +7,7 @@ import { subscriberSchema } from "./subscriberSchema";
 export enum Status {
   success = "success",
   failed = "failed",
+  initial = "initial",
 }
 
 export type Handler = () => void;
