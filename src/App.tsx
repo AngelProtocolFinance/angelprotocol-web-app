@@ -15,7 +15,7 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div className={`grid grid-rows-app ${appBackround}`}>
+    <div className={`grid grid-rows-1a ${appBackround}`}>
       <HeaderColorProvider>
         <Head />
       </HeaderColorProvider>

@@ -22,7 +22,7 @@ const Head = () => {
       ref={shadowRef}
       className={`grid fixed w-full bg-${bgColor} h-24 z-10 transition-shadow `}
     >
-      <nav className="md:container md:mx-auto w-full grid grid-cols-nav items-center justify-items-end md:justify-items-center px-5">
+      <nav className="md:container md:mx-auto w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center px-5">
         <Link to="/">
           <Logo />
         </Link>

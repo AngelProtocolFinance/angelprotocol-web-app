@@ -5,7 +5,7 @@ import mgmtIcon from "assets/icons/gear.svg";
 
 export default function Specs() {
   return (
-    <section className="h-auto lg:h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent px-10 pb-10 lg:pb-0">
+    <section className="h-auto lg:h-specs grid grid-rows-a1 justify-items-center mt-20  text-blue-accent px-10 pb-10 lg:pb-0">
       <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center">
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
