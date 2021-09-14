@@ -28,6 +28,7 @@ const Footer = () => {
                 <a
                   href={link}
                   target="_blank"
+                  rel="noreferrer"
                   className={`text-${color} hover:text-opacity-75 block m-2`}
                 >
                   <Icon className="w-8 h-8" title={title} />
