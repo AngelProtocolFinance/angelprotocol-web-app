@@ -1,64 +1,45 @@
-import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  useHistory,
-} from "react-router-dom";
-import TerraConnector from "components/TerraConnector/TerraConnector";
-import Header from "components/Layout/Header";
-import Footer from "components/Layout/Footer";
+import { Switch, Route, Redirect, useLocation } from "react-router-dom";
+import Footer from "components/Footer/Footer";
+import useAppBackground from "hooks/useAppBackground";
 import Donate from "pages/Donate";
 import Dashboard from "pages/Dashboard";
-import Home from "pages/Home";
+import Home from "pages/Home/Home";
 import About from "pages/About";
 import Goals from "pages/Goals";
-import Login from "pages/Login";
+import Login from "pages/Login/Login";
 import Register from "pages/registration/index";
-import PrivacyPolicy from "pages/PrivacyPolicy";
-import { useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import Contact from "pages/Contact/Contact";
+import TCA from "pages/TCA/TCA";
+import { routes } from "./types/types";
+import HeaderColorProvider from "contexts/HeaderColorProvider";
+import Header from "./layout/Header/Header";
 
 const App = () => {
+  const appBackround = useAppBackground();
   const location = useLocation();
-  const history = useHistory();
-  const inLogin = /(login)|(register)/.test(location.pathname);
-  const appColor = /(login)/.test(location.pathname)
-    ? "bg-gradient-to-b from-thin-blue to-thin-grey"
-    : "bg-gradient-to-b from-thin-blue to-black-blue";
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!inLogin) {
-      if (token) {
-        const decoded_data: any = jwt_decode(token);
-        if (decoded_data.exp * 1000 <= Date.now()) {
-          history.replace("/login");
-        }
-      } else {
-        history.replace("/login");
-      }
-    }
-  }, []);
 
   return (
-    <div className={`grid grid-rows-app ${appColor}`}>
-      <Header hasMenu={!inLogin} hasTitle={inLogin} />
+    <div className={`grid grid-rows-app ${appBackround}`}>
+      <HeaderColorProvider>
+        <Header />
+      </HeaderColorProvider>
+
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-        <Route exact path="/test" component={TerraConnector} />
-        <Route exact path="/about" component={About} />
-        <Route exact path="/about-unsdgs" component={Goals} />
-        <Route exact path="/dashboard" component={Dashboard} />
-        <Route exact path="/donate" component={Donate} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route exact path="/" component={Home} />
-        <Redirect from="*" to="/donate" />
+        <Route path={routes.about} component={About} />
+        <Route path={routes.about_unsdgs} component={Goals} />
+        <Route path={routes.dashboard} component={Dashboard} />
+        <Route path={routes.donate} component={Donate} />
+        <Route path={routes.login} component={Login} />
+        <Route path={routes.register} component={Register} />
+        <Route path={routes.contact} component={Contact} />
+        <Route path={routes.tca} component={TCA} />
+        <Route path={`${routes.donate}/:charityId`} component={Donate} />
+        <Route exact path={routes.home} component={Home} />
+        <Redirect from="*" to={routes.donate} />
       </Switch>
-      <Footer hasMenu={!inLogin} />
+      <Footer />
     </div>
   );
 };
