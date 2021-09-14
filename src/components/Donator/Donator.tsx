@@ -26,7 +26,6 @@ export default function Donator() {
       validationSchema={donatorSchema}
     >
       {({ isSubmitting, status }) => {
-        console.log(status);
         return (
           <Form className="flex flex-col items-center bg-white rounded-sm shadow-md p-2 h-60">
             <span>{status?.message}</span>

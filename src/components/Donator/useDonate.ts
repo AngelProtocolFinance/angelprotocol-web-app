@@ -25,7 +25,7 @@ interface DepositMsg {
 
 //change contract address depending on the wallet network
 const contractAddress: AccAddress =
-  "terra19hajpu39cr9h25azwsgdaz98mc7ep774mt6bh";
+  "terra19hajpu39cr9h25azwsgdaz98mc7ejp774mt6ch";
 
 export default function useDonate() {
   const connectedWallet = useConnectedWallet();
@@ -71,6 +71,7 @@ export default function useDonate() {
       const result = await connectedWallet.post(transaction);
       console.log(result);
     } catch (error) {
+      console.log(error);
       const errorObj = handleError(error);
       actions.setStatus(errorObj);
     }

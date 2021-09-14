@@ -1,4 +1,3 @@
-// import { Handler, Status } from "./Subscriber";
 import Modal from "components/Modal/Modal";
 import SuccessPopup from "./SuccessPopup";
 import ErrorPopup from "./ErrorPopup";
