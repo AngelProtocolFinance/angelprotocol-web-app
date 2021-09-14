@@ -19,7 +19,7 @@ export default async function handleSubscribe(
     ],
     legalConsentOptions: {
       consent: {
-        consentToProcess: true,
+        consentToProcess: false,
         text: "Text that gives consent to process",
         communications: [
           {

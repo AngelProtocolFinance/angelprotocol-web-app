@@ -42,9 +42,7 @@ export default class Indexfund {
     UST_amount: number | string,
     split?: number
   ): CreateTxOptions {
-    console.log(this.chainID);
     const micro_UST_Amount = new Dec(UST_amount).mul(1_000_000).toNumber();
-
     const depositMessage = new MsgExecuteContract(
       this.walletAddress,
       Indexfund.indexFundAddresses[this.chainID],
@@ -62,4 +60,6 @@ export default class Indexfund {
       fee: Indexfund.fee,
     };
   }
+
+  //will add more transactions in the future
 }

@@ -1,14 +1,14 @@
 import Modal from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
-import { Handler, Status } from "./Subscriber";
+import { Result, ResultSetter, Status } from "./types";
 
 interface Props {
-  status: Status;
-  resetForm: Handler;
+  result: Result;
+  resetResult: ResultSetter;
 }
 
 export default function Announcer(props: Props) {
-  switch (props.status) {
+  switch (props.result.status) {
     case Status.success:
       return (
         <Modal
@@ -16,25 +16,25 @@ export default function Announcer(props: Props) {
             <Popup
               type="success"
               heading="Success"
-              message="Thank you for subscribing!"
+              message={props.result.message}
               acknowledge={() => {
-                props.resetForm();
+                props.resetResult({ status: Status.initial, message: "" });
                 modalCloser();
               }}
             />
           )}
         />
       );
-    case Status.failed:
+    case Status.error:
       return (
         <Modal
           render={(modalCloser) => (
             <Popup
               type="error"
               heading="Error"
-              message="Failed to subscribe."
+              message={props.result.message}
               acknowledge={() => {
-                props.resetForm();
+                props.resetResult({ status: Status.initial, message: "" });
                 modalCloser();
               }}
             />

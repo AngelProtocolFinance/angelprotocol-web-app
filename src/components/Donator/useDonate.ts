@@ -1,24 +1,30 @@
-import { FormikHelpers } from "formik";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Status, Values } from "./Donator";
+import { Status, Values, Result } from "./types";
 import handleError from "./handleError";
 import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
+import { useState } from "react";
+import { FormikHelpers } from "formik";
 
 export default function useDonate() {
+  const [result, setResult] = useState<Result>({
+    status: Status.initial,
+    message: "",
+  });
+
   const connectedWallet = useConnectedWallet();
   const UST_balance = useUSTBalance(connectedWallet);
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
-    //values.amount is properly formatted string | number at this point
+    //values.amount is properly formatted string | number at this point due to validation
     const UST_Amount = values.amount;
 
     actions.setSubmitting(true);
 
     if (!connectedWallet) {
-      actions.setStatus({
-        status: Status.failed,
+      setResult({
+        status: Status.error,
         message: "Wallet is not connected",
       });
       //set error message
@@ -26,14 +32,17 @@ export default function useDonate() {
     }
 
     // coerce(+) UST_amount to number
+    // plus fees??
     if (UST_balance < +UST_Amount) {
-      actions.setStatus({
-        status: Status.failed,
+      setResult({
+        status: Status.error,
         message: "Not enough balance",
       });
       //set error message
       return;
     }
+
+    //should also check if network is on mainnet not actual donations
 
     try {
       const indexFund = new Indexfund(
@@ -42,16 +51,24 @@ export default function useDonate() {
       );
       const transaction = indexFund.createDepositTransaction(1, UST_Amount);
 
-      const result = await connectedWallet.post(transaction);
-      console.log(result);
+      const response = await connectedWallet.post(transaction);
+      if (response.success) {
+        setResult({
+          status: Status.success,
+          message: "Thank you for your donation!",
+        });
+      }
     } catch (error) {
-      console.log(error);
       const errorObj = handleError(error);
-      actions.setStatus(errorObj);
+      setResult(errorObj);
+    } finally {
+      actions.resetForm();
     }
   }
 
   return {
+    result,
+    setResult,
     handleDonate,
     UST_balance,
     network: connectedWallet?.network.name || "not available",
