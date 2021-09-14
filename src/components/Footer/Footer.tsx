@@ -25,8 +25,13 @@ const Footer = () => {
           {links.map(({ id, Icon, color, link }) => {
             return (
               <li key={id}>
-                <a href={link} className={`text-${color} block m-2`}>
-                  <Icon className="w-8 h-8" />
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`text-${color} hover:text-opacity-75 block m-2`}
+                >
+                  <Icon className="w-8 h-8" title={title} />
                 </a>
               </li>
             );
