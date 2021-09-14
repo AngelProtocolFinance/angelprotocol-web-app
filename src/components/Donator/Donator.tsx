@@ -6,14 +6,14 @@ export interface Values {
   amount: string;
 }
 
-export enum donateStatus {
+export enum Status {
   success = "success",
   canceled = "cancelled",
   failed = "failed",
 }
 
 export interface ErrorMsg {
-  status: donateStatus;
+  status: Status;
   message: string;
 }
 
