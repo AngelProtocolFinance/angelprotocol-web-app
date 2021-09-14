@@ -13,7 +13,7 @@ interface ContractAddresses {
 }
 
 export default class Indexfund {
-  walletAddress: string;
+  walletAddress: AccAddress;
   chainID: string;
   //contract address
 
@@ -38,7 +38,7 @@ export default class Indexfund {
   }
 
   createDepositTransaction(
-    fund_id: number,
+    fund_ID: number,
     UST_amount: number | string,
     split?: number
   ): CreateTxOptions {
@@ -50,7 +50,7 @@ export default class Indexfund {
       Indexfund.indexFundAddresses[this.chainID],
       {
         deposit: {
-          fund_id,
+          fund_ID,
           split,
         },
       },

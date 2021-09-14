@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import useUSTBalance from "hooks/useUSTBalance";
 import { donatorSchema } from "./donatorSchema";
 import useDonate from "./useDonate";
 
@@ -18,7 +19,8 @@ export interface ErrorMsg {
 }
 
 export default function Donator() {
-  const { handleDonate } = useDonate();
+  const { handleDonate, UST_balance, network } = useDonate();
+
   return (
     <Formik
       initialValues={{ amount: "" }}
@@ -28,7 +30,11 @@ export default function Donator() {
       {({ isSubmitting, status }) => {
         return (
           <Form className="flex flex-col items-center bg-white rounded-sm shadow-md p-2 h-60">
-            <span>{status?.message}</span>
+            <div>
+              <p>Network: {network.toUpperCase()}</p>
+              <p>Balance: {UST_balance} UST</p>
+              <p>{status?.message}</p>
+            </div>
             <p className="text-center my-5">Specify donation amount</p>
             <div className="border mb-1">
               <label
