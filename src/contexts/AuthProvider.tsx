@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 
 interface Props {
   children: ReactNode;
@@ -17,10 +18,21 @@ const setContext = createContext<Handlers>({
 });
 
 //sync get token from local storage after refresh before loading this Provider
+
+let initialToken: Token = null;
 const savedToken = localStorage.getItem("token");
+if (savedToken) {
+  const decodedToken: JwtPayload = jwtDecode(savedToken);
+  const expiry = decodedToken.exp!;
+  if (expiry * 1000 <= Date.now()) {
+    localStorage.removeItem("token");
+  } else {
+    initialToken = savedToken;
+  }
+}
 
 export default function AuthProvider(props: Props) {
-  const [token, setToken] = useState<string | null>(savedToken);
+  const [token, setToken] = useState<Token>(initialToken);
 
   function saveToken(token: string) {
     setToken(token);

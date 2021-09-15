@@ -15,4 +15,4 @@ export interface Result {
   message: string;
 }
 
-export type ResultSetter = (c: Result) => void;
+export type ResultSetter = (result: Result) => void;
