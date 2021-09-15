@@ -41,9 +41,9 @@ export default class Indexfund {
       gas prices changes not so often
       https://github.com/terra-money/terra.js/issues/70
 
-      gas prices - https://fcd.terra.dev/v1/txs/gas_prices --> uusd : 0.453??
+      mainnet gas prices - https://fcd.terra.dev/v1/txs/gas_prices --> uusd : 0.453??
 
-      last manual computed gas price is 0.151792301 for a failed transaction that requires
+      last manual computed gas price in bombay-10 is 0.151792301 for a failed transaction that requires
       314761uusd fee for 2073626 units of requested gas
 
        */
