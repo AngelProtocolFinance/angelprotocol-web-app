@@ -8,6 +8,7 @@ import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router";
 import { routes } from "types/types";
+import { loginSchema } from "./loginSchema";
 
 export type Values = {
   password: string;
@@ -15,7 +16,7 @@ export type Values = {
 
 const Login = () => {
   const token = useGetToken();
-  const { validator, handleLogin } = useLogin();
+  const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
@@ -39,7 +40,7 @@ const Login = () => {
         </div>
         <Formik
           initialValues={{ password: "" }}
-          validate={validator}
+          validationSchema={loginSchema}
           onSubmit={handleLogin}
         >
           {({ isSubmitting, status }) => (

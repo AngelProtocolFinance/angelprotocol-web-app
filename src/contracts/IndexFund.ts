@@ -4,9 +4,12 @@ import {
   CreateTxOptions,
   Dec,
   Denom,
+  LCDClient,
+  Msg,
   MsgExecuteContract,
   StdFee,
 } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 
 interface ContractAddresses {
   [index: string]: string;
@@ -15,7 +18,18 @@ interface ContractAddresses {
 export default class Indexfund {
   walletAddress: AccAddress;
   chainID: string;
+  client: LCDClient;
   //contract address
+
+  //may need to re-implement to handle multiple currencies in the future
+  constructor(wallet: ConnectedWallet) {
+    this.walletAddress = wallet.walletAddress;
+    this.chainID = wallet.network.chainID;
+    this.client = new LCDClient({
+      chainID: this.chainID,
+      URL: wallet.network.lcd,
+    });
+  }
 
   //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
@@ -25,25 +39,19 @@ export default class Indexfund {
     "columbus-4": "",
   };
 
-  //may need to re-implement to handle multiple currencies in the future
-  static gasLimit = 6_000_000; //unit
-  static gasCoinAmount = 3_000_000; //'uust'
-  static fee = new StdFee(Indexfund.gasLimit, [
-    new Coin(Denom.USD, Indexfund.gasCoinAmount),
-  ]);
-
-  constructor(walletAddress: AccAddress, chainID: string) {
-    this.walletAddress = walletAddress;
-    this.chainID = chainID;
+  async estimateFee(msgs: Msg[]): Promise<StdFee> {
+    return this.client.tx.estimateFee(this.walletAddress, msgs, {
+      feeDenoms: [Denom.USD],
+    });
   }
 
-  createDepositTransaction(
+  async createDepositTx(
     fund_ID: number,
     UST_amount: number | string,
     split?: number
-  ): CreateTxOptions {
+  ): Promise<CreateTxOptions> {
     const micro_UST_Amount = new Dec(UST_amount).mul(1_000_000).toNumber();
-    const depositMessage = new MsgExecuteContract(
+    const depositMsg = new MsgExecuteContract(
       this.walletAddress,
       Indexfund.indexFundAddresses[this.chainID],
       {
@@ -54,11 +62,9 @@ export default class Indexfund {
       },
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
-
-    return {
-      msgs: [depositMessage],
-      fee: Indexfund.fee,
-    };
+    const fee = await this.estimateFee([depositMsg]);
+    console.log(fee);
+    return { msgs: [depositMsg], fee };
   }
 
   //will add more transactions in the future

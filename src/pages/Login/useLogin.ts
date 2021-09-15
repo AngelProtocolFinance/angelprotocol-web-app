@@ -11,45 +11,36 @@ export default function useLogin() {
   const { saveToken } = useSetToken();
   const history = useHistory();
 
-  function handleLogin(values: Values, actions: FormikHelpers<Values>) {
-    //when this handler run, isSubmitting is set to true automatically
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify(values),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          return response.json();
-        } else if (response.status === 403) {
-          toast.error("Unauthorized");
-        } else {
-          //error is other than 403
-          toast.error("Something went wrong");
-        }
-      })
-      .then((jsonData) => {
-        saveToken(jsonData.accessToken);
-        history.replace(routes.tca);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        actions.resetForm();
-        actions.setSubmitting(false);
-      });
-  }
-
-  function validator(values: Values) {
-    const errors = { password: "" };
-    if (!values.password) {
-      errors.password = "Please enter your password.";
-    } else {
-      return {};
+  async function handleLogin(values: Values, actions: FormikHelpers<Values>) {
+    function resetStatus() {
+      actions.resetForm();
+      actions.setSubmitting(false);
     }
-    return errors;
+    //start request
+    actions.setSubmitting(true);
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+
+      if (response.status === 200) {
+        const data = await response.json();
+        //don't perform state update because form would unmount
+        saveToken(data.accessToken);
+        history.replace(routes.tca);
+      } else if (response.status === 403) {
+        toast.error("Unauthorized");
+        resetStatus();
+      } else {
+        toast.error("Something went wrong");
+        resetStatus();
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+      resetStatus();
+    }
   }
 
-  return { validator, handleLogin };
+  return handleLogin;
 }

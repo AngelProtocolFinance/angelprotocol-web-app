@@ -42,16 +42,13 @@ export default function useDonate() {
       return;
     }
 
-    //should also check if network is on mainnet not actual donations
+    //should also check if network is on mainnet for actual donations
 
     try {
-      const indexFund = new Indexfund(
-        connectedWallet.terraAddress,
-        connectedWallet.network.chainID
-      );
-      const transaction = indexFund.createDepositTransaction(1, UST_Amount);
-
+      const indexFund = new Indexfund(connectedWallet);
+      const transaction = await indexFund.createDepositTx(1, UST_Amount);
       const response = await connectedWallet.post(transaction);
+
       if (response.success) {
         setResult({
           status: Status.success,
