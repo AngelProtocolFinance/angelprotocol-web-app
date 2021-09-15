@@ -28,6 +28,26 @@ export default class Indexfund {
     this.client = new LCDClient({
       chainID: this.chainID,
       URL: wallet.network.lcd,
+      /*
+      default gasAdjusment 1.4 - e.g if estimated gas to be used is 100, gas requested would be
+      140 and the fee will be computed as ('uusd' * gas requested)
+      gas requested should always be greater than estimated gas to be used
+
+    
+      let user adjust gas request for lower chance of transaction failure?
+       */
+      gasAdjustment: 1.01, //use gas units 1% greater than estimate
+      /*
+      gas prices changes not so often
+      https://github.com/terra-money/terra.js/issues/70
+
+      gas prices - https://fcd.terra.dev/v1/txs/gas_prices --> uusd : 0.453??
+
+      last manual computed gas price is 0.151792301 for a failed transaction that requires
+      314761uusd fee for 2073626 units of requested gas
+
+       */
+      gasPrices: [new Coin(Denom.USD, 0.151792301)],
     });
   }
 
@@ -46,7 +66,7 @@ export default class Indexfund {
   }
 
   async createDepositTx(
-    fund_ID: number,
+    fund_id: number,
     UST_amount: number | string,
     split?: number
   ): Promise<CreateTxOptions> {
@@ -56,14 +76,13 @@ export default class Indexfund {
       Indexfund.indexFundAddresses[this.chainID],
       {
         deposit: {
-          fund_ID,
+          fund_id,
           split,
         },
       },
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
-    console.log(fee);
     return { msgs: [depositMsg], fee };
   }
 
