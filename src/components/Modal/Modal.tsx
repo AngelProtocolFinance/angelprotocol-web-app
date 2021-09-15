@@ -2,9 +2,9 @@ import { ReactNode, useState } from "react";
 
 type Handler = () => void;
 
-type Props = {
-  render: (c: Handler) => ReactNode;
-};
+interface Props {
+  render: (modalCloser: Handler) => ReactNode;
+}
 
 export default function Modal({ render }: Props) {
   const [shown, setShown] = useState(true);
