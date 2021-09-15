@@ -47,7 +47,6 @@ export default function useDonate() {
     try {
       const indexFund = new Indexfund(connectedWallet);
       const transaction = await indexFund.createDepositTx(1, UST_Amount);
-      console.log("transaction", transaction);
       const response = await connectedWallet.post(transaction);
 
       if (response.success) {
