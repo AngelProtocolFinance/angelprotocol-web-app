@@ -2,7 +2,7 @@ import { FormikHelpers } from "formik";
 import { Values } from "./Login";
 import { useSetToken } from "contexts/AuthProvider";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { routes } from "types/types";
 
 const url = "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-login";

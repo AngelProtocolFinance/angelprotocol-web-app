@@ -9,4 +9,12 @@ export enum routes {
   contact = "/contact",
   tca = "/tca",
   test = "/test",
+  privacy_policy = "/privacy-policy",
+}
+
+export enum register_routes {
+  index = "",
+  detail = "/register/detail",
+  confirm = "/register/confirm",
+  verify = "/register/verify/:token",
 }

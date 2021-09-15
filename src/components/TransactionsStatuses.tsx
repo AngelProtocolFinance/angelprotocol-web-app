@@ -1,5 +1,3 @@
-import React from "react";
-
 // TODO (borodanov): remove 'any', create interface for TransactionsStatuses props
 export function TransactionsStatuses(props: any) {
   const { transactionsStatuses } = props;
