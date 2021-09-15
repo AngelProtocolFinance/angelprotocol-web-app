@@ -28,7 +28,7 @@ const Login = () => {
 
   return (
     <section className="p-5 pt-24 h-screen grid place-items-center ">
-      <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5">
+      <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
         </p>
@@ -70,7 +70,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white"
+                className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
                 disabled={isSubmitting}
               >
                 Enter

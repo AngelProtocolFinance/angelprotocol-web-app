@@ -14,8 +14,6 @@ export default function Announcer(props: Props) {
         <Modal
           render={(modalCloser) => (
             <Popup
-              type="success"
-              heading="Success"
               message="Thank you for subscribing!"
               acknowledge={() => {
                 props.resetForm();
@@ -30,8 +28,6 @@ export default function Announcer(props: Props) {
         <Modal
           render={(modalCloser) => (
             <Popup
-              type="error"
-              heading="Error"
               message="Failed to subscribe."
               acknowledge={() => {
                 props.resetForm();

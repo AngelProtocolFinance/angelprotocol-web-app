@@ -8,40 +8,21 @@ interface Props {
 }
 
 export default function Announcer(props: Props) {
-  switch (props.result.status) {
-    case Status.success:
-      return (
-        <Modal
-          render={(modalCloser) => (
-            <Popup
-              type="success"
-              heading="Success"
-              message={props.result.message}
-              acknowledge={() => {
-                props.resetResult({ status: Status.initial, message: "" });
-                modalCloser();
-              }}
-            />
-          )}
-        />
-      );
-    case Status.error:
-      return (
-        <Modal
-          render={(modalCloser) => (
-            <Popup
-              type="error"
-              heading="Error"
-              message={props.result.message}
-              acknowledge={() => {
-                props.resetResult({ status: Status.initial, message: "" });
-                modalCloser();
-              }}
-            />
-          )}
-        />
-      );
-    default:
-      return null;
+  if (props.result.status === Status.initial) {
+    return null;
+  } else {
+    return (
+      <Modal
+        render={(modalCloser) => (
+          <Popup
+            message={props.result.message}
+            acknowledge={() => {
+              props.resetResult({ status: Status.initial, message: "" });
+              modalCloser();
+            }}
+          />
+        )}
+      />
+    );
   }
 }

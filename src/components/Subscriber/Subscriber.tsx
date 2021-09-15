@@ -47,10 +47,10 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-sm shadow-md w-36 h-10"
+              className="text-sm block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
             >
               {isSubmitting ? (
-                <LineLoader color="white" size={"4"} spacing={"2"} />
+                <LineLoader color="white" size={"3"} spacing={"1"} />
               ) : (
                 "Subscribe"
               )}

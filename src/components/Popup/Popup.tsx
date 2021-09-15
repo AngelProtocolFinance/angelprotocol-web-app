@@ -1,38 +1,43 @@
-import { FaCheck } from "react-icons/fa";
-import { AiFillWarning } from "react-icons/ai";
-import { Icons, Styles, Props } from "./types";
+import { IoCloseOutline } from "react-icons/io5";
 
-const icons: Icons = {
-  error: AiFillWarning,
-  success: FaCheck,
-};
+export type Handler = () => void;
 
-const styles: Styles = {
-  success: { accentBg: "blue-accent", textColor: "white-grey" },
-  error: { accentBg: "red-400", textColor: "white-grey" },
-};
+export interface Props {
+  message: string;
+  //function to run before the Modal and Popup is closed
+  acknowledge: Handler;
+  //function to run inside Popup e.g share / redirect etc
+  action?: Handler;
+}
 
 export default function Popup(props: Props) {
   console.log("renders");
-  const Icon = icons[props.type];
-  const { accentBg, textColor } = styles[props.type];
+
   return (
-    <div className="bg-white-grey w-72 rounded-sm shadow-lg">
-      <div
-        className={`bg-${accentBg} text-${textColor} text-xl font-semibold p-2 flex items-center`}
-      >
-        <Icon className={`mr-2 text-${textColor}`} /> {props.heading}
-      </div>
-      <p className="px-2 py-10 font-semibold text-angel-grey text-center">
+    <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-72 rounded-xl shadow-lg overflow-hidden relative">
+      <button className={`absolute top-3 right-3`} onClick={props.acknowledge}>
+        <IoCloseOutline className="text-angel-grey" />
+      </button>
+      <p className="text-angel-grey text-center h-40 grid place-items-center">
         {props.message}
       </p>
-      <div className="p-2 flex justify-end">
+      <div className="grid gap-3">
         <button
-          className={`bg-${accentBg} text-${textColor} uppercase py-1 px-3 m-2 rounded-sm`}
           onClick={props.acknowledge}
+          className="bg-angel-blue py-2 px-11 rounded-lg shadow-sm 
+                font-bold font-heading text-white text-sm"
         >
           OK
         </button>
+        {props?.action && (
+          <button
+            onClick={props.action}
+            className="bg-angel-blue py-2 px-11 rounded-lg shadow-sm 
+                font-bold font-heading text-white text-sm uppercase"
+          >
+            Share
+          </button>
+        )}
       </div>
     </div>
   );
