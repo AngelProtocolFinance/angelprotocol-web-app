@@ -11,31 +11,15 @@ export default function Announcer(props: Props) {
   switch (props.status) {
     case Status.success:
       return (
-        <Modal
-          render={(modalCloser) => (
-            <Popup
-              message="Thank you for subscribing!"
-              acknowledge={() => {
-                props.resetForm();
-                modalCloser();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <Popup message="Thank you for subscribing!" />
+        </Modal>
       );
     case Status.failed:
       return (
-        <Modal
-          render={(modalCloser) => (
-            <Popup
-              message="Failed to subscribe."
-              acknowledge={() => {
-                props.resetForm();
-                modalCloser();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <Popup message="Failed to subscribe." />
+        </Modal>
       );
     default:
       return null;

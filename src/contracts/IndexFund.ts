@@ -60,6 +60,7 @@ export default class Indexfund {
   };
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
+    //throws error when msg coin is greater than wallet available balance
     return this.client.tx.estimateFee(this.walletAddress, msgs, {
       feeDenoms: [Denom.USD],
     });
@@ -70,7 +71,7 @@ export default class Indexfund {
     UST_amount: number | string,
     split?: number
   ): Promise<CreateTxOptions> {
-    const micro_UST_Amount = new Dec(UST_amount).mul(1_000_000).toNumber();
+    const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(
       this.walletAddress,
       Indexfund.indexFundAddresses[this.chainID],

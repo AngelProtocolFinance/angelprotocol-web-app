@@ -4,15 +4,25 @@ export interface Values {
   amount: string;
 }
 
-export enum Status {
+export enum Steps {
   success = "success",
   error = "error",
   initial = "initial",
+  confirm = "confirm",
+  ready = "ready",
 }
 
-export interface Result {
-  status: Status;
-  message: string;
+export interface Estimates {
+  amount: number;
+  fee: number;
 }
 
-export type ResultSetter = (result: Result) => void;
+export type Details = Estimates;
+
+export interface Status {
+  step: Steps;
+  message?: string;
+  details?: Details;
+}
+
+export type SetStatus = (result: Status) => void;

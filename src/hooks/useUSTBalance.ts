@@ -1,11 +1,10 @@
 import { Denom, LCDClient } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
 
 //can be extended to view balance of different currencies
-export default function useUSTBalance(
-  wallet: ConnectedWallet | undefined
-): number {
+export default function useUSTBalance(): number {
+  const wallet = useConnectedWallet();
   const [balance, setBalance] = useState(0);
 
   useEffect(() => {
