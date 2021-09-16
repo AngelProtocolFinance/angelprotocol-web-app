@@ -78,6 +78,7 @@ module.exports = {
         36: "36",
       },
       minHeight: {
+        r15: "15rem",
         modal: "300px",
         10: "10",
       },
