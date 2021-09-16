@@ -1,28 +1,34 @@
 import Modal from "components/Modal/Modal";
-import Popup from "components/Popup/Popup";
-import { Result, ResultSetter, Status } from "./types";
+import Popup from "components/Donator/Popup";
+import { useGetStatus } from "./Donator";
+import Estimates from "./Estimates";
+import { Steps } from "./types";
 
-interface Props {
-  result: Result;
-  resetResult: ResultSetter;
-}
+export default function Announcer() {
+  //since Announcer is inside <Formik/> - has access to formik props
+  const status = useGetStatus();
+  console.log(status);
 
-export default function Announcer(props: Props) {
-  if (props.result.status === Status.initial) {
-    return null;
-  } else {
-    return (
-      <Modal
-        render={(modalCloser) => (
-          <Popup
-            message={props.result.message}
-            acknowledge={() => {
-              props.resetResult({ status: Status.initial, message: "" });
-              modalCloser();
-            }}
-          />
-        )}
-      />
-    );
+  switch (status.step) {
+    case Steps.error: {
+      return (
+        <Modal>
+          <Popup message={status?.message} />
+        </Modal>
+      );
+    }
+
+    case Steps.confirm: {
+      return (
+        <Modal>
+          <Popup message={status?.message}>
+            <Estimates />
+          </Popup>
+        </Modal>
+      );
+    }
+
+    default:
+      return null;
   }
 }

@@ -3,7 +3,6 @@ import useDropdownMenu from "react-accessible-dropdown-menu-hook";
 export default function useCopyAddress() {
   const { buttonProps, isOpen } = useDropdownMenu(5);
   const handleCopy = (terraAddress: string) => () => {
-    console.log(handleCopy);
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";

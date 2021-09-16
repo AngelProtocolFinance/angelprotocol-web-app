@@ -1,28 +1,31 @@
-import { cleanup } from "@testing-library/react";
 import { useModalCloser } from "components/Modal/Modal";
-import React, { ReactNode } from "react";
+import { useFormikContext } from "formik";
+import { ReactNode } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import { useSetStatus } from "./Donator";
+import { Steps } from "./types";
 
 export type Handler = () => void;
 
 export interface Props {
   message?: string;
   children?: ReactNode;
-  //run before closing popup
-  cleanup?: () => void;
 }
 
 export default function Popup(props: Props) {
-  console.log(cleanup);
-  //Popup must only be rendered inside Modal
+  //This Popup is inside Modal
   const closeModal = useModalCloser();
+  //This Popup is inside Formik
+  const { resetForm } = useFormikContext();
+  //This Popup is inside Donator
+  const setStatus = useSetStatus();
+
+  //default reset when user press 'x' button
   function closePopup() {
-    if (cleanup !== undefined) {
-      cleanup();
-    }
+    resetForm();
     closeModal();
+    setStatus({ step: Steps.initial });
   }
-  //To use formik context, make sure Popup is also inside <Formik/> tree
 
   return (
     <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-r15  rounded-xl shadow-lg overflow-hidden relative">
