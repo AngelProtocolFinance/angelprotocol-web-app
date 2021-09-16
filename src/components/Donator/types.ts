@@ -12,17 +12,10 @@ export enum Steps {
   ready = "ready",
 }
 
-export interface Estimates {
-  amount: number;
-  fee: number;
-}
-
-export type Details = Estimates;
-
 export interface Status {
   step: Steps;
   message?: string;
-  details?: Details;
+  details?: any;
 }
 
 export type SetStatus = (result: Status) => void;

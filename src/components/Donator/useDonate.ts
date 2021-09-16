@@ -5,9 +5,10 @@ import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
 import { Denom } from "@terra-money/terra.js";
+import pollTxInfo from "./pollTxInfo";
 
 export default function useDonate(status: Status, setStatus: SetStatus) {
-  const connectedWallet = useConnectedWallet();
+  const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
 
   //executing message (needs gas)
@@ -15,7 +16,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
     //values.amount is properly formatted string | number at this point due to validation
     const UST_Amount = values.amount;
     actions.setSubmitting(true);
-    if (!connectedWallet) {
+    if (!wallet) {
       setStatus({
         step: Steps.error,
         message: "Wallet is not connected",
@@ -32,7 +33,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
     }
 
     try {
-      const indexFund = new Indexfund(connectedWallet);
+      const indexFund = new Indexfund(wallet);
       //createTx errors will be on catch block
       const transaction = await indexFund.createDepositTx(1, UST_Amount);
       const estimatedFee =
@@ -54,15 +55,36 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
         return;
       }
 
-      const response = await connectedWallet.post(transaction);
-      console.log(response);
+      const response = await wallet.post(transaction);
 
+      //if transaction is ran, get transaction info
       if (response.success) {
-        setStatus({
-          step: Steps.success,
-          message: "Thank you for your donation!",
-        });
-        return;
+        //not readily available so we need to poll
+        const txInfo = await pollTxInfo(
+          indexFund.getTxResponse,
+          response.result.txhash,
+          1000, //try again 1 second after last retry
+          7 //poll 7 items before giving up
+        );
+        if (!txInfo) {
+          setStatus({
+            step: Steps.error,
+            message: `Transaction ran but failed to get details`,
+          });
+        } else {
+          if (!txInfo.code) {
+            setStatus({
+              step: Steps.success,
+              message: `Thank you for your donation!`,
+            });
+          } else {
+            setStatus({
+              step: Steps.error,
+              message: `The transaction ran but failed`,
+            });
+          }
+        }
+        //code prop is present on failed transactions
       }
     } catch (error) {
       console.log(error);
