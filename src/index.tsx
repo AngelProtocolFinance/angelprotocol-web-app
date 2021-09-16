@@ -21,12 +21,6 @@ const testnet = {
   lcd: "https://bombay-lcd.terra.dev",
 };
 
-const testnet2 = {
-  name: "testnet",
-  chainID: "tequila-0004",
-  lcd: "https://tequila-lcd.terra.dev",
-};
-
 const mainnet = {
   name: "mainnet",
   chainID: "columbus-4",
@@ -36,15 +30,14 @@ const mainnet = {
 const walletConnectChainIds: Record<number, NetworkInfo> = {
   0: localterra,
   1: testnet,
-  2: testnet2,
-  3: mainnet,
+  2: mainnet,
 };
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <WalletProvider
-        defaultNetwork={localterra}
+        defaultNetwork={testnet}
         walletConnectChainIds={walletConnectChainIds}
       >
         <AuthProvider>

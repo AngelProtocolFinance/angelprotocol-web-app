@@ -7,9 +7,9 @@ import { Steps } from "./types";
 export default function Announcer() {
   //since Announcer is inside <Formik/> - has access to formik props
   const status = useGetStatus();
-  console.log(status);
 
   switch (status.step) {
+    case Steps.success:
     case Steps.error: {
       return (
         <Modal>

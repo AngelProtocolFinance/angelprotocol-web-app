@@ -1,3 +1,4 @@
+import toCurrency from "components/helpers/toCurrency";
 import { useModalCloser } from "components/Modal/Modal";
 import { useFormikContext } from "formik";
 import { useGetStatus, useSetStatus } from "./Donator";
@@ -7,7 +8,9 @@ export default function Estimates() {
   //Estimates is inside Modal tree under Popup
   const closeModal = useModalCloser();
   //Estimates is inside Donator
-  const status = useGetStatus();
+  const { details } = useGetStatus();
+  const formattedAmount = toCurrency(details?.amount);
+  const formattedFee = toCurrency(details?.fee);
   const setStatus = useSetStatus();
   //Estimates is inside Formik
   const { submitForm, resetForm } = useFormikContext();
@@ -26,18 +29,22 @@ export default function Estimates() {
 
   return (
     <>
-      <p className="text-angel-grey mb-1 uppercase">
-        Amount: UST {status.details?.amount}
-      </p>
-      <p className="text-angel-grey mb-1 uppercase">
-        Fee: UST {status.details?.fee}
-      </p>
+      <div className="p-2 font-heading text-angel-blue font-semibold text-angel-blue font-semibold">
+        <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
+          <span className="mr-2 text-xs">Amount :</span>
+          <span className="font-semibold">{formattedAmount} UST</span>
+        </p>
+        <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
+          <span className="mr-2 text-xs">TX Fee :</span>
+          <span className="font-semibold">{formattedFee} UST</span>
+        </p>
+      </div>
 
       <button
-        className="my-2 w-32 text-center bg-angel-orange py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
+        className="my-3 w-32 text-center bg-angel-orange py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
         onClick={handleProceed}
       >
-        proceed
+        Donate
       </button>
 
       <button

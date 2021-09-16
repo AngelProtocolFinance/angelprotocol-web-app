@@ -28,11 +28,13 @@ export default function Popup(props: Props) {
   }
 
   return (
-    <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-r15  rounded-xl shadow-lg overflow-hidden relative">
+    <div className="p-6 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-r15  rounded-xl shadow-lg overflow-hidden relative">
       <button className={`absolute top-3 right-3`} onClick={closePopup}>
         <IoCloseOutline className="text-angel-grey" />
       </button>
-      <p className="text-angel-grey text-center my-18">{props?.message}</p>
+      <p className="my-10 text-angel-grey text-center font-semibold font-heading">
+        {props?.message}
+      </p>
       {props.children}
     </div>
   );

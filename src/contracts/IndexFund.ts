@@ -1,5 +1,4 @@
 import {
-  AccAddress,
   Coin,
   CreateTxOptions,
   Dec,
@@ -16,39 +15,21 @@ interface ContractAddresses {
 }
 
 export default class Indexfund {
-  walletAddress: AccAddress;
-  chainID: string;
+  wallet: ConnectedWallet;
   client: LCDClient;
   //contract address
 
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet: ConnectedWallet) {
-    this.walletAddress = wallet.walletAddress;
-    this.chainID = wallet.network.chainID;
+    this.wallet = wallet;
     this.client = new LCDClient({
-      chainID: this.chainID,
-      URL: wallet.network.lcd,
-      /*
-      default gasAdjusment 1.4 - e.g if estimated gas to be used is 100, gas requested would be
-      140 and the fee will be computed as ('uusd' * gas requested)
-      gas requested should always be greater than estimated gas to be used
-
-    
-      let user adjust gas request for lower chance of transaction failure?
-       */
+      chainID: this.wallet.network.chainID,
+      URL: this.wallet.network.lcd,
       gasAdjustment: 1.01, //use gas units 1% greater than estimate
-      /*
-      gas prices changes not so often
-      https://github.com/terra-money/terra.js/issues/70
-
-      mainnet gas prices - https://fcd.terra.dev/v1/txs/gas_prices --> uusd : 0.453??
-
-      last manual computed gas price in bombay-10 is 0.151792301 for a failed transaction that requires
-      314761uusd fee for 2073626 units of requested gas
-
-       */
       gasPrices: [new Coin(Denom.USD, 0.151792301)],
     });
+
+    this.getTxResponse = this.getTxResponse.bind(this);
   }
 
   //TODO: hide contract addresses to env
@@ -60,9 +41,17 @@ export default class Indexfund {
   };
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
-    //throws error when msg coin is greater than wallet available balance
-    return this.client.tx.estimateFee(this.walletAddress, msgs, {
+    return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
       feeDenoms: [Denom.USD],
+    });
+  }
+
+  //bind this function in constructor to keep context
+  async getTxResponse(txhash: string): Promise<Response> {
+    return fetch(`${this.wallet.network.lcd}/txs/${txhash}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   }
 
@@ -73,8 +62,8 @@ export default class Indexfund {
   ): Promise<CreateTxOptions> {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(
-      this.walletAddress,
-      Indexfund.indexFundAddresses[this.chainID],
+      this.wallet.terraAddress,
+      Indexfund.indexFundAddresses[this.wallet.network.chainID],
       {
         deposit: {
           fund_id,
