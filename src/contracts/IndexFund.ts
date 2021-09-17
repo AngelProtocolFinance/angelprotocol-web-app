@@ -25,7 +25,7 @@ export default class Indexfund {
     this.client = new LCDClient({
       chainID: this.wallet.network.chainID,
       URL: this.wallet.network.lcd,
-      gasAdjustment: 1.01, //use gas units 1% greater than estimate
+      gasAdjustment: 1.2, //use gas units 20% greater than estimate
       gasPrices: [new Coin(Denom.USD, 0.151792301)],
     });
 
