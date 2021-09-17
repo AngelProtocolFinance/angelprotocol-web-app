@@ -1,7 +1,7 @@
 import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsFrom";
 
 const ContactDetails = () => {
-  const contactInfo = JSON.parse(localStorage.getItem("userData") || "");
+  const contactInfo = JSON.parse(localStorage.getItem("userData") || "{}");
   return (
     <div>
       <h3 className="text-3xl font-bold mb-10">

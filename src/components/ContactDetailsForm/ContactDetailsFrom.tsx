@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
 import { routes } from "types/types";
-import { useContactDetails } from "./useContactDetails";
+import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
 
 export type ContactDetails = {
   charityName: string;
@@ -15,7 +15,7 @@ export type ContactDetails = {
   uniqueID: string;
 };
 export const ContactDetailsForm = (props: any) => {
-  const { validation, saveContactInfo } = useContactDetails();
+  const { saveContactInfo } = useContactDetails();
   console.log(props.contactData);
   return (
     <Formik
@@ -30,7 +30,7 @@ export const ContactDetailsForm = (props: any) => {
         checkedPolicy: false,
         uniqueID: props.contactData?.uniqueID || "",
       }}
-      validate={validation}
+      validationSchema={ContactInfoSchema}
       onSubmit={saveContactInfo}
     >
       {({ values, isSubmitting }) => (

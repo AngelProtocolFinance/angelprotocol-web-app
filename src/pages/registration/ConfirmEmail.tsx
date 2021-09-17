@@ -6,7 +6,7 @@ const ConfirmEmail = () => {
   const history = useHistory();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
-  const userData: any = JSON.parse(localStorage.getItem("userData") || ""); // remove this when using Redux in the future
+  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}"); // remove this when using Redux in the future
 
   return (
     <div>

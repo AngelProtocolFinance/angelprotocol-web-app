@@ -14,7 +14,7 @@ export enum routes {
 
 export enum register_routes {
   index = "",
-  detail = "/register/detail",
-  confirm = "/register/confirm",
-  verify = "/register/verify/:token",
+  detail = "detail",
+  confirm = "confirm",
+  verify = "verify/:token",
 }

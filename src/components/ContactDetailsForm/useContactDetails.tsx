@@ -2,6 +2,29 @@ import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
 import { register_routes } from "types/types";
 import { ContactDetails } from "./ContactDetailsFrom";
+import * as Yup from "yup";
+
+export const ContactInfoSchema = Yup.object().shape({
+  charityName: Yup.string().required(
+    "Please enter the name of your organization."
+  ),
+  firstName: Yup.string().required(
+    "Please enter the name of your organization."
+  ),
+  lastName: Yup.string().required(
+    "Please enter the name of your organization."
+  ),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter the name of your organization."),
+  orgRule: Yup.string().required(
+    "Please select your role within your organization."
+  ),
+  phone: Yup.string().matches(
+    /^([0]{1}|\+?[234]{3})([7-9]{1})([0|1]{1})([\d]{1})([\d]{7})$/g,
+    "Invalid phone number"
+  ),
+});
 
 export const useContactDetails = () => {
   const history = useHistory();
@@ -15,29 +38,5 @@ export const useContactDetails = () => {
     history.push(register_routes.confirm);
     actions.setSubmitting(false);
   }
-
-  const validation = (values: ContactDetails) => {
-    const errors: any = {};
-    if (!values.charityName) {
-      errors.charityName = "Please enter the name of your organization.";
-    }
-    if (!values.firstName) {
-      errors.firstName = "Please enter your first name.";
-    }
-    if (!values.lastName) {
-      errors.lastName = "Please enter your last name.";
-    }
-    if (
-      !values.email ||
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-    ) {
-      errors.email = "Please enter correct email address.";
-    }
-    if (!values.orgRule) {
-      errors.orgRule = "Please select your role within your organization.";
-    }
-    return errors;
-  };
-
-  return { saveContactInfo, validation };
+  return { saveContactInfo };
 };
