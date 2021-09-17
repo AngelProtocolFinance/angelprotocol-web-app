@@ -13,7 +13,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [isShowPassword, setIsShowPassword] = useState(false);
 
-  const { doRequest, errors } = useRequest({
+  const { doRequest } = useRequest({
     url: API_URLS["TCA_login"],
     method: "post",
     body: {},

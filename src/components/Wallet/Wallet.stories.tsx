@@ -12,6 +12,7 @@ const testnet: NetworkInfo = {
   chainID: "tequila-0004",
   lcd: "https://tequila-lcd.terra.dev",
 };
+
 export default {
   title: "Components/Wallet",
   component: Wallet,

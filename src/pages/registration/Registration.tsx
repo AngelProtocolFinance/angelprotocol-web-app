@@ -1,14 +1,24 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
-
+import { register_routes } from "types/types";
 import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
   const history = useHistory();
+  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+
+  console.log("dat  => ", userData);
+  if (userData.email) {
+    history.push({
+      pathname: register_routes.confirm,
+      state: { is_sent: true },
+    });
+  }
+
   return (
     <div>
       <div className="rounded-xl mb-5">
-        <img src={banner1} width="100%" className="rounded-xl" />
+        <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
       </div>
       <div>
         <span className="text-2xl font-bold">
