@@ -38,7 +38,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
       //createTx errors will be on catch block
       const transaction = await indexFund.createDepositTx(1, UST_Amount);
       const estimatedFee =
-        +transaction.fee!.amount.get(Denom.USD)!.toData().amount / 1e6;
+        transaction.fee!.amount.get(Denom.USD)!.amount.toNumber() / 1e6;
 
       //check if user has enough balance
 
@@ -48,9 +48,10 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
         setStatus({
           step: Steps.confirm,
           message: `Kindly confirm transaction details`,
-          details: {
+          estimates: {
             amount: +UST_Amount,
-            fee: estimatedFee,
+            txFee: estimatedFee,
+            total: +UST_Amount + estimatedFee,
           },
         });
         return;
@@ -61,12 +62,18 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
       //if transaction is ran, get transaction info
       if (response.success) {
         //not readily available so we need to poll
+        setStatus({
+          step: Steps.waiting,
+          message: "Waiting for transaction result",
+        });
+
         const txInfo = await pollTxInfo(
           indexFund.getTxResponse,
           response.result.txhash,
           1000, //try again 1 second after last retry
           7 //poll 7 items before giving up
         );
+
         console.log(txInfo);
         if (!txInfo) {
           setStatus({
@@ -76,10 +83,15 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
         } else {
           //code property is present on failed transaction info
           if (!txInfo.code) {
-            getDepositAmount(txInfo.logs!);
+            const depositAmount = getDepositAmount(txInfo.logs!);
+            console.log(depositAmount);
             setStatus({
               step: Steps.success,
               message: `Thank you for your donation!`,
+              result: {
+                received: +UST_Amount,
+                deposited: depositAmount,
+              },
             });
           } else {
             setStatus({

@@ -12,7 +12,7 @@ export default function TCA() {
   }
 
   return (
-    <div className="pt-24 grid place-items-center">
+    <div className="pt-24 grid place-items-center min-h-screen">
       <Donator />
     </div>
   );

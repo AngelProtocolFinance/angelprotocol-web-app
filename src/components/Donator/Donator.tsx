@@ -39,7 +39,7 @@ export default function Donator() {
                   </label>
                   <Field
                     disabled={isSubmitting}
-                    className="block w-full bg-white-grey disabled:bg-thin-grey text-lg focus:outline-none  text-angel-grey 
+                    className="border block w-full bg-white-grey disabled:bg-thin-grey text-lg focus:outline-none  text-angel-grey 
                 p-3 rounded-md mb-1"
                     id="amount"
                     name="amount"

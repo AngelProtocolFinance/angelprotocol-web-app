@@ -8,14 +8,14 @@ export default function Estimates() {
   //Estimates is inside Modal tree under Popup
   const closeModal = useModalCloser();
   //Estimates is inside Donator
-  const { details } = useGetStatus();
+  const { estimates } = useGetStatus();
   const setStatus = useSetStatus();
   //Estimates is inside Formik
   const { submitForm, resetForm } = useFormikContext();
 
-  const amount = toCurrency(details?.amount);
-  const fee = toCurrency(details?.fee);
-  const total = toCurrency(details?.amount + details?.fee);
+  const amount = toCurrency(estimates?.amount);
+  const fee = toCurrency(estimates?.txFee);
+  const total = toCurrency(estimates!.amount + estimates!.txFee);
 
   function handleProceed() {
     setStatus({ step: Steps.ready });
