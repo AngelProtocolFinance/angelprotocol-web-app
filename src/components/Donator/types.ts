@@ -10,12 +10,32 @@ export enum Steps {
   initial = "initial",
   confirm = "confirm",
   ready = "ready",
+  waiting = "waiting",
 }
 
-export interface Status {
+interface Estimates {
+  amount: number;
+  txFee: number;
+  total: number;
+}
+
+interface Result {
+  received: number;
+  deposited: number;
+}
+
+interface WithResult {
   step: Steps;
   message?: string;
-  details?: any;
+  result?: Result;
 }
+
+interface WithEstimate {
+  step: Steps;
+  message?: string;
+  estimates?: Estimates;
+}
+
+export type Status = WithResult & WithEstimate;
 
 export type SetStatus = (result: Status) => void;
