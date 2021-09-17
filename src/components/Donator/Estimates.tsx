@@ -9,11 +9,13 @@ export default function Estimates() {
   const closeModal = useModalCloser();
   //Estimates is inside Donator
   const { details } = useGetStatus();
-  const formattedAmount = toCurrency(details?.amount);
-  const formattedFee = toCurrency(details?.fee);
   const setStatus = useSetStatus();
   //Estimates is inside Formik
   const { submitForm, resetForm } = useFormikContext();
+
+  const amount = toCurrency(details?.amount);
+  const fee = toCurrency(details?.fee);
+  const total = toCurrency(details?.amount + details?.fee);
 
   function handleProceed() {
     setStatus({ step: Steps.ready });
@@ -32,11 +34,15 @@ export default function Estimates() {
       <div className="p-2 font-heading text-angel-blue font-semibold text-angel-blue font-semibold">
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-2 text-xs">Amount :</span>
-          <span className="font-semibold">{formattedAmount} UST</span>
+          <span className="font-semibold">{amount} UST</span>
         </p>
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-2 text-xs">TX Fee :</span>
-          <span className="font-semibold">{formattedFee} UST</span>
+          <span className="font-semibold">{fee} UST</span>
+        </p>
+        <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
+          <span className="mr-2 text-xs">Total :</span>
+          <span className="font-semibold">{total} UST</span>
         </p>
       </div>
 

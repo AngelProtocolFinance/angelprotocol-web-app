@@ -6,6 +6,7 @@ import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
 import { Denom } from "@terra-money/terra.js";
 import pollTxInfo from "./pollTxInfo";
+import getDepositAmount from "./getDepositAmount";
 
 export default function useDonate(status: Status, setStatus: SetStatus) {
   const wallet = useConnectedWallet();
@@ -66,13 +67,16 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
           1000, //try again 1 second after last retry
           7 //poll 7 items before giving up
         );
+        console.log(txInfo);
         if (!txInfo) {
           setStatus({
             step: Steps.error,
             message: `Transaction ran but failed to get details`,
           });
         } else {
+          //code property is present on failed transaction info
           if (!txInfo.code) {
+            getDepositAmount(txInfo.logs!);
             setStatus({
               step: Steps.success,
               message: `Thank you for your donation!`,

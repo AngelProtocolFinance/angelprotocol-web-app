@@ -32,7 +32,7 @@ export default function Popup(props: Props) {
       <button className={`absolute top-3 right-3`} onClick={closePopup}>
         <IoCloseOutline className="text-angel-grey" />
       </button>
-      <p className="my-10 text-angel-grey text-center font-semibold font-heading">
+      <p className="my-6 text-angel-grey text-center font-semibold font-heading">
         {props?.message}
       </p>
       {props.children}
