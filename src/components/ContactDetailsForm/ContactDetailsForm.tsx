@@ -9,8 +9,8 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
-  orgRole: string;
-  otherRole: string;
+  orgRule: string;
+  otherRule: string;
   checkedPolicy: boolean;
   uniqueID: string;
 };
@@ -25,8 +25,8 @@ export const ContactDetailsForm = (props: any) => {
         lastName: props.contactData?.lastName || "",
         email: props.contactData?.email || "",
         phone: props.contactData?.phone || "",
-        orgRole: props.contactData?.orgRole || "ceo",
-        otherRole: props.contactData?.otherRole || "",
+        orgRule: props.contactData?.orgRule || "ceo",
+        otherRule: props.contactData?.otherRule || "",
         checkedPolicy: false,
         uniqueID: props.contactData?.uniqueID || "",
       }}
@@ -170,9 +170,9 @@ export const ContactDetailsForm = (props: any) => {
                         as="select"
                         className="outline-none border-none w-full px-3"
                         placeholder="Role"
-                        value={values.orgRole}
+                        value={values.orgRule}
                         defaultValue="ceo"
-                        name="orgRole"
+                        name="orgRule"
                       >
                         <option value="president">
                           Chairperson / President
@@ -189,12 +189,12 @@ export const ContactDetailsForm = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-sm text-failed-red"
-                      name="orgRole"
+                      name="orgRule"
                       component="div"
                     />
                   </div>
                 </div>
-                {values.orgRole === "other" && (
+                {values.orgRule === "other" && (
                   <div className="items-center justify-center mb-4">
                     <div className="text-left">
                       <span className="text-md text-left">
@@ -208,13 +208,13 @@ export const ContactDetailsForm = (props: any) => {
                           type="text"
                           className="outline-none border-none w-full px-3 text-black"
                           placeholder="Specify Your Role"
-                          value={values.otherRole}
-                          name="otherRole"
+                          value={values.otherRule}
+                          name="otherRule"
                         />
                       </div>
                       <ErrorMessage
                         className="text-sm text-failed-red"
-                        name="otherRole"
+                        name="otherRule"
                         component="div"
                       />
                     </div>

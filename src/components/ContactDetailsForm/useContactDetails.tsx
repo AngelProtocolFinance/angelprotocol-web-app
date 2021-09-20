@@ -2,6 +2,7 @@ import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
 import { register_routes } from "types/types";
 import { ContactDetails } from "./ContactDetailsForm";
+import { ContactDetailsFormSubmit } from "aws-settings.config";
 import * as Yup from "yup";
 
 export const ContactInfoSchema = Yup.object().shape({
@@ -34,6 +35,7 @@ export const useContactDetails = () => {
   ) {
     actions.setSubmitting(true);
     // call API to add or update contact details information(contactData)
+    ContactDetailsFormSubmit(contactData);
     localStorage.setItem("userData", JSON.stringify(contactData));
     history.push(register_routes.confirm);
     actions.setSubmitting(false);

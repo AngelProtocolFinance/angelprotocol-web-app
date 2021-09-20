@@ -20,4 +20,52 @@ const TCAAuthProcess = async (password: string) => {
   }
 };
 
-export { TCAAuthProcess };
+// Charity Registration Process
+// Initial Registration
+const ContactDetailsFormSubmit = async (contactData: any) => {
+  const url = process.env.REACT_APP_AWS_REGISTER_CONTACT_PERSON_URL;
+  let body;
+
+  if (contactData.orgRole === "other") {
+    body = {
+      Registration: { CharityName: contactData.charityName },
+      ContactPerson: {
+        FirstName: contactData.firstName,
+        LastName: contactData.lastName,
+        Email: contactData.email,
+        PhoneNumber: contactData.phone,
+        Role: contactData.otherRole,
+      },
+    };
+  } else {
+    body = {
+      Registration: { CharityName: contactData.charityName },
+      ContactPerson: {
+        FirstName: contactData.firstName,
+        LastName: contactData.lastName,
+        Email: contactData.email,
+        PhoneNumber: contactData.phone,
+        Role: contactData.orgRole,
+      },
+    };
+  }
+
+  try {
+    const response: any = await fetch(`${url}`, {
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+
+    const data: { message: string; UUID: string } = await response.json();
+
+    if (data.UUID) {
+      console.log("message:", data.message, "UUID:", data.UUID);
+    } else {
+      console.log("message:", data.message);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { TCAAuthProcess, ContactDetailsFormSubmit };
