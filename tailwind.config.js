@@ -54,9 +54,9 @@ module.exports = {
         "donate-content-height": "calc(100% - 7.5rem)",
         info: "28rem",
         process: "36rem",
-        banner: "52rem",
+        banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
-        specs: "52rem",
+        specs: "40rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",
@@ -73,6 +73,10 @@ module.exports = {
         a1a: "auto 1fr auto",
         charity: "auto 1fr",
       },
+      inset: {
+        12: "12px",
+        69: "69px",
+      },
       maxWidth: {
         "4/5": "80%",
       },
@@ -85,11 +89,10 @@ module.exports = {
         10: "10",
       },
       width: {
-        video: "30rem",
-      },
-      inset: {
-        12: "12px",
-        69: "69px",
+        "video:xl": "35rem",
+        "video:lg": "28rem",
+        "video:md": "30rem",
+        "video:sm": "30rem",
       },
     },
   },

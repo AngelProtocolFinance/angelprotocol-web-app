@@ -9,4 +9,5 @@ export enum routes {
   contact = "/contact",
   tca = "/tca",
   test = "/test",
+  charities = "/charities",
 }

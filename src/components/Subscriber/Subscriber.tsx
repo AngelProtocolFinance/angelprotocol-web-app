@@ -1,4 +1,4 @@
-import LineLoader from "components/Loader/LineLoader";
+import Loader from "components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Announcer from "./Announcer";
 import handleSubscribe from "./handleSubscribe";
@@ -41,16 +41,20 @@ export default function Subscriber() {
             />
             <ErrorMessage
               name="email"
-              className="text-sm text-yellow-300 font-semibold mt-1"
+              className="text-sm text-white-grey mt-1"
               component="div"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="text-sm block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
+              className="text-white-grey font-semibold text-sm block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
             >
               {isSubmitting ? (
-                <LineLoader color="white" size={"3"} spacing={"1"} />
+                <Loader
+                  bgColorClass="bg-white"
+                  widthClass="w-3"
+                  gapClass="gap-1"
+                />
               ) : (
                 "Subscribe"
               )}

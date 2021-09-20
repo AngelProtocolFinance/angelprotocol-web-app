@@ -4,8 +4,7 @@ import { useGetStatus } from "./Donator";
 import Estimates from "./Estimates";
 import { Steps } from "./types";
 import Results from "./Results";
-import BlockLoader from "components/Loader/BlockLoader";
-import LineLoader from "components/Loader/LineLoader";
+import Loader from "components/Loader/Loader";
 
 export default function Announcer() {
   //since Announcer is inside <Formik/> - has access to formik props
@@ -42,7 +41,11 @@ export default function Announcer() {
       return (
         <Modal>
           <Popup message={status?.message}>
-            <LineLoader size="4" spacing="2" color="angel-grey" />
+            <Loader
+              widthClass="w-4"
+              gapClass="gap-2"
+              bgColorClass="bg-angel-grey"
+            />
           </Popup>
         </Modal>
       );
