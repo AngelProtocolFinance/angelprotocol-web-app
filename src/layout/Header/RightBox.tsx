@@ -31,9 +31,6 @@ export default function RightBox() {
       );
       break;
     }
-    case routes.home:
-      varNode = <></>;
-      break;
     case routes.login:
       varNode = (
         <p className="font-bold text-white font-lg uppercase">

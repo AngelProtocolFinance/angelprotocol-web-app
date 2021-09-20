@@ -23,16 +23,6 @@ export default function MobileNav() {
           Charities
         </NavLink>
       </li>
-      <li className="mb-2">
-        <NavLink to={routes.about_unsdgs} {...linkStyles}>
-          UNSDGs
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to={routes.register} {...linkStyles}>
-          Register
-        </NavLink>
-      </li>
     </ul>
   );
 }
