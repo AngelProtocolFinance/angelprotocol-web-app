@@ -6,7 +6,8 @@ const ConfirmEmail = () => {
   const history = useHistory();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
-  const userData: any = JSON.parse(localStorage.getItem("userData") || ""); // remove this when using Redux in the future
+  // const userData: any = JSON.parse(localStorage.getItem("userData") || ""); // remove this when using Redux in the future
+  let userData; // remove this when using Redux in the future
 
   return (
     <div>
@@ -17,7 +18,7 @@ const ConfirmEmail = () => {
       )}
       {is_sent ? (
         <div>
-          <span className="text-2xl font-bold">Hi {userData.firstName}!</span>
+          <span className="text-2xl font-bold">Hi {userData}!</span>
           <br />
           <span className="text-2xl font-bold">
             We're still waiting for you to confirm your email address.
@@ -27,13 +28,13 @@ const ConfirmEmail = () => {
         <div>
           <span className="text-2xl font-bold">
             Thank you for registering <br />
-            {userData.firstName}, {userData.charityName}!
+            {userData}, {userData}!
           </span>
           <br />
           <br />
           <span className="text-2xl font-bold">
             Your registration reference is <br />
-            <span className="text-orange">{userData.uniqueID || ""}</span>
+            <span className="text-orange">{userData || ""}</span>
           </span>
         </div>
       )}
@@ -46,7 +47,7 @@ const ConfirmEmail = () => {
         ) : (
           <span className="text-base">
             Please click on the link in the email and you'll be able to continue
-            with the registration of {userData.charityName} on Angel.
+            with the registration of {userData} on Angel.
           </span>
         )}
       </div>

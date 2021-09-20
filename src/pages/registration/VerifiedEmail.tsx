@@ -9,7 +9,8 @@ const VerifiedEmail = () => {
   const location = history.location;
   const query: any = queryString.parse(location.search);
   console.log("url query => ", query);
-  const userData: any = jwtDecode(query?.token);
+  // const userData: any = jwtDecode(query?.token);
+  let userData;
 
   return (
     <div>
@@ -20,7 +21,7 @@ const VerifiedEmail = () => {
         <span className="text-2xl font-bold">Thank you for registering.</span>
         <br />
         <span className="text-2xl font-bold">
-          {userData.charityName}, {userData.firstName}!
+          {userData}, {userData}!
         </span>
       </div>
       <div className="my-10">
