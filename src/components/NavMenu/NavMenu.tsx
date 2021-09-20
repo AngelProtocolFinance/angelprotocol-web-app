@@ -18,9 +18,9 @@ const NavMenu = () => {
           Donate
         </NavLink>
       </li>
-      <li>
-        <NavLink to={routes.contact} {...linkStyles}>
-          Contact
+      <li className="mr-4">
+        <NavLink to={routes.charities} {...linkStyles}>
+          Charities
         </NavLink>
       </li>
     </ul>

@@ -18,11 +18,6 @@ export default function MobileNav() {
           Donate Now
         </NavLink>
       </li>
-      <li className="mb-2">
-        <NavLink to={routes.contact} {...linkStyles}>
-          Contact
-        </NavLink>
-      </li>
     </ul>
   );
 }

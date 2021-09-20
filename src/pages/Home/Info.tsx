@@ -1,8 +1,7 @@
 import YouTube, { Options } from "react-youtube";
+import AngelVid from "./AngelVid";
 
 const opts: Options = {
-  height: "320",
-  width: "480",
   playerVars: {
     // https://developers.google.com/youtube/player_parameters
     autoplay: 1,
@@ -17,12 +16,7 @@ export default function Info() {
   return (
     <section className="grid lg:items-center grid-rows-2a grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-end ">
       <div className="justify-self-center">
-        <YouTube
-          videoId="Tv2ECcdPqzY"
-          opts={opts}
-          onReady={onReady}
-          className="w-80 sm:w-96 lg:w-video"
-        />
+        <AngelVid />
       </div>
       <article className="justify-self-center lg:justify-self-start max-w-2xl mt-5 lg:mt-0 lg:pl-2">
         <h3 className="text-xl sm:text-2xl font-semibold text-blue-accent font-body mb-3">
