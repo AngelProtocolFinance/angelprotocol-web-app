@@ -4,13 +4,14 @@ import { useGetStatus } from "./Donator";
 import Estimates from "./Estimates";
 import { Steps } from "./types";
 import Results from "./Results";
+import BlockLoader from "components/Loader/BlockLoader";
+import LineLoader from "components/Loader/LineLoader";
 
 export default function Announcer() {
   //since Announcer is inside <Formik/> - has access to formik props
   const status = useGetStatus();
 
   switch (status.step) {
-    case Steps.waiting:
     case Steps.error: {
       return (
         <Modal>
@@ -37,6 +38,14 @@ export default function Announcer() {
         </Modal>
       );
     }
+    case Steps.waiting:
+      return (
+        <Modal>
+          <Popup message={status?.message}>
+            <LineLoader size="4" spacing="2" color="angel-grey" />
+          </Popup>
+        </Modal>
+      );
 
     default:
       return null;
