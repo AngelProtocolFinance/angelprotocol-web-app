@@ -6,9 +6,8 @@ export function TransactionsStatuses(props: any) {
     <div>
       {/* TODO (borodanov): remove 'any' */}
       {transactionsStatuses?.map((transactionStatus: any, i: number) => {
-        {
-          /* TODO (borodanov): make keys not to equal to index */
-        }
+        /* TODO (borodanov): make keys not to equal to index */
+
         return <div key={i}>{transactionStatus}</div>;
       })}
     </div>

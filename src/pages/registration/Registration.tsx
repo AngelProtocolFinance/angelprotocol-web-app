@@ -17,7 +17,7 @@ const Registration = () => {
   return (
     <div>
       <div className="rounded-xl mb-5">
-        <img src={banner1} width="100%" className="rounded-xl" />
+        <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
       </div>
       <div>
         <span className="text-2xl font-bold">

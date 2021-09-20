@@ -39,6 +39,7 @@ const App = () => {
         <Route path={routes.privacy_policy} component={PrivacyPolicy} />
         <Route path={`${routes.donate}/:charityId`} component={Donate} />
         <Route exact path={routes.home} component={Home} />
+        <Redirect from="*" to={routes.donate} />
       </Switch>
       <Footer />
     </div>
