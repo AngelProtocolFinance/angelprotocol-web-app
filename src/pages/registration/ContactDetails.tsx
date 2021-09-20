@@ -1,4 +1,4 @@
-import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsFrom";
+import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsForm";
 
 const ContactDetails = () => {
   // const contactInfo = JSON.parse(localStorage.getItem("userData") || "");

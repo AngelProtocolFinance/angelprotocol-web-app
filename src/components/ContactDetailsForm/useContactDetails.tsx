@@ -1,7 +1,7 @@
 import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
 import { register_routes } from "types/types";
-import { ContactDetails } from "./ContactDetailsFrom";
+import { ContactDetails } from "./ContactDetailsForm";
 import * as Yup from "yup";
 
 export const ContactInfoSchema = Yup.object().shape({
