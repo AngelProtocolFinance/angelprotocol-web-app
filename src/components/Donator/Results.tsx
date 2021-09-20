@@ -35,7 +35,14 @@ export default function Results() {
           <span className="font-semibold">{deposited} UST</span>
         </p>
       </div>
-
+      <a
+        className="text-thin-blue"
+        href={result?.url}
+        target="_blank"
+        referrerPolicy="no-referrer"
+      >
+        transaction details
+      </a>
       <button
         className="my-3 w-32 text-center bg-angel-orange py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
         onClick={handleShare}

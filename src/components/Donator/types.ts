@@ -22,6 +22,7 @@ interface Estimates {
 interface Result {
   received: number;
   deposited: number;
+  url: string;
 }
 
 interface WithResult {

@@ -91,6 +91,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
               result: {
                 received: +UST_Amount,
                 deposited: depositAmount,
+                url: `https://finder.terra.money/${indexFund.wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             });
           } else {
