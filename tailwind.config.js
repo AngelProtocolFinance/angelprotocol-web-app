@@ -94,6 +94,9 @@ module.exports = {
         "video:md": "30rem",
         "video:sm": "30rem",
       },
+      animation: {
+        iconPing: "ping 100ms",
+      },
     },
   },
   variants: {

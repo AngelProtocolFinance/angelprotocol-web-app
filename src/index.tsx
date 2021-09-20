@@ -27,10 +27,17 @@ const mainnet = {
   lcd: "https://lcd.terra.dev",
 };
 
+const bombay = {
+  name: "bombay",
+  chainID: "bombay-10",
+  lcd: "https://bombay-lcd.terra.dev",
+};
+
 const walletConnectChainIds: Record<number, NetworkInfo> = {
   0: localterra,
   1: testnet,
   2: mainnet,
+  3: bombay,
 };
 
 ReactDOM.render(
