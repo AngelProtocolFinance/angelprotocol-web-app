@@ -14,7 +14,7 @@ const NavMenu = () => {
       className={`text-${textColor} hidden md:flex justify-self-end font-body text-sm lg:text-base mr-4`}
     >
       <li className="mr-4">
-        <NavLink to={routes.donate} {...linkStyles}>
+        <NavLink to={routes.tca} {...linkStyles}>
           Donate
         </NavLink>
       </li>
@@ -23,7 +23,7 @@ const NavMenu = () => {
           Charities
         </NavLink>
       </li>
-      <li className="mr-4">
+      {/* <li className="mr-4">
         <NavLink to={routes.about_unsdgs} {...linkStyles}>
           UNSDGs
         </NavLink>
@@ -32,7 +32,7 @@ const NavMenu = () => {
         <NavLink to={routes.register} {...linkStyles}>
           Register
         </NavLink>
-      </li>
+      </li> */}
     </ul>
   );
 };
