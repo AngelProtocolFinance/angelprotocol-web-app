@@ -22,7 +22,12 @@ export default function Specs() {
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
       </h3>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 items-start justify-items-center gap-16 mt-16">
+      <ul
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromRight
+        )} grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 items-start justify-items-center gap-16 mt-16`}
+      >
         {specs.map(({ id, heading, icon, text }) => (
           <li
             key={id}

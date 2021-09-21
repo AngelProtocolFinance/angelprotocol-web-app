@@ -7,7 +7,7 @@ import transitionIn, { Direction } from "./transitionIn";
 //can't interpolate delay val to class because of tailwind purge
 
 export default function Process() {
-  const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  const { ref, isVisible } = useObserve({ threshold: 0.7 });
   return (
     <section
       ref={ref}
@@ -21,7 +21,12 @@ export default function Process() {
       >
         How It Works
       </h3>
-      <ul className="grid lg:grid-cols-3 h-full justify-items-center mb-10">
+      <ul
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromBottom
+        )} grid lg:grid-cols-3 h-full justify-items-center mb-10`}
+      >
         {processes.map(({ icon, heading, toolkit, text, id }) => {
           return (
             <li

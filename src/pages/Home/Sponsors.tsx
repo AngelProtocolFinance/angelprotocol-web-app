@@ -28,7 +28,14 @@ export default function Sponsors() {
       ref={ref}
       className="grid content-start justify-items-center h-auto sm:h-96 bg-light-grey pb-10 sm:pb-0 px-5"
     >
-      <h3 className="text-2xl text-angel-grey font-bold my-10">SUPPORTED BY</h3>
+      <h3
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromLeft
+        )} text-2xl text-angel-grey font-bold my-10`}
+      >
+        SUPPORTED BY
+      </h3>
       <ul
         className={`${transitionIn(
           isVisible,
