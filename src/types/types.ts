@@ -10,4 +10,5 @@ export enum routes {
   tca = "/tca",
   test = "/test",
   charities = "/charities",
+  privacy = "/privacy-policy",
 }

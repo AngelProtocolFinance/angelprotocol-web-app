@@ -18,12 +18,23 @@ import spaar from "assets/icons/sponsors/spaar.png";
 import spar from "assets/icons/sponsors/spar.png";
 import starterra from "assets/icons/sponsors/starterra.png";
 import talis from "assets/icons/sponsors/talis.png";
+import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "./transitionIn";
 
 export default function Sponsors() {
+  const { ref, isVisible } = useObserve({ threshold: 0.8 });
   return (
-    <section className="grid content-start justify-items-center h-auto sm:h-96 bg-light-grey pb-10 sm:pb-0 px-5">
+    <section
+      ref={ref}
+      className="grid content-start justify-items-center h-auto sm:h-96 bg-light-grey pb-10 sm:pb-0 px-5"
+    >
       <h3 className="text-2xl text-angel-grey font-bold my-10">SUPPORTED BY</h3>
-      <ul className="flex justify-center flex-wrap gap-3 max-w-3xl">
+      <ul
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromDot
+        )} flex justify-center flex-wrap gap-3 max-w-3xl`}
+      >
         {supporterIcons.map((icon, index) => (
           <li key={index}>
             <img src={icon} className="w-16" alt="" />

@@ -1,23 +1,23 @@
 import { useState } from "react";
 import Slider from "rc-slider";
 import { ShareModal } from "components/ShareModal";
-import contracts from "../contracts";
+// import contracts from "../contracts";
 import "rc-slider/assets/index.css";
 
 import {
   useConnectedWallet,
-  UserDenied,
-  CreateTxFailed,
-  TxFailed,
-  Timeout,
-  TxUnspecifiedError,
+  // UserDenied,
+  // CreateTxFailed,
+  // TxFailed,
+  // Timeout,
+  // TxUnspecifiedError,
 } from "@terra-money/wallet-provider";
 
-import {
-  CreateTxOptions,
-  MsgExecuteContract,
-  StdFee,
-} from "@terra-money/terra.js";
+// import {
+//   // CreateTxOptions,
+//   // MsgExecuteContract,
+//   // StdFee,
+// } from "@terra-money/terra.js";
 import useSlider from "hooks/useSlider";
 
 interface DonationFormProps {

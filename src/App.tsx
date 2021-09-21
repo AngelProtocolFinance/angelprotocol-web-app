@@ -14,6 +14,7 @@ import TCA from "pages/TCA/TCA";
 import { routes } from "./types/types";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 import Header from "./layout/Header/Header";
+import PrivacyPolicy from "pages/PrivacyPolicy";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -36,6 +37,7 @@ const App = () => {
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.login} component={Login} />
         <Route path={routes.tca} component={TCA} />
+        <Route path={routes.privacy} component={PrivacyPolicy} />
         <Route path={`${routes.donate}/:charityId`} component={Donate} />
         <Route exact path={routes.home} component={Home} />
         <Redirect from="*" to={routes.donate} />

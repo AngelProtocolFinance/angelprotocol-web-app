@@ -2,11 +2,23 @@ import donorIcon from "assets/icons/administrator.svg";
 import setupIcon from "assets/icons/rocket.svg";
 import lowCostIcon from "assets/icons/piggy_bank.svg";
 import mgmtIcon from "assets/icons/gear.svg";
+import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "./transitionIn";
 
 export default function Specs() {
+  const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  console.log(isVisible);
   return (
-    <section className="h-auto lg:h-specs grid grid-rows-a1 justify-items-center mt-16  text-blue-accent px-10 pb-10 lg:pb-0">
-      <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center">
+    <section
+      ref={ref}
+      className="h-auto lg:h-specs grid grid-rows-a1 justify-items-center mt-16  text-blue-accent px-10 pb-10 lg:pb-0"
+    >
+      <h3
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromDot
+        )} font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center`}
+      >
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
       </h3>
