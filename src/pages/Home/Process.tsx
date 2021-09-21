@@ -7,7 +7,7 @@ import transitionIn, { Direction } from "./transitionIn";
 //can't interpolate delay val to class because of tailwind purge
 
 export default function Process() {
-  const { ref, isVisible } = useObserve({ threshold: 0.7 });
+  const { ref, isVisible } = useObserve({ threshold: 0.2 });
   return (
     <section
       ref={ref}

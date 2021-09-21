@@ -22,7 +22,7 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "./transitionIn";
 
 export default function Sponsors() {
-  const { ref, isVisible } = useObserve({ threshold: 0.8 });
+  const { ref, isVisible } = useObserve({ threshold: 0.6 });
   return (
     <section
       ref={ref}

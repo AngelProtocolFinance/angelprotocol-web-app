@@ -6,7 +6,7 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "./transitionIn";
 
 export default function Specs() {
-  const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  const { ref, isVisible } = useObserve({ threshold: 0.2 });
   console.log(isVisible);
   return (
     <section
