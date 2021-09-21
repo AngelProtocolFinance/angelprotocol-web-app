@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useObserve(options: IntersectionObserverInit) {
   const targetRef = useRef<HTMLDivElement>(null);
@@ -6,20 +6,20 @@ export default function useObserve(options: IntersectionObserverInit) {
   const [entry, setEntry] = useState<IntersectionObserverEntry>();
   const { current: target } = targetRef;
 
-  const observer = useMemo(
-    () =>
-      new IntersectionObserver(function (entries) {
-        //this call will run once observer has target
-        !entry && setEntry(entries[0]);
-      }, options),
-    []
-  );
-
   useEffect(() => {
     if (!target) {
       forceUpdate(Math.random());
       return;
     }
+
+    if (!window.IntersectionObserver) {
+      return;
+    }
+    const observer = new IntersectionObserver(function (entries) {
+      //this call will run once observer has target
+      !entry && setEntry(entries[0]);
+    }, options);
+
     observer.observe(target);
 
     return () => observer.disconnect();

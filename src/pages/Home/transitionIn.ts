@@ -7,7 +7,7 @@ export enum Direction {
 }
 
 export default function transitionIn(cue: boolean, direction: Direction) {
-  const init = "relative transition-all";
+  const init = "relative transition-all duration-700";
   let transition = "";
   switch (direction) {
     case Direction.fromLeft: {
