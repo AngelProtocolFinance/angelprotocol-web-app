@@ -5,14 +5,14 @@ import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
   const history = useHistory();
-  // const userData: any = JSON.parse(localStorage.getItem("userData") || "");
+  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
 
-  // if (userData) {
-  //   history.push({
-  //     pathname: register_routes.confirm,
-  //     state: { is_sent: true },
-  //   });
-  // }
+  if (userData) {
+    history.push({
+      pathname: register_routes.confirm,
+      state: { is_sent: true },
+    });
+  }
 
   return (
     <div>

@@ -1,6 +1,3 @@
-import { useHistory } from "react-router-dom";
-import { register_routes } from "types/types";
-
 // TCA Member's Login Auth Process
 // after check useRequest hook, remove it
 const TCAAuthProcess = async (password: string) => {
@@ -84,8 +81,17 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
 
     // If there's a UUID returned, it means registration is a success
     if (data.UUID) {
+      body = {
+        charityName: contactData.charityName,
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phone: contactData.phone,
+        UUID: data.UUID,
+      };
+
       console.log("message:", data.message, "UUID:", data.UUID);
-      localStorage.setItem("userData", JSON.stringify(data));
+      localStorage.setItem("userData", JSON.stringify(body));
     } else {
       console.log("message:", data.message);
     }
