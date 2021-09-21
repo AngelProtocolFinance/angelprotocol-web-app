@@ -17,7 +17,7 @@ const ConfirmEmail = () => {
       )}
       {is_sent ? (
         <div>
-          <span className="text-2xl font-bold">Hi {userData.firstName}!</span>
+          <span className="text-2xl font-bold">Hi {userData.FirstName}!</span>
           <br />
           <span className="text-2xl font-bold">
             We're still waiting for you to confirm your email address.
@@ -27,7 +27,7 @@ const ConfirmEmail = () => {
         <div>
           <span className="text-2xl font-bold">
             Thank you for registering <br />
-            {userData.firstName}, {userData.charityName}!
+            {userData.FirstName}, {userData.CharityName}!
           </span>
           <br />
           <br />
@@ -46,7 +46,7 @@ const ConfirmEmail = () => {
         ) : (
           <span className="text-base">
             Please click on the link in the email and you'll be able to continue
-            with the registration of {userData.charityName} on Angel.
+            with the registration of {userData.CharityName} on Angel.
           </span>
         )}
       </div>

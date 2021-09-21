@@ -49,24 +49,24 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
   //     },
   //   };
   // }
-  if (contactData.orgRole === "other") {
+  if (contactData.OrgRole === "other") {
     body = {
-      Registration: { CharityName: contactData.charityName },
+      Registration: { CharityName: contactData.CharityName },
       ContactPerson: {
-        FirstName: contactData.firstName,
-        LastName: contactData.lastName,
-        Email: contactData.email,
-        PhoneNumber: contactData.phone,
+        FirstName: contactData.FirstName,
+        LastName: contactData.LastName,
+        Email: contactData.Email,
+        PhoneNumber: contactData.Phone,
       },
     };
   } else {
     body = {
-      Registration: { CharityName: contactData.charityName },
+      Registration: { CharityName: contactData.CharityName },
       ContactPerson: {
-        FirstName: contactData.firstName,
-        LastName: contactData.lastName,
-        Email: contactData.email,
-        PhoneNumber: contactData.phone,
+        FirstName: contactData.FirstName,
+        LastName: contactData.LastName,
+        Email: contactData.Email,
+        PhoneNumber: contactData.Phone,
       },
     };
   }
@@ -82,11 +82,11 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
     // If there's a UUID returned, it means registration is a success
     if (data.UUID) {
       body = {
-        charityName: contactData.charityName,
-        firstName: contactData.firstName,
-        lastName: contactData.lastName,
-        email: contactData.email,
-        phone: contactData.phone,
+        CharityName: contactData.CharityName,
+        FirstName: contactData.FirstName,
+        LastName: contactData.LastName,
+        Email: contactData.Email,
+        Phone: contactData.Phone,
         UUID: data.UUID,
       };
 
@@ -105,26 +105,28 @@ const GetPreviousRegistration = async (id: string) => {
   let body: { [key: string]: any } = {};
 
   try {
-    // const response: any = await fetch(`${url}?uuid=${id}&sort=ContactPerson`, {
-    //   method: "GET",
-    // });
     const response: any = await fetch(`${url}?uuid=${id}`, {
       method: "GET",
     });
     const data: any = await response.json();
-    data.forEach((element: any) => {
-      if (element.SK === "ContactPerson") {
-        // console.log(element);
-        // body += element;
-        body = element;
-      } else {
-        body["CharityName"] = element.CharityName;
-      }
-    });
-    console.log(body);
-    // console.log(data[0]);
-    // console.log(data[1]);
-    // return true;
+
+    if (data.message === "Charity not found.") {
+      console.log("message:", data.message);
+      return false;
+    } else {
+      data.forEach((element: any) => {
+        if (element.SK === "ContactPerson") {
+          // console.log(element);
+          // body += element;
+          body = element;
+        } else {
+          body["CharityName"] = element.CharityName;
+        }
+      });
+
+      localStorage.setItem("userData", JSON.stringify(body));
+      return true;
+    }
   } catch (error) {
     console.error(error);
   }

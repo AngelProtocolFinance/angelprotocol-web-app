@@ -19,11 +19,11 @@ export type ContactDetails = {
 
 export const ContactDetailsForm = () => {
   const initialValues = {
-    charityName: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
+    CharityName: "",
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    Phone: "",
   };
 
   const onSubmit = (values: any) => {
@@ -35,28 +35,28 @@ export const ContactDetailsForm = () => {
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       <Form>
         <div className="text-black">
-          <label htmlFor="charityName">Charity Name</label>
+          <label htmlFor="CharityName">Charity Name</label>
           <Field
-            id="charityName"
-            name="charityName"
+            id="CharityName"
+            name="CharityName"
             placeholder="Charity Name"
           />
           <br />
           <br />
-          <label htmlFor="firstName">First Name</label>
-          <Field id="firstName" name="firstName" placeholder="First Name" />
+          <label htmlFor="FirstName">First Name</label>
+          <Field id="FirstName" name="FirstName" placeholder="First Name" />
           <br />
           <br />
-          <label htmlFor="lastName">Last Name</label>
-          <Field id="lastName" name="lastName" placeholder="Last Name" />
+          <label htmlFor="LastName">Last Name</label>
+          <Field id="LastName" name="LastName" placeholder="Last Name" />
           <br />
           <br />
-          <label htmlFor="email">Email</label>
-          <Field id="email" name="email" placeholder="Email" type="email" />
+          <label htmlFor="Email">Email</label>
+          <Field id="Email" name="Email" placeholder="Email" type="email" />
           <br />
           <br />
-          <label htmlFor="phone">Phone</label>
-          <Field id="phone" name="phone" placeholder="Phone" />
+          <label htmlFor="Phone">Phone</label>
+          <Field id="Phone" name="Phone" placeholder="Phone" />
           <br />
           <br />
           <button type="submit">Submit</button>

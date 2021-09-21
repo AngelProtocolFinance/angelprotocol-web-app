@@ -55,23 +55,23 @@ const Registration = () => {
             }
             return {};
           }}
-          onSubmit={(values, { setSubmitting, setFieldError }) => {
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
             setSubmitting(true);
             // API integration.
-            let isFound = GetPreviousRegistration(values.refer);
+            let isFound = await GetPreviousRegistration(values.refer);
 
-            // if (!isFound) {
-            //   history.push({
-            //     pathname: register_routes.confirm,
-            //     state: { is_sent: true },
-            //   });
-            // } else {
-            //   // set error
-            //   setFieldError(
-            //     "refer",
-            //     "Can not find a registration file with this reference!"
-            //   );
-            // }
+            if (!isFound) {
+              // set error
+              setFieldError(
+                "refer",
+                "Can not find a registration file with this reference!"
+              );
+            } else {
+              history.push({
+                pathname: register_routes.confirm,
+                state: { is_sent: true },
+              });
+            }
             setSubmitting(false);
           }}
         >
