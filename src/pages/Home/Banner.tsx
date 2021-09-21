@@ -1,9 +1,20 @@
 import useObserve from "hooks/useObserver";
 import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 import transitionIn, { Direction } from "./transitionIn";
+import useTypeWriter from "./useTypeWritter";
 
 export default function Banner() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  const [typedText, cursorShown] = useTypeWriter(
+    [
+      "have funding, forever.",
+      "focus on impact.",
+      "spend less on fundraising.",
+    ],
+    70,
+    1000
+  );
+
   return (
     <section
       ref={ref}
@@ -11,15 +22,19 @@ export default function Banner() {
     >
       <div className="container mx-auto  grid grid-cols-1a items-center">
         <section
-          className={`max-w-3xl pl-5 ${transitionIn(
+          className={`max-w-3xl p-5 ${transitionIn(
             isVisible,
             Direction.fromTop
           )}`}
         >
-          <h1 className="text-3xl  sm:text-4xl sm:leading-snug md:text-5xl text-white md:leading-normal">
+          <h1 className="font-semibold text-3xl sm:text-4xl sm:leading-snug md:text-5xl text-white md:leading-normal">
             Simplified endowments that empower charities to{" "}
-            <span className="block font-semibold text-angel-orange">
-              have funding forever
+            <span
+              className={`ml-1 inline font-bold text-angel-orange border-r-4 transition-all ${
+                cursorShown ? "border-white-grey" : "border-transparent"
+              }`}
+            >
+              {typedText}
             </span>
           </h1>
         </section>
