@@ -1,13 +1,14 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
 import { register_routes } from "types/types";
+import { GetPreviousRegistration } from "aws-settings.config";
 import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
 
-  if (userData) {
+  if (userData.UUID) {
     history.push({
       pathname: register_routes.confirm,
       state: { is_sent: true },
@@ -55,14 +56,22 @@ const Registration = () => {
             return {};
           }}
           onSubmit={(values, { setSubmitting, setFieldError }) => {
-            alert(JSON.stringify(values, null, 2));
             setSubmitting(true);
             // API integration.
-            // set error
-            setFieldError(
-              "refer",
-              "Can`t find a registration file with this reference!"
-            );
+            let isFound = GetPreviousRegistration(values.refer);
+
+            // if (!isFound) {
+            //   history.push({
+            //     pathname: register_routes.confirm,
+            //     state: { is_sent: true },
+            //   });
+            // } else {
+            //   // set error
+            //   setFieldError(
+            //     "refer",
+            //     "Can not find a registration file with this reference!"
+            //   );
+            // }
             setSubmitting(false);
           }}
         >

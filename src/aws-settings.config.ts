@@ -23,7 +23,7 @@ const TCAAuthProcess = async (password: string) => {
 // Charity Registration Process
 // Initial Registration
 const ContactDetailsFormSubmit = async (contactData: any) => {
-  const url = process.env.REACT_APP_AWS_REGISTER_CONTACT_PERSON_URL;
+  const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body;
 
   // if (contactData.orgRole === "other") {
@@ -100,4 +100,35 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
   }
 };
 
-export { TCAAuthProcess, ContactDetailsFormSubmit };
+const GetPreviousRegistration = async (id: string) => {
+  const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
+  let body: { [key: string]: any } = {};
+
+  try {
+    // const response: any = await fetch(`${url}?uuid=${id}&sort=ContactPerson`, {
+    //   method: "GET",
+    // });
+    const response: any = await fetch(`${url}?uuid=${id}`, {
+      method: "GET",
+    });
+    const data: any = await response.json();
+    data.forEach((element: any) => {
+      if (element.SK === "ContactPerson") {
+        // console.log(element);
+        // body += element;
+        body = element;
+      } else {
+        body["CharityName"] = element.CharityName;
+      }
+    });
+    console.log(body);
+    // console.log(data[0]);
+    // console.log(data[1]);
+    // return true;
+  } catch (error) {
+    console.error(error);
+  }
+  // Should set data to localStorage
+};
+
+export { TCAAuthProcess, ContactDetailsFormSubmit, GetPreviousRegistration };
