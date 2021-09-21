@@ -1,3 +1,6 @@
+import { useHistory } from "react-router-dom";
+import { register_routes } from "types/types";
+
 // TCA Member's Login Auth Process
 // after check useRequest hook, remove it
 const TCAAuthProcess = async (password: string) => {
@@ -26,6 +29,29 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
   const url = process.env.REACT_APP_AWS_REGISTER_CONTACT_PERSON_URL;
   let body;
 
+  // if (contactData.orgRole === "other") {
+  //   body = {
+  //     Registration: { CharityName: contactData.charityName },
+  //     ContactPerson: {
+  //       FirstName: contactData.firstName,
+  //       LastName: contactData.lastName,
+  //       Email: contactData.email,
+  //       PhoneNumber: contactData.phone,
+  //       Role: contactData.otherRole,
+  //     },
+  //   };
+  // } else {
+  //   body = {
+  //     Registration: { CharityName: contactData.charityName },
+  //     ContactPerson: {
+  //       FirstName: contactData.firstName,
+  //       LastName: contactData.lastName,
+  //       Email: contactData.email,
+  //       PhoneNumber: contactData.phone,
+  //       Role: contactData.orgRole,
+  //     },
+  //   };
+  // }
   if (contactData.orgRole === "other") {
     body = {
       Registration: { CharityName: contactData.charityName },
@@ -34,7 +60,6 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
         LastName: contactData.lastName,
         Email: contactData.email,
         PhoneNumber: contactData.phone,
-        Role: contactData.otherRole,
       },
     };
   } else {
@@ -45,7 +70,6 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
         LastName: contactData.lastName,
         Email: contactData.email,
         PhoneNumber: contactData.phone,
-        Role: contactData.orgRole,
       },
     };
   }
@@ -58,8 +82,10 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
 
     const data: { message: string; UUID: string } = await response.json();
 
+    // If there's a UUID returned, it means registration is a success
     if (data.UUID) {
       console.log("message:", data.message, "UUID:", data.UUID);
+      localStorage.setItem("userData", JSON.stringify(data));
     } else {
       console.log("message:", data.message);
     }

@@ -12,7 +12,8 @@ const ContactDetails = () => {
         you are. Once this form is submitted, you will be able to resume your
         registration if it gets interrupted in the future.
       </p>
-      <ContactDetailsForm contactData={contactInfo} />
+      {/* <ContactDetailsForm contactData={contactInfo} /> */}
+      <ContactDetailsForm />
     </div>
   );
 };
