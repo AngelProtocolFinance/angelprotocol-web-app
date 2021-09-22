@@ -1,4 +1,5 @@
 import "react-toastify/dist/ReactToastify.css";
+import { routes } from "./types/types";
 import { Switch, Route, Redirect, useLocation } from "react-router-dom";
 import Footer from "components/Footer/Footer";
 import useAppBackground from "hooks/useAppBackground";
@@ -11,10 +12,11 @@ import Login from "pages/Login/Login";
 import Register from "pages/registration/index";
 import Contact from "pages/Contact/Contact";
 import TCA from "pages/TCA/TCA";
-import { routes } from "./types/types";
+import Donors from "pages/Donors/Donors";
+import PrivacyPolicy from "pages/PrivacyPolicy";
+import Charities from "pages/Charities/Charities";
 import HeaderColorProvider from "contexts/HeaderColorProvider";
 import Header from "./layout/Header/Header";
-import PrivacyPolicy from "pages/PrivacyPolicy";
 
 const App = () => {
   const appBackround = useAppBackground();
@@ -25,7 +27,6 @@ const App = () => {
       <HeaderColorProvider>
         <Header />
       </HeaderColorProvider>
-
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
         <Route path={routes.about} component={About} />
@@ -37,6 +38,8 @@ const App = () => {
         <Route path={routes.contact} component={Contact} />
         <Route path={routes.login} component={Login} />
         <Route path={routes.tca} component={TCA} />
+        <Route path={routes.donors} component={Donors} />
+        <Route path={routes.charities} component={Charities} />
         <Route path={routes.privacy} component={PrivacyPolicy} />
         <Route path={`${routes.donate}/:charityId`} component={Donate} />
         <Route exact path={routes.home} component={Home} />

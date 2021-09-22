@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="_x30_9_x5F_signing_x5F_contract" x="0px" y="0px" width="64px" height="64px" viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<polyline style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" points="46,1 46,9 54,9    "></polyline>
+			<polyline style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" points="54,34 54,9 46,1 10,1 10,34    "></polyline>
+			<polyline style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" points="10,46 10,63 54,63 54,50    "></polyline>
+			<g>
+				<g>
+					<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="10" y1="43" x2="58" y2="43"></line>
+					<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="58" y1="37" x2="10" y2="37"></line>
+					<rect x="58" y="37" style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" width="5" height="6"></rect>
+					
+						<polygon style="fill:none;stroke:#222829;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:10;" points="       10,37 8,37 1,40 8,43 10,43      "></polygon>
+					<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="22" y1="43" x2="22" y2="37"></line>
+				</g>
+				<polyline style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" points="39,47 54,47 54,37     "></polyline>
+			</g>
+			<path style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" d="M15,51c1.998,0,2.002,2,4,2s2.002-2,4-2     c1.999,0,2.001,2,4,2c2.002,0,1.998-2,4-2s1.998,2,4,2"></path>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="9" x2="17" y2="9"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="19" y1="9" x2="21" y2="9"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="23" y1="9" x2="25" y2="9"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="15" x2="49" y2="15"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="19" x2="49" y2="19"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="23" x2="49" y2="23"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="27" x2="49" y2="27"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="31" x2="31" y2="31"></line>
+			<line style="fill:none;stroke:#222829;stroke-width:2;stroke-miterlimit:10;" x1="15" y1="57" x2="35" y2="57"></line>
+		</g>
+	</g>
+</g>
+</svg>

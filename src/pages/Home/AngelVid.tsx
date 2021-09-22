@@ -1,4 +1,4 @@
-import transitionIn, { Direction } from "./transitionIn";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 interface Props {
   isVisible: boolean;

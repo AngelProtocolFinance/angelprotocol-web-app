@@ -19,7 +19,7 @@ import spar from "assets/icons/sponsors/spar.png";
 import starterra from "assets/icons/sponsors/starterra.png";
 import talis from "assets/icons/sponsors/talis.png";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "./transitionIn";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Sponsors() {
   const { ref, isVisible } = useObserve({ threshold: 0.6 });

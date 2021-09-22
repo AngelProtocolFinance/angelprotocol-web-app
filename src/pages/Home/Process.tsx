@@ -2,7 +2,7 @@ import setupIcon from "assets/icons/production_wheel.svg";
 import donateIcon from "assets/icons/money_savings.svg";
 import growIcon from "assets/icons/market_analytics.svg";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "./transitionIn";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 //can't interpolate delay val to class because of tailwind purge
 
@@ -10,6 +10,7 @@ export default function Process() {
   const { ref, isVisible } = useObserve({ threshold: 0.2 });
   return (
     <section
+      id="process"
       ref={ref}
       className="grid items-center bg-process bg-no-repeat bg-center w-full bg-cover px-5 lg:px-0"
     >

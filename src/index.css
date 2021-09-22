@@ -60,3 +60,7 @@
     @apply font-body;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}

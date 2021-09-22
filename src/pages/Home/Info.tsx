@@ -1,6 +1,6 @@
 import useObserve from "hooks/useObserver";
 import AngelVid from "./AngelVid";
-import transitionIn, { Direction } from "./transitionIn";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Info() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
