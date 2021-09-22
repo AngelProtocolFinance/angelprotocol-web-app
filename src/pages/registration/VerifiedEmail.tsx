@@ -20,7 +20,7 @@ const VerifiedEmail = () => {
         <span className="text-2xl font-bold">Thank you for registering.</span>
         <br />
         <span className="text-2xl font-bold">
-          {userData.CharityName}, {userData.FirstName}!
+          {userData.charityName}, {userData.firstName}!
         </span>
       </div>
       <div className="my-10">

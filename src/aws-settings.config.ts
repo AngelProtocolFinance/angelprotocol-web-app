@@ -26,26 +26,26 @@ const CreateNewCharity = async (contactData: any) => {
   const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body;
 
-  if (contactData.OrgRole === "other") {
+  if (contactData.orgRole === "other") {
     body = {
-      Registration: { CharityName: contactData.CharityName },
+      Registration: { CharityName: contactData.charityName },
       ContactPerson: {
-        FirstName: contactData.FirstName,
-        LastName: contactData.LastName,
-        Email: contactData.Email,
-        PhoneNumber: contactData.Phone,
-        Role: contactData.OtherRole,
+        FirstName: contactData.firstName,
+        LastName: contactData.lastName,
+        Email: contactData.email,
+        PhoneNumber: contactData.phone,
+        Role: contactData.otherRole,
       },
     };
   } else {
     body = {
-      Registration: { CharityName: contactData.CharityName },
+      Registration: { CharityName: contactData.charityName },
       ContactPerson: {
-        FirstName: contactData.FirstName,
-        LastName: contactData.LastName,
-        Email: contactData.Email,
-        PhoneNumber: contactData.Phone,
-        Role: contactData.OrgRole,
+        FirstName: contactData.firstName,
+        LastName: contactData.lastName,
+        Email: contactData.email,
+        PhoneNumber: contactData.phone,
+        Role: contactData.orgRole,
       },
     };
   }
@@ -61,12 +61,12 @@ const CreateNewCharity = async (contactData: any) => {
     // If there's a UUID returned, it means registration is a success
     if (data.UUID) {
       body = {
-        CharityName: contactData.CharityName,
-        FirstName: contactData.FirstName,
-        LastName: contactData.LastName,
-        Email: contactData.Email,
-        Phone: contactData.Phone,
-        UUID: data.UUID,
+        charityName: contactData.charityName,
+        firstName: contactData.firstName,
+        lastName: contactData.lastName,
+        email: contactData.email,
+        phone: contactData.phone,
+        uniqueID: data.UUID,
       };
 
       console.log("message:", data.message, "UUID:", data.UUID);
