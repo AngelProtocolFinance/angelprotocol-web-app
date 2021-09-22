@@ -1,4 +1,4 @@
-import { Handler } from "./Subscriber";
+import { Handler } from "types/types";
 import { AiFillWarning } from "react-icons/ai";
 
 type Props = {

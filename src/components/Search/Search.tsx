@@ -2,6 +2,7 @@ import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { useState } from "react";
 import { BsFilterRight } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
+
 export default function Search() {
   const { textColor } = useHeaderColors();
   const [isOpenSearch, setOpenSearch] = useState(false);
@@ -20,7 +21,7 @@ export default function Search() {
           className={`rounded-xl h-8 border border-${textColor} p-1 bg-white mr-1`}
         >
           <input
-            className={`tex-sm md:text-base text-${textColor} outline-none text-black w-52 pl-1`}
+            className={`text-sm md:text-base outline-none text-black w-52 pl-1`}
             type="text"
             placeholder="Search"
             name="searchkey"

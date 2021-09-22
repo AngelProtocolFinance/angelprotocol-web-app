@@ -1,12 +1,11 @@
 import LineLoader from "components/Loader/LineLoader";
 import Modal from "components/Modal/Modal";
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Handler } from "types/types";
 import ErrorPopup from "./ErrorPopup";
 import handleSubscribe from "./handleSubscribe";
 import SuccessPopup from "./SuccessPopup";
 import validator from "./validator";
-
-export type Handler = () => void;
 
 export interface Values {
   email: string;
@@ -44,7 +43,7 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-orange w-48 h-10 rounded-xl uppercase text-md font-bold text-white block mt-3 disabled:bg-grey-accent"
+              className="bg-orange w-48 h-10 rounded-xl uppercase text-base font-bold text-white block mt-3 disabled:bg-grey-accent"
             >
               {isSubmitting ? (
                 <LineLoader color="thin-grey" size={"4"} spacing={"2"} />
