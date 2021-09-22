@@ -33,7 +33,7 @@ export default function Subscriber() {
               autoComplete="off"
               type="text"
               name="email"
-              className="block p-2 rounded-sm w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
+              className="block p-2 rounded-md w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
             focus:outline-none focus:ring-2 focus:ring-white-grey focus:ring-opacity-50"
             />
             <ErrorMessage
@@ -44,7 +44,7 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="block mt-3 bg-angel-orange disabled:bg-grey-accent px-5 py-1 uppercase rounded-sm shadow-md w-36 h-10"
+              className="bg-orange w-48 h-10 rounded-xl uppercase text-md font-bold text-white block mt-3 disabled:bg-grey-accent"
             >
               {isSubmitting ? (
                 <LineLoader color="thin-grey" size={"4"} spacing={"2"} />

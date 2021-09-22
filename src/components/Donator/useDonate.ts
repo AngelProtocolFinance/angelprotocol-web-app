@@ -13,7 +13,6 @@ import {
   Coin,
   Dec,
 } from "@terra-money/terra.js";
-import { useState } from "react";
 
 interface DepositArgs {
   fund_id: number;

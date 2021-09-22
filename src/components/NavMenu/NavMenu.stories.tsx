@@ -13,6 +13,5 @@ const Template: ComponentStory<typeof NavMenu> = () => (
     <NavMenu />
   </MemoryRouter>
 );
-
 export const Default = Template.bind({});
 Default.args = {};
