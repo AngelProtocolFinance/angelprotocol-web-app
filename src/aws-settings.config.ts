@@ -114,6 +114,7 @@ const GetPreviousRegistration = async (id: string) => {
       console.log("message:", data.message);
       return false;
     } else {
+      // TO DO PAOLO: Refactor the Lambda function handling this to return just 1 whole object
       data.forEach((element: any) => {
         if (element.SK === "ContactPerson") {
           body = element;

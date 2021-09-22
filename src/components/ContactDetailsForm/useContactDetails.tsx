@@ -34,7 +34,6 @@ export const useContactDetails = () => {
     actions.setSubmitting(true);
     // call API to add or update contact details information(contactData)
     await CreateNewCharity(contactData);
-    // localStorage.setItem("userData", JSON.stringify(contactData));
     history.push(registerRoutes.confirm);
     actions.setSubmitting(false);
   }
