@@ -32,8 +32,8 @@ const Login = () => {
           Private access
         </p>
         <div className="text-center my-5 text-gray-400">
-          <p className="text-sm sm:text-md">Access Restricted to</p>
-          <p className="text-md sm:text-lg font-bold  text-angel-grey">
+          <p className="text-sm sm:text-base">Access Restricted to</p>
+          <p className="text-base sm:text-lg font-bold  text-angel-grey">
             Terra Charity Alliance Members
           </p>
         </div>
@@ -69,7 +69,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="disabled:bg-grey-accent bg-angel-grey bg-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white"
+                className="disabled:bg-grey-accent bg-angel-grey bg-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-base font-bold text-white"
                 disabled={isSubmitting}
               >
                 Enter
@@ -79,10 +79,10 @@ const Login = () => {
         </Formik>
 
         <div className="text-center my-10">
-          <p className="text-thin-blue font-bold text-md uppercase">
+          <p className="text-thin-blue font-bold text-base uppercase">
             learn more about
           </p>
-          <p className="text-thin-blue font-bold text-md uppercase">
+          <p className="text-thin-blue font-bold text-base uppercase">
             angel protocol
           </p>
         </div>

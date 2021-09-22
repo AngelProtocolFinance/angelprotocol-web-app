@@ -14,7 +14,7 @@ const Footer = () => {
         <p className="text-lg sm:text-xl text-center lg:text-left text-white-grey font-semibold  mb-2">
           Angel Protocol creates sustainable income streams for charities. And
           we're just starting!{" "}
-          <span className="text-md sm:text-lg text-center lg:text-left block font-normal ">
+          <span className="text-base sm:text-lg text-center lg:text-left block font-normal ">
             Subscribe to our newsletter to get the latest updates.
           </span>
         </p>

@@ -234,7 +234,7 @@ export function DonationForm(props: DonationFormProps) {
               <button className="uppercase bg-leaf-green rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
                 Success
               </button>
-              <span className="text-leaf-green text-md mx-4">
+              <span className="text-leaf-green text-base mx-4">
                 Thank you for your donation!
               </span>
               <button
@@ -253,7 +253,7 @@ export function DonationForm(props: DonationFormProps) {
               <button className="uppercase bg-failed-red rounded-xl w-56 h-12 d-flex justify-center items-center mb-4">
                 Declined
               </button>
-              <span className="text-failed-red text-md mx-4">
+              <span className="text-failed-red text-base mx-4">
                 Something went wrong. Please try again in a few minutes
               </span>
             </div>

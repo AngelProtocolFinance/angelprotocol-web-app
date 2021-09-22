@@ -1,4 +1,4 @@
-import { Handler } from "./Subscriber";
+import { Handler } from "types/types";
 import { FaCheck } from "react-icons/fa";
 
 type Props = {
