@@ -1,6 +1,6 @@
 import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
-import { register_routes } from "types/types";
+import { registerRoutes } from "types/types";
 import { ContactDetails } from "./ContactDetailsForm";
 import { CreateNewCharity } from "aws-settings.config";
 import * as Yup from "yup";
@@ -35,7 +35,7 @@ export const useContactDetails = () => {
     // call API to add or update contact details information(contactData)
     await CreateNewCharity(contactData);
     // localStorage.setItem("userData", JSON.stringify(contactData));
-    history.push(register_routes.confirm);
+    history.push(registerRoutes.confirm);
     actions.setSubmitting(false);
   }
   return { saveContactInfo };
