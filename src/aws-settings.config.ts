@@ -21,34 +21,11 @@ const TCAAuthProcess = async (password: string) => {
 };
 
 // Charity Registration Process
-// Initial Registration
-const ContactDetailsFormSubmit = async (contactData: any) => {
+// Initial Registration (creating Registration and ContactPerson items)
+const CreateNewCharity = async (contactData: any) => {
   const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body;
 
-  // if (contactData.orgRole === "other") {
-  //   body = {
-  //     Registration: { CharityName: contactData.charityName },
-  //     ContactPerson: {
-  //       FirstName: contactData.firstName,
-  //       LastName: contactData.lastName,
-  //       Email: contactData.email,
-  //       PhoneNumber: contactData.phone,
-  //       Role: contactData.otherRole,
-  //     },
-  //   };
-  // } else {
-  //   body = {
-  //     Registration: { CharityName: contactData.charityName },
-  //     ContactPerson: {
-  //       FirstName: contactData.firstName,
-  //       LastName: contactData.lastName,
-  //       Email: contactData.email,
-  //       PhoneNumber: contactData.phone,
-  //       Role: contactData.orgRole,
-  //     },
-  //   };
-  // }
   if (contactData.OrgRole === "other") {
     body = {
       Registration: { CharityName: contactData.CharityName },
@@ -57,6 +34,7 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
         LastName: contactData.LastName,
         Email: contactData.Email,
         PhoneNumber: contactData.Phone,
+        Role: contactData.OtherRole,
       },
     };
   } else {
@@ -67,6 +45,7 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
         LastName: contactData.LastName,
         Email: contactData.Email,
         PhoneNumber: contactData.Phone,
+        Role: contactData.OrgRole,
       },
     };
   }
@@ -100,6 +79,27 @@ const ContactDetailsFormSubmit = async (contactData: any) => {
   }
 };
 
+// Create new Metadata of charity
+const CreateNewMetadata = async (metadata: any) => {
+  const url = process.env.REACT_APP_AWS_CHARITY_METADATA_URL;
+
+  try {
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Create new Key Person's details
+const CreateNewKeyPerson = async (keyPersonData: any) => {
+  const url = process.env.REACT_APP_AWS_CHARITY_KEYPERSON_URL;
+
+  try {
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// Get previous registration details of charity when given a UUID
 const GetPreviousRegistration = async (id: string) => {
   const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body: { [key: string]: any } = {};
@@ -116,8 +116,6 @@ const GetPreviousRegistration = async (id: string) => {
     } else {
       data.forEach((element: any) => {
         if (element.SK === "ContactPerson") {
-          // console.log(element);
-          // body += element;
           body = element;
         } else {
           body["CharityName"] = element.CharityName;
@@ -130,7 +128,30 @@ const GetPreviousRegistration = async (id: string) => {
   } catch (error) {
     console.error(error);
   }
-  // Should set data to localStorage
 };
 
-export { TCAAuthProcess, ContactDetailsFormSubmit, GetPreviousRegistration };
+// Other "GET" requests here...
+
+// Update the charity's Registration data
+const UpdateRegistrationData = async () => {};
+
+// Update the Contact Person's details
+const UpdateContactPerson = async () => {};
+
+// Update Metadata of charity
+const UpdateMetadata = async () => {};
+
+// Update Key Person's details
+const UpdateKeyPerson = async () => {};
+
+export {
+  TCAAuthProcess,
+  CreateNewCharity,
+  CreateNewMetadata,
+  CreateNewKeyPerson,
+  GetPreviousRegistration,
+  UpdateRegistrationData,
+  UpdateContactPerson,
+  UpdateMetadata,
+  UpdateKeyPerson,
+};

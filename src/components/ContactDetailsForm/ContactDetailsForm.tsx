@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { routes } from "types/types";
 import { boolean } from "yup/lib/locale";
 // import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
-import { ContactDetailsFormSubmit } from "aws-settings.config";
+import { CreateNewCharity } from "aws-settings.config";
 
 export type ContactDetails = {
   charityName: string;
@@ -24,11 +24,12 @@ export const ContactDetailsForm = () => {
     LastName: "",
     Email: "",
     Phone: "",
+    OrgRole: "",
   };
 
   const onSubmit = (values: any) => {
     console.log(values);
-    ContactDetailsFormSubmit(values); // returns a message and the charity's UUID
+    CreateNewCharity(values); // returns a message and the charity's UUID
   };
 
   return (
@@ -57,6 +58,10 @@ export const ContactDetailsForm = () => {
           <br />
           <label htmlFor="Phone">Phone</label>
           <Field id="Phone" name="Phone" placeholder="Phone" />
+          <br />
+          <br />
+          <label htmlFor="OrgRole">Role</label>
+          <Field id="OrgRole" name="OrgRole" placeholder="Role" />
           <br />
           <br />
           <button type="submit">Submit</button>
