@@ -2,7 +2,7 @@ import targetIcon from "assets/icons/08_marketing_idea.svg";
 import checkIcon from "assets/icons/07_bank_check_payment.svg";
 import futureIcon from "assets/icons/10_future_possibility.svg";
 import lockIcon from "assets/icons/16_security_lock.svg";
-import trackIcon from "assets/icons/market_analytics.svg";
+import trackIcon from "assets/icons/market_analytics_dark.svg";
 import receiptIcon from "assets/icons/09_signing_contract.svg";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
@@ -13,7 +13,7 @@ export default function Specs() {
   return (
     <section
       ref={ref}
-      className="h-auto grid grid-rows-a1 justify-items-center  text-blue-accent py-16 px-10"
+      className="h-auto grid grid-rows-a1 justify-items-center text-blue-accent py-16 px-10"
     >
       <h3
         className={`${transitionIn(
