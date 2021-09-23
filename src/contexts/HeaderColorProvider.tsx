@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { routes } from "types/types";
 
@@ -20,13 +20,21 @@ const colorContext = createContext<Colors>(defaultColor);
 
 export default function HeaderColorProvider(props: propType) {
   const location = useLocation();
+
+  //scroll to top when locatin changes - will add to a better context
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   const colors = (() => {
     switch (location.pathname) {
+      case routes.donors:
+      case routes.charities:
       case routes.contact:
       case routes.home: {
         return {
           bgColor: "white",
-          textColor: "angel-grey",
+          textColor: "angel-blue",
         };
       }
       default: {

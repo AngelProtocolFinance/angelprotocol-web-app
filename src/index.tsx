@@ -14,10 +14,11 @@ const localterra = {
   lcd: "http://localhost:1317",
 };
 
+//how about tequilla testnet??
 const testnet = {
   name: "testnet",
-  chainID: "tequila-0004",
-  lcd: "https://tequila-lcd.terra.dev",
+  chainID: "bombay-10",
+  lcd: "https://bombay-lcd.terra.dev",
 };
 
 const mainnet = {

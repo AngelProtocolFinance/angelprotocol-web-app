@@ -8,6 +8,8 @@ import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router";
 import { routes } from "types/types";
+import { loginSchema } from "./loginSchema";
+import { Link } from "react-router-dom";
 
 export type Values = {
   password: string;
@@ -15,7 +17,7 @@ export type Values = {
 
 const Login = () => {
   const token = useGetToken();
-  const { validator, handleLogin } = useLogin();
+  const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
@@ -27,7 +29,7 @@ const Login = () => {
 
   return (
     <section className="p-5 pt-24 h-screen grid place-items-center ">
-      <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5">
+      <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
         </p>
@@ -39,7 +41,7 @@ const Login = () => {
         </div>
         <Formik
           initialValues={{ password: "" }}
-          validate={validator}
+          validationSchema={loginSchema}
           onSubmit={handleLogin}
         >
           {({ isSubmitting, status }) => (
@@ -69,7 +71,7 @@ const Login = () => {
               </div>
               <button
                 type="submit"
-                className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white"
+                className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
                 disabled={isSubmitting}
               >
                 Enter
@@ -78,14 +80,12 @@ const Login = () => {
           )}
         </Formik>
 
-        <div className="text-center my-10">
-          <p className="text-thin-blue font-bold text-md uppercase">
-            learn more about
-          </p>
-          <p className="text-thin-blue font-bold text-md uppercase">
-            angel protocol
-          </p>
-        </div>
+        <Link
+          to={routes.home}
+          className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"
+        >
+          learn more about angel protocol
+        </Link>
       </div>
       <ToastContainer />
     </section>

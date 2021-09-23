@@ -35,14 +35,11 @@ export default function Wallet() {
         onClick={handleCopyClick}
         onAnimationEnd={endAnimation}
       >
-        <BiCopy className={`text-${textColor}`} title="Copy Wallet Address" />
+        <BiCopy className={`text-${textColor}`} />
       </button>
       <div className="flex justify-between items-center relative">
         <button {...buttonProps}>
-          <FiMoreHorizontal
-            className={`text-${textColor}`}
-            title="More Options"
-          />
+          <FiMoreHorizontal className={`text-${textColor}`} />
         </button>
         <div
           className={
@@ -56,16 +53,16 @@ export default function Wallet() {
             {address.substr(0, 15) + "..."}
           </h3>
           <button
-            className="uppercase bg-thin-blue hover:bg-opacity-75 rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
+            className="uppercase bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
             onClick={handleCopy(address)}
           >
             Copy Address
           </button>
-          <button className="uppercase bg-thin-blue hover:bg-opacity-75 rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
+          <button className="uppercase bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
             send
           </button>
           <button
-            className="uppercase bg-orange hover:bg-opacity-75 rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
+            className="uppercase bg-orange rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
             onClick={disconnect}
           >
             Disconnect Wallet

@@ -1,4 +1,4 @@
-import BlockLoader from "components/Loader/BlockLoader";
+import Loader from "components/Loader/Loader";
 import useHBSTCreator from "hooks/useHBSTCreator";
 
 export default function Contact() {
@@ -7,7 +7,7 @@ export default function Contact() {
   let form = (
     <div className="my-10 flex flex-col items-center">
       <p className="mb-3 text-blue-accent">contact form is loading</p>
-      <BlockLoader size="20" thickness="4" color={"blue-accent"} />
+      <Loader gapClass="gap-1" widthClass="w-4" bgColorClass="bg-blue-accent" />
     </div>
   );
 
