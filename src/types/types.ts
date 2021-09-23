@@ -10,4 +10,22 @@ export enum routes {
   tca = "/tca",
   test = "/test",
   charities = "/charities",
+  privacy_policy = "/privacy-policy",
 }
+
+export enum registerRoutes {
+  index = "",
+  detail = "detail",
+  confirm = "confirm",
+  verify = "verify/:token",
+  status = "status",
+  wallet_check = "wallet-check",
+  connect_wallet = "connect-wallet",
+  select_wallet = "select-wallet",
+  upload_docs = "upload-docs",
+  charity_profile = "charity-profile",
+  others = "others",
+  self_custody = "self-custody",
+}
+
+export type Handler = () => void;

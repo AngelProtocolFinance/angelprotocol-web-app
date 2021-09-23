@@ -29,7 +29,7 @@ export default function MobileNav() {
         </NavLink>
       </li>
       <li>
-        <NavLink to={routes.register} {...linkStyles}>
+        <NavLink to={`${routes.register}/index`} {...linkStyles}>
           Register
         </NavLink>
       </li>

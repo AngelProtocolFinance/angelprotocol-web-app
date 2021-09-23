@@ -10,8 +10,6 @@ export enum Status {
   initial = "initial",
 }
 
-export type Handler = () => void;
-
 export interface Values {
   email: string;
 }
@@ -36,7 +34,7 @@ export default function Subscriber() {
               autoComplete="off"
               type="text"
               name="email"
-              className="block p-2 rounded-sm w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
+              className="block p-2 rounded-md w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
             focus:outline-none focus:ring-2 focus:ring-white-grey focus:ring-opacity-50"
             />
             <ErrorMessage
@@ -47,7 +45,7 @@ export default function Subscriber() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="text-white-grey font-semibold text-sm block mt-3 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
+              className="bg-orange w-48 h-10 rounded-xl uppercase text-base font-bold text-white block mt-3 disabled:bg-grey-accent"
             >
               {isSubmitting ? (
                 <Loader

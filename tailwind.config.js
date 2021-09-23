@@ -50,7 +50,7 @@ module.exports = {
         body: ["Open Sans", "sans-serif"],
       },
       height: {
-        "fixed-content-height": "calc(100vh - 9.25rem);",
+        "fixed-content-height": "calc(100vh - 7rem);",
         "donate-content-height": "calc(100% - 7.5rem)",
         info: "28rem",
         process: "36rem",
