@@ -9,8 +9,8 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
-  orgRule: string;
-  otherRule: string;
+  orgRole: string;
+  otherRole: string;
   checkedPolicy: boolean;
   uniqueID: string;
 };
@@ -25,8 +25,8 @@ export const ContactDetailsForm = (props: any) => {
         lastName: props.contactData?.lastName || "",
         email: props.contactData?.email || "",
         phone: props.contactData?.phone || "",
-        orgRule: props.contactData?.orgRule || "ceo",
-        otherRule: props.contactData?.otherRule || "",
+        orgRole: props.contactData?.orgRole || "ceo",
+        otherRole: props.contactData?.otherRole || "",
         checkedPolicy: false,
         uniqueID: props.contactData?.uniqueID || "",
       }}
@@ -40,9 +40,9 @@ export const ContactDetailsForm = (props: any) => {
               <div className="">
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md">
+                    <span className="text-base">
                       Name of your organization
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                       <Field
                         type="hidden"
                         value={values.uniqueID}
@@ -69,9 +69,9 @@ export const ContactDetailsForm = (props: any) => {
                 </div>
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md text-left">
+                    <span className="text-base text-left">
                       First name
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                     </span>
                   </div>
                   <div className="">
@@ -93,9 +93,9 @@ export const ContactDetailsForm = (props: any) => {
                 </div>
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md text-left">
+                    <span className="text-base text-left">
                       Last name
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                     </span>
                   </div>
                   <div className="">
@@ -117,17 +117,17 @@ export const ContactDetailsForm = (props: any) => {
                 </div>
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md text-left">
+                    <span className="text-base text-left">
                       E-mail address
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                     </span>
                   </div>
                   <div className="">
                     <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
                       <Field
-                        type="text"
+                        type="email"
                         className="outline-none border-none w-full px-3"
-                        placeholder="Email Address"
+                        placeholder="email Address"
                         value={values.email}
                         name="email"
                       />
@@ -143,14 +143,14 @@ export const ContactDetailsForm = (props: any) => {
               <div className="">
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md text-left">phone number</span>
+                    <span className="text-base text-left">phone number</span>
                   </div>
                   <div className="">
                     <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
                       <Field
                         type="text"
                         className="outline-none border-none w-full px-3"
-                        placeholder="Phone Number"
+                        placeholder="phone Number"
                         value={values.phone}
                         name="phone"
                       />
@@ -159,9 +159,9 @@ export const ContactDetailsForm = (props: any) => {
                 </div>
                 <div className="items-center justify-center mb-4">
                   <div className="text-left">
-                    <span className="text-md text-left">
+                    <span className="text-base text-left">
                       What's your role within the organization?
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                     </span>
                   </div>
                   <div className="">
@@ -170,9 +170,9 @@ export const ContactDetailsForm = (props: any) => {
                         as="select"
                         className="outline-none border-none w-full px-3"
                         placeholder="Role"
-                        value={values.orgRule}
+                        value={values.orgRole}
                         defaultValue="ceo"
-                        name="orgRule"
+                        name="orgRole"
                       >
                         <option value="president">
                           Chairperson / President
@@ -189,17 +189,17 @@ export const ContactDetailsForm = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-sm text-failed-red"
-                      name="orgRule"
+                      name="orgRole"
                       component="div"
                     />
                   </div>
                 </div>
-                {values.orgRule === "other" && (
+                {values.orgRole === "other" && (
                   <div className="items-center justify-center mb-4">
                     <div className="text-left">
-                      <span className="text-md text-left">
+                      <span className="text-base text-left">
                         please specify
-                        <span className="text-md text-failed-red">*</span>
+                        <span className="text-base text-failed-red">*</span>
                       </span>
                     </div>
                     <div className="">
@@ -208,13 +208,13 @@ export const ContactDetailsForm = (props: any) => {
                           type="text"
                           className="outline-none border-none w-full px-3 text-black"
                           placeholder="Specify Your Role"
-                          value={values.otherRule}
-                          name="otherRule"
+                          value={values.otherRole}
+                          name="otherRole"
                         />
                       </div>
                       <ErrorMessage
                         className="text-sm text-failed-red"
-                        name="otherRule"
+                        name="otherRole"
                         component="div"
                       />
                     </div>
@@ -231,19 +231,19 @@ export const ContactDetailsForm = (props: any) => {
                       name="checkedPolicy"
                       className="mr-2"
                     />
-                    <span className="text-md">
+                    <span className="text-base">
                       {" "}
                       By checking this box, you declare that you have read and
                       agreed our{" "}
                       <Link to={routes.privacy_policy} className="underline">
                         Privacy Policy
                       </Link>
-                      <span className="text-md text-failed-red">*</span>
+                      <span className="text-base text-failed-red">*</span>
                     </span>
                   </label>
                 </div>
                 <ErrorMessage
-                  className="text-md text-failed-red"
+                  className="text-base text-failed-red"
                   name="checkedPolicy"
                   component="div"
                 />
@@ -251,7 +251,7 @@ export const ContactDetailsForm = (props: any) => {
             </div>
             <div className="text-center">
               <button
-                className="bg-orange w-48 h-12 rounded-xl uppercase text-md font-bold text-white"
+                className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
                 type="submit"
                 disabled={isSubmitting}
               >
@@ -264,3 +264,76 @@ export const ContactDetailsForm = (props: any) => {
     </Formik>
   );
 };
+
+// import { ErrorMessage, Field, Form, Formik } from "formik";
+// import { Link } from "react-router-dom";
+// import { routes } from "types/types";
+// import { boolean } from "yup/lib/locale";
+// // import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
+// import { CreateNewCharity } from "aws-settings.config";
+
+// export type ContactDetails = {
+//   charityName: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phone: string;
+//   orgRole: string;
+//   otherRole: string;
+//   checkedPolicy: boolean;
+//   uniqueID: string;
+// };
+
+// export const ContactDetailsForm = () => {
+//   const initialValues = {
+//     charityName: "",
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     orgRole: "",
+//   };
+
+//   const onSubmit = (values: any) => {
+//     console.log(values);
+//     CreateNewCharity(values); // returns a message and the charity's UUID
+//   };
+
+//   return (
+//     <Formik initialValues={initialValues} onSubmit={onSubmit}>
+//       <Form>
+//         <div className="text-black">
+//           <label htmlFor="charityName">Charity Name</label>
+//           <Field
+//             id="charityName"
+//             name="charityName"
+//             placeholder="Charity Name"
+//           />
+//           <br />
+//           <br />
+//           <label htmlFor="firstName">First Name</label>
+//           <Field id="firstName" name="firstName" placeholder="First Name" />
+//           <br />
+//           <br />
+//           <label htmlFor="lastName">Last Name</label>
+//           <Field id="lastName" name="lastName" placeholder="Last Name" />
+//           <br />
+//           <br />
+//           <label htmlFor="email">email</label>
+//           <Field id="email" name="email" placeholder="email" type="email" />
+//           <br />
+//           <br />
+//           <label htmlFor="phone">phone</label>
+//           <Field id="phone" name="phone" placeholder="phone" />
+//           <br />
+//           <br />
+//           <label htmlFor="orgRole">Role</label>
+//           <Field id="orgRole" name="orgRole" placeholder="Role" />
+//           <br />
+//           <br />
+//           <button type="submit">Submit</button>
+//         </div>
+//       </Form>
+//     </Formik>
+//   );
+// };
