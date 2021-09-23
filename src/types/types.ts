@@ -9,8 +9,9 @@ export enum routes {
   contact = "/contact",
   tca = "/tca",
   test = "/test",
-  charities = "/charities",
   privacy_policy = "/privacy-policy",
+  charities = "/for-charities",
+  donors = "/for-donors",
 }
 
 export enum registerRoutes {

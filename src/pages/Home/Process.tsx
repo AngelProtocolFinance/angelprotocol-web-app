@@ -1,14 +1,33 @@
 import setupIcon from "assets/icons/production_wheel.svg";
 import donateIcon from "assets/icons/money_savings.svg";
 import growIcon from "assets/icons/market_analytics.svg";
+import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
+
+//can't interpolate delay val to class because of tailwind purge
 
 export default function Process() {
+  const { ref, isVisible } = useObserve({ threshold: 0.2 });
   return (
-    <section className="grid items-center bg-process bg-no-repeat bg-center w-full bg-cover px-5 lg:px-0">
-      <h3 className="text-4xl font-bold text-center text-white uppercase my-24 ">
+    <section
+      id="process"
+      ref={ref}
+      className="grid items-center bg-process bg-no-repeat bg-center w-full bg-cover px-5 lg:px-0"
+    >
+      <h3
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromDot
+        )} text-4xl font-bold text-center text-white uppercase my-24`}
+      >
         How It Works
       </h3>
-      <ul className="grid lg:grid-cols-3 h-full justify-items-center mb-10">
+      <ul
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromBottom
+        )} grid lg:grid-cols-3 h-full justify-items-center mb-10`}
+      >
         {processes.map(({ icon, heading, toolkit, text, id }) => {
           return (
             <li
@@ -17,7 +36,9 @@ export default function Process() {
             >
               <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg backdrop-blur-xl">
                 <img src={icon} alt="" className="w-14 m-8" />
-                <span className="font-bold uppercase text-xs text-angel-grey absolute top-1 -right-6 bg-angel-orange py-2 px-4 rounded-full shadow-md ">
+                <span
+                  className={`font-bold uppercase text-xs text-angel-grey absolute top-1 -right-6 bg-angel-orange py-2 px-4 rounded-full shadow-md`}
+                >
                   {toolkit}
                 </span>
               </div>

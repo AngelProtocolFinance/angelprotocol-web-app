@@ -28,11 +28,13 @@ export default function HeaderColorProvider(props: propType) {
 
   const colors = (() => {
     switch (location.pathname) {
+      case routes.donors:
+      case routes.charities:
       case routes.contact:
       case routes.home: {
         return {
           bgColor: "white",
-          textColor: "angel-grey",
+          textColor: "angel-blue",
         };
       }
       default: {

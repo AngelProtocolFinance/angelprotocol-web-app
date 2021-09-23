@@ -8,6 +8,8 @@ export default function LeftBox() {
   const location = useLocation();
   let varNode = <></>; //initialize variable with ReactNode
   switch (location.pathname) {
+    case routes.donors:
+    case routes.charities:
     case routes.contact:
     case routes.home:
       varNode = <img src={blueLogo} alt="" className="w-32 sm:w-36" />;

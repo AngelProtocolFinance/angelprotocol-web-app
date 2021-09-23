@@ -9,8 +9,8 @@ import { FaTelegramPlane } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="grid grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 justify-items-center p-5 py-10 bg-blue-accent">
-      <section className="max-w-2xl lg:order-2">
+    <footer className="grid grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 justify-items-center p-5 pt-10 py-12 bg-blue-accent">
+      <section className="max-w-2xl lg:order-2 grid place-items-center lg:block">
         <p className="text-lg sm:text-xl text-center lg:text-left text-white-grey font-semibold  mb-2">
           Angel Protocol creates sustainable income streams for charities
           <span className="text-base sm:text-lg text-center lg:text-left block font-normal ">
@@ -19,7 +19,7 @@ const Footer = () => {
         </p>
         <Subscriber />
       </section>
-      <section className="grid justify-items-center content-center lg:order-1">
+      <section className="grid justify-items-center content-center lg:order-1 mt-10 md:mt-0">
         <ul className="flex">
           {links.map(({ id, Icon, textColor, link, title }) => {
             return (

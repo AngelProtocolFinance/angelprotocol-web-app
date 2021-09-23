@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer utilities {
+  .aspect-square {
+    aspect-ratio: 1/1;
+  }
+
   .box-delay-1 {
     animation-delay: 300ms;
   }
@@ -10,8 +14,12 @@
     animation-delay: 600ms;
   }
 
-  .aspect-square {
-    aspect-ratio: 1/1;
+  .img-no-drag {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
   }
 
   .youtube-wrapper {
@@ -36,14 +44,6 @@
   .scroll-hidden::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
   }
-
-  .img-no-drag {
-    -webkit-user-drag: none;
-    -khtml-user-drag: none;
-    -moz-user-drag: none;
-    -o-user-drag: none;
-    user-drag: none;
-  }
 }
 
 @layer base {
@@ -59,4 +59,8 @@
   body {
     @apply font-body;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }

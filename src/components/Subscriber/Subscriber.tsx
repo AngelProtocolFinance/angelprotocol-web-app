@@ -26,7 +26,7 @@ export default function Subscriber() {
           <Announcer status={status} />
           <Form
             autoComplete="off"
-            className="flex flex-col items-center lg:items-start"
+            className="relative flex flex-col md:flex-row items-center lg:items-start"
           >
             <Field
               placeholder="Email"
@@ -39,13 +39,13 @@ export default function Subscriber() {
             />
             <ErrorMessage
               name="email"
-              className="text-sm text-white-grey mt-1"
+              className="static mt-2 md:absolute md:left-0 md:-bottom-6 text-sm text-white-grey "
               component="div"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-orange w-48 h-10 rounded-xl uppercase text-base font-bold text-white block mt-3 disabled:bg-grey-accent"
+              className="text-white-grey font-semibold text-sm block ml-2 mt-5 md:mt-0 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
             >
               {isSubmitting ? (
                 <Loader

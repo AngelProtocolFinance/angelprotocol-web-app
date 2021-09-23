@@ -17,6 +17,24 @@ export default function RightBox() {
   const location = useLocation();
   let varNode = <></>; //init type with ReactNode
   switch (location.pathname) {
+    case routes.dashboard:
+    case routes.donate:
+    case routes.tca: {
+      varNode = (
+        <div className="flex">
+          <Search />
+          <TerraConnector />
+          <button
+            className={`text-${textColor} block md:hidden ml-5`}
+            onClick={toggleNav}
+          >
+            <FiMenu className="text-2xl" />
+          </button>
+          {navShown && <MobileNav />}
+        </div>
+      );
+      break;
+    }
     case routes.login:
       varNode = (
         <p className="font-bold text-white font-lg uppercase">
@@ -27,8 +45,6 @@ export default function RightBox() {
     default:
       varNode = (
         <div className="flex">
-          <Search />
-          <TerraConnector />
           <button
             className={`text-${textColor} block md:hidden ml-5`}
             onClick={toggleNav}

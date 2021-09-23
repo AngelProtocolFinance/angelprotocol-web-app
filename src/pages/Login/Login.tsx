@@ -9,6 +9,7 @@ import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router";
 import { routes } from "types/types";
 import { loginSchema } from "./loginSchema";
+import { Link } from "react-router-dom";
 
 export type Values = {
   password: string;
@@ -79,14 +80,12 @@ const Login = () => {
           )}
         </Formik>
 
-        <div className="text-center my-10">
-          <p className="text-thin-blue font-bold text-base uppercase">
-            learn more about
-          </p>
-          <p className="text-thin-blue font-bold text-base uppercase">
-            angel protocol
-          </p>
-        </div>
+        <Link
+          to={routes.home}
+          className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"
+        >
+          learn more about angel protocol
+        </Link>
       </div>
       <ToastContainer />
     </section>

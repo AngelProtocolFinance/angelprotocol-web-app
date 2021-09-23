@@ -1,14 +1,23 @@
+import {
+  NetworkInfo,
+  StaticWalletProvider,
+} from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import App from "./App";
-import TestWalletProvider from "./test/helpers/TestWalletProvider";
+
+const testnet: NetworkInfo = {
+  name: "testnet",
+  chainID: "tequila-0004",
+  lcd: "https://tequila-lcd.terra.dev",
+};
 
 test("renders HOME at first load", () => {
   render(
     <MemoryRouter>
-      <TestWalletProvider>
+      <StaticWalletProvider defaultNetwork={testnet}>
         <App />
-      </TestWalletProvider>
+      </StaticWalletProvider>
     </MemoryRouter>
   );
   const h1Heading = screen.getByText(/simplified endowments/i);

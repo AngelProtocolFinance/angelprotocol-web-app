@@ -17,6 +17,8 @@ module.exports = {
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/volunteers.webp')",
         "banner-charity":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
+        "banner-charities":
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/deliveries.jpeg')",
       },
 
       cursor: {
@@ -28,6 +30,7 @@ module.exports = {
         "angel-blue": "#3FA9F5",
         "thin-blue": "#54A3D9",
         "blue-accent": "#3385BD",
+        "blue-dark": "#1a4f72",
         "angel-grey": "#4F5F6F",
         "grey-accent": "#ADB7BE",
         "white-grey": "#FAFAFA",
@@ -56,7 +59,6 @@ module.exports = {
         process: "36rem",
         banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
-        specs: "40rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",
@@ -93,6 +95,9 @@ module.exports = {
         "video:lg": "28rem",
         "video:md": "30rem",
         "video:sm": "30rem",
+      },
+      animation: {
+        iconPing: "ping 100ms",
       },
     },
   },

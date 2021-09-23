@@ -7,6 +7,8 @@ export default function useAppBackground() {
     case routes.login: {
       return "bg-gradient-to-b from-blue-accent to-thin-grey";
     }
+    case routes.charities:
+    case routes.donors:
     case routes.contact:
     case routes.home: {
       return "bg-white";
