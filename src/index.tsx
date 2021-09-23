@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import "react-toastify/dist/ReactToastify.css";
+import App from "./App/App";
 import reportWebVitals from "./reportWebVitals";
 
 import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthProvider from "contexts/AuthProvider";
+import { site } from "./types/routes";
+import Website from "Website/Website";
 
 const localterra = {
   name: "localterra",
@@ -48,7 +51,10 @@ ReactDOM.render(
         walletConnectChainIds={walletConnectChainIds}
       >
         <AuthProvider>
-          <App />
+          <Switch>
+            <Route path={site.app} component={App} />
+            <Route path={site.home} component={Website} />
+          </Switch>
         </AuthProvider>
       </WalletProvider>
     </BrowserRouter>
