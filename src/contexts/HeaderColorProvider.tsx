@@ -29,6 +29,7 @@ export default function HeaderColorProvider(props: propType) {
           textColor: "angel-grey",
         };
       }
+
       default: {
         return defaultColor;
       }

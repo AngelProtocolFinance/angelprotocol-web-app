@@ -1,4 +1,4 @@
-import no_provery_img from "../../assets/images/unsdg-no-poverty.png";
+import no_provery_img from "../../assets/icons/unsdgs/unsdg-no-poverty.png";
 
 type Props = {
   title: string;

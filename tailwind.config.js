@@ -17,6 +17,7 @@ module.exports = {
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/volunteers.webp')",
         "banner-charity":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
+        goal: "url('https://source.unsplash.com/500x300?charity')",
       },
 
       cursor: {
@@ -66,6 +67,7 @@ module.exports = {
         "2a": "repeat(2,auto)",
       },
       gridTemplateColumns: {
+        a1: "auto 1fr",
         charity: "auto 1fr",
         banner: "1fr auto",
         highlight: "auto 1fr",
@@ -82,6 +84,7 @@ module.exports = {
         10: "10",
       },
       width: {
+        r32: "32rem",
         video: "30rem",
       },
       inset: {

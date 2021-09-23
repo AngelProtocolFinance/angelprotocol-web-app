@@ -11,6 +11,9 @@ export default function useAppBackground() {
     case routes.home: {
       return "bg-white";
     }
+    case routes.about_unsdgs: {
+      return "bg-white";
+    }
 
     default: {
       return "bg-gradient-to-b from-blue-accent to-black-blue";
