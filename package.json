@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.2.0",
-    "@terra-money/terra.js": "^2.1.1",
+    "@terra-money/terra.js": "^2.0.8",
     "@terra-money/wallet-provider": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

@@ -33,7 +33,7 @@ export default function Specs() {
         {specs.map(({ id, heading, icon, text }) => (
           <li
             key={id}
-            className="grid justify-items-center grid-rows-a1 items-start 2xl:grid-cols-a1"
+            className="max-w-md grid justify-items-center grid-rows-a1 items-start 2xl:grid-cols-a1"
           >
             <img
               src={icon}
