@@ -1,6 +1,6 @@
 import { cleanup } from "@testing-library/react";
 import { useModalCloser } from "components/Modal/Modal";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 
 export type Handler = () => void;

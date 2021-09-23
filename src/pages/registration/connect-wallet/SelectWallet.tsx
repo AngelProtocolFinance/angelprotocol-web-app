@@ -59,15 +59,9 @@ const SelectWallet = () => {
         </button>
       </div>
       {isOpenModal && (
-        <Modal
-          render={() => (
-            <TerraInfoModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <TerraInfoModal />
+        </Modal>
       )}
     </div>
   );

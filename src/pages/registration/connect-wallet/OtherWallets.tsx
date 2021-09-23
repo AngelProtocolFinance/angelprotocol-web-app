@@ -70,26 +70,14 @@ const OtherWallets = () => {
         </button>
       </div>
       {isOpenModal && modalType == "prime_trust" && (
-        <Modal
-          render={() => (
-            <CustodianInfoModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <CustodianInfoModal />
+        </Modal>
       )}
       {isOpenModal && modalType == "self_custody" && (
-        <Modal
-          render={() => (
-            <SelfCustodyInfoModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <SelfCustodyInfoModal />
+        </Modal>
       )}
     </div>
   );

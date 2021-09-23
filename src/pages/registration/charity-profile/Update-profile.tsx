@@ -321,26 +321,14 @@ const UpdateProfile = () => {
         </Formik>
       </div>
       {isOpenModal && modalType == "unsdg" && (
-        <Modal
-          render={() => (
-            <UNSDGInfoModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <UNSDGInfoModal />
+        </Modal>
       )}
       {isOpenModal && modalType == "average" && (
-        <Modal
-          render={() => (
-            <RevenueInfoModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <RevenueInfoModal />
+        </Modal>
       )}
     </div>
   );

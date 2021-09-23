@@ -21,9 +21,9 @@ export default function Subscriber() {
       validationSchema={subscriberSchema}
       onSubmit={handleSubscribe}
     >
-      {({ isSubmitting, status, resetForm }) => (
+      {({ isSubmitting, status }) => (
         <>
-          <Announcer status={status} resetForm={resetForm} />
+          <Announcer status={status} />
           <Form
             autoComplete="off"
             className="flex flex-col items-center lg:items-start"

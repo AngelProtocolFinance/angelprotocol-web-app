@@ -100,15 +100,9 @@ const StepsDocs = () => {
         </div>
       </div>
       {isOpenModal && (
-        <Modal
-          render={() => (
-            <WalletTemplateModal
-              clickHandler={() => {
-                closeModal();
-              }}
-            />
-          )}
-        />
+        <Modal>
+          <WalletTemplateModal />
+        </Modal>
       )}
     </div>
   );
