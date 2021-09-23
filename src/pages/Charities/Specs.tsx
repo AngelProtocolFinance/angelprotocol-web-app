@@ -13,7 +13,7 @@ export default function Specs() {
   return (
     <section
       ref={ref}
-      className="h-auto grid grid-rows-a1 justify-items-center text-blue-accent py-16 px-10"
+      className="xl:container xl:mx-auto h-auto grid grid-rows-a1 justify-items-center text-blue-accent py-16 px-10"
     >
       <h3
         className={`${transitionIn(
