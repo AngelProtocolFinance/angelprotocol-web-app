@@ -37,6 +37,13 @@ export default function HeaderColorProvider(props: propType) {
           textColor: "angel-blue",
         };
       }
+      case routes.tca: {
+        return {
+          bgColor: "transparent",
+          textColor: "white",
+        };
+      }
+
       default: {
         return defaultColor;
       }

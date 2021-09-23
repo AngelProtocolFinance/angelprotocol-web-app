@@ -7,7 +7,7 @@ import {
 
 import { FaTelegramPlane } from "react-icons/fa";
 
-const Footer = () => {
+export default function MarketFoot() {
   return (
     <footer className="grid grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 justify-items-center p-5 pt-10 py-12 bg-blue-accent">
       <section className="max-w-2xl lg:order-2 grid place-items-center lg:block">
@@ -42,9 +42,7 @@ const Footer = () => {
       </section>
     </footer>
   );
-};
-
-export default Footer;
+}
 
 const links = [
   {

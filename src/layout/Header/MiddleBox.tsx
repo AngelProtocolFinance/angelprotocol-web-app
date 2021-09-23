@@ -5,6 +5,7 @@ import { routes } from "types/types";
 export default function MiddleBox() {
   const location = useLocation();
   switch (location.pathname) {
+    case routes.tca:
     case routes.login:
       return <div></div>;
     default:
