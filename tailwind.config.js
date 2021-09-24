@@ -12,13 +12,16 @@ module.exports = {
         process:
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/home-process.webp')",
         portal:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/teamwork.webp')",
+          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('./assets/images/teamwork.webp')",
         contact:
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/volunteers.webp')",
         "banner-charity":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
         "banner-charities":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/deliveries.jpeg')",
+        "banner-donors":
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/hand.jpeg')",
+        comet: "url('./assets/images/comet.jpeg')",
       },
 
       cursor: {
