@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
 import { registerRoutes } from "types/types";
+import { GetPreviousRegistration } from "aws-settings.config";
 import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
@@ -55,15 +56,23 @@ const Registration = () => {
             }
             return {};
           }}
-          onSubmit={(values, { setSubmitting, setFieldError }) => {
-            alert(JSON.stringify(values, null, 2));
+          onSubmit={async (values, { setSubmitting, setFieldError }) => {
             setSubmitting(true);
             // API integration.
-            // set error
-            setFieldError(
-              "refer",
-              "Can`t find a registration file with this reference!"
-            );
+            let isFound = await GetPreviousRegistration(values.refer);
+
+            if (!isFound) {
+              // set error
+              setFieldError(
+                "refer",
+                "Can not find a registration file with this reference!"
+              );
+            } else {
+              history.push({
+                pathname: registerRoutes.confirm,
+                state: { is_sent: true },
+              });
+            }
             setSubmitting(false);
           }}
         >

@@ -1,7 +1,8 @@
 import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
 import { registerRoutes } from "types/types";
-import { ContactDetails } from "./ContactDetailsFrom";
+import { ContactDetails } from "./ContactDetailsForm";
+import { CreateNewCharity } from "aws-settings.config";
 import * as Yup from "yup";
 
 export const ContactInfoSchema = Yup.object().shape({
@@ -14,7 +15,7 @@ export const ContactInfoSchema = Yup.object().shape({
     .email("Invalid email format")
     .required("Please enter your email."),
 
-  orgRule: Yup.string().required(
+  orgRole: Yup.string().required(
     "Please select your role within your organization."
   ),
   // phone: Yup.string().matches(
@@ -25,13 +26,14 @@ export const ContactInfoSchema = Yup.object().shape({
 
 export const useContactDetails = () => {
   const history = useHistory();
-  function saveContactInfo(
+  async function saveContactInfo(
     contactData: ContactDetails,
     actions: FormikHelpers<ContactDetails>
   ) {
+    console.log(contactData);
     actions.setSubmitting(true);
     // call API to add or update contact details information(contactData)
-    localStorage.setItem("userData", JSON.stringify(contactData));
+    await CreateNewCharity(contactData);
     history.push(registerRoutes.confirm);
     actions.setSubmitting(false);
   }

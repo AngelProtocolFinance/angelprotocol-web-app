@@ -9,8 +9,8 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
-  orgRule: string;
-  otherRule: string;
+  orgRole: string;
+  otherRole: string;
   checkedPolicy: boolean;
   uniqueID: string;
 };
@@ -25,8 +25,8 @@ export const ContactDetailsForm = (props: any) => {
         lastName: props.contactData?.lastName || "",
         email: props.contactData?.email || "",
         phone: props.contactData?.phone || "",
-        orgRule: props.contactData?.orgRule || "ceo",
-        otherRule: props.contactData?.otherRule || "",
+        orgRole: props.contactData?.orgRole || "ceo",
+        otherRole: props.contactData?.otherRole || "",
         checkedPolicy: false,
         uniqueID: props.contactData?.uniqueID || "",
       }}
@@ -127,7 +127,7 @@ export const ContactDetailsForm = (props: any) => {
                       <Field
                         type="email"
                         className="outline-none border-none w-full px-3"
-                        placeholder="Email Address"
+                        placeholder="email Address"
                         value={values.email}
                         name="email"
                       />
@@ -150,7 +150,7 @@ export const ContactDetailsForm = (props: any) => {
                       <Field
                         type="text"
                         className="outline-none border-none w-full px-3"
-                        placeholder="Phone Number"
+                        placeholder="phone Number"
                         value={values.phone}
                         name="phone"
                       />
@@ -170,9 +170,9 @@ export const ContactDetailsForm = (props: any) => {
                         as="select"
                         className="outline-none border-none w-full px-3"
                         placeholder="Role"
-                        value={values.orgRule}
+                        value={values.orgRole}
                         defaultValue="ceo"
-                        name="orgRule"
+                        name="orgRole"
                       >
                         <option value="president">
                           Chairperson / President
@@ -189,12 +189,12 @@ export const ContactDetailsForm = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-sm text-failed-red"
-                      name="orgRule"
+                      name="orgRole"
                       component="div"
                     />
                   </div>
                 </div>
-                {values.orgRule === "other" && (
+                {values.orgRole === "other" && (
                   <div className="items-center justify-center mb-4">
                     <div className="text-left">
                       <span className="text-base text-left">
@@ -208,13 +208,13 @@ export const ContactDetailsForm = (props: any) => {
                           type="text"
                           className="outline-none border-none w-full px-3 text-black"
                           placeholder="Specify Your Role"
-                          value={values.otherRule}
-                          name="otherRule"
+                          value={values.otherRole}
+                          name="otherRole"
                         />
                       </div>
                       <ErrorMessage
                         className="text-sm text-failed-red"
-                        name="otherRule"
+                        name="otherRole"
                         component="div"
                       />
                     </div>
@@ -264,3 +264,76 @@ export const ContactDetailsForm = (props: any) => {
     </Formik>
   );
 };
+
+// import { ErrorMessage, Field, Form, Formik } from "formik";
+// import { Link } from "react-router-dom";
+// import { routes } from "types/types";
+// import { boolean } from "yup/lib/locale";
+// // import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
+// import { CreateNewCharity } from "aws-settings.config";
+
+// export type ContactDetails = {
+//   charityName: string;
+//   firstName: string;
+//   lastName: string;
+//   email: string;
+//   phone: string;
+//   orgRole: string;
+//   otherRole: string;
+//   checkedPolicy: boolean;
+//   uniqueID: string;
+// };
+
+// export const ContactDetailsForm = () => {
+//   const initialValues = {
+//     charityName: "",
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     phone: "",
+//     orgRole: "",
+//   };
+
+//   const onSubmit = (values: any) => {
+//     console.log(values);
+//     CreateNewCharity(values); // returns a message and the charity's UUID
+//   };
+
+//   return (
+//     <Formik initialValues={initialValues} onSubmit={onSubmit}>
+//       <Form>
+//         <div className="text-black">
+//           <label htmlFor="charityName">Charity Name</label>
+//           <Field
+//             id="charityName"
+//             name="charityName"
+//             placeholder="Charity Name"
+//           />
+//           <br />
+//           <br />
+//           <label htmlFor="firstName">First Name</label>
+//           <Field id="firstName" name="firstName" placeholder="First Name" />
+//           <br />
+//           <br />
+//           <label htmlFor="lastName">Last Name</label>
+//           <Field id="lastName" name="lastName" placeholder="Last Name" />
+//           <br />
+//           <br />
+//           <label htmlFor="email">email</label>
+//           <Field id="email" name="email" placeholder="email" type="email" />
+//           <br />
+//           <br />
+//           <label htmlFor="phone">phone</label>
+//           <Field id="phone" name="phone" placeholder="phone" />
+//           <br />
+//           <br />
+//           <label htmlFor="orgRole">Role</label>
+//           <Field id="orgRole" name="orgRole" placeholder="Role" />
+//           <br />
+//           <br />
+//           <button type="submit">Submit</button>
+//         </div>
+//       </Form>
+//     </Formik>
+//   );
+// };
