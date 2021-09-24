@@ -12,7 +12,7 @@ const testnet: NetworkInfo = {
   lcd: "https://tequila-lcd.terra.dev",
 };
 
-test("renders HOME at first load", () => {
+test("App doesn't have / render yet", () => {
   render(
     <MemoryRouter>
       <StaticWalletProvider defaultNetwork={testnet}>
@@ -20,6 +20,7 @@ test("renders HOME at first load", () => {
       </StaticWalletProvider>
     </MemoryRouter>
   );
-  const h1Heading = screen.getByText(/simplified endowments/i);
-  expect(h1Heading).toBeInTheDocument();
+  screen.debug();
+  const h1Heading = screen.queryByText(/simplified endowments/i);
+  expect(h1Heading).toBeNull();
 });
