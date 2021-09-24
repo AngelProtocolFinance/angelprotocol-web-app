@@ -23,10 +23,10 @@ const NavMenu = () => {
           For Charities
         </NavLink>
       </li>
-      <li className="mr-4 bg-angel-blue rounded-sm shadow-md">
+      <li className="mr-4 bg-angel-blue rounded-lg shadow-md">
         <NavLink
           to={routes.tca}
-          className="text-center text-white-grey text-sm font-black py-1 w-24 block"
+          className="text-center text-white-grey text-md font-black py-1 w-24 block"
         >
           Donate
         </NavLink>
