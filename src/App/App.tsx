@@ -15,6 +15,8 @@ import { app } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 
 const App = () => {
+  //this component will only render under '/app' route
+  //{match.path} is '/app'
   const { path } = useRouteMatch();
   console.log(path);
   const appBackround = useAppBackground();

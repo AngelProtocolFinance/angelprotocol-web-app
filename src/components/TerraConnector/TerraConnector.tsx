@@ -1,9 +1,7 @@
 import Wallet from "components/Wallet/Wallet";
-import { useHeaderColors } from "contexts/HeaderColorProvider";
 import useTerraConnector from "./useTerraConnector";
 
 export default function TerraConnector() {
-  const { textColor } = useHeaderColors();
   const {
     status,
     WalletStatus,
@@ -17,7 +15,7 @@ export default function TerraConnector() {
     case WalletStatus.INITIALIZING:
       return (
         <div>
-          <button className={`text-${textColor}`} disabled>
+          <button className={`text-white`} disabled>
             Initializing Wallet...
           </button>
         </div>

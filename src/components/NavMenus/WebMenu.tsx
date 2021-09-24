@@ -1,18 +1,17 @@
-import { NavLink, useRouteMatch } from "react-router-dom";
-import { app, web, site } from "types/routes";
+import { NavLink } from "react-router-dom";
+import { app, site, web } from "types/routes";
+import { useRouteMatch } from "react-router-dom";
 
-//Will be for WebNav
-export default function MobileNav() {
-  //url = /
+export default function WebMenu() {
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase text-angel-blue`,
+    className: `text-angel-blue hover:text-opacity-75 uppercase`,
     activeClassName: "font-bold",
   };
 
   return (
     <ul
-      className={`text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
+      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
     >
       <li className="mr-4">
         <NavLink to={`${url}${web.charities}`} {...linkStyles}>

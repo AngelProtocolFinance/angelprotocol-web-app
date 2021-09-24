@@ -19,6 +19,7 @@ import {
 //   // StdFee,
 // } from "@terra-money/terra.js";
 import useSlider from "hooks/useSlider";
+import AppHead from "./Headers/AppHead";
 
 interface DonationFormProps {
   pushTransactionStatus: any;

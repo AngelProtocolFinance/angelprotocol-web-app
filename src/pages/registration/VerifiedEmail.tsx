@@ -2,10 +2,11 @@ import { useHistory } from "react-router-dom";
 import queryString from "query-string";
 import jwtDecode from "jwt-decode";
 import { FaCheck } from "react-icons/fa";
-import { registerRoutes } from "types/types";
 import { updateNamespaceExportDeclaration } from "typescript";
+import { register } from "types/routes";
 
 const VerifiedEmail = () => {
+  //url = app/register/verify
   const history = useHistory();
   const location = history.location;
   const query: any = queryString.parse(location.search);
@@ -42,7 +43,7 @@ const VerifiedEmail = () => {
       <div className="mb-2">
         <button
           className="bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={() => history.push(`../${registerRoutes.detail}`)}
+          onClick={() => history.push(register.detail)}
         >
           close
         </button>

@@ -1,12 +1,13 @@
 import { useHistory } from "react-router";
 import { BsExclamationCircle } from "react-icons/bs";
-import { registerRoutes } from "../../../types/types";
 import { useState } from "react";
 import Modal from "components/Modal/Modal";
 import CustodianInfoModal from "../modals/CustodianInfoModal";
 import SelfCustodyInfoModal from "../modals/SelfCustodyInfoModal";
+import { register } from "types/routes";
 
 const OtherWallets = () => {
+  //url = app/register/other-wallet
   const history = useHistory();
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
@@ -35,7 +36,7 @@ const OtherWallets = () => {
           <button
             className="bg-thin-blue w-60 h-10 rounded-xl uppercase text-base font-bold text-white mr-1"
             onClick={() => {
-              history.push(registerRoutes.self_custody);
+              history.push(register.self_custody);
             }}
           >
             self custody
@@ -63,7 +64,7 @@ const OtherWallets = () => {
         <button
           className="bg-orange w-72 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
           onClick={() => {
-            history.push(registerRoutes.wallet_check);
+            history.push(register.wallet_check);
           }}
         >
           back

@@ -1,10 +1,11 @@
 import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { routes } from "types/types";
 import WalletTemplateModal from "../modals/WalletTemplateModal";
+import { site, web } from "types/routes";
 
 const StepsDocs = () => {
+  //url = app/register/upload-docs
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
   const [isOpenModal, setOpenModal] = useState(false);
   const showInfoModal = () => {
@@ -87,7 +88,7 @@ const StepsDocs = () => {
                 {" "}
                 By checking this box, you declare that you have read and agreed
                 our{" "}
-                <Link to={routes.privacy_policy} className="underline">
+                <Link to={`${site.home}${web.privacy}`} className="underline">
                   Privacy Policy
                 </Link>
                 <span className="text-base text-failed-red">*</span>

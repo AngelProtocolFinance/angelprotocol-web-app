@@ -1,7 +1,8 @@
 import { useHistory } from "react-router-dom";
-import { registerRoutes } from "types/types";
+import { register } from "types/routes";
 
 const RegistrationStatus = () => {
+  //url is app/register/status
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
   const status = {
@@ -35,7 +36,7 @@ const RegistrationStatus = () => {
                 className="bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
                 onClick={() => {
                   history.push({
-                    pathname: registerRoutes.detail,
+                    pathname: register.detail,
                   });
                 }}
               >
@@ -130,7 +131,7 @@ const RegistrationStatus = () => {
       <div>
         <button
           className="disabled:bg-gray-300 bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(registerRoutes.charity_profile)}
+          onClick={() => history.push(register.charity_profile)}
           disabled={!status.completed}
         >
           Go to {userData.charityName}'s profile

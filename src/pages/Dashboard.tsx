@@ -8,7 +8,7 @@ const charityCategories = Array(6)
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-rows-dashboard">
+    <div className="grid grid-rows-dashboard pb-12">
       <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover h-80 pt-5">
         <AppHead />
         <div>

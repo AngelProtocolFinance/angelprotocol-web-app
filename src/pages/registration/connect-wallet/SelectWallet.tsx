@@ -2,10 +2,11 @@ import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router";
-import { registerRoutes } from "types/types";
+import { register } from "types/routes";
 import TerraInfoModal from "../modals/TerraInfoModal";
 
 const SelectWallet = () => {
+  //url = app/register/select-wallet
   const history = useHistory();
   const [isOpenModal, setOpenModal] = useState(false);
   const showTerraInfoModal = () => {
@@ -33,7 +34,7 @@ const SelectWallet = () => {
         <button
           className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
           onClick={() => {
-            history.push(registerRoutes.connect_wallet);
+            history.push(register.connect_wallet);
           }}
         >
           Terra station chrome extension
@@ -53,7 +54,7 @@ const SelectWallet = () => {
         </p>
         <button
           className="bg-orange w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(registerRoutes.wallet_check)}
+          onClick={() => history.push(register.wallet_check)}
         >
           back
         </button>

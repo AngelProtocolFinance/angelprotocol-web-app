@@ -2,10 +2,11 @@ import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
-import { registerRoutes } from "types/types";
+import { register } from "types/routes";
 import TerraInfoModal from "../modals/TerraInfoModal";
 
 const WalletCheck = () => {
+  //url = app/register/wallet-check
   const history = useHistory();
   const [isOpenModal, setOpenModal] = useState(false);
   const showTerraInfoModal = () => {
@@ -28,7 +29,7 @@ const WalletCheck = () => {
       <div className="text-center">
         <button
           className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(registerRoutes.select_wallet)}
+          onClick={() => history.push(register.select_wallet)}
         >
           YES
         </button>
@@ -36,7 +37,7 @@ const WalletCheck = () => {
         <button
           className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
           onClick={() => {
-            history.push(registerRoutes.others);
+            history.push(register.others);
           }}
         >
           NO

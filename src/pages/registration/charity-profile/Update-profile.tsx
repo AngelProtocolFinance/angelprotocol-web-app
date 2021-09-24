@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
-import { routes } from "types/types";
 import * as Yup from "yup";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "components/Modal/Modal";
 import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
+import { site, web } from "types/routes";
 
 const UpdateProfile = () => {
+  //url = app/register/charity-profile
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
   const handleUpdateProfile = () => {};
   const ProfileSchema = Yup.object().shape({
@@ -304,7 +305,10 @@ const UpdateProfile = () => {
                         {" "}
                         By checking this box, you declare that you have read and
                         agreed our{" "}
-                        <Link to={routes.privacy_policy} className="underline">
+                        <Link
+                          to={`${site.home}${web.privacy}`}
+                          className="underline"
+                        >
                           Privacy Policy
                         </Link>
                         <span className="text-base text-failed-red">*</span>
