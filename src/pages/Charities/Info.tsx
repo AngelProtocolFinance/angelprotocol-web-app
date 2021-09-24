@@ -7,7 +7,7 @@ export default function Info() {
   return (
     <section
       ref={ref}
-      className="bg-blue-accent grid lg:items-center grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-end "
+      className="bg-gradient-to-bl from-blue-accent to-angel-blue grid lg:items-center grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-end "
     >
       <div className="justify-self-center">
         <img
