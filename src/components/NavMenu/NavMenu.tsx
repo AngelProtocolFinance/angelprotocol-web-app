@@ -1,36 +1,36 @@
-import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { NavLink } from "react-router-dom";
-import { routes } from "types/types";
+import { app, site, web } from "types/routes";
+import { useRouteMatch } from "react-router-dom";
 
 const NavMenu = () => {
-  const { textColor } = useHeaderColors();
+  const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase text-${textColor} py-1 border-b border-transparent`,
-    activeClassName: "border-current",
+    className: `text-angel-blue hover:text-opacity-75 uppercase`,
+    activeClassName: "font-bold",
   };
 
   return (
     <ul
-      className={`text-${textColor} hidden md:flex justify-self-end font-body text-sm lg:text-base mr-4`}
+      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
     >
       <li className="mr-4">
-        <NavLink to={routes.donate} {...linkStyles}>
-          Donate
+        <NavLink to={`${url}${web.charities}`} {...linkStyles}>
+          For Charities
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={routes.dashboard} {...linkStyles}>
-          Charities
+        <NavLink to={`${url}${web.donors}`} {...linkStyles}>
+          For Donors
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={routes.about_unsdgs} {...linkStyles}>
-          UNSDGs
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to={`${routes.register}/index`} {...linkStyles}>
+        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
           Register
+        </NavLink>
+      </li>
+      <li className="">
+        <NavLink to={`${site.app}/${app.donate}`} {...linkStyles}>
+          Donate
         </NavLink>
       </li>
     </ul>

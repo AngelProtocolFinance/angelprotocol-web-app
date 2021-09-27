@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link } from "react-router-dom";
-import { routes } from "types/types";
+import { site, web } from "types/routes";
 import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
 
 export type ContactDetails = {
@@ -15,6 +15,7 @@ export type ContactDetails = {
   uniqueID: string;
 };
 export const ContactDetailsForm = (props: any) => {
+  //url = app/register/details
   const { saveContactInfo } = useContactDetails();
   console.log(props.contactData);
   return (
@@ -235,7 +236,10 @@ export const ContactDetailsForm = (props: any) => {
                       {" "}
                       By checking this box, you declare that you have read and
                       agreed our{" "}
-                      <Link to={routes.privacy_policy} className="underline">
+                      <Link
+                        to={`${site.home}${web.privacy}`}
+                        className="underline"
+                      >
                         Privacy Policy
                       </Link>
                       <span className="text-base text-failed-red">*</span>

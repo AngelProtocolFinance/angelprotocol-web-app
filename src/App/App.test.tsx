@@ -1,10 +1,10 @@
-import { ComponentStory, ComponentMeta } from "@storybook/react";
 import {
   NetworkInfo,
   StaticWalletProvider,
 } from "@terra-money/wallet-provider";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Header from "./Header";
+import App from "./App";
 
 const testnet: NetworkInfo = {
   name: "testnet",
@@ -12,19 +12,15 @@ const testnet: NetworkInfo = {
   lcd: "https://tequila-lcd.terra.dev",
 };
 
-export default {
-  title: "Layout/Header",
-  component: Header,
-} as ComponentMeta<typeof Header>;
-
-const Template: ComponentStory<typeof Header> = () => {
-  return (
+test("App doesn't have / render yet", () => {
+  render(
     <MemoryRouter>
       <StaticWalletProvider defaultNetwork={testnet}>
-        <Header />;
+        <App />
       </StaticWalletProvider>
     </MemoryRouter>
   );
-};
-
-export const Default = Template.bind({});
+  screen.debug();
+  const h1Heading = screen.queryByText(/simplified endowments/i);
+  expect(h1Heading).toBeNull();
+});

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="_x30_8_x5F_money_x5F_flow" x="0px" y="0px" width="64px" height="60px" viewBox="0 0 64 60" style="enable-background:new 0 0 64 60;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<g>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="59,33 63,33       63,59 9,59 9,55     "></polyline>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="55,29 59,29       59,55 5,55 5,51     "></polyline>
+				<g>
+					
+						<rect x="1" y="25" style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" width="54" height="26"></rect>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M11,25"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M1,35"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M45,25"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M55,35"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M45,51"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M55,41"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M1,41"></path>
+					<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" d="M11,51"></path>
+					<polygon style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="48,47 8,47        5,44 5,32 8,29 48,29 51,32 51,44      "></polygon>
+					
+						<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="18" y1="38" x2="16" y2="38"></line>
+					
+						<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="14" y1="38" x2="12" y2="38"></line>
+					
+						<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="44" y1="38" x2="42" y2="38"></line>
+					
+						<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="40" y1="38" x2="38" y2="38"></line>
+					<circle style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" cx="28" cy="38" r="5"></circle>
+				</g>
+			</g>
+			<g>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="27,17 23,21       19,17     "></polyline>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="45,17 41,21       37,17     "></polyline>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="36,5 32,1       28,5     "></polyline>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="23,21 23,10       0,10     "></polyline>
+				<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="41,21 41,10       64,10     "></polyline>
+				
+					<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="32" y1="22" x2="32" y2="1"></line>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

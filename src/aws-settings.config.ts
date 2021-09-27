@@ -23,7 +23,9 @@ const TCAAuthProcess = async (password: string) => {
 // Charity Registration Process
 // Initial Registration (creating Registration and ContactPerson items)
 const CreateNewCharity = async (contactData: any) => {
-  const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
+  const url =
+    "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/registration";
+  // const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body;
 
   if (contactData.orgRole === "other") {
@@ -101,7 +103,9 @@ const CreateNewKeyPerson = async (keyPersonData: any) => {
 
 // Get previous registration details of charity when given a UUID
 const GetPreviousRegistration = async (id: string) => {
-  const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
+  const url =
+    "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/registration";
+  // const url = process.env.REACT_APP_AWS_CHARITY_REGISTRATION_URL;
   let body: { [key: string]: any } = {};
 
   try {
@@ -109,6 +113,7 @@ const GetPreviousRegistration = async (id: string) => {
       method: "GET",
     });
     const data: any = await response.json();
+    console.log(data);
 
     if (data.message === "Charity not found.") {
       console.log("message:", data.message);

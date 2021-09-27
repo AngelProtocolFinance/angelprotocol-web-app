@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import "react-toastify/dist/ReactToastify.css";
+import App from "./App/App";
 import reportWebVitals from "./reportWebVitals";
 
 import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthProvider from "contexts/AuthProvider";
+import { site } from "./types/routes";
+import Website from "Website/Website";
 
 const localterra = {
   name: "localterra",
@@ -14,10 +17,11 @@ const localterra = {
   lcd: "http://localhost:1317",
 };
 
+//how about tequilla testnet??
 const testnet = {
   name: "testnet",
-  chainID: "tequila-0004",
-  lcd: "https://tequila-lcd.terra.dev",
+  chainID: "bombay-10",
+  lcd: "https://bombay-lcd.terra.dev",
 };
 
 const mainnet = {
@@ -26,10 +30,17 @@ const mainnet = {
   lcd: "https://lcd.terra.dev",
 };
 
+const bombay = {
+  name: "bombay",
+  chainID: "bombay-10",
+  lcd: "https://bombay-lcd.terra.dev",
+};
+
 const walletConnectChainIds: Record<number, NetworkInfo> = {
   0: localterra,
   1: testnet,
   2: mainnet,
+  3: bombay,
 };
 
 ReactDOM.render(
@@ -40,7 +51,10 @@ ReactDOM.render(
         walletConnectChainIds={walletConnectChainIds}
       >
         <AuthProvider>
-          <App />
+          <Switch>
+            <Route path={site.app} component={App} />
+            <Route path={site.home} component={Website} />
+          </Switch>
         </AuthProvider>
       </WalletProvider>
     </BrowserRouter>

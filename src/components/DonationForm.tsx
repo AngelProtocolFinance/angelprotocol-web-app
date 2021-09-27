@@ -1,24 +1,25 @@
 import { useState } from "react";
 import Slider from "rc-slider";
 import { ShareModal } from "components/ShareModal";
-import contracts from "../contracts";
+// import contracts from "../contracts";
 import "rc-slider/assets/index.css";
 
 import {
   useConnectedWallet,
-  UserDenied,
-  CreateTxFailed,
-  TxFailed,
-  Timeout,
-  TxUnspecifiedError,
+  // UserDenied,
+  // CreateTxFailed,
+  // TxFailed,
+  // Timeout,
+  // TxUnspecifiedError,
 } from "@terra-money/wallet-provider";
 
-import {
-  CreateTxOptions,
-  MsgExecuteContract,
-  StdFee,
-} from "@terra-money/terra.js";
+// import {
+//   // CreateTxOptions,
+//   // MsgExecuteContract,
+//   // StdFee,
+// } from "@terra-money/terra.js";
 import useSlider from "hooks/useSlider";
+import AppHead from "./Headers/AppHead";
 
 interface DonationFormProps {
   pushTransactionStatus: any;
@@ -58,53 +59,53 @@ export function DonationForm(props: DonationFormProps) {
     setAmountToDonate(0);
   };
 
-  const donate = async () => {
-    setIsSubmitDonation(true);
-    if (!connectedWallet) return; // TODO (borodanov): should be:
-    // const currentNetwork = connectedWallet.network.name
+  // const donate = async () => {
+  //   setIsSubmitDonation(true);
+  //   if (!connectedWallet) return; // TODO (borodanov): should be:
+  //   // const currentNetwork = connectedWallet.network.name
 
-    const execute = new MsgExecuteContract(
-      connectedWallet.terraAddress,
-      contracts.AngelProtocolIndexFund.address[currentNetwork],
-      contracts.AngelProtocolIndexFund.handleMessages.depositDonor
-    );
+  //   const execute = new MsgExecuteContract(
+  //     connectedWallet.terraAddress,
+  //     contracts.AngelProtocolIndexFund.address[currentNetwork],
+  //     contracts.AngelProtocolIndexFund.handleMessages.depositDonor
+  //   );
 
-    const txOptions: CreateTxOptions = {
-      msgs: [execute],
-      fee: new StdFee(200000, { uluna: 1000000 }), // TODO (borodanov): adjust fee
-    };
+  //   const txOptions: CreateTxOptions = {
+  //     msgs: [execute],
+  //     fee: new StdFee(200000, { uluna: 1000000 }), // TODO (borodanov): adjust fee
+  //   };
 
-    try {
-      const result = await connectedWallet.post(txOptions);
-      pushTransactionStatus(
-        `Transaction success with txhash: ${result.result.txhash}`
-      );
-      setIsSuccess(true);
-    } catch (error) {
-      setIsSuccess(false);
-      if (error instanceof UserDenied) {
-        pushTransactionStatus("User Denied");
-      } else if (error instanceof CreateTxFailed) {
-        pushTransactionStatus("Create Tx Failed");
-        pushTransactionStatus(error.message);
-        pushTransactionStatus(error.tx);
-      } else if (error instanceof TxFailed) {
-        pushTransactionStatus("Tx Failed");
-        pushTransactionStatus(error.txhash);
-        pushTransactionStatus(error.message);
-        pushTransactionStatus(error.raw_message);
-        pushTransactionStatus(error.tx);
-      } else if (error instanceof Timeout) {
-        pushTransactionStatus("Timeout");
-        pushTransactionStatus(error.message);
-      } else if (error instanceof TxUnspecifiedError) {
-        pushTransactionStatus(error.message);
-        pushTransactionStatus(error.tx);
-      } else {
-        pushTransactionStatus(String(error));
-      }
-    }
-  };
+  //   try {
+  //     const result = await connectedWallet.post(txOptions);
+  //     pushTransactionStatus(
+  //       `Transaction success with txhash: ${result.result.txhash}`
+  //     );
+  //     setIsSuccess(true);
+  //   } catch (error) {
+  //     setIsSuccess(false);
+  //     if (error instanceof UserDenied) {
+  //       pushTransactionStatus("User Denied");
+  //     } else if (error instanceof CreateTxFailed) {
+  //       pushTransactionStatus("Create Tx Failed");
+  //       pushTransactionStatus(error.message);
+  //       pushTransactionStatus(error.tx);
+  //     } else if (error instanceof TxFailed) {
+  //       pushTransactionStatus("Tx Failed");
+  //       pushTransactionStatus(error.txhash);
+  //       pushTransactionStatus(error.message);
+  //       pushTransactionStatus(error.raw_message);
+  //       pushTransactionStatus(error.tx);
+  //     } else if (error instanceof Timeout) {
+  //       pushTransactionStatus("Timeout");
+  //       pushTransactionStatus(error.message);
+  //     } else if (error instanceof TxUnspecifiedError) {
+  //       pushTransactionStatus(error.message);
+  //       pushTransactionStatus(error.tx);
+  //     } else {
+  //       pushTransactionStatus(String(error));
+  //     }
+  //   }
+  // };
 
   return (
     <div>
@@ -262,7 +263,7 @@ export function DonationForm(props: DonationFormProps) {
           <button
             className="uppercase bg-orange rounded-xl w-56 h-12 d-flex justify-center items-center mb-4"
             disabled={!connectedWallet || !connectedWallet.availablePost}
-            onClick={donate}
+            // onClick={donate}
           >
             Donate
           </button>

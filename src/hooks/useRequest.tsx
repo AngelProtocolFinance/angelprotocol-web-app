@@ -13,8 +13,8 @@ const useRequest = ({ url, method, body, onSuccess, onFailed }: any) => {
 
       onSuccess(await response.json());
     } catch (error: any) {
+      onFailed("Login Failed");
       setErrors(error);
-      onFailed(error);
     }
   };
   return { doRequest, errors };

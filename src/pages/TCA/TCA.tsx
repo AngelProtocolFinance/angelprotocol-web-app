@@ -1,28 +1,18 @@
 import Donator from "components/Donator/Donator";
-import { useGetToken, useSetToken } from "contexts/AuthProvider";
-import jwtDecode, { JwtPayload } from "jwt-decode";
-import { Redirect } from "react-router";
-import { routes } from "types/types";
+import { useGetToken } from "contexts/AuthProvider";
+import { Redirect, useRouteMatch } from "react-router-dom";
+import { app, site } from "types/routes";
 
 export default function TCA() {
-  const { deleteToken } = useSetToken();
-  const token = useGetToken();
+  const decodedToken = useGetToken();
 
   //user can't access TCA page when not logged in or his prev token expired
-  if (token) {
-    const decodedToken: JwtPayload = jwtDecode(token);
-    const expiry = decodedToken.exp!;
-    if (expiry * 1000 <= Date.now()) {
-      //delete expired token to avoid these checks everytime
-      deleteToken();
-      return <Redirect to={routes.login} />;
-    }
-  } else {
-    return <Redirect to={routes.login} />;
+  if (!decodedToken) {
+    return <Redirect to={`${site.app}/${app.login}`} />;
   }
 
   return (
-    <div className="pt-24 grid place-items-center">
+    <div className="grid place-items-center min-h-screen">
       <Donator />
     </div>
   );
