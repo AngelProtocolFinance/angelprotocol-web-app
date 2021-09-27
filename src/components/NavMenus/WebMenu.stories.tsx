@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import WebMenu from "./WebMenu";
 
 export default {
-  title: "Layout/WebMenu",
+  title: "Components/WebMenu",
   component: WebMenu,
   argTypes: {},
 } as ComponentMeta<typeof WebMenu>;
