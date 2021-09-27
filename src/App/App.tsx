@@ -22,13 +22,13 @@ const App = () => {
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <Switch>
-        {/* <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} /> */}
-        <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
+        <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+        {/* <Route path={`${path}/${app.dashboard}`} component={Dashboard} /> */}
         {/* <Route path={`${path}/${app.donate}`} component={Donate} /> */}
         <Route path={`${path}/${app.login}`} component={Login} />
         {/* <Route path={`${path}/${app.register}`} component={Register} /> */}
         <Route path={`${path}/${app.tca}`} component={TCA} />
-        {/* <Redirect from="*" to={site.home} /> */}
+        <Redirect from="*" to={site.home} />
       </Switch>
       <AppFoot />
     </div>
