@@ -44,7 +44,7 @@ export default function Sponsors() {
       >
         {supporterIcons.map((icon, index) => (
           <li key={index}>
-            <img src={icon} className="w-16" alt="" />
+            <img src={icon} className="w-16" alt="icon" />
           </li>
         ))}
       </ul>

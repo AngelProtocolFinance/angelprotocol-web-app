@@ -1,21 +1,15 @@
 import { useLocation } from "react-router-dom";
-import { routes } from "../types/types";
+import { site, app } from "../types/routes";
 
 export default function useAppBackground() {
   const location = useLocation();
   switch (location.pathname) {
-    case routes.login: {
-      return "bg-gradient-to-b from-thin-blue to-thin-grey";
-    }
-    case routes.charities:
-    case routes.donors:
-    case routes.contact:
-    case routes.home: {
-      return "bg-white";
+    case `${site.app}/${app.login}`: {
+      return "bg-gradient-to-b from-blue-accent to-thin-grey";
     }
 
     default: {
-      return "bg-gradient-to-b from-thin-blue to-black-blue";
+      return "bg-gradient-to-b from-blue-accent to-black-blue";
     }
   }
 }

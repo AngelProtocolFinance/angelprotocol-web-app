@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import NavMenu from "./NavMenu";
+import WebMenu from "./WebMenu";
 
-test("renders NavMenu", () => {
+test("renders WebMenu", () => {
   render(
     <MemoryRouter>
-      <NavMenu />
+      <WebMenu />
     </MemoryRouter>
   );
   //changed to list only for list items often change

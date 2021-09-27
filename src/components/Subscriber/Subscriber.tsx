@@ -10,8 +10,6 @@ export enum Status {
   initial = "initial",
 }
 
-export type Handler = () => void;
-
 export interface Values {
   email: string;
 }
@@ -23,9 +21,9 @@ export default function Subscriber() {
       validationSchema={subscriberSchema}
       onSubmit={handleSubscribe}
     >
-      {({ isSubmitting, status, resetForm }) => (
+      {({ isSubmitting, status }) => (
         <>
-          <Announcer status={status} resetForm={resetForm} />
+          <Announcer status={status} />
           <Form
             autoComplete="off"
             className="relative flex flex-col md:flex-row items-center lg:items-start"
@@ -36,7 +34,7 @@ export default function Subscriber() {
               autoComplete="off"
               type="text"
               name="email"
-              className="block p-2 rounded-sm w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
+              className="block p-2 rounded-md w-72 disabled:bg-thin-grey text-blue-accent font-semibold 
             focus:outline-none focus:ring-2 focus:ring-white-grey focus:ring-opacity-50"
             />
             <ErrorMessage

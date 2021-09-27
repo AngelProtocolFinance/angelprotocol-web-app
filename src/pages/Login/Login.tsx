@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { ToastContainer } from "react-toastify";
-
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router";
-import { routes } from "types/types";
+import { site } from "types/routes";
 import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";
+import Logo from "components/Logo/Logo";
 
 export type Values = {
   password: string;
@@ -24,18 +24,24 @@ const Login = () => {
   }
 
   if (token) {
-    return <Redirect to={routes.home} />;
+    return <Redirect to={site.home} />;
   }
 
   return (
-    <section className="p-5 pt-24 h-screen grid place-items-center ">
+    <section className="pb-12 h-screen grid grid-rows-a1 place-items-center">
+      <header className="flex items-center justify-between xl:container xl:mx-auto w-full p-5">
+        <Logo />
+        <p className="uppercase font-bold text-white font-heading text-lg">
+          Give once, give forever
+        </p>
+      </header>
       <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access
         </p>
         <div className="text-center my-5 text-gray-400">
-          <p className="text-sm sm:text-md">Access Restricted to</p>
-          <p className="text-md sm:text-lg font-bold  text-angel-grey">
+          <p className="text-sm sm:text-base">Access Restricted to</p>
+          <p className="text-base sm:text-lg font-bold  text-angel-grey">
             Terra Charity Alliance Members
           </p>
         </div>
@@ -81,7 +87,7 @@ const Login = () => {
         </Formik>
 
         <Link
-          to={routes.home}
+          to={site.home}
           className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"
         >
           learn more about angel protocol

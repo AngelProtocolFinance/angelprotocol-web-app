@@ -1,4 +1,4 @@
-import toCurrency from "components/helpers/toCurrency";
+import toCurrency from "helpers/toCurrency";
 import { useModalCloser } from "components/Modal/Modal";
 import { useFormikContext } from "formik";
 import { useGetStatus, useSetStatus } from "./Donator";

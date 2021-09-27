@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function useCheckScroll() {
+export default function useScrollShadow() {
   const ref = useRef<HTMLDivElement>(null);
 
   function handleScroll() {

@@ -1,18 +1,17 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
-import NavMenu from "./NavMenu";
+import WebMenu from "./WebMenu";
 
 export default {
-  title: "Layout/NavMenu",
-  component: NavMenu,
+  title: "Components/WebMenu",
+  component: WebMenu,
   argTypes: {},
-} as ComponentMeta<typeof NavMenu>;
+} as ComponentMeta<typeof WebMenu>;
 
-const Template: ComponentStory<typeof NavMenu> = () => (
+const Template: ComponentStory<typeof WebMenu> = () => (
   <MemoryRouter>
-    <NavMenu />
+    <WebMenu />
   </MemoryRouter>
 );
-
 export const Default = Template.bind({});
 Default.args = {};

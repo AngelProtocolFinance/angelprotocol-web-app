@@ -1,15 +1,1 @@
-export enum routes {
-  home = "/",
-  login = "/login",
-  register = "/register",
-  about = "/about",
-  about_unsdgs = "/about-unsdgs",
-  dashboard = "/dashboard",
-  donate = "/donate",
-  contact = "/contact",
-  tca = "/tca",
-  test = "/test",
-  charities = "/for-charities",
-  donors = "/for-donors",
-  privacy = "/privacy-policy",
-}
+export type Handler = () => void;
