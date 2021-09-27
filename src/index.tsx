@@ -1,15 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import App from "./App/App";
+import React from "react";
+import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-
 import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthProvider from "contexts/AuthProvider";
-import { site } from "./types/routes";
+import App from "./App/App";
 import Website from "Website/Website";
+import { site } from "./types/routes";
 
 const localterra = {
   name: "localterra",

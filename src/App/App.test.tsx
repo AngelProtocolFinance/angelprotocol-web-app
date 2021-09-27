@@ -20,7 +20,6 @@ test("App doesn't have / render yet", () => {
       </StaticWalletProvider>
     </MemoryRouter>
   );
-  screen.debug();
   const h1Heading = screen.queryByText(/simplified endowments/i);
   expect(h1Heading).toBeNull();
 });

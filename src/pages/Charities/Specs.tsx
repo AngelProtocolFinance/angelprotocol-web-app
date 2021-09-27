@@ -9,7 +9,6 @@ import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Specs() {
   const { ref, isVisible } = useObserve({ threshold: 0.2 });
-  console.log(isVisible);
   return (
     <section
       ref={ref}
