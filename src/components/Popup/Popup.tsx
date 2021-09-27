@@ -13,7 +13,6 @@ export interface Props {
 }
 
 export default function Popup(props: Props) {
-  console.log(cleanup);
   //Popup must only be rendered inside Modal
   const closeModal = useModalCloser();
   function closePopup() {
