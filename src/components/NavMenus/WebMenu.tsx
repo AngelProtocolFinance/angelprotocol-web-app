@@ -23,13 +23,11 @@ export default function WebMenu() {
           For Donors
         </NavLink>
       </li>
-      <li className="mr-4">
-        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
-          Register
-        </NavLink>
-      </li>
       <li className="">
-        <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
+        <NavLink
+          to={`${site.app}/${app.tca}`}
+          className="uppercase block w-24 text-center p-1 rounded-lg text-white bg-angel-blue"
+        >
           Donate
         </NavLink>
       </li>

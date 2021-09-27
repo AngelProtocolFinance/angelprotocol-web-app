@@ -24,10 +24,10 @@ const App = () => {
     <div className={`grid ${appBackround}`}>
       <Switch>
         {/* <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} /> */}
-        <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
-        <Route path={`${path}/${app.donate}`} component={Donate} />
+        {/* <Route path={`${path}/${app.dashboard}`} component={Dashboard} /> */}
+        {/* <Route path={`${path}/${app.donate}`} component={Donate} /> */}
         <Route path={`${path}/${app.login}`} component={Login} />
-        <Route path={`${path}/${app.register}`} component={Register} />
+        {/* <Route path={`${path}/${app.register}`} component={Register} /> */}
         <Route path={`${path}/${app.tca}`} component={TCA} />
         {/* <Redirect from="*" to={routes.donate} /> */}
       </Switch>
