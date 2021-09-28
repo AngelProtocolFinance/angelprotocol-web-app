@@ -4,7 +4,6 @@ import ContactDetails from "./ContactDetails";
 import ConfirmEmail from "./ConfirmEmail";
 import VerifiedEmail from "./VerifiedEmail";
 import RegistrationStatus from "./RegistrationStatus";
-import { registerRoutes } from "types/types";
 import WalletCheck from "./connect-wallet/WalletCheck";
 import ConnectWallet from "./connect-wallet/ConnectWallet";
 import SelectWallet from "./connect-wallet/SelectWallet";
@@ -12,70 +11,77 @@ import StepsDocs from "./register-docs/Steps-docs";
 import UpdateProfile from "./charity-profile/Update-profile";
 import OtherWallets from "./connect-wallet/OtherWallets";
 import SelfCustody from "./connect-wallet/Self-custody";
-
+import { register } from "types/routes";
+import AppHead from "components/Headers/AppHead";
 const Register = () => {
-  let match = useRouteMatch();
-  console.log("match url => ", match.url);
+  //this component will only render under '/app/register/'
+  //{path} = '/app/register'
+  const { path } = useRouteMatch();
   return (
-    <section className="container mx-auto my-auto flex-auto my-10 flex justify-center">
+    <section className="grid grid-rows-dashboard pb-12 pt-5 justify-items-center">
+      <AppHead />
       <div className="relative sm:w-4/5 max-w-6xl p-10 mt-32 text-center text-white">
         <Switch>
           <Route
             exact
-            path={`${match.url}/${registerRoutes.detail}`}
+            path={`${path}/${register.detail}`}
             component={ContactDetails}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.confirm}`}
+            path={`${path}/${register.confirm}`}
             component={ConfirmEmail}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.verify}`}
+            path={`${path}/${register.verify}`}
             component={VerifiedEmail}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.status}`}
+            path={`${path}/${register.status}`}
             component={RegistrationStatus}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.wallet_check}`}
+            path={`${path}/${register.wallet_check}`}
             component={WalletCheck}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.select_wallet}`}
+            path={`${path}/${register.select_wallet}`}
             component={SelectWallet}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.connect_wallet}`}
+            path={`${path}/${register.connect_wallet}`}
             component={ConnectWallet}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.upload_docs}`}
+            path={`${path}/${register.upload_docs}`}
             component={StepsDocs}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.charity_profile}`}
+            path={`${path}/${register.charity_profile}`}
             component={UpdateProfile}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.others}`}
+            path={`${path}/${register.others}`}
             component={OtherWallets}
           />
           <Route
             exact
-            path={`${match.url}/${registerRoutes.self_custody}`}
+            path={`${path}/${register.self_custody}`}
             component={SelfCustody}
           />
-          <Route exact path={`${match.url}/index`} component={Registration} />
+          <Route
+            exact
+            path={`${path}${register.index}`}
+            component={Registration}
+          />
         </Switch>
       </div>
     </section>

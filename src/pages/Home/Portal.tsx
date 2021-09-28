@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { site, web } from "types/routes";
 
 export default function Portal() {
   return (
@@ -8,8 +9,8 @@ export default function Portal() {
           Transform how your charity fundraises today
         </h3>
         <Link
-          to="/contact"
-          className="text-center bg-angel-orange text-lg sm:text-xl lg:text-2xl py-1 px-2 lg:py-2 lg:px-5 rounded-sm text-white-grey font-semibold shadow-md"
+          to={web.contact}
+          className="text-center bg-angel-orange hover:bg-orange text-lg sm:text-xl lg:text-2xl py-1 px-2 lg:py-2 lg:px-5 rounded-sm text-white-grey font-semibold shadow-md"
         >
           I want to know more!
         </Link>

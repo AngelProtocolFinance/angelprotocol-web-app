@@ -1,17 +1,19 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useHistory } from "react-router-dom";
-import { registerRoutes } from "types/types";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { register } from "types/routes";
 import { GetPreviousRegistration } from "aws-settings.config";
 import banner1 from "assets/images/banner-register-1.jpg";
 
 const Registration = () => {
+  //url -> app/register
+  const { url } = useRouteMatch();
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
 
   console.log("dat  => ", userData);
   if (userData?.email) {
     history.push({
-      pathname: registerRoutes.confirm,
+      pathname: `${url}/${register.confirm}`,
       state: { is_sent: true },
     });
   }
@@ -37,7 +39,7 @@ const Registration = () => {
       <div className="mb-2">
         <button
           className="bg-orange w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={() => history.push("/register/detail")}
+          onClick={() => history.push(`${url}/${register.detail}`)}
         >
           Start
         </button>
@@ -69,7 +71,7 @@ const Registration = () => {
               );
             } else {
               history.push({
-                pathname: registerRoutes.confirm,
+                pathname: `${url}/${register.confirm}`,
                 state: { is_sent: true },
               });
             }

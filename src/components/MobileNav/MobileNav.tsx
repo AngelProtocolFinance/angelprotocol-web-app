@@ -1,36 +1,37 @@
-import { useHeaderColors } from "contexts/HeaderColorProvider";
-import { NavLink } from "react-router-dom";
-import { routes } from "types/types";
+import { NavLink, useRouteMatch } from "react-router-dom";
+import { app, web, site } from "types/routes";
 
+//Will be for WebNav
 export default function MobileNav() {
-  const { textColor, bgColor } = useHeaderColors();
+  //url = /
+  const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase ${textColor}`,
+    className: `uppercase text-angel-blue`,
     activeClassName: "font-bold",
   };
 
   return (
     <ul
-      className={`text-${textColor} bg-${bgColor} md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
+      className={`text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
     >
-      <li className="mb-2">
-        <NavLink to={routes.tca} {...linkStyles}>
-          Donate
+      <li className="mr-4">
+        <NavLink to={`${url}${web.charities}`} {...linkStyles}>
+          For Charities
         </NavLink>
       </li>
-      <li className="mb-2">
-        <NavLink to={routes.dashboard} {...linkStyles}>
-          Charities
+      <li className="mr-4">
+        <NavLink to={`${url}${web.donors}`} {...linkStyles}>
+          For Donors
         </NavLink>
       </li>
-      <li className="mb-2">
-        <NavLink to={routes.about_unsdgs} {...linkStyles}>
-          UNSDGs
-        </NavLink>
-      </li>
-      <li>
-        <NavLink to={`${routes.register}/index`} {...linkStyles}>
+      <li className="mr-4">
+        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
           Register
+        </NavLink>
+      </li>
+      <li className="mr-4">
+        <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
+          Donate
         </NavLink>
       </li>
     </ul>

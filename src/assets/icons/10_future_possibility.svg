@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="_x31_0_x5F_future_x5F_possibility" x="0px" y="0px" width="64px" height="44px" viewBox="0 0 64 44" style="enable-background:new 0 0 64 44;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<g>
+				<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" d="M21,21"></path>
+				<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" d="M13,21h9l11,4h9c1.656,0,3,1.343,3,3      s-1.344,3-3,3H31c-1.656,0-3,1.343-3,3"></path>
+				<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" d="M44,30l16-5c1.656,0,3,1.343,3,3      c0,0.997-1,2-1,2L37,43h-2l-17-6h-5"></path>
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" x1="10" y1="35" x2="8" y2="35"></line>
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" x1="6" y1="35" x2="4" y2="35"></line>
+				<path style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-miterlimit:10;" d="M0,19h12c0.553,0,1,0.447,1,1v18      c0,0.553-0.447,1-1,1H0"></path>
+			</g>
+			<polygon style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="63,9 17,9 21,1      37,1 63,6    "></polygon>
+			<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="17,9 13,1 18,1         "></polyline>
+			<polyline style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" points="63,9 34,15      24,15 22,9    "></polyline>
+			
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="10" y1="1" x2="0" y2="1"></line>
+			
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="4" y1="5" x2="11" y2="5"></line>
+			
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="8" y1="9" x2="12" y2="9"></line>
+			
+				<line style="fill:none;stroke:#4F5F6F;stroke-width:2;stroke-linejoin:round;stroke-miterlimit:10;" x1="6" y1="9" x2="0" y2="9"></line>
+		</g>
+	</g>
+</g>
+</svg>

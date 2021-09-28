@@ -20,7 +20,6 @@ describe("Renders text according to wallet status", () => {
         <TerraConnector />
       </StaticWalletProvider>
     );
-    screen.debug();
     const connectButtonEl = screen.getByRole("button");
     expect(connectButtonEl).toHaveTextContent(/initializing/i);
   });
@@ -35,7 +34,6 @@ describe("Renders text according to wallet status", () => {
         <TerraConnector />
       </StaticWalletProvider>
     );
-    screen.debug();
     const connectButtonEl = screen.getByRole("button");
     expect(connectButtonEl).toHaveTextContent(/connect/i);
   });
@@ -50,7 +48,6 @@ describe("Renders text according to wallet status", () => {
         <TerraConnector />
       </StaticWalletProvider>
     );
-    screen.debug();
     const connectButtonEl = screen.getByRole("button");
     expect(connectButtonEl).toHaveTextContent(/install/i);
   });
@@ -70,7 +67,6 @@ describe("Renders text according to wallet status", () => {
         <TerraConnector />
       </StaticWalletProvider>
     );
-    screen.debug();
     expect(screen.getByRole("heading")).toHaveTextContent(/terra1235/i);
   });
 });

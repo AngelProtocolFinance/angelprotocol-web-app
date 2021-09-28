@@ -8,10 +8,10 @@ export default function Highlights() {
       {highlights.map(({ id, heading, icon, text }) => (
         <li
           key={id}
-          className="grid grid-cols-1 justify-items-center lg:grid-cols-highlight max-w-xs items-center mb-10 sm:mb-0"
+          className="grid grid-cols-1 justify-items-center lg:grid-cols-a1 max-w-xs items-center mb-10 sm:mb-0"
         >
-          <img src={icon} alt="" className="w-28" />
-          <article className="lg:pl-3">
+          <img src={icon} alt="" className="w-28 h-28" />
+          <article className="lg:pl-6">
             <h3 className="font-bold text-white text-lg text-center lg:text-left my-3 lg:my-0">
               {heading}
             </h3>

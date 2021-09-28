@@ -2,26 +2,46 @@ import donorIcon from "assets/icons/administrator.svg";
 import setupIcon from "assets/icons/rocket.svg";
 import lowCostIcon from "assets/icons/piggy_bank.svg";
 import mgmtIcon from "assets/icons/gear.svg";
+import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Specs() {
+  const { ref, isVisible } = useObserve({ threshold: 0.2 });
   return (
-    <section className="h-auto lg:h-specs grid grid-rows-specs justify-items-center mt-20  text-blue-accent px-10 pb-10 lg:pb-0">
-      <h3 className="font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center">
+    <section
+      ref={ref}
+      className="grid grid-rows-a1 justify-items-center text-blue-accent px-10 py-16"
+    >
+      <h3
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromDot
+        )} font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center`}
+      >
         Angel Protocol enables your charity to thrive from decentralized
         financial products, without the complexity
       </h3>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 items-start justify-items-center gap-16 mt-16">
+      <ul
+        className={`${transitionIn(
+          isVisible,
+          Direction.fromRight
+        )} grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2  gap-16 mt-16`}
+      >
         {specs.map(({ id, heading, icon, text }) => (
           <li
             key={id}
-            className="grid justify-items-center lg:grid-cols-highlight  items-start"
+            className="grid grid-rows-a1 xl:grid-rows-1 xl:grid-cols-1a justify-items-center "
           >
-            <img src={icon} alt="" className="w-28 mb-4 lg:mb-0" />
-            <article className="lg:pl-6 max-w-sm mt-2 lg:mt-0">
-              <h3 className="text-center text-xl sm:text-2xl lg:text-left font-bold text-angel-grey  mb-1">
+            <img
+              src={icon}
+              alt=""
+              className="w-24 h-24 mb-4 xl:mb-0 self-center"
+            />
+            <article className="xl:grid xl:grid-rows-a1 xl:pl-6 max-w-sm mt-2 lg:mt-0">
+              <h3 className="text-center text-xl sm:text-2xl xl:text-left font-bold text-angel-grey mb-1">
                 {heading}
               </h3>
-              <p className="text-center lg:text-left text-angel-grey font-heading font-light">
+              <p className="self-center text-center xl:text-left text-angel-grey font-heading font-light">
                 {text}
               </p>
             </article>

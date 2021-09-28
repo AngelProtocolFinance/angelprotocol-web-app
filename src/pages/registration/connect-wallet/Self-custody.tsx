@@ -1,8 +1,9 @@
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router";
-import { registerRoutes } from "types/types";
+import { register } from "types/routes";
 
 const SelfCustody = () => {
+  //url = app/register/self-custody
   const history = useHistory();
   const showInfoModal = () => {};
   return (
@@ -18,7 +19,7 @@ const SelfCustody = () => {
           <button
             className="bg-thin-blue w-72 h-10 rounded-xl uppercase text-base font-bold text-white mr-1"
             onClick={() => {
-              history.push(registerRoutes.connect_wallet);
+              history.push(register.connect_wallet);
             }}
           >
             take me to the tutorial
@@ -42,7 +43,7 @@ const SelfCustody = () => {
         <button
           className="bg-orange w-72 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
           onClick={() => {
-            history.push(registerRoutes.others);
+            history.push(register.others);
           }}
         >
           back

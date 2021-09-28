@@ -15,7 +15,9 @@ export default function TerraConnector() {
     case WalletStatus.INITIALIZING:
       return (
         <div>
-          <button disabled>Initializing Wallet...</button>
+          <button className={`text-white`} disabled>
+            Initializing Wallet...
+          </button>
         </div>
       );
     case WalletStatus.WALLET_NOT_CONNECTED:

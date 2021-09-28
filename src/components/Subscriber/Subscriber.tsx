@@ -1,11 +1,14 @@
-import LineLoader from "components/Loader/LineLoader";
-import Modal from "components/Modal/Modal";
+import Loader from "components/Loader/Loader";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Handler } from "types/types";
-import ErrorPopup from "./ErrorPopup";
+import Announcer from "./Announcer";
 import handleSubscribe from "./handleSubscribe";
-import SuccessPopup from "./SuccessPopup";
-import validator from "./validator";
+import { subscriberSchema } from "./subscriberSchema";
+
+export enum Status {
+  success = "success",
+  failed = "failed",
+  initial = "initial",
+}
 
 export interface Values {
   email: string;
@@ -15,17 +18,16 @@ export default function Subscriber() {
   return (
     <Formik
       initialValues={{ email: "" }}
-      validate={validator}
+      validationSchema={subscriberSchema}
       onSubmit={handleSubscribe}
     >
-      {({ isSubmitting, status, resetForm }) => (
+      {({ isSubmitting, status }) => (
         <>
-          {renderModal(status, resetForm)}
+          <Announcer status={status} />
           <Form
             autoComplete="off"
-            className="flex flex-col items-center lg:items-start"
+            className="relative flex flex-col md:flex-row items-center lg:items-start"
           >
-            <span>{status}</span>
             <Field
               placeholder="Email"
               disabled={isSubmitting}
@@ -37,16 +39,20 @@ export default function Subscriber() {
             />
             <ErrorMessage
               name="email"
-              className="text-sm text-yellow-300 font-semibold mt-1"
+              className="static mt-2 md:absolute md:left-0 md:-bottom-6 text-sm text-white-grey "
               component="div"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="bg-orange w-48 h-10 rounded-xl uppercase text-base font-bold text-white block mt-3 disabled:bg-grey-accent"
+              className="text-white-grey font-semibold text-sm block ml-2 mt-5 md:mt-0 bg-angel-orange disabled:bg-grey-accent hover:bg-orange px-5 py-1 uppercase rounded-md shadow-md w-36 h-10"
             >
               {isSubmitting ? (
-                <LineLoader color="thin-grey" size={"4"} spacing={"2"} />
+                <Loader
+                  bgColorClass="bg-white"
+                  widthClass="w-3"
+                  gapClass="gap-1"
+                />
               ) : (
                 "Subscribe"
               )}
@@ -56,37 +62,4 @@ export default function Subscriber() {
       )}
     </Formik>
   );
-}
-
-function renderModal(status: string, resetForm: Handler) {
-  switch (status) {
-    case "success":
-      return (
-        <Modal
-          render={(closeModal) => (
-            <SuccessPopup
-              clickHandler={() => {
-                resetForm();
-                closeModal();
-              }}
-            />
-          )}
-        />
-      );
-    case "failed":
-      return (
-        <Modal
-          render={(closeModal) => (
-            <ErrorPopup
-              clickHandler={() => {
-                resetForm();
-                closeModal();
-              }}
-            />
-          )}
-        />
-      );
-    default:
-      return null;
-  }
 }

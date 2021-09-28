@@ -1,8 +1,9 @@
 import { useHistory, useLocation } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { registerRoutes } from "types/types";
+import { register } from "types/routes";
 
 const ConfirmEmail = () => {
+  //url = /app/register/confirm
   const history = useHistory();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
@@ -66,7 +67,10 @@ const ConfirmEmail = () => {
       <div className="mb-2">
         <button
           className="bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={() => history.push(registerRoutes.detail)}
+          onClick={() =>
+            //go to adjacent route /detail from current /app/register/confirm
+            history.push(register.detail)
+          }
         >
           close
         </button>
