@@ -2,9 +2,10 @@ import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "components/CharityInfo";
-import { DonationForm } from "components/DonationForm";
+import DonationForm from "pages/Donate/DonationForm";
 import { DonationInfo } from "components/DonationInfo";
 import AppHead from "components/Headers/AppHead";
+import Donator from "components/Donator/Donator";
 
 const Donate = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -17,7 +18,6 @@ const Donate = () => {
       autoplay: 1,
     },
   };
-  const pushTransactionStatus = () => {};
   const onReady = (event: any) => {
     event.target.pauseVideo();
   };
@@ -57,7 +57,9 @@ const Donate = () => {
           </div>
           <div className="overflow-y-auto">
             {isDonate ? (
-              <DonationForm pushTransactionStatus={pushTransactionStatus} />
+              <Donator>
+                <DonationForm />
+              </Donator>
             ) : (
               <div className="overflow-y-auto h-full">
                 <div className="paragraph mb-4">

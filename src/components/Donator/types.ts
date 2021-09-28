@@ -2,6 +2,7 @@ export type Handler = () => void;
 
 export interface Values {
   amount: string;
+  split: number;
 }
 
 export enum Steps {
