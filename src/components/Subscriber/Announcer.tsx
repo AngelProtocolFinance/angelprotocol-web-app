@@ -1,6 +1,5 @@
 import Modal from "components/Modal/Modal";
-import Popup from "components/Popup/Popup";
-import { useFormikContext } from "formik";
+import Popup from "components/Subscriber/Popup";
 import { Status } from "./Subscriber";
 
 interface Props {
@@ -8,18 +7,17 @@ interface Props {
 }
 
 export default function Announcer(props: Props) {
-  const { resetForm } = useFormikContext();
   switch (props.status) {
     case Status.success:
       return (
         <Modal>
-          <Popup message="Thank you for subscribing!" cleanup={resetForm} />
+          <Popup message="Thank you for subscribing!" />
         </Modal>
       );
     case Status.failed:
       return (
         <Modal>
-          <Popup message="Failed to subscribe." cleanup={resetForm} />
+          <Popup message="Failed to subscribe." />
         </Modal>
       );
     default:
