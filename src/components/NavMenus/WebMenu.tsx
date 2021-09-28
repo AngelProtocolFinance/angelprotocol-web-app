@@ -23,14 +23,14 @@ export default function WebMenu() {
           For Donors
         </NavLink>
       </li>
-      <li className="">
+      {/* <li className="">
         <NavLink
           to={`${site.app}/${app.tca}`}
           className="uppercase block w-24 text-center p-1 rounded-lg text-white bg-angel-blue"
         >
           Donate
         </NavLink>
-      </li>
+      </li> */}
     </ul>
   );
 }
