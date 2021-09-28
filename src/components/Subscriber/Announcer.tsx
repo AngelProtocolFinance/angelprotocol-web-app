@@ -1,13 +1,11 @@
 import Modal from "components/Modal/Modal";
 import Popup from "components/Subscriber/Popup";
+import { useFormikContext } from "formik";
 import { Status } from "./Subscriber";
 
-interface Props {
-  status: Status;
-}
-
-export default function Announcer(props: Props) {
-  switch (props.status) {
+export default function Announcer() {
+  const { status }: { status?: Status } = useFormikContext();
+  switch (status) {
     case Status.success:
       return (
         <Modal>
