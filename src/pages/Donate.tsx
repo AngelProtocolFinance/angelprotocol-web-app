@@ -4,6 +4,7 @@ import YouTube, { Options } from "react-youtube";
 import { CharityInfo } from "components/CharityInfo";
 import { DonationForm } from "components/DonationForm";
 import { DonationInfo } from "components/DonationInfo";
+import AppHead from "components/Headers/AppHead";
 
 const Donate = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -24,7 +25,8 @@ const Donate = () => {
     setIsDonate(!isDonate);
   };
   return (
-    <section className="container mx-auto flex-auto p-5 pt-28">
+    <section className="container mx-auto grid grid-rows-1a pb-12">
+      <AppHead />
       <div className="flex flex-row justify-between pb-5">
         <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
           <img
@@ -59,7 +61,7 @@ const Donate = () => {
             ) : (
               <div className="overflow-y-auto h-full">
                 <div className="paragraph mb-4">
-                  <p className="text-md">
+                  <p className="text-base">
                     Our global community invests in women survivors of war and
                     conflict, providing them with social and economic skills to
                     transform their own lives. Women pass their knowledge to
@@ -69,7 +71,7 @@ const Donate = () => {
                   </p>
                 </div>
                 <div className="paragraph mb-4">
-                  <p className="text-md">
+                  <p className="text-base">
                     What is Women for Women international's Approach?
                   </p>
                   <span className="text-sm">

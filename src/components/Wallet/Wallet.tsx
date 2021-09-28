@@ -2,13 +2,11 @@ import { useWallet } from "@terra-money/wallet-provider";
 import useCopyAddress from "./useCopyAddress";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { BiCopy } from "react-icons/bi";
-import { useHeaderColors } from "contexts/HeaderColorProvider";
 import { useState } from "react";
 
 export default function Wallet() {
   //since this is under WALLET_CONNECTED status --> wallet guaranteed to be defined
   const [animation, setAnimation] = useState(false);
-  const { textColor } = useHeaderColors();
   const { buttonProps, isOpen, handleCopy } = useCopyAddress();
   const { wallets, disconnect } = useWallet();
   const wallet = wallets[0];
@@ -25,9 +23,9 @@ export default function Wallet() {
 
   return (
     <div
-      className={`flex justify-between items-center ml-1 border border-${textColor} py-1 px-2 rounded-md`}
+      className={`flex justify-between items-center ml-1 border border-white py-1 px-2 rounded-md`}
     >
-      <p className={`text-sm md:tex-base text-${textColor} `}>
+      <p className={`text-sm md:tex-base text-white`}>
         {address.substr(0, 15) + "..."}
       </p>
       <button
@@ -35,11 +33,11 @@ export default function Wallet() {
         onClick={handleCopyClick}
         onAnimationEnd={endAnimation}
       >
-        <BiCopy className={`text-${textColor}`} />
+        <BiCopy className={`text-white`} />
       </button>
       <div className="flex justify-between items-center relative">
         <button {...buttonProps}>
-          <FiMoreHorizontal className={`text-${textColor}`} />
+          <FiMoreHorizontal className={`text-white`} />
         </button>
         <div
           className={

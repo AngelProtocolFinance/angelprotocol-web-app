@@ -2,12 +2,15 @@ import { FormikHelpers } from "formik";
 import { Values } from "./Login";
 import { useSetToken } from "contexts/AuthProvider";
 import { toast } from "react-toastify";
-import { useHistory } from "react-router";
-import { routes } from "types/types";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { app, site } from "types/routes";
 
-const url = "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-login";
+const endPoint =
+  "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-login";
 
 export default function useLogin() {
+  //url = app/login
+  const { url } = useRouteMatch();
   const { saveToken } = useSetToken();
   const history = useHistory();
 
@@ -19,7 +22,7 @@ export default function useLogin() {
     //start request
     actions.setSubmitting(true);
     try {
-      const response = await fetch(url, {
+      const response = await fetch(endPoint, {
         method: "POST",
         body: JSON.stringify(values),
       });
@@ -28,7 +31,7 @@ export default function useLogin() {
         const data = await response.json();
         //don't perform state update because form would unmount
         saveToken(data.accessToken);
-        history.replace(routes.tca);
+        history.push(`${site.app}/${app.tca}`);
       } else if (response.status === 403) {
         toast.error("Unauthorized");
         resetStatus();
