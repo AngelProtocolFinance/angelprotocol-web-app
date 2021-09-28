@@ -1,6 +1,10 @@
 import { FormikHelpers } from "formik";
 import { Status, Values } from "./Subscriber";
 
+interface Helpers<_> extends FormikHelpers<Values> {
+  setStatus: (status: Status) => void;
+}
+
 const portalId = "24900163";
 const subscriptionTypeId = "118859752";
 const formId = "6593339e-cc5d-4375-bd06-560a8c88879c";
@@ -8,9 +12,8 @@ const url = `https://api.hsforms.com/submissions/v3/integration/submit/${portalI
 
 export default async function handleSubscribe(
   values: Values,
-  actions: FormikHelpers<Values>
+  actions: Helpers<Values>
 ) {
-  console.log(values.email);
   const data = {
     fields: [
       {
