@@ -607,7 +607,7 @@ const Bold = ({ children }: { children: ReactText }) => (
 const Anchor = ({ children, to }: { children: ReactText; to: string }) => (
   <a
     href={to}
-    referrerPolicy="no-referrer"
+    rel="noreferrer noopener"
     target="_blank"
     className="text-blue-500"
   >

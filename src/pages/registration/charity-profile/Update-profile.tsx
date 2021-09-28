@@ -308,6 +308,8 @@ const UpdateProfile = () => {
                         <Link
                           to={`${site.home}${web.privacy}`}
                           className="underline"
+                          rel="noreferrer noopener"
+                          target="_blank"
                         >
                           Privacy Policy
                         </Link>

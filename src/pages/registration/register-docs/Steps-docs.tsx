@@ -88,7 +88,12 @@ const StepsDocs = () => {
                 {" "}
                 By checking this box, you declare that you have read and agreed
                 our{" "}
-                <Link to={`${site.home}${web.privacy}`} className="underline">
+                <Link
+                  to={`${site.home}${web.privacy}`}
+                  className="underline"
+                  rel="noreferrer noopener"
+                  target="_blank"
+                >
                   Privacy Policy
                 </Link>
                 <span className="text-base text-failed-red">*</span>

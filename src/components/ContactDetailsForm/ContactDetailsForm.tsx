@@ -238,6 +238,8 @@ export const ContactDetailsForm = (props: any) => {
                       agreed our{" "}
                       <Link
                         to={`${site.home}${web.privacy}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
                         className="underline"
                       >
                         Privacy Policy
