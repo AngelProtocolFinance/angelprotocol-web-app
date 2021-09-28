@@ -10,6 +10,7 @@ export default async function handleSubscribe(
   values: Values,
   actions: FormikHelpers<Values>
 ) {
+  console.log(values.email);
   const data = {
     fields: [
       {

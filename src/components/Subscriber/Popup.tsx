@@ -1,26 +1,25 @@
-import { cleanup } from "@testing-library/react";
 import { useModalCloser } from "components/Modal/Modal";
-import { ReactNode } from "react";
+import { useFormikContext } from "formik";
 import { IoCloseOutline } from "react-icons/io5";
 
 export type Handler = () => void;
 
 export interface Props {
-  message?: string;
-  children?: ReactNode;
-  //run before closing popup
-  cleanup?: () => void;
+  message: string;
 }
 
 export default function Popup(props: Props) {
   //Popup must only be rendered inside Modal
   const closeModal = useModalCloser();
+  //This Popup is inside Formik
+  const { resetForm } = useFormikContext();
+
+  //default reset when user press 'x' button
   function closePopup() {
-    if (cleanup !== undefined) {
-      cleanup();
-    }
+    resetForm();
     closeModal();
   }
+
   //To use formik context, make sure Popup is also inside <Formik/> tree
 
   return (
@@ -29,7 +28,6 @@ export default function Popup(props: Props) {
         <IoCloseOutline className="text-angel-grey" />
       </button>
       <p className="text-angel-grey text-center my-18">{props?.message}</p>
-      {props.children}
     </div>
   );
 }
