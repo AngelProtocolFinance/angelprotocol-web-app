@@ -3,7 +3,7 @@ import transitionIn, { Direction } from "../../helpers/transitionIn";
 import unsdgPoster from "assets/images/unsdg_poster.png";
 
 export default function Alignment() {
-  const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  const { ref, isVisible } = useObserve({ threshold: 0.3 });
   return (
     <section
       ref={ref}
