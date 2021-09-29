@@ -14,6 +14,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
+    console.log(values);
     //values.amount is properly formatted string | number at this point due to validation
     const UST_Amount = values.amount;
     actions.setSubmitting(true);

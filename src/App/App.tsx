@@ -6,7 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import useAppBackground from "hooks/useAppBackground";
-import Donate from "pages/Donate";
+import Donate from "pages/Donate/Donate";
 import Dashboard from "pages/Dashboard";
 import Login from "pages/Login/Login";
 import Register from "pages/registration/index";
