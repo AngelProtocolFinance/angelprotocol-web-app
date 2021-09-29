@@ -44,7 +44,7 @@ export default class Indexfund extends Contract {
 
   async createDepositTx(
     UST_amount: number | string,
-    split?: number
+    splitToLiquid?: number
   ): Promise<CreateTxOptions> {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(

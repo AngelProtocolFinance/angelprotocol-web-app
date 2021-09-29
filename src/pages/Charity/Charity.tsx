@@ -2,13 +2,10 @@ import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "components/CharityInfo";
-<<<<<<< HEAD:src/pages/Donate.tsx
-import { DonationForm } from "components/DonationForm";
-=======
 import DonationForm from "pages/Charity/CharityForm";
->>>>>>> 50877af... introduced Accoutn deposit logic:src/pages/Charity/Charity.tsx
 import { DonationInfo } from "components/DonationInfo";
 import AppHead from "components/Headers/AppHead";
+import Donator from "components/Donator/Donator";
 
 const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -61,16 +58,12 @@ const Charity = () => {
           </div>
           <div className="overflow-y-auto">
             {isDonate ? (
-<<<<<<< HEAD:src/pages/Donate.tsx
-              <DonationForm pushTransactionStatus={pushTransactionStatus} />
-=======
               <Donator
                 to="charity"
                 receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
               >
                 <DonationForm />
               </Donator>
->>>>>>> 50877af... introduced Accoutn deposit logic:src/pages/Charity/Charity.tsx
             ) : (
               <div className="overflow-y-auto h-full">
                 <div className="paragraph mb-4">
