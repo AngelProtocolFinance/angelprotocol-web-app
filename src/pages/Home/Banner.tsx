@@ -22,15 +22,17 @@ export default function Banner() {
     >
       <div className="container mx-auto  grid grid-cols-1a items-center">
         <section
-          className={`max-w-3xl p-5 ${transitionIn(
+          className={`max-w-3xl p-4 md:p-5 ${transitionIn(
             isVisible,
             Direction.fromTop
           )}`}
         >
           <h1 className="font-semibold text-3xl sm:text-4xl sm:leading-snug md:text-5xl text-white md:leading-normal">
-            Simplified endowments that empower charities to{" "}
+            <span className="pr-2 sm:block">
+              Simplified endowments that empower charities to
+            </span>
             <span
-              className={`ml-1 inline font-bold text-angel-orange border-r-4 transition-all ${
+              className={`inline font-bold text-angel-orange border-r-4 transition-all ${
                 cursorShown ? "border-white-grey" : "border-transparent"
               }`}
             >
