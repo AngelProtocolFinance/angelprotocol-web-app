@@ -3,11 +3,11 @@ import transitionIn, { Direction } from "../../helpers/transitionIn";
 import growthImage from "assets/images/growth.png";
 
 export default function Info() {
-  const { ref, isVisible } = useObserve({ threshold: 0.5 });
+  const { ref, isVisible } = useObserve({ threshold: 0.2 });
   return (
     <section
       ref={ref}
-      className="bg-gradient-to-bl from-blue-accent to-angel-blue grid lg:items-center grid-rows-2 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-end "
+      className="bg-gradient-to-bl from-blue-accent to-angel-blue grid lg:items-center grid-rows-1a grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-end "
     >
       <div className="justify-self-center">
         <img
