@@ -38,7 +38,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test --env=jsdom",
+    "test": "craco test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "eject": "react-scripts eject",
