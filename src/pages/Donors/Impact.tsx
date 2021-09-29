@@ -8,7 +8,7 @@ export default function Impact() {
       <article
         className={`${transitionIn(
           isVisible,
-          Direction.fromRight
+          Direction.fromLeft
         )} p-8 md:p-16 xl:p-24`}
       >
         <h3 className="uppercase text-xl lg:text-2xl xl:text-3xl text-angel-blue font-bold mb-5">
