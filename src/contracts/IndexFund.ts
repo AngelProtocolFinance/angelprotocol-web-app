@@ -30,12 +30,12 @@ export default class Indexfund {
     });
 
     this.getTxResponse = this.getTxResponse.bind(this);
-    this.createDepositTx = this.createDepositTx.bind(this);
+    // this.createDepositTx = this.createDepositTx.bind(this);
   }
 
   //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
-    "bombay-11": "terra19hajpu39cr9h25azwsgdaz98mc7ejp774mt6ch",
+    "bombay-12": "terra1tttm9vv84gylek4daqnprdde5v2nue7t7e2jmy",
     localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
     "tequila-0004": "",
     "columbus-4": "",
@@ -59,7 +59,7 @@ export default class Indexfund {
   async createDepositTx(
     fund_id: number,
     UST_amount: number | string,
-    split?: number
+    splitToLiquid?: number
   ): Promise<CreateTxOptions> {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(
@@ -68,13 +68,13 @@ export default class Indexfund {
       {
         deposit: {
           fund_id,
-          split,
+          split: `${splitToLiquid}`,
         },
       },
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
-    // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
+    const fee = await this.estimateFee([depositMsg]);
+    // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 
