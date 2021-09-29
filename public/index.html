@@ -93,12 +93,13 @@
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+      if (window.location.hostname === "www.angelprotocol.io") {
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-G6NWQG2Q42");
       }
-      gtag("js", new Date());
-
-      gtag("config", "G-G6NWQG2Q42");
     </script>
   </body>
 </html>
