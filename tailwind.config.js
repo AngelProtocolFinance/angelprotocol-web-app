@@ -12,16 +12,16 @@ module.exports = {
         process:
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/home-process.webp')",
         portal:
-          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('assets/images/teamwork.webp')",
+          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('assets/images/teamwork2.webp')",
         contact:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/volunteers.webp')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/volunteers2.webp')",
         "banner-charity":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/banner-charity.jpg')",
         "banner-charities":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/deliveries.jpeg')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/deliveries.jpg')",
         "banner-donors":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/hand.jpeg')",
-        comet: "url('assets/images/comet.jpeg')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/hand.jpg')",
+        comet: "url('assets/images/comet.jpg')",
       },
 
       cursor: {
