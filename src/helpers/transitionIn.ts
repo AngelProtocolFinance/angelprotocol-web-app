@@ -4,6 +4,7 @@ export enum Direction {
   fromTop = "from-top",
   fromBottom = "from-bottom",
   fromDot = "from-dot",
+  fromFront = "from-front",
 }
 
 export default function transitionIn(cue: boolean, direction: Direction) {
@@ -29,7 +30,13 @@ export default function transitionIn(cue: boolean, direction: Direction) {
     case Direction.fromDot: {
       transition = cue
         ? "transform scale-100 opacity-1"
-        : "transform scale-0 opacity-0";
+        : "transform scale-50 opacity-0";
+      break;
+    }
+    case Direction.fromFront: {
+      transition = cue
+        ? "transform scale-100 opacity-1"
+        : "transform scale-110 opacity-0";
       break;
     }
     default: {

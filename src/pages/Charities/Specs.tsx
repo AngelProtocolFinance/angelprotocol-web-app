@@ -8,7 +8,7 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Specs() {
-  const { ref, isVisible } = useObserve({ threshold: 0.2 });
+  const { ref, isVisible } = useObserve({ threshold: 0.15 });
   return (
     <section
       ref={ref}
@@ -17,7 +17,7 @@ export default function Specs() {
       <h3
         className={`${transitionIn(
           isVisible,
-          Direction.fromDot
+          Direction.fromFront
         )} font-semibold text-xl sm:text-2xl md:text-3xl max-w-5xl text-center`}
       >
         We provide the tools for your charity to achieve financial
@@ -26,7 +26,7 @@ export default function Specs() {
       <ul
         className={`${transitionIn(
           isVisible,
-          Direction.fromRight
+          Direction.fromBottom
         )} grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-20 mt-16`}
       >
         {specs.map(({ id, heading, icon, text }) => (

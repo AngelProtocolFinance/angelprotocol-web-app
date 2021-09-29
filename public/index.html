@@ -89,16 +89,17 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
-      src="https://www.googletagmanager.com/gtag/js?id=G-FE8JXBQVYM"
+      src="https://www.googletagmanager.com/gtag/js?id=G-G6NWQG2Q42"
     ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
+      if (window.location.hostname.indexOf("angelprotocol.io")) {
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-G6NWQG2Q42");
       }
-      gtag("js", new Date());
-
-      gtag("config", "G-FE8JXBQVYM");
     </script>
   </body>
 </html>

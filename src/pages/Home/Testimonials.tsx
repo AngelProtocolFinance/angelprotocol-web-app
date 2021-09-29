@@ -3,7 +3,7 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
 
 export default function Testimonials() {
-  const { ref, isVisible } = useObserve({ threshold: 1 });
+  const { ref, isVisible } = useObserve({ threshold: 0.5 });
   return (
     <section
       ref={ref}
