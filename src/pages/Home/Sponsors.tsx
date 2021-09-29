@@ -39,7 +39,7 @@ export default function Sponsors() {
       <ul
         className={`${transitionIn(
           isVisible,
-          Direction.fromDot
+          Direction.fromFront
         )} flex justify-center flex-wrap gap-3 max-w-3xl`}
       >
         {supporterIcons.map((icon, index) => (

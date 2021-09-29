@@ -2,7 +2,7 @@ import transitionIn, { Direction } from "helpers/transitionIn";
 import useObserve from "hooks/useObserver";
 
 export default function Impact() {
-  const { isVisible, ref } = useObserve({ threshold: 0.5 });
+  const { isVisible, ref } = useObserve({ threshold: 0.3 });
   return (
     <section ref={ref} className="bg-white grid lg:grid-cols-2">
       <article
