@@ -14,9 +14,12 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
-    console.log(values);
     //values.amount is properly formatted string | number at this point due to validation
     const UST_Amount = values.amount;
+
+    //values.split = split to locked acc
+    const splitToLiquid = 100 - values.split;
+
     actions.setSubmitting(true);
     if (!wallet) {
       setStatus({
@@ -37,7 +40,11 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
     try {
       const indexFund = new Indexfund(wallet);
       //createTx errors will be on catch block
-      const transaction = await indexFund.createDepositTx(1, UST_Amount);
+      const transaction = await indexFund.createDepositTx(
+        1,
+        UST_Amount,
+        splitToLiquid
+      );
       const estimatedFee =
         transaction.fee!.amount.get(Denom.USD)!.amount.toNumber() / 1e6;
 
