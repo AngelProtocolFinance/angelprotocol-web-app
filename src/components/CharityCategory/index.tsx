@@ -31,7 +31,7 @@ const CharityCategory = ({
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        className={`flex flex-row ${
+        className={`flex flex-row gap-4 ${
           isDown ? "cursor-grabbing" : "cursor-grab"
         } overflow-x-scroll scroll-hidden`}
       >
