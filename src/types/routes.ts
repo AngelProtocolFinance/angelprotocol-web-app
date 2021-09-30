@@ -21,6 +21,7 @@ export enum app {
   unsdgs = "unsdgs",
   donate = "donate",
   tca = "tca",
+  fund = "fund",
 }
 
 export enum register {
