@@ -1,10 +1,4 @@
-import {
-  Switch,
-  Route,
-  // Redirect,
-  // useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 import useAppBackground from "hooks/useAppBackground";
 import Donate from "pages/Donate/Donate";
 import Dashboard from "pages/Dashboard";
@@ -13,6 +7,7 @@ import Register from "pages/registration/index";
 import TCA from "pages/TCA/TCA";
 import { app } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
+import Fund from "pages/Fund/Fund";
 
 const App = () => {
   //this component will only render under '/app' route
@@ -29,6 +24,7 @@ const App = () => {
         <Route path={`${path}/${app.login}`} component={Login} />
         <Route path={`${path}/${app.register}`} component={Register} />
         <Route path={`${path}/${app.tca}`} component={TCA} />
+        <Route path={`${path}/${app.fund}`} component={Fund} />
         {/* <Redirect from="*" to={routes.donate} /> */}
       </Switch>
       <AppFoot />
