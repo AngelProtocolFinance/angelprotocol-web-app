@@ -2,13 +2,13 @@ import transitionIn, { Direction } from "helpers/transitionIn";
 import useObserve from "hooks/useObserver";
 
 export default function Impact() {
-  const { isVisible, ref } = useObserve({ threshold: 0.5 });
+  const { isVisible, ref } = useObserve({ threshold: 0.3 });
   return (
     <section ref={ref} className="bg-white grid lg:grid-cols-2">
       <article
         className={`${transitionIn(
           isVisible,
-          Direction.fromRight
+          Direction.fromLeft
         )} p-8 md:p-16 xl:p-24`}
       >
         <h3 className="uppercase text-xl lg:text-2xl xl:text-3xl text-angel-blue font-bold mb-5">

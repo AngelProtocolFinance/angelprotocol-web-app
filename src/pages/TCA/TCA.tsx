@@ -1,5 +1,6 @@
 import Donator from "components/Donator/Donator";
 import TCAForm from "components/Donator/TCAForm";
+import AppHead from "components/Headers/AppHead";
 import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
@@ -13,7 +14,8 @@ export default function TCA() {
   }
 
   return (
-    <div className="grid place-items-center min-h-screen">
+    <div className="grid grid-rows-a1 place-items-center min-h-screen pt-2">
+      <AppHead />
       <Donator>
         <TCAForm />
       </Donator>

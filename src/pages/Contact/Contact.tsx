@@ -26,7 +26,7 @@ export default function Contact() {
   return (
     <div className="pt-24 grid justify-items-center">
       <section className="grid items-center bg-contact bg-no-repeat bg-cover bg-center w-full h-96 px-5">
-        <h1 className="text-3xl lg:text-4xl text-white font-semibold text-center">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl text-white font-semibold text-center">
           We’d love to connect to better understand how we can support your
           cause!
         </h1>

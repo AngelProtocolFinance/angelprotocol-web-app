@@ -11,8 +11,8 @@ interface Handlers {
   deleteToken: () => void;
 }
 
-const getContext = createContext<Token>(null);
-const setContext = createContext<Handlers>({
+export const getContext = createContext<Token>(null);
+export const setContext = createContext<Handlers>({
   saveToken: () => {},
   deleteToken: () => {},
 });
