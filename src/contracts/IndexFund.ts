@@ -34,7 +34,7 @@ export default class Indexfund {
 
   //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
-    "bombay-12": "terra1ac2nzq0yregq0xr4c500dp83vxe20uu4puy054",
+    "bombay-12": "terra1gnsvg4663jukep64ce4qlxx6rxgayzz3e8487d",
     localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
     "tequila-0004": "",
     "columbus-4": "",
