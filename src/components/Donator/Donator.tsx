@@ -26,7 +26,7 @@ export default function Donator(props: Props) {
     <getContext.Provider value={status}>
       <setContext.Provider value={setStatus}>
         <Formik
-          initialValues={{ amount: "", split: 100 }}
+          initialValues={{ amount: "", split: 50 }}
           onSubmit={handleDonate}
           validationSchema={donatorSchema}
         >

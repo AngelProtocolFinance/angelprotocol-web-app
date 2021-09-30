@@ -3,7 +3,6 @@ import { useFormikContext } from "formik";
 
 export default function useSlider() {
   const { setFieldValue, values } = useFormikContext<Values>();
-  console.log(values.split);
 
   return {
     percentage: values.split,

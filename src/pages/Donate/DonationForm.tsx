@@ -1,7 +1,7 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import useSlider from "pages/Donate/useSlider";
-import { FastField, Field, Form, useFormikContext } from "formik";
+import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
 import { Values } from "components/Donator/types";
 import CustomAmount from "./CustomAmount";
 
@@ -51,6 +51,11 @@ export default function DonationForm() {
             )}
           </div>
         </div>
+        <ErrorMessage
+          name="amount"
+          component="div"
+          className="text-sm mt-2 text-red-400"
+        />
       </div>
       <div className="percentage-slider">
         <p className="text-xl mt-2">
@@ -63,6 +68,8 @@ export default function DonationForm() {
               Percentage<span className="text-sm text-dark-red">*</span>
             </p>
             <Slider
+              min={50}
+              max={100}
               value={percentage}
               onChange={handleSlide}
               onAfterChange={handleSlideEnd}
