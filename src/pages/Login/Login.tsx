@@ -29,7 +29,7 @@ const Login = () => {
 
   return (
     <section className="pb-12 h-screen grid grid-rows-a1 place-items-center">
-      <header className="flex items-center justify-between xl:container xl:mx-auto w-full p-5">
+      <header className="flex items-center justify-between xl:container xl:mx-auto w-full h-24 px-5">
         <Logo />
         <p className="uppercase font-bold text-white font-heading text-lg">
           Give once, give forever
