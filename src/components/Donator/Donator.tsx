@@ -3,7 +3,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { donatorSchema } from "./donatorSchema";
 import useDonate from "./useDonate";
 import { createContext, useContext, useState } from "react";
-import { Status, SetStatus, Steps } from "./types";
+import { Status, SetStatus, Steps, Props } from "./types";
 
 const initialStatus = {
   step: Steps.initial,
@@ -14,9 +14,9 @@ const setContext = createContext<SetStatus>(() => initialStatus);
 export const useGetStatus = () => useContext(getContext);
 export const useSetStatus = () => useContext(setContext);
 
-export default function Donator() {
+export default function Donator(props: Props) {
   const [status, setStatus] = useState<Status>(initialStatus);
-  const { handleDonate } = useDonate(status, setStatus);
+  const handleDonate = useDonate(status, setStatus, props.receiver);
   return (
     <getContext.Provider value={status}>
       <setContext.Provider value={setStatus}>
