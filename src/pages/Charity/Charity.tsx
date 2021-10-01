@@ -2,12 +2,12 @@ import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "components/CharityInfo";
-import DonationForm from "pages/Donate/DonationForm";
+import DonationForm from "pages/Charity/CharityForm";
 import { DonationInfo } from "components/DonationInfo";
 import AppHead from "components/Headers/AppHead";
 import Donator from "components/Donator/Donator";
 
-const Donate = () => {
+const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
   const title = "women for women international";
   const opts: Options = {
@@ -57,7 +57,10 @@ const Donate = () => {
           </div>
           <div className="overflow-y-auto">
             {isDonate ? (
-              <Donator>
+              <Donator
+                to="charity"
+                receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
+              >
                 <DonationForm />
               </Donator>
             ) : (
@@ -114,4 +117,4 @@ const Donate = () => {
   );
 };
 
-export default Donate;
+export default Charity;

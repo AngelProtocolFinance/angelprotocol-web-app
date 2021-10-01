@@ -1,3 +1,6 @@
+import { AccAddress } from "@terra-money/terra.js";
+import { ReactNode } from "react";
+
 export type Handler = () => void;
 
 export interface Values {
@@ -37,6 +40,20 @@ interface WithEstimate {
   message?: string;
   estimates?: Estimates;
 }
+
+interface ToFund {
+  to: "fund";
+  receiver?: number;
+  children: ReactNode;
+}
+
+interface ToCharity {
+  to: "charity";
+  receiver: AccAddress;
+  children: ReactNode;
+}
+
+export type Props = ToFund | ToCharity;
 
 export type Status = WithResult & WithEstimate;
 
