@@ -15,7 +15,6 @@ import AppFoot from "components/Footers/AppFoot";
 import Fund from "pages/Fund/Fund";
 import Charity from "pages/Charity/Charity";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import AuthProvider from "contexts/AuthProvider";
 import { testnet, walletConnectChainIds } from "./chains";
 
 const App = () => {
@@ -30,19 +29,17 @@ const App = () => {
         defaultNetwork={testnet}
         walletConnectChainIds={walletConnectChainIds}
       >
-        <AuthProvider>
-          <Switch>
-            <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-            <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
-            <Route path={`${path}/${app.charity}`} component={Charity} />
-            <Route path={`${path}/${app.login}`} component={Login} />
-            <Route path={`${path}/${app.register}`} component={Register} />
-            <Route path={`${path}/${app.tca}`} component={TCA} />
-            <Route path={`${path}/${app.fund}`} component={Fund} />
-            <Redirect from="*" to={site.home} />
-          </Switch>
-          <AppFoot />
-        </AuthProvider>
+        <Switch>
+          <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+          <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
+          <Route path={`${path}/${app.charity}`} component={Charity} />
+          <Route path={`${path}/${app.login}`} component={Login} />
+          <Route path={`${path}/${app.register}`} component={Register} />
+          <Route path={`${path}/${app.tca}`} component={TCA} />
+          <Route path={`${path}/${app.fund}`} component={Fund} />
+          <Redirect from="*" to={site.home} />
+        </Switch>
+        <AppFoot />
       </WalletProvider>
     </div>
   );

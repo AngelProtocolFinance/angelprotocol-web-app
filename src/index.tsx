@@ -8,12 +8,15 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App/App";
 import Website from "Website/Website";
 import { site } from "./types/routes";
+import AuthProvider from "contexts/AuthProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-        <Route path={site.app} component={App} />
+        <AuthProvider>
+          <Route path={site.app} component={App} />
+        </AuthProvider>
         <Route path={site.home} component={Website} />
       </Switch>
     </BrowserRouter>
