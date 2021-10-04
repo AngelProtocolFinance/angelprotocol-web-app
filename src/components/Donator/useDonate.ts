@@ -4,11 +4,12 @@ import createStatusFromError from "./createStatusFromError";
 import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
-import { Denom } from "@terra-money/terra.js";
+import { AccAddress, Denom } from "@terra-money/terra.js";
 import pollTxInfo from "./pollTxInfo";
 import getDepositAmount from "./getDepositAmount";
-
-export default function useDonate(status: Status, setStatus: SetStatus) {
+import Account from "contracts/Account";
+//prettier-ignore
+function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
 
@@ -29,6 +30,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
       return;
     }
 
+    //check if user has enough balance
     if (UST_balance < +UST_Amount) {
       setStatus({
         step: Steps.error,
@@ -38,20 +40,25 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
     }
 
     try {
-      const indexFund = new Indexfund(wallet);
+      let contract; 
+      if(!receiver){
+        contract = new Indexfund(wallet)
+      } else if (typeof receiver === 'number'){
+        contract = new Indexfund(wallet, receiver)
+      } else {
+        contract = new Account(wallet, receiver)
+      }
       //createTx errors will be on catch block
-      const transaction = await indexFund.createDepositTx(
-        1,
+      const transaction = await contract.createDepositTx(
         UST_Amount,
         splitToLiquid
       );
       const estimatedFee =
         transaction.fee!.amount.get(Denom.USD)!.amount.toNumber() / 1e6;
 
-      //check if user has enough balance
+    
 
       //prompt user to confirm transaction
-
       if (status.step !== Steps.ready) {
         setStatus({
           step: Steps.confirm,
@@ -76,7 +83,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
         });
 
         const txInfo = await pollTxInfo(
-          indexFund.getTxResponse,
+          contract.getTxResponse,
           response.result.txhash,
           1000, //try again 1 second after last retry
           7 //poll 7 items before giving up
@@ -92,14 +99,13 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
           //code property is present on failed transaction info
           if (!txInfo.code) {
             const depositAmount = getDepositAmount(txInfo.logs!);
-            console.log(depositAmount);
             setStatus({
               step: Steps.success,
               message: `Thank you for your donation!`,
               result: {
                 received: +UST_Amount,
                 deposited: depositAmount,
-                url: `https://finder.terra.money/${indexFund.wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.terra.money/${contract.wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             });
           } else {
@@ -118,7 +124,7 @@ export default function useDonate(status: Status, setStatus: SetStatus) {
     }
   }
 
-  return {
-    handleDonate,
-  };
+  return handleDonate;
 }
+
+export default useDonate;

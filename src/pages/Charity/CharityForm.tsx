@@ -1,6 +1,6 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import useSlider from "pages/Donate/useSlider";
+import useSlider from "pages/Charity/useSlider";
 import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
 import { Values } from "components/Donator/types";
 import CustomAmount from "./CustomAmount";
@@ -12,7 +12,7 @@ const amounts = [
   "100.000000",
   "1000.000000",
 ];
-export default function DonationForm() {
+export default function CharityForm() {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values } = useFormikContext<Values>();
   return (

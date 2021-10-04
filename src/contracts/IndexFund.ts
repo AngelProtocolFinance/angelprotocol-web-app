@@ -3,37 +3,19 @@ import {
   CreateTxOptions,
   Dec,
   Denom,
-  LCDClient,
-  Msg,
   MsgExecuteContract,
-  StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import Contract from "./Contract";
 
 interface ContractAddresses {
   [index: string]: string;
 }
 
-export default class Indexfund {
-  wallet: ConnectedWallet;
-  client: LCDClient;
+export type _IndexFund = typeof Indexfund;
+export default class Indexfund extends Contract {
+  fund_id?: number;
   //contract address
-
-  //may need to re-implement to handle multiple currencies in the future
-  constructor(wallet: ConnectedWallet) {
-    this.wallet = wallet;
-    this.client = new LCDClient({
-      chainID: this.wallet.network.chainID,
-      URL: this.wallet.network.lcd,
-      gasAdjustment: 1.2, //use gas units 20% greater than estimate
-      gasPrices: [new Coin(Denom.USD, 0.151792301)],
-    });
-
-    this.getTxResponse = this.getTxResponse.bind(this);
-    // this.createDepositTx = this.createDepositTx.bind(this);
-  }
-
-  //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
     "bombay-12": "terra1gnsvg4663jukep64ce4qlxx6rxgayzz3e8487d",
     localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
@@ -41,23 +23,13 @@ export default class Indexfund {
     "columbus-4": "",
   };
 
-  async estimateFee(msgs: Msg[]): Promise<StdFee> {
-    return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
-      feeDenoms: [Denom.USD],
-    });
-  }
-
-  //bind this function in constructor to keep context
-  async getTxResponse(txhash: string): Promise<Response> {
-    return fetch(`${this.wallet.network.lcd}/txs/${txhash}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  //may need to re-implement to handle multiple currencies in the future
+  constructor(wallet: ConnectedWallet, fund_id?: number) {
+    super(wallet);
+    this.fund_id = fund_id;
   }
 
   async createDepositTx(
-    fund_id: number,
     UST_amount: number | string,
     splitToLiquid?: number
   ): Promise<CreateTxOptions> {
@@ -67,7 +39,7 @@ export default class Indexfund {
       Indexfund.indexFundAddresses[this.wallet.network.chainID],
       {
         deposit: {
-          fund_id,
+          fund_id: this.fund_id,
           split: `${splitToLiquid}`,
         },
       },
