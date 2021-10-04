@@ -17,7 +17,6 @@ export type Values = {
 
 const Login = () => {
   const token = useGetToken();
-  console.log("login", token);
   const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   function togglePasswordView() {
