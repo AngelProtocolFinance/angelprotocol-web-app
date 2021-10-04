@@ -13,12 +13,13 @@ import AuthProvider from "contexts/AuthProvider";
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Switch>
-        <AuthProvider>
+      <AuthProvider>
+        <Switch>
           <Route path={site.app} component={App} />
-        </AuthProvider>
-        <Route path={site.home} component={Website} />
-      </Switch>
+
+          <Route path={site.home} component={Website} />
+        </Switch>
+      </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
