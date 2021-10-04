@@ -30,12 +30,11 @@ export default class Indexfund {
     });
 
     this.getTxResponse = this.getTxResponse.bind(this);
-    this.createDepositTx = this.createDepositTx.bind(this);
   }
 
   //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
-    "bombay-11": "terra19hajpu39cr9h25azwsgdaz98mc7ejp774mt6ch",
+    "bombay-12": "terra1ac2nzq0yregq0xr4c500dp83vxe20uu4puy054",
     localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
     "tequila-0004": "",
     "columbus-4": "",
@@ -73,8 +72,8 @@ export default class Indexfund {
       },
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
-    // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
+    const fee = await this.estimateFee([depositMsg]);
+    // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 
