@@ -1,16 +1,46 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { register } from "types/routes";
-import { GetPreviousRegistration } from "aws-settings.config";
+import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
+import { useCheckPreviousRegistrationMutation } from "api/registerAPIs";
+
+export type ReferInfo = {
+  refer: string;
+};
 
 const Registration = () => {
+  const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
   //url -> app/register
   const { url } = useRouteMatch();
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+  const FormInfoSchema = Yup.object().shape({
+    refer: Yup.string().required("Please enter your registration reference."),
+  });
 
-  console.log("dat  => ", userData);
+  const onResumeRefer = async (
+    values: ReferInfo,
+    actions: FormikHelpers<ReferInfo>
+  ) => {
+    actions.setSubmitting(true);
+    // API integration.
+    let response = await checkData(values.refer);
+    console.log(response);
+    if (!response) {
+      // set error
+      actions.setFieldError(
+        "refer",
+        "Can not find a registration file with this reference!"
+      );
+    } else {
+      history.push({
+        pathname: `${url}/${register.confirm}`,
+        state: { is_sent: true },
+      });
+    }
+    actions.setSubmitting(false);
+  };
   if (userData?.email) {
     history.push({
       pathname: `${url}/${register.confirm}`,
@@ -29,7 +59,7 @@ const Registration = () => {
         </span>
       </div>
       <div className="my-10">
-        <span className="text-xl">
+        <span className="text-md">
           First, we need to collect information about you and your organization
           to prevent fraud. The registration only takes a few minutes and it can
           be interrupted and resumed as many times as necessary. We’ll be making
@@ -50,33 +80,8 @@ const Registration = () => {
       <div className="">
         <Formik
           initialValues={{ refer: "" }}
-          validate={(values) => {
-            const errors = { refer: "" };
-            if (!values.refer) {
-              errors.refer = "Please enter your registration reference.";
-              return errors;
-            }
-            return {};
-          }}
-          onSubmit={async (values, { setSubmitting, setFieldError }) => {
-            setSubmitting(true);
-            // API integration.
-            let isFound = await GetPreviousRegistration(values.refer);
-
-            if (!isFound) {
-              // set error
-              setFieldError(
-                "refer",
-                "Can not find a registration file with this reference!"
-              );
-            } else {
-              history.push({
-                pathname: `${url}/${register.confirm}`,
-                state: { is_sent: true },
-              });
-            }
-            setSubmitting(false);
-          }}
+          validationSchema={FormInfoSchema}
+          onSubmit={onResumeRefer}
         >
           {({ values, isSubmitting }) => (
             <div>
@@ -98,9 +103,9 @@ const Registration = () => {
                   component="div"
                 />
                 <button
-                  className="bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mt-3"
+                  className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mt-3"
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isLoading || isSubmitting}
                 >
                   Resume
                 </button>
