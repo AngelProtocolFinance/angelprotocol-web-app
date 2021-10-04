@@ -2,17 +2,13 @@ import { FormikHelpers } from "formik";
 import { Values } from "./Login";
 import { useSetToken } from "contexts/AuthProvider";
 import { toast } from "react-toastify";
-import { useHistory, useRouteMatch } from "react-router-dom";
-import { app, site } from "types/routes";
 
 const endPoint =
   "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-login";
 
 export default function useLogin() {
   //url = app/login
-  const { url } = useRouteMatch();
   const { saveToken } = useSetToken();
-  const history = useHistory();
 
   async function handleLogin(values: Values, actions: FormikHelpers<Values>) {
     function resetStatus() {
@@ -31,7 +27,7 @@ export default function useLogin() {
         const data = await response.json();
         //don't perform state update because form would unmount
         saveToken(data.accessToken);
-        history.push(`${site.app}/${app.tca}`);
+        //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
         toast.error("Unauthorized");
         resetStatus();

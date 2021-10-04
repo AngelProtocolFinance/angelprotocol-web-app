@@ -29,11 +29,11 @@ export default function MobileNav() {
           Register
         </NavLink>
       </li> */}
-      {/* <li className="mr-4">
+      <li className="mr-4">
         <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
           Donate
         </NavLink>
-      </li> */}
+      </li>
     </ul>
   );
 }

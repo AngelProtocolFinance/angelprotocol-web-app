@@ -1,7 +1,7 @@
 import Donator from "components/Donator/Donator";
 import AppHead from "components/Headers/AppHead";
 import { useGetToken } from "contexts/AuthProvider";
-import { Redirect, useRouteMatch } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 
 export default function TCA() {

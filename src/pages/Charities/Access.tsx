@@ -35,7 +35,7 @@ export default function Access() {
             key={article.id}
             className="w-full max-w-lg shadow-md flex flex-col items-center p-6 border-4 border-blue-accent"
           >
-            <img className="w-32 h-32" src={article.icon} />
+            <img className="w-32 h-32" src={article.icon} alt="" />
             <h4
               className={`uppercase text-lg lg:text-xl text-center font-bold text-angel-grey my-4`}
             >

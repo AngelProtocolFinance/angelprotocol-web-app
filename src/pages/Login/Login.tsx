@@ -6,7 +6,7 @@ import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router";
-import { site } from "types/routes";
+import { site, app } from "types/routes";
 import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";
 import Logo from "components/Logo/Logo";
@@ -24,7 +24,7 @@ const Login = () => {
   }
 
   if (token) {
-    return <Redirect to={site.home} />;
+    return <Redirect to={`${site.app}/${app.tca}`} />;
   }
 
   return (

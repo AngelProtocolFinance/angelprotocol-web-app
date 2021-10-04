@@ -45,7 +45,7 @@ describe("<App/> reacts to auth state", () => {
   test("App doesn't redirect when token is available", () => {
     render(
       <Wrapper>
-        <getContext.Provider value={"hahaha"}>
+        <getContext.Provider value={"testdecodedToken"}>
           <Route path={site.app} component={App} />
         </getContext.Provider>
       </Wrapper>
