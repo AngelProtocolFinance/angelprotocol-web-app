@@ -16,8 +16,23 @@ export type _IndexFund = typeof Indexfund;
 export default class Indexfund extends Contract {
   fund_id?: number;
   //contract address
+
+  //may need to re-implement to handle multiple currencies in the future
+  constructor(wallet: ConnectedWallet) {
+    this.wallet = wallet;
+    this.client = new LCDClient({
+      chainID: this.wallet.network.chainID,
+      URL: this.wallet.network.lcd,
+      gasAdjustment: 1.2, //use gas units 20% greater than estimate
+      gasPrices: [new Coin(Denom.USD, 0.151792301)],
+    });
+
+    this.getTxResponse = this.getTxResponse.bind(this);
+  }
+
+  //TODO: hide contract addresses to env
   static indexFundAddresses: ContractAddresses = {
-    "bombay-12": "terra1gnsvg4663jukep64ce4qlxx6rxgayzz3e8487d",
+    "bombay-12": "terra1ac2nzq0yregq0xr4c500dp83vxe20uu4puy054",
     localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
     "tequila-0004": "",
     "columbus-4": "",
