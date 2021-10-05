@@ -15,7 +15,7 @@ export default function TerraConnector() {
     case WalletStatus.INITIALIZING:
       return (
         <div>
-          <button className={`text-white`} disabled>
+          <button className={`cursor-wait text-white`} disabled>
             Initializing Wallet...
           </button>
         </div>
@@ -25,7 +25,7 @@ export default function TerraConnector() {
         <div>
           {isConnectible && (
             <button
-              className="uppercase bg-orange rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
+              className="uppercase hover:bg-angel-orange bg-orange rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
               onClick={handleConnect}
             >
               Connect Wallet
@@ -33,7 +33,7 @@ export default function TerraConnector() {
           )}
           {isInstallable && (
             <button
-              className="uppercase bg-leaf-green rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
+              className="uppercase hover:bg-opacity-90 bg-leaf-green rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
               onClick={handleInstall}
             >
               Install Wallet
