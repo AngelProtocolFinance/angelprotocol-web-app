@@ -29,6 +29,18 @@ export default class Indexfund extends Contract {
     this.fund_id = fund_id;
   }
 
+  async getTCAList(): Promise<string[]> {
+    const contractAddr =
+      Indexfund.indexFundAddresses[this.wallet.network.chainID];
+    const res = await this.client.wasm.contractQuery<{ tca_members: string[] }>(
+      contractAddr,
+      {
+        tca_list: {},
+      }
+    );
+    return res.tca_members;
+  }
+
   async createDepositTx(
     UST_amount: number | string,
     splitToLiquid?: number
