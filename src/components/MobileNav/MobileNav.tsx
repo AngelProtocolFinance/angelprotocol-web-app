@@ -6,7 +6,7 @@ export default function MobileNav() {
   //url = /
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase text-angel-blue`,
+    className: `uppercase text-angel-blue hover:text-opacity-75`,
     activeClassName: "font-bold",
   };
 
