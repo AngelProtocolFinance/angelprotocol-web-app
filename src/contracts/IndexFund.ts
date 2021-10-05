@@ -15,6 +15,7 @@ interface ContractAddresses {
 export type _IndexFund = typeof Indexfund;
 export default class Indexfund extends Contract {
   fund_id?: number;
+  currContractAddr: string;
   //contract address
   static indexFundAddresses: ContractAddresses = {
     "bombay-12": "terra1gnsvg4663jukep64ce4qlxx6rxgayzz3e8487d",
@@ -27,13 +28,13 @@ export default class Indexfund extends Contract {
   constructor(wallet: ConnectedWallet, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
+    this.currContractAddr =
+      Indexfund.indexFundAddresses[this.wallet.network.chainID];
   }
 
   async getTCAList(): Promise<string[]> {
-    const contractAddr =
-      Indexfund.indexFundAddresses[this.wallet.network.chainID];
     const res = await this.client.wasm.contractQuery<{ tca_members: string[] }>(
-      contractAddr,
+      this.currContractAddr,
       {
         tca_list: {},
       }
@@ -48,7 +49,7 @@ export default class Indexfund extends Contract {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(
       this.wallet.terraAddress,
-      Indexfund.indexFundAddresses[this.wallet.network.chainID],
+      this.currContractAddr,
       {
         deposit: {
           fund_id: this.fund_id,
