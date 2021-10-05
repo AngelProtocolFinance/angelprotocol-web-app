@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
 interface Props {
@@ -17,33 +23,35 @@ export const setContext = createContext<Handlers>({
   deleteToken: () => {},
 });
 
-//sync get token from local storage after refresh before loading this Provider
-
 let initialToken: Token = null;
-const savedToken = localStorage.getItem("token");
-if (savedToken) {
-  const decodedToken: JwtPayload = jwtDecode(savedToken);
-  const expiry = decodedToken.exp!;
-  if (expiry * 1000 <= Date.now()) {
-    localStorage.removeItem("token");
-  } else {
-    initialToken = savedToken;
-  }
-}
 
 export default function AuthProvider(props: Props) {
   const [token, setToken] = useState<Token>(initialToken);
 
+  useEffect(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      const decodedToken: JwtPayload = jwtDecode(savedToken);
+      const expiry = decodedToken.exp!;
+      if (expiry * 1000 <= Date.now()) {
+        deleteToken();
+      } else {
+        setToken(savedToken);
+      }
+    }
+    // eslint-disable-next-line
+  }, []);
+
   function saveToken(token: string) {
+    localStorage.setItem("token", token);
     setToken(token);
     //sync save token
-    localStorage.setItem("token", token);
   }
 
   function deleteToken() {
+    localStorage.removeItem("token");
     setToken(null);
     //sync delete token
-    localStorage.removeItem("token");
   }
 
   return (
