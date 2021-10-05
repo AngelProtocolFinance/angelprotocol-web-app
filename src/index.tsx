@@ -3,7 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App/App";
 import Website from "Website/Website";
@@ -16,7 +15,6 @@ ReactDOM.render(
       <AuthProvider>
         <Switch>
           <Route path={site.app} component={App} />
-
           <Route path={site.home} component={Website} />
         </Switch>
       </AuthProvider>

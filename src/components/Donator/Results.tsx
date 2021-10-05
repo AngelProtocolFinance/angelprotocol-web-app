@@ -39,7 +39,7 @@ export default function Results() {
         className="text-thin-blue"
         href={result?.url}
         target="_blank"
-        rel="noreferrer noopener"
+        rel="noreferrer"
       >
         transaction details
       </a>
