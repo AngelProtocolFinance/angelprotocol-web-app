@@ -3,6 +3,8 @@ import useCopyAddress from "./useCopyAddress";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { BiCopy, BiCheck } from "react-icons/bi";
 import { useState } from "react";
+import useUSTBalance from "hooks/useUSTBalance";
+import toCurrency from "helpers/toCurrency";
 
 export default function Wallet() {
   //since this is under WALLET_CONNECTED status --> wallet guaranteed to be defined
@@ -12,6 +14,7 @@ export default function Wallet() {
   const { wallets, disconnect } = useWallet();
   const wallet = wallets[0];
   const address = wallet.terraAddress;
+  const ustBalance = useUSTBalance();
 
   function backToDefault(type: string) {
     if (type === "icon") {
@@ -22,10 +25,11 @@ export default function Wallet() {
   }
 
   return (
-    <div
-      className={`flex justify-between items-center ml-1 border border-white py-1 px-2 rounded-md`}
-    >
-      <p className={`text-sm md:tex-base text-white`}>
+    <div className={`flex justify-between items-center`}>
+      <p className={`text-sm md:tex-base text-white border-r pr-1 uppercase`}>
+        UST {toCurrency(ustBalance)}
+      </p>
+      <p className={`pl-1 text-sm md:tex-base text-white`}>
         {address.substr(0, 15) + "..."}
       </p>
       <button
