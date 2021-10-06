@@ -19,8 +19,9 @@ export enum app {
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
-  donate = "donate",
+  charity = "charity",
   tca = "tca",
+  fund = "fund",
 }
 
 export enum register {
