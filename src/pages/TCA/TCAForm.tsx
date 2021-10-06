@@ -29,7 +29,7 @@ export default function TCAForm() {
       <button
         disabled={isSubmitting}
         type="submit"
-        className="disabled:bg-thin-grey bg-angel-orange py-2 px-10 rounded-lg shadow-sm 
+        className="disabled:bg-thin-grey hover:bg-orange bg-angel-orange py-2 px-10 rounded-lg shadow-sm 
   font-bold font-heading text-white text-sm uppercase mt-10"
       >
         Proceed
