@@ -3,6 +3,7 @@ import FundVid from "./FundVid";
 import fundLogo from "assets/images/unsdg-gender-equality.png";
 import { charities } from "./charities";
 import CharityCard from "components/CharityCard";
+import Overview from "./Overview";
 
 //props
 //fundBgClass
@@ -22,25 +23,7 @@ export default function Fund() {
           </h1>
         </div>
         <FundVid />
-        <article className="mt-6 col-start-1 col-span-1 row-start-2 row-span-1">
-          <h3 className="text-2xl text-white mb-4 font-semibold">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit
-            repellat nemo illo
-          </h3>
-          <p className="text-white-grey pr-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vero
-            similique sapiente voluptate repellat dolorum doloremque perferendis
-            iusto? Amet ea, est repellendus ut quisquam maxime nam voluptatum et
-            adipisci sapiente? Iusto harum et nostrum labore consequatur eius
-            voluptate nemo quod fuga aspernatur. Nam fuga commodi error
-            reprehenderit obcaecati, praesentium eius harum, mollitia soluta aut
-            quibusdam esse itaque maxime, dignissimos tempore. Animi facere
-            inventore dignissimos numquam tenetur exercitationem earum sit
-            placeat, ducimus quidem aliquid maiores ipsa odit consectetur
-            doloremque similique quis autem magnam vitae incidunt deserunt
-            accusantium! Dolorem consectetur ducimus harum!
-          </p>
-        </article>
+        <Overview />
         <div className="col-start-2 col-span-1 row-start-2 row-span-1 ml-2 self-start mt-6">
           <button className="bg-yellow-blue uppercase text-white text-sm w-32 py-2 rounded-lg font-semibold shadow-md">
             Donate
