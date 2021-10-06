@@ -13,21 +13,12 @@ export default function Wallet() {
   const wallet = wallets[0];
   const address = wallet.terraAddress;
 
-  function handleCopyIcon() {
-    setIsAddressCopiedIcon(true);
-    handleCopy(address)();
-    setTimeout(backToDefault, 4000);
-  }
-
-  function handleCopyButton() {
-    setIsAddressCopiedButton(true);
-    handleCopy(address)();
-    setTimeout(backToDefault, 4000);
-  }
-
-  function backToDefault() {
-    setIsAddressCopiedIcon(false);
-    setIsAddressCopiedButton(false);
+  function backToDefault(type: string) {
+    if (type === "icon") {
+      setIsAddressCopiedIcon(false);
+    } else {
+      setIsAddressCopiedButton(false);
+    }
   }
 
   return (
@@ -37,7 +28,14 @@ export default function Wallet() {
       <p className={`text-sm md:tex-base text-white`}>
         {address.substr(0, 15) + "..."}
       </p>
-      <button className="mx-2" onClick={handleCopyIcon}>
+      <button
+        className="mx-2"
+        onClick={() => {
+          setIsAddressCopiedIcon(true);
+          handleCopy(address)();
+          setTimeout(backToDefault, 4000, "icon");
+        }}
+      >
         {isAddressCopiedIcon ? (
           <BiCheck
             className="text-white hover:text-orange cursor-default"
@@ -70,7 +68,11 @@ export default function Wallet() {
           </h3>
           <button
             className="uppercase hover:bg-angel-blue bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
-            onClick={handleCopyButton}
+            onClick={() => {
+              setIsAddressCopiedButton(true);
+              handleCopy(address)();
+              setTimeout(backToDefault, 4000, "button");
+            }}
           >
             {isAddressCopiedButton ? `Copied!` : `Copy Address`}
           </button>
