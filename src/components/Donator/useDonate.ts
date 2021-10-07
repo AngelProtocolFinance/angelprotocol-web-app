@@ -21,6 +21,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     //values.split = split to locked acc
     const splitToLiquid = 100 - values.split;
 
+    console.log(values)
+
     actions.setSubmitting(true);
     if (!wallet) {
       setStatus({

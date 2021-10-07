@@ -1,8 +1,8 @@
-import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import useSlider from "pages/Charity/useSlider";
 import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
-import { Values } from "components/Donator/types";
+import Slider from "rc-slider";
+import useSlider from "./useSlider";
+import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
 
 const amounts = [
@@ -13,12 +13,12 @@ const amounts = [
   "1000.000000",
 ];
 
-export default function FundForm() {
+export default function UserForm() {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values, touched } = useFormikContext<Values>();
 
   return (
-    <Form className="grid grid-cols-2 border p-4 border-opacity-30 rounded-md shadow-md bg-opacity-5 bg-white">
+    <Form className="grid grid-cols-2 p-4 rounded-md ">
       <div className="">
         <p className="text-xl text-white-grey font-semibold">
           Choose the amount of your donation
@@ -91,7 +91,7 @@ export default function FundForm() {
       <button
         disabled={isSubmitting}
         type="submit"
-        className="mt-8 cols-start-1 col-span-2 uppercase text-white bg-orange disabled:bg-thin-grey rounded-md w-48 py-2 font-bold justify-self-center"
+        className="mt-8 cols-start-1 col-span-2 uppercase text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-bold justify-self-center"
         // onClick={donate}
       >
         Donate

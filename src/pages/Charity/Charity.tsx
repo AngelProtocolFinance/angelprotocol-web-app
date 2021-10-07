@@ -1,11 +1,12 @@
 import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
-import { CharityInfo } from "components/CharityInfo";
-import DonationForm from "pages/Charity/CharityForm";
-import { DonationInfo } from "components/DonationInfo";
+import { CharityInfo } from "pages/Charity/CharityInfo";
+// import DonationForm from "pages/Charity/CharityForm";
+import { DonationInfo } from "./DonationInfo";
 import AppHead from "components/Headers/AppHead";
 import Donator from "components/Donator/Donator";
+import UserForm from "components/Donator/UserForm";
 
 const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -61,7 +62,7 @@ const Charity = () => {
                 to="charity"
                 receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
               >
-                <DonationForm />
+                <UserForm />
               </Donator>
             ) : (
               <div className="overflow-y-auto h-full">

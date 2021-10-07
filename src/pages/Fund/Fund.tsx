@@ -4,7 +4,7 @@ import fundLogo from "assets/images/unsdg-gender-equality.png";
 import { charities } from "./charities";
 import CharityCard from "components/CharityCard";
 // import Overview from "./Overview";
-import FundForm from "./FundForm";
+import UserForm from "components/Donator/UserForm";
 import Donator from "components/Donator/Donator";
 import Overview from "./Overview";
 import useFund from "./useFund";
@@ -30,7 +30,7 @@ export default function Fund() {
         <FundVid />
         {(isDonating && (
           <Donator to="fund" receiver={1}>
-            <FundForm />
+            <UserForm />
           </Donator>
         )) || <Overview />}
 

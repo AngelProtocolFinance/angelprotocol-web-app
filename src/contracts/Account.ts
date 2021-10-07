@@ -10,7 +10,6 @@ import {
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
 
-export type _Account = typeof Account;
 export default class Account extends Contract {
   accountAddr: AccAddress;
 

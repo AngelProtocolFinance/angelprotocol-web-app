@@ -2,7 +2,7 @@
 export default function FundVid() {
   return (
     <iframe
-      className="rounded-lg shadow-lg h-full w-128"
+      className="rounded-lg shadow-md h-full w-128"
       src="https://www.youtube.com/embed/jx1GsOSN1Fs"
       title="YouTube video player"
       frameBorder="0"
