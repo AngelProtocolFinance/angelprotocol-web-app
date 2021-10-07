@@ -16,7 +16,7 @@ export default function TCA() {
   return (
     <div className="grid grid-rows-a1 place-items-center min-h-screen pt-2">
       <AppHead />
-      <Donator to="fund">
+      <Donator to="fund" minSplitLiq={20} maxSplitLiq={80}>
         <TCAForm />
       </Donator>
     </div>

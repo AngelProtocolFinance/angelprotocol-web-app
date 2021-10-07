@@ -4,10 +4,9 @@ import fundLogo from "assets/images/unsdg-gender-equality.png";
 import { charities } from "./charities";
 import CharityCard from "components/CharityCard";
 // import Overview from "./Overview";
-import UserForm from "components/Donator/UserForm";
-import Donator from "components/Donator/Donator";
 import Overview from "./Overview";
 import useFund from "./useFund";
+import Donate from "./Donate";
 
 //props
 //fundBgClass
@@ -15,7 +14,7 @@ import useFund from "./useFund";
 //heading
 //description
 export default function Fund() {
-  const { isDonating, toggleDonate } = useFund();
+  const { isDonating, toggleDonate, error, loading, split } = useFund();
   return (
     <section className="grid content-start pb-24">
       <AppHead />
@@ -29,9 +28,7 @@ export default function Fund() {
         </div>
         <FundVid />
         {(isDonating && (
-          <Donator to="fund" receiver={1}>
-            <UserForm />
-          </Donator>
+          <Donate split={split} loading={loading} error={error} />
         )) || <Overview />}
 
         <div className="col-start-2 col-span-1 row-start-2 row-span-1 self-start">

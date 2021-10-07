@@ -19,7 +19,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     const UST_Amount = values.amount;
 
     //values.split = split to locked acc
-    const splitToLiquid = 100 - values.split;
+    const splitToLiquid = 100 - values.split
 
     console.log(values)
 

@@ -17,8 +17,8 @@ export default class Indexfund extends Contract {
   currContractAddr: string;
   //contract address
   static indexFundAddresses: ContractAddresses = {
-    "bombay-12": "terra1gnsvg4663jukep64ce4qlxx6rxgayzz3e8487d",
-    localterra: "terra174kgn5rtw4kf6f938wm7kwh70h2v4vcfd26jlc",
+    "bombay-12": "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+    localterra: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     "tequila-0004": "",
     "columbus-4": "",
   };
