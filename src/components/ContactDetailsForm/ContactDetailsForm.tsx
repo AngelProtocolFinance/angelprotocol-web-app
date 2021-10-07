@@ -17,19 +17,19 @@ export type ContactDetails = {
 export const ContactDetailsForm = (props: any) => {
   //url = app/register/details
   const { saveContactInfo } = useContactDetails();
-  console.log(props.contactData);
+
   return (
     <Formik
       initialValues={{
-        charityName: props.contactData?.charityName || "",
-        firstName: props.contactData?.firstName || "",
-        lastName: props.contactData?.lastName || "",
-        email: props.contactData?.email || "",
-        phone: props.contactData?.phone || "",
-        orgRole: props.contactData?.orgRole || "ceo",
+        charityName: props.contactData?.CharityName || "",
+        firstName: props.contactData?.FirstName || "",
+        lastName: props.contactData?.LastName || "",
+        email: props.contactData?.Email || "",
+        phone: props.contactData?.PhoneNumber || "",
+        orgRole: props.contactData?.Role || "ceo",
         otherRole: props.contactData?.otherRole || "",
         checkedPolicy: false,
-        uniqueID: props.contactData?.uniqueID || "",
+        uniqueID: props.contactData?.PK || "",
       }}
       validationSchema={ContactInfoSchema}
       onSubmit={saveContactInfo}

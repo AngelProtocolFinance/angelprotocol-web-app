@@ -9,20 +9,28 @@ const initialUserState: UserState = {
   Role: "",
   PK: "",
   SK: "",
+  CharityName: "",
+  CharityName_ContactEmail: "",
+  RegistrationDate: "",
+  RegistrationStatus: "",
+  EmailVerified: false,
 };
 
-const UserSlice = createSlice({
+export const UserSlice = createSlice({
   name: "user",
-  initialState: initialUserState,
+  initialState: {
+    userData: initialUserState,
+  },
   reducers: {
     updateUserData: (state, { payload }: PayloadAction<UserState>) => {
-      state.Email = payload.Email;
+      state.userData = {
+        ...payload,
+      };
     },
     removeUserData: (state) => {
-      state = initialUserState;
+      state.userData = initialUserState;
     },
   },
 });
 
 export const userReducer = UserSlice.reducer;
-export const { updateUserData } = UserSlice.actions;

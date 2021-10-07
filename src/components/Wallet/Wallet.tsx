@@ -56,9 +56,6 @@ export default function Wallet() {
           >
             Copy Address
           </button>
-          <button className="uppercase bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
-            send
-          </button>
           <button
             className="uppercase bg-orange rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
             onClick={disconnect}

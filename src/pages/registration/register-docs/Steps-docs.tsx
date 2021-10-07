@@ -11,9 +11,6 @@ const StepsDocs = () => {
   const showInfoModal = () => {
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-  };
   return (
     <div>
       <div className="title text-center mb-5">

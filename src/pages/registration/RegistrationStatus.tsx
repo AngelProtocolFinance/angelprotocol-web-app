@@ -1,10 +1,13 @@
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { TStore } from "Redux/store";
 import { register } from "types/routes";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+  const userData: any = useSelector((state: TStore) => state.user);
+  console.log("userData from status page => ", userData);
   const status = {
     contact_details: "complete",
     wallet_address: "missing",
@@ -100,7 +103,7 @@ const RegistrationStatus = () => {
         <div className="infor-status my-2">
           <div className="py-2 mx-auto flex justify-between xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #1: Contact Details</span>
+              <span className="">Step #1: Charity Profile</span>
               <br />
               <span className="status-text uppercase text-green-500">
                 complete
@@ -114,7 +117,7 @@ const RegistrationStatus = () => {
           </div>
           <div className="py-2 mx-auto flex justify-between xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #2: Wallet Address</span>
+              <span className="">Step #2: Key Person Profile</span>
               <br />
               <span className="status-text uppercase text-yellow-600">
                 Missing

@@ -4,6 +4,11 @@ export interface UserState {
   LastName: string;
   PhoneNumber: string;
   Role: string;
-  SK: string;
-  PK: string;
+  SK?: string;
+  PK?: string;
+  CharityName: string;
+  CharityName_ContactEmail?: string;
+  RegistrationDate: string;
+  RegistrationStatus: string;
+  EmailVerified: boolean;
 }

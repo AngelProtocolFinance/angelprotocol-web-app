@@ -2,7 +2,7 @@ import { FormikHelpers } from "formik";
 import { Values } from "./Login";
 import { useSetToken } from "contexts/AuthProvider";
 import { toast } from "react-toastify";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { app, site } from "types/routes";
 
 const endPoint =
@@ -10,7 +10,6 @@ const endPoint =
 
 export default function useLogin() {
   //url = app/login
-  const { url } = useRouteMatch();
   const { saveToken } = useSetToken();
   const history = useHistory();
 

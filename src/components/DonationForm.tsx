@@ -19,16 +19,13 @@ import {
 //   // StdFee,
 // } from "@terra-money/terra.js";
 import useSlider from "hooks/useSlider";
-import AppHead from "./Headers/AppHead";
 
 interface DonationFormProps {
   pushTransactionStatus: any;
 }
 
 export function DonationForm(props: DonationFormProps) {
-  const { pushTransactionStatus } = props;
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
-  const currentNetwork = "localterra"; // TODO: should be:
   // const currentNetwork = connectedWallet.network.name
   const [isTypingAmount, setIsTypingAmount] = useState(false);
   const [amountToDonate, setAmountToDonate] = useState(0);

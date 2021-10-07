@@ -41,10 +41,6 @@ const UpdateProfile = () => {
     setModalType(type);
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-    setModalType("");
-  };
   return (
     <div className="">
       <div className="title mb-10">
@@ -326,12 +322,12 @@ const UpdateProfile = () => {
           )}
         </Formik>
       </div>
-      {isOpenModal && modalType == "unsdg" && (
+      {isOpenModal && modalType === "unsdg" && (
         <Modal>
           <UNSDGInfoModal />
         </Modal>
       )}
-      {isOpenModal && modalType == "average" && (
+      {isOpenModal && modalType === "average" && (
         <Modal>
           <RevenueInfoModal />
         </Modal>

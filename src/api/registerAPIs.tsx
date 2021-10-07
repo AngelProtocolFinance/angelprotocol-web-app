@@ -8,16 +8,67 @@ export const registerAPIs = createApi({
     mode: "cors",
   }),
   endpoints: (builder) => ({
-    checkPreviousRegistration: builder.mutation<any, string>({
-      query: (uuid) => {
+    getRegisteredCharities: builder.mutation<any, any>({
+      query: (data) => {
         return {
-          url: "registration?uuid=" + uuid,
+          url: `registration/list?regStatus=${data.regStatus}`,
           method: "GET",
         };
       },
-      transformResponse: (response: { data: any }) => response.data,
+      transformResponse: (response: { data: any }) => response,
+    }),
+    checkPreviousRegistration: builder.mutation<any, string>({
+      query: (uuid) => {
+        return {
+          url: `registration?uuid=${uuid}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: { data: any }) => response,
+    }),
+    createCharityMetaData: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `registration?uuid=${data.uuid}`,
+          method: "POST",
+          body: data.body,
+        };
+      },
+      transformResponse: (response: { data: any }) => response,
+    }),
+    requestEmail: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `registration/build-email?uuid=${data.uuid}&type=${data.type}`,
+          method: "POST",
+          body: data.body,
+        };
+      },
+      transformResponse: (response: { data: any }) => response,
+    }),
+    createNewCharity: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "registration",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: { data: any }) => response,
+    }),
+    updatePersonData: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `registration?uuid=${data.uuid}`,
+          method: "POST",
+          body: data.body,
+        };
+      },
     }),
   }),
 });
 
-export const { useCheckPreviousRegistrationMutation } = registerAPIs;
+export const {
+  useCheckPreviousRegistrationMutation,
+  useCreateNewCharityMutation,
+  useRequestEmailMutation,
+  useGetRegisteredCharitiesMutation,
+} = registerAPIs;
