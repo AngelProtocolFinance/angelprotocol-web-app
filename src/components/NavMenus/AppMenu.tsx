@@ -9,6 +9,11 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
+        <Link to="/ap-litepaper.pdf" {...linkStyles} target="_blank" download>
+          Litepaper
+        </Link>
+      </li>
+      <li>
         <Link to={`${site.home}${web.index}`} {...linkStyles}>
           About
         </Link>
