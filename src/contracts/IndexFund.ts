@@ -12,7 +12,6 @@ interface ContractAddresses {
   [index: string]: string;
 }
 
-export type _IndexFund = typeof Indexfund;
 export default class Indexfund extends Contract {
   fund_id?: number;
   currContractAddr: string;
