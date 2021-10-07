@@ -36,15 +36,6 @@ export default function WebFoot() {
             );
           })}
         </ul>
-
-        <Link
-          to="/ap-litepaper.pdf"
-          className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
-          target="_blank"
-          download
-        >
-          Download Litepaper
-        </Link>
         <p className="font-body text-xs uppercase text-white text-center">
           <Link to="/ap-litepaper.pdf" target="_blank" download>
             Litepaper
