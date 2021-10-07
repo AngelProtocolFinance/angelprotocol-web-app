@@ -16,6 +16,11 @@ export default function AppMenu() {
         </Link>
       </li>
       <li>
+        <Link to="/ap-litepaper.pdf" {...linkStyles} target="_blank" download>
+          Litepaper
+        </Link>
+      </li>
+      <li>
         <Link to={`${url}/${app.register}`} {...linkStyles}>
           REGISTER
         </Link>
