@@ -5,17 +5,17 @@ import useSlider from "./useSlider";
 import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
 
-const amounts = [
-  "5.000000",
-  "20.000000",
-  "50.000000",
-  "100.000000",
-  "1000.000000",
-];
+type Props = {
+  //for charity donations, no split data yet
+  maxSplitLiq?: number;
+  minSplitLiq?: number;
+};
 
-export default function UserForm() {
+export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values, touched } = useFormikContext<Values>();
+  const minLocked = 100 - (props?.maxSplitLiq || 50);
+  const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
     <Form className="grid grid-cols-2 p-4 rounded-md ">
@@ -74,16 +74,16 @@ export default function UserForm() {
         </p>
         <div className="p-5">
           <Slider
-            min={50}
-            max={100}
+            min={minLocked}
+            max={maxLocked}
             value={percentage}
             onChange={handleSlide}
             onAfterChange={handleSlideEnd}
             className="w-full"
           />
           <p className="flex justify-between mt-2 text-white">
-            <span>50%</span>
-            <span>100%</span>
+            <span>{minLocked}%</span>
+            <span>{maxLocked}%</span>
           </p>
         </div>
       </div>
@@ -99,3 +99,11 @@ export default function UserForm() {
     </Form>
   );
 }
+
+const amounts = [
+  "5.000000",
+  "20.000000",
+  "50.000000",
+  "100.000000",
+  "1000.000000",
+];
