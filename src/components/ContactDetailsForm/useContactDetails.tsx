@@ -82,7 +82,7 @@ export const useContactDetails = () => {
           PK: result.UUID,
         })
       );
-      if (is_create) {
+      if (!is_create) {
         toast.success(result.message);
       } else {
         // await resendEmail({

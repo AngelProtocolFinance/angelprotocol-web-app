@@ -130,9 +130,9 @@ const UpdateContactPerson = async (contactData: any) => {
           ...contactData.ContactPerson,
           CharityName: contactData.Registration.CharityName,
         }),
-        headers: {
-          "Content-type": "application/json",
-        },
+        // headers: {
+        //   "Content-type": "application/json",
+        // },
       }
     );
     return response.json();
