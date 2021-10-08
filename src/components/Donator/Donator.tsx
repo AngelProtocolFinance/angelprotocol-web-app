@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import { donatorSchema } from "./donatorSchema";
 import useDonate from "./useDonate";
 import { createContext, useContext, useState } from "react";
-import { Status, SetStatus, Steps, Props } from "./types";
+import { Status, SetStatus, Steps, Props, Values } from "./types";
 
 const initialStatus = {
   step: Steps.initial,
@@ -17,11 +17,12 @@ export const useSetStatus = () => useContext(setContext);
 export default function Donator(props: Props) {
   const [status, setStatus] = useState<Status>(initialStatus);
   const handleDonate = useDonate(status, setStatus, props.receiver);
+  const minLocked = 100 - (props?.maxSplitLiq || 50);
   return (
     <getContext.Provider value={status}>
       <setContext.Provider value={setStatus}>
-        <Formik
-          initialValues={{ amount: "", split: 50 }}
+        <Formik<Values>
+          initialValues={{ amount: "", split: minLocked }}
           onSubmit={handleDonate}
           validationSchema={donatorSchema}
         >

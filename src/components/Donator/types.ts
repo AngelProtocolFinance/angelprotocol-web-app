@@ -45,12 +45,17 @@ interface ToFund {
   to: "fund";
   receiver?: number;
   children: ReactNode;
+  maxSplitLiq?: number;
+  minSplitLiq?: number;
 }
 
 interface ToCharity {
   to: "charity";
   receiver: AccAddress;
   children: ReactNode;
+  //doesn't know yet limits on charity donations
+  maxSplitLiq?: never;
+  minSplitLiq?: never;
 }
 
 export type Props = ToFund | ToCharity;
