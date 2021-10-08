@@ -20,7 +20,7 @@ export default class Indexfund extends Contract {
     "bombay-12": "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     localterra: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     "tequila-0004": "",
-    "columbus-4": "",
+    "columbus-5": "",
   };
 
   //may need to re-implement to handle multiple currencies in the future
