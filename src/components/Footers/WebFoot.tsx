@@ -46,11 +46,6 @@ export default function WebFoot() {
           Download Litepaper
         </Link>
         <p className="font-body text-xs uppercase text-white text-center">
-          <Link to="/ap-litepaper.pdf" target="_blank" download>
-            Litepaper
-          </Link>
-        </p>
-        <p className="font-body text-xs uppercase text-white text-center">
           Copyright 2021 Angel Protocol. All rights reserved.
         </p>
       </section>
