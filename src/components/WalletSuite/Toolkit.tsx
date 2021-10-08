@@ -1,9 +1,11 @@
 import { useGetWallet } from "./WalletSuite";
 import { Icons, Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
+import useInitializer from "./useInitialzer";
 
 export default function Toolkit() {
   const { activeWallet } = useGetWallet();
+  useInitializer();
   const isConnected = activeWallet !== Wallets.none;
 
   console.log(activeWallet);

@@ -15,13 +15,13 @@ export default function useActivator(
     //they react on the same status
 
     //on clean slate, connect if can,
-    if (
-      status === WalletStatus.WALLET_CONNECTED &&
-      activeWallet === Wallets.none &&
-      currWallet === Wallets.none
-    ) {
-      setActiveWallet(thisWallet);
-    }
+    // if (
+    //   status === WalletStatus.WALLET_CONNECTED &&
+    //   activeWallet === Wallets.none &&
+    //   currWallet === Wallets.none
+    // ) {
+    //   setActiveWallet(thisWallet);
+    // }
 
     //on connect, set this active if not active yet
     if (

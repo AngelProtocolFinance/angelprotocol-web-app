@@ -25,14 +25,14 @@ export default function Connector(props: Props) {
       ? Wallets.terraStationExt
       : Wallets.terraStationMobile;
 
-  useActivator(status, thisWallet);
+  // useActivator(status, thisWallet);
 
   function handleClick() {
     if (isConnected) {
       disconnect();
     } else {
       //set wallet to be activated before next render
-      setCurrWallet(thisWallet);
+      // setCurrWallet(thisWallet);
       //connect and renders component
       connect(props.type);
     }
