@@ -17,7 +17,7 @@ export default class Registrar extends Contract {
     "bombay-12": "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
     localterra: "",
     "tequila-0004": "",
-    "columbus-4": "",
+    "columbus-5": "",
   };
 
   //may need to re-implement to handle multiple currencies in the future
