@@ -6,7 +6,7 @@ const localterra = {
   lcd: "http://localhost:1317",
 };
 
-export const testnet = {
+const testnet = {
   name: "testnet",
   chainID: "tequilla-004",
   lcd: "https://tequilla-lcd.terra.dev",
@@ -18,7 +18,7 @@ const mainnet = {
   lcd: "https://lcd.terra.dev",
 };
 
-const bombay = {
+export const bombay = {
   name: "bombay",
   chainID: "bombay-12",
   lcd: "https://bombay-lcd.terra.dev",

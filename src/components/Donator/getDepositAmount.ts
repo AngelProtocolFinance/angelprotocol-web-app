@@ -1,4 +1,4 @@
-import { TxLog, Coin, Denom } from "@terra-money/terra.js";
+import { TxLog, Coin } from "@terra-money/terra.js";
 
 const anchorContractAddr = "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal";
 
@@ -10,7 +10,7 @@ export default function getDepositAmount(logs: TxLog[]): number {
 
   const attributes = receiveEvent!.attributes;
 
-  let totalCoinDeposit = Coin.fromString(`0${Denom.USD}`);
+  let totalCoinDeposit = Coin.fromString(`0uusd`);
 
   for (let i = 0; i < attributes.length; i++) {
     const currentAttr = attributes[i];

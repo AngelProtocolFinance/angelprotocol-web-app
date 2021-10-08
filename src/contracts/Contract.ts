@@ -5,7 +5,7 @@ export default class Contract {
   wallet: ConnectedWallet;
   client: LCDClient;
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
-  static gasPrices = [new Coin(Denom.USD, 0.151792301)];
+  static gasPrices = [new Coin("uusd", 0.151792301)];
 
   constructor(wallet: ConnectedWallet) {
     this.wallet = wallet;
@@ -21,7 +21,7 @@ export default class Contract {
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
     return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
-      feeDenoms: [Denom.USD],
+      feeDenoms: ["uusd"],
     });
   }
   //bind this function in constructor to keep context

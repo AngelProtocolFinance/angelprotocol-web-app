@@ -55,7 +55,7 @@ export default class Indexfund extends Contract {
           split: `${splitToLiquid}`,
         },
       },
-      [new Coin(Denom.USD, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
     // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);

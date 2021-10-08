@@ -69,7 +69,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         splitToLiquid
       );
       const estimatedFee =
-        transaction.fee!.amount.get(Denom.USD)!.amount.toNumber() / 1e6;
+        transaction.fee!.amount.get('uusd')!.amount.toNumber() / 1e6;
 
     
 

@@ -15,7 +15,8 @@ import AppFoot from "components/Footers/AppFoot";
 import Fund from "pages/Fund/Fund";
 import Charity from "pages/Charity/Charity";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { testnet, walletConnectChainIds } from "./chains";
+import { bombay, walletConnectChainIds } from "./chains";
+import Test from "pages/Test/Test";
 
 const App = () => {
   //this component will only render under '/app' route
@@ -26,7 +27,7 @@ const App = () => {
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
-        defaultNetwork={testnet}
+        defaultNetwork={bombay}
         walletConnectChainIds={walletConnectChainIds}
       >
         <Switch>
@@ -37,6 +38,7 @@ const App = () => {
           <Route path={`${path}/${app.register}`} component={Register} />
           <Route path={`${path}/${app.tca}`} component={TCA} />
           <Route path={`${path}/${app.fund}`} component={Fund} />
+          <Route path={`${path}/${app.test}`} component={Test} />
           <Redirect from="*" to={site.home} />
         </Switch>
         <AppFoot />

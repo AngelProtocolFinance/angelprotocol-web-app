@@ -71,6 +71,7 @@ const CreateNewCharity = async (contactData: any) => {
         uniqueID: data.UUID,
       };
 
+      console.log(data);
       console.log("message:", data.message, "UUID:", data.UUID);
       localStorage.setItem("userData", JSON.stringify(body));
     } else {

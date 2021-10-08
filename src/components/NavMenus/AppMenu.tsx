@@ -25,6 +25,11 @@ export default function AppMenu() {
           DONATE
         </Link>
       </li>
+      <li>
+        <Link to={`${url}/${app.test}`} {...linkStyles}>
+          TEST
+        </Link>
+      </li>
     </ul>
   );
 }

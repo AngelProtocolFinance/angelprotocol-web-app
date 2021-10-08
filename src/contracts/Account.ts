@@ -34,10 +34,10 @@ export default class Account extends Contract {
           liquid_percentage: `${pctLiquid}`,
         },
       },
-      [new Coin(Denom.USD, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
     // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
+    const fee = new StdFee(2500000, [new Coin("uusd", 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 }
