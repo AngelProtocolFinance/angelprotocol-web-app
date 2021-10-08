@@ -14,7 +14,7 @@ export const testnet = {
 
 const mainnet = {
   name: "mainnet",
-  chainID: "columbus-4",
+  chainID: "columbus-5",
   lcd: "https://lcd.terra.dev",
 };
 
