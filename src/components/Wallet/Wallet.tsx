@@ -80,9 +80,6 @@ export default function Wallet() {
           >
             {isAddressCopiedButton ? `Copied!` : `Copy Address`}
           </button>
-          <button className="uppercase hover:bg-angel-blue bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
-            send
-          </button>
           <button
             className="uppercase hover:bg-angel-orange bg-orange rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
             onClick={disconnect}
