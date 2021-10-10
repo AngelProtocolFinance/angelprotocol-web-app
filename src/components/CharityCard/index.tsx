@@ -26,20 +26,19 @@ const CharityCard = ({
     }
   }, [dateDiff]);
 
+  //TODO: make title the link
   return (
-    <article className="relative w-64 h-48 ml-4 flex-none ">
-      <a href={`/donate/${title}`}>
-        <img
-          className="rounded-lg img-no-drag"
-          src={backgroundImageUrl}
-          alt="charity banner"
-        />
-        <h1 className="text-white-grey font-bold text-base uppercase text-grey-light mt-1">
-          {title}
-        </h1>
-        <p className="text-xs text-white-grey">{description}</p>
-        {isCharityNew ? <TextBadgeNew /> : null}
-      </a>
+    <article className="relative w-64 h-48 flex-none ">
+      <img
+        className="rounded-lg img-no-drag"
+        src={backgroundImageUrl}
+        alt="charity banner"
+      />
+      <h1 className="text-white-grey font-bold text-base uppercase text-grey-light mt-1">
+        {title}
+      </h1>
+      <p className="text-xs text-white-grey">{description}</p>
+      {isCharityNew ? <TextBadgeNew /> : null}
     </article>
   );
 };

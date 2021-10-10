@@ -4,13 +4,13 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Ways() {
-  const { isVisible, ref } = useObserve({ threshold: 0.5 });
+  const { isVisible, ref } = useObserve({ threshold: 0.3 });
   return (
     <div className="py-24 px-10" ref={ref}>
       <h3
         className={`${transitionIn(
           isVisible,
-          Direction.fromTop
+          Direction.fromFront
         )} max-w-xl mx-auto mb-10 text-2xl lg:text-3xl font-bold text-center text-blue-accent`}
       >
         Donate to a charity aligned to the causes you are passionate about

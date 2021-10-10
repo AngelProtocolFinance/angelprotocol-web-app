@@ -3,14 +3,14 @@ import "react-toastify/dist/ReactToastify.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import AuthProvider from "contexts/AuthProvider";
 import App from "./App/App";
 import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import { store } from "Redux/store";
+import { NetworkInfo, WalletProvider } from "@terra-money/wallet-provider";
+import AuthProvider from "contexts/AuthProvider";
 
 const localterra = {
   name: "localterra",

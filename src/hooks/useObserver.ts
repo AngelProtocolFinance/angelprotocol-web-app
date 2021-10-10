@@ -24,6 +24,7 @@ export default function useObserve(options: IntersectionObserverInit) {
 
     return () => observer.disconnect();
     //before next run of useEffect, disconnect existing observer
+    //eslint-disable-next-line
   }, [update]);
 
   return { ref: targetRef, isVisible: !!entry?.isIntersecting };

@@ -47,14 +47,14 @@ export default function Estimates() {
       </div>
 
       <button
-        className="my-3 w-32 text-center bg-angel-orange py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
+        className="my-3 w-32 text-center bg-angel-orange hover:bg-orange py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
         onClick={handleProceed}
       >
         Donate
       </button>
 
       <button
-        className="w-32 text-center bg-red-400 py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
+        className="w-32 text-center bg-red-400 hover:bg-dark-red py-2 rounded-lg shadow-sm font-bold font-heading text-white text-sm uppercase"
         onClick={handleCancel}
       >
         cancel

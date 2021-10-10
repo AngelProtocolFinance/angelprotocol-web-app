@@ -4,13 +4,13 @@ import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Access() {
-  const { isVisible, ref } = useObserve({ threshold: 0.5 });
+  const { isVisible, ref } = useObserve({ threshold: 0.15 });
   return (
     <div className="py-24 px-10" ref={ref}>
       <h3
         className={`${transitionIn(
           isVisible,
-          Direction.fromLeft
+          Direction.fromFront
         )} uppercase mb-4 text-2xl lg:text-3xl font-bold text-center text-blue-accent`}
       >
         Easy access to donated funds
@@ -18,7 +18,7 @@ export default function Access() {
       <p
         className={`${transitionIn(
           isVisible,
-          Direction.fromRight
+          Direction.fromLeft
         )} text-center text-angel-grey text-lg lg:xl-lg mb-6`}
       >
         Donors choose what percent of their donation goes to your Endowment
@@ -27,7 +27,7 @@ export default function Access() {
       <div
         className={`${transitionIn(
           isVisible,
-          Direction.fromBottom
+          Direction.fromRight
         )} flex  flex-col items-center md:flex-row md:justify-center md:items-stretch gap-12`}
       >
         {articles.map((article) => (

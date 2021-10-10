@@ -18,7 +18,7 @@ export default function Process() {
         className={`${transitionIn(
           isVisible,
           Direction.fromDot
-        )} text-4xl font-bold text-center text-white uppercase my-24`}
+        )} text-3xl lg:text-4xl font-bold text-center text-white uppercase my-24`}
       >
         How It Works
       </h3>

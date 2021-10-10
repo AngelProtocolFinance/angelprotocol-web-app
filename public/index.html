@@ -5,10 +5,6 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -24,6 +20,39 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <!-- Primary Meta Tags -->
+    <title>Angel Protocol</title>
+    <meta name="title" content="Angel Protocol" />
+    <meta
+      name="description"
+      content="Angel Protocol enables charities to create an endowment that makes better use of decentralised finance"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.angelprotocol.io/" />
+    <meta property="og:title" content="Angel Protocol" />
+    <meta
+      property="og:description"
+      content="Angel Protocol enables charities to create an endowment that makes better use of decentralised finance"
+    />
+    <meta
+      property="og:image"
+      content="https://www.angelprotocol.io/static/media/home-banner.73980c69.jpg"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.angelprotocol.io/" />
+    <meta property="twitter:title" content="Angel Protocol" />
+    <meta
+      property="twitter:description"
+      content="Angel Protocol enables charities to create an endowment that makes better use of decentralised finance"
+    />
+    <meta
+      property="twitter:image"
+      content="https://www.angelprotocol.io/static/media/home-banner.73980c69.jpg"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -53,5 +82,20 @@
       src="https://platform.twitter.com/widgets.js"
       charset="utf-8"
     ></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-G6NWQG2Q42"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      if (window.location.hostname.indexOf("angelprotocol.io")) {
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+        gtag("config", "G-G6NWQG2Q42");
+      }
+    </script>
   </body>
 </html>

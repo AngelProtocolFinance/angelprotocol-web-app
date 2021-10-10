@@ -1,12 +1,14 @@
 import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
-import { CharityInfo } from "components/CharityInfo";
-import { DonationForm } from "components/DonationForm";
-import { DonationInfo } from "components/DonationInfo";
+import { CharityInfo } from "pages/Charity/CharityInfo";
+// import DonationForm from "pages/Charity/CharityForm";
+import { DonationInfo } from "./DonationInfo";
 import AppHead from "components/Headers/AppHead";
+import Donator from "components/Donator/Donator";
+import UserForm from "components/Donator/UserForm";
 
-const Donate = () => {
+const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
   const title = "women for women international";
   const opts: Options = {
@@ -17,7 +19,6 @@ const Donate = () => {
       autoplay: 1,
     },
   };
-  const pushTransactionStatus = () => {};
   const onReady = (event: any) => {
     event.target.pauseVideo();
   };
@@ -25,7 +26,7 @@ const Donate = () => {
     setIsDonate(!isDonate);
   };
   return (
-    <section className="container mx-auto grid grid-rows-1a pb-12">
+    <section className="container mx-auto grid grid-rows-1a pb-16">
       <AppHead />
       <div className="flex flex-row justify-between pb-5">
         <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
@@ -57,7 +58,12 @@ const Donate = () => {
           </div>
           <div className="overflow-y-auto">
             {isDonate ? (
-              <DonationForm pushTransactionStatus={pushTransactionStatus} />
+              <Donator
+                to="charity"
+                receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
+              >
+                <UserForm />
+              </Donator>
             ) : (
               <div className="overflow-y-auto h-full">
                 <div className="paragraph mb-4">
@@ -112,4 +118,4 @@ const Donate = () => {
   );
 };
 
-export default Donate;
+export default Charity;

@@ -10,18 +10,18 @@ module.exports = {
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
         process:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/home-process.webp')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/home-process.jpg')",
         portal:
-          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('./assets/images/teamwork.webp')",
+          "linear-gradient(rgba(63, 169, 245, 0.9),rgba(51, 133, 189, 0.85)), url('assets/images/teamwork2.jpg')",
         contact:
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/volunteers.webp')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/volunteers2.jpg')",
         "banner-charity":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/banner-charity.jpg')",
         "banner-charities":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/deliveries.jpeg')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/deliveries.jpg')",
         "banner-donors":
-          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('./assets/images/hand.jpeg')",
-        comet: "url('./assets/images/comet.jpeg')",
+          "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/hand.jpg')",
+        comet: "url('assets/images/comet.jpg')",
       },
 
       cursor: {
@@ -71,6 +71,7 @@ module.exports = {
         dashboard: "auto 1fr auto",
         wallet: "auto 1fr 1fr",
         "2a": "repeat(2,auto)",
+        fund: "18rem auto",
       },
       gridTemplateColumns: {
         "1a": "1fr auto",
@@ -94,13 +95,9 @@ module.exports = {
         10: "10",
       },
       width: {
-        "video:xl": "35rem",
-        "video:lg": "28rem",
-        "video:md": "30rem",
-        "video:sm": "30rem",
-      },
-      animation: {
-        iconPing: "ping 100ms",
+        128: "28rem",
+        130: "30rem",
+        135: "35rem",
       },
     },
   },
