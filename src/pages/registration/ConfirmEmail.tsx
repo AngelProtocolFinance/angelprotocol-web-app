@@ -1,33 +1,33 @@
 import { useHistory, useLocation } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { register } from "types/routes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TStore } from "Redux/store";
 import { useRequestEmailMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
-import { BuildEmail } from "aws-settings.config";
+import { UserSlice } from "Redux/slices/userSlice";
 
 const ConfirmEmail = () => {
   //url = /app/register/confirm
   const history = useHistory();
+  const dispatch = useDispatch();
+  const { removeUserData } = UserSlice.actions;
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const { userData } = useSelector((state: TStore) => state.user);
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const resendVerificationEmail = async () => {
-    // await resendEmail({
-    //   uuid: userData.PK,
-    //   type: "verify-email",
-    //   body: userData,
-    // });   /// use API hook
-    console.log("userDatra => ", userData);
-    const response = await BuildEmail({
+    const response: any = await resendEmail({
       uuid: userData.PK,
       type: "verify-email",
       body: userData,
     });
-    toast.info(response.message);
+    toast.info(response.data?.message || response.error?.data.message);
+  };
+
+  const returnMain = () => {
+    dispatch(removeUserData());
+    history.push("/");
   };
 
   return (
@@ -89,7 +89,7 @@ const ConfirmEmail = () => {
       <div className="mb-2">
         <button
           className="bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={() => history.push("/")}
+          onClick={returnMain}
         >
           close
         </button>

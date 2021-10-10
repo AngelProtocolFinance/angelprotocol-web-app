@@ -57,9 +57,12 @@ export const registerAPIs = createApi({
     updatePersonData: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration?uuid=${data.uuid}`,
-          method: "POST",
-          body: data.body,
+          url: `registration?uuid=${data.ContactPerson.UUID}`,
+          method: "PUT",
+          body: {
+            ...data.ContactPerson,
+            CharityName: data.Registration.CharityName,
+          },
         };
       },
     }),
@@ -71,4 +74,5 @@ export const {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useGetRegisteredCharitiesMutation,
+  useUpdatePersonDataMutation,
 } = registerAPIs;

@@ -28,11 +28,11 @@ const StepsDocs = () => {
               Your Proof of Identity
             </p>
           </div>
-          <div className="md:w-2/3 xl:w-1/2 flex items-center">
+          <div className=" md:w-2/3 xl:w-1/2 flex items-center justify-end">
             <button className="bg-yellow-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               upload new file
             </button>
-            <p className="text-green-500 uppercase text-sm xl:text-base">
+            <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
               complete
             </p>
           </div>
@@ -44,11 +44,11 @@ const StepsDocs = () => {
               {userData.charityName}{" "}
             </p>
           </div>
-          <div className="flex items-center md:w-2/3 xl:w-1/2">
+          <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
             <button className="bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               select or drag and drop
             </button>
-            <p className="text-red-500 uppercase text-sm xl:text-base">
+            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
               Not submitted
             </p>
           </div>
@@ -66,11 +66,11 @@ const StepsDocs = () => {
               </span>
             </p>
           </div>
-          <div className="flex items-center md:w-2/3 xl:w-1/2">
+          <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
             <button className="bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               select or drag and drop
             </button>
-            <p className="text-red-500 uppercase text-sm xl:text-base">
+            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
               Not submitted
             </p>
           </div>

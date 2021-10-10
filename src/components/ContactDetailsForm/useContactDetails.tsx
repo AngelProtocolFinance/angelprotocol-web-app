@@ -2,16 +2,11 @@ import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
 import { ContactDetails } from "./ContactDetailsForm";
-import {
-  CreateNewCharity,
-  BuildEmail,
-  UpdateContactPerson,
-} from "aws-settings.config";
 import * as Yup from "yup";
 import {
-  registerAPIs,
   useCreateNewCharityMutation,
   useRequestEmailMutation,
+  useUpdatePersonDataMutation,
 } from "api/registerAPIs";
 import { useDispatch } from "react-redux";
 import { UserSlice } from "Redux/slices/userSlice";
@@ -34,6 +29,7 @@ export const ContactInfoSchema = Yup.object().shape({
 export const useContactDetails = () => {
   const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
+  const [updateContactPerson] = useUpdatePersonDataMutation();
   const history = useHistory();
   const dispatch = useDispatch();
   const { updateUserData } = UserSlice.actions;
@@ -45,7 +41,6 @@ export const useContactDetails = () => {
     actions.setSubmitting(true);
     // call API to add or update contact details information(contactData)
     const is_create = !contactData?.uniqueID;
-    console.log("is create flag => ", is_create);
     const postData = {
       Registration: {
         CharityName: contactData.charityName,
@@ -65,12 +60,15 @@ export const useContactDetails = () => {
 
     let result: any = {};
     if (is_create) {
-      result = await CreateNewCharity(postData);
-      // result = await registerCharity(postData);   /// use registerAPIs hook
+      // result = await CreateNewCharity(postData);
+      const response: any = await registerCharity(postData); /// use registerAPIs hook
+      result = response.data ? response.data : response.error.data;
     } else {
-      result = await UpdateContactPerson(postData);
+      const response: any = await updateContactPerson(postData);
+      result = response.data ? response.data : response.error.data;
     }
 
+    console.log("res =>", result);
     if (result.UUID || result.message === "Updated successfully!") {
       dispatch(
         updateUserData({
@@ -79,28 +77,28 @@ export const useContactDetails = () => {
           RegistrationDate: new Date().toISOString(),
           RegistrationStatus: "Not Complete",
           EmailVerified: false,
-          PK: result.UUID,
+          PK: result.UUID || contactData.uniqueID,
         })
       );
       if (!is_create) {
         toast.success(result.message);
       } else {
-        // await resendEmail({
-        //   uuid: result.UUID,
-        //   type: "verify-email",
-        //   body: {
-        //     ...postData.ContactPerson,
-        //     CharityName: postData.Registration.CharityName,
-        //   },
-        // });   /// use API hook
-        await BuildEmail({
+        await resendEmail({
           uuid: result.UUID,
           type: "verify-email",
           body: {
             ...postData.ContactPerson,
             CharityName: postData.Registration.CharityName,
           },
-        });
+        }); /// use API hook
+        // await BuildEmail({
+        //   uuid: result.UUID,
+        //   type: "verify-email",
+        //   body: {
+        //     ...postData.ContactPerson,
+        //     CharityName: postData.Registration.CharityName,
+        //   },
+        // });
         history.push(register.confirm);
       }
     } else {

@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link } from "react-router-dom";
-import { site, web } from "types/routes";
+import { Link, useHistory } from "react-router-dom";
+import { register, site, web } from "types/routes";
 import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
 
 export type ContactDetails = {
@@ -17,6 +17,7 @@ export type ContactDetails = {
 export const ContactDetailsForm = (props: any) => {
   //url = app/register/details
   const { saveContactInfo } = useContactDetails();
+  const history = useHistory();
 
   return (
     <Formik
@@ -59,6 +60,7 @@ export const ContactDetailsForm = (props: any) => {
                         placeholder="Organization"
                         value={values.charityName}
                         name="charityName"
+                        disabled={values.uniqueID != ""}
                       />
                     </div>
                     <ErrorMessage
@@ -255,14 +257,27 @@ export const ContactDetailsForm = (props: any) => {
                 />
               </div>
             </div>
-            <div className="text-center">
-              <button
-                className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                continue
-              </button>
+            <div className="text-center flex justify-center">
+              <div className="mr-2">
+                <button
+                  className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  continue
+                </button>
+              </div>
+              {values.uniqueID && (
+                <div className="mr-2">
+                  <button
+                    className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                    onClick={() => history.push(register.status)}
+                    disabled={isSubmitting}
+                  >
+                    back
+                  </button>
+                </div>
+              )}
             </div>
           </Form>
         </div>

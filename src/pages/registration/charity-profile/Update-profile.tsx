@@ -7,10 +7,12 @@ import Modal from "components/Modal/Modal";
 import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
 import { site, web } from "types/routes";
+import { useSelector } from "react-redux";
+import { TStore } from "Redux/store";
 
 const UpdateProfile = () => {
   //url = app/register/charity-profile
-  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+  const { userData } = useSelector((state: TStore) => state.user);
   const handleUpdateProfile = () => {};
   const ProfileSchema = Yup.object().shape({
     companyNumber: Yup.number().required("Please enter your company number"),
@@ -18,7 +20,7 @@ const UpdateProfile = () => {
       "please select the country of incorporation."
     ),
     selectCountry: Yup.string().required(
-      `Please select the countries where ${userData.charityName} runs programs.`
+      `Please select the countries where ${userData.CharityName} runs programs.`
     ),
     visionStatement: Yup.string().required(
       "Please select the vision statement."
@@ -37,7 +39,6 @@ const UpdateProfile = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const showInfoModal = (type: any) => {
-    console.log("sadfasdfasdfasdfasdf");
     setModalType(type);
     setOpenModal(true);
   };
@@ -45,7 +46,7 @@ const UpdateProfile = () => {
     <div className="">
       <div className="title mb-10">
         <p className="text-2xl md:text-3xl font-bold">
-          Update the profile details for {userData.charityName}
+          Update the profile details for {userData.CharityName}
         </p>
         <span className="text-center">General Information</span>
       </div>
@@ -74,7 +75,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Company Number{" "}
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -93,7 +94,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Country of Incorporation{" "}
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -127,8 +128,8 @@ const UpdateProfile = () => {
                   </div>
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Countries where {userData.charityName} runs programs{" "}
-                      <span className="ml-1 text-xs text-red">*</span>
+                      Countries where {userData.CharityName} runs programs{" "}
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -149,7 +150,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Vision Statement
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -167,7 +168,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Mission Statement
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -186,9 +187,9 @@ const UpdateProfile = () => {
                 <div className="w-full md:w-1/3">
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      With Which UNSDG dones {userData.charityName} identify
+                      With Which UNSDG dones {userData.CharityName} identify
                       with the most?
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="form-control rounded-md bg-gray-200 p-2 flex items-center w-full mr-1">
@@ -217,7 +218,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Average annual revenue (in your local currency)
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="form-control rounded-md bg-gray-200 p-2 flex items-center w-full mr-1">
@@ -245,7 +246,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Average operating expenses (in your local currency)
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -267,7 +268,7 @@ const UpdateProfile = () => {
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       What's your local currency?
-                      <span className="ml-1 text-xs text-red">*</span>
+                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
@@ -313,7 +314,11 @@ const UpdateProfile = () => {
                       </span>
                     </label>
                   </div>
-                  <button className="bg-thin-blue w-48 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
+                  <button
+                    type="submit"
+                    className="bg-thin-blue w-48 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+                    disabled={isSubmitting}
+                  >
                     upload
                   </button>
                 </div>
