@@ -22,10 +22,10 @@ export default function useBalance() {
       });
 
       const coins = await client.bank.balance(wallet.terraAddress);
-      const ustCoin = coins.get(Denoms.UUSD)?.div(1e6);
+      const ustCoin = coins.get(Denoms.UUSD);
       const balance = coins.map((coin) => coin.div(1e6).toData());
       // const ustCoin = balance.find((coin) => coin.denom === Denoms.UUSD);
-      const ustAmount = ustCoin?.amount.toNumber() || 0;
+      const ustAmount = (ustCoin?.amount?.toNumber() || 0) / 1e6;
       setCoins(balance);
       setUstAmount(ustAmount);
     })();

@@ -47,7 +47,6 @@ const TerraXIcon = () => (
 const icons: Icons = {
   [Wallets.none]: <IoWalletSharp className="text-white text-xl" />,
   [Wallets.terraStationExt]: <TerraXIcon />,
-  [Wallets.terraStationMobile]: <TerraXIcon />,
 };
 
 const displays = {
