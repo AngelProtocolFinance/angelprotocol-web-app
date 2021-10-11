@@ -14,8 +14,6 @@ export default function useFund() {
   const [split, setSplit] = useState<SplitLiq>();
   const wallet = useConnectedWallet();
 
-  console.log(split);
-
   useEffect(() => {
     (async () => {
       try {
