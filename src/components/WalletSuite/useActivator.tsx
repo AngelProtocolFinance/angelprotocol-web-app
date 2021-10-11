@@ -1,5 +1,5 @@
-import { useWallet, WalletStatus } from "@terra-dev/use-wallet";
-import { useEffect, useRef } from "react";
+import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import { useEffect } from "react";
 import { Wallets, WalletStates } from "./types";
 import { useSetWallet } from "./WalletSuite";
 

@@ -1,5 +1,3 @@
-import { StaticWalletProvider } from "@terra-money/wallet-provider";
-
 import { render, screen } from "@testing-library/react";
 import { getContext } from "contexts/AuthProvider";
 import { ReactNode } from "react";
@@ -7,6 +5,7 @@ import { MemoryRouter, Route } from "react-router-dom";
 import { app, site } from "types/routes";
 import App from "./App";
 import { testnet } from "./chains";
+import { StaticWalletProvider } from "@terra-money/wallet-provider";
 
 function Wrapper(props: { children: ReactNode }) {
   return (

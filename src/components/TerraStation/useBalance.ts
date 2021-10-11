@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Coin, LCDClient } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { Denoms } from "types/currencies";

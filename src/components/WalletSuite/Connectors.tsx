@@ -1,4 +1,4 @@
-import { ConnectType } from "@terra-dev/use-wallet";
+import { ConnectType } from "@terra-money/wallet-provider";
 import TerraStation from "components/TerraStation/TerraStation";
 import { IoClose } from "react-icons/io5";
 

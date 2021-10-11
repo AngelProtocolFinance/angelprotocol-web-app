@@ -1,4 +1,4 @@
-import { useWallet, WalletStatus } from "@terra-dev/use-wallet";
+import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { Coin } from "@terra-money/terra.js";
 import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";

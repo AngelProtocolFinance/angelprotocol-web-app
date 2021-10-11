@@ -3,7 +3,7 @@ import {
   Timeout,
   TxUnspecifiedError,
   UserDenied,
-} from "@terra-dev/wallet-types";
+} from "@terra-money/wallet-provider";
 import { Steps, Status } from "./types";
 
 export default function createStatusFromError(error: unknown): Status {

@@ -1,4 +1,4 @@
-import { ConnectType } from "@terra-dev/use-wallet";
+import { ConnectType } from "@terra-money/wallet-provider";
 import terraExtIcon from "assets/icons/wallets/terra-extension.jpg";
 import Connector from "./Connector";
 import Installer from "./Installer";
