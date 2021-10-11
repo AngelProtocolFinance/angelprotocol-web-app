@@ -3,6 +3,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 type Handler = () => void;
 interface Props {
   children: ReactNode;
+  withoutBackdrop?: true;
 }
 
 const setContext = createContext<Handler>(() => {});
@@ -18,11 +19,13 @@ export default function Modal(props: Props) {
 
   return (
     <setContext.Provider value={closeModal}>
-      {shown && (
-        <div className="fixed bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
-          {props.children}
-        </div>
-      )}
+      {shown &&
+        ((!props.withoutBackdrop && (
+          <div className="fixed bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
+            {props.children}
+          </div>
+        )) ||
+          props.children)}
     </setContext.Provider>
   );
 }

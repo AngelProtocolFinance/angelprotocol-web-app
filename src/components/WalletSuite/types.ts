@@ -20,17 +20,11 @@ export type Icons = {
   [key in Wallets]: string | ReactNode;
 };
 
+export type Displays = {
+  [key in Wallets]: ReactNode;
+};
+
 export type Changer = (wallet: Wallets) => void;
-
-export interface State {
-  activeWallet: Wallets;
-  currWallet: Wallets;
-}
-
-export interface Setters {
-  setActiveWallet: Changer;
-  setCurrWallet: Changer;
-}
 
 export type Props = {
   children: ReactNode;

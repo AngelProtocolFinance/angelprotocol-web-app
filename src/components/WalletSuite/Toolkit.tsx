@@ -1,24 +1,48 @@
 import { useGetWallet } from "./WalletSuite";
 import { Icons, Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
-import useInitializer from "./useInitialzer";
+import terraXIcon from "assets/icons/wallets/terra-extension.jpg";
+import useActivator from "./useActivator";
+import TerraDisplay from "components/TerraStation/Display";
+import { useEffect, useState } from "react";
+import Connectors from "./Connectors";
 
 export default function Toolkit() {
-  const { activeWallet } = useGetWallet();
-  useInitializer();
+  const [connectorsShown, showConnectors] = useState(false);
+  const activeWallet = useGetWallet();
+  useActivator();
   const isConnected = activeWallet !== Wallets.none;
 
-  console.log(activeWallet);
+  //close modal after connecting
+  useEffect(() => {
+    isConnected && showConnectors(false);
+  }, [isConnected]);
+
+  const toggleConnector = () => showConnectors((p) => !p);
+  const hideConnectors = () => showConnectors(false);
+
   return (
-    <div className="border rounded-md flex items-center gap-2 p-2">
+    <div className="relative border border-opacity-30 text-white-grey rounded-md flex items-center gap-2 px-2 py-2">
       {icons[activeWallet]}
-      {!isConnected && <button>connect button</button>}
-      <button>details</button>
+      {!isConnected && <button onClick={toggleConnector}>connect</button>}
+      {displays[activeWallet]}
+      {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
   );
 }
+
+const TerraXIcon = () => (
+  <img className="w-6 h-6 bg-white p-1 rounded-full" src={terraXIcon} alt="" />
+);
+
 const icons: Icons = {
   [Wallets.none]: <IoWalletSharp className="text-white text-xl" />,
-  [Wallets.terraStationExt]: "terra station",
-  [Wallets.terraStationMobile]: "terra station",
+  [Wallets.terraStationExt]: <TerraXIcon />,
+  [Wallets.terraStationMobile]: <TerraXIcon />,
+};
+
+const displays = {
+  [Wallets.none]: null,
+  [Wallets.terraStationExt]: <TerraDisplay />,
+  [Wallets.terraStationMobile]: <TerraDisplay />,
 };

@@ -1,7 +1,4 @@
-import {
-  NetworkInfo,
-  StaticWalletProvider,
-} from "@terra-money/wallet-provider";
+import { StaticWalletProvider } from "@terra-money/wallet-provider";
 
 import { render, screen } from "@testing-library/react";
 import { getContext } from "contexts/AuthProvider";
@@ -9,12 +6,7 @@ import { ReactNode } from "react";
 import { MemoryRouter, Route } from "react-router-dom";
 import { app, site } from "types/routes";
 import App from "./App";
-
-const testnet: NetworkInfo = {
-  name: "testnet",
-  chainID: "tequila-0004",
-  lcd: "https://tequila-lcd.terra.dev",
-};
+import { testnet } from "./chains";
 
 function Wrapper(props: { children: ReactNode }) {
   return (

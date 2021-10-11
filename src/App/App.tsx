@@ -15,7 +15,7 @@ import AppFoot from "components/Footers/AppFoot";
 import Fund from "pages/Fund/Fund";
 import Charity from "pages/Charity/Charity";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { bombay, walletConnectChainIds } from "./chains";
+import { testnet, walletConnectChainIds } from "./chains";
 import Test from "pages/Test/Test";
 
 const App = () => {
@@ -27,7 +27,7 @@ const App = () => {
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
-        defaultNetwork={bombay}
+        defaultNetwork={testnet}
         walletConnectChainIds={walletConnectChainIds}
       >
         <Switch>

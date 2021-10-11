@@ -1,11 +1,7 @@
-export default function toCurrency(num?: number) {
+export default function toCurrency(num = 0) {
   //set local to undefined to use user's default format
-  if (!num) {
-    return "xxx";
-  } else {
-    return num.toLocaleString(undefined, {
-      minimumFractionDigits: 3,
-      maximumFractionDigits: 3,
-    });
-  }
+  return num.toLocaleString(undefined, {
+    minimumFractionDigits: 3,
+    maximumFractionDigits: 3,
+  });
 }

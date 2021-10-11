@@ -3,9 +3,8 @@ import { useEffect, useRef } from "react";
 import { Wallets, WalletStates } from "./types";
 import { useSetWallet } from "./WalletSuite";
 
-export default function useInitializer() {
-  const { setActiveWallet } = useSetWallet();
-  const initWalletRef = useRef<Wallets>(Wallets.none);
+export default function useActivator() {
+  const setActiveWallet = useSetWallet();
 
   const { status: terraStatus } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
@@ -15,22 +14,16 @@ export default function useInitializer() {
     [Wallets.future, false],
   ];
 
-  const isOneConnected = walletStates.some(([wallet, isConnected]) => {
-    if (isConnected) {
-      initWalletRef.current = wallet;
-      return isConnected;
-    } else {
-      return false;
-    }
-  });
+  //find first connected wallet
+  //undefined if not wallet is connected
+  const activeWallet = walletStates.find((walletState) => walletState[1]);
 
-  //TODO: since this also resets activeWallet, should delete disconnect clause in
-  //individual wallets ??
   useEffect(() => {
-    if (isOneConnected) {
-      setActiveWallet(initWalletRef.current);
+    if (activeWallet) {
+      const [wallet] = activeWallet;
+      setActiveWallet(wallet);
     } else {
       setActiveWallet(Wallets.none);
     }
-  }, [isOneConnected]);
+  }, [activeWallet]);
 }
