@@ -1,32 +1,26 @@
 import { NetworkInfo } from "@terra-dev/wallet-types";
+import { chains } from "contracts/types";
 
 const localterra = {
   name: "localterra",
-  chainID: "localterra",
+  chainID: chains.localterra,
   lcd: "http://localhost:1317",
 };
 
-export const testnet = {
-  name: "testnet",
-  chainID: "tequilla-004",
-  lcd: "https://tequilla-lcd.terra.dev",
-};
-
-const mainnet = {
+export const mainnet = {
   name: "mainnet",
-  chainID: "columbus-5",
+  chainID: chains.mainnet,
   lcd: "https://lcd.terra.dev",
 };
 
-const bombay = {
+const testnet = {
   name: "bombay",
-  chainID: "bombay-12",
+  chainID: chains.testnet,
   lcd: "https://bombay-lcd.terra.dev",
 };
 
 export const walletConnectChainIds: Record<number, NetworkInfo> = {
-  0: localterra,
-  1: testnet,
-  2: mainnet,
-  3: bombay,
+  0: testnet,
+  1: mainnet,
+  2: localterra,
 };
