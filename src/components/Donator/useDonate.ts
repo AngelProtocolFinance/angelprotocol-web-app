@@ -113,7 +113,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         } else {
           //code property is present on failed transaction info
           if (!txInfo.code) {
-            const depositAmount = getDepositAmount(txInfo.logs!);
+            const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
             setStatus({
               step: Steps.success,
               message: `Thank you for your donation!`,
