@@ -71,6 +71,7 @@ module.exports = {
         dashboard: "auto 1fr auto",
         wallet: "auto 1fr 1fr",
         "2a": "repeat(2,auto)",
+        fund: "18rem auto",
       },
       gridTemplateColumns: {
         "1a": "1fr auto",
@@ -94,13 +95,9 @@ module.exports = {
         10: "10",
       },
       width: {
-        "video:xl": "35rem",
-        "video:lg": "28rem",
-        "video:md": "30rem",
-        "video:sm": "30rem",
-      },
-      animation: {
-        iconPing: "ping 100ms",
+        128: "28rem",
+        130: "30rem",
+        135: "35rem",
       },
     },
   },

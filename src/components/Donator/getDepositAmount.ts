@@ -1,8 +1,11 @@
 import { TxLog, Coin, Denom } from "@terra-money/terra.js";
+import Account from "contracts/Account";
 
-const anchorContractAddr = "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal";
-
-export default function getDepositAmount(logs: TxLog[]): number {
+export default function getDepositAmount(
+  logs: TxLog[],
+  chainID: string
+): number {
+  const anchorAddr = Account.anchorAddrs[chainID];
   const eventLog = logs.find((log) => "events" in log);
   const receiveEvent = eventLog!.events.find(
     (event) => event.type === "coin_received"
@@ -14,7 +17,7 @@ export default function getDepositAmount(logs: TxLog[]): number {
 
   for (let i = 0; i < attributes.length; i++) {
     const currentAttr = attributes[i];
-    if (currentAttr.value === anchorContractAddr) {
+    if (currentAttr.value === anchorAddr) {
       //get next attribute
       const nextAttr = attributes[i + 1];
       totalCoinDeposit = totalCoinDeposit.add(Coin.fromString(nextAttr.value));

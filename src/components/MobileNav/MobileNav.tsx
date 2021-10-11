@@ -6,7 +6,7 @@ export default function MobileNav() {
   //url = /
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase text-angel-blue`,
+    className: `uppercase text-angel-blue hover:text-opacity-75`,
     activeClassName: "font-bold",
   };
 
@@ -29,11 +29,11 @@ export default function MobileNav() {
           Register
         </NavLink>
       </li> */}
-      {/* <li className="mr-4">
+      <li className="mr-4">
         <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
           Donate
         </NavLink>
-      </li> */}
+      </li>
     </ul>
   );
 }

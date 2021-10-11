@@ -4,7 +4,7 @@ import {
   AiFillYoutube,
   AiFillMediumSquare,
 } from "react-icons/ai";
-
+import { Link } from "react-router-dom";
 import { FaTelegramPlane } from "react-icons/fa";
 
 export default function WebFoot() {
@@ -36,6 +36,15 @@ export default function WebFoot() {
             );
           })}
         </ul>
+
+        <Link
+          to="/ap-litepaper.pdf"
+          className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
+          target="_blank"
+          download
+        >
+          Download Litepaper
+        </Link>
         <p className="font-body text-xs uppercase text-white text-center">
           Copyright 2021 Angel Protocol. All rights reserved.
         </p>

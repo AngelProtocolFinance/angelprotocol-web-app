@@ -12,7 +12,7 @@ export default function Search() {
     <div className="flex flex-row items-center">
       <BsFilterRight className={`text-white text-xl`} />
       <button onClick={toggleSearch}>
-        <FiSearch className={`text-white text-xl mx-2`} />
+        <FiSearch className={`text-white text-xl mx-2 hover:text-orange`} />
       </button>
       {isOpenSearch && (
         <div className={`rounded-xl h-8 border border-white p-1 bg-white mr-1`}>
