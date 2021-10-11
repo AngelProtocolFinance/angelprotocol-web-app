@@ -13,7 +13,7 @@ import TCA from "pages/TCA/TCA";
 import { app, site } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { testnet, walletConnectChainIds } from "./chains";
+import { mainnet, walletConnectChainIds } from "./chains";
 
 const App = () => {
   //this component will only render under '/app' route
@@ -24,7 +24,7 @@ const App = () => {
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
-        defaultNetwork={testnet}
+        defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}
       >
         <Switch>
