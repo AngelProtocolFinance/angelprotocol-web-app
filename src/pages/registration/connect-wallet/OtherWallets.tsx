@@ -16,10 +16,6 @@ const OtherWallets = () => {
     setModalType(type);
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-    setModalType("");
-  };
   return (
     <div className="">
       <div className="title mb-5">
@@ -70,12 +66,12 @@ const OtherWallets = () => {
           back
         </button>
       </div>
-      {isOpenModal && modalType == "prime_trust" && (
+      {isOpenModal && modalType === "prime_trust" && (
         <Modal>
           <CustodianInfoModal />
         </Modal>
       )}
-      {isOpenModal && modalType == "self_custody" && (
+      {isOpenModal && modalType === "self_custody" && (
         <Modal>
           <SelfCustodyInfoModal />
         </Modal>

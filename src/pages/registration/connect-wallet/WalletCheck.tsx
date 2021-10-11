@@ -12,9 +12,6 @@ const WalletCheck = () => {
   const showTerraInfoModal = () => {
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-  };
   return (
     <div className="text-center">
       <div className="flex items-center mb-5 justify-center">
