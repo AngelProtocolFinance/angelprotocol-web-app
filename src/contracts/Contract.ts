@@ -18,7 +18,8 @@ export default class Contract {
   }
 
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
-  static gasPrices = [new Coin(Denom.USD, 0.151792301)];
+  //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
+  static gasPrices = [new Coin(Denom.USD, 0.5)];
 
   static makeStaticCLient(chainID: string, URL: string) {
     return new LCDClient({ chainID, URL });
