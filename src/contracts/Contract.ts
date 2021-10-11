@@ -1,11 +1,12 @@
-import { Coin, Denom, LCDClient, Msg, StdFee } from "@terra-money/terra.js";
+import { Coin, LCDClient, Msg, StdFee } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { Denoms } from "types/currencies";
 
 export default class Contract {
   wallet: ConnectedWallet;
   client: LCDClient;
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
-  static gasPrices = [new Coin("uusd", 0.151792301)];
+  static gasPrices = [new Coin(Denoms.UUSD, 0.151792301)];
 
   constructor(wallet: ConnectedWallet) {
     this.wallet = wallet;
@@ -21,7 +22,7 @@ export default class Contract {
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
     return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
-      feeDenoms: ["uusd"],
+      feeDenoms: [Denoms.UUSD],
     });
   }
   //bind this function in constructor to keep context

@@ -8,6 +8,9 @@ export default function useActivator() {
 
   const { status: terraStatus } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
+  const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
+
+  const isLoading = isTerraLoading; // || false || otherwallet loading state
   const walletStates: WalletStates = [
     [Wallets.terraStationExt, terraConnected],
     [Wallets.terraStationMobile, terraConnected],
@@ -25,5 +28,8 @@ export default function useActivator() {
     } else {
       setActiveWallet(Wallets.none);
     }
+    //eslint-disable-next-line
   }, [activeWallet]);
+
+  return isLoading;
 }

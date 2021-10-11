@@ -1,6 +1,7 @@
-import { Denom, LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
+import { Denoms } from "types/currencies";
 
 //can be extended to view balance of different currencies
 export default function useUSTBalance(): number {
@@ -19,7 +20,7 @@ export default function useUSTBalance(): number {
       });
 
       const coins = await client.bank.balance(wallet.terraAddress);
-      const UUST_coin = coins.get("uusd");
+      const UUST_coin = coins.get(Denoms.UUSD);
       if (!UUST_coin) {
         setBalance(0);
         return;

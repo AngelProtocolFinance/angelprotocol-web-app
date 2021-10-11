@@ -10,12 +10,13 @@ import Connectors from "./Connectors";
 export default function Toolkit() {
   const [connectorsShown, showConnectors] = useState(false);
   const activeWallet = useGetWallet();
-  useActivator();
+  const isLoading = useActivator();
   const isConnected = activeWallet !== Wallets.none;
 
   //close modal after connecting
   useEffect(() => {
     isConnected && showConnectors(false);
+    //eslint-disable-next-line
   }, [isConnected]);
 
   const toggleConnector = () => showConnectors((p) => !p);
@@ -24,7 +25,15 @@ export default function Toolkit() {
   return (
     <div className="relative border border-opacity-30 text-white-grey rounded-md flex items-center gap-2 px-2 py-2">
       {icons[activeWallet]}
-      {!isConnected && <button onClick={toggleConnector}>connect</button>}
+      {!isConnected && (
+        <button
+          className="uppercase text-sm"
+          disabled={isLoading}
+          onClick={toggleConnector}
+        >
+          {isLoading ? "Initializing" : "Connect"}
+        </button>
+      )}
       {displays[activeWallet]}
       {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
