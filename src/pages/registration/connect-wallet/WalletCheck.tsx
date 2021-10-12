@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
-import TerraInfoModal from "../Modals/TerraInfoModal";
+import TerraInfoModal from "../modals/TerraInfoModal";
 
 const WalletCheck = () => {
   //url = app/register/wallet-check

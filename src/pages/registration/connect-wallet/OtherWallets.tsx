@@ -2,8 +2,8 @@ import { useHistory } from "react-router";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
 import Modal from "components/Modal/Modal";
-import CustodianInfoModal from "../Modals/CustodianInfoModal";
-import SelfCustodyInfoModal from "../Modals/SelfCustodyInfoModal";
+import CustodianInfoModal from "../modals/CustodianInfoModal";
+import SelfCustodyInfoModal from "../modals/SelfCustodyInfoModal";
 import { register } from "types/routes";
 
 const OtherWallets = () => {
