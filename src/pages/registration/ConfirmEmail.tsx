@@ -5,6 +5,7 @@ import { TStore } from "Redux/store";
 import { useRequestEmailMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
 import { UserSlice } from "Redux/slices/userSlice";
+import CustomButton from "components/CustomButton/CustomButton";
 
 const ConfirmEmail = () => {
   //url = /app/register/confirm
@@ -80,25 +81,34 @@ const ConfirmEmail = () => {
         )}
       </div>
       <div className="mb-2">
-        <button
-          className="bg-orange w-64 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={resendVerificationEmail}
-        >
-          Resend verification email
-        </button>
+        <CustomButton
+          activeColor="orange"
+          onClickEvent={resendVerificationEmail}
+          title="Resend verification email"
+          width={64}
+          height={12}
+          margin="mb-3"
+        />
       </div>
       <div className="mb-2">
-        <button className="bg-yellow-blue w-96 h-12 rounded-xl uppercase text-base font-bold text-white mb-3">
-          I'm having trouble with my email
-        </button>
+        <CustomButton
+          activeColor="yellow-blue"
+          onClickEvent={resendVerificationEmail}
+          title="I'm having trouble with my email"
+          width={96}
+          height={12}
+          margin="mb-3"
+        />
       </div>
       <div className="mb-2">
-        <button
-          className="bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={returnMain}
-        >
-          close
-        </button>
+        <CustomButton
+          activeColor="thin-blue"
+          onClickEvent={returnMain}
+          title="close"
+          width={48}
+          height={12}
+          margin="mb-3"
+        />
       </div>
       <ToastContainer />
     </div>

@@ -7,6 +7,7 @@ import { useCheckPreviousRegistrationMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
 import { UserSlice } from "../../Redux/slices/userSlice";
 import { useDispatch } from "react-redux";
+import CustomButton from "components/CustomButton/CustomButton";
 
 export type ReferInfo = {
   refer: string;
@@ -49,10 +50,15 @@ const Registration = () => {
         RegistrationStatus: response.data.Registration.RegistrationStatus,
       };
       dispatch(updateUserData(data));
-      history.push({
-        pathname: `${url}/${register.confirm}`,
-        state: { is_sent: true },
-      });
+      if (response.data.ContactPerson.EmailVerified)
+        history.push({
+          pathname: `${url}/${register.status}`,
+        });
+      else
+        history.push({
+          pathname: `${url}/${register.confirm}`,
+          state: { is_sent: true },
+        });
     }
     actions.setSubmitting(false);
   };
@@ -83,12 +89,14 @@ const Registration = () => {
         </span>
       </div>
       <div className="mb-2">
-        <button
-          className="bg-orange w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          onClick={() => history.push(`${url}/${register.detail}`)}
-        >
-          Start
-        </button>
+        <CustomButton
+          activeColor="orange"
+          onClickEvent={() => history.push(`${url}/${register.detail}`)}
+          title="Start"
+          width={48}
+          height={12}
+          margin="mb-3"
+        />
         <div className="cursor-pointer mb-3">
           <p className="text-xl font-bold">OR</p>
         </div>
@@ -118,13 +126,15 @@ const Registration = () => {
                   name="refer"
                   component="div"
                 />
-                <button
-                  className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mt-3"
+                <CustomButton
+                  activeColor="thin-blue"
                   type="submit"
-                  disabled={isLoading || isSubmitting}
-                >
-                  Resume
-                </button>
+                  title="Resume"
+                  width={48}
+                  height={12}
+                  margin="mt-3"
+                  isDisabled={isLoading || isSubmitting}
+                />
               </Form>
             </div>
           )}

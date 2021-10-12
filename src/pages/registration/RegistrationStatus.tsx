@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { TStore } from "Redux/store";
 import { register } from "types/routes";
+import CustomButton from "components/CustomButton/CustomButton";
 
 const RegistrationStatus = () => {
   //url is app/register/status
@@ -52,16 +53,15 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button
-                className="bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                onClick={() => {
-                  history.push({
-                    pathname: register.detail,
-                  });
-                }}
-              >
-                Change
-              </button>
+              <CustomButton
+                activeColor="yellow-blue"
+                onClickEvent={() => history.push(register.detail)}
+                title="Change"
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={userData.PK == ""}
+              />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
@@ -73,16 +73,15 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button
-                className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                onClick={() => {
-                  history.push({
-                    pathname: register.wallet_check,
-                  });
-                }}
-              >
-                {status.wallet_address === 0 ? "Change" : "Continue"}
-              </button>
+              <CustomButton
+                activeColor="thin-blue"
+                onClickEvent={() => history.push(register.wallet_check)}
+                title={status.wallet_address === 0 ? "Change" : "Continue"}
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={userData.PK == ""}
+              />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
@@ -94,16 +93,15 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button
-                className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                onClick={() => {
-                  history.push({
-                    pathname: register.upload_docs,
-                  });
-                }}
-              >
-                {status.document === 0 ? "Change" : "Continue"}
-              </button>
+              <CustomButton
+                activeColor="thin-blue"
+                onClickEvent={() => history.push(register.wallet_check)}
+                title={status.document === 0 ? "Change" : "Continue"}
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={userData.PK == ""}
+              />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
@@ -119,12 +117,15 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button
-                className="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                disabled={status.endowment === 2}
-              >
-                {status.endowment === 0 ? "Complete" : "Continue"}
-              </button>
+              <CustomButton
+                activeColor="thin-blue"
+                onClickEvent={() => history.push(register.wallet_check)}
+                title={status.endowment === 0 ? "Complete" : "Continue"}
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={status.endowment === 2 || userData.PK == ""}
+              />
             </div>
           </div>
         </div>
@@ -148,12 +149,15 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button
-                className="bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                onClick={() => history.push(register.charity_profile)}
-              >
-                Change
-              </button>
+              <CustomButton
+                activeColor="yellow-blue"
+                onClickEvent={() => history.push(register.charity_profile)}
+                title="Change"
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={userData.PK == ""}
+              />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
@@ -165,21 +169,28 @@ const RegistrationStatus = () => {
               </span>
             </div>
             <div className="">
-              <button className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                Continue
-              </button>
+              <CustomButton
+                activeColor="thin-blue"
+                title="Continue"
+                width={40}
+                height={10}
+                margin="mt-3"
+                isDisabled={userData.PK == ""}
+              />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <button
-          className="disabled:bg-gray-300 bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(register.charity_profile)}
-          disabled={!status.completed}
-        >
-          Go to {userData.CharityName}'s profile
-        </button>
+        <CustomButton
+          activeColor="thin-blue"
+          title={"Go to " + userData.CharityName + "'s profile"}
+          onClickEvent={() => history.push(register.charity_profile)}
+          width={64}
+          height={10}
+          margin="mt-3"
+          isDisabled={!status.completed || userData.PK == ""}
+        />
       </div>
       <ToastContainer />
     </div>
