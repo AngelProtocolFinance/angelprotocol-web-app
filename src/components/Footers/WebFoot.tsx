@@ -1,10 +1,10 @@
 import Subscriber from "components/Subscriber/Subscriber";
+import litePaper from "assets/docs/ap-litepaper.pdf";
 import {
   AiOutlineTwitter,
   AiFillYoutube,
   AiFillMediumSquare,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { FaTelegramPlane } from "react-icons/fa";
 
 export default function WebFoot() {
@@ -27,7 +27,8 @@ export default function WebFoot() {
                 <a
                   href={link}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noreferrer noopener"
+                  download="AP Litepaper"
                   className={`${textColor} hover:text-opacity-75 block m-2`}
                 >
                   <Icon className="w-8 h-8" title={title} />
@@ -37,14 +38,15 @@ export default function WebFoot() {
           })}
         </ul>
 
-        <Link
-          to="/ap-litepaper.pdf"
+        <a
+          href={litePaper}
           className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
           target="_blank"
+          rel="noreferrer"
           download
         >
           Download Litepaper
-        </Link>
+        </a>
         <p className="font-body text-xs uppercase text-white text-center">
           Copyright 2021 Angel Protocol. All rights reserved.
         </p>
