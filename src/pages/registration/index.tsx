@@ -4,18 +4,17 @@ import ContactDetails from "./ContactDetails";
 import ConfirmEmail from "./ConfirmEmail";
 import VerifiedEmail from "./VerifiedEmail";
 import RegistrationStatus from "./RegistrationStatus";
-import WalletCheck from "./connect-wallet/WalletCheck";
-import ConnectWallet from "./connect-wallet/ConnectWallet";
-import SelectWallet from "./connect-wallet/SelectWallet";
-import StepsDocs from "./register-docs/Steps-docs";
-import UpdateProfile from "./charity-profile/Update-profile";
-import OtherWallets from "./connect-wallet/OtherWallets";
-import SelfCustody from "./connect-wallet/Self-custody";
+import WalletCheck from "./Connect-wallet/WalletCheck";
+import ConnectWallet from "./Connect-wallet/ConnectWallet";
+import SelectWallet from "./Connect-wallet/SelectWallet";
+import StepsDocs from "./Register-docs/Steps-docs";
+import UpdateProfile from "./Charity-profile/Update-profile";
+import OtherWallets from "./Connect-wallet/OtherWallets";
+import SelfCustody from "./Connect-wallet/Self-custody";
 import { register } from "types/routes";
 import AppHead from "components/Headers/AppHead";
 const Register = () => {
   //this component will only render under '/app/register/'
-  //{path} = '/app/register'
   const { path } = useRouteMatch();
   return (
     <section className="grid grid-rows-dashboard pb-16 justify-items-center">

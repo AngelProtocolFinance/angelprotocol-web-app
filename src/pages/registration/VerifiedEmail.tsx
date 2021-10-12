@@ -33,13 +33,18 @@ const VerifiedEmail = () => {
   }
 
   const resendVerificationEmail = async () => {
-    const response: any = await resendEmail({
-      uuid: responseData.PK,
-      type: "verify-email",
-      body: responseData,
-    });
-
-    toast.success(response.data?.message || response.error?.message);
+    if (responseData.PK) {
+      const response: any = await resendEmail({
+        uuid: responseData.PK,
+        type: "verify-email",
+        body: responseData,
+      });
+      response.data
+        ? toast.info(response.data?.message)
+        : toast.error(response.error?.data.message);
+    } else {
+      toast.error("Invalid Data. Please ask the administrator about that.");
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import WalletTemplateModal from "../modals/WalletTemplateModal";
+import WalletTemplateModal from "../Modals/WalletTemplateModal";
 import { site, web } from "types/routes";
 
 const StepsDocs = () => {

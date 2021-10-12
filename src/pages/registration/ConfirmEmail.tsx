@@ -17,12 +17,18 @@ const ConfirmEmail = () => {
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const resendVerificationEmail = async () => {
-    const response: any = await resendEmail({
-      uuid: userData.PK,
-      type: "verify-email",
-      body: userData,
-    });
-    toast.info(response.data?.message || response.error?.data.message);
+    if (userData.PK) {
+      const response: any = await resendEmail({
+        uuid: userData.PK,
+        type: "verify-email",
+        body: userData,
+      });
+      response.data
+        ? toast.info(response.data?.message)
+        : toast.error(response.error?.data.message);
+    } else {
+      toast.error("Invalid Data. Please ask the administrator about that.");
+    }
   };
 
   const returnMain = () => {
