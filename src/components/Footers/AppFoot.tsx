@@ -1,5 +1,5 @@
 import AppMenu from "components/NavMenus/AppMenu";
-import litePaper from "assets/docs/ap-litepaper.pdf";
+import { Link } from "react-router-dom";
 
 export default function AppFoot() {
   return (
@@ -9,15 +9,14 @@ export default function AppFoot() {
           <AppMenu />
         </nav>
         <div className="flex flex-col items-center">
-          <a
-            href={litePaper}
+          <Link
+            to="/ap-litepaper.pdf"
             className="mt-2 mb-1 font-semibold text-xs uppercase text-white-grey text-center"
             target="_blank"
-            rel="noreferrer noopener"
-            download="AP Litepaper"
+            download
           >
             Download Litepaper
-          </a>
+          </Link>
           <p className="text-white-grey text-center text-xs uppercase lg:order-1 lg:text-left ">
             Copyright 2021 Angel Protocol. All rights reserved
           </p>
