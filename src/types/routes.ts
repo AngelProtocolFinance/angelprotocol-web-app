@@ -21,6 +21,7 @@ export enum app {
   charity = "charity",
   tca = "tca",
   fund = "fund",
+  board_tca = "tca-leaderboard",
 }
 
 export enum register {

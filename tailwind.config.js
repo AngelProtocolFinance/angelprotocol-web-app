@@ -62,6 +62,7 @@ module.exports = {
         process: "36rem",
         banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
+        "leader-table": "38rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",

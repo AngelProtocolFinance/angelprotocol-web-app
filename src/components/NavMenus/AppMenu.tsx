@@ -12,7 +12,7 @@ export default function AppMenu() {
     <ul className="flex lg:items-center">
       <li>
         <Link to={`${url}${app.index}`} {...linkStyles}>
-          TCA
+          Leaderboards
         </Link>
       </li>
       <li>
