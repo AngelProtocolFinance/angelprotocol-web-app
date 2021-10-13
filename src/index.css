@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .cell {
+    @apply border-b;
+  }
+}
+
 @layer utilities {
   .aspect-square {
     aspect-ratio: 1/1;

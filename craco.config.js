@@ -7,4 +7,8 @@ module.exports = {
       ],
     },
   },
+  babel: {
+    //to allow use of logical assignments
+    plugins: ["@babel/plugin-proposal-logical-assignment-operators"],
+  },
 };

@@ -7,7 +7,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import { chains, ContractAddrs } from "./types";
+import { chains, ContractAddrs, Donors, TCAList } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -28,13 +28,19 @@ export default class Indexfund extends Contract {
   }
 
   async getTCAList(): Promise<string[]> {
-    const res = await this.client.wasm.contractQuery<{ tca_members: string[] }>(
+    const res = await this.client.wasm.contractQuery<TCAList>(
       this.currContractAddr,
       {
         tca_list: {},
       }
     );
     return res.tca_members;
+  }
+
+  async getFundDonations(): Promise<Donors> {
+    return this.client.wasm.contractQuery<Donors>(this.currContractAddr, {
+      active_fund_donations: {},
+    });
   }
 
   async createDepositTx(

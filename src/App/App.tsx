@@ -14,6 +14,7 @@ import { app, site } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "./chains";
+import Leaderboard from "pages/Leaderboard/Leaderboard";
 
 const App = () => {
   //this component will only render under '/app' route
@@ -34,6 +35,8 @@ const App = () => {
           <Route path={`${path}/${app.login}`} component={Login} />
           {/* <Route path={`${path}/${app.register}`} component={Register} /> */}
           <Route path={`${path}/${app.tca}`} component={TCA} />
+
+          <Route path={`${path}/${app.leaders}`} component={Leaderboard} />
           <Redirect from="*" to={site.home} />
         </Switch>
         <AppFoot />

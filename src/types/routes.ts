@@ -22,6 +22,7 @@ export enum app {
   charity = "charity",
   tca = "tca",
   fund = "fund",
+  leaders = "leaderboards",
 }
 
 export enum register {
