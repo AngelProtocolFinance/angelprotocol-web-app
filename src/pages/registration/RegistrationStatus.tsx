@@ -20,7 +20,7 @@ const RegistrationStatus = () => {
       const messageData: any = error;
       toast.error(messageData.data.message);
     }
-  });
+  }, [error]);
 
   const status = {
     contact_details: 0,
