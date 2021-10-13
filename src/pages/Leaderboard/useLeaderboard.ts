@@ -1,12 +1,14 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Indexfund from "contracts/IndexFund";
 import { useEffect, useState } from "react";
-import { donors as tcaDonors, Names, Sums } from "./tcaMembers";
+import { donors as tcaDonors, Sums } from "./donors";
+import { Names } from "./names";
+// import { donations as testDonations, donors as testDonors } from "./testdata";
 
 export default function useLeaderboard() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [sums, setSums] = useState<Sums>({});
+  const [sums, setSums] = useState<Array<[Names, number]>>([]);
   const wallet = useConnectedWallet();
   useEffect(() => {
     (async () => {
@@ -18,17 +20,21 @@ export default function useLeaderboard() {
         setLoading(true);
         const indexfund = new Indexfund(wallet);
         const res = await indexfund.getFundDonations();
-        console.log(res);
         const _sums: Sums = {};
         res.donors.forEach((donor) => {
-          const donorName = tcaDonors[donor.address] || Names.others;
+          const donorName = tcaDonors[donor.address] || Names.community;
           //init to MIN_VALUE if no value yet
           _sums[donorName] ||= Number.MIN_VALUE;
           //increment if existing
           _sums[donorName] &&= _sums[donorName]! + +donor.total_ust / 1e6;
         });
+        //cast to desired types
+        const entries = Object.entries(_sums) as Array<[Names, number]>;
+        //in-place sort based on donation amount
+        entries.sort((curr, next) => next[1] - curr[1]);
+
         setLoading(false);
-        setSums(_sums);
+        setSums(entries);
       } catch (err) {
         console.log(err);
         setLoading(false);
