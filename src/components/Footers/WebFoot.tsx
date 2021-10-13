@@ -28,6 +28,7 @@ export default function WebFoot() {
                   href={link}
                   target="_blank"
                   rel="noreferrer noopener"
+                  download="AP Litepaper"
                   className={`${textColor} hover:text-opacity-75 block m-2`}
                 >
                   <Icon className="w-8 h-8" title={title} />
@@ -41,8 +42,8 @@ export default function WebFoot() {
           href={litePaper}
           className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
           target="_blank"
-          rel="noreferrer noopener"
-          download="AP Litepaper"
+          rel="noreferrer"
+          download
         >
           Download Litepaper
         </a>
