@@ -9,3 +9,11 @@ export enum chains {
 export type ContractAddrs = {
   [index: string]: AccAddress;
 };
+
+export interface TCAList {
+  tca_members: string[];
+}
+export type Donor = { address: string; total_ust: string };
+export interface Donors {
+  donors: Donor[];
+}
