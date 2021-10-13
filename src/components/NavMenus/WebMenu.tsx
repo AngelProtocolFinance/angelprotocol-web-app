@@ -23,12 +23,12 @@ export default function WebMenu() {
           For Donors
         </NavLink>
       </li>
-      <li className="">
+      <li className="mr-4">
         <NavLink
-          to={`${site.app}/${app.tca}`}
-          className="uppercase block w-24 text-center p-1 rounded-lg text-white bg-angel-blue"
+          to={`${site.app}${app.index}`}
+          className={`${linkStyles.className} border py-2 px-4 border-angel-blue rounded-full hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
         >
-          Donate
+          Launch App
         </NavLink>
       </li>
     </ul>
