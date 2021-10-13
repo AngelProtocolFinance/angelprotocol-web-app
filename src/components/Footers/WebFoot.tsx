@@ -6,6 +6,7 @@ import {
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaTelegramPlane } from "react-icons/fa";
+import { RiDiscordFill } from "react-icons/ri";
 
 export default function WebFoot() {
   return (
@@ -81,5 +82,12 @@ const links = [
     link: "https://angelprotocol.medium.com/",
     textColor: "text-gray-800",
     title: "Medium",
+  },
+  {
+    id: 5,
+    Icon: RiDiscordFill,
+    link: "https://discord.gg/RhqA652ySA",
+    textColor: "text-gray-800",
+    title: "Discord",
   },
 ];
