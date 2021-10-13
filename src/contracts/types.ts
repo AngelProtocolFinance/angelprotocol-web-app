@@ -6,6 +6,10 @@ export enum chains {
   localterra = "localterra",
 }
 
+export type URLs = {
+  [key in chains]: string;
+};
+
 export type ContractAddrs = {
   [index: string]: AccAddress;
 };

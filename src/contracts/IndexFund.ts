@@ -6,6 +6,7 @@ import {
   MsgExecuteContract,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { urls } from "App/chains";
 import Contract from "./Contract";
 import { chains, ContractAddrs, Donors, TCAList } from "./types";
 
@@ -13,11 +14,6 @@ export default class Indexfund extends Contract {
   fund_id?: number;
   currContractAddr: string;
   //contract address
-  static indexFundAddresses: ContractAddrs = {
-    [chains.mainnet]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
-    [chains.testnet]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
-    [chains.localterra]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
-  };
 
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet: ConnectedWallet, fund_id?: number) {
@@ -27,6 +23,25 @@ export default class Indexfund extends Contract {
       Indexfund.indexFundAddresses[this.wallet.network.chainID];
   }
 
+  static indexFundAddresses: ContractAddrs = {
+    [chains.mainnet]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
+    [chains.testnet]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+    [chains.localterra]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+  };
+
+  static async getFundDonations(
+    //handle chainID here as needed in determining contract address
+    chainID = chains.mainnet as string,
+    url = urls[chains.mainnet] as string
+  ): Promise<Donors> {
+    const client = this.makeStaticCLient(chainID, url);
+    const contractAddr = Indexfund.indexFundAddresses[chainID];
+    return client.wasm.contractQuery<Donors>(contractAddr, {
+      active_fund_donations: {},
+    });
+  }
+
+  //TODO: convert his query to static client also
   async getTCAList(): Promise<string[]> {
     const res = await this.client.wasm.contractQuery<TCAList>(
       this.currContractAddr,
@@ -35,12 +50,6 @@ export default class Indexfund extends Contract {
       }
     );
     return res.tca_members;
-  }
-
-  async getFundDonations(): Promise<Donors> {
-    return this.client.wasm.contractQuery<Donors>(this.currContractAddr, {
-      active_fund_donations: {},
-    });
   }
 
   async createDepositTx(

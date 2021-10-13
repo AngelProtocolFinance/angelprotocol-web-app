@@ -35,8 +35,7 @@ const App = () => {
           <Route path={`${path}/${app.login}`} component={Login} />
           {/* <Route path={`${path}/${app.register}`} component={Register} /> */}
           <Route path={`${path}/${app.tca}`} component={TCA} />
-
-          <Route path={`${path}/${app.leaders}`} component={Leaderboard} />
+          <Route path={`${path}${app.index}`} component={Leaderboard} />
           <Redirect from="*" to={site.home} />
         </Switch>
         <AppFoot />

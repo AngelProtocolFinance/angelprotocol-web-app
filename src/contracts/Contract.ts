@@ -20,6 +20,10 @@ export default class Contract {
     this.getTxResponse = this.getTxResponse.bind(this);
   }
 
+  static makeStaticCLient(chainID: string, URL: string) {
+    return new LCDClient({ chainID, URL });
+  }
+
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
     return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
       feeDenoms: [Denom.USD],
