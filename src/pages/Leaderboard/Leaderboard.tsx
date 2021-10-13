@@ -12,7 +12,7 @@ export default function Leaderboard() {
   return (
     <section className="pb-16 grid content-start h-screen">
       <AppHead />
-      <h3 className="pt-2 padded-container uppercase text-white-grey text-3xl font-bold">
+      <h3 className="pt-8 padded-container uppercase text-white-grey text-3xl font-bold">
         Leaderboards
       </h3>
       <Nav />
