@@ -2,7 +2,6 @@ import { useState } from "react";
 import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "pages/Charity/CharityInfo";
-// import DonationForm from "pages/Charity/CharityForm";
 import { DonationInfo } from "./DonationInfo";
 import AppHead from "components/Headers/AppHead";
 import Donator from "components/Donator/Donator";
