@@ -1,7 +1,6 @@
 export enum site {
   home = "/",
   app = "/app",
-  test = "/test",
 }
 
 export enum web {
@@ -22,7 +21,6 @@ export enum app {
   charity = "charity",
   tca = "tca",
   fund = "fund",
-  leaders = "leaderboards",
 }
 
 export enum register {

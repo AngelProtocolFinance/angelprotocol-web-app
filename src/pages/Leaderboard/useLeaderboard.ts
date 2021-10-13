@@ -10,16 +10,15 @@ export default function useLeaderboard() {
   const [error, setError] = useState("");
   const [sums, setSums] = useState<Array<[Names, number]>>([]);
   const wallet = useConnectedWallet();
+
   useEffect(() => {
     (async () => {
-      if (!wallet) {
-        return;
-      }
+      const chainID = wallet?.network.chainID;
+      const url = wallet?.network.lcd;
       try {
         setError("");
         setLoading(true);
-        const indexfund = new Indexfund(wallet);
-        const res = await indexfund.getFundDonations();
+        const res = await Indexfund.getFundDonations(chainID, url);
         const _sums: Sums = {};
         res.donors.forEach((donor) => {
           const donorName = tcaDonors[donor.address] || Names.community;
