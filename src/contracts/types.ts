@@ -13,7 +13,7 @@ export type ContractAddrs = {
 export interface TCAList {
   tca_members: string[];
 }
-export type Donor = { address: string; total_ust: string };
+export type Donation = { address: string; total_ust: string };
 export interface Donors {
-  donors: Donor[];
+  donors: Donation[];
 }

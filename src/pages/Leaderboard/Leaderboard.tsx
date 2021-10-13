@@ -2,14 +2,13 @@ import AppHead from "components/Headers/AppHead";
 import useLeaderboard from "./useLeaderboard";
 import tcaLogo from "assets/icons/tcalogo.png";
 import Entry from "./Entry";
-import { Names } from "./tcaMembers";
+import { Names } from "./names";
 import Heading from "./Heading";
 import Loader from "components/Loader/Loader";
 
 export default function Leaderboard() {
   const { sums, error, isReady, isLoading } = useLeaderboard();
   //cast names to desired type
-  const names = Object.keys(sums) as Array<Names>;
   return (
     <section className="pb-16 grid h-screen grid-rows-a1">
       <AppHead />
@@ -32,8 +31,8 @@ export default function Leaderboard() {
               </tr>
             </thead>
             <tbody>
-              {names.map((name, idx) => (
-                <Entry key={idx} name={name} amount={sums[name]} />
+              {sums.map(([name, amount], idx) => (
+                <Entry key={idx} name={name} amount={amount} />
               ))}
             </tbody>
           </table>
