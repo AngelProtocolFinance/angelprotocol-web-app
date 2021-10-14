@@ -4,14 +4,12 @@ import { FiMoreHorizontal } from "react-icons/fi";
 import { BiCopy, BiCheck } from "react-icons/bi";
 import { useState } from "react";
 import { app } from "types/routes";
-import { useRouteMatch } from "react-router";
 import { Link } from "react-router-dom";
 import useUSTBalance from "hooks/useUSTBalance";
 import toCurrency from "helpers/toCurrency";
 
 export default function Wallet() {
   //since this is under WALLET_CONNECTED status --> wallet guaranteed to be defined
-  const { path } = useRouteMatch();
   const [isAddressCopiedIcon, setIsAddressCopiedIcon] = useState(false);
   const [isAddressCopiedButton, setIsAddressCopiedButton] = useState(false);
   const { buttonProps, isOpen, handleCopy } = useCopyAddress();
@@ -84,7 +82,7 @@ export default function Wallet() {
           >
             {isAddressCopiedButton ? `Copied!` : `Copy Address`}
           </button>
-          <Link to={`${path}${app.withdraw}`}>
+          <Link to={`app/${app.withdraw}`}>
             <button className="uppercase hover:bg-angel-blue bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
               Withdraw
             </button>
