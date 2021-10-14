@@ -5,7 +5,7 @@ import { donors as tcaDonors, Sums } from "./donors";
 import { Names } from "./names";
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
-export default function useLeaderboard() {
+export default function useBoard() {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [sums, setSums] = useState<Array<[Names, number]>>([]);
@@ -30,7 +30,7 @@ export default function useLeaderboard() {
         //cast to desired types
         const entries = Object.entries(_sums) as Array<[Names, number]>;
         //in-place sort based on donation amount
-        entries.sort((curr, next) => next[1] - curr[1]);
+        entries.sort((prev, next) => next[1] - prev[1]);
 
         setLoading(false);
         setSums(entries);

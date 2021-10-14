@@ -1,11 +1,11 @@
 import Loader from "components/Loader/Loader";
-import useLeaderboard from "./useLeaderboard";
 import tcaLogo from "assets/icons/tcalogo.png";
-import Heading from "./Heading";
 import Entry from "./Entry";
+import useBoard from "./useBoard";
+import Heading from "../Heading";
 
-export default function BoardTCA() {
-  const { sums, error, isReady, isLoading } = useLeaderboard();
+export default function Board() {
+  const { sums, error, isReady, isLoading } = useBoard();
   return (
     <div className="p-6 my-5 grid grid-cols-a1 place-items-center overflow-hidden bg-white-grey rounded-xl shadow-lg padded-container">
       <img className="m-20 w-60 h-60" src={tcaLogo} />

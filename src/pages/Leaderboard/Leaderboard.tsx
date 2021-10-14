@@ -1,10 +1,10 @@
 import AppHead from "components/Headers/AppHead";
-import Nav from "./Nav";
+import Nav from "./TCA/Nav";
 
 import { Route, Switch, useRouteMatch } from "react-router";
 import { app } from "types/routes";
-import BoardTCA from "./BoardTCA";
-import BoardCharity from "./BoardCharity";
+import BoardTCA from "./TCA/Board";
+import BoardCharity from "./Charity/Board";
 
 export default function Leaderboard() {
   const { path } = useRouteMatch();
