@@ -17,6 +17,7 @@ import Charity from "pages/Charity/Charity";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "./chains";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
+import Withdraw from "pages/Withdraw/Withdraw";
 
 const App = () => {
   //this component will only render under '/app' route
@@ -38,6 +39,7 @@ const App = () => {
           <Route path={`${path}/${app.register}`} component={Register} />
           <Route path={`${path}/${app.tca}`} component={TCA} />
           <Route path={`${path}/${app.fund}`} component={Fund} />
+          <Route path={`${path}/${app.withdraw}`} component={Withdraw} />
           <Route path={`${path}${app.index}`} component={Leaderboard} />
           <Redirect from="*" to={site.home} />
         </Switch>
