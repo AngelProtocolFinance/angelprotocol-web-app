@@ -3,7 +3,7 @@ import { Names } from "./names";
 import { memberInfo } from "./infos";
 
 type Props = { name: Names; amount?: number };
-export default function Entry(props: Props) {
+export default function TCAMember(props: Props) {
   const { icon, url } = memberInfo[props.name];
   return (
     <tr>
