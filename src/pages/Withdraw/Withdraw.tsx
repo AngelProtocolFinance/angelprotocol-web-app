@@ -1,8 +1,11 @@
 import AppHead from "components/Headers/AppHead";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
+import useWithdraw from "./useWithdraw";
 
 export default function Withdraw() {
+  const { isReady, isLoading, error, liquid, locked } = useWithdraw();
+
   return (
     <section className="pb-16 grid content-start h-screen">
       <AppHead />

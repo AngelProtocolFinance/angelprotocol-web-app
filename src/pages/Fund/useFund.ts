@@ -24,7 +24,7 @@ export default function useFund() {
         }
         setError("");
         const registrar = new Registrar(wallet);
-        const splitConfig = await registrar.getConfig();
+        const splitConfig = await Registrar.getConfig();
         const _split: SplitLiq = {};
         _split.max = Number(splitConfig.max) * 100;
         _split.min = Number(splitConfig.min) * 100;

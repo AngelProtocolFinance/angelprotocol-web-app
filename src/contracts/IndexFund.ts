@@ -6,7 +6,6 @@ import {
   MsgExecuteContract,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { urls } from "App/chains";
 import Contract from "./Contract";
 import { chains, ContractAddrs, Donors, TCAList } from "./types";
 
@@ -30,13 +29,12 @@ export default class Indexfund extends Contract {
   };
 
   static async getFundDonations(
-    //handle chainID here as needed in determining contract address
-    chainID = chains.mainnet as string,
-    url = urls[chains.mainnet] as string
+    chainID?: string,
+    url?: string
   ): Promise<Donors> {
-    const client = this.makeStaticCLient(chainID, url);
-    const contractAddr = Indexfund.indexFundAddresses[chainID];
-    return client.wasm.contractQuery<Donors>(contractAddr, {
+    const _chain = chainID || chains.mainnet;
+    const contract = Indexfund.indexFundAddresses[_chain];
+    return this.queryContract<Donors>(_chain, url, contract, {
       active_fund_donations: {},
     });
   }
