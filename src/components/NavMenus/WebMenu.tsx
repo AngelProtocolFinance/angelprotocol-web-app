@@ -24,13 +24,11 @@ export default function WebMenu() {
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
-          Register
-        </NavLink>
-      </li>
-      <li className="">
-        <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
-          Donate
+        <NavLink
+          to={`${site.app}${app.index}`}
+          className={`${linkStyles.className} border py-2 px-4 border-angel-blue rounded-full hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
+        >
+          Launch App
         </NavLink>
       </li>
     </ul>

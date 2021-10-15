@@ -16,7 +16,7 @@ export default function WebHead() {
       ref={shadowRef}
       className={`grid fixed bg-white w-full h-24 z-10 transition-shadow `}
     >
-      <nav className="xl:container xl:mx-auto w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center px-5">
+      <nav className="w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center padded-container">
         <Logo />
         <WebMenu />
         <button

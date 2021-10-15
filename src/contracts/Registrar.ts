@@ -1,11 +1,13 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import { chains, ContractAddrs } from "./types";
-
-type SplitConfig = { max: string; min: string; default: string };
-interface SplitRes {
-  split_to_liquid: SplitConfig;
-}
+import {
+  chains,
+  ContractAddrs,
+  Endowment,
+  Endowments,
+  SplitConfig,
+  SplitRes,
+} from "./types";
 
 export default class Registrar extends Contract {
   currContractAddr: string;
@@ -22,13 +24,30 @@ export default class Registrar extends Contract {
     this.currContractAddr = Registrar.scAddresses[this.wallet.network.chainID];
   }
 
-  async getConfig(): Promise<SplitConfig> {
-    const res = await this.client.wasm.contractQuery<SplitRes>(
-      this.currContractAddr,
+  static async getConfig(chainID?: string, url?: string): Promise<SplitConfig> {
+    const _chain = chainID || chains.mainnet;
+    const contract = Registrar.scAddresses[_chain];
+    const result = await this.queryContract<SplitRes>(chainID, url, contract, {
+      config: {},
+    });
+    return result.split_to_liquid;
+  }
+
+  static async getEndowmentList(
+    chainID?: string,
+    url?: string
+  ): Promise<Endowment[]> {
+    const _chain = chainID || chains.mainnet;
+    const contract = Registrar.scAddresses[_chain];
+    const result = await this.queryContract<Endowments>(
+      chainID,
+      url,
+      contract,
       {
-        config: {},
+        endowment_list: {},
       }
     );
-    return res.split_to_liquid;
+
+    return result.endowments;
   }
 }

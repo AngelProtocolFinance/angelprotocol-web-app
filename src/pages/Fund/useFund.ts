@@ -14,19 +14,14 @@ export default function useFund() {
   const [split, setSplit] = useState<SplitLiq>();
   const wallet = useConnectedWallet();
 
-  console.log(split);
-
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          setError("Your wallet is not connected");
-          setLoading(false);
-          return;
-        }
         setError("");
-        const registrar = new Registrar(wallet);
-        const splitConfig = await registrar.getConfig();
+        const url = wallet?.network.lcd;
+        const chainID = wallet?.network.chainID;
+        const splitConfig = await Registrar.getConfig(chainID, url);
+        console.log(splitConfig);
         const _split: SplitLiq = {};
         _split.max = Number(splitConfig.max) * 100;
         _split.min = Number(splitConfig.min) * 100;
