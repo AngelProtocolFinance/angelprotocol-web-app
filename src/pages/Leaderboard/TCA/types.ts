@@ -41,3 +41,16 @@ export enum Names {
   hero = "Hero",
   community = "Community",
 }
+
+export type Details = {
+  icon: string;
+  url: string;
+};
+
+export type MemberInfo = {
+  [key in Names]: Details;
+};
+
+export type Sums = {
+  [key in Names]?: number;
+};

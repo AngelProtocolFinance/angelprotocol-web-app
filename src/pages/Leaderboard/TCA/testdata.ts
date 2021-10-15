@@ -1,5 +1,5 @@
 import { Donation } from "contracts/types";
-import { Names } from "./names";
+import { Names } from "./types";
 import { Donors } from "./donors";
 
 export const donors: Donors = {

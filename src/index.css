@@ -3,9 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  .cell {
-    @apply border-b;
-  }
   .padded-container {
     @apply xl:container xl:mx-auto px-5 xl:px-0;
   }
