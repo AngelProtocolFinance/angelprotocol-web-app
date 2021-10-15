@@ -4,9 +4,9 @@ import Locked from "./Locked";
 
 export default function Withdraw() {
   return (
-    <section className="pb-16 grid content-start h-screen text-white-grey font-heading">
+    <section className="pb-16 grid content-start h-screen">
       <AppHead />
-      <div className="mt-8 mx-auto w-auto">
+      <div className="mt-8 mx-auto w-auto text-white-grey">
         <h2 className="pt-8 pl-5 uppercase text-lg font-bold">
           Total Balance: $5,023
         </h2>
