@@ -3,11 +3,18 @@ import tcaLogo from "assets/images/tca1600.png";
 import Entry from "./Entry";
 import useBoard from "./useBoard";
 import Heading from "../Heading";
+import View from "../View";
+import Updator from "../Updator";
 
 export default function Board() {
-  const { sums, error, isReady, isLoading } = useBoard();
+  const { sums, error, isReady, isLoading, refresh, lastUpdate } = useBoard();
   return (
-    <div className="p-6 mt-2 my-5 grid grid-cols-a1 place-items-center overflow-hidden bg-white-grey rounded-xl shadow-lg padded-container">
+    <View className="grid-cols-a1">
+      <Updator
+        refresh={refresh}
+        lastUpdate={lastUpdate}
+        isLoading={isLoading}
+      />
       <img className="m-20 w-60" src={tcaLogo} />
       {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
@@ -34,6 +41,6 @@ export default function Board() {
           </table>
         </div>
       )}
-    </div>
+    </View>
   );
 }

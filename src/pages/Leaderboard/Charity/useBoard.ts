@@ -7,10 +7,10 @@ import { Balance } from "contracts/types";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
-const storage_key = 'charity_board",';
+const storage_key = "charity_board";
 export default function useBoard() {
   const [isLoading, setLoading] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState(new Date());
+  const [lastUpdate, setLastUpdate] = useState(Date());
   const [flag, setFlag] = useState(0);
   const [error, setError] = useState("");
   const [charities, setCharities] = useState<Array<[Addresses, Balance]>>([]);
@@ -21,7 +21,7 @@ export default function useBoard() {
       const string_data = localStorage.getItem(storage_key);
       if (string_data) {
         const saved_summary: {
-          time: Date;
+          time: string;
           entries: Array<[Addresses, Balance]>;
         } = JSON.parse(string_data);
 
@@ -53,16 +53,17 @@ export default function useBoard() {
         entries.sort(([, prev], [, next]) => next.overall - prev.overall);
 
         //save to localStorage
+        const stamp = Date();
         localStorage.setItem(
           storage_key,
           JSON.stringify({
-            time: new Date(),
+            time: stamp,
             entries,
           })
         );
-
         setCharities(entries);
         setLoading(false);
+        setLastUpdate(stamp);
       } catch (err) {
         console.log(err);
         setError("Failed to get charity data");
