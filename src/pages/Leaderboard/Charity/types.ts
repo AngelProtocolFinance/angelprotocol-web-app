@@ -17,8 +17,8 @@ export enum Addresses {
 }
 
 export type Details = {
-  //   icon: string;
-  //   url: string;
+  icon: string;
+  url: string;
   name: string;
   description: string;
 };

@@ -1,8 +1,8 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Indexfund from "contracts/IndexFund";
 import { useEffect, useState } from "react";
-import { donors as tcaDonors, Sums } from "./donors";
-import { Names } from "./names";
+import { donors as tcaDonors } from "./donors";
+import { Names, Sums } from "./types";
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
 export default function useBoard() {

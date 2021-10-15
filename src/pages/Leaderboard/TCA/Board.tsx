@@ -1,5 +1,5 @@
 import Loader from "components/Loader/Loader";
-import tcaLogo from "assets/icons/tcalogo.png";
+import tcaLogo from "assets/images/tca1600.png";
 import Entry from "./Entry";
 import useBoard from "./useBoard";
 import Heading from "../Heading";
@@ -7,8 +7,8 @@ import Heading from "../Heading";
 export default function Board() {
   const { sums, error, isReady, isLoading } = useBoard();
   return (
-    <div className="p-6 my-5 grid grid-cols-a1 place-items-center overflow-hidden bg-white-grey rounded-xl shadow-lg padded-container">
-      <img className="m-20 w-60 h-60" src={tcaLogo} />
+    <div className="p-6 mt-2 my-5 grid grid-cols-a1 place-items-center overflow-hidden bg-white-grey rounded-xl shadow-lg padded-container">
+      <img className="m-20 w-60" src={tcaLogo} />
       {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
         <Loader
