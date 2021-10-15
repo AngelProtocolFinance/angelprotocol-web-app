@@ -1,58 +1,50 @@
-import { Names } from "./names";
-import defaultIcon from "assets/tca/tca.png";
+import { Names } from "./types";
+import defaultIcon from "assets/icons/tca/tca192.png";
 
 //validators
-// import angel_validator from "assets/tca/validators/Angel@4x.png";
-import luna_orbit from "assets/tca/validators/Luna-Orbit@4x.png";
-import smartstake from "assets/tca/validators/Smartstake@4x.png";
+// import angel_validator from "assets/icons/tca/validators/Angel@4x.png";
+import luna_orbit from "assets/icons/tca/validators/Luna-Orbit@4x.png";
+import smartstake from "assets/icons/tca/validators/Smartstake@4x.png";
 
 //nfts
-import astronorcs from "assets/tca/nfts/Astronorcs@4x.png";
-import fits from "assets/tca/nfts/Fits@4x.png";
-import galatic_punks from "assets/tca/nfts/galactic-punks.png";
-import hero from "assets/tca/nfts/Hero@4x.png";
-import luna_bulls from "assets/tca/nfts/LunaBulls@4x.png";
-import millionaire from "assets/tca/nfts/Millionare@4x.png";
-import tales_of_terra from "assets/tca/nfts/Talesofterra@4x.png";
-import terran from "assets/tca/nfts/Terran@4x.png";
+import astronorcs from "assets/icons/tca/nfts/Astronorcs@4x.png";
+import fits from "assets/icons/tca/nfts/Fits@4x.png";
+import galatic_punks from "assets/icons/tca/nfts/galactic-punks.png";
+import hero from "assets/icons/tca/nfts/Hero@4x.png";
+import luna_bulls from "assets/icons/tca/nfts/LunaBulls@4x.png";
+import millionaire from "assets/icons/tca/nfts/Millionare@4x.png";
+import tales_of_terra from "assets/icons/tca/nfts/Talesofterra@4x.png";
+import terran from "assets/icons/tca/nfts/Terran@4x.png";
 
 //protocols
-import alice from "assets/tca/protocols/alice@4x.png";
-import angel from "assets/tca/protocols/Angel@4x.png";
-import apollo from "assets/tca/protocols/Apollo@4x.png";
-import astral from "assets/tca/protocols/Astral@4x.png";
-import bet_terra from "assets/tca/protocols/BetTerra@4x.png";
-import crypto11 from "assets/tca/protocols/Crypto11@4x.png";
-import edge from "assets/tca/protocols/Edge@4x.png";
-import fantasy_investar from "assets/tca/protocols/Fantasy-investar@4x.png";
-import kado from "assets/tca/protocols/Kado@4x.png";
-import kash from "assets/tca/protocols/Kash@4x.png";
-import kinetic_money from "assets/tca/protocols/Kinetic-money@4x.png";
-import kujira from "assets/tca/protocols/Kujira@4x.png";
-import loop from "assets/tca/protocols/Loop@4x.png";
-import loterra from "assets/tca/protocols/Loterra@4x.png";
-import mavolo from "assets/tca/protocols/Mavolo@4x.png";
-// import minerva from "assets/tca/protocols/minerva@4x.png";
-import neptune_finance from "assets/tca/protocols/Neptune-finance@4x.png";
-import orion from "assets/tca/protocols/Orion@4x.png";
-import plutos_pot from "assets/tca/protocols/Plutos-pot@4x.png";
-// import prism from "assets/tca/protocols/prism@4x.png";
-import pylon from "assets/tca/protocols/Pylon@4x.png";
-import spaar from "assets/tca/protocols/Spaar@4x.png";
-import spar from "assets/tca/protocols/Spar@4x.png";
-import star_terra from "assets/tca/protocols/StarTerra@4x.png";
-import talis from "assets/tca/protocols/Talis@4x.png";
-import tsunami from "assets/tca/protocols/Tsunami@4x.png";
-import white_whale from "assets/tca/protocols/White-whale@4x.png";
-
-type Assets = {
-  icon: string;
-  url: string;
-};
-
-type MemberInfo = {
-  [key in Names]: Assets;
-};
+import alice from "assets/icons/tca/protocols/alice@4x.png";
+import angel from "assets/icons/tca/protocols/Angel@4x.png";
+import apollo from "assets/icons/tca/protocols/Apollo@4x.png";
+import astral from "assets/icons/tca/protocols/Astral@4x.png";
+import bet_terra from "assets/icons/tca/protocols/BetTerra@4x.png";
+import crypto11 from "assets/icons/tca/protocols/Crypto11@4x.png";
+import edge from "assets/icons/tca/protocols/Edge@4x.png";
+import fantasy_investar from "assets/icons/tca/protocols/Fantasy-investar@4x.png";
+import kado from "assets/icons/tca/protocols/Kado@4x.png";
+import kash from "assets/icons/tca/protocols/Kash@4x.png";
+import kinetic_money from "assets/icons/tca/protocols/Kinetic-money@4x.png";
+import kujira from "assets/icons/tca/protocols/Kujira@4x.png";
+import loop from "assets/icons/tca/protocols/Loop@4x.png";
+import loterra from "assets/icons/tca/protocols/Loterra@4x.png";
+import mavolo from "assets/icons/tca/protocols/Mavolo@4x.png";
+// import minerva from "assets/icons/tca/protocols/minerva@4x.png";
+import neptune_finance from "assets/icons/tca/protocols/Neptune-finance@4x.png";
+import orion from "assets/icons/tca/protocols/Orion@4x.png";
+import plutos_pot from "assets/icons/tca/protocols/Plutos-pot@4x.png";
+// import prism from "assets/icons/tca/protocols/prism@4x.png";
+import pylon from "assets/icons/tca/protocols/Pylon@4x.png";
+import spaar from "assets/icons/tca/protocols/Spaar@4x.png";
+import spar from "assets/icons/tca/protocols/Spar@4x.png";
+import star_terra from "assets/icons/tca/protocols/StarTerra@4x.png";
+import talis from "assets/icons/tca/protocols/Talis@4x.png";
+import tsunami from "assets/icons/tca/protocols/Tsunami@4x.png";
+import white_whale from "assets/icons/tca/protocols/White-whale@4x.png";
+import { MemberInfo } from "./types";
 
 const defaultUrl = "https://terraalliance.io/";
 

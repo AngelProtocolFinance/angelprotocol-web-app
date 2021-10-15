@@ -94,6 +94,7 @@ module.exports = {
       minHeight: {
         r15: "15rem",
         modal: "300px",
+        "leader-table": "36rem",
         10: "10",
       },
       width: {

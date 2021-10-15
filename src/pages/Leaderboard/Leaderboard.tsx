@@ -1,18 +1,18 @@
 import AppHead from "components/Headers/AppHead";
-import Nav from "./Nav";
+import Nav from "./TCA/Nav";
 
 import { Route, Switch, useRouteMatch } from "react-router";
 import { app } from "types/routes";
-import BoardTCA from "./BoardTCA";
-import BoardCharity from "./BoardCharity";
+import BoardTCA from "./TCA/Board";
+import BoardCharity from "./Charity/Board";
 
 export default function Leaderboard() {
   const { path } = useRouteMatch();
   //cast names to desired type
   return (
-    <section className="pb-16 grid content-start h-screen">
+    <section className="pb-16 grid content-start min-h-screen">
       <AppHead />
-      <h3 className="pt-8 padded-container uppercase text-white-grey text-3xl font-bold">
+      <h3 className="pt-6 padded-container uppercase text-white-grey text-3xl font-bold">
         Leaderboards
       </h3>
       <Nav />
