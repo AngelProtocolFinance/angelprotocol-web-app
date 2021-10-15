@@ -1,14 +1,21 @@
 import Loader from "components/Loader/Loader";
-import useLeaderboard from "./useLeaderboard";
-import tcaLogo from "assets/icons/tcalogo.png";
-import Heading from "./Heading";
+import tcaLogo from "assets/images/tca1600.png";
 import Entry from "./Entry";
+import useBoard from "./useBoard";
+import Heading from "../Heading";
+import View from "../View";
+import Updator from "../Updator";
 
-export default function BoardTCA() {
-  const { sums, error, isReady, isLoading } = useLeaderboard();
+export default function Board() {
+  const { sums, error, isReady, isLoading, refresh, lastUpdate } = useBoard();
   return (
-    <div className="p-6 my-5 grid grid-cols-a1 place-items-center overflow-hidden bg-white-grey rounded-xl shadow-lg padded-container">
-      <img className="m-20 w-60 h-60" src={tcaLogo} />
+    <View className="grid-cols-a1">
+      <Updator
+        refresh={refresh}
+        lastUpdate={lastUpdate}
+        isLoading={isLoading}
+      />
+      <img className="m-20 w-60" src={tcaLogo} />
       {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
         <Loader
@@ -34,6 +41,6 @@ export default function BoardTCA() {
           </table>
         </div>
       )}
-    </div>
+    </View>
   );
 }
