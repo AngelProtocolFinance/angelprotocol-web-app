@@ -1,23 +1,21 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-
-interface SCAddresses {
-  [index: string]: string;
-}
-
-type SplitConfig = { max: string; min: string; default: string };
-interface SplitRes {
-  split_to_liquid: SplitConfig;
-}
+import {
+  chains,
+  ContractAddrs,
+  Endowment,
+  Endowments,
+  SplitConfig,
+  SplitRes,
+} from "./types";
 
 export default class Registrar extends Contract {
   currContractAddr: string;
   //contract address
-  static scAddresses: SCAddresses = {
-    "bombay-12": "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
-    localterra: "",
-    "tequila-0004": "",
-    "columbus-5": "",
+  static scAddresses: ContractAddrs = {
+    [chains.mainnet]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
+    [chains.testnet]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+    [chains.localterra]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
   };
 
   //may need to re-implement to handle multiple currencies in the future
@@ -26,13 +24,30 @@ export default class Registrar extends Contract {
     this.currContractAddr = Registrar.scAddresses[this.wallet.network.chainID];
   }
 
-  async getConfig(): Promise<SplitConfig> {
-    const res = await this.client.wasm.contractQuery<SplitRes>(
-      this.currContractAddr,
+  static async getConfig(chainID?: string, url?: string): Promise<SplitConfig> {
+    const _chain = chainID || chains.mainnet;
+    const contract = Registrar.scAddresses[_chain];
+    const result = await this.queryContract<SplitRes>(chainID, url, contract, {
+      config: {},
+    });
+    return result.split_to_liquid;
+  }
+
+  static async getEndowmentList(
+    chainID?: string,
+    url?: string
+  ): Promise<Endowment[]> {
+    const _chain = chainID || chains.mainnet;
+    const contract = Registrar.scAddresses[_chain];
+    const result = await this.queryContract<Endowments>(
+      chainID,
+      url,
+      contract,
       {
-        config: {},
+        endowment_list: {},
       }
     );
-    return res.split_to_liquid;
+
+    return result.endowments;
   }
 }

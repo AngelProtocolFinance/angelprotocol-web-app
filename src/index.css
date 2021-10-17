@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .padded-container {
+    @apply xl:container xl:mx-auto px-5 xl:px-0;
+  }
+}
+
 @layer utilities {
   .aspect-square {
     aspect-ratio: 1/1;
@@ -20,21 +26,6 @@
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
-  }
-
-  .youtube-wrapper {
-    aspect-radio: 16/9;
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 */
-    height: 0;
-  }
-
-  .youtube-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
   }
 
   .scroll-hidden {

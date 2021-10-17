@@ -24,9 +24,8 @@ export default function useUSTBalance(): number {
         setBalance(0);
         return;
       }
-      const UST_coin = UUST_coin.div(1_000_000);
-      const amount = UST_coin.toData().amount;
-      setBalance(Number(amount));
+      const ustAmount = UUST_coin.amount.toNumber() / 1e6;
+      setBalance(Number(ustAmount));
     })();
   }, [wallet]);
 

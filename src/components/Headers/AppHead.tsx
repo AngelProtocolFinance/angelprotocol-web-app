@@ -4,7 +4,7 @@ import TerraConnector from "components/TerraConnector/TerraConnector";
 
 export default function AppHead() {
   return (
-    <div className="flex items-center justify-between xl:container xl:mx-auto w-full px-5 h-24">
+    <div className="flex items-center justify-between w-full padded-container h-24">
       <Logo />
       <div className="flex">
         <Search />

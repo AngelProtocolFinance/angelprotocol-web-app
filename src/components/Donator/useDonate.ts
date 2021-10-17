@@ -21,7 +21,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     //values.split = split to locked acc
     const splitToLiquid = 100 - values.split
 
-    console.log(values)
 
     actions.setSubmitting(true);
     if (!wallet) {
@@ -104,7 +103,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           7 //poll 7 items before giving up
         );
 
-        console.log(txInfo);
         if (!txInfo) {
           setStatus({
             step: Steps.error,
@@ -113,7 +111,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         } else {
           //code property is present on failed transaction info
           if (!txInfo.code) {
-            const depositAmount = getDepositAmount(txInfo.logs!);
+            const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
             setStatus({
               step: Steps.success,
               message: `Thank you for your donation!`,
