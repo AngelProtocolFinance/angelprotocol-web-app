@@ -16,7 +16,7 @@ export default function Alignment() {
           className={`${transitionIn(
             isVisible,
             Direction.fromLeft
-          )} w-video:sm rounded-sm shadow-lg mb-4 lg:mb-0`}
+          )} w-135 rounded-sm shadow-lg mb-4 lg:mb-0`}
         />
       </div>
       <article

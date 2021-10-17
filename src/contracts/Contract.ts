@@ -1,11 +1,18 @@
-import { Coin, Denom, LCDClient, Msg, StdFee } from "@terra-money/terra.js";
+import {
+  AccAddress,
+  Coin,
+  Denom,
+  LCDClient,
+  Msg,
+  StdFee,
+} from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { urls } from "App/chains";
+import { chains } from "./types";
 
 export default class Contract {
   wallet: ConnectedWallet;
   client: LCDClient;
-  static gasAdjustment = 1.2; //use gas units 20% greater than estimate
-  static gasPrices = [new Coin(Denom.USD, 0.151792301)];
 
   constructor(wallet: ConnectedWallet) {
     this.wallet = wallet;
@@ -17,6 +24,20 @@ export default class Contract {
     });
 
     this.getTxResponse = this.getTxResponse.bind(this);
+  }
+
+  static gasAdjustment = 1.2; //use gas units 20% greater than estimate
+  //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
+  static gasPrices = [new Coin(Denom.USD, 0.5)];
+
+  static async queryContract<T>(
+    chainID = chains.mainnet as string,
+    URL = urls[chains.mainnet] as string,
+    contractAddr: AccAddress,
+    message: { [index: string]: any }
+  ): Promise<T> {
+    const client = new LCDClient({ chainID, URL });
+    return await client.wasm.contractQuery<T>(contractAddr, message);
   }
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
