@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import Registrar from "contracts/Registrar";
 import Account from "contracts/Account";
 import { Addresses } from "./types";
-import { Balance } from "contracts/types";
+import { Balance, chains } from "contracts/types";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
-const storage_key = "charity_board";
 export default function useBoard() {
   const [isLoading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(Date());
@@ -15,6 +14,9 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [charities, setCharities] = useState<Array<[Addresses, Balance]>>([]);
   const wallet = useConnectedWallet();
+  const chainID = wallet?.network.chainID;
+  const url = wallet?.network.lcd;
+  const storage_key = `charity_board_${chainID || chains.mainnet}`;
 
   useEffect(() => {
     (async () => {
@@ -31,8 +33,6 @@ export default function useBoard() {
       }
 
       try {
-        const chainID = wallet?.network.chainID;
-        const url = wallet?.network.lcd;
         setError("");
         setLoading(true);
         const _endowments = await Registrar.getEndowmentList(chainID, url);

@@ -107,6 +107,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ["disabled"],
+      textColor: ["disabled"],
     },
   },
   plugins: [],
