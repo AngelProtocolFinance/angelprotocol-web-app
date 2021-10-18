@@ -11,12 +11,12 @@ export default function Withdraw() {
     <section className="pb-16 grid content-start h-screen">
       <AppHead />
       {error && (
-        <div className="relative min-h-leader-table grid place-items-center overflow-hidden padded-container">
-          <p className="grid items-center uppercase text-white-grey">{error}</p>
+        <div className="min-h-leader-table grid place-items-center">
+          <p className="uppercase text-white-grey">{error}</p>
         </div>
       )}
       {isLoading && (
-        <div className="relative min-h-leader-table grid place-items-center overflow-hidden padded-container">
+        <div className="min-h-leader-table grid place-items-center">
           <Loader
             gapClass="gap-4"
             widthClass="w-4"
