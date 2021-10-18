@@ -62,12 +62,14 @@ module.exports = {
         process: "36rem",
         banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
+        "leader-table": "36rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
         a11: "auto 1fr 1fr",
+        aa1: "auto auto 1fr",
         dashboard: "auto 1fr auto",
         wallet: "auto 1fr 1fr",
         "2a": "repeat(2,auto)",
@@ -92,6 +94,7 @@ module.exports = {
       minHeight: {
         r15: "15rem",
         modal: "300px",
+        "leader-table": "36rem",
         10: "10",
       },
       width: {
@@ -104,6 +107,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ["disabled"],
+      textColor: ["disabled"],
     },
   },
   plugins: [],
