@@ -5,7 +5,6 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-
 import Dashboard from "pages/Dashboard";
 import Login from "pages/Login/Login";
 import Register from "pages/registration/index";
@@ -19,7 +18,6 @@ import { mainnet, walletConnectChainIds } from "./chains";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 
 const App = () => {
-  //this component will only render under '/app' route
   //{match.path} is '/app'
   const { path } = useRouteMatch();
   const location = useLocation();

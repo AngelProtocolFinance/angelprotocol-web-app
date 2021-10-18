@@ -11,7 +11,6 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
-  console.log("userData => ", userData);
   const { data, error, isLoading, isFetching, refetch } =
     useGetCharityDataQuery(userData.PK);
 
@@ -170,6 +169,14 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
+                onClickEvent={() =>
+                  history.push({
+                    pathname: register.key_person,
+                    state: {
+                      data: data?.KeyPerson,
+                    },
+                  })
+                }
                 activeColor="thin-blue"
                 title="Continue"
                 width={40}

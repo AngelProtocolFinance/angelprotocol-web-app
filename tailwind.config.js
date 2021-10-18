@@ -44,7 +44,7 @@ module.exports = {
         orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
-        "failed-red": "#EE4444",
+        "failed-red": "#FE4454",
       },
 
       fontSize: {
