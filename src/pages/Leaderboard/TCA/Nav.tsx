@@ -6,7 +6,7 @@ export default function Nav() {
     "uppercase text-lg text-white-grey py-1 w-28 text-center rounded-sm border-t border-b border-opacity-20";
   const activeStyles = "bg-white bg-opacity-20";
   return (
-    <div className="padded-container flex py-2">
+    <div className="padded-container flex mt-5 mb-1">
       <NavLink
         activeClassName={activeStyles}
         className={linkStyles}
