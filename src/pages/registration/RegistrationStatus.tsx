@@ -11,7 +11,6 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
-  console.log("userData => ", userData);
   const { data, error, isLoading, isFetching, refetch } =
     useGetCharityDataQuery(userData.PK);
 
@@ -156,6 +155,14 @@ const RegistrationStatus = () => {
             <div className="">
               <CustomButton
                 classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
+                onClickEvent={() =>
+                  history.push({
+                    pathname: register.key_person,
+                    state: {
+                      data: data?.KeyPerson,
+                    },
+                  })
+                }
                 title="Continue"
                 isDisabled={userData.PK == ""}
               />
