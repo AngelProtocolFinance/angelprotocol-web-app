@@ -11,7 +11,8 @@ export const registerAPIs = createApi({
     getRegisteredCharities: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration/list?regStatus=${data.regStatus}`,
+          url: `registration/list`,
+          params: { regStatus: data.regStatus },
           method: "GET",
         };
       },
@@ -20,7 +21,8 @@ export const registerAPIs = createApi({
     checkPreviousRegistration: builder.mutation<any, string>({
       query: (uuid) => {
         return {
-          url: `registration?uuid=${uuid}`,
+          url: `registration`,
+          params: { uuid: uuid },
           method: "GET",
         };
       },
@@ -29,7 +31,8 @@ export const registerAPIs = createApi({
     createCharityMetaData: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration?uuid=${data.uuid}`,
+          url: `registration`,
+          params: { uuid: data.uuid },
           method: "POST",
           body: data.body,
         };
@@ -39,7 +42,8 @@ export const registerAPIs = createApi({
     requestEmail: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration/build-email?uuid=${data.uuid}&type=${data.type}`,
+          url: `registration/build-email`,
+          params: { uuid: data.uuid, type: data.type },
           method: "POST",
           body: data.body,
         };
@@ -57,7 +61,8 @@ export const registerAPIs = createApi({
     updatePersonData: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration?uuid=${data.ContactPerson.UUID}`,
+          url: `registration`,
+          params: { uuid: data.ContactPerson.UUID },
           method: "PUT",
           body: {
             ...data.ContactPerson,

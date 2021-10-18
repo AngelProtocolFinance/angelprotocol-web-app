@@ -4,7 +4,7 @@ const CustomButton = (props: any) => {
     <div>
       {props.type === "submit" ? (
         <button
-          className={className}
+          className={props.classNames}
           type={props.type}
           disabled={props.isDisabled}
         >
@@ -12,7 +12,7 @@ const CustomButton = (props: any) => {
         </button>
       ) : (
         <button
-          className={className}
+          className={props.classNames}
           disabled={props.isDisabled}
           onClick={() => props.onClickEvent()}
         >

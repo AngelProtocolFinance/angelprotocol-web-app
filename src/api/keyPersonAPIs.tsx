@@ -11,7 +11,8 @@ export const keyPersonAPIs = createApi({
     updateKeyPersonData: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity/key-person?uuid=${data.uuid}`,
+          url: `charity/key-person`,
+          params: { uuid: data.PK },
           method: "PUT",
           body: data.body,
         };
@@ -21,7 +22,8 @@ export const keyPersonAPIs = createApi({
     addNewKeyCharity: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity/key-person?uuid=${data.uuid}`,
+          url: `charity/key-person`,
+          params: { uuid: data.PK },
           method: "POST",
           body: data.body,
         };

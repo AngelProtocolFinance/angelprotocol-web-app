@@ -53,12 +53,9 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
-                activeColor="yellow-blue"
+                classNames="disabled:bg-gray-300 bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() => history.push(register.detail)}
                 title="Change"
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={userData.PK == ""}
               />
             </div>
@@ -73,12 +70,9 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
-                activeColor="thin-blue"
+                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() => history.push(register.wallet_check)}
                 title={status.wallet_address === 0 ? "Change" : "Continue"}
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={userData.PK == ""}
               />
             </div>
@@ -93,12 +87,9 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
-                activeColor="thin-blue"
+                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() => history.push(register.wallet_check)}
                 title={status.document === 0 ? "Change" : "Continue"}
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={userData.PK == ""}
               />
             </div>
@@ -117,12 +108,9 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
-                activeColor="thin-blue"
+                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() => history.push(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={status.endowment === 2 || userData.PK == ""}
               />
             </div>
@@ -149,12 +137,9 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
-                activeColor="yellow-blue"
+                classNames="disabled:bg-gray-300 bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() => history.push(register.charity_profile)}
                 title="Change"
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={userData.PK == ""}
               />
             </div>
@@ -169,6 +154,7 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <CustomButton
+                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
                 onClickEvent={() =>
                   history.push({
                     pathname: register.key_person,
@@ -177,11 +163,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                activeColor="thin-blue"
                 title="Continue"
-                width={40}
-                height={10}
-                margin="mt-3"
                 isDisabled={userData.PK == ""}
               />
             </div>
@@ -190,12 +172,9 @@ const RegistrationStatus = () => {
       </div>
       <div>
         <CustomButton
-          activeColor="thin-blue"
+          classNames="disabled:bg-gray-300 bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
           title={"Go to " + userData.CharityName + "'s profile"}
           onClickEvent={() => history.push(register.charity_profile)}
-          width={64}
-          height={10}
-          margin="mt-3"
           isDisabled={!status.completed || userData.PK == ""}
         />
       </div>

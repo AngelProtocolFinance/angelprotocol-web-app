@@ -11,7 +11,8 @@ export const charityAPIs = createApi({
     addCharityMetadata: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity?uuid=${data.uuid}`,
+          url: `charity`,
+          params: { uuid: data.uuid },
           method: "POST",
           body: data.body,
         };
@@ -21,7 +22,8 @@ export const charityAPIs = createApi({
     updateCharityMetadata: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `charity?uuid=${data.uuid}`,
+          url: `charity`,
+          params: { uuid: data.uuid },
           method: "PUT",
           body: data.body,
         };
@@ -31,7 +33,8 @@ export const charityAPIs = createApi({
     getCharityData: builder.query<any, any>({
       query: (uuid) => {
         return {
-          url: `charity?uuid=${uuid}`,
+          url: `charity`,
+          params: { uuid: uuid },
           method: "Get",
         };
       },
@@ -40,7 +43,8 @@ export const charityAPIs = createApi({
     getCharityListEndowment: builder.query<any, any>({
       query: (status) => {
         return {
-          url: `charity/list?endowmentStatus=${status}`,
+          url: `charity/list`,
+          params: { endowmentStatus: status },
           method: "GET",
         };
       },
