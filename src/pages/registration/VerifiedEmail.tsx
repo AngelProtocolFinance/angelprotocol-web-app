@@ -91,39 +91,19 @@ const VerifiedEmail = () => {
       )}
       <div className="mb-2">
         {is_expired ? (
-          // <button
-          //   className="disabled:bg-grey-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          //   onClick={resendVerificationEmail}
-          //   disabled={isLoading}
-          // >
-          //   resend
-          // </button>
           <CustomButton
-            activeColor="thin-blue"
+            classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
             onClickEvent={resendVerificationEmail}
             title="resend"
-            width={48}
-            height={12}
-            margin="mt-3"
             isDisabled={isLoading}
           />
         ) : (
-          // <button
-          //   className="disabled:bg-grey-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-          //   onClick={() => history.push(`/app/register/${register.status}`)}
-          //   disabled={isLoading}
-          // >
-          //   Continue
-          // </button>
           <CustomButton
-            activeColor="thin-blue"
+            classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
             onClickEvent={() =>
               history.push(`/app/register/${register.status}`)
             }
             title="Continue"
-            width={48}
-            height={12}
-            margin="mt-3"
             isDisabled={isLoading}
           />
         )}

@@ -90,12 +90,9 @@ const Registration = () => {
       </div>
       <div className="mb-2">
         <CustomButton
-          activeColor="orange"
           onClickEvent={() => history.push(`${url}/${register.detail}`)}
           title="Start"
-          width={48}
-          height={12}
-          margin="mb-3"
+          classNames="disabled:bg-gray-300 bg-orange w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
         />
         <div className="cursor-pointer mb-3">
           <p className="text-xl font-bold">OR</p>
@@ -127,12 +124,9 @@ const Registration = () => {
                   component="div"
                 />
                 <CustomButton
-                  activeColor="thin-blue"
                   type="submit"
                   title="Resume"
-                  width={48}
-                  height={12}
-                  margin="mt-3"
+                  classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
                   isDisabled={isLoading || isSubmitting}
                 />
               </Form>
