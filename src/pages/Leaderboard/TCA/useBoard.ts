@@ -1,11 +1,11 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Indexfund from "contracts/IndexFund";
+import { chains } from "contracts/types";
 import { useEffect, useState } from "react";
 import { donors as tcaDonors } from "./donors";
 import { Names, Sums } from "./types";
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
-const storage_key = "tca_boards";
 export default function useBoard() {
   const [isLoading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(Date());
@@ -13,6 +13,9 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [sums, setSums] = useState<Array<[Names, number]>>([]);
   const wallet = useConnectedWallet();
+  const chainID = wallet?.network.chainID;
+  const url = wallet?.network.lcd;
+  const storage_key = `tca_boards_${chainID || chains.mainnet}`;
 
   useEffect(() => {
     (async () => {
@@ -27,8 +30,6 @@ export default function useBoard() {
         setLastUpdate(saved_sums.time);
         return;
       }
-      const chainID = wallet?.network.chainID;
-      const url = wallet?.network.lcd;
       try {
         setError("");
         setLoading(true);
