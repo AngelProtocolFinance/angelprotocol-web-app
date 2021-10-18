@@ -28,13 +28,9 @@ export default class Indexfund extends Contract {
     [chains.localterra]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
   };
 
-  static async getFundDonations(
-    chainID?: string,
-    url?: string
-  ): Promise<Donors> {
-    const _chain = chainID || chains.mainnet;
-    const contract = Indexfund.indexFundAddresses[_chain];
-    return this.queryContract<Donors>(_chain, url, contract, {
+  static async getFundDonations(chainID: string, url: string): Promise<Donors> {
+    const contract = Indexfund.indexFundAddresses[chainID];
+    return this.queryContract<Donors>(chainID, url, contract, {
       active_fund_donations: {},
     });
   }
