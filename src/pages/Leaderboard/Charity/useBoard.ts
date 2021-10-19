@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import RegistrarQuerier from "contracts/queriers/Registrar";
 import AccountQuerrier from "contracts/queriers/Account";
 import { Addresses } from "./types";
-import { Balance, chains } from "contracts/types";
+import { chains, Balance } from "contracts/types";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
@@ -50,7 +50,11 @@ export default function useBoard() {
         results.forEach((result) => {
           if (result.status === "fulfilled") {
             const { total_locked, total_liq, overall, address } = result.value;
-            _sums[address] = { total_locked, total_liq, overall };
+            _sums[address] = {
+              total_locked,
+              total_liq,
+              overall,
+            };
           }
         });
         const entries = Object.entries(_sums) as Array<[Addresses, Balance]>;
