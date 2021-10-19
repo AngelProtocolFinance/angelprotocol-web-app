@@ -7,8 +7,9 @@ import {
   StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { chains, ContractAddrs, Donors, TCAList } from "./types";
+import { Donors, sc, TCAList } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -19,14 +20,8 @@ export default class Indexfund extends Contract {
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
-    this.address = Indexfund.indexFundAddresses[this.chainID];
+    this.address = contracts[this.chainID][sc.index_fund];
   }
-
-  static indexFundAddresses: ContractAddrs = {
-    [chains.mainnet]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
-    [chains.testnet]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
-    [chains.localterra]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
-  };
 
   async getFundDonations() {
     return await this.query<Donors>(this.address, {

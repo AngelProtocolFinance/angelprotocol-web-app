@@ -6,6 +6,12 @@ export enum chains {
   localterra = "localterra",
 }
 
+export enum sc {
+  index_fund = "index_fund",
+  registrar = "registrar",
+  anchor = "anchor",
+}
+
 export type URLs = {
   [key in chains]: string;
 };

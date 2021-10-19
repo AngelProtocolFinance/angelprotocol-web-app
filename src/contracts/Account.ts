@@ -22,12 +22,6 @@ import Vault from "./Vault";
 export default class Account extends Contract {
   address: AccAddress;
 
-  static anchorAddrs: ContractAddrs = {
-    [chains.mainnet]: "terra1sepfj7s0aeg5967uxnfk4thzlerrsktkpelm5s",
-    [chains.testnet]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
-    [chains.localterra]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
-  };
-
   constructor(accountAddr: AccAddress, wallet?: ConnectedWallet) {
     super(wallet);
     this.address = accountAddr;
