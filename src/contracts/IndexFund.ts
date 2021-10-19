@@ -4,7 +4,7 @@ import {
   Dec,
   Denom,
   MsgExecuteContract,
-  StdFee,
+  // StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
@@ -53,8 +53,8 @@ export default class Indexfund extends Contract {
       },
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
-    // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
+    const fee = await this.estimateFee([depositMsg]);
+    // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 
