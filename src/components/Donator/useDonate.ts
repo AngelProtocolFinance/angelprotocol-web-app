@@ -5,10 +5,8 @@ import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
 import { AccAddress, Denom } from "@terra-money/terra.js";
-import pollTxInfo from "./pollTxInfo";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
-import { TxResultFail } from "contracts/Errors";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();

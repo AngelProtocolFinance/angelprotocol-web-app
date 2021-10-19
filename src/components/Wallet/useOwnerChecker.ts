@@ -29,6 +29,7 @@ export default function useOwnerChecker() {
         setCharityOwner(false);
       }
     })();
+    //eslint-disable-next-line
   }, [wallet]);
 
   return { isCharityOwner };

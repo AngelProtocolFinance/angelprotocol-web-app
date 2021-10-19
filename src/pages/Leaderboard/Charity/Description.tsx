@@ -1,14 +1,17 @@
 import { charities, defaultURL, defIcon } from "./charities";
 import { Addresses } from "./types";
-import useDetails from "./useDetails";
 
 type Props = {
   address: Addresses;
 };
 
 export default function Description(props: Props) {
-  const { url = defaultURL, icon = defIcon } = charities[props.address] || {}; //details only exists on mainnet
-  const { name, desc } = useDetails(props.address);
+  const {
+    url = defaultURL,
+    icon = defIcon,
+    name = "Charity",
+    description = "failed to get charity data",
+  } = charities[props.address] || {}; //details only exists on mainnet
   return (
     <div className="flex items-center">
       <img src={icon} alt="" className="w-28 h-20 m-1 object-contain mr-4" />
@@ -24,7 +27,7 @@ export default function Description(props: Props) {
         <p
           className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
         >
-          {desc}
+          {description}
         </p>
       </div>
     </div>

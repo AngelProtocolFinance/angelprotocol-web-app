@@ -66,6 +66,7 @@ export default function useBoard() {
         setError("Failed to get donation data. Please try again later");
       }
     })();
+    //eslint-disable-next-line
   }, [wallet, flag]);
 
   function refresh() {

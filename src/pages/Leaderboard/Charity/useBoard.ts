@@ -75,6 +75,7 @@ export default function useBoard() {
         setLoading(false);
       }
     })();
+    //eslint-disable-next-line
   }, [wallet, flag]);
 
   function refresh() {

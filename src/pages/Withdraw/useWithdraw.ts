@@ -32,6 +32,7 @@ export default function useWithdraw() {
         setLoading(false);
       }
     })();
+    //eslint-disable-next-line
   }, [wallet]);
 
   return {

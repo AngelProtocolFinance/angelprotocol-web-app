@@ -7,7 +7,7 @@ import {
   StdFee,
   TxInfo,
 } from "@terra-money/terra.js";
-import { ConnectedWallet, Timeout } from "@terra-money/wallet-provider";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { urls } from "App/chains";
 import { Disconnected, TxResultFail } from "./Errors";
 import { chains } from "./types";
