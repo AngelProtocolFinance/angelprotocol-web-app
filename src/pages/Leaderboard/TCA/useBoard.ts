@@ -1,4 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { urls } from "App/chains";
 import Indexfund from "contracts/IndexFund";
 import { chains } from "contracts/types";
 import { useEffect, useState } from "react";
@@ -13,9 +14,9 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [sums, setSums] = useState<Array<[Names, number]>>([]);
   const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID;
-  const url = wallet?.network.lcd;
-  const storage_key = `tca_boards_${chainID || chains.mainnet}`;
+  const chainID = wallet?.network.chainID || chains.mainnet;
+  const url = wallet?.network.lcd || urls[chains.mainnet];
+  const storage_key = `tca_boards_${chainID}`;
 
   useEffect(() => {
     (async () => {
