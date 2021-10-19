@@ -25,7 +25,7 @@ export default function TerraConnector() {
         <div>
           {isConnectible && (
             <button
-              className="uppercase hover:bg-angel-orange bg-orange rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
+              className="uppercase hover:bg-opacity-90 bg-grey-accent rounded-xl w-40 h-8 d-flex justify-center items-center text-sm text-white font-bold"
               onClick={handleConnect}
             >
               Connect Wallet

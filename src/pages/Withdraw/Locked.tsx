@@ -1,3 +1,4 @@
+import { FaCog, FaLock } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 
 type LockedBalance = {
@@ -6,11 +7,19 @@ type LockedBalance = {
 
 export default function Locked(props: LockedBalance) {
   return (
-    <div className="flex-auto pl-1 pr-1">
-      <div className="p-4 block bg-angel-orange overflow-hidden h-full rounded-lg">
-        <h3 className="mb-2 text-lg font-bold uppercase">Locked Account</h3>
+    <div className="flex-none pl-1 pr-1">
+      <div className="p-4 block bg-grey-accent overflow-hidden h-full rounded-lg">
+        <div className="flex justify-end">
+          <FaCog size={25} title="Change Strategies" />
+        </div>
+        <h3 className="mb-2 text-lg font-bold uppercase">
+          Locked Account
+          <span className="inline-block">
+            <FaLock size={19} className="align-middle ml-1" />
+          </span>
+        </h3>
         <p className="text-6xl font-bold">
-          UST {toCurrency(props.lockedBalance)}
+          $ {toCurrency(props.lockedBalance)}
         </p>
         <table className="table-auto mt-4">
           <thead>

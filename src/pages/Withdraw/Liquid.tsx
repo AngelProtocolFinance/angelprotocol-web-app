@@ -1,3 +1,4 @@
+import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 
 type LiquidBalance = {
@@ -6,11 +7,14 @@ type LiquidBalance = {
 
 export default function Liquid(props: LiquidBalance) {
   return (
-    <div className="flex-auto pl-1 pr-1">
-      <div className="p-4 block bg-leaf-green overflow-hidden h-full rounded-lg">
+    <div className="flex-none pl-1 pr-1">
+      <div className="p-4 block bg-grey-accent overflow-hidden h-full rounded-lg">
+        <div className="flex justify-end">
+          <FaCog size={25} title="Change Strategies" />
+        </div>
         <h3 className="mb-2 text-lg font-bold uppercase">Liquid Account</h3>
         <p className="text-6xl font-bold">
-          UST {toCurrency(props.liquidBalance)}
+          $ {toCurrency(props.liquidBalance)}
         </p>
         <table className="table-auto mt-4">
           <thead>
