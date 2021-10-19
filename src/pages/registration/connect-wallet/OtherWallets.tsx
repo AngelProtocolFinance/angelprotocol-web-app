@@ -42,7 +42,6 @@ const OtherWallets = () => {
             onClick={() => showInfoModal("self_custody")}
           />
         </div>
-        <br />
         <div className="flex items-center my-2 justify-center">
           <button className="bg-gray-300 w-60 h-10 rounded-xl uppercase text-base font-bold text-white mr-1">
             Prime trust

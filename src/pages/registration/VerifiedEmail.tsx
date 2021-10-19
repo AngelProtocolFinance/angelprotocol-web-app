@@ -59,20 +59,14 @@ const VerifiedEmail = () => {
       </div>
       {!is_expired && (
         <div>
-          <span className="text-2xl font-bold">Thank you for registering.</span>
-          <br />
-          <span className="text-2xl font-bold">
+          <p className="text-2xl font-bold">Thank you for registering.</p>
+          <p className="text-2xl font-bold mb-10">
             {responseData.CharityName}, {responseData.FirstName}!
-          </span>
-          <br />
-          <br />
-          <span className="text-2xl font-bold">
-            Your registration reference is{" "}
-          </span>
-          <br />
-          <span className="text-2xl font-bold text-yellow-600">
+          </p>
+          <p className="text-2xl font-bold">Your registration reference is </p>
+          <p className="text-2xl font-bold text-yellow-600">
             {responseData.PK}
-          </span>
+          </p>
         </div>
       )}
       {is_expired ? (
