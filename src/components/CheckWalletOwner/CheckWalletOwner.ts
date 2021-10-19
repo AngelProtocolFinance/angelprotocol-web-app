@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Registrar from "contracts/Registrar";
 
-export default function useWithdrawButton() {
+export default function CheckWalletOwner() {
   const [isCharityOwner, setCharityOwner] = useState(false);
   const wallet = useConnectedWallet();
 
