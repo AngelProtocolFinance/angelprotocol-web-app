@@ -31,7 +31,6 @@ export default class Contract {
       gasPrices: Contract.gasPrices,
     });
 
-    this.getTxResponse = this.getTxResponse.bind(this);
     this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
@@ -46,14 +45,6 @@ export default class Contract {
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
     return this.client.tx.estimateFee(this.walletAddr!, msgs, {
       feeDenoms: [Denom.USD],
-    });
-  }
-  //bind this function in constructor to keep context
-  async getTxResponse(txhash: string): Promise<Response> {
-    return fetch(`${this.url}/txs/${txhash}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
     });
   }
 
