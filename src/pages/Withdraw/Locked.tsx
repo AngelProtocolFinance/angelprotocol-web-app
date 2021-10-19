@@ -7,7 +7,7 @@ type LockedBalance = {
 
 export default function Locked(props: LockedBalance) {
   return (
-    <div className="flex-none pl-1 pr-1">
+    <div className="flex-none pl-2 pr-2">
       <div className="p-5 block bg-grey-accent overflow-hidden h-full rounded-lg">
         <h3 className="mb-2 text-lg font-bold uppercase">
           Locked Account
@@ -16,7 +16,7 @@ export default function Locked(props: LockedBalance) {
           </span>
           <div className="float-right">
             <span className="inline-block">
-              <FaCog size={16} title="Change Strategies" />
+              <FaCog size={16} title="Coming Soon!" />
             </span>
           </div>
         </h3>

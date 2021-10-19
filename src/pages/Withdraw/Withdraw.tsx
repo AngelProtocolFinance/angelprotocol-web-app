@@ -27,15 +27,15 @@ export default function Withdraw() {
       )}
       {isReady && (
         <div className="mt-8 mx-auto w-auto text-white-grey">
-          <h2 className="pt-8 pl-5 uppercase text-lg font-bold">
+          <h2 className="pt-8 pl-6 uppercase text-lg font-bold">
             Total Balance: $ {toCurrency(overall)}
           </h2>
           <div className="flex items-stretch mt-3 mx-4">
             <Liquid liquidBalance={liquid} />
             <Locked lockedBalance={locked} />
           </div>
-          <div className="flex justify-center">
-            <button className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg mt-3 pr-4 pl-4 h-12 text-sm font-bold">
+          <div className="flex justify-center mt-4">
+            <button className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg pr-4 pl-4 h-12 text-sm font-bold">
               Withdraw from Account
             </button>
           </div>
