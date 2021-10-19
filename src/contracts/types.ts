@@ -34,6 +34,13 @@ export type Endowment = { address: string; status: string };
 export type Endowments = { endowments: Endowment[] };
 
 //Accounts
+
+export interface AccountDetails {
+  name: string;
+  description: string;
+  others: any;
+}
+
 export type Holding = { address: string; amount: string };
 export type Balance = {
   total_locked: number;

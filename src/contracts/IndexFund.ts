@@ -7,7 +7,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import { chains, ContractAddrs, Donors, TCAList } from "./types";
+import { chains, ContractAddrs } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -18,8 +18,7 @@ export default class Indexfund extends Contract {
   constructor(wallet: ConnectedWallet, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
-    this.currContractAddr =
-      Indexfund.indexFundAddresses[this.wallet.network.chainID];
+    this.currContractAddr = Indexfund.indexFundAddresses[this.chainID];
   }
 
   static indexFundAddresses: ContractAddrs = {
@@ -28,31 +27,13 @@ export default class Indexfund extends Contract {
     [chains.localterra]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
   };
 
-  static async getFundDonations(chainID: string, url: string): Promise<Donors> {
-    const contract = Indexfund.indexFundAddresses[chainID];
-    return this.queryContract<Donors>(chainID, url, contract, {
-      active_fund_donations: {},
-    });
-  }
-
-  //TODO: convert his query to static client also
-  async getTCAList(): Promise<string[]> {
-    const res = await this.client.wasm.contractQuery<TCAList>(
-      this.currContractAddr,
-      {
-        tca_list: {},
-      }
-    );
-    return res.tca_members;
-  }
-
   async createDepositTx(
     UST_amount: number | string,
     splitToLiquid?: number
   ): Promise<CreateTxOptions> {
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
     const depositMsg = new MsgExecuteContract(
-      this.wallet.terraAddress,
+      this.walletAddr,
       this.currContractAddr,
       {
         deposit: {
@@ -63,7 +44,6 @@ export default class Indexfund extends Contract {
       [new Coin(Denom.USD, micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
-    // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 

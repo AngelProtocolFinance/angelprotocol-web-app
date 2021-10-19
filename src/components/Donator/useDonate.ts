@@ -2,6 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Values, Steps, SetStatus, Status } from "./types";
 import createStatusFromError from "./createStatusFromError";
 import Indexfund from "contracts/IndexFund";
+import IndexFundQuerier from "contracts/queriers/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
 import { AccAddress, Denom } from "@terra-money/terra.js";
@@ -47,7 +48,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
       if(typeof receiver === 'number' || typeof receiver === 'undefined'){
 
         contract = new Indexfund(wallet, receiver)
-        const tcaMembers = await contract.getTCAList()
+        const querier = new IndexFundQuerier(wallet)
+        const tcaMembers = await querier.getTCAList();
         const isTca = tcaMembers.includes(wallet.walletAddress)
         if(!isTca){
           setStatus({
@@ -118,7 +120,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
               result: {
                 received: +UST_Amount,
                 deposited: depositAmount,
-                url: `https://finder.terra.money/${contract.wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             });
           } else {

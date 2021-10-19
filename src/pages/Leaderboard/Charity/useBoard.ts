@@ -1,10 +1,9 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import Registrar from "contracts/Registrar";
-import Account from "contracts/Account";
+import RegistrarQuerier from "contracts/queriers/Registrar";
+import AccountQuerrier from "contracts/queriers/Account";
 import { Addresses } from "./types";
 import { Balance, chains } from "contracts/types";
-import { urls } from "App/chains";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
@@ -16,7 +15,6 @@ export default function useBoard() {
   const [charities, setCharities] = useState<Array<[Addresses, Balance]>>([]);
   const wallet = useConnectedWallet();
   const chainID = wallet?.network.chainID || chains.mainnet;
-  const url = wallet?.network.lcd || urls[chains.mainnet];
   const storage_key = `charity_board_${chainID}`;
 
   useEffect(() => {
@@ -36,10 +34,15 @@ export default function useBoard() {
       try {
         setError("");
         setLoading(true);
-        const _endowments = await Registrar.getEndowmentList(chainID, url);
-        const queries = _endowments.map((endowment) =>
-          Account.getBalance(endowment.address, chainID, url)
-        );
+        const registrar_querier = new RegistrarQuerier(wallet);
+        const _endowments = await registrar_querier.getEndowmentList();
+        const queries = _endowments.map((endowment) => {
+          const account_querier = new AccountQuerrier(
+            endowment.address,
+            wallet
+          );
+          return account_querier.getBalance();
+        });
 
         const results = await Promise.allSettled(queries);
         const _sums: any = {};
