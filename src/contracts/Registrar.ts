@@ -24,9 +24,8 @@ export default class Registrar extends Contract {
     this.currContractAddr = Registrar.scAddresses[this.wallet.network.chainID];
   }
 
-  static async getConfig(chainID?: string, url?: string): Promise<SplitConfig> {
-    const _chain = chainID || chains.mainnet;
-    const contract = Registrar.scAddresses[_chain];
+  static async getConfig(chainID: string, url: string): Promise<SplitConfig> {
+    const contract = Registrar.scAddresses[chainID];
     const result = await this.queryContract<SplitRes>(chainID, url, contract, {
       config: {},
     });
@@ -34,11 +33,10 @@ export default class Registrar extends Contract {
   }
 
   static async getEndowmentList(
-    chainID?: string,
-    url?: string
+    chainID: string,
+    url: string
   ): Promise<Endowment[]> {
-    const _chain = chainID || chains.mainnet;
-    const contract = Registrar.scAddresses[_chain];
+    const contract = Registrar.scAddresses[chainID];
     const result = await this.queryContract<Endowments>(
       chainID,
       url,

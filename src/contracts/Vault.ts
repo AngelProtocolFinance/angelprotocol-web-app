@@ -5,8 +5,8 @@ import { Holding, Swap } from "./types";
 export default class Vault extends Contract {
   static async getUSTValue(
     holding: Holding,
-    chainID?: string,
-    url?: string
+    chainID: string,
+    url: string
   ): Promise<Dec> {
     const swap = await this.queryContract<Swap>(chainID, url, holding.address, {
       exchange_rate: { input_denom: "uusd" },

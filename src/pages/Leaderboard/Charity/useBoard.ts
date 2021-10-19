@@ -4,6 +4,7 @@ import Registrar from "contracts/Registrar";
 import Account from "contracts/Account";
 import { Addresses } from "./types";
 import { Balance, chains } from "contracts/types";
+import { urls } from "App/chains";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
@@ -14,9 +15,9 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [charities, setCharities] = useState<Array<[Addresses, Balance]>>([]);
   const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID;
-  const url = wallet?.network.lcd;
-  const storage_key = `charity_board_${chainID || chains.mainnet}`;
+  const chainID = wallet?.network.chainID || chains.mainnet;
+  const url = wallet?.network.lcd || urls[chains.mainnet];
+  const storage_key = `charity_board_${chainID}`;
 
   useEffect(() => {
     (async () => {
@@ -84,5 +85,6 @@ export default function useBoard() {
     charities,
     lastUpdate,
     refresh,
+    chainID,
   };
 }
