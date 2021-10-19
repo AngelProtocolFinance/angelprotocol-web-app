@@ -45,11 +45,8 @@ const RegistrationStatus = () => {
         <div className="infor-status my-2">
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #1: Contact Details</span>
-              <br />
-              <span className="status-text uppercase text-green-500">
-                Complete
-              </span>
+              <p className="">Step #1: Contact Details</p>
+              <p className="status-text uppercase text-green-500">Complete</p>
             </div>
             <div className="">
               <CustomButton
@@ -62,11 +59,10 @@ const RegistrationStatus = () => {
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #2: Wallet Address</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
+              <p className="">Step #2: Wallet Address</p>
+              <p className="status-text uppercase text-yellow-600">
                 {status.wallet_address === 0 ? "Complete" : "Missing"}
-              </span>
+              </p>
             </div>
             <div className="">
               <CustomButton
@@ -79,11 +75,10 @@ const RegistrationStatus = () => {
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #3: Documentation</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
+              <p className="">Step #3: Documentation</p>
+              <p className="status-text uppercase text-yellow-600">
                 {status.document === 0 ? "Complete" : "Missing"}
-              </span>
+              </p>
             </div>
             <div className="">
               <CustomButton
@@ -96,15 +91,14 @@ const RegistrationStatus = () => {
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Status of Your Endowment</span>
-              <br />
-              <span className="status-text uppercase text-red-600">
+              <p className="">Status of Your Endowment</p>
+              <p className="status-text uppercase text-red-600">
                 {status.endowment === 0
                   ? "Complete"
                   : status.endowment === 1
                   ? "Missing"
                   : "Not available"}
-              </span>
+              </p>
             </div>
             <div className="">
               <CustomButton
@@ -129,11 +123,8 @@ const RegistrationStatus = () => {
         <div className="infor-status my-2">
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #1: Charity Profile</span>
-              <br />
-              <span className="status-text uppercase text-green-500">
-                complete
-              </span>
+              <p className="">Step #1: Charity Profile</p>
+              <p className="status-text uppercase text-green-500">complete</p>
             </div>
             <div className="">
               <CustomButton
@@ -146,11 +137,8 @@ const RegistrationStatus = () => {
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #2: Key Person Profile</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
-                Missing
-              </span>
+              <p className="">Step #2: Key Person Profile</p>
+              <p className="status-text uppercase text-yellow-600">Missing</p>
             </div>
             <div className="">
               <CustomButton

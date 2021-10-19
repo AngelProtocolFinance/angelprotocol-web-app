@@ -27,7 +27,6 @@ const SelectWallet = () => {
         <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
           Terra station mobile extension
         </button>
-        <br />
         <button
           className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
           onClick={() => {
@@ -36,11 +35,9 @@ const SelectWallet = () => {
         >
           Terra station chrome extension
         </button>
-        <br />
         <button className="bg-gray-300 w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
           Prime trust
         </button>
-        <br />
         <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
           other means
         </button>
