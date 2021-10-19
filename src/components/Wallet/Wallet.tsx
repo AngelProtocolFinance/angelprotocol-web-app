@@ -3,11 +3,16 @@ import useCopyAddress from "./useCopyAddress";
 import { FiMoreHorizontal } from "react-icons/fi";
 import { BiCopy, BiCheck } from "react-icons/bi";
 import { useState } from "react";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { app } from "types/routes";
 import useUSTBalance from "hooks/useUSTBalance";
 import toCurrency from "helpers/toCurrency";
+import WithdrawButton from "./WithdrawButton";
+import Withdraw from "../../pages/Withdraw/Withdraw";
 
 export default function Wallet() {
   //since this is under WALLET_CONNECTED status --> wallet guaranteed to be defined
+  const { path } = useRouteMatch();
   const [isAddressCopiedIcon, setIsAddressCopiedIcon] = useState(false);
   const [isAddressCopiedButton, setIsAddressCopiedButton] = useState(false);
   const { buttonProps, isOpen, handleCopy } = useCopyAddress();
@@ -80,9 +85,10 @@ export default function Wallet() {
           >
             {isAddressCopiedButton ? `Copied!` : `Copy Address`}
           </button>
-          <button className="uppercase hover:bg-angel-blue bg-thin-blue rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1">
-            send
-          </button>
+          <WithdrawButton />
+          <Switch>
+            <Route path={`${path}${app.withdraw}`} component={Withdraw} />
+          </Switch>
           <button
             className="uppercase hover:bg-angel-orange bg-orange rounded-xl w-40 h-6 d-flex justify-center items-center text-sm text-white mb-1"
             onClick={disconnect}

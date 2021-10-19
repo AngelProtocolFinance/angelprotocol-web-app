@@ -5,22 +5,25 @@ import {
   LCDClient,
   Msg,
   StdFee,
+  TxInfo,
 } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { ConnectedWallet, Timeout } from "@terra-money/wallet-provider";
 import { urls } from "App/chains";
-import Disconnected from "./Errors";
+import { Disconnected, TxResultFail } from "./Errors";
 import { chains } from "./types";
 
 export default class Contract {
+  wallet?: ConnectedWallet;
   client: LCDClient;
   chainID: string;
   url: string;
   walletAddr?: AccAddress;
 
   constructor(wallet?: ConnectedWallet) {
-    this.chainID = wallet?.network.chainID || chains.mainnet;
-    this.url = wallet?.network.lcd || urls[chains.mainnet];
-    this.walletAddr = wallet?.walletAddress;
+    this.wallet = wallet;
+    this.chainID = this.wallet?.network.chainID || chains.mainnet;
+    this.url = this.wallet?.network.lcd || urls[chains.mainnet];
+    this.walletAddr = this.wallet?.walletAddress;
     this.client = new LCDClient({
       chainID: this.chainID,
       URL: this.url,
@@ -29,6 +32,7 @@ export default class Contract {
     });
 
     this.getTxResponse = this.getTxResponse.bind(this);
+    this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
@@ -50,6 +54,32 @@ export default class Contract {
       headers: {
         "Content-Type": "application/json",
       },
+    });
+  }
+
+  async pollTxInfo(
+    txhash: string,
+    retries: number,
+    interval: number
+  ): Promise<TxInfo> {
+    const req = new Request(`${this.url}/txs/${txhash}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await new Promise((r) => {
+      setTimeout(r, interval);
+    });
+    return fetch(req).then((res) => {
+      if (res.status === 200) {
+        return res.json() as unknown as TxInfo;
+      }
+      if (retries > 0 || res.status === 400) {
+        return this.pollTxInfo(txhash, retries - 1, interval);
+      }
+      throw new TxResultFail(
+        `https://finder.terra.money/${this.chainID}/tx/${txhash}`
+      );
     });
   }
 

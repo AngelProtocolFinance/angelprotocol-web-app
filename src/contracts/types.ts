@@ -44,6 +44,7 @@ export type Endowments = { endowments: Endowment[] };
 export interface AccountDetails {
   name: string;
   description: string;
+  owner: string;
   others: any;
 }
 

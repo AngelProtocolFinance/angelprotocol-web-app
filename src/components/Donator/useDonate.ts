@@ -8,6 +8,7 @@ import { AccAddress, Denom } from "@terra-money/terra.js";
 import pollTxInfo from "./pollTxInfo";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
+import { TxResultFail } from "contracts/Errors";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
@@ -95,42 +96,30 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           message: "Waiting for transaction result",
         });
 
-        const txInfo = await pollTxInfo(
-          contract.getTxResponse,
-          response.result.txhash,
-          1000, //try again 1 second after last retry
-          7 //poll 7 items before giving up
-        );
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000)
+        const txInfo = await getTxInfo;
 
-        if (!txInfo) {
+        if (!txInfo.code) {
+          const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
           setStatus({
-            step: Steps.error,
-            message: `Transaction ran but failed to get details`,
+            step: Steps.success,
+            message: `Thank you for your donation!`,
+            result: {
+              received: +UST_Amount,
+              deposited: depositAmount,
+              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+            },
           });
         } else {
-          //code property is present on failed transaction info
-          if (!txInfo.code) {
-            const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
-            setStatus({
-              step: Steps.success,
-              message: `Thank you for your donation!`,
-              result: {
-                received: +UST_Amount,
-                deposited: depositAmount,
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            });
-          } else {
-            setStatus({
-              step: Steps.error,
-              message: `The transaction ran but failed`,
-            });
-          }
+          setStatus({
+            step: Steps.error,
+            message: `The transaction ran but failed`,
+          });
         }
-        //code prop is present on failed transactions
+  
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       const errorStatus = createStatusFromError(error);
       setStatus(errorStatus);
     }

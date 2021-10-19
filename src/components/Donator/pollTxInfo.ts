@@ -12,8 +12,7 @@ export default async function pollTxInfo(
       let id = setTimeout(async () => {
         try {
           if (retries++ >= retryLimit) {
-            clearTimeout(id);
-            reject(undefined);
+            reject(id);
           }
           var txres = await txGetter(txhash);
           if (txres.status === 200) {
@@ -23,13 +22,11 @@ export default async function pollTxInfo(
           } else if (txres.status === 404) {
             poll();
           } else {
-            clearTimeout(id);
-            reject(undefined);
+            reject(id);
           }
         } catch (err) {
-          console.log(err);
-          clearTimeout(id);
-          reject(undefined);
+          console.error(err);
+          reject(id);
         }
       }, timetoRetry);
     })();

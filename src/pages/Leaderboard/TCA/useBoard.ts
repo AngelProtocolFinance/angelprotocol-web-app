@@ -61,7 +61,7 @@ export default function useBoard() {
         setSums(entries);
         setLastUpdate(stamp);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setLoading(false);
         setError("Failed to get donation data. Please try again later");
       }

@@ -9,14 +9,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import {
-  AccountDetails,
-  chains,
-  ContractAddrs,
-  Holding,
-  Holdings,
-  OwnedBalance,
-} from "./types";
+import { AccountDetails, Holding, Holdings, OwnedBalance } from "./types";
 import Vault from "./Vault";
 
 export default class Account extends Contract {
@@ -61,7 +54,7 @@ export default class Account extends Contract {
 
   async sumHoldings(holdings: Holding[]) {
     const queries = holdings.map((holding) => {
-      const vault = new Vault(holding.address);
+      const vault = new Vault(holding.address, this.wallet);
       return vault.getUSTValue(holding.amount);
     });
 
@@ -82,7 +75,6 @@ export default class Account extends Contract {
     const total_locked = await this.sumHoldings(locked_cw20);
     const total_liq = await this.sumHoldings(liquid_cw20);
     const overall = total_locked.add(total_liq);
-    console.log(this.address);
     return {
       address: this.address,
       total_liq: total_liq.toNumber(),

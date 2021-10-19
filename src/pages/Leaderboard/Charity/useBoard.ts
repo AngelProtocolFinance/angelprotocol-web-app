@@ -70,7 +70,7 @@ export default function useBoard() {
         setLoading(false);
         setLastUpdate(stamp);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setError("Failed to get charity data");
         setLoading(false);
       }
