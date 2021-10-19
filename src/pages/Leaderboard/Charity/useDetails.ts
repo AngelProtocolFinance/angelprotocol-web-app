@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Account from "contracts/queriers/Account";
+import Account from "contracts/Account";
 import { useEffect, useState } from "react";
 
 export default function useDetails(address: string) {

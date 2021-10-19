@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import IndexfundQuerier from "contracts/queriers/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import { chains } from "contracts/types";
 import { useEffect, useState } from "react";
 import { donors as tcaDonors } from "./donors";
@@ -32,8 +32,8 @@ export default function useBoard() {
       try {
         setError("");
         setLoading(true);
-        const indexfund_querier = new IndexfundQuerier(wallet);
-        const res = await indexfund_querier.getFundDonations();
+        const indexFund = new IndexFund(wallet);
+        const res = await indexFund.getFundDonations();
         const _sums: Sums = {};
         res.donors.forEach((donor) => {
           const donorName = tcaDonors[donor.address] || Names.community;

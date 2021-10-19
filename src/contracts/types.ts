@@ -1,4 +1,4 @@
-import { AccAddress, Dec } from "@terra-money/terra.js";
+import { AccAddress } from "@terra-money/terra.js";
 
 export enum chains {
   testnet = "bombay-12",

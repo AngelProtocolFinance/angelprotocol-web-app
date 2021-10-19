@@ -9,11 +9,12 @@ export default async function pollTxInfo(
   return await new Promise((resolve, reject) => {
     let retries = 0;
     (async function poll() {
-      if (retries++ >= retryLimit) {
-        reject(undefined);
-      }
       let id = setTimeout(async () => {
         try {
+          if (retries++ >= retryLimit) {
+            clearTimeout(id);
+            reject(undefined);
+          }
           var txres = await txGetter(txhash);
           if (txres.status === 200) {
             clearTimeout(id);

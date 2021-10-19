@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import RegistrarQuerier from "contracts/queriers/Registrar";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Registrar from "contracts/Registrar";
 
 export interface SplitLiq {
   max?: number;
@@ -18,8 +18,8 @@ export default function useFund() {
     (async () => {
       try {
         setError("");
-        const querier = new RegistrarQuerier(wallet);
-        const splitConfig = await querier.getConfig();
+        const registrar = new Registrar(wallet);
+        const splitConfig = await registrar.getConfig();
         const _split: SplitLiq = {};
         _split.max = Number(splitConfig.max) * 100;
         _split.min = Number(splitConfig.min) * 100;

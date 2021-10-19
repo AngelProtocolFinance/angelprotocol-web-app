@@ -1,14 +1,15 @@
 import { AccAddress, Dec } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Swap } from "contracts/types";
-import Querier from "./Querier";
+import Contract from "./Contract";
+import { Swap } from "./types";
 
-export default class Vault extends Querier {
+export default class Vault extends Contract {
   address: AccAddress;
-  constructor(address: AccAddress, wallet?: ConnectedWallet) {
+  constructor(vaultAddr: AccAddress, wallet?: ConnectedWallet) {
     super(wallet);
-    this.address = address;
+    this.address = vaultAddr;
   }
+
   async getExchangeRate(denom: string) {
     return await this.query<Swap>(this.address, {
       exchange_rate: { input_denom: denom },

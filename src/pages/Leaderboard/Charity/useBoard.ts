@@ -1,9 +1,9 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import RegistrarQuerier from "contracts/queriers/Registrar";
-import AccountQuerrier from "contracts/queriers/Account";
 import { Addresses } from "./types";
 import { chains, Balance } from "contracts/types";
+import Registrar from "contracts/Registrar";
+import Account from "contracts/Account";
 
 // import { donations as testDonations, donors as testDonors } from "./testdata";
 
@@ -34,14 +34,11 @@ export default function useBoard() {
       try {
         setError("");
         setLoading(true);
-        const registrar_querier = new RegistrarQuerier(wallet);
-        const _endowments = await registrar_querier.getEndowmentList();
+        const registrar = new Registrar(wallet);
+        const _endowments = await registrar.getEndowmentList();
         const queries = _endowments.map((endowment) => {
-          const account_querier = new AccountQuerrier(
-            endowment.address,
-            wallet
-          );
-          return account_querier.getBalance();
+          const account = new Account(endowment.address, wallet);
+          return account.getBalance();
         });
 
         const results = await Promise.allSettled(queries);

@@ -1,9 +1,9 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import { chains, ContractAddrs } from "./types";
+import { chains, ContractAddrs, Endowments, SplitRes } from "./types";
 
 export default class Registrar extends Contract {
-  currContractAddr: string;
+  address: string;
   //contract address
   static scAddresses: ContractAddrs = {
     [chains.mainnet]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
@@ -12,8 +12,22 @@ export default class Registrar extends Contract {
   };
 
   //may need to re-implement to handle multiple currencies in the future
-  constructor(wallet: ConnectedWallet) {
+  constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.currContractAddr = Registrar.scAddresses[this.chainID];
+    this.address = Registrar.scAddresses[this.chainID];
+  }
+
+  async getConfig() {
+    const result = await this.query<SplitRes>(this.address, {
+      config: {},
+    });
+    return result.split_to_liquid;
+  }
+
+  async getEndowmentList() {
+    const result = await this.query<Endowments>(this.address, {
+      endowment_list: {},
+    });
+    return result.endowments;
   }
 }
