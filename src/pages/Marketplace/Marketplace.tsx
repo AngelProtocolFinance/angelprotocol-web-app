@@ -7,7 +7,7 @@ export default function Marketplace() {
   return (
     <section className="pb-16 grid grid-rows-a1">
       <AppHead />
-      <ul className="grid grid-cols-4 content-start gap-8 padded-container my-4">
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 content-start gap-8 padded-container my-8">
         {endowments
           .filter((endowment) => endowment.status === "Approved")
           .map((endowment) => (
