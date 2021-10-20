@@ -110,5 +110,4 @@ module.exports = {
       textColor: ["disabled"],
     },
   },
-  plugins: [require("@tailwindcss/line-clamp")],
 };
