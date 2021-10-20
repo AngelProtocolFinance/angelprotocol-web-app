@@ -2,9 +2,7 @@ import { FormikHelpers } from "formik";
 import { Values } from "./Login";
 import { useSetToken } from "contexts/AuthProvider";
 import { toast } from "react-toastify";
-
-const endPoint =
-  "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com/tca-login";
+import { aws_endpoint } from "constants/urls";
 
 export default function useLogin() {
   //url = app/login
@@ -18,7 +16,7 @@ export default function useLogin() {
     //start request
     actions.setSubmitting(true);
     try {
-      const response = await fetch(endPoint, {
+      const response = await fetch(aws_endpoint + "/tca-login", {
         method: "POST",
         body: JSON.stringify(values),
       });

@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link } from "react-router-dom";
-import { site, web } from "types/routes";
+import { Link, useHistory } from "react-router-dom";
+import { register, site, web } from "types/routes";
 import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
 
 export type ContactDetails = {
@@ -17,19 +17,20 @@ export type ContactDetails = {
 export const ContactDetailsForm = (props: any) => {
   //url = app/register/details
   const { saveContactInfo } = useContactDetails();
-  console.log(props.contactData);
+  const history = useHistory();
+
   return (
     <Formik
       initialValues={{
-        charityName: props.contactData?.charityName || "",
-        firstName: props.contactData?.firstName || "",
-        lastName: props.contactData?.lastName || "",
-        email: props.contactData?.email || "",
-        phone: props.contactData?.phone || "",
-        orgRole: props.contactData?.orgRole || "ceo",
+        charityName: props.contactData?.CharityName || "",
+        firstName: props.contactData?.FirstName || "",
+        lastName: props.contactData?.LastName || "",
+        email: props.contactData?.Email || "",
+        phone: props.contactData?.PhoneNumber || "",
+        orgRole: props.contactData?.Role || "ceo",
         otherRole: props.contactData?.otherRole || "",
         checkedPolicy: false,
-        uniqueID: props.contactData?.uniqueID || "",
+        uniqueID: props.contactData?.PK || "",
       }}
       validationSchema={ContactInfoSchema}
       onSubmit={saveContactInfo}
@@ -59,6 +60,7 @@ export const ContactDetailsForm = (props: any) => {
                         placeholder="Organization"
                         value={values.charityName}
                         name="charityName"
+                        disabled={values.uniqueID !== ""}
                       />
                     </div>
                     <ErrorMessage
@@ -255,14 +257,27 @@ export const ContactDetailsForm = (props: any) => {
                 />
               </div>
             </div>
-            <div className="text-center">
-              <button
-                className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
-                type="submit"
-                disabled={isSubmitting}
-              >
-                continue
-              </button>
+            <div className="text-center flex justify-center">
+              <div className="mr-2">
+                <button
+                  className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  continue
+                </button>
+              </div>
+              {values.uniqueID && (
+                <div className="mr-2">
+                  <button
+                    className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                    onClick={() => history.push(register.status)}
+                    disabled={isSubmitting}
+                  >
+                    back
+                  </button>
+                </div>
+              )}
             </div>
           </Form>
         </div>
@@ -270,76 +285,3 @@ export const ContactDetailsForm = (props: any) => {
     </Formik>
   );
 };
-
-// import { ErrorMessage, Field, Form, Formik } from "formik";
-// import { Link } from "react-router-dom";
-// import { routes } from "types/types";
-// import { boolean } from "yup/lib/locale";
-// // import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
-// import { CreateNewCharity } from "aws-settings.config";
-
-// export type ContactDetails = {
-//   charityName: string;
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   phone: string;
-//   orgRole: string;
-//   otherRole: string;
-//   checkedPolicy: boolean;
-//   uniqueID: string;
-// };
-
-// export const ContactDetailsForm = () => {
-//   const initialValues = {
-//     charityName: "",
-//     firstName: "",
-//     lastName: "",
-//     email: "",
-//     phone: "",
-//     orgRole: "",
-//   };
-
-//   const onSubmit = (values: any) => {
-//     console.log(values);
-//     CreateNewCharity(values); // returns a message and the charity's UUID
-//   };
-
-//   return (
-//     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-//       <Form>
-//         <div className="text-black">
-//           <label htmlFor="charityName">Charity Name</label>
-//           <Field
-//             id="charityName"
-//             name="charityName"
-//             placeholder="Charity Name"
-//           />
-//           <br />
-//           <br />
-//           <label htmlFor="firstName">First Name</label>
-//           <Field id="firstName" name="firstName" placeholder="First Name" />
-//           <br />
-//           <br />
-//           <label htmlFor="lastName">Last Name</label>
-//           <Field id="lastName" name="lastName" placeholder="Last Name" />
-//           <br />
-//           <br />
-//           <label htmlFor="email">email</label>
-//           <Field id="email" name="email" placeholder="email" type="email" />
-//           <br />
-//           <br />
-//           <label htmlFor="phone">phone</label>
-//           <Field id="phone" name="phone" placeholder="phone" />
-//           <br />
-//           <br />
-//           <label htmlFor="orgRole">Role</label>
-//           <Field id="orgRole" name="orgRole" placeholder="Role" />
-//           <br />
-//           <br />
-//           <button type="submit">Submit</button>
-//         </div>
-//       </Form>
-//     </Formik>
-//   );
-// };

@@ -38,6 +38,7 @@ export enum register {
   charity_profile = "charity-profile",
   others = "others",
   self_custody = "self-custody",
+  key_person = "key-person",
 }
 
 export enum routes {

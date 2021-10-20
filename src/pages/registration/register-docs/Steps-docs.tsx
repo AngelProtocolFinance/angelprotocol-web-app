@@ -11,9 +11,6 @@ const StepsDocs = () => {
   const showInfoModal = () => {
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-  };
   return (
     <div>
       <div className="title text-center mb-5">
@@ -31,11 +28,11 @@ const StepsDocs = () => {
               Your Proof of Identity
             </p>
           </div>
-          <div className="md:w-2/3 xl:w-1/2 flex items-center">
+          <div className=" md:w-2/3 xl:w-1/2 flex items-center justify-end">
             <button className="bg-yellow-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               upload new file
             </button>
-            <p className="text-green-500 uppercase text-sm xl:text-base">
+            <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
               complete
             </p>
           </div>
@@ -47,11 +44,11 @@ const StepsDocs = () => {
               {userData.charityName}{" "}
             </p>
           </div>
-          <div className="flex items-center md:w-2/3 xl:w-1/2">
+          <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
             <button className="bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               select or drag and drop
             </button>
-            <p className="text-red-500 uppercase text-sm xl:text-base">
+            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
               Not submitted
             </p>
           </div>
@@ -60,20 +57,20 @@ const StepsDocs = () => {
           <div className="md:w-1/3 xl:w-1/2 mb-2 md:mb-0">
             <p className="font-bold text-base max-w-xs text-left xl:ml-32">
               Resolution approving the creation of an Endowment on Angel
-              Protocol with the Terra address {userData.wallet_address} <br />
-              <span
+              Protocol with the Terra address {userData.wallet_address}
+              <p
                 className="text-orange text-xs underline text-left cursor-pointer"
                 onClick={showInfoModal}
               >
                 See Template
-              </span>
+              </p>
             </p>
           </div>
-          <div className="flex items-center md:w-2/3 xl:w-1/2">
+          <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
             <button className="bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mr-5">
               select or drag and drop
             </button>
-            <p className="text-red-500 uppercase text-sm xl:text-base">
+            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
               Not submitted
             </p>
           </div>

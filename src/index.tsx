@@ -7,18 +7,22 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App/App";
 import Website from "Website/Website";
 import { site } from "./types/routes";
+import { Provider } from "react-redux";
+import { store } from "Redux/store";
 import AuthProvider from "contexts/AuthProvider";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <Switch>
-          <Route path={site.app} component={App} />
-          <Route path={site.home} component={Website} />
-        </Switch>
-      </AuthProvider>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <AuthProvider>
+          <Switch>
+            <Route path={site.app} component={App} />
+            <Route path={site.home} component={Website} />
+          </Switch>
+        </AuthProvider>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

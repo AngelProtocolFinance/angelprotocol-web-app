@@ -15,7 +15,7 @@ const SelfCustody = () => {
         </p>
       </div>
       <div className="text-center">
-        <div className="flex items-center pt-3 justify-center">
+        <div className="flex items-center pt-3 justify-center mb-10">
           <button
             className="bg-thin-blue w-72 h-10 rounded-xl uppercase text-base font-bold text-white mr-1"
             onClick={() => {
@@ -29,7 +29,6 @@ const SelfCustody = () => {
             onClick={() => showInfoModal()}
           />
         </div>
-        <br />
         <p className="text-sm">
           We have sent you an email with a link to resume your application once
           you're done with the wallet creation. Don't hesitate to{" "}
