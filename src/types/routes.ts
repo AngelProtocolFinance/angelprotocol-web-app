@@ -16,6 +16,7 @@ export enum app {
   index = "/",
   dashboard = "dashboard",
   charities = "charities",
+  marketplace = "marketplace",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",

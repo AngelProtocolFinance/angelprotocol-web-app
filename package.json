@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.2.0",
+    "@tailwindcss/line-clamp": "^0.2.2",
     "@terra-money/terra.js": "^2.0.8",
     "@terra-money/wallet-provider": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.4",

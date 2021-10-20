@@ -1,4 +1,3 @@
-import { Addresses } from "./types";
 import { Balance } from "contracts/types";
 import maskAddress from "helpers/maskAddress";
 import Copier, { Addr } from "components/Copier/Copier";
@@ -6,7 +5,7 @@ import Amount from "./Amount";
 import Description from "./Description";
 import getFutureValue from "./getFutureValue";
 type Props = {
-  address: Addresses;
+  address: string;
   balance: Balance;
   chainID: string;
 };

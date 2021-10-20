@@ -1,6 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import { Addresses } from "./types";
 import { chains, Balance } from "contracts/types";
 import Registrar from "contracts/Registrar";
 import Account from "contracts/Account";
@@ -12,7 +11,7 @@ export default function useBoard() {
   const [lastUpdate, setLastUpdate] = useState(Date());
   const [flag, setFlag] = useState(0);
   const [error, setError] = useState("");
-  const [charities, setCharities] = useState<Array<[Addresses, Balance]>>([]);
+  const [charities, setCharities] = useState<Array<[string, Balance]>>([]);
   const wallet = useConnectedWallet();
   const chainID = wallet?.network.chainID || chains.mainnet;
   const storage_key = `charity_board_${chainID}`;
@@ -23,7 +22,7 @@ export default function useBoard() {
       if (string_data) {
         const saved_summary: {
           time: string;
-          entries: Array<[Addresses, Balance]>;
+          entries: Array<[string, Balance]>;
         } = JSON.parse(string_data);
 
         setCharities(saved_summary.entries);
@@ -54,7 +53,7 @@ export default function useBoard() {
             };
           }
         });
-        const entries = Object.entries(_sums) as Array<[Addresses, Balance]>;
+        const entries = Object.entries(_sums) as Array<[string, Balance]>;
         entries.sort(([, prev], [, next]) => next.overall - prev.overall);
 
         //save to localStorage
