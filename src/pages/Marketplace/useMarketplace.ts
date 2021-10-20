@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 export default function useMarketPlace() {
   const [endowments, setEndowments] = useState<Endowment[]>([]);
   const wallet = useConnectedWallet();
-  console.log(endowments);
   useEffect(() => {
+    //TODO: add loading state
     const registrar = new Registrar(wallet);
     registrar
       .getEndowmentList()

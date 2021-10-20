@@ -18,6 +18,7 @@ export default function CharityCard(props: Props) {
   return (
     <li className="grid grid-rows-aa1 rounded-md overflow-hidden shadow-lg border border-angel-grey border-opacity-30 bg-angel-grey">
       <img
+        alt=""
         src={icon}
         className={`h-32 w-full p-5 object-contain ${
           iconLight ? "bg-angel-grey" : "bg-white"
