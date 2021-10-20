@@ -36,7 +36,7 @@ export default function BoardCharity() {
                 <Heading text="Charity" />
                 <Heading text="Endowment Address" />
                 <Heading text="Donations Received" />
-                <Heading text="1YR Projection" />
+                <Heading text="10YR Projection" />
               </tr>
             </thead>
             <tbody>
