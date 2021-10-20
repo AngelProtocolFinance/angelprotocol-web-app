@@ -7,10 +7,10 @@ type Props = {
 
 export default function Description(props: Props) {
   const {
-    name = "Charity",
-    description = "failed to get charity data",
     url = defaultURL,
     icon = defIcon,
+    name = "Charity",
+    description = "failed to get charity data",
   } = charities[props.address] || {}; //details only exists on mainnet
   return (
     <div className="flex items-center">

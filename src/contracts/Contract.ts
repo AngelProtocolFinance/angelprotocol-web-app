@@ -5,50 +5,78 @@ import {
   LCDClient,
   Msg,
   StdFee,
+  TxInfo,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { urls } from "App/chains";
+import { Disconnected, TxResultFail } from "./Errors";
+import { chains } from "./types";
 
 export default class Contract {
-  wallet: ConnectedWallet;
+  wallet?: ConnectedWallet;
   client: LCDClient;
+  chainID: string;
+  url: string;
+  walletAddr?: AccAddress;
 
-  constructor(wallet: ConnectedWallet) {
+  constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;
+    this.chainID = this.wallet?.network.chainID || chains.mainnet;
+    this.url = this.wallet?.network.lcd || urls[chains.mainnet];
+    this.walletAddr = this.wallet?.walletAddress;
     this.client = new LCDClient({
-      chainID: this.wallet.network.chainID,
-      URL: this.wallet.network.lcd,
+      chainID: this.chainID,
+      URL: this.url,
       gasAdjustment: Contract.gasAdjustment, //use gas units 20% greater than estimate
       gasPrices: Contract.gasPrices,
     });
 
-    this.getTxResponse = this.getTxResponse.bind(this);
+    this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
   //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
   static gasPrices = [new Coin(Denom.USD, 0.5)];
 
-  static async queryContract<T>(
-    chainID: string,
-    URL: string,
-    contractAddr: AccAddress,
-    message: { [index: string]: any }
-  ): Promise<T> {
-    const client = new LCDClient({ chainID, URL });
-    return await client.wasm.contractQuery<T>(contractAddr, message);
+  async query<T>(source: AccAddress, message: object) {
+    return this.client.wasm.contractQuery<T>(source, message);
   }
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
-    return this.client.tx.estimateFee(this.wallet.terraAddress, msgs, {
+    return this.client.tx.estimateFee(this.walletAddr!, msgs, {
       feeDenoms: [Denom.USD],
     });
   }
-  //bind this function in constructor to keep context
-  async getTxResponse(txhash: string): Promise<Response> {
-    return fetch(`${this.wallet.network.lcd}/txs/${txhash}`, {
+
+  async pollTxInfo(
+    txhash: string,
+    retries: number,
+    interval: number
+  ): Promise<TxInfo> {
+    const req = new Request(`${this.url}/txs/${txhash}`, {
       headers: {
         "Content-Type": "application/json",
       },
     });
+    await new Promise((r) => {
+      setTimeout(r, interval);
+    });
+    return fetch(req).then((res) => {
+      if (res.status === 200) {
+        return res.json() as unknown as TxInfo;
+      }
+      if (retries > 0 || res.status === 400) {
+        return this.pollTxInfo(txhash, retries - 1, interval);
+      }
+      throw new TxResultFail(
+        `https://finder.terra.money/${this.chainID}/tx/${txhash}`
+      );
+    });
+  }
+
+  checkWallet() {
+    if (!this.walletAddr) {
+      throw new Disconnected();
+    }
   }
 }

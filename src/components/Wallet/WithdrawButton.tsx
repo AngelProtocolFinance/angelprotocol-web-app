@@ -1,16 +1,12 @@
 import { useEffect, useState } from "react";
 import { NavLink, useRouteMatch } from "react-router-dom";
-import CheckWalletOwner from "../CheckWalletOwner/CheckWalletOwner";
 import { app } from "types/routes";
-
-type CharityOwner = {
-  isCharityOwner: boolean;
-};
+import useOwnerChecker from "./useOwnerChecker";
 
 export default function WithdrawButton() {
   const { url } = useRouteMatch();
   const [onWithdrawUrl, setWithdrawUrl] = useState(false);
-  const { isCharityOwner }: CharityOwner = CheckWalletOwner();
+  const { isCharityOwner } = useOwnerChecker();
 
   useEffect(() => {
     if (url === "/app/withdraw") {

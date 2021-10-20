@@ -5,7 +5,6 @@ import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
 import { AccAddress, Denom } from "@terra-money/terra.js";
-import pollTxInfo from "./pollTxInfo";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
 //prettier-ignore
@@ -45,9 +44,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
       //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
       if(typeof receiver === 'number' || typeof receiver === 'undefined'){
-
         contract = new Indexfund(wallet, receiver)
-        const tcaMembers = await contract.getTCAList()
+        const tcaMembers = await contract.getTCAList();
         const isTca = tcaMembers.includes(wallet.walletAddress)
         if(!isTca){
           setStatus({
@@ -58,7 +56,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         }
 
       } else {
-        contract = new Account(wallet, receiver)
+        contract = new Account(receiver, wallet)
       }
 
 
@@ -96,42 +94,30 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           message: "Waiting for transaction result",
         });
 
-        const txInfo = await pollTxInfo(
-          contract.getTxResponse,
-          response.result.txhash,
-          1000, //try again 1 second after last retry
-          7 //poll 7 items before giving up
-        );
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000)
+        const txInfo = await getTxInfo;
 
-        if (!txInfo) {
+        if (!txInfo.code) {
+          const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
           setStatus({
-            step: Steps.error,
-            message: `Transaction ran but failed to get details`,
+            step: Steps.success,
+            message: `Thank you for your donation!`,
+            result: {
+              received: +UST_Amount,
+              deposited: depositAmount,
+              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+            },
           });
         } else {
-          //code property is present on failed transaction info
-          if (!txInfo.code) {
-            const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
-            setStatus({
-              step: Steps.success,
-              message: `Thank you for your donation!`,
-              result: {
-                received: +UST_Amount,
-                deposited: depositAmount,
-                url: `https://finder.terra.money/${contract.wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            });
-          } else {
-            setStatus({
-              step: Steps.error,
-              message: `The transaction ran but failed`,
-            });
-          }
+          setStatus({
+            step: Steps.error,
+            message: `The transaction ran but failed`,
+          });
         }
-        //code prop is present on failed transactions
+  
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
       const errorStatus = createStatusFromError(error);
       setStatus(errorStatus);
     }
