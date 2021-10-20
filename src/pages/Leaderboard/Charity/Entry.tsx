@@ -11,8 +11,8 @@ type Props = {
 };
 
 export default function Entry({ address, balance, chainID }: Props) {
-  const future_locked = getFutureValue(1, 20, 365, balance.total_locked);
-  const future_liq = getFutureValue(1, 20, 365, balance.total_liq);
+  const future_locked = getFutureValue(10, 20, 365, balance.total_locked);
+  const future_liq = getFutureValue(10, 20, 365, balance.total_liq);
 
   return (
     <tr className="border-b">
