@@ -35,14 +35,14 @@ export default function Entry({ address, balance, chainID }: Props) {
       </td>
       <td>
         <div className="flex flex-col">
-          <Amount type="locked" amount={balance.total_locked} />
-          <Amount type="liquid" amount={balance.total_liq} />
+          <Amount type="principal" amount={balance.total_locked} />
+          <Amount type="donations" amount={balance.total_liq} />
         </div>
       </td>
       <td>
         <div className="flex flex-col">
-          <Amount type="locked" amount={future_locked} />
-          <Amount type="liquid" amount={future_liq} />
+          <Amount type="principal" amount={future_locked} />
+          <Amount type="donations" amount={future_liq} />
         </div>
       </td>
     </tr>
