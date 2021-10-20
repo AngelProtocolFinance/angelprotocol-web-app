@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { TStore } from "Redux/store";
 import { register } from "types/routes";
-import CustomButton from "components/CustomButton/CustomButton";
+import Action from "./Action";
 
 const RegistrationStatus = () => {
   //url is app/register/status
@@ -16,8 +16,14 @@ const RegistrationStatus = () => {
 
   useEffect(() => {
     if (error) {
+      //TODO:provide typing for this error if possible
+      //encountered error of this shape
+      /*{
+      "status": "FETCH_ERROR",
+      "error": "TypeError: Failed to fetch"
+      } */
       const messageData: any = error;
-      toast.error(messageData.data.message);
+      toast.error(messageData?.data?.message || "something wen't wrong");
     }
   }, [error]);
 
@@ -32,6 +38,11 @@ const RegistrationStatus = () => {
       data?.Metadata?.EndowmentStatus === "Active" &&
       data?.Wallet,
   };
+
+  const navigate = (dest: string) => () => {
+    history.push(dest);
+  };
+
   return (
     <div className="">
       <div className="necessary-information">
@@ -49,11 +60,11 @@ const RegistrationStatus = () => {
               <p className="status-text uppercase text-green-500">Complete</p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() => history.push(register.detail)}
+              <Action
+                classes="bg-yellow-blue w-40 h-10"
+                onClick={navigate(register.detail)}
                 title="Change"
-                isDisabled={userData.PK == ""}
+                disabled={userData.PK === ""}
               />
             </div>
           </div>
@@ -65,11 +76,11 @@ const RegistrationStatus = () => {
               </p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() => history.push(register.wallet_check)}
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
                 title={status.wallet_address === 0 ? "Change" : "Continue"}
-                isDisabled={userData.PK == ""}
+                disabled={userData.PK === ""}
               />
             </div>
           </div>
@@ -81,11 +92,11 @@ const RegistrationStatus = () => {
               </p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() => history.push(register.wallet_check)}
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
                 title={status.document === 0 ? "Change" : "Continue"}
-                isDisabled={userData.PK == ""}
+                disabled={userData.PK === ""}
               />
             </div>
           </div>
@@ -101,11 +112,11 @@ const RegistrationStatus = () => {
               </p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() => history.push(register.wallet_check)}
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
-                isDisabled={status.endowment === 2 || userData.PK == ""}
+                disabled={status.endowment === 2 || userData.PK === ""}
               />
             </div>
           </div>
@@ -127,11 +138,11 @@ const RegistrationStatus = () => {
               <p className="status-text uppercase text-green-500">complete</p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() => history.push(register.charity_profile)}
+              <Action
+                classes="bg-yellow-blue w-40 h-10"
+                onClick={navigate(register.charity_profile)}
                 title="Change"
-                isDisabled={userData.PK == ""}
+                disabled={userData.PK === ""}
               />
             </div>
           </div>
@@ -141,9 +152,9 @@ const RegistrationStatus = () => {
               <p className="status-text uppercase text-yellow-600">Missing</p>
             </div>
             <div className="">
-              <CustomButton
-                classNames="disabled:bg-gray-300 bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
-                onClickEvent={() =>
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={() =>
                   history.push({
                     pathname: register.key_person,
                     state: {
@@ -152,18 +163,18 @@ const RegistrationStatus = () => {
                   })
                 }
                 title="Continue"
-                isDisabled={userData.PK == ""}
+                disabled={userData.PK === ""}
               />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <CustomButton
-          classNames="disabled:bg-gray-300 bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mb-3"
+        <Action
+          classes="bg-thin-blue w-64 h-10"
           title={"Go to " + userData.CharityName + "'s profile"}
-          onClickEvent={() => history.push(register.charity_profile)}
-          isDisabled={!status.completed || userData.PK == ""}
+          onClick={navigate(register.charity_profile)}
+          disabled={!status.completed || userData.PK === ""}
         />
       </div>
       <ToastContainer />

@@ -7,8 +7,6 @@ import {
   StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { urls } from "App/chains";
-import { chains } from "./types";
 
 export default class Contract {
   wallet: ConnectedWallet;
@@ -31,8 +29,8 @@ export default class Contract {
   static gasPrices = [new Coin(Denom.USD, 0.5)];
 
   static async queryContract<T>(
-    chainID = chains.mainnet as string,
-    URL = urls[chains.mainnet] as string,
+    chainID: string,
+    URL: string,
     contractAddr: AccAddress,
     message: { [index: string]: any }
   ): Promise<T> {
