@@ -4,12 +4,17 @@ import maskAddress from "helpers/maskAddress";
 import Copier, { Addr } from "components/Copier/Copier";
 import Amount from "./Amount";
 import Description from "./Description";
+import getFutureValue from "./getFutureValue";
 type Props = {
   address: Addresses;
   balance: Balance;
+  chainID: string;
 };
 
-export default function Entry({ address, balance }: Props) {
+export default function Entry({ address, balance, chainID }: Props) {
+  const future_locked = getFutureValue(1, 20, 365, balance.total_locked);
+  const future_liq = getFutureValue(1, 20, 365, balance.total_liq);
+
   return (
     <tr className="border-b">
       <td>
@@ -17,9 +22,15 @@ export default function Entry({ address, balance }: Props) {
       </td>
       <td>
         <div className="flex items-center gap-2">
-          <span title={address} className="text-md text-angel-grey">
+          <a
+            href={`https://finder.terra.money/${chainID}/address/${address}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={address}
+            className="text-md text-blue-accent"
+          >
             {maskAddress(address)}
-          </span>
+          </a>
           <Copier colorClass="text-angel-grey text-sm" text={address as Addr} />
         </div>
       </td>
@@ -27,6 +38,12 @@ export default function Entry({ address, balance }: Props) {
         <div className="flex flex-col">
           <Amount type="locked" amount={balance.total_locked} />
           <Amount type="liquid" amount={balance.total_liq} />
+        </div>
+      </td>
+      <td>
+        <div className="flex flex-col">
+          <Amount type="locked" amount={future_locked} />
+          <Amount type="liquid" amount={future_liq} />
         </div>
       </td>
     </tr>

@@ -7,7 +7,7 @@ import { useCheckPreviousRegistrationMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
 import { UserSlice } from "../../Redux/slices/userSlice";
 import { useDispatch } from "react-redux";
-import CustomButton from "components/CustomButton/CustomButton";
+import Action from "./Action";
 
 export type ReferInfo = {
   refer: string;
@@ -63,7 +63,7 @@ const Registration = () => {
     actions.setSubmitting(false);
   };
 
-  if (userData && userData.EmailVerified == false) {
+  if (userData && userData.EmailVerified === false) {
     history.push({
       pathname: `${url}/${register.confirm}`,
       state: { is_sent: true },
@@ -89,10 +89,10 @@ const Registration = () => {
         </span>
       </div>
       <div className="mb-2">
-        <CustomButton
-          onClickEvent={() => history.push(`${url}/${register.detail}`)}
+        <Action
+          onClick={() => history.push(`${url}/${register.detail}`)}
           title="Start"
-          classNames="disabled:bg-gray-300 bg-orange w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
+          classes="bg-orange w-48 h-12"
         />
         <div className="cursor-pointer mb-3">
           <p className="text-xl font-bold">OR</p>
@@ -123,11 +123,11 @@ const Registration = () => {
                   name="refer"
                   component="div"
                 />
-                <CustomButton
-                  type="submit"
+                <Action
+                  submit
                   title="Resume"
-                  classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-                  isDisabled={isLoading || isSubmitting}
+                  classes="bg-thin-blue w-48 h-12"
+                  disabled={isLoading || isSubmitting}
                 />
               </Form>
             </div>

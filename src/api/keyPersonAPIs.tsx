@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { aws_endpoint } from "constants/urls";
 
-export const KEYPERSON_API_REDUCER_KEY = "keyPersonAPIs";
 export const keyPersonAPIs = createApi({
-  reducerPath: KEYPERSON_API_REDUCER_KEY,
+  reducerPath: "keyPersonAPIs",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BASE_URL,
+    baseUrl: aws_endpoint,
     mode: "cors",
   }),
   endpoints: (builder) => ({

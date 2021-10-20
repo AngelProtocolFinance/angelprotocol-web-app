@@ -2,9 +2,9 @@ import { NetworkInfo } from "@terra-dev/wallet-types";
 import { chains, URLs } from "contracts/types";
 
 export const urls: URLs = {
-  [chains.localterra]: process.env.REACT_APP_LOCALTERRA_LCD as string,
-  [chains.mainnet]: process.env.REACT_APP_MAINNET_LCD as string,
-  [chains.testnet]: process.env.REACT_APP_BOMBAY_LCD as string,
+  [chains.localterra]: "http://localhost:1317",
+  [chains.mainnet]: "https://lcd.terra.dev",
+  [chains.testnet]: "https://bombay-lcd.terra.dev",
 };
 
 const localterra = {
