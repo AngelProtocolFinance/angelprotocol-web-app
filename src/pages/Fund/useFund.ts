@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Registrar from "contracts/Registrar";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { chains } from "contracts/types";
+import { urls } from "App/chains";
 
 export interface SplitLiq {
   max?: number;
@@ -13,15 +15,14 @@ export default function useFund() {
   const [error, setError] = useState<string>("");
   const [split, setSplit] = useState<SplitLiq>();
   const wallet = useConnectedWallet();
+  const url = wallet?.network.lcd || urls[chains.mainnet];
+  const chainID = wallet?.network.chainID || chains.mainnet;
 
   useEffect(() => {
     (async () => {
       try {
         setError("");
-        const url = wallet?.network.lcd;
-        const chainID = wallet?.network.chainID;
         const splitConfig = await Registrar.getConfig(chainID, url);
-        console.log(splitConfig);
         const _split: SplitLiq = {};
         _split.max = Number(splitConfig.max) * 100;
         _split.min = Number(splitConfig.min) * 100;

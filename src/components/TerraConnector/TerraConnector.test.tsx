@@ -5,6 +5,7 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import TerraConnector from "./TerraConnector";
 
 const testnet: NetworkInfo = {
@@ -17,7 +18,9 @@ describe("Renders text according to wallet status", () => {
   test("wallet is initializing'", () => {
     render(
       <StaticWalletProvider defaultNetwork={testnet}>
-        <TerraConnector />
+        <MemoryRouter>
+          <TerraConnector />
+        </MemoryRouter>
       </StaticWalletProvider>
     );
     const connectButtonEl = screen.getByRole("button");
@@ -31,7 +34,9 @@ describe("Renders text according to wallet status", () => {
         status={WalletStatus.WALLET_NOT_CONNECTED}
         availableConnectTypes={[ConnectType.CHROME_EXTENSION]}
       >
-        <TerraConnector />
+        <MemoryRouter>
+          <TerraConnector />
+        </MemoryRouter>
       </StaticWalletProvider>
     );
     const connectButtonEl = screen.getByRole("button");
@@ -45,7 +50,9 @@ describe("Renders text according to wallet status", () => {
         status={WalletStatus.WALLET_NOT_CONNECTED}
         availableInstallTypes={[ConnectType.CHROME_EXTENSION]}
       >
-        <TerraConnector />
+        <MemoryRouter>
+          <TerraConnector />
+        </MemoryRouter>
       </StaticWalletProvider>
     );
     const connectButtonEl = screen.getByRole("button");
@@ -64,7 +71,9 @@ describe("Renders text according to wallet status", () => {
           },
         ]}
       >
-        <TerraConnector />
+        <MemoryRouter>
+          <TerraConnector />
+        </MemoryRouter>
       </StaticWalletProvider>
     );
     expect(screen.getByRole("heading")).toHaveTextContent(/terra1235/i);

@@ -14,7 +14,7 @@ export default function Description(props: Props) {
   } = charities[props.address] || {}; //details only exists on mainnet
   return (
     <div className="flex items-center">
-      <img src={icon} alt="" className="w-28 mr-4" />
+      <img src={icon} alt="" className="w-28 h-20 m-1 object-contain mr-4" />
       <div>
         <a
           href={url}
@@ -24,7 +24,9 @@ export default function Description(props: Props) {
         >
           {name}
         </a>
-        <p className="max-w-sm text-sm text-angel-grey leading-normal mb-2">
+        <p
+          className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
+        >
           {description}
         </p>
       </div>
