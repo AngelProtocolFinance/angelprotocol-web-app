@@ -24,7 +24,7 @@ const KeyPersonProfile = () => {
   return (
     <div className="">
       <div className="title mb-10">
-        <p className="text-2xl md:text-3xl font-bold">
+        <p className="text-2xl md:text-3xl font-bold mb-10">
           Update the profile details for {userData.CharityName}'s KEY PERSON
         </p>
         <span className="text-center">
