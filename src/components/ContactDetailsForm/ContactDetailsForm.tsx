@@ -60,7 +60,7 @@ export const ContactDetailsForm = (props: any) => {
                         placeholder="Organization"
                         value={values.charityName}
                         name="charityName"
-                        disabled={values.uniqueID != ""}
+                        disabled={values.uniqueID !== ""}
                       />
                     </div>
                     <ErrorMessage

@@ -3,10 +3,10 @@ import jwtDecode from "jwt-decode";
 import { FaCheck, FaExclamation } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { UserSlice } from "Redux/slices/userSlice";
-import { register } from "types/routes";
+import { app, register, site } from "types/routes";
 import { toast, ToastContainer } from "react-toastify";
 import { useRequestEmailMutation } from "api/registerAPIs";
-import CustomButton from "components/CustomButton/CustomButton";
+import Action from "./Action";
 
 const VerifiedEmail = () => {
   //url = app/register/verify
@@ -85,20 +85,21 @@ const VerifiedEmail = () => {
       )}
       <div className="mb-2">
         {is_expired ? (
-          <CustomButton
-            classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-            onClickEvent={resendVerificationEmail}
+          <Action
+            classes="bg-thin-blue w-48 h-12"
+            onClick={resendVerificationEmail}
             title="resend"
-            isDisabled={isLoading}
+            disabled={isLoading}
           />
         ) : (
-          <CustomButton
-            classNames="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white mb-3"
-            onClickEvent={() =>
-              history.push(`/app/register/${register.status}`)
+          <Action
+            //TODO:simplify link
+            classes="bg-thin-blue w-48 h-12"
+            onClick={() =>
+              history.push(`${site.app}/${app.register}/${register.status}`)
             }
             title="Continue"
-            isDisabled={isLoading}
+            disabled={isLoading}
           />
         )}
       </div>

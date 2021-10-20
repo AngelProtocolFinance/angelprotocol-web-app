@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { aws_endpoint } from "constants/urls";
 
-export const REGISTER_API_REDUCER_KEY = "registerAPIs";
 export const registerAPIs = createApi({
-  reducerPath: REGISTER_API_REDUCER_KEY,
+  reducerPath: "registerAPIs",
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BASE_URL,
+    baseUrl: aws_endpoint,
     mode: "cors",
   }),
   endpoints: (builder) => ({
@@ -39,6 +39,7 @@ export const registerAPIs = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
+    //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
       query: (data) => {
         return {
