@@ -28,8 +28,8 @@ export default class Account extends Contract {
 
   static async getBalance(
     contract: AccAddress,
-    chainID?: string,
-    url?: string
+    chainID: string,
+    url: string
   ): Promise<OwnedBalance> {
     const holding = await this.queryContract<Holdings>(chainID, url, contract, {
       balance: {},
