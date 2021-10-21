@@ -3,7 +3,7 @@ import maskAddress from "helpers/maskAddress";
 import Copier, { Addr } from "components/Copier/Copier";
 import Amount from "./Amount";
 import Description from "./Description";
-import getFutureValue from "./getFutureValue";
+import projectFunds from "./projectFunds";
 type Props = {
   address: string;
   balance: Balance;
@@ -11,9 +11,13 @@ type Props = {
 };
 
 export default function Entry({ address, balance, chainID }: Props) {
-  const future_locked = getFutureValue(10, 15, 365, balance.total_locked);
-  const future_liq = getFutureValue(10, 5, 365, balance.total_liq);
-
+  const { locked, liquid } = projectFunds(
+    10,
+    balance.total_locked,
+    balance.total_liq,
+    20,
+    15
+  );
   return (
     <tr className="border-b">
       <td>
@@ -41,8 +45,8 @@ export default function Entry({ address, balance, chainID }: Props) {
       </td>
       <td>
         <div className="flex flex-col">
-          <Amount type="principal" amount={future_locked} />
-          <Amount type="donations" amount={future_liq} />
+          <Amount type="principal" amount={locked} />
+          <Amount type="donations" amount={liquid} />
         </div>
       </td>
     </tr>
