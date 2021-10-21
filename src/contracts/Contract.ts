@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   AccAddress,
   Coin,
@@ -11,13 +12,23 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { urls } from "App/chains";
 import { Disconnected, TxResultFail } from "./Errors";
 import { chains } from "./types";
+=======
+import { Coin, LCDClient, Msg, StdFee } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { Denoms } from "types/currencies";
+>>>>>>> wallet-suite
 
 export default class Contract {
   wallet?: ConnectedWallet;
   client: LCDClient;
+<<<<<<< HEAD
   chainID: string;
   url: string;
   walletAddr?: AccAddress;
+=======
+  static gasAdjustment = 1.2; //use gas units 20% greater than estimate
+  static gasPrices = [new Coin(Denoms.UUSD, 0.151792301)];
+>>>>>>> wallet-suite
 
   constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;

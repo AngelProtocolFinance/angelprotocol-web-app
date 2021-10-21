@@ -1,6 +1,7 @@
 import Logo from "components/Logo/Logo";
 import Search from "components/Search/Search";
-import TerraConnector from "components/TerraConnector/TerraConnector";
+import Toolkit from "components/WalletSuite/Toolkit";
+import WalletSuite from "components/WalletSuite/WalletSuite";
 
 export default function AppHead() {
   return (
@@ -8,7 +9,9 @@ export default function AppHead() {
       <Logo />
       <div className="flex">
         <Search />
-        <TerraConnector />
+        <WalletSuite>
+          <Toolkit />
+        </WalletSuite>
       </div>
     </div>
   );

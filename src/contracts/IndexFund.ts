@@ -2,7 +2,6 @@ import {
   Coin,
   CreateTxOptions,
   Dec,
-  Denom,
   MsgExecuteContract,
   // StdFee,
 } from "@terra-money/terra.js";
@@ -51,7 +50,7 @@ export default class Indexfund extends Contract {
           split: `${splitToLiquid}`,
         },
       },
-      [new Coin(Denom.USD, micro_UST_Amount)]
+      [new Coin(Denoms.UUSD, micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
     // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
