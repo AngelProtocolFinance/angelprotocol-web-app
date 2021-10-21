@@ -7,6 +7,7 @@ import { FormikHelpers } from "formik";
 import { AccAddress, Denom } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
+import { denoms } from "constants/curriencies";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
@@ -66,7 +67,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         splitToLiquid
       );
       const estimatedFee =
-        transaction.fee!.amount.get('uusd')!.amount.toNumber() / 1e6;
+        transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
 
     
 
