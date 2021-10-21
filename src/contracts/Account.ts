@@ -7,7 +7,7 @@ import {
   StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { Denoms } from "types/currencies";
+import { denoms } from "constants/curriencies";
 import Contract from "./Contract";
 import { AccountDetails, Holding, Holdings, OwnedBalance } from "./types";
 import Vault from "./Vault";
@@ -37,10 +37,10 @@ export default class Account extends Contract {
           liquid_percentage: `${pctLiquid}`,
         },
       },
-      [new Coin(Denoms.UUSD, micro_UST_Amount)]
+      [new Coin(denoms.uusd, micro_UST_Amount)]
     );
     // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(Denoms.UUSD, 1.5e6)]);
+    const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 

@@ -1,7 +1,7 @@
 import { useGetWallet } from "./WalletSuite";
 import { Icons, Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
-import terraXIcon from "assets/icons/wallets/terra-extension.jpg";
+import terraStationIcon from "assets/icons/wallets/terra-station.jpg";
 import useActivator from "./useActivator";
 import TerraDisplay from "components/TerraStation/Display";
 import { useEffect, useState } from "react";
@@ -41,7 +41,11 @@ export default function Toolkit() {
 }
 
 const TerraXIcon = () => (
-  <img className="w-6 h-6 bg-white p-1 rounded-full" src={terraXIcon} alt="" />
+  <img
+    className="w-6 h-6 bg-white p-1 rounded-full"
+    src={terraStationIcon}
+    alt=""
+  />
 );
 
 const icons: Icons = {

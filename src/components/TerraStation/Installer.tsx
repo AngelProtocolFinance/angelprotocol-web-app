@@ -15,7 +15,7 @@ export default function Installer(props: Props) {
     return (
       <button
         onClick={handleInstall}
-        className={`mt-2 uppercase text-xs bg-white bg-opacity-50 text-white px-3 py-1 rounded-sm`}
+        className={`mt-4 uppercase text-xs bg-white bg-opacity-50 text-white px-3 py-1 rounded-full`}
       >
         Install
       </button>
