@@ -21,13 +21,11 @@ export default function Display() {
 
   return (
     <div className="flex">
-      <span className="pr-2 border-r text-sm text-white-grey">
-        {maskedAddr}
-      </span>
-      <span className="px-2 text-sm text-sm text-white-grey">
+      <span className="pr-2 text-sm text-white-grey">{maskedAddr}</span>
+      <Copier text={addr} colorClass="text-white" />
+      <span className="pl-2 ml-2 text-sm text-sm text-white-grey border-l">
         UST {toCurrency(ustAmount)}
       </span>
-      <Copier text={addr} colorClass="text-white" />
       <button onClick={toggleDetails} className="ml-2">
         <FiMoreHorizontal
           className="text-white hover:text-orange"

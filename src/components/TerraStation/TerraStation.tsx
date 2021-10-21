@@ -13,7 +13,7 @@ export default function TerraStation(props: Props) {
       ? "Terra Station Extension"
       : "Terra Station Mobile";
   return (
-    <div className="border border-opacity-30 rounded-md p-3 flex flex-col items-center w-40">
+    <div className="border border-opacity-50 rounded-md p-3 flex flex-col items-center w-40">
       <img
         src={terraExtIcon}
         alt=""
@@ -21,9 +21,7 @@ export default function TerraStation(props: Props) {
       />
       <Connector type={props.type} />
       <Installer type={props.type} />
-      <p className="mt-2 text-white-grey text-opacity-50 text-center">
-        {title}
-      </p>
+      <p className="mt-2 text-white-grey text-center">{title}</p>
     </div>
   );
 }

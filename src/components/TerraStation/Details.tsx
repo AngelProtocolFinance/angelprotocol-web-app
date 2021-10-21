@@ -16,7 +16,7 @@ export default function Details(props: Props) {
   const handleDisconnect = () => disconnect();
 
   return (
-    <div className="grid grid-rows-a1a absolute top-full mt-2 bg-white bg-opacity-10 w-full left-0 rounded-md overflow-hidden">
+    <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">
       <button
         className="text-black absolute top-2 right-2"
         onClick={props.closeHandler}

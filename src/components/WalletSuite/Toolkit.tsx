@@ -23,7 +23,7 @@ export default function Toolkit() {
   const hideConnectors = () => showConnectors(false);
 
   return (
-    <div className="relative border border-opacity-30 text-white-grey rounded-md flex items-center gap-2 px-2 py-2">
+    <div className="relative border border-opacity-40 text-white-grey rounded-md flex items-center gap-2 px-2 py-2">
       {icons[activeWallet]}
       {!isConnected && (
         <button

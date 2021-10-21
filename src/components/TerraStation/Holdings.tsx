@@ -19,12 +19,14 @@ export default function Holdings(props: Props) {
         return (
           <li
             key={denom}
-            className="p-1 grid grid-cols-a1 border-b border-opacity-10"
+            className="p-1 grid grid-cols-a1 border-b border-angel-grey border-opacity-10"
           >
-            <span className="uppercase text-sm font-bold mr-2">
+            <span className="uppercase text-sm font-bold mr-2 text-angel-grey">
               {userDenoms[denom] || "other"}
             </span>
-            <span className="ml-auto">{toCurrency(Number(amount))}</span>
+            <span className="ml-auto text-angel-grey">
+              {toCurrency(Number(amount))}
+            </span>
           </li>
         );
       })}

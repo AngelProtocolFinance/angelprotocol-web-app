@@ -4,13 +4,19 @@ import { ReactNode } from "react";
 import { MemoryRouter, Route } from "react-router-dom";
 import { app, site } from "types/routes";
 import App from "./App";
+import {
+  StaticWalletProvider,
+  WalletStatus,
+} from "@terra-money/wallet-provider";
 import { testnet } from "./chains";
-import { StaticWalletProvider } from "@terra-money/wallet-provider";
 
 function Wrapper(props: { children: ReactNode }) {
   return (
     <MemoryRouter initialEntries={[`${site.app}/${app.tca}`]} initialIndex={0}>
-      <StaticWalletProvider defaultNetwork={testnet}>
+      <StaticWalletProvider
+        defaultNetwork={testnet}
+        status={WalletStatus.WALLET_CONNECTED}
+      >
         {props.children}
       </StaticWalletProvider>
     </MemoryRouter>
