@@ -2,7 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
-import Copier from "./Copier";
+import Copier from "components/Copier/Copier";
 import useBalance from "./useBalance";
 import { FiMoreHorizontal } from "react-icons/fi";
 import Details from "./Details";
@@ -27,7 +27,7 @@ export default function Display() {
       <span className="px-2 text-sm text-sm text-white-grey">
         UST {toCurrency(ustAmount)}
       </span>
-      <Copier text={addr} />
+      <Copier text={addr} colorClass="text-white" />
       <button onClick={toggleDetails} className="ml-2">
         <FiMoreHorizontal
           className="text-white hover:text-orange"
