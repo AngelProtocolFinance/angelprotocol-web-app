@@ -10,8 +10,7 @@ export default function projectFunds(
     return { locked, liquid };
   }
   const new_locked = getNextYearVal(apy - harvest_rate, 365, locked);
-  const new_liq =
-    getNextYearVal(apy, 365, liquid) + new_locked * (harvest_rate / 100);
+  const new_liq = liquid + new_locked * (harvest_rate / 100);
   return projectFunds(years - 1, new_locked, new_liq, apy, harvest_rate);
 }
 

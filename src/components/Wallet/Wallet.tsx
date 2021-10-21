@@ -32,7 +32,7 @@ export default function Wallet() {
   return (
     <div className={`flex justify-between items-center`}>
       <p className={`text-sm md:tex-base text-white border-r pr-1 uppercase`}>
-        UST {toCurrency(ustBalance)}
+        UST {toCurrency(ustBalance, 3)}
       </p>
       <p className={`pl-1 text-sm md:tex-base text-white`}>
         {address.substr(0, 15) + "..."}
