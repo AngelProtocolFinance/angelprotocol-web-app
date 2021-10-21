@@ -1,7 +1,6 @@
 import { useGetWallet } from "./WalletSuite";
-import { Icons, Wallets } from "./types";
+import { Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
-import terraStationIcon from "assets/icons/wallets/terra-station.jpg";
 import useActivator from "./useActivator";
 import TerraDisplay from "components/TerraStation/Display";
 import { useEffect, useState } from "react";
@@ -23,15 +22,17 @@ export default function Toolkit() {
   const hideConnectors = () => showConnectors(false);
 
   return (
-    <div className="relative border border-opacity-40 text-white-grey rounded-md flex items-center gap-2 px-2 py-2">
-      {icons[activeWallet]}
+    <div className="relative border border-opacity-40 rounded-md">
       {!isConnected && (
         <button
-          className="uppercase text-sm"
+          className="flex py-2 px-3 items-center text-white  "
           disabled={isLoading}
           onClick={toggleConnector}
         >
-          {isLoading ? "Initializing" : "Connect"}
+          {activeWallet === Wallets.none && (
+            <IoWalletSharp className="text-white text-xl mr-2" />
+          )}
+          <span>{isLoading ? "Initializing" : "Connect"}</span>
         </button>
       )}
       {displays[activeWallet]}
@@ -39,19 +40,6 @@ export default function Toolkit() {
     </div>
   );
 }
-
-const TerraXIcon = () => (
-  <img
-    className="w-6 h-6 bg-white p-1 rounded-full"
-    src={terraStationIcon}
-    alt=""
-  />
-);
-
-const icons: Icons = {
-  [Wallets.none]: <IoWalletSharp className="text-white text-xl" />,
-  [Wallets.terraStationExt]: <TerraXIcon />,
-};
 
 const displays = {
   [Wallets.none]: null,

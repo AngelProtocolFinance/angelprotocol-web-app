@@ -2,17 +2,15 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
-import Copier from "components/Copier/Copier";
 import useBalance from "./useBalance";
-import { FiMoreHorizontal } from "react-icons/fi";
 import Details from "./Details";
+import terraIcon from "assets/icons/wallets/terra-station.jpg";
 
 export default function Display() {
   //this component won't be rendered if wallet is not connected
   const [detailsShown, showDetails] = useState(false);
   const { ustAmount, coins } = useBalance();
   const wallet = useConnectedWallet();
-  const addr = wallet?.walletAddress;
   const chainId = wallet?.network.chainID || "unknown";
   const maskedAddr = maskAddress(wallet?.terraAddress);
 
@@ -21,16 +19,12 @@ export default function Display() {
 
   return (
     <div className="flex">
-      <span className="pr-2 text-sm text-white-grey">{maskedAddr}</span>
-      <Copier text={addr} colorClass="text-white" />
-      <span className="pl-2 ml-2 text-sm text-sm text-white-grey border-l">
-        UST {toCurrency(ustAmount)}
-      </span>
-      <button onClick={toggleDetails} className="ml-2">
-        <FiMoreHorizontal
-          className="text-white hover:text-orange"
-          title="More Options"
-        />
+      <button onClick={toggleDetails} className="flex items-center py-2 px-3">
+        <img src={terraIcon} alt="" className="w-6 h-6 rounded-full mr-2" />
+        <span className="pr-2 text-sm text-white-grey">{maskedAddr}</span>
+        <span className="pl-2 ml-2 text-sm text-sm text-white-grey border-l">
+          UST {toCurrency(ustAmount)}
+        </span>
       </button>
       {detailsShown && (
         <Details
