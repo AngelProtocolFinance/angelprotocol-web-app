@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
-import { site, web } from "types/routes";
+import { Link, useRouteMatch } from "react-router-dom";
+import { app } from "types/routes";
 
 export default function AppMenu() {
+  const { url } = useRouteMatch();
   const linkStyles = {
     className:
       "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
@@ -9,18 +10,18 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${site.home}${web.index}`} {...linkStyles}>
-          About
+        <Link to={`${url}${app.index}`} {...linkStyles}>
+          Leaderboards
         </Link>
       </li>
       <li>
-        <Link to={`${site.home}${web.charities}`} {...linkStyles}>
-          For charities
+        <Link to={`/contact`} {...linkStyles}>
+          REGISTER
         </Link>
       </li>
       <li>
-        <Link to={`${site.home}${web.donors}`} {...linkStyles}>
-          For donors
+        <Link to={`${url}/${app.tca}`} {...linkStyles}>
+          Donate
         </Link>
       </li>
     </ul>

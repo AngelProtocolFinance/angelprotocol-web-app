@@ -9,6 +9,7 @@ export default function CustomAmount() {
   useEffect(() => {
     setFieldValue("amount", "");
     inputRef.current?.focus();
+    //eslint-disable-next-line
   }, []);
 
   return (

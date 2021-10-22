@@ -12,9 +12,6 @@ const WalletCheck = () => {
   const showTerraInfoModal = () => {
     setOpenModal(true);
   };
-  const closeModal = () => {
-    setOpenModal(false);
-  };
   return (
     <div className="text-center">
       <div className="flex items-center mb-5 justify-center">
@@ -27,21 +24,24 @@ const WalletCheck = () => {
         />
       </div>
       <div className="text-center">
-        <button
-          className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(register.select_wallet)}
-        >
-          YES
-        </button>
-        <br />
-        <button
-          className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => {
-            history.push(register.others);
-          }}
-        >
-          NO
-        </button>
+        <div>
+          <button
+            className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+            onClick={() => history.push(register.select_wallet)}
+          >
+            YES
+          </button>
+        </div>
+        <div>
+          <button
+            className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+            onClick={() => {
+              history.push(register.others);
+            }}
+          >
+            NO
+          </button>
+        </div>
       </div>
       {isOpenModal && (
         <Modal>

@@ -54,7 +54,7 @@ export default async function handleSubscribe(
       actions.setStatus(Status.failed);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     actions.setStatus(Status.failed);
   }
 

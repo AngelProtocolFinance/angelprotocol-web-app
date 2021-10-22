@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Registrar from "contracts/Registrar";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Registrar from "contracts/Registrar";
 
 export interface SplitLiq {
   max?: number;
@@ -17,11 +17,6 @@ export default function useFund() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          setError("Your wallet is not connected");
-          setLoading(false);
-          return;
-        }
         setError("");
         const registrar = new Registrar(wallet);
         const splitConfig = await registrar.getConfig();
@@ -31,7 +26,7 @@ export default function useFund() {
         setSplit(_split);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setError("Failed to get form resources");
         setLoading(false);
       }
