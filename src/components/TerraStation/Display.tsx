@@ -22,7 +22,7 @@ export default function Display() {
       <button onClick={toggleDetails} className="flex items-center py-2 px-3">
         <img src={terraIcon} alt="" className="w-6 h-6 rounded-full mr-2" />
         <span className="pr-2 text-sm text-white-grey">{maskedAddr}</span>
-        <span className="pl-2 ml-2 text-sm text-sm text-white-grey border-l">
+        <span className="pl-2 text-sm text-sm text-white-grey border-l">
           UST {toCurrency(ustAmount)}
         </span>
       </button>
