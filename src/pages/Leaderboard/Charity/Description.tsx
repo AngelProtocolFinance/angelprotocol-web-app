@@ -1,30 +1,36 @@
-import { charities, defaultURL, defIcon } from "./charities";
-import { Addresses } from "./types";
+import useDescription from "./useDescription";
 
 type Props = {
-  address: Addresses;
+  address: string;
+  chainID: string;
 };
 
 export default function Description(props: Props) {
-  const {
-    name = "Charity",
-    description = "failed to get charity data",
-    url = defaultURL,
-    icon = defIcon,
-  } = charities[props.address] || {}; //details only exists on mainnet
+  const { icon, iconLight, url, name, description } = useDescription(
+    props.address,
+    props.chainID
+  );
   return (
     <div className="flex items-center">
-      <img src={icon} alt="" className="w-28 mr-4" />
+      <img
+        src={icon}
+        alt=""
+        className={`bg-angel-blue ${
+          iconLight ? "bg-opacity-70" : "bg-opacity-10"
+        } p-3 rounded-sm shadow-sm w-32 h-24 m-1 object-contain mr-4`}
+      />
       <div>
         <a
           href={url}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-lg text-angel-grey font-bold pt-2 block mb-1"
+          className="text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 block mb-1"
         >
           {name}
         </a>
-        <p className="max-w-sm text-sm text-angel-grey leading-normal mb-2">
+        <p
+          className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
+        >
           {description}
         </p>
       </div>

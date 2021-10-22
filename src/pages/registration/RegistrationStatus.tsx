@@ -1,17 +1,48 @@
+import { useEffect } from "react";
+import { useGetCharityDataQuery } from "api/charityAPIs";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { TStore } from "Redux/store";
 import { register } from "types/routes";
+import Action from "./Action";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+  const { userData } = useSelector((state: TStore) => state.user);
+  const { data, error, isLoading, isFetching, refetch } =
+    useGetCharityDataQuery(userData.PK);
+
+  useEffect(() => {
+    if (error) {
+      //TODO:provide typing for this error if possible
+      //encountered error of this shape
+      /*{
+      "status": "FETCH_ERROR",
+      "error": "TypeError: Failed to fetch"
+      } */
+      const messageData: any = error;
+      toast.error(messageData?.data?.message || "something wen't wrong");
+    }
+  }, [error]);
+
   const status = {
-    contact_details: "complete",
-    wallet_address: "missing",
-    document: "missing",
-    endwment: "not available",
-    completed: false,
+    contact_details: 0,
+    wallet_address: 1,
+    document: data?.Metadata ? 0 : 1,
+    endowment:
+      data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
+    completed:
+      data?.Metadata &&
+      data?.Metadata?.EndowmentStatus === "Active" &&
+      data?.Wallet,
   };
+
+  const navigate = (dest: string) => () => {
+    history.push(dest);
+  };
+
   return (
     <div className="">
       <div className="necessary-information">
@@ -23,67 +54,70 @@ const RegistrationStatus = () => {
           </span>
         </div>
         <div className="infor-status my-2">
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #1: Contact Details</span>
-              <br />
-              <span className="status-text uppercase text-green-500">
-                {status.contact_details}
-              </span>
+              <p className="">Step #1: Contact Details</p>
+              <p className="status-text uppercase text-green-500">Complete</p>
             </div>
             <div className="">
-              <button
-                className="bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-                onClick={() => {
-                  history.push({
-                    pathname: register.detail,
-                  });
-                }}
-              >
-                Change
-              </button>
+              <Action
+                classes="bg-yellow-blue w-40 h-10"
+                onClick={navigate(register.detail)}
+                title="Change"
+                disabled={userData.PK === ""}
+              />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #2: Wallet Address</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
-                {status.wallet_address}
-              </span>
+              <p className="">Step #2: Wallet Address</p>
+              <p className="status-text uppercase text-yellow-600">
+                {status.wallet_address === 0 ? "Complete" : "Missing"}
+              </p>
             </div>
             <div className="">
-              <button className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                Continue
-              </button>
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
+                title={status.wallet_address === 0 ? "Change" : "Continue"}
+                disabled={userData.PK === ""}
+              />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #3: Documentation</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
-                {status.document}
-              </span>
+              <p className="">Step #3: Documentation</p>
+              <p className="status-text uppercase text-yellow-600">
+                {status.document === 0 ? "Complete" : "Missing"}
+              </p>
             </div>
             <div className="">
-              <button className="bg-gray-300 w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                Change
-              </button>
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
+                title={status.document === 0 ? "Change" : "Continue"}
+                disabled={userData.PK === ""}
+              />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Status of Your Endwment</span>
-              <br />
-              <span className="status-text uppercase text-red-600">
-                {status.endwment}
-              </span>
+              <p className="">Status of Your Endowment</p>
+              <p className="status-text uppercase text-red-600">
+                {status.endowment === 0
+                  ? "Complete"
+                  : status.endowment === 1
+                  ? "Missing"
+                  : "Not available"}
+              </p>
             </div>
             <div className="">
-              <button className="bg-gray-300 w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                create
-              </button>
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={navigate(register.wallet_check)}
+                title={status.endowment === 0 ? "Complete" : "Continue"}
+                disabled={status.endowment === 2 || userData.PK === ""}
+              />
             </div>
           </div>
         </div>
@@ -98,45 +132,52 @@ const RegistrationStatus = () => {
           </span>
         </div>
         <div className="infor-status my-2">
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #1: Contact Details</span>
-              <br />
-              <span className="status-text uppercase text-green-500">
-                complete
-              </span>
+              <p className="">Step #1: Charity Profile</p>
+              <p className="status-text uppercase text-green-500">complete</p>
             </div>
             <div className="">
-              <button className="bg-yellow-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                Change
-              </button>
+              <Action
+                classes="bg-yellow-blue w-40 h-10"
+                onClick={navigate(register.charity_profile)}
+                title="Change"
+                disabled={userData.PK === ""}
+              />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
-              <span className="">Step #2: Wallet Address</span>
-              <br />
-              <span className="status-text uppercase text-yellow-600">
-                Missing
-              </span>
+              <p className="">Step #2: Key Person Profile</p>
+              <p className="status-text uppercase text-yellow-600">Missing</p>
             </div>
             <div className="">
-              <button className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-                Continue
-              </button>
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={() =>
+                  history.push({
+                    pathname: register.key_person,
+                    state: {
+                      data: data?.KeyPerson,
+                    },
+                  })
+                }
+                title="Continue"
+                disabled={userData.PK === ""}
+              />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <button
-          className="disabled:bg-gray-300 bg-thin-blue w-64 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => history.push(register.charity_profile)}
-          disabled={!status.completed}
-        >
-          Go to {userData.charityName}'s profile
-        </button>
+        <Action
+          classes="bg-thin-blue w-64 h-10"
+          title={"Go to " + userData.CharityName + "'s profile"}
+          onClick={navigate(register.charity_profile)}
+          disabled={!status.completed || userData.PK === ""}
+        />
       </div>
+      <ToastContainer />
     </div>
   );
 };

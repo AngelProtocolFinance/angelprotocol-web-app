@@ -27,10 +27,9 @@ const ConnectWallet = () => {
       <div className="title">
         {isSuccess ? (
           <div className="text-center items-center">
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-5">
               <FaCheck className="text-3xl text-white" />
             </div>
-            <br />
             <p className="text-3xl font-bold uppercase">success!</p>
           </div>
         ) : (
@@ -69,13 +68,11 @@ const ConnectWallet = () => {
                 </div>
                 <button
                   type="submit"
-                  className="disabled:bg-grey-accent bg-thin-blue text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-base font-bold text-white"
+                  className="disabled:bg-grey-accent bg-thin-blue text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-base font-bold text-white mb-10"
                   disabled={isSubmitting || isSuccess}
                 >
                   SUBMIT
                 </button>
-                <br />
-                <br />
                 {isSuccess && (
                   <p>
                     Thanks, we've been notified and we'll get in touch with you

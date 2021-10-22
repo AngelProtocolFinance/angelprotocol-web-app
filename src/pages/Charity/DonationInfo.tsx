@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Modal from "react-modal";
-import { CharityInfo } from "./CharityInfo";
+// import Modal from "react-modal";
+// import { CharityInfo } from "./CharityInfo";
 
 interface DonationInfoProps {
   isDonate: boolean;
@@ -82,7 +82,7 @@ export function DonationInfo({
           </div>
         </div>
       </div>
-      <Modal
+      {/* <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeInfoModal}
         contentLabel="Example Modal"
@@ -94,7 +94,7 @@ export function DonationInfo({
             <CharityInfo />
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }

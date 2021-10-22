@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Indexfund from "contracts/IndexFund";
+import IndexFund from "contracts/IndexFund";
 import { chains } from "contracts/types";
 import { useEffect, useState } from "react";
 import { donors as tcaDonors } from "./donors";
@@ -13,9 +13,8 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [sums, setSums] = useState<Array<[Names, number]>>([]);
   const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID;
-  const url = wallet?.network.lcd;
-  const storage_key = `tca_boards_${chainID || chains.mainnet}`;
+  const chainID = wallet?.network.chainID || chains.mainnet;
+  const storage_key = `tca_boards_${chainID}`;
 
   useEffect(() => {
     (async () => {
@@ -33,7 +32,8 @@ export default function useBoard() {
       try {
         setError("");
         setLoading(true);
-        const res = await Indexfund.getFundDonations(chainID, url);
+        const indexFund = new IndexFund(wallet);
+        const res = await indexFund.getFundDonations();
         const _sums: Sums = {};
         res.donors.forEach((donor) => {
           const donorName = tcaDonors[donor.address] || Names.community;
@@ -61,11 +61,12 @@ export default function useBoard() {
         setSums(entries);
         setLastUpdate(stamp);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setLoading(false);
         setError("Failed to get donation data. Please try again later");
       }
     })();
+    //eslint-disable-next-line
   }, [wallet, flag]);
 
   function refresh() {

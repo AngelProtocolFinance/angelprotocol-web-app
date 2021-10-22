@@ -24,13 +24,8 @@ export default function MobileNav() {
           For Donors
         </NavLink>
       </li>
-      {/* <li className="mr-4">
-        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
-          Register
-        </NavLink>
-      </li> */}
       <li className="mr-4">
-        <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
+        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
           Launch App
         </NavLink>
       </li>
