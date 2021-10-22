@@ -20,7 +20,7 @@ export default function Locked(props: LockedBalance) {
             </span>
           </div>
         </h3>
-        <p className="text-6xl font-bold">
+        <p className="text-5xl font-bold">
           $ {toCurrency(props.lockedBalance)}
         </p>
         <div className="grid grid-cols-1">

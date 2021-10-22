@@ -17,7 +17,7 @@ export default function Liquid(props: LiquidBalance) {
             </span>
           </div>
         </h3>
-        <p className="text-6xl font-bold">
+        <p className="text-5xl font-bold">
           $ {toCurrency(props.liquidBalance)}
         </p>
         <div className="grid grid-cols-1">
