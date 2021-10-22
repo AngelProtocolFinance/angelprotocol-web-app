@@ -30,7 +30,7 @@ export default function Details(props: Props) {
         network : {props.chainId}
       </div>
       <Address address={addr} />
-      <Portal address={addr} />
+      <Portal />
       {(!isEmpty && <Holdings coinData={props.coinData} />) || (
         <span className="text-white-grey p-10 text-center text-sm uppercase">
           Wallet is empty

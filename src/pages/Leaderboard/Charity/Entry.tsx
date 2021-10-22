@@ -22,7 +22,7 @@ export default function Entry({ address, balance, chainID }: Props) {
   return (
     <tr className="border-b">
       <td>
-        <Description address={address} />
+        <Description address={address} chainID={chainID} />
       </td>
       <td>
         <div className="flex items-center gap-2">
