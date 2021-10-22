@@ -1,19 +1,10 @@
-import charityData from "../Leaderboard/Charity/charityData.json";
-import { Charities } from "pages/Leaderboard/Charity/types";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Link } from "react-router-dom";
+import { Endowment } from "api/endowmentsAPI/types";
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 
-type Props = {
-  address: string;
-};
-export default function CharityCard(props: Props) {
-  const data: Charities = charityData;
-  const details = data[props.address] || {};
-  const icon = details.icon || defaultIcon;
-  const iconLight = details.iconLight || false;
-  const url = details.url || "https://angelprotocol.io";
-  const description = details.description || "Failed to get charity data";
-  const name = details.name || "Charity";
+export default function CharityCard(props: Endowment) {
+  const icon = props.icon || defaultIcon;
+  const url = props.url || "https://angelprotocol.io";
 
   return (
     <li className="grid grid-rows-aa1 rounded-md overflow-hidden shadow-lg border border-angel-grey border-opacity-30 bg-angel-grey">
@@ -21,7 +12,7 @@ export default function CharityCard(props: Props) {
         alt=""
         src={icon}
         className={`h-32 w-full p-5 object-contain ${
-          iconLight ? "bg-angel-grey" : "bg-white"
+          props?.iconLight ? "bg-angel-grey" : "bg-white"
         }`}
       />
       <a
@@ -30,10 +21,10 @@ export default function CharityCard(props: Props) {
         rel="noopener noreferrer"
         className="shadow-md bg-blue-accent p-3 font-heading font-bold text-white-grey"
       >
-        {name}
+        {props.name}
       </a>
       <p className="text-sm md:text-base leading-relaxed text-white-grey p-4">
-        {description}
+        {props.description}
       </p>
       <div className="p-4 flex justify-between items-center">
         <a

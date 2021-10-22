@@ -1,9 +1,14 @@
 import { Link } from "react-router-dom";
-import { useLookupQuery } from "services/endowmentsAPI/endowmentAPI";
+import { useLookupQuery } from "api/endowmentsAPI/endowmentAPI";
+import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { chains } from "contracts/types";
 
-export default function Portal({ address }: { address: string }) {
-  const { data } = useLookupQuery("");
-  const endowmentAddr = data?.[address];
+export default function Portal() {
+  const wallet = useConnectedWallet();
+  const isTestNet = wallet?.network.chainID === chains.testnet;
+  //on testnet --> url resolves to endpoint/endowments/testnet
+  const { data } = useLookupQuery(isTestNet);
+  const endowmentAddr = data?.[wallet?.terraAddress || ""];
   if (!endowmentAddr) {
     return null;
   } else {

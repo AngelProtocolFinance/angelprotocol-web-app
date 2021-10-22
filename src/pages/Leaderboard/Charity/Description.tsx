@@ -1,19 +1,15 @@
-import charityData from "./charityData.json";
-import { Charities } from "./types";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
+import useDescription from "./useDescription";
 
 type Props = {
   address: string;
+  chainID: string;
 };
 
 export default function Description(props: Props) {
-  const data: Charities = charityData;
-  const details = data[props.address] || {};
-  const icon = details.icon || defaultIcon;
-  const iconLight = details.iconLight || false;
-  const url = details.url || "https://angelprotocol.io";
-  const description = details.description || "Failed to get charity data";
-  const name = details.name || "Charity";
+  const { icon, iconLight, url, name, description } = useDescription(
+    props.address,
+    props.chainID
+  );
   return (
     <div className="flex items-center">
       <img
