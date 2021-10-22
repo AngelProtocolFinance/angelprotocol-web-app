@@ -3,6 +3,7 @@ import Heading from "../Heading";
 import Updator from "../Updator";
 import View from "../View";
 import Entry from "./Entry";
+import Tooltip from "./Tooltip";
 // import { Addresses } from "./types";
 import useBoard from "./useBoard";
 
@@ -36,7 +37,9 @@ export default function BoardCharity() {
                 <Heading text="Charity" />
                 <Heading text="Endowment Address" />
                 <Heading text="Donations Received" />
-                <Heading text="10YR Projection" />
+                <Heading text="10YR Projection">
+                  <Tooltip />
+                </Heading>
               </tr>
             </thead>
             <tbody>

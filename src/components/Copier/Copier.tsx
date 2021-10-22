@@ -1,9 +1,6 @@
 import { BiCopy, BiCheck } from "react-icons/bi";
+import { Addr } from "./types";
 import useCopier from "./useCopier";
-
-export type Addr = string & {
-  __type: "HumanAddr";
-};
 
 type Props = {
   text?: Addr;

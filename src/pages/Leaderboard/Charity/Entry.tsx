@@ -1,9 +1,10 @@
 import { Balance } from "contracts/types";
 import maskAddress from "helpers/maskAddress";
-import Copier, { Addr } from "components/Copier/Copier";
+import Copier from "components/Copier/Copier";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
+import { Addr } from "components/Copier/types";
 type Props = {
   address: string;
   balance: Balance;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Addr } from "./Copier";
+import { Addr } from "./types";
 
 const copyWaitTime = 700;
 export default function useCopier(text?: Addr) {
