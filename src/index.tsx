@@ -1,15 +1,18 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import App from "./App/App";
+// import App from "./App/App";
 import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import { store } from "Redux/store";
 import AuthProvider from "contexts/AuthProvider";
+import LoadPage from "pages/Loading/Loading";
+
+const LazyApp = React.lazy(() => import("./App/App"));
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +20,11 @@ ReactDOM.render(
       <BrowserRouter>
         <AuthProvider>
           <Switch>
-            <Route path={site.app} component={App} />
+            <Route path={site.app}>
+              <Suspense fallback={<LoadPage />}>
+                <LazyApp />
+              </Suspense>
+            </Route>
             <Route path={site.home} component={Website} />
           </Switch>
         </AuthProvider>
