@@ -64,6 +64,7 @@ export default function Withdraw() {
                     Enter the quantity of tokens to withdraw from each of the
                     active Liquid Account's current strategies.
                   </p>
+                  {/* Add form here */}
                 </div>
               </div>
             ) : null}
