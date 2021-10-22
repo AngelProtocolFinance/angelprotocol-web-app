@@ -109,6 +109,7 @@ module.exports = {
     extend: {
       backgroundColor: ["disabled"],
       textColor: ["disabled"],
+      translate: ["active"],
     },
   },
 };

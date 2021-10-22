@@ -13,7 +13,7 @@ export default function TerraAction(props: Props) {
     <button
       onClick={handleClick}
       style={{ backgroundImage: `url(${props.icon})`, backgroundSize: "40%" }}
-      className={`flex flex-col bg-white bg-contain bg-no-repeat bg-center  items-center w-32 h-32 rounded-md shadow-md`}
+      className={`items-center w-32 h-32 flex flex-col bg-white bg-contain bg-no-repeat bg-center rounded-md shadow-md transform active:translate-y-0.5`}
     >
       <p className="text-white font-bold font-heading leading-normal text-xs uppercase text-center bg-angel-blue bg-opacity-70 p-2">
         {props.label}
