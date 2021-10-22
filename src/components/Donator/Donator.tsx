@@ -8,6 +8,7 @@ import { Status, SetStatus, Steps, Props, Values } from "./types";
 const initialStatus = {
   step: Steps.initial,
 };
+
 const getContext = createContext<Status>(initialStatus);
 const setContext = createContext<SetStatus>(() => initialStatus);
 //use these hooks only in components inside Donator

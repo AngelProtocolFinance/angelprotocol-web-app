@@ -83,7 +83,7 @@ const CreateNewCharity = async (contactData: any) => {
 
 // Create new Metadata of charity
 const CreateNewMetadata = async (metadata: any) => {
-  const url = process.env.REACT_APP_AWS_CHARITY_METADATA_URL;
+  // const url = process.env.REACT_APP_AWS_CHARITY_METADATA_URL;
 
   try {
   } catch (error) {
@@ -93,7 +93,7 @@ const CreateNewMetadata = async (metadata: any) => {
 
 // Create new Key Person's details
 const CreateNewKeyPerson = async (keyPersonData: any) => {
-  const url = process.env.REACT_APP_AWS_CHARITY_KEYPERSON_URL;
+  // const url = process.env.REACT_APP_AWS_CHARITY_KEYPERSON_URL;
 
   try {
   } catch (error) {

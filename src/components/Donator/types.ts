@@ -9,12 +9,13 @@ export interface Values {
 }
 
 export enum Steps {
-  success = "success",
-  error = "error",
   initial = "initial",
   confirm = "confirm",
   ready = "ready",
   waiting = "waiting",
+  no_result = "noresult",
+  success = "success",
+  error = "error",
 }
 
 interface Estimates {
@@ -33,6 +34,12 @@ interface WithResult {
   step: Steps;
   message?: string;
   result?: Result;
+}
+
+interface WithoutResult {
+  step: Steps;
+  message?: string;
+  url?: string;
 }
 
 interface WithEstimate {
@@ -60,6 +67,6 @@ interface ToCharity {
 
 export type Props = ToFund | ToCharity;
 
-export type Status = WithResult & WithEstimate;
+export type Status = WithResult & WithEstimate & WithoutResult;
 
 export type SetStatus = (result: Status) => void;

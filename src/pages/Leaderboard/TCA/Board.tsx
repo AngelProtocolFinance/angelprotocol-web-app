@@ -15,7 +15,7 @@ export default function Board() {
         lastUpdate={lastUpdate}
         isLoading={isLoading}
       />
-      <img className="m-20 w-60" src={tcaLogo} />
+      <img className="m-20 w-60" src={tcaLogo} alt="" />
       {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
         <Loader

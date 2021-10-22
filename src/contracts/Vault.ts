@@ -1,16 +1,23 @@
-import { Dec } from "@terra-money/terra.js";
+import { AccAddress, Dec } from "@terra-money/terra.js";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import Contract from "./Contract";
-import { Holding, Swap } from "./types";
+import { Swap } from "./types";
 
 export default class Vault extends Contract {
-  static async getUSTValue(
-    holding: Holding,
-    chainID?: string,
-    url?: string
-  ): Promise<Dec> {
-    const swap = await this.queryContract<Swap>(chainID, url, holding.address, {
-      exchange_rate: { input_denom: "uusd" },
+  address: AccAddress;
+  constructor(vaultAddr: AccAddress, wallet?: ConnectedWallet) {
+    super(wallet);
+    this.address = vaultAddr;
+  }
+
+  async getExchangeRate(denom: string) {
+    return await this.query<Swap>(this.address, {
+      exchange_rate: { input_denom: denom },
     });
-    return new Dec(swap.exchange_rate).mul(new Dec(holding.amount));
+  }
+
+  async getUSTValue(amount: string) {
+    const rate = await this.getExchangeRate("uust");
+    return new Dec(rate.exchange_rate).mul(new Dec(amount));
   }
 }

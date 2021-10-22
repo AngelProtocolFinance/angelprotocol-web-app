@@ -3,11 +3,19 @@ import Heading from "../Heading";
 import Updator from "../Updator";
 import View from "../View";
 import Entry from "./Entry";
+<<<<<<< HEAD
+=======
+import Tooltip from "./Tooltip";
+>>>>>>> to-mvp
 // import { Addresses } from "./types";
 import useBoard from "./useBoard";
 
 export default function BoardCharity() {
+<<<<<<< HEAD
   const { isReady, isLoading, error, charities, refresh, lastUpdate } =
+=======
+  const { isReady, isLoading, error, charities, refresh, lastUpdate, chainID } =
+>>>>>>> to-mvp
     useBoard();
 
   return (
@@ -36,11 +44,19 @@ export default function BoardCharity() {
                 <Heading text="Charity" />
                 <Heading text="Endowment Address" />
                 <Heading text="Donations Received" />
+                <Heading text="10YR Projection">
+                  <Tooltip />
+                </Heading>
               </tr>
             </thead>
             <tbody>
               {charities.map(([address, balance], idx) => (
-                <Entry key={idx} balance={balance} address={address} />
+                <Entry
+                  key={idx}
+                  balance={balance}
+                  address={address}
+                  chainID={chainID}
+                />
               ))}
             </tbody>
           </table>

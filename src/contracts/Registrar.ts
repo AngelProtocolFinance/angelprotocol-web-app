@@ -1,53 +1,25 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import {
-  chains,
-  ContractAddrs,
-  Endowment,
-  Endowments,
-  SplitConfig,
-  SplitRes,
-} from "./types";
+import { Endowments, sc, SplitRes } from "./types";
 
 export default class Registrar extends Contract {
-  currContractAddr: string;
-  //contract address
-  static scAddresses: ContractAddrs = {
-    [chains.mainnet]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
-    [chains.testnet]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
-    [chains.localterra]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
-  };
-
-  //may need to re-implement to handle multiple currencies in the future
-  constructor(wallet: ConnectedWallet) {
+  address: string;
+  constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.currContractAddr = Registrar.scAddresses[this.wallet.network.chainID];
+    this.address = contracts[this.chainID][sc.registrar];
   }
-
-  static async getConfig(chainID?: string, url?: string): Promise<SplitConfig> {
-    const _chain = chainID || chains.mainnet;
-    const contract = Registrar.scAddresses[_chain];
-    const result = await this.queryContract<SplitRes>(chainID, url, contract, {
+  async getConfig() {
+    const result = await this.query<SplitRes>(this.address, {
       config: {},
     });
     return result.split_to_liquid;
   }
 
-  static async getEndowmentList(
-    chainID?: string,
-    url?: string
-  ): Promise<Endowment[]> {
-    const _chain = chainID || chains.mainnet;
-    const contract = Registrar.scAddresses[_chain];
-    const result = await this.queryContract<Endowments>(
-      chainID,
-      url,
-      contract,
-      {
-        endowment_list: {},
-      }
-    );
-
+  async getEndowmentList() {
+    const result = await this.query<Endowments>(this.address, {
+      endowment_list: {},
+    });
     return result.endowments;
   }
 }

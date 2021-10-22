@@ -18,6 +18,22 @@ export default function Announcer() {
         </Modal>
       );
     }
+    case Steps.no_result: {
+      return (
+        <Modal>
+          <Popup message={status?.message}>
+            <a
+              href={status.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-accent"
+            >
+              Check results manually
+            </a>
+          </Popup>
+        </Modal>
+      );
+    }
 
     case Steps.confirm: {
       return (

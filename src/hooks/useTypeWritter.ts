@@ -54,7 +54,7 @@ export default function useTypeWriter(
     frameRef.current = requestAnimationFrame(typeAndDelete);
     return () => cancelAnimationFrame(frameRef.current);
     //start animation and end only before this component unmounts
-    // eslint-disable-next-line
+    //eslint-disable-next-line
   }, []);
 
   return [text, cursorShown];

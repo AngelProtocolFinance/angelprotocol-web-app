@@ -20,7 +20,7 @@ export default function TCAMember(props: Props) {
           </a>
         </div>
       </td>
-      <td className="font-heading">UST {toCurrency(props.amount)}</td>
+      <td className="font-heading">$ {toCurrency(props.amount, 0)}</td>
     </tr>
   );
 }

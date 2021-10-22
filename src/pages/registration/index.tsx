@@ -13,14 +13,14 @@ import OtherWallets from "./connect-wallet/OtherWallets";
 import SelfCustody from "./connect-wallet/Self-custody";
 import { register } from "types/routes";
 import AppHead from "components/Headers/AppHead";
+import KeyPersonProfile from "./keyPerson-profile/KeyPersonProfile";
 const Register = () => {
   //this component will only render under '/app/register/'
-  //{path} = '/app/register'
   const { path } = useRouteMatch();
   return (
     <section className="grid grid-rows-dashboard pb-16 justify-items-center">
       <AppHead />
-      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-32 text-center text-white">
+      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white">
         <Switch>
           <Route
             exact
@@ -76,6 +76,11 @@ const Register = () => {
             exact
             path={`${path}/${register.self_custody}`}
             component={SelfCustody}
+          />
+          <Route
+            exact
+            path={`${path}/${register.key_person}`}
+            component={KeyPersonProfile}
           />
           <Route
             exact
