@@ -27,8 +27,6 @@ export default function Connectors(props: Props) {
         type={ConnectType.WALLETCONNECT}
         label="Terra Station Mobile"
       />
-      {/* <TerraStation type={ConnectType.CHROME_EXTENSION} /> */}
-      {/* <TerraStation type={ConnectType.WALLETCONNECT} /> */}
     </div>
   );
 }
