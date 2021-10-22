@@ -23,7 +23,7 @@ const Website = () => {
       <WebHead />
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-        <Route path={`${path}${web.about}`} component={About} />
+        {/* <Route path={`${path}${web.about}`} component={About} /> */}
         <Route path={`${path}${web.contact}`} component={Contact} />
         {/* <Route path={`${path}${web.privacy}`} component={PrivacyPolicy} /> */}
         <Route path={`${path}${web.donors}`} component={Donors} />

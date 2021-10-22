@@ -3,19 +3,12 @@ import Heading from "../Heading";
 import Updator from "../Updator";
 import View from "../View";
 import Entry from "./Entry";
-<<<<<<< HEAD
-=======
 import Tooltip from "./Tooltip";
->>>>>>> to-mvp
 // import { Addresses } from "./types";
 import useBoard from "./useBoard";
 
 export default function BoardCharity() {
-<<<<<<< HEAD
-  const { isReady, isLoading, error, charities, refresh, lastUpdate } =
-=======
   const { isReady, isLoading, error, charities, refresh, lastUpdate, chainID } =
->>>>>>> to-mvp
     useBoard();
 
   return (

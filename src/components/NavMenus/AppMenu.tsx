@@ -1,5 +1,5 @@
 import { Link, useRouteMatch } from "react-router-dom";
-import { site, web, app } from "types/routes";
+import { app } from "types/routes";
 
 export default function AppMenu() {
   const { url } = useRouteMatch();
@@ -20,7 +20,7 @@ export default function AppMenu() {
         </Link>
       </li>
       <li>
-        <Link to={`${url}${app.tca}`} {...linkStyles}>
+        <Link to={`${url}/${app.tca}`} {...linkStyles}>
           Donate
         </Link>
       </li>
