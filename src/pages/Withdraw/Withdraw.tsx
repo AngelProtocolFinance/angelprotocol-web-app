@@ -44,12 +44,11 @@ export default function Withdraw() {
           </div>
           <div className="flex justify-start mt-4 pl-6">
             {/*//TODO: should disable/hide when curr wallet_addr is not endowment owner */}
-            {/* <button
+            <button
               className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
               onClick={() => setShowModal(true)}
-            > */}
-            <button className="cursor-default uppercase bg-angel-grey rounded-lg w-56 h-12 text-sm font-bold">
-              Withdraw Coming Soon!{/* Withdraw from Accounts */}
+            >
+              Withdraw from Accounts
             </button>
           </div>
           <div>
