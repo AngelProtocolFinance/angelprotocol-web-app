@@ -1,5 +1,7 @@
 import { ConnectType } from "@terra-money/wallet-provider";
-import TerraStation from "components/TerraStation/TerraStation";
+import TerraAction from "components/TerraStation/TerraAction";
+import terraMobileIcon from "assets/icons/wallets/terra-mobile.png";
+import terraExtIcon from "assets/icons/wallets/terra-extension.jpg";
 import { IoClose } from "react-icons/io5";
 
 type Props = {
@@ -12,8 +14,18 @@ export default function Connectors(props: Props) {
       <button className="absolute top-2 right-2" onClick={props.closeHandler}>
         <IoClose className="text-white-grey text-lg" />
       </button>
-      <TerraStation type={ConnectType.CHROME_EXTENSION} />
-      <TerraStation type={ConnectType.WALLETCONNECT} />
+      <TerraAction
+        icon={terraExtIcon}
+        type={ConnectType.CHROME_EXTENSION}
+        label="Terra Station Extension"
+      />
+      <TerraAction
+        icon={terraMobileIcon}
+        type={ConnectType.WALLETCONNECT}
+        label="Terra Station Mobile"
+      />
+      {/* <TerraStation type={ConnectType.CHROME_EXTENSION} /> */}
+      {/* <TerraStation type={ConnectType.WALLETCONNECT} /> */}
     </div>
   );
 }

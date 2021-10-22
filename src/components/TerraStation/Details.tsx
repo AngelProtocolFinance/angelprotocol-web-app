@@ -39,7 +39,7 @@ export default function Details(props: Props) {
       <button
         disabled={!isConnected}
         onClick={handleDisconnect}
-        className="uppercase text-sm bg-blue-accent p-2 text-white"
+        className="uppercase text-sm bg-blue-accent hover:bg-angel-blue p-2 text-white"
       >
         disconnect
       </button>

@@ -22,7 +22,7 @@ export default function Toolkit() {
   const hideConnectors = () => showConnectors(false);
 
   return (
-    <div className="relative border border-opacity-40 rounded-md">
+    <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">
       {!isConnected && (
         <button
           className="flex py-2 px-3 items-center text-white  "

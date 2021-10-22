@@ -20,8 +20,8 @@ export default function TerraStation(props: Props) {
       : terraMobileIcon;
 
   return (
-    <div className="border border-opacity-50 rounded-md p-3 flex flex-col items-center w-40">
-      <img src={icon} alt="" className="bg-white p-2 w-10 h-10 rounded-full" />
+    <div className="border border-opacity-50 rounded-md flex flex-col items-center">
+      <img src={icon} alt="" className="bg-white w-16 h-16 p-3" />
       <Connector type={props.type} />
       <Installer type={props.type} />
       <p className="mt-2 text-white-grey text-center">{title}</p>
