@@ -13,9 +13,9 @@ export default function Estimates() {
   //Estimates is inside Formik
   const { submitForm, resetForm } = useFormikContext();
 
-  const amount = toCurrency(estimates?.amount);
-  const fee = toCurrency(estimates?.txFee);
-  const total = toCurrency(estimates!.amount + estimates!.txFee);
+  const amount = toCurrency(estimates?.amount, 3);
+  const fee = toCurrency(estimates?.txFee, 3);
+  const total = toCurrency(estimates!.amount + estimates!.txFee, 3);
 
   function handleProceed() {
     setStatus({ step: Steps.ready });

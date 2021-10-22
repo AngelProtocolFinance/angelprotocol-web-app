@@ -13,8 +13,8 @@ export default function Results() {
   //Estimates is inside Formik
   const { resetForm } = useFormikContext();
 
-  const received = toCurrency(result?.received);
-  const deposited = toCurrency(result?.deposited);
+  const received = toCurrency(result?.received, 3);
+  const deposited = toCurrency(result?.deposited, 3);
 
   function handleShare() {
     setStatus({ step: Steps.initial });

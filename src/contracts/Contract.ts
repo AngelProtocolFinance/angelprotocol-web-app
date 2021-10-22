@@ -1,7 +1,6 @@
 import {
   AccAddress,
   Coin,
-  Denom,
   LCDClient,
   Msg,
   StdFee,
@@ -9,6 +8,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { urls } from "App/chains";
+import { denoms } from "constants/curriencies";
 import { Disconnected, TxResultFail } from "./Errors";
 import { chains } from "./types";
 
@@ -36,7 +36,7 @@ export default class Contract {
 
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
   //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [new Coin(Denom.USD, 0.5)];
+  static gasPrices = [new Coin(denoms.uusd, 0.5)];
 
   async query<T>(source: AccAddress, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
@@ -44,7 +44,7 @@ export default class Contract {
 
   async estimateFee(msgs: Msg[]): Promise<StdFee> {
     return this.client.tx.estimateFee(this.walletAddr!, msgs, {
-      feeDenoms: [Denom.USD],
+      feeDenoms: [denoms.uusd],
     });
   }
 

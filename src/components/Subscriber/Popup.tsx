@@ -1,6 +1,6 @@
 import { useModalCloser } from "components/Modal/Modal";
 import { useFormikContext } from "formik";
-import { IoCloseOutline } from "react-icons/io5";
+import { IoClose } from "react-icons/io5";
 
 export type Handler = () => void;
 
@@ -25,7 +25,7 @@ export default function Popup(props: Props) {
   return (
     <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-r15  rounded-xl shadow-lg overflow-hidden relative">
       <button className={`absolute top-3 right-3`} onClick={closePopup}>
-        <IoCloseOutline className="text-angel-grey" />
+        <IoClose className="text-angel-grey" />
       </button>
       <p className="text-angel-grey text-center my-18">{props?.message}</p>
     </div>
