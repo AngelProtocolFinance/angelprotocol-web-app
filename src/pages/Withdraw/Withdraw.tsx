@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import { Formik, Field, Form, FormikHelpers } from "formik";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
-import WithdrawForm from "./WithdrawForm";
+// import WithdrawForm from "./WithdrawForm";
 import useWithdraw from "./useWithdraw";
+
+interface Values {
+  strategy: string;
+}
 
 export default function Withdraw() {
   const [showModal, setShowModal] = useState(false);
@@ -64,7 +69,44 @@ export default function Withdraw() {
                     Enter the quantity of tokens to withdraw from each of the
                     active Liquid Account's current strategies.
                   </p>
-                  <WithdrawForm />
+                  {/* <WithdrawForm /> */}
+                  <div className="text-angel-grey">
+                    <Formik
+                      initialValues={{ strategy: "" }}
+                      onSubmit={(
+                        values: Values,
+                        { setSubmitting }: FormikHelpers<Values>
+                      ) => {
+                        setSubmitting(false);
+                      }}
+                    >
+                      <Form>
+                        <label htmlFor="strategy">Anchor Protocol</label>
+                        <p>$ {toCurrency(liquid)}</p>
+                        <Field
+                          className="bg-gray-200"
+                          id="strategy"
+                          name="strategy"
+                          autoComplete="off"
+                          type="text"
+                        />
+                        <div className="flex justify-around mt-6">
+                          <button
+                            type="submit"
+                            className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
+                          >
+                            Withdraw
+                          </button>
+                          <button
+                            onClick={() => setShowModal(false)}
+                            className="uppercase hover:bg-angel-orange bg-orange rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </Form>
+                    </Formik>
+                  </div>
                 </div>
               </div>
             ) : null}
