@@ -17,7 +17,7 @@ export default function TerraAction(props: Props) {
   return (
     <button
       onClick={handleClick}
-      className={`transform active:translate-x-1  bg-white hover:bg-blue-100 flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
+      className={`transform active:translate-x-1 bg-white hover:bg-blue-100 flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
     >
       <img
         src={props.icon}
