@@ -14,7 +14,7 @@ export default function getDepositAmount(
 
   const attributes = receiveEvent!.attributes;
 
-  let totalCoinDeposit = Coin.fromString(`0${Denom.USD}`);
+  let totalCoinDeposit = Coin.fromString(`0uusd`);
 
   for (let i = 0; i < attributes.length; i++) {
     const currentAttr = attributes[i];
