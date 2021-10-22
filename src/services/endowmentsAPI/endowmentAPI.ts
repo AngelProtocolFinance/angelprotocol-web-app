@@ -23,8 +23,11 @@ export const endowmentAPI = createApi({
         res.Items.forEach((endowment) => {
           _lookup[endowment.owner] = endowment.address;
         });
+        //TODO: remove this test data once testnet aws endpoint is available
+        //manual add wallet address for testing
+        _lookup["terra178u9lz89f54njqz6nentst3m9nye2cc7ezssmq"] =
+          "test address";
         return _lookup;
-        // return res.Items.map((endowment) => endowment.address);
       },
     }),
     details: builder.query<Endowment[], any>({
