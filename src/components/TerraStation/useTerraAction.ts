@@ -25,5 +25,5 @@ export default function useTerraAction(type: ConnectType) {
       return;
     }
   }
-  return { handleClick, isInstallable };
+  return { handleClick, isAvailable: isInstallable || isConnectible };
 }

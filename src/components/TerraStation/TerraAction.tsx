@@ -8,19 +8,23 @@ type Props = {
 };
 
 export default function TerraAction(props: Props) {
-  const { handleClick, isInstallable } = useTerraAction(props.type);
+  const { handleClick, isAvailable } = useTerraAction(props.type);
+
+  if (!isAvailable) {
+    return null;
+  }
+
   return (
     <button
       onClick={handleClick}
-      style={{ backgroundImage: `url(${props.icon})`, backgroundSize: "40%" }}
-      className={`items-center w-32 h-32 flex flex-col bg-white bg-contain bg-no-repeat bg-center rounded-md shadow-md transform active:translate-y-0.5`}
+      className={`transform active:translate-x-1 hover:bg-white flex items-center gap-2 rounded-full pitems-center bg-thin-grey p-1 pr-4 shadow-md`}
     >
-      <p className="text-white font-bold font-heading leading-normal text-xs uppercase text-center bg-angel-blue bg-opacity-70 p-2">
-        {props.label}
-      </p>
-      <p className="mt-auto pb-1 uppercase text-sm text-blue-accent font-bold bg-angel">
-        {isInstallable ? "install" : "connect"}
-      </p>
+      <img
+        src={props.icon}
+        className="w-8 h-8 p-2 bg-white rounded-full shadow-md"
+        alt=""
+      />
+      <p className="uppercase text-angel-grey text-sm ">{props.label}</p>
     </button>
   );
 }

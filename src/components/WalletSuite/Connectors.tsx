@@ -10,7 +10,10 @@ type Props = {
 
 export default function Connectors(props: Props) {
   return (
-    <div className="absolute top-full right-0 flex gap-4 bg-blue-accent  p-4 pt-8 mt-2 rounded-md shadow-lg z-50">
+    <div className="w-72 absolute top-full right-0 flex flex-col gap-4 bg-blue-accent p-4 pt-4 mt-2 rounded-md shadow-lg z-50">
+      <p className="uppercase font-heading text-white font-bold">
+        Choose wallet
+      </p>
       <button className="absolute top-2 right-2" onClick={props.closeHandler}>
         <IoClose className="text-white-grey text-lg" />
       </button>
