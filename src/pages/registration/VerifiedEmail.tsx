@@ -28,6 +28,9 @@ const VerifiedEmail = () => {
     CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
     RegistrationDate: jwtData.Registration.RegistrationDate,
     RegistrationStatus: jwtData.Registration.RegistrationStatus,
+    userType: jwtData.user,
+    authorization: jwtData.authorization,
+    token: pathNames[pathNames.length - 1],
   };
   if (!is_expired) {
     dispatch(updateUserData(responseData));

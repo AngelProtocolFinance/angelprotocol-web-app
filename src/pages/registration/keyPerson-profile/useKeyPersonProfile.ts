@@ -3,17 +3,17 @@ import {
   useUpdateKeyPersonDataMutation,
   useAddNewKeyCharityMutation,
 } from "api/keyPersonAPIs";
-import { FormikHelpers } from "formik";
+import { toast } from "react-toastify";
 
 export type KeyPersoData = {
   FullName: string;
   Title: string;
-  HeadshotPicture: string;
+  HeadshotPicture?: string;
   Email?: string;
   Twitter?: string;
   Linkedin?: string;
   Quote: string;
-  PK?: string;
+  uuid?: string;
 };
 
 export const ProfileSchema = Yup.object().shape({
@@ -22,7 +22,6 @@ export const ProfileSchema = Yup.object().shape({
   Email: Yup.string()
     .required("Please enter your email address")
     .email("Please enter the correct email address."),
-  ProfilePicture: Yup.string().required("Please upload your profile picture."),
   Quote: Yup.string()
     .required("Please enter the description.")
     .min(120, "Description must be more than 120 letters."),
@@ -32,15 +31,49 @@ export const useKeyPersonProfile = () => {
   const [createKeyPersonProfile] = useAddNewKeyCharityMutation();
   const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
 
-  async function saveKeyPersonData(
+  const saveKeyPersonData = async (
     keyPersonData: KeyPersoData,
-    actions: FormikHelpers<KeyPersoData>
-  ) {
-    actions.setSubmitting(true);
-    const is_create = !keyPersonData?.PK;
-  }
+    fileContent: string,
+    is_create: boolean
+  ) => {
+    const postData = {
+      ...keyPersonData,
+      HeadshotPicture: fileContent,
+    };
+    console.log("psod data => ", postData);
+    let result: any = {};
+    if (is_create) {
+      const response: any = await createKeyPersonProfile(postData);
+      result = response.data ? response : response.error;
+    } else {
+      const response: any = await updateKeyPersonProfile(postData);
+      result = response.data ? response : response.error;
+    }
+    console.log("result => ", result);
+    if (result.status === 500) {
+      toast.error("Saving data was failed. Please try again.");
+    } else if (result.error) {
+      toast.error(result.error.data.message);
+    } else {
+      if (result.status === 400 || result.status === 401) {
+        toast.error(result.data.message);
+      } else {
+        toast.success("Your key person data was saved successfully.");
+      }
+    }
+  };
 
-  async function uploadAvatar() {}
+  const readFileToBase64 = (file: File) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file as Blob);
 
-  return { saveKeyPersonData, uploadAvatar };
+      reader.onload = () => {
+        return resolve(reader.result);
+      };
+
+      reader.onerror = (error) => reject(error);
+    });
+
+  return { saveKeyPersonData, readFileToBase64 };
 };

@@ -1,11 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { aws_endpoint } from "constants/urls";
+import { TStore } from "Redux/store";
 
 export const registerAPIs = createApi({
   reducerPath: "registerAPIs",
   baseQuery: fetchBaseQuery({
     baseUrl: aws_endpoint,
     mode: "cors",
+    prepareHeaders: (headers, { getState }) => {
+      const userData: any = (getState() as TStore).user.userData;
+      if (userData.token) {
+        headers.set("authorization", `${userData.token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     getRegisteredCharities: builder.mutation<any, any>({
@@ -72,6 +80,16 @@ export const registerAPIs = createApi({
         };
       },
     }),
+    updateCharityDocs: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `registration`,
+          params: { uuid: data.PK },
+          method: "PUT",
+          body: data.body,
+        };
+      },
+    }),
   }),
 });
 
@@ -81,4 +99,5 @@ export const {
   useRequestEmailMutation,
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
+  useUpdateCharityDocsMutation,
 } = registerAPIs;

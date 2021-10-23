@@ -32,7 +32,6 @@ const Registration = () => {
     actions.setSubmitting(true);
     // API integration.
     let response: any = await checkData(values.refer);
-    console.log(response);
     if (response.error) {
       // set error
       toast.error(response.error.data.message);

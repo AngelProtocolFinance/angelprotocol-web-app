@@ -11,9 +11,9 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
-  const { data, error, isLoading, isFetching, refetch } =
-    useGetCharityDataQuery(userData.PK);
+  const { data, error } = useGetCharityDataQuery(userData.PK);
 
+  console.log("data => ", data);
   useEffect(() => {
     if (error) {
       //TODO:provide typing for this error if possible
@@ -94,7 +94,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes="bg-thin-blue w-40 h-10"
-                onClick={navigate(register.wallet_check)}
+                onClick={navigate(register.upload_docs)}
                 title={status.document === 0 ? "Change" : "Continue"}
                 disabled={userData.PK === ""}
               />
@@ -149,11 +149,19 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              <p className="status-text uppercase text-yellow-600">Missing</p>
+              {data?.KeyPerson ? (
+                <p className="status-text uppercase text-green-500">complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  data?.KeyPerson
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={() =>
                   history.push({
                     pathname: register.key_person,
@@ -162,7 +170,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title="Continue"
+                title={data?.KeyPerson ? "Change" : "Continue"}
                 disabled={userData.PK === ""}
               />
             </div>

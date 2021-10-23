@@ -14,6 +14,10 @@ const initialUserState: UserState = {
   RegistrationDate: "",
   RegistrationStatus: "",
   EmailVerified: false,
+  userType: "",
+  authorization: "",
+  WalletAddress: "",
+  token: "",
 };
 
 export const UserSlice = createSlice({

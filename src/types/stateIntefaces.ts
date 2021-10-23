@@ -11,4 +11,8 @@ export interface UserState {
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
+  userType?: string,
+  authorization?: string,
+  WalletAddress?: string,
+  token?: string,
 }

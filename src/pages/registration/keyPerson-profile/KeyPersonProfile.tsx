@@ -1,8 +1,6 @@
-import { useCallback, useState } from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import { Link, useLocation } from "react-router-dom";
-import { useDropzone } from "react-dropzone";
-import { site, web } from "types/routes";
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { register, site, web } from "types/routes";
 import { useSelector } from "react-redux";
 import { TStore } from "Redux/store";
 import {
@@ -10,19 +8,47 @@ import {
   useKeyPersonProfile,
   KeyPersoData,
 } from "./useKeyPersonProfile";
-import FileUploader from "components/FileUploader/FileUploader";
+import { DropzoneArea } from "material-ui-dropzone";
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+import Action from "../Action";
 
 const KeyPersonProfile = () => {
   //url = app/register/charity-profile
+  const [fileContent, setFileContent] = useState("");
   const location: any = useLocation();
   const keyPersonData = location.state.data;
   const { userData } = useSelector((state: TStore) => state.user);
-  const { saveKeyPersonData, uploadAvatar } = useKeyPersonProfile();
-  const onDrop = useCallback((acceptedFiles) => {}, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone();
+  const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
+  const [openDropzone, setOpenDropzone] = useState(
+    keyPersonData?.HeadshotPicture && true
+  );
+
+  const history = useHistory();
+
+  const readFiles = async (files: any) => {
+    let content: any;
+    if (files.length > 0) {
+      content = await readFileToBase64(files[0]);
+      setFileContent(content);
+    }
+  };
+
+  const onSavePersonData = async (
+    updatedkeyPersonData: KeyPersoData,
+    actions: FormikHelpers<KeyPersoData>
+  ) => {
+    actions.setSubmitting(true);
+    await saveKeyPersonData(
+      updatedkeyPersonData,
+      fileContent,
+      !keyPersonData?.FullName
+    );
+    actions.setSubmitting(false);
+  };
 
   return (
-    <div className="">
+    <div>
       <div className="title mb-10">
         <p className="text-2xl md:text-3xl font-bold mb-10">
           Update the profile details for {userData.CharityName}'s KEY PERSON
@@ -40,22 +66,22 @@ const KeyPersonProfile = () => {
             {
               FullName: keyPersonData?.FullName || "",
               Title: keyPersonData?.Title || "",
-              HeadshotPicture: keyPersonData?.HeadshotPicture || "",
               Email: keyPersonData?.Email || "",
               Twitter: keyPersonData?.Twitter || "",
               Linkedin: keyPersonData?.Linkedin || "",
               Quote: keyPersonData?.Quote || "",
-              PK: userData.PK,
+              uuid: userData.PK,
+              HeadshotPicture: keyPersonData?.HeadshotPicture || "",
             } as KeyPersoData
           }
           validationSchema={ProfileSchema}
-          onSubmit={saveKeyPersonData}
+          onSubmit={onSavePersonData}
         >
           {({ isSubmitting, values }) => (
             <Form className="text-center">
               <div className="md:flex justify-between">
                 <div className="w-full md:w-1/2 px-5 text-left">
-                  <input type="hidden" value={values.PK} name="PK" />
+                  <input type="hidden" value={values.uuid} name="uuid" />
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Full name{" "}
@@ -154,7 +180,7 @@ const KeyPersonProfile = () => {
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
                         as="textarea"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black h-16"
                         placeholder="Description"
                         name="Quote"
                         value={values.Quote}
@@ -169,30 +195,32 @@ const KeyPersonProfile = () => {
                   <div className="item">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Headshot picture
-                      <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
-                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                      <Field
-                        component={FileUploader}
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="HeadshotPicture"
-                      />
-                    </div>
-                    {/* </div>
-                  <div className="item mb-5">
-                    <div className="form-control rounded-md bg-gray-200 flex justify-between items-center">
-                      <input
-                        type="hidden"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="HeadshotPicture"
-                        value={values.HeadshotPicture}
-                      />
-                    </div> */}
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="HeadshotPicture"
-                      component="div"
-                    />
+                    {openDropzone ? (
+                      <div className="flex items-end">
+                        <img
+                          src={values.HeadshotPicture}
+                          width={150}
+                          height={150}
+                          className="rounded-full mr-10"
+                        />
+                        <Action
+                          classes="bg-yellow-blue w-36 h-8 text-xs"
+                          onClick={() => setOpenDropzone(false)}
+                          title="Change Image"
+                          // disabled={!openDropzone}
+                        />
+                      </div>
+                    ) : (
+                      <div className="form-control rounded-md flex justify-between items-center w-full h-64">
+                        <DropzoneArea
+                          onChange={readFiles}
+                          dropzoneClass="text-gray-400"
+                          filesLimit={1}
+                          acceptedFiles={["image/*"]}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -221,19 +249,25 @@ const KeyPersonProfile = () => {
                       </span>
                     </label>
                   </div>
-                  <button
-                    type="submit"
-                    className="bg-thin-blue w-48 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+                  <Action
+                    submit
+                    title="Upload"
+                    classes="bg-thin-blue w-48 h-10 mr-5"
                     disabled={isSubmitting}
-                  >
-                    upload
-                  </button>
+                  />
+                  <Action
+                    onClick={() => history.push(register.status)}
+                    title="Back"
+                    classes="bg-thin-blue w-48 h-10"
+                    disabled={isSubmitting}
+                  />
                 </div>
               </div>
             </Form>
           )}
         </Formik>
       </div>
+      <ToastContainer />
     </div>
   );
 };
