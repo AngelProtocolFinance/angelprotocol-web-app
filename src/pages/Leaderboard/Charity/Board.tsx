@@ -30,7 +30,7 @@ export default function BoardCharity() {
       )}
 
       {isReady && (
-        <div className="self-start w-full h-leader-table overflow-y-auto pl-4">
+        <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll overflow-x-scroll">
           <table className="border-collapse w-full">
             <thead className="">
               <tr>

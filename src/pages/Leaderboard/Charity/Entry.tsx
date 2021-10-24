@@ -35,7 +35,7 @@ export default function Entry({ address, balance, chainID }: Props) {
           >
             {maskAddress(address)}
           </a>
-          <Copier colorClass="text-angel-grey text-sm" text={address as Addr} />
+          {/*<Copier colorClass="text-angel-grey text-sm" text={address as Addr} />*/}
         </div>
       </td>
       <td>
