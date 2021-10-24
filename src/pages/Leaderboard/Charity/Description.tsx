@@ -11,14 +11,16 @@ export default function Description(props: Props) {
     props.chainID
   );
   return (
-    <div className="flex items-center">
-      <img
-        src={icon}
-        alt=""
-        className={`bg-angel-blue ${
-          iconLight ? "bg-opacity-70" : "bg-opacity-10"
-        } p-3 rounded-sm shadow-sm w-32 m-1 object-contain mr-4`}
-      />
+    <div className="flex flex-row items-center">
+      <div className="w-32 mr-10">
+        <img
+          src={icon}
+          alt=""
+          className={`bg-angel-blue ${
+            iconLight ? "bg-opacity-70" : "bg-opacity-10"
+          } p-3 rounded-sm shadow-sm m-1 object-contain mr-4`}
+        />
+      </div>
       <div>
         <a
           href={url}
@@ -28,11 +30,11 @@ export default function Description(props: Props) {
         >
           {name}
         </a>
-        <span
-          className={`relative text-sm text-angel-grey leading-normal mb-2`}
+        <div
+          className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
         >
           {description}
-        </span>
+        </div>
       </div>
     </div>
   );
