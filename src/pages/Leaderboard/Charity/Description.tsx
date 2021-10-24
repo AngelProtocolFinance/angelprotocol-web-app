@@ -17,7 +17,7 @@ export default function Description(props: Props) {
         alt=""
         className={`bg-angel-blue ${
           iconLight ? "bg-opacity-70" : "bg-opacity-10"
-        } p-3 rounded-sm shadow-sm w-32 h-24 m-1 object-contain mr-4`}
+        } p-3 rounded-sm shadow-sm w-32 m-1 object-contain mr-4`}
       />
       <div>
         <a
@@ -28,11 +28,11 @@ export default function Description(props: Props) {
         >
           {name}
         </a>
-        <p
-          className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
+        <span
+          className={`relative text-sm text-angel-grey leading-normal mb-2`}
         >
           {description}
-        </p>
+        </span>
       </div>
     </div>
   );
