@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Field, Form, FormikHelpers } from "formik";
 import Slider from "rc-slider";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
@@ -32,6 +32,12 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
 
   const computeWithdrawAmount = (value: number) => {
     setWithdrawAmount((liquid! * value) / 100);
+    console.log(value);
+  };
+
+  const computeWithdrawAmount = (value: number) => {
+    // Liquid account balance is still zero, for now 10 is hard-coded
+    setWithdrawAmount((10 * value) / 100);
     console.log(value);
   };
 
@@ -98,6 +104,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                       <Form>
                         <div className="flex justify-around mb-3">
                           <div className="flex-col w-1/2">
+<<<<<<< HEAD
                             <div className="my-1.5">
                               <label htmlFor="withdraw">Anchor Protocol</label>
                             </div>
@@ -126,6 +133,32 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               </p>
                             </div>
                           </div>
+=======
+                            <label htmlFor="withdraw">Anchor Protocol</label>
+                            <p className="text-xs italic">
+                              Available: ${toCurrency(liquid)}
+                            </p>
+                          </div>
+                          <Field
+                            className="bg-gray-200 w-full p-3 rounded-md focus:outline-none"
+                            id="withdraw"
+                            name="withdraw"
+                            autoComplete="off"
+                            type="hidden"
+                          />
+                          <div className="flex-col w-1/2">
+                            <p className="text-xs italic">
+                              Withdraw Amt: ~${withdrawAmount}
+                            </p>
+                            <Slider
+                              min={0}
+                              max={100}
+                              defaultValue={0}
+                              onChange={computeWithdrawAmount}
+                              className="self-center w-full"
+                            />
+                          </div>
+>>>>>>> 6019c09... Withdraw modal with slider
                         </div>
                         <div className="flex justify-around mt-6">
                           <button
@@ -139,7 +172,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               setWithdrawAmount(0);
                               setShowModal(false);
                             }}
+<<<<<<< HEAD
                             className="uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
+=======
+                            className="uppercase hover:bg-blue-accent hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-blue border-2 border-angel-blue text-sm font-bold"
+>>>>>>> 6019c09... Withdraw modal with slider
                           >
                             Cancel
                           </button>
