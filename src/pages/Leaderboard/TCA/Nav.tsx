@@ -3,10 +3,10 @@ import { app } from "types/routes";
 export default function Nav() {
   const { url } = useRouteMatch();
   const linkStyles =
-    "uppercase text-lg text-white-grey py-1 w-28 text-center rounded-sm border-t border-b border-opacity-20";
+    "uppercase text-lg text-white-grey py-1 p-5 text-center rounded-sm border-t border-b border-opacity-20";
   const activeStyles = "bg-white bg-opacity-20";
   return (
-    <div className="padded-container flex mt-5 mb-1">
+    <div className="padded-container flex mt-5 mb-1 font-heading">
       <NavLink
         activeClassName={activeStyles}
         className={linkStyles}
@@ -20,7 +20,7 @@ export default function Nav() {
         className={linkStyles}
         to={`${url}/${app.board_tca}`}
       >
-        TCA
+        Angel Alliance
       </NavLink>
     </div>
   );

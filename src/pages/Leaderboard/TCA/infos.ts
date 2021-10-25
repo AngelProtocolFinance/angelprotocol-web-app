@@ -1,5 +1,5 @@
 import { Names } from "./types";
-import defaultIcon from "assets/icons/tca/tca192.png";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 //validators
 // import angel_validator from "assets/icons/tca/validators/Angel@4x.png";
