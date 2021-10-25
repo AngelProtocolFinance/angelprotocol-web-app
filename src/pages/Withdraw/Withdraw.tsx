@@ -32,13 +32,6 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
 
   const computeWithdrawAmount = (value: number) => {
     setWithdrawAmount((liquid! * value) / 100);
-    console.log(value);
-  };
-
-  const computeWithdrawAmount = (value: number) => {
-    // Liquid account balance is still zero, for now 10 is hard-coded
-    setWithdrawAmount((10 * value) / 100);
-    console.log(value);
   };
 
   return (
@@ -84,10 +77,8 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                     Withdraw from Accounts
                   </h3>
                   <p className="mb-6 text-angel-grey text-center text-xs">
-                    Enter the quantity of tokens to withdraw from each of the
-                    active Liquid Account's current strategies.
+                    Enter the quantity of tokens to withdraw from each of the active Liquid Account's current strategies.
                   </p>
-                  {/* <WithdrawForm /> */}
                   <div className="text-angel-grey">
                     <Formik<Values>
                       initialValues={{ withdraw: 0 }}
@@ -104,39 +95,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                       <Form>
                         <div className="flex justify-around mb-3">
                           <div className="flex-col w-1/2">
-<<<<<<< HEAD
                             <div className="my-1.5">
                               <label htmlFor="withdraw">Anchor Protocol</label>
                             </div>
-                            <div className="align-bottom">
-                              <p className="text-xs italic">
-                                Available: {toCurrency(liquidCW20Tokens! / 1e6)}
-                                {} tokens
-                              </p>
-                              <p className="text-xs italic">
-                                (~$ {toCurrency(liquid)})
-                              </p>
-                            </div>
-                          </div>
-                          <div className="flex-col w-1/2">
-                            <div className="my-3">
-                              <Slider
-                                min={0}
-                                max={100}
-                                defaultValue={0}
-                                onChange={computeWithdrawAmount}
-                              />
-                            </div>
-                            <div className="align-bottom">
-                              <p className="text-xs italic py-px">
-                                Withdraw Amt: ~$ {toCurrency(withdrawAmount)}
-                              </p>
-                            </div>
-                          </div>
-=======
-                            <label htmlFor="withdraw">Anchor Protocol</label>
                             <p className="text-xs italic">
-                              Available: ${toCurrency(liquid)}
+                              Available: ~${toCurrency(liquid)}
                             </p>
                           </div>
                           <Field
@@ -147,18 +110,18 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             type="hidden"
                           />
                           <div className="flex-col w-1/2">
+                            <div className="my-3">
+                              <Slider
+                                min={0}
+                                max={100}
+                                defaultValue={0}
+                                onChange={computeWithdrawAmount}
+                              />
+                            </div>
                             <p className="text-xs italic">
                               Withdraw Amt: ~${withdrawAmount}
                             </p>
-                            <Slider
-                              min={0}
-                              max={100}
-                              defaultValue={0}
-                              onChange={computeWithdrawAmount}
-                              className="self-center w-full"
-                            />
                           </div>
->>>>>>> 6019c09... Withdraw modal with slider
                         </div>
                         <div className="flex justify-around mt-6">
                           <button
@@ -172,11 +135,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               setWithdrawAmount(0);
                               setShowModal(false);
                             }}
-<<<<<<< HEAD
                             className="uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
-=======
-                            className="uppercase hover:bg-blue-accent hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-blue border-2 border-angel-blue text-sm font-bold"
->>>>>>> 6019c09... Withdraw modal with slider
                           >
                             Cancel
                           </button>
