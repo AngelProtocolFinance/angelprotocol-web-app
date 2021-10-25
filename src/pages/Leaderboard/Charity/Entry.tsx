@@ -27,7 +27,7 @@ export default function Entry({ address, balance, chainID }: Props) {
       <td>
         <div className="flex items-center gap-2">
           <a
-            href={`https://finder.terra.money/${chainID}/address/${address}`}
+            href={`https://finder.extraterrestrial.money/${chainID}/address/${address}`}
             target="_blank"
             rel="noopener noreferrer"
             title={address}
