@@ -24,23 +24,31 @@ const SelectWallet = () => {
         />
       </div>
       <div className="terra-connect-btns mb-7">
-        <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-          Terra station mobile extension
-        </button>
-        <button
-          className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => {
-            history.push(register.connect_wallet);
-          }}
-        >
-          Terra station chrome extension
-        </button>
-        <button className="bg-gray-300 w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-          Prime trust
-        </button>
-        <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
-          other means
-        </button>
+        <div>
+          <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
+            Terra station mobile extension
+          </button>
+        </div>
+        <div>
+          <button
+            className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+            onClick={() => {
+              history.push(register.connect_wallet);
+            }}
+          >
+            Terra station chrome extension
+          </button>
+        </div>
+        <div>
+          <button className="bg-gray-300 w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
+            Prime trust
+          </button>
+        </div>
+        <div>
+          <button className="bg-thin-blue w-96 h-10 rounded-xl uppercase text-base font-bold text-white mt-3">
+            other means
+          </button>
+        </div>
       </div>
       <div className="back-btn">
         <p className="mb-5">

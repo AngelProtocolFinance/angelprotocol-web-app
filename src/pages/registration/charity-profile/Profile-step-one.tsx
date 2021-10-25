@@ -14,7 +14,6 @@ import { UN_SDGS } from "types/unsdgs";
 const ProfileStepOne = (props: any) => {
   //url = app/register/charity-profile
   const countries = useMemo(() => countryList().getData(), []);
-  console.log("countries => ", countries);
 
   const history = useHistory();
   const userData = props.userInfo;
@@ -23,6 +22,7 @@ const ProfileStepOne = (props: any) => {
     actions: FormikHelpers<any>
   ) => {
     actions.setSubmitting(true);
+    props.onSubmit(profileData);
     props.onNext();
     actions.setSubmitting(false);
   };
@@ -41,7 +41,7 @@ const ProfileStepOne = (props: any) => {
             CompanyNumber: "",
             CountryIncorporation: "",
             isYourCountry: false,
-            SelectCountries: [],
+            SelectCountries: "",
             VisionStatement: "",
             MissionStatement: "",
             UN_SDG: "",
@@ -49,10 +49,10 @@ const ProfileStepOne = (props: any) => {
             OperatingExpense: "",
             Currency: "",
           }}
-          validateSchedule={StepOneSchema}
+          validationSchema={StepOneSchema}
           onSubmit={handleUpdateProfile}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, values }) => (
             <Form className="text-center">
               <div className="md:flex justify-between">
                 <div className="w-full md:w-1/3">
@@ -63,7 +63,7 @@ const ProfileStepOne = (props: any) => {
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        type="text"
+                        type="number"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
                         placeholder="Company Number"
                         name="CompanyNumber"
@@ -87,9 +87,9 @@ const ProfileStepOne = (props: any) => {
                         placeholder="Country of Incorporation"
                         name="CountryIncorporation"
                       >
-                        {countries.map((country: any) => {
+                        {countries.map((country: any, index: number) => {
                           return (
-                            <option value={country.label}>
+                            <option value={country.label} key={index}>
                               {country.label}
                             </option>
                           );
@@ -123,11 +123,11 @@ const ProfileStepOne = (props: any) => {
                         as="select"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
                         placeholder="Countries"
-                        name="selectCountry"
+                        name="SelectCountries"
                       >
-                        {countries.map((country: any) => {
+                        {countries.map((country: any, index: number) => {
                           return (
-                            <option value={country.label}>
+                            <option value={country.label} key={index}>
                               {country.label}
                             </option>
                           );
@@ -136,7 +136,7 @@ const ProfileStepOne = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="selectCountry"
+                      name="SelectCountries"
                       component="div"
                     />
                   </div>
@@ -151,12 +151,12 @@ const ProfileStepOne = (props: any) => {
                       <Field
                         as="textarea"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black h-32"
-                        name="visionStatement"
+                        name="VisionStatement"
                       />
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="visionStatement"
+                      name="VisionStatement"
                       component="div"
                     />
                   </div>
@@ -169,12 +169,12 @@ const ProfileStepOne = (props: any) => {
                       <Field
                         as="textarea"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black h-32"
-                        name="missionStatement"
+                        name="MissionStatement"
                       />
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="missionStatement"
+                      name="MissionStatement"
                       component="div"
                     />
                   </div>
@@ -192,10 +192,14 @@ const ProfileStepOne = (props: any) => {
                           as="select"
                           className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
                           placeholder="List of UNSDGs"
-                          name="unsdg"
+                          name="UN_SDG"
                         >
-                          {UN_SDGS.map((item: string) => {
-                            return <option value={item}>{item}</option>;
+                          {UN_SDGS.map((item: string, index: number) => {
+                            return (
+                              <option value={item} key={index}>
+                                {item}
+                              </option>
+                            );
                           })}
                         </Field>
                       </div>
@@ -206,7 +210,7 @@ const ProfileStepOne = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="unsdg"
+                      name="UN_SDG"
                       component="div"
                     />
                   </div>
@@ -220,11 +224,14 @@ const ProfileStepOne = (props: any) => {
                         <Field
                           as="select"
                           className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                          name="revenue"
+                          name="AnnualRevenue"
                         >
-                          <option>10</option>
-                          <option>50</option>
-                          <option>100</option>
+                          <option value="500">0 - 500k</option>
+                          <option value="1000">500k - 1m</option>
+                          <option value="5000">1m - 5m</option>
+                          <option value="10000">5m - 10m</option>
+                          <option value="20000">10m - 20m</option>
+                          <option value="full">20m+</option>
                         </Field>
                       </div>
                       <BsExclamationCircle
@@ -234,7 +241,7 @@ const ProfileStepOne = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="revenue"
+                      name="AnnualRevenue"
                       component="div"
                     />
                   </div>
@@ -245,18 +252,14 @@ const ProfileStepOne = (props: any) => {
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        as="select"
+                        type="text"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="expense"
-                      >
-                        <option>10</option>
-                        <option>50</option>
-                        <option>100</option>
-                      </Field>
+                        name="OperatingExpense"
+                      />
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="expense"
+                      name="OperatingExpense"
                       component="div"
                     />
                   </div>
@@ -269,7 +272,7 @@ const ProfileStepOne = (props: any) => {
                       <Field
                         as="select"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="currency"
+                        name="Currency"
                       >
                         <option value="EUR">EUR</option>
                         <option value="USD">USD</option>
@@ -278,7 +281,7 @@ const ProfileStepOne = (props: any) => {
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="currency"
+                      name="Currency"
                       component="div"
                     />
                   </div>

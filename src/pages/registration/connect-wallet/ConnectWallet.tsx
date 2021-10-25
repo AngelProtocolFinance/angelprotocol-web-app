@@ -52,9 +52,10 @@ const ConnectWallet = () => {
                     </p>
                   )}
                   <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                    <span className="text-black px-1">terra</span>
                     <Field
                       type="text"
-                      className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                      className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"
                       placeholder="Wallet Number"
                       name="wallet_number"
                       disabled={isSuccess}

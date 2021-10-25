@@ -12,8 +12,6 @@ const RegistrationStatus = () => {
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
   const { data, error } = useGetCharityDataQuery(userData.PK);
-
-  console.log("data => ", data);
   useEffect(() => {
     if (error) {
       //TODO:provide typing for this error if possible
@@ -33,10 +31,7 @@ const RegistrationStatus = () => {
     document: data?.Metadata ? 0 : 1,
     endowment:
       data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
-    completed:
-      data?.Metadata &&
-      data?.Metadata?.EndowmentStatus === "Active" &&
-      data?.Wallet,
+    completed: userData?.RegistrationStatus,
   };
 
   const navigate = (dest: string) => () => {
@@ -87,9 +82,11 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #3: Documentation</p>
-              <p className="status-text uppercase text-yellow-600">
-                {status.document === 0 ? "Complete" : "Missing"}
-              </p>
+              {status.document === 0 ? (
+                <p className="status-text uppercase text-green-500">Complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
@@ -140,7 +137,14 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(register.charity_profile)}
+                onClick={() =>
+                  history.push({
+                    pathname: register.charity_profile,
+                    state: {
+                      data: data?.MetaData,
+                    },
+                  })
+                }
                 title="Change"
                 disabled={userData.PK === ""}
               />

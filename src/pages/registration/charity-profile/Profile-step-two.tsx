@@ -1,271 +1,280 @@
 import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { Link } from "react-router-dom";
-import * as Yup from "yup";
 import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "components/Modal/Modal";
 import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
 import { site, web } from "types/routes";
-import { useSelector } from "react-redux";
-import { TStore } from "Redux/store";
+import { DropzoneArea } from "material-ui-dropzone";
 import { StepTwoSchema } from "./useUpdateCharityProfile";
+import Action from "../Action";
 
 const ProfileStepTwo = (props: any) => {
   //url = app/register/charity-profile
-  const userData = props.userInfo;
-  const handleUpdateProfile = (
+  const metaData = props.metaData;
+  const [isOpenModal, setOpenModal] = useState(false);
+  const [modalType, setModalType] = useState("");
+  const [openLogoDropzone, setOpenLogoDropzone] = useState(
+    metaData?.Logo && true
+  );
+  const [openBannerDropzone, setOpenBannerDropzone] = useState(
+    metaData?.Banner && true
+  );
+  const [logoFile, setLogoFile] = useState();
+  const [bannerFile, setBannerFile] = useState();
+
+  const handleUpdateProfile = async (
     profileData: any,
     actions: FormikHelpers<any>
   ) => {
     actions.setSubmitting(true);
-    props.onPrev();
+    await props.onSubmit({
+      ...profileData,
+      logoFile,
+      bannerFile,
+    });
     actions.setSubmitting(false);
   };
 
-  const [isOpenModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState("");
   const showInfoModal = (type: any) => {
     setModalType(type);
     setOpenModal(true);
+  };
+
+  const readFiles = (files: any, type: string) => {
+    type === "logo" && setLogoFile(files);
+    type === "banner" && setBannerFile(files);
   };
   return (
     <div>
       <div>
         <Formik
           initialValues={{
-            companyNumber: "",
-            countryIncorporation: "",
-            isYourCountry: false,
-            countries: [],
-            selectCountry: "",
-            visionStatement: "",
-            missionStatement: "",
-            unsdg: "",
-            revenue: "",
-            expense: "",
-            currency: "",
+            Website: "",
+            ContactEmail: "",
+            Twitter: "",
+            YouTube: "",
+            Linkedin: "",
+            Facebook: "",
+            Instagram: "",
+            TikTok: "",
+            Logo: "",
+            Banner: "",
+            VideoEmbed: "",
           }}
-          validateSchedule={StepTwoSchema}
+          validationSchema={StepTwoSchema}
           onSubmit={handleUpdateProfile}
         >
-          {({ isSubmitting, status }) => (
+          {({ isSubmitting, values }) => (
             <Form className="text-center">
               <div className="md:flex justify-between">
-                <div className="w-full md:w-1/3">
+                <div className="w-full md:w-1/2">
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Company Number{" "}
+                      Website{" "}
                       <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
                         type="text"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        placeholder="Company Number"
-                        name="companyNumber"
+                        placeholder="Website URL"
+                        name="Website"
                       />
                     </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="companyNumber"
+                      name="Website"
                       component="div"
                     />
                   </div>
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Country of Incorporation{" "}
+                      ContactEmail{" "}
                       <span className="ml-1 text-xs text-failed-red">*</span>
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        as="select"
+                        type="text"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        placeholder="Country of Incorporation"
-                        name="countryIncorporation"
-                      >
-                        <option value="1">Incorporation 1</option>
-                        <option value="2">Incorporation 2</option>
-                        <option value="3">Incorporation 3</option>
-                        <option value="4">Incorporation 4</option>
-                      </Field>
-                    </div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="isYourCountry"
-                        className="mr-2"
+                        placeholder="Email address"
+                        name="ContactEmail"
                       />
-                      <span className="text-sm">
-                        Check the box if you are officially registered as a
-                        charity in your country of incorporation.
-                      </span>
-                    </label>
+                    </div>
                     <ErrorMessage
                       className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="countryIncorporation"
+                      name="ContactEmail"
                       component="div"
                     />
                   </div>
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Countries where {userData.CharityName} runs programs{" "}
-                      <span className="ml-1 text-xs text-failed-red">*</span>
+                      Twitter
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        as="select"
+                        type="text"
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        placeholder="Countries"
-                        name="selectCountry"
+                        placeholder="Twitter URL"
+                        name="Twitter"
                       />
                     </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="selectCountry"
-                      component="div"
-                    />
+                  </div>
+                  <div className="item mb-5">
+                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                      YouTube
+                    </p>
+                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                      <Field
+                        type="text"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        placeholder="YouTube URL"
+                        name="YouTube"
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="w-full md:w-1/3 md:px-10">
+                <div className="w-full md:w-1/2 md:px-10">
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Vision Statement
-                      <span className="ml-1 text-xs text-failed-red">*</span>
+                      Linkedin
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        as="textarea"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black h-32"
-                        name="visionStatement"
+                        type="text"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        placeholder="Linkedin URL"
+                        name="Linkedin"
                       />
                     </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="visionStatement"
-                      component="div"
-                    />
                   </div>
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Mission Statement
-                      <span className="ml-1 text-xs text-failed-red">*</span>
+                      Facebook
                     </p>
                     <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
                       <Field
-                        as="textarea"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black h-32"
-                        name="missionStatement"
+                        type="text"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        placeholder="Facebook URL"
+                        name="Facebook"
                       />
                     </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="missionStatement"
-                      component="div"
-                    />
+                  </div>
+                  <div className="item mb-5">
+                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                      Instagram
+                    </p>
+                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                      <Field
+                        type="text"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        placeholder="Instagram URL"
+                        name="Instagram"
+                      />
+                    </div>
+                  </div>
+                  <div className="item mb-5">
+                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                      TikTok
+                    </p>
+                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                      <Field
+                        type="text"
+                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                        placeholder="TikTok URL"
+                        name="TikTok"
+                      />
+                    </div>
                   </div>
                 </div>
-                <div className="w-full md:w-1/3">
-                  <div className="item mb-5">
-                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      With Which UNSDG dones {userData.CharityName} identify
-                      with the most?
-                      <span className="ml-1 text-xs text-failed-red">*</span>
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="form-control rounded-md bg-gray-200 p-2 flex items-center w-full mr-1">
-                        <Field
-                          as="select"
-                          className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                          placeholder="List of UNSDGs"
-                          name="unsdg"
-                        >
-                          <option value="unsdg1">UNSDG 1</option>
-                          <option value="unsdg2">UNSDG 2</option>
-                          <option value="unsdg3">UNSDG 3</option>
-                        </Field>
-                      </div>
-                      <BsExclamationCircle
-                        className="text-xl text-thin-blue cursor-pointer"
-                        onClick={() => showInfoModal("unsdg")}
+              </div>
+              <div>
+                <div className="md:flex justify-between">
+                  <div className="w-full md:w-1/2">
+                    <div className="item mb-5">
+                      <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                        Logo{" "}
+                        <span className="ml-1 text-xs text-failed-red">*</span>
+                      </p>
+                      {openLogoDropzone ? (
+                        <div className="flex items-end">
+                          <img
+                            src={values.Logo}
+                            width={150}
+                            height={150}
+                            className="rounded-full mr-10"
+                          />
+                          <Action
+                            classes="bg-yellow-blue w-36 h-8 text-xs"
+                            onClick={() => setOpenLogoDropzone(false)}
+                            title="Change Image"
+                            // disabled={!openDropzone}
+                          />
+                        </div>
+                      ) : (
+                        <div className="form-control rounded-md flex justify-between items-center w-full h-64">
+                          <DropzoneArea
+                            onChange={(files: any) => readFiles(files, "logo")}
+                            dropzoneClass="text-gray-400"
+                            filesLimit={1}
+                            acceptedFiles={["image/*"]}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="w-full md:w-1/2 px-10">
+                    <div className="item mb-5">
+                      <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                        Banner{" "}
+                        <span className="ml-1 text-xs text-failed-red">*</span>
+                      </p>
+                      {openBannerDropzone ? (
+                        <div className="flex items-end">
+                          <img
+                            src={values.Banner}
+                            width={150}
+                            height={150}
+                            className="rounded-full mr-10"
+                          />
+                          <Action
+                            classes="bg-yellow-blue w-36 h-8 text-xs"
+                            onClick={() => setOpenBannerDropzone(false)}
+                            title="Change Image"
+                            // disabled={!openDropzone}
+                          />
+                        </div>
+                      ) : (
+                        <div className="form-control rounded-md flex justify-between items-center w-full h-64">
+                          <DropzoneArea
+                            onChange={(files: any) =>
+                              readFiles(files, "banner")
+                            }
+                            dropzoneClass="text-gray-400"
+                            filesLimit={1}
+                            acceptedFiles={["image/*"]}
+                          />
+                        </div>
+                      )}
+                      <ErrorMessage
+                        className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
+                        name="revenue"
+                        component="div"
                       />
                     </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="unsdg"
-                      component="div"
-                    />
                   </div>
-                  <div className="item mb-5">
-                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Average annual revenue (in your local currency)
-                      <span className="ml-1 text-xs text-failed-red">*</span>
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="form-control rounded-md bg-gray-200 p-2 flex items-center w-full mr-1">
-                        <Field
-                          as="select"
-                          className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                          name="revenue"
-                        >
-                          <option>10</option>
-                          <option>50</option>
-                          <option>100</option>
-                        </Field>
-                      </div>
-                      <BsExclamationCircle
-                        className="text-xl text-thin-blue cursor-pointer"
-                        onClick={() => showInfoModal("average")}
-                      />
-                    </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="revenue"
-                      component="div"
-                    />
-                  </div>
-                  <div className="item mb-5">
-                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      Average operating expenses (in your local currency)
-                      <span className="ml-1 text-xs text-failed-red">*</span>
-                    </p>
-                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                      <Field
-                        as="select"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="expense"
-                      >
-                        <option>10</option>
-                        <option>50</option>
-                        <option>100</option>
-                      </Field>
-                    </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="expense"
-                      component="div"
-                    />
-                  </div>
-                  <div className="item mb-5">
-                    <p className="text-sm text-gray-400 font-bold mb-1 text-left">
-                      What's your local currency?
-                      <span className="ml-1 text-xs text-failed-red">*</span>
-                    </p>
-                    <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                      <Field
-                        as="select"
-                        className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
-                        name="currency"
-                      >
-                        <option>EUR</option>
-                        <option>USD</option>
-                        <option>RMB</option>
-                      </Field>
-                    </div>
-                    <ErrorMessage
-                      className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                      name="currency"
-                      component="div"
+                </div>
+                <div className="w-full item mb-5">
+                  <p className="text-sm text-gray-400 font-bold mb-1 text-left">
+                    Video Embed
+                  </p>
+                  <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                    <Field
+                      type="text"
+                      className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                      name="VideoEmbed"
                     />
                   </div>
                 </div>
@@ -295,25 +304,35 @@ const ProfileStepTwo = (props: any) => {
                       </span>
                     </label>
                   </div>
-                  <button
-                    type="submit"
-                    className="bg-thin-blue w-48 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+                  <Action
+                    submit
+                    title="upload"
+                    classes="bg-thin-blue w-48 h-10 mr-10 mt-3"
                     disabled={isSubmitting}
-                  >
-                    upload
-                  </button>
+                  />
+                  <Action
+                    onClick={() => props.onPrev()}
+                    title="Prev"
+                    classes="bg-thin-blue w-48 h-10 mt-3"
+                    disabled={isSubmitting}
+                  />
                 </div>
               </div>
             </Form>
           )}
         </Formik>
       </div>
-      {isOpenModal && modalType === "unsdg" && (
+      {isOpenModal && modalType === "logo" && (
         <Modal>
           <UNSDGInfoModal />
         </Modal>
       )}
-      {isOpenModal && modalType === "average" && (
+      {isOpenModal && modalType === "banner" && (
+        <Modal>
+          <RevenueInfoModal />
+        </Modal>
+      )}
+      {isOpenModal && modalType === "video" && (
         <Modal>
           <RevenueInfoModal />
         </Modal>
