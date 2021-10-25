@@ -8,7 +8,7 @@ export default function AppHead() {
     <div className="flex items-center justify-between w-full padded-container h-24">
       <Logo />
       <div className="flex">
-        <Search />
+        {/*<Search />*/}
         <WalletSuite>
           <Toolkit />
         </WalletSuite>

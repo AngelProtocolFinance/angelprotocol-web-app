@@ -15,13 +15,13 @@ export default function AppMenu() {
           Leaderboards
         </Link>
       </li>
-      <li>
+      {/*<li>
         <Link to={`${url}/${app.dashboard}`} {...linkStyles}>
           CHARITIES
         </Link>
-      </li>
+      </li>*/}
       <li>
-        <Link to={`${url}/${app.register}`} {...linkStyles}>
+        <Link to={`/contact`} {...linkStyles}>
           REGISTER
         </Link>
       </li>

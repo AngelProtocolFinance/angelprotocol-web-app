@@ -7,14 +7,24 @@ import Liquid from "./Liquid";
 import Locked from "./Locked";
 // import WithdrawForm from "./WithdrawForm";
 import useWithdraw from "./useWithdraw";
+import { RouteComponentProps } from "react-router";
 
 interface Values {
   withdrawAnc: string;
 }
 
-export default function Withdraw() {
+type Param = { address: string };
+
+export default function Withdraw(props: RouteComponentProps<Param>) {
+  //use can malinger this address url param
+  //can also pass address as state but no guarantee that user will go to this page using
+  //only the in-app link provided
+  //TODO://check if valid, redirect to somewhere if not
+  const address = props.match.params.address;
+
   const [showModal, setShowModal] = useState(false);
-  const { isReady, isLoading, error, locked, liquid, overall } = useWithdraw();
+  const { isReady, isLoading, error, locked, liquid, overall } =
+    useWithdraw(address);
 
   return (
     <section className="pb-16 grid content-start h-screen">
@@ -74,6 +84,7 @@ export default function Withdraw() {
                         setSubmitting(false);
                       }}
                     >
+                      {/*TODO:// separate this form in separate component*/}
                       <Form>
                         <div className="flex justify-around mb-3">
                           <div className="flex-col w-full">

@@ -3,7 +3,7 @@ import { registerAPIs } from "api/registerAPIs";
 import { combineReducers, Reducer } from "@reduxjs/toolkit";
 import { charityAPIs } from "api/charityAPIs";
 import { keyPersonAPIs } from "api/keyPersonAPIs";
-import { endowmentAPI } from "services/endowmentsAPI/endowmentAPI";
+import { endowmentAPI } from "api/endowmentsAPI/endowmentAPI";
 
 const reducers = {
   [UserSlice.name]: userReducer,
