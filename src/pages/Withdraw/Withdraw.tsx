@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Formik, Field, Form, FormikHelpers } from "formik";
+import Slider from "rc-slider";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
@@ -10,7 +11,7 @@ import useWithdraw from "./useWithdraw";
 import { RouteComponentProps } from "react-router";
 
 interface Values {
-  withdrawAnc: string;
+  withdraw: number;
 }
 
 type Param = { address: string };
@@ -23,8 +24,15 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   const address = props.match.params.address;
 
   const [showModal, setShowModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const { isReady, isLoading, error, locked, liquid, overall } =
     useWithdraw(address);
+
+  const computeWithdrawAmount = (value: number) => {
+    // Liquid account balance is still zero, for now 10 is hard-coded
+    setWithdrawAmount((10 * value) / 100);
+    console.log(value);
+  };
 
   return (
     <section className="pb-16 grid content-start h-screen">
@@ -74,32 +82,45 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                   </p>
                   {/* <WithdrawForm /> */}
                   <div className="text-angel-grey">
-                    <Formik
-                      initialValues={{ withdrawAnc: "" }}
+                    <Formik<Values>
+                      initialValues={{ withdraw: 0 }}
                       onSubmit={(
                         values: Values,
                         { setSubmitting }: FormikHelpers<Values>
                       ) => {
-                        alert(JSON.stringify(values, null, 2));
+                        values.withdraw = withdrawAmount;
+                        console.log(values);
                         setSubmitting(false);
                       }}
                     >
                       {/*TODO:// separate this form in separate component*/}
                       <Form>
                         <div className="flex justify-around mb-3">
-                          <div className="flex-col w-full">
-                            <label htmlFor="withdrawAnc">Anchor Protocol</label>
+                          <div className="flex-col w-1/2">
+                            <label htmlFor="withdraw">Anchor Protocol</label>
                             <p className="text-xs italic">
-                              Available: $ {toCurrency(liquid)}
+                              Available: ${toCurrency(liquid)}
                             </p>
                           </div>
                           <Field
                             className="bg-gray-200 w-full p-3 rounded-md focus:outline-none"
-                            id="withdrawAnc"
-                            name="withdrawAnc"
+                            id="withdraw"
+                            name="withdraw"
                             autoComplete="off"
-                            type="text"
+                            type="hidden"
                           />
+                          <div className="flex-col w-1/2">
+                            <p className="text-xs italic">
+                              Withdraw Amt: ~${withdrawAmount}
+                            </p>
+                            <Slider
+                              min={0}
+                              max={100}
+                              defaultValue={0}
+                              onChange={computeWithdrawAmount}
+                              className="self-center w-full"
+                            />
+                          </div>
                         </div>
                         <div className="flex justify-around mt-6">
                           <button
@@ -109,8 +130,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             Withdraw
                           </button>
                           <button
-                            onClick={() => setShowModal(false)}
-                            className="uppercase hover:bg-angel-orange bg-orange rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
+                            onClick={() => {
+                              setWithdrawAmount(0);
+                              setShowModal(false);
+                            }}
+                            className="uppercase hover:bg-blue-accent hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-blue border-2 border-angel-blue text-sm font-bold"
                           >
                             Cancel
                           </button>
