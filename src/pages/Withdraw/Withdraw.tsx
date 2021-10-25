@@ -97,9 +97,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                       <Form>
                         <div className="flex justify-around mb-3">
                           <div className="flex-col w-1/2">
-                            <label htmlFor="withdraw">Anchor Protocol</label>
+                            <div className="my-1.5">
+                              <label htmlFor="withdraw">Anchor Protocol</label>
+                            </div>
                             <p className="text-xs italic">
-                              Available: ${toCurrency(liquid)}
+                              Available: ~${toCurrency(liquid)}
                             </p>
                           </div>
                           <Field
@@ -110,16 +112,17 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             type="hidden"
                           />
                           <div className="flex-col w-1/2">
+                            <div className="my-3">
+                              <Slider
+                                min={0}
+                                max={100}
+                                defaultValue={0}
+                                onChange={computeWithdrawAmount}
+                              />
+                            </div>
                             <p className="text-xs italic">
                               Withdraw Amt: ~${withdrawAmount}
                             </p>
-                            <Slider
-                              min={0}
-                              max={100}
-                              defaultValue={0}
-                              onChange={computeWithdrawAmount}
-                              className="self-center w-full"
-                            />
                           </div>
                         </div>
                         <div className="flex justify-around mt-6">
@@ -134,7 +137,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               setWithdrawAmount(0);
                               setShowModal(false);
                             }}
-                            className="uppercase hover:bg-blue-accent hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-blue border-2 border-angel-blue text-sm font-bold"
+                            className="uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
                           >
                             Cancel
                           </button>
