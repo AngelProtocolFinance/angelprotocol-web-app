@@ -35,7 +35,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   };
 
   return (
-    <section className="pb-16 grid content-start h-screen">
+    <div className="pb-16 grid content-start min-h-screen">
       <AppHead />
       {error && (
         <div className="min-h-leader-table grid place-items-center">
@@ -52,15 +52,17 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
         </div>
       )}
       {isReady && (
-        <div className="mt-8 mx-auto w-auto text-white-grey">
-          <h2 className="pt-8 pl-6 uppercase text-lg font-bold">
-            Total Balance: $ {toCurrency(overall)}
-          </h2>
-          <div className="flex items-stretch mt-3 mx-4">
+        <div className="mt-0 md:mt-8 mx-auto w-auto text-white-grey">
+          <div className="flex justify-center md:justify-start">
+            <h2 className="md:pt-8 md:pl-6 uppercase text-lg font-bold">
+              Total Balance: $ {toCurrency(overall)}
+            </h2>
+          </div>
+          <div className="flex flex-wrap items-stretch justify-around mt-3 mx-4">
             <Liquid liquidBalance={liquid} />
             <Locked lockedBalance={locked} />
           </div>
-          <div className="flex justify-start mt-4 pl-6">
+          <div className="flex justify-center md:justify-start mt-0 md:mt-4 md:pl-6">
             {/*//TODO: should disable/hide when curr wallet_addr is not endowment owner */}
             <button
               className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
@@ -71,13 +73,14 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
           </div>
           <div>
             {showModal ? (
-              <div className="fixed bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
-                <div className="p-6 place-items-center bg-white-grey w-full max-w-xs min-h-r15 rounded-xl shadow-lg overflow-hidden relative">
+              <div className="absolute bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
+                <div className="p-3 md:p-6 place-items-center bg-white-grey w-full max-w-xs min-h-r15 rounded-xl shadow-lg overflow-hidden relative">
                   <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
                     Withdraw from Accounts
                   </h3>
-                  <p className="mb-6 text-angel-grey text-center text-xs">
-                    Enter the quantity of tokens to withdraw from each of the active Liquid Account's current strategies.
+                  <p className="mb-3 md:mb-6 text-angel-grey text-center text-xs">
+                    Enter the quantity of tokens to withdraw from each of the
+                    active Liquid Account's current strategies.
                   </p>
                   <div className="text-angel-grey">
                     <Formik<Values>
@@ -93,8 +96,8 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                     >
                       {/*TODO:// separate this form in separate component*/}
                       <Form>
-                        <div className="flex justify-around mb-3">
-                          <div className="flex-col w-1/2">
+                        <div className="flex flex-row justify-around mb-3">
+                          <div>
                             <div className="my-1.5">
                               <label htmlFor="withdraw">Anchor Protocol</label>
                             </div>
@@ -108,7 +111,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               </p>
                             </div>
                           </div>
-                          <div className="flex-col w-1/2">
+                          <div>
                             <div className="my-3">
                               <Slider
                                 min={0}
@@ -124,10 +127,10 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             </div>
                           </div>
                         </div>
-                        <div className="flex justify-around mt-6">
+                        <div className="flex flex-row mt-6">
                           <button
                             type="submit"
-                            className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
+                            className="m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
                           >
                             Withdraw
                           </button>
@@ -136,7 +139,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                               setWithdrawAmount(0);
                               setShowModal(false);
                             }}
-                            className="uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
+                            className="m-auto uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
                           >
                             Cancel
                           </button>
@@ -150,6 +153,6 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
