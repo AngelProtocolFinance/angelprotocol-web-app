@@ -28,7 +28,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const { isReady, isLoading, error, locked, liquid, overall } =
     useWithdraw(address);
-  const { liquidCW20Tokens } = useHoldings(address);
+  const { lockedCW20Tokens, liquidCW20Tokens } = useHoldings(address);
 
   const computeWithdrawAmount = (value: number) => {
     setWithdrawAmount((liquid! * value) / 100);
@@ -98,17 +98,16 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             <div className="my-1.5">
                               <label htmlFor="withdraw">Anchor Protocol</label>
                             </div>
-                            <p className="text-xs italic">
-                              Available: ~${toCurrency(liquid)}
-                            </p>
+                            <div className="align-bottom">
+                              <p className="text-xs italic">
+                                Available: {toCurrency(lockedCW20Tokens! / 1e6)}
+                                {} tokens
+                              </p>
+                              <p className="text-xs italic">
+                                (~$ {toCurrency(locked)})
+                              </p>
+                            </div>
                           </div>
-                          <Field
-                            className="bg-gray-200 w-full p-3 rounded-md focus:outline-none"
-                            id="withdraw"
-                            name="withdraw"
-                            autoComplete="off"
-                            type="hidden"
-                          />
                           <div className="flex-col w-1/2">
                             <div className="my-3">
                               <Slider
@@ -118,9 +117,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                                 onChange={computeWithdrawAmount}
                               />
                             </div>
-                            <p className="text-xs italic">
-                              Withdraw Amt: ~${withdrawAmount}
-                            </p>
+                            <div className="align-bottom">
+                              <p className="text-xs italic py-px">
+                                Withdraw Amt: ~$ {withdrawAmount}
+                              </p>
+                            </div>
                           </div>
                         </div>
                         <div className="flex justify-around mt-6">
