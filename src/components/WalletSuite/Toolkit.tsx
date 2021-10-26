@@ -3,6 +3,7 @@ import { Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
 import useActivator from "./useActivator";
 import TerraDisplay from "components/TerraStation/Display";
+import MetaMaskDisplay from "components/Metamask/Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 
@@ -43,6 +44,7 @@ export default function Toolkit() {
 
 const displays = {
   [Wallets.none]: null,
+  [Wallets.metamask]: <MetaMaskDisplay />,
   [Wallets.terraStationExt]: <TerraDisplay />,
   [Wallets.terraStationMobile]: <TerraDisplay />,
 };

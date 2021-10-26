@@ -7,8 +7,14 @@ export enum None {
 export enum Future {
   future = "future",
 }
+
+export enum Eth {
+  metamask = "metamask",
+}
+
 export enum Wallets {
   none = None.none,
+  metamask = Eth.metamask,
   terraStationMobile = ConnectType.WALLETCONNECT,
   terraStationExt = ConnectType.CHROME_EXTENSION,
   future = Future.future,

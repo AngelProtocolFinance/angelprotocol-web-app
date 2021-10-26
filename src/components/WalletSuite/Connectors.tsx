@@ -3,6 +3,7 @@ import TerraAction from "components/TerraStation/TerraAction";
 import terraMobileIcon from "assets/icons/wallets/terra-mobile.png";
 import terraExtIcon from "assets/icons/wallets/terra-extension.jpg";
 import { IoClose } from "react-icons/io5";
+import Action from "components/Metamask/Action";
 
 type Props = {
   closeHandler: () => void;
@@ -27,6 +28,7 @@ export default function Connectors(props: Props) {
         type={ConnectType.WALLETCONNECT}
         label="Terra Station Mobile"
       />
+      <Action />
     </div>
   );
 }
