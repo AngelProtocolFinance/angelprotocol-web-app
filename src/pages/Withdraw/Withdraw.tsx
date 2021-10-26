@@ -74,7 +74,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
           <div>
             {showModal ? (
               <div className="absolute bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
-                <div className="p-3 md:p-6 place-items-center bg-white-grey w-full max-w-xs min-h-r15 rounded-xl shadow-lg overflow-hidden relative">
+                <div className="p-3 md:p-6 bg-white-grey w-full max-w-xs min-h-r15 rounded-xl shadow-lg overflow-hidden relative">
                   <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
                     Withdraw from Accounts
                   </h3>
