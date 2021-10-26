@@ -3,6 +3,8 @@ import {
   useWallet,
   WalletStatus,
 } from "@terra-money/wallet-provider";
+import { setIcon } from "components/WalletSuite/manageIcon";
+import { Icons } from "components/WalletSuite/types";
 export default function useTerraAction(type: ConnectType) {
   const {
     availableConnectTypes,
@@ -11,6 +13,8 @@ export default function useTerraAction(type: ConnectType) {
     install,
     status,
   } = useWallet();
+  const icon =
+    type === ConnectType.WALLETCONNECT ? Icons.terra_mobile : Icons.terra_ext;
   const isConnectible = availableConnectTypes.includes(type);
   const isInstallable = availableInstallTypes.includes(type);
   const shouldConnect =
@@ -19,6 +23,7 @@ export default function useTerraAction(type: ConnectType) {
   function handleClick() {
     if (shouldConnect) {
       connect(type);
+      setIcon(icon);
     } else if (isInstallable) {
       install(type);
     } else {

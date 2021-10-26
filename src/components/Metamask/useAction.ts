@@ -1,3 +1,5 @@
+import { setIcon } from "components/WalletSuite/manageIcon";
+import { Icons } from "components/WalletSuite/types";
 import { useWallet } from "use-wallet";
 
 export default function useAction() {
@@ -5,7 +7,7 @@ export default function useAction() {
 
   async function handleConnect() {
     await wallet.connect("injected");
-    console.log("done");
+    setIcon(Icons.metamask);
   }
 
   return { handleConnect, connecting: wallet.status === "connecting" };

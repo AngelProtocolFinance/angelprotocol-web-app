@@ -17,10 +17,8 @@ export default function useActivator() {
 
   const isLoading = isTerraLoading || ethLoading; // || false || otherwallet loading state
   const walletStates: WalletStates = [
-    [Wallets.terraStationExt, terraConnected],
-    [Wallets.terraStationMobile, terraConnected],
-    [Wallets.metamask, ethConnected],
-    [Wallets.future, false],
+    [Wallets.terra, terraConnected],
+    [Wallets.ethereum, ethConnected],
   ];
 
   //find first connected wallet

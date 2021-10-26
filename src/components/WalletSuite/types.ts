@@ -1,30 +1,18 @@
-import { ConnectType } from "@terra-money/wallet-provider";
 import { ReactNode } from "react";
 
-export enum None {
-  none = "none",
-}
-export enum Future {
-  future = "future",
-}
-
-export enum Eth {
+export enum Icons {
+  terra_mobile = "terra_mobile",
+  terra_ext = "terra_ext",
   metamask = "metamask",
 }
 
 export enum Wallets {
-  none = None.none,
-  metamask = Eth.metamask,
-  terraStationMobile = ConnectType.WALLETCONNECT,
-  terraStationExt = ConnectType.CHROME_EXTENSION,
-  future = Future.future,
+  none = "none",
+  ethereum = "ethereum",
+  terra = "terra",
 }
 
 export type WalletStates = Array<[Wallets, boolean]>;
-
-export type Icons = {
-  [key in Wallets]: string | ReactNode;
-};
 
 export type Displays = {
   [key in Wallets]: ReactNode;
