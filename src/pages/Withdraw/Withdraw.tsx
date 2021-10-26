@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import Slider from "rc-slider";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
@@ -28,11 +28,10 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const { isReady, isLoading, error, locked, liquid, overall } =
     useWithdraw(address);
-  const { lockedCW20Tokens, liquidCW20Tokens } = useHoldings(address);
+  const { liquidCW20Tokens } = useHoldings(address);
 
   const computeWithdrawAmount = (value: number) => {
-    // Liquid account balance is still zero, for now 10 is hard-coded
-    setWithdrawAmount((10 * value) / 100);
+    setWithdrawAmount((liquid! * value) / 100);
     console.log(value);
   };
 
@@ -104,11 +103,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             </div>
                             <div className="align-bottom">
                               <p className="text-xs italic">
-                                Available: {toCurrency(lockedCW20Tokens! / 1e6)}
+                                Available: {toCurrency(liquidCW20Tokens! / 1e6)}
                                 {} tokens
                               </p>
                               <p className="text-xs italic">
-                                (~$ {toCurrency(locked)})
+                                (~$ {toCurrency(liquid)})
                               </p>
                             </div>
                           </div>
@@ -123,7 +122,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             </div>
                             <div className="align-bottom">
                               <p className="text-xs italic py-px">
-                                Withdraw Amt: ~$ {withdrawAmount}
+                                Withdraw Amt: ~$ {toCurrency(withdrawAmount)}
                               </p>
                             </div>
                           </div>
