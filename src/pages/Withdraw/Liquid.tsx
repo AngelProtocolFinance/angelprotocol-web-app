@@ -8,7 +8,7 @@ type LiquidBalance = {
 export default function Liquid(props: LiquidBalance) {
   return (
     <div className="flex-none pl-2 pr-2 mb-3 md:mb-0">
-      <div className="p-2 md:p-5 block bg-grey-accent overflow-hidden h-full rounded-lg">
+      <div className="p-4 md:p-5 block bg-grey-accent overflow-hidden h-full rounded-lg">
         <h3 className="mb-2 text-lg font-bold uppercase">
           Liquid Account
           <div className="float-right">
