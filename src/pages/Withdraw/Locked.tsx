@@ -20,23 +20,25 @@ export default function Locked(props: LockedBalance) {
             </span>
           </div>
         </h3>
-        <p className="text-6xl font-bold">
+        <p className="text-5xl font-bold">
           $ {toCurrency(props.lockedBalance)}
         </p>
-        <table className="table-auto mt-4">
-          <thead>
-            <tr className="text-md text-left">
-              <th className="pr-8">Strategy</th>
-              <th>Allocation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="pr-8">Anchor Protocol</td>
-              <td>100%</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="grid grid-cols-1">
+          <table className="table-fixed mt-4">
+            <thead>
+              <tr className="text-md text-left">
+                <th className="pr-8">Strategy</th>
+                <th>Allocation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="pr-8">Anchor Protocol</td>
+                <td>100%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

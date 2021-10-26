@@ -15,6 +15,8 @@ export enum web {
 export enum app {
   index = "/",
   dashboard = "dashboard",
+  charities = "charities",
+  marketplace = "marketplace",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
@@ -23,6 +25,7 @@ export enum app {
   fund = "fund",
   board_tca = "tca-leaderboard",
   withdraw = "withdraw",
+  test = "test",
 }
 
 export enum register {
@@ -39,19 +42,6 @@ export enum register {
   others = "others",
   self_custody = "self-custody",
   key_person = "key-person",
-}
-
-export enum routes {
-  home = "/",
-  login = "/login",
-  register = "/register",
-  about = "/about",
-  about_unsdgs = "/about-unsdgs",
-  dashboard = "/dashboard",
-  donate = "/donate",
-  contact = "/contact",
-  tca = "/tca",
-  test = "/test",
 }
 
 export type Handler = () => void;

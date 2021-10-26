@@ -4,6 +4,7 @@ import { combineReducers, Reducer } from "@reduxjs/toolkit";
 import { charityAPIs } from "api/charityAPIs";
 import { keyPersonAPIs } from "api/keyPersonAPIs";
 import { lambdaAuthAPIs } from "api/lambdaAuthAPIs";
+import { endowmentAPI } from "api/endowmentsAPI/endowmentAPI";
 
 const reducers = {
   [UserSlice.name]: userReducer,
@@ -11,6 +12,7 @@ const reducers = {
   [charityAPIs.reducerPath]: charityAPIs.reducer,
   [keyPersonAPIs.reducerPath]: keyPersonAPIs.reducer,
   [lambdaAuthAPIs.reducerPath]: lambdaAuthAPIs.reducer,
+  [endowmentAPI.reducerPath]: endowmentAPI.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

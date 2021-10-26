@@ -79,6 +79,7 @@ module.exports = {
         "1a": "1fr auto",
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
+        aa1: "auto auto 1fr",
         charity: "auto 1fr",
       },
       inset: {
@@ -108,6 +109,7 @@ module.exports = {
     extend: {
       backgroundColor: ["disabled"],
       textColor: ["disabled"],
+      translate: ["active"],
     },
   },
 };

@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Account from "contracts/Account";
-import { chains } from "contracts/types";
-import { urls } from "App/chains";
 
-export default function useWithdraw() {
+export default function useWithdraw(address: string) {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [locked, setLocked] = useState<number>();
@@ -15,25 +13,21 @@ export default function useWithdraw() {
   useEffect(() => {
     (async () => {
       try {
-        const chainID = wallet?.network.chainID || chains.mainnet;
-        const url = wallet?.network.lcd || urls[chains.mainnet];
-        // const walletAddress = wallet?.walletAddress;
-        const walletAddress = "terra12crxq8nxml96e9h38fe67c4p76pc24l54zjzzh"; //Hard coded for now
         setError("");
         setLoading(true);
-
-        // Fetches balance of one charity depending on their walletAddress
-        const result = await Account.getBalance(walletAddress, chainID, url);
+        const account = new Account(address, wallet);
+        const result = await account.getBalance();
         setLocked(result.total_locked);
         setLiquid(result.total_liq);
         setOverall(result.overall);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.error(err);
         setError("Failed to get balance.");
         setLoading(false);
       }
     })();
+    //eslint-disable-next-line
   }, [wallet]);
 
   return {

@@ -3,6 +3,7 @@ import Heading from "../Heading";
 import Updator from "../Updator";
 import View from "../View";
 import Entry from "./Entry";
+import Tooltip from "./Tooltip";
 // import { Addresses } from "./types";
 import useBoard from "./useBoard";
 
@@ -29,14 +30,16 @@ export default function BoardCharity() {
       )}
 
       {isReady && (
-        <div className="self-start w-full h-leader-table overflow-y-auto pl-4">
-          <table className="border-collapse w-full">
+        <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll overflow-x-scroll">
+          <table className="border-collapse table-auto">
             <thead className="">
               <tr>
                 <Heading text="Charity" />
-                <Heading text="Endowment Address" />
+                {/*<Heading text="Endowment Address" />*/}
                 <Heading text="Donations Received" />
-                <Heading text="1YR Projection" />
+                <Heading text="10YR Projection">
+                  <Tooltip />
+                </Heading>
               </tr>
             </thead>
             <tbody>

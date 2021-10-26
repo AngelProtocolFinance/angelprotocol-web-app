@@ -1,9 +1,15 @@
-import { AccAddress, Dec } from "@terra-money/terra.js";
+import { AccAddress } from "@terra-money/terra.js";
 
 export enum chains {
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
+}
+
+export enum sc {
+  index_fund = "index_fund",
+  registrar = "registrar",
+  anchor = "anchor",
 }
 
 export type URLs = {
@@ -34,6 +40,14 @@ export type Endowment = { address: string; status: string };
 export type Endowments = { endowments: Endowment[] };
 
 //Accounts
+
+export interface AccountDetails {
+  name: string;
+  description: string;
+  owner: string;
+  others: any;
+}
+
 export type Holding = { address: string; amount: string };
 export type Balance = {
   total_locked: number;

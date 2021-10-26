@@ -1,5 +1,5 @@
 import Loader from "components/Loader/Loader";
-import tcaLogo from "assets/images/tca1600.png";
+import tcaLogo from "assets/images/angel_alliance.png";
 import Entry from "./Entry";
 import useBoard from "./useBoard";
 import Heading from "../Heading";
@@ -15,7 +15,9 @@ export default function Board() {
         lastUpdate={lastUpdate}
         isLoading={isLoading}
       />
-      <img className="m-20 w-60" src={tcaLogo} />
+      <div className="hidden md:block">
+        <img className="mr-10 w-80" src={tcaLogo} alt="" />
+      </div>
       {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
         <Loader
@@ -29,7 +31,7 @@ export default function Board() {
           <table className="border-collapse w-full">
             <thead className="">
               <tr>
-                <Heading text="TCA Member" />
+                <Heading text="Alliance Member" />
                 <Heading text="Total Donation" />
               </tr>
             </thead>
