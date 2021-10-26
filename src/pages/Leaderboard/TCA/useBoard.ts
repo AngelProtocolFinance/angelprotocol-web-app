@@ -57,6 +57,8 @@ export default function useBoard() {
           })
         );
 
+        console.log(entries);
+
         setLoading(false);
         setSums(entries);
         setLastUpdate(stamp);

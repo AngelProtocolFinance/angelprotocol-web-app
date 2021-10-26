@@ -4,7 +4,7 @@ import Copier from "components/Copier/Copier";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
-import { Addr } from "components/Copier/types";
+// import { Addr } from "components/Copier/types";
 type Props = {
   address: string;
   balance: Balance;
