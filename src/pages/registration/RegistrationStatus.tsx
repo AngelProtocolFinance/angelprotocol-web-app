@@ -26,9 +26,21 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    contact_details: 0,
-    wallet_address: 1,
-    document: data?.Metadata ? 0 : 1,
+    contact_details: !!data?.MetaData,
+    wallet_address: data?.MetaData?.TerraWallet,
+    document:
+      data?.Registration?.ProofOfIdentityVerified &&
+      data?.Registration?.ProofOfEmploymentVerified &&
+      data?.Registration?.EndowmentAgreementVerified
+        ? 2
+        : data?.Registration?.ProofOfEmployment != "" &&
+          data?.Registration?.ProofOfEmployment != undefined &&
+          data?.Registration?.ProofOfIdentity != "" &&
+          data?.Registration?.ProofOfIdentity != undefined &&
+          data?.Registration?.EndowmentAgreement != "" &&
+          data?.Registration?.EndowmentAgreement != undefined
+        ? 1
+        : 0,
     endowment:
       data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
     completed: userData?.RegistrationStatus,
@@ -66,23 +78,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Wallet Address</p>
-              <p className="status-text uppercase text-yellow-600">
-                {status.wallet_address === 0 ? "Complete" : "Missing"}
-              </p>
-            </div>
-            <div className="">
-              <Action
-                classes="bg-thin-blue w-40 h-10"
-                onClick={navigate(register.wallet_check)}
-                title={status.wallet_address === 0 ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
-            <div className="status text-left font-bold">
-              <p className="">Step #3: Documentation</p>
-              {status.document === 0 ? (
+              {status.wallet_address ? (
                 <p className="status-text uppercase text-green-500">Complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -91,9 +87,40 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes="bg-thin-blue w-40 h-10"
-                onClick={navigate(register.upload_docs)}
-                title={status.document === 0 ? "Change" : "Continue"}
+                onClick={navigate(register.wallet_check)}
+                title={status.wallet_address ? "Change" : "Continue"}
                 disabled={userData.PK === ""}
+              />
+            </div>
+          </div>
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+            <div className="status text-left font-bold">
+              <p className="">Step #3: Documentation</p>
+              {status.document === 2 && (
+                <p className="status-text uppercase text-green-500">Complete</p>
+              )}
+              {status.document === 1 && (
+                <p className="status-text uppercase text-yellow-blue">
+                  In Review
+                </p>
+              )}
+              {status.document === 0 && (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
+            </div>
+            <div className="">
+              <Action
+                classes="bg-thin-blue w-40 h-10"
+                onClick={() =>
+                  history.push({
+                    pathname: register.upload_docs,
+                    state: {
+                      data: data?.Registration,
+                    },
+                  })
+                }
+                title={status.document === 2 ? "Change" : "Continue"}
+                disabled={userData.PK === "" || !data?.Metadata}
               />
             </div>
           </div>
@@ -132,7 +159,11 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              <p className="status-text uppercase text-green-500">complete</p>
+              {data?.contact_details ? (
+                <p className="status-text uppercase text-green-500">complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action

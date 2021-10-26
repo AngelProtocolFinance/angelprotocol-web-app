@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { UserSlice } from "../../Redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import Action from "./Action";
+import { useGetLambdaAuthTokenMutation } from "api/lambdaAuthAPIs";
 
 export type ReferInfo = {
   refer: string;
@@ -16,6 +17,7 @@ export type ReferInfo = {
 const Registration = () => {
   const dispatch = useDispatch();
   const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
+  const [getTokenData] = useGetLambdaAuthTokenMutation();
   const { updateUserData } = UserSlice.actions;
   //url -> app/register
   const { url } = useRouteMatch();
@@ -40,6 +42,8 @@ const Registration = () => {
         "Can not find a registration file with this reference!"
       );
     } else {
+      const token: any = await getTokenData(values.refer);
+      console.log("token => ", token);
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,
@@ -47,6 +51,7 @@ const Registration = () => {
           response.data.Registration.CharityName_ContactEmail,
         RegistrationDate: response.data.Registration.RegistrationDate,
         RegistrationStatus: response.data.Registration.RegistrationStatus,
+        token: token.error.data,
       };
       dispatch(updateUserData(data));
       if (response.data.ContactPerson.EmailVerified)

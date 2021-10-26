@@ -51,17 +51,17 @@ const ProfileStepTwo = (props: any) => {
       <div>
         <Formik
           initialValues={{
-            Website: "",
-            ContactEmail: "",
-            Twitter: "",
-            YouTube: "",
-            Linkedin: "",
-            Facebook: "",
-            Instagram: "",
-            TikTok: "",
-            Logo: "",
-            Banner: "",
-            VideoEmbed: "",
+            Website: metaData?.Website || "",
+            ContactEmail: metaData?.ContactEmail || "",
+            Twitter: metaData?.Twitter || "",
+            YouTube: metaData?.YouTube || "",
+            Linkedin: metaData?.Linkedin || "",
+            Facebook: metaData?.Facebook || "",
+            Instagram: metaData?.Instagram || "",
+            TikTok: metaData?.TikTok || "",
+            Logo: metaData?.Logo || "",
+            Banner: metaData?.Banner || "",
+            VideoEmbed: metaData?.VideoEmbed || "",
           }}
           validationSchema={StepTwoSchema}
           onSubmit={handleUpdateProfile}

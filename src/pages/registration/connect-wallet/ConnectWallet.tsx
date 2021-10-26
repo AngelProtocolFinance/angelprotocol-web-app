@@ -2,12 +2,19 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FaCheck } from "react-icons/fa";
 import * as Yup from "yup";
+import {
+  useAddCharityMetadataMutation,
+  useUpdateCharityMetadataMutation,
+} from "api/charityAPIs";
+import { useSelector } from "react-redux";
+import { TStore } from "Redux/store";
+import { toast, ToastContainer } from "react-toastify";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.number()
-    .required()
+    .required("Please enter the number of your wallet")
     .positive()
-    .integer("Please enter the number of your wallet."),
+    .integer("It must be numeric."),
 });
 
 export type Values = {
@@ -16,11 +23,39 @@ export type Values = {
 
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
+  const [addCharityMetaProfile] = useAddCharityMetadataMutation();
+  const { userData } = useSelector((state: TStore) => state.user);
 
-  const onConnectWallet = (values: Values, actions: FormikHelpers<Values>) => {
+  const onConnectWallet = async (
+    values: Values,
+    actions: FormikHelpers<Values>
+  ) => {
     actions.setSubmitting(true);
-    setSuccess(true);
-    console.log("number => ", values.wallet_number);
+    const response: any = await addCharityMetaProfile({
+      body: { TerraWallet: values.wallet_number },
+      uuid: userData.PK,
+    });
+    let result = response.data ? response : response.error;
+    console.log("result => ", result);
+    if (result.status === 500) {
+      toast.error("Saving data was failed. Please try again.");
+      setSuccess(false);
+    } else if (result.error) {
+      toast.error(result.error.data.message);
+      setSuccess(false);
+    } else {
+      if (
+        result.status === 400 ||
+        result.status === 401 ||
+        result.status === 403
+      ) {
+        toast.error(result.data.message);
+        setSuccess(false);
+      } else {
+        toast.success("Your wallet number was saved successfully.");
+        setSuccess(true);
+      }
+    }
   };
   return (
     <div>
@@ -85,6 +120,7 @@ const ConnectWallet = () => {
           </Formik>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -28,8 +28,10 @@ export const useUploadFiles = () => {
         toast.error(result.data.message);
       } else {
         toast.success("Your doc was uploaded successfully.");
+        return true;
       }
     }
+    return false;
   };
 
   const readFileToBase64 = (file: File) =>

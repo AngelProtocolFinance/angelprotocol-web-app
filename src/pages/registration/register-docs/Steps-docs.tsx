@@ -1,20 +1,24 @@
 import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { register, site, web } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
 import { useSelector } from "react-redux";
 import { TStore } from "Redux/store";
+import { ToastContainer } from "react-toastify";
 
 const StepsDocs = () => {
   //url = app/register/upload-docs
   const history = useHistory();
+  const location: any = useLocation();
+  const registrationData = location.state.data;
   const { uploadDocs } = useUploadFiles();
   const { userData } = useSelector((state: TStore) => state.user);
   const [isOpenModal, setOpenModal] = useState(false);
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
+  const [uploadedStatus, setUploadedStatus] = useState(false);
 
   const showInfoModal = (index: number) => {
     setOpenModal(true);
@@ -24,7 +28,8 @@ const StepsDocs = () => {
   const uploadFile = async (files: any) => {
     setLoading(true);
     console.log(userData);
-    await uploadDocs(files[0], userData.PK, docType);
+    const success = await uploadDocs(files[0], userData.PK, docType);
+    setUploadedStatus(success);
     setLoading(false);
     setOpenModal(false);
   };
@@ -52,9 +57,23 @@ const StepsDocs = () => {
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
             />
-            <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
-              complete
-            </p>
+            {registrationData?.ProofOfIdentityVerified && (
+              <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
+                complete
+              </p>
+            )}
+            {(registrationData?.ProofOfIdentityVerified === false &&
+              registrationData?.ProofOfIdentity !== "") ||
+              (uploadedStatus && docType === 0 && (
+                <p className="text-yellow-blue uppercase text-sm xl:text-base w-1/3">
+                  In Review
+                </p>
+              ))}
+            {!registrationData?.ProofOfIdentity && (
+              <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
+                Not submitted
+              </p>
+            )}
           </div>
         </div>
         <div className="step-1 md:flex justify-between mb-5">
@@ -71,9 +90,23 @@ const StepsDocs = () => {
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
             />
-            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
-              Not submitted
-            </p>
+            {registrationData?.ProofOfEmploymentVerified && (
+              <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
+                complete
+              </p>
+            )}
+            {(registrationData?.ProofOfEmploymentVerified === false &&
+              registrationData?.ProofOfEmployment !== "") ||
+              (uploadedStatus && docType === 1 && (
+                <p className="text-yellow-blue uppercase text-sm xl:text-base w-1/3">
+                  In Review
+                </p>
+              ))}
+            {!registrationData?.ProofOfEmployment && (
+              <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
+                Not submitted
+              </p>
+            )}
           </div>
         </div>
         <div className="step-1 md:flex justify-between">
@@ -93,9 +126,23 @@ const StepsDocs = () => {
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
             />
-            <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
-              Not submitted
-            </p>
+            {registrationData?.EndowmentAgreementVerified && (
+              <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
+                complete
+              </p>
+            )}
+            {(registrationData?.EndowmentAgreementVerified === false &&
+              registrationData?.EndowmentAgreement !== "") ||
+              (uploadedStatus && docType === 2 && (
+                <p className="text-yellow-blue uppercase text-sm xl:text-base w-1/3">
+                  In Review
+                </p>
+              ))}
+            {!registrationData?.EndowmentAgreement && (
+              <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
+                Not submitted
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -139,6 +186,7 @@ const StepsDocs = () => {
         showFileNamesInPreview={true}
         filesLimit={1}
       />
+      <ToastContainer />
     </div>
   );
 };

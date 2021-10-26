@@ -68,6 +68,7 @@ const UpdateProfile = () => {
         {step === 1 ? (
           <ProfileStepOne
             userInfo={userData}
+            metaData={metaData}
             onNext={onNext}
             onSubmit={onSaveCharityMetaData}
           />

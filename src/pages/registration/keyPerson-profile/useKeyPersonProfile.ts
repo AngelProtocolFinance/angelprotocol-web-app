@@ -55,7 +55,11 @@ export const useKeyPersonProfile = () => {
     } else if (result.error) {
       toast.error(result.error.data.message);
     } else {
-      if (result.status === 400 || result.status === 401) {
+      if (
+        result.status === 400 ||
+        result.status === 401 ||
+        result.status === 403
+      ) {
         toast.error(result.data.message);
       } else {
         toast.success("Your key person data was saved successfully.");

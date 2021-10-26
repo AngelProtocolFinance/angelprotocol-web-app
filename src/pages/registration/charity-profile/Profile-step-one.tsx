@@ -17,6 +17,7 @@ const ProfileStepOne = (props: any) => {
 
   const history = useHistory();
   const userData = props.userInfo;
+  const metaData = props.metaData;
   const handleUpdateProfile = (
     profileData: any,
     actions: FormikHelpers<any>
@@ -38,16 +39,16 @@ const ProfileStepOne = (props: any) => {
       <div>
         <Formik
           initialValues={{
-            CompanyNumber: "",
-            CountryIncorporation: "",
+            CompanyNumber: metaData?.CompanyNumber || "",
+            CountryIncorporation: metaData?.CountryIncorporation || "",
             isYourCountry: false,
-            SelectCountries: "",
-            VisionStatement: "",
-            MissionStatement: "",
-            UN_SDG: "",
-            AnnualRevenue: "",
-            OperatingExpense: "",
-            Currency: "",
+            SelectCountries: metaData?.SelectCountries || "",
+            VisionStatement: metaData?.VisionStatement || "",
+            MissionStatement: metaData?.MissionStatement || "",
+            UN_SDG: metaData?.UN_SDG || "",
+            AnnualRevenue: metaData?.AnnualRevenue || "",
+            OperatingExpense: metaData?.OperatingExpense || "",
+            Currency: metaData?.Currency || "",
           }}
           validationSchema={StepOneSchema}
           onSubmit={handleUpdateProfile}
