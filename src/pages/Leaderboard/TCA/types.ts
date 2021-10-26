@@ -38,6 +38,7 @@ export enum Names {
   luna_lapins = "LunaLapins",
   knowhere_art = "Knowhere Art",
   terrapins = "Terrapins",
+  luna_apes = "LunApe",
   hero = "Hero",
   community = "Community",
 }
@@ -45,6 +46,7 @@ export enum Names {
 export type Details = {
   icon: string;
   url: string;
+  bgClass?: string;
 };
 
 export type MemberInfo = {
