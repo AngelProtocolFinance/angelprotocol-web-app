@@ -9,6 +9,9 @@ import {
 import { useSelector } from "react-redux";
 import { TStore } from "Redux/store";
 import { toast, ToastContainer } from "react-toastify";
+import Action from "../Action";
+import { register } from "types/routes";
+import { useHistory } from "react-router";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.number()
@@ -25,6 +28,7 @@ const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const { userData } = useSelector((state: TStore) => state.user);
+  const history = useHistory();
 
   const onConnectWallet = async (
     values: Values,
@@ -102,13 +106,18 @@ const ConnectWallet = () => {
                     component="div"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="disabled:bg-grey-accent bg-thin-blue text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-base font-bold text-white mb-10"
+                <Action
+                  submit
+                  title="SUBMIT"
+                  classes="bg-thin-blue w-48 h-10 mr-3 mb-10"
                   disabled={isSubmitting || isSuccess}
-                >
-                  SUBMIT
-                </button>
+                />
+                <Action
+                  onClick={() => history.push(register.status)}
+                  title="Back"
+                  classes="bg-thin-blue w-48 h-10"
+                  disabled={isSubmitting}
+                />
                 {isSuccess && (
                   <p>
                     Thanks, we've been notified and we'll get in touch with you
