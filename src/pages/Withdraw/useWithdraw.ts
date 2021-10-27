@@ -39,13 +39,14 @@ export default function useWithdraw(address: string) {
           // If wallet connected is not the endowment owner's wallet address
           setEndowmentOwner(false);
           getEndowmentBalance();
-        } else if (data?.[wallet?.walletAddress] !== address) {
-          // If endowment address is invalid
-          setRedirect(true);
-          console.log("HUY!");
         } else {
-          setEndowmentOwner(true);
-          getEndowmentBalance();
+          if (data?.[wallet?.walletAddress] !== address) {
+            // Redirects if endowment address is invalid
+            setRedirect(true);
+          } else {
+            setEndowmentOwner(true);
+            getEndowmentBalance();
+          }
         }
       } catch (err) {
         console.error(err);
@@ -54,7 +55,7 @@ export default function useWithdraw(address: string) {
       }
     })();
     //eslint-disable-next-line
-  }, [wallet]);
+  }, [data, wallet]);
 
   return {
     redirect,
