@@ -31,11 +31,11 @@ export default function BoardCharity() {
 
       {isReady && (
         <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll overflow-x-scroll">
-          <table className="border-collapse table-auto">
+          <table className="border-collapse table-auto w-full">
             <thead className="">
               <tr>
                 <Heading text="Charity" />
-                <Heading text="Endowment Address" />
+                {/*<Heading text="Endowment Address" />*/}
                 <Heading text="Donations Received" />
                 <Heading text="10YR Projection">
                   <Tooltip />

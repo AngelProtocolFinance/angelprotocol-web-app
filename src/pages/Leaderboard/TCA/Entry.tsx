@@ -4,12 +4,16 @@ import { memberInfo } from "./infos";
 
 type Props = { name: Names; amount?: number };
 export default function TCAMember(props: Props) {
-  const { icon, url } = memberInfo[props.name];
+  const { icon, url, bgClass = "bg-white" } = memberInfo[props.name];
   return (
     <tr className="border-b">
       <td>
         <div className="flex items-center">
-          <img src={icon} alt="" className="w-12 ml-0" />
+          <img
+            src={icon}
+            alt=""
+            className={`w-32 m-2 mr-4 h-20 object-contain rounded-sm ${bgClass}`}
+          />
           <a
             href={url}
             target="_blank"

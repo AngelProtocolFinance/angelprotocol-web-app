@@ -16,8 +16,8 @@ export default function Description(props: Props) {
         <img
           src={icon}
           alt=""
-          className={`bg-angel-blue ${
-            iconLight ? "bg-opacity-70" : "bg-opacity-10"
+          className={`bg-white ${
+            iconLight ? "bg-angel-blue" : ""
           } p-3 rounded-sm shadow-sm m-1 object-contain mr-4`}
         />
       </div>
