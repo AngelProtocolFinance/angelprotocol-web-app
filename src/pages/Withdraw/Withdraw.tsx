@@ -10,6 +10,8 @@ import Locked from "./Locked";
 import useHoldings from "./useHoldings";
 import useWithdraw from "./useWithdraw";
 import { RouteComponentProps } from "react-router";
+import { Redirect } from "react-router-dom";
+import { site } from "types/routes";
 
 interface Values {
   withdraw: number;
@@ -21,13 +23,20 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   //use can malinger this address url param
   //can also pass address as state but no guarantee that user will go to this page using
   //only the in-app link provided
-  //TODO://check if valid, redirect to somewhere if not
   const address = props.match.params.address;
 
   const [showModal, setShowModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
-  const { isReady, isLoading, error, locked, liquid, overall } =
-    useWithdraw(address);
+  const {
+    redirect,
+    isReady,
+    isLoading,
+    isEndowmentOwner,
+    error,
+    locked,
+    liquid,
+    overall,
+  } = useWithdraw(address);
   const { liquidCW20Tokens } = useHoldings(address);
 
   const computeWithdrawAmount = (value: number) => {
@@ -38,6 +47,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   return (
     <div className="pb-16 grid content-start min-h-screen">
       <AppHead />
+      {redirect ? <Redirect to={site.app} /> : null}
       {error && (
         <div className="min-h-leader-table grid place-items-center">
           <p className="uppercase text-white-grey">{error}</p>
@@ -64,13 +74,14 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
             <Locked lockedBalance={locked} />
           </div>
           <div className="flex justify-center md:justify-start mt-0 md:mt-4 md:pl-6">
-            {/*//TODO: should disable/hide when curr wallet_addr is not endowment owner */}
-            <button
-              className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
-              onClick={() => setShowModal(true)}
-            >
-              Withdraw from Accounts
-            </button>
+            {isEndowmentOwner ? (
+              <button
+                className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
+                onClick={() => setShowModal(true)}
+              >
+                Withdraw from Accounts
+              </button>
+            ) : null}
           </div>
           <div>
             {showModal ? (
