@@ -37,7 +37,7 @@ const App = () => {
             //TODO: get proper url
             ledger: {
               chainId: 1,
-              url: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213",
+              url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
             },
           }}
         >

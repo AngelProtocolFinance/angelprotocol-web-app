@@ -27,6 +27,7 @@ export default function Connectors(props: Props) {
         label="Terra Station Mobile"
       />
       <Action type={Connects.injected} label="Metamask" icon={Icons.metamask} />
+      <Action type={Connects.injected} label="XDEFI" icon={Icons.xdefi} />
       <Action type={Connects.torus} label="Torus" icon={Icons.torus} />
       <Action type={Connects.ledger} label="Ledger" icon={Icons.ledger} />
     </div>

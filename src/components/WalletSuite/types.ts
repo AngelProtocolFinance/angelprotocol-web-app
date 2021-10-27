@@ -10,8 +10,10 @@ export enum Icons {
   terra_mobile = "terra_mobile",
   terra_ext = "terra_ext",
   metamask = "metamask",
+  xdefi = "xdefi",
   torus = "torus",
   ledger = "ledger",
+  uknown = "unknown",
 }
 
 export enum Wallets {
@@ -30,6 +32,11 @@ export type WalletStates = Array<[Wallets, boolean]>;
 export type Displays = {
   [key in Wallets]: ReactNode;
 };
+
+export interface dWindow extends Window {
+  ethereum: any;
+  xfi?: any;
+}
 
 export type Props = {
   children: ReactNode;

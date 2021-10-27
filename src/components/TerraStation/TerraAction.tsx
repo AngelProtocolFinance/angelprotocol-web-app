@@ -24,7 +24,7 @@ export default function TerraAction(props: Props) {
     >
       <img
         src={icons[props.icon]}
-        className="w-8 h-8 p-2 bg-white-grey rounded-full shadow-md"
+        className="w-8 h-8 p-1.5 bg-white-grey rounded-full shadow-md"
         alt=""
       />
       <p className="uppercase text-sm ">{props.label}</p>
