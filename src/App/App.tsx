@@ -35,7 +35,10 @@ const App = () => {
           connectors={{
             torus: { chainId: 1 },
             //TODO: get proper url
-            ledger: { chainId: 1, url: "https://main-light.eth.linkpool.io/" },
+            ledger: {
+              chainId: 1,
+              url: "https://mainnet.infura.io/v3/84842078b09946638c03157f83405213",
+            },
           }}
         >
           <Switch>

@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function TerraAction(props: Props) {
-  const { handleClick, isAvailable } = useTerraAction(props.type);
+  const { handleClick, isAvailable, isLoading } = useTerraAction(props.type);
 
   if (!isAvailable) {
     return null;
@@ -18,8 +18,9 @@ export default function TerraAction(props: Props) {
 
   return (
     <button
+      disabled={isLoading}
       onClick={handleClick}
-      className={`transform active:translate-x-1 bg-white text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
+      className={`transform active:translate-x-1 bg-white disabled:bg-thin-grey text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
     >
       <img
         src={icons[props.icon]}

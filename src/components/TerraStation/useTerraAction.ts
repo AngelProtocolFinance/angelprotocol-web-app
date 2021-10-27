@@ -5,7 +5,9 @@ import {
 } from "@terra-money/wallet-provider";
 import { setIcon } from "components/WalletSuite/manageIcon";
 import { Icons } from "components/WalletSuite/types";
+import { useGetState } from "components/WalletSuite/WalletSuite";
 export default function useTerraAction(type: ConnectType) {
+  const { isLoading } = useGetState();
   const {
     availableConnectTypes,
     connect,
@@ -30,5 +32,9 @@ export default function useTerraAction(type: ConnectType) {
       return;
     }
   }
-  return { handleClick, isAvailable: isInstallable || isConnectible };
+  return {
+    handleClick,
+    isAvailable: isInstallable || isConnectible,
+    isLoading,
+  };
 }

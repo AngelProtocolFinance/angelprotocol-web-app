@@ -20,13 +20,16 @@ export enum Wallets {
   terra = "terra",
 }
 
+export type State = {
+  activeWallet: Wallets;
+  isLoading: boolean;
+};
+
 export type WalletStates = Array<[Wallets, boolean]>;
 
 export type Displays = {
   [key in Wallets]: ReactNode;
 };
-
-export type Changer = (wallet: Wallets) => void;
 
 export type Props = {
   children: ReactNode;
