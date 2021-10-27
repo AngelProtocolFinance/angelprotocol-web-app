@@ -31,7 +31,13 @@ const App = () => {
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}
       >
-        <UseWalletProvider>
+        <UseWalletProvider
+          connectors={{
+            torus: { chainId: 1 },
+            //TODO: get proper url
+            ledger: { chainId: 1, url: "https://main-light.eth.linkpool.io/" },
+          }}
+        >
           <Switch>
             <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
             <Route path={`${path}/${app.dashboard}`} component={Dashboard} />

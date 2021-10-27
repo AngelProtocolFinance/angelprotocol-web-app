@@ -1,9 +1,9 @@
 import { useGetWallet } from "./WalletSuite";
-import { Icons, Wallets } from "./types";
+import { Wallets } from "./types";
 import { IoWalletSharp } from "react-icons/io5";
 import useActivator from "./useActivator";
 import TerraDisplay from "components/TerraStation/Display";
-import MetaMaskDisplay from "components/Metamask/Display";
+import EthDisplay from "components/Ethereum/Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 
@@ -44,6 +44,6 @@ export default function Toolkit() {
 
 const displays = {
   [Wallets.none]: null,
-  [Wallets.ethereum]: <MetaMaskDisplay />,
+  [Wallets.ethereum]: <EthDisplay />,
   [Wallets.terra]: <TerraDisplay />,
 };

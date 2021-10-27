@@ -1,9 +1,11 @@
 // import { ConnectType } from "@terra-money/wallet-provider";
-import metamaskIcon from "assets/icons/wallets/metamask.png";
+import { icons } from "components/WalletSuite/Icon";
+import { Connectors, Icons } from "components/WalletSuite/types";
 import useAction from "./useAction";
 
-export default function Action() {
-  const { handleConnect, connecting } = useAction();
+type Props = { type: Connectors; label: string; icon: Icons };
+export default function Action(props: Props) {
+  const { handleConnect, connecting } = useAction(props.type, props.icon);
   return (
     <button
       disabled={connecting}
@@ -11,11 +13,11 @@ export default function Action() {
       className={`transform active:translate-x-1 bg-white text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
     >
       <img
-        src={metamaskIcon}
+        src={icons[props.icon]}
         className="w-8 h-8 p-2 bg-white-grey rounded-full shadow-md"
         alt=""
       />
-      <p className="uppercase text-sm">Metamask</p>
+      <p className="uppercase text-sm">{props.label}</p>
     </button>
   );
 }

@@ -1,10 +1,8 @@
 import { ConnectType } from "@terra-money/wallet-provider";
 import TerraAction from "components/TerraStation/TerraAction";
-import terraMobileIcon from "assets/icons/wallets/terra-mobile.png";
-import terraExtIcon from "assets/icons/wallets/terra-extension.jpg";
 import { IoClose } from "react-icons/io5";
-import Action from "components/Metamask/Action";
-
+import Action from "components/Ethereum/Action";
+import { Connectors as Connects, Icons } from "./types";
 type Props = {
   closeHandler: () => void;
 };
@@ -19,16 +17,18 @@ export default function Connectors(props: Props) {
         <IoClose className="text-white-grey text-lg" />
       </button>
       <TerraAction
-        icon={terraExtIcon}
+        icon={Icons.terra_ext}
         type={ConnectType.CHROME_EXTENSION}
         label="Terra Station Extension"
       />
       <TerraAction
-        icon={terraMobileIcon}
+        icon={Icons.terra_mobile}
         type={ConnectType.WALLETCONNECT}
         label="Terra Station Mobile"
       />
-      <Action />
+      <Action type={Connects.injected} label="Metamask" icon={Icons.metamask} />
+      <Action type={Connects.torus} label="Torus" icon={Icons.torus} />
+      <Action type={Connects.ledger} label="Ledger" icon={Icons.ledger} />
     </div>
   );
 }

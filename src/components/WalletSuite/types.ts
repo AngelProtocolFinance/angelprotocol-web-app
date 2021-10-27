@@ -1,9 +1,17 @@
 import { ReactNode } from "react";
 
+export enum Connectors {
+  injected = "injected",
+  torus = "torus",
+  ledger = "ledger",
+}
+
 export enum Icons {
   terra_mobile = "terra_mobile",
   terra_ext = "terra_ext",
   metamask = "metamask",
+  torus = "torus",
+  ledger = "ledger",
 }
 
 export enum Wallets {
