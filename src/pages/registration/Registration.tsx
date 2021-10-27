@@ -51,7 +51,7 @@ const Registration = () => {
           response.data.Registration.CharityName_ContactEmail,
         RegistrationDate: response.data.Registration.RegistrationDate,
         RegistrationStatus: response.data.Registration.RegistrationStatus,
-        token: token.error.data,
+        token: token.data,
       };
       dispatch(updateUserData(data));
       if (response.data.ContactPerson.EmailVerified)

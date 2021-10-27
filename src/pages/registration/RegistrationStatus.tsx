@@ -27,7 +27,7 @@ const RegistrationStatus = () => {
 
   const status = {
     contact_details: !!data?.MetaData,
-    wallet_address: data?.MetaData?.TerraWallet,
+    wallet_address: data?.MetaData?.TerraWallet != "",
     document:
       data?.Registration?.ProofOfIdentityVerified &&
       data?.Registration?.ProofOfEmploymentVerified &&

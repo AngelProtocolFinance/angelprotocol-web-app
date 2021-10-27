@@ -6,10 +6,6 @@ export const lambdaAuthAPIs = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: aws_endpoint,
     mode: "cors",
-    prepareHeaders: (headers) => {
-      headers.set("Content-type", `application/x-www-form-urlencoded`);
-      return headers;
-    },
   }),
   endpoints: (builder) => ({
     getLambdaAuthToken: builder.mutation<any, any>({
@@ -17,9 +13,12 @@ export const lambdaAuthAPIs = createApi({
         return {
           url: `TEST-jwt-generator`,
           method: "GET",
+          headers: {
+            "content-type": "text/plain",
+          },
+          responseHandler: (response) => response.text(),
         };
       },
-      transformResponse: (response: { data: any }) => response,
     }),
   }),
 });
