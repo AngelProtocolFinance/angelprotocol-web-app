@@ -4,9 +4,8 @@ import { register, site, web } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { UploadFiles, useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
-import { useSelector } from "react-redux";
-import { TStore } from "Redux/store";
 import { ToastContainer } from "react-toastify";
+import { useGetter } from "store/accessors";
 
 const StepsDocs = () => {
   //url = app/register/upload-docs
@@ -14,8 +13,7 @@ const StepsDocs = () => {
   const location: any = useLocation();
   let registrationData: UploadFiles = location.state.data;
   const { uploadDocs } = useUploadFiles();
-  //TODO: redux refactor
-  const { userData } = useSelector((state: TStore) => state.user);
+  const user = useGetter((state) => state.user);
   const [isOpenModal, setOpenModal] = useState(false);
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
@@ -28,7 +26,7 @@ const StepsDocs = () => {
 
   const uploadFile = async (files: any) => {
     setLoading(true);
-    const success = await uploadDocs(files[0], userData.PK, docType);
+    const success = await uploadDocs(files[0], user.PK, docType);
     setUploadedStatus(success);
     setLoading(false);
     setOpenModal(false);
@@ -79,8 +77,8 @@ const StepsDocs = () => {
         <div className="step-1 md:flex justify-between mb-5">
           <div className="md:w-1/3 xl:w-1/2 mb-2 md:mb-0">
             <p className="font-bold text-base max-w-xs text-left xl:ml-32">
-              Documentation attesting of your {userData.Role} position in{" "}
-              {userData.CharityName}{" "}
+              Documentation attesting of your {user.Role} position in{" "}
+              {user.CharityName}{" "}
             </p>
           </div>
           <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
@@ -113,7 +111,7 @@ const StepsDocs = () => {
           <div className="md:w-1/3 xl:w-1/2 mb-2 md:mb-0">
             <p className="font-bold text-base max-w-xs text-left xl:ml-32">
               Resolution approving the creation of an Endowment on Angel
-              Protocol with the Terra address {userData.WalletAddress}
+              Protocol with the Terra address {user.WalletAddress}
               <p className="text-orange text-xs underline text-left cursor-pointer">
                 See Template
               </p>

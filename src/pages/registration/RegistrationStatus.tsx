@@ -1,20 +1,18 @@
 import { useEffect } from "react";
-import { useGetCharityDataQuery } from "api/charityAPIs";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { TStore } from "Redux/store";
 import { register } from "types/routes";
 import Action from "./Action";
 import maskAddress from "helpers/maskAddress";
+import { useGetCharityDataQuery } from "services/aws/charity";
+import { useGetter } from "store/accessors";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  //TODO:redux refactor
-  const { userData } = useSelector((state: TStore) => state.user);
-  const { data, error } = useGetCharityDataQuery(userData.PK);
-  console.log("userData => ", userData);
+  const user = useGetter((state) => state.user);
+  const { data, error } = useGetCharityDataQuery(user.PK);
+  console.log("user => ", user);
 
   useEffect(() => {
     if (error) {
@@ -47,7 +45,7 @@ const RegistrationStatus = () => {
         : 0,
     endowment:
       data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
-    completed: userData?.RegistrationStatus,
+    completed: user?.RegistrationStatus,
   };
 
   const navigate = (dest: string) => () => {
@@ -75,7 +73,7 @@ const RegistrationStatus = () => {
                 classes="bg-yellow-blue w-40 h-10"
                 onClick={navigate(register.detail)}
                 title="Change"
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -93,7 +91,7 @@ const RegistrationStatus = () => {
                 classes="bg-thin-blue w-40 h-10"
                 onClick={navigate(register.wallet_check)}
                 title={status.wallet_address ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -124,7 +122,7 @@ const RegistrationStatus = () => {
                   })
                 }
                 title={status.document === 2 ? "Change" : "Continue"}
-                disabled={userData.PK === "" || !data?.Metadata}
+                disabled={user.PK === "" || !data?.Metadata}
               />
             </div>
           </div>
@@ -144,7 +142,7 @@ const RegistrationStatus = () => {
                 classes="bg-thin-blue w-40 h-10"
                 onClick={navigate(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
-                disabled={status.endowment === 2 || userData.PK === ""}
+                disabled={status.endowment === 2 || user.PK === ""}
               />
             </div>
           </div>
@@ -181,7 +179,7 @@ const RegistrationStatus = () => {
                   })
                 }
                 title="Change"
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -210,7 +208,7 @@ const RegistrationStatus = () => {
                   })
                 }
                 title={data?.KeyPerson ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -219,9 +217,9 @@ const RegistrationStatus = () => {
       <div>
         <Action
           classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + userData.CharityName + "'s profile"}
+          title={"Go to " + user.CharityName + "'s profile"}
           onClick={navigate(register.charity_profile)}
-          disabled={!status.completed || userData.PK === ""}
+          disabled={!status.completed || user.PK === ""}
         />
       </div>
       <ToastContainer />

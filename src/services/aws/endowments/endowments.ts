@@ -1,7 +1,6 @@
 import { aws } from "../aws";
 import { Result, Lookup, Accounts, Endowment } from "./types";
 
-//TODO: restructure api categories and reducer nesting
 const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({

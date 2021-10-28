@@ -3,23 +3,21 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { register } from "types/routes";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useCheckPreviousRegistrationMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
-import { UserSlice } from "../../Redux/slices/userSlice";
-import { useDispatch } from "react-redux";
 import Action from "./Action";
-import { useGetLambdaAuthTokenMutation } from "api/lambdaAuthAPIs";
+import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
+import { useGetLambdaAuthTokenMutation } from "services/aws/auth";
+import { useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 export type ReferInfo = {
   refer: string;
 };
 
 const Registration = () => {
-  const dispatch = useDispatch();
-  //TODO: redux refactor
+  const dispatch = useSetter();
   const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
   const [getTokenData] = useGetLambdaAuthTokenMutation();
-  const { updateUserData } = UserSlice.actions;
   //url -> app/register
   const { url } = useRouteMatch();
   const history = useHistory();
@@ -44,6 +42,7 @@ const Registration = () => {
       );
     } else {
       const token: any = await getTokenData(values.refer);
+      console.log(token);
       console.log("token => ", token);
       const data = {
         ...response.data.ContactPerson,

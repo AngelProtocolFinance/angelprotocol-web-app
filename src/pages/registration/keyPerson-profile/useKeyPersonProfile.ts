@@ -1,9 +1,9 @@
 import * as Yup from "yup";
-import {
-  useUpdateKeyPersonDataMutation,
-  useAddNewKeyCharityMutation,
-} from "api/keyPersonAPIs";
 import { toast } from "react-toastify";
+import {
+  useAddNewKeyCharityMutation,
+  useUpdateKeyPersonDataMutation,
+} from "services/aws/keyPerson";
 
 export type KeyPersoData = {
   FullName: string;
@@ -28,7 +28,6 @@ export const ProfileSchema = Yup.object().shape({
 });
 
 export const useKeyPersonProfile = () => {
-  //TODO: redux refactor
   const [createKeyPersonProfile] = useAddNewKeyCharityMutation();
   const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
 

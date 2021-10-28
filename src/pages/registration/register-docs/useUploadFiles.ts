@@ -1,5 +1,5 @@
-import { useUpdateCharityDocsMutation } from "api/registerAPIs";
 import { toast } from "react-toastify";
+import { useUpdateCharityDocsMutation } from "services/aws/registration";
 
 export type UploadFiles = {
   ProofOfIdentity?: any;
@@ -11,7 +11,6 @@ export type UploadFiles = {
 };
 
 export const useUploadFiles = () => {
-  //TODO: redux refactor
   const [uploadCharityDoc] = useUpdateCharityDocsMutation();
 
   const uploadDocs = async (file: File, uuid: any, docType: number) => {

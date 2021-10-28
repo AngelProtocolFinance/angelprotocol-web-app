@@ -1,9 +1,9 @@
+import * as Yup from "yup";
+import { toast } from "react-toastify";
 import {
   useAddCharityMetadataMutation,
   useUpdateCharityMetadataMutation,
-} from "api/charityAPIs";
-import * as Yup from "yup";
-import { toast } from "react-toastify";
+} from "services/aws/charity";
 
 export type CharityMetaData = {
   CompanyNumber?: string;
@@ -59,7 +59,6 @@ export const StepTwoSchema = Yup.object().shape({
 });
 
 export const useUpdateCharityProfile = () => {
-  //TODO: redux refactor
   const [updateCharityMetaProfile] = useUpdateCharityMetadataMutation();
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
 
