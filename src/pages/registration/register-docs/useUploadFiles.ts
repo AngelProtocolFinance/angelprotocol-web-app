@@ -1,22 +1,33 @@
 import { useUpdateCharityDocsMutation } from "api/registerAPIs";
 import { toast } from "react-toastify";
 
+export type UploadFiles = {
+  ProofOfIdentity?: any;
+  ProofOfEmployment?: any;
+  EndowmentAgreement?: any;
+  ProofOfIdentityVerified?: any;
+  ProofOfEmploymentVerified?: any;
+  EndowmentAgreementVerified?: any;
+};
+
 export const useUploadFiles = () => {
   const [uploadCharityDoc] = useUpdateCharityDocsMutation();
 
   const uploadDocs = async (file: File, uuid: any, docType: number) => {
     const docTypes = [
       "ProofOfIdentity",
-      "ProotOfEmployment",
+      "ProofOfEmployment",
       "EndowmentAgreement",
     ];
     const postData = {
       PK: uuid,
       body: {
+        ProofOfIdentity: "",
+        ProofOfEmployment: "",
+        EndowmentAgreement: "",
         [docTypes[docType]]: await readFileToBase64(file),
       },
     };
-    console.log("post data => ", postData);
     const response: any = await uploadCharityDoc(postData);
     const result = response.data ? response : response.error;
     if (result.error) {

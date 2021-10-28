@@ -14,10 +14,15 @@ const initialUserState: UserState = {
   RegistrationDate: "",
   RegistrationStatus: "",
   EmailVerified: false,
-  userType: "",
-  authorization: "",
   WalletAddress: "",
   token: "",
+  // for docs
+  ProofOfIdentity: "",
+  ProofOfEmployment: "",
+  EndowmentAgreement: "",
+  ProofOfIdentityVerified: "",
+  ProofOfEmploymentVerified: "",
+  EndowmentAgreementVerified: "",
 };
 
 export const UserSlice = createSlice({

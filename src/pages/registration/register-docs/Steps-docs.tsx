@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { register, site, web } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
-import { useUploadFiles } from "./useUploadFiles";
+import { UploadFiles, useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
 import { useSelector } from "react-redux";
 import { TStore } from "Redux/store";
@@ -12,7 +12,7 @@ const StepsDocs = () => {
   //url = app/register/upload-docs
   const history = useHistory();
   const location: any = useLocation();
-  const registrationData = location.state.data;
+  let registrationData: UploadFiles = location.state.data;
   const { uploadDocs } = useUploadFiles();
   const { userData } = useSelector((state: TStore) => state.user);
   const [isOpenModal, setOpenModal] = useState(false);
@@ -27,7 +27,6 @@ const StepsDocs = () => {
 
   const uploadFile = async (files: any) => {
     setLoading(true);
-    console.log(userData);
     const success = await uploadDocs(files[0], userData.PK, docType);
     setUploadedStatus(success);
     setLoading(false);
@@ -53,7 +52,7 @@ const StepsDocs = () => {
           <div className=" md:w-2/3 xl:w-1/2 flex items-center justify-end">
             <Action
               onClick={() => showInfoModal(0)}
-              title="upload new file"
+              title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
             />
@@ -69,7 +68,7 @@ const StepsDocs = () => {
                   In Review
                 </p>
               ))}
-            {!registrationData?.ProofOfIdentity && (
+            {!uploadedStatus && !registrationData?.ProofOfIdentity && (
               <p className="text-red-500 uppercase text-sm xl:text-base w-1/3">
                 Not submitted
               </p>

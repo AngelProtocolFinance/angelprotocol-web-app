@@ -6,12 +6,15 @@ import { toast, ToastContainer } from "react-toastify";
 import { TStore } from "Redux/store";
 import { register } from "types/routes";
 import Action from "./Action";
+import maskAddress from "helpers/maskAddress";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
   const { data, error } = useGetCharityDataQuery(userData.PK);
+  console.log("userData => ", userData);
+
   useEffect(() => {
     if (error) {
       //TODO:provide typing for this error if possible
@@ -129,9 +132,9 @@ const RegistrationStatus = () => {
               <p className="">Status of Your Endowment</p>
               <p className="status-text uppercase text-red-600">
                 {status.endowment === 0
-                  ? "Complete"
+                  ? `Address: ${maskAddress(data?.Metadata?.TerraWallet)}`
                   : status.endowment === 1
-                  ? "Missing"
+                  ? "Available soon"
                   : "Not available"}
               </p>
             </div>

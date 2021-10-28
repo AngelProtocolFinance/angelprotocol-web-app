@@ -52,6 +52,9 @@ const Registration = () => {
         RegistrationDate: response.data.Registration.RegistrationDate,
         RegistrationStatus: response.data.Registration.RegistrationStatus,
         token: token.data,
+        TerraWallet: response.data.Metadata?.TerraWallet,
+        IsKeyPersonCompleted: !!response.data.KeyPerson,
+        IsMetaDataCompleted: !!response.data.Metadata,
       };
       dispatch(updateUserData(data));
       if (response.data.ContactPerson.EmailVerified)

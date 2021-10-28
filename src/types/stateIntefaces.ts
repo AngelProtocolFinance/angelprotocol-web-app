@@ -11,8 +11,19 @@ export interface UserState {
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
-  userType?: string;
-  authorization?: string;
   WalletAddress?: string;
   token?: string;
+  // for docs
+  ProofOfIdentity?: any;
+  ProofOfEmployment?: any;
+  EndowmentAgreement?: any;
+  ProofOfIdentityVerified?: any;
+  ProofOfEmploymentVerified?: any;
+  EndowmentAgreementVerified?: any;
+  // for wallet
+  TerraWallet?: any;
+  // for key person
+  IsKeyPersonCompleted?: boolean;
+  // for meta profile
+  IsMetaDataCompleted?: boolean;
 }
