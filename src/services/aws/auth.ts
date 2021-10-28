@@ -1,12 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
+import { aws } from "./aws";
 
-export const lambdaAuthAPIs = createApi({
-  reducerPath: "lambdaAuthAPIs",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-  }),
+const auth_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getLambdaAuthToken: builder.mutation<any, any>({
       query: () => {
@@ -23,4 +17,4 @@ export const lambdaAuthAPIs = createApi({
   }),
 });
 
-export const { useGetLambdaAuthTokenMutation } = lambdaAuthAPIs;
+export const { useGetLambdaAuthTokenMutation } = auth_api;

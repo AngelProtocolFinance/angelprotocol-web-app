@@ -1,20 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
-import { TStore } from "Redux/store";
+import { aws } from "./aws";
 
-export const registerAPIs = createApi({
-  reducerPath: "registerAPIs",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-    prepareHeaders: (headers, { getState }) => {
-      const userData: any = (getState() as TStore).user.userData;
-      if (userData.token) {
-        headers.set("authorization", `${userData.token}`);
-      }
-      return headers;
-    },
-  }),
+const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getRegisteredCharities: builder.mutation<any, any>({
       query: (data) => {
@@ -100,4 +86,4 @@ export const {
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
   useUpdateCharityDocsMutation,
-} = registerAPIs;
+} = registration_api;

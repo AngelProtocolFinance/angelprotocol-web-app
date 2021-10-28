@@ -1,5 +1,5 @@
-import { useUpdateCharityDocsMutation } from "api/registerAPIs";
 import { toast } from "react-toastify";
+import { useUpdateCharityDocsMutation } from "services/aws/registration";
 
 export type UploadFiles = {
   ProofOfIdentity?: any;

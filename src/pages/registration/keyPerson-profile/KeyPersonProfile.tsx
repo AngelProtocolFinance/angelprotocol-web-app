@@ -1,8 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { register, site, web } from "types/routes";
-import { useSelector } from "react-redux";
-import { TStore } from "Redux/store";
 import {
   ProfileSchema,
   useKeyPersonProfile,
@@ -12,13 +10,14 @@ import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Action from "../Action";
+import { useGetter } from "store/accessors";
 
 const KeyPersonProfile = () => {
   //url = app/register/charity-profile
   const [fileContent, setFileContent] = useState("");
   const location: any = useLocation();
   const keyPersonData = location.state.data;
-  const { userData } = useSelector((state: TStore) => state.user);
+  const user = useGetter((state) => state.user);
   const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
   const [openDropzone, setOpenDropzone] = useState(
     keyPersonData?.HeadshotPicture && true
@@ -51,13 +50,13 @@ const KeyPersonProfile = () => {
     <div>
       <div className="title mb-10">
         <p className="text-2xl md:text-3xl font-bold mb-10">
-          Update the profile details for {userData.CharityName}'s KEY PERSON
+          Update the profile details for {user.CharityName}'s KEY PERSON
         </p>
         <span className="text-center">
           The key person of your organization is a person that you want to
-          highlight on {userData.CharityName}'s profile. The highlight would
-          include a headshot picture, a title, contact details and an
-          inspirational quote.
+          highlight on {user.CharityName}'s profile. The highlight would include
+          a headshot picture, a title, contact details and an inspirational
+          quote.
         </span>
       </div>
       <div>
@@ -70,7 +69,7 @@ const KeyPersonProfile = () => {
               Twitter: keyPersonData?.Twitter || "",
               Linkedin: keyPersonData?.Linkedin || "",
               Quote: keyPersonData?.Quote || "",
-              uuid: userData.PK,
+              uuid: user.PK,
               HeadshotPicture: keyPersonData?.HeadshotPicture || "",
             } as KeyPersoData
           }

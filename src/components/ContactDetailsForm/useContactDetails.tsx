@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
 import { ContactDetails } from "./ContactDetailsForm";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
-} from "api/registerAPIs";
-import { useDispatch } from "react-redux";
-import { UserSlice } from "Redux/slices/userSlice";
-import { toast } from "react-toastify";
+} from "services/aws/registration";
+import { useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 export const ContactInfoSchema = Yup.object().shape({
   charityName: Yup.string().required(
@@ -31,8 +31,8 @@ export const useContactDetails = () => {
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { updateUserData } = UserSlice.actions;
+  const dispatch = useSetter();
+  // const { updateUserData } = UserSlice.actions;
 
   async function saveContactInfo(
     contactData: ContactDetails,

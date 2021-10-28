@@ -2,16 +2,12 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FaCheck } from "react-icons/fa";
 import * as Yup from "yup";
-import {
-  useAddCharityMetadataMutation,
-  useUpdateCharityMetadataMutation,
-} from "api/charityAPIs";
-import { useSelector } from "react-redux";
-import { TStore } from "Redux/store";
+import { useAddCharityMetadataMutation } from "services/aws/charity";
 import { toast, ToastContainer } from "react-toastify";
 import Action from "../Action";
 import { register } from "types/routes";
 import { useHistory } from "react-router";
+import { useGetter } from "store/accessors";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.number()
@@ -27,7 +23,7 @@ export type Values = {
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
-  const { userData } = useSelector((state: TStore) => state.user);
+  const user = useGetter((state) => state.user);
   const history = useHistory();
 
   const onConnectWallet = async (
@@ -37,7 +33,7 @@ const ConnectWallet = () => {
     actions.setSubmitting(true);
     const response: any = await addCharityMetaProfile({
       body: { TerraWallet: values.wallet_number },
-      uuid: userData.PK,
+      uuid: user.PK,
     });
     let result = response.data ? response : response.error;
     console.log("result => ", result);

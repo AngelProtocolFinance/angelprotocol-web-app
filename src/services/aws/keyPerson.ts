@@ -1,20 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
-import { TStore } from "Redux/store";
+import { aws } from "./aws";
 
-export const keyPersonAPIs = createApi({
-  reducerPath: "keyPersonAPIs",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-    prepareHeaders: (headers, { getState }) => {
-      const userData: any = (getState() as TStore).user.userData;
-      if (userData.token) {
-        headers.set("authorization", `${userData.token}`);
-      }
-      return headers;
-    },
-  }),
+const keyPerson_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     updateKeyPersonData: builder.mutation<any, any>({
       query: (data) => {
@@ -42,4 +28,4 @@ export const keyPersonAPIs = createApi({
 });
 
 export const { useAddNewKeyCharityMutation, useUpdateKeyPersonDataMutation } =
-  keyPersonAPIs;
+  keyPerson_api;

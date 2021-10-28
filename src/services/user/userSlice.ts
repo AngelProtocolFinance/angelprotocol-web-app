@@ -1,7 +1,7 @@
-import { UserState } from "../../types/stateIntefaces";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "./types";
 
-const initialUserState: UserState = {
+const initialState: User = {
   Email: "",
   FirstName: "",
   LastName: "",
@@ -31,21 +31,14 @@ const initialUserState: UserState = {
   IsMetaDataCompleted: false,
 };
 
-export const UserSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
-  initialState: {
-    userData: initialUserState,
-  },
+  initialState,
   reducers: {
-    updateUserData: (state, { payload }: PayloadAction<UserState>) => {
-      state.userData = {
-        ...payload,
-      };
-    },
-    removeUserData: (state) => {
-      state.userData = initialUserState;
-    },
+    updateUserData: (state, { payload }: PayloadAction<User>) => payload,
+    removeUserData: (state) => initialState,
   },
 });
 
-export const userReducer = UserSlice.reducer;
+export default userSlice.reducer;
+export const { updateUserData, removeUserData } = userSlice.actions;

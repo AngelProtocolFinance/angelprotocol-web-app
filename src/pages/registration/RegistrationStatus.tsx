@@ -1,19 +1,18 @@
 import { useEffect } from "react";
-import { useGetCharityDataQuery } from "api/charityAPIs";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { TStore } from "Redux/store";
 import { register } from "types/routes";
 import Action from "./Action";
 import maskAddress from "helpers/maskAddress";
+import { useGetCharityDataQuery } from "services/aws/charity";
+import { useGetter } from "store/accessors";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const { userData } = useSelector((state: TStore) => state.user);
-  const { data, error } = useGetCharityDataQuery(userData.PK);
-  console.log("userData => ", userData);
+  const user = useGetter((state) => state.user);
+  const { data, error } = useGetCharityDataQuery(user.PK);
+  console.log("user => ", user);
 
   useEffect(() => {
     if (error) {
@@ -29,27 +28,27 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: userData.TerraWallet != "",
+    wallet_address: user.TerraWallet !== "",
     document:
-      userData.ProofOfIdentityVerified &&
-      userData.ProofOfEmploymentVerified &&
-      userData.EndowmentAgreementVerified
+      user.ProofOfIdentityVerified &&
+      user.ProofOfEmploymentVerified &&
+      user.EndowmentAgreementVerified
         ? 2
-        : userData.ProofOfEmployment != "" &&
-          userData.ProofOfEmployment != undefined &&
-          userData.ProofOfIdentity != "" &&
-          userData.ProofOfIdentity != undefined &&
-          userData.EndowmentAgreement != "" &&
-          userData.EndowmentAgreement != undefined
+        : user.ProofOfEmployment !== "" &&
+          user.ProofOfEmployment !== undefined &&
+          user.ProofOfIdentity !== "" &&
+          user.ProofOfIdentity !== undefined &&
+          user.EndowmentAgreement !== "" &&
+          user.EndowmentAgreement !== undefined
         ? 1
         : 0,
     endowment:
       data?.Metadata?.EndowmentStatus === "Active"
         ? 0
-        : userData.IsMetaDataCompleted
+        : user.IsMetaDataCompleted
         ? 1
         : 2,
-    completed: userData?.RegistrationStatus,
+    completed: user?.RegistrationStatus,
   };
 
   const navigate = (dest: string) => () => {
@@ -77,7 +76,7 @@ const RegistrationStatus = () => {
                 classes="bg-yellow-blue w-40 h-10"
                 onClick={navigate(register.detail)}
                 title="Change"
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -99,7 +98,7 @@ const RegistrationStatus = () => {
                 }
                 onClick={navigate(register.wallet_check)}
                 title={status.wallet_address ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -134,7 +133,7 @@ const RegistrationStatus = () => {
                     : "bg-thin-blue w-40 h-10"
                 }
                 title={status.document === 2 ? "Change" : "Continue"}
-                disabled={userData.PK === "" || !data?.Metadata}
+                disabled={user.PK === "" || !data?.Metadata}
               />
             </div>
           </div>
@@ -158,7 +157,7 @@ const RegistrationStatus = () => {
                 }
                 onClick={navigate(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
-                disabled={status.endowment === 2 || userData.PK === ""}
+                disabled={status.endowment === 2 || user.PK === ""}
               />
             </div>
           </div>
@@ -177,7 +176,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              {userData.IsMetaDataCompleted ? (
+              {user.IsMetaDataCompleted ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -186,7 +185,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  userData.IsMetaDataCompleted
+                  user.IsMetaDataCompleted
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -198,15 +197,15 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                disabled={userData.PK === ""}
-                title={userData.IsMetaDataCompleted ? "Complete" : "Continue"}
+                disabled={user.PK === ""}
+                title={user.IsMetaDataCompleted ? "Complete" : "Continue"}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              {userData?.IsKeyPersonCompleted ? (
+              {user?.IsKeyPersonCompleted ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -215,7 +214,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  userData.IsKeyPersonCompleted
+                  user.IsKeyPersonCompleted
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -227,8 +226,8 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title={userData.IsKeyPersonCompleted ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                title={user.IsKeyPersonCompleted ? "Change" : "Continue"}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -237,9 +236,9 @@ const RegistrationStatus = () => {
       <div>
         <Action
           classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + userData.CharityName + "'s profile"}
+          title={"Go to " + user.CharityName + "'s profile"}
           onClick={navigate(register.charity_profile)}
-          disabled={!status.completed || userData.PK === ""}
+          disabled={!status.completed || user.PK === ""}
         />
       </div>
       <ToastContainer />
