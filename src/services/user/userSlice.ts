@@ -23,6 +23,12 @@ const initialState: User = {
   ProofOfIdentityVerified: "",
   ProofOfEmploymentVerified: "",
   EndowmentAgreementVerified: "",
+  // for wallet
+  TerraWallet: "",
+  // for key person
+  IsKeyPersonCompleted: false,
+  // for meta profile
+  IsMetaDataCompleted: false,
 };
 
 const userSlice = createSlice({
