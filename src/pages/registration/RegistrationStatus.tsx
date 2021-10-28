@@ -11,6 +11,7 @@ import maskAddress from "helpers/maskAddress";
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
+  //TODO:redux refactor
   const { userData } = useSelector((state: TStore) => state.user);
   const { data, error } = useGetCharityDataQuery(userData.PK);
   console.log("userData => ", userData);

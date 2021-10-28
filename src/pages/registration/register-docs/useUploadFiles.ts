@@ -11,6 +11,7 @@ export type UploadFiles = {
 };
 
 export const useUploadFiles = () => {
+  //TODO: redux refactor
   const [uploadCharityDoc] = useUpdateCharityDocsMutation();
 
   const uploadDocs = async (file: File, uuid: any, docType: number) => {

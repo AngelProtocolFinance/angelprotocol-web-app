@@ -26,6 +26,7 @@ export type Values = {
 
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
+  //TODO:redux refactor
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const { userData } = useSelector((state: TStore) => state.user);
   const history = useHistory();

@@ -59,6 +59,7 @@ export const StepTwoSchema = Yup.object().shape({
 });
 
 export const useUpdateCharityProfile = () => {
+  //TODO: redux refactor
   const [updateCharityMetaProfile] = useUpdateCharityMetadataMutation();
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
 

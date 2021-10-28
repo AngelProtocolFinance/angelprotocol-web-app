@@ -28,6 +28,7 @@ export const ProfileSchema = Yup.object().shape({
 });
 
 export const useKeyPersonProfile = () => {
+  //TODO: redux refactor
   const [createKeyPersonProfile] = useAddNewKeyCharityMutation();
   const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
 

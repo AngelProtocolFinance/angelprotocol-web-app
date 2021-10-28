@@ -14,6 +14,7 @@ import {
 const UpdateProfile = () => {
   //url = app/register/charity-profile
   const location: any = useLocation();
+  //TODO:redux refactor
   const { userData } = useSelector((state: TStore) => state.user);
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});

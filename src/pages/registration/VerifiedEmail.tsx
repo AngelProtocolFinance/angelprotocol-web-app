@@ -11,6 +11,7 @@ import Action from "./Action";
 const VerifiedEmail = () => {
   //url = app/register/verify
   const history = useHistory();
+  //TODO: redux refactor
   const dispatch = useDispatch();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const { updateUserData } = UserSlice.actions;

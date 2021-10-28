@@ -15,6 +15,7 @@ const ConfirmEmail = () => {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const { userData } = useSelector((state: TStore) => state.user);
+  //TODO: redux refactor
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const resendVerificationEmail = async () => {

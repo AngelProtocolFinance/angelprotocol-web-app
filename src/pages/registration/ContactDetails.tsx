@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import { TStore } from "Redux/store";
 
 const ContactDetails = () => {
+  //TODO: redux refactor
   const { userData } = useSelector((state: TStore) => state.user);
   return (
     <div>

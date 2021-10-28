@@ -14,6 +14,7 @@ const StepsDocs = () => {
   const location: any = useLocation();
   let registrationData: UploadFiles = location.state.data;
   const { uploadDocs } = useUploadFiles();
+  //TODO: redux refactor
   const { userData } = useSelector((state: TStore) => state.user);
   const [isOpenModal, setOpenModal] = useState(false);
   const [docType, setDocType] = useState(-1);

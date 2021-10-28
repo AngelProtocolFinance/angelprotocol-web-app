@@ -16,6 +16,7 @@ export type ReferInfo = {
 
 const Registration = () => {
   const dispatch = useDispatch();
+  //TODO: redux refactor
   const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
   const [getTokenData] = useGetLambdaAuthTokenMutation();
   const { updateUserData } = UserSlice.actions;

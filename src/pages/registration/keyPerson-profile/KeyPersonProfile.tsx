@@ -18,6 +18,7 @@ const KeyPersonProfile = () => {
   const [fileContent, setFileContent] = useState("");
   const location: any = useLocation();
   const keyPersonData = location.state.data;
+  //TODO: redux refactor
   const { userData } = useSelector((state: TStore) => state.user);
   const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
   const [openDropzone, setOpenDropzone] = useState(
