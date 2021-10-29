@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { FormikHelpers } from "formik";
 import Account from "contracts/Account";
+import { denoms } from "constants/curriencies";
 
 interface Values {
   withdraw: string;
@@ -14,24 +14,34 @@ function useWithdrawHoldings(
 ) {
   const wallet = useConnectedWallet();
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const account = new Account(address, wallet);
-  //     // const result = await account.createWithdrawTx(anchorVault);
-  //     console.log(account);
-  //     console.log(anchorVault);
-  //   })();
-  // }, [wallet]);
-
   async function withdrawHoldings(
     values: Values,
     actions: FormikHelpers<Values>
   ) {
     values.withdraw = withdrawTokenQty;
     const tokenQty = values.withdraw;
-    console.log("Vault:", anchorVault);
-    console.log("Token QTY:", tokenQty);
+
     try {
+      actions.setSubmitting(true);
+      console.log("Vault:", anchorVault);
+      console.log("Token QTY:", tokenQty);
+
+      // Initiate withdraw transaction
+      const account = new Account(address, wallet);
+      console.log(account);
+      const transaction = await account.createWithdrawTx(anchorVault, tokenQty);
+      console.log(transaction);
+
+      // Computing for fees
+      const estimatedFee =
+        transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
+      console.log("Estimated Fee:", estimatedFee);
+
+      // Posting the transaction
+      const response = await wallet!.post(transaction);
+
+      // Check if tx is a success or error
+      console.log(response);
     } catch (err) {
       console.error(err);
     }

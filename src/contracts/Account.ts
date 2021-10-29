@@ -44,11 +44,14 @@ export default class Account extends Contract {
     return { msgs: [depositMsg], fee };
   }
 
-  async createWithdrawTx(anchorVault: string) {
+  async createWithdrawTx(
+    anchorVault: string,
+    tokenQty: string
+  ): Promise<CreateTxOptions> {
     this.checkWallet();
     const withdrawMsg = new MsgExecuteContract(this.walletAddr!, this.address, {
       withdraw: {
-        sources: [{ vault: anchorVault, locked: "0", liquid: "liquidAmount" }],
+        sources: [{ vault: anchorVault, locked: "0", liquid: tokenQty }],
       },
     });
     // const fee = await this.estimateFee([withdrawMsg]);
