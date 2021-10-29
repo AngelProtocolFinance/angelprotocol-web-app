@@ -18,7 +18,6 @@ export default function Board() {
       <div className="hidden md:block">
         <img className="mr-10 w-80" src={tcaLogo} alt="" />
       </div>
-      {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isLoading && (
         <Loader
           gapClass="gap-4"
@@ -26,6 +25,7 @@ export default function Board() {
           bgColorClass="bg-angel-grey"
         />
       )}
+      {error && <p className="uppercase text-angel-grey">{error}</p>}
       {isReady && (
         <div className="self-start w-full h-leader-table overflow-y-auto">
           <table className="border-collapse w-full">
@@ -36,8 +36,8 @@ export default function Board() {
               </tr>
             </thead>
             <tbody>
-              {sums.map(([name, amount], idx) => (
-                <Entry key={idx} name={name} amount={amount} />
+              {sums.map(([name, details], idx) => (
+                <Entry key={idx} name={name} details={details} />
               ))}
             </tbody>
           </table>
