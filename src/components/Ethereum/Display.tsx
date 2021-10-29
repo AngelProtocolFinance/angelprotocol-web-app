@@ -12,8 +12,10 @@ export default function Display() {
       <button onClick={toggleDetails} className="flex items-center py-2 px-3">
         {/* <img src={metaMaskIcon} alt="" className="w-6 h-6 rounded-full mr-2 " /> */}
         <Icon />
-        <span className="pr-2 text-sm text-white-grey">{maskedAddr}</span>
-        <span className="pl-2 text-sm text-sm text-white-grey border-l">
+        <span className="pr-2 text-sm text-white-grey hidden sm:block">
+          {maskedAddr}
+        </span>
+        <span className="pl-2 text-sm text-sm text-white-grey sm:border-l">
           ETH {balance}
         </span>
       </button>

@@ -14,7 +14,7 @@ export default function Icon() {
     <img
       src={icons[active_icon]}
       alt=""
-      className="w-6 h-6 object-contain rounded-full mr-2 bg-white p-0.5"
+      className="w-6 h-6 object-contain rounded-full mr-0 sm:mr-2 bg-white p-0.5"
     />
   );
 }
