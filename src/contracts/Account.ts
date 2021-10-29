@@ -42,6 +42,18 @@ export default class Account extends Contract {
     return { msgs: [depositMsg], fee };
   }
 
+  async createWithdrawTx(anchorVault: string) {
+    this.checkWallet();
+    const withdrawMsg = new MsgExecuteContract(this.walletAddr!, this.address, {
+      withdraw: {
+        sources: [{ vault: anchorVault, locked: "0", liquid: "liquidAmount" }],
+      },
+    });
+    // const fee = await this.estimateFee([withdrawMsg]);
+    const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
+    return { msgs: [withdrawMsg], fee };
+  }
+
   async getHoldings() {
     return await this.query<Holdings>(this.address, { balance: {} });
   }
