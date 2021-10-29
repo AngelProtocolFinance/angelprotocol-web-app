@@ -35,8 +35,9 @@ export default class Contract {
   }
 
   static gasAdjustment = 1.2; //use gas units 20% greater than estimate
+
   //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [new Coin(denoms.uusd, 0.5)];
+  static gasPrices = [new Coin(denoms.uusd, 0.15)];
 
   async query<T>(source: AccAddress, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
