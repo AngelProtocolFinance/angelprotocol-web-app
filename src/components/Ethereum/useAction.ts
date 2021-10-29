@@ -36,7 +36,8 @@ export default function useAction(type: Connectors, icon: Icons) {
           alert(
             "kindly remove priority to xdefi and refresh page to use metamask"
           );
-          modIcon = Icons.xdefi;
+          // modIcon = Icons.xdefi;
+          return;
         }
       }
 
@@ -53,7 +54,8 @@ export default function useAction(type: Connectors, icon: Icons) {
           alert(
             "kindly prioritize xdefi to use it menu/prioritize xdefi and refresh the page"
           );
-          modIcon = Icons.metamask;
+          // modIcon = Icons.metamask;
+          return;
         }
       }
 

@@ -10,7 +10,7 @@ export default function Action(props: Props) {
     <button
       disabled={isLoading}
       onClick={handleConnect}
-      className={`transform active:translate-x-1 disabled:bg-thin-grey bg-white text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
+      className={`transform active:translate-x-1 disabled:bg-grey-accent bg-thin-blue text-white hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md`}
     >
       <img
         src={icons[props.icon]}
