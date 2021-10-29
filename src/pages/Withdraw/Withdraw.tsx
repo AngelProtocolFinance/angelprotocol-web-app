@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Form } from "formik";
 import Slider from "rc-slider";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
@@ -44,7 +44,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   const computeWithdrawAmount = (value: number) => {
     // value is the percentage based on the slider
     setWithdrawAmount((liquid! * value) / 100);
-    setWithdrawTokenQty(((liquidCW20Tokens! * value) / 100 / 1e6).toString());
+    setWithdrawTokenQty(((liquidCW20Tokens! * value) / 100).toString());
   };
 
   const withdrawHoldings = useWithdrawHoldings(
