@@ -40,13 +40,18 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
     overall,
   } = useWithdraw(address);
   const { liquidCW20Tokens, anchorVault } = useHoldings(address);
-  useWithdrawHoldings(address, anchorVault);
 
   const computeWithdrawAmount = (value: number) => {
     // value is the percentage based on the slider
     setWithdrawAmount((liquid! * value) / 100);
     setWithdrawTokenQty(((liquidCW20Tokens! * value) / 100 / 1e6).toString());
   };
+
+  const withdrawHoldings = useWithdrawHoldings(
+    address,
+    anchorVault,
+    withdrawTokenQty
+  );
 
   return (
     <div className="pb-16 grid content-start min-h-screen">
@@ -102,14 +107,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                   <div className="text-angel-grey">
                     <Formik<Values>
                       initialValues={{ withdraw: "0" }}
-                      onSubmit={(
-                        values: Values,
-                        { setSubmitting }: FormikHelpers<Values>
-                      ) => {
-                        values.withdraw = withdrawTokenQty;
-                        console.log(values);
-                        setSubmitting(false);
-                      }}
+                      onSubmit={withdrawHoldings}
                     >
                       {/*TODO:// separate this form in separate component*/}
                       <Form>
