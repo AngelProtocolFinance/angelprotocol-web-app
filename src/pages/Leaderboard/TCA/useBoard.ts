@@ -1,20 +1,20 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import IndexFund from "contracts/IndexFund";
 import { chains } from "contracts/types";
 import { useEffect, useState } from "react";
-import { donors as tcaDonors } from "./donors";
-import { Names, Sums } from "./types";
-// import { donations as testDonations, donors as testDonors } from "./testdata";
+import { useDonorsQuery } from "services/aws/alliance/alliance";
+import { Details, Sums } from "./types";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
+const defaultName = "Community";
 export default function useBoard() {
+  const { data, isLoading: donorLoading, isFetching } = useDonorsQuery(null);
+
   const [isLoading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(Date());
   const [flag, setFlag] = useState(0);
   const [error, setError] = useState("");
-  const [sums, setSums] = useState<Array<[Names, number]>>([]);
-  const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID || chains.mainnet;
-  const storage_key = `tca_boards_${chainID}`;
+  const [sums, setSums] = useState<Array<[string, Details]>>([]);
+  const storage_key = `tca_boards_${chains.mainnet}`;
 
   useEffect(() => {
     (async () => {
@@ -22,7 +22,7 @@ export default function useBoard() {
       if (string_data) {
         const saved_sums: {
           time: string;
-          entries: Array<[Names, number]>;
+          entries: Array<[string, Details]>;
         } = JSON.parse(string_data);
 
         setSums(saved_sums.entries);
@@ -32,20 +32,25 @@ export default function useBoard() {
       try {
         setError("");
         setLoading(true);
-        const indexFund = new IndexFund(wallet);
+        const indexFund = new IndexFund();
         const res = await indexFund.getFundDonations();
         const _sums: Sums = {};
+        const tcaDonors = data!;
         res.donors.forEach((donor) => {
-          const donorName = tcaDonors[donor.address] || Names.community;
-          //init to MIN_VALUE if no value yet
-          _sums[donorName] ||= Number.MIN_VALUE;
+          const {
+            name = defaultName,
+            icon = defaultIcon,
+            iconLight,
+          } = tcaDonors[donor.address];
+          //init details
+          _sums[name] ||= { icon, iconLight, amount: Number.MIN_VALUE };
           //increment if existing
-          _sums[donorName] &&= _sums[donorName]! + +donor.total_ust / 1e6;
+          _sums[name].amount &&= _sums[name].amount! + +donor.total_ust / 1e6;
         });
         //cast to desired types
-        const entries = Object.entries(_sums) as Array<[Names, number]>;
+        const entries = Object.entries(_sums);
         //in-place sort based on donation amount
-        entries.sort((prev, next) => next[1] - prev[1]);
+        entries.sort((prev, next) => next[1].amount! - prev[1].amount!);
 
         //save to localStorage
         const stamp = Date();
@@ -67,7 +72,7 @@ export default function useBoard() {
       }
     })();
     //eslint-disable-next-line
-  }, [wallet, flag]);
+  }, [flag]);
 
   function refresh() {
     localStorage.removeItem(storage_key);
@@ -77,7 +82,7 @@ export default function useBoard() {
   return {
     error: !isLoading && error,
     isReady: !isLoading && !error,
-    isLoading,
+    isLoading: isLoading || donorLoading || isFetching,
     sums,
     refresh,
     lastUpdate,

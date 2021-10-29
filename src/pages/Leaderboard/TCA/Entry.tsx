@@ -1,28 +1,27 @@
 import toCurrency from "helpers/toCurrency";
-import { Names } from "./types";
-import { memberInfo } from "./infos";
-import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
+import { Details } from "./types";
 
-type Props = { name: Names; amount?: number };
+type Props = { name: string; details: Details };
 export default function TCAMember(props: Props) {
-  const { icon = defaultIcon, url = "https://angelprotocol.io" } =
-    memberInfo[props.name] || {};
+  const isLight = props.details.iconLight;
+  console.log(isLight, props.name);
   return (
     <tr className="border-b">
       <td>
         <div className="flex items-center">
-          <img src={icon} alt="" className="w-12 ml-0" />
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="text-angel-grey font-bold"
-          >
-            {props.name}
-          </a>
+          <img
+            src={props.details.icon}
+            alt=""
+            className={`w-32 h-20 m-2 object-contain ml-0 rounded-sm ${
+              isLight ? "bg-blue-900" : ""
+            } `}
+          />
+          <p className="text-angel-grey font-bold">{props.name}</p>
         </div>
       </td>
-      <td className="text-angel-grey">$ {toCurrency(props.amount, 0)}</td>
+      <td className="text-angel-grey">
+        $ {toCurrency(props.details.amount, 0)}
+      </td>
     </tr>
   );
 }

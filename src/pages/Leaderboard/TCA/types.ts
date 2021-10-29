@@ -44,7 +44,8 @@ export enum Names {
 
 export type Details = {
   icon: string;
-  url: string;
+  iconLight: boolean;
+  amount: number;
 };
 
 export type MemberInfo = {
@@ -52,5 +53,5 @@ export type MemberInfo = {
 };
 
 export type Sums = {
-  [key in Names]?: number;
+  [index: string]: Details;
 };
