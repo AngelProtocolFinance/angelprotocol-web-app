@@ -9,12 +9,13 @@ import Locked from "./Locked";
 // import WithdrawForm from "./WithdrawForm";
 import useHoldings from "./useHoldings";
 import useWithdraw from "./useWithdraw";
+import useWithdrawHoldings from "./useWithdrawHoldings";
 import { RouteComponentProps } from "react-router";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 
 interface Values {
-  withdraw: number;
+  withdraw: string;
 }
 
 type Param = { address: string };
@@ -27,6 +28,7 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
 
   const [showModal, setShowModal] = useState(false);
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
+  const [withdrawTokenQty, setWithdrawTokenQty] = useState("");
   const {
     redirect,
     isReady,
@@ -37,11 +39,13 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
     liquid,
     overall,
   } = useWithdraw(address);
-  const { liquidCW20Tokens } = useHoldings(address);
+  const { liquidCW20Tokens, anchorVault } = useHoldings(address);
+  useWithdrawHoldings(address, anchorVault);
 
   const computeWithdrawAmount = (value: number) => {
+    // value is the percentage based on the slider
     setWithdrawAmount((liquid! * value) / 100);
-    console.log(value);
+    setWithdrawTokenQty(((liquidCW20Tokens! * value) / 100 / 1e6).toString());
   };
 
   return (
@@ -97,12 +101,12 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                   {/* <WithdrawForm /> */}
                   <div className="text-angel-grey">
                     <Formik<Values>
-                      initialValues={{ withdraw: 0 }}
+                      initialValues={{ withdraw: "0" }}
                       onSubmit={(
                         values: Values,
                         { setSubmitting }: FormikHelpers<Values>
                       ) => {
-                        values.withdraw = withdrawAmount;
+                        values.withdraw = withdrawTokenQty;
                         console.log(values);
                         setSubmitting(false);
                       }}

@@ -4,6 +4,7 @@ import Account from "contracts/Account";
 
 export default function useHoldings(address: string) {
   const [getHoldingsError, setHoldingsError] = useState("");
+  const [anchorVault, setAnchorVault] = useState("");
   const [lockedNativeTokens, setLockedNativeTokens] = useState<number>();
   const [lockedCW20Tokens, setLockedCW20Tokens] = useState<number>();
   const [liquidNativeTokens, setLiquidNativeTokens] = useState<number>();
@@ -12,7 +13,8 @@ export default function useHoldings(address: string) {
   let lockedcw20: string,
     liquidcw20: string,
     lockedNative: string,
-    liquidNative: string;
+    liquidNative: string,
+    ancVault: string;
 
   useEffect(() => {
     (async () => {
@@ -23,11 +25,13 @@ export default function useHoldings(address: string) {
         if (result.locked_cw20.length != 0) {
           lockedcw20 = result.locked_cw20[0].amount;
           liquidcw20 = result.liquid_cw20[0].amount;
+          ancVault = result.liquid_cw20[0].address;
         } else if (result.locked_native.length != 0) {
           lockedNative = result.locked_native[0].amount;
           liquidNative = result.liquid_native[0].amount;
         }
 
+        setAnchorVault(ancVault);
         setLockedCW20Tokens(Number(lockedcw20));
         setLockedNativeTokens(Number(lockedNative));
         setLiquidCW20Tokens(Number(liquidcw20));
@@ -46,5 +50,6 @@ export default function useHoldings(address: string) {
     lockedCW20Tokens,
     liquidNativeTokens,
     liquidCW20Tokens,
+    anchorVault,
   };
 }
