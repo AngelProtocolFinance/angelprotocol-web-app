@@ -1,28 +1,26 @@
-import charityData from "./charityData.json";
-import { Charities } from "./types";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
+import useDescription from "./useDescription";
 
 type Props = {
   address: string;
+  chainID: string;
 };
 
 export default function Description(props: Props) {
-  const data: Charities = charityData;
-  const details = data[props.address] || {};
-  const icon = details.icon || defaultIcon;
-  const iconLight = details.iconLight || false;
-  const url = details.url || "https://angelprotocol.io";
-  const description = details.description || "Failed to get charity data";
-  const name = details.name || "Charity";
+  const { icon, iconLight, url, name, description } = useDescription(
+    props.address,
+    props.chainID
+  );
   return (
-    <div className="flex items-center">
-      <img
-        src={icon}
-        alt=""
-        className={`bg-angel-blue ${
-          iconLight ? "bg-opacity-70" : "bg-opacity-10"
-        } p-3 rounded-sm shadow-sm w-32 h-24 m-1 object-contain mr-4`}
-      />
+    <div className="flex flex-row items-center">
+      <div className="w-32 mr-10">
+        <img
+          src={icon}
+          alt=""
+          className={`bg-white ${
+            iconLight ? "bg-angel-blue" : ""
+          } p-3 rounded-sm shadow-sm m-1 object-contain mr-4`}
+        />
+      </div>
       <div>
         <a
           href={url}
@@ -32,11 +30,11 @@ export default function Description(props: Props) {
         >
           {name}
         </a>
-        <p
+        <div
           className={`relative w-96 text-sm text-angel-grey leading-normal mb-2`}
         >
           {description}
-        </p>
+        </div>
       </div>
     </div>
   );

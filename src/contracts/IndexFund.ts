@@ -2,12 +2,12 @@ import {
   Coin,
   CreateTxOptions,
   Dec,
-  Denom,
   MsgExecuteContract,
   // StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/curriencies";
 import Contract from "./Contract";
 import { Donors, sc, TCAList } from "./types";
 
@@ -51,10 +51,10 @@ export default class Indexfund extends Contract {
           split: `${splitToLiquid}`,
         },
       },
-      [new Coin(Denom.USD, micro_UST_Amount)]
+      [new Coin(denoms.uusd, micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
-    // const fee = new StdFee(2500000, [new Coin(Denom.USD, 1.5e6)]);
+    // const fee = new StdFee(2500000, [new Coin(Denoms.UUSD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
 

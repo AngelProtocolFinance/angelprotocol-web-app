@@ -1,5 +1,5 @@
 import { Names } from "./types";
-import defaultIcon from "assets/icons/tca/tca192.png";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 //validators
 // import angel_validator from "assets/icons/tca/validators/Angel@4x.png";
@@ -15,6 +15,7 @@ import luna_bulls from "assets/icons/tca/nfts/LunaBulls@4x.png";
 import millionaire from "assets/icons/tca/nfts/Millionare@4x.png";
 import tales_of_terra from "assets/icons/tca/nfts/Talesofterra@4x.png";
 import terran from "assets/icons/tca/nfts/Terran@4x.png";
+import luna_apes from "assets/icons/tca/nfts/luna_apes.png";
 
 //protocols
 import alice from "assets/icons/tca/protocols/alice@4x.png";
@@ -91,4 +92,5 @@ export const memberInfo: MemberInfo = {
   [Names.terrapins]: { icon: defaultIcon, url: "https://www.terrapinsonterra.com/" },
   [Names.hero]: { icon: hero, url: defaultUrl },
   [Names.community]: { icon: defaultIcon, url: "https://terraalliance.io/" },
+  [Names.luna_apes]: { icon: luna_apes, url: " https://apes.city/ ", bgClass:"bg-blue-900" },
 };

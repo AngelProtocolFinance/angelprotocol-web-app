@@ -19,7 +19,7 @@ export const mainnet = {
   lcd: urls[chains.mainnet],
 };
 
-const testnet = {
+export const testnet = {
   name: "bombay",
   chainID: chains.testnet,
   lcd: urls[chains.testnet],
