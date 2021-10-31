@@ -28,18 +28,18 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: user.TerraWallet != "",
+    wallet_address: user.TerraWallet !== "",
     document:
       user.ProofOfIdentityVerified &&
       user.ProofOfEmploymentVerified &&
       user.EndowmentAgreementVerified
         ? 2
-        : user.ProofOfEmployment != "" &&
-          user.ProofOfEmployment != undefined &&
-          user.ProofOfIdentity != "" &&
-          user.ProofOfIdentity != undefined &&
-          user.EndowmentAgreement != "" &&
-          user.EndowmentAgreement != undefined
+        : user.ProofOfEmployment !== "" &&
+          user.ProofOfEmployment !== undefined &&
+          user.ProofOfIdentity !== "" &&
+          user.ProofOfIdentity !== undefined &&
+          user.EndowmentAgreement !== "" &&
+          user.EndowmentAgreement !== undefined
         ? 1
         : 0,
     endowment:
