@@ -10,6 +10,7 @@ interface Values {
 function useWithdrawHoldings(
   address: string,
   anchorVault: string,
+  withdrawAmount: number,
   withdrawTokenQty: string
 ) {
   const wallet = useConnectedWallet();
@@ -36,6 +37,11 @@ function useWithdrawHoldings(
       const estimatedFee =
         transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
       console.log("Estimated Fee:", estimatedFee);
+
+      // TODO: Check if their max available liquid fund is smaller than the estimated fee
+      // If true, don't allow them to withdraw
+      // if (withdrawAmount) {
+      // }
 
       // Posting the transaction
       const response = await wallet!.post(transaction);
