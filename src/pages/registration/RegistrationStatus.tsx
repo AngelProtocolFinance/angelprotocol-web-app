@@ -28,23 +28,26 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    contact_details: !!data?.MetaData,
-    wallet_address: data?.MetaData?.TerraWallet != "",
+    wallet_address: user.TerraWallet != "",
     document:
-      data?.Registration?.ProofOfIdentityVerified &&
-      data?.Registration?.ProofOfEmploymentVerified &&
-      data?.Registration?.EndowmentAgreementVerified
+      user.ProofOfIdentityVerified &&
+      user.ProofOfEmploymentVerified &&
+      user.EndowmentAgreementVerified
         ? 2
-        : data?.Registration?.ProofOfEmployment != "" &&
-          data?.Registration?.ProofOfEmployment != undefined &&
-          data?.Registration?.ProofOfIdentity != "" &&
-          data?.Registration?.ProofOfIdentity != undefined &&
-          data?.Registration?.EndowmentAgreement != "" &&
-          data?.Registration?.EndowmentAgreement != undefined
+        : user.ProofOfEmployment != "" &&
+          user.ProofOfEmployment != undefined &&
+          user.ProofOfIdentity != "" &&
+          user.ProofOfIdentity != undefined &&
+          user.EndowmentAgreement != "" &&
+          user.EndowmentAgreement != undefined
         ? 1
         : 0,
     endowment:
-      data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
+      data?.Metadata?.EndowmentStatus === "Active"
+        ? 0
+        : user.IsMetaDataCompleted
+        ? 1
+        : 2,
     completed: user?.RegistrationStatus,
   };
 
@@ -88,7 +91,11 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  status.wallet_address
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={navigate(register.wallet_check)}
                 title={status.wallet_address ? "Change" : "Continue"}
                 disabled={user.PK === ""}
@@ -112,7 +119,6 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
                 onClick={() =>
                   history.push({
                     pathname: register.upload_docs,
@@ -120,6 +126,11 @@ const RegistrationStatus = () => {
                       data: data?.Registration,
                     },
                   })
+                }
+                classes={
+                  status.document === 2
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
                 }
                 title={status.document === 2 ? "Change" : "Continue"}
                 disabled={user.PK === "" || !data?.Metadata}
@@ -139,7 +150,11 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  status.endowment === 2
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={navigate(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
                 disabled={status.endowment === 2 || user.PK === ""}
@@ -161,32 +176,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              {data?.contact_details ? (
-                <p className="status-text uppercase text-green-500">complete</p>
-              ) : (
-                <p className="status-text uppercase text-yellow-600">Missing</p>
-              )}
-            </div>
-            <div className="">
-              <Action
-                classes="bg-yellow-blue w-40 h-10"
-                onClick={() =>
-                  history.push({
-                    pathname: register.charity_profile,
-                    state: {
-                      data: data?.MetaData,
-                    },
-                  })
-                }
-                title="Change"
-                disabled={user.PK === ""}
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
-            <div className="status text-left font-bold">
-              <p className="">Step #2: Key Person Profile</p>
-              {data?.KeyPerson ? (
+              {user.IsMetaDataCompleted ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -195,7 +185,36 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  data?.KeyPerson
+                  user.IsMetaDataCompleted
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
+                onClick={() =>
+                  history.push({
+                    pathname: register.charity_profile,
+                    state: {
+                      data: data?.MetaData,
+                    },
+                  })
+                }
+                disabled={user.PK === ""}
+                title={user.IsMetaDataCompleted ? "Complete" : "Continue"}
+              />
+            </div>
+          </div>
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+            <div className="status text-left font-bold">
+              <p className="">Step #2: Key Person Profile</p>
+              {user?.IsKeyPersonCompleted ? (
+                <p className="status-text uppercase text-green-500">complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
+            </div>
+            <div className="">
+              <Action
+                classes={
+                  user.IsKeyPersonCompleted
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -207,7 +226,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title={data?.KeyPerson ? "Change" : "Continue"}
+                title={user.IsKeyPersonCompleted ? "Change" : "Continue"}
                 disabled={user.PK === ""}
               />
             </div>
