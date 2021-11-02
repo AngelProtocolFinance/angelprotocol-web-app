@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import Action from "components/Ethereum/Action";
 import { Connectors as Connects, Icons } from "./types";
 import Backdrop from "./Backdrop";
+import Nodal from "components/Nodal/Nodal";
 type Props = {
   closeHandler: () => void;
 };
@@ -18,24 +19,26 @@ export default function Connectors(props: Props) {
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
           <IoClose className="text-white-grey text-lg" />
         </button>
-        <TerraAction
-          icon={Icons.terra_ext}
-          type={ConnectType.CHROME_EXTENSION}
-          label="Terra Station Extension"
-        />
-        <TerraAction
-          icon={Icons.terra_mobile}
-          type={ConnectType.WALLETCONNECT}
-          label="Terra Station Mobile"
-        />
-        <Action
-          type={Connects.injected}
-          label="Metamask"
-          icon={Icons.metamask}
-        />
-        <Action type={Connects.injected} label="XDEFI" icon={Icons.xdefi} />
-        <Action type={Connects.torus} label="Torus" icon={Icons.torus} />
-        <Action type={Connects.ledger} label="Ledger" icon={Icons.ledger} />
+        <Nodal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
+          <TerraAction
+            icon={Icons.terra_ext}
+            type={ConnectType.CHROME_EXTENSION}
+            label="Terra Station Extension"
+          />
+          <TerraAction
+            icon={Icons.terra_mobile}
+            type={ConnectType.WALLETCONNECT}
+            label="Terra Station Mobile"
+          />
+          <Action
+            type={Connects.injected}
+            label="Metamask"
+            icon={Icons.metamask}
+          />
+          <Action type={Connects.injected} label="XDEFI" icon={Icons.xdefi} />
+          <Action type={Connects.torus} label="Torus" icon={Icons.torus} />
+          <Action type={Connects.ledger} label="Ledger" icon={Icons.ledger} />
+        </Nodal>
       </div>
       <Backdrop closeHandler={props.closeHandler} />
     </>

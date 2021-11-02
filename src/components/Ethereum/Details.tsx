@@ -5,6 +5,7 @@ import { utils } from "ethers";
 import Balance from "./Balance";
 import { denoms } from "constants/curriencies";
 import Backdrop from "components/WalletSuite/Backdrop";
+import Disconnect from "components/WalletSuite/Disconnect";
 type Props = { closeHandler: () => void };
 export default function Details(props: Props) {
   const wallet = useWallet();
@@ -28,13 +29,7 @@ export default function Details(props: Props) {
         </div>
         <Address address={wallet.account || ""} />
         <Balance denom={denoms.ether} amount={balance} />
-        <button
-          disabled={!isConnected}
-          onClick={disconnect}
-          className="uppercase text-sm bg-blue-accent hover:bg-angel-blue p-2 text-white"
-        >
-          disconnect
-        </button>
+        <Disconnect disabled={!isConnected} disconnect={disconnect} />
       </div>
       <Backdrop closeHandler={props.closeHandler} />
     </>

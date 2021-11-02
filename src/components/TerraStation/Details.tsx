@@ -5,6 +5,7 @@ import Holdings from "./Holdings";
 import Address from "./Address";
 import Portal from "./Portal";
 import Backdrop from "components/WalletSuite/Backdrop";
+import Disconnect from "components/WalletSuite/Disconnect";
 
 type Props = {
   coinData: Coin.Data[];
@@ -38,13 +39,7 @@ export default function Details(props: Props) {
             Wallet is empty
           </span>
         )}
-        <button
-          disabled={!isConnected}
-          onClick={handleDisconnect}
-          className="uppercase text-sm bg-angel-orange hover:text-black p-2 text-angel-grey"
-        >
-          disconnect
-        </button>
+        <Disconnect disabled={!isConnected} disconnect={handleDisconnect} />
       </div>
       <Backdrop closeHandler={props.closeHandler} />
     </>

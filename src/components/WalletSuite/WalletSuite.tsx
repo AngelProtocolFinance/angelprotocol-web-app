@@ -1,6 +1,7 @@
 // import { IoWallet } from "react-icons/io5";
 import { Props, State, Wallets } from "./types";
 import { createContext, useContext } from "react";
+import Nodal from "components/Nodal/Nodal";
 import useWalletSuite from "./useWalletSuite";
 
 export default function WalletSuite(props: Props) {
@@ -8,7 +9,7 @@ export default function WalletSuite(props: Props) {
 
   return (
     <getContext.Provider value={{ activeWallet, isLoading }}>
-      {props.children}
+      <Nodal classes="">{props.children}</Nodal>
     </getContext.Provider>
   );
 }
