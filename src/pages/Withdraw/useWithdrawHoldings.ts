@@ -2,12 +2,13 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { FormikHelpers } from "formik";
 import Account from "contracts/Account";
 import { denoms } from "constants/curriencies";
-
-interface Values {
-  withdraw: string;
-}
+import createStatusFromError from "./createStatusFromError";
+import { Status, SetStatus, Values, Steps } from "./types";
+import toCurrency from "helpers/toCurrency";
 
 function useWithdrawHoldings(
+  status: Status,
+  setStatus: SetStatus,
   address: string,
   anchorVault: string,
   withdrawAmount: number,
@@ -19,37 +20,46 @@ function useWithdrawHoldings(
     values: Values,
     actions: FormikHelpers<Values>
   ) {
-    values.withdraw = withdrawTokenQty;
-    const tokenQty = values.withdraw;
-
     try {
       actions.setSubmitting(true);
-      console.log("Vault:", anchorVault);
-      console.log("Token QTY:", tokenQty);
+
+      // Withdraw amount should be at least $2
+      if (toCurrency(withdrawAmount) <= "1.99") {
+        setStatus({
+          step: Steps.error,
+          message: "Withdraw amount is too low",
+        });
+        return;
+      }
 
       // Initiate withdraw transaction
       const account = new Account(address, wallet);
-      console.log(account);
-      const transaction = await account.createWithdrawTx(anchorVault, tokenQty);
-      console.log(transaction);
+      const transaction = await account.createWithdrawTx(
+        anchorVault,
+        withdrawTokenQty
+      );
 
       // Computing for fees
       const estimatedFee =
         transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
-      console.log("Estimated Fee:", estimatedFee);
 
-      // TODO: Check if their max available liquid fund is smaller than the estimated fee
-      // If true, don't allow them to withdraw
-      // if (withdrawAmount) {
-      // }
-
-      // Posting the transaction
-      const response = await wallet!.post(transaction);
-
-      // Check if tx is a success or error
-      console.log(response);
+      // Let the user confirm the transaction
+      if (status.step !== Steps.ready) {
+        setStatus({
+          step: Steps.confirm,
+          message: "Kindly confirm transaction details",
+          estimates: {
+            amount: withdrawAmount,
+            txFee: estimatedFee,
+            total: withdrawAmount - estimatedFee,
+          },
+        });
+        return;
+      }
     } catch (err) {
       console.error(err);
+      const errorStatus = createStatusFromError(err);
+      setStatus(errorStatus);
     }
   }
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
@@ -9,14 +9,24 @@ import useWithdraw from "./useWithdraw";
 import { RouteComponentProps } from "react-router";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
+import { RouteParam, Steps, Status, SetStatus } from "./types";
 
-type Param = { address: string };
+const initialStatus = {
+  step: Steps.initial,
+};
 
-export default function Withdraw(props: RouteComponentProps<Param>) {
+const getContext = createContext<Status>(initialStatus);
+const setContext = createContext<SetStatus>(() => initialStatus);
+//use these hooks only in components inside Withdraw.tsx
+export const useGetStatus = () => useContext(getContext);
+export const useSetStatus = () => useContext(setContext);
+
+export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   //use can malinger this address url param
   //can also pass address as state but no guarantee that user will go to this page using
   //only the in-app link provided
   const address = props.match.params.address;
+  const [status, setStatus] = useState<Status>(initialStatus);
   const [withdrawFormIsOpen, setWithdrawForm] = useState(false);
 
   const {
@@ -78,12 +88,16 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
             ) : null}
           </div>
           <div>
-            <WithdrawForm
-              address={address}
-              liquid={liquid!}
-              isModalOpened={withdrawFormIsOpen}
-              onCloseModal={closeWithdrawForm}
-            />
+            <getContext.Provider value={status}>
+              <setContext.Provider value={setStatus}>
+                <WithdrawForm
+                  address={address}
+                  liquid={liquid!}
+                  isModalOpened={withdrawFormIsOpen}
+                  onCloseModal={closeWithdrawForm}
+                />
+              </setContext.Provider>
+            </getContext.Provider>
           </div>
         </div>
       )}
