@@ -35,7 +35,8 @@ export default function BoardCharity() {
             <thead className="">
               <tr>
                 <Heading text="Charity" />
-                <Heading text="Endowment Address" />
+                {/*<Heading text="Endowment Address" />*/}
+                <Heading text="Present Balance" />
                 <Heading text="10YR Endowment Growth" />
                 <Heading text="10YR Impact">
                   <Tooltip />
