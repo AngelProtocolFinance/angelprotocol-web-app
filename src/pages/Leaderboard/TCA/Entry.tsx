@@ -1,10 +1,15 @@
 import toCurrency from "helpers/toCurrency";
 import { Names } from "./types";
 import { memberInfo } from "./infos";
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 
 type Props = { name: Names; amount?: number };
 export default function TCAMember(props: Props) {
-  const { icon, url, bgClass = "bg-white" } = memberInfo[props.name];
+  const {
+    icon = defaultIcon,
+    url = "https://angelprotocol.io",
+    bgClass = "bg-white",
+  } = memberInfo[props.name] || {};
   return (
     <tr className="border-b">
       <td>
