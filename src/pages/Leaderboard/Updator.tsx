@@ -10,9 +10,10 @@ export default function Updator({ lastUpdate, isLoading, refresh }: Props) {
     <div className="flex absolute top-3 right-6 gap-2 text-sm font-body">
       <p className="text-angel-grey italic">
         last update:{" "}
-        {new Date(lastUpdate).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
+        {new Date(lastUpdate).toLocaleString([], {
+          dateStyle: "short",
+          timeStyle: "short",
+          hour12: false,
         })}
       </p>
       <button

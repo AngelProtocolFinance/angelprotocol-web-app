@@ -36,8 +36,8 @@ export default function BoardCharity() {
               <tr>
                 <Heading text="Charity" />
                 <Heading text="Endowment Address" />
-                <Heading text="Donations Received" />
-                <Heading text="10YR Projection">
+                <Heading text="10YR Endowment Growth" />
+                <Heading text="10YR Impact">
                   <Tooltip />
                 </Heading>
               </tr>
