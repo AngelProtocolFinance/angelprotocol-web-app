@@ -47,7 +47,7 @@ function useWithdrawHoldings(
       if (status.step !== Steps.ready) {
         setStatus({
           step: Steps.confirm,
-          message: "Kindly confirm transaction details",
+          message: "Kindly confirm the transaction details",
           estimates: {
             amount: withdrawAmount,
             txFee: estimatedFee,

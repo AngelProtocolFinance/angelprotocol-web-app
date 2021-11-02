@@ -23,12 +23,14 @@ export default function useHoldings(address: string) {
         const account = new Account(address, wallet);
         const result = await account.getHoldings();
         if (result.locked_cw20.length != 0) {
-          lockedcw20 = result.locked_cw20[0].amount;
-          liquidcw20 = result.liquid_cw20[0].amount;
-          ancVault = result.liquid_cw20[0].address;
+          // REMINDER:
+          // In testnet, there are two anchor vaults used to test the re-balancing logic
+          lockedcw20 = result.locked_cw20[1].amount;
+          liquidcw20 = result.liquid_cw20[1].amount;
+          ancVault = result.liquid_cw20[1].address;
         } else if (result.locked_native.length != 0) {
-          lockedNative = result.locked_native[0].amount;
-          liquidNative = result.liquid_native[0].amount;
+          lockedNative = result.locked_native[1].amount;
+          liquidNative = result.liquid_native[1].amount;
         }
 
         setAnchorVault(ancVault);
