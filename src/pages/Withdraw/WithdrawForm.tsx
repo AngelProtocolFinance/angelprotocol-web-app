@@ -91,7 +91,7 @@ export default function WithdrawForm(props: WithdrawProps) {
                       </div>
                       <div className="align-bottom">
                         <p className="text-xs italic">
-                          Available: {toCurrency(liquidCW20Tokens! / 1e6)}
+                          Available: {toCurrency(liquidCW20Tokens! / 1e6, 3)}
                           {} tokens
                         </p>
                         <p className="text-xs italic">
