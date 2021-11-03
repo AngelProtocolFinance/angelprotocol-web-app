@@ -20,18 +20,22 @@ export default function Estimates(props: EstimatesProps) {
       <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
         {message}
       </h3>
-      <div className="p-2 font-heading text-angel-blue font-semibold">
+      <div className="p-2 font-heading text-angel-grey">
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
-          <span className="mr-2 text-xs">Amount :</span>
-          <span className="font-semibold">~$ {amount}</span>
+          <span className="mr-4 text-xs text-right font-semibold">
+            Amount :
+          </span>
+          <span className="">~{amount} UST</span>
         </p>
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
-          <span className="mr-2 text-xs">TX Fee :</span>
-          <span className="font-semibold">$ {fee}</span>
+          <span className="mr-4 text-xs text-right font-semibold">
+            TX Fee :
+          </span>
+          <span className="">~{fee} UST</span>
         </p>
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
-          <span className="mr-2 text-xs">Total :</span>
-          <span className="font-semibold">~$ {total}</span>
+          <span className="mr-4 text-xs text-right font-semibold">Total :</span>
+          <span className="">~{total} UST</span>
         </p>
       </div>
 
