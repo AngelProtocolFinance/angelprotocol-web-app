@@ -7,11 +7,13 @@ import { FormikHelpers } from "formik";
 import { AccAddress, Denom } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
+import { useFormContext } from "react-hook-form";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
+
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {

@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Coin, LCDClient } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 
 export default function useBalance() {
   const [coins, setCoins] = useState<Coin.Data[]>([]);

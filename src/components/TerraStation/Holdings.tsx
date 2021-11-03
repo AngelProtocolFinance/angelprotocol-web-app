@@ -1,5 +1,5 @@
 import { Coin } from "@terra-money/terra.js";
-import { currency_text, currency_icons, denoms } from "constants/curriencies";
+import { currency_text, currency_icons, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 
 type Props = {

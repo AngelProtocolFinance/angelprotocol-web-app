@@ -20,9 +20,9 @@ export default function Nodal(props: Props) {
       }}
     >
       {!!Content && (
-        <div onClick={closeModal} className={props.classes}>
-          {Content}
-        </div>
+        <>
+          <div className={props.classes}>{Content}</div>
+        </>
       )}
 
       {props.children}

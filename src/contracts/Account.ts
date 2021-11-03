@@ -7,7 +7,7 @@ import {
   StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import Contract from "./Contract";
 import { AccountDetails, Holding, Holdings, OwnedBalance } from "./types";
 import Vault from "./Vault";

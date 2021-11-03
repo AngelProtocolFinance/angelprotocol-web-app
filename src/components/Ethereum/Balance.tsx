@@ -1,4 +1,4 @@
-import { currency_icons, currency_text, denoms } from "constants/curriencies";
+import { currency_icons, currency_text, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 
 type Props = {

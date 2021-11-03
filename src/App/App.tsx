@@ -19,6 +19,7 @@ import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Withdraw from "pages/Withdraw/Withdraw";
 import Marketplace from "pages/Marketplace/Marketplace";
 import { UseWalletProvider } from "use-wallet";
+import Test from "pages/Test";
 
 const App = () => {
   //{match.path} is '/app'
@@ -52,11 +53,12 @@ const App = () => {
             <Route path={`${path}/${app.login}`} component={Login} />
             <Route path={`${path}/${app.register}`} component={Register} />
             <Route path={`${path}/${app.tca}`} component={TCA} />
-            <Route path={`${path}/${app.fund}`} component={Fund} />
+            <Route path={`${path}/${app.test}`} component={Test} />
             <Route
               path={`${path}/${app.withdraw}/:address`}
               component={Withdraw}
             />
+            <Route path={`${path}${app.index}`} component={Leaderboard} />
             <Route path={`${path}${app.index}`} component={Leaderboard} />
             <Redirect from="*" to={site.home} />
           </Switch>
