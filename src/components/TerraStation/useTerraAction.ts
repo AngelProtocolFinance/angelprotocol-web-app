@@ -3,7 +3,11 @@ import {
   useWallet,
   WalletStatus,
 } from "@terra-money/wallet-provider";
+import { setIcon } from "components/WalletSuite/manageIcon";
+import { Icons } from "components/WalletSuite/types";
+import { useGetState } from "components/WalletSuite/WalletSuite";
 export default function useTerraAction(type: ConnectType) {
+  const { isLoading } = useGetState();
   const {
     availableConnectTypes,
     connect,
@@ -11,6 +15,8 @@ export default function useTerraAction(type: ConnectType) {
     install,
     status,
   } = useWallet();
+  const icon =
+    type === ConnectType.WALLETCONNECT ? Icons.terra_mobile : Icons.terra_ext;
   const isConnectible = availableConnectTypes.includes(type);
   const isInstallable = availableInstallTypes.includes(type);
   const shouldConnect =
@@ -19,11 +25,16 @@ export default function useTerraAction(type: ConnectType) {
   function handleClick() {
     if (shouldConnect) {
       connect(type);
+      setIcon(icon);
     } else if (isInstallable) {
       install(type);
     } else {
       return;
     }
   }
-  return { handleClick, isAvailable: isInstallable || isConnectible };
+  return {
+    handleClick,
+    isAvailable: isInstallable || isConnectible,
+    isLoading,
+  };
 }

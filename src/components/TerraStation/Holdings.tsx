@@ -18,7 +18,7 @@ export default function Holdings(props: Props) {
           >
             <img
               src={currency_icons[_denom] || currency_icons.coin}
-              className="w-7 h-7 mr-2"
+              className="w-7 h-7 object-contain mr-2"
             />
             <span className="uppercase text-sm font-bold mr-2 text-angel-grey">
               {currency_text[_denom] || currency_text.coin}
