@@ -14,7 +14,7 @@ export default function Results(props: ResultProps) {
       <div className="p-2 font-heading text-angel-blue font-semibold">
         <p className="w-full mb-5 uppercase grid items-center">
           <span className="text-xs">Withdrawn Amount :</span>
-          <span className="font-semibold">{withdrawn} UST</span>
+          <span className="font-semibold">~$ {withdrawn}</span>
         </p>
         <p className="text-xs">
           <a

@@ -19,7 +19,7 @@ export default function useWithdraw(address: string) {
 
   const getEndowmentBalance = async () => {
     const account = new Account(address, wallet);
-    const result = await account.getBalance();
+    const result = await account.getBalance(); // Returned value is the sum of all liquidCW20 holdings in UST
     setLocked(result.total_locked);
     setLiquid(result.total_liq);
     setOverall(result.overall);
