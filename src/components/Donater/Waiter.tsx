@@ -2,7 +2,7 @@ import Loader from "components/Loader/Loader";
 import Popup, { Content } from "./Popup";
 export default function Waiter(props: { url: string }) {
   return (
-    <Popup>
+    <Popup accent="bg-angel-blue">
       <Content>
         <div className="flex flex-col items-center my-auto p-4 ">
           <Loader

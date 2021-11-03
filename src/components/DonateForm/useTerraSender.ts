@@ -1,15 +1,17 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import useUSTBalance from "hooks/useUSTBalance";
+import { useFormContext } from "react-hook-form";
 import { Values as Data } from "components/Donater/schema";
 import { useSetModal } from "components/Nodal/Nodal";
-import { useFormContext } from "react-hook-form";
+import ErrPop, { Props as ErrProps } from "components/Donater/ErrPop";
+import Estimates, { Props as EstProps } from "components/Donater/Estimates";
+import Result, { Props as ResProps } from "components/Donater/Result";
+import getDepositAmount from "components/Donator/getDepositAmount";
+import Waiter from "components/Donater/Waiter";
 import Indexfund from "contracts/IndexFund";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
-import ErrPop, { Props as ErrProps } from "components/Donater/ErrPop";
-import Estimates, { Props as EstProps } from "components/Donater/Estimates";
-import getDepositAmount from "components/Donator/getDepositAmount";
-import Waiter from "components/Donater/Waiter";
+import useUSTBalance from "hooks/useUSTBalance";
+import displayError from "./displayError";
 
 function useTerraSender(receiver?: string | number) {
   const { handleSubmit, reset } = useFormContext();
@@ -22,19 +24,19 @@ function useTerraSender(receiver?: string | number) {
     const liquid_split = 100 - Number(data.split);
 
     //submitting is true once this sender is fired
-    console.log(data);
-
     if (!wallet) {
       showModal<ErrProps>(ErrPop, {
         desc: "No wallet is currently connected",
       });
       return;
     }
+    yield;
 
     if (UST_balance < +UST_amount) {
       showModal<ErrProps>(ErrPop, { desc: "Not enough balance" });
       return;
     }
+    yield;
 
     try {
       let contract;
@@ -49,10 +51,10 @@ function useTerraSender(receiver?: string | number) {
           });
           return;
         }
+        yield;
       } else {
         contract = new Account(receiver, wallet);
       }
-
       const transaction = await contract.createDepositTx(
         UST_amount,
         liquid_split
@@ -64,10 +66,11 @@ function useTerraSender(receiver?: string | number) {
         .amount.toNumber();
 
       //pause to show user fees
+
       const res: "resume" | "cancel" = yield estimatedFee;
       if (res === "cancel") {
-        reset();
         hideModal();
+        reset();
         return;
       }
 
@@ -85,39 +88,42 @@ function useTerraSender(receiver?: string | number) {
             txInfo.logs!,
             wallet.network.chainID
           );
-          // setStatus({
-          //   step: Steps.success,
-          //   message: `Thank you for your donation!`,
-          //   result: {
-          //     received: +UST_Amount,
-          //     deposited: depositAmount,
-          //     url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-          //   },
-          // });
+          showModal<ResProps>(Result, {
+            sent: +data.amount,
+            received: depositAmount,
+            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+          });
         } else {
-          // setStatus({
-          //   step: Steps.error,
-          //   message: `The transaction ran but failed`,
-          // });
+          showModal<ErrProps>(ErrPop, {
+            desc: "Transaction failed",
+            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+          });
         }
       }
     } catch (err) {
-      console.log(err);
+      displayError(err, showModal);
+    } finally {
+      reset();
     }
-
-    alert("done");
-    return;
   }
 
   async function processor(data: Data) {
-    const _sender = sender(data);
-    const fee = (await _sender.next()).value;
-    showModal<EstProps>(Estimates, {
-      fee: fee as number,
-      amount: +data.amount,
-      resume: () => _sender.next("resume"),
-      cancel: () => _sender.next("cancel"),
-    });
+    try {
+      const _sender = sender(data);
+      if ((await _sender.next()).done) return; //wallet check
+      if ((await _sender.next()).done) return; //balance check
+      if ((await _sender.next()).done) return; //tca check
+      const fee = (await _sender.next()).value;
+      showModal<EstProps>(Estimates, {
+        fee: fee as number,
+        amount: +data.amount,
+        resume: () => _sender.next("resume"),
+        cancel: () => _sender.next("cancel"),
+      });
+      //this handler is done at this point and transfer control to modal
+    } catch (err) {
+      displayError(err, showModal);
+    }
   }
 
   return handleSubmit(processor);

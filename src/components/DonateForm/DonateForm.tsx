@@ -3,7 +3,7 @@ import Portion from "./Portion";
 import Currency from "./Currency";
 import Slider from "./Slider";
 import Amount from "./Amount";
-import useTerraSender from "./useTerraSend";
+import useTerraSender from "./useTerraSender";
 import { useFormContext } from "react-hook-form";
 
 export default function DonateForm() {

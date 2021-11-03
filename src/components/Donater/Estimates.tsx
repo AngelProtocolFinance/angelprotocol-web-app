@@ -4,7 +4,7 @@ import Popup, { Actions, Content } from "./Popup";
 export type Props = { fee: number; amount: number; resume: any; cancel: any };
 export default function Estimates(props: Props) {
   return (
-    <Popup>
+    <Popup accent="bg-angel-blue">
       <Content>
         <div className="flex flex-col items-center my-auto p-4 ">
           <Entry title="Amount" amount={props.amount} />
