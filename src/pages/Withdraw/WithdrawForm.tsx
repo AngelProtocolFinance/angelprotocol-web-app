@@ -17,13 +17,15 @@ export default function WithdrawForm(props: WithdrawProps) {
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const [withdrawTokenQty, setWithdrawTokenQty] = useState("");
 
-  const { liquidCW20Tokens, anchorVault } = useHoldings(props.address);
+  const { liquidCW20Tokens, liquidCW20TokenValue, anchorVault } = useHoldings(
+    props.address
+  );
   const status = useGetStatus();
   const setStatus = useSetStatus();
 
   const computeWithdrawAmount = (value: number) => {
     // value is the percentage based on the slider
-    setWithdrawAmount((props.liquid! * value) / 100);
+    setWithdrawAmount((liquidCW20TokenValue! * value) / 100);
     setWithdrawTokenQty(
       Math.round((liquidCW20Tokens! * value) / 100).toString()
     );
@@ -95,7 +97,7 @@ export default function WithdrawForm(props: WithdrawProps) {
                           {} tokens
                         </p>
                         <p className="text-xs italic">
-                          (~$ {toCurrency(props.liquid)})
+                          (~$ {toCurrency(liquidCW20TokenValue)})
                         </p>
                       </div>
                     </div>

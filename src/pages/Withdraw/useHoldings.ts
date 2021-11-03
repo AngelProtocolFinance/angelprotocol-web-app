@@ -5,37 +5,43 @@ import Account from "contracts/Account";
 export default function useHoldings(address: string) {
   const [getHoldingsError, setHoldingsError] = useState("");
   const [anchorVault, setAnchorVault] = useState("");
-  const [lockedNativeTokens, setLockedNativeTokens] = useState<number>();
-  const [lockedCW20Tokens, setLockedCW20Tokens] = useState<number>();
   const [liquidNativeTokens, setLiquidNativeTokens] = useState<number>();
   const [liquidCW20Tokens, setLiquidCW20Tokens] = useState<number>();
+  const [liquidNativeTokenValue, setLiquidNativeTokenValue] =
+    useState<number>();
+  const [liquidCW20TokenValue, setLiquidCW20TokenValue] = useState<number>();
   const wallet = useConnectedWallet();
-  let lockedcw20: string,
-    liquidcw20: string,
-    lockedNative: string,
-    liquidNative: string,
-    ancVault: string;
+  let liquidcw20: string, liquidNative: string, ancVault: string;
+  let vaultArray: any = [];
 
   useEffect(() => {
     (async () => {
       try {
         setHoldingsError("");
         const account = new Account(address, wallet);
-        const result = await account.getHoldings();
-        if (result.locked_cw20.length != 0) {
-          // REMINDER:
-          // In testnet, there are two anchor vaults used to test the re-balancing logic
-          lockedcw20 = result.locked_cw20[1].amount;
-          liquidcw20 = result.liquid_cw20[1].amount;
-          ancVault = result.liquid_cw20[1].address;
-        } else if (result.locked_native.length != 0) {
-          lockedNative = result.locked_native[1].amount;
-          liquidNative = result.liquid_native[1].amount;
+        const holdingsResult = await account.getHoldings(); // Returns all liquid and locked (CW20 and native token) holdings
+
+        // In the future, this if statement can be used to pick which vault the user indicates
+        // If multiple vaults exist, we might need a function that removes a single vault from the array
+        if (holdingsResult.liquid_cw20.length != 0) {
+          // REMINDER: There's only one vault for now
+          liquidcw20 = holdingsResult.liquid_cw20[0].amount;
+          ancVault = holdingsResult.liquid_cw20[0].address;
+
+          // sumHoldings() accepts an array
+          vaultArray.push({
+            amount: liquidcw20,
+            address: ancVault,
+          });
+
+          // After getting the quantity of tokens, convert their value to UST
+          const liquidcw20Value = await account.sumHoldings(vaultArray);
+          setLiquidCW20TokenValue(Number(liquidcw20Value));
+        } else if (holdingsResult.liquid_native.length != 0) {
+          liquidNative = holdingsResult.liquid_native[0].amount;
         }
 
         setAnchorVault(ancVault);
-        setLockedCW20Tokens(Number(lockedcw20));
-        setLockedNativeTokens(Number(lockedNative));
         setLiquidCW20Tokens(Number(liquidcw20));
         setLiquidNativeTokens(Number(liquidNative));
       } catch (err) {
@@ -48,10 +54,10 @@ export default function useHoldings(address: string) {
 
   return {
     getHoldingsError,
-    lockedNativeTokens,
-    lockedCW20Tokens,
     liquidNativeTokens,
     liquidCW20Tokens,
+    liquidNativeTokenValue,
+    liquidCW20TokenValue,
     anchorVault,
   };
 }
