@@ -1,12 +1,12 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-import { Values as Data } from "components/Donater/schema";
+import { Values as Data } from "components/Donater/types";
 import { useSetModal } from "components/Nodal/Nodal";
-import ErrPop, { Props as ErrProps } from "components/Donater/ErrPop";
-import Estimates, { Props as EstProps } from "components/Donater/Estimates";
-import Result, { Props as ResProps } from "components/Donater/Result";
-import Waiter, { Props as WaitProps } from "components/Donater/Waiter";
-import getDepositAmount from "components/Donator/getDepositAmount";
+import ErrPop, { Props as ErrProps } from "./ErrPop";
+import Estimates, { Props as EstProps } from "./Estimates";
+import Result, { Props as ResProps } from "./Result";
+import Waiter, { Props as WaitProps } from "./Waiter";
+import getDepositAmount from "./getDepositAmount";
 import Indexfund from "contracts/IndexFund";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";

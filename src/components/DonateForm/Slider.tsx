@@ -1,4 +1,4 @@
-import { Values } from "components/Donater/schema";
+import { Values } from "components/Donater/types";
 import { useFormContext } from "react-hook-form";
 
 export default function Slider() {

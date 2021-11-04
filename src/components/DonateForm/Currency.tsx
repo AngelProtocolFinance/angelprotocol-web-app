@@ -1,4 +1,4 @@
-import { Values } from "components/Donater/schema";
+import { Values } from "components/Donater/types";
 import { denoms, currency_text, currency_icons } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 

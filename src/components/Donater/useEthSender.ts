@@ -1,11 +1,11 @@
-import ErrPop, { Props as ErrProps } from "components/Donater/ErrPop";
-import Waiter, { Props as WaitProps } from "components/Donater/Waiter";
-import Result, { Props as ResProps } from "components/Donater/Result";
+import ErrPop, { Props as ErrProps } from "./ErrPop";
+import Waiter, { Props as WaitProps } from "./Waiter";
+import Result, { Props as ResProps } from "./Result";
 import { useSetModal } from "components/Nodal/Nodal";
 import { chains } from "contracts/types";
 import { useWallet } from "use-wallet";
 import { ethers, BigNumber, utils } from "ethers";
-import { Values } from "components/Donater/schema";
+import { Values } from "./types";
 import { ap_wallets } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";

@@ -1,8 +1,8 @@
-import { Values } from "components/Donater/schema";
+import { Values } from "components/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
-import useEthSender from "./useEthSender";
-import useTerraSender from "./useTerraSender";
+import useEthSender from "../Donater/useEthSender";
+import useTerraSender from "../Donater/useTerraSender";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useSubmit() {
