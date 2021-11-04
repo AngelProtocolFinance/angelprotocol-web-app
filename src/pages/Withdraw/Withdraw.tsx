@@ -1,34 +1,57 @@
-import { useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { createContext, useContext, useState } from "react";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
-// import WithdrawForm from "./WithdrawForm";
+import WithdrawForm from "./WithdrawForm";
 import useWithdraw from "./useWithdraw";
 import { RouteComponentProps } from "react-router";
+import { Redirect } from "react-router-dom";
+import { site } from "types/routes";
+import { RouteParam, Steps, Status, SetStatus } from "./types";
 
-interface Values {
-  withdrawAnc: string;
-}
+const initialStatus = {
+  step: Steps.initial,
+};
 
-type Param = { address: string };
+const getContext = createContext<Status>(initialStatus);
+const setContext = createContext<SetStatus>(() => initialStatus);
+//use these hooks only in components inside Withdraw.tsx
+export const useGetStatus = () => useContext(getContext);
+export const useSetStatus = () => useContext(setContext);
 
-export default function Withdraw(props: RouteComponentProps<Param>) {
+export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   //use can malinger this address url param
   //can also pass address as state but no guarantee that user will go to this page using
   //only the in-app link provided
-  //TODO://check if valid, redirect to somewhere if not
   const address = props.match.params.address;
+  const [status, setStatus] = useState<Status>(initialStatus);
+  const [withdrawFormIsOpen, setWithdrawForm] = useState(false);
 
-  const [showModal, setShowModal] = useState(false);
-  const { isReady, isLoading, error, locked, liquid, overall } =
-    useWithdraw(address);
+  const {
+    redirect,
+    isReady,
+    isLoading,
+    isEndowmentOwner,
+    error,
+    locked,
+    liquid,
+    overall,
+  } = useWithdraw(address);
+
+  function openWithdrawForm() {
+    setWithdrawForm(true);
+  }
+
+  function closeWithdrawForm() {
+    setWithdrawForm(false);
+  }
 
   return (
-    <section className="pb-16 grid content-start h-screen">
+    <div className="pb-16 grid content-start min-h-screen">
       <AppHead />
+      {redirect ? <Redirect to={site.app} /> : null}
       {error && (
         <div className="min-h-leader-table grid place-items-center">
           <p className="uppercase text-white-grey">{error}</p>
@@ -44,87 +67,40 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
         </div>
       )}
       {isReady && (
-        <div className="mt-8 mx-auto w-auto text-white-grey">
-          <h2 className="pt-8 pl-6 uppercase text-lg font-bold">
-            Total Balance: $ {toCurrency(overall)}
-          </h2>
-          <div className="flex items-stretch mt-3 mx-4">
+        <div className="mt-0 md:mt-8 mx-auto w-auto text-white-grey">
+          <div className="flex justify-center md:justify-start">
+            <h2 className="md:pt-8 md:pl-6 uppercase text-lg font-bold">
+              Total Balance: $ {toCurrency(overall)}
+            </h2>
+          </div>
+          <div className="flex flex-wrap items-stretch justify-around mt-3 mx-4">
             <Liquid liquidBalance={liquid} />
             <Locked lockedBalance={locked} />
           </div>
-          <div className="flex justify-start mt-4 pl-6">
-            {/*//TODO: should disable/hide when curr wallet_addr is not endowment owner */}
-            {/* <button
-              className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
-              onClick={() => setShowModal(true)}
-            > */}
-            <button className="cursor-default uppercase bg-angel-grey rounded-lg w-56 h-12 text-sm font-bold">
-              Withdraw Coming Soon!{/* Withdraw from Accounts */}
-            </button>
+          <div className="flex justify-center md:justify-start mt-0 md:mt-4 md:pl-6">
+            {isEndowmentOwner ? (
+              <button
+                className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
+                onClick={openWithdrawForm}
+              >
+                Withdraw from Accounts
+              </button>
+            ) : null}
           </div>
           <div>
-            {showModal ? (
-              <div className="fixed bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
-                <div className="p-6 place-items-center bg-white-grey w-full max-w-xs min-h-r15 rounded-xl shadow-lg overflow-hidden relative">
-                  <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
-                    Withdraw from Accounts
-                  </h3>
-                  <p className="mb-6 text-angel-grey text-center text-xs">
-                    Enter the quantity of tokens to withdraw from each of the
-                    active Liquid Account's current strategies.
-                  </p>
-                  {/* <WithdrawForm /> */}
-                  <div className="text-angel-grey">
-                    <Formik
-                      initialValues={{ withdrawAnc: "" }}
-                      onSubmit={(
-                        values: Values,
-                        { setSubmitting }: FormikHelpers<Values>
-                      ) => {
-                        alert(JSON.stringify(values, null, 2));
-                        setSubmitting(false);
-                      }}
-                    >
-                      {/*TODO:// separate this form in separate component*/}
-                      <Form>
-                        <div className="flex justify-around mb-3">
-                          <div className="flex-col w-full">
-                            <label htmlFor="withdrawAnc">Anchor Protocol</label>
-                            <p className="text-xs italic">
-                              Available: $ {toCurrency(liquid)}
-                            </p>
-                          </div>
-                          <Field
-                            className="bg-gray-200 w-full p-3 rounded-md focus:outline-none"
-                            id="withdrawAnc"
-                            name="withdrawAnc"
-                            autoComplete="off"
-                            type="text"
-                          />
-                        </div>
-                        <div className="flex justify-around mt-6">
-                          <button
-                            type="submit"
-                            className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
-                          >
-                            Withdraw
-                          </button>
-                          <button
-                            onClick={() => setShowModal(false)}
-                            className="uppercase hover:bg-angel-orange bg-orange rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      </Form>
-                    </Formik>
-                  </div>
-                </div>
-              </div>
-            ) : null}
+            <getContext.Provider value={status}>
+              <setContext.Provider value={setStatus}>
+                <WithdrawForm
+                  address={address}
+                  liquid={liquid!}
+                  isModalOpened={withdrawFormIsOpen}
+                  onCloseModal={closeWithdrawForm}
+                />
+              </setContext.Provider>
+            </getContext.Provider>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
