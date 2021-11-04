@@ -16,7 +16,7 @@ export default function Balance(props: Props) {
         {currency_text[props.denom] || currency_text.coin}
       </span>
       <span className="ml-auto text-angel-grey">
-        {toCurrency(props.amount, 3)}
+        {toCurrency(props.amount, 6)}
       </span>
     </li>
   );

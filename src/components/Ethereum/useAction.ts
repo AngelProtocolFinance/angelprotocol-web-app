@@ -10,12 +10,12 @@ export default function useAction(type: Connectors, icon: Icons) {
   const dwindow: dWindow = window;
   const wallet = useWallet();
   const { isLoading } = useGetState();
-  const { show } = useSetModal();
+  const { showModal } = useSetModal();
 
   async function handleConnect() {
     try {
       if (type === Connectors.ledger) {
-        show<Props>(Warning, {
+        showModal<Props>(Warning, {
           text: "Not available at the moment.",
         });
         return;
@@ -31,7 +31,7 @@ export default function useAction(type: Connectors, icon: Icons) {
         //if xdefi is prioritized by user in menu/Prioritize_xdefi,
         //conencting to metamask will just point to xdefi, --> so update icon
         if (dwindow.xfi.ethereum) {
-          show<Props>(Warning, {
+          showModal<Props>(Warning, {
             text: "To use Metamask, you need to remove priority to XDEFI wallet - then refresh the page",
           });
           return;
@@ -48,7 +48,7 @@ export default function useAction(type: Connectors, icon: Icons) {
         if (!dwindow.xfi.ethereum) {
           //xdefi can only be properly used if menu/Prioritize_xdefi is enabled by user
           //if not enabled, connector will just revert to metamask --> so update icon
-          show<Props>(Warning, {
+          showModal<Props>(Warning, {
             text: "Kindly prioritize XDEFI wallet to use it - then refresh the page",
           });
           return;

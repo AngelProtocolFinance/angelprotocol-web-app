@@ -4,7 +4,7 @@ import { MdOutlineClose } from "react-icons/md";
 
 export type PropChild = { children?: ReactNode; accent?: string };
 export default function Popup(props: PropChild) {
-  const { hide: hideModal } = useSetModal();
+  const { hideModal } = useSetModal();
   return (
     <div className="bg-white rounded-md grid w-full max-w-xs rounded-md overflow-hidden shadow-xl">
       <div

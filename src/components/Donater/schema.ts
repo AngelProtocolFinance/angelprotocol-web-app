@@ -5,7 +5,6 @@ export interface Values {
   amount: string;
   split: string;
   currency: denoms.uusd | denoms.btc | denoms.ether;
-  isReady: boolean;
 }
 
 export const schema = Yup.object().shape({

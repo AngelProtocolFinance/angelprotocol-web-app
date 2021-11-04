@@ -1,6 +1,7 @@
 import Loader from "components/Loader/Loader";
 import Popup, { Content } from "./Popup";
-export default function Waiter(props: { url: string }) {
+export type Props = { url?: string };
+export default function Waiter(props: Props) {
   return (
     <Popup accent="bg-angel-blue">
       <Content>
@@ -13,14 +14,16 @@ export default function Waiter(props: { url: string }) {
           <p className="text-center text-angel-grey mt-4">
             Waiting for transaction result
           </p>
-          <a
-            href={props.url}
-            target="_blank"
-            rel="noreferrer noopener"
-            className="text-center text-angel-blue cursor-pointer"
-          >
-            view transaction status
-          </a>
+          {props.url && (
+            <a
+              href={props.url}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-center text-angel-blue cursor-pointer"
+            >
+              view transaction status
+            </a>
+          )}
         </div>
       </Content>
     </Popup>

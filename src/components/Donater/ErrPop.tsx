@@ -4,7 +4,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export type Props = { desc: string; url?: string };
 export default function ErrPop(props: Props) {
-  const { hide: hideModal } = useSetModal();
+  const { hideModal } = useSetModal();
   return (
     <Popup>
       <Content>

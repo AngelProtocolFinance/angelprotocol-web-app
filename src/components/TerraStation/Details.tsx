@@ -35,8 +35,8 @@ export default function Details(props: Props) {
         <Address address={addr} />
         <Portal />
         {(!isEmpty && <Holdings coinData={props.coinData} />) || (
-          <span className="text-white-grey p-10 text-center text-sm uppercase">
-            Wallet is empty
+          <span className="text-angel-grey p-10 text-center text-sm uppercase">
+            Your Wallet is empty
           </span>
         )}
         <Disconnect disabled={!isConnected} disconnect={handleDisconnect} />

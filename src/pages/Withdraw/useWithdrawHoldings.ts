@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { FormikHelpers } from "formik";
 import Account from "contracts/Account";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import createStatusFromError from "./createStatusFromError";
 import { Status, SetStatus, Values, Steps } from "./types";
 import toCurrency from "helpers/toCurrency";

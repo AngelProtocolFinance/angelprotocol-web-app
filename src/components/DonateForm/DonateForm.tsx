@@ -3,15 +3,13 @@ import Portion from "./Portion";
 import Currency from "./Currency";
 import Slider from "./Slider";
 import Amount from "./Amount";
-import useTerraSender from "./useTerraSender";
-import { useFormContext } from "react-hook-form";
+import useSubmit from "./useSubmit";
 
 export default function DonateForm() {
-  const { formState } = useFormContext();
-  const handleSubmit = useTerraSender();
+  const { submitHandler, isSubmitting } = useSubmit();
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={submitHandler}
       className="bg-white grid p-4 rounded-md"
       autoComplete="off"
     >
@@ -29,7 +27,7 @@ export default function DonateForm() {
         </Portion>
       </div>
       <button
-        disabled={formState.isSubmitting}
+        disabled={isSubmitting}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-b-md rounded-t-sm mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >

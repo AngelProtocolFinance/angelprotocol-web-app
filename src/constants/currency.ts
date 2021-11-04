@@ -30,6 +30,7 @@ export enum denoms {
   uthb = "uthb",
   uusd = "uusd",
   ether = "ether",
+  wei = "wei",
   btc = "btc",
   coin = "coin",
 }
@@ -59,6 +60,7 @@ export const currency_text: { [key in denoms]: string } = {
   [denoms.coin]: "COIN",
   [denoms.btc]: "BTC",
   [denoms.ether]: "ETH",
+  [denoms.wei]: "WEI",
 };
 
 export const currency_icons: { [key in denoms]: string } = {
@@ -85,5 +87,6 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uusd]: ust,
   [denoms.coin]: token,
   [denoms.ether]: ether,
+  [denoms.wei]: token,
   [denoms.btc]: btc,
 };

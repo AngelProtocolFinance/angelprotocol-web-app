@@ -15,8 +15,8 @@ export default function Nodal(props: Props) {
   return (
     <setContext.Provider
       value={{
-        show: showModal,
-        hide: closeModal,
+        showModal,
+        hideModal: closeModal,
       }}
     >
       {!!Content && (
@@ -30,8 +30,8 @@ export default function Nodal(props: Props) {
   );
 }
 const setContext = createContext<Handlers>({
-  show: () => {},
-  hide: () => {},
+  showModal: () => {},
+  hideModal: () => {},
 });
 
 export const useSetModal = () => useContext(setContext);

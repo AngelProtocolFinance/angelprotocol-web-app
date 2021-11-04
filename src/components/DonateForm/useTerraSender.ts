@@ -5,8 +5,8 @@ import { useSetModal } from "components/Nodal/Nodal";
 import ErrPop, { Props as ErrProps } from "components/Donater/ErrPop";
 import Estimates, { Props as EstProps } from "components/Donater/Estimates";
 import Result, { Props as ResProps } from "components/Donater/Result";
+import Waiter, { Props as WaitProps } from "components/Donater/Waiter";
 import getDepositAmount from "components/Donator/getDepositAmount";
-import Waiter from "components/Donater/Waiter";
 import Indexfund from "contracts/IndexFund";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
@@ -14,19 +14,19 @@ import useUSTBalance from "hooks/useUSTBalance";
 import displayError from "./displayError";
 
 function useTerraSender(receiver?: string | number) {
-  const { handleSubmit, reset } = useFormContext();
+  const { reset } = useFormContext();
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
-  const { show: showModal, hide: hideModal } = useSetModal();
+  const { showModal, hideModal } = useSetModal();
 
-  async function* sender(data: Data) {
+  async function* process(data: Data) {
     const UST_amount = data.amount;
     const liquid_split = 100 - Number(data.split);
 
     //submitting is true once this sender is fired
     if (!wallet) {
       showModal<ErrProps>(ErrPop, {
-        desc: "No wallet is currently connected",
+        desc: "No Terra wallet is currently connected",
       });
       return;
     }
@@ -76,7 +76,7 @@ function useTerraSender(receiver?: string | number) {
 
       const response = await wallet.post(transaction);
       if (response.success) {
-        showModal(Waiter, {
+        showModal<WaitProps>(Waiter, {
           url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
         });
 
@@ -89,7 +89,7 @@ function useTerraSender(receiver?: string | number) {
             wallet.network.chainID
           );
           showModal<ResProps>(Result, {
-            sent: +data.amount,
+            sent: +UST_amount,
             received: depositAmount,
             url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
           });
@@ -107,18 +107,18 @@ function useTerraSender(receiver?: string | number) {
     }
   }
 
-  async function processor(data: Data) {
+  async function sender(data: Data) {
     try {
-      const _sender = sender(data);
-      if ((await _sender.next()).done) return; //wallet check
-      if ((await _sender.next()).done) return; //balance check
-      if ((await _sender.next()).done) return; //tca check
-      const fee = (await _sender.next()).value;
+      const _process = process(data);
+      if ((await _process.next()).done) return; //wallet check
+      if ((await _process.next()).done) return; //balance check
+      if ((await _process.next()).done) return; //tca check
+      const fee = (await _process.next()).value;
       showModal<EstProps>(Estimates, {
         fee: fee as number,
         amount: +data.amount,
-        resume: () => _sender.next("resume"),
-        cancel: () => _sender.next("cancel"),
+        resume: () => _process.next("resume"),
+        cancel: () => _process.next("cancel"),
       });
       //this handler is done at this point and transfer control to modal
     } catch (err) {
@@ -126,7 +126,7 @@ function useTerraSender(receiver?: string | number) {
     }
   }
 
-  return handleSubmit(processor);
+  return sender;
 }
 
 export default useTerraSender;
