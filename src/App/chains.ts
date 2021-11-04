@@ -3,7 +3,7 @@ import { chains, URLs } from "contracts/types";
 
 export const urls: URLs = {
   [chains.localterra]: "http://localhost:1317",
-  [chains.mainnet]: "https://lcd.terra.dev",
+  [chains.mainnet]: "https://apis.ankr.com/242bf15be1354eda8bad73fb320e9fb9/aae7334102f8f52264b50ad44bf343d3/terra/full/columbus",
   [chains.testnet]: "https://bombay-lcd.terra.dev",
 };
 
