@@ -21,7 +21,7 @@ export default function AppMenu() {
         </Link>
       </li>*/}
       <li>
-        <Link to={`/contact`} {...linkStyles}>
+        <Link to={`${url}/${app.register}`} {...linkStyles}>
           REGISTER
         </Link>
       </li>
