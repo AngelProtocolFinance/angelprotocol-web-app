@@ -59,6 +59,11 @@
     height: 2.5rem;
   }
 
+  .MuiDropzoneArea-root {
+    min-height: 250px !important;
+    max-height: 250px !important;
+  }
+
   .MuiDialogActions-root button:disabled {
     color: white !important;
     --tw-bg-opacity: 1;

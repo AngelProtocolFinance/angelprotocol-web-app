@@ -10,10 +10,7 @@ import { useHistory } from "react-router";
 import { useGetter } from "store/accessors";
 
 export const WalletSchema = Yup.object().shape({
-  wallet_number: Yup.number()
-    .required("Please enter the number of your wallet")
-    .positive()
-    .integer("It must be numeric."),
+  wallet_number: Yup.string().required("Please enter your wallet address."),
 });
 
 export type Values = {
@@ -36,7 +33,6 @@ const ConnectWallet = () => {
       uuid: user.PK,
     });
     let result = response.data ? response : response.error;
-    console.log("result => ", result);
     if (result.status === 500) {
       toast.error("Saving data was failed. Please try again.");
       setSuccess(false);
@@ -52,7 +48,7 @@ const ConnectWallet = () => {
         toast.error(result.data.message);
         setSuccess(false);
       } else {
-        toast.success("Your wallet number was saved successfully.");
+        toast.success("Your wallet address was saved successfully.");
         setSuccess(true);
       }
     }
@@ -91,7 +87,7 @@ const ConnectWallet = () => {
                     <Field
                       type="text"
                       className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"
-                      placeholder="Wallet Number"
+                      placeholder="Wallet Address"
                       name="wallet_number"
                       disabled={isSuccess}
                     />

@@ -7,6 +7,7 @@ import Action from "./Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { useGetCharityDataQuery } from "services/aws/charity";
 
 const VerifiedEmail = () => {
   //url = app/register/verify
@@ -31,7 +32,14 @@ const VerifiedEmail = () => {
     userType: jwtData.user,
     authorization: jwtData.authorization,
     token: pathNames[pathNames.length - 1],
+    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
+    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
+    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
+    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
+    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
+    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
   };
+
   if (!is_expired) {
     dispatch(updateUserData(responseData));
   }

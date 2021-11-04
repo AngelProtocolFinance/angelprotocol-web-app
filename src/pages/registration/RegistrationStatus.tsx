@@ -12,18 +12,11 @@ const RegistrationStatus = () => {
   const history = useHistory();
   const user = useGetter((state) => state.user);
   const { data, error } = useGetCharityDataQuery(user.PK);
-  console.log("user => ", user);
 
   useEffect(() => {
     if (error) {
-      //TODO:provide typing for this error if possible
-      //encountered error of this shape
-      /*{
-      "status": "FETCH_ERROR",
-      "error": "TypeError: Failed to fetch"
-      } */
       const messageData: any = error;
-      toast.error(messageData?.data?.message || "something wen't wrong");
+      toast.error(messageData?.data?.message || "something went wrong");
     }
   }, [error]);
 
@@ -48,7 +41,7 @@ const RegistrationStatus = () => {
         : user.IsMetaDataCompleted
         ? 1
         : 2,
-    completed: user?.RegistrationStatus,
+    completed: user?.RegistrationStatus === "Complete",
   };
 
   const navigate = (dest: string) => () => {
@@ -122,9 +115,6 @@ const RegistrationStatus = () => {
                 onClick={() =>
                   history.push({
                     pathname: register.upload_docs,
-                    state: {
-                      data: data?.Registration,
-                    },
                   })
                 }
                 classes={

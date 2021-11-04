@@ -1,12 +1,12 @@
 import { useState, useMemo } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { BsExclamationCircle } from "react-icons/bs";
 import countryList from "react-select-country-list";
 import Modal from "components/Modal/Modal";
 import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
-import { register, site, web } from "types/routes";
+import { register } from "types/routes";
 import { StepOneSchema } from "./useUpdateCharityProfile";
 import Action from "../Action";
 import { UN_SDGS } from "types/unsdgs";
@@ -17,7 +17,7 @@ const ProfileStepOne = (props: any) => {
 
   const history = useHistory();
   const userData = props.userInfo;
-  const metaData = props.metaData;
+  const metaData = props.formData || props.metaData;
   const handleUpdateProfile = (
     profileData: any,
     actions: FormikHelpers<any>
@@ -40,15 +40,16 @@ const ProfileStepOne = (props: any) => {
         <Formik
           initialValues={{
             CompanyNumber: metaData?.CompanyNumber || "",
-            CountryIncorporation: metaData?.CountryIncorporation || "",
+            CountryIncorporation:
+              metaData?.CountryIncorporation || "Afghanistan",
             isYourCountry: false,
-            SelectCountries: metaData?.SelectCountries || "",
+            SelectCountries: metaData?.SelectCountries || "Afghanistan",
             VisionStatement: metaData?.VisionStatement || "",
             MissionStatement: metaData?.MissionStatement || "",
-            UN_SDG: metaData?.UN_SDG || "",
-            AnnualRevenue: metaData?.AnnualRevenue || "",
+            UN_SDG: metaData?.UN_SDG || "No poverty",
+            AnnualRevenue: metaData?.AnnualRevenue || "500",
             OperatingExpense: metaData?.OperatingExpense || "",
-            Currency: metaData?.Currency || "",
+            Currency: metaData?.Currency || "EUR",
           }}
           validationSchema={StepOneSchema}
           onSubmit={handleUpdateProfile}
@@ -290,38 +291,15 @@ const ProfileStepOne = (props: any) => {
               </div>
               <div className="mt-5 text-center flex justify-center">
                 <div>
-                  <div className="flex items-center py-2">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="checkedPolicy"
-                        className="mr-2"
-                      />
-                      <span className="text-base">
-                        {" "}
-                        By checking this box, you declare that you have read and
-                        agreed our{" "}
-                        <Link
-                          to={`${site.home}${web.privacy}`}
-                          className="underline"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          Privacy Policy
-                        </Link>
-                        <span className="text-base text-failed-red">*</span>
-                      </span>
-                    </label>
-                  </div>
-                  <Action
-                    submit
-                    title="Next"
-                    classes="bg-thin-blue w-48 h-10 mr-10 mt-3"
-                    disabled={isSubmitting}
-                  />
                   <Action
                     onClick={() => history.push(register.status)}
                     title="Back"
+                    classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
+                    disabled={isSubmitting}
+                  />
+                  <Action
+                    submit
+                    title="Next"
                     classes="bg-thin-blue w-48 h-10 mt-3"
                     disabled={isSubmitting}
                   />

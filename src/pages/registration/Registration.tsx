@@ -42,8 +42,6 @@ const Registration = () => {
       );
     } else {
       const token: any = await getTokenData(values.refer);
-      console.log(token);
-      console.log("token => ", token);
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,
@@ -55,6 +53,15 @@ const Registration = () => {
         TerraWallet: response.data.Metadata?.TerraWallet,
         IsKeyPersonCompleted: !!response.data.KeyPerson,
         IsMetaDataCompleted: !!response.data.Metadata,
+        ProofOfIdentity: response.data.Registration.ProofOfIdentity,
+        ProofOfEmployment: response.data.Registration.ProofOfEmployment,
+        EndowmentAgreement: response.data.Registration.EndowmentAgreement,
+        ProofOfIdentityVerified:
+          response.data.Registration.ProofOfIdentityVerified,
+        ProofOfEmploymentVerified:
+          response.data.Registration.ProofOfEmploymentVerified,
+        EndowmentAgreementVerified:
+          response.data.Registration.EndowmentAgreementVerified,
       };
       dispatch(updateUserData(data));
       if (response.data.ContactPerson.EmailVerified)

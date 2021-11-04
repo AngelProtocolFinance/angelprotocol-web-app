@@ -1,18 +1,15 @@
 import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { Link } from "react-router-dom";
-import { BsExclamationCircle } from "react-icons/bs";
 import Modal from "components/Modal/Modal";
 import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
-import { site, web } from "types/routes";
 import { DropzoneArea } from "material-ui-dropzone";
 import { StepTwoSchema } from "./useUpdateCharityProfile";
 import Action from "../Action";
 
 const ProfileStepTwo = (props: any) => {
   //url = app/register/charity-profile
-  const metaData = props.metaData;
+  const metaData = props.formData || props.metaData;
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [openLogoDropzone, setOpenLogoDropzone] = useState(
@@ -205,6 +202,7 @@ const ProfileStepTwo = (props: any) => {
                             width={150}
                             height={150}
                             className="rounded-full mr-10"
+                            alt="logo"
                           />
                           <Action
                             classes="bg-yellow-blue w-36 h-8 text-xs"
@@ -238,6 +236,7 @@ const ProfileStepTwo = (props: any) => {
                             width={150}
                             height={150}
                             className="rounded-full mr-10"
+                            alt="banner"
                           />
                           <Action
                             classes="bg-yellow-blue w-36 h-8 text-xs"
@@ -281,38 +280,15 @@ const ProfileStepTwo = (props: any) => {
               </div>
               <div className="mt-5 text-center flex justify-center">
                 <div>
-                  <div className="flex items-center py-2">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="checkedPolicy"
-                        className="mr-2"
-                      />
-                      <span className="text-base">
-                        {" "}
-                        By checking this box, you declare that you have read and
-                        agreed our{" "}
-                        <Link
-                          to={`${site.home}${web.privacy}`}
-                          className="underline"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          Privacy Policy
-                        </Link>
-                        <span className="text-base text-failed-red">*</span>
-                      </span>
-                    </label>
-                  </div>
                   <Action
-                    submit
-                    title="upload"
-                    classes="bg-thin-blue w-48 h-10 mr-10 mt-3"
+                    onClick={() => props.onPrev(values)}
+                    title="Prev"
+                    classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
                     disabled={isSubmitting}
                   />
                   <Action
-                    onClick={() => props.onPrev()}
-                    title="Prev"
+                    submit
+                    title="upload"
                     classes="bg-thin-blue w-48 h-10 mt-3"
                     disabled={isSubmitting}
                   />

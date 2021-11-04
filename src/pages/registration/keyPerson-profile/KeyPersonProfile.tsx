@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { register, site, web } from "types/routes";
+import { useHistory, useLocation } from "react-router-dom";
+import { register } from "types/routes";
 import {
   ProfileSchema,
   useKeyPersonProfile,
@@ -202,6 +202,7 @@ const KeyPersonProfile = () => {
                           width={150}
                           height={150}
                           className="rounded-full mr-10"
+                          alt="avatar"
                         />
                         <Action
                           classes="bg-yellow-blue w-36 h-8 text-xs"
@@ -225,38 +226,15 @@ const KeyPersonProfile = () => {
               </div>
               <div className="mt-5 text-center flex justify-center">
                 <div>
-                  <div className="flex items-center py-2">
-                    <label>
-                      <input
-                        type="checkbox"
-                        name="checkedPolicy"
-                        className="mr-2"
-                      />
-                      <span className="text-base">
-                        {" "}
-                        By checking this box, you declare that you have read and
-                        agreed our{" "}
-                        <Link
-                          to={`${site.home}${web.privacy}`}
-                          className="underline"
-                          rel="noreferrer noopener"
-                          target="_blank"
-                        >
-                          Privacy Policy
-                        </Link>
-                        <span className="text-base text-failed-red">*</span>
-                      </span>
-                    </label>
-                  </div>
-                  <Action
-                    submit
-                    title="Upload"
-                    classes="bg-thin-blue w-48 h-10 mr-5"
-                    disabled={isSubmitting}
-                  />
                   <Action
                     onClick={() => history.push(register.status)}
                     title="Back"
+                    classes="bg-thin-blue w-48 h-10 mr-10"
+                    disabled={isSubmitting}
+                  />
+                  <Action
+                    submit
+                    title="Upload"
                     classes="bg-thin-blue w-48 h-10"
                     disabled={isSubmitting}
                   />

@@ -97,7 +97,6 @@ export const useUpdateCharityProfile = () => {
       const response: any = await updateCharityMetaProfile(postData);
       result = response.data ? response : response.error;
     }
-    console.log("result => ", result);
     if (result.status === 500) {
       toast.error("Saving data was failed. Please try again.");
     } else if (result.error) {

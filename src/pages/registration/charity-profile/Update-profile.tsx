@@ -15,6 +15,7 @@ const UpdateProfile = () => {
   const user = useGetter((state) => state.user);
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});
+  const [secondData, setSecondData] = useState({});
   let metaData: CharityMetaData = location.state.data;
   const is_create = !metaData;
   const { saveCharityMetaData, readFileToBase64 } = useUpdateCharityProfile();
@@ -50,7 +51,8 @@ const UpdateProfile = () => {
     setStep(2);
   };
 
-  const onPrev = () => {
+  const onPrev = (data: any) => {
+    setSecondData(data);
     setStep(1);
   };
 
@@ -65,6 +67,7 @@ const UpdateProfile = () => {
       <div>
         {step === 1 ? (
           <ProfileStepOne
+            formData={firstData}
             userInfo={user}
             metaData={metaData}
             onNext={onNext}
@@ -72,6 +75,7 @@ const UpdateProfile = () => {
           />
         ) : (
           <ProfileStepTwo
+            formData={secondData}
             metaData={metaData}
             onPrev={onPrev}
             onSubmit={onSaveCharityMetaData}

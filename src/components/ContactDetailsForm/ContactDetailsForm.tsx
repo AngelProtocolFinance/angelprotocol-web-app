@@ -29,7 +29,7 @@ export const ContactDetailsForm = (props: any) => {
         phone: props.contactData?.PhoneNumber || "",
         orgRole: props.contactData?.Role || "ceo",
         otherRole: props.contactData?.otherRole || "",
-        checkedPolicy: false,
+        checkedPolicy: props.contactData ? true : false,
         uniqueID: props.contactData?.PK || "",
       }}
       validationSchema={ContactInfoSchema}
@@ -226,47 +226,40 @@ export const ContactDetailsForm = (props: any) => {
               </div>
             </div>
             <div className="grid grid-cols-1 items-center justify-center mb-4 mt-10">
-              <div className="flex text-center justify-center">
-                <div className="mr-5 flex items-center py-2">
-                  <label>
-                    <Field
-                      type="checkbox"
-                      name="checkedPolicy"
-                      className="mr-2"
-                    />
-                    <span className="text-base">
-                      {" "}
-                      By checking this box, you declare that you have read and
-                      agreed our{" "}
-                      <Link
-                        to={`${site.home}${web.privacy}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="underline"
-                      >
-                        Privacy Policy
-                      </Link>
-                      <span className="text-base text-failed-red">*</span>
-                    </span>
-                  </label>
+              {!props.contactData && (
+                <div className="mx-auto">
+                  <div className="mr-5 items-center pt-2 text-center justify-center">
+                    <label>
+                      <Field
+                        type="checkbox"
+                        name="checkedPolicy"
+                        className="mr-2"
+                      />
+                      <span className="text-base">
+                        {" "}
+                        By checking this box, you declare that you have read and
+                        agreed our{" "}
+                        <Link
+                          to={`${site.home}${web.privacy}`}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="underline"
+                        >
+                          Privacy Policy
+                        </Link>
+                        <span className="text-base text-failed-red">*</span>
+                      </span>
+                    </label>
+                  </div>
+                  <ErrorMessage
+                    className="text-sm text-failed-red"
+                    name="checkedPolicy"
+                    component="div"
+                  />
                 </div>
-                <ErrorMessage
-                  className="text-base text-failed-red"
-                  name="checkedPolicy"
-                  component="div"
-                />
-              </div>
+              )}
             </div>
             <div className="text-center flex justify-center">
-              <div className="mr-2">
-                <button
-                  className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Save
-                </button>
-              </div>
               {values.uniqueID && (
                 <div className="mr-2">
                   <button
@@ -278,6 +271,15 @@ export const ContactDetailsForm = (props: any) => {
                   </button>
                 </div>
               )}
+              <div className="mr-2">
+                <button
+                  className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </Form>
         </div>
