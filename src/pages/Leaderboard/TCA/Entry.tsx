@@ -1,10 +1,18 @@
 import toCurrency from "helpers/toCurrency";
 import { Details } from "./types";
+import { Names } from "./types";
+import { memberInfo } from "./infos";
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 
 type Props = { name: string; details: Details };
 export default function TCAMember(props: Props) {
   const isLight = props.details.iconLight;
   console.log(isLight, props.name);
+  const {
+    icon = defaultIcon,
+    url = "https://angelprotocol.io",
+    bgClass = "bg-white",
+  } = memberInfo[props.name] || {};
   return (
     <tr className="border-b">
       <td>

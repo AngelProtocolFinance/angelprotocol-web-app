@@ -1,30 +1,42 @@
-import { ConnectType } from "@terra-money/wallet-provider";
 import { ReactNode } from "react";
 
-export enum None {
-  none = "none",
+export enum Connectors {
+  injected = "injected",
+  torus = "torus",
+  ledger = "ledger",
 }
-export enum Future {
-  future = "future",
+
+export enum Icons {
+  terra_mobile = "terra_mobile",
+  terra_ext = "terra_ext",
+  metamask = "metamask",
+  xdefi = "xdefi",
+  torus = "torus",
+  ledger = "ledger",
+  uknown = "unknown",
 }
+
 export enum Wallets {
-  none = None.none,
-  terraStationMobile = ConnectType.WALLETCONNECT,
-  terraStationExt = ConnectType.CHROME_EXTENSION,
-  future = Future.future,
+  none = "none",
+  ethereum = "ethereum",
+  terra = "terra",
 }
+
+export type State = {
+  activeWallet: Wallets;
+  isLoading: boolean;
+};
 
 export type WalletStates = Array<[Wallets, boolean]>;
-
-export type Icons = {
-  [key in Wallets]: string | ReactNode;
-};
 
 export type Displays = {
   [key in Wallets]: ReactNode;
 };
 
-export type Changer = (wallet: Wallets) => void;
+export interface dWindow extends Window {
+  ethereum: any;
+  xfi?: any;
+}
 
 export type Props = {
   children: ReactNode;
