@@ -9,7 +9,7 @@ import { Opener } from "components/Nodal/types";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import ErrPop, { Props as ErrProp } from "../Donater/ErrPop";
 
-export default function displayError(error: unknown, prompter: Opener) {
+export default function displayTerraError(error: any, prompter: Opener) {
   if (error instanceof UserDenied) {
     prompter<ErrProp>(ErrPop, { desc: "Transaction aborted" });
   } else if (error instanceof Disconnected) {
@@ -27,6 +27,7 @@ export default function displayError(error: unknown, prompter: Opener) {
     prompter<ErrProp>(ErrPop, { desc: "Transaction timeout" });
   } else if (error instanceof TxUnspecifiedError) {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
+    //uknown error
   } else {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
   }

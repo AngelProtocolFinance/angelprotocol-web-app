@@ -5,6 +5,7 @@ export enum chains {
   mainnet = "columbus-5",
   localterra = "localterra",
   kovan = "42",
+  ropsten = "3",
   eth_main = "1",
   btc_test = "1",
 }

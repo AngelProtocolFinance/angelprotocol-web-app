@@ -11,7 +11,7 @@ import Indexfund from "contracts/IndexFund";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
 import useUSTBalance from "hooks/useUSTBalance";
-import displayError from "./displayError";
+import displayTerraError from "./displayTerraError";
 
 function useTerraSender(receiver?: string | number) {
   const { reset } = useFormContext();
@@ -66,7 +66,6 @@ function useTerraSender(receiver?: string | number) {
         .amount.toNumber();
 
       //pause to show user fees
-
       const res: "resume" | "cancel" = yield estimatedFee;
       if (res === "cancel") {
         hideModal();
@@ -101,7 +100,7 @@ function useTerraSender(receiver?: string | number) {
         }
       }
     } catch (err) {
-      displayError(err, showModal);
+      displayTerraError(err, showModal);
     } finally {
       reset();
     }
@@ -122,7 +121,7 @@ function useTerraSender(receiver?: string | number) {
       });
       //this handler is done at this point and transfer control to modal
     } catch (err) {
-      displayError(err, showModal);
+      displayTerraError(err, showModal);
     }
   }
 

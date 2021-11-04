@@ -17,6 +17,7 @@ export default function ErrPop(props: Props) {
             href={props.url}
             target="_blank"
             className="uppercase text-angel-blue text-sm mb-2"
+            rel="noreferrer noopener"
           >
             view transaction details
           </a>

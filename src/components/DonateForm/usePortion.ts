@@ -3,12 +3,6 @@ import { currency_text, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 
-const decimals: { [index: string]: number } = {
-  [denoms.uusd]: 2,
-  [denoms.btc]: 6,
-  [denoms.ether]: 6,
-};
-
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
   const { watch } = useFormContext<Values>();
@@ -36,3 +30,9 @@ export default function usePortion(type: string) {
 
   return { currency, desc, amountTxt, splitTxt, txtColor, borderColor };
 }
+
+const decimals: { [index: string]: number } = {
+  [denoms.uusd]: 2,
+  [denoms.btc]: 6,
+  [denoms.ether]: 6,
+};

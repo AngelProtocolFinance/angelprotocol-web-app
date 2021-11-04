@@ -22,6 +22,7 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
 export const ap_wallets: { [index: string]: { [index: string]: string } } = {
   [denoms.ether]: {
     [chains.kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
+    [chains.ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
   },
   [denoms.btc]: {
     [chains.btc_test]: "bc1qezneaj4976ev4kkqws40dk2dxgxwcjynggd8fq",
