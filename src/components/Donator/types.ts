@@ -6,6 +6,7 @@ export type Handler = () => void;
 export interface Values {
   amount: string;
   split: number;
+  receiptRequested: boolean;
 }
 
 export enum Steps {
