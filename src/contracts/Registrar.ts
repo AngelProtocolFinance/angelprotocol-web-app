@@ -1,7 +1,7 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { Endowments, sc, SplitRes } from "./types";
+import { Endowments, sc, SplitRes, Status } from "./types";
 
 export default class Registrar extends Contract {
   address: string;
@@ -16,10 +16,13 @@ export default class Registrar extends Contract {
     return result.split_to_liquid;
   }
 
-  async getEndowmentList() {
+  async getEndowmentList(status?: Status) {
     const result = await this.query<Endowments>(this.address, {
       endowment_list: {},
     });
-    return result.endowments;
+    return result.endowments.filter(
+      //if status is undefined, return all, else, filter with given status
+      (endowment) => !status || endowment.status === status
+    );
   }
 }
