@@ -11,8 +11,9 @@ export default function Updator({ lastUpdate, isLoading, refresh }: Props) {
       <p className="text-angel-grey italic">
         last update:{" "}
         {new Date(lastUpdate).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
+          dateStyle: "short",
+          timeStyle: "short",
+          hour12: false,
         })}
       </p>
       <button
