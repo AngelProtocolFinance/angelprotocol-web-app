@@ -4,6 +4,9 @@ import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
 import Address from "./Address";
 import Portal from "./Portal";
+import { useState } from "react";
+import { denoms } from "constants/curriencies";
+import Filter from "./Filter";
 
 type Props = {
   coinData: Coin.Data[];
@@ -11,10 +14,20 @@ type Props = {
   chainId: string;
 };
 
+const criterionAmount = 10;
 export default function Details(props: Props) {
+  const [filtered, setFilter] = useState(false);
+  const coins = props.coinData.filter(
+    (coin) =>
+      filtered ||
+      coin.denom === denoms.uusd ||
+      Number(coin.amount) > criterionAmount
+  );
+  const handleFilter = () => setFilter((p) => !p);
   const { disconnect, status, wallets } = useWallet();
   const isConnected = status === WalletStatus.WALLET_CONNECTED;
-  const isEmpty = props.coinData.length <= 0;
+
+  const isEmpty = coins.length <= 0;
   const addr = wallets[0]?.terraAddress;
   const handleDisconnect = () => disconnect();
 
@@ -26,12 +39,13 @@ export default function Details(props: Props) {
       >
         <IoClose />
       </button>
-      <div className="bg-angel-grey text-white-grey uppercase text-sm p-2">
-        network : {props.chainId}
+      <div className="bg-angel-grey text-white-grey text-sm p-2">
+        <p className="uppercase">network : {props.chainId}</p>
       </div>
+      <Filter filtered={filtered} handleFilter={handleFilter} />
       <Address address={addr} />
       <Portal />
-      {(!isEmpty && <Holdings coinData={props.coinData} />) || (
+      {(!isEmpty && <Holdings coinData={coins} />) || (
         <span className="text-white-grey p-10 text-center text-sm uppercase">
           Wallet is empty
         </span>
