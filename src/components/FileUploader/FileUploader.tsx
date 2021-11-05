@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 // import "./styles.css";
 
 import Dropzone from "react-dropzone";
 
 export default function FileUploader() {
-  const [fileNames, setFileNames] = useState([]);
+  const [fileNames] = useState([]);
   const handleDrop = (acceptedFiles: any[]) =>
     // setFileNames(acceptedFiles?.map((file) => file.name));
     console.log(acceptedFiles[0].name);
