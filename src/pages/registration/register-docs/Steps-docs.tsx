@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { UploadFiles, useUploadFiles } from "./useUploadFiles";
@@ -12,15 +12,19 @@ const StepsDocs = () => {
   //url = app/register/upload-docs
   const dispatch = useSetter();
   const history = useHistory();
-  const location: any = useLocation();
   const { uploadDocs } = useUploadFiles();
-  const user = useGetter((state) => state.user);
   const [isOpenModal, setOpenModal] = useState(false);
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [uploadedStatus, setUploadedStatus] = useState(false);
-  const [userData, setUserData] = useState(user);
 
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
+
+  const [userData, setUserData] = useState(user);
   const showInfoModal = (index: number) => {
     setOpenModal(true);
     setDocType(index);

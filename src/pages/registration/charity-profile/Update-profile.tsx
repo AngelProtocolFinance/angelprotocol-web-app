@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
-import { useGetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
+import { useGetter, useSetter } from "store/accessors";
 import ProfileStepOne from "./Profile-step-one";
 import ProfileStepTwo from "./Profile-step-two";
 import {
@@ -12,13 +13,19 @@ import {
 const UpdateProfile = () => {
   //url = app/register/charity-profile
   const location: any = useLocation();
-  const user = useGetter((state) => state.user);
+  const dispatch = useSetter();
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});
   const [secondData, setSecondData] = useState({});
   let metaData: CharityMetaData = location.state.data;
   const is_create = !metaData;
   const { saveCharityMetaData, readFileToBase64 } = useUpdateCharityProfile();
+
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
 
   const readFiles = async (files: any) => {
     let content: any;

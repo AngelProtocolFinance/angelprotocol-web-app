@@ -132,7 +132,7 @@ const ProfileStepTwo = (props: any) => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full md:w-1/2 md:px-10">
+                <div className="w-full md:w-1/2 md:pl-10">
                   <div className="item mb-5">
                     <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                       Linkedin
@@ -223,7 +223,7 @@ const ProfileStepTwo = (props: any) => {
                       )}
                     </div>
                   </div>
-                  <div className="w-full md:w-1/2 px-10">
+                  <div className="w-full md:w-1/2 pl-10">
                     <div className="item mb-5">
                       <p className="text-sm text-gray-400 font-bold mb-1 text-left">
                         Banner{" "}

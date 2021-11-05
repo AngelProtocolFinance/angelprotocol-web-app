@@ -42,6 +42,7 @@ const VerifiedEmail = () => {
 
   if (!is_expired) {
     dispatch(updateUserData(responseData));
+    localStorage.setItem("userData", JSON.stringify(responseData));
   }
 
   const resendVerificationEmail = async () => {

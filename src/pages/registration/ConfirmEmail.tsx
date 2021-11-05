@@ -4,12 +4,16 @@ import { toast, ToastContainer } from "react-toastify";
 import Action from "./Action";
 import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUserData } from "services/user/userSlice";
+import { removeUserData, updateUserData } from "services/user/userSlice";
 
 const ConfirmEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
-  const user = useGetter((state) => state.user);
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();

@@ -5,12 +5,19 @@ import { register } from "types/routes";
 import Action from "./Action";
 import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const user = useGetter((state) => state.user);
+  const dispatch = useSetter();
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
+  console.log("user => ", user);
   const { data, error } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {
@@ -21,18 +28,15 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: user.TerraWallet !== "",
+    wallet_address: user.TerraWallet,
     document:
       user.ProofOfIdentityVerified &&
       user.ProofOfEmploymentVerified &&
       user.EndowmentAgreementVerified
         ? 2
-        : user.ProofOfEmployment !== "" &&
-          user.ProofOfEmployment !== undefined &&
-          user.ProofOfIdentity !== "" &&
-          user.ProofOfIdentity !== undefined &&
-          user.EndowmentAgreement !== "" &&
-          user.EndowmentAgreement !== undefined
+        : user.ProofOfEmployment &&
+          user.ProofOfIdentity &&
+          user.EndowmentAgreement
         ? 1
         : 0,
     endowment:

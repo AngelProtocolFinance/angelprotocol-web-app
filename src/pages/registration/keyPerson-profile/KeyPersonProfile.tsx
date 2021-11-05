@@ -10,20 +10,26 @@ import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Action from "../Action";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 const KeyPersonProfile = () => {
   //url = app/register/charity-profile
   const [fileContent, setFileContent] = useState("");
   const location: any = useLocation();
+  const dispatch = useSetter();
   const keyPersonData = location.state.data;
-  const user = useGetter((state) => state.user);
   const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
   const [openDropzone, setOpenDropzone] = useState(
     keyPersonData?.HeadshotPicture && true
   );
-
   const history = useHistory();
+
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
 
   const readFiles = async (files: any) => {
     let content: any;

@@ -89,6 +89,7 @@ export const useUpdateCharityProfile = () => {
       },
       uuid: uuid,
     };
+
     let result: any = {};
     if (is_create) {
       const response: any = await addCharityMetaProfile(postData);
