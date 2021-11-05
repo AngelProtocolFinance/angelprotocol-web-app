@@ -36,7 +36,11 @@ export interface SplitRes {
   split_to_liquid: SplitConfig;
 }
 
-export type Endowment = { address: string; status: string };
+export type Status = "Approved" | "Inactive" | "Frozen" | "Closed";
+export type Endowment = {
+  address: string;
+  status: Status;
+};
 export type Endowments = { endowments: Endowment[] };
 
 //Accounts
