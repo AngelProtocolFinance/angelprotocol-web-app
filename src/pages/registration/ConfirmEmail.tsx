@@ -15,7 +15,8 @@ const ConfirmEmail = () => {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const { userData } = useSelector((state: TStore) => state.user);
-  const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  // const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const [resendEmail] = useRequestEmailMutation();
 
   const resendVerificationEmail = async () => {
     if (userData.PK) {

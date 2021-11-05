@@ -1,5 +1,4 @@
 import Logo from "components/Logo/Logo";
-import Search from "components/Search/Search";
 import Toolkit from "components/WalletSuite/Toolkit";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 

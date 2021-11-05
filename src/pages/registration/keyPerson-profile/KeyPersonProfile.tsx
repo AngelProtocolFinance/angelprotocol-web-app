@@ -1,7 +1,7 @@
-import { useCallback, useState } from "react";
+// import { useCallback, useState } from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Link, useLocation } from "react-router-dom";
-import { useDropzone } from "react-dropzone";
+// import { useDropzone } from "react-dropzone";
 import { site, web } from "types/routes";
 import { useSelector } from "react-redux";
 import { TStore } from "Redux/store";
@@ -17,9 +17,10 @@ const KeyPersonProfile = () => {
   const location: any = useLocation();
   const keyPersonData = location.state.data;
   const { userData } = useSelector((state: TStore) => state.user);
-  const { saveKeyPersonData, uploadAvatar } = useKeyPersonProfile();
-  const onDrop = useCallback((acceptedFiles) => {}, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone();
+  const { saveKeyPersonData } = useKeyPersonProfile();
+  // const { saveKeyPersonData, uploadAvatar } = useKeyPersonProfile();
+  // const onDrop = useCallback((acceptedFiles) => {}, []);
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone();
 
   return (
     <div className="">
