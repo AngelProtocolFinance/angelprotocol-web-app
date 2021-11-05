@@ -11,8 +11,8 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const { userData } = useSelector((state: TStore) => state.user);
-  const { data, error, isLoading, isFetching, refetch } =
-    useGetCharityDataQuery(userData.PK);
+  // const { data, error, isLoading, isFetching, refetch } =
+  const { data, error } = useGetCharityDataQuery(userData.PK);
 
   useEffect(() => {
     if (error) {

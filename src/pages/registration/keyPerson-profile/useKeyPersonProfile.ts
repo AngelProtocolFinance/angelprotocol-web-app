@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import {
-  useUpdateKeyPersonDataMutation,
-  useAddNewKeyCharityMutation,
-} from "api/keyPersonAPIs";
+// import {
+//   useUpdateKeyPersonDataMutation,
+//   useAddNewKeyCharityMutation,
+// } from "api/keyPersonAPIs";
 import { FormikHelpers } from "formik";
 
 export type KeyPersoData = {
@@ -29,15 +29,15 @@ export const ProfileSchema = Yup.object().shape({
 });
 
 export const useKeyPersonProfile = () => {
-  const [createKeyPersonProfile] = useAddNewKeyCharityMutation();
-  const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
+  // const [createKeyPersonProfile] = useAddNewKeyCharityMutation();
+  // const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
 
   async function saveKeyPersonData(
     keyPersonData: KeyPersoData,
     actions: FormikHelpers<KeyPersoData>
   ) {
     actions.setSubmitting(true);
-    const is_create = !keyPersonData?.PK;
+    // const is_create = !keyPersonData?.PK;
   }
 
   async function uploadAvatar() {}
