@@ -24,7 +24,6 @@ export default function useBalance() {
       const coins = await client.bank.balance(wallet.terraAddress);
       const ustCoin = coins.get(denoms.uusd);
       const balance = coins.map((coin) => coin.mul(1e-6).toData());
-      // const ustCoin = balance.find((coin) => coin.denom === Denoms.UUSD);
       const ustAmount = ustCoin?.mul(1e-6).amount.toNumber() || 0;
       setCoins(balance);
       setUstAmount(ustAmount);
