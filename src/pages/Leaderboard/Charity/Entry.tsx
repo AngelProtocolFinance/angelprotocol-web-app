@@ -24,9 +24,9 @@ export default function Entry({ address, balance, chainID }: Props) {
       <td>
         <Description address={address} chainID={chainID} />
       </td>
-      <td>
+      {/*<td>
         <a
-          href={`https://finder.terra.money/${chainID}/address/${address}`}
+          href={`https://finder.extraterrestrial.money/${chainID}/address/${address}`}
           target="_blank"
           rel="noopener noreferrer"
           title={address}
@@ -34,7 +34,7 @@ export default function Entry({ address, balance, chainID }: Props) {
         >
           {maskAddress(address)}
         </a>
-      </td>
+      </td>*/}
       <td>
         <div className="flex flex-col">
           <Amount type="principal" amount={balance.total_locked} />
