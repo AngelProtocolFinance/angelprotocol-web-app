@@ -16,7 +16,7 @@ type Props = {
 
 const criterionAmount = 10;
 export default function Details(props: Props) {
-  const [filtered, setFilter] = useState(true);
+  const [filtered, setFilter] = useState(false);
   const coins = props.coinData.filter(
     (coin) =>
       filtered ||
