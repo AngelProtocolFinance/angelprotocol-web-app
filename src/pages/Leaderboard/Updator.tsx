@@ -6,11 +6,12 @@ type Props = {
 };
 
 export default function Updator({ lastUpdate, isLoading, refresh }: Props) {
+  console.log(lastUpdate);
   return (
     <div className="flex absolute top-3 right-6 gap-2 text-sm font-body">
       <p className="text-angel-grey italic">
         last update:{" "}
-        {new Date(lastUpdate).toLocaleTimeString([], {
+        {new Date(lastUpdate).toLocaleString([], {
           dateStyle: "short",
           timeStyle: "short",
           hour12: false,
