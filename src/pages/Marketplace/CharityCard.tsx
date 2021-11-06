@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Endowment } from "api/endowmentsAPI/types";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
+import { Endowment } from "services/aws/endowments/types";
 
 export default function CharityCard(props: Endowment) {
   const icon = props.icon || defaultIcon;

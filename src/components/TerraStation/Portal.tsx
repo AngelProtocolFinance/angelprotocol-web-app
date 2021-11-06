@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { useLookupQuery } from "api/endowmentsAPI/endowmentAPI";
 import { useConnectedWallet } from "@terra-dev/use-wallet";
 import { chains } from "contracts/types";
 import { app, site } from "types/routes";
+import { useLookupQuery } from "services/aws/endowments/endowments";
 
 export default function Portal() {
   const wallet = useConnectedWallet();

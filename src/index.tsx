@@ -8,8 +8,8 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
-import { store } from "Redux/store";
 import AuthProvider from "contexts/AuthProvider";
+import { store } from "store/store";
 import LoadPage from "pages/Loading/Loading";
 
 const LazyApp = React.lazy(() => import("./App/App"));

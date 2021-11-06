@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
+import Action from "../Action";
 import TerraInfoModal from "../modals/TerraInfoModal";
 
 const WalletCheck = () => {
@@ -25,23 +26,24 @@ const WalletCheck = () => {
       </div>
       <div className="text-center">
         <div>
-          <button
-            className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
+          <Action
             onClick={() => history.push(register.select_wallet)}
-          >
-            YES
-          </button>
+            title="YES"
+            classes="bg-thin-blue w-48 h-10"
+          />
         </div>
         <div>
-          <button
-            className="bg-thin-blue w-40 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-            onClick={() => {
-              history.push(register.others);
-            }}
-          >
-            NO
-          </button>
+          <Action
+            onClick={() => history.push(register.others)}
+            title="NO"
+            classes="bg-thin-blue w-48 h-10"
+          />
         </div>
+        <Action
+          onClick={() => history.push(register.status)}
+          title="Back"
+          classes="bg-thin-blue w-48 h-10"
+        />
       </div>
       {isOpenModal && (
         <Modal>

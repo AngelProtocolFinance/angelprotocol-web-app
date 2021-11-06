@@ -3,20 +3,21 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { register } from "types/routes";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useCheckPreviousRegistrationMutation } from "api/registerAPIs";
 import { toast, ToastContainer } from "react-toastify";
-import { UserSlice } from "../../Redux/slices/userSlice";
-import { useDispatch } from "react-redux";
 import Action from "./Action";
+import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
+import { useGetLambdaAuthTokenMutation } from "services/aws/auth";
+import { useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 export type ReferInfo = {
   refer: string;
 };
 
 const Registration = () => {
-  const dispatch = useDispatch();
+  const dispatch = useSetter();
   const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
-  const { updateUserData } = UserSlice.actions;
+  const [getTokenData] = useGetLambdaAuthTokenMutation();
   //url -> app/register
   const { url } = useRouteMatch();
   const history = useHistory();
@@ -32,7 +33,6 @@ const Registration = () => {
     actions.setSubmitting(true);
     // API integration.
     let response: any = await checkData(values.refer);
-    console.log(response);
     if (response.error) {
       // set error
       toast.error(response.error.data.message);
@@ -41,6 +41,9 @@ const Registration = () => {
         "Can not find a registration file with this reference!"
       );
     } else {
+      const token: any = await getTokenData(values.refer);
+      console.log(token);
+      console.log("token => ", token);
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,
@@ -48,6 +51,10 @@ const Registration = () => {
           response.data.Registration.CharityName_ContactEmail,
         RegistrationDate: response.data.Registration.RegistrationDate,
         RegistrationStatus: response.data.Registration.RegistrationStatus,
+        token: token.data,
+        TerraWallet: response.data.Metadata?.TerraWallet,
+        IsKeyPersonCompleted: !!response.data.KeyPerson,
+        IsMetaDataCompleted: !!response.data.Metadata,
       };
       dispatch(updateUserData(data));
       if (response.data.ContactPerson.EmailVerified)

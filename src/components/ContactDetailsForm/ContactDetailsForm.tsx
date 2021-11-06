@@ -260,17 +260,17 @@ export const ContactDetailsForm = (props: any) => {
             <div className="text-center flex justify-center">
               <div className="mr-2">
                 <button
-                  className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                  className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
                   type="submit"
                   disabled={isSubmitting}
                 >
-                  continue
+                  Save
                 </button>
               </div>
               {values.uniqueID && (
                 <div className="mr-2">
                   <button
-                    className="bg-orange disabled:bg-gray-300 w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                    className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
                     onClick={() => history.push(register.status)}
                     disabled={isSubmitting}
                   >

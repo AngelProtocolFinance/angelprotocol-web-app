@@ -2,12 +2,18 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FaCheck } from "react-icons/fa";
 import * as Yup from "yup";
+import { useAddCharityMetadataMutation } from "services/aws/charity";
+import { toast, ToastContainer } from "react-toastify";
+import Action from "../Action";
+import { register } from "types/routes";
+import { useHistory } from "react-router";
+import { useGetter } from "store/accessors";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.number()
-    .required()
+    .required("Please enter the number of your wallet")
     .positive()
-    .integer("Please enter the number of your wallet."),
+    .integer("It must be numeric."),
 });
 
 export type Values = {
@@ -16,11 +22,40 @@ export type Values = {
 
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
+  const [addCharityMetaProfile] = useAddCharityMetadataMutation();
+  const user = useGetter((state) => state.user);
+  const history = useHistory();
 
-  const onConnectWallet = (values: Values, actions: FormikHelpers<Values>) => {
+  const onConnectWallet = async (
+    values: Values,
+    actions: FormikHelpers<Values>
+  ) => {
     actions.setSubmitting(true);
-    setSuccess(true);
-    console.log("number => ", values.wallet_number);
+    const response: any = await addCharityMetaProfile({
+      body: { TerraWallet: values.wallet_number },
+      uuid: user.PK,
+    });
+    let result = response.data ? response : response.error;
+    console.log("result => ", result);
+    if (result.status === 500) {
+      toast.error("Saving data was failed. Please try again.");
+      setSuccess(false);
+    } else if (result.error) {
+      toast.error(result.error.data.message);
+      setSuccess(false);
+    } else {
+      if (
+        result.status === 400 ||
+        result.status === 401 ||
+        result.status === 403
+      ) {
+        toast.error(result.data.message);
+        setSuccess(false);
+      } else {
+        toast.success("Your wallet number was saved successfully.");
+        setSuccess(true);
+      }
+    }
   };
   return (
     <div>
@@ -52,9 +87,10 @@ const ConnectWallet = () => {
                     </p>
                   )}
                   <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                    <span className="text-black px-1">terra</span>
                     <Field
                       type="text"
-                      className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
+                      className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"
                       placeholder="Wallet Number"
                       name="wallet_number"
                       disabled={isSuccess}
@@ -66,13 +102,18 @@ const ConnectWallet = () => {
                     component="div"
                   />
                 </div>
-                <button
-                  type="submit"
-                  className="disabled:bg-grey-accent bg-thin-blue text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-base font-bold text-white mb-10"
+                <Action
+                  submit
+                  title="SUBMIT"
+                  classes="bg-thin-blue w-48 h-10 mr-3 mb-10"
                   disabled={isSubmitting || isSuccess}
-                >
-                  SUBMIT
-                </button>
+                />
+                <Action
+                  onClick={() => history.push(register.status)}
+                  title="Back"
+                  classes="bg-thin-blue w-48 h-10"
+                  disabled={isSubmitting}
+                />
                 {isSuccess && (
                   <p>
                     Thanks, we've been notified and we'll get in touch with you
@@ -84,6 +125,7 @@ const ConnectWallet = () => {
           </Formik>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

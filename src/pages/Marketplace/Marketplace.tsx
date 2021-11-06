@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-dev/use-wallet";
-import { useEndowmentsQuery } from "api/endowmentsAPI/endowmentAPI";
 import AppHead from "components/Headers/AppHead";
 import { chains } from "contracts/types";
+import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 import CharityCard from "./CharityCard";
 
 export default function Marketplace() {
