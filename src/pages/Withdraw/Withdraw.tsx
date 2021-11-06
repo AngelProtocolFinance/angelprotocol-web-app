@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Formik, Field, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
+import Slider from "rc-slider";
 import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
 // import WithdrawForm from "./WithdrawForm";
+import useHoldings from "./useHoldings";
 import useWithdraw from "./useWithdraw";
 import { RouteComponentProps } from "react-router";
 
 interface Values {
-  withdrawAnc: string;
+  withdraw: number;
 }
 
 type Param = { address: string };
@@ -23,8 +25,15 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
   const address = props.match.params.address;
 
   const [showModal, setShowModal] = useState(false);
+  const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const { isReady, isLoading, error, locked, liquid, overall } =
     useWithdraw(address);
+  const { liquidCW20Tokens } = useHoldings(address);
+
+  const computeWithdrawAmount = (value: number) => {
+    setWithdrawAmount((liquid! * value) / 100);
+    console.log(value);
+  };
 
   return (
     <section className="pb-16 grid content-start h-screen">
@@ -54,12 +63,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
           </div>
           <div className="flex justify-start mt-4 pl-6">
             {/*//TODO: should disable/hide when curr wallet_addr is not endowment owner */}
-            {/* <button
+            <button
               className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
               onClick={() => setShowModal(true)}
-            > */}
-            <button className="cursor-default uppercase bg-angel-grey rounded-lg w-56 h-12 text-sm font-bold">
-              Withdraw Coming Soon!{/* Withdraw from Accounts */}
+            >
+              Withdraw from Accounts
             </button>
           </div>
           <div>
@@ -75,32 +83,49 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                   </p>
                   {/* <WithdrawForm /> */}
                   <div className="text-angel-grey">
-                    <Formik
-                      initialValues={{ withdrawAnc: "" }}
+                    <Formik<Values>
+                      initialValues={{ withdraw: 0 }}
                       onSubmit={(
                         values: Values,
                         { setSubmitting }: FormikHelpers<Values>
                       ) => {
-                        alert(JSON.stringify(values, null, 2));
+                        values.withdraw = withdrawAmount;
+                        console.log(values);
                         setSubmitting(false);
                       }}
                     >
                       {/*TODO:// separate this form in separate component*/}
                       <Form>
                         <div className="flex justify-around mb-3">
-                          <div className="flex-col w-full">
-                            <label htmlFor="withdrawAnc">Anchor Protocol</label>
-                            <p className="text-xs italic">
-                              Available: $ {toCurrency(liquid)}
-                            </p>
+                          <div className="flex-col w-1/2">
+                            <div className="my-1.5">
+                              <label htmlFor="withdraw">Anchor Protocol</label>
+                            </div>
+                            <div className="align-bottom">
+                              <p className="text-xs italic">
+                                Available: {toCurrency(liquidCW20Tokens! / 1e6)}
+                                {} tokens
+                              </p>
+                              <p className="text-xs italic">
+                                (~$ {toCurrency(liquid)})
+                              </p>
+                            </div>
                           </div>
-                          <Field
-                            className="bg-gray-200 w-full p-3 rounded-md focus:outline-none"
-                            id="withdrawAnc"
-                            name="withdrawAnc"
-                            autoComplete="off"
-                            type="text"
-                          />
+                          <div className="flex-col w-1/2">
+                            <div className="my-3">
+                              <Slider
+                                min={0}
+                                max={100}
+                                defaultValue={0}
+                                onChange={computeWithdrawAmount}
+                              />
+                            </div>
+                            <div className="align-bottom">
+                              <p className="text-xs italic py-px">
+                                Withdraw Amt: ~$ {toCurrency(withdrawAmount)}
+                              </p>
+                            </div>
+                          </div>
                         </div>
                         <div className="flex justify-around mt-6">
                           <button
@@ -110,8 +135,11 @@ export default function Withdraw(props: RouteComponentProps<Param>) {
                             Withdraw
                           </button>
                           <button
-                            onClick={() => setShowModal(false)}
-                            className="uppercase hover:bg-angel-orange bg-orange rounded-lg w-28 h-8 text-white-grey text-sm font-bold"
+                            onClick={() => {
+                              setWithdrawAmount(0);
+                              setShowModal(false);
+                            }}
+                            className="uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
                           >
                             Cancel
                           </button>

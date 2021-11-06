@@ -35,7 +35,6 @@ export default function useBoard() {
         setLoading(true);
         const registrar = new Registrar(wallet);
         const _endowments = await registrar.getEndowmentList("Approved");
-        console.log(_endowments);
         const queries = _endowments.map((endowment) => {
           const account = new Account(endowment.address, wallet);
           return account.getBalance();

@@ -54,9 +54,6 @@ export default class Indexfund extends Contract {
       [new Coin(denoms.uusd, micro_UST_Amount)]
     );
     const fee = await this.estimateFee([depositMsg]);
-    // const fee = new StdFee(2500000, [new Coin(Denoms.UUSD, 1.5e6)]);
     return { msgs: [depositMsg], fee };
   }
-
-  //will add more transactions in the future
 }

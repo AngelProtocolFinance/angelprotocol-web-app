@@ -16,6 +16,7 @@ import millionaire from "assets/icons/tca/nfts/Millionare@4x.png";
 import tales_of_terra from "assets/icons/tca/nfts/Talesofterra@4x.png";
 import terran from "assets/icons/tca/nfts/Terran@4x.png";
 import luna_apes from "assets/icons/tca/nfts/luna_apes.png";
+import west_coast_wonder from "assets/icons/tca/nfts/west-coast-wonder-min.jpg";
 
 //protocols
 import alice from "assets/icons/tca/protocols/alice@4x.png";
@@ -45,6 +46,7 @@ import star_terra from "assets/icons/tca/protocols/StarTerra@4x.png";
 import talis from "assets/icons/tca/protocols/Talis@4x.png";
 import tsunami from "assets/icons/tca/protocols/Tsunami@4x.png";
 import white_whale from "assets/icons/tca/protocols/White-whale@4x.png";
+
 import { MemberInfo } from "./types";
 
 const defaultUrl = "https://terraalliance.io/";
@@ -93,4 +95,5 @@ export const memberInfo: MemberInfo = {
   [Names.hero]: { icon: hero, url: defaultUrl },
   [Names.community]: { icon: defaultIcon, url: "https://terraalliance.io/" },
   [Names.luna_apes]: { icon: luna_apes, url: " https://apes.city/ ", bgClass:"bg-blue-900" },
+  [Names.west_coast_wonder]: { icon: west_coast_wonder, url: defaultUrl },
 };

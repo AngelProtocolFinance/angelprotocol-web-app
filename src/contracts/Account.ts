@@ -4,7 +4,6 @@ import {
   CreateTxOptions,
   Dec,
   MsgExecuteContract,
-  StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { denoms } from "constants/curriencies";
@@ -39,8 +38,7 @@ export default class Account extends Contract {
       },
       [new Coin(denoms.uusd, micro_UST_Amount)]
     );
-    // const fee = await this.estimateFee([depositMsg]);
-    const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
+    const fee = await this.estimateFee([depositMsg]);
     return { msgs: [depositMsg], fee };
   }
 

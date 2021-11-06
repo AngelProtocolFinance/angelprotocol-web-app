@@ -41,6 +41,7 @@ export enum Names {
   luna_apes = "LunApe",
   hero = "Hero",
   community = "Community",
+  west_coast_wonder = "West Coast Wonder",
 }
 
 export type Details = {

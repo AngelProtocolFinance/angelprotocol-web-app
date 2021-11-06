@@ -16,9 +16,9 @@ export default function Description(props: Props) {
         <img
           src={icon}
           alt=""
-          className={`bg-white ${
-            iconLight ? "bg-angel-blue" : ""
-          } p-3 rounded-sm m-1 object-contain mr-4`}
+          className={`bg-white 
+            ${iconLight ? "bg-angel-blue" : ""} 
+            p-3 rounded-sm m-1 object-contain mr-4`}
         />
       </div>
       <div>
