@@ -45,7 +45,7 @@ const KeyPersonProfile = () => {
     );
     actions.setSubmitting(false);
   };
-  
+
   return (
     <div>
       <div className="title mb-10">
