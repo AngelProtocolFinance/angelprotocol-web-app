@@ -52,8 +52,7 @@ export default class Account extends Contract {
         sources: [{ vault: anchorVault, locked: "0", liquid: tokenQty }],
       },
     });
-    // const fee = await this.estimateFee([withdrawMsg]);
-    const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
+    const fee = await this.estimateFee([withdrawMsg]);
     return { msgs: [withdrawMsg], fee };
   }
 
