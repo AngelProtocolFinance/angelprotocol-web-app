@@ -10,11 +10,12 @@ export function DonationInfo({
   isDonate,
   onToggleDonation,
 }: DonationInfoProps) {
+  //eslint-disable-next-line
   const [modalIsOpen, setIsOpen] = useState(false);
   function openInfoModal() {
     setIsOpen(true);
   }
-
+  //eslint-disable-next-line
   function closeInfoModal() {
     setIsOpen(false);
   }

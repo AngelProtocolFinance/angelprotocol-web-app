@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
-import { UploadFiles, useUploadFiles } from "./useUploadFiles";
+import { useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
 import { ToastContainer } from "react-toastify";
 import { useGetter, useSetter } from "store/accessors";

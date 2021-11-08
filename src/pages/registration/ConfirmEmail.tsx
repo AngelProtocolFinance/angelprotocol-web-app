@@ -16,6 +16,7 @@ const ConfirmEmail = () => {
   }
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
+  //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const resendVerificationEmail = async () => {

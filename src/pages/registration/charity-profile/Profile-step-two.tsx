@@ -34,6 +34,7 @@ const ProfileStepTwo = (props: any) => {
     actions.setSubmitting(false);
   };
 
+  //eslint-disable-next-line
   const showInfoModal = (type: any) => {
     setModalType(type);
     setOpenModal(true);

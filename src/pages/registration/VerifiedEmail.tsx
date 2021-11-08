@@ -7,7 +7,7 @@ import Action from "./Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
-import { useGetCharityDataQuery } from "services/aws/charity";
+// import { useGetCharityDataQuery } from "services/aws/charity";
 
 const VerifiedEmail = () => {
   //url = app/register/verify

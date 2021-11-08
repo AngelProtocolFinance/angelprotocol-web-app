@@ -1,4 +1,4 @@
-import { TxLog, Coin, Denom } from "@terra-money/terra.js";
+import { TxLog, Coin } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import { sc } from "contracts/types";
 
