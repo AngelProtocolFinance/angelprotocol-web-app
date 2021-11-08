@@ -30,7 +30,8 @@ export const ContactInfoSchema = Yup.object().shape({
 });
 
 export const useContactDetails = () => {
-  const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
+  // const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
+  const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const history = useHistory();
