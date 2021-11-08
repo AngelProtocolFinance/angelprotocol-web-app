@@ -17,9 +17,10 @@ const RegistrationStatus = () => {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(user));
   }
-  console.log("user => ", user);
+
   const { data, error } = useGetCharityDataQuery(user.PK);
 
+  console.log("user meta data => ", data?.Metadata);
   useEffect(() => {
     if (error) {
       const messageData: any = error;
@@ -28,7 +29,7 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: user.TerraWallet,
+    wallet_address: !!data?.Metadata.TerraWallet,
     document:
       user.ProofOfIdentityVerified &&
       user.ProofOfEmploymentVerified &&

@@ -18,13 +18,15 @@ const UpdateProfile = () => {
   const [firstData, setFirstData] = useState({});
   const [secondData, setSecondData] = useState({});
   let metaData: CharityMetaData = location.state.data;
+
+  console.log("meta data => ", location.state);
   const is_create = !metaData;
   const { saveCharityMetaData, readFileToBase64 } = useUpdateCharityProfile();
 
   let user = useGetter((state) => state.user);
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    // dispatch(updateUserData(user));
   }
 
   const readFiles = async (files: any) => {
@@ -39,6 +41,7 @@ const UpdateProfile = () => {
     if (step === 1) setFirstData(data);
     if (step === 2) {
       metaData = {
+        ...metaData,
         ...firstData,
         ...data,
       };

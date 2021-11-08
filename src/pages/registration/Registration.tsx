@@ -64,6 +64,7 @@ const Registration = () => {
           response.data.Registration.EndowmentAgreementVerified,
       };
       dispatch(updateUserData(data));
+      localStorage.setItem("userData", JSON.stringify(data));
       if (response.data.ContactPerson.EmailVerified)
         history.push({
           pathname: `${url}/${register.status}`,
