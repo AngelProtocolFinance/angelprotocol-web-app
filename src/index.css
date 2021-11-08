@@ -37,6 +37,47 @@
   .scroll-hidden::-webkit-scrollbar {
     display: none; /* for Chrome, Safari, and Opera */
   }
+
+  .MuiGrid-root {
+    justify-content: center;
+  }
+
+  .MuiDialogActions-root {
+    padding: 16px 24px !important;
+  }
+
+  .MuiDialogActions-root button {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgba(245, 151, 0, var(--tw-bg-opacity));
+    border-radius: 0.75rem;
+    width: 8rem;
+    height: 2.5rem;
+  }
+
+  .MuiDropzoneArea-root {
+    min-height: 250px !important;
+    max-height: 250px !important;
+  }
+
+  .MuiDialogActions-root button:disabled {
+    color: white !important;
+    --tw-bg-opacity: 1;
+    background-color: rgba(209, 213, 219, var(--tw-bg-opacity)) !important;
+  }
+
+  .MuiDialogActions-root button:hover {
+    background-color: rgba(245, 151, 0, var(--tw-bg-opacity));
+  }
+
+  .MuiDropzonePreviewList-root {
+    width: 100% !important;
+    margin: 0px !important;
+  }
 }
 
 @layer base {

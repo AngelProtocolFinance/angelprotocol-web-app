@@ -8,8 +8,8 @@ import App from "./App/App";
 import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
-import { store } from "Redux/store";
 import AuthProvider from "contexts/AuthProvider";
+import { store } from "store/store";
 
 ReactDOM.render(
   <React.StrictMode>

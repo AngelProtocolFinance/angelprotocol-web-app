@@ -1,19 +1,20 @@
 import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { FaCheck, FaExclamation } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { UserSlice } from "Redux/slices/userSlice";
 import { app, register, site } from "types/routes";
 import { toast, ToastContainer } from "react-toastify";
-import { useRequestEmailMutation } from "api/registerAPIs";
 import Action from "./Action";
+import { useRequestEmailMutation } from "services/aws/registration";
+import { useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
+// import { useGetCharityDataQuery } from "services/aws/charity";
 
 const VerifiedEmail = () => {
   //url = app/register/verify
   const history = useHistory();
-  const dispatch = useDispatch();
+  //TODO: redux refactor
+  const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-  const { updateUserData } = UserSlice.actions;
 
   const location = history.location;
   const pathNames = location.pathname.split("/");
@@ -28,9 +29,20 @@ const VerifiedEmail = () => {
     CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
     RegistrationDate: jwtData.Registration.RegistrationDate,
     RegistrationStatus: jwtData.Registration.RegistrationStatus,
+    userType: jwtData.user,
+    authorization: jwtData.authorization,
+    token: pathNames[pathNames.length - 1],
+    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
+    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
+    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
+    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
+    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
+    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
   };
+
   if (!is_expired) {
     dispatch(updateUserData(responseData));
+    localStorage.setItem("userData", JSON.stringify(responseData));
   }
 
   const resendVerificationEmail = async () => {

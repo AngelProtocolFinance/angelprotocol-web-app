@@ -5,6 +5,7 @@ import Modal from "components/Modal/Modal";
 import CustodianInfoModal from "../modals/CustodianInfoModal";
 import SelfCustodyInfoModal from "../modals/SelfCustodyInfoModal";
 import { register } from "types/routes";
+import Action from "../Action";
 
 const OtherWallets = () => {
   //url = app/register/other-wallet
@@ -12,7 +13,6 @@ const OtherWallets = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const showInfoModal = (type: any) => {
-    console.log("sadfasdfasdfasdfasdf");
     setModalType(type);
     setOpenModal(true);
   };
@@ -56,14 +56,11 @@ const OtherWallets = () => {
         <p className="text-md">
           Primetrust, coming soon, we'll keep you posted!
         </p>
-        <button
-          className="bg-orange w-72 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => {
-            history.push(register.wallet_check);
-          }}
-        >
-          back
-        </button>
+        <Action
+          onClick={() => history.push(register.wallet_check)}
+          title="Back"
+          classes="bg-thin-blue w-48 h-10"
+        />
       </div>
       {isOpenModal && modalType === "prime_trust" && (
         <Modal>
