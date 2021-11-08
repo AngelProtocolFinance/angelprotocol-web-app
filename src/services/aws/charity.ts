@@ -1,12 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
+import { aws } from "./aws";
 
-export const charityAPIs = createApi({
-  reducerPath: "charityAPIs",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-  }),
+const charity_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     addCharityMetadata: builder.mutation<any, any>({
       query: (data) => {
@@ -57,4 +51,4 @@ export const {
   useGetCharityDataQuery,
   useGetCharityListEndowmentQuery,
   useUpdateCharityMetadataMutation,
-} = charityAPIs;
+} = charity_api;

@@ -1,12 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
+import { aws } from "./aws";
 
-export const registerAPIs = createApi({
-  reducerPath: "registerAPIs",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-  }),
+const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getRegisteredCharities: builder.mutation<any, any>({
       query: (data) => {
@@ -72,6 +66,16 @@ export const registerAPIs = createApi({
         };
       },
     }),
+    updateCharityDocs: builder.mutation<any, any>({
+      query: (data) => {
+        return {
+          url: `registration`,
+          params: { uuid: data.PK },
+          method: "PUT",
+          body: data.body,
+        };
+      },
+    }),
   }),
 });
 
@@ -81,4 +85,5 @@ export const {
   useRequestEmailMutation,
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
-} = registerAPIs;
+  useUpdateCharityDocsMutation,
+} = registration_api;

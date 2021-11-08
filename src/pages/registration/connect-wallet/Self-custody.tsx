@@ -1,6 +1,7 @@
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router";
 import { register } from "types/routes";
+import Action from "../Action";
 
 const SelfCustody = () => {
   //url = app/register/self-custody
@@ -16,12 +17,7 @@ const SelfCustody = () => {
       </div>
       <div className="text-center">
         <div className="flex items-center pt-3 justify-center mb-10">
-          <button
-            className="bg-thin-blue w-72 h-10 rounded-xl uppercase text-base font-bold text-white mr-1"
-            onClick={() => {
-              history.push(register.connect_wallet);
-            }}
-          >
+          <button className="bg-thin-blue w-72 h-10 rounded-xl uppercase text-base font-bold text-white mr-1">
             take me to the tutorial
           </button>
           <BsExclamationCircle
@@ -39,14 +35,11 @@ const SelfCustody = () => {
         </p>
       </div>
       <div className="mt-5">
-        <button
-          className="bg-orange w-72 h-10 rounded-xl uppercase text-base font-bold text-white mt-3"
-          onClick={() => {
-            history.push(register.others);
-          }}
-        >
-          back
-        </button>
+        <Action
+          onClick={() => history.push(register.others)}
+          title="Back"
+          classes="bg-thin-blue w-48 h-10"
+        />
       </div>
     </div>
   );
