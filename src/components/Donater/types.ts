@@ -8,6 +8,17 @@ export interface Values {
   currency: denoms.uusd | denoms.btc | denoms.ether;
 }
 
+export interface XFI {
+  bitcoin?: any;
+  ethereum?: any;
+  //others to add if needed
+}
+
+export interface DWindow extends Window {
+  ethereum: any;
+  xfi?: XFI;
+}
+
 interface ToFund {
   to: "fund";
   receiver?: number;

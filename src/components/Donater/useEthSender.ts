@@ -61,7 +61,8 @@ export default function useEthSender() {
       showModal<ResProps>(Result, {
         sent: +data.amount,
         received: +data.amount,
-        url: `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
+        // url: `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
+        url: `https://ropsten.etherscan.io/tx/${receipt.transactionHash}`,
         denom: denoms.ether,
         precision: 7,
       });
