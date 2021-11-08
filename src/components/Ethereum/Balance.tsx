@@ -11,6 +11,7 @@ export default function Balance(props: Props) {
       <img
         src={currency_icons[props.denom] || currency_icons.coin}
         className="w-7 h-7 mr-2 object-contain"
+        alt=""
       />
       <span className="uppercase text-sm font-bold mr-2 text-angel-grey">
         {currency_text[props.denom] || currency_text.coin}

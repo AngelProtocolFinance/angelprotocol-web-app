@@ -1,21 +1,21 @@
 import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsForm";
-import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { TStore } from "Redux/store";
+import { useGetter } from "store/accessors";
 
 const ContactDetails = () => {
-  const { userData } = useSelector((state: TStore) => state.user);
+  const user = useGetter((state) => state.user);
   return (
     <div>
       <h3 className="text-3xl font-bold mb-10">
-        Let's start with your contact details.
+        {user
+          ? "Update your contact details."
+          : "Let's start with your contact details."}
       </h3>
       <p className="text-xl mb-6">
-        This information will let us know more about your organization and who
-        you are. Once this form is submitted, you will be able to resume your
-        registration if it gets interrupted in the future.
+        {!user &&
+          "This information will let us know more about your organization and who you are. Once this form is submitted, you will be able to resume your registration if it gets interrupted in the future."}
       </p>
-      <ContactDetailsForm contactData={userData} />
+      <ContactDetailsForm contactData={user} />
       <ToastContainer />
     </div>
   );

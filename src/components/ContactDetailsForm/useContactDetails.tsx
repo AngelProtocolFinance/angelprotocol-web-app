@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 import { register } from "types/routes";
 import { ContactDetails } from "./ContactDetailsForm";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
-} from "api/registerAPIs";
-import { useDispatch } from "react-redux";
-import { UserSlice } from "Redux/slices/userSlice";
-import { toast } from "react-toastify";
+} from "services/aws/registration";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 export const ContactInfoSchema = Yup.object().shape({
   charityName: Yup.string().required(
@@ -24,15 +24,19 @@ export const ContactInfoSchema = Yup.object().shape({
   orgRole: Yup.string().required(
     "Please select your role within your organization."
   ),
+  checkedPolicy: Yup.bool()
+    .required("Please check Privacy Policy")
+    .oneOf([true], "Field must be checked"),
 });
 
 export const useContactDetails = () => {
-  const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
+  // const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
+  const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const history = useHistory();
-  const dispatch = useDispatch();
-  const { updateUserData } = UserSlice.actions;
+  const dispatch = useSetter();
+  const user = useGetter((state) => state.user);
 
   async function saveContactInfo(
     contactData: ContactDetails,
@@ -68,10 +72,10 @@ export const useContactDetails = () => {
       result = response.data ? response.data : response.error.data;
     }
 
-    console.log("res =>", result);
     if (result.UUID || result.message === "Updated successfully!") {
       dispatch(
         updateUserData({
+          ...user,
           ...postData.ContactPerson,
           CharityName: postData.Registration.CharityName,
           RegistrationDate: new Date().toISOString(),
@@ -90,15 +94,7 @@ export const useContactDetails = () => {
             ...postData.ContactPerson,
             CharityName: postData.Registration.CharityName,
           },
-        }); /// use API hook
-        // await BuildEmail({
-        //   uuid: result.UUID,
-        //   type: "verify-email",
-        //   body: {
-        //     ...postData.ContactPerson,
-        //     CharityName: postData.Registration.CharityName,
-        //   },
-        // });
+        });
         history.push(register.confirm);
       }
     } else {

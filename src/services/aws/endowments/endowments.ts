@@ -1,14 +1,7 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { aws_endpoint } from "constants/urls";
+import { aws } from "../aws";
 import { Result, Lookup, Accounts, Endowment } from "./types";
 
-//TODO: restructure api categories and reducer nesting
-export const endowmentAPI = createApi({
-  reducerPath: "endowmentAPI",
-  baseQuery: fetchBaseQuery({
-    baseUrl: aws_endpoint,
-    mode: "cors",
-  }),
+const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
       query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
@@ -51,4 +44,4 @@ export const endowmentAPI = createApi({
 });
 
 export const { useLookupQuery, useAccountsQuery, useEndowmentsQuery } =
-  endowmentAPI;
+  endowments_api;

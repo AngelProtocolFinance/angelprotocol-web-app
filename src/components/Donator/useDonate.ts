@@ -4,7 +4,7 @@ import createStatusFromError from "./createStatusFromError";
 import Indexfund from "contracts/IndexFund";
 import useUSTBalance from "hooks/useUSTBalance";
 import { FormikHelpers } from "formik";
-import { AccAddress, Denom } from "@terra-money/terra.js";
+import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
