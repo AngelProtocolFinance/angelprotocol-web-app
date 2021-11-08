@@ -21,8 +21,18 @@ export default function DonateForm() {
       </div>
       <p className="text-angel-grey uppercase font-bold my-2">Split</p>
       <div className="grid grid-cols-2 gap-2 mb-2">
-        <Portion type="liquid" />
-        <Portion type="locked">
+        <Portion
+          type="liquid"
+          border_class="border-angel-blue"
+          text_class="text-blue-accent"
+          title="Readily available"
+        />
+        <Portion
+          type="locked"
+          border_class="border-green-400"
+          text_class="text-green-400"
+          title="Compunded Forever"
+        >
           <Slider />
         </Portion>
       </div>

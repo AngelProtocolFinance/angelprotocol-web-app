@@ -5,9 +5,10 @@ import { useFormContext } from "react-hook-form";
 
 export default function Amount() {
   const denomRef = useRef<denoms>(denoms.uusd);
-  const { register, watch, setValue } = useFormContext<Values>();
+  const { register, watch, setValue, formState } = useFormContext<Values>();
   const denom = watch("currency");
 
+  console.log(formState.errors);
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
@@ -32,6 +33,7 @@ export default function Amount() {
         placeholder={currency_text[denom]}
         className="p-1 pl-0 outline-none border-b mb-2 text-angel-grey text-lg"
       />
+      <p>{formState.errors.amount?.message}</p>
     </div>
   );
 }
