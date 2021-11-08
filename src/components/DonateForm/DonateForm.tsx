@@ -14,7 +14,7 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Amount />
-      <div className="flex gap-2 mb-3">
+      <div className="flex gap-2 mb-3 mt-0.5">
         <Currency currency={denoms.uusd} />
         <Currency currency={denoms.ether} />
         <Currency currency={denoms.btc} />
@@ -38,7 +38,7 @@ export default function DonateForm() {
       </div>
       <button
         disabled={isSubmitting}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-b-md rounded-t-sm mt-2 uppercase text-sm text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         submit

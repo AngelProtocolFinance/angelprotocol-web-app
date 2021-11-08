@@ -2,7 +2,7 @@ import { useSetModal } from "components/Nodal/Nodal";
 import { ap_wallets } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
-import { useState } from "react";
+// import { useState } from "react";
 import { useWallet } from "use-wallet";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
 import { DWindow } from "./types";

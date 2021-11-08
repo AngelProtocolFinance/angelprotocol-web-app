@@ -1,11 +1,12 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { useWallet as useEthWallet } from "use-wallet";
-import { useEffect, useState } from "react";
-import { Wallets, WalletStates } from "./types";
+import { useEffect } from "react";
+import { useSetter } from "store/accessors";
+import { setLoading, setActive } from "services/wallet/walletSlice";
+import { Wallets, WalletStates } from "services/wallet/types";
 
 export default function useWalletSuite() {
-  const [activeWallet, setActiveWallet] = useState<Wallets>(Wallets.none);
-
+  const dispatch = useSetter();
   const { status: ethStatus } = useEthWallet();
 
   const ethConnected = ethStatus === "connected";
@@ -27,15 +28,20 @@ export default function useWalletSuite() {
   const connectedWallet = walletStates.find((walletState) => walletState[1]);
 
   useEffect(() => {
+    dispatch(setLoading(isLoading));
+    //eslint-disable-next-line
+  }, [isLoading]);
+
+  useEffect(() => {
     if (connectedWallet) {
       const [wallet] = connectedWallet;
-      setActiveWallet(wallet);
+      dispatch(setActive(wallet));
     } else {
-      setActiveWallet(Wallets.none);
+      dispatch(setActive(Wallets.none));
     }
-    return () => setActiveWallet(Wallets.none);
+    return () => {
+      dispatch(setActive(Wallets.none));
+    };
     //eslint-disable-next-line
   }, [connectedWallet]);
-
-  return { isLoading, activeWallet };
 }

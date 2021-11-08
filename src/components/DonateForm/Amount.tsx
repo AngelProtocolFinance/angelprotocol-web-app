@@ -2,19 +2,25 @@ import { Values } from "components/Donater/types";
 import { currency_text, denoms } from "constants/currency";
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 export default function Amount() {
   const denomRef = useRef<denoms>(denoms.uusd);
-  const { register, watch, setValue, formState } = useFormContext<Values>();
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useFormContext<Values>();
   const denom = watch("currency");
 
-  console.log(formState.errors);
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
       setValue("amount", "", { shouldValidate: false });
     }
     denomRef.current = denom;
+    //eslint-disable-next-line
   }, [denom]);
 
   return (
@@ -31,9 +37,14 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={currency_text[denom]}
-        className="p-1 pl-0 outline-none border-b mb-2 text-angel-grey text-lg"
+        className="p-1 pl-0 outline-none border-b text-angel-grey text-lg"
       />
-      <p>{formState.errors.amount?.message}</p>
+      <ErrorMessage
+        errors={errors}
+        name="amount"
+        as="span"
+        className="text-red-400 text-xs mb-1 mt-0.5"
+      />
     </div>
   );
 }

@@ -119,6 +119,7 @@ function useTerraSender(receiver?: string | number) {
         resume: () => _process.next("resume"),
         cancel: () => _process.next("cancel"),
       });
+
       //this handler is done at this point and transfer control to modal
     } catch (err) {
       displayTerraError(err, showModal);

@@ -1,15 +1,15 @@
 import { setIcon } from "components/WalletSuite/manageIcon";
 import Warning, { Props } from "components/WalletSuite/Warning";
-import { useGetState } from "components/WalletSuite/WalletSuite";
 import { Connectors, dWindow, Icons } from "components/WalletSuite/types";
 import { useWallet } from "use-wallet";
 import { useSetModal } from "components/Nodal/Nodal";
+import { useGetter } from "store/accessors";
 
 export default function useAction(type: Connectors, icon: Icons) {
   let modIcon = icon;
   const dwindow: dWindow = window;
   const wallet = useWallet();
-  const { isLoading } = useGetState();
+  const { isLoading } = useGetter((state) => state.wallet);
   const { showModal } = useSetModal();
 
   async function handleConnect() {

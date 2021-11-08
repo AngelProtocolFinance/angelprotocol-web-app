@@ -1,21 +1,47 @@
-// import { IoWallet } from "react-icons/io5";
-import { Props, State, Wallets } from "./types";
-import { createContext, useContext } from "react";
-import useWalletSuite from "./useWalletSuite";
+import { IoWalletSharp } from "react-icons/io5";
+import TerraDisplay from "components/TerraStation/Display";
+import EthDisplay from "components/Ethereum/Display";
+import { useEffect, useState } from "react";
+import Connectors from "./Connectors";
+import { useGetter } from "store/accessors";
+import { Wallets } from "services/wallet/types";
 
-export default function WalletSuite(props: Props) {
-  const { isLoading, activeWallet } = useWalletSuite();
+export default function WalletSuite() {
+  const [connectorsShown, showConnectors] = useState(false);
+  const { activeWallet, isLoading } = useGetter((state) => state.wallet);
+  const isConnected = activeWallet !== Wallets.none;
+
+  //close modal after connecting
+  useEffect(() => {
+    isConnected && showConnectors(false);
+    //eslint-disable-next-line
+  }, [isConnected]);
+
+  const toggleConnector = () => showConnectors((p) => !p);
+  const hideConnectors = () => showConnectors(false);
 
   return (
-    <getContext.Provider value={{ activeWallet, isLoading }}>
-      {props.children}
-    </getContext.Provider>
+    <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">
+      {!isConnected && (
+        <button
+          className="flex py-2 px-3 items-center text-white  "
+          disabled={isLoading}
+          onClick={toggleConnector}
+        >
+          {activeWallet === Wallets.none && (
+            <IoWalletSharp className="text-white text-xl mr-2" />
+          )}
+          <span>{isLoading ? "Initializing" : "Connect"}</span>
+        </button>
+      )}
+      {displays[activeWallet]}
+      {connectorsShown && <Connectors closeHandler={hideConnectors} />}
+    </div>
   );
 }
 
-const getContext = createContext<State>({
-  activeWallet: Wallets.none,
-  isLoading: false,
-});
-
-export const useGetState = () => useContext(getContext);
+const displays = {
+  [Wallets.none]: null,
+  [Wallets.ethereum]: <EthDisplay />,
+  [Wallets.terra]: <TerraDisplay />,
+};

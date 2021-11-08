@@ -8,7 +8,7 @@ import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
-import { useFormContext } from "react-hook-form";
+// import { useFormContext } from "react-hook-form";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();

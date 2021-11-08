@@ -1,6 +1,6 @@
 import ErrPop, { Props as ErrProps } from "./ErrPop";
-import Waiter, { Props as WaitProps } from "./Waiter";
-import Result, { Props as ResProps } from "./Result";
+// import Waiter, { Props as WaitProps } from "./Waiter";
+// import Result, { Props as ResProps } from "./Result";
 import { useSetModal } from "components/Nodal/Nodal";
 import { chains } from "contracts/types";
 import { useWallet } from "use-wallet";
@@ -10,9 +10,12 @@ import { ap_wallets } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import displayEthError from "./displayEthError";
+import { useSetter } from "store/accessors";
+import { setPending } from "services/wallet/walletSlice";
 
 export default function useEthSender() {
   const wallet = useWallet();
+  const dispatch = useSetter();
   const { reset } = useFormContext();
   const { showModal } = useSetModal();
 
@@ -54,18 +57,20 @@ export default function useEthSender() {
         value: wei_amount,
       });
 
-      showModal<WaitProps>(Waiter, {});
+      dispatch(setPending({ amount: +data.amount, hash: response.hash }));
 
-      const receipt = await response.wait();
+      // showModal<WaitProps>(Waiter, {});
 
-      showModal<ResProps>(Result, {
-        sent: +data.amount,
-        received: +data.amount,
-        // url: `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
-        url: `https://ropsten.etherscan.io/tx/${receipt.transactionHash}`,
-        denom: denoms.ether,
-        precision: 7,
-      });
+      // const receipt = await response.wait();
+
+      // showModal<ResProps>(Result, {
+      //   sent: +data.amount,
+      //   received: +data.amount,
+      //   // url: `https://kovan.etherscan.io/tx/${receipt.transactionHash}`,
+      //   url: `https://ropsten.etherscan.io/tx/${receipt.transactionHash}`,
+      //   denom: denoms.ether,
+      //   precision: 7,
+      // });
     } catch (error) {
       displayEthError(error, showModal);
     } finally {
