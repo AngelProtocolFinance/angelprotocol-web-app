@@ -99,12 +99,6 @@ export default function UserForm(props: Props) {
 
       {showKYCForm ? (
         <div className="col-span-2 text-white-grey font-semibold">
-          <p className="my-2 text-sm text-center">
-            Please note that our tax receipts are issued by an US-based
-            501(c)(3) nonprofit. Please consult with your local lawyer,
-            accountant or tax advisor to determine the eligibility of your
-            donation for a tax relief in your country of residence.
-          </p>
           <KYCForm />
         </div>
       ) : null}
