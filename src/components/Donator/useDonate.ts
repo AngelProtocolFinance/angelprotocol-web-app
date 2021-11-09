@@ -71,6 +71,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
       );
       const estimatedFee =
         transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
+      const transactionMessage: any = transaction.msgs[0];
+      const fundId = transactionMessage.execute_msg.deposit.fund_id;
 
     
 
@@ -109,7 +111,14 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           let valuesToBeSubmitted: any = values;
           valuesToBeSubmitted["walletAddress"] = wallet.walletAddress;
           valuesToBeSubmitted["denomination"] = "UST";
+          valuesToBeSubmitted["fundId"] = fundId;
           valuesToBeSubmitted["transactionId"] = txInfo.txhash;
+          valuesToBeSubmitted["transactionDate"] = new Date().toLocaleString([], {
+            dateStyle: "long",
+            timeStyle: "short",
+            hour12: false,
+          });
+          Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
 
           // Auth token to be passed as part of the header of the request
           const authToken = createAuthToken("angelprotocol-web-app");
@@ -122,7 +131,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
             },
           };
 
-          const response: any = await logDonationTransaction(postData); // Logs all donation transactions
+          const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
           const result = response.error ? response.error.data.message : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
 
           setStatus({

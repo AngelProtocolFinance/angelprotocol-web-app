@@ -28,6 +28,14 @@ export default function Donator(props: Props) {
             amount: "",
             split: minLocked,
             receiptRequested: false,
+            fullName: "",
+            email: "",
+            streetAddress: "",
+            addressComplement: "",
+            city: "",
+            zipCode: "",
+            stateAddress: "",
+            country: "",
           }}
           onSubmit={handleDonate}
           validationSchema={donatorSchema}
