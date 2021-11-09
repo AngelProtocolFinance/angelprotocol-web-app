@@ -18,7 +18,6 @@ export default function UserForm(props: Props) {
   const showKYCForm = values.receiptRequested;
   const minLocked = 100 - (props?.maxSplitLiq || 50);
   const maxLocked = 100 - (props?.minSplitLiq || 0);
-  console.log("Form Values:", values);
 
   return (
     <Form className="grid grid-cols-2 p-4 rounded-md ">

@@ -8,6 +8,7 @@ import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
 import { denoms } from "constants/curriencies";
+import createAuthToken from "helpers/createAuthToken";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
@@ -100,9 +101,29 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
         if (!txInfo.code) {
           const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
+
+          // Every transaction is recorded in our APES AWS DynamoDB donations table
+          let successMessage: string;
+          let valuesToBeSubmitted: any = values; // TO DO: Specify a type here instead of just "any"
+          valuesToBeSubmitted["walletAddress"] = wallet.walletAddress;
+          valuesToBeSubmitted["denomination"] = "UST";
+          valuesToBeSubmitted["transactionId"] = txInfo.txhash;
+          console.log("Submitted Values:", valuesToBeSubmitted);
+
+          // When a Tax Receipt is requested, an email will be sent to them
+          if (values.receiptRequested) {
+            successMessage = "Thank you for your donation! Check your email later for the Tax Receipt.";
+          } else {
+            successMessage = "Thank you for your donation!";
+          }
+
+          // Auth token to be passed as part of the header of the request
+          const authToken = createAuthToken("angelprotocol-web-app");
+          console.log("Token:", authToken);
+          // CALL APES ENDPOINT HERE
           setStatus({
             step: Steps.success,
-            message: `Thank you for your donation!`,
+            message: successMessage,
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
