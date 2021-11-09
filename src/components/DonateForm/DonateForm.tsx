@@ -1,7 +1,7 @@
 import { denoms } from "constants/currency";
-import Portion from "./Portion";
+// import Portion from "./Portion";
 import Currency from "./Currency";
-import Slider from "./Slider";
+// import Slider from "./Slider";
 import Amount from "./Amount";
 import useSubmit from "./useSubmit";
 import Breakdown from "./Breakdown";
@@ -28,7 +28,7 @@ export default function DonateForm() {
         <Currency currency={denoms.btc} />
       </div>
       <Breakdown />
-      <p className="text-angel-grey uppercase font-bold mb-2 mt-4">Split</p>
+      {/* <p className="text-angel-grey uppercase font-bold mb-2 mt-4">Split</p>
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="liquid"
@@ -44,13 +44,13 @@ export default function DonateForm() {
         >
           <Slider />
         </Portion>
-      </div>
+      </div> */}
       <button
         disabled={isSubmitting || loading || !!error}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        submit
+        {loading ? "estimating fee.." : "submit"}
       </button>
     </form>
   );

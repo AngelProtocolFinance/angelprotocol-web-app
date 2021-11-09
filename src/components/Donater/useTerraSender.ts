@@ -3,84 +3,39 @@ import { useFormContext } from "react-hook-form";
 import { Values as Data, Values } from "components/Donater/types";
 import { useSetModal } from "components/Nodal/Nodal";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
-import Estimates, { Props as EstProps } from "./Estimates";
 import Result, { Props as ResProps } from "./Result";
 import Waiter, { Props as WaitProps } from "./Waiter";
 import getDepositAmount from "./getDepositAmount";
-import Indexfund from "contracts/IndexFund";
-import Account from "contracts/Account";
-import { denoms } from "constants/currency";
-import useUSTBalance from "hooks/useUSTBalance";
 import displayTerraError from "./displayTerraError";
-import useEstimator from "./useEstimator";
+import useTerraEstimator from "./useTerraEstimator";
+import Contract from "contracts/Contract";
 
 function useTerraSender(receiver?: string | number) {
   const { reset } = useFormContext<Values>();
   const wallet = useConnectedWallet();
-  const UST_balance = useUSTBalance();
-  const { showModal, hideModal } = useSetModal();
-  useEstimator();
+  const { showModal } = useSetModal();
+  const tx = useTerraEstimator();
 
-  async function* process(data: Data) {
+  async function sender(data: Data) {
     const UST_amount = data.amount;
-    const liquid_split = 100 - Number(data.split);
-
-    //submitting is true once this sender is fired
-    if (!wallet) {
-      showModal<ErrProps>(ErrPop, {
-        desc: "No Terra wallet is currently connected",
-      });
-      return;
-    }
-    yield;
-
-    if (UST_balance < +UST_amount) {
-      showModal<ErrProps>(ErrPop, { desc: "Not enough balance" });
-      return;
-    }
-    yield;
+    // const liquid_split = 100 - Number(data.split);
 
     try {
-      let contract;
-      //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
-      if (typeof receiver === "number" || typeof receiver === "undefined") {
-        contract = new Indexfund(wallet, receiver);
-        const tcaMembers = await contract.getTCAList();
-        const isTca = tcaMembers.includes(wallet.walletAddress);
-        if (!isTca) {
-          showModal<ErrProps>(ErrPop, {
-            desc: "Your wallet is not included in TCA list",
-          });
-          return;
-        }
-        yield;
-      } else {
-        contract = new Account(receiver, wallet);
-      }
-      const transaction = await contract.createDepositTx(
-        UST_amount,
-        liquid_split
-      );
-
-      const estimatedFee = transaction
-        .fee!.amount.get(denoms.uusd)!
-        .mul(1e-6)
-        .amount.toNumber();
-
-      //pause to show user fees
-      const res: "resume" | "cancel" = yield estimatedFee;
-      if (res === "cancel") {
-        hideModal();
-        reset();
+      if (!wallet) {
+        showModal<ErrProps>(ErrPop, {
+          desc: "No Terra wallet is currently connected",
+        });
         return;
       }
 
-      const response = await wallet.post(transaction);
+      const response = await wallet.post(tx!);
+
       if (response.success) {
         showModal<WaitProps>(Waiter, {
           url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
         });
 
+        const contract = new Contract(wallet);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
@@ -105,26 +60,6 @@ function useTerraSender(receiver?: string | number) {
       displayTerraError(err, showModal);
     } finally {
       reset();
-    }
-  }
-
-  async function sender(data: Data) {
-    try {
-      const _process = process(data);
-      if ((await _process.next()).done) return; //wallet check
-      if ((await _process.next()).done) return; //balance check
-      if ((await _process.next()).done) return; //tca check
-      const fee = (await _process.next()).value;
-      showModal<EstProps>(Estimates, {
-        fee: fee as number,
-        amount: +data.amount,
-        resume: () => _process.next("resume"),
-        cancel: () => _process.next("cancel"),
-      });
-
-      //this handler is done at this point and transfer control to modal
-    } catch (err) {
-      displayTerraError(err, showModal);
     }
   }
 

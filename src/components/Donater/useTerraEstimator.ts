@@ -8,24 +8,31 @@ import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 import useDebouncer from "./useDebouncer";
 
-export default function useEstimator() {
+export default function useTerraEstimator() {
   const { watch, setValue } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
 
-  const amount = watch("amount");
-  const debounced_amount = useDebouncer(amount, 1000);
-  console.log("deb", debounced_amount);
+  const amount = Number(watch("amount")) || 0;
+  const currency = watch("currency");
+  const debounced_amount = useDebouncer(amount, 500);
 
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
-          setValue("form_error", "Wallet is not connected");
+        //don't run this estimator when currency is not UST
+        if (currency !== denoms.uusd) {
           return;
         }
-        if (debounced_amount === 0 || !debounced_amount) {
+
+        setValue("form_error", "");
+        if (!wallet) {
+          setValue("form_error", "Terra wallet is not connected");
+          return;
+        }
+        if (!debounced_amount) {
+          setValue("fee", 0);
           return;
         }
 
@@ -37,7 +44,8 @@ export default function useEstimator() {
           setValue("form_error", "Wallet not included in TCA list");
           return;
         }
-        const tx = await contract.createDepositTx(debounced_amount, 50);
+
+        const tx = await contract.createDepositTx(debounced_amount, 0);
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
           .mul(1e-6)
@@ -50,8 +58,6 @@ export default function useEstimator() {
 
         setValue("fee", estimatedFee);
         setTx(tx);
-        //if successful, and reaches this line, clear error
-        setValue("form_error", "");
       } catch (err) {
         console.error(err);
         setValue("form_error", "Error estimating transaction");
@@ -59,6 +65,8 @@ export default function useEstimator() {
         setValue("loading", false);
       }
     })();
-  }, [debounced_amount, wallet, UST_balance]);
+    //eslint-disable-next-line
+  }, [debounced_amount, wallet, UST_balance, currency]);
+
   return tx;
 }

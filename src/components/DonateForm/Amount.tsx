@@ -17,7 +17,7 @@ export default function Amount() {
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
-      setValue("amount", 0, { shouldValidate: false });
+      setValue("amount", "", { shouldValidate: false });
     }
     denomRef.current = denom;
     //eslint-disable-next-line
@@ -35,7 +35,7 @@ export default function Amount() {
         {...register("amount")}
         autoComplete="off"
         id="amount"
-        type="number"
+        type="text"
         placeholder={currency_text[denom]}
         className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-lg"
       />

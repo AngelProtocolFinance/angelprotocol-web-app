@@ -3,7 +3,7 @@ import { denoms } from "constants/currency";
 import { ReactNode } from "react";
 
 export interface Values {
-  amount: number;
+  amount: string;
   split: string;
   currency: denoms.uusd | denoms.btc | denoms.ether;
   fee: number;
