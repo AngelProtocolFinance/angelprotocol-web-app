@@ -2,12 +2,16 @@ import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FaCheck } from "react-icons/fa";
 import * as Yup from "yup";
-import { useAddCharityMetadataMutation } from "services/aws/charity";
+import {
+  useAddCharityMetadataMutation,
+  useGetCharityDataQuery,
+} from "services/aws/charity";
 import { toast, ToastContainer } from "react-toastify";
 import Action from "../Action";
 import { register } from "types/routes";
 import { useHistory } from "react-router";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.string().required("Please enter your wallet address."),
@@ -22,6 +26,8 @@ const ConnectWallet = () => {
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const user = useGetter((state) => state.user);
   const history = useHistory();
+  const dispatch = useSetter();
+  const { data, error } = useGetCharityDataQuery(user.PK);
 
   const onConnectWallet = async (
     values: Values,
@@ -50,6 +56,19 @@ const ConnectWallet = () => {
       } else {
         toast.success("Your wallet address was saved successfully.");
         setSuccess(true);
+        dispatch(
+          updateUserData({
+            ...user,
+            TerraWallet: values.wallet_number,
+          })
+        );
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            ...user,
+            TerraWallet: values.wallet_number,
+          })
+        );
       }
     }
   };
@@ -70,7 +89,10 @@ const ConnectWallet = () => {
       <div className="wallet-info">
         <div>
           <Formik
-            initialValues={{ wallet_number: "" }}
+            initialValues={{
+              wallet_number:
+                user.TerraWallet || data.Metadata.TerraWallet || "",
+            }}
             validationSchema={WalletSchema}
             onSubmit={onConnectWallet}
           >
@@ -83,7 +105,6 @@ const ConnectWallet = () => {
                     </p>
                   )}
                   <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                    <span className="text-black px-1">terra</span>
                     <Field
                       type="text"
                       className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"

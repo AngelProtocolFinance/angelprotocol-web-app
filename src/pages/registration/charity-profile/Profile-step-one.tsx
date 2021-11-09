@@ -34,6 +34,9 @@ const ProfileStepOne = (props: any) => {
     setModalType(type);
     setOpenModal(true);
   };
+
+  console.log("modal type => ", modalType);
+  console.log("modal open => ", isOpenModal);
   return (
     <div>
       <div>

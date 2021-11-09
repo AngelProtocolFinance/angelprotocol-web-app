@@ -29,7 +29,7 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: !!data?.Metadata.TerraWallet,
+    wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
     document:
       user.ProofOfIdentityVerified &&
       user.ProofOfEmploymentVerified &&
@@ -128,7 +128,10 @@ const RegistrationStatus = () => {
                     : "bg-thin-blue w-40 h-10"
                 }
                 title={status.document === 2 ? "Change" : "Continue"}
-                disabled={user.PK === "" || !data?.Metadata}
+                disabled={
+                  user.PK === "" ||
+                  !(user.TerraWallet || data?.Metadata?.TerraWallet)
+                }
               />
             </div>
           </div>
@@ -171,7 +174,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              {user.IsMetaDataCompleted ? (
+              {data?.Metadata?.CompanyNumber ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -180,7 +183,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  user.IsMetaDataCompleted
+                  data?.Metadata?.CompanyNumber
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -193,14 +196,14 @@ const RegistrationStatus = () => {
                   })
                 }
                 disabled={user.PK === ""}
-                title={user.IsMetaDataCompleted ? "Complete" : "Continue"}
+                title={data?.Metadata?.CompanyNumber ? "Complete" : "Continue"}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              {user?.IsKeyPersonCompleted ? (
+              {data?.KeyPerson ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -209,7 +212,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  user.IsKeyPersonCompleted
+                  data?.KeyPerson
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -221,7 +224,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title={user.IsKeyPersonCompleted ? "Change" : "Continue"}
+                title={data?.KeyPerson ? "Change" : "Continue"}
                 disabled={user.PK === ""}
               />
             </div>

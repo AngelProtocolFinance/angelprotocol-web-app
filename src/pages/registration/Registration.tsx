@@ -8,7 +8,7 @@ import Action from "./Action";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { useGetLambdaAuthTokenMutation } from "services/aws/auth";
 import { useSetter } from "store/accessors";
-import { updateUserData } from "services/user/userSlice";
+import { removeUserData, updateUserData } from "services/user/userSlice";
 
 export type ReferInfo = {
   refer: string;
@@ -83,6 +83,9 @@ const Registration = () => {
       pathname: `${url}/${register.confirm}`,
       state: { is_sent: true },
     });
+  } else {
+    localStorage.setItem("userData", JSON.stringify({}));
+    dispatch(removeUserData());
   }
 
   return (
