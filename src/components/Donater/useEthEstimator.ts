@@ -42,11 +42,12 @@ export default function useEthEstimator() {
         setValue("loading", true);
         const wei_balance = BigNumber.from(wallet.balance);
         const wei_amount = utils.parseEther(debounced_amount.toString());
+
+        //initial balance check to ensure estimate will run
         if (wei_amount.gt(wei_balance)) {
           setValue("form_error", "Not enough balance");
           return;
         }
-
         const raw_transaction = {
           to: ap_wallets[denoms.ether][chains.ropsten],
           value: wei_amount,
@@ -59,6 +60,12 @@ export default function useEthEstimator() {
         const gas = await signer.estimateGas(raw_transaction);
         const big_fee = gas.mul(fee_data.maxFeePerGas!);
         const eth_fee = +utils.formatEther(big_fee);
+
+        //2nd balance check including estimated fee
+        if (wei_amount.gt(wei_balance.add(big_fee))) {
+          setValue("form_error", "Not enough balance");
+          return;
+        }
 
         setTx(raw_transaction);
         setValue("fee", eth_fee);

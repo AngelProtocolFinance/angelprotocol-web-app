@@ -45,13 +45,20 @@ export default function useTerraEstimator() {
           return;
         }
 
+        //initial balance check to successfully run estimate
+        if (debounced_amount >= UST_balance) {
+          setValue("form_error", "Not enough balance");
+          return;
+        }
+
         const tx = await contract.createDepositTx(debounced_amount, 0);
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
           .mul(1e-6)
           .amount.toNumber();
 
-        if (estimatedFee + debounced_amount > UST_balance) {
+        //2nd balance check including fees
+        if (debounced_amount + estimatedFee >= UST_balance) {
           setValue("form_error", "Not enough balance");
           return;
         }
