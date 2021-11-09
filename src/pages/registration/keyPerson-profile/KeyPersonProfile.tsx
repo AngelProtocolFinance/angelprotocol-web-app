@@ -12,20 +12,27 @@ import { ToastContainer } from "react-toastify";
 import Action from "../Action";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { useGetCharityDataQuery } from "services/aws/charity";
 
 const KeyPersonProfile = () => {
   //url = app/register/charity-profile
   const [fileContent, setFileContent] = useState("");
   const location: any = useLocation();
   const dispatch = useSetter();
-  const keyPersonData = location.state.data;
   const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
+  let user = useGetter((state) => state.user);
+  let keyPersonData = location.state.data;
+  const { data, error } = useGetCharityDataQuery(user.PK);
+
+  if (!location.state.data && user.IsKeyPersonCompleted) {
+    keyPersonData = data.KeyPerson;
+  }
+
   const [openDropzone, setOpenDropzone] = useState(
     keyPersonData?.HeadshotPicture && true
   );
   const history = useHistory();
 
-  let user = useGetter((state) => state.user);
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(user));
@@ -44,11 +51,20 @@ const KeyPersonProfile = () => {
     actions: FormikHelpers<KeyPersoData>
   ) => {
     actions.setSubmitting(true);
-    await saveKeyPersonData(
+    const flag = await saveKeyPersonData(
       updatedkeyPersonData,
       fileContent,
       !keyPersonData?.FullName
     );
+
+    if (flag) {
+      dispatch(
+        updateUserData({
+          ...user,
+          IsKeyPersonCompleted: true,
+        })
+      );
+    }
     actions.setSubmitting(false);
   };
 
@@ -205,9 +221,10 @@ const KeyPersonProfile = () => {
                       <div className="flex items-end">
                         <img
                           src={values.HeadshotPicture}
-                          width={150}
-                          height={150}
-                          className="rounded-full mr-10"
+                          width={160}
+                          height={160}
+                          id="headshotpic"
+                          className="rounded-full mr-10 h-40"
                           alt="avatar"
                         />
                         <Action

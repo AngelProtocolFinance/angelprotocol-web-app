@@ -174,7 +174,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              {data?.Metadata?.CompanyNumber ? (
+              {data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -183,7 +183,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  data?.Metadata?.CompanyNumber
+                  data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -191,19 +191,23 @@ const RegistrationStatus = () => {
                   history.push({
                     pathname: register.charity_profile,
                     state: {
-                      data: data?.MetaData,
+                      data: data?.Metadata,
                     },
                   })
                 }
                 disabled={user.PK === ""}
-                title={data?.Metadata?.CompanyNumber ? "Complete" : "Continue"}
+                title={
+                  data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted
+                    ? "Complete"
+                    : "Continue"
+                }
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              {data?.KeyPerson ? (
+              {data?.KeyPerson || user.IsKeyPersonCompleted ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -212,7 +216,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  data?.KeyPerson
+                  data?.KeyPerson || user.IsKeyPersonCompleted
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -224,7 +228,11 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title={data?.KeyPerson ? "Change" : "Continue"}
+                title={
+                  data?.KeyPerson || user.IsKeyPersonCompleted
+                    ? "Change"
+                    : "Continue"
+                }
                 disabled={user.PK === ""}
               />
             </div>

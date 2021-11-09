@@ -5,7 +5,7 @@ import {
   useUpdateKeyPersonDataMutation,
 } from "services/aws/keyPerson";
 
-export type KeyPersoData = {
+export interface KeyPersoData {
   FullName: string;
   Title: string;
   HeadshotPicture?: string;
@@ -14,7 +14,7 @@ export type KeyPersoData = {
   Linkedin?: string;
   Quote: string;
   uuid?: string;
-};
+}
 
 export const ProfileSchema = Yup.object().shape({
   FullName: Yup.string().required("Please enter the full name."),
@@ -36,10 +36,12 @@ export const useKeyPersonProfile = () => {
     fileContent: string,
     is_create: boolean
   ) => {
-    const postData = {
+    const postData: KeyPersoData = {
       ...keyPersonData,
       HeadshotPicture: fileContent,
     };
+    if (!fileContent) delete postData.HeadshotPicture;
+
     let result: any = {};
     if (is_create) {
       const response: any = await createKeyPersonProfile(postData);
@@ -56,13 +58,16 @@ export const useKeyPersonProfile = () => {
       if (
         result.status === 400 ||
         result.status === 401 ||
-        result.status === 403
+        result.status === 403 ||
+        result.status === 415
       ) {
         toast.error(result.data.message);
       } else {
         toast.success("Your key person data was saved successfully.");
+        return true;
       }
     }
+    return false;
   };
 
   const readFileToBase64 = (file: File) =>

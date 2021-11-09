@@ -27,6 +27,9 @@ export type CharityMetaData = {
   Logo?: string;
   Banner?: string;
   VideoEmbed?: string;
+  TerraWallet?: string;
+  SK?: string;
+  PK?: string;
 };
 
 export const StepOneSchema = Yup.object().shape({
@@ -70,7 +73,6 @@ export const useUpdateCharityProfile = () => {
       reader.onload = () => {
         return resolve(reader.result);
       };
-
       reader.onerror = (error) => reject(error);
     });
 
@@ -106,13 +108,16 @@ export const useUpdateCharityProfile = () => {
       if (
         result.status === 400 ||
         result.status === 401 ||
-        result.status === 403
+        result.status === 403 ||
+        result.status === 415
       ) {
         toast.error(result.data.message);
       } else {
         toast.success("Your key person data was saved successfully.");
+        return true;
       }
     }
+    return false;
   };
 
   return { saveCharityMetaData, readFileToBase64 };

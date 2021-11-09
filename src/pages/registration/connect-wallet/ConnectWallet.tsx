@@ -91,7 +91,7 @@ const ConnectWallet = () => {
           <Formik
             initialValues={{
               wallet_number:
-                user.TerraWallet || data.Metadata.TerraWallet || "",
+                user.TerraWallet || data?.Metadata?.TerraWallet || "",
             }}
             validationSchema={WalletSchema}
             onSubmit={onConnectWallet}

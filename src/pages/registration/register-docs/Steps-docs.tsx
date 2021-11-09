@@ -26,6 +26,7 @@ const StepsDocs = () => {
 
   const [userData, setUserData] = useState(user);
   const showInfoModal = (index: number) => {
+    setUploadedStatus(false);
     setOpenModal(true);
     setDocType(index);
   };

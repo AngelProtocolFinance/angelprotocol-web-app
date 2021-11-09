@@ -6,12 +6,12 @@ import RevenueInfoModal from "../modals/RevenueInfoModal";
 import { DropzoneArea } from "material-ui-dropzone";
 import { StepTwoSchema } from "./useUpdateCharityProfile";
 import Action from "../Action";
+import { register } from "types/routes";
+import { useHistory } from "react-router-dom";
 
 const ProfileStepTwo = (props: any) => {
   //url = app/register/charity-profile
-  const metaData = props.formData || props.metaData;
-  const [isOpenModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState("");
+  const metaData = props.formData.Website ? props.formData : props.metaData;
   const [openLogoDropzone, setOpenLogoDropzone] = useState(
     metaData?.Logo && true
   );
@@ -20,6 +20,7 @@ const ProfileStepTwo = (props: any) => {
   );
   const [logoFile, setLogoFile] = useState();
   const [bannerFile, setBannerFile] = useState();
+  const history = useHistory();
 
   const handleUpdateProfile = async (
     profileData: any,
@@ -32,12 +33,6 @@ const ProfileStepTwo = (props: any) => {
       bannerFile,
     });
     actions.setSubmitting(false);
-  };
-
-  //eslint-disable-next-line
-  const showInfoModal = (type: any) => {
-    setModalType(type);
-    setOpenModal(true);
   };
 
   const readFiles = (files: any, type: string) => {
@@ -200,9 +195,9 @@ const ProfileStepTwo = (props: any) => {
                         <div className="flex items-end">
                           <img
                             src={values.Logo}
-                            width={150}
-                            height={150}
-                            className="rounded-full mr-10"
+                            width={160}
+                            height={160}
+                            className="rounded-full mr-10 h-40"
                             alt="logo"
                           />
                           <Action
@@ -234,9 +229,9 @@ const ProfileStepTwo = (props: any) => {
                         <div className="flex items-end">
                           <img
                             src={values.Banner}
-                            width={150}
-                            height={150}
-                            className="rounded-full mr-10"
+                            width={160}
+                            height={160}
+                            className="rounded-full mr-10 h-40"
                             alt="banner"
                           />
                           <Action
@@ -282,6 +277,12 @@ const ProfileStepTwo = (props: any) => {
               <div className="mt-5 text-center flex justify-center">
                 <div>
                   <Action
+                    onClick={() => history.push(register.status)}
+                    title="Back"
+                    classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
+                    disabled={isSubmitting}
+                  />
+                  <Action
                     onClick={() => props.onPrev(values)}
                     title="Prev"
                     classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
@@ -299,21 +300,6 @@ const ProfileStepTwo = (props: any) => {
           )}
         </Formik>
       </div>
-      {isOpenModal && modalType === "logo" && (
-        <Modal>
-          <UNSDGInfoModal />
-        </Modal>
-      )}
-      {isOpenModal && modalType === "banner" && (
-        <Modal>
-          <RevenueInfoModal />
-        </Modal>
-      )}
-      {isOpenModal && modalType === "video" && (
-        <Modal>
-          <RevenueInfoModal />
-        </Modal>
-      )}
     </div>
   );
 };

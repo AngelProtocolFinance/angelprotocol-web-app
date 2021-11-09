@@ -17,7 +17,9 @@ const ProfileStepOne = (props: any) => {
 
   const history = useHistory();
   const userData = props.userInfo;
-  const metaData = props.formData || props.metaData;
+  const metaData = props.formData.CompanyNumber
+    ? props.formData
+    : props.metaData;
   const handleUpdateProfile = (
     profileData: any,
     actions: FormikHelpers<any>
@@ -35,8 +37,6 @@ const ProfileStepOne = (props: any) => {
     setOpenModal(true);
   };
 
-  console.log("modal type => ", modalType);
-  console.log("modal open => ", isOpenModal);
   return (
     <div>
       <div>
