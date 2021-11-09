@@ -8,7 +8,7 @@ export default function usePortion(type: string) {
   const { watch } = useFormContext<Values>();
   const split_locked = Number(watch("split"));
   const split_liq = 100 - split_locked;
-  const amount = Number(watch("amount")) || 0;
+  const amount = watch("amount");
   const currency = watch("currency");
 
   //values

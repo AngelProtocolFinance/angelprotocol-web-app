@@ -35,7 +35,7 @@ export default function useBTCSender() {
         { method: "request_accounts" },
         (err: any, accounts: any) => {
           if (err) {
-            console.log(err);
+            console.error(err);
             reject();
           }
           provider.request(

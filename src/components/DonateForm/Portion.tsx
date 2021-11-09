@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { memo, ReactNode } from "react";
 import usePortion from "./usePortion";
 
 export type Type = "locked" | "liquid";
@@ -9,7 +9,7 @@ type Props = {
   border_class: string;
   text_class: string;
 };
-export default function Portion(props: Props) {
+function Portion(props: Props) {
   const { disp_amount, disp_split } = usePortion(props.type);
   return (
     <div
@@ -26,3 +26,5 @@ export default function Portion(props: Props) {
     </div>
   );
 }
+
+export default Portion;

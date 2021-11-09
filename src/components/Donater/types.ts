@@ -3,9 +3,12 @@ import { denoms } from "constants/currency";
 import { ReactNode } from "react";
 
 export interface Values {
-  amount: string;
+  amount: number;
   split: string;
   currency: denoms.uusd | denoms.btc | denoms.ether;
+  fee: number;
+  loading: boolean;
+  form_error: string;
 }
 
 export interface XFI {

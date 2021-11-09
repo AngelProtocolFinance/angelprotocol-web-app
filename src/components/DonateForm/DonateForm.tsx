@@ -4,22 +4,31 @@ import Currency from "./Currency";
 import Slider from "./Slider";
 import Amount from "./Amount";
 import useSubmit from "./useSubmit";
+import Breakdown from "./Breakdown";
+import Status from "./Status";
+import { useFormContext } from "react-hook-form";
+import { Values } from "components/Donater/types";
 
 export default function DonateForm() {
+  const { watch } = useFormContext<Values>();
   const { submitHandler, isSubmitting } = useSubmit();
+  const loading = watch("loading");
+  const error = watch("form_error");
   return (
     <form
       onSubmit={submitHandler}
       className="bg-white grid p-4 rounded-md"
       autoComplete="off"
     >
+      <Status />
       <Amount />
-      <div className="flex gap-2 mb-3 mt-0.5">
+      <div className="flex gap-2 mb-3">
         <Currency currency={denoms.uusd} />
         <Currency currency={denoms.ether} />
         <Currency currency={denoms.btc} />
       </div>
-      <p className="text-angel-grey uppercase font-bold my-2">Split</p>
+      <Breakdown />
+      <p className="text-angel-grey uppercase font-bold mb-2 mt-4">Split</p>
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="liquid"
@@ -37,7 +46,7 @@ export default function DonateForm() {
         </Portion>
       </div>
       <button
-        disabled={isSubmitting}
+        disabled={isSubmitting || loading || !!error}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >

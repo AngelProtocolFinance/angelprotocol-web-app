@@ -1,6 +1,6 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-import { Values as Data } from "components/Donater/types";
+import { Values as Data, Values } from "components/Donater/types";
 import { useSetModal } from "components/Nodal/Nodal";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
 import Estimates, { Props as EstProps } from "./Estimates";
@@ -12,12 +12,14 @@ import Account from "contracts/Account";
 import { denoms } from "constants/currency";
 import useUSTBalance from "hooks/useUSTBalance";
 import displayTerraError from "./displayTerraError";
+import useEstimator from "./useEstimator";
 
 function useTerraSender(receiver?: string | number) {
-  const { reset } = useFormContext();
+  const { reset } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
   const { showModal, hideModal } = useSetModal();
+  useEstimator();
 
   async function* process(data: Data) {
     const UST_amount = data.amount;

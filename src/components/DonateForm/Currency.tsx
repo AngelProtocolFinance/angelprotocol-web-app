@@ -1,16 +1,17 @@
 import { Values } from "components/Donater/types";
 import { denoms, currency_text, currency_icons } from "constants/currency";
 import { useFormContext } from "react-hook-form";
+import { memo } from "react";
 
 type Props = { currency: denoms.uusd | denoms.btc | denoms.ether };
-export default function Currency(props: Props) {
+function Currency(props: Props) {
   const { register, watch } = useFormContext<Values>();
   const isActive = watch("currency") === props.currency;
   return (
     <div
       className={`flex items-center ${
         isActive ? "bg-angel-blue bg-opacity-20" : ""
-      } p-0.5 pr-1 rounded-sm`}
+      } p-0.5 pr-2 rounded-sm`}
     >
       <input
         id={props.currency}
@@ -35,3 +36,5 @@ export default function Currency(props: Props) {
     </div>
   );
 }
+
+export default memo(Currency);
