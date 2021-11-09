@@ -8,11 +8,13 @@ import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
 import { denoms } from "constants/curriencies";
+import { useLogDonationTransactionMutation } from "services/apes/donations";
 import createAuthToken from "helpers/createAuthToken";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
+  const [logDonationTransaction] = useLogDonationTransactionMutation();
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
@@ -103,27 +105,29 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
 
           // Every transaction is recorded in our APES AWS DynamoDB donations table
-          let successMessage: string;
-          let valuesToBeSubmitted: any = values; // TO DO: Specify a type here instead of just "any"
+          // When a Tax Receipt is requested, an email will be sent to them
+          let valuesToBeSubmitted: any = values;
           valuesToBeSubmitted["walletAddress"] = wallet.walletAddress;
           valuesToBeSubmitted["denomination"] = "UST";
           valuesToBeSubmitted["transactionId"] = txInfo.txhash;
-          console.log("Submitted Values:", valuesToBeSubmitted);
-
-          // When a Tax Receipt is requested, an email will be sent to them
-          if (values.receiptRequested) {
-            successMessage = "Thank you for your donation! Check your email later for the Tax Receipt.";
-          } else {
-            successMessage = "Thank you for your donation!";
-          }
 
           // Auth token to be passed as part of the header of the request
           const authToken = createAuthToken("angelprotocol-web-app");
-          console.log("Token:", authToken);
-          // CALL APES ENDPOINT HERE
+
+          // Call APES endpoint
+          const postData = {
+            token: authToken,
+            body: {
+              ...valuesToBeSubmitted,
+            },
+          };
+
+          const response: any = await logDonationTransaction(postData); // Logs all donation transactions
+          const result = response.error ? response.error.data.message : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
+
           setStatus({
             step: Steps.success,
-            message: successMessage,
+            message: result,
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
