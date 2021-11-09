@@ -62,10 +62,10 @@ export default function useEthEstimator() {
 
         setTx(raw_transaction);
         setValue("fee", eth_fee);
+        setValue("loading", false);
       } catch (err) {
         console.error(err);
         setValue("form_error", "Error estimating transaction");
-      } finally {
         setValue("loading", false);
       }
     })();

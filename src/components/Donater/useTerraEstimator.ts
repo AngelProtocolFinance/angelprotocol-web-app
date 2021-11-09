@@ -58,11 +58,11 @@ export default function useTerraEstimator() {
 
         setValue("fee", estimatedFee);
         setTx(tx);
+        setValue("loading", false);
       } catch (err) {
         console.error(err);
-        setValue("form_error", "Error estimating transaction");
-      } finally {
         setValue("loading", false);
+        setValue("form_error", "Error estimating transaction");
       }
     })();
     //eslint-disable-next-line
