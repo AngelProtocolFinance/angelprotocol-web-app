@@ -41,7 +41,8 @@ export default function useBoard() {
             name = defaultName,
             icon = defaultIcon,
             iconLight,
-          } = tcaDonors[donor.address];
+          } = tcaDonors[donor.address] || {};
+
           //init details
           _sums[name] ||= { icon, iconLight, amount: Number.MIN_VALUE };
           //increment if existing
