@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";

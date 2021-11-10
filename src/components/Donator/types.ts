@@ -6,6 +6,15 @@ export type Handler = () => void;
 export interface Values {
   amount: string;
   split: number;
+  receiptRequested: boolean;
+  fullName: string;
+  email: string;
+  streetAddress: string;
+  addressComplement: string;
+  city: string;
+  zipCode: string;
+  stateAddress: string;
+  country: string;
 }
 
 export enum Steps {

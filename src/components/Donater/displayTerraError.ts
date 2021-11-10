@@ -4,7 +4,7 @@ import {
   TxFailed,
   TxUnspecifiedError,
   UserDenied,
-} from "@terra-dev/wallet-types";
+} from "@terra-money/wallet-provider";
 import { Opener } from "components/Nodal/types";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import ErrPop, { Props as ErrProp } from "../Donater/ErrPop";
