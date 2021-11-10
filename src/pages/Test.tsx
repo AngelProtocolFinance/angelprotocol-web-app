@@ -7,7 +7,7 @@ export default function Test() {
     <div className="pb-16 grid grid-rows-a1">
       <AppHead />
       <div className="grid place-items-center">
-        <Donater to="fund">
+        <Donater to="tca">
           <DonateForm />
         </Donater>
       </div>

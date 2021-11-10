@@ -9,7 +9,7 @@ type Props = {
   withTooltip?: true;
 };
 function Currency(props: Props) {
-  const { enter, exit, _Tooltip } = useTooltip(Tooltip);
+  const { enter, exit, Tooltip } = useTooltip(Tooltip_);
   const { register, watch } = useFormContext<Values>();
   const isActive = watch("currency") === props.currency;
   return (
@@ -32,27 +32,31 @@ function Currency(props: Props) {
       />
       <label
         htmlFor={props.currency}
-        className="uppercase flex items-center text-sm"
+        className={`uppercase flex items-center text-sm`}
       >
         <img
           src={currency_icons[props.currency]}
           alt=""
           className="w-4 h-4 object-contain"
         />
-        <span className="text-angel-grey ml-0.5">
+        <span
+          className={`${
+            props.withTooltip ? "text-grey-accent" : "text-angel-grey"
+          } ml-0.5`}
+        >
           {currency_text[props.currency]}
         </span>
       </label>
-      {props.withTooltip && <_Tooltip />}
+      {props.withTooltip && <Tooltip />}
     </div>
   );
 }
 
 export default memo(Currency);
 
-function Tooltip() {
+function Tooltip_() {
   return (
-    <span className="absolute bg-white text-angel-grey p-2 rounded-md text-sm shadow-md z-10">
+    <span className="fixed bg-white text-angel-grey p-1.5 rounded-md text-sm shadow-md z-10">
       comming soon!
     </span>
   );

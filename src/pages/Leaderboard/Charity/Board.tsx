@@ -3,8 +3,6 @@ import Heading from "../Heading";
 import Updator from "../Updator";
 import View from "../View";
 import Entry from "./Entry";
-import Tooltip from "./Tooltip";
-// import { Addresses } from "./types";
 import useBoard from "./useBoard";
 
 export default function BoardCharity() {

@@ -1,4 +1,4 @@
-import { memo, ReactNode } from "react";
+import { ReactNode } from "react";
 import usePortion from "./usePortion";
 
 export type Type = "locked" | "liquid";

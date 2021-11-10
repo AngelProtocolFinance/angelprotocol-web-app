@@ -18,6 +18,6 @@ export default function useTooltip(tooltip: FC) {
     enter,
     exit,
     handleClick,
-    _Tooltip: hovered ? tooltip : () => null,
+    Tooltip: hovered ? tooltip : () => null,
   };
 }

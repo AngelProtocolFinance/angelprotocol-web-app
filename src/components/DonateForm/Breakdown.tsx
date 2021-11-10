@@ -9,7 +9,7 @@ export default function Breakdown() {
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
   return (
-    <div className="border-b border-angel-blue border-opacity-20 pb-1">
+    <div className="pb-1">
       <Entry title="tx fee" amount={fee} currency={currency} />
       <Entry title="total amount" amount={amount + fee} currency={currency} />
     </div>

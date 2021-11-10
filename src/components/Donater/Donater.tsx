@@ -3,28 +3,26 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Props } from "./types";
 import { schema } from "./schema";
 import { denoms } from "constants/currency";
-// import Nodal from "components/Nodal/Nodal";
+import { Values } from "components/Donater/types";
 
 export default function Donater(props: Props) {
-  const maxLiq = props.maxSplitLiq;
-  const minLocked = 100 - (maxLiq === undefined ? 50 : maxLiq);
-  const methods = useForm({
+  const methods = useForm<Values>({
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",
-      split: minLocked,
+      split_liq: `${props.min_liq || 0}`,
+
+      //metadata
       currency: denoms.uusd,
       loading: false,
-      error: "",
+      form_error: "",
       fee: 0,
+      min_liq: props.min_liq || 0,
+      max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
+      to: props.to,
+      receiver: props.receiver,
     },
     resolver: yupResolver(schema),
   });
-  return (
-    <FormProvider {...methods}>
-      {/* <Nodal classes="fixed bg-black bg-opacity-50 top-0 bottom-0 right-0 left-0 grid place-items-center"> */}
-      {props.children}
-      {/* </Nodal> */}
-    </FormProvider>
-  );
+  return <FormProvider {...methods}>{props.children}</FormProvider>;
 }

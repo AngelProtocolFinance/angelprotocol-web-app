@@ -1,10 +1,10 @@
 import useTooltip from "hooks/useTooltip";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-import Tooltip from "./Charity/Tooltip";
+import _Tooltip from "./Charity/Tooltip";
 
 type Props = { text: string; withTooltip?: true };
 export default function Heading(props: Props) {
-  const { enter, exit, handleClick, _Tooltip } = useTooltip(Tooltip);
+  const { enter, exit, handleClick, Tooltip } = useTooltip(_Tooltip);
   return (
     <th
       onClick={handleClick}
@@ -18,7 +18,7 @@ export default function Heading(props: Props) {
       {props.withTooltip && (
         <AiOutlineQuestionCircle className="inline text-lg mb-1" />
       )}
-      {props.withTooltip && <_Tooltip />}
+      {props.withTooltip && <Tooltip />}
     </th>
   );
 }
