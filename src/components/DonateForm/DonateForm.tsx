@@ -17,15 +17,15 @@ export default function DonateForm() {
   return (
     <form
       onSubmit={submitHandler}
-      className="bg-white grid p-4 rounded-md"
+      className="bg-white grid p-4 rounded-md w-96"
       autoComplete="off"
     >
       <Status />
       <Amount />
       <div className="flex gap-2 mb-3">
         <Currency currency={denoms.uusd} />
-        <Currency currency={denoms.ether} />
-        <Currency currency={denoms.btc} />
+        <Currency currency={denoms.ether} withTooltip />
+        <Currency currency={denoms.btc} withTooltip />
       </div>
       <Breakdown />
       {/* <p className="text-angel-grey uppercase font-bold mb-2 mt-4">Split</p>
@@ -50,7 +50,7 @@ export default function DonateForm() {
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {loading ? "estimating fee.." : "submit"}
+        {loading ? "estimating fee.." : "proceed"}
       </button>
     </form>
   );

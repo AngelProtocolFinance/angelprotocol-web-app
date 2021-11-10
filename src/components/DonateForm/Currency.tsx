@@ -2,18 +2,28 @@ import { Values } from "components/Donater/types";
 import { denoms, currency_text, currency_icons } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { memo } from "react";
+import useTooltip from "hooks/useTooltip";
 
-type Props = { currency: denoms.uusd | denoms.btc | denoms.ether };
+type Props = {
+  currency: denoms.uusd | denoms.btc | denoms.ether;
+  withTooltip?: true;
+};
 function Currency(props: Props) {
+  const { enter, exit, _Tooltip } = useTooltip(Tooltip);
   const { register, watch } = useFormContext<Values>();
   const isActive = watch("currency") === props.currency;
   return (
     <div
-      className={`flex items-center ${
+      onMouseEnter={enter}
+      onMouseLeave={exit}
+      className={`${
+        props.withTooltip ? "relative cursor-pointer" : ""
+      } flex items-center ${
         isActive ? "bg-angel-blue bg-opacity-20" : ""
       } p-0.5 pr-2 rounded-sm`}
     >
       <input
+        disabled={props.withTooltip}
         id={props.currency}
         {...register("currency")}
         value={props.currency}
@@ -33,8 +43,17 @@ function Currency(props: Props) {
           {currency_text[props.currency]}
         </span>
       </label>
+      {props.withTooltip && <_Tooltip />}
     </div>
   );
 }
 
 export default memo(Currency);
+
+function Tooltip() {
+  return (
+    <span className="absolute bg-white text-angel-grey p-2 rounded-md text-sm shadow-md z-10">
+      comming soon!
+    </span>
+  );
+}

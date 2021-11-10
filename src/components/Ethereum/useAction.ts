@@ -30,7 +30,7 @@ export default function useAction(type: Connectors, icon: Icons) {
         //prompt user to disable xdefi priority?
         //if xdefi is prioritized by user in menu/Prioritize_xdefi,
         //conencting to metamask will just point to xdefi, --> so update icon
-        if (dwindow.xfi.ethereum) {
+        if (dwindow.xfi?.ethereum) {
           showModal<Props>(Warning, {
             text: "To use Metamask, you need to remove priority to XDEFI wallet - then refresh the page",
           });
@@ -45,7 +45,7 @@ export default function useAction(type: Connectors, icon: Icons) {
           return;
         }
 
-        if (!dwindow.xfi.ethereum) {
+        if (!dwindow.xfi?.ethereum) {
           //xdefi can only be properly used if menu/Prioritize_xdefi is enabled by user
           //if not enabled, connector will just revert to metamask --> so update icon
           showModal<Props>(Warning, {
@@ -54,7 +54,7 @@ export default function useAction(type: Connectors, icon: Icons) {
           return;
         }
       }
-
+      alert("connect");
       await wallet.connect(type);
       setIcon(modIcon);
     } catch (err) {

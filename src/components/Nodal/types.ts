@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
+import { ReactNode, FC } from "react";
 
 export type Handler = () => void;
-export type Opener = <T = {}>(Content: React.FC<T>, props: T) => void;
+export type Opener = <T = {}>(Content: FC<T>, props: T) => void;
 export type Handlers = {
   showModal: Opener;
   hideModal: Handler;
