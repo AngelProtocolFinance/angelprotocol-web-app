@@ -10,11 +10,12 @@ import { register } from "types/routes";
 import { StepOneSchema } from "./useUpdateCharityProfile";
 import Action from "../Action";
 import { UN_SDGS } from "types/unsdgs";
+import CurrencyList from "currency-list";
 
 const ProfileStepOne = (props: any) => {
   //url = app/register/charity-profile
   const countries = useMemo(() => countryList().getData(), []);
-
+  const currencies = Object.keys(CurrencyList.getAll("en_US"));
   const history = useHistory();
   const userData = props.userInfo;
   const metaData = props.formData.CompanyNumber
@@ -279,9 +280,11 @@ const ProfileStepOne = (props: any) => {
                         className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200 text-black"
                         name="Currency"
                       >
-                        <option value="EUR">EUR</option>
-                        <option value="USD">USD</option>
-                        <option value="RMB">RMB</option>
+                        {currencies.map((currency, index) => (
+                          <option value={currency} key={index}>
+                            {currency}
+                          </option>
+                        ))}
                       </Field>
                     </div>
                     <ErrorMessage
@@ -313,12 +316,12 @@ const ProfileStepOne = (props: any) => {
         </Formik>
       </div>
       {isOpenModal && modalType === "unsdg" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <UNSDGInfoModal />
         </Modal>
       )}
       {isOpenModal && modalType === "average" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <RevenueInfoModal />
         </Modal>
       )}

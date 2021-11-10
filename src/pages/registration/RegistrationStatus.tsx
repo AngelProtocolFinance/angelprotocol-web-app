@@ -23,7 +23,6 @@ const RegistrationStatus = () => {
   }
   const { data, error } = useGetCharityDataQuery(user.PK);
 
-  console.log("user meta data => ", data?.Metadata);
   useEffect(() => {
     if (error) {
       const messageData: any = error;
@@ -34,13 +33,16 @@ const RegistrationStatus = () => {
   const status = {
     wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
     document:
-      user.ProofOfIdentityVerified &&
-      user.ProofOfEmploymentVerified &&
-      user.EndowmentAgreementVerified
+      (user.ProofOfIdentityVerified ||
+        data?.Registration?.ProofOfIdentityVerified) &&
+      (user.ProofOfEmploymentVerified ||
+        data?.Registration?.ProofOfEmploymentVerified) &&
+      (user.EndowmentAgreementVerified ||
+        data?.Registration?.EndowmentAgreementVerified)
         ? 2
-        : user.ProofOfEmployment &&
-          user.ProofOfIdentity &&
-          user.EndowmentAgreement
+        : (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
+          (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
+          (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
         ? 1
         : 0,
     endowment:
@@ -123,6 +125,9 @@ const RegistrationStatus = () => {
                 onClick={() =>
                   history.push({
                     pathname: register.upload_docs,
+                    state: {
+                      data: data?.Registration,
+                    },
                   })
                 }
                 classes={
@@ -177,7 +182,7 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              {data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted ? (
+              {data?.Metadata?.CompanyNumber ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -186,7 +191,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted
+                  data?.Metadata?.CompanyNumber
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -199,18 +204,14 @@ const RegistrationStatus = () => {
                   })
                 }
                 disabled={user.PK === ""}
-                title={
-                  data?.Metadata?.CompanyNumber || user.IsMetaDataCompleted
-                    ? "Complete"
-                    : "Continue"
-                }
+                title={data?.Metadata?.CompanyNumber ? "Change" : "Continue"}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              {data?.KeyPerson || user.IsKeyPersonCompleted ? (
+              {data?.KeyPerson ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
                 <p className="status-text uppercase text-yellow-600">Missing</p>
@@ -219,7 +220,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes={
-                  data?.KeyPerson || user.IsKeyPersonCompleted
+                  data?.KeyPerson
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
@@ -231,11 +232,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title={
-                  data?.KeyPerson || user.IsKeyPersonCompleted
-                    ? "Change"
-                    : "Continue"
-                }
+                title={data?.KeyPerson ? "Change" : "Continue"}
                 disabled={user.PK === ""}
               />
             </div>

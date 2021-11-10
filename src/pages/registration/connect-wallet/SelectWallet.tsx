@@ -62,7 +62,7 @@ const SelectWallet = () => {
         />
       </div>
       {isOpenModal && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <TerraInfoModal />
         </Modal>
       )}

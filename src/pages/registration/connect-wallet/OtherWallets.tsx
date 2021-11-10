@@ -53,7 +53,7 @@ const OtherWallets = () => {
         </div>
       </div>
       <div className="pt-5">
-        <p className="text-md">
+        <p className="text-md mb-5">
           Primetrust, coming soon, we'll keep you posted!
         </p>
         <Action
@@ -63,12 +63,12 @@ const OtherWallets = () => {
         />
       </div>
       {isOpenModal && modalType === "prime_trust" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <CustodianInfoModal />
         </Modal>
       )}
       {isOpenModal && modalType === "self_custody" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <SelfCustodyInfoModal />
         </Modal>
       )}
