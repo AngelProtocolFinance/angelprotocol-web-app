@@ -5,7 +5,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/charity";
 
-export type CharityMetaData = {
+export interface CharityMetaData {
   CompanyNumber?: string;
   CountryIncorporation?: string;
   IsYourCountry?: boolean;
@@ -30,7 +30,7 @@ export type CharityMetaData = {
   TerraWallet?: string;
   SK?: string;
   PK?: string;
-};
+}
 
 export const StepOneSchema = Yup.object().shape({
   CompanyNumber: Yup.number().required("Please enter your company number"),
@@ -88,9 +88,14 @@ export const useUpdateCharityProfile = () => {
         ...metaData,
         Logo: logoFile,
         Banner: bannerFile,
-      },
+      } as CharityMetaData,
       uuid: uuid,
     };
+
+    if (!logoFile) delete postData.body.Logo;
+    if (!bannerFile) delete postData.body.Banner;
+    if (postData.body.SK) delete postData.body.SK;
+    if (postData.body.PK) delete postData.body.PK;
 
     let result: any = {};
     if (is_create) {

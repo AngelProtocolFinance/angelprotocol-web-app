@@ -27,10 +27,6 @@ const UpdateProfile = () => {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(user));
   }
-  console.log(
-    "data meta => ",
-    !metaData?.CompanyNumber && user.IsMetaDataCompleted
-  );
   if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
     metaData = data.Metadata;
   }
@@ -39,10 +35,11 @@ const UpdateProfile = () => {
 
   const readFiles = async (files: any) => {
     let content: any;
-    if (files.length > 0) {
+    if (files && files.length > 0) {
       content = await readFileToBase64(files[0]);
       return content;
     }
+    return null;
   };
 
   const onSaveCharityMetaData = async (data: any) => {
@@ -82,7 +79,6 @@ const UpdateProfile = () => {
     setStep(1);
   };
 
-  console.log("meta data => ", metaData);
   return (
     <div className="">
       <div className="title mb-10">

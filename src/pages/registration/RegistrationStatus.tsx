@@ -18,6 +18,9 @@ const RegistrationStatus = () => {
     dispatch(updateUserData(user));
   }
 
+  if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
+    history.go(0);
+  }
   const { data, error } = useGetCharityDataQuery(user.PK);
 
   console.log("user meta data => ", data?.Metadata);
