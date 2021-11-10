@@ -54,7 +54,6 @@ export default function useAction(type: Connectors, icon: Icons) {
           return;
         }
       }
-      alert("connect");
       await wallet.connect(type);
       setIcon(modIcon);
     } catch (err) {
