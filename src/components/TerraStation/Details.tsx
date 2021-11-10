@@ -16,7 +16,7 @@ type Props = {
 
 const criterionAmount = 10;
 export default function Details(props: Props) {
-  const [filtered, setFilter] = useState(true);
+  const [filtered, setFilter] = useState(false);
   const coins = props.coinData.filter(
     (coin) =>
       filtered ||
@@ -42,11 +42,11 @@ export default function Details(props: Props) {
       <div className="bg-angel-grey text-white-grey text-sm p-2">
         <p className="uppercase">network : {props.chainId}</p>
       </div>
-      <Filter filtered={filtered} handleFilter={handleFilter} />
+      {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
       <Address address={addr} />
       <Portal />
       {(!isEmpty && <Holdings coinData={coins} />) || (
-        <span className="text-white-grey p-10 text-center text-sm uppercase">
+        <span className="text-angel-grey p-10 text-center text-sm uppercase">
           Wallet is empty
         </span>
       )}
