@@ -4,8 +4,11 @@ import { useEffect } from "react";
 import { useSetter } from "store/accessors";
 import { setLoading, setActive } from "services/wallet/walletSlice";
 import { Wallets, WalletStates } from "services/wallet/types";
+import { useGetPhantom } from "contexts/PhantomProvider";
 
 export default function useWalletSuite() {
+  const { loading: phantomLoading, connected: phantomConnected } =
+    useGetPhantom();
   const dispatch = useSetter();
   const { status: ethStatus } = useEthWallet();
 
@@ -16,11 +19,12 @@ export default function useWalletSuite() {
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
 
-  const isLoading = isTerraLoading || ethLoading; // || false || otherwallet loading state
+  const isLoading = isTerraLoading || ethLoading || phantomLoading; // || false || otherwallet loading state
 
   const walletStates: WalletStates = [
     [Wallets.terra, terraConnected],
     [Wallets.ethereum, ethConnected],
+    [Wallets.phantom, phantomConnected],
   ];
 
   //find first connected wallet

@@ -1,6 +1,7 @@
 import { IoWalletSharp } from "react-icons/io5";
 import TerraDisplay from "components/TerraStation/Display";
 import EthDisplay from "components/Ethereum/Display";
+import PhantomDisp from "components/Phantom/Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
@@ -31,7 +32,7 @@ export default function WalletSuite() {
           {activeWallet === Wallets.none && (
             <IoWalletSharp className="text-white text-xl mr-2" />
           )}
-          <span>{isLoading ? "Initializing" : "Connect"}</span>
+          <span>{isLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
       {displays[activeWallet]}
@@ -44,4 +45,5 @@ const displays = {
   [Wallets.none]: null,
   [Wallets.ethereum]: <EthDisplay />,
   [Wallets.terra]: <TerraDisplay />,
+  [Wallets.phantom]: <PhantomDisp />,
 };
