@@ -27,7 +27,7 @@ const ConnectWallet = () => {
   const user = useGetter((state) => state.user);
   const history = useHistory();
   const dispatch = useSetter();
-  const { data, error } = useGetCharityDataQuery(user.PK);
+  const { data } = useGetCharityDataQuery(user.PK);
 
   const onConnectWallet = async (
     values: Values,

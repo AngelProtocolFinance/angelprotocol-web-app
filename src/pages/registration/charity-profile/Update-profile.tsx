@@ -21,7 +21,7 @@ const UpdateProfile = () => {
   let metaData: CharityMetaData = location.state.data;
   const { saveCharityMetaData, readFileToBase64 } = useUpdateCharityProfile();
   let user = useGetter((state) => state.user);
-  const { data, error } = useGetCharityDataQuery(user.PK);
+  const { data } = useGetCharityDataQuery(user.PK);
 
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");

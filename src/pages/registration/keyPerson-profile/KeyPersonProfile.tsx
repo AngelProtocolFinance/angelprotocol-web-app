@@ -22,7 +22,7 @@ const KeyPersonProfile = () => {
   const { saveKeyPersonData, readFileToBase64 } = useKeyPersonProfile();
   let user = useGetter((state) => state.user);
   let keyPersonData = location.state.data;
-  const { data, error } = useGetCharityDataQuery(user.PK);
+  const { data } = useGetCharityDataQuery(user.PK);
 
   if (!location.state.data && user.IsKeyPersonCompleted) {
     keyPersonData = data.KeyPerson;

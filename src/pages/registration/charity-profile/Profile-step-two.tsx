@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
-import Modal from "components/Modal/Modal";
-import UNSDGInfoModal from "../modals/UNSDGInfoModal";
-import RevenueInfoModal from "../modals/RevenueInfoModal";
 import { DropzoneArea } from "material-ui-dropzone";
 import { StepTwoSchema } from "./useUpdateCharityProfile";
 import Action from "../Action";

@@ -1,4 +1,3 @@
-import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router";
 import { register } from "types/routes";
 import Action from "../Action";
