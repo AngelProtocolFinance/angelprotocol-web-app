@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Account from "contracts/Account";
 import createStatusFromError from "./createStatusFromError";
-import { Status, SetStatus, Steps } from "./types";
+import { SetStatus, Steps } from "./types";
 
 function useConfirmWithdraw(
   setStatus: SetStatus,

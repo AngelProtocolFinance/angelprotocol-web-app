@@ -1,42 +1,52 @@
 import { useEffect } from "react";
-import { useGetCharityDataQuery } from "api/charityAPIs";
-import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { TStore } from "Redux/store";
 import { register } from "types/routes";
 import Action from "./Action";
+import maskAddress from "helpers/maskAddress";
+import { useGetCharityDataQuery } from "services/aws/charity";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const { userData } = useSelector((state: TStore) => state.user);
-  const { data, error, isLoading, isFetching, refetch } =
-    useGetCharityDataQuery(userData.PK);
+  const dispatch = useSetter();
+  let user = useGetter((state) => state.user);
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
 
+  const { data, error } = useGetCharityDataQuery(user.PK);
+
+  console.log("user meta data => ", data?.Metadata);
   useEffect(() => {
     if (error) {
-      //TODO:provide typing for this error if possible
-      //encountered error of this shape
-      /*{
-      "status": "FETCH_ERROR",
-      "error": "TypeError: Failed to fetch"
-      } */
       const messageData: any = error;
-      toast.error(messageData?.data?.message || "something wen't wrong");
+      toast.error(messageData?.data?.message || "something went wrong");
     }
   }, [error]);
 
   const status = {
-    contact_details: 0,
-    wallet_address: 1,
-    document: data?.Metadata ? 0 : 1,
+    wallet_address: !!data?.Metadata.TerraWallet,
+    document:
+      user.ProofOfIdentityVerified &&
+      user.ProofOfEmploymentVerified &&
+      user.EndowmentAgreementVerified
+        ? 2
+        : user.ProofOfEmployment &&
+          user.ProofOfIdentity &&
+          user.EndowmentAgreement
+        ? 1
+        : 0,
     endowment:
-      data?.Metadata?.EndowmentStatus === "Active" ? 0 : data?.Metadata ? 1 : 2,
-    completed:
-      data?.Metadata &&
-      data?.Metadata?.EndowmentStatus === "Active" &&
-      data?.Wallet,
+      data?.Metadata?.EndowmentStatus === "Active"
+        ? 0
+        : user.IsMetaDataCompleted
+        ? 1
+        : 2,
+    completed: user?.RegistrationStatus === "Complete",
   };
 
   const navigate = (dest: string) => () => {
@@ -64,39 +74,61 @@ const RegistrationStatus = () => {
                 classes="bg-yellow-blue w-40 h-10"
                 onClick={navigate(register.detail)}
                 title="Change"
-                disabled={userData.PK === ""}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Wallet Address</p>
-              <p className="status-text uppercase text-yellow-600">
-                {status.wallet_address === 0 ? "Complete" : "Missing"}
-              </p>
+              {status.wallet_address ? (
+                <p className="status-text uppercase text-green-500">Complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  status.wallet_address
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={navigate(register.wallet_check)}
-                title={status.wallet_address === 0 ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                title={status.wallet_address ? "Change" : "Continue"}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #3: Documentation</p>
-              <p className="status-text uppercase text-yellow-600">
-                {status.document === 0 ? "Complete" : "Missing"}
-              </p>
+              {status.document === 2 && (
+                <p className="status-text uppercase text-green-500">Complete</p>
+              )}
+              {status.document === 1 && (
+                <p className="status-text uppercase text-yellow-blue">
+                  In Review
+                </p>
+              )}
+              {status.document === 0 && (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
-                onClick={navigate(register.wallet_check)}
-                title={status.document === 0 ? "Change" : "Continue"}
-                disabled={userData.PK === ""}
+                onClick={() =>
+                  history.push({
+                    pathname: register.upload_docs,
+                  })
+                }
+                classes={
+                  status.document === 2
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
+                title={status.document === 2 ? "Change" : "Continue"}
+                disabled={user.PK === "" || !data?.Metadata}
               />
             </div>
           </div>
@@ -105,18 +137,22 @@ const RegistrationStatus = () => {
               <p className="">Status of Your Endowment</p>
               <p className="status-text uppercase text-red-600">
                 {status.endowment === 0
-                  ? "Complete"
+                  ? `Address: ${maskAddress(data?.Metadata?.TerraWallet)}`
                   : status.endowment === 1
-                  ? "Missing"
+                  ? "Available soon"
                   : "Not available"}
               </p>
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  status.endowment === 2
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={navigate(register.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
-                disabled={status.endowment === 2 || userData.PK === ""}
+                disabled={status.endowment === 2 || user.PK === ""}
               />
             </div>
           </div>
@@ -135,25 +171,48 @@ const RegistrationStatus = () => {
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
-              <p className="status-text uppercase text-green-500">complete</p>
+              {user.IsMetaDataCompleted ? (
+                <p className="status-text uppercase text-green-500">complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
-                classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(register.charity_profile)}
-                title="Change"
-                disabled={userData.PK === ""}
+                classes={
+                  user.IsMetaDataCompleted
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
+                onClick={() =>
+                  history.push({
+                    pathname: register.charity_profile,
+                    state: {
+                      data: data?.MetaData,
+                    },
+                  })
+                }
+                disabled={user.PK === ""}
+                title={user.IsMetaDataCompleted ? "Complete" : "Continue"}
               />
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
-              <p className="status-text uppercase text-yellow-600">Missing</p>
+              {user?.IsKeyPersonCompleted ? (
+                <p className="status-text uppercase text-green-500">complete</p>
+              ) : (
+                <p className="status-text uppercase text-yellow-600">Missing</p>
+              )}
             </div>
             <div className="">
               <Action
-                classes="bg-thin-blue w-40 h-10"
+                classes={
+                  user.IsKeyPersonCompleted
+                    ? "bg-yellow-blue w-40 h-10"
+                    : "bg-thin-blue w-40 h-10"
+                }
                 onClick={() =>
                   history.push({
                     pathname: register.key_person,
@@ -162,8 +221,8 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                title="Continue"
-                disabled={userData.PK === ""}
+                title={user.IsKeyPersonCompleted ? "Change" : "Continue"}
+                disabled={user.PK === ""}
               />
             </div>
           </div>
@@ -172,9 +231,9 @@ const RegistrationStatus = () => {
       <div>
         <Action
           classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + userData.CharityName + "'s profile"}
+          title={"Go to " + user.CharityName + "'s profile"}
           onClick={navigate(register.charity_profile)}
-          disabled={!status.completed || userData.PK === ""}
+          disabled={!status.completed || user.PK === ""}
         />
       </div>
       <ToastContainer />
