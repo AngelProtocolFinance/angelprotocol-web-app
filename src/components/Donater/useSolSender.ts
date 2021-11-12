@@ -9,6 +9,7 @@ import Result, { Props as ResProps } from "./Result";
 import { Values } from "./types";
 import useSolEstimator from "./useSolEstimator";
 import { denoms } from "constants/currency";
+import displaySolError from "./displaySolError";
 
 export default function useSolSender() {
   const { setValue } = useFormContext<Values>();
@@ -42,7 +43,7 @@ export default function useSolSender() {
         denom: denoms.sol,
       });
     } catch (error) {
-      console.error(error);
+      displaySolError(error, showModal);
     } finally {
       setValue("amount", "");
     }

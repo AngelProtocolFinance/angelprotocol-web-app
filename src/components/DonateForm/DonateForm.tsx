@@ -26,7 +26,7 @@ export default function DonateForm() {
         <Currency currency={denoms.uusd} />
         <Currency currency={denoms.ether} withTooltip />
         <Currency currency={denoms.btc} withTooltip />
-        <Currency currency={denoms.sol} withTooltip />
+        <Currency currency={denoms.sol} />
       </div>
       <Breakdown />
       {to !== "tca" && <Split />}

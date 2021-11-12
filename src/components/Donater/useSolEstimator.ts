@@ -74,6 +74,7 @@ export default function useSolEstimator() {
         setValue("loading", false);
       } catch (err) {
         console.error(err);
+        setValue("form_error", "Error estimating transaction");
         setValue("loading", false);
       }
     })();
