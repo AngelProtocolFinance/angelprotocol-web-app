@@ -8,7 +8,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { urls } from "App/chains";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import { Disconnected, TxResultFail } from "./Errors";
 import { chains } from "./types";
 

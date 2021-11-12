@@ -90,13 +90,13 @@ module.exports = {
         "4/5": "80%",
       },
       minWidth: {
-        36: "36",
+        136: "36rem",
       },
       minHeight: {
         r15: "15rem",
         modal: "300px",
         "leader-table": "36rem",
-        10: "10",
+        110: "10rem",
       },
       width: {
         128: "28rem",

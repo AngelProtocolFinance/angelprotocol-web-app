@@ -7,7 +7,7 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import Contract from "./Contract";
 import { Donors, sc, TCAList } from "./types";
 
