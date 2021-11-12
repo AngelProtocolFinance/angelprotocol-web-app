@@ -31,7 +31,6 @@ export default function Views() {
       <Route path={`${path}/${app.test}`} component={Test} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />
-      <Route path={`${path}${app.index}`} component={Leaderboard} />
       <Redirect from="*" to={site.home} />
     </Switch>
   );
