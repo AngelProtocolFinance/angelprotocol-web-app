@@ -4,10 +4,13 @@ export enum chains {
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
-  kovan = "42",
-  ropsten = "3",
+  eth_kovan = "42",
+  eth_ropsten = "3",
   eth_main = "1",
   btc_test = "1",
+  sol_dev = "devnet",
+  sol_main = "mainnet-beta",
+  sol_test = "testnet",
 }
 
 export enum sc {

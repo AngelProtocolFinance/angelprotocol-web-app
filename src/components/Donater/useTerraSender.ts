@@ -10,7 +10,7 @@ import displayTerraError from "./displayTerraError";
 import useTerraEstimator from "./useTerraEstimator";
 import Contract from "contracts/Contract";
 
-function useTerraSender(receiver?: string | number) {
+function useTerraSender() {
   const { reset } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -32,6 +32,7 @@ function useTerraSender(receiver?: string | number) {
 
       if (response.success) {
         showModal<WaitProps>(Waiter, {
+          desc: "Waiting for transaction result",
           url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
         });
 

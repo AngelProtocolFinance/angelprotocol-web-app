@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { DWindow } from "types/window";
+import { chains } from "contracts/types";
 
 enum events {
   connect = "connect",
@@ -15,6 +16,7 @@ export default function usePhantom() {
   const should_reconnect = last_action === "connect";
   const [loading, setLoading] = useState(false);
   const [connected, setConnected] = useState(false);
+  const [provider, setProvider] = useState(null);
   const [balance, setBalance] = useState<number>(0);
   const [address, setAddress] = useState("");
 
@@ -72,15 +74,20 @@ export default function usePhantom() {
     setAddress("");
     setConnected(false);
     setBalance(0);
+    //disconnect() triggers loading, this listener ends loading
+    setLoading(false);
   };
 
   const onConnect = async (pub_key: PublicKey) => {
-    const connection = new Connection(clusterApiUrl("devnet"));
+    const [, phantom] = get_phantom();
+    const connection = new Connection(clusterApiUrl(chains.sol_dev));
     const lamports = await connection.getBalance(pub_key);
     setAddress(pub_key.toString());
+    setProvider(phantom);
     setBalance(lamports);
     setConnected(true);
     save_action("connect");
+    //connect() triggers loading, this listener ends loading
     setLoading(false);
   };
 
@@ -90,7 +97,7 @@ export default function usePhantom() {
     const [, phantom] = get_phantom();
     await phantom.disconnect();
     save_action("disconnect");
-    setLoading(false);
+    setProvider(null);
   }
 
   async function connect() {
@@ -112,7 +119,7 @@ export default function usePhantom() {
 
   return {
     setters: { connect, disconnect },
-    state: { loading, balance, address, connected },
+    state: { loading, balance, address, connected, provider },
   };
 }
 
@@ -126,6 +133,6 @@ function retrieve_action(): Action {
   return (localStorage.getItem(key) as Action) || "disconnect";
 }
 
-function get_phantom(): [boolean, any] {
+export function get_phantom(): [boolean, any] {
   return [!!dwindow?.phantom?.solana, dwindow?.phantom?.solana];
 }

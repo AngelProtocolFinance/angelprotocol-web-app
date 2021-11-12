@@ -4,6 +4,7 @@ import { useFormContext } from "react-hook-form";
 import useEthSender from "../Donater/useEthSender";
 import useTerraSender from "../Donater/useTerraSender";
 import useBTCSender from "../Donater/useBTCSender";
+import useSolSender from "components/Donater/useSolSender";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useSubmit() {
@@ -12,11 +13,13 @@ export default function useSubmit() {
   const terraSender = useTerraSender();
   const ethSender = useEthSender();
   const btcSender = useBTCSender();
+  const solSender = useSolSender();
 
   const senders: Senders = {
     [denoms.uusd]: terraSender,
     [denoms.ether]: ethSender,
     [denoms.btc]: btcSender,
+    [denoms.sol]: solSender,
   };
   return {
     submitHandler: handleSubmit(senders[currency]),

@@ -1,6 +1,6 @@
 import Loader from "components/Loader/Loader";
 import Popup, { Content } from "./Popup";
-export type Props = { url?: string };
+export type Props = { url?: string; desc: string };
 export default function Waiter(props: Props) {
   return (
     <Popup accent="bg-angel-blue">
@@ -11,9 +11,7 @@ export default function Waiter(props: Props) {
             gapClass="gap-2"
             widthClass="w-4"
           />
-          <p className="text-center text-angel-grey mt-4">
-            Waiting for transaction result
-          </p>
+          <p className="text-center text-angel-grey mt-4">{props.desc}</p>
           {props.url && (
             <a
               href={props.url}
