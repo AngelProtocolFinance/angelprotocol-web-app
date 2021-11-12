@@ -29,7 +29,7 @@ const RegistrationStatus = () => {
   }, [error]);
 
   const status = {
-    wallet_address: !!data?.Metadata.TerraWallet,
+    wallet_address: !!data?.Metadata?.TerraWallet,
     document:
       user.ProofOfIdentityVerified &&
       user.ProofOfEmploymentVerified &&
