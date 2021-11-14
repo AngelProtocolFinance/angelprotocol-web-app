@@ -1,70 +1,41 @@
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
-import Dashboard from "pages/Dashboard";
-import Login from "pages/Login/Login";
-import Register from "pages/registration/index";
-import TCA from "pages/TCA/TCA";
-import { app, site } from "../types/routes";
-import AppFoot from "components/Footers/AppFoot";
-import Fund from "pages/Fund/Fund";
-import Charity from "pages/Charity/Charity";
-import { WalletProvider } from "@terra-money/wallet-provider";
+import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
+import { UseWalletProvider as EthProvider } from "use-wallet";
 import { mainnet, walletConnectChainIds } from "./chains";
-import Leaderboard from "pages/Leaderboard/Leaderboard";
-import Withdraw from "pages/Withdraw/Withdraw";
-import Marketplace from "pages/Marketplace/Marketplace";
-import { UseWalletProvider } from "use-wallet";
+import AppFoot from "components/Footers/AppFoot";
+import Waiter from "components/Waiter/Waiter";
+import Nodal from "components/Nodal/Nodal";
+import Views from "./Views";
+import PhantomProvider from "contexts/PhantomProvider";
 
-const App = () => {
-  //{match.path} is '/app'
-  const { path } = useRouteMatch();
-  const location = useLocation();
+export default function App() {
+  //ethereum
+  const eth_connectors = {
+    torus: { chainId: 1 },
+    //TODO: get proper url
+    ledger: {
+      chainId: 1,
+      url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+    },
+  };
 
   return (
-    <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
-      <WalletProvider
+    <div
+      className={`grid bg-gradient-to-b from-blue-accent to-black-blue relative`}
+    >
+      <TerraProvider
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}
       >
-        <UseWalletProvider
-          connectors={{
-            torus: { chainId: 1 },
-            //TODO: get proper url
-            ledger: {
-              chainId: 1,
-              url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-            },
-          }}
-        >
-          <Switch>
-            <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-            <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
-            <Route
-              path={`${path}/${app.marketplace}`}
-              component={Marketplace}
-            />
-            <Route path={`${path}/${app.charity}`} component={Charity} />
-            <Route path={`${path}/${app.login}`} component={Login} />
-            <Route path={`${path}/${app.register}`} component={Register} />
-            <Route path={`${path}/${app.tca}`} component={TCA} />
-            <Route path={`${path}/${app.fund}`} component={Fund} />
-            <Route
-              path={`${path}/${app.withdraw}/:address`}
-              component={Withdraw}
-            />
-            <Route path={`${path}${app.index}`} component={Leaderboard} />
-            <Redirect from="*" to={site.home} />
-          </Switch>
+        <EthProvider connectors={eth_connectors}>
+          <PhantomProvider>
+            <Nodal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
+              <Waiter />
+              <Views />
+            </Nodal>
+          </PhantomProvider>
           <AppFoot />
-        </UseWalletProvider>
-      </WalletProvider>
+        </EthProvider>
+      </TerraProvider>
     </div>
   );
-};
-
-export default App;
+}

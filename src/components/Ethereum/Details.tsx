@@ -3,7 +3,7 @@ import Address from "components/TerraStation/Address";
 import { useWallet } from "use-wallet";
 import { utils } from "ethers";
 import Balance from "./Balance";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import Backdrop from "components/WalletSuite/Backdrop";
 import Disconnect from "components/WalletSuite/Disconnect";
 type Props = { closeHandler: () => void };

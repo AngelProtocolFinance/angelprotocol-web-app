@@ -14,7 +14,7 @@ import {
 const UpdateProfile = () => {
   //url = app/register/charity-profile
   const location: any = useLocation();
-  const dispatch = useSetter();
+  // const dispatch = useSetter();
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});
   const [secondData, setSecondData] = useState({});

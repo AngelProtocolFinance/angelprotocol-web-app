@@ -4,6 +4,10 @@ export enum chains {
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
+  kovan = "42",
+  ropsten = "3",
+  eth_main = "1",
+  btc_test = "1",
 }
 
 export enum sc {
@@ -13,7 +17,7 @@ export enum sc {
 }
 
 export type URLs = {
-  [key in chains]: string;
+  [index: string]: string;
 };
 
 //Contract types

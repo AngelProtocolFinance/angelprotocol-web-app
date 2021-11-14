@@ -4,6 +4,7 @@ import Slider from "rc-slider";
 import useSlider from "./useSlider";
 import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
+import KYCForm from "./KYCForm";
 
 type Props = {
   //for charity donations, no split data yet
@@ -14,12 +15,13 @@ type Props = {
 export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values, touched } = useFormikContext<Values>();
+  const showKYCForm = values.receiptRequested;
   const minLocked = 100 - (props?.maxSplitLiq || 50);
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
     <Form className="grid grid-cols-2 p-4 rounded-md ">
-      <div className="">
+      <div className="col-span-2 lg:col-span-1">
         <p className="text-xl text-white-grey font-semibold">
           Choose the amount of your donation
         </p>
@@ -68,8 +70,8 @@ export default function UserForm(props: Props) {
         </div>
       </div>
 
-      <div className="">
-        <p className="ml-4 text-xl text-white-grey font-semibold">
+      <div className="col-span-2 lg:col-span-1">
+        <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
           How much of your donation should be compounded forever?
         </p>
         <div className="p-5">
@@ -87,6 +89,18 @@ export default function UserForm(props: Props) {
           </p>
         </div>
       </div>
+
+      <div className="col-span-2 lg:col-start-2 lg:mt-4">
+        <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
+          <Field type="checkbox" name="receiptRequested" /> I want a Tax Receipt
+        </label>
+      </div>
+
+      {showKYCForm ? (
+        <div className="col-span-2 text-white-grey font-semibold">
+          <KYCForm />
+        </div>
+      ) : null}
 
       <button
         disabled={isSubmitting}

@@ -7,11 +7,15 @@ import { FormikHelpers } from "formik";
 import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
+import { useLogDonationTransactionMutation } from "services/apes/donations";
+import createAuthToken from "helpers/createAuthToken";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
+  const [logDonationTransaction] = useLogDonationTransactionMutation();
+
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
@@ -68,6 +72,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
       );
       const estimatedFee =
         transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
+      const transactionMessage: any = transaction.msgs[0];
+      const fundId = transactionMessage.execute_msg.deposit.fund_id;
 
     
 
@@ -100,9 +106,38 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
         if (!txInfo.code) {
           const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
+
+          // Every transaction is recorded in our APES AWS DynamoDB donations table
+          // When a Tax Receipt is requested, an email will be sent to them
+          let valuesToBeSubmitted: any = values;
+          valuesToBeSubmitted["walletAddress"] = wallet.walletAddress;
+          valuesToBeSubmitted["denomination"] = "UST";
+          valuesToBeSubmitted["fundId"] = fundId;
+          valuesToBeSubmitted["transactionId"] = txInfo.txhash;
+          valuesToBeSubmitted["transactionDate"] = new Date().toLocaleString([], {
+            dateStyle: "long",
+            timeStyle: "short",
+            hour12: false,
+          });
+          Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
+
+          // Auth token to be passed as part of the header of the request
+          const authToken = createAuthToken("angelprotocol-web-app");
+
+          // Call APES endpoint
+          const postData = {
+            token: authToken,
+            body: {
+              ...valuesToBeSubmitted,
+            },
+          };
+
+          const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
+          const result = response.error ? response.error.data.message : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
+
           setStatus({
             step: Steps.success,
-            message: `Thank you for your donation!`,
+            message: result,
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
