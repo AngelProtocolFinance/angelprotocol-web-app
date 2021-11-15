@@ -1,7 +1,7 @@
 import { denoms } from "constants/currency";
 import Currency from "./Currency";
 import Amount from "./Amount";
-import useSubmit from "./useSubmit";
+import useDonateForm from "./useDonateForm";
 import Breakdown from "./Breakdown";
 import Status from "./Status";
 import { useFormContext } from "react-hook-form";
@@ -10,7 +10,7 @@ import Split from "./Split";
 
 export default function DonateForm() {
   const { watch } = useFormContext<Values>();
-  const { submitHandler, isSubmitting } = useSubmit();
+  const { submitHandler, isSubmitting } = useDonateForm();
   const loading = watch("loading");
   const error = watch("form_error");
   const to = watch("to");
@@ -24,9 +24,9 @@ export default function DonateForm() {
       <Amount />
       <div className="flex gap-2 mb-3">
         <Currency currency={denoms.uusd} />
-        <Currency currency={denoms.ether} withTooltip />
+        <Currency currency={denoms.ether} />
         <Currency currency={denoms.btc} />
-        <Currency currency={denoms.sol} withTooltip />
+        <Currency currency={denoms.sol} />
       </div>
       <Breakdown />
       {to !== "tca" && <Split />}
