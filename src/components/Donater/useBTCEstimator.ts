@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { denoms } from "constants/currency";
 import { DWindow } from "types/window";
 import { useWallet } from "use-wallet";
