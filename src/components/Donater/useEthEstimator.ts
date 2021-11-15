@@ -31,7 +31,7 @@ export default function useEthEstimator() {
           return;
         }
 
-        if (wallet.chainId !== Number(chains.ropsten)) {
+        if (wallet.chainId !== Number(chains.eth_ropsten)) {
           setValue("form_error", "Kindly set your network to Kovan");
           return;
         }
@@ -49,7 +49,7 @@ export default function useEthEstimator() {
           return;
         }
         const raw_transaction = {
-          to: ap_wallets[denoms.ether][chains.ropsten],
+          to: ap_wallets[denoms.ether][chains.eth_ropsten],
           value: wei_amount,
         };
 

@@ -5,13 +5,14 @@ import { memo } from "react";
 import useTooltip from "hooks/useTooltip";
 
 type Props = {
-  currency: denoms.uusd | denoms.btc | denoms.ether;
+  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol;
   withTooltip?: true;
 };
 function Currency(props: Props) {
   const { enter, exit, Tooltip } = useTooltip(Tooltip_);
   const { register, watch } = useFormContext<Values>();
   const isActive = watch("currency") === props.currency;
+
   return (
     <div
       onMouseEnter={enter}
