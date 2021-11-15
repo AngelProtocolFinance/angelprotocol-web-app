@@ -12,7 +12,7 @@ import useEthEstimator from "./useEthEstimator";
 export default function useEthSender() {
   const wallet = useWallet();
   const dispatch = useSetter();
-  const { reset } = useFormContext();
+  const { setValue } = useFormContext();
   const { showModal } = useSetModal();
   const tx = useEthEstimator();
 
@@ -32,7 +32,7 @@ export default function useEthSender() {
     } catch (error) {
       displayEthError(error, showModal);
     } finally {
-      reset();
+      setValue("amount", "");
     }
   }
 

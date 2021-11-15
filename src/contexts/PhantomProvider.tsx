@@ -10,6 +10,7 @@ type State = {
   connected: boolean;
   balance: number;
   address: string;
+  provider: any | null;
 };
 
 type Setters = {
@@ -22,6 +23,7 @@ const initialState: State = {
   connected: false,
   balance: 0,
   address: "",
+  provider: null,
 };
 
 export default function PhantomProvider(props: Props) {
