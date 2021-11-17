@@ -1,6 +1,7 @@
 export enum site {
   home = "/",
   app = "/app",
+  admin = "/admin",
 }
 
 export enum web {
@@ -10,6 +11,11 @@ export enum web {
   donors = "for-donors",
   about = "about",
   contact = "contact",
+}
+
+export enum admin {
+  index = "/",
+  index_fund_management = "index-fund",
 }
 
 export enum app {

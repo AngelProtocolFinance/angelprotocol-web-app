@@ -88,6 +88,8 @@ module.exports = {
       },
       maxWidth: {
         "4/5": "80%",
+        450: "450px",
+        600: "600px",
       },
       minWidth: {
         36: "36",
@@ -97,6 +99,9 @@ module.exports = {
         modal: "300px",
         "leader-table": "36rem",
         10: "10",
+        "1/3": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
       },
       width: {
         128: "28rem",
