@@ -5,6 +5,7 @@ export enum Wallets {
   ethereum = "ethereum",
   terra = "terra",
   phantom = "phantom",
+  keplr = "keplr",
 }
 
 export type PendingTx = { amount: number; hash: string } | null;

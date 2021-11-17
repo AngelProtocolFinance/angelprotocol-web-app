@@ -14,6 +14,7 @@ export enum Icons {
   torus = "torus",
   ledger = "ledger",
   phantom = "phantom",
+  keplr = "keplr",
   uknown = "unknown",
 }
 

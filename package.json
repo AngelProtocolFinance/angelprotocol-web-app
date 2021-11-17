@@ -93,6 +93,7 @@
     ]
   },
   "devDependencies": {
+    "@keplr-wallet/types": "^0.9.6",
     "@peculiar/webcrypto": "^1.1.7",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-essentials": "^6.3.6",

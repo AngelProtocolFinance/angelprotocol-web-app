@@ -1,7 +1,8 @@
-import { useGetPhantom } from "contexts/PhantomProvider";
+import { useGetPhantom } from "wallets/Phantom";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
+import { chains } from "contracts/types";
 
 export default function useDisplay() {
   const { address, balance } = useGetPhantom();
@@ -13,7 +14,7 @@ export default function useDisplay() {
   return {
     toggleDetails,
     hideDetails,
-    chainId: "dev-net",
+    chainId: chains.sol_dev,
     maskedAddr,
     balance: toCurrency(balance / 1e9, 3),
     detailsShown,

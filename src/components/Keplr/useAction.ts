@@ -3,10 +3,10 @@ import { Icons } from "components/WalletSuite/types";
 import Warning, { Props } from "components/WalletSuite/Warning";
 import { useSetModal } from "components/Nodal/Nodal";
 import { useGetter } from "store/accessors";
-import { useSetPhantom } from "wallets/Phantom";
+import { useSetKeplr } from "wallets/Keplr";
 
 export default function useAction(icon: Icons) {
-  const { connect } = useSetPhantom();
+  const { connect } = useSetKeplr();
   const { isLoading } = useGetter((state) => state.wallet);
   const { showModal } = useSetModal();
 
@@ -17,7 +17,7 @@ export default function useAction(icon: Icons) {
     } catch (err) {
       console.error(err);
       showModal<Props>(Warning, {
-        text: "Error connecting to phantom wallet",
+        text: "Error connecting to Keplr wallet",
       });
     }
   }

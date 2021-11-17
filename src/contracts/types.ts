@@ -11,6 +11,8 @@ export enum chains {
   sol_dev = "devnet",
   sol_main = "mainnet-beta",
   sol_test = "testnet",
+  cosmos_3 = "cosmoshub-3",
+  cosmos_4 = "cosmoshub-4",
 }
 
 export enum sc {
