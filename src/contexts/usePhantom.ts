@@ -112,7 +112,7 @@ export default function usePhantom() {
       await phantom.connect();
     } catch (err) {
       setLoading(false);
-      console.log(err);
+      console.error(err);
       // { code: 4001, message: 'User rejected the request.' }
     }
   }

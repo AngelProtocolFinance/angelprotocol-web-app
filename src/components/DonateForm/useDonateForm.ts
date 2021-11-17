@@ -9,18 +9,16 @@ import { useEffect, useRef } from "react";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useSubmit() {
-  const denomRef = useRef<denoms>(denoms.uusd);
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
-  const currency = watch("currency");
   const terraSender = useTerraSender();
   const ethSender = useEthSender();
   const btcSender = useBTCSender();
   const solSender = useSolSender();
-
+  const denomRef = useRef<denoms>(denoms.uusd);
+  const currency = watch("currency");
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== currency) {
-      setValue("form_error", "");
       setValue("amount", "", { shouldValidate: false });
     }
     denomRef.current = currency;

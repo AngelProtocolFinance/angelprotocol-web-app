@@ -25,7 +25,7 @@ export const ap_wallets: { [index: string]: { [index: string]: string } } = {
     [chains.eth_ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
   },
   [denoms.btc]: {
-    [chains.btc_test]: "bc1qezneaj4976ev4kkqws40dk2dxgxwcjynggd8fq",
+    [chains.btc_test]: "tb1qp6r3j2xr07f0qs2dvxx9xy4hk98c8f5r4l7xva",
   },
   [denoms.uusd]: {
     [chains.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
