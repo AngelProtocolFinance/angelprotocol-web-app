@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useLookupQuery } from "api/endowmentsAPI/endowmentAPI";
+import { useLookupQuery } from "services/aws/endowments/endowments"; // Previous file path used in RC-MVP-staging branch is "api/endowmentsAPI/endowmentAPI"
 import Account from "contracts/Account";
 import { chains } from "contracts/types";
 

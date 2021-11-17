@@ -1,3 +1,4 @@
+import "rc-slider/assets/index.css";
 import { useState } from "react";
 import Modal from "react-modal";
 import { Formik, Form } from "formik";
