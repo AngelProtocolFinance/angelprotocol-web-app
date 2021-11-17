@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import Action from "./Action";
 import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
@@ -77,7 +77,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(register.detail)}
+                onClick={navigate(registration.detail)}
                 title="Change"
                 disabled={user.PK === ""}
               />
@@ -99,7 +99,7 @@ const RegistrationStatus = () => {
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                onClick={navigate(register.wallet_check)}
+                onClick={navigate(registration.wallet_check)}
                 title={status.wallet_address ? "Change" : "Continue"}
                 disabled={user.PK === ""}
               />
@@ -124,7 +124,7 @@ const RegistrationStatus = () => {
               <Action
                 onClick={() =>
                   history.push({
-                    pathname: register.upload_docs,
+                    pathname: registration.upload_docs,
                     state: {
                       data: data?.Registration,
                     },
@@ -161,7 +161,7 @@ const RegistrationStatus = () => {
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                onClick={navigate(register.wallet_check)}
+                onClick={navigate(registration.wallet_check)}
                 title={status.endowment === 0 ? "Complete" : "Continue"}
                 disabled={status.endowment === 2 || user.PK === ""}
               />
@@ -197,7 +197,7 @@ const RegistrationStatus = () => {
                 }
                 onClick={() =>
                   history.push({
-                    pathname: register.charity_profile,
+                    pathname: registration.charity_profile,
                     state: {
                       data: data?.Metadata,
                     },
@@ -226,7 +226,7 @@ const RegistrationStatus = () => {
                 }
                 onClick={() =>
                   history.push({
-                    pathname: register.key_person,
+                    pathname: registration.key_person,
                     state: {
                       data: data?.KeyPerson,
                     },
@@ -243,7 +243,7 @@ const RegistrationStatus = () => {
         <Action
           classes="bg-thin-blue w-64 h-10"
           title={"Go to " + user.CharityName + "'s profile"}
-          onClick={navigate(register.charity_profile)}
+          onClick={navigate(registration.charity_profile)}
           disabled={!status.completed || user.PK === ""}
         />
       </div>

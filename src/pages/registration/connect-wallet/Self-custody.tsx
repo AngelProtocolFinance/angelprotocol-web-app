@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import Action from "../Action";
 
 const SelfCustody = () => {
@@ -35,7 +35,7 @@ const SelfCustody = () => {
       </div>
       <div className="mt-5">
         <Action
-          onClick={() => history.push(register.others)}
+          onClick={() => history.push(registration.others)}
           title="Back"
           classes="bg-thin-blue w-48 h-10"
         />

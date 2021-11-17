@@ -37,7 +37,7 @@ export const StepOneSchema = Yup.object().shape({
   CountryIncorporation: Yup.string().required(
     "please select the country of incorporation."
   ),
-  SelectCountries: Yup.string().required(`Please select the countries.`),
+  SelectCountries: Yup.array().min(1).required(`Please select the countries.`),
   VisionStatement: Yup.string()
     .required("Please select the vision statement.")
     .max(150, "Description must be less than 150 letters."),

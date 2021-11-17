@@ -5,7 +5,7 @@ import {
   useUpdateKeyPersonDataMutation,
 } from "services/aws/keyPerson";
 
-export interface KeyPersoData {
+export interface KeyPersonData {
   FullName: string;
   Title: string;
   HeadshotPicture?: string;
@@ -32,11 +32,11 @@ export const useKeyPersonProfile = () => {
   const [updateKeyPersonProfile] = useUpdateKeyPersonDataMutation();
 
   const saveKeyPersonData = async (
-    keyPersonData: KeyPersoData,
+    keyPersonData: KeyPersonData,
     fileContent: string,
     is_create: boolean
   ) => {
-    const postData: KeyPersoData = {
+    const postData: KeyPersonData = {
       ...keyPersonData,
       HeadshotPicture: fileContent,
     };

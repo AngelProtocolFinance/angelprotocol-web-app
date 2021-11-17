@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
@@ -42,6 +42,7 @@ const StepsDocs = () => {
   };
 
   const uploadFile = async (files: any) => {
+    setOpenModal(false);
     const paramDocNames = [
       ["ProofOfIdentity", "ProofOfIdentityVerified"],
       ["ProofOfEmployment", "ProofOfEmploymentVerified"],
@@ -60,7 +61,6 @@ const StepsDocs = () => {
     }
     setUploadedStatus(success);
     setLoading(false);
-    setOpenModal(false);
   };
   return (
     <div>
@@ -85,6 +85,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 0}
             />
             {userData?.ProofOfIdentityVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -118,6 +119,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 1}
             />
             {userData?.ProofOfEmploymentVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -154,6 +156,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 2}
             />
             {userData?.EndowmentAgreementVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -178,7 +181,7 @@ const StepsDocs = () => {
       <div className="mt-5 text-center flex justify-center">
         <div>
           <Action
-            onClick={() => history.push(register.status)}
+            onClick={() => history.push(registration.status)}
             title="back"
             classes="bg-thin-blue w-48 h-10 mt-3"
             disabled={loading}

@@ -1,9 +1,12 @@
+import Loader from "components/Loader/Loader";
+
 type Submit = {
   submit?: true;
   disabled?: boolean;
   title: string;
   classes: string;
   onClick?: never;
+  isLoading?: boolean;
 };
 
 type Button = {
@@ -12,6 +15,7 @@ type Button = {
   title: string;
   classes: string;
   onClick: () => void;
+  isLoading?: boolean;
 };
 
 type Props = Submit | Button;
@@ -24,7 +28,11 @@ export default function Action(props: Props) {
       disabled={props.disabled}
       onClick={props.onClick}
     >
-      {props.title}
+      {props.isLoading ? (
+        <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+      ) : (
+        props.title
+      )}
     </button>
   );
 }
