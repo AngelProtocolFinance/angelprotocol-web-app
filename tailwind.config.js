@@ -44,7 +44,15 @@ module.exports = {
         orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
+        "dark-grey": "#999999",
         "failed-red": "#FE4454",
+      },
+
+      borderColor: {
+        "angel-orange": "#FAAC2E",
+        "angel-blue": "#3FA9F5",
+        "thin-blue": "#54A3D9",
+        "light-grey": "#f5f5f5",
       },
 
       fontSize: {
@@ -103,7 +111,16 @@ module.exports = {
         "1/2": "50%",
         "3/4": "75%",
       },
+      maxHeight: {
+        "1/3": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
+        modal: "300px",
+        280: "280px",
+        "75vh": "75vh",
+      },
       width: {
+        115: "15rem",
         128: "28rem",
         130: "30rem",
         135: "35rem",
