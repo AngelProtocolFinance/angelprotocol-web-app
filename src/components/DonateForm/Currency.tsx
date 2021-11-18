@@ -5,7 +5,7 @@ import { memo } from "react";
 import useTooltip from "hooks/useTooltip";
 
 type Props = {
-  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol;
+  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   withTooltip?: true;
 };
 function Currency(props: Props) {

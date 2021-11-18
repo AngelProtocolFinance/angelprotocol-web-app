@@ -6,7 +6,7 @@ export interface Values {
   split_liq: string;
 
   //metadata;
-  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol;
+  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   fee: number;
   loading: boolean;
   form_error: string;
