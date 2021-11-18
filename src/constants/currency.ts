@@ -5,6 +5,8 @@ import sdt from "assets/icons/currencies/sdt.svg";
 import token from "assets/icons/currencies/token.svg";
 import ust from "assets/icons/currencies/ust.svg";
 import ether from "assets/icons/currencies/ether.png";
+import btc from "assets/icons/currencies/btc.png";
+import sol from "assets/icons/currencies/sol.svg";
 
 export enum denoms {
   uluna = "uluna",
@@ -29,6 +31,9 @@ export enum denoms {
   uthb = "uthb",
   uusd = "uusd",
   ether = "ether",
+  wei = "wei",
+  btc = "btc",
+  sol = "sol",
   coin = "coin",
 }
 
@@ -55,7 +60,10 @@ export const currency_text: { [key in denoms]: string } = {
   [denoms.uthb]: "THB",
   [denoms.uusd]: "UST",
   [denoms.coin]: "COIN",
+  [denoms.btc]: "BTC",
   [denoms.ether]: "ETH",
+  [denoms.wei]: "WEI",
+  [denoms.sol]: "SOL",
 };
 
 export const currency_icons: { [key in denoms]: string } = {
@@ -82,4 +90,7 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uusd]: ust,
   [denoms.coin]: token,
   [denoms.ether]: ether,
+  [denoms.wei]: token,
+  [denoms.btc]: btc,
+  [denoms.sol]: sol,
 };

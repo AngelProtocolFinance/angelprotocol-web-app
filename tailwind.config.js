@@ -92,7 +92,7 @@ module.exports = {
         600: "600px",
       },
       minWidth: {
-        36: "36",
+        136: "36rem",
       },
       minHeight: {
         r15: "15rem",
@@ -104,7 +104,6 @@ module.exports = {
         "3/4": "75%",
       },
       maxHeight: {
-        modal: "300px",
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
