@@ -1,5 +1,10 @@
 import { Dec } from "@terra-money/terra.js";
-import { SigningCosmosClient } from "@cosmjs/launchpad";
+import {
+  StdFee,
+  StdSignDoc,
+  coin as create_coin,
+  MsgSend,
+} from "@cosmjs/launchpad";
 import { useSetModal } from "components/Nodal/Nodal";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
@@ -44,32 +49,59 @@ export default function useAtomSender() {
     try {
       if (!provider) {
         showModal<ErrProps>(ErrPop, {
-          desc: "Solana wallet is not connected.",
+          desc: "Atom wallet is not connected.",
         });
         return;
       }
 
-      const offlineSigner = dwindow.getOfflineSigner!(chains.cosmos_3);
-      const accounts = await offlineSigner.getAccounts();
-
-      const cosmJS = new SigningCosmosClient(
-        "https://node-cosmoshub-3.keplr.app/rest",
-        accounts[0].address,
-        offlineSigner
-      );
+      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_3);
+      const accounts = await offline_signer.getAccounts();
+      const address = accounts[0].address;
 
       const dec_uatom = new Dec(data.amount).mul(1e6);
 
-      const result = await cosmJS.sendTokens(
-        "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x",
-        [
-          {
-            denom: denoms.uatom,
-            amount: dec_uatom.toString(),
-          },
-        ]
-      );
-      console.log(result);
+      const fee: StdFee = {
+        amount: [create_coin(1000, denoms.uatom)],
+        gas: "1000",
+      };
+
+      const msg_send: MsgSend = {
+        type: "cosmos-sdk/MsgSend",
+        value: {
+          from_address: address,
+          to_address: address,
+          amount: [create_coin(dec_uatom.toNumber(), denoms.uatom)],
+        },
+      };
+
+      const doc: StdSignDoc = {
+        chain_id: chains.cosmos_3,
+        account_number: "",
+        sequence: "",
+        fee,
+        msgs: [msg_send],
+        memo: "",
+      };
+      const response = await offline_signer.signAmino(address, doc);
+
+      // const cosmJS = new SigningCosmosClient(
+      //   "https://node-cosmoshub-3.keplr.app/rest",
+      //   accounts[0].address,
+      //   offline_signer
+      // );
+
+      // const dec_uatom = new Dec(data.amount).mul(1e6);
+
+      // const result = await cosmJS.sendTokens(
+      //   "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x",
+      //   [
+      //     {
+      //       denom: denoms.uatom,
+      //       amount: dec_uatom.toString(),
+      //     },
+      //   ]
+      // );
+      console.log(response);
     } catch (err) {
       console.error(err);
     }
