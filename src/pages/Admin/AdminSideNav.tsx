@@ -1,8 +1,9 @@
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { app } from "types/routes";
+import { admin } from "types/routes";
 
-export default function SideNav() {
+export default function AdminSideNav() {
   const { url } = useRouteMatch();
+
   const linkStyles =
     "block uppercase text-sm md:text-lg text-gray-400 hover:text-gray-700 py-1 p-5 text-center rounded-sm border-t border-b border-opacity-20";
   const activeStyles = "bg-white bg-opacity-40 text-gray-600";
@@ -16,11 +17,11 @@ export default function SideNav() {
         </h2>
       </div>
       {/* side nav body */}
-      <div className="mt-10 flex flex-col flex-grow gap-4 align-items-start justify-start min-h-3/4">
+      <div className="mt-10 flex flex-col flex-grow gap-4 align-items-start justify-start max-h-3/4 min-h-1/2">
         <NavLink
           activeClassName={activeStyles}
           className={linkStyles}
-          to={`${url}`}
+          to={`${url}/${admin.charity_applications}`}
           exact
         >
           Charity Applications
@@ -28,21 +29,21 @@ export default function SideNav() {
         <NavLink
           activeClassName={activeStyles}
           className={linkStyles}
-          to={`${url}/${app.board_tca}`}
+          to={`${url}/${admin.endowments}`}
         >
           Endowments
         </NavLink>
         <NavLink
           activeClassName={activeStyles}
           className={linkStyles}
-          to={`${url}/${app.board_tca}`}
+          to={`${url}/${admin.index_fund_management}`}
         >
           Index Funds
         </NavLink>
         <NavLink
           activeClassName={activeStyles}
           className={linkStyles}
-          to={`${url}/${app.board_tca}`}
+          to={`${url}/${admin.aliance_members}`}
         >
           Alliance Members
         </NavLink>

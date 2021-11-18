@@ -11,12 +11,14 @@ import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "./chains";
 import { UseWalletProvider } from "use-wallet";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
+import AppHead from "components/Headers/AppHead";
+import AdminSideNav from "pages/Admin/AdminSideNav";
 
 const Admin = () => {
   //{match.path} is '/app'
   const { path } = useRouteMatch();
   const location = useLocation();
-  console.log("path", path);
+
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
@@ -33,14 +35,36 @@ const Admin = () => {
             },
           }}
         >
-          <Switch>
-            <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-            <Route
-              path={`${path}/${admin.index_fund_management}`}
-              component={IndexFund}
-            />
-            <Redirect from="*" to={site.home} />
-          </Switch>
+          <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16">
+            <AppHead />
+            <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10">
+              <AdminSideNav />
+              <Switch>
+                <Redirect
+                  from="/:url*(/+)"
+                  to={location.pathname.slice(0, -1)}
+                />
+                <Route
+                  path={`${path}/${admin.index_fund_management}`}
+                  component={IndexFund}
+                />
+                <Route
+                  path={`${path}/${admin.charity_applications}`}
+                  component={IndexFund}
+                />
+                <Route
+                  path={`${path}/${admin.endowments}`}
+                  component={IndexFund}
+                />
+                <Route
+                  path={`${path}/${admin.aliance_members}`}
+                  component={IndexFund}
+                />
+                <Route path={`${path}${admin.index}`} component={IndexFund} />
+                <Redirect from="*" to={site.home} />
+              </Switch>
+            </div>
+          </div>
           <AppFoot />
         </UseWalletProvider>
       </WalletProvider>
