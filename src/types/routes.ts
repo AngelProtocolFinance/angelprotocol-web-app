@@ -17,8 +17,8 @@ export enum admin {
   index = "/",
   index_fund_management = "index-fund",
   endowments = "endowments",
-  aliance_members = "aliance_members",
-  charity_applications = "charity_applications",
+  aliance_members = "aliance-members",
+  charity_applications = "charity-applications",
 }
 
 export enum app {
