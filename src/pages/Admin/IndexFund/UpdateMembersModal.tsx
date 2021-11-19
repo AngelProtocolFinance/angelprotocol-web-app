@@ -4,7 +4,9 @@ import AddressSelector from "./AddressSelector";
 const UpdateMembersModal = () => {
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const handleUpdate = () => {};
+  const handleUpdate = () => {
+    setSubmitting(true);
+  };
 
   return (
     <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-r15 p-5 text-center">

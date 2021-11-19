@@ -8,7 +8,7 @@ import {
 import { admin, site } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { mainnet, walletConnectChainIds } from "./chains";
+import { mainnet, walletConnectChainIds } from "../App/chains";
 import { UseWalletProvider } from "use-wallet";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
 import AppHead from "components/Headers/AppHead";
