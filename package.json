@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cosmjs/stargate": "^0.26.4",
     "@craco/craco": "^6.2.0",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",

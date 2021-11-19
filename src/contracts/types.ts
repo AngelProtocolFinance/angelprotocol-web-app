@@ -13,6 +13,7 @@ export enum chains {
   sol_test = "testnet",
   cosmos_3 = "cosmoshub-3",
   cosmos_4 = "cosmoshub-4",
+  cosmos_test = "cosmoshub-testnet",
 }
 
 export enum sc {

@@ -1,10 +1,14 @@
 import { Dec } from "@terra-money/terra.js";
+
 import {
   StdFee,
-  StdSignDoc,
+  // StdSignDoc,
   coin as create_coin,
-  MsgSend,
+  // MsgSend,
 } from "@cosmjs/launchpad";
+
+import { SigningStargateClient } from "@cosmjs/stargate";
+
 import { useSetModal } from "components/Nodal/Nodal";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
@@ -14,6 +18,7 @@ import { DWindow } from "types/window";
 import { useGetKeplr } from "wallets/Keplr";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
 import { Values } from "./types";
+import { cosmoshub_test_rpc } from "constants/urls";
 
 const dwindow: DWindow = window;
 export default function useAtomSender() {
@@ -54,54 +59,50 @@ export default function useAtomSender() {
         return;
       }
 
-      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_3);
+      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_test);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
 
-      const dec_uatom = new Dec(data.amount).mul(1e6);
+      const client = await SigningStargateClient.connectWithSigner(
+        cosmoshub_test_rpc,
+        offline_signer
+      );
 
       const fee: StdFee = {
-        amount: [create_coin(1000, denoms.uatom)],
-        gas: "1000",
+        amount: [create_coin(1.0, "uphoton")],
+        gas: "70000",
       };
 
-      const msg_send: MsgSend = {
-        type: "cosmos-sdk/MsgSend",
-        value: {
-          from_address: address,
-          to_address: address,
-          amount: [create_coin(dec_uatom.toNumber(), denoms.uatom)],
-        },
-      };
+      const dec_uatom = new Dec(data.amount).mul(1e6);
+      // [create_coin(dec_uatom.toNumber(), denoms.uatom)];
 
-      const doc: StdSignDoc = {
-        chain_id: chains.cosmos_3,
-        account_number: "",
-        sequence: "",
-        fee,
-        msgs: [msg_send],
-        memo: "",
-      };
-      const response = await offline_signer.signAmino(address, doc);
+      const res = await client.sendTokens(
+        address,
+        "cosmos1kd63kkhtswlh5vcx5nd26fjmr9av74yd4sf8ve",
+        [create_coin(dec_uatom.toNumber(), "uphoton")],
+        fee
+      );
 
-      // const cosmJS = new SigningCosmosClient(
-      //   "https://node-cosmoshub-3.keplr.app/rest",
-      //   accounts[0].address,
-      //   offline_signer
-      // );
+      // const msg_send: MsgSend = {
+      //   type: "cosmos-sdk/MsgSend",
+      //   value: {
+      //     from_address: address,
+      //     to_address: address,
+      //     amount: [create_coin(dec_uatom.toNumber(), denoms.uatom)],
+      //   },
+      // };
 
-      // const dec_uatom = new Dec(data.amount).mul(1e6);
+      // const doc: StdSignDoc = {
+      //   chain_id: chains.cosmos_3,
+      //   account_number: "",
+      //   sequence: "",
+      //   fee,
+      //   msgs: [msg_send],
+      //   memo: "",
+      // };
+      // const response = await offline_signer.signAmino(address, doc);
 
-      // const result = await cosmJS.sendTokens(
-      //   "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x",
-      //   [
-      //     {
-      //       denom: denoms.uatom,
-      //       amount: dec_uatom.toString(),
-      //     },
-      //   ]
-      // );
-      console.log(response);
+      console.log(res);
     } catch (err) {
       console.error(err);
     }
