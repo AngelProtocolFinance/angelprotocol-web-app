@@ -1,6 +1,6 @@
 import { LCDClient } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import { useEffect, useState } from "react";
 
 //can be extended to view balance of different currencies

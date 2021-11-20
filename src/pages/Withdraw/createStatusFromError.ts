@@ -4,7 +4,7 @@ import {
   TxFailed,
   TxUnspecifiedError,
   UserDenied,
-} from "@terra-dev/wallet-types";
+} from "@terra-money/wallet-provider";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import { Steps, Status } from "./types";
 

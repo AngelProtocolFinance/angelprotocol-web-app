@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Coin, LCDClient } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 
 export default function useBalance() {
   const [coins, setCoins] = useState<Coin.Data[]>([]);
@@ -24,7 +24,6 @@ export default function useBalance() {
       const coins = await client.bank.balance(wallet.terraAddress);
       const ustCoin = coins.get(denoms.uusd);
       const balance = coins.map((coin) => coin.mul(1e-6).toData());
-      // const ustCoin = balance.find((coin) => coin.denom === Denoms.UUSD);
       const ustAmount = ustCoin?.mul(1e-6).amount.toNumber() || 0;
       setCoins(balance);
       setUstAmount(ustAmount);

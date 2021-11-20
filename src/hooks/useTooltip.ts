@@ -1,18 +1,23 @@
-import { useState } from "react";
+import { useState, FC } from "react";
 
-export default function useTooltip(isPresent: boolean) {
+export default function useTooltip(tooltip: FC) {
   const [hovered, setHovered] = useState(false);
-  const handleEnter = () => {
-    isPresent && setHovered(true);
-  };
-  const handleExit = () => {
-    isPresent && setHovered(false);
-  };
 
+  const enter = () => {
+    setHovered(true);
+  };
+  const exit = () => {
+    setHovered(false);
+  };
   //when hover is not available
   const handleClick = () => {
-    isPresent && setHovered((prev) => !prev);
+    setHovered((prev) => !prev);
   };
 
-  return { hovered, handleEnter, handleExit, handleClick };
+  return {
+    enter,
+    exit,
+    handleClick,
+    Tooltip: hovered ? tooltip : () => null,
+  };
 }

@@ -5,9 +5,9 @@ import {
 } from "@terra-money/wallet-provider";
 import { setIcon } from "components/WalletSuite/manageIcon";
 import { Icons } from "components/WalletSuite/types";
-import { useGetState } from "components/WalletSuite/WalletSuite";
+import { useGetter } from "store/accessors";
 export default function useTerraAction(type: ConnectType) {
-  const { isLoading } = useGetState();
+  const { isLoading } = useGetter((state) => state.wallet);
   const {
     availableConnectTypes,
     connect,
