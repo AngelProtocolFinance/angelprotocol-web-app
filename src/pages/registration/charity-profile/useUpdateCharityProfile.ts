@@ -5,7 +5,7 @@ import {
   useUpdateCharityMetadataMutation,
 } from "services/aws/charity";
 
-export type CharityMetaData = {
+export interface CharityMetaData {
   CompanyNumber?: string;
   CountryIncorporation?: string;
   IsYourCountry?: boolean;
@@ -27,14 +27,17 @@ export type CharityMetaData = {
   Logo?: string;
   Banner?: string;
   VideoEmbed?: string;
-};
+  TerraWallet?: string;
+  SK?: string;
+  PK?: string;
+}
 
 export const StepOneSchema = Yup.object().shape({
   CompanyNumber: Yup.number().required("Please enter your company number"),
   CountryIncorporation: Yup.string().required(
     "please select the country of incorporation."
   ),
-  SelectCountries: Yup.string().required(`Please select the countries.`),
+  SelectCountries: Yup.array().min(1).required(`Please select the countries.`),
   VisionStatement: Yup.string()
     .required("Please select the vision statement.")
     .max(150, "Description must be less than 150 letters."),
@@ -70,7 +73,6 @@ export const useUpdateCharityProfile = () => {
       reader.onload = () => {
         return resolve(reader.result);
       };
-
       reader.onerror = (error) => reject(error);
     });
 
@@ -86,9 +88,14 @@ export const useUpdateCharityProfile = () => {
         ...metaData,
         Logo: logoFile,
         Banner: bannerFile,
-      },
+      } as CharityMetaData,
       uuid: uuid,
     };
+
+    if (!logoFile) delete postData.body.Logo;
+    if (!bannerFile) delete postData.body.Banner;
+    if (postData.body.SK) delete postData.body.SK;
+    if (postData.body.PK) delete postData.body.PK;
 
     let result: any = {};
     if (is_create) {
@@ -106,13 +113,16 @@ export const useUpdateCharityProfile = () => {
       if (
         result.status === 400 ||
         result.status === 401 ||
-        result.status === 403
+        result.status === 403 ||
+        result.status === 415
       ) {
         toast.error(result.data.message);
       } else {
         toast.success("Your key person data was saved successfully.");
+        return true;
       }
     }
+    return false;
   };
 
   return { saveCharityMetaData, readFileToBase64 };

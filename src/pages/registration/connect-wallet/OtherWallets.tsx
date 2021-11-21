@@ -4,7 +4,7 @@ import { useState } from "react";
 import Modal from "components/Modal/Modal";
 import CustodianInfoModal from "../modals/CustodianInfoModal";
 import SelfCustodyInfoModal from "../modals/SelfCustodyInfoModal";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import Action from "../Action";
 
 const OtherWallets = () => {
@@ -32,7 +32,7 @@ const OtherWallets = () => {
           <button
             className="bg-thin-blue w-60 h-10 rounded-xl uppercase text-base font-bold text-white mr-1"
             onClick={() => {
-              history.push(register.self_custody);
+              history.push(registration.self_custody);
             }}
           >
             self custody
@@ -53,22 +53,22 @@ const OtherWallets = () => {
         </div>
       </div>
       <div className="pt-5">
-        <p className="text-md">
+        <p className="text-md mb-5">
           Primetrust, coming soon, we'll keep you posted!
         </p>
         <Action
-          onClick={() => history.push(register.wallet_check)}
+          onClick={() => history.push(registration.wallet_check)}
           title="Back"
           classes="bg-thin-blue w-48 h-10"
         />
       </div>
       {isOpenModal && modalType === "prime_trust" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <CustodianInfoModal />
         </Modal>
       )}
       {isOpenModal && modalType === "self_custody" && (
-        <Modal>
+        <Modal setShown={() => setOpenModal(false)}>
           <SelfCustodyInfoModal />
         </Modal>
       )}

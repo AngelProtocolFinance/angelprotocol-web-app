@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 type Handler = () => void;
 interface Props {
+  setShown?: Function;
   children: ReactNode;
 }
 
@@ -13,6 +14,7 @@ export default function Modal(props: Props) {
   const [shown, setShown] = useState(true);
 
   function closeModal() {
+    if (props.setShown) props.setShown(false);
     setShown(false);
   }
 

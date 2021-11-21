@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useLocation } from "react-router";
 import { ToastContainer } from "react-toastify";
-// import { updateUserData } from "services/user/userSlice";
-import { useGetter } from "store/accessors";
+import { useGetCharityDataQuery } from "services/aws/charity";
+import { updateUserData } from "services/user/userSlice";
+import { useGetter, useSetter } from "store/accessors";
 import ProfileStepOne from "./Profile-step-one";
 import ProfileStepTwo from "./Profile-step-two";
 import {
@@ -13,28 +14,32 @@ import {
 const UpdateProfile = () => {
   //url = app/register/charity-profile
   const location: any = useLocation();
-  // const dispatch = useSetter();
+  const dispatch = useSetter();
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});
   const [secondData, setSecondData] = useState({});
   let metaData: CharityMetaData = location.state.data;
-
-  console.log("meta data => ", location.state);
-  const is_create = !metaData;
   const { saveCharityMetaData, readFileToBase64 } = useUpdateCharityProfile();
-
   let user = useGetter((state) => state.user);
+  const { data } = useGetCharityDataQuery(user.PK);
+
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
-    // dispatch(updateUserData(user));
+    dispatch(updateUserData(user));
   }
+  if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
+    metaData = data.Metadata;
+  }
+
+  const is_create = !metaData?.CompanyNumber;
 
   const readFiles = async (files: any) => {
     let content: any;
-    if (files.length > 0) {
+    if (files && files.length > 0) {
       content = await readFileToBase64(files[0]);
       return content;
     }
+    return null;
   };
 
   const onSaveCharityMetaData = async (data: any) => {
@@ -47,13 +52,21 @@ const UpdateProfile = () => {
       };
       const logoFileContent = await readFiles(data.logoFile);
       const bannerFileContent = await readFiles(data.bannerFile);
-      await saveCharityMetaData(
+      const flag = await saveCharityMetaData(
         user.PK,
         metaData,
         logoFileContent,
         bannerFileContent,
         is_create
       );
+      if (flag) {
+        dispatch(
+          updateUserData({
+            ...user,
+            IsMetaDataCompleted: true,
+          })
+        );
+      }
     }
   };
 

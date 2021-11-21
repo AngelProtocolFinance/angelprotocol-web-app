@@ -11,7 +11,6 @@ export interface User {
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
-  WalletAddress?: string;
   token?: string;
   // for docs
   ProofOfIdentity?: any;
