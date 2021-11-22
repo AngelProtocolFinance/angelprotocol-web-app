@@ -37,7 +37,7 @@ export enum app {
   test = "test",
 }
 
-export enum register {
+export enum registration {
   index = "/",
   detail = "detail",
   confirm = "confirm",

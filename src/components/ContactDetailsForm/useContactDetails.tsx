@@ -1,7 +1,5 @@
-import { FormikHelpers } from "formik";
 import { useHistory } from "react-router-dom";
-import { register } from "types/routes";
-import { ContactDetails } from "./ContactDetailsForm";
+import { registration } from "types/routes";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import {
@@ -11,6 +9,18 @@ import {
 } from "services/aws/registration";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+
+export type ContactDetails = {
+  charityName: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  orgRole: string;
+  otherRole: string;
+  checkedPolicy: boolean;
+  uniqueID: string;
+};
 
 export const ContactInfoSchema = Yup.object().shape({
   charityName: Yup.string().required(
@@ -30,7 +40,6 @@ export const ContactInfoSchema = Yup.object().shape({
 });
 
 export const useContactDetails = () => {
-  // const [registerCharity, { isLoading }] = useCreateNewCharityMutation();
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
@@ -38,11 +47,7 @@ export const useContactDetails = () => {
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  async function saveContactInfo(
-    contactData: ContactDetails,
-    actions: FormikHelpers<ContactDetails>
-  ) {
-    actions.setSubmitting(true);
+  async function saveContactInfo(contactData: ContactDetails) {
     // call API to add or update contact details information(contactData)
     const is_create = !contactData?.uniqueID;
     const postData = {
@@ -55,10 +60,8 @@ export const useContactDetails = () => {
         LastName: contactData.lastName,
         Email: contactData.email,
         PhoneNumber: contactData.phone,
-        Role:
-          contactData.orgRole !== "Other"
-            ? contactData.orgRole
-            : contactData.otherRole,
+        Role: contactData.orgRole,
+        OtherRole: contactData.otherRole || "",
       },
     };
 
@@ -95,13 +98,11 @@ export const useContactDetails = () => {
             CharityName: postData.Registration.CharityName,
           },
         });
-        history.push(register.confirm);
+        history.push(registration.confirm);
       }
     } else {
       toast.error(result.message);
     }
-
-    actions.setSubmitting(false);
   }
   return { saveContactInfo };
 };

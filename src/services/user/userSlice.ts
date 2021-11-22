@@ -14,7 +14,6 @@ const initialState: User = {
   RegistrationDate: "",
   RegistrationStatus: "",
   EmailVerified: false,
-  WalletAddress: "",
   token: "",
   // for docs
   ProofOfIdentity: "",
