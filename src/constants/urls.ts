@@ -6,3 +6,6 @@ export const apes_endpoint =
 
 export const cosmoshub_test_rpc = "https://rpc.testnet.cosmos.network:443";
 export const cosmoshub_test_rest = "https://api.testnet.cosmos.network:443";
+
+export const bombay_rest = "https://bombay-lcd.terra.dev";
+export const bombay_rpc = "";
