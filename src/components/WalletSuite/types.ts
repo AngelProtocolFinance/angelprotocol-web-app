@@ -13,6 +13,7 @@ export enum Icons {
   xdefi = "xdefi",
   torus = "torus",
   ledger = "ledger",
+  phantom = "phantom",
   uknown = "unknown",
 }
 
@@ -20,6 +21,7 @@ export enum Wallets {
   none = "none",
   ethereum = "ethereum",
   terra = "terra",
+  phantom = "phantom",
 }
 
 export type State = {

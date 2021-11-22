@@ -31,7 +31,7 @@ export default function Estimates() {
 
   return (
     <>
-      <div className="p-2 font-heading text-angel-blue font-semibold text-angel-blue font-semibold">
+      <div className="p-2 font-heading text-angel-blue font-semibold">
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-2 text-xs">Amount :</span>
           <span className="font-semibold">{amount} UST</span>

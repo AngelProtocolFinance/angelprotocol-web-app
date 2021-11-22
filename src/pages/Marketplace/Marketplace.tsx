@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import AppHead from "components/Headers/AppHead";
 import { chains } from "contracts/types";
 import { useEndowmentsQuery } from "services/aws/endowments/endowments";
