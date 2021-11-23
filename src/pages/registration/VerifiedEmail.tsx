@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import { FaCheck, FaExclamation } from "react-icons/fa";
 import { app, registration, site } from "types/routes";
 import { toast, ToastContainer } from "react-toastify";
-import Action from "./Action";
+import Action from "../../components/ActionButton/Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";

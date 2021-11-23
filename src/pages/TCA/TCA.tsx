@@ -9,7 +9,7 @@ export default function TCA() {
   const decodedToken = useGetToken();
 
   //user can't access TCA page when not logged in or his prev token expired
-  if (!decodedToken) {
+  if (!decodedToken?.token) {
     return <Redirect to={`${site.app}/${app.login}`} />;
   }
 

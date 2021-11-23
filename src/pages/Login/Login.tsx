@@ -16,14 +16,14 @@ export type Values = {
 };
 
 const Login = () => {
-  const token = useGetToken();
+  const decodedToken = useGetToken();
   const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
   }
 
-  if (token) {
+  if (decodedToken?.token) {
     return <Redirect to={`${site.app}/${app.tca}`} />;
   }
 

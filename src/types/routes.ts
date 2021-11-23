@@ -14,7 +14,7 @@ export enum web {
 }
 
 export enum admin {
-  index = "/",
+  index = "dashboard",
   login = "login",
   index_fund_management = "index-fund",
   endowments = "endowments",
