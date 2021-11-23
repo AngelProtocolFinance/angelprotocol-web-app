@@ -1,6 +1,6 @@
 import useKeplr from "./useKeplr";
 import { createContext, useContext } from "react";
-import { KeplrState, Props, Setters, State } from "./types";
+import { KeplrState, Props, Setters } from "./types";
 
 export default function Keplr(props: Props) {
   const { setters, state } = useKeplr();
@@ -13,12 +13,12 @@ export default function Keplr(props: Props) {
   );
 }
 
-const initialState: State = {
+const initialState: KeplrState = {
   loading: false,
   connected: false,
-  balance: 0,
+  balance: [],
   address: "",
-  provider: null,
+  provider: undefined,
 };
 
 const getContext = createContext<KeplrState>(initialState);

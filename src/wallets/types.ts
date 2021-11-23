@@ -1,3 +1,4 @@
+import { Coin as CosmosCoin } from "@cosmjs/stargate";
 import { Keplr } from "@keplr-wallet/types";
 import { ReactNode } from "react";
 
@@ -23,4 +24,5 @@ export type KeplrState = {
   connected: boolean;
   address: string;
   provider: Keplr | undefined;
+  balance: CosmosCoin[];
 };

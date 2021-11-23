@@ -28,7 +28,7 @@ export default function useWalletConnect() {
     client.on(CLIENT_EVENTS.pairing.proposal, async (proposal: any) => {
       // uri should be shared with the Wallet either through QR Code scanning or mobile deep linking
       const { uri } = proposal.signal.params;
-      console.log(uri);
+      // console.log(uri);
     });
   }
 

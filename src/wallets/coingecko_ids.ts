@@ -4,4 +4,5 @@ import { denoms } from "constants/currency";
 export const coingecko_ids = {
   [denoms.uluna]: "terra-luna",
   [denoms.uusd]: "terrausd",
+  [denoms.uatom]: "cosmos",
 };

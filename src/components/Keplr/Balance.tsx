@@ -4,6 +4,7 @@ import toCurrency from "helpers/toCurrency";
 type Props = {
   denom: denoms;
   amount: number;
+  precision?: number;
 };
 export default function Balance(props: Props) {
   return (
@@ -17,7 +18,7 @@ export default function Balance(props: Props) {
         {currency_text[props.denom] || currency_text.coin}
       </span>
       <span className="ml-auto text-angel-grey">
-        {toCurrency(props.amount, 6)}
+        {toCurrency(props.amount, props.precision || 6)}
       </span>
     </li>
   );

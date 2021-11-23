@@ -2,6 +2,7 @@ import { Window as KeplrWindow } from "@keplr-wallet/types";
 export interface XFI {
   bitcoin?: any;
   ethereum?: any;
+  terra?: any;
   //others to add if needed
 }
 

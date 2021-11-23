@@ -9,3 +9,6 @@ export const cosmoshub_test_rest = "https://api.testnet.cosmos.network:443";
 
 export const bombay_rest = "https://bombay-lcd.terra.dev";
 export const bombay_rpc = "";
+
+//https://docs.tendermint.com/master/rpc/
+export const cosmos_4_rpc = "https://rpc.cosmos.network";

@@ -1,14 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
-
-import {
-  StdFee,
-  // StdSignDoc,
-  coin as create_coin,
-  // MsgSend,
-} from "@cosmjs/launchpad";
-
+import { StdFee, coin as create_coin } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
-
 import { useSetModal } from "components/Nodal/Nodal";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
@@ -17,8 +9,12 @@ import { useFormContext } from "react-hook-form";
 import { DWindow } from "types/window";
 import { useGetKeplr } from "wallets/Keplr";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
+import Waiter, { Props as WaitProps } from "./Waiter";
+import Result, { Props as ResProps } from "./Result";
 import { Values } from "./types";
-import { cosmoshub_test_rpc } from "constants/urls";
+import { cosmos_4_rpc } from "constants/urls";
+import { ap_wallets } from "constants/contracts";
+import displayKeplrError from "./diplayKeplrError";
 
 const dwindow: DWindow = window;
 export default function useAtomSender() {
@@ -31,10 +27,8 @@ export default function useAtomSender() {
   useEffect(() => {
     (async () => {
       try {
-        //don't run this estimator when currency is not UST
-        if (currency !== denoms.uatom) {
-          return;
-        }
+        //don't run this estimator when currency is not uatom
+        if (currency !== denoms.uatom) return;
         setValue("form_error", "");
 
         if (!provider) {
@@ -59,52 +53,56 @@ export default function useAtomSender() {
         return;
       }
 
-      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_test);
+      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_4);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
 
       const client = await SigningStargateClient.connectWithSigner(
-        cosmoshub_test_rpc,
+        cosmos_4_rpc,
         offline_signer
       );
 
+      //this fee will be overriden by wallet
+      //but can opt to override wallet config once fee estimation is clear
+      //balance check will also be done by the wallet
+      const gas_limit = "80000";
       const fee: StdFee = {
-        amount: [create_coin(1.0, "uphoton")],
-        gas: "70000",
+        amount: [create_coin(1, denoms.uatom)],
+        gas: gas_limit,
       };
 
-      const dec_uatom = new Dec(data.amount).mul(1e6);
-      // [create_coin(dec_uatom.toNumber(), denoms.uatom)];
+      const dec_amount = new Dec(data.amount).mul(1e6);
+
+      showModal<WaitProps>(Waiter, {
+        desc: "Processing transaction...",
+      });
 
       const res = await client.sendTokens(
         address,
-        "cosmos1kd63kkhtswlh5vcx5nd26fjmr9av74yd4sf8ve",
-        [create_coin(dec_uatom.toNumber(), "uphoton")],
+        ap_wallets[denoms.uatom][chains.cosmos_4],
+        [create_coin(dec_amount.toNumber(), denoms.uatom)],
         fee
       );
 
-      // const msg_send: MsgSend = {
-      //   type: "cosmos-sdk/MsgSend",
-      //   value: {
-      //     from_address: address,
-      //     to_address: address,
-      //     amount: [create_coin(dec_uatom.toNumber(), denoms.uatom)],
-      //   },
-      // };
+      if ("code" in res) {
+        if (res.code !== 0) {
+          showModal<ErrProps>(ErrPop, {
+            desc: "Transaction failed",
+            url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
+          });
+          return;
+        }
+      }
 
-      // const doc: StdSignDoc = {
-      //   chain_id: chains.cosmos_3,
-      //   account_number: "",
-      //   sequence: "",
-      //   fee,
-      //   msgs: [msg_send],
-      //   memo: "",
-      // };
-      // const response = await offline_signer.signAmino(address, doc);
-
-      console.log(res);
+      showModal<ResProps>(Result, {
+        sent: +data.amount,
+        received: +data.amount,
+        url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
+        precision: 6,
+        denom: denoms.uatom,
+      });
     } catch (err) {
-      console.error(err);
+      displayKeplrError(err, showModal);
     }
   }
 

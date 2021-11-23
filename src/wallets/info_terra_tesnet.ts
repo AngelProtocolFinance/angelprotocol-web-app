@@ -19,9 +19,9 @@ const uusd_info = {
   coinGeckoId: coingecko_ids[denoms.uusd],
 };
 
-export const info_terra_tesnet: ChainInfo = {
+export const info_terra_testnet: ChainInfo = {
   chainId: chains.testnet,
-  chainName: "Terra tesnet",
+  chainName: "Terra (USD)",
   rpc: bombay_rest,
   rest: bombay_rest,
   stakeCurrency: luna_info,
@@ -37,6 +37,6 @@ export const info_terra_tesnet: ChainInfo = {
     bech32PrefixConsPub: "terravalconspub",
   },
   currencies: [luna_info, uusd_info],
-  feeCurrencies: [luna_info, uusd_info],
+  feeCurrencies: [uusd_info],
   coinType: coin_types[denoms.uluna],
 };
