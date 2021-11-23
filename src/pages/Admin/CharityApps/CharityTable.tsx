@@ -16,7 +16,7 @@ const TableRow = ({ onUpdateClick, onDeleteClick, charityInfo }: any) => {
       <TableChip data={charityInfo.CharityName} />
       <TableChip data={charityInfo.Docs} type="anchor" />
       <TableChip data={charityInfo.EndowmentStatus} />
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left text-center">
         <button
           onClick={onUpdateClick}
           className="h-10 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"

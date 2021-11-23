@@ -8,7 +8,7 @@ const FundRow = ({ onUpdateClick, fund }: any) => {
       <TableChip data={fund.id} />
       <TableChip data={fund.name} />
       <TableChip data={fund.description} />
-      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left text-center">
         <button
           onClick={onUpdateClick}
           className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
