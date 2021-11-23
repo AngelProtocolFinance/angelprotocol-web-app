@@ -26,7 +26,7 @@ import displayKeplrError from "./diplayKeplrError";
 
 function useUSTSender() {
   const active_wallet = useGetter((state) => state.wallet.activeWallet);
-  const { reset } = useFormContext<Values>();
+  const { reset, setValue } = useFormContext<Values>();
   const { provider } = useGetKeplr();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -145,6 +145,8 @@ function useUSTSender() {
       });
     } catch (err) {
       displayKeplrError(err, showModal, denoms.uusd);
+    } finally {
+      setValue("amount", "");
     }
   }
 

@@ -103,6 +103,8 @@ export default function useAtomSender() {
       });
     } catch (err) {
       displayKeplrError(err, showModal, denoms.uatom);
+    } finally {
+      setValue("amount", "");
     }
   }
 
