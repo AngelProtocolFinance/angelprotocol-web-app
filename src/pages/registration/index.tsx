@@ -11,7 +11,7 @@ import StepsDocs from "./register-docs/Steps-docs";
 import UpdateProfile from "./charity-profile/Update-profile";
 import OtherWallets from "./connect-wallet/OtherWallets";
 import SelfCustody from "./connect-wallet/Self-custody";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import AppHead from "components/Headers/AppHead";
 import KeyPersonProfile from "./keyPerson-profile/KeyPersonProfile";
 const Register = () => {
@@ -24,67 +24,67 @@ const Register = () => {
         <Switch>
           <Route
             exact
-            path={`${path}/${register.detail}`}
+            path={`${path}/${registration.detail}`}
             component={ContactDetails}
           />
           <Route
             exact
-            path={`${path}/${register.confirm}`}
+            path={`${path}/${registration.confirm}`}
             component={ConfirmEmail}
           />
           <Route
             exact
-            path={`${path}/${register.verify}`}
+            path={`${path}/${registration.verify}`}
             component={VerifiedEmail}
           />
           <Route
             exact
-            path={`${path}/${register.status}`}
+            path={`${path}/${registration.status}`}
             component={RegistrationStatus}
           />
           <Route
             exact
-            path={`${path}/${register.wallet_check}`}
+            path={`${path}/${registration.wallet_check}`}
             component={WalletCheck}
           />
           <Route
             exact
-            path={`${path}/${register.select_wallet}`}
+            path={`${path}/${registration.select_wallet}`}
             component={SelectWallet}
           />
           <Route
             exact
-            path={`${path}/${register.connect_wallet}`}
+            path={`${path}/${registration.connect_wallet}`}
             component={ConnectWallet}
           />
           <Route
             exact
-            path={`${path}/${register.upload_docs}`}
+            path={`${path}/${registration.upload_docs}`}
             component={StepsDocs}
           />
           <Route
             exact
-            path={`${path}/${register.charity_profile}`}
+            path={`${path}/${registration.charity_profile}`}
             component={UpdateProfile}
           />
           <Route
             exact
-            path={`${path}/${register.others}`}
+            path={`${path}/${registration.others}`}
             component={OtherWallets}
           />
           <Route
             exact
-            path={`${path}/${register.self_custody}`}
+            path={`${path}/${registration.self_custody}`}
             component={SelfCustody}
           />
           <Route
             exact
-            path={`${path}/${register.key_person}`}
+            path={`${path}/${registration.key_person}`}
             component={KeyPersonProfile}
           />
           <Route
             exact
-            path={`${path}${register.index}`}
+            path={`${path}${registration.index}`}
             component={Registration}
           />
         </Switch>

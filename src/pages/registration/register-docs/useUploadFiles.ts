@@ -22,9 +22,6 @@ export const useUploadFiles = () => {
     const postData = {
       PK: uuid,
       body: {
-        ProofOfIdentity: "",
-        ProofOfEmployment: "",
-        EndowmentAgreement: "",
         [docTypes[docType]]: await readFileToBase64(file),
       },
     };

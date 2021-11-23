@@ -2,6 +2,7 @@ import { createContext, ReactNode, useContext, useState } from "react";
 
 type Handler = () => void;
 interface Props {
+  setShown?: Function;
   children: ReactNode;
   onModalClose?: Function;
   show?: Boolean;
@@ -17,6 +18,7 @@ export default function Modal(props: Props) {
   function closeModal() {
     if (props.onModalClose && typeof props.onModalClose === "function")
       props.onModalClose();
+    if (props.setShown) props.setShown(false);
     setShown(false);
   }
 
