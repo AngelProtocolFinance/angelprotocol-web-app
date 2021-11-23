@@ -1,88 +1,45 @@
-import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { register } from "types/routes";
-import * as Yup from "yup";
+import { registration } from "types/routes";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Action from "./Action";
-import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { useGetLambdaAuthTokenMutation } from "services/aws/auth";
 import { useSetter } from "store/accessors";
-import { updateUserData } from "services/user/userSlice";
-
-export type ReferInfo = {
-  refer: string;
-};
+import { removeUserData } from "services/user/userSlice";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { ReferInfo, FormInfoSchema, useRegistration } from "./useRegistration";
+import { useState } from "react";
 
 const Registration = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useSetter();
-  const [checkData, { isLoading }] = useCheckPreviousRegistrationMutation();
-  const [getTokenData] = useGetLambdaAuthTokenMutation();
-  //url -> app/register
+  const { onResume } = useRegistration();
   const { url } = useRouteMatch();
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
-  const FormInfoSchema = Yup.object().shape({
-    refer: Yup.string().required("Please enter your registration reference."),
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(FormInfoSchema),
   });
 
-  const onResumeRefer = async (
-    values: ReferInfo,
-    actions: FormikHelpers<ReferInfo>
-  ) => {
-    actions.setSubmitting(true);
-    // API integration.
-    let response: any = await checkData(values.refer);
-    if (response.error) {
-      // set error
-      toast.error(response.error.data.message);
-      actions.setFieldError(
-        "refer",
-        "Can not find a registration file with this reference!"
-      );
-    } else {
-      const token: any = await getTokenData(values.refer);
-      const data = {
-        ...response.data.ContactPerson,
-        CharityName: response.data.Registration.CharityName,
-        CharityName_ContactEmail:
-          response.data.Registration.CharityName_ContactEmail,
-        RegistrationDate: response.data.Registration.RegistrationDate,
-        RegistrationStatus: response.data.Registration.RegistrationStatus,
-        token: token.data,
-        TerraWallet: response.data.Metadata?.TerraWallet,
-        IsKeyPersonCompleted: !!response.data.KeyPerson,
-        IsMetaDataCompleted: !!response.data.Metadata,
-        ProofOfIdentity: response.data.Registration.ProofOfIdentity,
-        ProofOfEmployment: response.data.Registration.ProofOfEmployment,
-        EndowmentAgreement: response.data.Registration.EndowmentAgreement,
-        ProofOfIdentityVerified:
-          response.data.Registration.ProofOfIdentityVerified,
-        ProofOfEmploymentVerified:
-          response.data.Registration.ProofOfEmploymentVerified,
-        EndowmentAgreementVerified:
-          response.data.Registration.EndowmentAgreementVerified,
-      };
-      dispatch(updateUserData(data));
-      localStorage.setItem("userData", JSON.stringify(data));
-      if (response.data.ContactPerson.EmailVerified)
-        history.push({
-          pathname: `${url}/${register.status}`,
-        });
-      else
-        history.push({
-          pathname: `${url}/${register.confirm}`,
-          state: { is_sent: true },
-        });
-    }
-    actions.setSubmitting(false);
+  const onResumeRefer = async (values: ReferInfo) => {
+    setIsLoading(true);
+    await onResume(values);
+    setIsLoading(false);
   };
 
   if (userData && userData.EmailVerified === false) {
     history.push({
-      pathname: `${url}/${register.confirm}`,
+      pathname: `${url}/${registration.confirm}`,
       state: { is_sent: true },
     });
+  } else {
+    localStorage.setItem("userData", JSON.stringify({}));
+    dispatch(removeUserData());
   }
 
   return (
@@ -105,7 +62,7 @@ const Registration = () => {
       </div>
       <div className="mb-2">
         <Action
-          onClick={() => history.push(`${url}/${register.detail}`)}
+          onClick={() => history.push(`${url}/${registration.detail}`)}
           title="Start"
           classes="bg-orange w-48 h-12"
         />
@@ -114,40 +71,27 @@ const Registration = () => {
         </div>
       </div>
       <div className="">
-        <Formik
-          initialValues={{ refer: "" }}
-          validationSchema={FormInfoSchema}
-          onSubmit={onResumeRefer}
-        >
-          {({ values, isSubmitting }) => (
-            <div>
-              <Form>
-                <div className="flex items-center justify-center mb-2">
-                  <div className="rounded-md bg-white flex items-center w-3/5 md:w-2/5 text-black py-2">
-                    <Field
-                      type="text"
-                      className="outline-none border-none w-full px-3"
-                      placeholder="Enter your registration reference"
-                      value={values.refer}
-                      name="refer"
-                    />
-                  </div>
-                </div>
-                <ErrorMessage
-                  className="text-base text-failed-red"
-                  name="refer"
-                  component="div"
-                />
-                <Action
-                  submit
-                  title="Resume"
-                  classes="bg-thin-blue w-48 h-12"
-                  disabled={isLoading || isSubmitting}
-                />
-              </Form>
+        <form onSubmit={handleSubmit(onResumeRefer)}>
+          <div className="flex items-center justify-center mb-2">
+            <div className="rounded-md bg-white flex items-center w-3/5 md:w-2/5 text-black py-2">
+              <input
+                {...register("refer")}
+                className="outline-none border-none w-full px-3"
+                placeholder="Enter your registration reference"
+                type="text"
+                required
+              />
             </div>
-          )}
-        </Formik>
+          </div>
+          <p className="text-base text-failed-red">{errors.refer?.message}</p>
+          <Action
+            submit
+            title="Resume"
+            classes="bg-thin-blue w-48 h-12"
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
+        </form>
       </div>
       <ToastContainer />
     </div>

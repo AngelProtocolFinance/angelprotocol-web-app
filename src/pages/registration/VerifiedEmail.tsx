@@ -1,28 +1,21 @@
 import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { FaCheck, FaExclamation } from "react-icons/fa";
-import { app, register, site } from "types/routes";
+import { app, registration, site } from "types/routes";
 import { toast, ToastContainer } from "react-toastify";
 import Action from "./Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
-// import { useGetCharityDataQuery } from "services/aws/charity";
 
 const VerifiedEmail = () => {
-  //url = app/register/verify
   const history = useHistory();
-  //TODO: redux refactor
   const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-
   const location = history.location;
   const pathNames = location.pathname.split("/");
   const jwtData: any = jwtDecode(pathNames[pathNames.length - 1]);
-
-  // check expired
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
-
   const responseData = {
     ...jwtData.ContactPerson,
     CharityName: jwtData.Registration.CharityName,
@@ -39,12 +32,10 @@ const VerifiedEmail = () => {
     ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
     EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
   };
-
   if (!is_expired) {
     dispatch(updateUserData(responseData));
     localStorage.setItem("userData", JSON.stringify(responseData));
   }
-
   const resendVerificationEmail = async () => {
     if (responseData.PK) {
       const response: any = await resendEmail({
@@ -59,7 +50,6 @@ const VerifiedEmail = () => {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
   };
-
   return (
     <div>
       <div className="flex justify-center rounded-xl mb-5">
@@ -108,7 +98,7 @@ const VerifiedEmail = () => {
             //TODO:simplify link
             classes="bg-thin-blue w-48 h-12"
             onClick={() =>
-              history.push(`${site.app}/${app.register}/${register.status}`)
+              history.push(`${site.app}/${app.register}/${registration.status}`)
             }
             title="Continue"
             disabled={isLoading}

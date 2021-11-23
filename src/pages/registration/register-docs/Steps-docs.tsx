@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import { register } from "types/routes";
+import { useHistory, useLocation } from "react-router-dom";
+import { registration } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { useUploadFiles } from "./useUploadFiles";
 import Action from "../Action";
@@ -12,25 +12,37 @@ const StepsDocs = () => {
   //url = app/register/upload-docs
   const dispatch = useSetter();
   const history = useHistory();
+  const location: any = useLocation();
   const { uploadDocs } = useUploadFiles();
   const [isOpenModal, setOpenModal] = useState(false);
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [uploadedStatus, setUploadedStatus] = useState(false);
 
+  const docData = location.state.data;
   let user = useGetter((state) => state.user);
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(user));
   }
 
-  const [userData, setUserData] = useState(user);
+  const [userData, setUserData] = useState({
+    ...user,
+    ProofOfIdentityVerified: docData.ProofOfIdentityVerified,
+    ProofOfIdentity: docData.ProofOfIdentity,
+    ProofOfEmploymentVerified: docData.ProofOfEmploymentVerified,
+    ProofOfEmployment: docData.ProofOfEmployment,
+    EndowmentAgreementVerified: docData.EndowmentAgreementVerified,
+    EndowmentAgreement: docData.EndowmentAgreement,
+  });
   const showInfoModal = (index: number) => {
+    setUploadedStatus(false);
     setOpenModal(true);
     setDocType(index);
   };
 
   const uploadFile = async (files: any) => {
+    setOpenModal(false);
     const paramDocNames = [
       ["ProofOfIdentity", "ProofOfIdentityVerified"],
       ["ProofOfEmployment", "ProofOfEmploymentVerified"],
@@ -49,7 +61,6 @@ const StepsDocs = () => {
     }
     setUploadedStatus(success);
     setLoading(false);
-    setOpenModal(false);
   };
   return (
     <div>
@@ -74,6 +85,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 0}
             />
             {userData?.ProofOfIdentityVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -107,6 +119,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 1}
             />
             {userData?.ProofOfEmploymentVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -131,7 +144,7 @@ const StepsDocs = () => {
           <div className="md:w-1/3 xl:w-1/2 mb-2 md:mb-0">
             <p className="font-bold text-base max-w-xs text-left xl:ml-32">
               Resolution approving the creation of an Endowment on Angel
-              Protocol with the Terra address {userData.WalletAddress}
+              Protocol with the Terra address {userData?.TerraWallet}
               <p className="text-orange text-xs underline text-left cursor-pointer">
                 See Template
               </p>
@@ -143,6 +156,7 @@ const StepsDocs = () => {
               title="select or drag and drop"
               classes="bg-yellow-blue w-64 h-10 mr-5"
               disabled={loading}
+              isLoading={loading && docType === 2}
             />
             {userData?.EndowmentAgreementVerified && (
               <p className="text-green-500 uppercase text-sm xl:text-base w-1/3">
@@ -167,7 +181,7 @@ const StepsDocs = () => {
       <div className="mt-5 text-center flex justify-center">
         <div>
           <Action
-            onClick={() => history.push(register.status)}
+            onClick={() => history.push(registration.status)}
             title="back"
             classes="bg-thin-blue w-48 h-10 mt-3"
             disabled={loading}
