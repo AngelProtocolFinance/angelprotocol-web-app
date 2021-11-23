@@ -102,7 +102,7 @@ export default function useAtomSender() {
         denom: denoms.uatom,
       });
     } catch (err) {
-      displayKeplrError(err, showModal);
+      displayKeplrError(err, showModal, denoms.uatom);
     }
   }
 

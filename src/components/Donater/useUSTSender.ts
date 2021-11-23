@@ -144,7 +144,7 @@ function useUSTSender() {
         denom: denoms.uusd,
       });
     } catch (err) {
-      displayKeplrError(err, showModal);
+      displayKeplrError(err, showModal, denoms.uusd);
     }
   }
 
