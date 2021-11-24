@@ -4,6 +4,8 @@ type Handler = () => void;
 interface Props {
   setShown?: Function;
   children: ReactNode;
+  onModalClose?: Function;
+  show?: Boolean;
 }
 
 const setContext = createContext<Handler>(() => {});
@@ -11,9 +13,11 @@ const setContext = createContext<Handler>(() => {});
 export const useModalCloser = () => useContext(setContext);
 
 export default function Modal(props: Props) {
-  const [shown, setShown] = useState(true);
+  const [shown, setShown] = useState(props.show || true);
 
   function closeModal() {
+    if (props.onModalClose && typeof props.onModalClose === "function")
+      props.onModalClose();
     if (props.setShown) props.setShown(false);
     setShown(false);
   }
