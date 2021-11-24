@@ -21,7 +21,7 @@ export default function UserForm(props: Props) {
 
   return (
     <Form className="grid grid-cols-2 p-4 rounded-md ">
-      <div className="col-span-2 lg:col-span-1">
+      <div className="col-span-2 lg:col-span-2">
         <p className="text-xl text-white-grey font-semibold">
           Choose the amount of your donation
         </p>
@@ -70,7 +70,7 @@ export default function UserForm(props: Props) {
         </div>
       </div>
 
-      <div className="col-span-2 lg:col-span-1">
+      <div className="col-span-2 lg:col-span-2">
         <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
           How much of your donation should be compounded forever?
         </p>
@@ -102,14 +102,16 @@ export default function UserForm(props: Props) {
         </div>
       ) : null}
 
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="mt-8 cols-start-1 col-span-2 uppercase text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-bold justify-self-center"
-        // onClick={donate}
-      >
-        Donate
-      </button>
+      <div className="col-span-4 lg:col-span-2 mt-10 text-center">
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="bg-angel-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+          // onClick={donate}
+        >
+          Donate
+        </button>
+      </div>
     </Form>
   );
 }

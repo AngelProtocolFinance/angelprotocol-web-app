@@ -102,6 +102,8 @@ module.exports = {
       },
       minWidth: {
         36: "36",
+        250: "250px",
+        300: "300px",
       },
       minHeight: {
         r15: "15rem",
@@ -122,6 +124,9 @@ module.exports = {
       },
       width: {
         115: "15rem",
+        120: "20rem",
+        122: "22rem",
+        124: "24rem",
         128: "28rem",
         130: "30rem",
         135: "35rem",
