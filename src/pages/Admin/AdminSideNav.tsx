@@ -17,7 +17,6 @@ export default function AdminSideNav() {
 
   return (
     <div className="flex flex-col w-128 min-h-3/4 hidden md:block bg-gray-200 py-10 rounded-l-xl font-heading">
-
       <div className="flex-none">
         <h2 className="flex-none text-2xl font-semibold capitalize text-center">
           <span className="inline-block">Angel Protocol:</span>
