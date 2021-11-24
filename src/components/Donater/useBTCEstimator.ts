@@ -5,7 +5,7 @@ import { denoms } from "constants/currency";
 import { DWindow } from "types/window";
 import { useWallet } from "use-wallet";
 
-const d_window: DWindow = window;
+const dwindow: DWindow = window;
 export default function useBTCEstimator() {
   const { watch, setValue } = useFormContext<Values>();
   const wallet = useWallet();
@@ -19,7 +19,7 @@ export default function useBTCEstimator() {
           return;
         }
         setValue("form_error", "");
-        const provider = d_window?.xfi?.bitcoin;
+        const provider = dwindow?.xfi?.bitcoin;
 
         if (!wallet.ethereum || !provider) {
           setValue("form_error", "Bitcoin wallet is not connected");

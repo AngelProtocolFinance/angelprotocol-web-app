@@ -9,7 +9,7 @@ import {
 } from "@solana/web3.js";
 import { Values } from "./types";
 import { useEffect, useState } from "react";
-import { useGetPhantom } from "contexts/PhantomProvider";
+import { useGetPhantom } from "wallets/Phantom";
 import useDebouncer from "./useDebouncer";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";

@@ -5,6 +5,7 @@ import torusIcon from "assets/icons/wallets/torus.jpg";
 import ledgerIcon from "assets/icons/wallets/ledger.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import phantomIcon from "assets/icons/wallets/phantom.jpg";
+import keplrIcon from "assets/icons/wallets/keplr.jpg";
 import unknownIcon from "assets/icons/wallets/unknown.svg";
 import { getIcon } from "./manageIcon";
 import { Icons } from "./types";
@@ -28,6 +29,7 @@ export const icons: { [key in Icons]: string } = {
   [Icons.torus]: torusIcon,
   [Icons.ledger]: ledgerIcon,
   [Icons.phantom]: phantomIcon,
+  [Icons.keplr]: keplrIcon,
   //edge case, where user connects using terra, deletes local_storage, and refresh page
   [Icons.uknown]: unknownIcon,
 };

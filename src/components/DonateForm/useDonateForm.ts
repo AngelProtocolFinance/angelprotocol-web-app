@@ -2,18 +2,20 @@ import { Values } from "components/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import useEthSender from "../Donater/useEthSender";
-import useTerraSender from "../Donater/useTerraSender";
+import useUSTSender from "../Donater/useUSTSender";
 import useBTCSender from "../Donater/useBTCSender";
 import useSolSender from "components/Donater/useSolSender";
+import useAtomSender from "components/Donater/useAtomSender";
 import { useEffect, useRef } from "react";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useSubmit() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
-  const terraSender = useTerraSender();
+  const ustSender = useUSTSender();
   const ethSender = useEthSender();
   const btcSender = useBTCSender();
   const solSender = useSolSender();
+  const atomSender = useAtomSender();
   const denomRef = useRef<denoms>(denoms.uusd);
   const currency = watch("currency");
   //reset amount when changing currency
@@ -26,10 +28,11 @@ export default function useSubmit() {
   }, [currency]);
 
   const senders: Senders = {
-    [denoms.uusd]: terraSender,
+    [denoms.uusd]: ustSender,
     [denoms.ether]: ethSender,
     [denoms.btc]: btcSender,
     [denoms.sol]: solSender,
+    [denoms.uatom]: atomSender,
   };
   return {
     submitHandler: handleSubmit(senders[currency]),

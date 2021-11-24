@@ -11,6 +11,7 @@ import useBTCEstimator from "./useBTCEstimator";
 import { chains } from "contracts/types";
 import displayEthError from "./displayEthError";
 
+const dwindow: DWindow = window;
 export default function useBTCSender() {
   const { setValue } = useFormContext<Values>();
   useBTCEstimator();
@@ -20,19 +21,19 @@ export default function useBTCSender() {
   async function sender(data: Values) {
     //no need to check if
     try {
-      if (!wallet || !wallet.ethereum || !d_window.xfi) {
+      if (!wallet || !wallet.ethereum || !dwindow.xfi) {
         showModal<ErrProps>(ErrPop, {
           desc: "No bitcoin wallet is currently connected",
         });
         return;
       }
-      if (!d_window.xfi.bitcoin) {
+      if (!dwindow.xfi.bitcoin) {
         showModal<ErrProps>(ErrPop, {
           desc: "Bitcoin network may not be enabled in your wallet.",
         });
         return;
       }
-      const provider = d_window.xfi.bitcoin;
+      const provider = dwindow.xfi.bitcoin;
       //1BTC = 1e8 satoshis
       const dec_satoshi = new Dec(data.amount).mul(1e8);
       const accounts = await rpc_request(provider, "request_accounts");
@@ -69,7 +70,6 @@ export default function useBTCSender() {
   return sender;
 }
 
-const d_window: DWindow = window;
 async function rpc_request(
   provider: any,
   method: string,

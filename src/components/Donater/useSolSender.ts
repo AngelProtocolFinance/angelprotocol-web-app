@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { useSetModal } from "components/Nodal/Nodal";
-import { useGetPhantom } from "contexts/PhantomProvider";
+import { useGetPhantom } from "wallets/Phantom";
 import { chains } from "contracts/types";
 import ErrPop, { Props as ErrProps } from "./ErrPop";
 import Waiter, { Props as WaitProps } from "./Waiter";
