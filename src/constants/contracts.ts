@@ -29,8 +29,12 @@ export const ap_wallets: { [index: string]: { [index: string]: string } } = {
   },
   [denoms.uusd]: {
     [chains.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
+    [chains.mainnet]: "terra1y07m37w0g8nwclthv5wn3vwuf985cz0z6v9n6w", //replace with ap_wallet
   },
   [denoms.sol]: {
     [chains.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",
+  },
+  [denoms.uatom]: {
+    [chains.cosmos_4]: "terra1epw9e02r3cdgem0c74847v2fm529rxatklsvnx", //replace with ap_wallet
   },
 };

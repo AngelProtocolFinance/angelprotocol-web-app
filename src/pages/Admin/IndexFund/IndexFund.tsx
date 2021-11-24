@@ -22,11 +22,13 @@ export default function IndexFund() {
     <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10 rounded-xl">
       <AdminSideNav />
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
+
         <h2 className="text-2xl font-semibold capitalize text-center">
           Index Funds Management
         </h2>
         <button
           className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-semibold "
+
           onClick={() => setShowIndexModal(true)}
         >
           Add new fund

@@ -4,12 +4,16 @@ import { useEffect } from "react";
 import { useSetter } from "store/accessors";
 import { setLoading, setActive } from "services/wallet/walletSlice";
 import { Wallets, WalletStates } from "services/wallet/types";
-import { useGetPhantom } from "contexts/PhantomProvider";
+import { useGetPhantom } from "wallets/Phantom";
+import { useGetKeplr } from "wallets/Keplr";
 
 export default function useWalletSuite() {
   const { loading: phantomLoading, connected: phantomConnected } =
     useGetPhantom();
+
+  const { loading: keplrLoading, connected: keplrConnected } = useGetKeplr();
   const dispatch = useSetter();
+
   const { status: ethStatus } = useEthWallet();
 
   const ethConnected = ethStatus === "connected";
@@ -19,12 +23,14 @@ export default function useWalletSuite() {
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
 
-  const isLoading = isTerraLoading || ethLoading || phantomLoading; // || false || otherwallet loading state
+  const isLoading =
+    isTerraLoading || ethLoading || phantomLoading || keplrLoading; // || false || otherwallet loading state
 
   const walletStates: WalletStates = [
     [Wallets.terra, terraConnected],
     [Wallets.ethereum, ethConnected],
     [Wallets.phantom, phantomConnected],
+    [Wallets.keplr, keplrConnected],
   ];
 
   //find first connected wallet

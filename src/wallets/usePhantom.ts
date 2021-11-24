@@ -113,7 +113,12 @@ export default function usePhantom() {
     } catch (err) {
       setLoading(false);
       console.error(err);
-      // { code: 4001, message: 'User rejected the request.' }
+      //let caller handle error with UI
+      if ((err as any).code === 4001) {
+        throw new RejectPhantomLogin();
+      } else {
+        throw new Error("Uknown error occured");
+      }
     }
   }
 
@@ -135,4 +140,12 @@ function retrieve_action(): Action {
 
 export function get_phantom(): [boolean, any] {
   return [!!dwindow?.phantom?.solana, dwindow?.phantom?.solana];
+}
+
+export class RejectPhantomLogin extends Error {
+  constructor() {
+    super();
+    this.message = "Phantom login cancelled";
+    this.name = "RejectPhantomLogin";
+  }
 }

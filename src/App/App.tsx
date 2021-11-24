@@ -5,7 +5,8 @@ import AppFoot from "components/Footers/AppFoot";
 import Waiter from "components/Waiter/Waiter";
 import Nodal from "components/Nodal/Nodal";
 import Views from "./Views";
-import PhantomProvider from "contexts/PhantomProvider";
+import Phantom from "wallets/Phantom";
+import Keplr from "wallets/Keplr";
 
 export default function App() {
   //ethereum
@@ -18,6 +19,7 @@ export default function App() {
     },
   };
 
+  //TODO: refactor non-terra providers to redux
   return (
     <div
       className={`grid bg-gradient-to-b from-blue-accent to-black-blue relative`}
@@ -27,12 +29,14 @@ export default function App() {
         walletConnectChainIds={walletConnectChainIds}
       >
         <EthProvider connectors={eth_connectors}>
-          <PhantomProvider>
-            <Nodal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
-              <Waiter />
-              <Views />
-            </Nodal>
-          </PhantomProvider>
+          <Phantom>
+            <Keplr>
+              <Nodal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
+                <Waiter />
+                <Views />
+              </Nodal>
+            </Keplr>
+          </Phantom>
           <AppFoot />
         </EthProvider>
       </TerraProvider>

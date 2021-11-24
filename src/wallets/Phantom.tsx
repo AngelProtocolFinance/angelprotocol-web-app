@@ -1,32 +1,8 @@
 import usePhantom from "./usePhantom";
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, useContext } from "react";
+import { Props, Setters, State } from "./types";
 
-type Props = {
-  children: ReactNode;
-};
-
-type State = {
-  loading: boolean;
-  connected: boolean;
-  balance: number;
-  address: string;
-  provider: any | null;
-};
-
-type Setters = {
-  connect: () => Promise<void>;
-  disconnect: () => Promise<void>;
-};
-
-const initialState: State = {
-  loading: false,
-  connected: false,
-  balance: 0,
-  address: "",
-  provider: null,
-};
-
-export default function PhantomProvider(props: Props) {
+export default function Phantom(props: Props) {
   const { setters, state } = usePhantom();
   return (
     <getContext.Provider value={state}>
@@ -36,6 +12,14 @@ export default function PhantomProvider(props: Props) {
     </getContext.Provider>
   );
 }
+
+const initialState: State = {
+  loading: false,
+  connected: false,
+  balance: 0,
+  address: "",
+  provider: null,
+};
 
 const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
