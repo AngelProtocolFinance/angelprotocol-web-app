@@ -24,6 +24,8 @@ export default function useTerraAction(type: ConnectType) {
 
   function handleClick() {
     if (shouldConnect) {
+      //edge case: user connects to WC with ethereum, disconnects then connects with
+      //terra wallet connect, unresponsive on first click but doesn't output error
       connect(type);
       setIcon(icon);
     } else if (isInstallable) {
