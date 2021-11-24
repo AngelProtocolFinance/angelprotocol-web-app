@@ -1,4 +1,5 @@
 import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
+import {} from "@web3-react/torus-connector";
 import { UseWalletProvider as EthProvider } from "use-wallet";
 import { mainnet, walletConnectChainIds } from "./chains";
 import AppFoot from "components/Footers/AppFoot";
@@ -7,18 +8,9 @@ import Nodal from "components/Nodal/Nodal";
 import Views from "./Views";
 import Phantom from "wallets/Phantom";
 import Keplr from "wallets/Keplr";
+import { chains } from "contracts/types";
 
 export default function App() {
-  //ethereum
-  const eth_connectors = {
-    torus: { chainId: 1 },
-    //TODO: get proper url
-    ledger: {
-      chainId: 1,
-      url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-    },
-  };
-
   //TODO: refactor non-terra providers to redux
   return (
     <div
@@ -43,3 +35,24 @@ export default function App() {
     </div>
   );
 }
+
+//ethereum
+const eth_connectors = {
+  torus: { chainId: +chains.eth_main },
+  walletconnect: {
+    rpc: {
+      [chains.eth_main]:
+        "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+      [chains.eth_ropsten]:
+        "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+      [chains.eth_kovan]:
+        "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+    },
+    qrcode: false,
+  },
+  //TODO: get proper url
+  ledger: {
+    chainId: +chains.eth_main,
+    url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+  },
+};
