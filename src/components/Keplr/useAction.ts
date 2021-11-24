@@ -4,6 +4,7 @@ import Warning, { Props } from "components/WalletSuite/Warning";
 import { useSetModal } from "components/Nodal/Nodal";
 import { useGetter } from "store/accessors";
 import { useSetKeplr } from "wallets/Keplr";
+import { KeplrNoAccount } from "wallets/useKeplr";
 
 export default function useAction(icon: Icons) {
   const { connect } = useSetKeplr();
@@ -12,13 +13,19 @@ export default function useAction(icon: Icons) {
 
   async function handleConnect() {
     try {
-      connect();
+      await connect();
       setIcon(icon);
     } catch (err) {
       console.error(err);
-      showModal<Props>(Warning, {
-        text: "Error connecting to Keplr wallet",
-      });
+      if (err instanceof KeplrNoAccount) {
+        showModal<Props>(Warning, {
+          text: err.message,
+        });
+      } else {
+        showModal<Props>(Warning, {
+          text: "Error connecting to Keplr wallet",
+        });
+      }
     }
   }
 

@@ -52,8 +52,14 @@ export default function useKeplr() {
       setConnected(true);
       setLoading(false);
     } catch (err) {
-      console.error(err);
       setLoading(false);
+      const _err = err as any;
+      //let consumer handle error with UI
+      if (/key doesn't exist/.test(_err.message)) {
+        throw new KeplrNoAccount();
+      } else {
+        throw new Error("Unknown error occured");
+      }
     }
   }
 
@@ -67,4 +73,12 @@ export default function useKeplr() {
     setters: { connect, disconnect },
     state: { loading, address, connected, provider, balance },
   };
+}
+
+export class KeplrNoAccount extends Error {
+  constructor() {
+    super();
+    this.message = "Kindly login to your Keplr account";
+    this.name = "KeplrNoAccount";
+  }
 }

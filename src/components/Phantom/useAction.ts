@@ -4,6 +4,7 @@ import Warning, { Props } from "components/WalletSuite/Warning";
 import { useSetModal } from "components/Nodal/Nodal";
 import { useGetter } from "store/accessors";
 import { useSetPhantom } from "wallets/Phantom";
+import { RejectPhantomLogin } from "wallets/usePhantom";
 
 export default function useAction(icon: Icons) {
   const { connect } = useSetPhantom();
@@ -12,13 +13,19 @@ export default function useAction(icon: Icons) {
 
   async function handleConnect() {
     try {
-      connect();
+      await connect();
       setIcon(icon);
     } catch (err) {
       console.error(err);
-      showModal<Props>(Warning, {
-        text: "Error connecting to phantom wallet",
-      });
+      if (err instanceof RejectPhantomLogin) {
+        showModal<Props>(Warning, {
+          text: err.message,
+        });
+      } else {
+        showModal<Props>(Warning, {
+          text: "Error connecting to phantom wallet",
+        });
+      }
     }
   }
 
