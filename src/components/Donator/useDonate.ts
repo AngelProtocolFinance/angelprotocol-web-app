@@ -7,7 +7,7 @@ import { FormikHelpers } from "formik";
 import { AccAddress } from "@terra-money/terra.js";
 import getDepositAmount from "./getDepositAmount";
 import Account from "contracts/Account";
-import { denoms } from "constants/curriencies";
+import { denoms } from "constants/currency";
 import { useLogDonationTransactionMutation } from "services/apes/donations";
 import createAuthToken from "helpers/createAuthToken";
 //prettier-ignore
@@ -15,6 +15,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
   const [logDonationTransaction] = useLogDonationTransactionMutation();
+
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {

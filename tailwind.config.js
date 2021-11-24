@@ -104,6 +104,7 @@ module.exports = {
         36: "36",
         250: "250px",
         300: "300px",
+        136: "36rem",
       },
       minHeight: {
         r15: "15rem",

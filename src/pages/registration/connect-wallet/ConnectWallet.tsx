@@ -1,13 +1,18 @@
 import { useState } from "react";
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from "formik";
 import { FaCheck } from "react-icons/fa";
 import * as Yup from "yup";
-import { useAddCharityMetadataMutation } from "services/aws/charity";
+import {
+  useAddCharityMetadataMutation,
+  useGetCharityDataQuery,
+} from "services/aws/charity";
 import { toast, ToastContainer } from "react-toastify";
 import Action from "../Action";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import { useHistory } from "react-router";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { updateUserData } from "services/user/userSlice";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.string().required("Please enter your wallet address."),
@@ -19,15 +24,26 @@ export type Values = {
 
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const user = useGetter((state) => state.user);
   const history = useHistory();
+  const dispatch = useSetter();
+  const { data } = useGetCharityDataQuery(user.PK);
 
-  const onConnectWallet = async (
-    values: Values,
-    actions: FormikHelpers<Values>
-  ) => {
-    actions.setSubmitting(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(WalletSchema),
+    defaultValues: {
+      wallet_number: user.TerraWallet || data?.Metadata?.TerraWallet || "",
+    },
+  });
+
+  const onConnectWallet = async (values: Values) => {
+    setIsLoading(true);
     const response: any = await addCharityMetaProfile({
       body: { TerraWallet: values.wallet_number },
       uuid: user.PK,
@@ -50,8 +66,22 @@ const ConnectWallet = () => {
       } else {
         toast.success("Your wallet address was saved successfully.");
         setSuccess(true);
+        dispatch(
+          updateUserData({
+            ...user,
+            TerraWallet: values.wallet_number,
+          })
+        );
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            ...user,
+            TerraWallet: values.wallet_number,
+          })
+        );
       }
     }
+    setIsLoading(false);
   };
   return (
     <div>
@@ -69,56 +99,49 @@ const ConnectWallet = () => {
       </div>
       <div className="wallet-info">
         <div>
-          <Formik
-            initialValues={{ wallet_number: "" }}
-            validationSchema={WalletSchema}
-            onSubmit={onConnectWallet}
+          <form
+            className="text-center"
+            onSubmit={handleSubmit(onConnectWallet)}
           >
-            {({ isSubmitting, status }) => (
-              <Form className="text-center">
-                <div className="my-10 text-left relative max-w-xl mx-auto">
-                  {!isSuccess && (
-                    <p className="text-sm text-gray-400 font-bold mb-1">
-                      Terra Wallet<span className="text-red-700">*</span>
-                    </p>
-                  )}
-                  <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                    <span className="text-black px-1">terra</span>
-                    <Field
-                      type="text"
-                      className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"
-                      placeholder="Wallet Address"
-                      name="wallet_number"
-                      disabled={isSuccess}
-                    />
-                  </div>
-                  <ErrorMessage
-                    className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                    name="wallet_number"
-                    component="div"
-                  />
-                </div>
-                <Action
-                  submit
-                  title="SUBMIT"
-                  classes="bg-thin-blue w-48 h-10 mr-3 mb-10"
-                  disabled={isSubmitting || isSuccess}
+            <div className="my-10 text-left relative max-w-xl mx-auto">
+              {!isSuccess && (
+                <p className="text-sm text-gray-400 font-bold mb-1">
+                  Terra Wallet<span className="text-red-700">*</span>
+                </p>
+              )}
+              <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+                <input
+                  {...register("wallet_number")}
+                  type="text"
+                  className="text-sm sm:text-base outline-none border-none w-full pr-3 bg-gray-200 text-black"
+                  placeholder="Wallet Address"
+                  disabled={isSuccess}
                 />
-                <Action
-                  onClick={() => history.push(register.status)}
-                  title="Back"
-                  classes="bg-thin-blue w-48 h-10"
-                  disabled={isSubmitting}
-                />
-                {isSuccess && (
-                  <p>
-                    Thanks, we've been notified and we'll get in touch with you
-                    very soon!
-                  </p>
-                )}
-              </Form>
+              </div>
+              <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
+                {errors.wallet_number?.message}
+              </p>
+            </div>
+            <Action
+              submit
+              title="SUBMIT"
+              classes="bg-thin-blue w-48 h-10 mr-3 mb-10"
+              disabled={isLoading || isSuccess}
+              isLoading={isLoading}
+            />
+            <Action
+              onClick={() => history.push(registration.status)}
+              title="Back"
+              classes="bg-thin-blue w-48 h-10"
+              disabled={isLoading}
+            />
+            {isSuccess && (
+              <p>
+                Thanks, we've been notified and we'll get in touch with you very
+                soon!
+              </p>
             )}
-          </Formik>
+          </form>
         </div>
       </div>
       <ToastContainer />

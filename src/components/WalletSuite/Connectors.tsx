@@ -1,7 +1,9 @@
 import { ConnectType } from "@terra-money/wallet-provider";
 import TerraAction from "components/TerraStation/TerraAction";
 import { IoClose } from "react-icons/io5";
-import Action from "components/Ethereum/Action";
+import Keplr from "components/Keplr/Action";
+import EthAction from "components/Ethereum/Action";
+import Phantom from "components/Phantom/Action";
 import { Connectors as Connects, Icons } from "./types";
 import Backdrop from "./Backdrop";
 import Nodal from "components/Nodal/Nodal";
@@ -30,14 +32,24 @@ export default function Connectors(props: Props) {
             type={ConnectType.WALLETCONNECT}
             label="Terra Station Mobile"
           />
-          <Action
+          <EthAction
             type={Connects.injected}
             label="Metamask"
             icon={Icons.metamask}
           />
-          <Action type={Connects.injected} label="XDEFI" icon={Icons.xdefi} />
-          <Action type={Connects.torus} label="Torus" icon={Icons.torus} />
-          <Action type={Connects.ledger} label="Ledger" icon={Icons.ledger} />
+          <EthAction
+            type={Connects.injected}
+            label="XDEFI"
+            icon={Icons.xdefi}
+          />
+          <EthAction type={Connects.torus} label="Torus" icon={Icons.torus} />
+          <EthAction
+            type={Connects.ledger}
+            label="Ledger"
+            icon={Icons.ledger}
+          />
+          <Phantom label="Phantom" icon={Icons.phantom} />
+          <Keplr label="Keplr" icon={Icons.keplr} />
         </Nodal>
       </div>
       <Backdrop closeHandler={props.closeHandler} />

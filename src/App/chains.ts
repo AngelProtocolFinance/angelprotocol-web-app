@@ -1,4 +1,4 @@
-import { NetworkInfo } from "@terra-dev/wallet-types";
+import { NetworkInfo } from "@terra-money/wallet-provider";
 import { chains, URLs } from "contracts/types";
 
 export const urls: URLs = {

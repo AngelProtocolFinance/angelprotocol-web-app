@@ -1,12 +1,11 @@
-import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router";
-import { register } from "types/routes";
+import { registration } from "types/routes";
 import Action from "../Action";
 
 const SelfCustody = () => {
   //url = app/register/self-custody
   const history = useHistory();
-  const showInfoModal = () => {};
+  // const showInfoModal = () => {};
   return (
     <div className="">
       <div className="title mb-5">
@@ -20,10 +19,10 @@ const SelfCustody = () => {
           <button className="bg-thin-blue w-72 h-10 rounded-xl uppercase text-base font-bold text-white mr-1">
             take me to the tutorial
           </button>
-          <BsExclamationCircle
+          {/* <BsExclamationCircle
             className="text-xl text-thin-blue cursor-pointer"
             onClick={() => showInfoModal()}
-          />
+          /> */}
         </div>
         <p className="text-sm">
           We have sent you an email with a link to resume your application once
@@ -36,7 +35,7 @@ const SelfCustody = () => {
       </div>
       <div className="mt-5">
         <Action
-          onClick={() => history.push(register.others)}
+          onClick={() => history.push(registration.others)}
           title="Back"
           classes="bg-thin-blue w-48 h-10"
         />
