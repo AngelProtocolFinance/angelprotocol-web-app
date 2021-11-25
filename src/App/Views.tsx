@@ -15,6 +15,7 @@ import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Withdraw from "pages/Withdraw/Withdraw";
 import Marketplace from "pages/Marketplace/Marketplace";
 import Test from "pages/Test";
+import Governance from "pages/Governance/Governance";
 
 export default function Views() {
   const { path } = useRouteMatch();
@@ -28,6 +29,7 @@ export default function Views() {
       <Route path={`${path}/${app.login}`} component={Login} />
       <Route path={`${path}/${app.register}`} component={Register} />
       <Route path={`${path}/${app.tca}`} component={TCA} />
+      <Route path={`${path}/${app.govern}`} component={Governance} />
       <Route path={`${path}/${app.test}`} component={Test} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />

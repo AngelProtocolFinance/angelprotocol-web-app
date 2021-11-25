@@ -34,6 +34,7 @@ export enum app {
   fund = "fund",
   board_tca = "tca-leaderboard",
   withdraw = "withdraw",
+  govern = "govern",
   test = "test",
 }
 
