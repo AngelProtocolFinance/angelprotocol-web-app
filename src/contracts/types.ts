@@ -22,6 +22,7 @@ export enum sc {
   anchor = "anchor",
   halo_token = "halo_token",
   halo_stake = "halo_stake",
+  halo_gov = "halo_gov",
 }
 
 export type URLs = {
