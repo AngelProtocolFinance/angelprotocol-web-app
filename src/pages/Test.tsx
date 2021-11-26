@@ -1,14 +1,14 @@
 import AppHead from "components/Headers/AppHead";
-import { useSetKeplr } from "wallets/Keplr";
+import StakeForm from "components/StakeForm/StakeForm";
+import Staker from "components/Staker/Staker";
 
 export default function Test() {
-  const { connect } = useSetKeplr();
   return (
-    <div className="pb-16 grid grid-rows-a1">
+    <div className="pb-16 grid grid-rows-a1 place-items-center">
       <AppHead />
-      <div className="grid place-items-center">
-        <button onClick={connect}>connect cosmos</button>
-      </div>
+      <Staker>
+        <StakeForm />
+      </Staker>
     </div>
   );
 }

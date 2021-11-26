@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useWallet } from "use-wallet";
 import { Values } from "./types";
-import useDebouncer from "./useDebouncer";
+import useDebouncer from "../../hooks/useDebouncer";
 
 export default function useEthEstimator() {
   const { watch, setValue } = useFormContext<Values>();

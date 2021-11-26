@@ -2,15 +2,16 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
-import useBalance from "./useBalance";
 import Details from "./Details";
 // import terraIcon from "assets/icons/wallets/terra-station.jpg";
 import Icon from "components/WalletSuite/Icon";
+import useTerraBalance from "hooks/useTerraBalance";
+import { denoms } from "constants/currency";
 
 export default function Display() {
   //this component won't be rendered if wallet is not connected
   const [detailsShown, showDetails] = useState(false);
-  const { ustAmount, coins } = useBalance();
+  const { main: ustAmount, others: coins } = useTerraBalance(denoms.uusd);
   const wallet = useConnectedWallet();
   const chainId = wallet?.network.chainID || "unknown";
   const maskedAddr = maskAddress(wallet?.terraAddress);

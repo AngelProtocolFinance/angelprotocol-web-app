@@ -20,6 +20,8 @@ export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  halo_token = "halo_token",
+  halo_stake = "halo_stake",
 }
 
 export type URLs = {
@@ -78,3 +80,8 @@ export interface Holdings {
 
 //Vaults
 export type Swap = { exchange_rate: string; yield_token_supply: string };
+
+//Halo
+export type HaloBalance = {
+  balance: string;
+};
