@@ -8,7 +8,6 @@ const alliance_api = aws.injectEndpoints({
       transformResponse: (res: Result) => {
         const _donors: Donors = {};
         res.Items.forEach((donor) => {
-          console.log(donor);
           _donors[donor.address] = {
             name: donor.name,
             icon: donor.icon,

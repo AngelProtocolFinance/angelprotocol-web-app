@@ -34,6 +34,11 @@ export default function useBoard() {
         setLoading(true);
         const indexFund = new IndexFund();
         const res = await indexFund.getFundDonations();
+        res.donors.push({
+          //add missing donation
+          address: "terra1janh9rs6pme3tdwhyag2lmsr2xv6wzhcrjz0xx",
+          total_ust: "83000000000",
+        });
         const _sums: Sums = {};
         const tcaDonors = data!;
         res.donors.forEach((donor) => {
@@ -41,7 +46,7 @@ export default function useBoard() {
             name = defaultName,
             icon = defaultIcon,
             iconLight,
-          } = tcaDonors[donor.address];
+          } = tcaDonors[donor.address] || {};
           //init details
           _sums[name] ||= { icon, iconLight, amount: Number.MIN_VALUE };
           //increment if existing
