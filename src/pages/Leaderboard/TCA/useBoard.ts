@@ -29,13 +29,18 @@ export default function useBoard() {
         setLastUpdate(saved_sums.time);
         return;
       }
+
+      if (!data) {
+        return;
+      }
+
       try {
         setError("");
         setLoading(true);
         const indexFund = new IndexFund();
         const res = await indexFund.getFundDonations();
         const _sums: Sums = {};
-        const tcaDonors = data!;
+        const tcaDonors = data;
         res.donors.forEach((donor) => {
           const {
             name = defaultName,
@@ -72,7 +77,7 @@ export default function useBoard() {
       }
     })();
     //eslint-disable-next-line
-  }, [flag]);
+  }, [flag, data]);
 
   function refresh() {
     localStorage.removeItem(storage_key);
