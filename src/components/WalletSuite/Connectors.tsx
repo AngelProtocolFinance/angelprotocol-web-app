@@ -48,6 +48,11 @@ export default function Connectors(props: Props) {
             label="Ledger"
             icon={Icons.ledger}
           />
+          <EthAction
+            type={Connects.walletconnect}
+            label="Wallet Connect"
+            icon={Icons.walletconnect}
+          />
           <Phantom label="Phantom" icon={Icons.phantom} />
           <Keplr label="Keplr" icon={Icons.keplr} />
         </Nodal>
