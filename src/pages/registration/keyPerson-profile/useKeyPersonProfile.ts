@@ -40,7 +40,6 @@ export const useKeyPersonProfile = () => {
       ...keyPersonData,
       HeadshotPicture: fileContent,
     };
-    console.log("psod data => ", postData);
     let result: any = {};
     if (is_create) {
       const response: any = await createKeyPersonProfile(postData);
@@ -49,7 +48,6 @@ export const useKeyPersonProfile = () => {
       const response: any = await updateKeyPersonProfile(postData);
       result = response.data ? response : response.error;
     }
-    console.log("result => ", result);
     if (result.status === 500) {
       toast.error("Saving data was failed. Please try again.");
     } else if (result.error) {

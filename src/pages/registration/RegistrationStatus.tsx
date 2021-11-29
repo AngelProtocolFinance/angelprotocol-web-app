@@ -12,7 +12,6 @@ const RegistrationStatus = () => {
   const history = useHistory();
   const user = useGetter((state) => state.user);
   const { data, error } = useGetCharityDataQuery(user.PK);
-  console.log("user => ", user);
 
   useEffect(() => {
     if (error) {

@@ -36,7 +36,6 @@ const ConnectWallet = () => {
       uuid: user.PK,
     });
     let result = response.data ? response : response.error;
-    console.log("result => ", result);
     if (result.status === 500) {
       toast.error("Saving data was failed. Please try again.");
       setSuccess(false);

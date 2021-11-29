@@ -4,7 +4,6 @@ import { Details } from "./types";
 type Props = { name: string; details: Details };
 export default function TCAMember(props: Props) {
   const isLight = props.details.iconLight;
-  console.log(isLight, props.name);
 
   return (
     <tr className="border-b">
