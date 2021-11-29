@@ -5,7 +5,7 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { admin, site } from "../types/routes";
+import { admin } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "../App/chains";
