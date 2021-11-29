@@ -4,6 +4,7 @@ export enum Connectors {
   injected = "injected",
   torus = "torus",
   ledger = "ledger",
+  walletconnect = "walletconnect",
 }
 
 export enum Icons {
@@ -15,6 +16,7 @@ export enum Icons {
   ledger = "ledger",
   phantom = "phantom",
   keplr = "keplr",
+  walletconnect = "walletconnect",
   uknown = "unknown",
 }
 

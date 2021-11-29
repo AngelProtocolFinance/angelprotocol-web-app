@@ -4,6 +4,7 @@ export enum chains {
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
+  eth_rinkeby = "4",
   eth_kovan = "42",
   eth_ropsten = "3",
   eth_main = "1",
