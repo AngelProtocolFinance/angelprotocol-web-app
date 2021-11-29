@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { registration } from "types/routes";
-import Action from "./Action";
+import Action from "../../components/ActionButton/Action";
 import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter, useSetter } from "store/accessors";

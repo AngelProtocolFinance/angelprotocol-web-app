@@ -1,7 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { toast, ToastContainer } from "react-toastify";
-import Action from "./Action";
+import Action from "../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";

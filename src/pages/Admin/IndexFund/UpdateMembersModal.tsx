@@ -1,8 +1,10 @@
 import { useState } from "react";
 import AddressSelector from "./AddressSelector";
+import { useModalCloser } from "components/Modal/Modal";
 
 const UpdateMembersModal = () => {
   const [isSubmitting, setSubmitting] = useState(false);
+  const closeModal = useModalCloser();
 
   const handleUpdate = () => {
     setSubmitting(true);
@@ -27,7 +29,10 @@ const UpdateMembersModal = () => {
           </button>
         </div>
         <div>
-          <button className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm">
+          <button
+            onClick={closeModal}
+            className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+          >
             Cancel
           </button>
         </div>

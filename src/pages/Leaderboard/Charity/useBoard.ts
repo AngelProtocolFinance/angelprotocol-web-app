@@ -35,7 +35,7 @@ export default function useBoard() {
         setLoading(true);
         const registrar = new Registrar(wallet);
         const _endowments = await registrar.getEndowmentList();
-        const queries = _endowments.map((endowment) => {
+        const queries = _endowments.map((endowment: any) => {
           const account = new Account(endowment.address, wallet);
           return account.getBalance();
         });
@@ -43,7 +43,7 @@ export default function useBoard() {
         const results = await Promise.allSettled(queries);
         const _sums: any = {};
         //display non-error charities
-        results.forEach((result) => {
+        results.forEach((result: any) => {
           if (result.status === "fulfilled") {
             const { total_locked, total_liq, overall, address } = result.value;
             _sums[address] = {

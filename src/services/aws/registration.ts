@@ -4,11 +4,18 @@ const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getRegisteredCharities: builder.mutation<any, any>({
       query: (data) => {
-        return {
-          url: `registration/list`,
-          params: { regStatus: data.regStatus },
-          method: "GET",
-        };
+        if (data) {
+          return {
+            url: `registration/list`,
+            params: { regStatus: data.regStatus },
+            method: "GET",
+          };
+        } else {
+          return {
+            url: `registration/list`,
+            method: "GET",
+          };
+        }
       },
       transformResponse: (response: { data: any }) => response,
     }),
