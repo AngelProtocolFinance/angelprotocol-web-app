@@ -8,7 +8,6 @@ import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 const defaultName = "Community";
 export default function useBoard() {
   const { data, isLoading: donorLoading, isFetching } = useDonorsQuery(null);
-
   const [isLoading, setLoading] = useState(false);
   const [lastUpdate, setLastUpdate] = useState(Date());
   const [flag, setFlag] = useState(0);
@@ -29,6 +28,13 @@ export default function useBoard() {
         setLastUpdate(saved_sums.time);
         return;
       }
+
+      if (!data) {
+        //if donor list is not yet available,
+        //run this effect again when data become available
+        return;
+      }
+
       try {
         setError("");
         setLoading(true);
@@ -77,7 +83,7 @@ export default function useBoard() {
       }
     })();
     //eslint-disable-next-line
-  }, [flag]);
+  }, [flag, data]);
 
   function refresh() {
     localStorage.removeItem(storage_key);

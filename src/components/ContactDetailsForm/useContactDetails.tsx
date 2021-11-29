@@ -69,7 +69,6 @@ export const useContactDetails = () => {
       result = response.data ? response.data : response.error.data;
     }
 
-    console.log("res =>", result);
     if (result.UUID || result.message === "Updated successfully!") {
       dispatch(
         updateUserData({

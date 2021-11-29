@@ -15,7 +15,6 @@ const charity_api = aws.injectEndpoints({
     }),
     updateCharityMetadata: builder.mutation<any, any>({
       query: (data) => {
-        console.log("data", data);
         return {
           url: `charity`,
           params: { uuid: data.uuid },

@@ -7,16 +7,17 @@ export default function useHoldings(address: string) {
   const [anchorVault, setAnchorVault] = useState("");
   const [liquidNativeTokens, setLiquidNativeTokens] = useState<number>();
   const [liquidCW20Tokens, setLiquidCW20Tokens] = useState<number>();
-  const [liquidNativeTokenValue, setLiquidNativeTokenValue] =
-    useState<number>();
+  const [liquidNativeTokenValue] = useState<number>();
   const [liquidCW20TokenValue, setLiquidCW20TokenValue] = useState<number>();
   const wallet = useConnectedWallet();
-  let liquidcw20: string, liquidNative: string, ancVault: string;
-  let vaultArray: any = [];
 
   useEffect(() => {
     (async () => {
       try {
+        let vaultArray: any = [];
+        let liquidcw20: string = "";
+        let liquidNative: string = "";
+        let ancVault: string = "";
         setHoldingsError("");
         const account = new Account(address, wallet);
         const holdingsResult = await account.getHoldings(); // Returns all liquid and locked (CW20 and native token) holdings

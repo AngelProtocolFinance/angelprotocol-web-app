@@ -42,8 +42,7 @@ const Registration = () => {
       );
     } else {
       const token: any = await getTokenData(values.refer);
-      console.log(token);
-      console.log("token => ", token);
+
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,

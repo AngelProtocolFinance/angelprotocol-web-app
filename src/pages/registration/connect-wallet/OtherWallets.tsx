@@ -13,7 +13,6 @@ const OtherWallets = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const showInfoModal = (type: any) => {
-    console.log("sadfasdfasdfasdfasdf");
     setModalType(type);
     setOpenModal(true);
   };
