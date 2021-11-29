@@ -15,18 +15,14 @@ const initialState: User = {
   RegistrationStatus: "",
   EmailVerified: false,
   token: "",
-  // for docs
   ProofOfIdentity: "",
   ProofOfEmployment: "",
   EndowmentAgreement: "",
   ProofOfIdentityVerified: "",
   ProofOfEmploymentVerified: "",
   EndowmentAgreementVerified: "",
-  // for wallet
   TerraWallet: "",
-  // for key person
   IsKeyPersonCompleted: false,
-  // for meta profile
   IsMetaDataCompleted: false,
 };
 

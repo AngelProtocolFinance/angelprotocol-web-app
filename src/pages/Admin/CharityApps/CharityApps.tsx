@@ -6,6 +6,7 @@ import { app, site } from "types/routes";
 import AdminSideNav from "../AdminSideNav";
 import { useGetCharityListEndowmentQuery } from "services/aws/charity";
 import CharityTable from "./CharityTable";
+import Loader from "components/Loader/Loader";
 
 export default function CharityApps() {
   const [isShowApproved, setIsShowApproved] = useState(false);
@@ -20,7 +21,9 @@ export default function CharityApps() {
   // get charity list
   useEffect(() => {
     setCharityList(data);
-    setTableData(data?.filter((item: any) => item.EndowmentStatus != "Active"));
+    setTableData(
+      data?.filter((item: any) => item.EndowmentStatus !== "Active")
+    );
     setIsLoading(false);
   }, []);
 
@@ -39,7 +42,7 @@ export default function CharityApps() {
     setIsShowApproved(!isShowApproved);
     setTableData(
       data?.filter(
-        (item: any) => item.EndowmentStatus != "Active" || isShowApproved
+        (item: any) => item.EndowmentStatus !== "Active" || isShowApproved
       )
     );
   };
@@ -81,11 +84,19 @@ export default function CharityApps() {
         </div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-            <CharityTable
-              onDelete={handleDeleteCharity}
-              onCheckOut={handleActivateCharity}
-              charityList={tableData}
-            />
+            {isLoading ? (
+              <Loader
+                bgColorClass="bg-white"
+                widthClass="w-3"
+                gapClass="gap-1"
+              />
+            ) : (
+              <CharityTable
+                onDelete={handleDeleteCharity}
+                onCheckOut={handleActivateCharity}
+                charityList={tableData}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import AddressSelector from "./AddressSelector";
 // import { newIndexFundSchema } from "./newIndexSchema";
 import { useForm } from "react-hook-form";
+import { useModalCloser } from "components/Modal/Modal";
 
 const NewIndexFundModal = () => {
   const {
@@ -10,6 +11,7 @@ const NewIndexFundModal = () => {
   } = useForm();
 
   const onSubmit = (data: any) => console.log("submit", data);
+  const closeModal = useModalCloser();
 
   return (
     <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-r15 p-5 text-center max-h-3/4 overflow-y-scroll">
@@ -83,7 +85,10 @@ const NewIndexFundModal = () => {
             </button>
           </div>
           <div>
-            <button className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm">
+            <button
+              onClick={closeModal}
+              className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+            >
               Cancel
             </button>
           </div>

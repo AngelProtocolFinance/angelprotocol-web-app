@@ -40,12 +40,12 @@ export default function IndexFund() {
         </div>
       </div>
       {showIndexModal && (
-        <Modal onModalClose={() => setShowIndexModal(false)}>
+        <Modal setShown={() => setShowIndexModal(false)}>
           <NewIndexFundModal />
         </Modal>
       )}
       {showUpdateModal && (
-        <Modal onModalClose={() => setShowUpdateModal(false)}>
+        <Modal setShown={() => setShowUpdateModal(false)}>
           <UpdateMembersModal />
         </Modal>
       )}

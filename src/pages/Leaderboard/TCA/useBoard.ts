@@ -36,7 +36,7 @@ export default function useBoard() {
         const res = await indexFund.getFundDonations();
         const _sums: Sums = {};
         const tcaDonors = data!;
-        res.donors.forEach((donor) => {
+        res.donors.forEach((donor: any) => {
           const {
             name = defaultName,
             icon = defaultIcon,
