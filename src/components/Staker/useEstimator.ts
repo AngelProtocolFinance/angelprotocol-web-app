@@ -42,7 +42,7 @@ export default function useEstimator() {
 
         setValue("loading", true);
         const contract = new Halo(wallet);
-        const tx = await contract.createStakeTx(debounced_amount);
+        const tx = await contract.createGovStakeTx(debounced_amount);
 
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!

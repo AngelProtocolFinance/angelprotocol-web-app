@@ -1,15 +1,15 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import {
   MsgExecuteContract,
-  Coin,
+  // Coin,
   Dec,
   CreateTxOptions,
-  StdFee,
+  // StdFee,
 } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { HaloBalance, sc } from "./types";
-import { denoms } from "constants/currency";
+import { GovStaker, GovState, HaloBalance, sc, TokenInfo } from "./types";
+// import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
   token_address: string;
@@ -23,8 +23,25 @@ export default class Halo extends Contract {
     this.gov_address = contracts[this.chainID][sc.halo_gov];
   }
 
-  //gov_stake
-  async createStakeTx(amount: number): Promise<CreateTxOptions> {
+  //halo_token
+  async getHaloBalance() {
+    if (!this.wallet) {
+      return { balance: "0" };
+    } else {
+      return await this.query<HaloBalance>(this.token_address, {
+        balance: { address: this.walletAddr! },
+      });
+    }
+  }
+
+  async getHaloInfo() {
+    return await this.query<TokenInfo>(this.token_address, {
+      token_info: {},
+    });
+  }
+
+  //halo_gov
+  async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
 
@@ -39,18 +56,20 @@ export default class Halo extends Contract {
         },
       }
     );
-    // const fee = await this.estimateFee([stake_msg]);
-    const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
+    const fee = await this.estimateFee([stake_msg]);
+    // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
     return { msgs: [stake_msg], fee };
   }
 
-  async getBalance() {
-    if (!this.wallet) {
-      return { balance: "0" };
-    } else {
-      return await this.query<HaloBalance>(this.token_address, {
-        balance: { address: this.walletAddr! },
-      });
-    }
+  async getGovStaker() {
+    return await this.query<GovStaker>(this.gov_address, {
+      staker: { address: this.walletAddr },
+    });
+  }
+
+  async getGovState() {
+    return await this.query<GovState>(this.gov_address, {
+      state: {},
+    });
   }
 }

@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
 import Action from "../Action";
 

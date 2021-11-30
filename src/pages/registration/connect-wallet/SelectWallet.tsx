@@ -1,7 +1,7 @@
 import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
 import Action from "../Action";
 import TerraInfoModal from "../modals/TerraInfoModal";

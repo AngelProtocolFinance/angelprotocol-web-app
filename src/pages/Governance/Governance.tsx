@@ -3,8 +3,10 @@ import { currency_text, denoms } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls";
 import Portal from "./Portal";
+import useGov from "./useGov";
 
 export default function Governance() {
+  const { shares, percentStaked } = useGov();
   return (
     <div className="grid grid-rows-a1 min-h-screen pt-2 pb-16">
       <AppHead />
@@ -22,9 +24,9 @@ export default function Governance() {
           <Figure
             position="lg:row-start-2"
             title="total staked"
-            value={303.76}
+            value={shares}
             denom={currency_text[denoms.uhalo]}
-            percent={13.36}
+            percent={percentStaked}
           />
           <Portal />
         </div>

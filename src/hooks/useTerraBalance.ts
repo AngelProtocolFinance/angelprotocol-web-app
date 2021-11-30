@@ -33,6 +33,7 @@ export default function useTerraBalance(main: denoms, others?: denoms[]) {
       set_main(_main);
       set_others(_others);
     })();
+    //eslint-disable-next-line
   }, [wallet]);
 
   return { main: _main, others: _others };

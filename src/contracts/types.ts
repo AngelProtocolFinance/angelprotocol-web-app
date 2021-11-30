@@ -82,7 +82,27 @@ export interface Holdings {
 //Vaults
 export type Swap = { exchange_rate: string; yield_token_supply: string };
 
-//Halo
+//Halo token
 export type HaloBalance = {
   balance: string;
+};
+
+export type TokenInfo = {
+  name: string;
+  symbol: string;
+  decimals: number;
+  total_supply: string;
+};
+
+//Halo gov
+export type GovState = {
+  poll_count: number;
+  total_share: string;
+  total_deposit: string;
+};
+
+export type GovStaker = {
+  balance: string;
+  locked_balance: any[];
+  share: string;
 };

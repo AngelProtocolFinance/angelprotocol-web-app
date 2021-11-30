@@ -9,7 +9,7 @@ export default function useHaloBalance() {
   useEffect(() => {
     (async () => {
       const contract = new Halo(wallet);
-      const holding = await contract.getBalance();
+      const holding = await contract.getHaloBalance();
       const halo = new Dec(holding.balance).mul(1e-6).toNumber();
       setHalo(halo);
     })();
