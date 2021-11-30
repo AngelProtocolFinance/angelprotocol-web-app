@@ -183,7 +183,7 @@ const StepsDocs = () => {
           <Action
             onClick={() => history.push(registration.status)}
             title="back"
-            classes="bg-thin-blue w-48 h-10 mt-3"
+            classes="bg-dark-grey w-48 h-10 mt-3"
             disabled={loading}
           />
         </div>

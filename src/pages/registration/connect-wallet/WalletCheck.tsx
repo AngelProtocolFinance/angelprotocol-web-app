@@ -36,13 +36,13 @@ const WalletCheck = () => {
           <Action
             onClick={() => history.push(registration.others)}
             title="NO"
-            classes="bg-thin-blue w-48 h-10"
+            classes="bg-orange w-48 h-10"
           />
         </div>
         <Action
           onClick={() => history.push(registration.status)}
           title="Back"
-          classes="bg-thin-blue w-48 h-10"
+          classes="bg-dark-grey w-48 h-10"
         />
       </div>
       {isOpenModal && (

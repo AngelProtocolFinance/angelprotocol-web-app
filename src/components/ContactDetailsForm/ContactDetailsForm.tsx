@@ -13,7 +13,6 @@ import { Selector } from "../../components/Selector/Selector";
 import Action from "components/ActionButton/Action";
 
 export const ContactDetailsForm = (props: any) => {
-  //url = app/register/details
   const [isLoading, setIsLoading] = useState(false);
   const [orgRole, setOrgRole] = useState(props.contactData?.Role || "");
   const { saveContactInfo } = useContactDetails();
@@ -238,7 +237,7 @@ export const ContactDetailsForm = (props: any) => {
           {props.contactData?.PK && (
             <div className="mr-2">
               <button
-                className="disabled:bg-gray-300 bg-thin-blue w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
+                className="disabled:bg-gray-300 bg-dark-grey w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
                 onClick={() => history.push(registration.status)}
                 disabled={isLoading}
               >

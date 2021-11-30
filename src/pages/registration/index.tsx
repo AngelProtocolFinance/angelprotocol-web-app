@@ -18,7 +18,7 @@ const Register = () => {
   //this component will only render under '/app/register/'
   const { path } = useRouteMatch();
   return (
-    <section className="grid grid-rows-dashboard pb-16 justify-items-center">
+    <section className="grid grid-rows-dashboard pb-16 justify-items-center font-heading">
       <AppHead />
       <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white">
         <Switch>

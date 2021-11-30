@@ -48,16 +48,14 @@ const Registration = () => {
         <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
       </div>
       <div>
-        <span className="text-2xl font-bold">
+        <span className="text-4xl font-bold">
           Thank you for registering, we'd love to have you on board!
         </span>
       </div>
-      <div className="my-10">
-        <span className="text-md">
-          First, we need to collect information about you and your organization
-          to prevent fraud. The registration only takes a few minutes and it can
-          be interrupted and resumed as many times as necessary. We’ll be making
-          it easy for you to come back to it.
+      <div className="mb-10 mt-5">
+        <span className="text-xl">
+          You're just steps away from bringing all the benefits of endowments to
+          your organization.
         </span>
       </div>
       <div className="mb-2">
@@ -67,7 +65,7 @@ const Registration = () => {
           classes="bg-orange w-48 h-12"
         />
         <div className="cursor-pointer mb-3">
-          <p className="text-xl font-bold">OR</p>
+          <p className="text-xl font-bold text-thin-blue">OR</p>
         </div>
       </div>
       <div className="">
@@ -87,12 +85,15 @@ const Registration = () => {
           <Action
             submit
             title="Resume"
-            classes="bg-thin-blue w-48 h-12"
+            classes="bg-thin-blue w-48 h-12 mt-3"
             disabled={isLoading}
             isLoading={isLoading}
           />
         </form>
       </div>
+      <p className="text-base mt-6">
+        Can't find a registration file with this reference?
+      </p>
       <ToastContainer />
     </div>
   );
