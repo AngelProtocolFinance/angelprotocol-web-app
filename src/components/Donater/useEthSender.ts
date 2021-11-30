@@ -9,8 +9,10 @@ import { setStage } from "services/donation/donationSlice";
 import useEthEstimator from "./useEthEstimator";
 import { Step } from "services/donation/types";
 import useErrorHandler from "./useErrorHandler";
+import { useSetModal } from "components/Nodal/Nodal";
 
 export default function useEthSender() {
+  const { hideModal } = useSetModal();
   const wallet = useWallet();
   const dispatch = useSetter();
   const { setValue } = useFormContext();
@@ -47,6 +49,10 @@ export default function useEthSender() {
           content: null,
         })
       );
+
+      if (hideModal !== undefined) {
+        hideModal();
+      }
     } catch (error) {
       handleEthError(error, handleError);
     } finally {
