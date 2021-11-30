@@ -5,7 +5,7 @@ import { useWallet } from "use-wallet";
 import { useSetModal } from "components/Nodal/Nodal";
 import { setPending } from "services/wallet/walletSlice";
 import Result, { Props as ResProps } from "components/Donater/Result";
-import displayEthError from "components/Donater/displayEthError";
+import displayEthError from "./displayEthError";
 import { denoms } from "constants/currency";
 
 export default function useWaiter() {

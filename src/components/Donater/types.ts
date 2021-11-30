@@ -7,14 +7,13 @@ export interface Values {
 
   //metadata;
   currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
-  fee: number;
-  loading: boolean;
-  form_error: string;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
 }
+
+export type ErrorHandler = (message: string, url?: string) => void;
 
 export interface XFI {
   bitcoin?: any;

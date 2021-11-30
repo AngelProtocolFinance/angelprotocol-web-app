@@ -1,6 +1,6 @@
 import { Opener } from "components/Nodal/types";
 import { errors } from "ethers";
-import ErrPop, { Props as ErrProp } from "./ErrPop";
+import ErrPop, { Props as ErrProp } from "components/Donater/ErrPop";
 
 export default function displayEthError(error: any, prompter: Opener) {
   console.error(error);
