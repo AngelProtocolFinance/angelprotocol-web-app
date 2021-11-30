@@ -87,25 +87,17 @@ export function DonationInfo({
         </div>
       </div>
       {/* charity stats */}
-      {isDonate ? (
-        <Donator
-          to="charity"
-          receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
-        >
-          <UserForm />
-        </Donator>
-      ) : (
-        <div className="flex flex-col h-full 2xl:h-80 px-0 md:px-10 lg:mt-10 2xl:mt-0 lg:overflow-y-scroll">
-          {mockCharityStats.map(({ title, value, rating }: any, i: number) => (
-            <StatsItem
-              key={i}
-              title={title}
-              value={value}
-              rating={rating}
-            ></StatsItem>
-          ))}
-        </div>
-      )}
+
+      <div className="flex flex-col h-full 2xl:h-80 px-0 md:px-10 lg:mt-10 2xl:mt-0 lg:overflow-y-scroll">
+        {mockCharityStats.map(({ title, value, rating }: any, i: number) => (
+          <StatsItem
+            key={i}
+            title={title}
+            value={value}
+            rating={rating}
+          ></StatsItem>
+        ))}
+      </div>
 
       {/* charity stats */}
       {/* <Modal

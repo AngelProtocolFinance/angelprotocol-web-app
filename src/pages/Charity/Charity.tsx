@@ -5,6 +5,9 @@ import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import Loader from "components/Loader/Loader";
+import Donator from "components/Donator/Donator";
+import UserForm from "components/Donator/UserForm";
+import Modal from "components/Modal/Modal";
 
 const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -49,6 +52,18 @@ const Charity = () => {
             {/* Information tabs  */}
           </div>
         </div>
+      )}
+      {isDonate && (
+        <Modal>
+          <div className="container mx-auto w-full lg:max-w-600 bg-white rounded-xl shadow-lg p-4">
+            <Donator
+              to="charity"
+              receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
+            >
+              <UserForm />
+            </Donator>
+          </div>
+        </Modal>
       )}
     </section>
   );
