@@ -24,10 +24,10 @@ export default function DonateForm() {
       <Amount />
       <div className="flex gap-2 mb-6">
         <Currency currency={denoms.uusd} />
-        <Currency currency={denoms.ether} />
-        <Currency currency={denoms.btc} />
-        <Currency currency={denoms.sol} />
-        <Currency currency={denoms.uatom} />
+        <Currency currency={denoms.ether} withTooltip />
+        <Currency currency={denoms.btc} withTooltip />
+        <Currency currency={denoms.sol} withTooltip />
+        <Currency currency={denoms.uatom} withTooltip />
       </div>
       <Breakdown />
       {to !== "tca" && <Split />}
