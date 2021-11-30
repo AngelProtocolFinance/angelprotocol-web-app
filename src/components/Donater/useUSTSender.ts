@@ -63,7 +63,7 @@ function useUSTSender() {
         );
 
         const contract = new Contract(wallet);
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 1, 1000);
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
