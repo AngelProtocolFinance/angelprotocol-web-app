@@ -6,76 +6,91 @@ import {
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-import { Values as Data, Values } from "components/Donater/types";
-import { useSetModal } from "components/Nodal/Nodal";
-import ErrPop, { Props as ErrProps } from "./ErrPop";
-import Result, { Props as ResProps } from "./Result";
-import Waiter, { Props as WaitProps } from "./Waiter";
-import getDepositAmount from "./getDepositAmount";
-import displayTerraError from "./displayTerraError";
+import { Values } from "components/Donater/types";
+import handleTerraError from "./handleTerraError";
 import useUSTEstimator from "./useUSTEstimator";
 import Contract from "contracts/Contract";
 import { useGetKeplr } from "wallets/Keplr";
 import { chains } from "contracts/types";
 import { terra_mainnet_rpc } from "wallets/info_terra_mainnet";
 import { denoms } from "constants/currency";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { setStage } from "services/donation/donationSlice";
 import { Wallets } from "services/wallet/types";
 import { ap_wallets } from "constants/contracts";
-import displayKeplrError from "./diplayKeplrError";
+import handleKeplrError from "./handleKeplrError";
+import { Step } from "services/donation/types";
+import useErrorHandler from "./useErrorHandler";
 
 function useUSTSender() {
+  const dispatch = useSetter();
   const active_wallet = useGetter((state) => state.wallet.activeWallet);
   const { reset, setValue } = useFormContext<Values>();
   const { provider } = useGetKeplr();
   const wallet = useConnectedWallet();
-  const { showModal } = useSetModal();
   const tx = useUSTEstimator();
+  const handleError = useErrorHandler();
 
-  async function terra_sender(data: Data) {
-    const UST_amount = data.amount;
-    // const liquid_split = 100 - Number(data.split);
-
+  //data:Data
+  async function terra_sender() {
     try {
       if (!wallet) {
-        showModal<ErrProps>(ErrPop, {
-          desc: "No Terra wallet is currently connected",
+        setStage({
+          step: Step.error,
+          content: { message: "Wallet is disconnected" },
         });
         return;
       }
 
+      dispatch(
+        setStage({
+          step: Step.submit,
+          content: { message: "Submitting transaction.." },
+        })
+      );
+
       const response = await wallet.post(tx!);
 
       if (response.success) {
-        showModal<WaitProps>(Waiter, {
-          desc: "Waiting for transaction result",
-          url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
-        });
+        dispatch(
+          setStage({
+            step: Step.broadcast,
+            content: {
+              message: "Transaction submitted, waiting for transaction result",
+              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            },
+          })
+        );
 
         const contract = new Contract(wallet);
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 1, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          const depositAmount = getDepositAmount(
-            txInfo.logs!,
-            wallet.network.chainID
+          dispatch(
+            setStage({
+              step: Step.success,
+              content: {
+                message: "Thank you for your donation!",
+                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              },
+            })
           );
-          showModal<ResProps>(Result, {
-            sent: +UST_amount,
-            received: depositAmount,
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-          });
         } else {
-          showModal<ErrProps>(ErrPop, {
-            desc: "Transaction failed",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-          });
+          dispatch(
+            setStage({
+              step: Step.error,
+              content: {
+                message: "Transaction failed",
+                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              },
+            })
+          );
         }
       }
     } catch (err) {
       console.error(err);
-      displayTerraError(err, showModal);
+      handleTerraError(err, handleError);
     } finally {
       reset();
     }
@@ -84,8 +99,9 @@ function useUSTSender() {
   async function keplr_sender(data: Values) {
     try {
       if (!provider) {
-        showModal<ErrProps>(ErrPop, {
-          desc: "UST wallet is not connected.",
+        setStage({
+          step: Step.error,
+          content: { message: "Wallet is disconnected" },
         });
         return;
       }
@@ -115,9 +131,12 @@ function useUSTSender() {
 
       const dec_amount = new Dec(data.amount).mul(1e6);
 
-      showModal<WaitProps>(Waiter, {
-        desc: "Processing transaction...",
-      });
+      dispatch(
+        setStage({
+          step: Step.submit,
+          content: { message: "Submitting transaction.." },
+        })
+      );
 
       const res = await client.sendTokens(
         address,
@@ -128,23 +147,31 @@ function useUSTSender() {
 
       if ("code" in res) {
         if (res.code !== 0) {
-          showModal<ErrProps>(ErrPop, {
-            desc: "Transaction failed",
-            url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
-          });
+          dispatch(
+            setStage({
+              step: Step.error,
+              content: {
+                message: "Transaction failed",
+                url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
+              },
+            })
+          );
+
           return;
         }
       }
 
-      showModal<ResProps>(Result, {
-        sent: +data.amount,
-        received: +data.amount,
-        url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
-        precision: 3,
-        denom: denoms.uusd,
-      });
+      dispatch(
+        setStage({
+          step: Step.success,
+          content: {
+            message: "Thank you for your donation!",
+            url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
+          },
+        })
+      );
     } catch (err) {
-      displayKeplrError(err, showModal, denoms.uusd);
+      handleKeplrError(err, handleError, denoms.uusd);
     } finally {
       setValue("amount", "");
     }
