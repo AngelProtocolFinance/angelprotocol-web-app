@@ -1,23 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-import useDebouncer from "hooks/useDebouncer";
 import useTerraBalance from "hooks/useTerraBalance";
 import useHaloBalance from "hooks/useHaloBalance";
 import { Values } from "./types";
 
 export default function useEstimator() {
   const { watch, setValue } = useFormContext<Values>();
-  const [tx, setTx] = useState<CreateTxOptions>();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
 
   const amount = Number(watch("amount")) || 0;
-  const debounced_amount = useDebouncer(amount, 500);
 
   useEffect(() => {
     (async () => {
@@ -28,22 +24,24 @@ export default function useEstimator() {
           return;
         }
 
-        if (!debounced_amount) {
-          setValue("fee", 0);
-          return;
-        }
-        //get $halo balance
-
         //initial balance check to successfully run estimate
-        if (debounced_amount >= halo_balance) {
+        if (amount >= halo_balance) {
           setValue("form_error", "Not enough Halo balance");
           return;
         }
 
         setValue("loading", true);
         const contract = new Halo(wallet);
-        const tx = await contract.createGovUnstakeTx(debounced_amount);
+        const tx = await contract.createPoll(
+          amount,
+          //just set max contraints for estimates to avoid
+          //estimating fee on different string lengths
+          create_placeholder(64),
+          create_placeholder(1024),
+          create_placeholder(128)
+        );
 
+        //fee estimate with max contraints
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
           .mul(1e-6)
@@ -56,7 +54,6 @@ export default function useEstimator() {
         }
 
         setValue("fee", estimatedFee);
-        setTx(tx);
         setValue("loading", false);
       } catch (err) {
         console.error(err);
@@ -65,7 +62,11 @@ export default function useEstimator() {
       }
     })();
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, halo_balance]);
+  }, [wallet, halo_balance, UST_balance]);
 
-  return tx;
+  //return estimated fee computed using max constraints
+}
+
+function create_placeholder(num_bytes = 1) {
+  return Array(num_bytes).fill("a").join("");
 }

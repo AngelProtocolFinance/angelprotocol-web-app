@@ -95,6 +95,13 @@ export type TokenInfo = {
 };
 
 //Halo gov
+
+export type PollExecuteMsg = {
+  order: number;
+  contract: string;
+  msg: string;
+};
+
 export type GovState = {
   poll_count: number;
   total_share: string;

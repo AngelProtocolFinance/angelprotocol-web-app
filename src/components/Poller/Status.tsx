@@ -9,6 +9,7 @@ export default function Status() {
   if (!error) {
     return null;
   }
+
   return (
     <div className="bg-red-400 bg-opacity-20 p-2 rounded-md text-angel-grey mb-2">
       <AiOutlineInfoCircle className="inline mb-1 text-lg mr-1" /> {error}

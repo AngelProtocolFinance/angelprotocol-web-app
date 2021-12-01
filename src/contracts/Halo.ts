@@ -8,7 +8,14 @@ import {
 } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { GovStaker, GovState, HaloBalance, sc, TokenInfo } from "./types";
+import {
+  GovStaker,
+  GovState,
+  HaloBalance,
+  PollExecuteMsg,
+  sc,
+  TokenInfo,
+} from "./types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
@@ -33,14 +40,12 @@ export default class Halo extends Contract {
       });
     }
   }
-
   async getHaloInfo() {
     return await this.query<TokenInfo>(this.token_address, {
       token_info: {},
     });
   }
 
-  //halo_gov
   async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
@@ -61,6 +66,34 @@ export default class Halo extends Contract {
     return { msgs: [stake_msg], fee };
   }
 
+  async createPoll(
+    amount: number,
+    title: string,
+    description: string,
+    link?: string,
+    msgs?: PollExecuteMsg[]
+  ) {
+    this.checkWallet();
+    const u_amount = new Dec(amount).mul(1e6).toInt();
+    const poll_msg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.token_address,
+      {
+        send: {
+          amount: u_amount.toString(),
+          contract: this.gov_address,
+          msg: btoa(
+            JSON.stringify({ create_poll: { title, description, link } })
+          ),
+        },
+      }
+    );
+    const fee = await this.estimateFee([poll_msg]);
+    // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
+    return { msgs: [poll_msg], fee };
+  }
+
+  //halo_gov
   async getGovStaker() {
     return await this.query<GovStaker>(this.gov_address, {
       staker: { address: this.walletAddr },
@@ -71,5 +104,17 @@ export default class Halo extends Contract {
     return await this.query<GovState>(this.gov_address, {
       state: {},
     });
+  }
+
+  async createGovUnstakeTx(amount: number): Promise<CreateTxOptions> {
+    this.checkWallet();
+    const uhalo = new Dec(amount).mul(1e6).toInt();
+    const unstake_msg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.gov_address,
+      { withdraw_voting_tokens: { amount: uhalo.toString() } }
+    );
+    const fee = await this.estimateFee([unstake_msg]);
+    return { msgs: [unstake_msg], fee };
   }
 }

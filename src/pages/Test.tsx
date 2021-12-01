@@ -1,5 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import AppHead from "components/Headers/AppHead";
+import Poller from "components/Poller/Poller";
+import PollerForm from "components/Poller/PollerForm";
 import StakeForm from "components/StakeForm/StakeForm";
 import Staker from "components/Staker/Staker";
 import Halo from "contracts/Halo";
@@ -21,9 +23,13 @@ export default function Test() {
   return (
     <div className="pb-16 grid grid-rows-a1 place-items-center">
       <AppHead />
-      <Staker>
+      {/* <Staker>
         <StakeForm />
-      </Staker>
+      </Staker> */}
+
+      <Poller>
+        <PollerForm />
+      </Poller>
     </div>
   );
 }

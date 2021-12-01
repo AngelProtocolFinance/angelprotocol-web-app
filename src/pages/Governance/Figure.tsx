@@ -20,11 +20,12 @@ export default function Figure(props: Props) {
       <p className="text-4xl font-heading text-white-grey text-opacity-80">
         <span className="">{toCurrency(props.value)}</span>
         <span className=""> {props.denom}</span>
-        {props.percent && (
+        {(props.percent && (
           <span className="text-lg pl-2 font-body">
             ( {toCurrency(props.percent)}% )
           </span>
-        )}
+        )) ||
+          null}
       </p>
     </div>
   );
