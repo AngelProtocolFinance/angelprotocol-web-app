@@ -1,4 +1,3 @@
-import { FaStopwatch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import formatTimer from "./formatTimer";
 
@@ -34,11 +33,10 @@ export default function CountdownTimer({ deadline }: Props) {
 
   return (
     <div className="flex items-center justify-center font-heading">
-      <span className="text-xl font-semibold mr-1">{days}:</span>
-      <span className="text-xl font-semibold mr-1">{hours}:</span>
-      <span className="text-xl font-semibold mr-1">{minutes}:</span>
-      <span className="text-xl font-semibold mr-3">{seconds}</span>
-      <FaStopwatch />
+      <span className="font-semibold mr-1">{days}:</span>
+      <span className="font-semibold mr-1">{hours}:</span>
+      <span className="font-semibold mr-1">{minutes}:</span>
+      <span className="font-semibold mr-2">{seconds}</span>
     </div>
   );
 }
