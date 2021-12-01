@@ -40,30 +40,18 @@ export default function PriceGraph() {
 
   const { currentPriceData } = useGetHistoricPrices();
 
+  console.log("asdfas");
+
   useEffect(() => {
     setCurrentData(currentPriceData);
-  }, [currentPriceData]);
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if (currentDateIndex === dates.length) {
-        clearTimeout(timer);
-        return;
-      }
-
-      const newDataPoint = {
-        price: Math.floor(Math.random() * 10000),
-        date: toUNIXTime(dates[currentDateIndex]),
-      };
-      setPredictedPriceData((prevData) => [...prevData, newDataPoint]);
-      setCurrentDateIndex((prevDateIndex) => prevDateIndex + 1);
-    }, 1000);
-    return () => {
-      if (timer) {
-        clearTimeout(timer);
-      }
+    const newDataPoint = {
+      price: Math.floor(Math.random() * 10000),
+      date: toUNIXTime(dates[currentDateIndex]),
     };
-  });
+    setPredictedPriceData((prevData) => [...prevData, newDataPoint]);
+    setCurrentDateIndex((prevDateIndex) => prevDateIndex + 1);
+  }, [currentPriceData]);
 
   return (
     <ResponsiveContainer width="70%" height="50%">
