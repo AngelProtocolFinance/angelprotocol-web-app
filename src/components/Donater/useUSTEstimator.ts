@@ -9,9 +9,16 @@ import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 import useDebouncer from "./useDebouncer";
 import { useGetKeplr } from "wallets/Keplr";
+import { useSetter } from "store/accessors";
+import {
+  setFormError,
+  setFormLoading,
+  setFee,
+} from "services/donation/donationSlice";
 
 export default function useUSTEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const dispatch = useSetter();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
@@ -39,41 +46,41 @@ export default function useUSTEstimator() {
           return;
         }
 
-        setValue("form_error", "");
+        dispatch(setFormError(""));
 
         if (!wallet && !keplr_provider) {
-          setValue("form_error", "UST wallet is not connected");
+          dispatch(setFormError("UST wallet is not connected"));
           return;
         }
 
         //if the connected wallet is keplr, no need to estimate
         if (keplr_provider) {
           if (debounced_amount >= keplr_ust) {
-            setValue("form_error", "Not enough balance");
+            dispatch(setFormError("Not enough balance"));
             return;
           }
           return;
         }
 
         if (!debounced_amount) {
-          setValue("fee", 0);
+          dispatch(setFee(0));
           return;
         }
 
         //initial balance check to successfully run estimate
         if (debounced_amount >= UST_balance) {
-          setValue("form_error", "Not enough balance");
+          dispatch(setFormError("Not enough balance"));
           return;
         }
 
-        setValue("loading", true);
+        dispatch(setFormLoading(true));
         let tx: CreateTxOptions;
         if (typeof receiver === "undefined" || typeof receiver === "number") {
           const index_fund = new Indexfund(wallet, receiver);
           const tcaMembers = await index_fund.getTCAList();
           const isTca = tcaMembers.includes(wallet!.walletAddress);
           if (!isTca) {
-            setValue("form_error", "Wallet not included in TCA list");
+            dispatch(setFormError("Wallet not included in TCA list"));
             return;
           }
           tx = await index_fund.createDepositTx(
@@ -92,17 +99,15 @@ export default function useUSTEstimator() {
 
         //2nd balance check including fees
         if (debounced_amount + estimatedFee >= UST_balance) {
-          setValue("form_error", "Not enough balance");
+          dispatch(setFormError("Not enough balance"));
           return;
         }
-
-        setValue("fee", estimatedFee);
+        dispatch(setFee(estimatedFee));
         setTx(tx);
-        setValue("loading", false);
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
-        setValue("loading", false);
-        setValue("form_error", "Error estimating transaction");
+        dispatch(setFormError("Error estimating transaction"));
       }
     })();
     //eslint-disable-next-line

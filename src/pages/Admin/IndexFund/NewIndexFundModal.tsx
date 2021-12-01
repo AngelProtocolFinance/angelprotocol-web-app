@@ -12,7 +12,7 @@ const NewIndexFundModal = () => {
   const onSubmit = (data: any) => console.log("submit", data);
 
   return (
-    <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-r15 p-5 text-center max-h-3/4 overflow-y-scroll">
+    <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-115 p-5 text-center max-h-3/4 overflow-y-scroll">
       <span className="text-2xl font-semibold inline-block mb-1">
         New Index fund
       </span>
