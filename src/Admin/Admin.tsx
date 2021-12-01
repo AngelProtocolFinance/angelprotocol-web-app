@@ -5,17 +5,18 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { admin, site } from "../types/routes";
+import { admin } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "../App/chains";
 import { UseWalletProvider } from "use-wallet";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
+import AdminLogin from "pages/Admin/Login/AdminLogin";
+import CharityApps from "pages/Admin/CharityApps/CharityApps";
 import AppHead from "components/Headers/AppHead";
-import AdminSideNav from "pages/Admin/AdminSideNav";
 
 const Admin = () => {
-  //{match.path} is '/app'
+  //{match.path} is '/admin'
   const { path } = useRouteMatch();
   const location = useLocation();
 
@@ -37,8 +38,7 @@ const Admin = () => {
         >
           <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16">
             <AppHead />
-            <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10">
-              <AdminSideNav />
+            <div className="flex justify-center w-full">
               <Switch>
                 <Redirect
                   from="/:url*(/+)"
@@ -50,7 +50,7 @@ const Admin = () => {
                 />
                 <Route
                   path={`${path}/${admin.charity_applications}`}
-                  component={IndexFund}
+                  component={CharityApps}
                 />
                 <Route
                   path={`${path}/${admin.endowments}`}
@@ -60,8 +60,9 @@ const Admin = () => {
                   path={`${path}/${admin.aliance_members}`}
                   component={IndexFund}
                 />
-                <Route path={`${path}${admin.index}`} component={IndexFund} />
-                <Redirect from="*" to={site.home} />
+                <Route path={`${path}/${admin.login}`} component={AdminLogin} />
+                <Route path={`${path}/${admin.index}`} component={IndexFund} />
+                <Redirect from="*" to={`${path}/${admin.login}`} />
               </Switch>
             </div>
           </div>

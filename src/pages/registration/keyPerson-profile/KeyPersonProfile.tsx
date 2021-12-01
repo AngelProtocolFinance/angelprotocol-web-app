@@ -8,7 +8,7 @@ import {
 import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
 import { ToastContainer } from "react-toastify";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { useGetCharityDataQuery } from "services/aws/charity";
