@@ -50,6 +50,8 @@ const auctionDates = [
 ];
 
 export default function useGetHistoricPrices() {
+  const targetPrice = 10;
+  const startingPrice = tempPriceData[0].price;
   const [index, setIndex] = useState(0);
   const [currentPriceData, setCurrentPriceData] = useState(
     new Array<PriceData>()
@@ -63,12 +65,12 @@ export default function useGetHistoricPrices() {
 
       setCurrentPriceData([...currentPriceData, tempPriceData[index]]);
       setIndex((prevIndex) => prevIndex + 1);
-    }, 1000);
+    }, 2000);
 
     return () => {
       if (timer) clearTimeout(timer);
     };
   });
 
-  return { auctionDates, currentPriceData };
+  return { auctionDates, startingPrice, targetPrice, currentPriceData };
 }

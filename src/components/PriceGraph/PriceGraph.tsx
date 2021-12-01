@@ -22,23 +22,39 @@ const tickDateFormatter = (dateUNIX: number) =>
   });
 
 export default function PriceGraph() {
-  const [predictedPriceData, setPredictedPriceData] = useState(
-    new Array<PriceData>()
-  );
   const [currentData, setCurrentData] = useState(new Array<PriceData>());
-  const [currentDateIndex, setCurrentDateIndex] = useState(0);
 
-  const { auctionDates, currentPriceData } = useGetHistoricPrices();
+  const { auctionDates, startingPrice, targetPrice, currentPriceData } =
+    useGetHistoricPrices();
+
+  const endPredictionPriceData = {
+    price: targetPrice,
+    date: toUNIXTime(auctionDates[auctionDates.length - 1]),
+  };
+
+  const [predictedPriceData, setPredictedPriceData] = useState([
+    {
+      price: startingPrice,
+      date: toUNIXTime(auctionDates[0]),
+    },
+    endPredictionPriceData,
+  ]);
 
   useEffect(() => {
     setCurrentData(currentPriceData);
 
-    const newDataPoint = {
-      price: Math.floor(Math.random() * 10000),
-      date: toUNIXTime(auctionDates[currentDateIndex]),
+    if (!currentPriceData.length) {
+      return;
+    }
+
+    const currentPriceDataPoint = currentPriceData[currentPriceData.length - 1];
+    console.log(currentPriceDataPoint);
+
+    const startPredictionPriceData = {
+      price: currentPriceDataPoint.price,
+      date: currentPriceDataPoint.date,
     };
-    setPredictedPriceData((prevData) => [...prevData, newDataPoint]);
-    setCurrentDateIndex((prevDateIndex) => prevDateIndex + 1);
+    setPredictedPriceData([startPredictionPriceData, endPredictionPriceData]);
   }, [currentPriceData]);
 
   return (
@@ -68,6 +84,7 @@ export default function PriceGraph() {
           stroke="#8884d8"
           dot={false}
           data={predictedPriceData}
+          strokeWidth={3}
         />
         <Line
           dot={false}
