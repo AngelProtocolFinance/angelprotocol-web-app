@@ -39,6 +39,16 @@ const tempPriceData: PriceData[] = [
   },
 ];
 
+const auctionDates = [
+  "2021-11-29 01:00",
+  "2021-11-30 01:00",
+  "2021-11-30 11:00",
+  "2021-12-01 01:00",
+  "2021-12-01 11:00",
+  "2021-12-02 01:00",
+  "2021-12-02 11:00",
+];
+
 export default function useGetHistoricPrices() {
   const [index, setIndex] = useState(0);
   const [currentPriceData, setCurrentPriceData] = useState(
@@ -60,5 +70,5 @@ export default function useGetHistoricPrices() {
     };
   });
 
-  return { currentPriceData };
+  return { auctionDates, currentPriceData };
 }

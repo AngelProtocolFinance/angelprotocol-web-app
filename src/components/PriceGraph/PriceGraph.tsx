@@ -21,16 +21,6 @@ const tickDateFormatter = (dateUNIX: number) =>
     month: "short",
   });
 
-const dates = [
-  "2021-11-29 01:00",
-  "2021-11-30 01:00",
-  "2021-11-30 11:00",
-  "2021-12-01 01:00",
-  "2021-12-01 11:00",
-  "2021-12-02 01:00",
-  "2021-12-02 11:00",
-];
-
 export default function PriceGraph() {
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
@@ -38,16 +28,14 @@ export default function PriceGraph() {
   const [currentData, setCurrentData] = useState(new Array<PriceData>());
   const [currentDateIndex, setCurrentDateIndex] = useState(0);
 
-  const { currentPriceData } = useGetHistoricPrices();
-
-  console.log("asdfas");
+  const { auctionDates, currentPriceData } = useGetHistoricPrices();
 
   useEffect(() => {
     setCurrentData(currentPriceData);
 
     const newDataPoint = {
       price: Math.floor(Math.random() * 10000),
-      date: toUNIXTime(dates[currentDateIndex]),
+      date: toUNIXTime(auctionDates[currentDateIndex]),
     };
     setPredictedPriceData((prevData) => [...prevData, newDataPoint]);
     setCurrentDateIndex((prevDateIndex) => prevDateIndex + 1);
