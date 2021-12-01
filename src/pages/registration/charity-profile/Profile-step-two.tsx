@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { DropzoneArea } from "material-ui-dropzone";
 import { StepTwoSchema } from "./useUpdateCharityProfile";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 import { registration } from "types/routes";
 import { useHistory } from "react-router-dom";
 

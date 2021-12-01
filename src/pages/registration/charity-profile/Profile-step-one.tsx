@@ -9,7 +9,7 @@ import UNSDGInfoModal from "../modals/UNSDGInfoModal";
 import RevenueInfoModal from "../modals/RevenueInfoModal";
 import { registration } from "types/routes";
 import { StepOneSchema } from "./useUpdateCharityProfile";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 import { UN_SDGS } from "types/unsdgs";
 import CurrencyList from "currency-list";
 import { Selector, MultiSelector } from "components/Selector";
