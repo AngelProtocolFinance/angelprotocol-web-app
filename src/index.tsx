@@ -5,12 +5,12 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App/App";
-import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Admin from "Admin/Admin";
+import PriceGraph from "components/PriceGraph/PriceGraph";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,7 +20,7 @@ ReactDOM.render(
           <Switch>
             <Route path={site.app} component={App} />
             <Route path={site.admin} component={Admin} />
-            <Route path={site.home} component={Website} />
+            <Route path={site.home} component={PriceGraph} />
           </Switch>
         </AuthProvider>
       </BrowserRouter>
