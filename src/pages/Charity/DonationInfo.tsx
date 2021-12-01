@@ -39,23 +39,9 @@ function StatsItem({
   );
 }
 interface DonationInfoProps {
-  isDonate: boolean;
-  onToggleDonation: () => void;
+  openModal: () => void;
 }
-export function DonationInfo({
-  isDonate,
-  onToggleDonation,
-}: DonationInfoProps) {
-  //eslint-disable-next-line
-  // const [modalIsOpen, setIsOpen] = useState(false);
-  // function openInfoModal() {
-  //   setIsOpen(true);
-  // }
-  // //eslint-disable-next-line
-  // function closeInfoModal() {
-  //   setIsOpen(false);
-  // }
-  console.log("isDonate ", isDonate);
+export function DonationInfo({ openModal }: DonationInfoProps) {
   return (
     <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-40 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 min-h-1/2 2xl:min-h-3/4 py-2">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 md:px-10 mt-10 2xl:mt-0">
@@ -67,12 +53,10 @@ export function DonationInfo({
         </h2>
         <div className="flex flex-row gap-2 mt-4">
           <button
-            className={`uppercase ${
-              isDonate ? "bg-angel-blue" : "bg-orange"
-            } text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4`}
-            onClick={onToggleDonation}
+            onClick={openModal}
+            className={`uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4`}
           >
-            {isDonate ? "Close" : "DONATE NOW"}
+            DONATE NOW
           </button>
           {/* create a customizable IconButton component to replace all occurrences of this */}
           <button className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey">

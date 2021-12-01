@@ -5,19 +5,23 @@ import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import Loader from "components/Loader/Loader";
-import Donator from "components/Donator/Donator";
-import UserForm from "components/Donator/UserForm";
-import Modal from "components/Modal/Modal";
+import Donater from "components/Donater/Donater";
+import DonateSuite from "components/DonateSuite/DonateSuite";
+import { useSetModal } from "components/Nodal/Nodal";
 
 const Charity = () => {
-  const [isDonate, setIsDonate] = useState(false);
   const [activeTab, setActiveTab] = useState("endowment");
-  const toggleDonate = () => {
-    setIsDonate(!isDonate);
-  };
-  const { data, error, isLoading } = useGetCharityDataQuery(
+
+  const { error, isLoading } = useGetCharityDataQuery(
     "a98bd3e3-836d-492c-8817-6a3a7f9ad52d"
   ); // hardcoded uuid to return data from api.
+  const { showModal } = useSetModal();
+
+  const showDonationForm = () => {
+    showModal(CharityForm, {
+      charity_addr: "terra129381",
+    });
+  };
 
   const loaded = !isLoading && !error;
   return (
@@ -33,7 +37,7 @@ const Charity = () => {
       {error && <div>An error occurred, refresh your page to try again!!!</div>}
       {loaded && (
         <div className="flex flex-col-reverse 2xl:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5 overflow-y-scroll overflow-x-hidden">
-          <DonationInfo isDonate={isDonate} onToggleDonation={toggleDonate} />
+          <DonationInfo openModal={showDonationForm} />
           <div className="flex-grow w-full min-h-1/4 items-center text-center bg-indigo 2xl:mb-0">
             <img
               className="rounded-2xl 2xl:-mt-6 shadow-md mb-1"
@@ -53,20 +57,17 @@ const Charity = () => {
           </div>
         </div>
       )}
-      {isDonate && (
-        <Modal>
-          <div className="container mx-auto w-full lg:max-w-600 bg-white rounded-xl shadow-lg p-4">
-            <Donator
-              to="charity"
-              receiver="terra1q2ffe8syyp0ykeclemek2qaswf4detyerpqjc5"
-            >
-              <UserForm />
-            </Donator>
-          </div>
-        </Modal>
-      )}
     </section>
   );
 };
+
+type CharityProps = { charity_addr: string };
+function CharityForm(props: CharityProps) {
+  return (
+    <Donater to="charity" receiver={props.charity_addr}>
+      <DonateSuite inModal />
+    </Donater>
+  );
+}
 
 export default Charity;
