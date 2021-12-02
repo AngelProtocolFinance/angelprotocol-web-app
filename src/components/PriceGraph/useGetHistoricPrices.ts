@@ -17,26 +17,26 @@ const tempPriceData: PriceData[] = [
     price: 1398,
     date: toUNIXTime("2021-11-30 01:00"),
   },
-  {
-    price: 9800,
-    date: toUNIXTime("2021-11-30 11:00"),
-  },
-  {
-    price: 3908,
-    date: toUNIXTime("2021-12-01 01:00"),
-  },
-  {
-    price: 4800,
-    date: toUNIXTime("2021-12-01 11:00"),
-  },
-  {
-    price: 3800,
-    date: toUNIXTime("2021-12-02 01:00"),
-  },
-  {
-    price: 4300,
-    date: toUNIXTime("2021-12-02 11:00"),
-  },
+  // {
+  //   price: 9800,
+  //   date: toUNIXTime("2021-11-30 11:00"),
+  // },
+  // {
+  //   price: 3908,
+  //   date: toUNIXTime("2021-12-01 01:00"),
+  // },
+  // {
+  //   price: 4800,
+  //   date: toUNIXTime("2021-12-01 11:00"),
+  // },
+  // {
+  //   price: 3800,
+  //   date: toUNIXTime("2021-12-02 01:00"),
+  // },
+  // {
+  //   price: 4300,
+  //   date: toUNIXTime("2021-12-02 11:00"),
+  // },
 ];
 
 const auctionDates = [
@@ -51,26 +51,55 @@ const auctionDates = [
 
 export default function useGetHistoricPrices() {
   const targetPrice = 10;
-  const startingPrice = tempPriceData[0].price;
-  const [index, setIndex] = useState(0);
-  const [currentPriceData, setCurrentPriceData] = useState(
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPriceData, setCurrentPriceData] = useState([tempPriceData[0]]);
+  const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
   );
+  const targetPriceDataPoint = {
+    price: targetPrice,
+    date: toUNIXTime(auctionDates[auctionDates.length - 1]),
+  };
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (index === tempPriceData.length) {
-        clearTimeout(timer);
-        return;
+    setIsLoading(true);
+
+    const getPredictedPriceData = (last: PriceData, target: PriceData) => {
+      var numberOfPoints = 7;
+      var points = [last];
+
+      for (var i = 0; i < numberOfPoints; i++) {
+        points.push({
+          price:
+            (Math.abs(last.price || 0 - (target.price || 0)) / numberOfPoints) *
+              (numberOfPoints - i) +
+            (target.price || 0),
+          date:
+            (Math.abs(last.date - target.date) / numberOfPoints) * i +
+            last.date,
+        });
       }
 
-      setCurrentPriceData([...currentPriceData, tempPriceData[index]]);
-      setIndex((prevIndex) => prevIndex + 1);
-    }, 2000);
+      points.push(target);
 
-    return () => {
-      if (timer) clearTimeout(timer);
+      return points;
     };
-  });
 
-  return { auctionDates, startingPrice, targetPrice, currentPriceData };
+    const timer = setTimeout(() => {
+      setCurrentPriceData([...tempPriceData]);
+      const lastPriceDataPoint = tempPriceData.slice(-1)[0];
+
+      const temp = getPredictedPriceData(
+        lastPriceDataPoint,
+        targetPriceDataPoint
+      );
+
+      setPredictedPriceData(temp);
+
+      setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return { auctionDates, isLoading, predictedPriceData, currentPriceData };
 }

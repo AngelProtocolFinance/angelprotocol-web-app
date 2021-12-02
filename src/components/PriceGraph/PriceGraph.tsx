@@ -1,3 +1,4 @@
+import Loader from "components/Loader/Loader";
 import React, { useState, useEffect } from "react";
 import {
   LineChart,
@@ -7,6 +8,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 import useGetHistoricPrices, {
   PriceData,
@@ -21,80 +23,115 @@ const tickDateFormatter = (dateUNIX: number) =>
     month: "short",
   });
 
-export default function PriceGraph() {
-  const [currentData, setCurrentData] = useState(new Array<PriceData>());
+interface PriceGraphData {
+  price?: number;
+  predictedPrice?: number;
+  date: number;
+}
 
-  const { auctionDates, startingPrice, targetPrice, currentPriceData } =
+export default function PriceGraph() {
+  const { auctionDates, isLoading, predictedPriceData, currentPriceData } =
     useGetHistoricPrices();
 
-  const endPredictionPriceData = {
-    price: targetPrice,
-    date: toUNIXTime(auctionDates[auctionDates.length - 1]),
+  const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
+    const priceGraphData = current.map(
+      (data) => ({ price: data.price, date: data.date } as PriceGraphData)
+    );
+    return priceGraphData.concat(
+      predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
+    );
   };
 
-  const [predictedPriceData, setPredictedPriceData] = useState([
-    {
-      price: startingPrice,
-      date: toUNIXTime(auctionDates[0]),
-    },
-    endPredictionPriceData,
-  ]);
+  const series = getPriceGraphData(currentPriceData, predictedPriceData);
 
-  useEffect(() => {
-    setCurrentData(currentPriceData);
+  // for (let i = 0; i < predictedPriceData.length; i++) {
+  //   const element = predictedPriceData[i];
+  //   const newData = {
+  //     predictedPrice: element.price,
+  //     date: element.date,
+  //   } as PriceData;
 
-    if (!currentPriceData.length) {
-      return;
-    }
+  //   if (i < currentPriceData.length) {
+  //     const element2 = currentPriceData[i];
+  //     newData.price = element2.price;
+  //   }
 
-    const currentPriceDataPoint = currentPriceData[currentPriceData.length - 1];
-    console.log(currentPriceDataPoint);
-
-    const startPredictionPriceData = {
-      price: currentPriceDataPoint.price,
-      date: currentPriceDataPoint.date,
-    };
-    setPredictedPriceData([startPredictionPriceData, endPredictionPriceData]);
-  }, [currentPriceData]);
+  //   series.push(newData);
+  // }
 
   return (
-    <ResponsiveContainer width="70%" height="50%">
-      <LineChart
-        width={500}
-        height={300}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <XAxis
-          dataKey="date"
-          tickFormatter={tickDateFormatter}
-          interval={1}
-          allowDuplicatedCategory={false}
+    <>
+      {isLoading && (
+        <Loader
+          gapClass="gap-4"
+          widthClass="w-4"
+          bgColorClass="bg-angel-grey"
         />
-        <YAxis axisLine={false} />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="price"
-          stroke="#8884d8"
-          dot={false}
-          data={predictedPriceData}
-          strokeWidth={3}
-        />
-        <Line
-          dot={false}
-          type="monotone"
-          dataKey="price"
-          stroke="#82ca9d"
-          data={currentData}
-          strokeWidth={2}
-        />
-      </LineChart>
-    </ResponsiveContainer>
+      )}
+      {!isLoading && (
+        // <ResponsiveContainer width="70%" height="50%">
+        //   <LineChart
+        //     width={500}
+        //     height={300}
+        //     margin={{
+        //       top: 5,
+        //       right: 30,
+        //       left: 20,
+        //       bottom: 5,
+        //     }}
+        //   >
+        //     <XAxis
+        //       dataKey="date"
+        //       tickFormatter={tickDateFormatter}
+        //       allowDuplicatedCategory={false}
+        //     />
+        //     <YAxis axisLine={false} dataKey="price" />
+        //     <Tooltip />
+        //     <Legend />
+        //     {/* <Line
+        //       type="monotone"
+        //       dataKey="price"
+        //       stroke="#8884d8"
+        //       dot={false}
+        //       data={predictedPriceData}
+        //       strokeWidth={3}
+        //       isAnimationActive={false}
+        //       name="Predicted"
+        //       key="Predicted"
+        //     />
+        //     <Line
+        //       dot={false}
+        //       type="monotone"
+        //       dataKey="price"
+        //       stroke="#82ca9d"
+        //       data={currentPriceData}
+        //       strokeWidth={2}
+        //       isAnimationActive={false}
+        //       name="Current"
+        //       key="Current"
+        //     /> */}
+        //     {series.map((s) => (
+        //       <Line dataKey="price" data={s.data} name={s.name} key={s.name} />
+        //     ))}
+        //   </LineChart>
+        // </ResponsiveContainer>
+        <LineChart width={500} height={500} data={series}>
+          <Tooltip />
+          <XAxis
+            tickFormatter={tickDateFormatter}
+            dataKey="date"
+            allowDuplicatedCategory={false}
+          />
+          <YAxis />
+          <Line
+            type="monotone"
+            strokeWidth={3}
+            dataKey="price"
+            stroke="#8884d8"
+          />
+          <Line type="monotone" dataKey="predictedPrice" stroke="#82ca9d" />
+        </LineChart>
+      )}
+    </>
   );
 }
