@@ -5,6 +5,8 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { useState } from "react";
 import { RiArrowDownCircleLine } from "react-icons/ri";
 import CurrencyInputPanel from "./CurrencyInputPanel";
+import { MdOutlineClose } from "react-icons/md";
+import { useSetModal } from "components/Nodal/Nodal";
 
 const SwapHeader = () => {
   const { enter, exit, Tooltip } = useTooltip(AdjustSlippage);
@@ -41,9 +43,9 @@ function CurrencyDivider() {
 
 export default function Swap() {
   return (
-    <div className="w-128 bg-gray-200 p-10">
+    <div className="w-128 bg-gray-200 p-10 min-h-3/4">
       <SwapHeader />
-      <div className="w-115 bg-white shadow-xl rounded-lg p-5 mt-4">
+      <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
         <CurrencyInputPanel></CurrencyInputPanel>
         <CurrencyDivider></CurrencyDivider>
         <CurrencyInputPanel></CurrencyInputPanel>
@@ -78,7 +80,7 @@ const AdjustSlippage = () => {
   };
 
   return (
-    <div className="absolute bg-white font-heading text-angel-grey rounded-md text-sm shadow-sm z-10 p-5 w-80 text-left">
+    <div className="absolute -left-52 xl:-left-32 bg-white font-heading text-angel-grey rounded-md text-sm shadow-sm z-10 p-5 w-80 text-left">
       <p className="text-md font-semibold">
         Slippage tolerance <FaExclamationCircle className="inline" />
       </p>
@@ -116,4 +118,30 @@ const AdjustSlippage = () => {
       </div>
     </div>
   );
+};
+
+export const SwapWrapper = (props: { inModal: true }) => {
+  const { hideModal } = useSetModal();
+
+  return (
+    <div
+      className={`max-w-md w-full relative ${
+        props.inModal ? "rounded-md" : ""
+      }`}
+    >
+      {props.inModal && (
+        <button
+          onClick={hideModal}
+          className="absolute right-2 top-2 text-angel-grey hover:text-black"
+        >
+          <MdOutlineClose size={30} />
+        </button>
+      )}
+      <Swap />
+    </div>
+  );
+};
+
+export const SwapModal = () => {
+  return <SwapWrapper inModal />;
 };
