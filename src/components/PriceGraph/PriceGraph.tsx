@@ -36,7 +36,25 @@ export default function PriceGraph() {
     );
   };
 
-  const series = getPriceGraphData(currentPriceData, predictedPriceData);
+  const getPriceTicks = (data: PriceGraphData[]) => {
+    const maxPrice = data.reduce(
+      (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
+      -1
+    );
+
+    return [
+      Math.ceil(maxPrice * 0.25),
+      Math.ceil(maxPrice * 0.5),
+      Math.ceil(maxPrice * 0.75),
+      Math.ceil(maxPrice),
+    ];
+  };
+
+  const priceGraphCombinedData = getPriceGraphData(
+    currentPriceData,
+    predictedPriceData
+  );
+  const priceTicks = getPriceTicks(priceGraphCombinedData);
 
   return (
     <>
@@ -49,7 +67,10 @@ export default function PriceGraph() {
       )}
       {!isLoading && (
         <ResponsiveContainer width="80%" height="80%">
-          <LineChart data={series}>
+          <LineChart
+            data={priceGraphCombinedData}
+            margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
+          >
             <Tooltip />
             <XAxis
               tickFormatter={tickDateFormatter}
@@ -59,7 +80,12 @@ export default function PriceGraph() {
               ticks={[1638144000, 1638230400, 1638316800, 1638399600]}
               domain={[1638144000, 1638417600]}
             />
-            <YAxis axisLine={false} />
+            <YAxis
+              axisLine={false}
+              type="number"
+              ticks={priceTicks}
+              domain={[0, priceTicks.slice(-1)[0]]}
+            />
             <Legend />
             <Line
               type="monotone"
