@@ -4,6 +4,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceDot,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -36,6 +37,7 @@ const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
 
 export default function PriceGraph() {
   const {
+    auctionDates,
     isLoading,
     predictedPriceData,
     tokenSaleData: tokenSaleData,
@@ -92,10 +94,11 @@ export default function PriceGraph() {
               dataKey="date"
               allowDuplicatedCategory={false}
               type="number"
-              ticks={[
-                1638144000000, 1638230400000, 1638316800000, 1638399600000,
+              ticks={auctionDates}
+              domain={[
+                auctionDates[0],
+                auctionDates[auctionDates.length - 1] + 2e7,
               ]}
-              domain={[1638144000000, 1638417600000]}
               dy={15}
               height={60}
             />
@@ -103,7 +106,7 @@ export default function PriceGraph() {
               axisLine={false}
               type="number"
               ticks={priceTicks}
-              domain={[0, priceTicks.slice(-1)[0]]}
+              domain={[0, priceTicks[priceTicks.length - 1]]}
               dx={-15}
               tickFormatter={(value) =>
                 new Intl.NumberFormat("en-us", {
@@ -131,6 +134,14 @@ export default function PriceGraph() {
               name={`${tokenSaleData.tokenName} predicted price`}
               isAnimationActive={false}
             />
+            {predictedPriceData && predictedPriceData[0] && (
+              <ReferenceDot
+                r={4}
+                x={predictedPriceData[0].date}
+                y={predictedPriceData[0].price}
+                stroke="#901ef2"
+              />
+            )}
           </LineChart>
         </ResponsiveContainer>
       )}

@@ -36,14 +36,14 @@ const tokenSaleData: TokenSaleData = {
       price: 4800,
       date: toMiliseconds("2021-12-01 11:00"),
     },
-    {
-      price: 3800,
-      date: toMiliseconds("2021-12-01 16:00"),
-    },
-    {
-      price: 4300,
-      date: toMiliseconds("2021-12-02 00:00"),
-    },
+    // {
+    //   price: 3800,
+    //   date: toMiliseconds("2021-12-01 16:00"),
+    // },
+    // {
+    //   price: 4300,
+    //   date: toMiliseconds("2021-12-02 00:00"),
+    // },
   ],
 };
 
@@ -60,10 +60,10 @@ export default function useGetHistoricPrices() {
 
   const auctionDates = useMemo(
     () => [
-      "2021-11-29 00:00",
-      "2021-11-30 00:00",
-      "2021-12-01 00:00",
-      "2021-12-02 00:00",
+      toMiliseconds("2021-11-29 00:00"),
+      toMiliseconds("2021-11-30 00:00"),
+      toMiliseconds("2021-12-01 00:00"),
+      toMiliseconds("2021-12-02 00:00"),
     ],
     []
   );
@@ -73,7 +73,7 @@ export default function useGetHistoricPrices() {
 
     const targetPriceDataPoint = {
       price: targetPrice,
-      date: toMiliseconds(auctionDates.slice(-1)[0]),
+      date: auctionDates[auctionDates.length - 1],
     };
 
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
@@ -107,7 +107,8 @@ export default function useGetHistoricPrices() {
 
     const timer = setTimeout(() => {
       setCurrentTokenSaleData(tokenSaleData);
-      const lastPriceDataPoint = tokenSaleData.priceData.slice(-1)[0];
+      const lastPriceDataPoint =
+        tokenSaleData.priceData[tokenSaleData.priceData.length - 1];
 
       const temp = getPredictedPriceData(
         lastPriceDataPoint,
