@@ -12,7 +12,7 @@ import {
 import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
 
 const tickDateFormatter = (dateUNIX: number) =>
-  new Date(dateUNIX * 1000).toLocaleDateString("en-us", {
+  new Date(dateUNIX * 1000).toLocaleDateString(undefined, {
     day: "numeric",
     month: "short",
   });
@@ -73,18 +73,21 @@ export default function PriceGraph() {
           >
             <Tooltip />
             <XAxis
+              tickLine={false}
               tickFormatter={tickDateFormatter}
               dataKey="date"
               allowDuplicatedCategory={false}
               type="number"
               ticks={[1638144000, 1638230400, 1638316800, 1638399600]}
               domain={[1638144000, 1638417600]}
+              dy={15}
             />
             <YAxis
               axisLine={false}
               type="number"
               ticks={priceTicks}
               domain={[0, priceTicks.slice(-1)[0]]}
+              dx={-15}
             />
             <Legend />
             <Line
@@ -98,7 +101,7 @@ export default function PriceGraph() {
             <Line
               type="monotone"
               dataKey="predictedPrice"
-              stroke="#82ca9d"
+              stroke="#ffa6f7"
               dot={false}
               name="Token predicted price"
             />
