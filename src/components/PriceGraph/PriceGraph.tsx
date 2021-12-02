@@ -12,7 +12,7 @@ import {
 import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
 
 const tickDateFormatter = (dateUNIX: number) =>
-  new Date(dateUNIX * 1000).toLocaleDateString(undefined, {
+  new Date(dateUNIX).toLocaleDateString(undefined, {
     day: "numeric",
     month: "short",
   });
@@ -78,8 +78,10 @@ export default function PriceGraph() {
               dataKey="date"
               allowDuplicatedCategory={false}
               type="number"
-              ticks={[1638144000, 1638230400, 1638316800, 1638399600]}
-              domain={[1638144000, 1638417600]}
+              ticks={[
+                1638144000000, 1638230400000, 1638316800000, 1638399600000,
+              ]}
+              domain={[1638144000000, 1638417600000]}
               dy={15}
               height={60}
             />

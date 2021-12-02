@@ -5,42 +5,42 @@ export interface PriceData {
   date: number;
 }
 
-export const toUNIXTime = (stringTime: string) =>
-  new Date(stringTime).getTime() / 1000;
+export const toMiliseconds = (stringTime: string) =>
+  new Date(stringTime).getTime();
 
 const tempPriceData: PriceData[] = [
   {
     price: 2400,
-    date: toUNIXTime("2021-11-29 01:00"),
+    date: toMiliseconds("2021-11-29 01:00"),
   },
   {
     price: 1398,
-    date: toUNIXTime("2021-11-30 01:00"),
+    date: toMiliseconds("2021-11-30 01:00"),
   },
   {
     price: 9800,
-    date: toUNIXTime("2021-11-30 11:00"),
+    date: toMiliseconds("2021-11-30 11:00"),
   },
   {
     price: 3908,
-    date: toUNIXTime("2021-12-01 01:00"),
+    date: toMiliseconds("2021-12-01 01:00"),
   },
   {
     price: 4800,
-    date: toUNIXTime("2021-12-01 11:00"),
+    date: toMiliseconds("2021-12-01 11:00"),
   },
   {
     price: 3800,
-    date: toUNIXTime("2021-12-01 20:00"),
+    date: toMiliseconds("2021-12-01 16:00"),
   },
   // {
   //   price: 4300,
-  //   date: toUNIXTime("2021-12-02 00:00"),
+  //   date: toMiliseconds("2021-12-02 00:00"),
   // },
 ];
 
 export default function useGetHistoricPrices() {
-  const targetPrice = 10;
+  const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [currentPriceData, setCurrentPriceData] = useState([tempPriceData[0]]);
   const [predictedPriceData, setPredictedPriceData] = useState(
@@ -48,15 +48,7 @@ export default function useGetHistoricPrices() {
   );
 
   const auctionDates = useMemo(
-    () => [
-      "2021-11-29 01:00",
-      "2021-11-30 01:00",
-      "2021-11-30 11:00",
-      "2021-12-01 01:00",
-      "2021-12-01 11:00",
-      "2021-12-01 20:00",
-      "2021-12-02 00:00",
-    ],
+    () => ["2021-11-29", "2021-11-30", "2021-12-01", "2021-12-02"],
     []
   );
 
@@ -65,12 +57,21 @@ export default function useGetHistoricPrices() {
 
     const targetPriceDataPoint = {
       price: targetPrice,
-      date: toUNIXTime(auctionDates[auctionDates.length - 1]),
+      date: toMiliseconds(auctionDates[auctionDates.length - 1]),
     };
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
       if (last.date === target.date) return [];
 
-      var numberOfPoints = 7;
+      var numberOfPoints = getNumberOfPoints(last.date, target.date);
+
+      console.log("nop", numberOfPoints);
+      console.log(
+        "last",
+        new Date(last.date).toLocaleString(),
+        "target",
+        new Date(target.date).toLocaleString()
+      );
+
       var points = [last];
 
       for (var i = 0; i < numberOfPoints; i++) {
@@ -101,6 +102,8 @@ export default function useGetHistoricPrices() {
 
       setPredictedPriceData(temp);
 
+      console.log(temp);
+
       setIsLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
@@ -108,3 +111,8 @@ export default function useGetHistoricPrices() {
 
   return { auctionDates, isLoading, predictedPriceData, currentPriceData };
 }
+
+// 36e5 is the scientific notation for 60*60*1000*1000,
+// dividing by which converts the UNIX timestamp difference into hours
+const getNumberOfPoints = (startDateUNIX: number, endDateUNIX: number) =>
+  Math.abs(endDateUNIX - startDateUNIX) / 36e8;
