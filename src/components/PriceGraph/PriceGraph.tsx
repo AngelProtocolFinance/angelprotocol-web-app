@@ -55,6 +55,9 @@ export default function PriceGraph() {
               tickFormatter={tickDateFormatter}
               dataKey="date"
               allowDuplicatedCategory={false}
+              type="number"
+              ticks={[1638144000, 1638230400, 1638316800, 1638403200]}
+              domain={[1638144000, 1638403200]}
             />
             <YAxis />
             <Legend />
