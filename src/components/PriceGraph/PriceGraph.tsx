@@ -98,6 +98,7 @@ export default function PriceGraph() {
               stroke="#901ef2"
               name="Token Price"
               dot={false}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -105,6 +106,7 @@ export default function PriceGraph() {
               stroke="#ffa6f7"
               dot={false}
               name="Token predicted price"
+              isAnimationActive={false}
             />
           </LineChart>
         </ResponsiveContainer>

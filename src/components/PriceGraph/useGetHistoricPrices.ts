@@ -33,10 +33,10 @@ const tempPriceData: PriceData[] = [
     price: 3800,
     date: toUNIXTime("2021-12-01 20:00"),
   },
-  {
-    price: 4300,
-    date: toUNIXTime("2021-12-02 00:00"),
-  },
+  // {
+  //   price: 4300,
+  //   date: toUNIXTime("2021-12-02 00:00"),
+  // },
 ];
 
 export default function useGetHistoricPrices() {
