@@ -26,15 +26,20 @@ const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
     <span style={{ color: "black", fontWeight: 500 }}>
       {children}
       {!!explanation && (
-        <span style={{ color: "gray", fontSize: "0.8em" }}>{explanation}</span>
+        <span style={{ color: "gray", fontSize: "0.8em", marginLeft: "5px" }}>
+          {explanation}
+        </span>
       )}
     </span>
   );
 };
 
 export default function PriceGraph() {
-  const { isLoading, predictedPriceData, currentPriceData } =
-    useGetHistoricPrices();
+  const {
+    isLoading,
+    predictedPriceData,
+    tokenSaleData: tokenSaleData,
+  } = useGetHistoricPrices();
 
   const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
     const priceGraphData = current.map(
@@ -60,7 +65,7 @@ export default function PriceGraph() {
   };
 
   const priceGraphCombinedData = getPriceGraphData(
-    currentPriceData,
+    tokenSaleData.priceData,
     predictedPriceData
   );
   const priceTicks = getPriceTicks(priceGraphCombinedData);
@@ -107,7 +112,7 @@ export default function PriceGraph() {
               strokeWidth={3}
               dataKey="price"
               stroke="#901ef2"
-              name="Token price"
+              name={`${tokenSaleData.tokenName} price`}
               dot={false}
               isAnimationActive={false}
             />
@@ -116,7 +121,7 @@ export default function PriceGraph() {
               dataKey="predictedPrice"
               stroke="#ffa6f7"
               dot={false}
-              name="Token predicted price"
+              name={`${tokenSaleData.tokenName} predicted price`}
               isAnimationActive={false}
             />
           </LineChart>
