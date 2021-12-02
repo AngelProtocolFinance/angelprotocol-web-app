@@ -1,4 +1,4 @@
-import { FaArrowDown, FaEthereum, FaExclamationCircle } from "react-icons/fa";
+import { FaEthereum } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
 export default function CurrencyInputPanel() {
@@ -14,7 +14,7 @@ export default function CurrencyInputPanel() {
       </div>
       <div className="flex justify-between">
         <button
-          className="flex items-center justify-evenly rounded-2xl bg-blue-200 hover:bg-blue-100 focus:bg-blue-100 hover:opacity-300 focus:outline-none"
+          className="flex items-center justify-evenly rounded-2xl  text-black bg-blue-200 hover:bg-blue-100 focus:bg-blue-100 hover:opacity-300 focus:outline-none"
           style={{
             minWidth: "110px",
             height: "33px",

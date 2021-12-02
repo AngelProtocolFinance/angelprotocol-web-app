@@ -12,7 +12,7 @@ const SwapHeader = () => {
   const { enter, exit, Tooltip } = useTooltip(AdjustSlippage);
 
   return (
-    <div className="flex justify-between items-center font-heading relative">
+    <div className="flex justify-between items-center font-heading relative text-white">
       <span className="inline-block text-2xl font-bold">
         {" "}
         Buy <span className="uppercase">Halo</span>
@@ -41,9 +41,20 @@ function CurrencyDivider() {
   );
 }
 
+export const ConnectButton = ({ onHandleClick }: { onHandleClick: any }) => {
+  return (
+    <button
+      onClick={onHandleClick}
+      className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
+    >
+      Connect wallet
+    </button>
+  );
+};
+
 export default function Swap() {
   return (
-    <div className="w-128 bg-gray-200 p-10 min-h-3/4">
+    <div className="w-128 p-10 min-h-3/4">
       <SwapHeader />
       <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
         <CurrencyInputPanel></CurrencyInputPanel>
@@ -61,9 +72,7 @@ export default function Swap() {
             <p className="usd-price text-xs text-gray-400">0.010524%</p>
           </div>
         </div>
-        <button className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-2xl tracking-widest capitalize text-md font-bold text-white shadow-sm focus:outline-none">
-          Connect wallet
-        </button>
+        <ConnectButton onHandleClick={() => {}}></ConnectButton>
       </div>
     </div>
   );
