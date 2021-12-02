@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export interface PriceData {
   price: number;
@@ -17,14 +17,14 @@ const tempPriceData: PriceData[] = [
     price: 1398,
     date: toUNIXTime("2021-11-30 01:00"),
   },
-  // {
-  //   price: 9800,
-  //   date: toUNIXTime("2021-11-30 11:00"),
-  // },
-  // {
-  //   price: 3908,
-  //   date: toUNIXTime("2021-12-01 01:00"),
-  // },
+  {
+    price: 9800,
+    date: toUNIXTime("2021-11-30 11:00"),
+  },
+  {
+    price: 3908,
+    date: toUNIXTime("2021-12-01 01:00"),
+  },
   // {
   //   price: 4800,
   //   date: toUNIXTime("2021-12-01 11:00"),
@@ -39,16 +39,6 @@ const tempPriceData: PriceData[] = [
   // },
 ];
 
-const auctionDates = [
-  "2021-11-29 01:00",
-  "2021-11-30 01:00",
-  "2021-11-30 11:00",
-  "2021-12-01 01:00",
-  "2021-12-01 11:00",
-  "2021-12-02 01:00",
-  "2021-12-02 11:00",
-];
-
 export default function useGetHistoricPrices() {
   const targetPrice = 10;
   const [isLoading, setIsLoading] = useState(false);
@@ -56,14 +46,27 @@ export default function useGetHistoricPrices() {
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
   );
-  const targetPriceDataPoint = {
-    price: targetPrice,
-    date: toUNIXTime(auctionDates[auctionDates.length - 1]),
-  };
+
+  const auctionDates = useMemo(
+    () => [
+      "2021-11-29 01:00",
+      "2021-11-30 01:00",
+      "2021-11-30 11:00",
+      "2021-12-01 01:00",
+      "2021-12-01 11:00",
+      "2021-12-02 01:00",
+      "2021-12-02 11:00",
+    ],
+    []
+  );
 
   useEffect(() => {
     setIsLoading(true);
 
+    const targetPriceDataPoint = {
+      price: targetPrice,
+      date: toUNIXTime(auctionDates[auctionDates.length - 1]),
+    };
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
       var numberOfPoints = 7;
       var points = [last];
@@ -99,7 +102,7 @@ export default function useGetHistoricPrices() {
       setIsLoading(false);
     }, 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [auctionDates]);
 
   return { auctionDates, isLoading, predictedPriceData, currentPriceData };
 }
