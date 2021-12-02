@@ -33,10 +33,10 @@ const tempPriceData: PriceData[] = [
     price: 3800,
     date: toMiliseconds("2021-12-01 16:00"),
   },
-  // {
-  //   price: 4300,
-  //   date: toMiliseconds("2021-12-02 00:00"),
-  // },
+  {
+    price: 4300,
+    date: toMiliseconds("2021-12-02 00:00"),
+  },
 ];
 
 export default function useGetHistoricPrices() {
@@ -48,7 +48,12 @@ export default function useGetHistoricPrices() {
   );
 
   const auctionDates = useMemo(
-    () => ["2021-11-29", "2021-11-30", "2021-12-01", "2021-12-02"],
+    () => [
+      "2021-11-29 00:00",
+      "2021-11-30 00:00",
+      "2021-12-01 00:00",
+      "2021-12-02 00:00",
+    ],
     []
   );
 
@@ -57,32 +62,30 @@ export default function useGetHistoricPrices() {
 
     const targetPriceDataPoint = {
       price: targetPrice,
-      date: toMiliseconds(auctionDates[auctionDates.length - 1]),
+      date: toMiliseconds(auctionDates.slice(-1)[0]),
     };
+
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
-      if (last.date === target.date) return [];
+      if (last.date === target.date) {
+        return [];
+      }
 
       var numberOfPoints = getNumberOfPoints(last.date, target.date);
 
-      console.log("nop", numberOfPoints);
-      console.log(
-        "last",
-        new Date(last.date).toLocaleString(),
-        "target",
-        new Date(target.date).toLocaleString()
-      );
-
       var points = [last];
 
-      for (var i = 0; i < numberOfPoints; i++) {
+      const getPriceOnPoint = (i: number) =>
+        (Math.abs(last.price - target.price) / numberOfPoints) *
+          (numberOfPoints - i) +
+        target.price;
+
+      const getDateOnPoint = (i: number) =>
+        (Math.abs(last.date - target.date) / numberOfPoints) * i + last.date;
+
+      for (var i = 1; i < numberOfPoints; i++) {
         points.push({
-          price:
-            (Math.abs(last.price || 0 - (target.price || 0)) / numberOfPoints) *
-              (numberOfPoints - i) +
-            (target.price || 0),
-          date:
-            (Math.abs(last.date - target.date) / numberOfPoints) * i +
-            last.date,
+          price: getPriceOnPoint(i),
+          date: getDateOnPoint(i),
         });
       }
 
@@ -102,17 +105,16 @@ export default function useGetHistoricPrices() {
 
       setPredictedPriceData(temp);
 
-      console.log(temp);
-
       setIsLoading(false);
     }, 1000);
+
     return () => clearTimeout(timer);
   }, [auctionDates]);
 
   return { auctionDates, isLoading, predictedPriceData, currentPriceData };
 }
 
-// 36e5 is the scientific notation for 60*60*1000*1000,
-// dividing by which converts the UNIX timestamp difference into hours
+// 36e5 is the scientific notation for 60*60*1000,
+// dividing by which converts the milisecond difference into hours
 const getNumberOfPoints = (startDateUNIX: number, endDateUNIX: number) =>
-  Math.abs(endDateUNIX - startDateUNIX) / 36e8;
+  Math.abs(endDateUNIX - startDateUNIX) / 36e5;
