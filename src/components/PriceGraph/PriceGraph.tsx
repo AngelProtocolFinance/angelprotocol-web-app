@@ -95,7 +95,7 @@ export default function PriceGraph() {
               type="monotone"
               strokeWidth={3}
               dataKey="price"
-              stroke="#8884d8"
+              stroke="#901ef2"
               name="Token Price"
               dot={false}
             />
