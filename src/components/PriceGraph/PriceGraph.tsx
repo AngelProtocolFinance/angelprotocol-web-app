@@ -80,10 +80,10 @@ export default function PriceGraph() {
         />
       )}
       {!isLoading && (
-        <ResponsiveContainer width="80%" height="80%">
+        <ResponsiveContainer width="80%" height="50%">
           <LineChart
+            margin={{ top: 50, left: 70 }}
             data={priceGraphCombinedData}
-            margin={{ top: 50, right: 30, left: 20, bottom: 5 }}
           >
             <Tooltip />
             <XAxis
@@ -105,6 +105,13 @@ export default function PriceGraph() {
               ticks={priceTicks}
               domain={[0, priceTicks.slice(-1)[0]]}
               dx={-15}
+              tickFormatter={(value) =>
+                new Intl.NumberFormat("en-us", {
+                  style: "currency",
+                  currency: "USD",
+                  maximumFractionDigits: 2,
+                }).format(value)
+              }
             />
             <Legend iconType="circle" formatter={legendFormatter} />
             <Line
