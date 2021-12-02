@@ -81,6 +81,7 @@ export default function PriceGraph() {
               ticks={[1638144000, 1638230400, 1638316800, 1638399600]}
               domain={[1638144000, 1638417600]}
               dy={15}
+              height={60}
             />
             <YAxis
               axisLine={false}
@@ -89,7 +90,7 @@ export default function PriceGraph() {
               domain={[0, priceTicks.slice(-1)[0]]}
               dx={-15}
             />
-            <Legend />
+            <Legend iconType="circle" margin={{ top: 40, bottom: 40 }} />
             <Line
               type="monotone"
               strokeWidth={3}
