@@ -59,7 +59,7 @@ export default function PriceGraph() {
               ticks={[1638144000, 1638230400, 1638316800, 1638399600]}
               domain={[1638144000, 1638417600]}
             />
-            <YAxis />
+            <YAxis axisLine={false} />
             <Legend />
             <Line
               type="monotone"
