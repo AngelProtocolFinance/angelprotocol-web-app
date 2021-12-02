@@ -1,5 +1,5 @@
 import Loader from "components/Loader/Loader";
-import React from "react";
+import React, { FC } from "react";
 import {
   Legend,
   Line,
@@ -11,17 +11,26 @@ import {
 } from "recharts";
 import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
 
-const tickDateFormatter = (dateUNIX: number) =>
-  new Date(dateUNIX).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-  });
+type LegendLabelProps = {
+  explanation?: string;
+};
 
 interface PriceGraphData {
   price?: number;
   predictedPrice?: number;
   date: number;
 }
+
+const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
+  return (
+    <span style={{ color: "black", fontWeight: 500 }}>
+      {children}
+      {!!explanation && (
+        <span style={{ color: "gray", fontSize: "0.8em" }}>{explanation}</span>
+      )}
+    </span>
+  );
+};
 
 export default function PriceGraph() {
   const { isLoading, predictedPriceData, currentPriceData } =
@@ -92,13 +101,13 @@ export default function PriceGraph() {
               domain={[0, priceTicks.slice(-1)[0]]}
               dx={-15}
             />
-            <Legend iconType="circle" margin={{ top: 40, bottom: 40 }} />
+            <Legend iconType="circle" formatter={legendFormatter} />
             <Line
               type="monotone"
               strokeWidth={3}
               dataKey="price"
               stroke="#901ef2"
-              name="Token Price"
+              name="Token price"
               dot={false}
               isAnimationActive={false}
             />
@@ -116,3 +125,17 @@ export default function PriceGraph() {
     </>
   );
 }
+
+const tickDateFormatter = (dateUNIX: number) =>
+  new Date(dateUNIX).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+
+const legendFormatter = (value: string, _: any, index: number) => {
+  return (
+    <LegendLabel explanation={index === 1 ? "(without new buyers)" : undefined}>
+      {value}
+    </LegendLabel>
+  );
+};
