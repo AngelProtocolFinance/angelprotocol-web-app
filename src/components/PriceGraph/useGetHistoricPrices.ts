@@ -31,11 +31,11 @@ const tempPriceData: PriceData[] = [
   },
   {
     price: 3800,
-    date: toUNIXTime("2021-12-02 01:00"),
+    date: toUNIXTime("2021-12-01 20:00"),
   },
   {
     price: 4300,
-    date: toUNIXTime("2021-12-02 11:00"),
+    date: toUNIXTime("2021-12-02 00:00"),
   },
 ];
 
@@ -54,8 +54,8 @@ export default function useGetHistoricPrices() {
       "2021-11-30 11:00",
       "2021-12-01 01:00",
       "2021-12-01 11:00",
-      "2021-12-02 01:00",
-      "2021-12-02 11:00",
+      "2021-12-01 20:00",
+      "2021-12-02 00:00",
     ],
     []
   );
@@ -68,6 +68,8 @@ export default function useGetHistoricPrices() {
       date: toUNIXTime(auctionDates[auctionDates.length - 1]),
     };
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
+      if (last.date === target.date) return [];
+
       var numberOfPoints = 7;
       var points = [last];
 
