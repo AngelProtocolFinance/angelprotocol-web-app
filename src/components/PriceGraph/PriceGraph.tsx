@@ -19,12 +19,10 @@ type LegendLabelProps = {
 
 const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
   return (
-    <span style={{ color: "black", fontWeight: 500 }}>
+    <span className="text-black font-medium">
       {children}
       {!!explanation && (
-        <span style={{ color: "gray", fontSize: "0.8em", marginLeft: "5px" }}>
-          {explanation}
-        </span>
+        <span className="text-gray-500 text-sm ml-1">{explanation}</span>
       )}
     </span>
   );
