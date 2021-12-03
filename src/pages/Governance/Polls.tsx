@@ -11,6 +11,7 @@ export default function Polls() {
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const halo_contract = useMemo(() => new Halo(wallet), [wallet]);
+
   const { data } = useGovPollsQuery({
     address: halo_contract.gov_address,
     msg: { polls: {} },

@@ -6,7 +6,14 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { urls } from "App/chains";
 import { chains, GovState } from "contracts/types";
-import { ContractQueryArgs, Poll, Polls, QueryRes, TokenInfo } from "./types";
+import {
+  ContractQueryArgs,
+  GovConfig,
+  Poll,
+  Polls,
+  QueryRes,
+  TokenInfo,
+} from "./types";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
@@ -40,6 +47,12 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
+    govConfig: builder.query<GovConfig, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<GovConfig>) => {
+        return res.query_result;
+      },
+    }),
     haloInfo: builder.query<TokenInfo, ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<TokenInfo>) => {
@@ -49,7 +62,12 @@ export const terra = createApi({
   }),
 });
 
-export const { useGovPollsQuery, useGovStateQuery, useHaloInfoQuery } = terra;
+export const {
+  useGovPollsQuery,
+  useGovStateQuery,
+  useHaloInfoQuery,
+  useGovConfigQuery,
+} = terra;
 
 function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));

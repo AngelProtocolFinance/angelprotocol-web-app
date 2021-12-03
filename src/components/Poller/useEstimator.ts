@@ -13,6 +13,8 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 
+import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
+
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
@@ -42,9 +44,9 @@ export default function useEstimator() {
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
-          create_placeholder(64),
-          create_placeholder(1024),
-          create_placeholder(128)
+          create_placeholder(max_title_bytes),
+          create_placeholder(max_desc_bytes),
+          create_placeholder(max_link_bytes)
         );
 
         //fee estimate with max contraints

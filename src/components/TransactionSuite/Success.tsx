@@ -22,7 +22,7 @@ export default function Success() {
           rel="noreferrer noopener"
           className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
         >
-          view donation details
+          view transaction details
         </a>
       )}
       <button

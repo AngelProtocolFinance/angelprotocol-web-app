@@ -23,7 +23,6 @@ export type TokenInfo = {
 export type Poll = {
   id: number;
   creator: string;
-  string: string;
   // status: "in_progress";
   status: string;
   end_height: number;
@@ -33,8 +32,8 @@ export type Poll = {
   deposit_amount: string;
   // execute_data: null;
   execute_data: any;
-  yes_votes: "0";
-  no_votes: "0";
+  yes_votes: "0"; //uhalo amount
+  no_votes: "0"; //uhalo amount
   // staked_amount: null;
   staked_amount: any;
   // total_balance_at_end_poll: null;
@@ -55,7 +54,18 @@ export type GovState = {
 };
 
 export type GovStaker = {
-  balance: string;
-  locked_balance: any[];
-  share: string;
+  balance: string; //uhalo balance
+  locked_balance: any[]; //locked uhalo balance
+  share: string; //staked halo
+};
+
+export type GovConfig = {
+  owner: string; //address of the owner
+  halo_token: string; //the contract address of the halo token
+  quorum: "0.3"; //the required number of voters
+  threshold: "0.5"; //required %of voters to vote yes to make the poll passed
+  voting_period: 2000; //block passes since the poll is created
+  timelock_period: 1000; //lock period of deposit
+  proposal_deposit: "10000000000"; //need 10k HALO to make poll
+  snapshot_period: 10; //num blocks passed when fresh update is made available
 };
