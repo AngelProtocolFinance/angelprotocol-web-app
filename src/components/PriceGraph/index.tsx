@@ -42,12 +42,8 @@ const legendFormatter = (value: string, _: any, index: number) => {
 };
 
 export default function PriceGraph() {
-  const {
-    auctionDates,
-    isLoading,
-    predictedPriceData,
-    tokenSaleData: tokenSaleData,
-  } = useGetHistoricPrices();
+  const { auctionDates, isLoading, predictedPriceData, tokenSaleData } =
+    useGetHistoricPrices();
 
   const priceGraphCombinedData = getPriceGraphData(
     tokenSaleData.priceData,

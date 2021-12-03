@@ -13,7 +13,7 @@ interface TokenSaleData {
   priceData: PriceData[];
 }
 
-const tokenSaleData: TokenSaleData = {
+const tempTokenSaleData: TokenSaleData = {
   tokenName: "HALO",
   priceData: [
     {
@@ -50,9 +50,9 @@ const tokenSaleData: TokenSaleData = {
 export default function useGetHistoricPrices() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
-  const [currentTokenSaleData, setCurrentTokenSaleData] = useState({
-    tokenName: tokenSaleData.tokenName,
-    priceData: [tokenSaleData.priceData[0]],
+  const [tokenSaleData, setTokenSaleData] = useState({
+    tokenName: tempTokenSaleData.tokenName,
+    priceData: [tempTokenSaleData.priceData[0]],
   });
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
@@ -106,9 +106,9 @@ export default function useGetHistoricPrices() {
     };
 
     const timer = setTimeout(() => {
-      setCurrentTokenSaleData(tokenSaleData);
+      setTokenSaleData(tempTokenSaleData);
       const lastPriceDataPoint =
-        tokenSaleData.priceData[tokenSaleData.priceData.length - 1];
+        tempTokenSaleData.priceData[tempTokenSaleData.priceData.length - 1];
 
       const temp = getPredictedPriceData(
         lastPriceDataPoint,
@@ -127,7 +127,7 @@ export default function useGetHistoricPrices() {
     auctionDates,
     isLoading,
     predictedPriceData,
-    tokenSaleData: currentTokenSaleData,
+    tokenSaleData,
   };
 }
 
