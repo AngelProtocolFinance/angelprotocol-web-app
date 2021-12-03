@@ -8,14 +8,7 @@ import {
 } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import {
-  GovStaker,
-  GovState,
-  HaloBalance,
-  PollExecuteMsg,
-  sc,
-  TokenInfo,
-} from "./types";
+import { PollExecuteMsg, sc, Vote } from "./types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
@@ -31,20 +24,6 @@ export default class Halo extends Contract {
   }
 
   //halo_token
-  async getHaloBalance() {
-    if (!this.wallet) {
-      return { balance: "0" };
-    } else {
-      return await this.query<HaloBalance>(this.token_address, {
-        balance: { address: this.walletAddr! },
-      });
-    }
-  }
-  async getHaloInfo() {
-    return await this.query<TokenInfo>(this.token_address, {
-      token_info: {},
-    });
-  }
 
   async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
@@ -94,18 +73,6 @@ export default class Halo extends Contract {
   }
 
   //halo_gov
-  async getGovStaker() {
-    return await this.query<GovStaker>(this.gov_address, {
-      staker: { address: this.walletAddr },
-    });
-  }
-
-  async getGovState() {
-    return await this.query<GovState>(this.gov_address, {
-      state: {},
-    });
-  }
-
   async createGovUnstakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
@@ -116,5 +83,19 @@ export default class Halo extends Contract {
     );
     const fee = await this.estimateFee([unstake_msg]);
     return { msgs: [unstake_msg], fee };
+  }
+
+  async createVoteTx(poll_id: string, vote: Vote, amount: number) {
+    this.checkWallet();
+    const uhalo = new Dec(amount).mul(1e6).toInt();
+    const vote_msg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.gov_address,
+      {
+        cast_vote: { poll_id: +poll_id, vote, amount: uhalo.toString() },
+      }
+    );
+    const fee = await this.estimateFee([vote_msg]);
+    return { msgs: [vote_msg], fee };
   }
 }

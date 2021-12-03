@@ -1,5 +1,3 @@
-import Poller from "components/Poller/Poller";
-import PollerForm from "components/Poller/PollerForm";
 import { currency_text, denoms } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls";
@@ -32,13 +30,5 @@ export default function Landing() {
       </div>
       <Polls />
     </div>
-  );
-}
-
-function PollerModal() {
-  return (
-    <Poller>
-      <PollerForm />
-    </Poller>
   );
 }

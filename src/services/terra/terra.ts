@@ -5,10 +5,12 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { urls } from "App/chains";
-import { chains, GovState } from "contracts/types";
+import { chains, GovState, HaloBalance } from "contracts/types";
+import { Dec } from "@terra-money/terra.js";
 import {
   ContractQueryArgs,
   GovConfig,
+  GovStaker,
   Poll,
   Polls,
   QueryRes,
@@ -47,6 +49,12 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
+    govStaker: builder.query<GovStaker, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<GovStaker>) => {
+        return res.query_result;
+      },
+    }),
     govConfig: builder.query<GovConfig, ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<GovConfig>) => {
@@ -59,14 +67,25 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
+    haloBalance: builder.query<number, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<HaloBalance>) => {
+        const halo_amount = new Dec(res.query_result.balance)
+          .div(1e6)
+          .toNumber();
+        return halo_amount;
+      },
+    }),
   }),
 });
 
 export const {
   useGovPollsQuery,
   useGovStateQuery,
-  useHaloInfoQuery,
   useGovConfigQuery,
+  useGovStakerQuery,
+  useHaloInfoQuery,
+  useHaloBalanceQuery,
 } = terra;
 
 function contract_querier(arg: ContractQueryArgs) {

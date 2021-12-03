@@ -1,3 +1,5 @@
+import { Vote } from "contracts/types";
+
 export interface QueryRes<T> {
   query_result: T;
 }
@@ -47,16 +49,18 @@ export type PollExecuteMsg = {
   msg: string;
 };
 
+type VoteInfo = { vote: Vote; balance: string };
+type LockedHolding = [number, VoteInfo]; //[poll_id, info]
+export type GovStaker = {
+  balance: string;
+  share: string;
+  locked_balance: LockedHolding[];
+};
+
 export type GovState = {
   poll_count: number;
   total_share: string;
   total_deposit: string;
-};
-
-export type GovStaker = {
-  balance: string; //uhalo balance
-  locked_balance: any[]; //locked uhalo balance
-  share: string; //staked halo
 };
 
 export type GovConfig = {

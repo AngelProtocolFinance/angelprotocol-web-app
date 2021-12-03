@@ -66,15 +66,15 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
 
     const voted_pct = is_staked_zero
       ? 0
-      : num_yes.add(num_no).div(total_gov_staked).toNumber();
+      : num_yes.add(num_no).div(total_gov_staked).mul(100).toNumber();
 
     const yes_pct = is_votes_zero
       ? 0
-      : num_yes.div(num_yes.add(num_no)).toNumber();
+      : num_yes.div(num_yes.add(num_no)).mul(100).toNumber();
 
     const no_pct = is_votes_zero
       ? 0
-      : num_yes.div(num_yes.add(num_no)).toNumber();
+      : num_no.div(num_yes.add(num_no)).mul(100).toNumber();
 
     const yes_halo = num_yes.div(1e6).toNumber();
     const no_halo = num_no.div(1e6).toNumber();
@@ -90,16 +90,16 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
       end_height: poll.end_height,
       link: poll.link,
       description: poll.description,
-      yes_pct: toCurrency(yes_pct, 2), //0.01 %
-      no_pct: toCurrency(no_pct, 2), //0.02%
-      voted_pct: toCurrency(voted_pct, 2), //0.03%
+      yes_pct: toCurrency(yes_pct, 2) + " %", //0.01 %
+      no_pct: toCurrency(no_pct, 2) + " %", //0.02%
+      voted_pct: toCurrency(voted_pct, 2) + " %", //0.03%
       quorum_val: `Quorum ${toCurrency(quorum_pct)} %`, //Quorum 10%
       yes_val: `${toCurrency(yes_halo)} HALO`, //10 HALO
       no_val: `${toCurrency(no_halo)} HALO`, //10 HALO
     };
 
     setData(processed);
-  }, [gov_config, gov_polls, gov_state, wallet]);
+  }, [gov_config, gov_polls, gov_state, wallet, poll_id]);
 
   return data;
 

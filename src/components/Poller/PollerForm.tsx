@@ -1,7 +1,7 @@
 import Field from "./Field";
 import Status from "./Status";
 import { useFormContext } from "react-hook-form";
-import { Values } from "components/Donater/types";
+import { Values } from "./types";
 import Fee from "./Fee";
 import useSubmit from "./useSubmit";
 import { useGetter } from "store/accessors";

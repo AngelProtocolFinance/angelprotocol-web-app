@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
@@ -14,18 +14,29 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+import { Vote } from "contracts/types";
+import useGovStaker from "./useGovStaker";
+import toCurrency from "helpers/toCurrency";
 
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
+  const staker = useGovStaker();
   const dispatch = useSetter();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
+  //TODO:check staked_balance instead
+  const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
 
-  const halo_balance = useHaloBalance();
   const amount = Number(watch("amount")) || 0;
-  const debounced_amount = useDebouncer(amount, 500);
+  const vote = watch("vote");
+  const poll_id = watch("poll_id");
 
+  const debounced_amount = useDebouncer(amount, 300);
+  const debounced_vote = useDebouncer<Vote>(vote, 300);
+  const debounced_id = useDebouncer<string>(poll_id, 300);
+
+  //TODO: check also if voter already voted
   useEffect(() => {
     (async () => {
       try {
@@ -39,17 +50,39 @@ export default function useEstimator() {
           dispatch(setFee(0));
           return;
         }
-        //get $halo balance
+        //check if voter already voted
+        const is_voted =
+          staker.locked_balance.find(([_poll_id]) => _poll_id === +poll_id) !==
+          undefined;
 
-        //initial balance check to successfully run estimate
-        if (debounced_amount >= halo_balance) {
-          dispatch(setFormError("Not enough Halo balance"));
+        if (is_voted) {
+          dispatch(setFormError("You already voted"));
+          return;
+        }
+
+        //check if voter has enough staked
+        const staked_amount = new Dec(staker.share).div(1e6);
+        const vote_amount = new Dec(debounced_amount);
+
+        if (vote_amount.gt(staked_amount)) {
+          dispatch(
+            setFormError(
+              `You only have ${toCurrency(
+                staked_amount.toNumber(),
+                2
+              )} HALO staked `
+            )
+          );
           return;
         }
 
         dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        const tx = await contract.createGovStakeTx(debounced_amount);
+        const tx = await contract.createVoteTx(
+          debounced_id,
+          debounced_vote,
+          debounced_amount
+        );
 
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
@@ -71,7 +104,15 @@ export default function useEstimator() {
       }
     })();
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, halo_balance]);
+  }, [
+    debounced_amount,
+    debounced_vote,
+    debounced_id,
+    wallet,
+    UST_balance,
+    halo_balance,
+    staker,
+  ]);
 
   return tx;
 }

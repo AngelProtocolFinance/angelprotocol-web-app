@@ -97,6 +97,8 @@ export type TokenInfo = {
 
 //Halo gov
 
+export type Vote = "yes" | "no";
+
 export type PollExecuteMsg = {
   order: number;
   contract: string;
