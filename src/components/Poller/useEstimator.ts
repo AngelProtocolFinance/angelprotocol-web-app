@@ -6,31 +6,37 @@ import { denoms } from "constants/currency";
 import useTerraBalance from "hooks/useTerraBalance";
 import useHaloBalance from "hooks/useHaloBalance";
 import { Values } from "./types";
+import { useSetter } from "store/accessors";
+import {
+  setFormError,
+  setFormLoading,
+  setFee,
+} from "services/transaction/transactionSlice";
 
 export default function useEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
+  const dispatch = useSetter();
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
-
   const amount = Number(watch("amount")) || 0;
 
   useEffect(() => {
     (async () => {
       try {
-        setValue("form_error", "");
+        dispatch(setFormError(""));
         if (!wallet) {
-          setValue("form_error", "Terra wallet is not connected");
+          dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
 
         //initial balance check to successfully run estimate
         if (amount >= halo_balance) {
-          setValue("form_error", "Not enough Halo balance");
+          dispatch(setFormError("Not enough halo balance"));
           return;
         }
 
-        setValue("loading", true);
+        dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
         const tx = await contract.createPoll(
           amount,
@@ -49,16 +55,15 @@ export default function useEstimator() {
 
         //2nd balance check including fees
         if (estimatedFee >= UST_balance) {
-          setValue("form_error", "Not enough UST to pay fees");
+          dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        setValue("fee", estimatedFee);
-        setValue("loading", false);
+        dispatch(setFee(estimatedFee));
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
-        setValue("loading", false);
-        setValue("form_error", "Error estimating transaction");
+        dispatch(setFormError("Error estimating transaction"));
       }
     })();
     //eslint-disable-next-line

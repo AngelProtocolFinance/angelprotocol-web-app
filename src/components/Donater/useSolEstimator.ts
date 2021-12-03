@@ -19,7 +19,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
 
 export default function useSolEstimator() {
   const dispatch = useSetter();

@@ -4,9 +4,4 @@ export interface Values {
   description: string;
   link: string;
   //execute_msgs: predefined fields
-
-  //metadata;
-  fee: number;
-  loading: boolean;
-  form_error: string;
 }

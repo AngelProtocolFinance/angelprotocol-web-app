@@ -1,16 +1,24 @@
 import { useGovPollsQuery } from "services/terra/terra";
 import Halo from "contracts/Halo";
 import Poll from "./Poll";
+import Poller from "components/Poller/Poller";
+import PollSuite from "components/TransactionSuite/PollSuite";
+import { useSetModal } from "components/Nodal/Nodal";
 import { useMemo } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 
 export default function Polls() {
   const wallet = useConnectedWallet();
+  const { showModal } = useSetModal();
   const halo_contract = useMemo(() => new Halo(wallet), [wallet]);
   const { data } = useGovPollsQuery({
     address: halo_contract.gov_address,
     msg: { polls: {} },
   });
+
+  function showPoller() {
+    showModal(PollerModal, {});
+  }
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl rounded-md h-ful p-6">
@@ -22,7 +30,10 @@ export default function Polls() {
           <span></span>
           <span>Filter</span>
         </p>
-        <button className="px-5 py-1 text-white-grey border-2 border-white-grey opacity-80 hover:opacity-100 uppercase text-center rounded-full">
+        <button
+          onClick={showPoller}
+          className="px-5 py-1 text-white-grey border-2 border-white-grey opacity-80 hover:opacity-100 uppercase text-center rounded-full"
+        >
           Create Poll
         </button>
       </div>
@@ -32,5 +43,13 @@ export default function Polls() {
         ))}
       </div>
     </div>
+  );
+}
+
+function PollerModal() {
+  return (
+    <Poller>
+      <PollSuite inModal />
+    </Poller>
   );
 }

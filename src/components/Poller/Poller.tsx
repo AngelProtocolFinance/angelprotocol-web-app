@@ -9,11 +9,6 @@ export default function Poller(props: { children: ReactNode }) {
     reValidateMode: "onChange",
     defaultValues: {
       amount: (10_000).toString(),
-
-      //metadata
-      loading: false,
-      form_error: "",
-      fee: 0,
     },
     resolver: yupResolver(schema),
   });

@@ -13,7 +13,7 @@ import {
   setFormError,
   setFormLoading,
   setFee,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
 import useTerraBalance from "hooks/useTerraBalance";
 
 export default function useUSTEstimator() {

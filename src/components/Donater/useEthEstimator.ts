@@ -13,7 +13,7 @@ import {
   setFormError,
   setFee,
   setFormLoading,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
 
 export default function useEthEstimator() {
   const dispatch = useSetter();

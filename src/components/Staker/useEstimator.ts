@@ -8,10 +8,17 @@ import useDebouncer from "hooks/useDebouncer";
 import useTerraBalance from "hooks/useTerraBalance";
 import useHaloBalance from "hooks/useHaloBalance";
 import { Values } from "./types";
+import { useSetter } from "store/accessors";
+import {
+  setFee,
+  setFormError,
+  setFormLoading,
+} from "services/transaction/transactionSlice";
 
 export default function useEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
+  const dispatch = useSetter();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
@@ -22,27 +29,27 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        setValue("form_error", "");
+        dispatch(setFormError(""));
         if (!wallet) {
-          setValue("form_error", "Terra wallet is not connected");
+          dispatch(setFormError("Wallet is disconnected"));
           return;
         }
 
         if (!debounced_amount) {
-          setValue("fee", 0);
+          dispatch(setFee(0));
           return;
         }
         //get $halo balance
 
         //initial balance check to successfully run estimate
         if (debounced_amount >= halo_balance) {
-          setValue("form_error", "Not enough Halo balance");
+          dispatch(setFormError("Not enough Halo balance"));
           return;
         }
 
-        setValue("loading", true);
+        dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        const tx = await contract.createGovUnstakeTx(debounced_amount);
+        const tx = await contract.createGovStakeTx(debounced_amount);
 
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
@@ -51,17 +58,16 @@ export default function useEstimator() {
 
         //2nd balance check including fees
         if (estimatedFee >= UST_balance) {
-          setValue("form_error", "Not enough UST to pay fees");
+          dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        setValue("fee", estimatedFee);
+        dispatch(setFee(estimatedFee));
         setTx(tx);
-        setValue("loading", false);
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
-        setValue("loading", false);
-        setValue("form_error", "Error estimating transaction");
+        dispatch(setFormError("Error estimating transcation"));
       }
     })();
     //eslint-disable-next-line

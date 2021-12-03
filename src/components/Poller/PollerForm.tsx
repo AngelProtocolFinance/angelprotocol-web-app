@@ -4,20 +4,20 @@ import { useFormContext } from "react-hook-form";
 import { Values } from "components/Donater/types";
 import Fee from "./Fee";
 import useSubmit from "./useSubmit";
+import { useGetter } from "store/accessors";
 
 export default function PollerForm() {
   const {
     handleSubmit,
-    watch,
     formState: { isSubmitting },
   } = useFormContext<Values>();
   const sender = useSubmit();
-  const loading = watch("loading");
-  const error = watch("form_error");
+  const { form_loading, form_error } = useGetter((state) => state.transaction);
+
   return (
     <form
       onSubmit={handleSubmit(sender)}
-      className="bg-white grid p-4 rounded-md w-96"
+      className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -27,11 +27,11 @@ export default function PollerForm() {
       <Field id="amount" label="Halo deposit" frozen />
       <Fee />
       <button
-        disabled={isSubmitting || loading || !!error}
+        disabled={isSubmitting || form_loading || !!form_error}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {loading ? "estimating fee.." : "proceed"}
+        {form_loading ? "estimating fee.." : "proceed"}
       </button>
     </form>
   );

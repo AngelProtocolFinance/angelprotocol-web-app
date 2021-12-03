@@ -5,17 +5,17 @@ import { chains } from "contracts/types";
 import { Values } from "./types";
 import useSolEstimator from "./useSolEstimator";
 import handleSolError from "./handleSolError";
-import useErrorHandler from "./useErrorHandler";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { useSetter } from "store/accessors";
-import { setStage } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 
 export default function useSolSender() {
   const dispatch = useSetter();
   const { setValue } = useFormContext<Values>();
   const wallet = useGetPhantom();
   const tx = useSolEstimator();
-  const handleError = useErrorHandler();
+  const handleTxError = useTxErrorHandler();
 
   async function sender(data: Values) {
     try {
@@ -59,7 +59,7 @@ export default function useSolSender() {
         })
       );
     } catch (error) {
-      handleSolError(error, handleError);
+      handleSolError(error, handleTxError);
     } finally {
       setValue("amount", "");
     }

@@ -1,5 +1,13 @@
 import haloIcon from "assets/icons/currencies/halo_solid.png";
+import { useSetModal } from "components/Nodal/Nodal";
+import Staker from "components/Staker/Staker";
+import StakeSuite from "components/TransactionSuite/StakeSuite";
 export default function Portal() {
+  const { showModal } = useSetModal();
+  function showStaker() {
+    showModal(StakeModal, {});
+  }
+
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
@@ -17,18 +25,29 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-center md:justify-self-end self-end">
-        <Action title="Trade Halo" />
-        <Action title="Stake" />
-        <Action title="Unstake" />
+        <Action title="Trade Halo" action={() => {}} />
+        <Action title="Stake" action={showStaker} />
+        <Action title="Unstake" action={() => {}} />
       </div>
     </div>
   );
 }
 
-function Action(props: { title: string }) {
+function Action(props: { title: string; action: () => void }) {
   return (
-    <button className="text-white-grey border-2 border-white-grey opacity-80 hover:opacity-100 shadow-md w-36 uppercase text-center py-1 mb-1 lg:mb:0 rounded-full">
+    <button
+      onClick={props.action}
+      className="text-white-grey border-2 border-white-grey opacity-80 hover:opacity-100 shadow-md w-36 uppercase text-center py-1 mb-1 lg:mb:0 rounded-full"
+    >
       {props.title}
     </button>
+  );
+}
+
+function StakeModal() {
+  return (
+    <Staker>
+      <StakeSuite inModal />
+    </Staker>
   );
 }

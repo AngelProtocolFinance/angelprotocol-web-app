@@ -1,4 +1,5 @@
-import AppHead from "components/Headers/AppHead";
+import Poller from "components/Poller/Poller";
+import PollerForm from "components/Poller/PollerForm";
 import { currency_text, denoms } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls";
@@ -7,6 +8,7 @@ import useGov from "./useGov";
 
 export default function Landing() {
   const { shares, percentStaked } = useGov();
+
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4">
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
@@ -30,5 +32,13 @@ export default function Landing() {
       </div>
       <Polls />
     </div>
+  );
+}
+
+function PollerModal() {
+  return (
+    <Poller>
+      <PollerForm />
+    </Poller>
   );
 }
