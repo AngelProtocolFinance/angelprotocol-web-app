@@ -1,13 +1,13 @@
-import { useState } from "react";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import AppHead from "components/Headers/AppHead";
-import Swap, { SwapModal } from "components/Swap/Swap";
-import { FaClock, FaStopwatch } from "react-icons/fa";
-import AuctionHistory from "./AuctionHistory";
-import AuctionDetails from "./AuctionDetails";
-import { LaunchStatsProps } from ".";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
+import Swap, { SwapModal } from "components/Swap/Swap";
+import { useState } from "react";
+import { FaClock, FaStopwatch } from "react-icons/fa";
+import { LaunchStatsProps } from ".";
+import AuctionDetails from "./AuctionDetails";
+import AuctionHistory from "./AuctionHistory";
 
 function AuctionStats() {
   return (
