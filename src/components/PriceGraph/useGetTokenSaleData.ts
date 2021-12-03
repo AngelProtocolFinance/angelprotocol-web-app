@@ -53,7 +53,7 @@ const tempTokenSaleData: TokenSaleData = {
 
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the milisecond difference into hours
-const getNumberOfPoints = (startDateTime: number, endDateTime: number) =>
+const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
   Math.abs(endDateTime - startDateTime) / 36e5;
 
 export default function useGetTokenSaleData() {
@@ -82,19 +82,20 @@ export default function useGetTokenSaleData() {
         return [];
       }
 
-      var numberOfPoints = getNumberOfPoints(last.date, target.date);
+      var numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
 
       var points = [last];
 
       const getPriceOnPoint = (i: number) =>
-        (Math.abs(last.price - target.price) / numberOfPoints) *
-          (numberOfPoints - i) +
+        (Math.abs(last.price - target.price) / numberOfPricePoints) *
+          (numberOfPricePoints - i) +
         target.price;
 
       const getDateOnPoint = (i: number) =>
-        (Math.abs(last.date - target.date) / numberOfPoints) * i + last.date;
+        (Math.abs(last.date - target.date) / numberOfPricePoints) * i +
+        last.date;
 
-      for (var i = 1; i < numberOfPoints; i++) {
+      for (var i = 1; i < numberOfPricePoints; i++) {
         points.push({
           price: getPriceOnPoint(i),
           date: getDateOnPoint(i),
