@@ -5,15 +5,15 @@ export interface PriceData {
   date: number;
 }
 
-export const toMiliseconds = (stringTime: string) =>
-  new Date(stringTime).getTime();
-
 export interface TokenSaleData {
   tokenName: string;
   auctionStartDateTime: number;
   auctionEndDateTime: number;
   historicPriceData: PriceData[];
 }
+
+const toMiliseconds = (stringDateTime: string) =>
+  new Date(stringDateTime).getTime();
 
 const tempTokenSaleData: TokenSaleData = {
   tokenName: "HALO",
