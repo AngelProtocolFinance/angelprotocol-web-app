@@ -2,6 +2,7 @@ import {
   createApi,
   fetchBaseQuery,
   BaseQueryFn,
+  retry,
 } from "@reduxjs/toolkit/query/react";
 import { urls } from "App/chains";
 import { chains, GovState } from "contracts/types";
@@ -12,10 +13,15 @@ import { ContractQueryArgs, Poll, Polls, QueryRes, TokenInfo } from "./types";
 
 //a way to segragate queries to testnet | mainnet
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
+  //disable retries
   //get state from api.getState
   const is_mainnet = false;
   const base_url = is_mainnet ? urls[chains.mainnet] : urls[chains.testnet];
-  return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
+  return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
+    args,
+    api,
+    extraOptions
+  );
 };
 
 export const terra = createApi({

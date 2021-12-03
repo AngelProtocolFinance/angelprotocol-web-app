@@ -1,8 +1,19 @@
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { Poll as PollType } from "services/terra/types";
+import { govern } from "types/routes";
 
 export default function Poll(props: PollType) {
+  const history = useHistory();
+  const { path } = useRouteMatch();
+  function goToPollDetail() {
+    history.push(`${path}${govern.poll}/${props.id}`);
+  }
+
   return (
-    <div className="cursor-pointer hover:bg-white hover:bg-opacity-10 border border-opacity-30 rounded-md p-6 text-white-grey text-opacity-80">
+    <div
+      onClick={goToPollDetail}
+      className="cursor-pointer hover:bg-white hover:bg-opacity-10 border border-opacity-30 rounded-md p-6 text-white-grey text-opacity-80"
+    >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {props.id}</p>
         <p className="text-white bg-white bg-opacity-10 px-2 py-1 rounded-sm">

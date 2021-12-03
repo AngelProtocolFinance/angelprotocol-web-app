@@ -38,6 +38,11 @@ export enum app {
   test = "test",
 }
 
+export enum govern {
+  index = "",
+  poll = "poll",
+}
+
 export enum registration {
   index = "/",
   detail = "detail",

@@ -1,37 +1,19 @@
 import AppHead from "components/Headers/AppHead";
-import { currency_text, denoms } from "constants/currency";
-import Figure from "./Figure";
-import Polls from "./Polls";
-import Portal from "./Portal";
-import useGov from "./useGov";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { govern } from "types/routes";
+import Landing from "./Landing";
+import Details from "./Details";
 
 export default function Governance() {
-  const { shares, percentStaked } = useGov();
+  const { path } = useRouteMatch();
+  console.log(path);
   return (
     <div className="grid grid-rows-a1 min-h-screen pt-2 pb-16">
       <AppHead />
-      <div className="padded-container grid grid-rows-aa1 gap-4">
-        <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-          Governance
-        </h2>
-        <div className="flex flex-wrap lg:grid lg:grid-cols-a1 xl:grid-cols-2 xl:grid-rows-2 gap-4">
-          <Figure
-            title="halo price"
-            value={0.333}
-            denom={currency_text[denoms.uusd]}
-          />
-
-          <Figure
-            position="lg:row-start-2"
-            title="total staked"
-            value={shares}
-            denom={currency_text[denoms.uhalo]}
-            percent={percentStaked}
-          />
-          <Portal />
-        </div>
-        <Polls />
-      </div>
+      <Switch>
+        <Route exact path={`${path}/${govern.index}`} component={Landing} />
+        <Route exact path={`${path}/${govern.poll}/:id`} component={Details} />
+      </Switch>
     </div>
   );
 }
