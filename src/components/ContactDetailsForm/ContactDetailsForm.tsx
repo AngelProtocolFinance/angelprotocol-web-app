@@ -10,7 +10,7 @@ import {
 } from "./useContactDetails";
 import { userRoles } from "../../constants/userRoles";
 import { Selector } from "../../components/Selector/Selector";
-import Action from "pages/registration/Action";
+import Action from "components/ActionButton/Action";
 
 export const ContactDetailsForm = (props: any) => {
   //url = app/register/details

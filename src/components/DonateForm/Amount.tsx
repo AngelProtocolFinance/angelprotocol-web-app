@@ -15,7 +15,7 @@ export default function Amount() {
     <div className="grid">
       <label
         htmlFor="amount"
-        className="text-angel-grey uppercase font-bold mb-2"
+        className="text-angel-grey text-lg uppercase font-bold mb-2"
       >
         Donation Amount
       </label>
@@ -25,7 +25,7 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={currency_text[denom]}
-        className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-lg"
+        className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
       />
       <ErrorMessage
         errors={errors}

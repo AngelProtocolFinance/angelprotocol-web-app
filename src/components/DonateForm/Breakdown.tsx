@@ -2,10 +2,11 @@ import { Values } from "components/Donater/types";
 import { currency_text, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
+import { useGetter } from "store/accessors";
 
 export default function Breakdown() {
+  const { fee } = useGetter((state) => state.donation);
   const { watch } = useFormContext<Values>();
-  const fee = watch("fee");
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
   return (

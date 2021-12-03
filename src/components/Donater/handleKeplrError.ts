@@ -1,12 +1,11 @@
 import { TimeoutError } from "@cosmjs/stargate";
-import { Opener } from "components/Nodal/types";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
-import ErrPop, { Props as ErrProps } from "./ErrPop";
+import { ErrorHandler } from "./types";
 
-export default function displayKeplrError(
+export default function handleKeplrError(
   error: any,
-  prompter: Opener,
+  handler: ErrorHandler,
   denom: denoms
 ) {
   console.error(error);
@@ -15,13 +14,9 @@ export default function displayKeplrError(
       denom === denoms.uatom
         ? `https://www.mintscan.io/cosmos/txs/${error.txId}`
         : `https://finder.terra.money/${chains.mainnet}/tx/${error.txId}`;
-    prompter<ErrProps>(ErrPop, {
-      desc: "Transaction timed out",
-      url,
-    });
+
+    handler("Transaction timed out", url);
   } else {
-    prompter<ErrProps>(ErrPop, {
-      desc: "Something went wrong",
-    });
+    handler("Something wen't wrong");
   }
 }

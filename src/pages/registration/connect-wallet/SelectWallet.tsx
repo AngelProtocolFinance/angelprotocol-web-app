@@ -3,7 +3,7 @@ import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 import TerraInfoModal from "../modals/TerraInfoModal";
 
 const SelectWallet = () => {

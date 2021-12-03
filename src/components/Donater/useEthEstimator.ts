@@ -7,10 +7,17 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useWallet } from "use-wallet";
 import { Values } from "./types";
-import useDebouncer from "../../hooks/useDebouncer";
+import useDebouncer from "hooks/useDebouncer";
+import { useSetter } from "store/accessors";
+import {
+  setFormError,
+  setFee,
+  setFormLoading,
+} from "services/donation/donationSlice";
 
 export default function useEthEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const dispatch = useSetter();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<TransactionRequest>();
   const wallet = useWallet();
 
@@ -25,27 +32,27 @@ export default function useEthEstimator() {
           return;
         }
 
-        setValue("form_error", "");
+        dispatch(setFormError(""));
         if (!wallet.ethereum) {
-          setValue("form_error", "Ethereum wallet is not connected");
+          dispatch(setFormError("Ethereum wallet is not connected"));
           return;
         }
 
         if (wallet.chainId !== Number(chains.eth_ropsten)) {
-          setValue("form_error", "Kindly set your network to Kovan");
+          dispatch(setFormError("Kindly set your network to Ropsten"));
           return;
         }
         if (!debounced_amount) {
-          setValue("fee", 0);
+          dispatch(setFee(0));
           return;
         }
-        setValue("loading", true);
+        dispatch(setFormLoading(true));
         const wei_balance = BigNumber.from(wallet.balance);
         const wei_amount = utils.parseEther(debounced_amount.toString());
 
         //initial balance check to ensure estimate will run
         if (wei_amount.gt(wei_balance)) {
-          setValue("form_error", "Not enough balance");
+          dispatch(setFormError("Not enough balance"));
           return;
         }
         const raw_transaction = {
@@ -63,17 +70,16 @@ export default function useEthEstimator() {
 
         //2nd balance check including estimated fee
         if (wei_amount.gt(wei_balance.add(big_fee))) {
-          setValue("form_error", "Not enough balance");
+          dispatch(setFormError("Not enough balance"));
           return;
         }
 
         setTx(raw_transaction);
-        setValue("fee", eth_fee);
-        setValue("loading", false);
+        dispatch(setFee(eth_fee));
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
-        setValue("form_error", "Error estimating transaction");
-        setValue("loading", false);
+        dispatch(setFormError("Error estimating transaction"));
       }
     })();
     //eslint-disable-next-line

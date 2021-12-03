@@ -16,6 +16,7 @@ import Withdraw from "pages/Withdraw/Withdraw";
 import Marketplace from "pages/Marketplace/Marketplace";
 import Test from "pages/Test";
 import Governance from "pages/Governance/Governance";
+import Auction from "pages/LBP/Auction";
 
 export default function Views() {
   const { path } = useRouteMatch();
@@ -31,6 +32,7 @@ export default function Views() {
       <Route path={`${path}/${app.tca}`} component={TCA} />
       <Route path={`${path}/${app.govern}`} component={Governance} />
       <Route path={`${path}/${app.test}`} component={Test} />
+      <Route path={`${path}/${app.auction}`} component={Auction} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />
       <Redirect from="*" to={site.home} />

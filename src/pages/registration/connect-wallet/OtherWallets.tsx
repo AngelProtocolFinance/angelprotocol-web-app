@@ -5,7 +5,7 @@ import Modal from "components/Modal/Modal";
 import CustodianInfoModal from "../modals/CustodianInfoModal";
 import SelfCustodyInfoModal from "../modals/SelfCustodyInfoModal";
 import { registration } from "types/routes";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 
 const OtherWallets = () => {
   //url = app/register/other-wallet

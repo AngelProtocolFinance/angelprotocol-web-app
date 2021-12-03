@@ -8,8 +8,8 @@ export default function Split() {
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="locked"
-          border_class="border-angel-blue"
-          text_class="text-blue-accent"
+          border_class="border-green-500"
+          text_class="text-green-500"
           title="Compounded forever"
         />
         <Portion
