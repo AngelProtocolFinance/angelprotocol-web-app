@@ -59,7 +59,7 @@ export default function PriceGraph() {
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
 
   return (
-    <div className="flex justify-center content-center m-5">
+    <>
       {isLoading && (
         <Loader
           gapClass="gap-4"
@@ -68,7 +68,11 @@ export default function PriceGraph() {
         />
       )}
       {!isLoading && (
-        <ResponsiveContainer width="90%" aspect={2}>
+        <ResponsiveContainer
+          width="90%"
+          aspect={2}
+          className="flex justify-center content-center m-5"
+        >
           <LineChart
             width={500}
             height={400}
@@ -124,6 +128,6 @@ export default function PriceGraph() {
           </LineChart>
         </ResponsiveContainer>
       )}
-    </div>
+    </>
   );
 }
