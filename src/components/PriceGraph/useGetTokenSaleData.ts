@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 
 export interface PriceData {
   price: number;
@@ -58,10 +58,10 @@ export default function useGetTokenSaleData() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
-    tokenName: tempTokenSaleData.tokenName,
-    auctionDates: tempTokenSaleData.auctionDates,
-    priceData: [tempTokenSaleData.priceData[0]],
-  });
+    tokenName: "Token",
+    auctionDates: [],
+    priceData: [],
+  } as TokenSaleData);
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
   );
@@ -121,7 +121,7 @@ export default function useGetTokenSaleData() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [tempTokenSaleData.auctionDates]);
+  }, []);
 
   return {
     isLoading,

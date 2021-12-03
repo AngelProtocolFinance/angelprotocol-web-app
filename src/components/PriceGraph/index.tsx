@@ -10,71 +10,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { getGraphData } from "./getGraphData";
 import { LegendLabel } from "./LegendLabel";
-import useGetTokenSaleData, {
-  PriceData,
-  TokenSaleData,
-} from "./useGetTokenSaleData";
-
-interface GraphPriceData {
-  price?: number;
-  predictedPrice?: number;
-  date: number;
-}
-
-interface GraphData {
-  tokenName: string;
-  priceData: GraphPriceData[];
-  dateTicks: number[];
-  priceTicks: number[];
-  dateAxisDomain: number[];
-  priceAxisDomain: number[];
-}
-
-const getGraphData = (
-  tokenSaleData: TokenSaleData,
-  predictedPriceData: PriceData[]
-) => {
-  const graphPriceData = tokenSaleData.priceData
-    .map((data) => ({ price: data.price, date: data.date } as GraphPriceData))
-    .concat(
-      predictedPriceData.map((data) => ({
-        predictedPrice: data.price,
-        date: data.date,
-      }))
-    );
-  const priceTicks = getPriceTicks(graphPriceData);
-
-  const dateAxisDomain = [
-    tokenSaleData.auctionDates[0],
-    tokenSaleData.auctionDates[tokenSaleData.auctionDates.length - 1] + 2e7,
-  ];
-
-  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
-
-  return {
-    tokenName: tokenSaleData.tokenName,
-    priceData: graphPriceData,
-    dateTicks: tokenSaleData.auctionDates,
-    priceTicks,
-    dateAxisDomain,
-    priceAxisDomain,
-  } as GraphData;
-};
-
-const getPriceTicks = (data: GraphPriceData[]) => {
-  const maxPrice = data.reduce(
-    (prev, data) => Math.max(prev, data.price || data.predictedPrice || 0),
-    0
-  );
-
-  return [
-    Math.ceil(maxPrice * 0.25),
-    Math.ceil(maxPrice * 0.5),
-    Math.ceil(maxPrice * 0.75),
-    Math.ceil(maxPrice),
-  ];
-};
+import useGetTokenSaleData from "./useGetTokenSaleData";
 
 const tickDateFormatter = (dateInMiliseconds: number) =>
   new Date(dateInMiliseconds).toLocaleDateString(undefined, {
@@ -161,14 +99,11 @@ export default function PriceGraph() {
               name={`${graphData.tokenName} predicted price`}
               isAnimationActive={false}
             />
-            {predictedPriceData && predictedPriceData[0] && (
-              <ReferenceDot
-                r={4}
-                x={predictedPriceData[0].date}
-                y={predictedPriceData[0].price}
-                stroke="#901ef2"
-              />
-            )}
+            <ReferenceDot
+              r={4}
+              {...graphData.referenceDotCoordinates}
+              stroke="#901ef2"
+            />
             <Legend iconType="circle" formatter={legendFormatter} />
           </LineChart>
         </ResponsiveContainer>
