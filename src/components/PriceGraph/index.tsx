@@ -29,8 +29,11 @@ const tickPriceFormatter = (value: number) =>
 
 const legendFormatter = (value: string, _: any, index: number) => {
   return (
-    <LegendLabel explanation={index === 1 ? "(without new buyers)" : undefined}>
+    <LegendLabel>
       {value}
+      {!!index && (
+        <span className="text-gray-500 text-sm ml-1">(without new buyers)</span>
+      )}
     </LegendLabel>
   );
 };
