@@ -10,17 +10,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
+import useGetHistoricPrices from "./useGetHistoricPrices";
+import { getPriceGraphData, getPriceTicks, tickDateFormatter } from "./utils";
 
 type LegendLabelProps = {
   explanation?: string;
 };
-
-interface PriceGraphData {
-  price?: number;
-  predictedPrice?: number;
-  date: number;
-}
 
 const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
   return (
@@ -34,35 +29,6 @@ const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
     </span>
   );
 };
-
-const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
-  const priceGraphData = current.map(
-    (data) => ({ price: data.price, date: data.date } as PriceGraphData)
-  );
-  return priceGraphData.concat(
-    predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
-  );
-};
-
-const getPriceTicks = (data: PriceGraphData[]) => {
-  const maxPrice = data.reduce(
-    (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
-    -1
-  );
-
-  return [
-    Math.ceil(maxPrice * 0.25),
-    Math.ceil(maxPrice * 0.5),
-    Math.ceil(maxPrice * 0.75),
-    Math.ceil(maxPrice),
-  ];
-};
-
-const tickDateFormatter = (dateInMiliseconds: number) =>
-  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-  });
 
 const legendFormatter = (value: string, _: any, index: number) => {
   return (
