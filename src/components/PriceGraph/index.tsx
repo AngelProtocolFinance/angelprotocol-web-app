@@ -88,7 +88,7 @@ export default function PriceGraph() {
             <Line
               type="monotone"
               strokeWidth={3}
-              dataKey="price"
+              dataKey="historicPrice"
               stroke="#901ef2"
               name={`${graphData.tokenName} price`}
               dot={false}

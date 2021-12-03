@@ -12,14 +12,14 @@ export interface TokenSaleData {
   tokenName: string;
   auctionStartDateTime: number;
   auctionEndDateTime: number;
-  priceData: PriceData[];
+  historicPriceData: PriceData[];
 }
 
 const tempTokenSaleData: TokenSaleData = {
   tokenName: "HALO",
   auctionStartDateTime: toMiliseconds("2021-11-29 00:00"),
   auctionEndDateTime: toMiliseconds("2021-12-02 00:00"),
-  priceData: [
+  historicPriceData: [
     {
       price: 2400,
       date: toMiliseconds("2021-11-29 01:00"),
@@ -56,6 +56,35 @@ const tempTokenSaleData: TokenSaleData = {
 const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
   Math.abs(endDateTime - startDateTime) / 36e5;
 
+const getPredictedPriceData = (last: PriceData, target: PriceData) => {
+  if (last.date === target.date) {
+    return [];
+  }
+
+  var numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
+
+  var points = [last];
+
+  const getPriceOnPoint = (i: number) =>
+    (Math.abs(last.price - target.price) / numberOfPricePoints) *
+      (numberOfPricePoints - i) +
+    target.price;
+
+  const getDateOnPoint = (i: number) =>
+    (Math.abs(last.date - target.date) / numberOfPricePoints) * i + last.date;
+
+  for (var i = 1; i < numberOfPricePoints; i++) {
+    points.push({
+      price: getPriceOnPoint(i),
+      date: getDateOnPoint(i),
+    });
+  }
+
+  points.push(target);
+
+  return points;
+};
+
 export default function useGetTokenSaleData() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +92,7 @@ export default function useGetTokenSaleData() {
     tokenName: "Token",
     auctionStartDateTime: 0,
     auctionEndDateTime: 0,
-    priceData: [],
+    historicPriceData: [],
   } as TokenSaleData);
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
@@ -77,40 +106,12 @@ export default function useGetTokenSaleData() {
       date: tempTokenSaleData.auctionEndDateTime,
     };
 
-    const getPredictedPriceData = (last: PriceData, target: PriceData) => {
-      if (last.date === target.date) {
-        return [];
-      }
-
-      var numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
-
-      var points = [last];
-
-      const getPriceOnPoint = (i: number) =>
-        (Math.abs(last.price - target.price) / numberOfPricePoints) *
-          (numberOfPricePoints - i) +
-        target.price;
-
-      const getDateOnPoint = (i: number) =>
-        (Math.abs(last.date - target.date) / numberOfPricePoints) * i +
-        last.date;
-
-      for (var i = 1; i < numberOfPricePoints; i++) {
-        points.push({
-          price: getPriceOnPoint(i),
-          date: getDateOnPoint(i),
-        });
-      }
-
-      points.push(target);
-
-      return points;
-    };
-
     const timer = setTimeout(() => {
       setTokenSaleData(tempTokenSaleData);
       const lastPriceDataPoint =
-        tempTokenSaleData.priceData[tempTokenSaleData.priceData.length - 1];
+        tempTokenSaleData.historicPriceData[
+          tempTokenSaleData.historicPriceData.length - 1
+        ];
 
       const temp = getPredictedPriceData(
         lastPriceDataPoint,
