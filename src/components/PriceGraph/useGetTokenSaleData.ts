@@ -47,7 +47,7 @@ const tempTokenSaleData: TokenSaleData = {
   ],
 };
 
-export default function useGetHistoricPrices() {
+export default function useGetTokenSaleData() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({

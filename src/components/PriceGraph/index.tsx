@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { LegendLabel } from "./LegendLabel";
-import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
+import useGetTokenSaleData, { PriceData } from "./useGetTokenSaleData";
 
 interface PriceGraphData {
   price?: number;
@@ -65,7 +65,7 @@ const legendFormatter = (value: string, _: any, index: number) => {
 
 export default function PriceGraph() {
   const { auctionDates, isLoading, predictedPriceData, tokenSaleData } =
-    useGetHistoricPrices();
+    useGetTokenSaleData();
 
   const priceGraphCombinedData = getPriceGraphData(
     tokenSaleData.priceData,
