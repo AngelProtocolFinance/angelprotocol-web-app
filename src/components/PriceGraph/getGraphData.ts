@@ -5,6 +5,10 @@ interface ReferenceDotCoordinates {
   y: number;
 }
 
+// (note: 2021-12-03)
+// It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
+// When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
+// the lines wouldn't get rendered correctly.
 interface GraphPriceData {
   historicPrice?: number;
   predictedPrice?: number;
@@ -59,10 +63,7 @@ export const getGraphData = (
   tokenSaleData: TokenSaleData,
   predictedPriceData: PriceData[]
 ) => {
-  // (note: 2021-12-03)
-  // It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
-  // When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
-  // the lines wouldn't get rendered correctly.
+  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
   const graphPriceData = tokenSaleData.historicPriceData
     .map(
       (data) =>
