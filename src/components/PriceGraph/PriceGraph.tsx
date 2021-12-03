@@ -35,6 +35,43 @@ const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
   );
 };
 
+const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
+  const priceGraphData = current.map(
+    (data) => ({ price: data.price, date: data.date } as PriceGraphData)
+  );
+  return priceGraphData.concat(
+    predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
+  );
+};
+
+const getPriceTicks = (data: PriceGraphData[]) => {
+  const maxPrice = data.reduce(
+    (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
+    -1
+  );
+
+  return [
+    Math.ceil(maxPrice * 0.25),
+    Math.ceil(maxPrice * 0.5),
+    Math.ceil(maxPrice * 0.75),
+    Math.ceil(maxPrice),
+  ];
+};
+
+const tickDateFormatter = (dateInMiliseconds: number) =>
+  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+
+const legendFormatter = (value: string, _: any, index: number) => {
+  return (
+    <LegendLabel explanation={index === 1 ? "(without new buyers)" : undefined}>
+      {value}
+    </LegendLabel>
+  );
+};
+
 export default function PriceGraph() {
   const {
     auctionDates,
@@ -42,29 +79,6 @@ export default function PriceGraph() {
     predictedPriceData,
     tokenSaleData: tokenSaleData,
   } = useGetHistoricPrices();
-
-  const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
-    const priceGraphData = current.map(
-      (data) => ({ price: data.price, date: data.date } as PriceGraphData)
-    );
-    return priceGraphData.concat(
-      predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
-    );
-  };
-
-  const getPriceTicks = (data: PriceGraphData[]) => {
-    const maxPrice = data.reduce(
-      (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
-      -1
-    );
-
-    return [
-      Math.ceil(maxPrice * 0.25),
-      Math.ceil(maxPrice * 0.5),
-      Math.ceil(maxPrice * 0.75),
-      Math.ceil(maxPrice),
-    ];
-  };
 
   const priceGraphCombinedData = getPriceGraphData(
     tokenSaleData.priceData,
@@ -148,17 +162,3 @@ export default function PriceGraph() {
     </>
   );
 }
-
-const tickDateFormatter = (dateUNIX: number) =>
-  new Date(dateUNIX).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-  });
-
-const legendFormatter = (value: string, _: any, index: number) => {
-  return (
-    <LegendLabel explanation={index === 1 ? "(without new buyers)" : undefined}>
-      {value}
-    </LegendLabel>
-  );
-};
