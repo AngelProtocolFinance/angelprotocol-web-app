@@ -37,3 +37,10 @@ export const tickDateFormatter = (dateInMiliseconds: number) =>
     day: "numeric",
     month: "short",
   });
+
+export const tickPriceFormatter = (value: number) =>
+  new Intl.NumberFormat("en-us", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(value);

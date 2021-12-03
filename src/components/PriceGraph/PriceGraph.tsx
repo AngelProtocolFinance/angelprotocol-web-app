@@ -11,7 +11,12 @@ import {
   YAxis,
 } from "recharts";
 import useGetHistoricPrices from "./useGetHistoricPrices";
-import { getPriceGraphData, getPriceTicks, tickDateFormatter } from "./utils";
+import {
+  getPriceGraphData,
+  getPriceTicks,
+  tickDateFormatter,
+  tickPriceFormatter,
+} from "./utils";
 
 type LegendLabelProps = {
   explanation?: string;
@@ -50,6 +55,13 @@ export default function PriceGraph() {
   );
   const priceTicks = getPriceTicks(priceGraphCombinedData);
 
+  const dateAxisDomain = [
+    auctionDates[0],
+    auctionDates[auctionDates.length - 1] + 2e7,
+  ];
+
+  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
+
   return (
     <>
       {isLoading && (
@@ -73,10 +85,7 @@ export default function PriceGraph() {
               allowDuplicatedCategory={false}
               type="number"
               ticks={auctionDates}
-              domain={[
-                auctionDates[0],
-                auctionDates[auctionDates.length - 1] + 2e7,
-              ]}
+              domain={dateAxisDomain}
               dy={15}
               height={60}
             />
@@ -84,17 +93,10 @@ export default function PriceGraph() {
               axisLine={false}
               type="number"
               ticks={priceTicks}
-              domain={[0, priceTicks[priceTicks.length - 1]]}
+              domain={priceAxisDomain}
               dx={-15}
-              tickFormatter={(value) =>
-                new Intl.NumberFormat("en-us", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumFractionDigits: 2,
-                }).format(value)
-              }
+              tickFormatter={tickPriceFormatter}
             />
-            <Legend iconType="circle" formatter={legendFormatter} />
             <Line
               type="monotone"
               strokeWidth={3}
@@ -120,6 +122,7 @@ export default function PriceGraph() {
                 stroke="#901ef2"
               />
             )}
+            <Legend iconType="circle" formatter={legendFormatter} />
           </LineChart>
         </ResponsiveContainer>
       )}
