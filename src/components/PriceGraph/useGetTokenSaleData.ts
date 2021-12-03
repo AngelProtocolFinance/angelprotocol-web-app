@@ -10,18 +10,15 @@ export const toMiliseconds = (stringTime: string) =>
 
 export interface TokenSaleData {
   tokenName: string;
-  auctionDates: number[];
+  auctionStartDateTime: number;
+  auctionEndDateTime: number;
   priceData: PriceData[];
 }
 
 const tempTokenSaleData: TokenSaleData = {
   tokenName: "HALO",
-  auctionDates: [
-    toMiliseconds("2021-11-29 00:00"),
-    toMiliseconds("2021-11-30 00:00"),
-    toMiliseconds("2021-12-01 00:00"),
-    toMiliseconds("2021-12-02 00:00"),
-  ],
+  auctionStartDateTime: toMiliseconds("2021-11-29 00:00"),
+  auctionEndDateTime: toMiliseconds("2021-12-02 00:00"),
   priceData: [
     {
       price: 2400,
@@ -54,12 +51,18 @@ const tempTokenSaleData: TokenSaleData = {
   ],
 };
 
+// 36e5 is the scientific notation for 60*60*1000,
+// dividing by which converts the milisecond difference into hours
+const getNumberOfPoints = (startDateTime: number, endDateTime: number) =>
+  Math.abs(endDateTime - startDateTime) / 36e5;
+
 export default function useGetTokenSaleData() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
     tokenName: "Token",
-    auctionDates: [],
+    auctionStartDateTime: 0,
+    auctionEndDateTime: 0,
     priceData: [],
   } as TokenSaleData);
   const [predictedPriceData, setPredictedPriceData] = useState(
@@ -71,9 +74,7 @@ export default function useGetTokenSaleData() {
 
     const targetPriceDataPoint = {
       price: targetPrice,
-      date: tempTokenSaleData.auctionDates[
-        tempTokenSaleData.auctionDates.length - 1
-      ],
+      date: tempTokenSaleData.auctionEndDateTime,
     };
 
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
@@ -129,8 +130,3 @@ export default function useGetTokenSaleData() {
     tokenSaleData,
   };
 }
-
-// 36e5 is the scientific notation for 60*60*1000,
-// dividing by which converts the milisecond difference into hours
-const getNumberOfPoints = (startDateUNIX: number, endDateUNIX: number) =>
-  Math.abs(endDateUNIX - startDateUNIX) / 36e5;

@@ -35,6 +35,24 @@ const getPriceTicks = (data: GraphPriceData[]) => {
   ];
 };
 
+// Date ticks to be represented by days on which the auction will occur.
+// 36e5 is the scientific notation for 60*60*1000,
+// dividing by which converts the miliseconds into hours.
+const getDateTicks = (startDateTime: number, endDateTime: number) => {
+  const dayConversionMultiplier = 36e5 * 24;
+
+  const ticks = [];
+  for (
+    let nextTick = startDateTime;
+    nextTick <= endDateTime;
+    nextTick += dayConversionMultiplier
+  ) {
+    ticks.push(nextTick);
+  }
+
+  return ticks;
+};
+
 export const getGraphData = (
   tokenSaleData: TokenSaleData,
   predictedPriceData: PriceData[]
@@ -47,11 +65,17 @@ export const getGraphData = (
         date: data.date,
       }))
     );
+
   const priceTicks = getPriceTicks(graphPriceData);
 
+  const dateTicks = getDateTicks(
+    tokenSaleData.auctionStartDateTime,
+    tokenSaleData.auctionEndDateTime
+  );
+
   const dateAxisDomain = [
-    tokenSaleData.auctionDates[0],
-    tokenSaleData.auctionDates[tokenSaleData.auctionDates.length - 1] + 2e7,
+    tokenSaleData.auctionStartDateTime,
+    tokenSaleData.auctionEndDateTime + 2e7,
   ];
 
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
@@ -66,7 +90,7 @@ export const getGraphData = (
   return {
     tokenName: tokenSaleData.tokenName,
     priceData: graphPriceData,
-    dateTicks: tokenSaleData.auctionDates,
+    dateTicks,
     priceTicks,
     dateAxisDomain,
     priceAxisDomain,
