@@ -1,5 +1,5 @@
 import Loader from "components/Loader/Loader";
-import React, { FC } from "react";
+import React from "react";
 import {
   Legend,
   Line,
@@ -10,28 +10,50 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import useGetHistoricPrices from "./useGetHistoricPrices";
-import {
-  getPriceGraphData,
-  getPriceTicks,
-  tickDateFormatter,
-  tickPriceFormatter,
-} from "./utils";
+import { LegendLabel } from "./LegendLabel";
+import useGetHistoricPrices, { PriceData } from "./useGetHistoricPrices";
 
-type LegendLabelProps = {
-  explanation?: string;
-};
+interface PriceGraphData {
+  price?: number;
+  predictedPrice?: number;
+  date: number;
+}
 
-const LegendLabel: FC<LegendLabelProps> = ({ explanation, children }) => {
-  return (
-    <span className="text-black font-medium">
-      {children}
-      {!!explanation && (
-        <span className="text-gray-500 text-sm ml-1">{explanation}</span>
-      )}
-    </span>
+const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
+  const priceGraphData = current.map(
+    (data) => ({ price: data.price, date: data.date } as PriceGraphData)
+  );
+  return priceGraphData.concat(
+    predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
   );
 };
+
+const getPriceTicks = (data: PriceGraphData[]) => {
+  const maxPrice = data.reduce(
+    (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
+    -1
+  );
+
+  return [
+    Math.ceil(maxPrice * 0.25),
+    Math.ceil(maxPrice * 0.5),
+    Math.ceil(maxPrice * 0.75),
+    Math.ceil(maxPrice),
+  ];
+};
+
+const tickDateFormatter = (dateInMiliseconds: number) =>
+  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+
+const tickPriceFormatter = (value: number) =>
+  new Intl.NumberFormat("en-us", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(value);
 
 const legendFormatter = (value: string, _: any, index: number) => {
   return (
