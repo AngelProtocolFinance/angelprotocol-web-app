@@ -22,6 +22,7 @@ interface GraphData {
 }
 
 const getPriceTicks = (data: GraphPriceData[]) => {
+  // maximum price to be shown on the price axis
   const maxPrice = data.reduce(
     (prev, data) => Math.max(prev, data.price || data.predictedPrice || 0),
     0
@@ -57,6 +58,10 @@ export const getGraphData = (
   tokenSaleData: TokenSaleData,
   predictedPriceData: PriceData[]
 ) => {
+  // (note: 2021-12-03)
+  // It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
+  // When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
+  // the lines wouldn't get rendered correctly.
   const graphPriceData = tokenSaleData.priceData
     .map((data) => ({ price: data.price, date: data.date } as GraphPriceData))
     .concat(
@@ -73,6 +78,8 @@ export const getGraphData = (
     tokenSaleData.auctionEndDateTime
   );
 
+  // 2e7 is scientific notation equal to 2*10,000,000.
+  // Added it to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
   const dateAxisDomain = [
     tokenSaleData.auctionStartDateTime,
     tokenSaleData.auctionEndDateTime + 2e7,
