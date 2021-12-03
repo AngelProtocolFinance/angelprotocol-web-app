@@ -11,27 +11,61 @@ import {
   YAxis,
 } from "recharts";
 import { LegendLabel } from "./LegendLabel";
-import useGetTokenSaleData, { PriceData } from "./useGetTokenSaleData";
+import useGetTokenSaleData, {
+  PriceData,
+  TokenSaleData,
+} from "./useGetTokenSaleData";
 
-interface PriceGraphData {
+interface GraphPriceData {
   price?: number;
   predictedPrice?: number;
   date: number;
 }
 
-const getPriceGraphData = (current: PriceData[], predicted: PriceData[]) => {
-  const priceGraphData = current.map(
-    (data) => ({ price: data.price, date: data.date } as PriceGraphData)
-  );
-  return priceGraphData.concat(
-    predicted.map((data) => ({ predictedPrice: data.price, date: data.date }))
-  );
+interface GraphData {
+  tokenName: string;
+  priceData: GraphPriceData[];
+  dateTicks: number[];
+  priceTicks: number[];
+  dateAxisDomain: number[];
+  priceAxisDomain: number[];
+}
+
+const getGraphData = (
+  tokenSaleData: TokenSaleData,
+  predictedPriceData: PriceData[]
+) => {
+  const graphPriceData = tokenSaleData.priceData
+    .map((data) => ({ price: data.price, date: data.date } as GraphPriceData))
+    .concat(
+      predictedPriceData.map((data) => ({
+        predictedPrice: data.price,
+        date: data.date,
+      }))
+    );
+  const priceTicks = getPriceTicks(graphPriceData);
+
+  const dateAxisDomain = [
+    tokenSaleData.auctionDates[0],
+    tokenSaleData.auctionDates[tokenSaleData.auctionDates.length - 1] + 2e7,
+  ];
+
+  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
+
+  return {
+    tokenName: tokenSaleData.tokenName,
+    priceData: graphPriceData,
+    dateTicks: tokenSaleData.auctionDates,
+    priceTicks,
+    dateAxisDomain,
+    priceAxisDomain,
+  } as GraphData;
 };
 
-const getPriceTicks = (data: PriceGraphData[]) => {
+const getPriceTicks = (data: GraphPriceData[]) => {
   const maxPrice = data.reduce(
-    (prev, data) => Math.max(prev, data.price || data.predictedPrice || -1),
-    -1
+    (prev, data) => Math.max(prev, data.price || data.predictedPrice || 0),
+    0
   );
 
   return [
@@ -64,21 +98,10 @@ const legendFormatter = (value: string, _: any, index: number) => {
 };
 
 export default function PriceGraph() {
-  const { auctionDates, isLoading, predictedPriceData, tokenSaleData } =
+  const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
 
-  const priceGraphCombinedData = getPriceGraphData(
-    tokenSaleData.priceData,
-    predictedPriceData
-  );
-  const priceTicks = getPriceTicks(priceGraphCombinedData);
-
-  const dateAxisDomain = [
-    auctionDates[0],
-    auctionDates[auctionDates.length - 1] + 2e7,
-  ];
-
-  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
+  const graphData = getGraphData(tokenSaleData, predictedPriceData);
 
   return (
     <>
@@ -99,7 +122,7 @@ export default function PriceGraph() {
             width={500}
             height={400}
             margin={{ top: 50, left: 70 }}
-            data={priceGraphCombinedData}
+            data={graphData.priceData}
           >
             <Tooltip />
             <XAxis
@@ -108,16 +131,16 @@ export default function PriceGraph() {
               dataKey="date"
               allowDuplicatedCategory={false}
               type="number"
-              ticks={auctionDates}
-              domain={dateAxisDomain}
+              ticks={graphData.dateTicks}
+              domain={graphData.dateAxisDomain}
               dy={15}
               height={60}
             />
             <YAxis
               axisLine={false}
               type="number"
-              ticks={priceTicks}
-              domain={priceAxisDomain}
+              ticks={graphData.priceTicks}
+              domain={graphData.priceAxisDomain}
               dx={-15}
               tickFormatter={tickPriceFormatter}
             />
@@ -126,7 +149,7 @@ export default function PriceGraph() {
               strokeWidth={3}
               dataKey="price"
               stroke="#901ef2"
-              name={`${tokenSaleData.tokenName} price`}
+              name={`${graphData.tokenName} price`}
               dot={false}
               isAnimationActive={false}
             />
@@ -135,7 +158,7 @@ export default function PriceGraph() {
               dataKey="predictedPrice"
               stroke="#ffa6f7"
               dot={false}
-              name={`${tokenSaleData.tokenName} predicted price`}
+              name={`${graphData.tokenName} predicted price`}
               isAnimationActive={false}
             />
             {predictedPriceData && predictedPriceData[0] && (

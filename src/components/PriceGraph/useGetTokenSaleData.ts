@@ -8,13 +8,20 @@ export interface PriceData {
 export const toMiliseconds = (stringTime: string) =>
   new Date(stringTime).getTime();
 
-interface TokenSaleData {
+export interface TokenSaleData {
   tokenName: string;
+  auctionDates: number[];
   priceData: PriceData[];
 }
 
 const tempTokenSaleData: TokenSaleData = {
   tokenName: "HALO",
+  auctionDates: [
+    toMiliseconds("2021-11-29 00:00"),
+    toMiliseconds("2021-11-30 00:00"),
+    toMiliseconds("2021-12-01 00:00"),
+    toMiliseconds("2021-12-02 00:00"),
+  ],
   priceData: [
     {
       price: 2400,
@@ -52,20 +59,11 @@ export default function useGetTokenSaleData() {
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
     tokenName: tempTokenSaleData.tokenName,
+    auctionDates: tempTokenSaleData.auctionDates,
     priceData: [tempTokenSaleData.priceData[0]],
   });
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
-  );
-
-  const auctionDates = useMemo(
-    () => [
-      toMiliseconds("2021-11-29 00:00"),
-      toMiliseconds("2021-11-30 00:00"),
-      toMiliseconds("2021-12-01 00:00"),
-      toMiliseconds("2021-12-02 00:00"),
-    ],
-    []
   );
 
   useEffect(() => {
@@ -73,7 +71,9 @@ export default function useGetTokenSaleData() {
 
     const targetPriceDataPoint = {
       price: targetPrice,
-      date: auctionDates[auctionDates.length - 1],
+      date: tempTokenSaleData.auctionDates[
+        tempTokenSaleData.auctionDates.length - 1
+      ],
     };
 
     const getPredictedPriceData = (last: PriceData, target: PriceData) => {
@@ -121,10 +121,9 @@ export default function useGetTokenSaleData() {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [auctionDates]);
+  }, [tempTokenSaleData.auctionDates]);
 
   return {
-    auctionDates,
     isLoading,
     predictedPriceData,
     tokenSaleData,
