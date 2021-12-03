@@ -10,7 +10,7 @@ import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Admin from "Admin/Admin";
-import PriceGraph from "components/PriceGraph/PriceGraph";
+import Website from "Website/Website";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,7 +20,7 @@ ReactDOM.render(
           <Switch>
             <Route path={site.app} component={App} />
             <Route path={site.admin} component={Admin} />
-            <Route path={site.home} component={PriceGraph} />
+            <Route path={site.home} component={Website} />
           </Switch>
         </AuthProvider>
       </BrowserRouter>
