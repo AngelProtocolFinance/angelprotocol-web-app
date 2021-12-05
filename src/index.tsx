@@ -5,12 +5,12 @@ import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import App from "./App/App";
-import Website from "Website/Website";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Admin from "Admin/Admin";
+import Website from "Website/Website";
 
 ReactDOM.render(
   <React.StrictMode>
