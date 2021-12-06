@@ -4,7 +4,6 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useTerraBalance from "hooks/useTerraBalance";
-import useHaloBalance from "hooks/useHaloBalance";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -12,6 +11,7 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
+import { useHaloBalance } from "services/terra/hooks";
 
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 

@@ -1,23 +1,12 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
-import Halo from "contracts/Halo";
-import { useState, useEffect, useMemo } from "react";
-import { useGovStateQuery, useHaloInfoQuery } from "services/terra/terra";
+import { useState, useEffect } from "react";
+import { useGovState, useHaloInfo } from "services/terra/hooks";
 
 export default function useGov() {
   const [shares, setShares] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
-  const wallet = useConnectedWallet();
-  const halo_contract = useMemo(() => new Halo(wallet), [wallet]);
-
-  const { data: token_info } = useHaloInfoQuery({
-    address: halo_contract.token_address,
-    msg: { token_info: {} },
-  });
-  const { data: gov_state } = useGovStateQuery({
-    address: halo_contract.gov_address,
-    msg: { state: {} },
-  });
+  const token_info = useHaloInfo();
+  const gov_state = useGovState();
 
   useEffect(() => {
     (async () => {
@@ -34,7 +23,7 @@ export default function useGov() {
         setPercentStaked(percent_shares.toNumber());
       }
     })();
-  }, [token_info, gov_state, wallet]);
+  }, [token_info, gov_state]);
 
   return { shares, percentStaked };
 }

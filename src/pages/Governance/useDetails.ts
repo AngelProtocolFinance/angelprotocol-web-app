@@ -1,14 +1,17 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import {
-  useGovPollsQuery,
-  useGovStateQuery,
-  useGovConfigQuery,
-} from "services/terra/terra";
+  useGovPolls,
+  useGovState,
+  useGovConfig,
+  useGovStaker,
+  useLatestBlock,
+} from "services/terra/hooks";
 import { Poll } from "services/terra/types";
+import { poll as placeholder_poll } from "services/terra/placeholders";
+import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
-import Halo from "contracts/Halo";
 
 type ProcessedPollData = {
   id: number;
@@ -17,44 +20,50 @@ type ProcessedPollData = {
   creator: string;
   amount: string;
   end_height: number;
+  blocks_remaining: number;
   link: string;
   description: string;
-  yes_pct: string; //0.01 %
-  no_pct: string; //0.02%
-  voted_pct: string; //0.03%
+  yes_pct: string; //0.01
+  no_pct: string; //0.02
+  voted_pct: string; //0.03
   quorum_val: string; //Quorum 10%
-  yes_val: string; //10 HALO
-  no_val: string; //10 HALO
+  yes_val: string; //10.00 HALO
+  no_val: string; //10.00 HALO
+  vote?: Vote;
+  vote_ended: boolean;
 };
 
 export default function useDetails(poll_id?: string): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
   const wallet = useConnectedWallet();
-  const gov_address = useMemo(() => new Halo(wallet).gov_address, [wallet]);
-
-  const { data: gov_config } = useGovConfigQuery({
-    address: gov_address,
-    msg: { config: {} },
-  });
-
-  const { data: gov_polls } = useGovPollsQuery({
-    address: gov_address,
-    msg: { polls: {} },
-  });
-
-  const { data: gov_state } = useGovStateQuery({
-    address: gov_address,
-    msg: { state: {} },
-  });
-
-  console.log(data);
+  const gov_config = useGovConfig();
+  const gov_polls = useGovPolls();
+  const gov_state = useGovState();
+  const gov_staker = useGovStaker();
+  const block_height = useLatestBlock();
 
   useEffect(() => {
     const poll: Poll =
-      gov_polls?.find((poll) => poll.id === Number(poll_id || "0")) ||
+      gov_polls.find((poll) => poll.id === Number(poll_id || "0")) ||
       placeholder_poll;
 
-    const total_gov_staked = new Dec(gov_state?.total_share || "0");
+    //is voting period expired?
+    const curr_block = new Dec(block_height);
+    const end_block = new Dec(poll.end_height);
+    const remaining_blocks = end_block.minus(curr_block);
+    const is_expired = remaining_blocks.lt(0);
+
+    //get user vote
+    let vote: Vote | undefined = undefined;
+    const locked_holding = gov_staker.locked_balance.find(
+      ([id]) => id === +(poll_id || "0")
+    );
+    if (locked_holding) {
+      const [, vote_info] = locked_holding;
+      vote = vote_info.vote;
+    }
+
+    const total_gov_staked = new Dec(gov_state.total_share);
 
     const num_yes = new Dec(poll.yes_votes);
     const num_no = new Dec(poll.no_votes);
@@ -88,39 +97,34 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
       creator: poll.creator,
       amount: toCurrency(deposit_amount),
       end_height: poll.end_height,
+      blocks_remaining: remaining_blocks.toNumber(),
       link: poll.link,
       description: poll.description,
-      yes_pct: toCurrency(yes_pct, 2) + " %", //0.01 %
-      no_pct: toCurrency(no_pct, 2) + " %", //0.02%
-      voted_pct: toCurrency(voted_pct, 2) + " %", //0.03%
-      quorum_val: `Quorum ${toCurrency(quorum_pct)} %`, //Quorum 10%
-      yes_val: `${toCurrency(yes_halo)} HALO`, //10 HALO
-      no_val: `${toCurrency(no_halo)} HALO`, //10 HALO
+      yes_pct: toCurrency(yes_pct, 2), //0.01
+      no_pct: toCurrency(no_pct, 2), //0.02%
+      voted_pct: toCurrency(voted_pct, 2), //0.03
+      quorum_val: `Quorum ${toCurrency(quorum_pct, 2)}%`,
+      yes_val: toCurrency(yes_halo) + " HALO", //10
+      no_val: toCurrency(no_halo) + " HALO", //10
+      vote,
+      vote_ended: is_expired,
     };
 
     setData(processed);
-  }, [gov_config, gov_polls, gov_state, wallet, poll_id]);
+  }, [
+    wallet,
+    gov_config,
+    gov_polls,
+    gov_state,
+    gov_staker,
+    block_height,
+    poll_id,
+  ]);
 
   return data;
 
   //instead of passing poll data via router, just find it in cache polls
 }
-
-const placeholder_poll: Poll = {
-  id: 0,
-  creator: "",
-  status: "",
-  end_height: 0,
-  title: "",
-  description: ".",
-  link: "",
-  deposit_amount: "0",
-  execute_data: "",
-  yes_votes: "0",
-  no_votes: "0",
-  staked_amount: "0",
-  total_balance_at_end_poll: "0",
-};
 
 const placeholder_data: ProcessedPollData = {
   id: 0,
@@ -129,12 +133,14 @@ const placeholder_data: ProcessedPollData = {
   creator: "",
   amount: "0",
   end_height: 0,
+  blocks_remaining: 0,
   link: "",
   description: "",
-  yes_pct: "0.00 %", //0.01 %
-  no_pct: "0.00 %", //0.02%
-  voted_pct: "0.00 %", //0.03%
-  quorum_val: `Quorum 0.00%`, //Quorum 10%
-  yes_val: `0 HALO`, //10 HALO
-  no_val: `0 HALO`, //10 HALO
+  yes_pct: "0.00", //0.01
+  no_pct: "0.00", //0.02%
+  voted_pct: "0.00", //0.03%
+  quorum_val: `0.00`, //Quorum 10%
+  yes_val: `0`, //10 HALO
+  no_val: `0`, //10 HALO
+  vote_ended: false,
 };

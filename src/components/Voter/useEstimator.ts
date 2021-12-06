@@ -6,7 +6,7 @@ import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 import useTerraBalance from "hooks/useTerraBalance";
-import useHaloBalance from "hooks/useHaloBalance";
+import { useHaloBalance } from "services/terra/hooks";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -15,19 +15,18 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
-import useGovStaker from "./useGovStaker";
 import toCurrency from "helpers/toCurrency";
+import { useGovStaker } from "services/terra/hooks";
 
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
-  const staker = useGovStaker();
   const dispatch = useSetter();
   const { main: UST_balance } = useTerraBalance(denoms.uusd);
   //TODO:check staked_balance instead
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
-
+  const gov_staker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const poll_id = watch("poll_id");
@@ -52,8 +51,9 @@ export default function useEstimator() {
         }
         //check if voter already voted
         const is_voted =
-          staker.locked_balance.find(([_poll_id]) => _poll_id === +poll_id) !==
-          undefined;
+          gov_staker.locked_balance.find(
+            ([_poll_id]) => _poll_id === +poll_id
+          ) !== undefined;
 
         if (is_voted) {
           dispatch(setFormError("You already voted"));
@@ -61,7 +61,7 @@ export default function useEstimator() {
         }
 
         //check if voter has enough staked
-        const staked_amount = new Dec(staker.share).div(1e6);
+        const staked_amount = new Dec(gov_staker.share).div(1e6);
         const vote_amount = new Dec(debounced_amount);
 
         if (vote_amount.gt(staked_amount)) {
@@ -111,7 +111,7 @@ export default function useEstimator() {
     wallet,
     UST_balance,
     halo_balance,
-    staker,
+    gov_staker,
   ]);
 
   return tx;

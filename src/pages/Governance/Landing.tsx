@@ -12,7 +12,7 @@ export default function Landing() {
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
         Governance
       </h2>
-      <div className="flex flex-wrap lg:grid lg:grid-cols-a1 xl:grid-cols-2 xl:grid-rows-2 gap-4">
+      <div className="flex flex-wrap lg:grid lg:grid-cols-a1 xl:grid-cols-2 xl:grid-rows-2 gap-3">
         <Figure
           title="halo price"
           value={0.333}

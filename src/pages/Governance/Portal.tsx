@@ -2,6 +2,7 @@ import haloIcon from "assets/icons/currencies/halo_solid.png";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
+
 export default function Portal() {
   const { showModal } = useSetModal();
   function showStaker() {
@@ -37,7 +38,7 @@ function Action(props: { title: string; action: () => void }) {
   return (
     <button
       onClick={props.action}
-      className="text-white-grey border-2 border-white-grey opacity-80 hover:opacity-100 shadow-md w-36 uppercase text-center py-1 mb-1 lg:mb:0 rounded-full"
+      className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-10 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb:0 rounded-md"
     >
       {props.title}
     </button>

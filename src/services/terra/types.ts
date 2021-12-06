@@ -9,6 +9,12 @@ export type ContractQueryArgs = {
   msg: object;
 };
 
+//Block
+export type BlockLatest = {
+  block_id: any;
+  block: { header: { height: string } };
+};
+
 //Halo token
 export type HaloBalance = {
   balance: string;
@@ -22,6 +28,15 @@ export type TokenInfo = {
 };
 
 //Halo gov
+export enum PollStatus {
+  in_progress = "in_progress",
+  passed = "passed",
+  rejected = "rejected",
+  executed = "executed",
+  expired = "expired", //deprecated
+  failed = "failed",
+}
+
 export type Poll = {
   id: number;
   creator: string;
@@ -66,10 +81,10 @@ export type GovState = {
 export type GovConfig = {
   owner: string; //address of the owner
   halo_token: string; //the contract address of the halo token
-  quorum: "0.3"; //the required number of voters
-  threshold: "0.5"; //required %of voters to vote yes to make the poll passed
-  voting_period: 2000; //block passes since the poll is created
-  timelock_period: 1000; //lock period of deposit
-  proposal_deposit: "10000000000"; //need 10k HALO to make poll
-  snapshot_period: 10; //num blocks passed when fresh update is made available
+  quorum: string; // "0.3" the required number of voters
+  threshold: string; //"0.5" required %of voters to vote yes to make the poll passed
+  voting_period: number; //2000 block passes since the poll is created
+  timelock_period: number; //1000 lock period of deposit
+  proposal_deposit: string; //"10000000000"need 10k HALO to make poll
+  snapshot_period: number; //10 num blocks passed when fresh update is made available
 };

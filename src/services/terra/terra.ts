@@ -8,6 +8,7 @@ import { urls } from "App/chains";
 import { chains, GovState, HaloBalance } from "contracts/types";
 import { Dec } from "@terra-money/terra.js";
 import {
+  BlockLatest,
   ContractQueryArgs,
   GovConfig,
   GovStaker,
@@ -37,6 +38,12 @@ export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
+    latestBlock: builder.query<string, unknown>({
+      query: () => "/blocks/latest",
+      transformResponse: (res: BlockLatest) => {
+        return res.block.header.height;
+      },
+    }),
     govPolls: builder.query<Poll[], ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<Polls>) => {
@@ -78,15 +85,6 @@ export const terra = createApi({
     }),
   }),
 });
-
-export const {
-  useGovPollsQuery,
-  useGovStateQuery,
-  useGovConfigQuery,
-  useGovStakerQuery,
-  useHaloInfoQuery,
-  useHaloBalanceQuery,
-} = terra;
 
 function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));
