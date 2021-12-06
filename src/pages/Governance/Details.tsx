@@ -13,9 +13,13 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
           <p>TEXT PROPOSAL</p>
-          <p className="inline-block uppercase ml-auto font-heading flex items-center">
-            <span className="aspect-square inline-block w-4 rounded-full bg-white bg-opacity-50 mr-1"></span>
-            <span>
+          <p className="inline-block uppercase ml-auto font-heading font-bold text-xs flex items-center">
+            <span
+              className={`aspect-square inline-block w-4 rounded-full ${
+                statusColors[details.status].bg
+              } mr-1`}
+            ></span>
+            <span className={`${statusColors[details.status].text}`}>
               {details.vote_ended && details.status === PollStatus.in_progress
                 ? "vote period ended"
                 : details.status.replace("_", " ")}
@@ -78,6 +82,15 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
     </div>
   );
 }
+
+const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
+  [PollStatus.executed]: { bg: "bg-green-400", text: "text-green-400" },
+  [PollStatus.expired]: { bg: "bg-white", text: "text-white-grey" },
+  [PollStatus.failed]: { bg: "bg-red-300", text: "text-red-300" },
+  [PollStatus.in_progress]: { bg: "bg-white", text: "text-white-grey" },
+  [PollStatus.passed]: { bg: "bg-green-400", text: "text-green-400" },
+  [PollStatus.rejected]: { bg: "bg-red-300", text: "text-red-300" },
+};
 
 function Count(props: {
   title: string;

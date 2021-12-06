@@ -2,7 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useSetModal } from "components/Nodal/Nodal";
 import ErrPop, { Props as ErrProps } from "components/Popup/ErrPop";
 import Waiter, { Props as WaitProps } from "components/Popup/Waiter";
-import Result, { Props as ResultProps } from "components/Popup/Waiter";
+import Result, { Props as ResultProps } from "components/Popup/Result";
 import Halo from "contracts/Halo";
 import displayTerraError from "helpers/displayTerraError";
 

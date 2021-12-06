@@ -29,7 +29,7 @@ export default function useEstimator() {
   const gov_staker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
-  const poll_id = watch("poll_id");
+  const poll_id = watch("poll_id") || "0";
 
   const debounced_amount = useDebouncer(amount, 300);
   const debounced_vote = useDebouncer<Vote>(vote, 300);
@@ -49,6 +49,12 @@ export default function useEstimator() {
           dispatch(setFee(0));
           return;
         }
+
+        if (poll_id === undefined || poll_id === "0") {
+          dispatch(setFormError("Error getting poll info"));
+          return;
+        }
+
         //check if voter already voted
         const is_voted =
           gov_staker.locked_balance.find(
@@ -61,7 +67,7 @@ export default function useEstimator() {
         }
 
         //check if voter has enough staked
-        const staked_amount = new Dec(gov_staker.share).div(1e6);
+        const staked_amount = new Dec(gov_staker.balance).div(1e6);
         const vote_amount = new Dec(debounced_amount);
 
         if (vote_amount.gt(staked_amount)) {

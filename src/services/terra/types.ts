@@ -41,7 +41,7 @@ export type Poll = {
   id: number;
   creator: string;
   // status: "in_progress";
-  status: string;
+  status: PollStatus;
   end_height: number;
   title: string;
   description: string;

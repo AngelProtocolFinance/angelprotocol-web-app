@@ -1,5 +1,5 @@
 import { TokenInfo } from "contracts/types";
-import { GovConfig, GovStaker, GovState, Poll } from "./types";
+import { GovConfig, GovStaker, GovState, Poll, PollStatus } from "./types";
 
 export const halo_info: TokenInfo = {
   name: "",
@@ -17,7 +17,7 @@ export const staker: GovStaker = {
 export const poll: Poll = {
   id: 0,
   creator: "",
-  status: "",
+  status: PollStatus.in_progress,
   end_height: 0,
   title: "",
   description: ".",

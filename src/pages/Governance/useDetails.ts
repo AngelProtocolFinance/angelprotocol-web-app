@@ -8,14 +8,14 @@ import {
   useGovStaker,
   useLatestBlock,
 } from "services/terra/hooks";
-import { Poll } from "services/terra/types";
+import { Poll, PollStatus } from "services/terra/types";
 import { poll as placeholder_poll } from "services/terra/placeholders";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
 
 type ProcessedPollData = {
   id: number;
-  status: string;
+  status: PollStatus;
   title: string;
   creator: string;
   amount: string;
@@ -58,6 +58,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
     const locked_holding = gov_staker.locked_balance.find(
       ([id]) => id === +(poll_id || "0")
     );
+
     if (locked_holding) {
       const [, vote_info] = locked_holding;
       vote = vote_info.vote;
@@ -128,7 +129,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
 
 const placeholder_data: ProcessedPollData = {
   id: 0,
-  status: "unknown",
+  status: PollStatus.in_progress,
   title: "",
   creator: "",
   amount: "0",

@@ -1,4 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { useSetModal } from "components/Nodal/Nodal";
+import VoteSuite from "components/TransactionSuite/VoteSuite";
+import Voter from "components/Voter/Voter";
 import { PollStatus } from "services/terra/types";
 import useDetails from "./useDetails";
 import usePollAction from "./usePollAction";
@@ -8,11 +11,16 @@ export default function PollAction(props: { poll_id?: string }) {
   const details = useDetails(props.poll_id);
   const end_poll = usePollAction(props.poll_id);
   const is_voted = details.vote !== undefined;
+  const { showModal } = useSetModal();
+
+  function showVoterForm() {
+    showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
+  }
 
   const defaultClasses =
     "bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30";
   const defaultAction = (
-    <Action disabled title="Vote" classes={defaultClasses} />
+    <Action action={showVoterForm} title="Vote" classes={defaultClasses} />
   );
 
   if (!wallet) {
@@ -66,19 +74,24 @@ export default function PollAction(props: { poll_id?: string }) {
         />
       );
     }
+    //voting period is still open
   } else {
     if (is_voted) {
       //voting period isn't ended and user already voted
-      <Action disabled title="You voted yes" classes="" />;
+      return <Action disabled title={`You voted ${details.vote}`} classes="" />;
+    } else {
+      return defaultAction;
     }
-    return (
-      <Action
-        title="Vote"
-        classes="bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30"
-        disabled
-      />
-    );
   }
+}
+
+type VoterProps = { poll_id?: string };
+function VoterModal(props: VoterProps) {
+  return (
+    <Voter poll_id={props.poll_id}>
+      <VoteSuite inModal />
+    </Voter>
+  );
 }
 
 type ActionProps =

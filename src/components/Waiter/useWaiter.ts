@@ -6,7 +6,6 @@ import { useSetModal } from "components/Nodal/Nodal";
 import { setPending } from "services/wallet/walletSlice";
 import Result, { Props as ResProps } from "components/Popup/Result";
 import displayEthError from "./displayEthError";
-import { denoms } from "constants/currency";
 
 export default function useWaiter() {
   const { pending_tx } = useGetter((state) => state.wallet);
@@ -24,11 +23,8 @@ export default function useWaiter() {
           const tx = await provider.getTransaction(pending_tx.hash);
           const receipt = await tx.wait();
           showModal<ResProps>(Result, {
+            desc: "Thank you for your donation!",
             url: `https://ropsten.etherscan.io/tx/${receipt.transactionHash}`,
-            sent: pending_tx.amount,
-            received: pending_tx.amount,
-            denom: denoms.ether,
-            precision: 6,
           });
           dispatch(setPending(null));
         }

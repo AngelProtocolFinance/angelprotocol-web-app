@@ -6,7 +6,6 @@ import Details from "./Details";
 
 export default function Governance() {
   const { path } = useRouteMatch();
-  console.log(path);
   return (
     <div className="grid grid-rows-a1 min-h-screen pt-2 pb-16">
       <AppHead />

@@ -16,7 +16,7 @@ export default function useVoter() {
   const wallet = useConnectedWallet();
   const tx = useEstimator();
 
-  async function voter(data: Values) {
+  async function voter() {
     // const liquid_split = 100 - Number(data.split);
 
     try {
@@ -59,7 +59,7 @@ export default function useVoter() {
             setStage({
               step: Step.success,
               content: {
-                message: "Staking successfull!",
+                message: "Vote is successfully casted",
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
