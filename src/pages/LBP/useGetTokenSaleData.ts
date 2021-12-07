@@ -1,16 +1,5 @@
+import { PriceData, TokenSaleData } from "components/PriceGraph/getGraphData";
 import { useEffect, useState } from "react";
-
-export interface PriceData {
-  price: number;
-  date: number;
-}
-
-export interface TokenSaleData {
-  tokenName: string;
-  auctionStartDateTime: number;
-  auctionEndDateTime: number;
-  historicPriceData: PriceData[];
-}
 
 const toMiliseconds = (stringDateTime: string) =>
   new Date(stringDateTime).getTime();

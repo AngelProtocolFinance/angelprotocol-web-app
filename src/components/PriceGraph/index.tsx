@@ -9,9 +9,14 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getGraphData } from "./getGraphData";
+import { getGraphData, PriceData, TokenSaleData } from "./getGraphData";
 import { LegendLabel } from "./LegendLabel";
-import useGetTokenSaleData from "./useGetTokenSaleData";
+
+type Props = {
+  isLoading: boolean;
+  predictedPriceData: PriceData[];
+  tokenSaleData: TokenSaleData;
+};
 
 const tickDateFormatter = (dateInMiliseconds: number) =>
   new Date(dateInMiliseconds).toLocaleDateString(undefined, {
@@ -37,9 +42,11 @@ const legendFormatter = (value: string, _: any, index: number) => {
   );
 };
 
-export default function PriceGraph() {
-  const { isLoading, predictedPriceData, tokenSaleData } =
-    useGetTokenSaleData();
+export default function PriceGraph({
+  isLoading,
+  predictedPriceData,
+  tokenSaleData,
+}: Props) {
   const graphData = getGraphData(tokenSaleData, predictedPriceData);
 
   return (

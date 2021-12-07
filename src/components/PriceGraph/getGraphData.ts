@@ -1,4 +1,14 @@
-import { PriceData, TokenSaleData } from "./useGetTokenSaleData";
+export interface PriceData {
+  price: number;
+  date: number;
+}
+
+export interface TokenSaleData {
+  tokenName: string;
+  auctionStartDateTime: number;
+  auctionEndDateTime: number;
+  historicPriceData: PriceData[];
+}
 
 interface ReferenceDotCoordinates {
   x: number;
