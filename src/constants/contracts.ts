@@ -49,3 +49,9 @@ export const ap_wallets: { [index: string]: { [index: string]: string } } = {
     [chains.cosmos_4]: "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x", //replace with ap_wallet
   },
 };
+
+export const allowedLBPPairContracts: { [index: string]: string[] } = {
+  [chains.mainnet]: [""],
+  [chains.testnet]: [""],
+  [chains.localterra]: [""],
+};
