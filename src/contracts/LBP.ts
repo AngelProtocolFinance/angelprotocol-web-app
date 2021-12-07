@@ -16,7 +16,7 @@ export default class LBP extends Contract {
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.address = contracts[this.chainID][sc.index_fund];
+    this.address = contracts[this.chainID][sc.lbp];
   }
 
   async getLBPs() {
