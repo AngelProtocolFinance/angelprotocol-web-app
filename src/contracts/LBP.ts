@@ -1,5 +1,5 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { contracts } from "constants/contracts";
+import { allowedLBPPairContracts, contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { sc } from "./types";
 
@@ -19,11 +19,13 @@ export default class LBP extends Contract {
     this.address = contracts[this.chainID][sc.lbp];
   }
 
-  async getLBPs() {
-    const pairs = await this.query<LBPPair>(this.address, {
+  async getAllowedLBPPairs() {
+    const pairs = await this.query<LBPPair[]>(this.address, {
       pairs: {},
     });
 
-    return pairs;
+    return pairs.filter((lbp) =>
+      allowedLBPPairContracts[this.chainID].includes(lbp.contract_addr)
+    );
   }
 }
