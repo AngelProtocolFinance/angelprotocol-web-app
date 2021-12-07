@@ -124,7 +124,8 @@ export default function useGetTokenSaleData() {
 
 function useGetTokenSaleDataV2() {
   const [isLoading, setLoading] = useState(false);
-  const [lbpPair, setLBPPair] = useState();
+  const [error, setError] = useState("");
+  const [currentPair, setCurrentPair] = useState({});
 
   const wallet = useConnectedWallet();
 
@@ -136,37 +137,21 @@ function useGetTokenSaleDataV2() {
         const lbps = await contract.getAllowedLBPPairs();
         const currentTime = Math.floor(Date.now() / 1000);
 
-        //   setScheduledPairs(sortLBPsAsc(
-        //     lbps.filter((lbp) => lbp.start_time > currentTime)
-        //   ));
+        const currentPair = lbps.find(
+          (lbp) => lbp.start_time <= currentTime && lbp.end_time > currentTime
+        );
 
-        //   setPreviousPairs(sortLBPsDesc(
-        //     lbps.filter((lbp) => lbp.end_time <= currentTime)
-        //   ));
-
-        //   const currentPair = lbps.find(
-        //     (lbp) => lbp.start_time <= currentTime && lbp.end_time > currentTime
-        //   );
-
-        //   // If there's an ongoing sale,
-        //   // fetch the detailed info for the pair
-        //   // and the sale token info (name, symbol, decimals, etc.)
-        //   if(currentPair) {
-        //     setCurrentPair(
-        //       await getPairInfo(terraClient, currentPair.contract_addr)
-        //     );
-
-        //     const saleTokenAddress = saleAssetFromPair(currentPair.asset_infos).info.token.contract_addr;
-
-        //     setSaleTokenInfo(
-        //       await getTokenInfo(terraClient, saleTokenAddress)
-        //     );
-        //   } else {
-        //     setCurrentPair();
-        //   }
-        // } catch(e) {
-        //   reportException(e);
-        //   setErrorLoadingData(true);
+        // If there's an ongoing sale,
+        // fetch the detailed info for the pair
+        // and the sale token info (name, symbol, decimals, etc.)
+        if (currentPair) {
+          setCurrentPair(await contract.getPairInfo(currentPair.contract_addr));
+        } else {
+          setCurrentPair({});
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Failed to get LBP Pair data. Please try again later");
       } finally {
         setLoading(false);
       }
@@ -174,4 +159,10 @@ function useGetTokenSaleDataV2() {
 
     fetchLBPs();
   }, []);
+
+  return {
+    error: !isLoading && error,
+    isLoading,
+    currentPair
+  };
 }

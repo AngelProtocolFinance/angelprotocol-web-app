@@ -28,4 +28,12 @@ export default class LBP extends Contract {
       allowedLBPPairContracts[this.chainID].includes(lbp.contract_addr)
     );
   }
+
+  async getPairInfo(pairAddress: string) {
+    const response = await this.query<LBPPair>(pairAddress, {
+      pair: {},
+    });
+
+    return response;
+  }
 }
