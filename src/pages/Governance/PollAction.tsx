@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useSetModal } from "components/Nodal/Nodal";
 import VoteSuite from "components/TransactionSuite/VoteSuite";
@@ -17,73 +18,51 @@ export default function PollAction(props: { poll_id?: string }) {
     showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
   }
 
-  const defaultClasses =
-    "bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30";
-  const defaultAction = (
-    <Action action={showVoterForm} title="Vote" classes={defaultClasses} />
-  );
+  const W = !!wallet;
+  const V = is_voted;
+  const E = details.vote_ended;
+  const P = details.status !== PollStatus.in_progress;
 
-  if (!wallet) {
-    //what to show when wallet is not connected
-    if (details.vote_ended) {
-      return (
-        //allow user to click vote, form will prompt to connect wallet
-        <Action
-          title="Voting period ended"
-          classes={"bg-white bg-opacity-10 text-gray-400"}
-          disabled
-        />
-      );
-    } else {
-      return defaultAction;
-    }
+  let node: ReactNode = null;
 
-    //wallet is connected, voting has ended, but poll is still in progress
-  } else if (details.vote_ended && details.status === PollStatus.in_progress) {
-    if (wallet.walletAddress === details.creator || is_voted) {
-      //both creator and voters can end the poll, no reason to let non-participant to do this
-      return (
-        <Action action={end_poll} title="End poll" classes={defaultClasses} />
-      );
-    } else {
-      return (
-        <Action
-          title="Voting period ended"
-          classes={"bg-white bg-opacity-10 text-gray-400"}
-          disabled
-        />
-      );
-    }
-    //wallet is connected, voting has ended, poll has ended
-  } else if (details.vote_ended && details.status !== PollStatus.in_progress) {
-    if (wallet.walletAddress === details.creator || is_voted) {
-      //let creator click claim action, and just get prompted if deposit token is not claimable
-      return (
-        <Action
-          disabled
-          title="Claim deposit tokens"
-          classes={defaultClasses}
-        />
-      );
-    } else {
-      return (
-        <Action
-          title="Voting period ended"
-          classes={"bg-white bg-opacity-10 text-gray-400"}
-          disabled
-        />
-      );
-    }
-    //voting period is still open
+  //poll has ended
+  if (P) {
+    node = <Text>poll has ended</Text>;
+    //poll hasn't ended
   } else {
-    if (is_voted) {
-      //voting period isn't ended and user already voted
-      return <Action disabled title={`You voted ${details.vote}`} classes="" />;
+    if (E) {
+      //voting period ended
+      if (V) {
+        node = <Action title="End poll" action={end_poll} />;
+      } else {
+        node = <Text>vote period has ended</Text>;
+      }
     } else {
-      return defaultAction;
+      if (V && W) {
+        node = <Text>you voted {details.vote}</Text>;
+      } else {
+        node = <Action title="Vote" action={showVoterForm} />;
+      }
+      //voting period hasn't ended
     }
   }
+
+  return <>{node}</>;
 }
+/** states
+ * W - is wallet connected?
+ * V - already voted ?
+ * E - voting period done ?
+ * P - poll ended ?
+ */
+
+/** button displays
+ * vote = !V && !E
+ * you voted yes | no = W && V && !P
+ * voting period ended = E && !P
+ * end poll = V && P
+ * poll has ended = P
+ */
 
 type VoterProps = { poll_id?: string };
 function VoterModal(props: VoterProps) {
@@ -95,18 +74,20 @@ function VoterModal(props: VoterProps) {
 }
 
 type ActionProps =
-  | { disabled?: false; action: () => void; title: string; classes: string }
-  | { disabled: true; action?: never; title: string; classes: string };
+  | { disabled?: false; action: () => void; title: string }
+  | { disabled: true; action?: never; title: string };
 function Action(props: ActionProps) {
   return (
     <button
       disabled={props.disabled}
       onClick={props.action}
-      className={`text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md ${props.classes}`}
+      className={`text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30`}
     >
       {props.title}
     </button>
   );
 }
 
-//is_poll done
+function Text(props: { children: ReactNode }) {
+  return <p className="uppercase text-sm">{props.children}</p>;
+}

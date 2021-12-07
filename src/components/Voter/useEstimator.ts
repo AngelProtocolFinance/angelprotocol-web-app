@@ -5,8 +5,8 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-import useTerraBalance from "hooks/useTerraBalance";
-import { useHaloBalance } from "services/terra/hooks";
+// import useTerraBalance from "hooks/useTerraBalance";
+import { useBalances, useHaloBalance } from "services/terra/hooks";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -22,11 +22,11 @@ export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useTerraBalance(denoms.uusd);
+  const { main: UST_balance } = useBalances(denoms.uusd);
   //TODO:check staked_balance instead
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
-  const gov_staker = useGovStaker();
+  const [gov_staker] = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const poll_id = watch("poll_id") || "0";

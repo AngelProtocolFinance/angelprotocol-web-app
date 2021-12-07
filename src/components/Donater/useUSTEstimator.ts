@@ -14,7 +14,8 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-import useTerraBalance from "hooks/useTerraBalance";
+// import useTerraBalance from "hooks/useTerraBalance";
+import { useBalances } from "services/terra/hooks";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
@@ -22,7 +23,7 @@ export default function useUSTEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
-  const { main: UST_balance } = useTerraBalance(denoms.uusd);
+  const { main: UST_balance } = useBalances(denoms.uusd);
 
   const keplr_ust = new Dec(
     keplr_balance.find((coin) => coin.denom === denoms.uusd)?.amount || "0"

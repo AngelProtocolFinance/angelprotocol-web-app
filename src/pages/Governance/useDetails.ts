@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import {
-  useGovPolls,
+  useGovPoll,
   useGovState,
   useGovConfig,
   useGovStaker,
+  useGovBalance,
   useLatestBlock,
 } from "services/terra/hooks";
-import { Poll, PollStatus } from "services/terra/types";
-import { poll as placeholder_poll } from "services/terra/placeholders";
+import { PollStatus } from "services/terra/types";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
 
@@ -37,16 +37,13 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
   const wallet = useConnectedWallet();
   const gov_config = useGovConfig();
-  const gov_polls = useGovPolls();
+  const poll = useGovPoll(poll_id);
   const gov_state = useGovState();
-  const gov_staker = useGovStaker();
+  const gov_staked = useGovBalance();
+  const [gov_staker] = useGovStaker();
   const block_height = useLatestBlock();
 
   useEffect(() => {
-    const poll: Poll =
-      gov_polls.find((poll) => poll.id === Number(poll_id || "0")) ||
-      placeholder_poll;
-
     //is voting period expired?
     const curr_block = new Dec(block_height);
     const end_block = new Dec(poll.end_height);
@@ -64,19 +61,18 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
       vote = vote_info.vote;
     }
 
-    const total_gov_staked = new Dec(gov_state.total_share);
+    const _gov_staked = new Dec(gov_staked).mul(1e6);
 
     const num_yes = new Dec(poll.yes_votes);
     const num_no = new Dec(poll.no_votes);
 
-    const is_staked_zero = total_gov_staked.eq(0);
     const is_votes_zero = num_yes.eq(0) && num_no.eq(0);
 
     const quorum_pct = new Dec(gov_config?.quorum).mul(100).toNumber();
 
-    const voted_pct = is_staked_zero
+    const voted_pct = _gov_staked.lte(0)
       ? 0
-      : num_yes.add(num_no).div(total_gov_staked).mul(100).toNumber();
+      : num_yes.add(num_no).div(_gov_staked).mul(100).toNumber();
 
     const yes_pct = is_votes_zero
       ? 0
@@ -115,11 +111,12 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
   }, [
     wallet,
     gov_config,
-    gov_polls,
+    poll,
     gov_state,
     gov_staker,
     block_height,
     poll_id,
+    gov_staked,
   ]);
 
   return data;

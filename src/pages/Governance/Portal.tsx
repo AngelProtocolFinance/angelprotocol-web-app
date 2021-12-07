@@ -8,6 +8,9 @@ export default function Portal() {
   function showStaker() {
     showModal(StakeModal, {});
   }
+  function showUnstaker() {
+    showModal(UnstakeModal, {});
+  }
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
@@ -28,7 +31,7 @@ export default function Portal() {
       <div className="flex flex-wrap gap-2 justify-center md:justify-self-end self-end">
         <Action title="Trade Halo" action={() => {}} />
         <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={() => {}} />
+        <Action title="Unstake" action={showUnstaker} />
       </div>
     </div>
   );
@@ -38,7 +41,7 @@ function Action(props: { title: string; action: () => void }) {
   return (
     <button
       onClick={props.action}
-      className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-10 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb:0 rounded-md"
+      className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb:0 rounded-md"
     >
       {props.title}
     </button>
@@ -46,6 +49,14 @@ function Action(props: { title: string; action: () => void }) {
 }
 
 function StakeModal() {
+  return (
+    <Staker stake>
+      <StakeSuite inModal />
+    </Staker>
+  );
+}
+
+function UnstakeModal() {
   return (
     <Staker>
       <StakeSuite inModal />

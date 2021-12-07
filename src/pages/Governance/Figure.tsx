@@ -18,7 +18,7 @@ export default function Figure(props: Props) {
         {props.title}
       </p>
       <p className="text-4xl font-heading text-white-grey text-opacity-80">
-        <span className="">{toCurrency(props.value)}</span>
+        <span className="">{toCurrency(props.value, 2, true)}</span>
         <span className=""> {props.denom}</span>
         {(props.percent && (
           <span className="text-lg pl-2 font-body">

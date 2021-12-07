@@ -6,8 +6,9 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { urls } from "App/chains";
 import { chains, GovState, HaloBalance } from "contracts/types";
-import { Dec } from "@terra-money/terra.js";
+import { Dec, Coin } from "@terra-money/terra.js";
 import {
+  BalanceRes,
   BlockLatest,
   ContractQueryArgs,
   GovConfig,
@@ -44,6 +45,14 @@ export const terra = createApi({
         return res.block.header.height;
       },
     }),
+
+    balances: builder.query<Coin.Data[], string | undefined>({
+      query: (address) => `/cosmos/bank/v1beta1/balances/${address}`,
+      transformResponse: (res: BalanceRes) => {
+        return res.balances;
+      },
+    }),
+
     govPolls: builder.query<Poll[], ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<Polls>) => {

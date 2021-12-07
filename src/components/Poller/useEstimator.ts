@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-import useTerraBalance from "hooks/useTerraBalance";
+// import useTerraBalance from "hooks/useTerraBalance";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -11,13 +11,13 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-import { useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/hooks";
 
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();
-  const { main: UST_balance } = useTerraBalance(denoms.uusd);
+  const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();

@@ -2,20 +2,25 @@ import { currency_text, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Values } from "./types";
+import Balance from "./Balance";
 
 export default function Amount() {
   const {
+    watch,
     register,
     formState: { errors },
   } = useFormContext<Values>();
+
+  const is_stake = watch("is_stake");
 
   return (
     <div className="grid">
       <label
         htmlFor="amount"
-        className="text-angel-grey uppercase font-bold mb-2"
+        className="flex justify-between text-angel-grey uppercase font-bold mb-2 items-end"
       >
-        Stake amount
+        <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
+        <Balance />
       </label>
       <input
         {...register("amount")}

@@ -30,7 +30,7 @@ export default function Polls() {
         </p>
         <button
           onClick={showPoller}
-          className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-10 shadow-sm font-heading text-sm uppercase text-center rounded-md"
+          className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm font-heading text-sm uppercase text-center rounded-md"
         >
           Create Poll
         </button>

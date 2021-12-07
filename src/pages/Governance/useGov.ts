@@ -1,29 +1,28 @@
 import { Dec } from "@terra-money/terra.js";
 import { useState, useEffect } from "react";
-import { useGovState, useHaloInfo } from "services/terra/hooks";
+import { useGovBalance, useHaloInfo } from "services/terra/hooks";
 
 export default function useGov() {
-  const [shares, setShares] = useState(0);
+  const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
   const token_info = useHaloInfo();
-  const gov_state = useGovState();
+  const gov_balance = useGovBalance();
 
   useEffect(() => {
     (async () => {
-      const total_shares = new Dec(token_info?.total_supply || "0");
-      const halo_shares = new Dec(gov_state?.total_share || "0").mul(1e-6);
+      const halo_supply = new Dec(token_info.total_supply);
+      const halo_balance = new Dec(gov_balance);
 
-      if (total_shares.toNumber() === 0) {
-        setShares(halo_shares.toNumber());
-        setPercentStaked(0);
-        return;
-      } else {
-        const percent_shares = halo_shares.div(total_shares).mul(100);
-        setShares(halo_shares.toNumber());
-        setPercentStaked(percent_shares.toNumber());
-      }
+      const _staked = halo_balance.toNumber();
+      const _pct_staked = halo_supply.lte(0)
+        ? 0
+        : //convert back to utoken
+          halo_balance.mul(1e6).div(halo_supply).mul(100).toNumber();
+
+      setStaked(_staked);
+      setPercentStaked(_pct_staked);
     })();
-  }, [token_info, gov_state]);
+  }, [token_info, gov_balance]);
 
-  return { shares, percentStaked };
+  return { staked, percentStaked };
 }

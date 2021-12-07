@@ -1,7 +1,12 @@
+import { Coin } from "@terra-money/terra.js";
 import { Vote } from "contracts/types";
 
 export interface QueryRes<T> {
   query_result: T;
+}
+
+export interface BalanceRes {
+  balances: Coin.Data[];
 }
 
 export type ContractQueryArgs = {
@@ -74,8 +79,8 @@ export type GovStaker = {
 
 export type GovState = {
   poll_count: number;
-  total_share: string;
-  total_deposit: string;
+  total_share: string; //gov share from gov staking
+  total_deposit: string; //total deposit from poll_creation and votes
 };
 
 export type GovConfig = {
@@ -84,7 +89,7 @@ export type GovConfig = {
   quorum: string; // "0.3" the required number of voters
   threshold: string; //"0.5" required %of voters to vote yes to make the poll passed
   voting_period: number; //2000 block passes since the poll is created
-  timelock_period: number; //1000 lock period of deposit
+  timelock_period: number; //1000 lock period of deposit?
   proposal_deposit: string; //"10000000000"need 10k HALO to make poll
   snapshot_period: number; //10 num blocks passed when fresh update is made available
 };

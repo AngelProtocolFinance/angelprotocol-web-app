@@ -5,7 +5,7 @@ import Portal from "./Portal";
 import useGov from "./useGov";
 
 export default function Landing() {
-  const { shares, percentStaked } = useGov();
+  const { staked, percentStaked } = useGov();
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4">
@@ -22,7 +22,7 @@ export default function Landing() {
         <Figure
           position="lg:row-start-2"
           title="total staked"
-          value={shares}
+          value={staked}
           denom={currency_text[denoms.uhalo]}
           percent={percentStaked}
         />

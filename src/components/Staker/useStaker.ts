@@ -10,11 +10,12 @@ import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 
 function useStaker() {
-  const { reset } = useFormContext<Values>();
+  const { reset, watch } = useFormContext<Values>();
   const dispatch = useSetter();
   const handleTxError = useTxErrorHandler();
   const wallet = useConnectedWallet();
   const tx = useEstimator();
+  const is_stake = watch("is_stake");
 
   async function staker() {
     // const liquid_split = 100 - Number(data.split);
@@ -55,11 +56,16 @@ function useStaker() {
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
+          //refetching staker here isn't good since state isn't yet reflected in the backend
+          //refetch will only get the old data
+          // refetch_staker();
           dispatch(
             setStage({
               step: Step.success,
               content: {
-                message: "Staking successfull!",
+                message: is_stake
+                  ? "Staking successfull!"
+                  : "HALO successfully withdrawn",
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })

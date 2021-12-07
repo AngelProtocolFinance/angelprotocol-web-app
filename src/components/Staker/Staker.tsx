@@ -4,11 +4,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
 import { Values } from "./types";
 
-export default function Staker(props: { children: ReactNode }) {
+type Props = { children: ReactNode; stake?: true };
+export default function Staker(props: Props) {
   const methods = useForm<Values>({
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",
+      is_stake: !!props.stake,
     },
     resolver: yupResolver(schema),
   });
