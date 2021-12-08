@@ -126,7 +126,6 @@ export function useGetTokenSaleDataV2() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
   const pairData = data;
-  console.log(data);
 
   return {
     isLoading: isLoading || isFetching,
