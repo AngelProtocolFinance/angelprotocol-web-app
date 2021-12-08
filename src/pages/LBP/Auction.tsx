@@ -32,8 +32,8 @@ export default function Auction() {
       <AppHead />
       <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-auction shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
-          <div className="flex-grow bg-transparent p-2">
-            <h1 className="text-4xl font-bold font-heading">
+          <div className="flex-grow bg-transparent p-10">
+            <h1 className="text-4xl font-bold font-heading mb-4">
               HALO Token Auction
             </h1>
             <div className="flex items-center justify-center lg:hidden w-115 my-3">
@@ -84,7 +84,7 @@ const Tabs = ({ color }: { color: string }) => {
 
   return (
     <>
-      <div className="flex flex-wrap p-3 overflow-x-hidden">
+      <div className="flex flex-wrap overflow-x-hidden p-10">
         <div className="w-full">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
@@ -130,7 +130,7 @@ const Tabs = ({ color }: { color: string }) => {
             </li>
           </ul>
           <div className="relative flex flex-col min-w-0 w-full mb-6 rounded">
-            <div className="px-4 py-5 flex-auto">
+            <div className="py-7 pr-2 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                   <AuctionDetails />
