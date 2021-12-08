@@ -43,7 +43,7 @@ interface DonationInfoProps {
 }
 export function DonationInfo({ openModal }: DonationInfoProps) {
   return (
-    <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-40 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 min-h-1/2 2xl:min-h-3/4 py-2">
+    <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-0 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 min-h-1/2 2xl:min-h-3/4 py-2">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 md:px-10 mt-10 2xl:mt-0">
         <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
           SDG #5: GENDER EQUALITY

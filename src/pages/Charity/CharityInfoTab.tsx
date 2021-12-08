@@ -65,6 +65,8 @@ function AccountInfo({
     </div>
   );
 }
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function AccountAction() {
   return (
     <div className="flex flex-col items-start lg:justify-end gap-2 w-115 min-h-r15">
@@ -85,8 +87,8 @@ function AccountAction() {
 function CharityEndowmentInfo() {
   return (
     <div className="w-full overflow-y-scroll lg:min-h-1/2 lg:mt-5 text-left pb-10">
-      <div className="flex justify-between w-124 md:w-full min-h-r15 bg-white shadow-xl border-0 rounded-2xl p-5 mb-2">
-        <div className="endowment_stats min-h-sm w-115 md:w-122">
+      <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl p-5 mb-5">
+        <div className="endowment_stats bg-white w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-6">
           <p className="uppercase font-semibold text-thin-blue text-xl">
             Endowment Balance
           </p>
@@ -98,19 +100,25 @@ function CharityEndowmentInfo() {
           </p>
           <p className="uppercase font-semibold text-thin-blue text-3xl">154</p>
         </div>
-        <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
+        {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
-        </div>
-      </div>
-      <div className="flex gap-2 flex-col lg:flex-row">
+        </div> */}
         {mockAccountDetails.map((account) => (
           <AccountInfo
             account={account}
             className={`${account.color}`}
           ></AccountInfo>
         ))}
-        <AccountAction />
       </div>
+      {/* <div className="flex gap-2 flex-col lg:flex-row">
+        {mockAccountDetails.map((account) => (
+          <AccountInfo
+            account={account}
+            className={`${account.color}`}
+          ></AccountInfo>
+        ))}
+      </div> */}
+      {/* <AccountAction /> turn on for admin features after V1 */}
     </div>
   );
 }
