@@ -13,6 +13,24 @@ interface PairDataQueryResult {
   result: PairData;
 }
 
+const parsePairData = (input: string) => {
+  const parsedResult = JSON.parse(input);
+
+  const return_amount = +parsedResult.return_amount;
+  const spread_amount = +parsedResult.spread_amount;
+  const commission_amount = +parsedResult.commission_amount;
+  const ask_weight = +parsedResult.ask_weight;
+  const offer_weight = +parsedResult.offer_weight;
+
+  return {
+    return_amount,
+    spread_amount,
+    commission_amount,
+    ask_weight,
+    offer_weight,
+  };
+};
+
 const lbp_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getLBPPairData: builder.query<PairDataQueryResult, any>({
@@ -23,9 +41,9 @@ const lbp_api = aws.injectEndpoints({
         };
       },
       transformResponse: (response: { message: string; result: string }) => {
-        const pairData: PairData = JSON.parse(response.result);
+        const result = parsePairData(response.result);
 
-        return { message: response.message, result: pairData };
+        return { message: response.message, result };
       },
     }),
   }),
