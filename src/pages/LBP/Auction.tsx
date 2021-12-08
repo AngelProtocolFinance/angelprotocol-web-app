@@ -10,7 +10,7 @@ import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 import {
   useGetTokenSaleData,
-  useGetTokenSaleDataV2,
+  useGetTokenSaleDataV2 as useGetLBPPairData,
 } from "./useGetTokenSaleData";
 
 function AuctionStats() {
@@ -32,7 +32,7 @@ export default function Auction() {
   const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
 
-  // const { isLoading, data: pairData } = useGetTokenSaleDataV2();
+  // const { isLoading, data: pairData } = useGetLBPPairData();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
