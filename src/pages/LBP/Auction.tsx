@@ -32,7 +32,7 @@ export default function Auction() {
   const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
 
-  const { pairData } = useGetTokenSaleDataV2();
+  // const { isLoading, data: pairData } = useGetTokenSaleDataV2();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">

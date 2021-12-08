@@ -125,10 +125,8 @@ export function useGetTokenSaleData() {
 export function useGetTokenSaleDataV2() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
-  const pairData = data;
-
   return {
     isLoading: isLoading || isFetching,
-    pairData,
+    data,
   };
 }
