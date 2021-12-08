@@ -36,6 +36,7 @@ export enum app {
   board_tca = "tca-leaderboard",
   withdraw = "withdraw",
   test = "test",
+  auction = "auction",
 }
 
 export enum registration {
