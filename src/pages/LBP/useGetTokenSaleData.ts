@@ -1,6 +1,7 @@
 import { useConnectedWallet } from "@terra-dev/use-wallet";
 import { PriceData, TokenSaleData } from "components/PriceGraph/getGraphData";
 import { useEffect, useState } from "react";
+import { useGetLBPPairDataQuery } from "services/aws/lbp";
 
 const toMiliseconds = (stringDateTime: string) =>
   new Date(stringDateTime).getTime();
@@ -73,7 +74,7 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
   return points;
 };
 
-export default function useGetTokenSaleData() {
+export function useGetTokenSaleData() {
   const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
@@ -121,38 +122,14 @@ export default function useGetTokenSaleData() {
   };
 }
 
-function useGetTokenSaleDataV2() {
-  const [isLoading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [currentPair, setCurrentPair] = useState({});
+export function useGetTokenSaleDataV2() {
+  const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
-  const wallet = useConnectedWallet();
-
-  useEffect(() => {
-    const fetchLBPs = async () => {
-      try {
-        // If there's an ongoing sale,
-        // fetch the detailed info for the pair
-        // and the sale token info (name, symbol, decimals, etc.)
-        // if (currentPair) {
-        //   setCurrentPair(await contract.getPairInfo(currentPair.contract_addr));
-        // } else {
-        //   setCurrentPair({});
-        // }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to get LBP Pair data. Please try again later");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchLBPs();
-  }, []);
+  const pairData = data;
+  console.log(data);
 
   return {
-    error: !isLoading && error,
-    isLoading,
-    currentPair
+    isLoading: isLoading || isFetching,
+    pairData,
   };
 }

@@ -8,7 +8,10 @@ import { LaunchStatsProps } from ".";
 import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
-import useGetTokenSaleData from "./useGetTokenSaleData";
+import {
+  useGetTokenSaleData,
+  useGetTokenSaleDataV2,
+} from "./useGetTokenSaleData";
 
 function AuctionStats() {
   return (
@@ -28,6 +31,8 @@ export default function Auction() {
   const { showModal } = useSetModal();
   const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
+
+  const { pairData } = useGetTokenSaleDataV2();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
