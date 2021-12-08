@@ -1,4 +1,4 @@
-import { FaArrowDown, FaEthereum, FaExclamationCircle } from "react-icons/fa";
+import { FaEthereum } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 
 export default function CurrencyInputPanel() {
