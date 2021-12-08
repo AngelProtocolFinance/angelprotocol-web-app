@@ -8,6 +8,8 @@ import { Step } from "services/transaction/types";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
+import { terra } from "services/terra/terra";
+import { tags, user } from "services/terra/tags";
 
 export default function useVoter() {
   const { reset } = useFormContext<Values>();
@@ -63,6 +65,14 @@ export default function useVoter() {
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
+          );
+
+          dispatch(
+            //invalidate all gov related cache
+            terra.util.invalidateTags([
+              { type: tags.gov },
+              { type: tags.user, id: user.halo_balance },
+            ])
           );
         } else {
           dispatch(

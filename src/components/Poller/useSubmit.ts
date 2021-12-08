@@ -8,7 +8,9 @@ import Halo from "contracts/Halo";
 import { useSetter } from "store/accessors";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
+import { terra } from "services/terra/terra";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
+import { gov, tags } from "services/terra/tags";
 
 export default function useSubmit() {
   useEstimator();
@@ -73,6 +75,9 @@ export default function useSubmit() {
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
+          );
+          dispatch(
+            terra.util.invalidateTags([{ type: tags.gov, id: gov.polls }])
           );
         } else {
           dispatch(

@@ -26,7 +26,7 @@ export default function useEstimator() {
   //TODO:check staked_balance instead
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
-  const [gov_staker] = useGovStaker();
+  const gov_staker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const poll_id = watch("poll_id") || "0";

@@ -8,9 +8,11 @@ import { Step } from "services/transaction/types";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
+import { terra } from "services/terra/terra";
+import { gov, tags, user } from "services/terra/tags";
 
 function useStaker() {
-  const { reset, watch } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const dispatch = useSetter();
   const handleTxError = useTxErrorHandler();
   const wallet = useConnectedWallet();
@@ -70,6 +72,14 @@ function useStaker() {
               },
             })
           );
+          //refetch new data
+          dispatch(
+            terra.util.invalidateTags([
+              { type: tags.gov, id: gov.staker },
+              { type: tags.gov, id: gov.halo_balance },
+              { type: tags.user, id: user.halo_balance },
+            ])
+          );
         } else {
           dispatch(
             setStage({
@@ -85,8 +95,6 @@ function useStaker() {
     } catch (err) {
       console.error(err);
       handleTerraError(err, handleTxError);
-    } finally {
-      reset();
     }
   }
 

@@ -5,8 +5,12 @@ import Waiter, { Props as WaitProps } from "components/Popup/Waiter";
 import Result, { Props as ResultProps } from "components/Popup/Result";
 import Halo from "contracts/Halo";
 import displayTerraError from "helpers/displayTerraError";
+import { useSetter } from "store/accessors";
+import { terra } from "services/terra/terra";
+import { tags, user } from "services/terra/tags";
 
 export default function usePollAction(poll_id?: string) {
+  const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   async function end_poll() {
@@ -42,6 +46,14 @@ export default function usePollAction(poll_id?: string) {
             desc: "Poll sucessfully ended",
             url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
           });
+
+          dispatch(
+            terra.util.invalidateTags([
+              //invalidate whole gov cache
+              { type: tags.gov },
+              { type: tags.user, id: user.halo_balance },
+            ])
+          );
         } else {
           showModal<ErrProps>(ErrPop, {
             desc: "Transaction failed",

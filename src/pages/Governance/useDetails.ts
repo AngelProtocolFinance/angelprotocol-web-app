@@ -40,7 +40,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
   const poll = useGovPoll(poll_id);
   const gov_state = useGovState();
   const gov_staked = useGovBalance();
-  const [gov_staker] = useGovStaker();
+  const gov_staker = useGovStaker();
   const block_height = useLatestBlock();
 
   useEffect(() => {

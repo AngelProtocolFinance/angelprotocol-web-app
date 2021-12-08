@@ -2,7 +2,6 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import { GovStaker } from "contracts/types";
 import { useMemo } from "react";
 import { terra } from "services/terra/terra";
 import { gov_config, gov_state, halo_info, poll, staker } from "./placeholders";
@@ -15,9 +14,7 @@ function useHaloContract() {
 
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;
-  const { data = "0" } = useLatestBlockQuery("", {
-    pollingInterval: 10_000,
-  });
+  const { data = "0" } = useLatestBlockQuery("", { pollingInterval: 10_000 });
 
   return data;
 }
@@ -27,6 +24,7 @@ export function useBalances(main: denoms, others?: denoms[]) {
   const { useBalancesQuery } = terra;
   const { data = [] } = useBalancesQuery(wallet?.walletAddress, {
     skip: wallet === undefined,
+    refetchOnMountOrArgChange: true,
   });
 
   //convert from utoken to token
@@ -70,11 +68,11 @@ export function useHaloBalance() {
   return data;
 }
 
-export function useGovStaker(): [GovStaker, () => void] {
+export function useGovStaker() {
   const { useGovStakerQuery } = terra;
   const { wallet, contract } = useHaloContract();
 
-  const { data = staker, refetch } = useGovStakerQuery(
+  const { data = staker } = useGovStakerQuery(
     {
       address: contract.gov_address,
       msg: { staker: { address: wallet?.walletAddress } },
@@ -82,13 +80,13 @@ export function useGovStaker(): [GovStaker, () => void] {
     { skip: wallet === undefined }
   );
 
-  return [data, refetch];
+  return data;
 }
 
 export function useGovBalance() {
-  const { useHaloBalanceQuery } = terra;
+  const { useGovBalanceQuery } = terra;
   const { contract } = useHaloContract();
-  const { data = 0 } = useHaloBalanceQuery({
+  const { data = 0 } = useGovBalanceQuery({
     address: contract.token_address,
     //this query will only run if wallet is not undefined
     msg: { balance: { address: contract.gov_address } },

@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 
 export default function Balance() {
-  const [gov_staker] = useGovStaker();
+  const gov_staker = useGovStaker();
   const halo_balance = useHaloBalance();
   const { watch } = useFormContext<Values>();
   const is_stake = watch("is_stake");

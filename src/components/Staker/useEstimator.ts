@@ -24,7 +24,7 @@ export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const [gov_staker] = useGovStaker();
+  const gov_staker = useGovStaker();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
 
