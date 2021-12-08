@@ -1,6 +1,5 @@
 import { useConnectedWallet } from "@terra-dev/use-wallet";
 import { PriceData, TokenSaleData } from "components/PriceGraph/getGraphData";
-import LBP from "contracts/LBP";
 import { useEffect, useState } from "react";
 
 const toMiliseconds = (stringDateTime: string) =>
@@ -132,23 +131,14 @@ function useGetTokenSaleDataV2() {
   useEffect(() => {
     const fetchLBPs = async () => {
       try {
-        // We only care about permitted/whitelisted pairs
-        const contract = new LBP(wallet);
-        const lbps = await contract.getAllowedLBPPairs();
-        const currentTime = Math.floor(Date.now() / 1000);
-
-        const currentPair = lbps.find(
-          (lbp) => lbp.start_time <= currentTime && lbp.end_time > currentTime
-        );
-
         // If there's an ongoing sale,
         // fetch the detailed info for the pair
         // and the sale token info (name, symbol, decimals, etc.)
-        if (currentPair) {
-          setCurrentPair(await contract.getPairInfo(currentPair.contract_addr));
-        } else {
-          setCurrentPair({});
-        }
+        // if (currentPair) {
+        //   setCurrentPair(await contract.getPairInfo(currentPair.contract_addr));
+        // } else {
+        //   setCurrentPair({});
+        // }
       } catch (err) {
         console.error(err);
         setError("Failed to get LBP Pair data. Please try again later");
