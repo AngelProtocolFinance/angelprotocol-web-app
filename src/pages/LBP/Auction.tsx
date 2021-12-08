@@ -28,7 +28,7 @@ export default function Auction() {
   const { showModal } = useSetModal();
 
   return (
-    <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16">
+    <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2">
       <AppHead />
       <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
