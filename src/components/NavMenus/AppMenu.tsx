@@ -30,6 +30,11 @@ export default function AppMenu() {
           DONATE
         </Link>
       </li>
+      <li>
+        <Link to={`${url}/${app.auction}`} {...linkStyles}>
+          Buy HALO
+        </Link>
+      </li>
     </ul>
   );
 }
