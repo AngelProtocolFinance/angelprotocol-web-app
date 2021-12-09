@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import AppFoot from "./AppFoot";
 
 export default {

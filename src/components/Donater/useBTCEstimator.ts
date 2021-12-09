@@ -5,7 +5,7 @@ import { denoms } from "constants/currency";
 import { DWindow } from "types/window";
 import { useWallet } from "use-wallet";
 import { useSetter } from "store/accessors";
-import { setFormError } from "services/donation/donationSlice";
+import { setFormError } from "services/transaction/transactionSlice";
 
 const dwindow: DWindow = window;
 export default function useBTCEstimator() {

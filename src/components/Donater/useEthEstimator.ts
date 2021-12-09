@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useWallet } from "use-wallet";
 import { Values } from "./types";
-import useDebouncer from "./useDebouncer";
+import useDebouncer from "hooks/useDebouncer";
 import { useSetter } from "store/accessors";
 import {
   setFormError,
   setFee,
   setFormLoading,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
 
 export default function useEthEstimator() {
   const dispatch = useSetter();

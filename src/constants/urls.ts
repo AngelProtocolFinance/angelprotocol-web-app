@@ -11,4 +11,7 @@ export const bombay_rest = "https://bombay-lcd.terra.dev";
 export const bombay_rpc = "";
 
 //https://docs.tendermint.com/master/rpc/
-export const cosmos_4_rpc = "https://rpc.cosmos.network";
+export const cosmos_4_rpc =
+  "https://cosmoshub-4--rpc--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67";
+export const cosmos_4_lcd =
+  "https://cosmoshub-4--lcd--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67";

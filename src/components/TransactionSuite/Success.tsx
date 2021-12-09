@@ -1,13 +1,16 @@
+import { useSetModal } from "components/Nodal/Nodal";
 import { AiOutlineCheckCircle } from "react-icons/ai";
-import { setStage } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function Success() {
-  const { stage } = useGetter((state) => state.donation);
+  const { hideModal } = useSetModal();
+  const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   function acknowledge() {
     dispatch(setStage({ step: Step.form, content: null }));
+    hideModal();
   }
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
@@ -22,7 +25,7 @@ export default function Success() {
           rel="noreferrer noopener"
           className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
         >
-          view donation details
+          view transaction details
         </a>
       )}
       <button

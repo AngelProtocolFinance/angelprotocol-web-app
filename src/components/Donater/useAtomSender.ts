@@ -11,16 +11,16 @@ import { Values } from "./types";
 import { cosmos_4_rpc } from "constants/urls";
 import { ap_wallets } from "constants/contracts";
 import { useSetter } from "store/accessors";
-import { setStage, setFormError } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
-import useErrorHandler from "./useErrorHandler";
+import { setStage, setFormError } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleKeplrError from "./handleKeplrError";
 
 const dwindow: DWindow = window;
 export default function useAtomSender() {
   const { provider } = useGetKeplr();
   const { watch, setValue } = useFormContext<Values>();
-  const handleError = useErrorHandler();
+  const handleTxError = useTxErrorHandler();
   const dispatch = useSetter();
 
   const currency = watch("currency");
@@ -114,7 +114,7 @@ export default function useAtomSender() {
         })
       );
     } catch (err) {
-      handleKeplrError(err, handleError, denoms.uatom);
+      handleKeplrError(err, handleTxError, denoms.uatom);
     } finally {
       setValue("amount", "");
     }

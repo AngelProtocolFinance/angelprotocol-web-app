@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 
 export default function Slider() {
-  const { form_error } = useGetter((state) => state.donation);
+  const { form_error } = useGetter((state) => state.transaction);
   const { register, watch } = useFormContext<Values>();
   const amount = Number(watch("amount"));
   const min_liq = watch("min_liq");

@@ -6,7 +6,7 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { Disconnected, TxResultFail } from "contracts/Errors";
-import { ErrorHandler } from "./types";
+import { ErrorHandler } from "components/Donater/types";
 
 export default function handleTerraError(error: any, handler: ErrorHandler) {
   if (error instanceof UserDenied) {

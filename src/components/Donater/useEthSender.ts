@@ -5,10 +5,10 @@ import { useFormContext } from "react-hook-form";
 import handleEthError from "./handleEthError";
 import { useSetter } from "store/accessors";
 import { setPending } from "services/wallet/walletSlice";
-import { setStage } from "services/donation/donationSlice";
+import { setStage } from "services/transaction/transactionSlice";
 import useEthEstimator from "./useEthEstimator";
-import { Step } from "services/donation/types";
-import useErrorHandler from "./useErrorHandler";
+import { Step } from "services/transaction/types";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { useSetModal } from "components/Nodal/Nodal";
 
 export default function useEthSender() {
@@ -17,7 +17,7 @@ export default function useEthSender() {
   const dispatch = useSetter();
   const { setValue } = useFormContext();
   const tx = useEthEstimator();
-  const handleError = useErrorHandler();
+  const handleTxError = useTxErrorHandler();
 
   async function sender(data: Values) {
     try {
@@ -54,7 +54,7 @@ export default function useEthSender() {
         hideModal();
       }
     } catch (error) {
-      handleEthError(error, handleError);
+      handleEthError(error, handleTxError);
     } finally {
       setValue("amount", "");
     }

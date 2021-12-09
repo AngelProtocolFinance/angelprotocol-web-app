@@ -8,8 +8,8 @@ const initialState: State = {
   stage: { step: Step.form, content: null },
 };
 
-const donationSlice = createSlice({
-  name: "donation",
+const transactionSlice = createSlice({
+  name: "transaction",
   initialState,
   reducers: {
     setFormError: (state, { payload }: PayloadAction<string>) => {
@@ -28,6 +28,6 @@ const donationSlice = createSlice({
   },
 });
 
-export default donationSlice.reducer;
+export default transactionSlice.reducer;
 export const { setFormError, setFormLoading, setFee, setStage } =
-  donationSlice.actions;
+  transactionSlice.actions;

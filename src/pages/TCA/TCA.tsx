@@ -2,7 +2,7 @@ import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import Donater from "components/Donater/Donater";
-import DonateSuite from "components/DonateSuite/DonateSuite";
+import DonateSuite from "components/TransactionSuite/DonateSuite";
 import DappHead from "components/Headers/DappHead";
 
 export default function TCA() {

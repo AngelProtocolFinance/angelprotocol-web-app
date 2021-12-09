@@ -35,8 +35,14 @@ export enum app {
   fund = "fund",
   board_tca = "tca-leaderboard",
   withdraw = "withdraw",
+  govern = "govern",
   test = "test",
   auction = "auction",
+}
+
+export enum govern {
+  index = "",
+  poll = "poll",
 }
 
 export enum registration {

@@ -7,17 +7,17 @@ import { DWindow, Values } from "./types";
 import useBTCEstimator from "./useBTCEstimator";
 import { chains } from "contracts/types";
 import handleEthError from "./handleEthError";
-import useErrorHandler from "./useErrorHandler";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { useSetter } from "store/accessors";
-import { setStage } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 
 const dwindow: DWindow = window;
 export default function useBTCSender() {
   useBTCEstimator();
   const dispatch = useSetter();
   const { setValue } = useFormContext<Values>();
-  const handleError = useErrorHandler();
+  const handleTxError = useTxErrorHandler();
   const wallet = useWallet();
 
   async function sender(data: Values) {
@@ -80,7 +80,7 @@ export default function useBTCSender() {
         })
       );
     } catch (err) {
-      handleEthError(err, handleError);
+      handleEthError(err, handleTxError);
     } finally {
       setValue("amount", "");
     }

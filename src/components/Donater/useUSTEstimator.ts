@@ -3,18 +3,19 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
-import useUSTBalance from "hooks/useUSTBalance";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
-import useDebouncer from "./useDebouncer";
+import useDebouncer from "../../hooks/useDebouncer";
 import { useGetKeplr } from "wallets/Keplr";
 import { useSetter } from "store/accessors";
 import {
   setFormError,
   setFormLoading,
   setFee,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
+// import useTerraBalance from "hooks/useTerraBalance";
+import { useBalances } from "services/terra/hooks";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
@@ -22,7 +23,7 @@ export default function useUSTEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
-  const UST_balance = useUSTBalance();
+  const { main: UST_balance } = useBalances(denoms.uusd);
 
   const keplr_ust = new Dec(
     keplr_balance.find((coin) => coin.denom === denoms.uusd)?.amount || "0"

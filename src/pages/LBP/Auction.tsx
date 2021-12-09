@@ -1,12 +1,13 @@
-import { useState } from "react";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import Swap, { SwapModal } from "components/Swap/Swap";
-import { FaClock, FaStopwatch } from "react-icons/fa";
-import AuctionHistory from "./AuctionHistory";
-import AuctionDetails from "./AuctionDetails";
-import { LaunchStatsProps } from ".";
 import { useSetModal } from "components/Nodal/Nodal";
+import PriceGraph from "components/PriceGraph";
+import Swap, { SwapModal } from "components/Swap/Swap";
+import { useState } from "react";
+import { FaClock, FaStopwatch } from "react-icons/fa";
+import { LaunchStatsProps } from ".";
 import DappHead from "components/Headers/DappHead";
+import AuctionDetails from "./AuctionDetails";
+import AuctionHistory from "./AuctionHistory";
 
 function AuctionStats() {
   return (
@@ -45,9 +46,7 @@ export default function Auction() {
               </button>
             </div>
             <AuctionStats></AuctionStats>
-            <div className="flex items-center justify-center w-full p-20">
-              <p className="p-0">Price chart</p>
-            </div>
+            <PriceGraph />
           </div>
           <div className="flex bg-gray-300 min-h-3/4 hidden lg:block">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
