@@ -38,8 +38,8 @@ export default function DaapMenu() {
         </a>
       </li>
       <li className="mr-4">
-        <NavLink to={`${app.marketplace}`} {...linkStyles}>
-          For donors
+        <NavLink to={`${app.charity}`} {...linkStyles}>
+          Donate now
         </NavLink>
       </li>
       <li className="mr-4 relative">
