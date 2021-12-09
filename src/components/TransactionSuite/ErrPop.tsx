@@ -1,10 +1,10 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { setStage } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function ErrPop() {
-  const { stage } = useGetter((state) => state.donation);
+  const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   function acknowledge() {
     dispatch(setStage({ step: Step.form, content: null }));

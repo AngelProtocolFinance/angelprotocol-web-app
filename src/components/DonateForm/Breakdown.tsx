@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 
 export default function Breakdown() {
-  const { fee } = useGetter((state) => state.donation);
+  const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<Values>();
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");

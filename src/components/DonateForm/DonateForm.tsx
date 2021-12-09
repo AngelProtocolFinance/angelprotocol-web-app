@@ -10,7 +10,7 @@ import Split from "./Split";
 import { useGetter } from "store/accessors";
 
 export default function DonateForm() {
-  const { form_loading, form_error } = useGetter((state) => state.donation);
+  const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<Values>();
   const { submitHandler, isSubmitting } = useDonateForm();
   const to = watch("to");

@@ -5,7 +5,7 @@ import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import { site, app } from "types/routes";
 import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";

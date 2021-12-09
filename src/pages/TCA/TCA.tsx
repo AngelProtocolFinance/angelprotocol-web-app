@@ -3,7 +3,7 @@ import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import Donater from "components/Donater/Donater";
-import DonateSuite from "components/DonateSuite/DonateSuite";
+import DonateSuite from "components/TransactionSuite/DonateSuite";
 
 export default function TCA() {
   const decodedToken = useGetToken();

@@ -7,7 +7,7 @@ import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 import { Values } from "components/Donater/types";
-import handleTerraError from "./handleTerraError";
+import handleTerraError from "helpers/handleTerraError";
 import useUSTEstimator from "./useUSTEstimator";
 import Contract from "contracts/Contract";
 import { useGetKeplr } from "wallets/Keplr";
@@ -15,12 +15,12 @@ import { chains } from "contracts/types";
 import { terra_mainnet_rpc } from "wallets/info_terra_mainnet";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
-import { setStage } from "services/donation/donationSlice";
+import { setStage } from "services/transaction/transactionSlice";
 import { Wallets } from "services/wallet/types";
 import { ap_wallets } from "constants/contracts";
 import handleKeplrError from "./handleKeplrError";
-import { Step } from "services/donation/types";
-import useErrorHandler from "./useErrorHandler";
+import { Step } from "services/transaction/types";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
 
 function useUSTSender() {
   const dispatch = useSetter();
@@ -29,7 +29,7 @@ function useUSTSender() {
   const { provider } = useGetKeplr();
   const wallet = useConnectedWallet();
   const tx = useUSTEstimator();
-  const handleError = useErrorHandler();
+  const handleTxError = useTxErrorHandler();
 
   //data:Data
   async function terra_sender() {
@@ -90,7 +90,7 @@ function useUSTSender() {
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleError);
+      handleTerraError(err, handleTxError);
     } finally {
       reset();
     }
@@ -171,7 +171,7 @@ function useUSTSender() {
         })
       );
     } catch (err) {
-      handleKeplrError(err, handleError, denoms.uusd);
+      handleKeplrError(err, handleTxError, denoms.uusd);
     } finally {
       setValue("amount", "");
     }

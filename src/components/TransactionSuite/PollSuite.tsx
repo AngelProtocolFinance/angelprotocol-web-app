@@ -1,4 +1,3 @@
-import DonateForm from "components/DonateForm/DonateForm";
 import { ReactNode } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import ErrPop from "./ErrPop";
@@ -7,12 +6,13 @@ import Broadcast from "./Broadcast";
 import Success from "./Success";
 import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Nodal/Nodal";
-import { setStage } from "services/donation/donationSlice";
-import { Step } from "services/donation/types";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
+import PollerForm from "components/Poller/PollerForm";
 
 type Display = { [key in Step]: ReactNode };
 
-export default function DonateSuite(props: { inModal?: true }) {
+export default function PollSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -21,9 +21,9 @@ export default function DonateSuite(props: { inModal?: true }) {
     hideModal();
   }
 
-  const { stage } = useGetter((state) => state.donation);
+  const { stage } = useGetter((state) => state.transaction);
   const display: Display = {
-    [Step.form]: <DonateForm />,
+    [Step.form]: <PollerForm />,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
     [Step.success]: <Success />,

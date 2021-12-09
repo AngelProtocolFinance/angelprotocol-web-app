@@ -10,7 +10,7 @@ import {
 import { Values } from "./types";
 import { useEffect, useState } from "react";
 import { useGetPhantom } from "wallets/Phantom";
-import useDebouncer from "./useDebouncer";
+import useDebouncer from "../../hooks/useDebouncer";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
 import { ap_wallets } from "constants/contracts";
@@ -19,7 +19,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/donation/donationSlice";
+} from "services/transaction/transactionSlice";
 
 export default function useSolEstimator() {
   const dispatch = useSetter();

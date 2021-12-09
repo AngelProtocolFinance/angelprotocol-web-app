@@ -2,7 +2,7 @@ import Loader from "components/Loader/Loader";
 import { useGetter } from "store/accessors";
 
 export default function Broadcast() {
-  const { stage } = useGetter((state) => state.donation);
+  const { stage } = useGetter((state) => state.transaction);
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center">
       <p className="text-center text-angel-grey mb-2">

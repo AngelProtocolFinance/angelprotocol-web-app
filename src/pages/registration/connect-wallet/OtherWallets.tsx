@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { BsExclamationCircle } from "react-icons/bs";
 import { useState } from "react";
 import Modal from "components/Modal/Modal";
