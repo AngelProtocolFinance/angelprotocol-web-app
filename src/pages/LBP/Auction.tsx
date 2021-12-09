@@ -32,7 +32,7 @@ export default function Auction() {
   const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
 
-  // const { isLoading: _, data: pairData } = useGetLBPPairData();
+  const { isLoading: _, data: pairData } = useGetLBPPairData();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
