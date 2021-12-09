@@ -1,6 +1,7 @@
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/DonateSuite/DonateSuite";
-import AppHead from "components/Headers/AppHead";
+// import AppHead from "components/Headers/AppHead";
+import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 
 export default function Test() {
@@ -31,7 +32,7 @@ export default function Test() {
 
   return (
     <div className="pb-16 grid grid-rows-a1">
-      <AppHead />
+      <DappHead />
       <div className="grid place-items-center content-center">
         <p className="text-white font-bold">tca form not modal</p>
         <Donater to="tca">

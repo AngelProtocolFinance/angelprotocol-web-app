@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
@@ -10,6 +9,7 @@ import { RouteComponentProps } from "react-router";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 import { RouteParam, Steps, Status, SetStatus } from "./types";
+import DappHead from "components/Headers/DappHead";
 
 const initialStatus = {
   step: Steps.initial,
@@ -50,7 +50,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
 
   return (
     <div className="pb-16 grid content-start min-h-screen">
-      <AppHead />
+      <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (
         <div className="min-h-leader-table grid place-items-center">

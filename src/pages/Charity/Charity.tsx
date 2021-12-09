@@ -3,9 +3,9 @@ import YouTube, { Options } from "react-youtube";
 
 import { CharityInfo } from "pages/Charity/CharityInfo";
 import { DonationInfo } from "./DonationInfo";
-import AppHead from "components/Headers/AppHead";
 import Donator from "components/Donator/Donator";
 import UserForm from "components/Donator/UserForm";
+import DappHead from "components/Headers/DappHead";
 
 const Charity = () => {
   const [isDonate, setIsDonate] = useState(false);
@@ -26,7 +26,7 @@ const Charity = () => {
   };
   return (
     <section className="container mx-auto grid grid-rows-1a pb-16 min-h-80%">
-      <AppHead />
+      <DappHead />
       <div className="flex flex-row justify-between pb-5">
         <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">
           <img
