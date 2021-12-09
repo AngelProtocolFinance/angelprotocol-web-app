@@ -22,7 +22,7 @@ export default function DaapMenu() {
   };
 
   const closeDropdown = () => setShowDropdown(false);
-
+  console.log("url", url);
   return (
     <ul
       className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
@@ -38,7 +38,7 @@ export default function DaapMenu() {
         </a>
       </li>
       <li className="mr-4">
-        <NavLink to={`app/${app.marketplace}`} {...linkStyles}>
+        <NavLink to={`${app.marketplace}`} {...linkStyles}>
           For donors
         </NavLink>
       </li>
@@ -79,7 +79,7 @@ export default function DaapMenu() {
           <ul className="py-1" aria-labelledby="governanceDropdown">
             <li>
               <NavLink
-                to={`${url}${app.auction}`}
+                to={`${app.auction}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -88,7 +88,7 @@ export default function DaapMenu() {
             </li>
             <li>
               <NavLink
-                to={`${url}${app.auction}`}
+                to={`${app.auction}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -99,7 +99,7 @@ export default function DaapMenu() {
         </div>
       </li>
       <li className="mr-4">
-        <NavLink to={`app/${app.tca}`} {...linkStyles}>
+        <NavLink to={`${app.tca}`} {...linkStyles}>
           Leaderboards
         </NavLink>
       </li>
