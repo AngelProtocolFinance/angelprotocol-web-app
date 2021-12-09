@@ -29,10 +29,10 @@ function AuctionStats() {
 
 export default function Auction() {
   const { showModal } = useSetModal();
-  const { isLoading, predictedPriceData, tokenSaleData } =
-    useGetTokenSaleData();
+  // const { isLoading, predictedPriceData, tokenSaleData } =
+  //   useGetTokenSaleData();
 
-  const { isLoading: _, data: pairData } = useGetLBPPairData();
+  const { isLoading, data } = useGetLBPPairData();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
@@ -54,8 +54,8 @@ export default function Auction() {
             <AuctionStats></AuctionStats>
             <PriceGraph
               isLoading={isLoading}
-              predictedPriceData={predictedPriceData}
-              tokenSaleData={tokenSaleData}
+              predictedPriceData={[]}
+              tokenSaleData={data}
             />
           </div>
           <div className="flex min-h-3/4 hidden lg:block">

@@ -1,7 +1,12 @@
 import { useConnectedWallet } from "@terra-dev/use-wallet";
 import { PriceData, TokenSaleData } from "components/PriceGraph/getGraphData";
 import { useEffect, useState } from "react";
-import { useGetLBPPairDataQuery } from "services/aws/lbp";
+import {
+  LBPPairDataQueryResult,
+  useGetLBPPairDataQuery,
+} from "services/aws/lbp";
+
+const TARGET_PRICE = 500;
 
 const toMiliseconds = (stringDateTime: string) =>
   new Date(stringDateTime).getTime();
@@ -52,8 +57,9 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
     return [];
   }
 
-  var numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
-  var points = [last];
+  const numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
+
+  const points = [last];
 
   const getPriceOnPoint = (i: number) =>
     (Math.abs(last.price - target.price) / numberOfPricePoints) *
@@ -75,7 +81,6 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
 };
 
 export function useGetTokenSaleData() {
-  const targetPrice = 500;
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
     tokenName: "Token",
@@ -91,7 +96,7 @@ export function useGetTokenSaleData() {
     setIsLoading(true);
 
     const targetPriceDataPoint = {
-      price: targetPrice,
+      price: TARGET_PRICE,
       date: tempTokenSaleData.auctionEndDateTime,
     };
 
@@ -122,13 +127,57 @@ export function useGetTokenSaleData() {
   };
 }
 
+const getPredictedPriceDataV2 = (
+  result: LBPPairDataQueryResult | undefined
+) => {
+  if (!result || !result.items || result.items.length === 0) {
+    return [];
+  }
+
+  // this should be read from the backend
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+
+  const target = {
+    price: TARGET_PRICE,
+    date: date.getTime(),
+  };
+
+  const numberOfPricePoints = 10;
+  const points = [];
+  const lastPairDataPoint = result.items[result.items.length - 1];
+  const lastPrice =
+    lastPairDataPoint.ask_price / lastPairDataPoint.return_amount;
+  const lastDate = lastPairDataPoint.timestamp;
+
+  const getPriceOnPoint = (i: number) =>
+    (Math.abs(lastPrice - target.price) / numberOfPricePoints) *
+      (numberOfPricePoints - i) +
+    target.price;
+
+  const getDateOnPoint = (i: number) =>
+    (Math.abs(lastDate - target.date) / numberOfPricePoints) * i + lastDate;
+
+  for (let i = 1; i < numberOfPricePoints; i++) {
+    points.push({
+      price: getPriceOnPoint(i),
+      date: getDateOnPoint(i),
+    });
+  }
+
+  points.push(target);
+
+  return points;
+};
+
 export function useGetTokenSaleDataV2() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
-  console.log(data);
+  const predictedPriceData = getPredictedPriceDataV2(data);
 
   return {
     isLoading: isLoading || isFetching,
     data,
+    predictedPriceData,
   };
 }

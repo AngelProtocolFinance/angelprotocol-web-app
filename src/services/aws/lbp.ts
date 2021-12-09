@@ -8,17 +8,18 @@ interface PairData {
   commission_amount: number;
   ask_weight: number;
   offer_weight: number;
+  ask_price: number;
 }
 
-interface PairDataQueryResult {
+export interface LBPPairDataQueryResult {
   message: string;
-  result: PairData;
+  items: PairData[];
   error: object;
 }
 
 const lbp_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    getLBPPairData: builder.query<PairDataQueryResult, any>({
+    getLBPPairData: builder.query<LBPPairDataQueryResult, any>({
       query: () => {
         return {
           url: "lbp-pair-data-get",
