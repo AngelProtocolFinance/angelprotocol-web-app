@@ -68,24 +68,19 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
       )}
       {isReady && (
         <div className="mt-0 md:mt-8 mx-auto w-auto text-white-grey">
-          <div className="flex justify-center md:justify-start">
-            <h2 className="md:pt-8 md:pl-6 uppercase text-lg font-bold">
-              Total Balance: $ {toCurrency(overall)}
-            </h2>
-          </div>
-          <div className="flex flex-wrap items-stretch justify-around mt-3 mx-4">
-            <Liquid liquidBalance={liquid} />
+          <h2 className="uppercase mb-2">
+            <span className="uppercase text-xs mr-0.5">Total Balance </span>
+            <span className="text-lg font-semibold">
+              ${toCurrency(overall)}
+            </span>
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Liquid
+              liquidBalance={liquid}
+              opener={openWithdrawForm}
+              isOwner={isEndowmentOwner}
+            />
             <Locked lockedBalance={locked} />
-          </div>
-          <div className="flex justify-center md:justify-start mt-0 md:mt-4 md:pl-6">
-            {isEndowmentOwner ? (
-              <button
-                className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
-                onClick={openWithdrawForm}
-              >
-                Withdraw from Accounts
-              </button>
-            ) : null}
           </div>
           <div>
             <getContext.Provider value={status}>
