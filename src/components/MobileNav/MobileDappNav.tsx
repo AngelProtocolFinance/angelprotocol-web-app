@@ -1,13 +1,15 @@
-import { NavLink } from "react-router-dom";
-import { app } from "types/routes";
-import { useRouteMatch } from "react-router-dom";
+import { NavLink, useRouteMatch } from "react-router-dom";
 import { createRef, useState } from "react";
+import { app } from "types/routes";
 import { createPopper } from "@popperjs/core/lib/createPopper";
 
-export default function DaapMenu() {
+//Will be for WebNav
+export default function MobileDappNav() {
+  //url = /
   const { url } = useRouteMatch();
+
   const linkStyles = {
-    className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold`,
+    className: `text-black hover:text-opacity-75 uppercase inline-flex items-center font-heading`,
     activeClassName: "font-bold",
   };
   const govButtonRef = createRef<any>();
@@ -22,11 +24,9 @@ export default function DaapMenu() {
   };
 
   const closeDropdown = () => setShowDropdown(false);
-  const path = url.split("/").length >= 2 ? "/app" : "";
-
   return (
     <ul
-      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
+      className={`text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
     >
       <li className="mr-4">
         <a
@@ -39,8 +39,8 @@ export default function DaapMenu() {
         </a>
       </li>
       <li className="mr-4">
-        <NavLink to={`${path}/${app.charity}`} {...linkStyles}>
-          Donate now
+        <NavLink to={`app/${app.marketplace}`} {...linkStyles}>
+          For donors
         </NavLink>
       </li>
       <li className="mr-4 relative">
@@ -80,7 +80,7 @@ export default function DaapMenu() {
           <ul className="py-1" aria-labelledby="governanceDropdown">
             <li>
               <NavLink
-                to={`${path}/${app.govern}`}
+                to={`${url}${app.auction}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -89,7 +89,7 @@ export default function DaapMenu() {
             </li>
             <li>
               <NavLink
-                to={`${path}/${app.auction}`}
+                to={`${url}${app.auction}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -100,7 +100,7 @@ export default function DaapMenu() {
         </div>
       </li>
       <li className="mr-4">
-        <NavLink to={`${path}/${app.tca}`} {...linkStyles}>
+        <NavLink to={`app/${app.tca}`} {...linkStyles}>
           Leaderboards
         </NavLink>
       </li>

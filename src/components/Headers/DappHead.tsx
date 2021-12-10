@@ -1,6 +1,6 @@
 import Logo from "components/Logo/Logo";
-import MobileDaapNav from "components/MobileNav/MobileDaapNav";
-import DaapMenu from "components/NavMenus/DaapMenu";
+import MobileDappNav from "components/MobileNav/MobileDappNav";
+import DappMenu from "components/NavMenus/DappMenu";
 import useWalletSuite from "components/WalletSuite/useWalletSuite";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export default function DappHead() {
     >
       <Logo />
       <nav className="w-full grid grid-cols-a1a items-center justify-items-end padded-container md:ml-5">
-        <DaapMenu />
+        <DappMenu />
         <div className="flex">
           <WalletSuite />
         </div>
@@ -29,7 +29,7 @@ export default function DappHead() {
         >
           <FiMenu className="text-2xl" />
         </button>
-        {navShown && <MobileDaapNav />}
+        {navShown && <MobileDappNav />}
       </nav>
     </header>
   );
