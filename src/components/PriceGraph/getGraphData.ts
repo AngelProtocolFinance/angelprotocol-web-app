@@ -12,7 +12,7 @@ interface ReferenceDotCoordinates {
 interface GraphPriceData {
   historicPrice?: number;
   predictedPrice?: number;
-  date: number;
+  timestamp: number;
 }
 
 interface AxisData {
@@ -33,12 +33,15 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
   const priceData = lbpPairData.historicPriceData
     .map(
       (data) =>
-        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
+        ({
+          historicPrice: data.price,
+          timestamp: data.timestamp,
+        } as GraphPriceData)
     )
     .concat(
       lbpPairData.predictedPriceData.map((data) => ({
         predictedPrice: data.price,
-        date: data.date,
+        timestamp: data.timestamp,
       }))
     );
 
@@ -130,7 +133,7 @@ const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
     lbpPairData.historicPriceData[lbpPairData.historicPriceData.length - 1];
 
   return {
-    x: lastPairDataPoint.date,
+    x: lastPairDataPoint.timestamp,
     y: lastPairDataPoint.price,
   };
 };

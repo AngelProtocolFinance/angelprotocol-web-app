@@ -7,7 +7,7 @@ import {
 
 export interface PriceData {
   price: number;
-  date: number;
+  timestamp: number;
 }
 
 export interface LBPPairData {
@@ -80,26 +80,29 @@ const calculateTokenPrice = (pairData: PairData) =>
 const getPredictedPriceData = (
   data: LBPPairDataQueryResult,
   auctionEndDateTime: number
-) => {
+): PriceData[] => {
   if (!data || !data.items || data.items.length === 0) {
     return [];
   }
 
-  const target = {
+  const target: PriceData = {
     price: TARGET_PRICE,
-    date: auctionEndDateTime,
+    timestamp: auctionEndDateTime,
   };
 
   const lastPairDataPoint = data.items[data.items.length - 1];
   const lastPrice = calculateTokenPrice(lastPairDataPoint);
   const lastDate = lastPairDataPoint.timestamp;
-  const numberOfPricePoints = getNumberOfPricePoints(lastDate, target.date);
+  const numberOfPricePoints = getNumberOfPricePoints(
+    lastDate,
+    target.timestamp
+  );
 
   // we initialize predicted points with the last pair data point
-  const points = [
+  const points: PriceData[] = [
     {
       price: lastPrice,
-      date: lastDate,
+      timestamp: lastDate,
     },
   ];
 
@@ -109,12 +112,13 @@ const getPredictedPriceData = (
     target.price;
 
   const getDateOnPoint = (i: number) =>
-    (Math.abs(lastDate - target.date) / numberOfPricePoints) * i + lastDate;
+    (Math.abs(lastDate - target.timestamp) / numberOfPricePoints) * i +
+    lastDate;
 
   for (let i = 1; i < numberOfPricePoints; i++) {
     points.push({
       price: getPriceOnPoint(i),
-      date: getDateOnPoint(i),
+      timestamp: getDateOnPoint(i),
     });
   }
 
@@ -123,11 +127,8 @@ const getPredictedPriceData = (
   return points;
 };
 
-const getHistoricPriceData = (data: LBPPairDataQueryResult) =>
-  data.items.map(
-    (pairData) =>
-      ({
-        price: calculateTokenPrice(pairData),
-        date: pairData.timestamp,
-      } as PriceData)
-  );
+const getHistoricPriceData = (data: LBPPairDataQueryResult): PriceData[] =>
+  data.items.map((pairData) => ({
+    price: calculateTokenPrice(pairData),
+    timestamp: pairData.timestamp,
+  }));

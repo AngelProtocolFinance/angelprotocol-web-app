@@ -48,7 +48,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
             <XAxis
               tickLine={false}
               tickFormatter={tickDateFormatter}
-              dataKey="date"
+              dataKey="timestamp"
               allowDuplicatedCategory={false}
               type="number"
               ticks={graphData.dateAxisData.ticks}
