@@ -82,11 +82,10 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
     lbpPairData.auctionEndDateTime
   );
 
-  // 2e7 is scientific notation equal to 2*10,000,000.
-  // Added it to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
+  // we add a couple of hours to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
   const dateAxisDomain = [
     lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime + 36e5 * 14,
+    lbpPairData.auctionEndDateTime + 36e5 * 4,
   ];
 
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
