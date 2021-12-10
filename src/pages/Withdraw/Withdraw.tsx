@@ -49,7 +49,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   }
 
   return (
-    <div className="pb-16 grid content-start min-h-screen">
+    <div className="grid content-start">
       <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (

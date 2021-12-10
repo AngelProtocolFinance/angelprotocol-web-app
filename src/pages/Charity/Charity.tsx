@@ -25,7 +25,7 @@ const Charity = () => {
     setIsDonate(!isDonate);
   };
   return (
-    <section className="container mx-auto grid grid-rows-1a pb-16 min-h-80%">
+    <section className="container mx-auto grid grid-rows-1a">
       <DappHead />
       <div className="flex flex-row justify-between pb-5">
         <div className="overflow-hidden lg:w-4/6 w-full lg:h-80 lg:pr-10">

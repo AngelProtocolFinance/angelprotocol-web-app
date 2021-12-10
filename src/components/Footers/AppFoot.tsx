@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function AppFoot() {
   return (
-    <footer className="w-full grid place-items-center max-h-28 bg-gray-900 pt-10">
+    <footer className="w-full grid place-items-center max-h-28 bg-gray-900">
       <div className="w-full  py-2 flex flex-col items-center lg:flex-row lg:items-center lg:justify-between padded-container">
         <nav className="flex lg:items-center mb-2 lg:mb-0 lg:order-2">
           <AppMenu />

@@ -20,16 +20,18 @@ export default function Logo() {
           <img src={blueLogo} alt="" className="w-32 sm:w-36" />
         </Link>
       );
-    case `/app`:
-    case `/app/${app.charities}`:
-    case `/app/${app.charity}`:
-    case `/app/${app.dashboard}`:
-    case `/app/${app.tca}`:
-    case `/app/${app.auction}`:
-    case `/app/${app.withdraw}`:
-    case `/app/${app.marketplace}`:
+    case `${site.app}`:
+    case `${site.app}/${app.charities}`:
+    case `${site.app}/${app.login}`:
+    case `${site.app}/${app.govern}`:
+    case `${site.app}/${app.charity}`:
+    case `${site.app}/${app.dashboard}`:
+    case `${site.app}/${app.tca}`:
+    case `${site.app}/${app.auction}`:
+    case `${site.app}/${app.withdraw}`:
+    case `${site.app}/${app.marketplace}`:
       return (
-        <Link to={app.marketplace} title="to home">
+        <Link to={site.app} title="to home">
           <img src={whiteLogo} alt="" className="w-32 sm:w-36" />
         </Link>
       );

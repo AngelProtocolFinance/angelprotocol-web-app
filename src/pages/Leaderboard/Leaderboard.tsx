@@ -9,7 +9,7 @@ export default function Leaderboard() {
   const { path } = useRouteMatch();
   //cast names to desired type
   return (
-    <section className="pb-16 grid content-start min-h-screen">
+    <section className="grid content-start">
       <DappHead />
       <h3 className="mt-6 padded-container uppercase text-white-grey text-3xl font-bold">
         Leaderboards

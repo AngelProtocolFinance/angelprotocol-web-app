@@ -7,7 +7,7 @@ import { createPopper } from "@popperjs/core/lib/createPopper";
 export default function DaapMenu() {
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading`,
+    className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold`,
     activeClassName: "font-bold",
   };
   const govButtonRef = createRef<any>();
@@ -22,7 +22,8 @@ export default function DaapMenu() {
   };
 
   const closeDropdown = () => setShowDropdown(false);
-  console.log("url", url);
+  const path = url.split("/").length >= 2 ? "/app" : "";
+
   return (
     <ul
       className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
@@ -38,7 +39,7 @@ export default function DaapMenu() {
         </a>
       </li>
       <li className="mr-4">
-        <NavLink to={`${app.charity}`} {...linkStyles}>
+        <NavLink to={`${path}/${app.charity}`} {...linkStyles}>
           Donate now
         </NavLink>
       </li>
@@ -79,7 +80,7 @@ export default function DaapMenu() {
           <ul className="py-1" aria-labelledby="governanceDropdown">
             <li>
               <NavLink
-                to={`${app.auction}`}
+                to={`${path}/${app.govern}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -88,7 +89,7 @@ export default function DaapMenu() {
             </li>
             <li>
               <NavLink
-                to={`${app.auction}`}
+                to={`${path}/${app.auction}`}
                 href="##"
                 className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
               >
@@ -99,7 +100,7 @@ export default function DaapMenu() {
         </div>
       </li>
       <li className="mr-4">
-        <NavLink to={`${app.tca}`} {...linkStyles}>
+        <NavLink to={`${path}/${app.tca}`} {...linkStyles}>
           Leaderboards
         </NavLink>
       </li>

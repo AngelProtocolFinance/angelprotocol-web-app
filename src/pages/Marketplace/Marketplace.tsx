@@ -9,7 +9,7 @@ export default function Marketplace() {
   const isTest = wallet?.network.chainID === chains.testnet;
   const { data } = useEndowmentsQuery(isTest);
   return (
-    <section className="pb-16 grid grid-rows-a1">
+    <section className="grid grid-rows-a1">
       <DappHead />
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 content-start gap-8 padded-container my-8">
         {data?.map((endowment) => (
