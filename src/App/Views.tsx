@@ -13,7 +13,7 @@ import { app, site } from "../types/routes";
 import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Withdraw from "pages/Withdraw/Withdraw";
-import Marketplace from "pages/Marketplace/Marketplace";
+import Marketplace2 from "pages/Marketplace/Marketplace2";
 import Test from "pages/Test";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
@@ -25,7 +25,7 @@ export default function Views() {
     <Switch>
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
       <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
-      <Route path={`${path}/${app.marketplace}`} component={Marketplace} />
+      <Route path={`${path}/${app.marketplace}`} component={Marketplace2} />
       <Route path={`${path}/${app.charity}`} component={Charity} />
       <Route path={`${path}/${app.login}`} component={Login} />
       <Route path={`${path}/${app.register}`} component={Register} />

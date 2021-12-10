@@ -1,6 +1,6 @@
 import CharityCard from "../CharityCard";
 import CategoryCard from "../CategoryCard/CategoryCard";
-import useClickScroll from "./useClickScroll";
+import useClickScroll from "../../hooks/useClickScroll";
 
 interface CharityCategoryProps {
   title: string;
