@@ -75,8 +75,8 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               dataKey="date"
               allowDuplicatedCategory={false}
               type="number"
-              ticks={graphData.dateTicks}
-              domain={graphData.dateAxisDomain}
+              ticks={graphData.dateAxisData.ticks}
+              domain={graphData.dateAxisData.axisDomain}
               dy={15}
               height={60}
             />

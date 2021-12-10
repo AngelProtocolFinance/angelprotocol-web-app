@@ -15,12 +15,18 @@ interface GraphPriceData {
   date: number;
 }
 
+interface AxisData {
+  ticks: number[];
+  axisDomain: number[];
+}
+
 interface GraphData {
   tokenName: string;
   priceData: GraphPriceData[];
-  dateTicks: number[];
+  dateAxisData: AxisData;
+  // dateTicks: number[];
+  // dateAxisDomain: number[];
   priceTicks: number[];
-  dateAxisDomain: number[];
   priceAxisDomain: number[];
   referenceDotCoordinates: ReferenceDotCoordinates;
 }
@@ -77,16 +83,8 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
       }))
     );
   const priceTicks = getPriceTicks(graphPriceData);
-  const dateTicks = getDateTicks(
-    lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime
-  );
 
-  // we add a couple of hours to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
-  const dateAxisDomain = [
-    lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime + 36e5 * 4,
-  ];
+  const dateAxisData = getDateAxisData(lbpPairData);
 
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
 
@@ -100,10 +98,27 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
   return {
     tokenName: lbpPairData.tokenName,
     priceData: graphPriceData,
-    dateTicks,
     priceTicks,
-    dateAxisDomain,
+    dateAxisData,
     priceAxisDomain,
     referenceDotCoordinates,
   } as GraphData;
+};
+
+const getDateAxisData = (lbpPairData: LBPPairData): AxisData => {
+  const ticks = getDateTicks(
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime
+  );
+
+  // we add a couple of hours to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
+  const axisDomain = [
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime + 36e5 * 4,
+  ];
+
+  return {
+    ticks,
+    axisDomain,
+  };
 };
