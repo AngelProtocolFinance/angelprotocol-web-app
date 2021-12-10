@@ -8,10 +8,7 @@ import { LaunchStatsProps } from ".";
 import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
-import {
-  useGetTokenSaleData,
-  useGetTokenSaleDataV2 as useGetLBPPairData,
-} from "./useGetTokenSaleData";
+import { useGetLBPPairData } from "./useGetTokenSaleData";
 
 function AuctionStats() {
   return (
@@ -32,7 +29,7 @@ export default function Auction() {
   // const { isLoading, predictedPriceData, tokenSaleData } =
   //   useGetTokenSaleData();
 
-  const { isLoading, data } = useGetLBPPairData();
+  const { isLoading, lbpPairData } = useGetLBPPairData();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
@@ -52,11 +49,7 @@ export default function Auction() {
               </button>
             </div>
             <AuctionStats></AuctionStats>
-            <PriceGraph
-              isLoading={isLoading}
-              predictedPriceData={[]}
-              tokenSaleData={data}
-            />
+            <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
           <div className="flex min-h-3/4 hidden lg:block">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}

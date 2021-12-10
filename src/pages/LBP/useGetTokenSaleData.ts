@@ -1,17 +1,29 @@
-import { useConnectedWallet } from "@terra-dev/use-wallet";
-import { PriceData, TokenSaleData } from "components/PriceGraph/getGraphData";
 import { useEffect, useState } from "react";
 import {
   LBPPairDataQueryResult,
+  PairData,
   useGetLBPPairDataQuery,
 } from "services/aws/lbp";
+
+export interface PriceData {
+  price: number;
+  date: number;
+}
+
+export interface LBPPairData {
+  tokenName: string;
+  auctionStartDateTime: number;
+  auctionEndDateTime: number;
+  historicPriceData: PriceData[];
+  predictedPriceData: PriceData[];
+}
 
 const TARGET_PRICE = 500;
 
 const toMiliseconds = (stringDateTime: string) =>
   new Date(stringDateTime).getTime();
 
-const tempTokenSaleData: TokenSaleData = {
+const tempTokenSaleData: LBPPairData = {
   tokenName: "HALO",
   auctionStartDateTime: toMiliseconds("2021-11-29 00:00"),
   auctionEndDateTime: toMiliseconds("2021-12-02 00:00"),
@@ -45,6 +57,7 @@ const tempTokenSaleData: TokenSaleData = {
     //   date: toMiliseconds("2021-12-02 00:00"),
     // },
   ],
+  predictedPriceData: [],
 };
 
 // 36e5 is the scientific notation for 60*60*1000,
@@ -83,11 +96,12 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
 export function useGetTokenSaleData() {
   const [isLoading, setIsLoading] = useState(false);
   const [tokenSaleData, setTokenSaleData] = useState({
-    tokenName: "Token",
+    tokenName: "HALO",
     auctionStartDateTime: 0,
     auctionEndDateTime: 0,
     historicPriceData: [],
-  } as TokenSaleData);
+    predictedPriceData: [],
+  } as LBPPairData);
   const [predictedPriceData, setPredictedPriceData] = useState(
     new Array<PriceData>()
   );
@@ -127,10 +141,11 @@ export function useGetTokenSaleData() {
   };
 }
 
-const getPredictedPriceDataV2 = (
-  result: LBPPairDataQueryResult | undefined
-) => {
-  if (!result || !result.items || result.items.length === 0) {
+const calculateTokenPrice = (pairData: PairData) =>
+  pairData.ask_price / pairData.return_amount;
+
+const getPredictedPriceDataV2 = (data: LBPPairDataQueryResult | undefined) => {
+  if (!data || !data.items || data.items.length === 0) {
     return [];
   }
 
@@ -145,9 +160,8 @@ const getPredictedPriceDataV2 = (
 
   const numberOfPricePoints = 10;
   const points = [];
-  const lastPairDataPoint = result.items[result.items.length - 1];
-  const lastPrice =
-    lastPairDataPoint.ask_price / lastPairDataPoint.return_amount;
+  const lastPairDataPoint = data.items[data.items.length - 1];
+  const lastPrice = calculateTokenPrice(lastPairDataPoint);
   const lastDate = lastPairDataPoint.timestamp;
 
   const getPriceOnPoint = (i: number) =>
@@ -170,14 +184,32 @@ const getPredictedPriceDataV2 = (
   return points;
 };
 
-export function useGetTokenSaleDataV2() {
+const getHistoricPriceData = (data: LBPPairDataQueryResult | undefined) =>
+  data?.items.map(
+    (pairData) =>
+      ({
+        price: calculateTokenPrice(pairData),
+        date: pairData.timestamp,
+      } as PriceData)
+  ) || [];
+
+export function useGetLBPPairData() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
+  const historicPriceData = getHistoricPriceData(data);
   const predictedPriceData = getPredictedPriceDataV2(data);
 
-  return {
-    isLoading: isLoading || isFetching,
-    data,
+  const lbpPairData = {
+    tokenName: "HALO",
+    auctionStartDateTime: data?.items[0].timestamp || Date.now(),
+    auctionEndDateTime: Date.now() + 24 * 36e5, // we add a day to today's Date, TODO: read this value from the backend
+    historicPriceData,
     predictedPriceData,
+  } as LBPPairData;
+
+  return {
+    error: !isLoading && data?.error,
+    isLoading: isLoading || isFetching,
+    lbpPairData,
   };
 }

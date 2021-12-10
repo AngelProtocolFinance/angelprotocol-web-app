@@ -1,14 +1,4 @@
-export interface PriceData {
-  price: number;
-  date: number;
-}
-
-export interface TokenSaleData {
-  tokenName: string;
-  auctionStartDateTime: number;
-  auctionEndDateTime: number;
-  historicPriceData: PriceData[];
-}
+import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 
 interface ReferenceDotCoordinates {
   x: number;
@@ -66,44 +56,42 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
   return ticks;
 };
 
-export const getGraphData = (
-  tokenSaleData: TokenSaleData,
-  predictedPriceData: PriceData[]
-) => {
+export const getGraphData = (lbpPairData: LBPPairData) => {
   // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
-  const graphPriceData = tokenSaleData.historicPriceData
+  const graphPriceData = lbpPairData.historicPriceData
     .map(
       (data) =>
         ({ historicPrice: data.price, date: data.date } as GraphPriceData)
     )
     .concat(
-      predictedPriceData.map((data) => ({
+      lbpPairData.predictedPriceData.map((data) => ({
         predictedPrice: data.price,
         date: data.date,
       }))
     );
   const priceTicks = getPriceTicks(graphPriceData);
   const dateTicks = getDateTicks(
-    tokenSaleData.auctionStartDateTime,
-    tokenSaleData.auctionEndDateTime
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime
   );
 
   // 2e7 is scientific notation equal to 2*10,000,000.
   // Added it to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
   const dateAxisDomain = [
-    tokenSaleData.auctionStartDateTime,
-    tokenSaleData.auctionEndDateTime + 2e7,
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime + 2e7,
   ];
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
-  const referenceDotCoordinates = !!predictedPriceData.length
+
+  const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length
     ? {
-        x: predictedPriceData[0].date,
-        y: predictedPriceData[0].price,
+        x: lbpPairData.predictedPriceData[0].date,
+        y: lbpPairData.predictedPriceData[0].price,
       }
     : null;
 
   return {
-    tokenName: tokenSaleData.tokenName,
+    tokenName: lbpPairData.tokenName,
     priceData: graphPriceData,
     dateTicks,
     priceTicks,

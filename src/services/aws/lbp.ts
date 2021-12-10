@@ -1,6 +1,6 @@
 import { aws } from "./aws";
 
-interface PairData {
+export interface PairData {
   pair_contract: string;
   timestamp: number;
   return_amount: number;

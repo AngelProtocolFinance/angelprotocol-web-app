@@ -1,4 +1,6 @@
 import Loader from "components/Loader/Loader";
+import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
+import React from "react";
 import {
   Legend,
   Line,
@@ -9,13 +11,12 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getGraphData, PriceData, TokenSaleData } from "./getGraphData";
+import { getGraphData } from "./getGraphData";
 import { LegendLabel } from "./LegendLabel";
 
 type Props = {
   isLoading: boolean;
-  predictedPriceData: PriceData[];
-  tokenSaleData: TokenSaleData;
+  lbpPairData: LBPPairData;
 };
 
 const tickDateFormatter = (dateInMiliseconds: number) =>
@@ -42,12 +43,8 @@ const legendFormatter = (value: string, _: any, index: number) => {
   );
 };
 
-export default function PriceGraph({
-  isLoading,
-  predictedPriceData,
-  tokenSaleData,
-}: Props) {
-  const graphData = getGraphData(tokenSaleData, predictedPriceData);
+export default function PriceGraph({ isLoading, lbpPairData }: Props) {
+  const graphData = getGraphData(lbpPairData);
 
   return (
     <>
