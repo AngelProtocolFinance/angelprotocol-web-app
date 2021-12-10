@@ -28,15 +28,18 @@ interface GraphData {
 const getPriceTicks = (data: GraphPriceData[]) => {
   // maximum price to be shown on the price axis
   const maxPrice = data.reduce(
-    (prev, data) =>
-      Math.max(prev, data.historicPrice || data.predictedPrice || 0),
+    (prev, data) => Math.max(prev, data.historicPrice || 0),
     0
   );
+
+  // multiplying by 1.1 to add some margin to the historic price line
+  const maxPriceTick = maxPrice * 1.1;
+
   return [
-    Math.ceil(maxPrice * 0.25),
-    Math.ceil(maxPrice * 0.5),
-    Math.ceil(maxPrice * 0.75),
-    Math.ceil(maxPrice),
+    maxPriceTick * 0.25,
+    maxPriceTick * 0.5,
+    maxPriceTick * 0.75,
+    maxPriceTick,
   ];
 };
 
