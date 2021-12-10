@@ -11,15 +11,10 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${url}${app.index}`} {...linkStyles}>
-          Leaderboards
+        <Link to={`${url}/${app.leaderboard}`} {...linkStyles}>
+          LEADERBOARD
         </Link>
       </li>
-      {/*<li>
-        <Link to={`${url}/${app.dashboard}`} {...linkStyles}>
-          CHARITIES
-        </Link>
-      </li>*/}
       <li>
         <Link to={`${url}/${app.register}`} {...linkStyles}>
           REGISTER
@@ -32,7 +27,7 @@ export default function AppMenu() {
       </li>
       <li>
         <Link to={`${url}/${app.auction}`} {...linkStyles}>
-          Buy HALO
+          BUY HALO
         </Link>
       </li>
     </ul>
