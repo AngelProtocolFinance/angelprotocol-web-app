@@ -14,7 +14,7 @@ export interface PairData {
 export interface LBPPairDataQueryResult {
   message: string;
   items: PairData[];
-  error: object;
+  error: any;
 }
 
 const lbp_api = aws.injectEndpoints({
