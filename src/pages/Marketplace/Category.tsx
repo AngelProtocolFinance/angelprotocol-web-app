@@ -8,10 +8,10 @@ import CharityCard2 from "./CharityCard2";
 export default function Category(props: RouteComponentProps<{ id?: string }>) {
   const { path } = useRouteMatch();
   const { data = [] } = useProfilesQuery(undefined);
-  //params may be string or number > 17
-  const id = +(props.match.params?.id || "0");
 
-  if (isNaN(id) || id > 17) {
+  //sanitize id param
+  const id = +(props.match.params?.id || "0");
+  if (id - Math.floor(id) > 0 || isNaN(id) || id > 17) {
     return <Redirect to={`..${path}/0`} />;
   }
 
