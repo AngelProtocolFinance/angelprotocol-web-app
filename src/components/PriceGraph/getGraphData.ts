@@ -89,11 +89,6 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
     lbpPairData.auctionEndDateTime + 36e5 * 14,
   ];
 
-  console.log(
-    new Date(graphPriceData[graphPriceData.length - 1].date).toUTCString()
-  );
-  console.log(new Date(dateAxisDomain[1]).toUTCString());
-
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
 
   const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length
