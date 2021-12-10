@@ -25,10 +25,10 @@ interface GraphData {
   priceData: GraphPriceData[];
   dateAxisData: AxisData;
   priceAxisData: AxisData;
-  referenceDotCoordinates: ReferenceDotCoordinates;
+  referenceDotCoordinates?: ReferenceDotCoordinates;
 }
 
-export const getGraphData = (lbpPairData: LBPPairData) => {
+export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
   // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
   const priceData = lbpPairData.historicPriceData
     .map(
