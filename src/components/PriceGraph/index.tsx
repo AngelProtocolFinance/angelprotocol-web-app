@@ -105,11 +105,13 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               name={`${graphData.tokenName} predicted price`}
               isAnimationActive={false}
             />
-            <ReferenceDot
-              r={4}
-              {...graphData.referenceDotCoordinates}
-              stroke="#901ef2"
-            />
+            {graphData.referenceDotCoordinates && (
+              <ReferenceDot
+                r={4}
+                {...graphData.referenceDotCoordinates}
+                stroke="#901ef2"
+              />
+            )}
             <Legend iconType="circle" formatter={legendFormatter} />
           </LineChart>
         </ResponsiveContainer>

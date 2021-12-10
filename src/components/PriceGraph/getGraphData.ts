@@ -95,6 +95,10 @@ const getPriceAxisData = (priceData: GraphPriceData[]) => {
 };
 
 const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
+  if (!lbpPairData.historicPriceData.length) {
+    return;
+  }
+
   const lastPairDataPoint =
     lbpPairData.historicPriceData[lbpPairData.historicPriceData.length - 1];
 
