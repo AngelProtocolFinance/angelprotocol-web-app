@@ -42,7 +42,7 @@ const Login = () => {
         <div className="text-center my-5 text-gray-400">
           <p className="text-sm sm:text-base">Access Restricted to</p>
           <p className="text-base sm:text-lg font-bold  text-angel-grey">
-            Terra Charity Alliance Members
+            Angel Alliance Members
           </p>
         </div>
         <Formik
