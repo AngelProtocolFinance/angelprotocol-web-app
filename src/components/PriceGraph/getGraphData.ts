@@ -66,7 +66,7 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
   return ticks;
 };
 
-const getDateAxisData = (lbpPairData: LBPPairData): AxisData => {
+const getDateAxisData = (lbpPairData: LBPPairData) => {
   const ticks = getDateTicks(
     lbpPairData.auctionStartDateTime,
     lbpPairData.auctionEndDateTime
@@ -84,13 +84,23 @@ const getDateAxisData = (lbpPairData: LBPPairData): AxisData => {
   };
 };
 
-const getPriceAxisData = (priceData: GraphPriceData[]): AxisData => {
+const getPriceAxisData = (priceData: GraphPriceData[]) => {
   const ticks = getPriceTicks(priceData);
   const axisDomain = [0, ticks[ticks.length - 1]];
 
   return {
     ticks,
     axisDomain,
+  };
+};
+
+const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
+  const lastPairDataPoint =
+    lbpPairData.historicPriceData[lbpPairData.historicPriceData.length - 1];
+
+  return {
+    x: lastPairDataPoint.date,
+    y: lastPairDataPoint.price,
   };
 };
 
@@ -110,13 +120,7 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
 
   const dateAxisData = getDateAxisData(lbpPairData);
   const priceAxisData = getPriceAxisData(priceData);
-
-  const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length
-    ? {
-        x: lbpPairData.predictedPriceData[0].date,
-        y: lbpPairData.predictedPriceData[0].price,
-      }
-    : null;
+  const referenceDotCoordinates = getReferenceDotCoordinates(lbpPairData);
 
   return {
     tokenName: lbpPairData.tokenName,
