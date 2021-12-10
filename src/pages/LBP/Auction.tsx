@@ -26,8 +26,6 @@ function AuctionStats() {
 
 export default function Auction() {
   const { showModal } = useSetModal();
-  // const { isLoading, predictedPriceData, tokenSaleData } =
-  //   useGetTokenSaleData();
 
   const { isLoading, lbpPairData } = useGetLBPPairData();
 
