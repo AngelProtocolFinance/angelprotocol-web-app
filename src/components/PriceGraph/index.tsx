@@ -53,8 +53,8 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               type="number"
               ticks={graphData.dateAxisData.ticks}
               domain={graphData.dateAxisData.axisDomain}
-              dy={15}
-              height={60}
+              dy={10}
+              height={80}
             />
             <YAxis
               axisLine={false}
