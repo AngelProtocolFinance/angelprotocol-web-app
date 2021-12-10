@@ -24,10 +24,7 @@ interface GraphData {
   tokenName: string;
   priceData: GraphPriceData[];
   dateAxisData: AxisData;
-  // dateTicks: number[];
-  // dateAxisDomain: number[];
-  priceTicks: number[];
-  priceAxisDomain: number[];
+  priceAxisData: AxisData;
   referenceDotCoordinates: ReferenceDotCoordinates;
 }
 
@@ -69,42 +66,6 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
   return ticks;
 };
 
-export const getGraphData = (lbpPairData: LBPPairData) => {
-  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
-  const graphPriceData = lbpPairData.historicPriceData
-    .map(
-      (data) =>
-        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
-    )
-    .concat(
-      lbpPairData.predictedPriceData.map((data) => ({
-        predictedPrice: data.price,
-        date: data.date,
-      }))
-    );
-  const priceTicks = getPriceTicks(graphPriceData);
-
-  const dateAxisData = getDateAxisData(lbpPairData);
-
-  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
-
-  const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length
-    ? {
-        x: lbpPairData.predictedPriceData[0].date,
-        y: lbpPairData.predictedPriceData[0].price,
-      }
-    : null;
-
-  return {
-    tokenName: lbpPairData.tokenName,
-    priceData: graphPriceData,
-    priceTicks,
-    dateAxisData,
-    priceAxisDomain,
-    referenceDotCoordinates,
-  } as GraphData;
-};
-
 const getDateAxisData = (lbpPairData: LBPPairData): AxisData => {
   const ticks = getDateTicks(
     lbpPairData.auctionStartDateTime,
@@ -121,4 +82,47 @@ const getDateAxisData = (lbpPairData: LBPPairData): AxisData => {
     ticks,
     axisDomain,
   };
+};
+
+const getPriceAxisData = (priceData: GraphPriceData[]): AxisData => {
+  const ticks = getPriceTicks(priceData);
+  const axisDomain = [0, ticks[ticks.length - 1]];
+
+  return {
+    ticks,
+    axisDomain,
+  };
+};
+
+export const getGraphData = (lbpPairData: LBPPairData) => {
+  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
+  const priceData = lbpPairData.historicPriceData
+    .map(
+      (data) =>
+        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
+    )
+    .concat(
+      lbpPairData.predictedPriceData.map((data) => ({
+        predictedPrice: data.price,
+        date: data.date,
+      }))
+    );
+
+  const dateAxisData = getDateAxisData(lbpPairData);
+  const priceAxisData = getPriceAxisData(priceData);
+
+  const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length
+    ? {
+        x: lbpPairData.predictedPriceData[0].date,
+        y: lbpPairData.predictedPriceData[0].price,
+      }
+    : null;
+
+  return {
+    tokenName: lbpPairData.tokenName,
+    priceData,
+    dateAxisData,
+    priceAxisData,
+    referenceDotCoordinates,
+  } as GraphData;
 };
