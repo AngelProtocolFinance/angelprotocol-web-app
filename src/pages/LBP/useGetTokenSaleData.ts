@@ -28,7 +28,7 @@ const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
 const calculateTokenPrice = (pairData: PairData) =>
   pairData.ask_price / pairData.return_amount;
 
-const getPredictedPriceDataV2 = (
+const getPredictedPriceData = (
   data: LBPPairDataQueryResult | undefined,
   auctionEndDateTime: number
 ) => {
@@ -87,8 +87,9 @@ export function useGetLBPPairData() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
   const auctionEndDateTime = Date.now() + 24 * 36e5;
+
   const historicPriceData = getHistoricPriceData(data);
-  const predictedPriceData = getPredictedPriceDataV2(data, auctionEndDateTime);
+  const predictedPriceData = getPredictedPriceData(data, auctionEndDateTime);
 
   const lbpPairData = {
     tokenName: "HALO",
