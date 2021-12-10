@@ -47,15 +47,19 @@ const getPriceTicks = (data: GraphPriceData[]) => {
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the miliseconds into hours.
 const getDateTicks = (startDateTime: number, endDateTime: number) => {
-  const dayConversionMultiplier = 36e5 * 24;
+  const tickDistance = 36e5 * 24;
+
   const ticks = [];
   for (
     let nextTick = startDateTime;
-    nextTick <= endDateTime;
-    nextTick += dayConversionMultiplier
+    nextTick < endDateTime;
+    nextTick += tickDistance
   ) {
     ticks.push(nextTick);
   }
+
+  ticks.push(endDateTime);
+
   return ticks;
 };
 
@@ -82,8 +86,14 @@ export const getGraphData = (lbpPairData: LBPPairData) => {
   // Added it to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
   const dateAxisDomain = [
     lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime + 2e7,
+    lbpPairData.auctionEndDateTime + 36e5 * 14,
   ];
+
+  console.log(
+    new Date(graphPriceData[graphPriceData.length - 1].date).toUTCString()
+  );
+  console.log(new Date(dateAxisDomain[1]).toUTCString());
+
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
 
   const referenceDotCoordinates = !!lbpPairData.predictedPriceData.length

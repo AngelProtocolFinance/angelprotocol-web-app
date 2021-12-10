@@ -28,18 +28,17 @@ const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
 const calculateTokenPrice = (pairData: PairData) =>
   pairData.ask_price / pairData.return_amount;
 
-const getPredictedPriceDataV2 = (data: LBPPairDataQueryResult | undefined) => {
+const getPredictedPriceDataV2 = (
+  data: LBPPairDataQueryResult | undefined,
+  auctionEndDateTime: number
+) => {
   if (!data || !data.items || data.items.length === 0) {
     return [];
   }
 
-  // this should be read from the backend
-  const date = new Date();
-  date.setDate(date.getDate() + 2);
-
   const target = {
     price: TARGET_PRICE,
-    date: date.getTime(),
+    date: auctionEndDateTime,
   };
 
   const lastPairDataPoint = data.items[data.items.length - 1];
@@ -87,13 +86,14 @@ const getHistoricPriceData = (data: LBPPairDataQueryResult | undefined) =>
 export function useGetLBPPairData() {
   const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
 
+  const auctionEndDateTime = Date.now() + 24 * 36e5;
   const historicPriceData = getHistoricPriceData(data);
-  const predictedPriceData = getPredictedPriceDataV2(data);
+  const predictedPriceData = getPredictedPriceDataV2(data, auctionEndDateTime);
 
   const lbpPairData = {
     tokenName: "HALO",
     auctionStartDateTime: data?.items[0].timestamp || Date.now(),
-    auctionEndDateTime: Date.now() + 24 * 36e5, // we add a day to today's Date, TODO: read this value from the backend
+    auctionEndDateTime, // we add a day to today's Date, TODO: read this value from the backend
     historicPriceData,
     predictedPriceData,
   } as LBPPairData;
