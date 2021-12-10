@@ -22,6 +22,53 @@ export interface LBPPairData {
 const TARGET_PRICE = 1e-6;
 const DAY_IN_MILISECONDS = 24 * 36e5;
 
+export function useGetLBPPairData() {
+  const [lbpPairData, setLBPPairData] = useState({
+    tokenName: "HALO",
+    historicPriceData: [],
+    predictedPriceData: [],
+    auctionStartDateTime: Date.now() - DAY_IN_MILISECONDS,
+    auctionEndDateTime: Date.now() + DAY_IN_MILISECONDS,
+  } as LBPPairData);
+  const [error, setError] = useState("");
+  const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
+
+  // TODO: read this value from the backend
+  // for now we add a day to today's date for the auction end date
+  const auctionEndDateTime = Date.now() + DAY_IN_MILISECONDS;
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    if (data.error) {
+      setError(
+        `Failed to get LBP pair data. Error message: ${data.error.message}`
+      );
+      return;
+    }
+
+    const historicPriceData = getHistoricPriceData(data);
+    const predictedPriceData = getPredictedPriceData(data, auctionEndDateTime);
+
+    const newLBPPairData = {
+      tokenName: "HALO",
+      auctionStartDateTime: data?.items[0].timestamp || Date.now(),
+      auctionEndDateTime,
+      historicPriceData,
+      predictedPriceData,
+    };
+    setLBPPairData(newLBPPairData);
+  }, [data]);
+
+  return {
+    error: !isLoading && error,
+    isLoading: isLoading || isFetching,
+    lbpPairData,
+  };
+}
+
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the milisecond difference into hours
 const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
@@ -77,57 +124,10 @@ const getPredictedPriceData = (
 };
 
 const getHistoricPriceData = (data: LBPPairDataQueryResult) =>
-  data?.items.map(
+  data.items.map(
     (pairData) =>
       ({
         price: calculateTokenPrice(pairData),
         date: pairData.timestamp,
       } as PriceData)
-  ) || [];
-
-export function useGetLBPPairData() {
-  const [lbpPairData, setLBPPairData] = useState({
-    tokenName: "HALO",
-    historicPriceData: [],
-    predictedPriceData: [],
-    auctionStartDateTime: Date.now() - DAY_IN_MILISECONDS,
-    auctionEndDateTime: Date.now() + DAY_IN_MILISECONDS,
-  } as LBPPairData);
-  const [error, setError] = useState("");
-  const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
-
-  // TODO: read this value from the backend
-  // for now we add a day to today's date for the auction end date
-  const auctionEndDateTime = Date.now() + DAY_IN_MILISECONDS;
-
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    if (data.error) {
-      setError(
-        `Failed to get LBP pair data. Error message: ${data.error.message}`
-      );
-      return;
-    }
-
-    const historicPriceData = getHistoricPriceData(data);
-    const predictedPriceData = getPredictedPriceData(data, auctionEndDateTime);
-
-    const newLBPPairData = {
-      tokenName: "HALO",
-      auctionStartDateTime: data?.items[0].timestamp || Date.now(),
-      auctionEndDateTime,
-      historicPriceData,
-      predictedPriceData,
-    };
-    setLBPPairData(newLBPPairData);
-  }, [data]);
-
-  return {
-    error: !isLoading && error,
-    isLoading: isLoading || isFetching,
-    lbpPairData,
-  };
-}
+  );

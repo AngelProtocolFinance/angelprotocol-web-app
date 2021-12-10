@@ -28,6 +28,33 @@ interface GraphData {
   referenceDotCoordinates: ReferenceDotCoordinates;
 }
 
+export const getGraphData = (lbpPairData: LBPPairData) => {
+  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
+  const priceData = lbpPairData.historicPriceData
+    .map(
+      (data) =>
+        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
+    )
+    .concat(
+      lbpPairData.predictedPriceData.map((data) => ({
+        predictedPrice: data.price,
+        date: data.date,
+      }))
+    );
+
+  const dateAxisData = getDateAxisData(lbpPairData);
+  const priceAxisData = getPriceAxisData(priceData);
+  const referenceDotCoordinates = getReferenceDotCoordinates(lbpPairData);
+
+  return {
+    tokenName: lbpPairData.tokenName,
+    priceData,
+    dateAxisData,
+    priceAxisData,
+    referenceDotCoordinates,
+  };
+};
+
 const getPriceTicks = (data: GraphPriceData[]) => {
   // maximum price to be shown on the price axis
   const maxPrice = data.reduce(
@@ -106,31 +133,4 @@ const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
     x: lastPairDataPoint.date,
     y: lastPairDataPoint.price,
   };
-};
-
-export const getGraphData = (lbpPairData: LBPPairData) => {
-  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
-  const priceData = lbpPairData.historicPriceData
-    .map(
-      (data) =>
-        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
-    )
-    .concat(
-      lbpPairData.predictedPriceData.map((data) => ({
-        predictedPrice: data.price,
-        date: data.date,
-      }))
-    );
-
-  const dateAxisData = getDateAxisData(lbpPairData);
-  const priceAxisData = getPriceAxisData(priceData);
-  const referenceDotCoordinates = getReferenceDotCoordinates(lbpPairData);
-
-  return {
-    tokenName: lbpPairData.tokenName,
-    priceData,
-    dateAxisData,
-    priceAxisData,
-    referenceDotCoordinates,
-  } as GraphData;
 };

@@ -19,30 +19,6 @@ type Props = {
   lbpPairData: LBPPairData;
 };
 
-const tickDateFormatter = (dateInMiliseconds: number) =>
-  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
-  });
-
-const tickPriceFormatter = (value: number) =>
-  new Intl.NumberFormat("en-us", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 2,
-  }).format(value);
-
-const legendFormatter = (value: string, _: any, index: number) => {
-  return (
-    <LegendLabel>
-      {value}
-      {!!index && (
-        <span className="text-gray-500 text-sm ml-1">(without new buyers)</span>
-      )}
-    </LegendLabel>
-  );
-};
-
 export default function PriceGraph({ isLoading, lbpPairData }: Props) {
   const graphData = getGraphData(lbpPairData);
 
@@ -119,3 +95,27 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
     </>
   );
 }
+
+const tickDateFormatter = (dateInMiliseconds: number) =>
+  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
+    day: "numeric",
+    month: "short",
+  });
+
+const tickPriceFormatter = (value: number) =>
+  new Intl.NumberFormat("en-us", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: 2,
+  }).format(value);
+
+const legendFormatter = (value: string, _: any, index: number) => {
+  return (
+    <LegendLabel>
+      {value}
+      {!!index && (
+        <span className="text-gray-500 text-sm ml-1">(without new buyers)</span>
+      )}
+    </LegendLabel>
+  );
+};
