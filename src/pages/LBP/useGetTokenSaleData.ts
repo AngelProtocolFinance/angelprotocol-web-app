@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   LBPPairDataQueryResult,
   PairData,
@@ -18,47 +17,8 @@ export interface LBPPairData {
   predictedPriceData: PriceData[];
 }
 
+// TODO: If the prediction price line is necessary, this should be read from the DB
 const TARGET_PRICE = 1e-6;
-
-const toMiliseconds = (stringDateTime: string) =>
-  new Date(stringDateTime).getTime();
-
-const tempTokenSaleData: LBPPairData = {
-  tokenName: "HALO",
-  auctionStartDateTime: toMiliseconds("2021-11-29 00:00"),
-  auctionEndDateTime: toMiliseconds("2021-12-02 00:00"),
-  historicPriceData: [
-    {
-      price: 2400,
-      date: toMiliseconds("2021-11-29 01:00"),
-    },
-    {
-      price: 1398,
-      date: toMiliseconds("2021-11-30 01:00"),
-    },
-    {
-      price: 9800,
-      date: toMiliseconds("2021-11-30 11:00"),
-    },
-    {
-      price: 3908,
-      date: toMiliseconds("2021-12-01 01:00"),
-    },
-    {
-      price: 4800,
-      date: toMiliseconds("2021-12-01 11:00"),
-    },
-    // {
-    //   price: 3800,
-    //   date: toMiliseconds("2021-12-01 16:00"),
-    // },
-    // {
-    //   price: 4300,
-    //   date: toMiliseconds("2021-12-02 00:00"),
-    // },
-  ],
-  predictedPriceData: [],
-};
 
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the milisecond difference into hours
