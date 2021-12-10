@@ -44,60 +44,9 @@ export default function MobileDappNav() {
         </NavLink>
       </li>
       <li className="mr-4 relative">
-        <button
-          {...linkStyles}
-          type="button"
-          id="governanceDropdown"
-          data-dropdown-toggle="gDropdown"
-          ref={govButtonRef}
-          onClick={() =>
-            showDropdown ? closeDropdown() : openDropdwonPopover()
-          }
-        >
+        <NavLink to={`app/${app.govern}`} {...linkStyles}>
           Governance
-          <svg
-            className="w-4 h-4 ml-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
-            />
-          </svg>
-        </button>
-        <div
-          id="gDropdown"
-          ref={govDropdownRef}
-          className={`${
-            showDropdown ? "block" : "hidden"
-          } absolute top-10 left-0 bg-white text-base z-10 list-none divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700`}
-        >
-          <ul className="py-1" aria-labelledby="governanceDropdown">
-            <li>
-              <NavLink
-                to={`${url}${app.auction}`}
-                href="##"
-                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-              >
-                Staking (Gov page)
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to={`${url}${app.auction}`}
-                href="##"
-                className="text-sm hover:bg-gray-100 text-gray-700 block px-4 py-2 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-              >
-                HALO Swap (AMM page)
-              </NavLink>
-            </li>
-          </ul>
-        </div>
+        </NavLink>
       </li>
       <li className="mr-4">
         <NavLink to={`app/${app.tca}`} {...linkStyles}>
