@@ -57,7 +57,7 @@ const Admin = () => {
                   component={IndexFund}
                 />
                 <Route
-                  path={`${path}/${admin.aliance_members}`}
+                  path={`${path}/${admin.alliance_members}`}
                   component={IndexFund}
                 />
                 <Route path={`${path}/${admin.login}`} component={AdminLogin} />
