@@ -16,7 +16,7 @@ export default function CharityInfoNav({
   };
 
   return (
-    <nav className=" overflow-x-scroll grid grid-cols-a1a items-center justify-between md:justify-items-center 2xl:padded-container my-5 2xl:mb-0 md:pl-0">
+    <nav className=" overflow-x-scroll grid items-center justify-between 2xl:padded-container my-5 2xl:mb-0 md:pl-0">
       <ul
         className={`flex font-body text-sm lg:text-base overflow-x-scroll ml-1 `}
       >

@@ -1,8 +1,3 @@
-import Donator from "components/Donator/Donator";
-import UserForm from "components/Donator/UserForm";
-// import { useState } from "react";
-// import Modal from "react-modal";
-// import { CharityInfo } from "./CharityInfo";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 const mockCharityStats: any = [
@@ -43,8 +38,8 @@ interface DonationInfoProps {
 }
 export function DonationInfo({ openModal }: DonationInfoProps) {
   return (
-    <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-0 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 min-h-1/2 2xl:min-h-3/4 py-2">
-      <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 md:px-10 mt-10 2xl:mt-0">
+    <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-0 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 py-2">
+      <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 2xl:mt-0">
         <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
           SDG #5: GENDER EQUALITY
         </span>
@@ -72,7 +67,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       </div>
       {/* charity stats */}
 
-      <div className="flex flex-col h-full 2xl:h-80 px-0 md:px-10 lg:mt-10 2xl:mt-0 lg:overflow-y-scroll">
+      <div className="flex flex-col h-full 2xl:h-80 px-0 2xl:px-10 lg:mt-10 2xl:mt-0">
         {mockCharityStats.map(({ title, value, rating }: any, i: number) => (
           <StatsItem
             key={i}

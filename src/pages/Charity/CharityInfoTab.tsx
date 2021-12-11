@@ -1,6 +1,6 @@
 function OverviewTab() {
   return (
-    <div className="w-full overflow-y-scroll lg:min-h-1/2 max-h-modal lg:py-10 lg:mt-2 2xl:mb-5 text-left">
+    <div className="w-full lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left">
       <span className="text-white font-normal text-md inline-block mb-4">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil atque
         dolorum dolorem. Velit pariatur tempora quasi vitae inventore natus at
@@ -86,8 +86,8 @@ function AccountAction() {
 
 function CharityEndowmentInfo() {
   return (
-    <div className="w-full overflow-y-scroll lg:min-h-1/2 lg:mt-5 text-left pb-10">
-      <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl p-5 mb-5">
+    <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10">
+      <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
         <div className="endowment_stats bg-white w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-6">
           <p className="uppercase font-semibold text-thin-blue text-xl">
             Endowment Balance
@@ -150,7 +150,7 @@ function CharityPrograms() {
   }
 
   return (
-    <div className="flex flex-col gap-2 w-full overflow-y-scroll lg:min-h-1/2 lg:mt-5 text-left pb-10">
+    <div className="flex flex-col gap-2 w-full lg:min-h-1/2 lg:mt-5 text-left pb-10">
       <ProgramItem></ProgramItem>
       <ProgramItem></ProgramItem>
       <ProgramItem></ProgramItem>

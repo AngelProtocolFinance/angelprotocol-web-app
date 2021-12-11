@@ -25,7 +25,7 @@ const Charity = () => {
 
   const loaded = !isLoading && !error;
   return (
-    <section className="container mx-auto grid pb-16 content-start gap-0 overflow-x-hidden">
+    <section className="container mx-auto grid pb-16 content-start gap-0">
       <AppHead />
       {isLoading && (
         <Loader
@@ -36,9 +36,9 @@ const Charity = () => {
       )}
       {error && <div>An error occurred, refresh your page to try again!!!</div>}
       {loaded && (
-        <div className="flex flex-col-reverse 2xl:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5 overflow-y-scroll overflow-x-hidden">
+        <div className="flex flex-col-reverse 2xl:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
           <DonationInfo openModal={showDonationForm} />
-          <div className="flex-grow w-full min-h-1/4 items-center text-center bg-indigo 2xl:mb-0">
+          <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
             <img
               className="rounded-2xl 2xl:-mt-6 shadow-md mb-1"
               style={{ width: "100%", maxHeight: "350px" }}
