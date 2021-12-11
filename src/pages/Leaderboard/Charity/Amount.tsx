@@ -2,16 +2,10 @@ import toCurrency from "helpers/toCurrency";
 
 type Props = {
   type: string;
-  amount: number;
+  locked: number;
+  liquid: number;
 };
 
 export default function Amount(props: Props) {
-  return (
-    <p>
-      <span className="font-body uppercase text-sm text-angel-grey w-24 inline-block">
-        {props.type}:
-      </span>{" "}
-      ${toCurrency(props.amount, 0)}
-    </p>
-  );
+  return <p>${toCurrency(props.locked + props.liquid, 0)}</p>;
 }
