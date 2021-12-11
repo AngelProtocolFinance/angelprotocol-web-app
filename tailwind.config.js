@@ -130,6 +130,7 @@ module.exports = {
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
+        116: "16rem",
         600: "600px",
       },
       width: {
@@ -140,6 +141,7 @@ module.exports = {
       },
     },
   },
+  plugins: [require("@tailwindcss/line-clamp")],
   variants: {
     extend: {
       backgroundColor: ["disabled"],

@@ -11,6 +11,12 @@
 }
 
 @layer utilities {
+  .line-clamp-3 {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .aspect-square {
     aspect-ratio: 1/1;
   }
