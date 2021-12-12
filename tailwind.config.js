@@ -7,6 +7,12 @@ module.exports = {
         iconPing: "ping 100ms",
       },
       backgroundImage: {
+        "gov-card":
+          "linear-gradient(45deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
+        "gov-card-2":
+          "linear-gradient(315deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
+        "gov-card-3":
+          "linear-gradient(180deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
         process:
@@ -96,7 +102,7 @@ module.exports = {
         136: "36rem",
       },
       minHeight: {
-        r15: "15rem",
+        115: "15rem",
         modal: "300px",
         "leader-table": "36rem",
         10: "10",

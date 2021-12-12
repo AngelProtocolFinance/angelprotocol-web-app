@@ -6,7 +6,7 @@ import Liquid from "./Liquid";
 import Locked from "./Locked";
 import WithdrawForm from "./WithdrawForm";
 import useWithdraw from "./useWithdraw";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 import { RouteParam, Steps, Status, SetStatus } from "./types";

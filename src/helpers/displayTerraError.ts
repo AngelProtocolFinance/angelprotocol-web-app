@@ -7,7 +7,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { Opener } from "components/Nodal/types";
 import { Disconnected, TxResultFail } from "contracts/Errors";
-import ErrPop, { Props as ErrProp } from "../Donater/ErrPop";
+import ErrPop, { Props as ErrProp } from "components/Popup/ErrPop";
 
 export default function displayTerraError(error: any, prompter: Opener) {
   if (error instanceof UserDenied) {

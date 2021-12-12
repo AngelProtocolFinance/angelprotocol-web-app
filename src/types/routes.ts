@@ -14,7 +14,8 @@ export enum web {
 }
 
 export enum admin {
-  index = "/",
+  index = "dashboard",
+  login = "login",
   index_fund_management = "index-fund",
   endowments = "endowments",
   aliance_members = "aliance-members",
@@ -34,8 +35,14 @@ export enum app {
   fund = "fund",
   board_tca = "tca-leaderboard",
   withdraw = "withdraw",
+  govern = "govern",
   test = "test",
   auction = "auction",
+}
+
+export enum govern {
+  index = "",
+  poll = "poll",
 }
 
 export enum registration {
