@@ -49,10 +49,10 @@ const Charity = () => {
             <CharityInfoNav
               activeTab={activeTab}
               onTabChange={(tab: string) => setActiveTab(tab)}
-            ></CharityInfoNav>
+            />
             {/* charity info */}
             {/* Information tabs  */}
-            <CharityInfoTab activeTab={activeTab}></CharityInfoTab>
+            <CharityInfoTab activeTab={activeTab} />
             {/* Information tabs  */}
           </div>
         </div>
