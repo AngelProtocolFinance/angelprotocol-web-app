@@ -35,7 +35,7 @@ export default function CurrencyInputPanel({
   const [focused, setFocused] = useState(false);
 
   const validateInput = () => {
-    console.log(inputRef?.current?.validity);
+    console.log(inputRef?.current?.validity?.valid);
     if (inputRef?.current?.validity.rangeOverflow) {
       setError(`cannot be greater than ${max}`);
     } else if (inputRef?.current?.validity.rangeUnderflow) {
@@ -73,11 +73,11 @@ export default function CurrencyInputPanel({
             <FaEthereum />
           </div>
           <div className="currency-name font-bold text-md font-heading">
-            <span>{assetSymbol}</span>
+            <span>{assetSymbol || "Token"}</span>
           </div>
-          <span className="cursor-pointer">
+          {/* <span className="cursor-pointer">
             <IoIosArrowDown className="font-semibold" />
-          </span>
+          </span> */}
         </button>
         <div className="flex flex-grow-1 flex-col items-end justify-around">
           <div className="currency-input">
@@ -96,7 +96,7 @@ export default function CurrencyInputPanel({
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               onChange={onInputChanged}
-              className="currency-input font-bold w-full text-right text-lg border-0 outline-none"
+              className="currency-input text-black font-bold w-full text-right text-lg border-0 outline-none"
             />
           </div>
           {/* format usd amount and display */}

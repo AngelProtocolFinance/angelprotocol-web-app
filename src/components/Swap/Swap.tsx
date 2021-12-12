@@ -65,8 +65,8 @@ export default function Swap() {
   });
   const { register, watch, setValue, setFocus, formState, trigger } = form;
   const [isReversed, setIsReversed] = useState(false);
+
   const formData = watch();
-  console.log("formData: ", formData);
   return (
     <div className="w-128 p-10 min-h-3/4">
       <SwapHeader />
