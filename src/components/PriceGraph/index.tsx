@@ -2,6 +2,7 @@ import Loader from "components/Loader/Loader";
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 import React from "react";
 import {
+  CartesianGrid,
   Legend,
   Line,
   LineChart,
@@ -22,8 +23,6 @@ type Props = {
 
 export default function PriceGraph({ isLoading, lbpPairData }: Props) {
   const graphData = getGraphData(lbpPairData);
-
-  console.log(graphData.dateAxisData.ticks.length);
 
   return (
     <>
@@ -47,9 +46,10 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
             data={graphData.priceData}
             className="bg-white rounded-md pb-2"
           >
-            <Tooltip />
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               tickLine={false}
+              axisLine={false}
               tickFormatter={tickDateFormatter}
               dataKey="timestamp"
               allowDuplicatedCategory={false}
@@ -61,6 +61,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               interval={0}
             />
             <YAxis
+              tickLine={false}
               axisLine={false}
               type="number"
               ticks={graphData.priceAxisData.ticks}
