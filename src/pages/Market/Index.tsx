@@ -5,7 +5,6 @@ import useProfiles from "./useProfiles";
 
 export default function Index(props: { id: number }) {
   const profiles = useProfiles(props.id);
-  const is_empty = profiles.length <= 0;
   const {
     ref,
     handleMouseLeave,
@@ -15,18 +14,21 @@ export default function Index(props: { id: number }) {
   } = useClickScroll();
 
   return (
-    <section className="grid grid-cols-charity">
-      <IndexCard id={props.id} is_empty={is_empty} />
+    <section className="grid grid-cols-1 sm:grid-cols-charity">
+      <IndexCard id={props.id} />
       <section
         ref={ref}
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        className={`flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-4`}
+        className={`hidden sm:flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-4`}
       >
         {profiles.map((profile) => (
-          <CharityCard address={profile.endowment_address} />
+          <CharityCard
+            key={profile.endowment_address}
+            address={profile.endowment_address}
+          />
         ))}
       </section>
     </section>

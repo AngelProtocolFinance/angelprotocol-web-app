@@ -6,7 +6,7 @@ import { DonationInfo } from "./DonationInfo";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import Loader from "components/Loader/Loader";
 import Donater from "components/Donater/Donater";
-import DonateSuite from "components/DonateSuite/DonateSuite";
+import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
 
 const Charity = () => {

@@ -1,4 +1,5 @@
 import { useProfilesQuery } from "services/aws/endowments/endowments";
+
 export default function useProfiles(fund_id?: number) {
   const { profiles = [] } = useProfilesQuery(undefined, {
     selectFromResult: ({ data }) => ({
