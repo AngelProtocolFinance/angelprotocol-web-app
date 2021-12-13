@@ -53,12 +53,12 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
       <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (
-        <div className="min-h-leader-table grid place-items-center">
+        <div className="min-h-withdraw-table grid place-items-center">
           <p className="uppercase text-white-grey">{error}</p>
         </div>
       )}
       {isLoading && (
-        <div className="min-h-leader-table grid place-items-center">
+        <div className="min-h-withdraw-table grid place-items-center">
           <Loader
             gapClass="gap-4"
             widthClass="w-4"

@@ -24,17 +24,17 @@ export default function MobileDappNav() {
         </a>
       </li>
       <li className="mr-4">
-        <NavLink to={`${url}/${app.marketplace}`} {...linkStyles}>
+        <NavLink to={`${url}${app.marketplace}`} {...linkStyles}>
           For donors
         </NavLink>
       </li>
       <li className="mr-4 relative">
-        <NavLink to={`${url}/${app.govern}`} {...linkStyles}>
+        <NavLink to={`${url}${app.govern}`} {...linkStyles}>
           Governance
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={`${url}/${app.leaderboard}`} {...linkStyles}>
+        <NavLink to={`${url}${app.leaderboard}`} {...linkStyles}>
           Leaderboard
         </NavLink>
       </li>
