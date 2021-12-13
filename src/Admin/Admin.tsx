@@ -13,7 +13,7 @@ import { UseWalletProvider } from "use-wallet";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
 import AdminLogin from "pages/Admin/Login/AdminLogin";
 import CharityApps from "pages/Admin/CharityApps/CharityApps";
-import AppHead from "components/Headers/AppHead";
+import DappHead from "components/Headers/DappHead";
 
 const Admin = () => {
   //{match.path} is '/admin'
@@ -37,7 +37,7 @@ const Admin = () => {
           }}
         >
           <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16">
-            <AppHead />
+            <DappHead />
             <div className="flex justify-center w-full">
               <Switch>
                 <Redirect
@@ -57,7 +57,7 @@ const Admin = () => {
                   component={IndexFund}
                 />
                 <Route
-                  path={`${path}/${admin.aliance_members}`}
+                  path={`${path}/${admin.alliance_members}`}
                   component={IndexFund}
                 />
                 <Route path={`${path}/${admin.login}`} component={AdminLogin} />

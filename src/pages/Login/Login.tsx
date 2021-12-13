@@ -28,7 +28,7 @@ const Login = () => {
   }
 
   return (
-    <section className="pb-16 h-screen grid grid-rows-a1 place-items-center">
+    <section className="grid grid-rows-a1 place-items-center">
       <header className="flex items-center justify-between w-full h-24 padded-container">
         <Logo />
         <p className="uppercase font-bold text-white font-heading text-lg text-right">
@@ -42,7 +42,7 @@ const Login = () => {
         <div className="text-center my-5 text-gray-400">
           <p className="text-sm sm:text-base">Access Restricted to</p>
           <p className="text-base sm:text-lg font-bold  text-angel-grey">
-            Terra Charity Alliance Members
+            Angel Alliance Members
           </p>
         </div>
         <Formik

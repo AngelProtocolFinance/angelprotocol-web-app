@@ -1,11 +1,11 @@
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import AppHead from "components/Headers/AppHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
 import { useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
+import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 
@@ -29,9 +29,9 @@ export default function Auction() {
   const { showModal } = useSetModal();
 
   return (
-    <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16 font-heading text-white-grey">
-      <AppHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-auction shadow-2xl min-h-3/4 gap-0 mt-10">
+    <div className="grid grid-rows-a1 place-items-start pt-2">
+      <DappHead />
+      <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
           <div className="flex-grow bg-transparent p-10">
             <h1 className="text-4xl font-bold font-heading mb-4">

@@ -14,7 +14,7 @@ export default function useBoard() {
   const [charities, setCharities] = useState<Array<[string, Balance]>>([]);
   const wallet = useConnectedWallet();
   const chainID = wallet?.network.chainID || chains.mainnet;
-  const storage_key = `charity_board_${chainID}`;
+  const storage_key = `leaderboard_${chainID}`;
 
   useEffect(() => {
     (async () => {
