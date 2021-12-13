@@ -8762,7 +8762,7 @@ csstype@^3.0.2:
 
 currency-list@^1.0.6:
   version "1.0.6"
-  resolved "https://registry.npmjs.org/currency-list/-/currency-list-1.0.6.tgz"
+  resolved "https://registry.yarnpkg.com/currency-list/-/currency-list-1.0.6.tgz#c0f929d0efa2b3a394fc30876290e01f60113999"
   integrity sha512-aYf2iqX8DdEvUfvK/h8uCXq+LYshwZ65jhPTgTBS+DZjCygyPj53vvL78FUePDA6vS1e+F4tAOnVGOuhPxpRFw==
 
 curve25519-js@0.0.4:
