@@ -1,6 +1,6 @@
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 
 const SelfCustody = () => {
   //url = app/register/self-custody

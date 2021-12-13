@@ -1,26 +1,27 @@
 import { Dec } from "@terra-money/terra.js";
 import { StdFee, coin as create_coin } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
-import { useSetModal } from "components/Nodal/Nodal";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { DWindow } from "types/window";
 import { useGetKeplr } from "wallets/Keplr";
-import ErrPop, { Props as ErrProps } from "./ErrPop";
-import Waiter, { Props as WaitProps } from "./Waiter";
-import Result, { Props as ResProps } from "./Result";
 import { Values } from "./types";
 import { cosmos_4_rpc } from "constants/urls";
 import { ap_wallets } from "constants/contracts";
-import displayKeplrError from "./diplayKeplrError";
+import { useSetter } from "store/accessors";
+import { setStage, setFormError } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
+import handleKeplrError from "./handleKeplrError";
 
 const dwindow: DWindow = window;
 export default function useAtomSender() {
   const { provider } = useGetKeplr();
-  const { showModal } = useSetModal();
   const { watch, setValue } = useFormContext<Values>();
+  const handleTxError = useTxErrorHandler();
+  const dispatch = useSetter();
 
   const currency = watch("currency");
 
@@ -29,16 +30,14 @@ export default function useAtomSender() {
       try {
         //don't run this estimator when currency is not uatom
         if (currency !== denoms.uatom) return;
-        setValue("form_error", "");
+        dispatch(setFormError(""));
 
         if (!provider) {
-          setValue("form_error", "Atom wallet is not connected");
-          return;
+          dispatch(setFormError("Atom wallet is not connected"));
         }
       } catch (err) {
         console.error(err);
-        setValue("form_error", "Unknown error occured");
-        setValue("loading", false);
+        dispatch(setFormError("Unknown error occured"));
       }
     })();
     //eslint-disable-next-line
@@ -47,9 +46,12 @@ export default function useAtomSender() {
   async function sender(data: Values) {
     try {
       if (!provider) {
-        showModal<ErrProps>(ErrPop, {
-          desc: "Atom wallet is not connected.",
-        });
+        dispatch(
+          setStage({
+            step: Step.error,
+            content: { message: "Wallet is disconnected" },
+          })
+        );
         return;
       }
 
@@ -73,9 +75,12 @@ export default function useAtomSender() {
 
       const dec_amount = new Dec(data.amount).mul(1e6);
 
-      showModal<WaitProps>(Waiter, {
-        desc: "Processing transaction...",
-      });
+      dispatch(
+        setStage({
+          step: Step.submit,
+          content: { message: "Processing transaction..." },
+        })
+      );
 
       const res = await client.sendTokens(
         address,
@@ -86,23 +91,30 @@ export default function useAtomSender() {
 
       if ("code" in res) {
         if (res.code !== 0) {
-          showModal<ErrProps>(ErrPop, {
-            desc: "Transaction failed",
-            url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
-          });
+          dispatch(
+            setStage({
+              step: Step.error,
+              content: {
+                message: "Transaction failed",
+                url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
+              },
+            })
+          );
           return;
         }
       }
 
-      showModal<ResProps>(Result, {
-        sent: +data.amount,
-        received: +data.amount,
-        url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
-        precision: 6,
-        denom: denoms.uatom,
-      });
+      dispatch(
+        setStage({
+          step: Step.success,
+          content: {
+            message: "Thank you for your donation!",
+            url: `https://www.mintscan.io/cosmos/txs/${res.transactionHash}`,
+          },
+        })
+      );
     } catch (err) {
-      displayKeplrError(err, showModal, denoms.uatom);
+      handleKeplrError(err, handleTxError, denoms.uatom);
     } finally {
       setValue("amount", "");
     }

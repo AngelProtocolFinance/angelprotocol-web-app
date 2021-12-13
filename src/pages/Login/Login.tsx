@@ -5,7 +5,7 @@ import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
 import { useGetToken } from "contexts/AuthProvider";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import { site, app } from "types/routes";
 import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";
@@ -16,19 +16,19 @@ export type Values = {
 };
 
 const Login = () => {
-  const token = useGetToken();
+  const decodedToken = useGetToken();
   const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
   }
 
-  if (token) {
+  if (decodedToken?.token) {
     return <Redirect to={`${site.app}/${app.tca}`} />;
   }
 
   return (
-    <section className="pb-16 h-screen grid grid-rows-a1 place-items-center">
+    <section className="grid grid-rows-a1 place-items-center">
       <header className="flex items-center justify-between w-full h-24 padded-container">
         <Logo />
         <p className="uppercase font-bold text-white font-heading text-lg text-right">
@@ -42,7 +42,7 @@ const Login = () => {
         <div className="text-center my-5 text-gray-400">
           <p className="text-sm sm:text-base">Access Restricted to</p>
           <p className="text-base sm:text-lg font-bold  text-angel-grey">
-            Terra Charity Alliance Members
+            Angel Alliance Members
           </p>
         </div>
         <Formik

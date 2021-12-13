@@ -6,9 +6,9 @@ import {
   useGetCharityDataQuery,
 } from "services/aws/charity";
 import { toast, ToastContainer } from "react-toastify";
-import Action from "../Action";
+import Action from "../../../components/ActionButton/Action";
 import { registration } from "types/routes";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { yupResolver } from "@hookform/resolvers/yup";

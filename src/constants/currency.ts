@@ -37,6 +37,7 @@ export enum denoms {
   sol = "sol",
   uatom = "uatom",
   coin = "coin",
+  uhalo = "uhalo",
 }
 
 export const currency_text: { [key in denoms]: string } = {
@@ -67,6 +68,7 @@ export const currency_text: { [key in denoms]: string } = {
   [denoms.wei]: "WEI",
   [denoms.sol]: "SOL",
   [denoms.uatom]: "ATOM",
+  [denoms.uhalo]: "HALO",
 };
 
 export const currency_icons: { [key in denoms]: string } = {
@@ -97,4 +99,5 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.btc]: btc,
   [denoms.sol]: sol,
   [denoms.uatom]: atom,
+  [denoms.uhalo]: token,
 };

@@ -20,12 +20,12 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="grid grid-cols-2 p-4 rounded-md ">
-      <div className="col-span-2 lg:col-span-1">
-        <p className="text-xl text-white-grey font-semibold">
+    <Form className="grid grid-cols-1 xl:justify-start p-4 pl-0 rounded-md mt-5 ">
+      <div className="col-span-4 justify-center xl:justify-start">
+        <p className="text-xl text-left text-white-grey font-semibold">
           Choose the amount of your donation
         </p>
-        <div className="mt-4">
+        <div className="mt-4 text-left">
           {amounts.map((amount) => (
             <label
               key={amount}
@@ -42,7 +42,7 @@ export default function UserForm(props: Props) {
           ))}
         </div>
 
-        <div className="mt-4 grid grid-cols-a1 items-center">
+        <div className="mt-4 grid grid-cols-a1 lg:items-left mt-10">
           <Field
             id="custom"
             type="radio"
@@ -65,12 +65,12 @@ export default function UserForm(props: Props) {
           <ErrorMessage
             name="amount"
             component="div"
-            className="cols-start-1 col-span-2 text-sm text-white ml-6 mt-2"
+            className="cols-start-1 col-span-2 text-sm text-white text-left ml-6 mt-2"
           />
         </div>
       </div>
 
-      <div className="col-span-2 lg:col-span-1">
+      <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
         <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
           How much of your donation should be compounded forever?
         </p>
@@ -90,7 +90,7 @@ export default function UserForm(props: Props) {
         </div>
       </div>
 
-      <div className="col-span-2 lg:col-start-2 lg:mt-4">
+      <div className="xl:flex col-span-4 xl:col-span-2 lg:mt-4 text-left">
         <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
           <Field type="checkbox" name="receiptRequested" /> I want a Tax Receipt
         </label>
@@ -102,14 +102,16 @@ export default function UserForm(props: Props) {
         </div>
       ) : null}
 
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="mt-8 cols-start-1 col-span-2 uppercase text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-bold justify-self-center"
-        // onClick={donate}
-      >
-        Donate
-      </button>
+      <div className="col-span-4 lg:col-span-2 mt-10 text-left lg:justify-start">
+        <button
+          disabled={isSubmitting}
+          type="submit"
+          className="bg-angel-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+          // onClick={donate}
+        >
+          Donate
+        </button>
+      </div>
     </Form>
   );
 }

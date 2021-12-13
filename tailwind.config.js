@@ -7,6 +7,12 @@ module.exports = {
         iconPing: "ping 100ms",
       },
       backgroundImage: {
+        "gov-card":
+          "linear-gradient(45deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
+        "gov-card-2":
+          "linear-gradient(315deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
+        "gov-card-3":
+          "linear-gradient(180deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
         process:
@@ -45,7 +51,15 @@ module.exports = {
         orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
+        "dark-grey": "#999999",
         "failed-red": "#FE4454",
+      },
+
+      borderColor: {
+        "angel-orange": "#FAAC2E",
+        "angel-blue": "#3FA9F5",
+        "thin-blue": "#54A3D9",
+        "light-grey": "#f5f5f5",
       },
 
       fontSize: {
@@ -63,7 +77,8 @@ module.exports = {
         process: "36rem",
         banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
-        "leader-table": "36rem",
+        "leader-table": "50rem",
+        "withdraw-table": "36rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",
@@ -89,16 +104,24 @@ module.exports = {
       },
       maxWidth: {
         "4/5": "80%",
+        500: "500px",
         450: "450px",
         600: "600px",
+        250: "250px",
       },
       minWidth: {
+        36: "36",
+        250: "250px",
+        300: "300px",
+        450: "450px",
+        600: "600px",
         136: "36rem",
       },
       minHeight: {
-        r15: "15rem",
+        115: "15rem",
         modal: "300px",
-        "leader-table": "36rem",
+        "leader-table": "50rem",
+        "withdraw-table": "36rem",
         10: "10",
         "1/3": "25%",
         "1/2": "50%",
@@ -108,13 +131,19 @@ module.exports = {
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
-        600: "600px",
+        modal: "300px",
+        280: "280px",
+        "75vh": "75vh",
       },
       width: {
         115: "15rem",
+        120: "20rem",
         128: "28rem",
         130: "30rem",
         135: "35rem",
+        "1/3": "25%",
+        "1/2": "50%",
+        "3/4": "75%",
       },
     },
   },

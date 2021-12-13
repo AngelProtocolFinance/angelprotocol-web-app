@@ -14,9 +14,6 @@ export default function Donater(props: Props) {
 
       //metadata
       currency: denoms.uusd,
-      loading: false,
-      form_error: "",
-      fee: 0,
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

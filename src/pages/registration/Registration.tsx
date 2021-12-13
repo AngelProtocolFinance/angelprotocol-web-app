@@ -2,7 +2,7 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
 import banner1 from "assets/images/banner-register-1.jpg";
 import { ToastContainer } from "react-toastify";
-import Action from "./Action";
+import Action from "../../components/ActionButton/Action";
 import { useSetter } from "store/accessors";
 import { removeUserData } from "services/user/userSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
