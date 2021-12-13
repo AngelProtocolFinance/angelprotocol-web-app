@@ -71,7 +71,7 @@ const getNumberOfPricePoints = (startDateTime: number, endDateTime: number) =>
   Math.abs(endDateTime - startDateTime) / 36e5;
 
 const calculateTokenPrice = (pairData: PairData) =>
-  pairData.ask_price / pairData.return_amount;
+  pairData.offer_amount / pairData.return_amount;
 
 const getHistoricPriceData = (data: LBPPairDataQueryResult): PriceData[] =>
   data.items.map((pairData) => ({

@@ -8,7 +8,7 @@ export interface PairData {
   commission_amount: number;
   ask_weight: number;
   offer_weight: number;
-  ask_price: number;
+  offer_amount: number;
 }
 
 export interface LBPPairDataQueryResult {
