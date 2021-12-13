@@ -24,6 +24,7 @@ export enum sc {
   halo_token = "halo_token",
   halo_stake = "halo_stake",
   halo_gov = "halo_gov",
+  lbp_factory = "lbp_factory",
 }
 
 export type URLs = {
@@ -92,7 +93,9 @@ export type TokenInfo = {
   name: string;
   symbol: string;
   decimals: number;
-  total_supply: string;
+  total_supply?: string;
+  contract_addr?: string;
+  icon?: any;
 };
 
 //Halo gov
@@ -115,4 +118,29 @@ export type GovStaker = {
   balance: string;
   locked_balance: any[];
   share: string;
+};
+
+export type PairsResult = {
+  pairs: PairResult[];
+};
+
+export type Infos = {
+  info: NativeInfo | AssetInfo;
+  start_weight: string;
+  end_weight: string;
+};
+
+export type PairResult = {
+  liquidity_token: string;
+  contract_addr: string;
+  asset_infos: Infos[];
+};
+
+export type Pairs = {
+  pairs: Pair[];
+};
+export type Pair = {
+  pair: TokenInfo[];
+  contract: string;
+  liquidity_token: string;
 };

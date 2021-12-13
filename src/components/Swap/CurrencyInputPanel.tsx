@@ -6,11 +6,11 @@ type CurrencyInputProps = {
   label?: string;
   required?: boolean;
   className?: string;
-  amount?: number;
-  usdAmount?: number;
+  amount?: string | number;
+  usdAmount?: string | number;
   assetSymbol?: string;
   balanceString?: string;
-  onAmountChange?: (x: string) => {};
+  onAmountChange?: (amount: string) => void;
   maxClick?: () => {};
   min?: number;
   max?: number;
@@ -72,7 +72,10 @@ export default function CurrencyInputPanel({
           <div className="currency-ico">
             <FaEthereum />
           </div>
-          <div className="currency-name font-bold text-md font-heading">
+          <div
+            className="currency-name font-bold text-md font-heading"
+            onClick={() => inputRef?.current?.focus()}
+          >
             <span>{assetSymbol || "Token"}</span>
           </div>
           {/* <span className="cursor-pointer">
@@ -90,9 +93,9 @@ export default function CurrencyInputPanel({
               autoCorrect="off"
               required={required}
               min={min}
-              max={max}
+              // max={max}
               step={step}
-              value={amount}
+              // defaultValue={Number(amount)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               onChange={onInputChanged}

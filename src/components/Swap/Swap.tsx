@@ -2,38 +2,13 @@
 
 import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Nodal/Nodal";
-import { useForm } from "react-hook-form";
-import { useGetter } from "store/accessors";
-import { Wallets } from "services/wallet/types";
 import SwapForm from "./SwapForm";
 import SwapHeader from "./SwapHeader";
-import { currency_text, denoms } from "constants/currency";
-import { useState } from "react";
-import { useWallet } from "@terra-money/wallet-provider";
-
-export enum Key {
-  fromAsset = "fromAsset",
-  toAsset = "toAsset",
-  fromAmount = "fromAmount",
-  fromUSDAmount = "fromUSDAmount",
-  toUSDAmount = "toUSDAmount",
-  fromBalance = "fromBalance",
-  toBalance = "toBalance",
-  toAmount = "toAmount",
-  feeValue = "feeValue",
-  feeSymbol = "feeSymbol",
-  load = "load",
-  fromAssetSymbol = "fromAssetSymbol",
-  toAssetSymbol = "toAssetSymbol",
-  fromMin = "fromMin",
-  fromMax = "fromMax",
-  toMax = "toMax",
-  maxFee = "maxFee",
-  gasPrice = "gasPrice",
-  taxCap = "taxCap",
-  taxRate = "taxRate",
-  poolLoading = "poolLoading",
-}
+import { HALO, UST } from "constants/currency";
+import { useState, useEffect } from "react";
+import usePair, { TokenResult } from "./usePair";
+import { Pair, PairResult } from "contracts/types";
+import { saleAssetFromPair } from "./assetPairs";
 
 export default function Swap() {
   // connect modal
@@ -42,35 +17,41 @@ export default function Swap() {
   // const { post: terraExtensionPost } = useWallet();
   // settings modal to change swap settings
   // slippage hook (localstorage)
+  const [currentPair, setCurrentPair] = useState<PairResult>();
+  const [saleTokenInfo, setSaleTokenInfo] = useState<TokenResult>();
+  const { result, isLoading, getPairInfo, fetchTokenInfo } = usePair();
 
-  const form = useForm({
-    defaultValues: {
-      [Key.fromAmount]: "",
-      [Key.toAmount]: "",
-      [Key.fromAsset]: denoms.uluna,
-      [Key.toAsset]: denoms.uusd,
-      [Key.feeValue]: "",
-      [Key.feeSymbol]: currency_text[denoms.uusd],
-      [Key.load]: "",
-      [Key.fromAssetSymbol]: "",
-      [Key.toAssetSymbol]: "",
-      [Key.fromMax]: "",
-      [Key.toMax]: "",
-      [Key.maxFee]: "",
-      [Key.gasPrice]: "",
-      [Key.poolLoading]: "",
-    },
-    mode: "all",
-    reValidateMode: "onChange",
-  });
-  const { register, watch, setValue, setFocus, formState, trigger } = form;
-  const [isReversed, setIsReversed] = useState(false);
+  useEffect(() => {
+    if (isLoading || (result.pairs.length && currentPair)) return;
+    const currentP = result.pairs.find(
+      (pairs: Pair) =>
+        (pairs.pair[0].symbol === UST && pairs.pair[1].symbol === HALO) ||
+        (pairs.pair[0].symbol === HALO && pairs.pair[1].symbol === UST)
+    );
 
-  const formData = watch();
+    const getCurrentPair = async () => {
+      if (currentP) {
+        const pairInfo = await getPairInfo(currentP.contract);
+        setCurrentPair(pairInfo);
+
+        const saleTokenAddress = saleAssetFromPair(pairInfo.asset_infos).info
+          ?.token.contract_addr;
+
+        setSaleTokenInfo(await fetchTokenInfo(saleTokenAddress));
+      }
+    };
+    getCurrentPair();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, result.pairs.length]);
+
   return (
     <div className="w-128 p-10 min-h-3/4">
       <SwapHeader />
-      <SwapForm register={register} form={form}></SwapForm>
+      <SwapForm
+        loading={isLoading}
+        pair={currentPair}
+        saleTokenInfo={saleTokenInfo}
+      />
     </div>
   );
 }
