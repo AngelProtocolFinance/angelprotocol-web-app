@@ -193,6 +193,7 @@ export default function SwapForm({
     setValue(key, value);
   }
   // setValue(Key.fromAmount, "8000");
+      
   return (
     <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
       <CurrencyInputPanel

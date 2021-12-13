@@ -35,7 +35,6 @@ export default function CurrencyInputPanel({
   const [focused, setFocused] = useState(false);
 
   const validateInput = () => {
-    console.log(inputRef?.current?.validity?.valid);
     if (inputRef?.current?.validity.rangeOverflow) {
       setError(`cannot be greater than ${max}`);
     } else if (inputRef?.current?.validity.rangeUnderflow) {
