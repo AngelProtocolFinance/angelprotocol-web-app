@@ -73,14 +73,16 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               dot={false}
               isAnimationActive={false}
             />
-            <Line
-              type="monotone"
-              dataKey="predictedPrice"
-              stroke="#ffa6f7"
-              dot={false}
-              name={`${graphData.tokenName} predicted price`}
-              isAnimationActive={false}
-            />
+            {lbpPairData.predictedPriceData?.length && (
+              <Line
+                type="monotone"
+                dataKey="predictedPrice"
+                stroke="#ffa6f7"
+                dot={false}
+                name={`${graphData.tokenName} predicted price`}
+                isAnimationActive={false}
+              />
+            )}
             {graphData.referenceDotCoordinates && (
               <ReferenceDot
                 r={4}
