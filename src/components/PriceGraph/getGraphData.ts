@@ -76,11 +76,28 @@ const getPriceTicks = (data: GraphPriceData[]) => {
   ];
 };
 
+const getDateAxisData = (lbpPairData: LBPPairData) => {
+  const ticks = getDateTicks(
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime
+  );
+
+  const axisDomain = [
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime,
+  ];
+
+  return {
+    ticks,
+    axisDomain,
+  };
+};
+
 // Date ticks to be represented by days on which the auction will occur.
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the miliseconds into hours.
 const getDateTicks = (startDateTime: number, endDateTime: number) => {
-  const tickDistance = 36e5 * 24;
+  const tickDistance = 36e5 * 4;
 
   const ticks = [];
   for (
@@ -94,24 +111,6 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
   ticks.push(endDateTime);
 
   return ticks;
-};
-
-const getDateAxisData = (lbpPairData: LBPPairData) => {
-  const ticks = getDateTicks(
-    lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime
-  );
-
-  // we add a couple of hours to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
-  const axisDomain = [
-    lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime + 36e5 * 4,
-  ];
-
-  return {
-    ticks,
-    axisDomain,
-  };
 };
 
 const getPriceAxisData = (priceData: GraphPriceData[]) => {

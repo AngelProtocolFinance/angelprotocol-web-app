@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { getGraphData } from "./getGraphData";
 import { LegendLabel } from "./LegendLabel";
+import "./priceGraph.css";
 
 type Props = {
   isLoading: boolean;
@@ -21,6 +22,8 @@ type Props = {
 
 export default function PriceGraph({ isLoading, lbpPairData }: Props) {
   const graphData = getGraphData(lbpPairData);
+
+  console.log(graphData.dateAxisData.ticks.length);
 
   return (
     <>
@@ -55,6 +58,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
               domain={graphData.dateAxisData.axisDomain}
               dy={10}
               height={80}
+              interval={0}
             />
             <YAxis
               axisLine={false}
@@ -99,9 +103,10 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
 }
 
 const tickDateFormatter = (dateInMiliseconds: number) =>
-  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
+  new Date(dateInMiliseconds).toLocaleString("en-us", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   });
 
 const tickPriceFormatter = (value: number) =>
