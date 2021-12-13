@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RouteComponentProps } from "react-router-dom";
 import DappHead from "components/Headers/DappHead";
 import CharityInfoNav from "./CharityInfoNav";
 import CharityInfoTab from "./CharityInfoTab";
@@ -6,8 +7,12 @@ import { DonationInfo } from "./DonationInfo";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
+import useProfile from "pages/Market/useProfile";
 
-const Charity = () => {
+export type CharityParam = { address: string };
+
+const Charity = (props: RouteComponentProps<CharityParam>) => {
+  const profile = useProfile(props.match.params.address);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const showDonationForm = () => {
@@ -15,6 +20,9 @@ const Charity = () => {
       charity_addr: "terra129381",
     });
   };
+
+  console.log(profile);
+
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
       <DappHead />
@@ -22,9 +30,9 @@ const Charity = () => {
         <DonationInfo openModal={showDonationForm} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <img
-            className="rounded-2xl 2xl:-mt-6 shadow-md mb-1"
+            className="bg-white rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
             style={{ width: "100%", maxHeight: "350px" }}
-            src="/static/media/home-banner.73980c69.jpg"
+            src={profile.charity_image}
             alt=""
           />
           {/* charity info */}

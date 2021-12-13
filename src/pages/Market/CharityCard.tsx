@@ -4,7 +4,7 @@ import useProfile from "./useProfile";
 export default function CharityCard(props: { address: string }) {
   const profile = useProfile(props.address);
   return (
-    <div className="relative w-64 flex-none break-words">
+    <div className="relative w-72 flex-none break-words">
       <img
         className="bg-white rounded-lg img-no-drag w-full h-32 object-cover"
         src={profile.charity_image}
@@ -12,7 +12,7 @@ export default function CharityCard(props: { address: string }) {
       />
       <Link
         to={`${site.app}/${app.charity}/${props.address}`}
-        className="block cursor-pointer font-heading text-white-grey text-opacity-80 hover:text-opacity-100 font-bold text-base uppercase text-grey-light mt-1.5"
+        className={`block cursor-pointer font-heading text-white-grey font-bold text-sm uppercase mt-1.5`}
       >
         {profile.charity_name}
       </Link>

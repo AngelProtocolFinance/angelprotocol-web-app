@@ -18,4 +18,5 @@ export const profile: Profile = {
   news_media_articles: "", //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
   un_sdg: "0", //"4"
   facebook_page: "https://facebook.com", //
+  is_placeholder: true,
 };

@@ -20,6 +20,7 @@ type S = string;
 type UNSDG = {
   text_light: S;
   text_dark: S;
+  text_hover: S;
   bg: S;
   border: S;
   icon: S;
@@ -33,6 +34,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
   0: {
     text_light: "text-white-grey",
     text_dark: "text-angel-grey",
+    text_hover: "hover:text-sdg",
     bg: "bg-white",
     border: "border-black",
     icon: unsdg,
@@ -44,6 +46,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
   1: {
     text_light: "text-white-grey",
     text_dark: "text-sdg1",
+    text_hover: "hover:text-sdg1",
     bg: "bg-sdg1",
     border: "border-sdg1",
     icon: no_poverty,
@@ -55,6 +58,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
   2: {
     text_light: "text-white-grey",
     text_dark: "text-sdg2",
+    text_hover: "hover:text-sdg2",
     bg: "bg-sdg2",
     border: "border-sdg2",
     icon: zero_hunger,
@@ -66,6 +70,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
   3: {
     text_light: "text-white-grey",
     text_dark: "text-sdg3",
+    text_hover: "hover:text-sdg3",
     bg: "bg-sdg3",
     border: "border-sdg3",
     icon: good_health,
@@ -79,6 +84,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all.",
     text_light: "text-white-grey",
     text_dark: "text-sdg4",
+    text_hover: "hover:text-sdg4",
     bg: "bg-sdg4",
     border: "border-sdg4",
     icon: education,
@@ -90,6 +96,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Achieve gender equality and empower all women and girls.",
     text_light: "text-white-grey",
     text_dark: "text-sdg5",
+    text_hover: "hover:text-sdg5",
     bg: "bg-sdg5",
     border: "border-sdg5",
     icon: gender_equality,
@@ -101,6 +108,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Ensure availability and sustainable management of water and sanitation for all.",
     text_light: "text-white-grey",
     text_dark: "text-sdg6",
+    text_hover: "hover:text-sdg6",
     bg: "bg-sdg6",
     border: "border-sdg6",
     icon: clean_water,
@@ -112,6 +120,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Ensure access to affordable, reliable, sustainable and modern energy for all.",
     text_light: "text-white-grey",
     text_dark: "text-sdg7",
+    text_hover: "hover:text-sdg7",
     bg: "bg-sdg7",
     border: "border-sdg7",
     icon: energy,
@@ -123,6 +132,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all.",
     text_light: "text-white-grey",
     text_dark: "text-sdg8",
+    text_hover: "hover:text-sdg8",
     bg: "bg-sdg8",
     border: "border-sdg8",
     icon: decent_work,
@@ -134,6 +144,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation.",
     text_light: "text-white-grey",
     text_dark: "text-sdg9",
+    text_hover: "hover:text-sdg9",
     bg: "bg-sdg9",
     border: "border-sdg9",
     icon: industry,
@@ -145,6 +156,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Reduce inequality within and among countries.",
     text_light: "text-white-grey",
     text_dark: "text-sdg10",
+    text_hover: "hover:text-sdg10",
     bg: "bg-sdg10",
     border: "border-sdg10",
     icon: placeholder,
@@ -156,6 +168,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Make cities and human settlements inclusive, safe, resilient and sustainable.",
     text_light: "text-white-grey",
     text_dark: "text-sdg11",
+    text_hover: "hover:text-sdg11",
     bg: "bg-sdg11",
     border: "border-sdg11",
     icon: sustainable,
@@ -167,6 +180,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Ensure sustainable consumption and production patterns.",
     text_light: "text-white-grey",
     text_dark: "text-sdg12",
+    text_hover: "hover:text-sdg12",
     bg: "bg-sdg12",
     border: "border-sdg12",
     icon: consumption,
@@ -178,6 +192,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Take urgent action to combat climate change and its impacts.",
     text_light: "text-white-grey",
     text_dark: "text-sdg13",
+    text_hover: "hover:text-sdg13",
     bg: "bg-sdg13",
     border: "border-sdg13",
     icon: climate,
@@ -189,6 +204,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Conserve and sustainably use the oceans, seas and marine resources for sustainable development.",
     text_light: "text-white-grey",
     text_dark: "text-sdg14",
+    text_hover: "hover:text-sdg14",
     bg: "bg-sdg14",
     border: "border-sdg14",
     icon: life_water,
@@ -200,6 +216,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss.",
     text_light: "text-white-grey",
     text_dark: "text-sdg15",
+    text_hover: "hover:text-sdg15",
     bg: "bg-sdg15",
     border: "border-sdg15",
     icon: life_land,
@@ -211,6 +228,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels.",
     text_light: "text-white-grey",
     text_dark: "text-sdg16",
+    text_hover: "hover:text-sdg16",
     bg: "bg-sdg16",
     border: "border-sdg16",
     icon: placeholder,
@@ -222,6 +240,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     desc: "Strengthen the means of implementation and revitalize the global partnership for sustainable development.",
     text_light: "text-white-grey",
     text_dark: "text-sdg",
+    text_hover: "hover:text-sdg17",
     bg: "bg-sdg17",
     border: "border-sdg17",
     icon: partnership,

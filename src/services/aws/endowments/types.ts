@@ -34,6 +34,7 @@ export interface Profile {
   news_media_articles: string; //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
   un_sdg: string; //"4"
   facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
+  is_placeholder?: true;
 }
 
 export interface QueryRes<T> {

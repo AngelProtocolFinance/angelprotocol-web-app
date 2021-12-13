@@ -14,7 +14,7 @@ export default function Index(props: { id: number }) {
   } = useClickScroll();
 
   return (
-    <section className="grid grid-cols-1 sm:grid-cols-charity">
+    <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0">
       <IndexCard id={props.id} />
       <section
         ref={ref}
@@ -22,7 +22,7 @@ export default function Index(props: { id: number }) {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        className={`hidden sm:flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-4`}
+        className={`flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0 sm:ml-4`}
       >
         {profiles.map((profile) => (
           <CharityCard

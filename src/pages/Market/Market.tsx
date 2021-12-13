@@ -1,23 +1,28 @@
-import AppHead from "components/Headers/AppHead";
-import useProfiles from "./useProfiles";
+import { useMemo } from "react";
+import DappHead from "components/Headers/DappHead";
 import Index from "./Index";
+import { useProfilesQuery } from "services/aws/endowments/endowments";
 
 export default function Market() {
-  const profiles = useProfiles();
+  const { data: profiles = [] } = useProfilesQuery(undefined);
 
-  const sdg_ids = Array.from(
-    //consolidate present sdgs then render sdg list
-    profiles.reduce((prev: Set<number>, curr) => {
-      prev.add(+curr.un_sdg);
-      return prev;
-    }, new Set<number>())
-    //sort acc to sdg number
-  ).sort((a, b) => a - b);
+  const sdg_ids = useMemo(
+    () =>
+      Array.from(
+        //consolidate present sdgs then render sdg list
+        profiles.reduce((prev: Set<number>, curr) => {
+          prev.add(+curr.un_sdg);
+          return prev;
+        }, new Set<number>())
+        //sort acc to sdg number
+      ).sort((a, b) => a - b),
+    [profiles]
+  );
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
       <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
-        <AppHead />
+        <DappHead />
         <div className="px-2">
           <p className="uppercase text-lg md:text-2xl xl:text-4xl">
             we categorize our charities based on the

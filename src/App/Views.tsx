@@ -24,7 +24,7 @@ export default function Views() {
     <Switch>
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
       <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-      <Route path={`${path}/${app.charity}`} component={Charity} />
+      <Route path={`${path}/${app.charity}/:address`} component={Charity} />
       <Route path={`${path}/${app.login}`} component={Login} />
       <Route path={`${path}/${app.register}`} component={Register} />
       <Route path={`${path}/${app.tca}`} component={TCA} />

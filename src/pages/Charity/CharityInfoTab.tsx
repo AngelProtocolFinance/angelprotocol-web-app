@@ -1,29 +1,15 @@
+import useProfile from "pages/Market/useProfile";
+import { useRouteMatch } from "react-router-dom";
+import { CharityParam } from "./Charity";
+
 function OverviewTab() {
+  const match = useRouteMatch<CharityParam>();
+  const charity_addr = match.params.address;
+  const profile = useProfile(charity_addr);
   return (
     <div className="w-full lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left">
       <span className="text-white font-normal text-md inline-block mb-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil atque
-        dolorum dolorem. Velit pariatur tempora quasi vitae inventore natus at
-        possimus. Corporis ab voluptatum consequuntur dignissimos voluptates
-        harum ad quasi?
-      </span>
-      <span className="text-white font-normal text-md inline-block mb-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil atque
-        dolorum dolorem. Velit pariatur tempora quasi vitae inventore natus at
-        possimus. Corporis ab voluptatum consequuntur dignissimos voluptates
-        harum ad quasi?
-      </span>
-      <span className="text-white font-normal text-md inline-block mb-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil atque
-        dolorum dolorem. Velit pariatur tempora quasi vitae inventore natus at
-        possimus. Corporis ab voluptatum consequuntur dignissimos voluptates
-        harum ad quasi?
-      </span>
-      <span className="text-white font-normal text-md inline-block mb-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil atque
-        dolorum dolorem. Velit pariatur tempora quasi vitae inventore natus at
-        possimus. Corporis ab voluptatum consequuntur dignissimos voluptates
-        harum ad quasi?
+        {profile.charity_overview}
       </span>
     </div>
   );
@@ -123,6 +109,7 @@ function CharityEndowmentInfo() {
   );
 }
 
+//TODO: remove this component declaration inside component
 function CharityPrograms() {
   function ProgramItem() {
     return (
@@ -163,6 +150,7 @@ export default function CharityInfoTab({
 }: {
   activeTab: string;
 }) {
+  //TODO: use enums or maybe just implement this over react-router
   return (
     <>
       {activeTab === "overview" && <OverviewTab />}
