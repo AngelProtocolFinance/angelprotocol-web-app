@@ -1,8 +1,7 @@
-import { NavLink, useRouteMatch } from "react-router-dom";
-import { app } from "types/routes";
+import { NavLink } from "react-router-dom";
+import { app, site } from "types/routes";
 
 export default function DappMenu() {
-  const { url } = useRouteMatch();
   const linkStyles = {
     className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold`,
     activeClassName: "font-bold",
@@ -23,17 +22,20 @@ export default function DappMenu() {
         </a>
       </li>
       <li className="mr-8">
-        <NavLink to={`${url}/${app.charity}`} {...linkStyles}>
+        {/**use abs path since this menu is rendered on diff urls
+         * and will result on unusual url e.g `app/leaderboard/govern
+         */}
+        <NavLink to={`${site.app}/${app.charity}`} {...linkStyles}>
           Donate now
         </NavLink>
       </li>
       <li className="mr-8">
-        <NavLink to={`${url}/${app.govern}`} {...linkStyles}>
+        <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
           Governance
         </NavLink>
       </li>
       <li className="mr-8">
-        <NavLink to={`${url}/${app.leaderboard}`} {...linkStyles}>
+        <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
           Leaderboard
         </NavLink>
       </li>
