@@ -76,7 +76,8 @@ module.exports = {
         process: "36rem",
         banner: "calc(100vh - 6rem);",
         "banner-sm": "35rem",
-        "leader-table": "36rem",
+        "leader-table": "50rem",
+        "withdraw-table": "36rem",
       },
       gridTemplateRows: {
         "1a": "1fr auto",
@@ -118,7 +119,8 @@ module.exports = {
       minHeight: {
         115: "15rem",
         modal: "300px",
-        "leader-table": "36rem",
+        "leader-table": "50rem",
+        "withdraw-table": "36rem",
         10: "10",
         "1/3": "25%",
         "1/2": "50%",

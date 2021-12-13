@@ -1,4 +1,3 @@
-import AppHead from "components/Headers/AppHead";
 import FundVid from "./FundVid";
 import fundLogo from "assets/images/unsdg-gender-equality.png";
 import { charities } from "./charities";
@@ -7,6 +6,7 @@ import CharityCard from "components/CharityCard";
 import Overview from "./Overview";
 import useFund from "./useFund";
 import Donate from "./Donate";
+import DappHead from "components/Headers/DappHead";
 
 //props
 //fundBgClass
@@ -17,7 +17,7 @@ export default function Fund() {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
   return (
     <section className="grid content-start pb-24">
-      <AppHead />
+      <DappHead />
       <div className="grid grid-rows-fund grid-cols-1a container mx-auto gap-4">
         <div className="col-start-1 col-span-1 bg-red-700 self-stretch grid grid-cols-a1 items-center rounded-xl shadow-md">
           <img src={fundLogo} alt="" className="h-44 m-9" />
