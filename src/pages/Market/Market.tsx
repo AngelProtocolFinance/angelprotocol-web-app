@@ -1,12 +1,9 @@
 import AppHead from "components/Headers/AppHead";
 import useProfiles from "./useProfiles";
 import Index from "./Index";
-import { useEffect } from "react";
 
 export default function Market() {
   const profiles = useProfiles();
-
-  useEffect(() => {}, []);
 
   const sdg_ids = Array.from(
     //consolidate present sdgs then render sdg list
@@ -21,7 +18,7 @@ export default function Market() {
     <div className="grid grid-rows-dashboard pb-16">
       <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
         <AppHead />
-        <div className="padded-container">
+        <div className="px-2">
           <p className="uppercase text-lg md:text-2xl xl:text-4xl">
             we categorize our charities based on the
           </p>
@@ -39,7 +36,7 @@ export default function Market() {
         </div>
       </div>
 
-      <section className="flex-auto container mx-auto px-5 mt-5">
+      <section className="flex-auto padded-container mx-auto px-5 mt-5">
         {sdg_ids.map((id) => (
           <Index id={id} key={id} />
         ))}
