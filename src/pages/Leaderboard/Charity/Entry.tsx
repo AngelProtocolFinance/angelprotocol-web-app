@@ -9,6 +9,10 @@ type Props = {
   chainID: string;
 };
 
+function show10yrModal() {
+  console.log("Clicked me!! hahaha!");
+}
+
 export default function Entry({ address, balance, chainID }: Props) {
   const { locked, liquid } = projectFunds(
     10,
@@ -23,15 +27,17 @@ export default function Entry({ address, balance, chainID }: Props) {
         <Description address={address} chainID={chainID} />
       </td>
       <td>
-        <div className="flex flex-col">
-          <Amount type="principal" amount={balance.total_locked} />
-          <Amount type="donations" amount={balance.total_liq} />
+        <div className="flex flex-col w-40">
+          <Amount
+            type="total"
+            locked={balance.total_locked}
+            liquid={balance.total_liq}
+          />
         </div>
       </td>
       <td>
-        <div className="flex flex-col">
-          <Amount type="principal" amount={locked} />
-          <Amount type="donations" amount={liquid} />
+        <div className="flex flex-col w-40">
+          <Amount type="10years" locked={locked} liquid={liquid} />
         </div>
       </td>
     </tr>
