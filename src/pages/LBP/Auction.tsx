@@ -26,8 +26,8 @@ function AuctionStats() {
 
   const ust_price = useMemo(() => {
     const uhalo_amount = new Dec(pairSimul.return_amount);
-    const uusd_amount = new Dec(1000);
-    return uusd_amount.div(uhalo_amount).mul(1e6).toNumber();
+    const uusd_amount = new Dec(1e6);
+    return uusd_amount.div(uhalo_amount).toNumber();
   }, [pairSimul]);
 
   return (
