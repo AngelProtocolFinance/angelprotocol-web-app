@@ -43,6 +43,14 @@ export default class LbpFactory extends Contract {
     return result;
   }
 
+  async getTokenBalance(tokenAddress: AccAddress, walletAddress: AccAddress) {
+    const result = await this.query<any>(tokenAddress, {
+      balance: {
+        address: walletAddress,
+      },
+    });
+    return result.balance;
+  }
   // async createSwapTx(
   //   UST_amount: number | string,
   //   splitToLiquid?: number

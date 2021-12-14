@@ -178,8 +178,8 @@ export default function AuctionHistory() {
     <table className="w-full min-w-136 leading-normal overflow-x-scroll whitespace-nowrap">
       <TableHeader></TableHeader>
       <tbody className="max-h-1/2 overflow-y-scroll">
-        {mockDataList.map((row: any) => (
-          <TableRow data={row}></TableRow>
+        {mockDataList.map((row: any, i: number) => (
+          <TableRow key={i} data={row}></TableRow>
         ))}
       </tbody>
     </table>

@@ -9,7 +9,7 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
     [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
     [sc.halo_stake]: "terra1ve9jpy2pumfg33ky8gl7l6l3e7h8ppuwajkx0k",
     [sc.halo_gov]: "terra1l8aj2jvjsz3whqyvt0hz5fvf3vhd8gcrxf6r56",
-    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
+    [sc.lbp_factory]: "terra1rg723ngfpwn2yfnvmrg4jlcq0dw0al9haxch09",
   },
   [chains.testnet]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
@@ -18,7 +18,7 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
     [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
     [sc.halo_stake]: "terra1ve9jpy2pumfg33ky8gl7l6l3e7h8ppuwajkx0k",
     [sc.halo_gov]: "terra1l8aj2jvjsz3whqyvt0hz5fvf3vhd8gcrxf6r56",
-    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
+    [sc.lbp_factory]: "terra1rg723ngfpwn2yfnvmrg4jlcq0dw0al9haxch09",
   },
   [chains.localterra]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
@@ -27,7 +27,7 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
     [sc.halo_token]: "",
     [sc.halo_stake]: "",
     [sc.halo_gov]: "",
-    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
+    [sc.lbp_factory]: "terra1rg723ngfpwn2yfnvmrg4jlcq0dw0al9haxch09",
   },
 };
 

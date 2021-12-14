@@ -1,13 +1,14 @@
 import { FaEthereum } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
 import { useState, useRef } from "react";
+import { Dec } from "@terra-money/terra.js";
+import { formatUSD } from "./utils";
 
 type CurrencyInputProps = {
   label?: string;
   required?: boolean;
   className?: string;
   amount?: string | number;
-  usdAmount?: string | number;
+  usdAmount?: number | Dec;
   assetSymbol?: string;
   balanceString?: string;
   onAmountChange?: (amount: string) => void;
@@ -35,7 +36,6 @@ export default function CurrencyInputPanel({
   const [focused, setFocused] = useState(false);
 
   const validateInput = () => {
-    console.log(inputRef?.current?.validity?.valid);
     if (inputRef?.current?.validity.rangeOverflow) {
       setError(`cannot be greater than ${max}`);
     } else if (inputRef?.current?.validity.rangeUnderflow) {
@@ -50,15 +50,19 @@ export default function CurrencyInputPanel({
 
     onAmountChange && onAmountChange(e.target.value);
   };
+  console.log(label, balanceString);
 
   return (
     <div className="currency-input-panel">
       <div className="flex justify-between mb-4">
-        <span className="inline-block text-gray-500 text-sm capitalize">
-          currency
+        <span className="inline-block text-gray-500 font-semibold text-sm capitalize">
+          {label}
         </span>
         <span className="inline-block text-gray-500 text-sm capitalize">
-          Balance: {balanceString}
+          Balance:{" "}
+          <span className="font-semibold text-grey-800">
+            {balanceString || "0"}
+          </span>
         </span>
       </div>
       <div className="flex justify-between">
@@ -95,7 +99,7 @@ export default function CurrencyInputPanel({
               min={min}
               // max={max}
               step={step}
-              // defaultValue={Number(amount)}
+              value={Number(amount)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               onChange={onInputChanged}
@@ -103,7 +107,9 @@ export default function CurrencyInputPanel({
             />
           </div>
           {/* format usd amount and display */}
-          <p className="usd-price text-xs text-gray-400">~$1,584.25</p>
+          <p className="usd-price text-xs text-gray-400">
+            ~$ {formatUSD(usdAmount)}
+          </p>
         </div>
       </div>
     </div>

@@ -6,13 +6,17 @@ import {
   NATIVE_TOKEN_SYMBOLS,
 } from "constants/currency";
 import { Pair, PairResult } from "contracts/types";
-import { useEffect, useState } from "react";
-import { useForm, UseFormRegister, UseFormReturn } from "react-hook-form";
+import { useEffect, useState, useCallback } from "react";
+import { useForm } from "react-hook-form";
 import { RiArrowDownCircleLine } from "react-icons/ri";
-import { nativeTokenFromPair } from "./assetPairs";
+import { nativeTokenFromPair, saleAssetFromPair } from "./assetPairs";
 import CurrencyInputPanel from "./CurrencyInputPanel";
 import { TokenResult } from "./usePair";
 import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet, useWallet } from "@terra-dev/use-wallet";
+import useUSTBalance from "hooks/useUSTBalance";
+import LbpFactory from "contracts/LbpFactory";
+import { formatTokenAmount } from "./utils";
 
 export enum Key {
   fromAsset = "fromAsset",
@@ -81,7 +85,7 @@ export default function SwapForm({
       [Key.fromAmount]: "",
       [Key.toAmount]: "",
       [Key.fromAsset]: "native_token",
-      [Key.toAsset]: "",
+      [Key.toAsset]: "token",
       [Key.feeValue]: "",
       [Key.feeSymbol]: currency_text[denoms.uusd],
       [Key.load]: "",
@@ -107,9 +111,13 @@ export default function SwapForm({
   const [isReversed, setIsReversed] = useState(false);
   const [usingMaxNativeAmount, setUsingMaxNativeAmount] = useState(false);
   const [balances, setBalances] = useState<any>({});
+  const [tx, setTx] = useState({ msg: null, fee: null });
+  const [lastTx, setLastTx] = useState();
+  const wallet = useConnectedWallet();
+  const ustBalance = useUSTBalance();
 
   const formData = watch();
-
+  // console.log("form: ", formData);
   function convertAmountToUSD(amountStr: string, asset: string) {
     let decAmount;
 
@@ -124,23 +132,25 @@ export default function SwapForm({
     return decAmount.mul(rate);
   }
 
-  // const decimals: any = {
-  //   native_token: NATIVE_TOKEN_DECIMALS,
-  //   token: saleTokenInfo?.decimals,
-  // };
-  // const sym: string = nativeTokenFromPair(pair?.asset_infos).info.native_token
-  //   .denom;
+  const decimals: any = {
+    native_token: NATIVE_TOKEN_DECIMALS,
+    token: saleTokenInfo?.decimals,
+  };
 
-  // const symbols = {
-  //   native_token: NATIVE_TOKEN_SYMBOLS[sym],
-  //   token: saleTokenInfo?.symbol,
-  // };
+  const sym: string =
+    pair?.asset_infos &&
+    nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
 
-  // const fromUSDAmount = convertAmountToUSD(
-  //   formData.fromAmount,
-  //   formData.fromAsset
-  // );
-  // const toUSDAmount = convertAmountToUSD(formData.toAmount, formData.toAsset);
+  const symbols: Record<string, any> = {
+    native_token: NATIVE_TOKEN_SYMBOLS[sym],
+    token: saleTokenInfo?.symbol,
+  };
+
+  const fromUSDAmount = convertAmountToUSD(
+    formData.fromAmount,
+    formData.fromAsset
+  );
+  const toUSDAmount = convertAmountToUSD(formData.toAmount, formData.toAsset);
 
   // let maxFromAmount;
   // if (balances[formData.fromAsset]) {
@@ -151,8 +161,44 @@ export default function SwapForm({
   //   );
   // }
 
+  const updateBalances = useCallback(async () => {
+    console.log("here: ", wallet?.walletAddress);
+    if (wallet?.walletAddress) {
+      // const nativeToken = nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
+
+      // const balances = await Promise.all([
+      //   getBalance(terraClient, nativeToken, wallet.walletAddress),
+      //   getTokenBalance(terraClient, saleAssetFromPair(pair.asset_infos).info.token.contract_addr, wallet.walletAddress)
+      // ]);
+      const lbpFactory = new LbpFactory(wallet);
+      const tokenContract =
+        pair?.asset_infos &&
+        saleAssetFromPair(pair?.asset_infos).info.token.contract_addr;
+      console.log("token contract: ", tokenContract);
+      if (!tokenContract) {
+        setBalances({
+          native_token: ustBalance,
+          token: 0,
+        });
+      }
+      const balance = await lbpFactory.getTokenBalance(
+        tokenContract,
+        wallet.walletAddress
+      );
+      console.log("balance: ", balance, ustBalance);
+      setBalances({
+        native_token: ustBalance,
+        token: balance,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wallet?.walletAddress, pair]);
+
+  useEffect(() => {
+    updateBalances();
+  }, [updateBalances]);
+
   function fromAmountChanged(amount: string) {
-    console.log("amountchanged: ", amount);
     // If the from amount changes from an input event,
     // we're no longer using the calculated max amount
     setUsingMaxNativeAmount(false);
@@ -161,8 +207,7 @@ export default function SwapForm({
   }
 
   function toAmountChanged(amount: string) {
-    console.log("amountchanged: ", amount);
-    setValue(Key.fromAmount, amount);
+    setValue(Key.toAmount, amount);
   }
 
   const handleFromAssetSelect = (token: string) => {
@@ -189,10 +234,9 @@ export default function SwapForm({
     handleFromAssetSelect(toAsset);
     handletoAssetSelect(fromAsset);
     setIsReversed(!isReversed);
-    console.log("val: ", key, value);
     setValue(key, value);
   }
-  // setValue(Key.fromAmount, "8000");
+  console.log("balances: ", balances);
   return (
     <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
       <CurrencyInputPanel
@@ -202,20 +246,32 @@ export default function SwapForm({
         amount={formData?.fromAmount}
         required={true}
         // maxClick={fromMaxClick}
-        usdAmount={formData.fromUSDAmount}
-        balanceString={formData.fromBalance}
-        assetSymbol={formData.fromAssetSymbol}
+        usdAmount={fromUSDAmount}
+        balanceString={
+          balances[formData.fromAsset] &&
+          formatTokenAmount(
+            balances[formData.fromAsset],
+            decimals[formData.fromAsset]
+          )
+        }
+        assetSymbol={symbols[formData.fromAsset]}
         onAmountChange={fromAmountChanged}
         {...register(Key.fromAsset)}
       ></CurrencyInputPanel>
       <CurrencyDivider onClickHandler={handleSwitchToken}></CurrencyDivider>
       <CurrencyInputPanel
-        label="From"
+        label="To"
         amount={formData.toAmount}
         required={true}
-        usdAmount={formData.toUSDAmount}
-        balanceString={formData.toBalance}
-        assetSymbol={formData.toAssetSymbol}
+        usdAmount={toUSDAmount}
+        balanceString={
+          balances[formData.toAsset] &&
+          formatTokenAmount(
+            balances[formData.toAsset],
+            decimals[formData.toAsset]
+          )
+        }
+        assetSymbol={symbols[formData.toAsset]}
         onAmountChange={toAmountChanged}
         {...register(Key.toAsset)}
       ></CurrencyInputPanel>
