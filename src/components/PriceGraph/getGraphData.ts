@@ -89,7 +89,7 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
 
 const getPriceAxisData = (priceData: GraphPriceData[]) => {
   const ticks = getPriceTicks(priceData);
-  const axisDomain = [0, ticks[ticks.length - 1] * 1.1];
+  const axisDomain = [0, ticks[ticks.length - 1] * 1.05];
 
   return {
     ticks,
@@ -104,10 +104,10 @@ const getPriceTicks = (data: GraphPriceData[]) => {
     0
   );
 
-  const numberOfTicks = 16;
+  const numberOfTicks = 8;
 
   const result = Array.from(Array(numberOfTicks)).map(
-    (x, i) => maxPrice * (1 / 16) * i
+    (x, i) => maxPrice * (1 / numberOfTicks) * (i + 1)
   );
 
   return result;
