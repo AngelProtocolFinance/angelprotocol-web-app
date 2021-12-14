@@ -6,6 +6,7 @@ import {
   PairInfo,
   Poll,
   PollStatus,
+  Simulation,
 } from "./types";
 
 export const halo_info: TokenInfo = {
@@ -83,4 +84,12 @@ export const pairInfo: PairInfo = {
   commission_rate: "0.03",
   collector_addr: "terra1wlr3fq2thnkzxw2flagle8w6yl52vx46mgrm5l",
   split_to_collector: "0.01",
+};
+
+export const simulation: Simulation = {
+  return_amount: "1000000",
+  spread_amount: "0",
+  commission_amount: "0",
+  ask_weight: "96",
+  offer_weight: "4",
 };

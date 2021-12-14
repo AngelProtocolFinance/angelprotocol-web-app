@@ -1,6 +1,7 @@
 import useTooltip from "hooks/useTooltip";
 import { FaEthereum } from "react-icons/fa";
 import { IoIosCopy, IoMdInformationCircleOutline } from "react-icons/io";
+import { usePairInfo } from "services/terra/hooks";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -33,6 +34,11 @@ function AuctionLink({
 }
 
 export default function AuctionDetails() {
+  const pairInfo = usePairInfo();
+  const startDate = new Date(pairInfo.start_time * 1000);
+  const endDate = new Date(pairInfo.end_time * 1000);
+  const is_active = endDate.getTime() > new Date().getTime();
+
   return (
     <div className="flex flex-wrap justify-between items-start">
       <div className="auction-details flex-grow">
@@ -51,9 +57,9 @@ export default function AuctionDetails() {
           Launch Description
         </h1>
         <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-          <Details title="status" value="Inactive" />
-          <Details title="start date" value="December 19, 2021, 15:00 AM GMT" />
-          <Details title="end date" value="December 21, 2021, 15:00 AM GMT" />
+          <Details title="status" value={is_active ? "Active" : "Inactive"} />
+          <Details title="start date" value={startDate.toLocaleString()} />
+          <Details title="end date" value={endDate.toLocaleString()} />
         </div>
         {/* End Launch details */}
         {/* Auction statistics */}
@@ -74,32 +80,32 @@ export default function AuctionDetails() {
           content="terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
           PostIcon={IoIosCopy}
           url="#"
-        ></AuctionLink>
+        />
         <p className="font-semibold text-md my-4">Links </p>
         <AuctionLink
           content="HALO Token on ET Finder"
           PreIcon={FaEthereum}
           url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
           type="link"
-        ></AuctionLink>
+        />
         <AuctionLink
           content="Auction Owner on ET Finder"
           PreIcon={FaEthereum}
           url="https://finder.extraterrestrial.money/testnet/address/terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
           type="link"
-        ></AuctionLink>
+        />
         <AuctionLink
           content="Auction Liquidity Bootstrapping Pool Pair"
           PreIcon={FaEthereum}
           url="https://finder.extraterrestrial.money/testnet/address/terra1j0zd9flhdckzlwulkaqzc4vlzg02nk4e4srcgl"
           type="link"
-        ></AuctionLink>
+        />
         <AuctionLink
           content="Token Launch Auction Documentation"
           PreIcon={FaEthereum}
           url="#"
           type="link"
-        ></AuctionLink>
+        />
       </div>
     </div>
   );

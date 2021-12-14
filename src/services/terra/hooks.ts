@@ -11,6 +11,7 @@ import {
   halo_info,
   pairInfo,
   poll,
+  simulation,
   staker,
 } from "./placeholders";
 
@@ -173,6 +174,36 @@ export function usePairInfo() {
       },
     },
   });
+
+  return data;
+}
+
+export function usePairSimul() {
+  //is_buy: true // your are buying HALO
+  //is_buy: false // you are selling HALO
+
+  const { usePairSimulQuery } = terra;
+  const { contract } = useLBPContract();
+
+  const { data = simulation } = usePairSimulQuery(
+    {
+      address: contract.pair_address,
+      msg: {
+        simulation: {
+          offer_asset: {
+            info: {
+              native_token: {
+                denom: "uusd",
+              },
+            },
+            amount: (1e6).toString(),
+          },
+          block_time: Math.round(new Date().getTime() / 1000 + 10),
+        },
+      },
+    },
+    { pollingInterval: 3000 }
+  );
 
   return data;
 }

@@ -17,6 +17,7 @@ import {
   Poll,
   Polls,
   QueryRes,
+  Simulation,
   TokenInfo,
 } from "./types";
 import { gov, halo, tags, user } from "./tags";
@@ -113,11 +114,16 @@ export const terra = createApi({
         return halo_amount;
       },
     }),
-    //lbp_factory
+    //lbp_pair
     pairInfo: builder.query<PairInfo, ContractQueryArgs>({
-      providesTags: [{ type: tags.user, id: user.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<PairInfo>) => {
+        return res.query_result;
+      },
+    }),
+    pairSimul: builder.query<Simulation, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Simulation>) => {
         return res.query_result;
       },
     }),

@@ -117,3 +117,11 @@ export type PairInfo = {
   collector_addr: string;
   split_to_collector: string; //""0.01""
 };
+
+export type Simulation = {
+  return_amount: string;
+  spread_amount: string;
+  commission_amount: string;
+  ask_weight: string;
+  offer_weight: string;
+};
