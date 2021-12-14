@@ -8,6 +8,7 @@ import toCurrency from "helpers/toCurrency";
 
 export default function Polls() {
   const { showModal } = useSetModal();
+
   const block_height = useLatestBlock();
   const gov_polls = useGovPolls();
 

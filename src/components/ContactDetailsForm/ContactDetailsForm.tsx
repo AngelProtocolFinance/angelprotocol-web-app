@@ -17,6 +17,7 @@ export const ContactDetailsForm = (props: any) => {
   const [orgRole, setOrgRole] = useState(props.contactData?.Role || "");
   const { saveContactInfo } = useContactDetails();
   const history = useHistory();
+
   const {
     register,
     handleSubmit,

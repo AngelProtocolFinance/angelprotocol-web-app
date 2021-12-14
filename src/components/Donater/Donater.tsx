@@ -11,7 +11,6 @@ export default function Donater(props: Props) {
     defaultValues: {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
-
       //metadata
       currency: denoms.uusd,
       min_liq: props.min_liq || 0,

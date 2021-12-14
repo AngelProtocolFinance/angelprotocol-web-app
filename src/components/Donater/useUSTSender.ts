@@ -41,14 +41,12 @@ function useUSTSender() {
         });
         return;
       }
-
       dispatch(
         setStage({
           step: Step.submit,
           content: { message: "Submitting transaction.." },
         })
       );
-
       const response = await wallet.post(tx!);
 
       if (response.success) {
@@ -113,7 +111,6 @@ function useUSTSender() {
       const offline_signer = provider.getOfflineSigner!(chains.mainnet);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
-
       const client = await SigningStargateClient.connectWithSigner(
         terra_mainnet_rpc,
         offline_signer

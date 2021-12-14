@@ -1,7 +1,6 @@
 import { ChainInfo } from "@keplr-wallet/types";
 import { chains } from "contracts/types";
 import { cosmoshub_test_rest, cosmoshub_test_rpc } from "constants/urls";
-
 export const info_cosmos_tesnet: ChainInfo = {
   chainId: chains.cosmos_test,
   chainName: "Photon",

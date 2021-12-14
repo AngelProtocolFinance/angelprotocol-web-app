@@ -21,6 +21,7 @@ export default function Entry({ address, balance, chainID }: Props) {
     20,
     15
   );
+
   return (
     <tr className="border-b">
       <td>

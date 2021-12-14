@@ -8,7 +8,6 @@ type Submit = {
   onClick?: never;
   isLoading?: boolean;
 };
-
 type Button = {
   submit?: never;
   disabled?: boolean;
@@ -17,7 +16,6 @@ type Button = {
   onClick: () => void;
   isLoading?: boolean;
 };
-
 type Props = Submit | Button;
 
 export default function Action(props: Props) {

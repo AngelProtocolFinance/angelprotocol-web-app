@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import usePortion from "./usePortion";
 
 export type Type = "locked" | "liquid";
+
 type Props = {
   children?: ReactNode;
   type: Type;
@@ -9,6 +10,7 @@ type Props = {
   border_class: string;
   text_class: string;
 };
+
 function Portion(props: Props) {
   const { disp_amount, disp_split } = usePortion(props.type);
   return (

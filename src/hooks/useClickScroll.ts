@@ -10,7 +10,6 @@ export default function useClickScroll() {
     if (!sliderRef.current) {
       return;
     }
-
     setDown(true);
     startRef.current = e.pageX - sliderRef.current.offsetLeft;
     scrollLefRef.current = sliderRef.current.scrollLeft;

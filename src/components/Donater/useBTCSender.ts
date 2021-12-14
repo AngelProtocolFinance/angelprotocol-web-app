@@ -13,6 +13,7 @@ import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 
 const dwindow: DWindow = window;
+
 export default function useBTCSender() {
   useBTCEstimator();
   const dispatch = useSetter();
@@ -54,7 +55,6 @@ export default function useBTCSender() {
       const dec_satoshi = new Dec(data.amount).mul(1e8);
       const accounts = await rpc_request(provider, "request_accounts");
       const _main = accounts[0];
-
       const hash = await rpc_request(provider, "transfer", [
         {
           feeRate: 10,

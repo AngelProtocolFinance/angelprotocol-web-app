@@ -41,7 +41,6 @@ export default function UserForm(props: Props) {
             </label>
           ))}
         </div>
-
         <div className="mt-4 grid grid-cols-a1 lg:items-left mt-10">
           <Field
             id="custom"
@@ -69,7 +68,6 @@ export default function UserForm(props: Props) {
           />
         </div>
       </div>
-
       <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
         <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
           How much of your donation should be compounded forever?

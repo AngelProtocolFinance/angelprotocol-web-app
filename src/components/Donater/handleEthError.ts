@@ -3,6 +3,7 @@ import { ErrorHandler } from "./types";
 
 export default function displayEthError(error: any, handler: ErrorHandler) {
   console.error(error);
+
   switch (error?.code) {
     //https://eips.ethereum.org/EIPS/eip-1193#provider-errors
     case 4001:

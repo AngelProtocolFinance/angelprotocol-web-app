@@ -8,10 +8,12 @@ export default function Success() {
   const { hideModal } = useSetModal();
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
+
   function acknowledge() {
     dispatch(setStage({ step: Step.form, content: null }));
     hideModal();
   }
+
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
       <AiOutlineCheckCircle className="text-blue-accent text-3xl mb-1" />

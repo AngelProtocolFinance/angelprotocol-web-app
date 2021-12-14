@@ -12,4 +12,5 @@ const Template: ComponentStory<typeof AppFoot> = () => (
     <AppFoot />
   </MemoryRouter>
 );
+
 export const Default = Template.bind({});

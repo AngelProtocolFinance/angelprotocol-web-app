@@ -62,7 +62,6 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
   }
 
   var numberOfPricePoints = getNumberOfPricePoints(last.date, target.date);
-
   var points = [last];
 
   const getPriceOnPoint = (i: number) =>
@@ -81,7 +80,6 @@ const getPredictedPriceData = (last: PriceData, target: PriceData) => {
   }
 
   points.push(target);
-
   return points;
 };
 

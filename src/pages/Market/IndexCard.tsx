@@ -2,6 +2,7 @@ import { unsdgs } from "pages/Fund/unsdgs";
 
 export default function IndexCard(props: { id: number }) {
   const sdg = unsdgs[props.id];
+
   return (
     <div className="w-full sm:w-60 text-white sm:py-8 border-t border-white border-opacity-40">
       <img

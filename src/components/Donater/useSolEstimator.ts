@@ -26,7 +26,6 @@ export default function useSolEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<Transaction>();
   const wallet = useGetPhantom();
-
   const amount = watch("amount");
   const currency = watch("currency");
   const debounced_amount = useDebouncer<string>(amount, 500);
@@ -66,9 +65,7 @@ export default function useSolEstimator() {
         const dec_fee = new Dec(recent_block.feeCalculator.lamportsPerSignature)
           .div(1e9)
           .mul(num_signature);
-
         let receiver = new PublicKey(ap_wallets[denoms.sol][chains.sol_dev]);
-
         const instruction = SystemProgram.transfer({
           toPubkey: receiver,
           fromPubkey: wallet.provider._publicKey,

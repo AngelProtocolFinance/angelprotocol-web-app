@@ -8,6 +8,7 @@ type Props = {
   currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   withTooltip?: true;
 };
+
 function Currency(props: Props) {
   const { enter, exit, Tooltip } = useTooltip(Tooltip_);
   const { register, watch } = useFormContext<Values>();

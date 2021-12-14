@@ -5,7 +5,6 @@ import { useProfilesQuery } from "services/aws/endowments/endowments";
 
 export default function Market() {
   const { data: profiles = [] } = useProfilesQuery(undefined);
-
   const sdg_ids = useMemo(
     () =>
       Array.from(
@@ -40,7 +39,6 @@ export default function Market() {
           </a>
         </div>
       </div>
-
       <section className="flex-auto padded-container mx-auto px-5 mt-5">
         {sdg_ids.map((id) => (
           <Index id={id} key={id} />

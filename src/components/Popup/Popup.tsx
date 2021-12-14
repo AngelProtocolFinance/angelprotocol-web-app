@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { MdOutlineClose } from "react-icons/md";
 
 export type PropChild = { children?: ReactNode; accent?: string };
+
 export default function Popup(props: PropChild) {
   const { hideModal } = useSetModal();
   return (

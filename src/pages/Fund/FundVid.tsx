@@ -1,4 +1,3 @@
-//future props --youtube -id
 export default function FundVid(props: { url: string }) {
   return (
     <iframe

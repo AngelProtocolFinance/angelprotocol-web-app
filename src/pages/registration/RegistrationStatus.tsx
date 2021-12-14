@@ -21,6 +21,7 @@ const RegistrationStatus = () => {
   if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
     history.go(0);
   }
+
   const { data, error } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {

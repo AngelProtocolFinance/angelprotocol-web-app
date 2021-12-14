@@ -13,6 +13,7 @@ import DappHead from "components/Headers/DappHead";
 //fundLogo
 //heading
 //description
+
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
   const id_param = props.match.params?.id;

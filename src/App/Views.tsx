@@ -20,6 +20,7 @@ import Fund from "pages/Fund/Fund";
 export default function Views() {
   const { path } = useRouteMatch();
   const location = useLocation();
+
   return (
     <Switch>
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />

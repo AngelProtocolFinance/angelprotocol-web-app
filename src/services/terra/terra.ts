@@ -22,7 +22,6 @@ import { gov, halo, tags, user } from "./tags";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
-
 //a way to segragate queries to testnet | mainnet
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
   //disable retries

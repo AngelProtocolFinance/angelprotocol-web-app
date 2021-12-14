@@ -3,6 +3,7 @@ import Popup, { Content, Actions } from "./Popup";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export type Props = { desc: string; url?: string };
+
 export default function ErrPop(props: Props) {
   const { hideModal } = useSetModal();
   return (

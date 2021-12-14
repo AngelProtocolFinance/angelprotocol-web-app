@@ -27,7 +27,6 @@ export default function displayTerraError(error: any, prompter: Opener) {
     prompter<ErrProp>(ErrPop, { desc: "Transaction timeout" });
   } else if (error instanceof TxUnspecifiedError) {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
-    //uknown error
   } else {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
   }

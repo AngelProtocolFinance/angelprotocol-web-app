@@ -11,7 +11,6 @@ export default function useDisplay() {
   const maskedAddr = maskAddress(address);
   const toggleDetails = () => showDetails((p) => !p);
   const hideDetails = () => showDetails(false);
-
   return {
     toggleDetails,
     hideDetails,

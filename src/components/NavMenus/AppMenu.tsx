@@ -8,6 +8,7 @@ export default function AppMenu() {
     className:
       "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
   };
+
   return (
     <ul className="flex lg:items-center">
       <li>

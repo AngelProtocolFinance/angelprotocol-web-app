@@ -33,7 +33,6 @@ export default function CurrencyInputPanel({
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | boolean>(false);
   const [focused, setFocused] = useState(false);
-
   const validateInput = () => {
     console.log(inputRef?.current?.validity?.valid);
     if (inputRef?.current?.validity.rangeOverflow) {
@@ -44,10 +43,8 @@ export default function CurrencyInputPanel({
       setError(false);
     }
   };
-
   const onInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     validateInput();
-
     onAmountChange && onAmountChange(e.target.value);
   };
 

@@ -7,6 +7,7 @@ import Phantom from "components/Phantom/Action";
 import { Connectors as Connects, Icons } from "./types";
 import Backdrop from "./Backdrop";
 import Nodal from "components/Nodal/Nodal";
+
 type Props = {
   closeHandler: () => void;
 };

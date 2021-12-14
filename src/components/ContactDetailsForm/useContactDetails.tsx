@@ -67,7 +67,7 @@ export const useContactDetails = () => {
 
     let result: any = {};
     if (is_create) {
-      const response: any = await registerCharity(postData); /// use registerAPIs hook
+      const response: any = await registerCharity(postData);
       result = response.data ? response.data : response.error.data;
     } else {
       const response: any = await updateContactPerson(postData);

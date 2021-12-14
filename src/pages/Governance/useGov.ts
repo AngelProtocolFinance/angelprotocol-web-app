@@ -12,7 +12,6 @@ export default function useGov() {
     (async () => {
       const halo_supply = new Dec(token_info.total_supply);
       const halo_balance = new Dec(gov_balance);
-
       const _staked = halo_balance.toNumber();
       const _pct_staked = halo_supply.lte(0)
         ? 0

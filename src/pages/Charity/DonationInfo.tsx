@@ -29,9 +29,11 @@ function StatsItem({
     </div>
   );
 }
+
 interface DonationInfoProps {
   openModal: () => void;
 }
+
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;

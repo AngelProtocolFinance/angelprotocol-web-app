@@ -4,8 +4,10 @@ import { Icons } from "components/WalletSuite/types";
 import useAction from "./useAction";
 
 type Props = { label: string; icon: Icons };
+
 export default function Action(props: Props) {
   const { handleConnect, isLoading } = useAction(props.icon);
+
   return (
     <button
       disabled={isLoading}

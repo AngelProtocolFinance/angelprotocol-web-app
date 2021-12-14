@@ -9,7 +9,6 @@ const NewIndexFundModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const onSubmit = (data: any) => console.log("submit", data);
   const closeModal = useModalCloser();
 

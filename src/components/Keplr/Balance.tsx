@@ -6,6 +6,7 @@ type Props = {
   amount: number;
   precision?: number;
 };
+
 export default function Balance(props: Props) {
   return (
     <li className="p-3 grid grid-cols-aa1 border-b border-angel-grey border-opacity-10 items-center">

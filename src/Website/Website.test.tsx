@@ -7,7 +7,6 @@ import userEvent from "@testing-library/user-event";
 describe("<Website/> reacts to routes", () => {
   //mock window function
   window.scrollTo = jest.fn();
-
   test("redirects to home when invalid route is typed in url bar", () => {
     //set page initially to /for-donors
     render(

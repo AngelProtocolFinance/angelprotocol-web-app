@@ -9,6 +9,7 @@ export default function Amount() {
     watch,
     formState: { errors },
   } = useFormContext<Values>();
+
   const denom = watch("currency");
 
   return (

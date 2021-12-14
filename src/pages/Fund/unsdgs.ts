@@ -18,6 +18,7 @@ import inequalities from "assets/icons/unsdg/inequalities.png";
 import unsdg from "assets/icons/unsdg/unsdg.png";
 
 type S = string;
+
 type UNSDG = {
   text_light: S;
   text_dark: S;

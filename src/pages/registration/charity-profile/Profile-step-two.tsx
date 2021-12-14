@@ -57,6 +57,7 @@ const ProfileStepTwo = (props: any) => {
     type === "logo" && setLogoFile(files);
     type === "banner" && setBannerFile(files);
   };
+
   return (
     <div>
       <div>

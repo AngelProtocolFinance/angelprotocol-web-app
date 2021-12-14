@@ -15,7 +15,6 @@ export default function CharityApps() {
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const decodedToken = useGetToken();
-
   const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list
