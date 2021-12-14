@@ -31,7 +31,7 @@ export default function Auction() {
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-white shadow-2xl min-h-3/4 gap-0 mt-10">
+      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
           <div className="flex-grow bg-transparent p-10">
             <h1 className="text-4xl font-bold font-heading mb-4">
@@ -106,25 +106,6 @@ const Tabs = ({ color }: { color: string }) => {
                 role="tablist"
               >
                 Auction Details
-              </a>
-            </li>
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
-                  (openTab === 2
-                    ? "text-white bg-angel-blue"
-                    : "text-gray-600 bg-white")
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenTab(2);
-                }}
-                data-toggle="tab"
-                href="#link2"
-                role="tablist"
-              >
-                Auction History
               </a>
             </li>
           </ul>
