@@ -64,7 +64,7 @@ export default function PriceGraph() {
             height={400}
             margin={{ top: 50, left: 70 }}
             data={graphData.priceData}
-            className="bg-white"
+            className="bg-white rounded-md pb-2"
           >
             <Tooltip />
             <XAxis

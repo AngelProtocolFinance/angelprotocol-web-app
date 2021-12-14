@@ -21,7 +21,7 @@ function AuctionLink({
   return (
     <a
       href="{url}"
-      className="icon-link py-1 px-2 bg-gray-100 inline-block shadow-md rounded-2xl mb-4"
+      className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
     >
       {PreIcon && <PreIcon className="inline mr-2 text-angel-blue" />}
       <span className="text-sm text-angel-grey font-light">{content}</span>
