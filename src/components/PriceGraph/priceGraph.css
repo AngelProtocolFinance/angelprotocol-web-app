@@ -1,3 +1,9 @@
 .recharts-cartesian-axis-tick {
   font-size: 0.7rem;
 }
+
+.graph-container {
+  @apply w-full;
+  @apply mt-5;
+  max-height: 600px;
+}
