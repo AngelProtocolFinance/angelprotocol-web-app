@@ -3,17 +3,13 @@ import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 import React from "react";
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
-  ReferenceDot,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 import { getGraphData } from "./getGraphData";
-import { LegendLabel } from "./LegendLabel";
 import "./priceGraph.css";
 
 type Props = {
@@ -46,10 +42,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
       {!isLoading && (
         <div className="graph-container">
           <ResponsiveContainer>
-            <LineChart
-              data={graphData.priceData}
-              className="bg-white rounded-md pb-2"
-            >
+            <LineChart data={graphData.priceData} className="rounded-md pb-2">
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
                 tickLine={false}
@@ -60,8 +53,6 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 type="number"
                 ticks={graphData.dateAxisData.ticks}
                 domain={graphData.dateAxisData.axisDomain}
-                dy={10}
-                height={80}
                 interval={0}
               />
               <YAxis
@@ -77,7 +68,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 type="monotone"
                 strokeWidth={3}
                 dataKey="historicPrice"
-                stroke="#901ef2"
+                stroke="#faac2e"
                 name={`${graphData.tokenName} price`}
                 dot={false}
                 isAnimationActive={false}

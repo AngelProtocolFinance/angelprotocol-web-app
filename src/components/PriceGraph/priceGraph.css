@@ -4,6 +4,6 @@
 
 .graph-container {
   @apply w-full;
-  @apply mt-5;
-  max-height: 600px;
+  margin-top: 50px;
+  height: 600px;
 }
