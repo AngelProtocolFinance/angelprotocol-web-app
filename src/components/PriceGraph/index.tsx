@@ -53,6 +53,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 ticks={graphData.dateAxisData.ticks}
                 domain={graphData.dateAxisData.axisDomain}
                 tick={{ fill: "white" }}
+                interval={0}
               />
               <YAxis
                 tickLine={false}
