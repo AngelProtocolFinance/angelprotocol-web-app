@@ -2,6 +2,14 @@
   font-size: 0.7rem;
 }
 
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
+  stroke-opacity: 0;
+}
+
+.recharts-wrapper .recharts-cartesian-grid-horizontal line {
+  stroke-dasharray: none;
+}
+
 .graph-container {
   @apply w-full;
   @apply h-full;
