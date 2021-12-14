@@ -49,7 +49,7 @@ export default function Auction() {
       <DappHead />
       <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white  min-h-3/4 gap-0 mt-10">
         <div className="flex w-full px-10 gap-5" style={{ height: "80vh" }}>
-          <Card className="p-5 lg:w-3/5 rounded h-full flex flex-col gap-3">
+          <Card className="p-5 w-3/5 rounded h-full flex flex-col gap-3">
             <h1 className="text-4xl font-bold font-heading">
               HALO Token Auction
             </h1>
@@ -64,7 +64,7 @@ export default function Auction() {
             <AuctionStats></AuctionStats>
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </Card>
-          <Card className="hidden lg:flex rounded items-center p-10">
+          <Card className="hidden w-2/5 lg:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </Card>
         </div>

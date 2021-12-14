@@ -42,7 +42,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
       {!isLoading && (
         <div className="graph-container">
           <ResponsiveContainer>
-            <LineChart data={graphData.priceData} className="rounded-md pb-2">
+            <LineChart data={graphData.priceData}>
               <CartesianGrid strokeDasharray="3" />
               <XAxis
                 tickLine={false}
