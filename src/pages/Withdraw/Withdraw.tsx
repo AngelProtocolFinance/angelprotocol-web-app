@@ -1,15 +1,15 @@
 import { createContext, useContext, useState } from "react";
-import AppHead from "components/Headers/AppHead";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
 import WithdrawForm from "./WithdrawForm";
 import useWithdraw from "./useWithdraw";
-import { RouteComponentProps } from "react-router";
+import { RouteComponentProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 import { RouteParam, Steps, Status, SetStatus } from "./types";
+import DappHead from "components/Headers/DappHead";
 
 const initialStatus = {
   step: Steps.initial,
@@ -49,16 +49,16 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   }
 
   return (
-    <div className="pb-16 grid content-start min-h-screen">
-      <AppHead />
+    <div className="grid content-start">
+      <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (
-        <div className="min-h-leader-table grid place-items-center">
+        <div className="min-h-withdraw-table grid place-items-center">
           <p className="uppercase text-white-grey">{error}</p>
         </div>
       )}
       {isLoading && (
-        <div className="min-h-leader-table grid place-items-center">
+        <div className="min-h-withdraw-table grid place-items-center">
           <Loader
             gapClass="gap-4"
             widthClass="w-4"

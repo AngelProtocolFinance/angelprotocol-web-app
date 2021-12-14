@@ -114,11 +114,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           valuesToBeSubmitted["denomination"] = "UST";
           valuesToBeSubmitted["fundId"] = fundId;
           valuesToBeSubmitted["transactionId"] = txInfo.txhash;
-          valuesToBeSubmitted["transactionDate"] = new Date().toLocaleString([], {
-            dateStyle: "long",
-            timeStyle: "short",
-            hour12: false,
-          });
+          valuesToBeSubmitted["transactionDate"] = new Date().toISOString();
           Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
 
           // Auth token to be passed as part of the header of the request

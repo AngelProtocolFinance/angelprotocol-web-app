@@ -1,14 +1,17 @@
 import { Balance } from "contracts/types";
-// import maskAddress from "helpers/maskAddress";
-// import Copier from "components/Copier/Copier";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
+
 type Props = {
   address: string;
   balance: Balance;
   chainID: string;
 };
+
+function show10yrModal() {
+  console.log("Clicked me!! hahaha!");
+}
 
 export default function Entry({ address, balance, chainID }: Props) {
   const { locked, liquid } = projectFunds(
@@ -23,27 +26,18 @@ export default function Entry({ address, balance, chainID }: Props) {
       <td>
         <Description address={address} chainID={chainID} />
       </td>
-      {/*<td>
-        <a
-          href={`https://finder.extraterrestrial.money/${chainID}/address/${address}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title={address}
-          className="text-md text-blue-accent"
-        >
-          {maskAddress(address)}
-        </a>
-      </td>*/}
       <td>
-        <div className="flex flex-col">
-          <Amount type="principal" amount={balance.total_locked} />
-          <Amount type="donations" amount={balance.total_liq} />
+        <div className="flex flex-col w-40">
+          <Amount
+            type="total"
+            locked={balance.total_locked}
+            liquid={balance.total_liq}
+          />
         </div>
       </td>
       <td>
-        <div className="flex flex-col">
-          <Amount type="principal" amount={locked} />
-          <Amount type="donations" amount={liquid} />
+        <div className="flex flex-col w-40">
+          <Amount type="10years" locked={locked} liquid={liquid} />
         </div>
       </td>
     </tr>

@@ -1,11 +1,4 @@
-import { denoms } from "constants/currency";
 import * as Yup from "yup";
-
-export interface Values {
-  amount: string;
-  split: string;
-  currency: denoms.uusd | denoms.btc | denoms.ether;
-}
 
 export const schema = Yup.object().shape({
   amount: Yup.number()

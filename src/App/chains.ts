@@ -3,8 +3,7 @@ import { chains, URLs } from "contracts/types";
 
 export const urls: URLs = {
   [chains.localterra]: "http://localhost:1317",
-  [chains.mainnet]:
-    "https://apis.ankr.com/242bf15be1354eda8bad73fb320e9fb9/aae7334102f8f52264b50ad44bf343d3/terra/full/columbus",
+  [chains.mainnet]: "https://lcd.terra.dev",
   [chains.testnet]: "https://bombay-lcd.terra.dev",
 };
 
@@ -30,4 +29,16 @@ export const walletConnectChainIds: Record<number, NetworkInfo> = {
   0: testnet,
   1: mainnet,
   2: localterra,
+};
+
+interface MirrorNetworkInfo {
+  name: string;
+  chainId?: string;
+  lcd: string;
+}
+
+export const networks: Record<string, MirrorNetworkInfo> = {
+  mainnet: mainnet,
+  testnet: testnet,
+  localterra: localterra,
 };

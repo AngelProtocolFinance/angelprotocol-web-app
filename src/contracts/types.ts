@@ -21,6 +21,10 @@ export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  halo_token = "halo_token",
+  halo_stake = "halo_stake",
+  halo_gov = "halo_gov",
+  lbp_factory = "lbp_factory",
 }
 
 export type URLs = {
@@ -79,3 +83,64 @@ export interface Holdings {
 
 //Vaults
 export type Swap = { exchange_rate: string; yield_token_supply: string };
+
+//Halo token
+export type HaloBalance = {
+  balance: string;
+};
+
+export type TokenInfo = {
+  name: string;
+  symbol: string;
+  decimals: number;
+  total_supply?: string;
+  contract_addr?: string;
+  icon?: any;
+};
+
+//Halo gov
+
+export type Vote = "yes" | "no";
+
+export type PollExecuteMsg = {
+  order: number;
+  contract: string;
+  msg: string;
+};
+
+export type GovState = {
+  poll_count: number;
+  total_share: string;
+  total_deposit: string;
+};
+
+export type GovStaker = {
+  balance: string;
+  locked_balance: any[];
+  share: string;
+};
+
+export type PairsResult = {
+  pairs: PairResult[];
+};
+
+export type Infos = {
+  info: NativeInfo | AssetInfo;
+  start_weight: string;
+  end_weight: string;
+};
+
+export type PairResult = {
+  liquidity_token: string;
+  contract_addr: string;
+  asset_infos: Infos[];
+};
+
+export type Pairs = {
+  pairs: Pair[];
+};
+export type Pair = {
+  pair: TokenInfo[];
+  contract: string;
+  liquidity_token: string;
+};

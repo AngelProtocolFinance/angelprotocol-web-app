@@ -10,13 +10,20 @@ import {
 import { Values } from "./types";
 import { useEffect, useState } from "react";
 import { useGetPhantom } from "wallets/Phantom";
-import useDebouncer from "./useDebouncer";
+import useDebouncer from "../../hooks/useDebouncer";
 import { denoms } from "constants/currency";
 import { chains } from "contracts/types";
 import { ap_wallets } from "constants/contracts";
+import { useSetter } from "store/accessors";
+import {
+  setFee,
+  setFormError,
+  setFormLoading,
+} from "services/transaction/transactionSlice";
 
 export default function useSolEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const dispatch = useSetter();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<Transaction>();
   const wallet = useGetPhantom();
 
@@ -32,13 +39,13 @@ export default function useSolEstimator() {
           return;
         }
 
-        setValue("form_error", "");
+        dispatch(setFormError(""));
         if (!wallet.provider) {
-          setValue("form_error", "Solana wallet is not connected");
+          dispatch(setFormError("Solana wallet is not connected"));
           return;
         }
         if (!debounced_amount) {
-          setValue("fee", 0);
+          dispatch(setFee(0));
           return;
         }
 
@@ -47,11 +54,11 @@ export default function useSolEstimator() {
 
         //initial balance check to successfully run estimate
         if (dec_lamports.gte(dec_balance)) {
-          setValue("form_error", "Not enough balance");
+          dispatch(setFormError("Not enough balance"));
           return;
         }
 
-        setValue("loading", true);
+        dispatch(setFormLoading(true));
         const endpoint = clusterApiUrl(chains.sol_dev);
         const connection = new Connection(endpoint);
         const recent_block = await connection.getRecentBlockhash();
@@ -74,12 +81,11 @@ export default function useSolEstimator() {
         }).add(instruction);
 
         setTx(transaction);
-        setValue("fee", dec_fee.toNumber());
-        setValue("loading", false);
+        dispatch(setFee(dec_fee.toNumber()));
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
-        setValue("form_error", "Error estimating transaction");
-        setValue("loading", false);
+        dispatch(setFormError("Error estimating transaction"));
       }
     })();
     //eslint-disable-next-line

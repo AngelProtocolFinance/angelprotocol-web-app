@@ -11,6 +11,12 @@
 }
 
 @layer utilities {
+  .line-clamp-3 {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   .aspect-square {
     aspect-ratio: 1/1;
   }
@@ -93,4 +99,30 @@
   body {
     @apply font-body;
   }
+}
+
+.slippage-input::-webkit-outer-spin-button,
+.slippage-input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.slippage-input[type="number"] {
+  width: 20px;
+  max-width: 30px;
+  -moz-appearance: textfield; /* Firefox */
+}
+
+.currency-input::-webkit-outer-spin-button,
+.currency-input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.currency-input[type="number"] {
+  /* width: 20px;
+  max-width: 30px; */
+  -moz-appearance: textfield; /* Firefox */
 }

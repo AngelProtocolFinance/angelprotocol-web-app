@@ -6,16 +6,28 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
     [sc.anchor]: "terra1sepfj7s0aeg5967uxnfk4thzlerrsktkpelm5s",
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
+    [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    [sc.halo_stake]: "terra1ve9jpy2pumfg33ky8gl7l6l3e7h8ppuwajkx0k",
+    [sc.halo_gov]: "terra1l8aj2jvjsz3whqyvt0hz5fvf3vhd8gcrxf6r56",
+    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
   },
   [chains.testnet]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+    [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    [sc.halo_stake]: "terra1ve9jpy2pumfg33ky8gl7l6l3e7h8ppuwajkx0k",
+    [sc.halo_gov]: "terra1l8aj2jvjsz3whqyvt0hz5fvf3vhd8gcrxf6r56",
+    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
   },
   [chains.localterra]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+    [sc.halo_token]: "",
+    [sc.halo_stake]: "",
+    [sc.halo_gov]: "",
+    [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
   },
 };
 
@@ -35,6 +47,6 @@ export const ap_wallets: { [index: string]: { [index: string]: string } } = {
     [chains.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",
   },
   [denoms.uatom]: {
-    [chains.cosmos_4]: "terra1epw9e02r3cdgem0c74847v2fm529rxatklsvnx", //replace with ap_wallet
+    [chains.cosmos_4]: "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x", //replace with ap_wallet
   },
 };

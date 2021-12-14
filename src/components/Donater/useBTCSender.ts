@@ -1,38 +1,54 @@
 import { useFormContext } from "react-hook-form";
 import { Dec } from "@terra-money/terra.js";
 import { useWallet } from "use-wallet";
-import { useSetModal } from "components/Nodal/Nodal";
 import { denoms } from "constants/currency";
 import { ap_wallets } from "constants/contracts";
-import Result, { Props as ResProps } from "./Result";
-import ErrPop, { Props as ErrProps } from "./ErrPop";
 import { DWindow, Values } from "./types";
 import useBTCEstimator from "./useBTCEstimator";
 import { chains } from "contracts/types";
-import displayEthError from "./displayEthError";
+import handleEthError from "./handleEthError";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
+import { useSetter } from "store/accessors";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 
 const dwindow: DWindow = window;
 export default function useBTCSender() {
-  const { setValue } = useFormContext<Values>();
   useBTCEstimator();
-  const { showModal } = useSetModal();
+  const dispatch = useSetter();
+  const { setValue } = useFormContext<Values>();
+  const handleTxError = useTxErrorHandler();
   const wallet = useWallet();
 
   async function sender(data: Values) {
     //no need to check if
     try {
       if (!wallet || !wallet.ethereum || !dwindow.xfi) {
-        showModal<ErrProps>(ErrPop, {
-          desc: "No bitcoin wallet is currently connected",
-        });
+        dispatch(
+          setStage({
+            step: Step.error,
+            content: { message: "Bitcoin wallet disconnected" },
+          })
+        );
         return;
       }
       if (!dwindow.xfi.bitcoin) {
-        showModal<ErrProps>(ErrPop, {
-          desc: "Bitcoin network may not be enabled in your wallet.",
-        });
+        dispatch(
+          setStage({
+            step: Step.error,
+            content: { message: "Bitcoin network disabled in wallet" },
+          })
+        );
         return;
       }
+
+      dispatch(
+        setStage({
+          step: Step.submit,
+          content: { message: "Submitting transaction..." },
+        })
+      );
+
       const provider = dwindow.xfi.bitcoin;
       //1BTC = 1e8 satoshis
       const dec_satoshi = new Dec(data.amount).mul(1e8);
@@ -54,15 +70,17 @@ export default function useBTCSender() {
 
       const explorer_url = `https://www.blockchain.com/btc-testnet/tx/${hash}`;
 
-      showModal<ResProps>(Result, {
-        sent: +data.amount,
-        received: +data.amount,
-        url: explorer_url,
-        precision: 6,
-        denom: denoms.btc,
-      });
+      dispatch(
+        setStage({
+          step: Step.success,
+          content: {
+            message: "Thank you for your donation!",
+            url: explorer_url,
+          },
+        })
+      );
     } catch (err) {
-      displayEthError(err, showModal);
+      handleEthError(err, handleTxError);
     } finally {
       setValue("amount", "");
     }

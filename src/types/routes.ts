@@ -18,7 +18,7 @@ export enum admin {
   login = "login",
   index_fund_management = "index-fund",
   endowments = "endowments",
-  aliance_members = "aliance-members",
+  alliance_members = "alliance-members",
   charity_applications = "charity-applications",
 }
 
@@ -27,15 +27,22 @@ export enum app {
   dashboard = "dashboard",
   charities = "charities",
   marketplace = "marketplace",
+  leaderboard = "leaderboard",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
   charity = "charity",
   tca = "tca",
   fund = "fund",
-  board_tca = "tca-leaderboard",
   withdraw = "withdraw",
+  govern = "govern",
   test = "test",
+  auction = "auction",
+}
+
+export enum govern {
+  index = "",
+  poll = "poll",
 }
 
 export enum registration {

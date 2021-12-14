@@ -5,7 +5,7 @@ import { useRouteMatch } from "react-router-dom";
 export default function WebMenu() {
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `text-angel-blue hover:text-opacity-75 uppercase`,
+    className: `text-angel-blue hover:text-opacity-75 uppercase inline-flex items-center`,
     activeClassName: "font-bold",
   };
 
@@ -18,7 +18,7 @@ export default function WebMenu() {
           For Charities
         </NavLink>
       </li>
-      <li className="mr-4">
+      <li className="mr-4 relative">
         <NavLink to={`${url}${web.donors}`} {...linkStyles}>
           For Donors
         </NavLink>

@@ -3,7 +3,7 @@ import {
   NetworkInfo,
   StaticWalletProvider,
 } from "@terra-money/wallet-provider";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 import AppHead from "./AppHead";
 
 const testnet: NetworkInfo = {

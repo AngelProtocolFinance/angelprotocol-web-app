@@ -1,14 +1,15 @@
-import AppHead from "components/Headers/AppHead";
-import { useSetKeplr } from "wallets/Keplr";
+import DappHead from "components/Headers/DappHead";
+// import Voter from "components/Voter/Voter";
+// import VoterForm from "components/Voter/VoterForm";
+// import { useGovStaker } from "services/terra/hooks";
 
 export default function Test() {
-  const { connect } = useSetKeplr();
   return (
-    <div className="pb-16 grid grid-rows-a1">
-      <AppHead />
-      <div className="grid place-items-center">
-        <button onClick={connect}>connect cosmos</button>
-      </div>
+    <div className="grid grid-rows-a1 place-items-center">
+      <DappHead />
+      {/* <Voter poll_id="5">
+        <VoterForm />
+      </Voter> */}
     </div>
   );
 }
