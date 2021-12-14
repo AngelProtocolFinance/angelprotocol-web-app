@@ -43,17 +43,16 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
         <div className="graph-container">
           <ResponsiveContainer>
             <LineChart data={graphData.priceData} className="rounded-md pb-2">
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3" />
               <XAxis
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={tickDateFormatter}
                 dataKey="timestamp"
-                allowDuplicatedCategory={false}
                 type="number"
                 ticks={graphData.dateAxisData.ticks}
                 domain={graphData.dateAxisData.axisDomain}
-                interval={0}
+                tick={{ fill: "white" }}
               />
               <YAxis
                 tickLine={false}
@@ -61,8 +60,8 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 type="number"
                 ticks={graphData.priceAxisData.ticks}
                 domain={graphData.priceAxisData.axisDomain}
-                dx={-15}
                 tickFormatter={tickPriceFormatter}
+                tick={{ fill: "white" }}
               />
               <Line
                 type="monotone"
