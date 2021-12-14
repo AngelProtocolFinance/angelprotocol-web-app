@@ -1,10 +1,5 @@
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 
-interface ReferenceDotCoordinates {
-  x: number;
-  y: number;
-}
-
 // (note: 2021-12-03)
 // It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
 // When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
@@ -25,7 +20,6 @@ interface GraphData {
   priceData: GraphPriceData[];
   dateAxisData: AxisData;
   priceAxisData: AxisData;
-  referenceDotCoordinates?: ReferenceDotCoordinates;
 }
 
 export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
@@ -47,33 +41,13 @@ export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
 
   const dateAxisData = getDateAxisData(lbpPairData);
   const priceAxisData = getPriceAxisData(priceData);
-  const referenceDotCoordinates = getReferenceDotCoordinates(lbpPairData);
 
   return {
     tokenName: lbpPairData.tokenName,
     priceData,
     dateAxisData,
     priceAxisData,
-    referenceDotCoordinates,
   };
-};
-
-const getPriceTicks = (data: GraphPriceData[]) => {
-  // maximum price to be shown on the price axis
-  const maxPrice = data.reduce(
-    (prev, data) => Math.max(prev, data.historicPrice || 0),
-    0
-  );
-
-  // multiplying by 1.1 to add some margin to the historic price line
-  const maxPriceTick = maxPrice * 1.1;
-
-  return [
-    maxPriceTick * 0.25,
-    maxPriceTick * 0.5,
-    maxPriceTick * 0.75,
-    maxPriceTick,
-  ];
 };
 
 const getDateAxisData = (lbpPairData: LBPPairData) => {
@@ -115,7 +89,7 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
 
 const getPriceAxisData = (priceData: GraphPriceData[]) => {
   const ticks = getPriceTicks(priceData);
-  const axisDomain = [0, ticks[ticks.length - 1]];
+  const axisDomain = [0, ticks[ticks.length - 1] * 1.1];
 
   return {
     ticks,
@@ -123,16 +97,18 @@ const getPriceAxisData = (priceData: GraphPriceData[]) => {
   };
 };
 
-const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
-  if (!lbpPairData.historicPriceData.length) {
-    return;
-  }
+const getPriceTicks = (data: GraphPriceData[]) => {
+  // maximum price to be shown on the price axis
+  const maxPrice = data.reduce(
+    (prev, data) => Math.max(prev, data.historicPrice || 0),
+    0
+  );
 
-  const lastPairDataPoint =
-    lbpPairData.historicPriceData[lbpPairData.historicPriceData.length - 1];
+  const numberOfTicks = 16;
 
-  return {
-    x: lastPairDataPoint.timestamp,
-    y: lastPairDataPoint.price,
-  };
+  const result = Array.from(Array(numberOfTicks)).map(
+    (x, i) => maxPrice * (1 / 16) * i
+  );
+
+  return result;
 };
