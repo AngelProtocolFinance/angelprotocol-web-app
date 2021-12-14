@@ -28,6 +28,7 @@ module.exports = {
         "banner-donors":
           "linear-gradient(rgba(51, 133, 189, 0.85),rgba(51, 133, 189, 0.85)), url('assets/images/hand.jpg')",
         comet: "url('assets/images/comet.jpg')",
+        auction: "linear-gradient(67deg, #9cc9e924, #66accd59)",
       },
 
       cursor: {
