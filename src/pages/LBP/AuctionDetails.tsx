@@ -61,9 +61,8 @@ export default function AuctionDetails() {
           Auction statistics
         </h1>
         <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-          <Details title="Starting HALO Balance" value="80,000,000.00000" />
-          <Details title="Current HALO Balance" value="1245851671.60214" />
-          <Details title="Total HALO Sold" value="1254148328.40259" />
+          <Details title="Starting HALO" value="80000000.00000" />
+          <Details title="Remaining HALO" value="1245851671.60214" />
         </div>
         {/* End Auction statistics */}
       </div>

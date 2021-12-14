@@ -18,8 +18,6 @@ function AuctionStats() {
         value={<CountdownTimer deadline={1639522800000} />}
         Icon={FaStopwatch}
       />
-      <StatsDetails title="Volume" value="$99,123.89" />
-      <StatsDetails title="Liquidity" value="$99,123.89" />
       <StatsDetails title="Price" value="$0.000119" />
     </div>
   );
