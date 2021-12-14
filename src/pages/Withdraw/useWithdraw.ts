@@ -29,6 +29,10 @@ export default function useWithdraw(address: string) {
   useEffect(() => {
     (async () => {
       try {
+        // Check for the endowment address in the url and compare it to the returned value of the useLookupQuery
+        const addressFilter = Object.values(data!).filter(
+          (dataAddress) => dataAddress === address
+        );
         setError("");
         setLoading(true);
         if (!wallet) {
@@ -36,11 +40,7 @@ export default function useWithdraw(address: string) {
           setError("Please connect a wallet to view this page.");
           setLoading(false);
         } else if (!data?.[wallet?.walletAddress]) {
-          // If wallet connected is not the endowment owner's wallet address
-          // Check for the endowment address in the url and compare it to the returned value of the useLookupQuery
-          const addressFilter = Object.values(data!).filter(
-            (dataAddress) => dataAddress === address
-          );
+          // If wallet connected is not whitelisted
 
           if (addressFilter.length < 1) {
             // If addressFilter returns an empty array, it means that an invalid endowment address is used
@@ -50,9 +50,14 @@ export default function useWithdraw(address: string) {
             getEndowmentBalance();
           }
         } else {
-          if (data?.[wallet?.walletAddress] !== address) {
+          // Else, the connected wallet is whitelisted
+          if (addressFilter.length < 1) {
             // Redirects if endowment address is invalid
             setRedirect(true);
+          } else if (data?.[wallet?.walletAddress] !== address) {
+            // The endowment address passed to the url does not belong to the connected wallet
+            setEndowmentOwner(false);
+            getEndowmentBalance();
           } else {
             setEndowmentOwner(true);
             getEndowmentBalance();
