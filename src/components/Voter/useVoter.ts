@@ -20,7 +20,6 @@ export default function useVoter() {
 
   async function voter() {
     // const liquid_split = 100 - Number(data.split);
-
     try {
       if (!wallet) {
         dispatch(

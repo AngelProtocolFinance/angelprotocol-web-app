@@ -112,7 +112,6 @@ const mockDataList = [
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
 ];
-
 const TableHeader = () => {
   return (
     <thead>
@@ -139,7 +138,6 @@ const TableHeader = () => {
     </thead>
   );
 };
-
 const TableRow = ({ data }: any) => {
   return (
     <tr style={{ minWidth: "600px", maxHeight: "600px" }}>
@@ -172,7 +170,6 @@ const TableRow = ({ data }: any) => {
     </tr>
   );
 };
-
 export default function AuctionHistory() {
   return (
     <table className="w-full min-w-136 leading-normal overflow-x-scroll whitespace-nowrap">

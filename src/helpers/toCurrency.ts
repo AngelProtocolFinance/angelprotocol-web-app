@@ -23,6 +23,5 @@ function truncator(num: number): [number, string] {
     truncated /= 1e3;
     suffix = "K";
   }
-
   return [truncated, suffix];
 }

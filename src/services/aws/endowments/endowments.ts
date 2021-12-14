@@ -50,7 +50,6 @@ const endowments_api = aws.injectEndpoints({
     }),
   }),
 });
-
 export const {
   useLookupQuery,
   useAccountsQuery,

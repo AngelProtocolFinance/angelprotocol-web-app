@@ -15,7 +15,6 @@ import { PairResult, PairsResult, sc } from "./types";
 export default class LbpFactory extends Contract {
   address: string;
   //contract address
-
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet?: ConnectedWallet) {
     super(wallet);

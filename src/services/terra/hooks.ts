@@ -15,7 +15,6 @@ function useHaloContract() {
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;
   const { data = "0" } = useLatestBlockQuery("", { pollingInterval: 10_000 });
-
   return data;
 }
 

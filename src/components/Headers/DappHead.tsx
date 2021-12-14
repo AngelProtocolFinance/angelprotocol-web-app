@@ -9,9 +9,11 @@ import { FiMenu } from "react-icons/fi";
 export default function DappHead() {
   useWalletSuite();
   const [navShown, showNav] = useState(false);
+
   function toggleNav() {
     showNav((prevState) => !prevState);
   }
+
   return (
     <header
       className={`grid grid grid-cols-1a lg:grid-cols-a1a items-center w-full h-24 z-10 padded-container`}

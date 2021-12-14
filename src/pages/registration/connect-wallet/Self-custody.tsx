@@ -5,7 +5,7 @@ import Action from "../../../components/ActionButton/Action";
 const SelfCustody = () => {
   //url = app/register/self-custody
   const history = useHistory();
-  // const showInfoModal = () => {};
+
   return (
     <div className="">
       <div className="title mb-5">

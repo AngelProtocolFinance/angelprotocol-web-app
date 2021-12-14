@@ -8,6 +8,7 @@ type Props = {
   wide?: true;
   frozen?: true;
 };
+
 export default function Title(props: Props) {
   const {
     register,

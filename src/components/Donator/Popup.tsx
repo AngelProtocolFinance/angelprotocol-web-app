@@ -6,7 +6,6 @@ import { useSetStatus } from "./Donator";
 import { Steps } from "./types";
 
 export type Handler = () => void;
-
 export interface Props {
   message?: string;
   children?: ReactNode;

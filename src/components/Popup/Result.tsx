@@ -4,6 +4,7 @@ export type Props = {
   desc: string;
   url: string;
 };
+
 export default function Result(props: Props) {
   return (
     <Popup accent="bg-angel-blue">

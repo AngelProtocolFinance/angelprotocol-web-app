@@ -1,5 +1,4 @@
 import Loader from "components/Loader/Loader";
-import React from "react";
 import {
   Legend,
   Line,
@@ -41,7 +40,6 @@ const legendFormatter = (value: string, _: any, index: number) => {
 export default function PriceGraph() {
   const { isLoading, predictedPriceData, tokenSaleData } =
     useGetTokenSaleData();
-
   const graphData = getGraphData(tokenSaleData, predictedPriceData);
 
   return (

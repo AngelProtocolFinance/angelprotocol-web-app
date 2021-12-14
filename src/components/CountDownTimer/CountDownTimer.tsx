@@ -20,7 +20,6 @@ export default function CountdownTimer({ deadline }: Props) {
       minutes: 0,
       seconds: 0,
     });
-
   useEffect(() => {
     const interval = setInterval(() => {
       const formatted = formatTimer(deadline);

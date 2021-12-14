@@ -12,7 +12,6 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 import { useBalances, useHaloBalance } from "services/terra/hooks";
-
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {

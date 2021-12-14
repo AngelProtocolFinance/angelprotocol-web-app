@@ -6,7 +6,6 @@ export function CharityInfo() {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
-
   return (
     <div className="leftbar overflow-y-auto">
       <div className="total-info-item mb-4">

@@ -49,7 +49,6 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
     const end_block = new Dec(poll.end_height);
     const remaining_blocks = end_block.minus(curr_block);
     const is_expired = remaining_blocks.lt(0);
-
     //get user vote
     let vote: Vote | undefined = undefined;
     const locked_holding = gov_staker.locked_balance.find(

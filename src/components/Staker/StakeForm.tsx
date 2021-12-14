@@ -13,6 +13,7 @@ export default function StakeForm() {
     formState: { isSubmitting },
   } = useFormContext<Values>();
   const staker = useStaker();
+
   return (
     <form
       onSubmit={handleSubmit(staker)}

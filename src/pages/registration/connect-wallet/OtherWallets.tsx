@@ -16,6 +16,7 @@ const OtherWallets = () => {
     setModalType(type);
     setOpenModal(true);
   };
+
   return (
     <div className="">
       <div className="title mb-5">

@@ -12,15 +12,14 @@ export default function WalletSuite() {
   const [connectorsShown, showConnectors] = useState(false);
   const { activeWallet, isLoading } = useGetter((state) => state.wallet);
   const isConnected = activeWallet !== Wallets.none;
+  const toggleConnector = () => showConnectors((p) => !p);
+  const hideConnectors = () => showConnectors(false);
 
   //close modal after connecting
   useEffect(() => {
     isConnected && showConnectors(false);
     //eslint-disable-next-line
   }, [isConnected]);
-
-  const toggleConnector = () => showConnectors((p) => !p);
-  const hideConnectors = () => showConnectors(false);
 
   return (
     <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">

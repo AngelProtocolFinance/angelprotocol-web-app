@@ -13,6 +13,7 @@ import { Icons } from "./types";
 
 export default function Icon() {
   const active_icon = (getIcon() as Icons) || Icons.uknown;
+
   return (
     <img
       src={icons[active_icon]}

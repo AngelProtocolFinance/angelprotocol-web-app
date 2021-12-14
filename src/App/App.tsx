@@ -50,7 +50,6 @@ const eth_connectors = {
     },
     qrcode: false,
   },
-  //TODO: get proper url
   ledger: {
     chainId: +chains.eth_main,
     url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",

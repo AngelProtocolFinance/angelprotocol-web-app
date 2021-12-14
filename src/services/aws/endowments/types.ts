@@ -7,7 +7,6 @@ export interface Endowment {
   name: string;
   iconLight?: boolean;
 }
-
 export interface Details {
   description: string;
   url: string;
@@ -15,7 +14,6 @@ export interface Details {
   icon: string;
   iconLight?: boolean;
 }
-
 export interface Profile {
   charity_image: string; //url of image
   charity_registration_number: string; //"CN201225725"
@@ -36,13 +34,11 @@ export interface Profile {
   facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
   is_placeholder?: true;
 }
-
 export interface QueryRes<T> {
   Count: number;
   ScannedCount: number;
   Items: T;
 }
-
 //owner:endowment
 export type Lookup = { [index: string]: string };
 export type Accounts = { [index: string]: Details };

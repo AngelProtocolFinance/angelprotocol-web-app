@@ -48,7 +48,6 @@ export default function useSubmit() {
         data.description,
         data.link
       );
-
       const response = await wallet.post(tx);
 
       if (response.success) {

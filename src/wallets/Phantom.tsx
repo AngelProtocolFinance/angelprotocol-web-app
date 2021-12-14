@@ -20,7 +20,6 @@ const initialState: State = {
   address: "",
   provider: null,
 };
-
 const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connect: async () => {},

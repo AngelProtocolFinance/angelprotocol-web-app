@@ -12,4 +12,5 @@ const Template: ComponentStory<typeof WebHead> = () => (
     <WebHead />
   </MemoryRouter>
 );
+
 export const Default = Template.bind({});

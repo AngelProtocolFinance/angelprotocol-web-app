@@ -20,7 +20,6 @@ const initialState: KeplrState = {
   address: "",
   provider: undefined,
 };
-
 const getContext = createContext<KeplrState>(initialState);
 const setContext = createContext<Setters>({
   connect: async () => {},

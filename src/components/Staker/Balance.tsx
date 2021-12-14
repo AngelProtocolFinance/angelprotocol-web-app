@@ -9,7 +9,6 @@ export default function Balance() {
   const halo_balance = useHaloBalance();
   const { watch } = useFormContext<Values>();
   const is_stake = watch("is_stake");
-
   const balance = is_stake
     ? halo_balance
     : new Dec(gov_staker.balance).div(1e6).toNumber();

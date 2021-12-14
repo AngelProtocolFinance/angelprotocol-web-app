@@ -19,6 +19,7 @@ const Login = () => {
   const decodedToken = useGetToken();
   const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
+
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
   }
@@ -85,7 +86,6 @@ const Login = () => {
             </Form>
           )}
         </Formik>
-
         <Link
           to={site.home}
           className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"

@@ -6,7 +6,6 @@ export enum Connectors {
   ledger = "ledger",
   walletconnect = "walletconnect",
 }
-
 export enum Icons {
   terra_mobile = "terra_mobile",
   terra_ext = "terra_ext",
@@ -19,30 +18,24 @@ export enum Icons {
   walletconnect = "walletconnect",
   uknown = "unknown",
 }
-
 export enum Wallets {
   none = "none",
   ethereum = "ethereum",
   terra = "terra",
   phantom = "phantom",
 }
-
 export type State = {
   activeWallet: Wallets;
   isLoading: boolean;
 };
-
 export type WalletStates = Array<[Wallets, boolean]>;
-
 export type Displays = {
   [key in Wallets]: ReactNode;
 };
-
 export interface dWindow extends Window {
   ethereum: any;
   xfi?: any;
 }
-
 export type Props = {
   children: ReactNode;
 };

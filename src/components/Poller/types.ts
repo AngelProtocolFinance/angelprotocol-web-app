@@ -3,5 +3,5 @@ export interface Values {
   title: string;
   description: string;
   link: string;
-  //execute_msgs: predefined fields
+  // execute_msgs: predefined fields
 }

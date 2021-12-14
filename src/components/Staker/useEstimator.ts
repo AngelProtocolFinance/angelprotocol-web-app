@@ -27,7 +27,6 @@ export default function useEstimator() {
   const gov_staker = useGovStaker();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
-
   const halo_balance = useHaloBalance();
   const is_stake = watch("is_stake");
   const amount = Number(watch("amount")) || 0;
@@ -71,8 +70,8 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let tx: CreateTxOptions;
-
         const contract = new Halo(wallet);
+
         if (is_stake) {
           tx = await contract.createGovStakeTx(debounced_amount);
         } else {

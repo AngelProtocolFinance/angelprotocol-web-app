@@ -85,6 +85,7 @@ const ConnectWallet = () => {
     }
     setIsLoading(false);
   };
+
   return (
     <div>
       <div className="title">

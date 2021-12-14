@@ -25,7 +25,6 @@ const initialState: User = {
   IsKeyPersonCompleted: false,
   IsMetaDataCompleted: false,
 };
-
 const userSlice = createSlice({
   name: "user",
   initialState,

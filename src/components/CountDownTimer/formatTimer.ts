@@ -4,7 +4,6 @@ export default function formatTimer(deadline: string | number) {
       ? new Date(deadline.replace(/-/g, "/")).getTime()
       : new Date(deadline).getTime();
   const now = new Date().getTime();
-
   var seconds = Math.floor((dueTime - now) / 1000);
   var minutes = Math.floor(seconds / 60);
   var hours = Math.floor(minutes / 60);

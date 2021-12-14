@@ -75,7 +75,6 @@ export default function Poll(props: { poll_id: number }) {
     </div>
   );
 }
-
 function Figure(props: { title: string; percent: string; colorClass: string }) {
   return (
     <p className={`${props.colorClass}`}>

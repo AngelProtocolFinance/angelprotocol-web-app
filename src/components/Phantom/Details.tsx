@@ -5,7 +5,9 @@ import Backdrop from "components/WalletSuite/Backdrop";
 import Disconnect from "components/WalletSuite/Disconnect";
 import { useGetPhantom, useSetPhantom } from "wallets/Phantom";
 import Balance from "components/WalletSuite/Balance";
+
 type Props = { closeHandler: () => void };
+
 export default function Details(props: Props) {
   const { disconnect } = useSetPhantom();
   const { address, connected, balance } = useGetPhantom();

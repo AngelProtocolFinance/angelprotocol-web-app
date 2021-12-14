@@ -10,7 +10,6 @@ import SelectWallet from "./connect-wallet/SelectWallet";
 import StepsDocs from "./register-docs/Steps-docs";
 import UpdateProfile from "./charity-profile/Update-profile";
 import OtherWallets from "./connect-wallet/OtherWallets";
-import RegisterWallet from "./connect-wallet/RegisterWallet";
 import SelfCustody from "./connect-wallet/Self-custody";
 import { registration } from "types/routes";
 // import AppHead from "components/Headers/AppHead";
@@ -20,6 +19,7 @@ const Register = () => {
   //this component will only render under '/app/register/'
   const { path } = useRouteMatch();
   return (
+    <section>
       <DappHead />
       <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white">
         <Switch>
@@ -82,11 +82,6 @@ const Register = () => {
             exact
             path={`${path}/${registration.key_person}`}
             component={KeyPersonProfile}
-          />
-          <Route
-            exact
-            path={`${path}/${registration.register_wallet}`}
-            component={RegisterWallet}
           />
           <Route
             exact

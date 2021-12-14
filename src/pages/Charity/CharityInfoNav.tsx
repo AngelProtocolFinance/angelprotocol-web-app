@@ -14,7 +14,6 @@ export default function CharityInfoNav({
     }`;
     return classes;
   };
-
   const handleLinkClick = (destination: string) => () => {
     onTabChange(destination);
   };

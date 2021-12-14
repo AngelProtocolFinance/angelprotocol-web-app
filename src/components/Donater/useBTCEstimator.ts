@@ -29,7 +29,6 @@ export default function useBTCEstimator() {
           return;
         }
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Unknown error occured"));
       }
     })();

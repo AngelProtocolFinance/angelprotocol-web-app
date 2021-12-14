@@ -9,6 +9,7 @@ export default function handleKeplrError(
   denom: denoms
 ) {
   console.error(error);
+
   if (error instanceof TimeoutError) {
     const url =
       denom === denoms.uatom

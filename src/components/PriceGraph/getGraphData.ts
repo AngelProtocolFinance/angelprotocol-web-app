@@ -32,7 +32,6 @@ const getPriceTicks = (data: GraphPriceData[]) => {
       Math.max(prev, data.historicPrice || data.predictedPrice || 0),
     0
   );
-
   return [
     Math.ceil(maxPrice * 0.25),
     Math.ceil(maxPrice * 0.5),
@@ -46,7 +45,6 @@ const getPriceTicks = (data: GraphPriceData[]) => {
 // dividing by which converts the miliseconds into hours.
 const getDateTicks = (startDateTime: number, endDateTime: number) => {
   const dayConversionMultiplier = 36e5 * 24;
-
   const ticks = [];
   for (
     let nextTick = startDateTime;
@@ -55,7 +53,6 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
   ) {
     ticks.push(nextTick);
   }
-
   return ticks;
 };
 
@@ -75,9 +72,7 @@ export const getGraphData = (
         date: data.date,
       }))
     );
-
   const priceTicks = getPriceTicks(graphPriceData);
-
   const dateTicks = getDateTicks(
     tokenSaleData.auctionStartDateTime,
     tokenSaleData.auctionEndDateTime
@@ -89,9 +84,7 @@ export const getGraphData = (
     tokenSaleData.auctionStartDateTime,
     tokenSaleData.auctionEndDateTime + 2e7,
   ];
-
   const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
-
   const referenceDotCoordinates = !!predictedPriceData.length
     ? {
         x: predictedPriceData[0].date,

@@ -11,5 +11,4 @@ const TableChip = ({ data, type = "text" }: any) => {
     </td>
   );
 };
-
 export default TableChip;

@@ -8,6 +8,7 @@ export default function Slider() {
   const amount = Number(watch("amount"));
   const min_liq = watch("min_liq");
   const max_liq = watch("max_liq");
+
   return (
     <div className="my-2 select-none">
       <input

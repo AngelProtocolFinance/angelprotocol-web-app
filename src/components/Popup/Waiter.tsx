@@ -1,6 +1,8 @@
 import Loader from "components/Loader/Loader";
 import Popup, { Content } from "./Popup";
+
 export type Props = { url?: string; desc: string };
+
 export default function Waiter(props: Props) {
   return (
     <Popup accent="bg-angel-blue">

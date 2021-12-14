@@ -106,7 +106,7 @@
     "@storybook/node-logger": "^6.3.6",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.6",
-    "@types/node": "^16.11.9",
+    "@types/node": "^16.11.12",
     "@types/react": "^17.0.35",
     "@types/react-router-dom": "^5.1.8",
     "eslint-config-prettier": "^8.3.0",

@@ -85,7 +85,6 @@ const registration_api = aws.injectEndpoints({
     }),
   }),
 });
-
 export const {
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,

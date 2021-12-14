@@ -6,6 +6,7 @@ import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
+import createAuthToken from "helpers/createAuthToken";
 
 export type ReferInfo = {
   refer: string;
@@ -27,7 +28,9 @@ export const useRegistration = () => {
     if (response.error) {
       toast.error(response.error.data.message);
     } else {
-      const token: any = await getTokenData(values.refer);
+      // const token: any = await getTokenData(values.refer);
+      const token: any = createAuthToken("charity-owner");
+      console.log(token);
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,
@@ -35,7 +38,7 @@ export const useRegistration = () => {
           response.data.Registration.CharityName_ContactEmail,
         RegistrationDate: response.data.Registration.RegistrationDate,
         RegistrationStatus: response.data.Registration.RegistrationStatus,
-        token: token.data,
+        token: token,
         TerraWallet: response.data.Metadata?.TerraWallet,
         IsKeyPersonCompleted: !!response.data.KeyPerson,
         IsMetaDataCompleted: !!response.data.Metadata,
@@ -62,5 +65,6 @@ export const useRegistration = () => {
         });
     }
   };
+
   return { onResume };
 };

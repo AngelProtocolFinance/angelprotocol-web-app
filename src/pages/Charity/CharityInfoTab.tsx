@@ -161,7 +161,6 @@ export default function CharityInfoTab({
     </>
   );
 }
-
 const mockAccountDetails = [
   {
     type: "current account",

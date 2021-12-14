@@ -6,5 +6,6 @@ export default function useProfiles(fund_id: number) {
       profiles: data?.filter((profile) => profile.un_sdg === `${fund_id}`),
     }),
   });
+
   return profiles;
 }

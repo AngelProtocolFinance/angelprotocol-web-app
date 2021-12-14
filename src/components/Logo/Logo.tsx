@@ -1,9 +1,9 @@
 import whiteLogo from "assets/images/angelprotocol-horiz-wht.png";
 import blueLogo from "assets/images/angelprotocol-horiz-blu.png";
-
 import { app, site, web } from "types/routes";
 import { Link, useLocation } from "react-router-dom";
 import useScrollTop from "hooks/useScrollTop";
+
 export default function Logo() {
   const location = useLocation();
   //Logo component is in App and Website and watches changes in routes
