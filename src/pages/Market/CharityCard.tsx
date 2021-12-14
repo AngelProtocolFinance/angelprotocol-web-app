@@ -12,7 +12,7 @@ export default function CharityCard(props: { address: string }) {
       />
       <Link
         to={`${site.app}/${app.charity}/${props.address}`}
-        className={`block cursor-pointer font-heading text-white-grey font-bold text-sm uppercase mt-1.5`}
+        className={`block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5`}
       >
         {profile.charity_name}
       </Link>

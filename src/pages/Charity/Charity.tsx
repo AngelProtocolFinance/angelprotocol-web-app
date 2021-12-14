@@ -12,16 +12,18 @@ import useProfile from "pages/Market/useProfile";
 export type CharityParam = { address: string };
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
-  const profile = useProfile(props.match.params.address);
+  const endowment_addr = props.match.params.address;
+  const profile = useProfile(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
+
   const showDonationForm = () => {
+    //the button firing this function is disabled when
+    //param address is wrong
     showModal(CharityForm, {
-      charity_addr: "terra129381",
+      charity_addr: endowment_addr,
     });
   };
-
-  console.log(profile);
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

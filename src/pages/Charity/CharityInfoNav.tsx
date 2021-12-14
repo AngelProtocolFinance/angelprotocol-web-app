@@ -7,7 +7,7 @@ export default function CharityInfoNav({
 }) {
   const getClassNames = (tab: string) => {
     const isActive = activeTab === tab;
-    const classes = `inline-block w-52 ${
+    const classes = `inline-block w-52 disabled:bg-grey-accent disabled:text-white-grey ${
       !isActive && "text-dark-grey"
     } hover:text-white hover:text-opacity-80 font-semibold bg-white uppercase border-0 py-3 px-4 hover:bg-angel-blue active:bg-angel-blue active:text-white ${
       isActive ? "bg-angel-blue text-light-grey" : ""
@@ -41,6 +41,7 @@ export default function CharityInfoNav({
         </li>
         <li className="mr-1">
           <button
+            disabled
             className={getClassNames("programs")}
             onClick={() => onTabChange("programs")}
           >
@@ -49,6 +50,7 @@ export default function CharityInfoNav({
         </li>
         <li className="mr-1">
           <button
+            disabled
             className={getClassNames("media")}
             onClick={() => onTabChange("media")}
           >
@@ -57,6 +59,7 @@ export default function CharityInfoNav({
         </li>
         <li className="mr-1">
           <button
+            disabled
             className={getClassNames("governance")}
             onClick={() => onTabChange("governance")}
           >

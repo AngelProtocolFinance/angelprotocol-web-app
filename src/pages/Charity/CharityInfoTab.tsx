@@ -171,7 +171,7 @@ const mockAccountDetails = [
     color: "bg-green-400",
   },
   {
-    type: "princiapl account",
+    type: "principal account",
     balance: "$4,023",
     strategy: "anchor protocol",
     allocation: "60%",

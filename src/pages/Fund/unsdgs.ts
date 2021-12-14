@@ -1,4 +1,3 @@
-import placeholder from "assets/icons/tca/validators/Angel@4x.png";
 import no_poverty from "assets/icons/unsdg/no_poverty.png";
 import zero_hunger from "assets/icons/unsdg/zero_hunger.png";
 import good_health from "assets/icons/unsdg/good_health.png";
@@ -14,6 +13,8 @@ import climate from "assets/icons/unsdg/climate.png";
 import life_water from "assets/icons/unsdg/life_water.png";
 import life_land from "assets/icons/unsdg/life_land.png";
 import partnership from "assets/icons/unsdg/partnership.png";
+import justice from "assets/icons/unsdg/justice.png";
+import inequalities from "assets/icons/unsdg/inequalities.png";
 import unsdg from "assets/icons/unsdg/unsdg.png";
 
 type S = string;
@@ -38,8 +39,8 @@ export const unsdgs: { [index: number]: UNSDG } = {
     bg: "bg-white",
     border: "border-black",
     icon: unsdg,
-    title: "no poverty",
-    desc: "End poverty in all its forms everywhere.",
+    title: "uncategorized",
+    desc: "",
     youtube: "",
     website: "",
   },
@@ -159,7 +160,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     text_hover: "hover:text-sdg10",
     bg: "bg-sdg10",
     border: "border-sdg10",
-    icon: placeholder,
+    icon: inequalities,
     youtube: "https://www.youtube.com/watch?v=P-xWg3WZUHw",
     website: "https://sdgs.un.org/goals/goal10",
   },
@@ -231,7 +232,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     text_hover: "hover:text-sdg16",
     bg: "bg-sdg16",
     border: "border-sdg16",
-    icon: placeholder,
+    icon: justice,
     youtube: "https://www.youtube.com/watch?v=Ww_B0mvGiYc",
     website: "https://sdgs.un.org/goals/goal16",
   },

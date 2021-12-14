@@ -41,7 +41,12 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   const stats = useMemo(() => {
     return [
       {
-        title: "Headquaters",
+        title: "Registration#",
+        value: profile.charity_registration_number,
+        rating: false,
+      },
+      {
+        title: "Headquarters",
         value: profile.country_city_origin,
         rating: false,
       },
@@ -62,12 +67,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       },
       {
         title: " navigator rating",
-        value: profile.charity_navigator_rating,
-        rating: true,
-      },
-      {
-        title: " navigator rating",
-        value: profile.charity_navigator_rating,
+        value: profile.charity_navigator_rating || "N/A",
         rating: true,
       },
     ];
@@ -84,36 +84,43 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         </h2>
         <div className="flex flex-row gap-2 mt-4">
           <button
+            disabled={profile.is_placeholder}
             onClick={openModal}
-            className={`uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4`}
+            className={`disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4`}
           >
             DONATE NOW
           </button>
           {/* create a customizable IconButton component to replace all occurrences of this */}
-          <a
-            href={`https://twitter.com/${profile.twitter_handle}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-          >
-            <FaTwitter color="#3FA9F5" size="25" />
-          </a>
-          <a
-            href={`https://linkedin.com/${profile.linkedin_page}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-          >
-            <FaLinkedinIn color="#3FA9F5" size="25" />
-          </a>
-          <a
-            href={`https://facebook.com/${profile.facebook_page}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-          >
-            <FaFacebookSquare color="#3FA9F5" size="25" />
-          </a>
+          {profile.twitter_handle && (
+            <a
+              href={`https://twitter.com/${profile.twitter_handle}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+            >
+              <FaTwitter color="#3FA9F5" size="25" />
+            </a>
+          )}
+          {profile.linkedin_page && (
+            <a
+              href={`https://linkedin.com/${profile.linkedin_page}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+            >
+              <FaLinkedinIn color="#3FA9F5" size="25" />
+            </a>
+          )}
+          {profile.facebook_page && (
+            <a
+              href={`https://facebook.com/${profile.facebook_page}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+            >
+              <FaFacebookSquare color="#3FA9F5" size="25" />
+            </a>
+          )}
         </div>
       </div>
       {/* charity stats */}
