@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { app, site } from "types/routes";
 import useProfile from "./useProfile";
+
 export default function CharityCard(props: { address: string }) {
   const profile = useProfile(props.address);
   return (

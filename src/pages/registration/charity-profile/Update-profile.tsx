@@ -27,12 +27,12 @@ const UpdateProfile = () => {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(user));
   }
+
   if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
     metaData = data.Metadata;
   }
 
   const is_create = !metaData?.CompanyNumber;
-
   const readFiles = async (files: any) => {
     let content: any;
     if (files && files.length > 0) {

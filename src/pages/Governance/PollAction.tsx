@@ -13,17 +13,15 @@ export default function PollAction(props: { poll_id?: string }) {
   const end_poll = usePollAction(props.poll_id);
   const is_voted = details.vote !== undefined;
   const { showModal } = useSetModal();
-
-  function showVoterForm() {
-    showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
-  }
-
   const W = !!wallet;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== PollStatus.in_progress;
-
   let node: ReactNode = null;
+
+  function showVoterForm() {
+    showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
+  }
 
   //poll has ended
   if (P) {

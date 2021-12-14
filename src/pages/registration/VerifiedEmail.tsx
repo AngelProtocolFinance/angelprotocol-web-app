@@ -32,10 +32,12 @@ const VerifiedEmail = () => {
     ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
     EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
   };
+
   if (!is_expired) {
     dispatch(updateUserData(responseData));
     localStorage.setItem("userData", JSON.stringify(responseData));
   }
+
   const resendVerificationEmail = async () => {
     if (responseData.PK) {
       const response: any = await resendEmail({
@@ -50,6 +52,7 @@ const VerifiedEmail = () => {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
   };
+
   return (
     <div>
       <div className="flex justify-center rounded-xl mb-5">

@@ -2,7 +2,6 @@ import CharityLeaderboard from "./Charity/Board";
 import DappHead from "components/Headers/DappHead";
 
 export default function Leaderboard() {
-  //cast names to desired type
   return (
     <section className="grid content-start">
       <DappHead />

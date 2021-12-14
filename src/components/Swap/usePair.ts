@@ -57,7 +57,6 @@ export default function usePair() {
         return;
       setNetworkName(wallet?.network.name);
       const factoryContract = new LbpFactory(wallet);
-
       const getTokenInfo = async (info: NativeInfo | AssetInfo) => {
         let tokenInfo: TokenInfo | undefined;
         if (isAssetInfo(info)) {

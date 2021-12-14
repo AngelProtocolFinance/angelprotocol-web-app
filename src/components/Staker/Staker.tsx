@@ -5,6 +5,7 @@ import { schema } from "./schema";
 import { Values } from "./types";
 
 type Props = { children: ReactNode; stake?: true };
+
 export default function Staker(props: Props) {
   const methods = useForm<Values>({
     reValidateMode: "onChange",

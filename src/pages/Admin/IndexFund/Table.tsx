@@ -1,7 +1,6 @@
 import { TableHeader, TableChip } from "components/Table";
 
 const headerNames = ["ID", "Name", "Description", "Members"];
-
 const FundRow = ({ onUpdateClick, fund }: any) => {
   return (
     <tr>

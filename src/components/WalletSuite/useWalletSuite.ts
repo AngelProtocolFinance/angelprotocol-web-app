@@ -10,29 +10,22 @@ import { useGetKeplr } from "wallets/Keplr";
 export default function useWalletSuite() {
   const { loading: phantomLoading, connected: phantomConnected } =
     useGetPhantom();
-
   const { loading: keplrLoading, connected: keplrConnected } = useGetKeplr();
   const dispatch = useSetter();
-
   const { status: ethStatus } = useEthWallet();
-
   const ethConnected = ethStatus === "connected";
   const ethLoading = ethStatus === "connecting";
-
   const { status: terraStatus } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
-
   const isLoading =
     isTerraLoading || ethLoading || phantomLoading || keplrLoading; // || false || otherwallet loading state
-
   const walletStates: WalletStates = [
     [Wallets.terra, terraConnected],
     [Wallets.ethereum, ethConnected],
     [Wallets.phantom, phantomConnected],
     [Wallets.keplr, keplrConnected],
   ];
-
   //find first connected wallet
   //undefined if not wallet is connected
   const connectedWallet = walletStates.find((walletState) => walletState[1]);

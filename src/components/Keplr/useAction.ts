@@ -16,7 +16,6 @@ export default function useAction(icon: Icons) {
       await connect();
       setIcon(icon);
     } catch (err) {
-      console.error(err);
       if (err instanceof KeplrNoAccount) {
         showModal<Props>(Warning, {
           text: err.message,

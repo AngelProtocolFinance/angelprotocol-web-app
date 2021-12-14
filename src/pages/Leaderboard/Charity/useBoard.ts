@@ -24,7 +24,6 @@ export default function useBoard() {
           time: string;
           entries: Array<[string, Balance]>;
         } = JSON.parse(string_data);
-
         setCharities(saved_summary.entries);
         setLastUpdate(saved_summary.time);
         return;

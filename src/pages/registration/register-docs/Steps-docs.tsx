@@ -18,8 +18,8 @@ const StepsDocs = () => {
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [uploadedStatus, setUploadedStatus] = useState(false);
-
   const docData = location.state.data;
+
   let user = useGetter((state) => state.user);
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");

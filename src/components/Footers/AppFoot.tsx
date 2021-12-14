@@ -1,6 +1,5 @@
 import AppMenu from "components/NavMenus/AppMenu";
 import { Link } from "react-router-dom";
-
 export default function AppFoot() {
   return (
     <footer className="w-full grid place-items-center max-h-28 bg-gray-900">

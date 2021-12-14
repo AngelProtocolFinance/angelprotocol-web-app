@@ -7,6 +7,7 @@ type Props = {
   percent?: number;
   position?: string;
 };
+
 export default function Figure(props: Props) {
   return (
     <div

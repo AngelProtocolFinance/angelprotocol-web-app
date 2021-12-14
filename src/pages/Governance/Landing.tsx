@@ -18,7 +18,6 @@ export default function Landing() {
           value={0.333}
           denom={currency_text[denoms.uusd]}
         />
-
         <Figure
           position="lg:row-start-2"
           title="total staked"

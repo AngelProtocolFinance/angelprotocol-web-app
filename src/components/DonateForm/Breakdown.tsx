@@ -9,6 +9,7 @@ export default function Breakdown() {
   const { watch } = useFormContext<Values>();
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
+
   return (
     <div className="pb-1">
       <Entry title="tx fee" amount={fee} currency={currency} />

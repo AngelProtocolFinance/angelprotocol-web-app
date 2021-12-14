@@ -30,7 +30,6 @@ export const contracts: { [index: string]: { [key in sc]: string } } = {
     [sc.lbp_factory]: "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
   },
 };
-
 export const ap_wallets: { [index: string]: { [index: string]: string } } = {
   [denoms.ether]: {
     [chains.eth_kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",

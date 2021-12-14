@@ -8,7 +8,6 @@ export default function WebMenu() {
     className: `text-angel-blue hover:text-opacity-75 uppercase inline-flex items-center`,
     activeClassName: "font-bold",
   };
-
   return (
     <ul
       className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}

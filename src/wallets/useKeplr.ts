@@ -68,7 +68,6 @@ export default function useKeplr() {
     setProvider(undefined);
     setConnected(false);
   }
-
   return {
     setters: { connect, disconnect },
     state: { loading, address, connected, provider, balance },

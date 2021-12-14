@@ -53,6 +53,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
 };
 
 type CharityProps = { charity_addr: string };
+
 function CharityForm(props: CharityProps) {
   return (
     <Donater to="charity" receiver={props.charity_addr}>

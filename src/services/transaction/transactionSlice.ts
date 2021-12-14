@@ -7,7 +7,6 @@ const initialState: State = {
   fee: 0,
   stage: { step: Step.form, content: null },
 };
-
 const transactionSlice = createSlice({
   name: "transaction",
   initialState,

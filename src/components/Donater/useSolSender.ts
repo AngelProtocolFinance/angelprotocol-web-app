@@ -34,21 +34,17 @@ export default function useSolSender() {
           content: { message: "Submitting transaction..." },
         })
       );
-
       const signed_tx = await wallet.provider.signTransaction(tx);
       const connection = new Connection(clusterApiUrl(chains.sol_dev));
-
       dispatch(
         setStage({
           step: Step.broadcast,
           content: { message: "Transaction submitted, waiting for results." },
         })
       );
-
       const signature = await connection.sendRawTransaction(
         signed_tx.serialize()
       );
-
       dispatch(
         setStage({
           step: Step.success,

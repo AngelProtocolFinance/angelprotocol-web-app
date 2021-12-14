@@ -16,7 +16,6 @@ import { Steps, Values, WithdrawProps } from "./types";
 export default function WithdrawForm(props: WithdrawProps) {
   const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const [withdrawTokenQty, setWithdrawTokenQty] = useState("");
-
   const { liquidCW20Tokens, liquidCW20TokenValue, anchorVault } = useHoldings(
     props.address
   );

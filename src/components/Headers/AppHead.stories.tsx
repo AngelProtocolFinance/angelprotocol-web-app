@@ -26,4 +26,5 @@ const Template: ComponentStory<typeof AppHead> = (args) => (
     </StaticWalletProvider>
   </MemoryRouter>
 );
+
 export const Default = Template.bind({});

@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
 type Handler = () => void;
+
 interface Props {
   setShown?: Function;
   children: ReactNode;

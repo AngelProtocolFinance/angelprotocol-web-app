@@ -1,5 +1,6 @@
 import image from "assets/images/home-banner.jpg";
 import { Profile } from "./types";
+
 export const profile: Profile = {
   charity_image: image, //url of image
   charity_registration_number: "00000", //"CN201225725"

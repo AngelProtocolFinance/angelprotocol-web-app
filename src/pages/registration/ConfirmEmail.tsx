@@ -10,15 +10,10 @@ const ConfirmEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
   let user = useGetter((state) => state.user);
-  if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
-  }
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-
   const resendVerificationEmail = async () => {
     if (user.PK) {
       const response: any = await resendEmail({
@@ -33,11 +28,15 @@ const ConfirmEmail = () => {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
   };
-
   const returnMain = () => {
     dispatch(removeUserData());
     history.push("/");
   };
+
+  if (!user.PK) {
+    user = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(user));
+  }
 
   return (
     <div>

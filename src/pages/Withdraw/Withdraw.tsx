@@ -28,7 +28,6 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   const address = props.match.params.address;
   const [status, setStatus] = useState<Status>(initialStatus);
   const [withdrawFormIsOpen, setWithdrawForm] = useState(false);
-
   const {
     redirect,
     isReady,

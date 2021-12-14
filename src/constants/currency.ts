@@ -106,9 +106,7 @@ export const UST: string = "UST";
 export const HALO: string = "HALO";
 export const UUSD = "uusd";
 export const ULUNA = "uluna";
-
 export const NATIVE_TOKENS = [ULUNA, UUSD];
-
 export const NATIVE_TOKEN_DECIMALS = 6;
 export const NATIVE_TOKEN_SYMBOLS: Record<string, string> = {
   uusd: "UST",

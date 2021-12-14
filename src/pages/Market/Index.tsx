@@ -12,7 +12,6 @@ export default function Index(props: { id: number }) {
     handleMouseUp,
     handleMouseMove,
   } = useClickScroll();
-
   return (
     <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0">
       <IndexCard id={props.id} />

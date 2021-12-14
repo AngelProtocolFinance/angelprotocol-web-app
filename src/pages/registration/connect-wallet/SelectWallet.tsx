@@ -13,6 +13,7 @@ const SelectWallet = () => {
   const showTerraInfoModal = () => {
     setOpenModal(true);
   };
+
   return (
     <div>
       <div className="title mb-3 flex items-center justify-center">

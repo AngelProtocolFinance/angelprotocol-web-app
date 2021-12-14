@@ -22,7 +22,6 @@ export default function useAtomSender() {
   const { watch, setValue } = useFormContext<Values>();
   const handleTxError = useTxErrorHandler();
   const dispatch = useSetter();
-
   const currency = watch("currency");
 
   useEffect(() => {
@@ -58,7 +57,6 @@ export default function useAtomSender() {
       const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_4);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
-
       const client = await SigningStargateClient.connectWithSigner(
         cosmos_4_rpc,
         offline_signer
@@ -72,7 +70,6 @@ export default function useAtomSender() {
         amount: [create_coin(1, denoms.uatom)],
         gas: gas_limit,
       };
-
       const dec_amount = new Dec(data.amount).mul(1e6);
 
       dispatch(
@@ -119,6 +116,5 @@ export default function useAtomSender() {
       setValue("amount", "");
     }
   }
-
   return sender;
 }

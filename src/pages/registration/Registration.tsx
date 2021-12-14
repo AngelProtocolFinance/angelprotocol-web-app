@@ -17,7 +17,6 @@ const Registration = () => {
   const { url } = useRouteMatch();
   const history = useHistory();
   const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
-
   const {
     register,
     handleSubmit,

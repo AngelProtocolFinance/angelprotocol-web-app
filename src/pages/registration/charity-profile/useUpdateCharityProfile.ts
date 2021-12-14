@@ -124,6 +124,5 @@ export const useUpdateCharityProfile = () => {
     }
     return false;
   };
-
   return { saveCharityMetaData, readFileToBase64 };
 };

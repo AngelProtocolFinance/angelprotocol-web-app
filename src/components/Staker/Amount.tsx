@@ -10,7 +10,6 @@ export default function Amount() {
     register,
     formState: { errors },
   } = useFormContext<Values>();
-
   const is_stake = watch("is_stake");
 
   return (

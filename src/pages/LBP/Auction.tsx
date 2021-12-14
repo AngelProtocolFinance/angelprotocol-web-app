@@ -78,7 +78,6 @@ const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
 
 const Tabs = ({ color }: { color: string }) => {
   const [openTab, setOpenTab] = useState(1);
-
   return (
     <>
       <div className="flex flex-wrap overflow-x-hidden p-10">
