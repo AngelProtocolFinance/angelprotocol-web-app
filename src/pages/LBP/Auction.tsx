@@ -12,12 +12,22 @@ import { usePairInfo } from "services/terra/hooks";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
+  const duration_time =
+    new Date(pairInfo.end_time * 1000).getTime() -
+    new Date(pairInfo.start_time * 1000).getTime();
+
+  const duration_days = duration_time / 1000 / 3600 / 24;
+
   return (
     <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-      <StatsDetails title="Duration" value="84 days" Icon={FaClock} />
+      <StatsDetails
+        title="Duration"
+        value={`${duration_days} days`}
+        Icon={FaClock}
+      />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={1639234038 * 1000} />}
+        value={<CountdownTimer deadline={pairInfo.end_time * 1000} />}
         Icon={FaStopwatch}
       />
       <StatsDetails title="Price" value="$0.000119" />

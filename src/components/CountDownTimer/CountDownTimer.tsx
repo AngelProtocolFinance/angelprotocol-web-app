@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import formatTimer from "./formatTimer";
 
 type Props = {
-  deadline: string | number;
+  deadline: number;
 };
 
 type FormattedProps = {
