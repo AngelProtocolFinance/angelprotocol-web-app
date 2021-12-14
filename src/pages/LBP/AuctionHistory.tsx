@@ -3,7 +3,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -11,7 +11,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -19,7 +19,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -27,7 +27,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -35,7 +35,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -43,7 +43,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -51,7 +51,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -59,7 +59,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -67,7 +67,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -75,7 +75,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -83,7 +83,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -91,7 +91,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -99,7 +99,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -107,7 +107,7 @@ const mockDataList = [
     time: "Nov 28, 2021, 8:59 AM",
     type: "Buy",
     input: "0.1500 WETH",
-    output: "5494978.5607 HALO",
+    output: "5494978.5607 PETAL",
     price: "$0.0001",
     wallet: "0xe6e2e2bd4a92c511ab6755ad98a0e1e5d562730c",
   },
@@ -143,23 +143,23 @@ const TableHeader = () => {
 const TableRow = ({ data }: any) => {
   return (
     <tr style={{ minWidth: "600px", maxHeight: "600px" }}>
-      <td className="px-5 py-5 border-b border-gray-200 bg-transparent text-white-grey text-sm">
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <span className="text-normal font-sans text-center">{data.time}</span>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 text-sm text-left">
-        <p className="whitespace-no-wrap">{data.type}</p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+        <p className="text-gray-900 whitespace-no-wrap">{data.type}</p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 text-sm text-left">
-        <p className="whitespace-no-wrap">{data.input} </p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+        <p className="text-gray-900 whitespace-no-wrap">{data.input} </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 text-sm text-left">
-        <p className="whitespace-no-wrap">{data.output} </p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+        <p className="text-gray-900 whitespace-no-wrap">{data.output} </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 text-sm text-left">
-        <p className="whitespace-no-wrap">{data.price} </p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+        <p className="text-gray-900 whitespace-no-wrap">{data.price} </p>
       </td>
-      <td className="px-5 py-5 border-b border-gray-200 text-sm text-left">
-        <p className="whitespace-no-wrap">{data.wallet} </p>
+      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
+        <p className="text-gray-900 whitespace-no-wrap">{data.wallet} </p>
       </td>
       {/* <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
         <button
