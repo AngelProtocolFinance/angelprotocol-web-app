@@ -22,7 +22,7 @@ function AuctionLink({
       className="icon-link py-1 px-2 bg-gray-100 inline-block shadow-md rounded-2xl mb-4"
     >
       {PreIcon && <PreIcon className="inline mr-2 text-angel-blue" />}
-      <span className="text-sm text-angel-grey font-light">{content}</span>
+      <span className="text-sm font-light">{content}</span>
       {PostIcon && (
         <PostIcon className="inline ml-2 text-angel-blue" size={15} />
       )}
@@ -36,10 +36,10 @@ export default function AuctionDetails() {
       <div className="auction-details flex-grow">
         {/* Launch description */}
         <div className="launch-description">
-          <h1 className="text-md font-semibold text-white-grey mb-5">
+          <h1 className="text-md font-semibold text-black mb-5">
             Launch Description
           </h1>
-          <p className="text-md font-light text-white-grey mb-4">
+          <p className="text-md font-light text-black mb-4">
             PETAL is the fractionalized Founder EtherTulip
           </p>
           <a href="##" className="more-info font-light hover:underline">
@@ -48,7 +48,7 @@ export default function AuctionDetails() {
         </div>
         {/* END  Launch description */}
         {/* Launch details */}
-        <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
+        <h1 className="text-md font-semibold text-black mb-3 mt-5">
           Launch Description
         </h1>
         <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
@@ -64,7 +64,7 @@ export default function AuctionDetails() {
         </div>
         {/* End Launch details */}
         {/* Auction statistics */}
-        <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
+        <h1 className="text-md font-semibold text-black mb-3 mt-5">
           Auction statistics
         </h1>
         <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
@@ -79,7 +79,7 @@ export default function AuctionDetails() {
         </div>
         {/* End Auction statistics */}
         <div className="info-card w-128">
-          <p className="text-sm font-semibold mb-2 mt-5">
+          <p className="text-sm font-semibold text-gray-600 mb-2 mt-5">
             Enabled auction rights
           </p>
           {/* <InfoCard content="Stop/Start Trading" /> */}
@@ -127,15 +127,15 @@ const InfoCard = ({
 
   function InfoPopup() {
     return (
-      <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
-        <p className="text-sm font-light text-black">{content}</p>
+      <div className="absolute left-2 bg-white font-heading text-angel-grey rounded-md text-sm shadow-lg z-10 p-4 text-left">
+        <p className="text-sm font-light">{content}</p>
       </div>
     );
   }
 
   return (
     <div
-      className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
+      className="flex justify-between relative bg-white shadow-md rounded-lg p-3 mb-3"
       style={{ width: "180px" }}
     >
       <span className="font-light text-sm">{content}</span>
@@ -152,10 +152,10 @@ const InfoCard = ({
 const Details = ({ title, value, Icon }: LaunchStatsProps) => {
   return (
     <div className="stats-item">
-      <span className="text-xs font-semibold text-white-gray capitalize">
+      <span className="text-xs font-semibold text-gray-400 capitalize">
         {title}
       </span>
-      <div className="flex items-center justify-center text-md font-normal font-heading">
+      <div className="flex items-center justify-center text-md font-normal text-angel-grey font-heading">
         {typeof value === "string" ? (
           <span className="mr-2 capitalize">{value}</span>
         ) : (

@@ -33,14 +33,14 @@ export default function Auction() {
       <DappHead />
       <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
-          <div className="flex-grow bg-transparent p-10">
-            <h1 className="text-4xl font-bold font-heading mb-4">
+          <div className="flex-grow bg-white bg-transparent p-2">
+            <h1 className="text-2xl font-bold font-heading">
               HALO Token Auction
             </h1>
             <div className="flex items-center justify-center lg:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
-                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
+                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-2xl tracking-widest capitalize text-md font-bold text-white shadow-sm focus:outline-none"
               >
                 Buy Halo
               </button>
@@ -48,11 +48,11 @@ export default function Auction() {
             <AuctionStats></AuctionStats>
             <PriceGraph />
           </div>
-          <div className="flex min-h-3/4 hidden lg:block">
+          <div className="flex bg-gray-300 min-h-3/4 hidden lg:block">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </div>
         </div>
-        <div className="">
+        <div className="bg-blue">
           <Tabs color="angel-blue" />
         </div>
       </div>
@@ -63,10 +63,10 @@ export default function Auction() {
 const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
   return (
     <div className="stats-item">
-      <span className="text-xs font-light text-light-grey uppercase">
+      <span className="text-xs font-light text-gray-400 uppercase">
         {title}
       </span>
-      <div className="flex items-center justify-center text-xl tracking-wide font-semibold text-white-grey font-heading">
+      <div className="flex items-center justify-center text-lg font-semibold text-black font-heading">
         {typeof value === "string" ? (
           <span className="mr-2 capitalize">{value}</span>
         ) : (
@@ -83,7 +83,7 @@ const Tabs = ({ color }: { color: string }) => {
 
   return (
     <>
-      <div className="flex flex-wrap overflow-x-hidden p-10">
+      <div className="flex flex-wrap p-3 overflow-x-hidden">
         <div className="w-full">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
@@ -128,8 +128,8 @@ const Tabs = ({ color }: { color: string }) => {
               </a>
             </li>
           </ul>
-          <div className="relative flex flex-col min-w-0 w-full mb-6 rounded">
-            <div className="py-7 pr-2 flex-auto">
+          <div className="relative flex flex-col min-w-0 bg-white w-full mb-6 rounded">
+            <div className="px-4 py-5 flex-auto">
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                   <AuctionDetails />
