@@ -1,6 +1,8 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
 import { CharityParam } from "./Charity";
+import useWithdraw from "../Withdraw/useWithdraw";
+import toCurrency from "helpers/toCurrency";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -71,6 +73,26 @@ function AccountAction() {
 }
 
 function CharityEndowmentInfo() {
+  const match = useRouteMatch<CharityParam>();
+  const charity_addr = match.params.address;
+  const { locked, liquid, overall } = useWithdraw(charity_addr);
+  const accountDetails = [
+    {
+      type: "Current Account",
+      balance: `$${toCurrency(liquid)}`,
+      strategy: "Anchor Protocol",
+      allocation: "100%",
+      color: "bg-green-400",
+    },
+    {
+      type: "Principal Account",
+      balance: `$${toCurrency(locked)}`,
+      strategy: "Anchor Protocol",
+      allocation: "100%",
+      color: "bg-orange",
+    },
+  ];
+
   return (
     <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10">
       <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
@@ -79,7 +101,7 @@ function CharityEndowmentInfo() {
             Endowment Balance
           </p>
           <p className="uppercase font-bold text-thin-blue text-7xl my-5">
-            $5,023
+            ${toCurrency(overall)}
           </p>
           <p className="uppercase font-medium text-thin-blue text-sm">
             Total donations
@@ -89,7 +111,7 @@ function CharityEndowmentInfo() {
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
         </div> */}
-        {mockAccountDetails.map((account) => (
+        {accountDetails.map((account) => (
           <AccountInfo
             account={account}
             className={`${account.color}`}
@@ -161,20 +183,3 @@ export default function CharityInfoTab({
     </>
   );
 }
-
-const mockAccountDetails = [
-  {
-    type: "current account",
-    balance: "$1,023",
-    strategy: "anchor protocol",
-    allocation: "60%",
-    color: "bg-green-400",
-  },
-  {
-    type: "principal account",
-    balance: "$4,023",
-    strategy: "anchor protocol",
-    allocation: "60%",
-    color: "bg-orange",
-  },
-];
