@@ -31,7 +31,7 @@ export default function Logo() {
     case `${site.app}/${app.withdraw}`:
     case `${site.app}/${app.marketplace}`:
       return (
-        <Link to={site.app} title="to home">
+        <Link to={site.home} title="to home">
           <img src={whiteLogo} alt="" className="w-32 sm:w-36" />
         </Link>
       );

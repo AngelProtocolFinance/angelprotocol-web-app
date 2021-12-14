@@ -67,7 +67,6 @@ export const useContactDetails = () => {
 
     let result: any = {};
     if (is_create) {
-      // result = await CreateNewCharity(postData);
       const response: any = await registerCharity(postData); /// use registerAPIs hook
       result = response.data ? response.data : response.error.data;
     } else {
@@ -76,17 +75,6 @@ export const useContactDetails = () => {
     }
 
     if (result.UUID || result.message === "Updated successfully!") {
-      dispatch(
-        updateUserData({
-          ...user,
-          ...postData.ContactPerson,
-          CharityName: postData.Registration.CharityName,
-          RegistrationDate: new Date().toISOString(),
-          RegistrationStatus: "Not Complete",
-          EmailVerified: false,
-          PK: result.UUID || contactData.uniqueID,
-        })
-      );
       if (!is_create) {
         toast.success(result.message);
       } else {
@@ -98,6 +86,17 @@ export const useContactDetails = () => {
             CharityName: postData.Registration.CharityName,
           },
         });
+        dispatch(
+          updateUserData({
+            ...user,
+            ...postData.ContactPerson,
+            CharityName: postData.Registration.CharityName,
+            RegistrationDate: new Date().toISOString(),
+            RegistrationStatus: "Not Complete",
+            EmailVerified: false,
+            PK: result.UUID || contactData.uniqueID,
+          })
+        );
         history.push(registration.confirm);
       }
     } else {

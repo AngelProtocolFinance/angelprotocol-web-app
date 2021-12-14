@@ -9,7 +9,7 @@ export default function DappMenu() {
 
   return (
     <ul
-      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
+      className={`hidden lg:flex justify-self-end items-center font-body text-sm lg:text-base`}
     >
       <li className="mr-8">
         <a

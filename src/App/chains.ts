@@ -30,3 +30,15 @@ export const walletConnectChainIds: Record<number, NetworkInfo> = {
   1: mainnet,
   2: localterra,
 };
+
+interface MirrorNetworkInfo {
+  name: string;
+  chainId?: string;
+  lcd: string;
+}
+
+export const networks: Record<string, MirrorNetworkInfo> = {
+  mainnet: mainnet,
+  testnet: testnet,
+  localterra: localterra,
+};

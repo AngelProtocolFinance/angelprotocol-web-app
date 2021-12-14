@@ -25,8 +25,8 @@ export default function useClickScroll() {
   }
 
   function handleMouseMove(e: React.MouseEvent) {
-    if (!down || !sliderRef.current) return;
     e.preventDefault();
+    if (!down || !sliderRef.current) return;
     const x = e.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startRef.current) * 3; //scroll-fast
     sliderRef.current.scrollLeft = scrollLefRef.current - walk;
