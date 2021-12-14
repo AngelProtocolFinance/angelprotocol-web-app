@@ -8,14 +8,16 @@ import { LaunchStatsProps } from ".";
 import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
+import { usePairInfo } from "services/terra/hooks";
 
 function AuctionStats() {
+  const pairInfo = usePairInfo();
   return (
     <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails title="Duration" value="84 days" Icon={FaClock} />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={1639522800000} />}
+        value={<CountdownTimer deadline={1639234038 * 1000} />}
         Icon={FaStopwatch}
       />
       <StatsDetails title="Price" value="$0.000119" />
@@ -43,7 +45,7 @@ export default function Auction() {
                 Buy Halo
               </button>
             </div>
-            <AuctionStats></AuctionStats>
+            <AuctionStats />
             <PriceGraph />
           </div>
           <div className="flex min-h-3/4 hidden lg:block">

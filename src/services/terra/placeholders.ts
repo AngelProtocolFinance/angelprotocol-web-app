@@ -1,5 +1,12 @@
 import { TokenInfo } from "contracts/types";
-import { GovConfig, GovStaker, GovState, Poll, PollStatus } from "./types";
+import {
+  GovConfig,
+  GovStaker,
+  GovState,
+  PairInfo,
+  Poll,
+  PollStatus,
+} from "./types";
 
 export const halo_info: TokenInfo = {
   name: "",
@@ -45,4 +52,35 @@ export const gov_config: GovConfig = {
   timelock_period: 0,
   proposal_deposit: "0",
   snapshot_period: 0,
+};
+
+//lbp
+
+export const pairInfo: PairInfo = {
+  asset_infos: [
+    {
+      info: {
+        token: {
+          contract_addr: "terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq",
+        },
+      },
+      start_weight: "96",
+      end_weight: "50",
+    },
+    {
+      info: {
+        native_token: {
+          denom: "uusd",
+        },
+      },
+      start_weight: "4",
+      end_weight: "50",
+    },
+  ],
+  token_code_id: 25641,
+  start_time: 1638974838,
+  end_time: 1639234038,
+  commission_rate: "0.03",
+  collector_addr: "terra1wlr3fq2thnkzxw2flagle8w6yl52vx46mgrm5l",
+  split_to_collector: "0.01",
 };

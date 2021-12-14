@@ -1,0 +1,31 @@
+{
+  "owner": "terra1ryjg80jend876v3awrqcvjmyl5k89t95gy2p6n",
+  "asset_infos": [
+    {
+      "info": {
+        "token": {
+          "contract_addr": "terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
+        }
+      },
+      "start_weight": "96",
+      "end_weight": "50"
+    },
+    {
+      "info": {
+        "native_token": {
+          "denom": "uusd"
+        }
+      },
+      "start_weight": "4",
+      "end_weight": "50"
+    }
+  ],
+  "contract_addr": "terra1j0zd9flhdckzlwulkaqzc4vlzg02nk4e4srcgl",
+  "liquidity_token": "terra17a26m8n7870zfs8w4kn8wh6wxggdfdl2d9aw9v",
+  "start_time": 1638974838,
+  "end_time": 1639234038,
+  "description": null,
+  "commission_rate": "0.03",
+  "collector_addr": "terra1nhpx7ek3haczdhvk8kghd348us9xrlyusmzlmq",
+  "split_to_collector": "0.01"
+}
