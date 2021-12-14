@@ -2,7 +2,7 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import DappHead from "components/Headers/DappHead";
@@ -24,6 +24,21 @@ function AuctionStats() {
   );
 }
 
+type Props = PropsWithChildren<{
+  className: string;
+}>;
+
+const Card = ({ className, children }: Props) => (
+  <div
+    className={className}
+    style={{
+      background: "linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2))",
+    }}
+  >
+    {children}
+  </div>
+);
+
 export default function Auction() {
   const { showModal } = useSetModal();
 
@@ -32,9 +47,9 @@ export default function Auction() {
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
-        <div className="flex w-full min-h-3/4 gap-0">
-          <div className="flex-grow bg-transparent p-10">
+      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white  min-h-3/4 gap-0 mt-10">
+        <div className="flex w-full justify-between" style={{ height: "80vh" }}>
+          <Card className="p-10 lg:w-3/5 rounded h-full flex flex-col">
             <h1 className="text-4xl font-bold font-heading mb-4">
               HALO Token Auction
             </h1>
@@ -48,10 +63,10 @@ export default function Auction() {
             </div>
             <AuctionStats></AuctionStats>
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
-          </div>
-          <div className="hidden lg:flex items-center">
+          </Card>
+          <Card className="hidden lg:flex rounded items-center">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
-          </div>
+          </Card>
         </div>
         <div className="">
           <Tabs color="angel-blue" />
