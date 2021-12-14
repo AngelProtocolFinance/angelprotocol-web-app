@@ -53,6 +53,7 @@ export enum registration {
   status = "status",
   wallet_check = "wallet-check",
   connect_wallet = "connect-wallet",
+  register_wallet = "register-wallet",
   select_wallet = "select-wallet",
   upload_docs = "upload-docs",
   charity_profile = "charity-profile",
