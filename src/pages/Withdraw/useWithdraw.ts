@@ -37,8 +37,18 @@ export default function useWithdraw(address: string) {
           setLoading(false);
         } else if (!data?.[wallet?.walletAddress]) {
           // If wallet connected is not the endowment owner's wallet address
-          setEndowmentOwner(false);
-          getEndowmentBalance();
+          // Check for the endowment address in the url and compare it to the returned value of the useLookupQuery
+          const addressFilter = Object.values(data!).filter(
+            (dataAddress) => dataAddress === address
+          );
+
+          if (addressFilter.length < 1) {
+            // If addressFilter returns an empty array, it means that an invalid endowment address is used
+            setRedirect(true);
+          } else {
+            setEndowmentOwner(false);
+            getEndowmentBalance();
+          }
         } else {
           if (data?.[wallet?.walletAddress] !== address) {
             // Redirects if endowment address is invalid
