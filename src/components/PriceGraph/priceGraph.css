@@ -2,7 +2,8 @@
   font-size: 0.7rem;
 }
 
-.recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child,
+.recharts-wrapper .recharts-cartesian-grid-horizontal line:nth-last-child(2) {
   stroke-opacity: 0;
 }
 
