@@ -26,7 +26,10 @@ export default function Views() {
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
       <Route path={`${path}/${app.dashboard}`} component={Dashboard} />
       <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-      <Route path={`${path}/${app.charity}`} component={Charity} />
+      <Route
+        path={`${path}/${app.charity}/:endowmentAddr`}
+        component={Charity}
+      />
       <Route path={`${path}/${app.login}`} component={Login} />
       <Route path={`${path}/${app.register}`} component={Register} />
       <Route path={`${path}/${app.tca}`} component={TCA} />

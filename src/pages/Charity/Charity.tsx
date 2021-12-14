@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RouteComponentProps } from "react-router";
 import DappHead from "components/Headers/DappHead";
 import CharityInfoNav from "./CharityInfoNav";
 import CharityInfoTab from "./CharityInfoTab";
@@ -6,8 +7,12 @@ import { DonationInfo } from "./DonationInfo";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
+import { useSingleProfileQuery } from "services/aws/endowments/endowments";
 
-const Charity = () => {
+type RouteParam = { endowmentAddr: string };
+const Charity = (props: RouteComponentProps<RouteParam>) => {
+  const endowmentAddr = props.match.params.endowmentAddr;
+  console.log("Endowment-Addr:", endowmentAddr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const showDonationForm = () => {

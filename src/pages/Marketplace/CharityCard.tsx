@@ -36,12 +36,12 @@ export default function CharityCard(props: Endowment) {
           Learn more
         </a>
         <Link
-          onClick={(e: any) => {
-            //show donate modal with address context or to dedicated page?
-            e.preventDefault();
-            alert(`donate to ${props.address}`);
-          }}
-          to="#"
+          // onClick={(e: any) => {
+          //   //show donate modal with address context or to dedicated page?
+          //   e.preventDefault();
+          //   alert(`donate to ${props.address}`);
+          // }}
+          to={`/app/charity/${props.address}`}
           className="font-heading bg-angel-blue hover:bg-angel-orange text-white font-bold shadow-sm uppercase px-5 py-1 rounded-full text-sm"
         >
           Donate
