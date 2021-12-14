@@ -10,7 +10,7 @@ import {
   useAdminLogin,
 } from "./useAdminLogin";
 import { useGetToken } from "contexts/AuthProvider";
-import { Redirect } from "react-router";
+import { Redirect } from "react-router-dom";
 import { site, admin } from "types/routes";
 import { Link } from "react-router-dom";
 

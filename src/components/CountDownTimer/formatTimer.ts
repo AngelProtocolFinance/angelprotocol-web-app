@@ -1,8 +1,6 @@
-export default function formatTimer(deadline: string | number) {
-  const dueTime =
-    typeof deadline === "string"
-      ? new Date(deadline.replace(/-/g, "/")).getTime()
-      : new Date(deadline).getTime();
+export default function formatTimer(deadline: number) {
+  //deadline epoch_num
+  const dueTime = new Date(deadline).getTime();
   const now = new Date().getTime();
 
   var seconds = Math.floor((dueTime - now) / 1000);

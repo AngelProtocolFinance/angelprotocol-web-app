@@ -8757,13 +8757,8 @@ csstype@^3.0.2:
 
 currency-list@^1.0.6:
   version "1.0.6"
-  resolved "https://registry.npmjs.org/currency-list/-/currency-list-1.0.6.tgz"
+  resolved "https://registry.yarnpkg.com/currency-list/-/currency-list-1.0.6.tgz#c0f929d0efa2b3a394fc30876290e01f60113999"
   integrity sha512-aYf2iqX8DdEvUfvK/h8uCXq+LYshwZ65jhPTgTBS+DZjCygyPj53vvL78FUePDA6vS1e+F4tAOnVGOuhPxpRFw==
-
-curve25519-js@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/curve25519-js/-/curve25519-js-0.0.4.tgz#e6ad967e8cd284590d657bbfc90d8b50e49ba060"
-  integrity sha512-axn2UMEnkhyDUPWOwVKBMVIzSQy2ejH2xRGy1wq81dqRwApXfIzfbE3hIX0ZRFBIihf/KDqK158DLwESu4AK1w==
 
 curve25519-js@0.0.4:
   version "0.0.4"

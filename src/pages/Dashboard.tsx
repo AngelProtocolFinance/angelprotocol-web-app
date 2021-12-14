@@ -1,6 +1,6 @@
 import CharityCategory from "components/CharityCategory";
 import fixtureData from "components/CharityCategory/CharityCategory.fixture.json";
-import AppHead from "components/Headers/AppHead";
+import DappHead from "components/Headers/DappHead";
 
 const charityCategories = Array(6)
   .fill(fixtureData)
@@ -8,9 +8,9 @@ const charityCategories = Array(6)
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-rows-dashboard pb-16">
+    <div className="grid grid-rows-dashboard">
       <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover h-80">
-        <AppHead />
+        <DappHead />
         <div>
           <p className="uppercase text-2xl xl:text-4xl">
             we categorize our charities based on the

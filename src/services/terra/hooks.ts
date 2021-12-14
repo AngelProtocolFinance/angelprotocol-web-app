@@ -2,13 +2,28 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
+import LBP from "contracts/LBP";
 import { useMemo } from "react";
 import { terra } from "services/terra/terra";
-import { gov_config, gov_state, halo_info, poll, staker } from "./placeholders";
+import {
+  gov_config,
+  gov_state,
+  halo_info,
+  pairInfo,
+  poll,
+  simulation,
+  staker,
+} from "./placeholders";
 
 function useHaloContract() {
   const wallet = useConnectedWallet();
   const contract = useMemo(() => new Halo(wallet), [wallet]);
+  return { wallet, contract };
+}
+
+function useLBPContract() {
+  const wallet = useConnectedWallet();
+  const contract = useMemo(() => new LBP(wallet), [wallet]);
   return { wallet, contract };
 }
 
@@ -140,6 +155,55 @@ export function useGovConfig() {
     address: contract.gov_address,
     msg: { config: {} },
   });
+
+  return data;
+}
+
+//PairContract
+export function usePairInfo() {
+  const { usePairInfoQuery } = terra;
+  const { contract } = useLBPContract();
+  const { data = pairInfo } = usePairInfoQuery({
+    address: contract.pair_address,
+    msg: {
+      pair: {
+        asset_infos: [
+          { token: { contract_addr: contract.token_address } },
+          { native_token: { denom: "uusd" } },
+        ],
+      },
+    },
+  });
+
+  return data;
+}
+
+export function usePairSimul() {
+  //is_buy: true // your are buying HALO
+  //is_buy: false // you are selling HALO
+
+  const { usePairSimulQuery } = terra;
+  const { contract } = useLBPContract();
+
+  const { data = simulation } = usePairSimulQuery(
+    {
+      address: contract.pair_address,
+      msg: {
+        simulation: {
+          offer_asset: {
+            info: {
+              native_token: {
+                denom: "uusd",
+              },
+            },
+            amount: (1e6).toString(),
+          },
+          block_time: Math.round(new Date().getTime() / 1000 + 10),
+        },
+      },
+    },
+    { pollingInterval: 3000 }
+  );
 
   return data;
 }

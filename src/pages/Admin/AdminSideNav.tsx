@@ -50,7 +50,7 @@ export default function AdminSideNav() {
         <NavLink
           activeClassName={activeStyles}
           className={linkStyles}
-          to={`${admin.aliance_members}`}
+          to={`${admin.alliance_members}`}
         >
           Alliance Members
         </NavLink>

@@ -13,9 +13,11 @@ import {
   ContractQueryArgs,
   GovConfig,
   GovStaker,
+  PairInfo,
   Poll,
   Polls,
   QueryRes,
+  Simulation,
   TokenInfo,
 } from "./types";
 import { gov, halo, tags, user } from "./tags";
@@ -110,6 +112,19 @@ export const terra = createApi({
           .div(1e6)
           .toNumber();
         return halo_amount;
+      },
+    }),
+    //lbp_pair
+    pairInfo: builder.query<PairInfo, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<PairInfo>) => {
+        return res.query_result;
+      },
+    }),
+    pairSimul: builder.query<Simulation, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Simulation>) => {
+        return res.query_result;
       },
     }),
   }),

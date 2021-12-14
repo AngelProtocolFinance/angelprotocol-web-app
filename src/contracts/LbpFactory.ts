@@ -1,8 +1,4 @@
 import {
-  Coin,
-  CreateTxOptions,
-  Dec,
-  MsgExecuteContract,
   AccAddress,
   // StdFee,
 } from "@terra-money/terra.js";

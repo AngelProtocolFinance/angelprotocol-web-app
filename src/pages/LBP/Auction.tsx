@@ -1,26 +1,49 @@
+import { Dec } from "@terra-money/terra.js";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import AppHead from "components/Headers/AppHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
+import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
+import { usePairInfo, usePairSimul } from "services/terra/hooks";
+import toCurrency from "helpers/toCurrency";
 
 function AuctionStats() {
+  const pairInfo = usePairInfo();
+  const pairSimul = usePairSimul();
+
+  const duration_days = useMemo(() => {
+    const duration_time =
+      new Date(pairInfo.end_time * 1000).getTime() -
+      new Date(pairInfo.start_time * 1000).getTime();
+
+    return duration_time / 1000 / 3600 / 24;
+  }, [pairInfo]);
+
+  const ust_price = useMemo(() => {
+    const uhalo_amount = new Dec(pairSimul.return_amount);
+    //1_000_000 uusd was offered on useSimul call
+    const uusd_amount = new Dec(1e6);
+    return uusd_amount.div(uhalo_amount).toNumber();
+  }, [pairSimul]);
+
   return (
     <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-      <StatsDetails title="Duration" value="84 days" Icon={FaClock} />
+      <StatsDetails
+        title="Duration"
+        value={`${duration_days} days`}
+        Icon={FaClock}
+      />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={1639522800000} />}
+        value={<CountdownTimer deadline={pairInfo.end_time * 1000} />}
         Icon={FaStopwatch}
       />
-      <StatsDetails title="Volume" value="$99,123.89" />
-      <StatsDetails title="Liquidity" value="$99,123.89" />
-      <StatsDetails title="Price" value="$0.000119" />
+      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
     </div>
   );
 }
@@ -29,9 +52,9 @@ export default function Auction() {
   const { showModal } = useSetModal();
 
   return (
-    <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16 font-heading text-white-grey">
-      <AppHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container bg-auction shadow-2xl min-h-3/4 gap-0 mt-10">
+    <div className="grid grid-rows-a1 place-items-start pt-2">
+      <DappHead />
+      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
           <div className="flex-grow bg-transparent p-10">
             <h1 className="text-4xl font-bold font-heading mb-4">
@@ -45,7 +68,7 @@ export default function Auction() {
                 Buy Halo
               </button>
             </div>
-            <AuctionStats></AuctionStats>
+            <AuctionStats />
             <PriceGraph />
           </div>
           <div className="flex min-h-3/4 hidden lg:block">
@@ -106,25 +129,6 @@ const Tabs = ({ color }: { color: string }) => {
                 role="tablist"
               >
                 Auction Details
-              </a>
-            </li>
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
-                  (openTab === 2
-                    ? "text-white bg-angel-blue"
-                    : "text-gray-600 bg-white")
-                }
-                onClick={(e) => {
-                  e.preventDefault();
-                  setOpenTab(2);
-                }}
-                data-toggle="tab"
-                href="#link2"
-                role="tablist"
-              >
-                Auction History
               </a>
             </li>
           </ul>

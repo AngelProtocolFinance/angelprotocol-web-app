@@ -73,9 +73,6 @@ export default function CurrencyInputPanel({
             height: "33px",
           }}
         >
-          <div className="currency-ico">
-            <FaEthereum />
-          </div>
           <div
             className="currency-name font-bold text-md font-heading"
             onClick={() => inputRef?.current?.focus()}

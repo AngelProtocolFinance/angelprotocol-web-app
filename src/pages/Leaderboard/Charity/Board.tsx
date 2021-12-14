@@ -32,10 +32,9 @@ export default function BoardCharity() {
           <table className="border-collapse table-auto w-full">
             <thead className="">
               <tr>
-                <Heading text="Charity" />
-                {/*<Heading text="Endowment Address" />*/}
-                <Heading text="Donations Received" />
-                <Heading text="10YR Projection" withTooltip />
+                <Heading text="" />
+                <Heading text="Total" />
+                <Heading text="10YR Projection" />
               </tr>
             </thead>
             <tbody>
