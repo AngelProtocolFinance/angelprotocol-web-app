@@ -33,7 +33,7 @@ export default function Auction() {
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
       <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
-        <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
+        <div className="flex w-full min-h-3/4 gap-0">
           <div className="flex-grow bg-transparent p-10">
             <h1 className="text-4xl font-bold font-heading mb-4">
               HALO Token Auction
@@ -49,7 +49,7 @@ export default function Auction() {
             <AuctionStats></AuctionStats>
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
-          <div className="flex min-h-3/4 hidden lg:block">
+          <div className="hidden lg:flex items-center">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </div>
         </div>
