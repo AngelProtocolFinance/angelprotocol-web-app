@@ -27,11 +27,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
   return (
     <>
       {isLoading && (
-        <Loader
-          gapClass="gap-4"
-          widthClass="w-4"
-          bgColorClass="bg-angel-grey"
-        />
+        <Loader gapClass="gap-4" widthClass="w-4" bgColorClass="bg-white" />
       )}
       {!isLoading && (
         <ResponsiveContainer
