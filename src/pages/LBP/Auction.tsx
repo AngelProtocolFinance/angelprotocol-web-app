@@ -26,6 +26,7 @@ function AuctionStats() {
 
   const ust_price = useMemo(() => {
     const uhalo_amount = new Dec(pairSimul.return_amount);
+    //1_000_000 uusd was offered on useSimul call
     const uusd_amount = new Dec(1e6);
     return uusd_amount.div(uhalo_amount).toNumber();
   }, [pairSimul]);
