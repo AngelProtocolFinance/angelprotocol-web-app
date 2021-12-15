@@ -1,12 +1,13 @@
 import { Dec } from "@terra-money/terra.js";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
+import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
 import { useState, useMemo } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
-import DappHead from "components/Headers/DappHead";
+import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 import { usePairInfo, usePairSimul } from "services/terra/hooks";
@@ -33,7 +34,7 @@ function AuctionStats() {
   }, [pairSimul]);
 
   return (
-    <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+    <div className="w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails
         title="Duration"
         value={`${duration_days} days`}
@@ -62,11 +63,11 @@ export default function Auction() {
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
-        <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
-          <div className="flex-grow bg-transparent p-10">
-            <h1 className="text-4xl font-bold font-heading mb-4">HaloSwap</h1>
-            <div className="flex items-center justify-center lg:hidden w-115 my-3">
+      <div className="content-section">
+        <div className="auction-section">
+          <div className="auction-data-section">
+            <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
+            <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
                 className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
@@ -77,13 +78,11 @@ export default function Auction() {
             <AuctionStats />
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
-          <div className="flex min-h-3/4 hidden lg:block">
+          <div className="hidden xl:w-2/5 xl:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </div>
         </div>
-        <div className="">
-          <Tabs color="angel-blue" />
-        </div>
+        <Tabs color="angel-blue" />
       </div>
     </div>
   );
@@ -95,7 +94,7 @@ const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
       <span className="text-xs font-light text-light-grey uppercase">
         {title}
       </span>
-      <div className="flex items-center justify-center text-xl tracking-wide font-semibold text-white-grey font-heading">
+      <div className="flex items-center justify-center text-base xl:text-xl tracking-wide font-semibold text-white-grey font-heading">
         {typeof value === "string" ? (
           <span className="mr-2 capitalize">{value}</span>
         ) : (
@@ -111,7 +110,7 @@ const Tabs = ({ color }: { color: string }) => {
   const [openTab, setOpenTab] = useState(1);
   return (
     <>
-      <div className="flex flex-wrap overflow-x-hidden p-10">
+      <div className="flex flex-wrap overflow-hidden p-10">
         <div className="w-full">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"

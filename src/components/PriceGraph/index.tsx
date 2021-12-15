@@ -2,9 +2,10 @@ import Loader from "components/Loader/Loader";
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 import React from "react";
 import {
+  Area,
   CartesianGrid,
+  ComposedChart,
   Line,
-  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -42,7 +43,22 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
       {!isLoading && (
         <div className="graph-container">
           <ResponsiveContainer>
-            <LineChart data={graphData.priceData} className="rounded-md pb-2">
+            <ComposedChart data={graphData.priceData}>
+              <svg>
+                <defs>
+                  <linearGradient
+                    id="fillGradient"
+                    x1="0%"
+                    x2="0%"
+                    y1="0%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopOpacity="1" className="from-color" />
+                    <stop offset="30%" stopOpacity="0" className="to-color" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
               <CartesianGrid strokeDasharray="3" />
               <XAxis
                 tickLine={false}
@@ -53,6 +69,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 ticks={graphData.dateAxisData.ticks}
                 domain={graphData.dateAxisData.axisDomain}
                 tick={{ fill: "white" }}
+                interval={0}
               />
               <YAxis
                 tickLine={false}
@@ -63,16 +80,21 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 tickFormatter={tickPriceFormatter}
                 tick={{ fill: "white" }}
               />
+              <Area
+                dataKey="historicPrice"
+                fill="url(#fillGradient)"
+                isAnimationActive={false}
+              />
               <Line
                 type="monotone"
-                strokeWidth={3}
+                strokeWidth={2}
                 dataKey="historicPrice"
                 stroke="#faac2e"
                 name={`${graphData.tokenName} price`}
                 dot={false}
                 isAnimationActive={false}
               />
-            </LineChart>
+            </ComposedChart>
           </ResponsiveContainer>
         </div>
       )}

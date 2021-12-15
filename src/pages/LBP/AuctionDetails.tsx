@@ -1,9 +1,9 @@
-import useTooltip from "hooks/useTooltip";
-import { IoIosCopy, IoMdInformationCircleOutline } from "react-icons/io";
-import { usePairInfo } from "services/terra/hooks";
-import { LaunchStatsProps } from ".";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
+import useTooltip from "hooks/useTooltip";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+import { usePairInfo } from "services/terra/hooks";
+import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
   PreIcon?: any;
@@ -43,7 +43,7 @@ export default function AuctionDetails() {
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Launch Description
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="status" value={is_active ? "Active" : "Inactive"} />
           <Details title="start date" value={startDate.toLocaleString()} />
           <Details title="end date" value={endDate.toLocaleString()} />
@@ -51,7 +51,7 @@ export default function AuctionDetails() {
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           HaloSwap Statistics
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="Starting HALO" value="80000000.00000" />
           <Details title="Remaining HALO" value="1245851671.60214" />
         </div>
