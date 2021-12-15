@@ -2,9 +2,10 @@ import Loader from "components/Loader/Loader";
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 import React from "react";
 import {
+  Area,
   CartesianGrid,
+  ComposedChart,
   Line,
-  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -42,7 +43,22 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
       {!isLoading && (
         <div className="graph-container">
           <ResponsiveContainer>
-            <LineChart data={graphData.priceData}>
+            <ComposedChart data={graphData.priceData}>
+              <svg>
+                <defs>
+                  <linearGradient
+                    id="fillGradient"
+                    x1="0%"
+                    x2="0%"
+                    y1="0%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopOpacity="1" stopColor="#faac2e" />
+                    <stop offset="25%" stopOpacity="0" stopColor="#faac2e" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
               <CartesianGrid strokeDasharray="3" />
               <XAxis
                 tickLine={false}
@@ -64,6 +80,11 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 tickFormatter={tickPriceFormatter}
                 tick={{ fill: "white" }}
               />
+              <Area
+                dataKey="historicPrice"
+                fill="url(#fillGradient)"
+                isAnimationActive={false}
+              />
               <Line
                 type="monotone"
                 strokeWidth={3}
@@ -73,7 +94,7 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 dot={false}
                 isAnimationActive={false}
               />
-            </LineChart>
+            </ComposedChart>
           </ResponsiveContainer>
         </div>
       )}
