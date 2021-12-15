@@ -1,13 +1,3 @@
-.auction-section {
-  @apply flex;
-  @apply w-full;
-  @apply h-full;
-  @apply px-10;
-  @apply gap-5;
-
-  height: 800px;
-}
-
 .content-section {
   @apply flex;
   @apply flex-col;
@@ -21,6 +11,29 @@
   @apply mt-10;
 
   max-height: 1700px;
+}
+
+.auction-section {
+  @apply flex;
+  @apply w-full;
+  @apply h-full;
+  @apply px-10;
+  @apply gap-5;
+
+  height: 800px;
+}
+
+.auction-data-section {
+  @apply p-5;
+  @apply w-full;
+  @apply md:w-3/5;
+  @apply rounded;
+  @apply h-full;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-3;
+
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 
 @media screen and (min-width: 1024px) {

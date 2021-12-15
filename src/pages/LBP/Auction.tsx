@@ -1,15 +1,15 @@
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
+import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
-import { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
-import DappHead from "components/Headers/DappHead";
+import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
-import "./Auction.css";
 
 function AuctionStats() {
   return (
@@ -25,21 +25,6 @@ function AuctionStats() {
   );
 }
 
-type Props = PropsWithChildren<{
-  className: string;
-}>;
-
-const Card = ({ className, children }: Props) => (
-  <div
-    className={className}
-    style={{
-      background: "linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2))",
-    }}
-  >
-    {children}
-  </div>
-);
-
 export default function Auction() {
   const { showModal } = useSetModal();
 
@@ -50,7 +35,7 @@ export default function Auction() {
       <DappHead />
       <div className="content-section">
         <div className="auction-section">
-          <Card className="p-5 w-full md:w-3/5 rounded h-full flex flex-col gap-3">
+          <div className="auction-data-section">
             <h1 className="text-4xl font-bold font-heading">
               HALO Token Auction
             </h1>
@@ -64,10 +49,10 @@ export default function Auction() {
             </div>
             <AuctionStats></AuctionStats>
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
-          </Card>
-          <Card className="hidden w-2/5 lg:flex rounded items-center p-10">
+          </div>
+          <div className="hidden w-2/5 lg:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
-          </Card>
+          </div>
         </div>
         <Tabs color="angel-blue" />
       </div>
