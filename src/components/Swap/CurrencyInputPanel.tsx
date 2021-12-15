@@ -49,8 +49,7 @@ export default function CurrencyInputPanel({
 
   const onInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     validateInput();
-
-    onAmountChange && onAmountChange(e.target.value);
+    onAmountChange && onAmountChange(e.target.value); // once this function is called, the bug sets in
   };
 
   return (
@@ -79,11 +78,11 @@ export default function CurrencyInputPanel({
             className="currency-name font-bold text-md font-heading"
             onClick={() => inputRef?.current?.focus()}
           >
-            <span>{assetSymbol || "Token"}</span>
+            <span>{assetSymbol}</span>
           </div>
-          <span className="cursor-pointer">
+          {/* <span className="cursor-pointer">
             <IoIosArrowDown className="font-semibold" />
-          </span>
+          </span> */}
         </button>
         <div className="flex flex-grow-1 flex-col items-end justify-around">
           <div className="currency-input">

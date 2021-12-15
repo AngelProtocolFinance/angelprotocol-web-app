@@ -14,11 +14,7 @@ import CurrencyInputPanel from "./CurrencyInputPanel";
 import { TokenResult } from "./usePair";
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet, useWallet } from "@terra-dev/use-wallet";
-import useUSTBalance from "hooks/useUSTBalance";
-import LbpFactory from "contracts/LbpFactory";
-import { formatTokenAmount } from "./utils";
 import { useBalances, useHaloBalance } from "services/terra/hooks";
-import toCurrency from "helpers/toCurrency";
 import debounce from "lodash/debounce";
 import { useLBPContract, useBuildSwapMsg } from "services/terra/hooks";
 
@@ -52,14 +48,12 @@ export type SwapFormKeys = {
   toAsset: any;
   fromAmount?: number;
   fromUSDAmount?: number;
-  fromAssetSymbol?: string;
   fromBalance?: string;
   fromMin?: number;
   fromMax?: number;
   fromStep?: number;
   toAmount?: number;
   toUSDAmount?: number;
-  toAssetSymbol?: string;
   toBalance?: string;
   toStep?: number;
   feeValue: any;
@@ -103,9 +97,6 @@ export default function SwapForm({
       [Key.toAsset]: "token",
       [Key.feeValue]: "",
       [Key.feeSymbol]: currency_text[denoms.uusd],
-      [Key.load]: "",
-      [Key.fromAssetSymbol]: "",
-      [Key.toAssetSymbol]: "",
       [Key.fromMin]: "",
       [Key.fromMax]: 0,
       [Key.toMin]: "",
@@ -122,11 +113,11 @@ export default function SwapForm({
     reValidateMode: "onChange",
   });
 
-  const { register, watch, setValue } = form;
+  const { register, watch, setValue, setFocus } = form;
   const [isReversed, setIsReversed] = useState(false);
   const [usingMaxNativeAmount, setUsingMaxNativeAmount] = useState(false);
   const [balances, setBalances] = useState<any>({});
-  const [tx, setTx] = useState<any>({ msg: null, fee: null });
+  const [tx, setTx] = useState<any>({ msgs: [], fee: null });
   const [lastTx, setLastTx] = useState<{ state: string }>();
   const [pendingSimulation, setPendingSimulation] = useState<{ type: string }>({
     type: "",
@@ -150,10 +141,14 @@ export default function SwapForm({
     pair?.asset_infos &&
     nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
 
-  const symbols: Record<string, any> = {
-    native_token: NATIVE_TOKEN_SYMBOLS[nativeTokenDenom],
-    token: saleTokenInfo?.symbol,
-  };
+  const symbols: Record<string, any> = useMemo(
+    () => ({
+      native_token: NATIVE_TOKEN_SYMBOLS[nativeTokenDenom],
+      token: saleTokenInfo?.symbol,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [pair, saleTokenInfo]
+  );
 
   const { main: UST_balance } = useBalances(denoms.uusd);
   const haloBalance = useHaloBalance();
@@ -192,15 +187,15 @@ export default function SwapForm({
     const intAmount = new Dec(fromAmount || 0)
       .mul(10 ** decimals[fromAsset])
       .toInt();
-    const msgs = builders[fromAsset]({
+    const msg = builders[fromAsset]({
       pair,
       intAmount,
     });
 
     // Fetch fees unless the user selected "max" for the native amount
     // (that logic already calculated the fee by backing it out of the wallet balance)
-    console.log("build: ", { ...tx, msgs });
-    return { ...tx, msgs };
+    console.log("build: ", { ...tx, msgs: [msg] });
+    return { ...tx, msgs: [msg] };
   }
 
   useEffect(() => {
@@ -381,35 +376,20 @@ export default function SwapForm({
     setSimulating(false);
   }
 
-  // const trackTx = useCallback(async function (txhash) {
-  //   try {
-  //     // Once the tx has been included on the blockchain,
-  //     // update the balances and state
-  //     await terraClient.tx.txInfo(txhash);
-
-  //     updateBalances();
-  //     onSwapTxMined();
-  //     setLastTx({ state: 'complete', txhash });
-  //   } catch {
-  //     // Not on chain yet, try again in 5s
-  //     setTimeout(trackTx, 5000, txhash);
-  //   }
-  //   // terraClient intentionally omitted
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [updateBalances, onSwapTxMined]);
-
   async function executeSwap() {
     // const feeEstimate = await lbpContract.estimateFee([tx.msg]);
     // console.log("fee ", feeEstimate);
 
     try {
       setLastTx({ state: "pending" });
+      console.log("broadcast: ", tx);
       const response = await wallet?.post(tx);
       if (response?.success) {
         // show modal
         console.log("success ", response);
       } else {
         // display terra error
+        console.log("err: ", response);
       }
     } catch (e) {
       console.log("error: ", e);
@@ -423,30 +403,23 @@ export default function SwapForm({
   function fromAmountChanged(amount: string) {
     // If the from amount changes from an input event,
     // we're no longer using the calculated max amount
-    setUsingMaxNativeAmount(false);
+    // setUsingMaxNativeAmount(false);
 
     setValue(Key.fromAmount, amount);
 
-    debouncedSetPendingSimulation({ type: "forward" });
+    // debouncedSetPendingSimulation({ type: "forward" });
   }
 
   function toAmountChanged(amount: string) {
     setValue(Key.toAmount, amount);
-    // debouncedSetPendingSimulation({ type: "reverse" });
   }
 
   const handleFromAssetSelect = (token: string) => {
     setValue(Key.fromAsset, token);
-    if (!formData[Key.fromAmount]) {
-      // setFocus(Key.fromAmount);
-    }
   };
 
   const handletoAssetSelect = (token: string) => {
     setValue(Key.toAsset, token);
-    if (!formData[Key.toAmount]) {
-      // setFocus(Key.toAmount);
-    }
   };
 
   function handleSwitchToken() {
@@ -465,13 +438,22 @@ export default function SwapForm({
 
   const pairSwitchable = useMemo(
     () =>
-      formData.fromAsset !== "" &&
-      formData.toAsset !== "" &&
+      formData.fromAsset &&
+      formData.toAsset &&
       formData.fromAsset !== formData.toAsset,
     [formData]
   );
 
-  console.log("max", maxFromAmount);
+  const canSubmit = () => {
+    return (
+      !!pair &&
+      !!error &&
+      formData.fromAmount &&
+      formData.toAmount &&
+      tx.msgs.length > 0
+    );
+  };
+
   return (
     <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
       <CurrencyInputPanel
@@ -524,8 +506,7 @@ export default function SwapForm({
         )}
       </div>
       <SwapButton
-        disabled={!pair || !!error}
-        connected={!!wallet}
+        disabled={!canSubmit() || !!wallet}
         // loading={props.isLoading}
         onHandleClick={executeSwap}
       ></SwapButton>
@@ -549,21 +530,19 @@ function CurrencyDivider({ onClickHandler }: { onClickHandler: any }) {
 export const SwapButton = ({
   onHandleClick,
   disabled,
-  connected,
   loading,
 }: {
   onHandleClick: any;
-  connected: boolean;
   disabled: boolean;
   loading?: boolean;
 }) => {
   return (
     <button
-      onClick={() => connected && !disabled && onHandleClick()}
+      onClick={() => !disabled && onHandleClick()}
       disabled={disabled}
       className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
     >
-      {!connected ? "Connect wallet" : "Swap"}
+      Swap
     </button>
   );
 };

@@ -213,6 +213,13 @@ export function usePairSimul(amount?: string) {
   return data;
 }
 
+/**
+ * @notice Encode a JSON object to base64 binary
+ */
+export function toEncodedBinary(obj: any): string {
+  return Buffer.from(JSON.stringify(obj)).toString("base64");
+}
+
 export function useBuildSwapMsg() {
   const { contract } = useLBPContract();
 
@@ -259,11 +266,13 @@ export function useBuildSwapMsg() {
       send: {
         contract: tokenAddr,
         amount: intAmount.toString(),
-        msg: btoa(
-          JSON.stringify({
-            swap: {},
-          })
-        ),
+        msg: toEncodedBinary({
+          swap: {
+            // max_spread: "0.1",
+            // belief_price: Option<Decimal>,
+            // to: Option<Addr>
+          },
+        }),
       },
     });
   }
