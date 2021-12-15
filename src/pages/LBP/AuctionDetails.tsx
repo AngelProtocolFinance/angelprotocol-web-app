@@ -32,7 +32,6 @@ export default function AuctionDetails() {
   return (
     <div className="flex flex-wrap justify-between items-start">
       <div className="auction-details flex-grow">
-        {/* Launch description */}
         <div className="launch-description">
           <h1 className="text-md font-semibold text-white-grey mb-5">
             Launch Description
@@ -41,8 +40,6 @@ export default function AuctionDetails() {
             HALO is the governance token of Angel Protocol
           </p>
         </div>
-        {/* END  Launch description */}
-        {/* Launch details */}
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Launch Description
         </h1>
@@ -51,8 +48,6 @@ export default function AuctionDetails() {
           <Details title="start date" value={startDate.toLocaleString()} />
           <Details title="end date" value={endDate.toLocaleString()} />
         </div>
-        {/* End Launch details */}
-        {/* Auction statistics */}
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Auction statistics
         </h1>
@@ -60,7 +55,6 @@ export default function AuctionDetails() {
           <Details title="Starting HALO" value="80000000.00000" />
           <Details title="Remaining HALO" value="1245851671.60214" />
         </div>
-        {/* End Auction statistics */}
       </div>
       <div className="contract-details w-128 p-5">
         <p className="font-semibold text-md mb-4">

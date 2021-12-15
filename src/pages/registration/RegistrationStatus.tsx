@@ -21,6 +21,7 @@ const RegistrationStatus = () => {
   if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
     history.go(0);
   }
+
   const { data, error } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {
@@ -47,10 +48,10 @@ const RegistrationStatus = () => {
         : 0,
     endowment:
       data?.Metadata?.EndowmentStatus === "Active"
-        ? 0
+        ? 2
         : user.IsMetaDataCompleted
         ? 1
-        : 2,
+        : 0,
     completed: user?.RegistrationStatus === "Complete",
   };
 
@@ -64,12 +65,12 @@ const RegistrationStatus = () => {
         <div className="">
           <h3 className="text-3xl font-bold">Necessary Information</h3>
           <span className="">
-            You need to complete all the following steps to be able to create
-            your endowment
+            Please complete all the following steps to be able to create your
+            endowment
           </span>
         </div>
         <div className="infor-status my-2">
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Step #1: Contact Details</p>
               <p className="status-text uppercase text-green-500">Complete</p>
@@ -83,41 +84,41 @@ const RegistrationStatus = () => {
               />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Step #2: Wallet Address</p>
               {status.wallet_address ? (
                 <p className="status-text uppercase text-green-500">Complete</p>
               ) : (
-                <p className="status-text uppercase text-yellow-600">Missing</p>
+                <p className="status-text uppercase text-yellow-500">Missing</p>
               )}
             </div>
             <div className="">
               <Action
                 classes={
                   status.wallet_address
-                    ? "bg-yellow-blue w-40 h-10"
+                    ? "bg-dark-grey w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
                 onClick={navigate(registration.wallet_check)}
-                title={status.wallet_address ? "Change" : "Continue"}
+                title={status.wallet_address ? "Completed" : "Continue"}
                 disabled={user.PK === ""}
               />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Step #3: Documentation</p>
               {status.document === 2 && (
                 <p className="status-text uppercase text-green-500">Complete</p>
               )}
               {status.document === 1 && (
-                <p className="status-text uppercase text-yellow-blue">
-                  In Review
+                <p className="status-text uppercase text-yellow-500">
+                  Under Review
                 </p>
               )}
               {status.document === 0 && (
-                <p className="status-text uppercase text-yellow-600">Missing</p>
+                <p className="status-text uppercase text-yellow-500">Missing</p>
               )}
             </div>
             <div className="">
@@ -132,10 +133,18 @@ const RegistrationStatus = () => {
                 }
                 classes={
                   status.document === 2
-                    ? "bg-yellow-blue w-40 h-10"
+                    ? "bg-dark-grey w-40 h-10"
+                    : status.document === 1
+                    ? "bg-orange w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                title={status.document === 2 ? "Change" : "Continue"}
+                title={
+                  status.document === 2
+                    ? "Completed"
+                    : status.document === 1
+                    ? "Under Review"
+                    : "Continue"
+                }
                 disabled={
                   user.PK === "" ||
                   !(user.TerraWallet || data?.Metadata?.TerraWallet)
@@ -143,33 +152,43 @@ const RegistrationStatus = () => {
               />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Status of Your Endowment</p>
-              <p className="status-text uppercase text-red-600">
-                {status.endowment === 0
-                  ? `Address: ${maskAddress(data?.Metadata?.TerraWallet)}`
-                  : status.endowment === 1
-                  ? "Available soon"
-                  : "Not available"}
-              </p>
+              {status.endowment === 0 && (
+                <p className="status-text uppercase text-yellow-500">
+                  Available soon
+                </p>
+              )}
+              {status.endowment === 1 && (
+                <p className="status-text uppercase text-green-500">
+                  Available
+                </p>
+              )}
             </div>
             <div className="">
-              <Action
-                classes={
-                  status.endowment === 2
-                    ? "bg-yellow-blue w-40 h-10"
-                    : "bg-thin-blue w-40 h-10"
-                }
-                onClick={navigate(registration.wallet_check)}
-                title={status.endowment === 0 ? "Complete" : "Continue"}
-                disabled={status.endowment === 2 || user.PK === ""}
-              />
+              {status.endowment === 2 ? (
+                <p className="text-green-500 uppercase">
+                  Created:{" "}
+                  <span>{maskAddress(data?.Metadata?.TerraWallet)}</span>
+                </p>
+              ) : (
+                <Action
+                  classes={
+                    status.endowment === 1
+                      ? "bg-green-500 w-40 h-10"
+                      : "bg-thin-blue w-40 h-10"
+                  }
+                  onClick={navigate(registration.wallet_check)}
+                  title="Create"
+                  disabled={status.endowment === 0 || user.PK === ""}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
-      <div className="optional-information my-5">
+      {/* <div className="optional-information my-5">
         <div className="">
           <h3 className="text-3xl font-bold">Optional Information</h3>
           <span className="">
@@ -179,13 +198,13 @@ const RegistrationStatus = () => {
           </span>
         </div>
         <div className="infor-status my-2">
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Step #1: Charity Profile</p>
               {data?.Metadata?.CompanyNumber ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
-                <p className="status-text uppercase text-yellow-600">Missing</p>
+                <p className="status-text uppercase text-yellow-500">Missing</p>
               )}
             </div>
             <div className="">
@@ -208,13 +227,13 @@ const RegistrationStatus = () => {
               />
             </div>
           </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-2/5">
+          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
               <p className="">Step #2: Key Person Profile</p>
               {data?.KeyPerson ? (
                 <p className="status-text uppercase text-green-500">complete</p>
               ) : (
-                <p className="status-text uppercase text-yellow-600">Missing</p>
+                <p className="status-text uppercase text-yellow-500">Missing</p>
               )}
             </div>
             <div className="">
@@ -238,14 +257,15 @@ const RegistrationStatus = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div>
+      </div> */}
+      <div className="my-10">
         <Action
           classes="bg-thin-blue w-64 h-10"
           title={"Go to " + user.CharityName + "'s profile"}
           onClick={navigate(registration.charity_profile)}
           disabled={!status.completed || user.PK === ""}
         />
+        <p className="mt-3 text-sm uppercase">coming soon</p>
       </div>
       <ToastContainer />
     </div>

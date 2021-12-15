@@ -8,7 +8,6 @@ const headerNames = [
   "Status",
   "Actions",
 ];
-
 const TableRow = ({ onUpdateClick, onDeleteClick, charityInfo }: any) => {
   return (
     <tr>
@@ -34,7 +33,6 @@ const TableRow = ({ onUpdateClick, onDeleteClick, charityInfo }: any) => {
     </tr>
   );
 };
-
 const CharityTable = ({ onCheckOut, onDelete, charityList }: any) => {
   return (
     <table className="min-w-full leading-normal">

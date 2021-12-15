@@ -30,7 +30,6 @@ module.exports = {
         comet: "url('assets/images/comet.jpg')",
         auction: "linear-gradient(67deg, #9cc9e924, #66accd59)",
       },
-
       cursor: {
         grab: "grab",
         grabbing: "grabbing",
@@ -53,6 +52,26 @@ module.exports = {
         "dark-red": "#8A3F30",
         "dark-grey": "#999999",
         "failed-red": "#FE4454",
+        "dark-grey": "#999999",
+        "light-blue": "#1b9cef",
+        "bright-blue": "#64c1fc",
+        sdg1: "#e5233d",
+        sdg2: "#dda73a",
+        sdg3: "#4ca146",
+        sdg4: "#c5192d",
+        sdg5: "#ef402c",
+        sdg6: "#27bfe6",
+        sdg7: "#fbc412",
+        sdg8: "#a31c44",
+        sdg9: "#f26a2d",
+        sdg10: "#e01483",
+        sdg11: "#f89d2a",
+        sdg12: "#bf8d2c",
+        sdg13: "#407f46",
+        sdg14: "#1f97d4",
+        sdg15: "#59ba48",
+        sdg16: "#126a9f",
+        sdg17: "#13496b",
       },
 
       borderColor: {
@@ -131,6 +150,8 @@ module.exports = {
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
+        116: "16rem",
+        600: "600px",
         modal: "300px",
         280: "280px",
         "75vh": "75vh",
@@ -147,6 +168,7 @@ module.exports = {
       },
     },
   },
+  plugins: [require("@tailwindcss/line-clamp")],
   variants: {
     extend: {
       backgroundColor: ["disabled"],

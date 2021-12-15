@@ -5,9 +5,11 @@ import StakeSuite from "components/TransactionSuite/StakeSuite";
 
 export default function Portal() {
   const { showModal } = useSetModal();
+
   function showStaker() {
     showModal(StakeModal, {});
   }
+
   function showUnstaker() {
     showModal(UnstakeModal, {});
   }

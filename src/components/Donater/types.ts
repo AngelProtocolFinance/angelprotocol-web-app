@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 export interface Values {
   amount: string;
   split_liq: string;
-
   //metadata;
   currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   min_liq: number;

@@ -23,7 +23,6 @@ const AdminLogin = () => {
   const handleLogin = useAdminLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
   const {
     register,
     handleSubmit,

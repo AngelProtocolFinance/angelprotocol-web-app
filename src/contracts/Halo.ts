@@ -27,7 +27,6 @@ export default class Halo extends Contract {
   async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
-
     const stake_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.token_address,
@@ -72,7 +71,6 @@ export default class Halo extends Contract {
   }
 
   //halo_gov
-
   async createEndPollTx(poll_id: string) {
     this.checkWallet();
     const poll_msg = new MsgExecuteContract(

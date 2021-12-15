@@ -7,9 +7,11 @@ export default function Option(props: { label: string; vote: Vote }) {
   const { register, watch } = useFormContext<Values>();
   const vote = watch("vote");
   const is_active = vote === props.vote;
+
   const iconClasses = `opacity-90 ${
     is_active ? vote_colors[props.vote].icon : "text-angel-grey "
   }`;
+
   const icon =
     props.vote === "yes" ? (
       <AiOutlineLike className={iconClasses} />

@@ -11,6 +11,7 @@ import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 import { usePairInfo, usePairSimul } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
+import { useGetLBPPairData } from "./useGetTokenSaleData";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
@@ -56,6 +57,8 @@ function AuctionStats() {
 export default function Auction() {
   const { showModal } = useSetModal();
 
+  const { isLoading, lbpPairData } = useGetLBPPairData();
+
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
@@ -74,7 +77,7 @@ export default function Auction() {
               </button>
             </div>
             <AuctionStats />
-            <PriceGraph />
+            <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
           <div className="flex min-h-3/4 hidden lg:block">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
@@ -108,7 +111,6 @@ const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
 
 const Tabs = ({ color }: { color: string }) => {
   const [openTab, setOpenTab] = useState(1);
-
   return (
     <>
       <div className="flex flex-wrap overflow-x-hidden p-10">

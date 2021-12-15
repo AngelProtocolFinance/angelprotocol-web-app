@@ -22,10 +22,10 @@ export default function formatTimer(
   // event hasn't started yet
   if (startTime > now) {
     return {
-      days: "-",
-      hours: "-",
-      minutes: "-",
-      seconds: "-",
+      days: "--",
+      hours: "--",
+      minutes: "--",
+      seconds: "--",
     };
   }
 

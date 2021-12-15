@@ -10,6 +10,7 @@ import jwtDecode, { JwtPayload } from "jwt-decode";
 interface Props {
   children: ReactNode;
 }
+
 type Token = null | {
   token: string;
   apToken: string;

@@ -7,6 +7,7 @@ import DappHead from "components/Headers/DappHead";
 
 export default function Governance() {
   const { path } = useRouteMatch();
+
   return (
     <div className="grid grid-rows-a1 pt-2">
       <DappHead />

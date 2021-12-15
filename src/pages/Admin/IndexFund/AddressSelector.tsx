@@ -40,5 +40,4 @@ function AddressSelector() {
     </table>
   );
 }
-
 export default AddressSelector;

@@ -7,6 +7,7 @@ import Backdrop from "components/WalletSuite/Backdrop";
 import Disconnect from "components/WalletSuite/Disconnect";
 import Balance from "components/WalletSuite/Balance";
 type Props = { closeHandler: () => void };
+
 export default function Details(props: Props) {
   const wallet = useWallet();
   const balance = parseFloat(utils.formatUnits(wallet.balance) || "0");

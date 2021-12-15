@@ -6,9 +6,11 @@ import { useGetter, useSetter } from "store/accessors";
 export default function ErrPop() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
+
   function acknowledge() {
     dispatch(setStage({ step: Step.form, content: null }));
   }
+
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
       <AiOutlineInfoCircle className="text-angel-grey text-2xl mb-2 " />

@@ -12,5 +12,6 @@ export default function Poller(props: { children: ReactNode }) {
     },
     resolver: yupResolver(schema),
   });
+
   return <FormProvider {...methods}>{props.children}</FormProvider>;
 }

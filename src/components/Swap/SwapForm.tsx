@@ -107,7 +107,6 @@ export default function SwapForm({
   const [isReversed, setIsReversed] = useState(false);
   const [usingMaxNativeAmount, setUsingMaxNativeAmount] = useState(false);
   const [balances, setBalances] = useState<any>({});
-
   const formData = watch();
 
   function convertAmountToUSD(amountStr: string, asset: string) {
@@ -156,7 +155,6 @@ export default function SwapForm({
     // If the from amount changes from an input event,
     // we're no longer using the calculated max amount
     setUsingMaxNativeAmount(false);
-
     setValue(Key.fromAmount, amount);
   }
 

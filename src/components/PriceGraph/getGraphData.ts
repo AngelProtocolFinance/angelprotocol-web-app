@@ -1,4 +1,4 @@
-import { PriceData, TokenSaleData } from "./useGetTokenSaleData";
+import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 
 interface ReferenceDotCoordinates {
   x: number;
@@ -12,100 +12,127 @@ interface ReferenceDotCoordinates {
 interface GraphPriceData {
   historicPrice?: number;
   predictedPrice?: number;
-  date: number;
+  timestamp: number;
+}
+
+interface AxisData {
+  ticks: number[];
+  axisDomain: number[];
 }
 
 interface GraphData {
   tokenName: string;
   priceData: GraphPriceData[];
-  dateTicks: number[];
-  priceTicks: number[];
-  dateAxisDomain: number[];
-  priceAxisDomain: number[];
-  referenceDotCoordinates: ReferenceDotCoordinates;
+  dateAxisData: AxisData;
+  priceAxisData: AxisData;
+  referenceDotCoordinates?: ReferenceDotCoordinates;
 }
+
+export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
+  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
+  const priceData = lbpPairData.historicPriceData
+    .map(
+      (data) =>
+        ({
+          historicPrice: data.price,
+          timestamp: data.timestamp,
+        } as GraphPriceData)
+    )
+    .concat(
+      lbpPairData.predictedPriceData.map((data) => ({
+        predictedPrice: data.price,
+        timestamp: data.timestamp,
+      }))
+    );
+
+  const dateAxisData = getDateAxisData(lbpPairData);
+  const priceAxisData = getPriceAxisData(priceData);
+  const referenceDotCoordinates = getReferenceDotCoordinates(lbpPairData);
+
+  return {
+    tokenName: lbpPairData.tokenName,
+    priceData,
+    dateAxisData,
+    priceAxisData,
+    referenceDotCoordinates,
+  };
+};
 
 const getPriceTicks = (data: GraphPriceData[]) => {
   // maximum price to be shown on the price axis
   const maxPrice = data.reduce(
-    (prev, data) =>
-      Math.max(prev, data.historicPrice || data.predictedPrice || 0),
+    (prev, data) => Math.max(prev, data.historicPrice || 0),
     0
   );
 
+  // multiplying by 1.1 to add some margin to the historic price line
+  const maxPriceTick = maxPrice * 1.1;
+
   return [
-    Math.ceil(maxPrice * 0.25),
-    Math.ceil(maxPrice * 0.5),
-    Math.ceil(maxPrice * 0.75),
-    Math.ceil(maxPrice),
+    maxPriceTick * 0.25,
+    maxPriceTick * 0.5,
+    maxPriceTick * 0.75,
+    maxPriceTick,
   ];
+};
+
+const getDateAxisData = (lbpPairData: LBPPairData) => {
+  const ticks = getDateTicks(
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime
+  );
+
+  const axisDomain = [
+    lbpPairData.auctionStartDateTime,
+    lbpPairData.auctionEndDateTime,
+  ];
+
+  return {
+    ticks,
+    axisDomain,
+  };
 };
 
 // Date ticks to be represented by days on which the auction will occur.
 // 36e5 is the scientific notation for 60*60*1000,
 // dividing by which converts the miliseconds into hours.
 const getDateTicks = (startDateTime: number, endDateTime: number) => {
-  const dayConversionMultiplier = 36e5 * 24;
+  const tickDistance = 36e5 * 4;
 
   const ticks = [];
   for (
     let nextTick = startDateTime;
-    nextTick <= endDateTime;
-    nextTick += dayConversionMultiplier
+    nextTick < endDateTime;
+    nextTick += tickDistance
   ) {
     ticks.push(nextTick);
   }
 
+  ticks.push(endDateTime);
+
   return ticks;
 };
 
-export const getGraphData = (
-  tokenSaleData: TokenSaleData,
-  predictedPriceData: PriceData[]
-) => {
-  // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
-  const graphPriceData = tokenSaleData.historicPriceData
-    .map(
-      (data) =>
-        ({ historicPrice: data.price, date: data.date } as GraphPriceData)
-    )
-    .concat(
-      predictedPriceData.map((data) => ({
-        predictedPrice: data.price,
-        date: data.date,
-      }))
-    );
-
-  const priceTicks = getPriceTicks(graphPriceData);
-
-  const dateTicks = getDateTicks(
-    tokenSaleData.auctionStartDateTime,
-    tokenSaleData.auctionEndDateTime
-  );
-
-  // 2e7 is scientific notation equal to 2*10,000,000.
-  // Added it to the end date to prolong the date axis further than the auction end date, just to improve its appearance.
-  const dateAxisDomain = [
-    tokenSaleData.auctionStartDateTime,
-    tokenSaleData.auctionEndDateTime + 2e7,
-  ];
-
-  const priceAxisDomain = [0, priceTicks[priceTicks.length - 1]];
-
-  const referenceDotCoordinates = !!predictedPriceData.length
-    ? {
-        x: predictedPriceData[0].date,
-        y: predictedPriceData[0].price,
-      }
-    : null;
+const getPriceAxisData = (priceData: GraphPriceData[]) => {
+  const ticks = getPriceTicks(priceData);
+  const axisDomain = [0, ticks[ticks.length - 1]];
 
   return {
-    tokenName: tokenSaleData.tokenName,
-    priceData: graphPriceData,
-    dateTicks,
-    priceTicks,
-    dateAxisDomain,
-    priceAxisDomain,
-    referenceDotCoordinates,
-  } as GraphData;
+    ticks,
+    axisDomain,
+  };
+};
+
+const getReferenceDotCoordinates = (lbpPairData: LBPPairData) => {
+  if (!lbpPairData.historicPriceData.length) {
+    return;
+  }
+
+  const lastPairDataPoint =
+    lbpPairData.historicPriceData[lbpPairData.historicPriceData.length - 1];
+
+  return {
+    x: lastPairDataPoint.timestamp,
+    y: lastPairDataPoint.price,
+  };
 };

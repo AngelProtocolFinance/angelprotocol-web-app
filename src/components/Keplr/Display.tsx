@@ -1,11 +1,11 @@
 import Icon from "components/WalletSuite/Icon";
 import Details from "./Details";
 import useDisplay from "./useDisplay";
+
 export default function Display() {
   const { maskedAddr, balance, detailsShown, toggleDetails, hideDetails } =
     useDisplay();
   //this component won't be rendered if wallet is not connected
-
   return (
     <div className="flex">
       <button onClick={toggleDetails} className="flex items-center py-2 px-3">

@@ -1,5 +1,4 @@
 // import { useEffect, useState } from "react";
-
 import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Nodal/Nodal";
 import SwapForm from "./SwapForm";
@@ -28,7 +27,6 @@ export default function Swap() {
         (pairs.pair[0].symbol === UST && pairs.pair[1].symbol === HALO) ||
         (pairs.pair[0].symbol === HALO && pairs.pair[1].symbol === UST)
     );
-
     const getCurrentPair = async () => {
       if (currentP) {
         const pairInfo = await getPairInfo(currentP.contract);

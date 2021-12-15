@@ -41,7 +41,6 @@ export default function useEthSender() {
       const provider = new ethers.providers.Web3Provider(wallet.ethereum);
       const signer = provider.getSigner();
       const response = await signer.sendTransaction(tx!);
-
       dispatch(setPending({ amount: +data.amount, hash: response.hash }));
       dispatch(
         setStage({

@@ -1,9 +1,3 @@
-export enum site {
-  home = "/",
-  app = "/app",
-  admin = "/admin",
-}
-
 export enum web {
   index = "",
   charities = "for-charities",
@@ -11,6 +5,12 @@ export enum web {
   donors = "for-donors",
   about = "about",
   contact = "contact",
+}
+
+export enum site {
+  home = "/",
+  app = "/app",
+  admin = "/admin",
 }
 
 export enum admin {
@@ -53,6 +53,7 @@ export enum registration {
   status = "status",
   wallet_check = "wallet-check",
   connect_wallet = "connect-wallet",
+  register_wallet = "register-wallet",
   select_wallet = "select-wallet",
   upload_docs = "upload-docs",
   charity_profile = "charity-profile",

@@ -3,7 +3,6 @@ import { errors } from "ethers";
 import ErrPop, { Props as ErrProp } from "components/Popup/ErrPop";
 
 export default function displayEthError(error: any, prompter: Opener) {
-  console.error(error);
   switch (error?.code) {
     //https://eips.ethereum.org/EIPS/eip-1193#provider-errors
     case 4001:

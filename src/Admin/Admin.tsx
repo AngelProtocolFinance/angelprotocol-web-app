@@ -29,7 +29,6 @@ const Admin = () => {
         <UseWalletProvider
           connectors={{
             torus: { chainId: 1 },
-            //TODO: get proper url
             ledger: {
               chainId: 1,
               url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",

@@ -9,7 +9,6 @@ export enum Wallets {
 }
 
 export type PendingTx = { amount: number; hash: string } | null;
-
 export type State = {
   activeWallet: Wallets;
   isLoading: boolean;

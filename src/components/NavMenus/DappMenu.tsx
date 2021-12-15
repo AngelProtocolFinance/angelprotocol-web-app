@@ -9,7 +9,7 @@ export default function DappMenu() {
 
   return (
     <ul
-      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
+      className={`hidden lg:flex justify-self-end items-center font-body text-sm lg:text-base`}
     >
       <li className="mr-8">
         <a
@@ -22,7 +22,7 @@ export default function DappMenu() {
         </a>
       </li>
       <li className="mr-8">
-        {/**use abs path since this menu is rendered on diff urls
+        {/* use abs path since this menu is rendered on diff urls
          * and will result on unusual url e.g `app/leaderboard/govern
          */}
         <NavLink to={`${site.app}/${app.charity}`} {...linkStyles}>

@@ -13,6 +13,7 @@ const SelectWallet = () => {
   const showTerraInfoModal = () => {
     setOpenModal(true);
   };
+
   return (
     <div>
       <div className="title mb-3 flex items-center justify-center">
@@ -58,7 +59,7 @@ const SelectWallet = () => {
         <Action
           onClick={() => history.push(registration.wallet_check)}
           title="Back"
-          classes="bg-thin-blue w-48 h-10"
+          classes="bg-dark-grey w-48 h-10"
         />
       </div>
       {isOpenModal && (

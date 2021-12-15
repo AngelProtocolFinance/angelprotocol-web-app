@@ -5,7 +5,6 @@ import { useModalCloser } from "components/Modal/Modal";
 const UpdateMembersModal = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const closeModal = useModalCloser();
-
   const handleUpdate = () => {
     setSubmitting(true);
   };

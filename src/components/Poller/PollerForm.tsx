@@ -13,7 +13,6 @@ export default function PollerForm() {
   } = useFormContext<Values>();
   const sender = useSubmit();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-
   return (
     <form
       onSubmit={handleSubmit(sender)}

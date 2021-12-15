@@ -28,6 +28,5 @@ export default function useAction(icon: Icons) {
       }
     }
   }
-
   return { handleConnect, isLoading };
 }

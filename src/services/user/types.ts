@@ -11,7 +11,6 @@ export interface User {
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
-  token?: string;
   ProofOfIdentity?: any;
   ProofOfEmployment?: any;
   EndowmentAgreement?: any;
@@ -21,4 +20,5 @@ export interface User {
   TerraWallet?: any;
   IsKeyPersonCompleted?: boolean;
   IsMetaDataCompleted?: boolean;
+  token?: string;
 }

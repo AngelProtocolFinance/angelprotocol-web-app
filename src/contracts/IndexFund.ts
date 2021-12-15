@@ -16,7 +16,6 @@ export default class Indexfund extends Contract {
   fund_id?: number;
   address: string;
   //contract address
-
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);

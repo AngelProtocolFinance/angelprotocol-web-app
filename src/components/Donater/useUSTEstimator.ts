@@ -24,18 +24,15 @@ export default function useUSTEstimator() {
   const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
   const { main: UST_balance } = useBalances(denoms.uusd);
-
   const keplr_ust = new Dec(
     keplr_balance.find((coin) => coin.denom === denoms.uusd)?.amount || "0"
   )
     .div(1e6)
     .toNumber();
-
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const currency = watch("currency");
   const receiver = watch("receiver");
-
   const debounced_amount = useDebouncer(amount, 500);
   const debounced_split = useDebouncer(split_liq, 500);
 

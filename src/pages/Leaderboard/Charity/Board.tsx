@@ -26,7 +26,6 @@ export default function BoardCharity() {
           bgColorClass="bg-angel-grey"
         />
       )}
-
       {isReady && (
         <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll overflow-x-scroll">
           <table className="border-collapse table-auto w-full">

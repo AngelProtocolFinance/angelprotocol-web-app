@@ -13,6 +13,7 @@ export default function usePollAction(poll_id?: string) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
+
   async function end_poll() {
     try {
       if (!wallet) {

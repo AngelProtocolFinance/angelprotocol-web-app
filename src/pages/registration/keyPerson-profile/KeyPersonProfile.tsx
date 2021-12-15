@@ -25,6 +25,7 @@ const KeyPersonProfile = () => {
   let user = useGetter((state) => state.user);
   let keyPersonData = location.state.data;
   const { data } = useGetCharityDataQuery(user.PK);
+  const history = useHistory();
 
   const {
     register,
@@ -51,7 +52,6 @@ const KeyPersonProfile = () => {
   const [openDropzone, setOpenDropzone] = useState(
     keyPersonData?.HeadshotPicture && true
   );
-  const history = useHistory();
 
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -235,7 +235,7 @@ const KeyPersonProfile = () => {
               <Action
                 onClick={() => history.push(registration.status)}
                 title="Back"
-                classes="bg-thin-blue w-48 h-10 mr-10"
+                classes="bg-dark-grey w-48 h-10 mr-10"
                 disabled={isLoading}
               />
               <Action

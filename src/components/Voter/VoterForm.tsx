@@ -14,7 +14,6 @@ export default function VoterForm() {
   } = useFormContext<Values>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const voter = useVoter();
-
   return (
     <form
       onSubmit={handleSubmit(voter)}
