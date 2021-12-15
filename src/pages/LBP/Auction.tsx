@@ -39,7 +39,7 @@ export default function Auction() {
             <h1 className="text-4xl font-bold font-heading">
               HALO Token Auction
             </h1>
-            <div className="flex items-center justify-center lg:hidden w-115 my-3">
+            <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
                 className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
@@ -50,7 +50,7 @@ export default function Auction() {
             <AuctionStats></AuctionStats>
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
-          <div className="hidden w-2/5 lg:flex rounded items-center p-10">
+          <div className="hidden w-2/5 xl:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </div>
         </div>
