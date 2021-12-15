@@ -40,7 +40,12 @@ function AuctionStats() {
       />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={pairInfo.end_time * 1000} />}
+        value={
+          <CountdownTimer
+            deadline={pairInfo.end_time * 1000}
+            start={pairInfo.start_time * 1000}
+          />
+        }
         Icon={FaStopwatch}
       />
       <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />

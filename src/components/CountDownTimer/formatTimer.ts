@@ -1,7 +1,33 @@
-export default function formatTimer(deadline: number) {
-  //deadline epoch_num
-  const dueTime = new Date(deadline).getTime();
+export default function formatTimer(
+  deadline: string | number,
+  start: number | any
+) {
+  const startTime = start ? start : new Date().getTime();
+  const dueTime =
+    typeof deadline === "string"
+      ? new Date(deadline.replace(/-/g, "/")).getTime()
+      : new Date(deadline).getTime();
   const now = new Date().getTime();
+
+  // event has already ended
+  if (deadline < now) {
+    return {
+      days: "00",
+      hours: "00",
+      minutes: "00",
+      seconds: "00",
+    };
+  }
+
+  // event hasn't started yet
+  if (startTime > now) {
+    return {
+      days: "-",
+      hours: "-",
+      minutes: "-",
+      seconds: "-",
+    };
+  }
 
   var seconds = Math.floor((dueTime - now) / 1000);
   var minutes = Math.floor(seconds / 60);
