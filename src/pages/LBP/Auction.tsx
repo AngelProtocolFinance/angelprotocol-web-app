@@ -13,7 +13,7 @@ import { useGetLBPPairData } from "./useGetTokenSaleData";
 
 function AuctionStats() {
   return (
-    <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+    <div className="w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails title="Duration" value="84 days" Icon={FaClock} />
       <StatsDetails
         title="Ends in"

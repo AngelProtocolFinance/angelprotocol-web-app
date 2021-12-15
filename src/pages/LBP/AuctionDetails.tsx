@@ -47,7 +47,7 @@ export default function AuctionDetails() {
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Launch Description
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="status" value="Inactive" />
           <Details title="start date" value="December 19, 2021, 15:00 AM GMT" />
           <Details title="end date" value="December 21, 2021, 15:00 AM GMT" />
@@ -55,7 +55,7 @@ export default function AuctionDetails() {
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Auction statistics
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="Starting HALO" value="80000000.00000" />
           <Details title="Remaining HALO" value="1245851671.60214" />
         </div>
