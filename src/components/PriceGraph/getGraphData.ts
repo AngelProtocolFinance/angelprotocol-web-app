@@ -1,9 +1,15 @@
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 
-// (note: 2021-12-03)
-// It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
-// When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
-// the lines wouldn't get rendered correctly.
+/* (note: 2021-12-03)
+ * It was necessary to merge historical price data with projected price data, due to the way that Recharts renders the separate graph lines.
+ * When they were stored as separate price data arrays and passed to Recharts Line components directly (e.g. <Line data={graphData.historicPrices} ... />),
+ * the lines wouldn't get rendered correctly.
+ *
+ * (note: 2021-12-15)
+ * We decided not to include the predicted price line in the graph.
+ * 'predictedPrice' field (and corresponding calculation) is here only in case the predicted price line needs to be re-added.
+ * If not, it can be removed as it's not used anywhere.
+ */
 interface GraphPriceData {
   historicPrice?: number;
   predictedPrice?: number;
