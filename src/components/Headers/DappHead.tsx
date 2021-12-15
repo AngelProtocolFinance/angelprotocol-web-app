@@ -9,7 +9,7 @@ import { IoClose } from "react-icons/io5";
 
 export default function DappHead() {
   useWalletSuite();
-  const [navShown, showNav] = useState(true);
+  const [navShown, showNav] = useState(false);
 
   function toggleNav() {
     showNav((prevState) => !prevState);
