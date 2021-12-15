@@ -13,5 +13,12 @@
 
 .graph-container {
   @apply w-full;
-  @apply h-full;
+
+  height: 400px;
+}
+
+@media screen and (min-width: 1024px) {
+  .graph-container {
+    height: 600px;
+  }
 }

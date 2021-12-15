@@ -1,0 +1,30 @@
+.auction-section {
+  @apply flex;
+  @apply w-full;
+  @apply h-full;
+  @apply px-10;
+  @apply gap-5;
+
+  height: 800px;
+}
+
+.content-section {
+  @apply flex;
+  @apply flex-col;
+  @apply justify-start;
+  @apply w-full;
+  @apply md:mx-auto;
+  @apply md:container;
+  @apply text-white;
+  @apply min-h-3/4;
+  @apply gap-0;
+  @apply mt-10;
+
+  max-height: 1700px;
+}
+
+@media screen and (min-width: 1024px) {
+  .auction-section {
+    height: 800px;
+  }
+}

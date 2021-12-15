@@ -9,6 +9,7 @@ import DappHead from "components/Headers/DappHead";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import "./Auction.css";
 
 function AuctionStats() {
   return (
@@ -47,9 +48,9 @@ export default function Auction() {
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
-      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white  min-h-3/4 gap-0 mt-10">
-        <div className="flex w-full px-10 gap-5" style={{ height: "80vh" }}>
-          <Card className="p-5 w-3/5 rounded h-full flex flex-col gap-3">
+      <div className="content-section">
+        <div className="auction-section">
+          <Card className="p-5 w-full md:w-3/5 rounded h-full flex flex-col gap-3">
             <h1 className="text-4xl font-bold font-heading">
               HALO Token Auction
             </h1>
@@ -96,7 +97,7 @@ const Tabs = ({ color }: { color: string }) => {
   const [openTab, setOpenTab] = useState(1);
   return (
     <>
-      <div className="flex flex-wrap overflow-x-hidden p-10">
+      <div className="flex flex-wrap overflow-hidden p-10">
         <div className="w-full">
           <ul
             className="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row"
