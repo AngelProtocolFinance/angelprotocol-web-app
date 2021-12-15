@@ -22,7 +22,7 @@ interface GraphData {
   priceAxisData: AxisData;
 }
 
-const NUMBER_OF_TICKS = 8;
+const NUMBER_OF_PRICE_TICKS = 8;
 
 export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
   // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
@@ -107,8 +107,8 @@ const getPriceTicks = (data: GraphPriceData[]) => {
   );
 
   const result = [];
-  for (let i = 1; i <= NUMBER_OF_TICKS; i++) {
-    result.push(maxPrice * (1 / NUMBER_OF_TICKS) * i);
+  for (let i = 1; i <= NUMBER_OF_PRICE_TICKS; i++) {
+    result.push(maxPrice * (1 / NUMBER_OF_PRICE_TICKS) * i);
   }
 
   return result;
