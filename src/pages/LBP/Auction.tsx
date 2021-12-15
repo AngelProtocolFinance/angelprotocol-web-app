@@ -78,7 +78,7 @@ export default function Auction() {
             <AuctionStats />
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
-          <div className="hidden w-2/5 xl:flex rounded items-center p-10">
+          <div className="hidden xl:w-2/5 xl:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
           </div>
         </div>
