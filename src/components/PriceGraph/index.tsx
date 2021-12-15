@@ -53,8 +53,8 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                     y1="0%"
                     y2="100%"
                   >
-                    <stop offset="0%" stopOpacity="1" stopColor="#faac2e" />
-                    <stop offset="25%" stopOpacity="0" stopColor="#faac2e" />
+                    <stop offset="0%" stopOpacity="1" className="from-color" />
+                    <stop offset="25%" stopOpacity="0" className="to-color" />
                   </linearGradient>
                 </defs>
               </svg>

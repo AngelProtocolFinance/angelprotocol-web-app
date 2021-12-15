@@ -11,6 +11,14 @@
   stroke-dasharray: none;
 }
 
+.graph-container #fillGradient .from-color {
+  stop-color: theme("colors.angel-orange");
+}
+
+.graph-container #fillGradient .to-color {
+  stop-color: theme("colors.angel-orange");
+}
+
 .graph-container {
   @apply w-full;
 
