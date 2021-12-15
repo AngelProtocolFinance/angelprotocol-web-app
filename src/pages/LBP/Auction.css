@@ -20,7 +20,7 @@
   @apply px-10;
   @apply gap-5;
 
-  height: 800px;
+  height: 600px;
 }
 
 .auction-data-section {
@@ -34,4 +34,10 @@
   @apply gap-3;
 
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+}
+
+@media screen and (min-width: 1280px) {
+  .auction-section {
+    height: 700px;
+  }
 }

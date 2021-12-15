@@ -14,17 +14,11 @@
 .graph-container {
   @apply w-full;
 
-  height: 300px;
+  height: 400px;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1280px) {
   .graph-container {
     height: 500px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .graph-container {
-    height: 600px;
   }
 }
