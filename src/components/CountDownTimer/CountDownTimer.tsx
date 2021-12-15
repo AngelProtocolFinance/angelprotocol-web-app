@@ -21,22 +21,47 @@ export default function CountdownTimer({ deadline }: Props) {
       seconds: 0,
     });
 
+  const [showZeroValues, setShowZeroValues] = useState(false);
+
   useEffect(() => {
+    if (!deadline) {
+      setShowZeroValues(true);
+      return;
+    }
+    if (showZeroValues) setShowZeroValues(false);
+
     const interval = setInterval(() => {
       const formatted = formatTimer(deadline);
       setFormattedDeadline(formatted);
+      if (
+        formatted.days === 0 &&
+        formatted.hours === 0 &&
+        formatted.minutes === 0 &&
+        formatted.seconds === 0
+      ) {
+        setShowZeroValues(true);
+        clearInterval(interval);
+      }
     }, 1000);
+
     return () => {
       clearInterval(interval);
     };
-  }, [deadline]);
-
+  }, [deadline, showZeroValues]);
   return (
     <div className="flex items-center justify-center font-heading">
-      <span className="font-semibold mr-1">{days}:</span>
-      <span className="font-semibold mr-1">{hours}:</span>
-      <span className="font-semibold mr-1">{minutes}:</span>
-      <span className="font-semibold mr-2">{seconds}</span>
+      <span className="font-semibold mr-1">
+        {showZeroValues ? "00" : days}:
+      </span>
+      <span className="font-semibold mr-1">
+        {showZeroValues ? "00" : hours}:
+      </span>
+      <span className="font-semibold mr-1">
+        {showZeroValues ? "00" : minutes}:
+      </span>
+      <span className="font-semibold mr-2">
+        {showZeroValues ? "00" : seconds}
+      </span>
     </div>
   );
 }

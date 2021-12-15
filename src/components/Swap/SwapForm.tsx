@@ -6,7 +6,7 @@ import {
   NATIVE_TOKEN_SYMBOLS,
 } from "constants/currency";
 import { Pair, PairResult } from "contracts/types";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { RiArrowDownCircleLine } from "react-icons/ri";
 import { nativeTokenFromPair, saleAssetFromPair } from "./assetPairs";
@@ -17,6 +17,10 @@ import { useConnectedWallet, useWallet } from "@terra-dev/use-wallet";
 import useUSTBalance from "hooks/useUSTBalance";
 import LbpFactory from "contracts/LbpFactory";
 import { formatTokenAmount } from "./utils";
+import { useBalances, useHaloBalance } from "services/terra/hooks";
+import toCurrency from "helpers/toCurrency";
+import debounce from "lodash/debounce";
+import { useLBPContract, useBuildSwapMsg } from "services/terra/hooks";
 
 export enum Key {
   fromAsset = "fromAsset",
@@ -73,12 +77,23 @@ export type SwapFormProps = {
   pair: PairResult | undefined;
   saleTokenInfo: TokenResult | undefined;
   loading: boolean;
+  ustPrice: Dec;
 };
+
+function SwapInfo({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between">
+      <p className="text-xs text-gray-400">{label}</p>
+      <p className="usd-price text-xs text-gray-600 uppercase">{value}</p>
+    </div>
+  );
+}
 
 export default function SwapForm({
   pair,
   saleTokenInfo,
   loading,
+  ustPrice,
 }: SwapFormProps) {
   const form = useForm({
     defaultValues: {
@@ -107,17 +122,225 @@ export default function SwapForm({
     reValidateMode: "onChange",
   });
 
-  const { register, watch, setValue, setFocus, formState, trigger } = form;
+  const { register, watch, setValue } = form;
   const [isReversed, setIsReversed] = useState(false);
   const [usingMaxNativeAmount, setUsingMaxNativeAmount] = useState(false);
   const [balances, setBalances] = useState<any>({});
-  const [tx, setTx] = useState({ msg: null, fee: null });
-  const [lastTx, setLastTx] = useState();
+  const [tx, setTx] = useState<any>({ msg: null, fee: null });
+  const [lastTx, setLastTx] = useState<{ state: string }>();
+  const [pendingSimulation, setPendingSimulation] = useState<{ type: string }>({
+    type: "",
+  });
+  const [simulating, setSimulating] = useState(false);
+  const [priceImpact, setPriceImpact] = useState<any>();
+  const [error, setError] = useState("");
   const wallet = useConnectedWallet();
-  const ustBalance = useUSTBalance();
+  const { contract: lbpContract } = useLBPContract();
+  const { buildSwapFromContractTokenMsg, buildSwapFromNativeTokenMsg } =
+    useBuildSwapMsg();
+
+  const ustExchangeRate = 1;
+
+  const decimals: any = {
+    native_token: NATIVE_TOKEN_DECIMALS,
+    token: saleTokenInfo?.decimals,
+  };
+
+  const nativeTokenDenom: string =
+    pair?.asset_infos &&
+    nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
+
+  const symbols: Record<string, any> = {
+    native_token: NATIVE_TOKEN_SYMBOLS[nativeTokenDenom],
+    token: saleTokenInfo?.symbol,
+  };
+
+  const { main: UST_balance } = useBalances(denoms.uusd);
+  const haloBalance = useHaloBalance();
 
   const formData = watch();
-  // console.log("form: ", formData);
+
+  let maxFromAmount: string = "";
+  if (balances[formData.fromAsset]) {
+    maxFromAmount = balances[formData.fromAsset];
+  }
+
+  function updateSimulatedAmount(value: string, type: string) {
+    if (type === "forward") {
+      setValue(Key.toAmount, value);
+    } else {
+      setValue(Key.fromAmount, value);
+    }
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSetPendingSimulation = useCallback(
+    debounce(setPendingSimulation, 300),
+    []
+  );
+
+  function nullifyTx() {
+    setTx({ msgs: null, fee: null });
+  }
+
+  async function buildTx(fromAmount: string, fromAsset: string) {
+    const builders: Record<string, any> = {
+      native_token: buildSwapFromNativeTokenMsg,
+      token: buildSwapFromContractTokenMsg,
+    };
+
+    const intAmount = new Dec(fromAmount || 0)
+      .mul(10 ** decimals[fromAsset])
+      .toInt();
+    const msgs = builders[fromAsset]({
+      pair,
+      intAmount,
+    });
+
+    // Fetch fees unless the user selected "max" for the native amount
+    // (that logic already calculated the fee by backing it out of the wallet balance)
+    console.log("build: ", { ...tx, msgs });
+    return { ...tx, msgs };
+  }
+
+  useEffect(() => {
+    if (!pendingSimulation.type) return;
+    setSimulating(true);
+
+    async function simulate() {
+      setError("");
+      const { type } = pendingSimulation;
+      let simulationFn,
+        decInputAmount,
+        inputAmountString,
+        simulationInputAsset,
+        simulationOutputAsset;
+
+      if (type === "forward") {
+        simulationFn = lbpContract.getSimulation;
+        inputAmountString = formData.fromAmount;
+        [simulationInputAsset, simulationOutputAsset] = [
+          formData.fromAsset,
+          formData.toAsset,
+        ];
+      } else {
+        simulationFn = lbpContract.getReverseSimulation;
+        inputAmountString = formData.toAmount;
+        [simulationInputAsset, simulationOutputAsset] = [
+          formData.toAsset,
+          formData.fromAsset,
+        ];
+      }
+
+      const requestAsset =
+        simulationInputAsset === "native_token"
+          ? nativeTokenFromPair(pair?.asset_infos)
+          : saleAssetFromPair(pair?.asset_infos);
+
+      try {
+        decInputAmount = new Dec(inputAmountString);
+      } catch {
+        updateSimulatedAmount("", type);
+        resetSimulationState();
+        return;
+      }
+
+      // Don't run simulation when from amount is below minimum
+      if (
+        type === "forward" &&
+        decInputAmount.lessThan(smallestDecOfAsset(formData.fromAsset))
+      ) {
+        updateSimulatedAmount("", type);
+        resetSimulationState();
+        return;
+      }
+      console.log("simulate: ", type, requestAsset, decInputAmount.toNumber());
+      try {
+        const simuationArgs = {
+          amount: decInputAmount
+            .mul(10 ** decimals[simulationInputAsset])
+            .toInt(),
+          contract_addr:
+            requestAsset?.info[simulationInputAsset]?.contract_addr,
+        };
+        const simulation = await simulationFn(
+          simuationArgs.amount.toString(),
+          simuationArgs.contract_addr
+        );
+
+        const decOutputAmount = Dec.withPrec(
+          simulation[type === "forward" ? "return_amount" : "offer_amount"],
+          decimals[simulationOutputAsset]
+        );
+
+        // update output amount
+        updateSimulatedAmount(
+          decOutputAmount.toFixed(decimals[simulationOutputAsset]),
+          type
+        );
+
+        console.log("output", decOutputAmount.toNumber(), maxFromAmount);
+        // Calculate and set price impact
+        let simulatedPrice;
+        if (simulationInputAsset === "native_token") {
+          simulatedPrice = decInputAmount.div(decOutputAmount);
+        } else {
+          simulatedPrice = decOutputAmount.div(decInputAmount);
+        }
+
+        setPriceImpact(
+          simulatedPrice.sub(ustPrice).div(ustPrice).toFixed(2).toString()
+        );
+
+        if (
+          (type === "forward" ? decInputAmount : decOutputAmount).greaterThan(
+            parseInt(maxFromAmount)
+          )
+        ) {
+          setError(`Not enough ${symbols[formData.fromAsset]}`);
+          console.log("Not enough ", symbols[formData.fromAsset]);
+          nullifyTx();
+        } else {
+          // A successful simulation is a pre-req to building the tx
+
+          let fromAmount;
+          if (type === "forward") {
+            fromAmount = decInputAmount;
+          } else {
+            fromAmount = decOutputAmount;
+          }
+
+          try {
+            setTx(await buildTx(fromAmount.toString(), formData.fromAsset));
+          } catch {
+            setError("Failed to estimate fees");
+          }
+        }
+      } catch (e) {
+        console.log("simulateError: ", e);
+        // setError();
+        // report error;
+      } finally {
+        setSimulating(false);
+      }
+    }
+
+    simulate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pendingSimulation]);
+
+  function usdExchangeRateForAsset(asset: string) {
+    if (asset === "native_token") {
+      return new Dec(ustExchangeRate);
+    } else {
+      return ustPrice.mul(ustExchangeRate);
+    }
+  }
+
+  function calculateHaloToUst() {
+    return new Dec(1).div(ustPrice).toFixed(2);
+  }
+
   function convertAmountToUSD(amountStr: string, asset: string) {
     let decAmount;
 
@@ -127,24 +350,10 @@ export default function SwapForm({
       return 0;
     }
 
-    // const rate = usdExchangeRateForAsset(asset);
-    const rate = 0.99; // use as temporary rate till the usdExchange function is implemented
+    const rate = usdExchangeRateForAsset(asset);
+    // const rate = 0.99; // use as temporary rate till the usdExchange function is implemented
     return decAmount.mul(rate);
   }
-
-  const decimals: any = {
-    native_token: NATIVE_TOKEN_DECIMALS,
-    token: saleTokenInfo?.decimals,
-  };
-
-  const sym: string =
-    pair?.asset_infos &&
-    nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
-
-  const symbols: Record<string, any> = {
-    native_token: NATIVE_TOKEN_SYMBOLS[sym],
-    token: saleTokenInfo?.symbol,
-  };
 
   const fromUSDAmount = convertAmountToUSD(
     formData.fromAmount,
@@ -152,43 +361,11 @@ export default function SwapForm({
   );
   const toUSDAmount = convertAmountToUSD(formData.toAmount, formData.toAsset);
 
-  // let maxFromAmount;
-  // if (balances[formData.fromAsset]) {
-  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //   maxFromAmount = Dec.withPrec(
-  //     balances[formData.fromAsset],
-  //     decimals[formData.fromAsset]
-  //   );
-  // }
-
   const updateBalances = useCallback(async () => {
-    console.log("here: ", wallet?.walletAddress);
     if (wallet?.walletAddress) {
-      // const nativeToken = nativeTokenFromPair(pair?.asset_infos).info.native_token.denom;
-
-      // const balances = await Promise.all([
-      //   getBalance(terraClient, nativeToken, wallet.walletAddress),
-      //   getTokenBalance(terraClient, saleAssetFromPair(pair.asset_infos).info.token.contract_addr, wallet.walletAddress)
-      // ]);
-      const lbpFactory = new LbpFactory(wallet);
-      const tokenContract =
-        pair?.asset_infos &&
-        saleAssetFromPair(pair?.asset_infos).info.token.contract_addr;
-      console.log("token contract: ", tokenContract);
-      if (!tokenContract) {
-        setBalances({
-          native_token: ustBalance,
-          token: 0,
-        });
-      }
-      const balance = await lbpFactory.getTokenBalance(
-        tokenContract,
-        wallet.walletAddress
-      );
-      console.log("balance: ", balance, ustBalance);
       setBalances({
-        native_token: ustBalance,
-        token: balance,
+        native_token: UST_balance,
+        token: haloBalance,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -198,16 +375,64 @@ export default function SwapForm({
     updateBalances();
   }, [updateBalances]);
 
+  function resetSimulationState() {
+    // setPriceImpact(null);
+    // nullifyTx();
+    setSimulating(false);
+  }
+
+  // const trackTx = useCallback(async function (txhash) {
+  //   try {
+  //     // Once the tx has been included on the blockchain,
+  //     // update the balances and state
+  //     await terraClient.tx.txInfo(txhash);
+
+  //     updateBalances();
+  //     onSwapTxMined();
+  //     setLastTx({ state: 'complete', txhash });
+  //   } catch {
+  //     // Not on chain yet, try again in 5s
+  //     setTimeout(trackTx, 5000, txhash);
+  //   }
+  //   // terraClient intentionally omitted
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [updateBalances, onSwapTxMined]);
+
+  async function executeSwap() {
+    // const feeEstimate = await lbpContract.estimateFee([tx.msg]);
+    // console.log("fee ", feeEstimate);
+
+    try {
+      setLastTx({ state: "pending" });
+      const response = await wallet?.post(tx);
+      if (response?.success) {
+        // show modal
+        console.log("success ", response);
+      } else {
+        // display terra error
+      }
+    } catch (e) {
+      console.log("error: ", e);
+      // display good error feedback
+    }
+  }
+
+  function smallestDecOfAsset(asset: string) {
+    return new Dec(1).div(10 ** decimals[asset]);
+  }
   function fromAmountChanged(amount: string) {
     // If the from amount changes from an input event,
     // we're no longer using the calculated max amount
     setUsingMaxNativeAmount(false);
 
     setValue(Key.fromAmount, amount);
+
+    debouncedSetPendingSimulation({ type: "forward" });
   }
 
   function toAmountChanged(amount: string) {
     setValue(Key.toAmount, amount);
+    // debouncedSetPendingSimulation({ type: "reverse" });
   }
 
   const handleFromAssetSelect = (token: string) => {
@@ -235,63 +460,75 @@ export default function SwapForm({
     handletoAssetSelect(fromAsset);
     setIsReversed(!isReversed);
     setValue(key, value);
+    debouncedSetPendingSimulation({ type: "forward" });
   }
-  console.log("balances: ", balances);
+
+  const pairSwitchable = useMemo(
+    () =>
+      formData.fromAsset !== "" &&
+      formData.toAsset !== "" &&
+      formData.fromAsset !== formData.toAsset,
+    [formData]
+  );
+
+  console.log("max", maxFromAmount);
   return (
     <div className="w-full bg-white shadow-xl rounded-lg p-5 mt-4">
       <CurrencyInputPanel
         label="From"
-        min={0}
-        // max={formData?.fromMax}
+        min={smallestDecOfAsset(formData.fromAsset)}
+        max={maxFromAmount}
+        step={smallestDecOfAsset(formData.fromAsset)}
         amount={formData?.fromAmount}
         required={true}
         // maxClick={fromMaxClick}
         usdAmount={fromUSDAmount}
-        balanceString={
-          balances[formData.fromAsset] &&
-          formatTokenAmount(
-            balances[formData.fromAsset],
-            decimals[formData.fromAsset]
-          )
-        }
+        balanceString={balances[formData.fromAsset]}
         assetSymbol={symbols[formData.fromAsset]}
         onAmountChange={fromAmountChanged}
+        disable={!pair || loading}
         {...register(Key.fromAsset)}
       ></CurrencyInputPanel>
-      <CurrencyDivider onClickHandler={handleSwitchToken}></CurrencyDivider>
+      <CurrencyDivider
+        onClickHandler={() => pairSwitchable && handleSwitchToken()}
+      ></CurrencyDivider>
       <CurrencyInputPanel
         label="To"
         amount={formData.toAmount}
+        min={smallestDecOfAsset(formData.toAsset)}
+        step={smallestDecOfAsset(formData.toAsset)}
         required={true}
         usdAmount={toUSDAmount}
-        balanceString={
-          balances[formData.toAsset] &&
-          formatTokenAmount(
-            balances[formData.toAsset],
-            decimals[formData.toAsset]
-          )
-        }
+        balanceString={balances[formData.toAsset]}
         assetSymbol={symbols[formData.toAsset]}
         onAmountChange={toAmountChanged}
+        disable={!pair || loading}
         {...register(Key.toAsset)}
       ></CurrencyInputPanel>
       <div className="swap-effect flex flex-col justify-between font-heading my-5 gap-3">
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-gray-400">Price</p>
-          <p className="usd-price text-xs text-gray-400">
-            1 UST = 89843.034 HALO
+        {error && (
+          <p className="text-red-500 font-semibold text-md text-center">
+            {error}
           </p>
-        </div>
-        <div className="flex items-center justify-between">
-          <p className="text-xs text-gray-400">Price Impact</p>
-          <p className="usd-price text-xs text-gray-400">0.010524%</p>
-        </div>
+        )}
+        {symbols.native_token && symbols.token && (
+          <SwapInfo
+            label="Price"
+            value={`1 ${symbols.native_token} = ${calculateHaloToUst()} ${
+              symbols.token
+            }`}
+          />
+        )}
+        {priceImpact && (
+          <SwapInfo label="Price Impact" value={`${priceImpact}%`} />
+        )}
       </div>
-      <ConnectButton
-        disabled={true}
+      <SwapButton
+        disabled={!pair || !!error}
+        connected={!!wallet}
         // loading={props.isLoading}
-        onHandleClick={() => {}}
-      ></ConnectButton>
+        onHandleClick={executeSwap}
+      ></SwapButton>
     </div>
   );
 }
@@ -309,22 +546,24 @@ function CurrencyDivider({ onClickHandler }: { onClickHandler: any }) {
   );
 }
 
-export const ConnectButton = ({
+export const SwapButton = ({
   onHandleClick,
   disabled,
+  connected,
   loading,
 }: {
   onHandleClick: any;
+  connected: boolean;
   disabled: boolean;
   loading?: boolean;
 }) => {
   return (
     <button
-      onClick={onHandleClick}
+      onClick={() => connected && !disabled && onHandleClick()}
       disabled={disabled}
       className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
     >
-      {loading ? "Connecting..." : "Connect wallet"}
+      {!connected ? "Connect wallet" : "Swap"}
     </button>
   );
 };

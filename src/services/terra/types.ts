@@ -125,3 +125,11 @@ export type Simulation = {
   ask_weight: string;
   offer_weight: string;
 };
+
+export type ReverseSimulation = {
+  offer_amount: string;
+  spread_amount: string;
+  commission_amount: string;
+  ask_weight: string;
+  offer_weight: string;
+};

@@ -2,6 +2,7 @@ import { FaEthereum } from "react-icons/fa";
 import { useState, useRef } from "react";
 import { Dec } from "@terra-money/terra.js";
 import { formatUSD } from "./utils";
+import { IoIosArrowDown } from "react-icons/io";
 
 type CurrencyInputProps = {
   label?: string;
@@ -13,9 +14,10 @@ type CurrencyInputProps = {
   balanceString?: string;
   onAmountChange?: (amount: string) => void;
   maxClick?: () => {};
-  min?: number;
-  max?: number;
-  step?: number;
+  min?: Dec;
+  max?: string | Dec;
+  step?: Dec;
+  disable: boolean;
 };
 
 export default function CurrencyInputPanel({
@@ -25,6 +27,7 @@ export default function CurrencyInputPanel({
   step,
   min,
   max,
+  disable,
   required,
   amount,
   usdAmount,
@@ -33,7 +36,6 @@ export default function CurrencyInputPanel({
 }: CurrencyInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | boolean>(false);
-  const [focused, setFocused] = useState(false);
 
   const validateInput = () => {
     if (inputRef?.current?.validity.rangeOverflow) {
@@ -50,7 +52,6 @@ export default function CurrencyInputPanel({
 
     onAmountChange && onAmountChange(e.target.value);
   };
-  console.log(label, balanceString);
 
   return (
     <div className="currency-input-panel">
@@ -60,18 +61,19 @@ export default function CurrencyInputPanel({
         </span>
         <span className="inline-block text-gray-500 text-sm capitalize">
           Balance:{" "}
-          <span className="font-semibold text-grey-800">
+          <span className="font-bold text-grey-800">
             {balanceString || "0"}
           </span>
         </span>
       </div>
       <div className="flex justify-between">
         <button
-          className="flex items-center justify-evenly rounded-2xl  text-black bg-blue-200 hover:bg-blue-100 focus:bg-blue-100 hover:opacity-300 focus:outline-none"
+          className="flex items-center justify-evenly rounded-2xl text-black bg-blue-200 hover:bg-blue-100 focus:bg-blue-100 hover:opacity-300 focus:outline-none disabled:bg-blue-100"
           style={{
             minWidth: "110px",
             height: "33px",
           }}
+          disabled={disable}
         >
           <div
             className="currency-name font-bold text-md font-heading"
@@ -79,33 +81,32 @@ export default function CurrencyInputPanel({
           >
             <span>{assetSymbol || "Token"}</span>
           </div>
-          {/* <span className="cursor-pointer">
+          <span className="cursor-pointer">
             <IoIosArrowDown className="font-semibold" />
-          </span> */}
+          </span>
         </button>
         <div className="flex flex-grow-1 flex-col items-end justify-around">
           <div className="currency-input">
             <input
               {...props}
               ref={inputRef}
+              disabled={label?.toLowerCase() === "to" || disable}
               type="number"
               inputMode="decimal"
               placeholder="0.0000"
               autoCorrect="off"
               required={required}
-              min={min}
-              // max={max}
-              step={step}
+              min={min?.toString()}
+              max={max?.toString()}
+              step={step?.toFixed(2)}
               value={Number(amount)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
               onChange={onInputChanged}
-              className="currency-input text-black font-bold w-full text-right text-lg border-0 outline-none"
+              className="currency-input text-black font-bold w-full text-right text-lg border-0 outline-none disabled:bg-transparent disabled:text-angel-grey"
             />
           </div>
           {/* format usd amount and display */}
           <p className="usd-price text-xs text-gray-400">
-            ~$ {formatUSD(usdAmount)}
+            ~{formatUSD(usdAmount)}
           </p>
         </div>
       </div>

@@ -40,11 +40,9 @@ export default function usePair() {
 
   async function fetchTokenInfo(token_contract: string) {
     const factoryContract = new LbpFactory(wallet);
-    console.log("deby: ", token_contract, factoryContract);
     const tokenResult: TokenResult = await factoryContract.getTokenInfo(
       token_contract
     );
-    console.log("token info", tokenResult);
     return tokenResult;
   }
 

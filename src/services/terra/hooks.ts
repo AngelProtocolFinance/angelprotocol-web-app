@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Dec } from "@terra-money/terra.js";
+import { Dec, Int, MsgExecuteContract } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
 import LBP from "contracts/LBP";
@@ -14,6 +14,11 @@ import {
   simulation,
   staker,
 } from "./placeholders";
+import { PairResult } from "contracts/types";
+import {
+  nativeTokenFromPair,
+  saleAssetFromPair,
+} from "components/Swap/assetPairs";
 
 function useHaloContract() {
   const wallet = useConnectedWallet();
@@ -21,7 +26,7 @@ function useHaloContract() {
   return { wallet, contract };
 }
 
-function useLBPContract() {
+export function useLBPContract() {
   const wallet = useConnectedWallet();
   const contract = useMemo(() => new LBP(wallet), [wallet]);
   return { wallet, contract };
@@ -178,7 +183,7 @@ export function usePairInfo() {
   return data;
 }
 
-export function usePairSimul() {
+export function usePairSimul(amount?: string) {
   //is_buy: true // your are buying HALO
   //is_buy: false // you are selling HALO
 
@@ -196,7 +201,7 @@ export function usePairSimul() {
                 denom: "uusd",
               },
             },
-            amount: (1e6).toString(),
+            amount: amount || (1e6).toString(),
           },
           block_time: Math.round(new Date().getTime() / 1000 + 10),
         },
@@ -206,4 +211,62 @@ export function usePairSimul() {
   );
 
   return data;
+}
+
+export function useBuildSwapMsg() {
+  const { contract } = useLBPContract();
+
+  function buildSwapFromNativeTokenMsg({
+    pair,
+    intAmount,
+  }: {
+    pair: PairResult;
+    intAmount: Int;
+  }) {
+    const denom = nativeTokenFromPair(pair.asset_infos).info.native_token.denom;
+
+    return new MsgExecuteContract(
+      String(contract.walletAddr),
+      pair.contract_addr,
+      {
+        swap: {
+          offer_asset: {
+            info: {
+              native_token: {
+                denom,
+              },
+            },
+            amount: intAmount.toString(),
+          },
+          // to: String(contract.walletAddr),
+        },
+      },
+      { [denom]: intAmount }
+    );
+  }
+
+  function buildSwapFromContractTokenMsg({
+    pair,
+    intAmount,
+  }: {
+    pair: PairResult;
+    intAmount: Int;
+  }) {
+    const tokenAddr = saleAssetFromPair(pair?.asset_infos).info.token
+      .contract_addr;
+
+    return new MsgExecuteContract(String(contract.walletAddr), tokenAddr, {
+      send: {
+        contract: tokenAddr,
+        amount: intAmount.toString(),
+        msg: btoa(
+          JSON.stringify({
+            swap: {},
+          })
+        ),
+      },
+    });
+  }
+
+  return { buildSwapFromContractTokenMsg, buildSwapFromNativeTokenMsg };
 }

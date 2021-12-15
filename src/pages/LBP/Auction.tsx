@@ -14,7 +14,7 @@ import toCurrency from "helpers/toCurrency";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
-  const pairSimul = usePairSimul();
+  const pairSimul = usePairSimul((1e6).toString());
 
   const duration_days = useMemo(() => {
     const duration_time =
@@ -40,7 +40,7 @@ function AuctionStats() {
       />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={pairInfo.end_time * 1000} />}
+        value={<CountdownTimer deadline={pairInfo?.end_time * 1000} />}
         Icon={FaStopwatch}
       />
       <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />

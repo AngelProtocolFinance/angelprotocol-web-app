@@ -10,7 +10,7 @@ export function formatUSD(amount: any) {
 }
 
 export function formatTokenAmount(amount: number, decimals: number) {
-  console.log("dec: ", amount, decimals);
+  // console.log("dec: ", amount, decimals);
   const tokens = Dec.withPrec(amount, decimals);
   const formatter = new Intl.NumberFormat(undefined, {
     maximumSignificantDigits: String(amount).length,

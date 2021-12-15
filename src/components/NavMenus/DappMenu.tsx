@@ -16,7 +16,7 @@ export default function DappMenu() {
           rel="noreferrer"
           target="_blank"
           href="https://www.angelprotocol.io/"
-          {...linkStyles}
+          className={linkStyles.className}
         >
           About us
         </a>
