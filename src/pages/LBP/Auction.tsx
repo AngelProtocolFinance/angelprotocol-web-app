@@ -1,26 +1,56 @@
+import { Dec } from "@terra-money/terra.js";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
+import { usePairInfo, usePairSimul } from "services/terra/hooks";
+import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 
 function AuctionStats() {
+  const pairInfo = usePairInfo();
+  const pairSimul = usePairSimul();
+
+  const duration_days = useMemo(() => {
+    const duration_time =
+      new Date(pairInfo.end_time * 1000).getTime() -
+      new Date(pairInfo.start_time * 1000).getTime();
+
+    return duration_time / 1000 / 3600 / 24;
+  }, [pairInfo]);
+
+  const ust_price = useMemo(() => {
+    const uhalo_amount = new Dec(pairSimul.return_amount);
+    //1_000_000 uusd was offered on useSimul call
+    const uusd_amount = new Dec(1e6);
+    return uusd_amount.div(uhalo_amount).toNumber();
+  }, [pairSimul]);
+
   return (
-    <div className="w-full flex flex-wrap justify-between sm:justify-start gap-5 mt-3">
-      <StatsDetails title="Duration" value="84 days" Icon={FaClock} />
+    <div className="w-full flex flex-wrap gap-5 mt-3">
+      <StatsDetails
+        title="Duration"
+        value={`${duration_days} days`}
+        Icon={FaClock}
+      />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={1639522800000} />}
+        value={
+          <CountdownTimer
+            deadline={pairInfo.end_time * 1000}
+            start={pairInfo.start_time * 1000}
+          />
+        }
         Icon={FaStopwatch}
       />
-      <StatsDetails title="Price" value="$0.000119" />
+      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
     </div>
   );
 }
@@ -36,9 +66,7 @@ export default function Auction() {
       <div className="content-section">
         <div className="auction-section">
           <div className="auction-data-section">
-            <h1 className="text-4xl font-bold font-heading">
-              HALO Token Auction
-            </h1>
+            <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
@@ -47,7 +75,7 @@ export default function Auction() {
                 Buy Halo
               </button>
             </div>
-            <AuctionStats></AuctionStats>
+            <AuctionStats />
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
           </div>
           <div className="hidden w-2/5 xl:flex rounded items-center p-10">
@@ -104,7 +132,7 @@ const Tabs = ({ color }: { color: string }) => {
                 href="#link1"
                 role="tablist"
               >
-                Auction Details
+                HaloSwap Details
               </a>
             </li>
           </ul>
