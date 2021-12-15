@@ -91,7 +91,7 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
 
 const getPriceAxisData = (priceData: GraphPriceData[]) => {
   const ticks = getPriceTicks(priceData);
-  const axisDomain = [0, ticks[ticks.length - 1] * 1.05];
+  const axisDomain = [0, ticks[ticks.length - 1] * 1.05]; // multiply by 1.05 to improve graph UI
 
   return {
     ticks,
