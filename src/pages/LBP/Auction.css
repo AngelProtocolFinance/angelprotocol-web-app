@@ -35,9 +35,3 @@
 
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
-
-@media screen and (min-width: 1024px) {
-  .auction-section {
-    height: 800px;
-  }
-}
