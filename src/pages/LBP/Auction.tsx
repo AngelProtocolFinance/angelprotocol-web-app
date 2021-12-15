@@ -66,7 +66,7 @@ const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
       <span className="text-xs font-light text-light-grey uppercase">
         {title}
       </span>
-      <div className="flex items-center justify-center text-xl tracking-wide font-semibold text-white-grey font-heading">
+      <div className="flex items-center justify-center text-base md:text-xl tracking-wide font-semibold text-white-grey font-heading">
         {typeof value === "string" ? (
           <span className="mr-2 capitalize">{value}</span>
         ) : (
