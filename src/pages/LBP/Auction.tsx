@@ -65,9 +65,7 @@ export default function Auction() {
       <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white shadow-2xl min-h-3/4 gap-0 mt-10">
         <div className="flex md:grid-cols-2 justify-start w-full min-h-3/4 gap-0">
           <div className="flex-grow bg-transparent p-10">
-            <h1 className="text-4xl font-bold font-heading mb-4">
-              HALO Token Auction
-            </h1>
+            <h1 className="text-4xl font-bold font-heading mb-4">HaloSwap</h1>
             <div className="flex items-center justify-center lg:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
@@ -135,7 +133,7 @@ const Tabs = ({ color }: { color: string }) => {
                 href="#link1"
                 role="tablist"
               >
-                Auction Details
+                HaloSwap Details
               </a>
             </li>
           </ul>

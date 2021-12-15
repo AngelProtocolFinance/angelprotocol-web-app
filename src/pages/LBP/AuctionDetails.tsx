@@ -49,7 +49,7 @@ export default function AuctionDetails() {
           <Details title="end date" value={endDate.toLocaleString()} />
         </div>
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
-          Auction statistics
+          HaloSwap Statistics
         </h1>
         <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
           <Details title="Starting HALO" value="80000000.00000" />
@@ -76,17 +76,17 @@ export default function AuctionDetails() {
           url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
         />
         <AuctionLink
-          content="Auction Owner on ET Finder"
+          content="HaloSwap Owner on ET Finder"
           PreIcon={"/favicon.png"}
           url="https://finder.extraterrestrial.money/testnet/address/terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
         />
         <AuctionLink
-          content="Auction Liquidity Bootstrapping Pool Pair"
+          content="HaloSwap Pair  on ET Finder"
           PreIcon={"/favicon.png"}
           url="https://finder.extraterrestrial.money/testnet/address/terra1j0zd9flhdckzlwulkaqzc4vlzg02nk4e4srcgl"
         />
         <AuctionLink
-          content="Token Launch Auction Documentation"
+          content="HaloSwap Documentation"
           PreIcon={"/favicon.png"}
           url="#"
         />
