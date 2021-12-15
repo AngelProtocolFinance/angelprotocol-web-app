@@ -16,7 +16,7 @@
 }
 
 .graph-container #fillGradient .to-color {
-  stop-color: theme("colors.angel-orange");
+  stop-color: theme("colors.black-blue");
 }
 
 .graph-container {
