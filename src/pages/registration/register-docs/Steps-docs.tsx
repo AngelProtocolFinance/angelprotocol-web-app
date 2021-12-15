@@ -18,8 +18,8 @@ const StepsDocs = () => {
   const [docType, setDocType] = useState(-1);
   const [loading, setLoading] = useState(false);
   const [uploadedStatus, setUploadedStatus] = useState(false);
-
   const docData = location.state.data;
+
   let user = useGetter((state) => state.user);
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
@@ -183,7 +183,7 @@ const StepsDocs = () => {
           <Action
             onClick={() => history.push(registration.status)}
             title="back"
-            classes="bg-thin-blue w-48 h-10 mt-3"
+            classes="bg-dark-grey w-48 h-10 mt-3"
             disabled={loading}
           />
         </div>

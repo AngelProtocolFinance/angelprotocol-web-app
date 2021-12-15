@@ -28,7 +28,6 @@ const AdjustSlippage = () => {
   const slippages: string[] = ["0.5", "1.0", "2.0"];
   const [currentSlippage, setCurrentSlippage] = useState(slippages[0]);
   const [dynamicSlippage, setDynamicSlippage] = useState("20");
-
   const handleSlippagechange = (e: any) => {
     setDynamicSlippage(e.target.value);
     setCurrentSlippage(e.target.value);

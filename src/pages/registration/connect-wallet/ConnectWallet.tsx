@@ -24,6 +24,7 @@ export type Values = {
 
 const ConnectWallet = () => {
   const [isSuccess, setSuccess] = useState(false);
+  const [walletAddress, setWalletAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const user = useGetter((state) => state.user);
@@ -79,10 +80,12 @@ const ConnectWallet = () => {
             TerraWallet: values.wallet_number,
           })
         );
+        setWalletAddress(values.wallet_number);
       }
     }
     setIsLoading(false);
   };
+
   return (
     <div>
       <div className="title">
@@ -131,15 +134,16 @@ const ConnectWallet = () => {
             />
             <Action
               onClick={() => history.push(registration.status)}
-              title="Back"
-              classes="bg-thin-blue w-48 h-10"
+              title="Back to dashboard"
+              classes="bg-dark-grey w-48 h-10"
               disabled={isLoading}
             />
             {isSuccess && (
-              <p>
-                Thanks, we've been notified and we'll get in touch with you very
-                soon!
-              </p>
+              <div>
+                <p>Thanks for registering your wallet:</p>
+                <p>your address is</p>
+                <p className="font-bold">{walletAddress}</p>
+              </div>
             )}
           </form>
         </div>

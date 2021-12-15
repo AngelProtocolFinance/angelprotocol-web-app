@@ -12,7 +12,6 @@ export default class LbpFactory extends Contract {
   address: string;
   pair_address: string;
   //contract address
-
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet?: ConnectedWallet) {
     super(wallet);

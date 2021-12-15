@@ -30,7 +30,6 @@ export default function useEstimator() {
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const poll_id = watch("poll_id") || "0";
-
   const debounced_amount = useDebouncer(amount, 300);
   const debounced_vote = useDebouncer<Vote>(vote, 300);
   const debounced_id = useDebouncer<string>(poll_id, 300);

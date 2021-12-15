@@ -1,34 +1,24 @@
+import Copier from "components/Copier/Copier";
+import { Addr } from "components/Copier/types";
 import useTooltip from "hooks/useTooltip";
-import { FaEthereum } from "react-icons/fa";
-import { IoIosCopy, IoMdInformationCircleOutline } from "react-icons/io";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 import { usePairInfo } from "services/terra/hooks";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
   PreIcon?: any;
   content: string;
-  PostIcon?: any;
   url: string;
-  type?: "copy" | "link";
 };
 
-function AuctionLink({
-  PreIcon,
-  content,
-  PostIcon,
-  url,
-  type = "copy",
-}: AuctionLinkProps) {
+function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
   return (
     <a
-      href="{url}"
-      className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
+      href={url}
+      className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
     >
-      {PreIcon && <PreIcon className="inline mr-2 text-angel-blue" />}
+      <img className="inline mr-2 w-5 text-angel-blue" src={PreIcon} />
       <span className="text-sm text-angel-grey font-light">{content}</span>
-      {PostIcon && (
-        <PostIcon className="inline ml-2 text-angel-blue" size={15} />
-      )}
     </a>
   );
 }
@@ -42,7 +32,6 @@ export default function AuctionDetails() {
   return (
     <div className="flex flex-wrap justify-between items-start">
       <div className="auction-details flex-grow">
-        {/* Launch description */}
         <div className="launch-description">
           <h1 className="text-md font-semibold text-white-grey mb-5">
             Launch Description
@@ -51,60 +40,55 @@ export default function AuctionDetails() {
             HALO is the governance token of Angel Protocol
           </p>
         </div>
-        {/* END  Launch description */}
-        {/* Launch details */}
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           Launch Description
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="status" value={is_active ? "Active" : "Inactive"} />
           <Details title="start date" value={startDate.toLocaleString()} />
           <Details title="end date" value={endDate.toLocaleString()} />
         </div>
-        {/* End Launch details */}
-        {/* Auction statistics */}
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
-          Auction statistics
+          HaloSwap Statistics
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
+        <div className="w-full flex flex-wrap gap-5 mt-3">
           <Details title="Starting HALO" value="80000000.00000" />
           <Details title="Remaining HALO" value="1245851671.60214" />
         </div>
-        {/* End Auction statistics */}
       </div>
       <div className="contract-details w-128 p-5">
         <p className="font-semibold text-md mb-4">
           HALO Token Contract Address
         </p>
-        <AuctionLink
-          content="terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
-          PostIcon={IoIosCopy}
-          url="#"
-        />
+        <div className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4">
+          <span className="text-sm text-angel-grey font-light pr-1">
+            {"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"}
+          </span>
+          <Copier
+            text={"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq" as Addr}
+            colorClass="text-angel-blue"
+          />
+        </div>
         <p className="font-semibold text-md my-4">Links </p>
         <AuctionLink
           content="HALO Token on ET Finder"
-          PreIcon={FaEthereum}
+          PreIcon={"/favicon.png"}
           url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
-          type="link"
         />
         <AuctionLink
-          content="Auction Owner on ET Finder"
-          PreIcon={FaEthereum}
+          content="HaloSwap Owner on ET Finder"
+          PreIcon={"/favicon.png"}
           url="https://finder.extraterrestrial.money/testnet/address/terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
-          type="link"
         />
         <AuctionLink
-          content="Auction Liquidity Bootstrapping Pool Pair"
-          PreIcon={FaEthereum}
+          content="HaloSwap Pair  on ET Finder"
+          PreIcon={"/favicon.png"}
           url="https://finder.extraterrestrial.money/testnet/address/terra1j0zd9flhdckzlwulkaqzc4vlzg02nk4e4srcgl"
-          type="link"
         />
         <AuctionLink
-          content="Token Launch Auction Documentation"
-          PreIcon={FaEthereum}
+          content="HaloSwap Documentation"
+          PreIcon={"/favicon.png"}
           url="#"
-          type="link"
         />
       </div>
     </div>

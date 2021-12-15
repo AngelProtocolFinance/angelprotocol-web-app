@@ -11,7 +11,6 @@ const luna_info = {
   coinDecimals: 6,
   coinGeckoId: coingecko_ids[denoms.uluna],
 };
-
 const uusd_info = {
   coinDenom: currency_text[denoms.uusd],
   coinMinimalDenom: denoms.uusd,

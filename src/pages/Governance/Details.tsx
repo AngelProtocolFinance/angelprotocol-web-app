@@ -26,7 +26,6 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
             </span>
           </p>
         </div>
-
         <div className="border-b border-b-2 border-opacity-40 pb-2 flex justify-between mb-6">
           <h3 className="text-xl font-bold text-white">{details.title}</h3>
           <PollAction poll_id={props.match.params.id} />

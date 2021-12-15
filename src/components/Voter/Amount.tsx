@@ -8,7 +8,6 @@ export default function Amount() {
     register,
     formState: { errors },
   } = useFormContext<Values>();
-
   return (
     <div className="grid mb-4">
       <label

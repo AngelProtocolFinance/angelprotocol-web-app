@@ -16,7 +16,6 @@ export default function Display() {
   const wallet = useConnectedWallet();
   const chainId = wallet?.network.chainID || "unknown";
   const maskedAddr = maskAddress(wallet?.terraAddress);
-
   const toggleDetails = () => showDetails((p) => !p);
   const hideDetails = () => showDetails(false);
 

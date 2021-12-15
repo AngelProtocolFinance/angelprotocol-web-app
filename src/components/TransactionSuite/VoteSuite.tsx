@@ -15,12 +15,6 @@ type Display = { [key in Step]: ReactNode };
 export default function VoteSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
   const dispatch = useSetter();
-
-  function close() {
-    dispatch(setStage({ step: Step.form, content: null }));
-    hideModal();
-  }
-
   const { stage } = useGetter((state) => state.transaction);
   const display: Display = {
     [Step.form]: <VoterForm />,
@@ -29,6 +23,12 @@ export default function VoteSuite(props: { inModal?: true }) {
     [Step.success]: <Success />,
     [Step.error]: <ErrPop />,
   };
+
+  function close() {
+    dispatch(setStage({ step: Step.form, content: null }));
+    hideModal();
+  }
+
   return (
     <div
       className={`max-w-md w-full relative ${

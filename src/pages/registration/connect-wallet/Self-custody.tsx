@@ -5,7 +5,7 @@ import Action from "../../../components/ActionButton/Action";
 const SelfCustody = () => {
   //url = app/register/self-custody
   const history = useHistory();
-  // const showInfoModal = () => {};
+
   return (
     <div className="">
       <div className="title mb-5">
@@ -37,7 +37,7 @@ const SelfCustody = () => {
         <Action
           onClick={() => history.push(registration.others)}
           title="Back"
-          classes="bg-thin-blue w-48 h-10"
+          classes="bg-dark-grey w-48 h-10"
         />
       </div>
     </div>

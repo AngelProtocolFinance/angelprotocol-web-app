@@ -15,13 +15,11 @@ export const halo_info: TokenInfo = {
   decimals: 0,
   total_supply: "0",
 };
-
 export const staker: GovStaker = {
   balance: "0",
   share: "0",
   locked_balance: [],
 };
-
 export const poll: Poll = {
   id: 0,
   creator: "",
@@ -37,13 +35,11 @@ export const poll: Poll = {
   staked_amount: "0",
   total_balance_at_end_poll: "0",
 };
-
 export const gov_state: GovState = {
   poll_count: 0,
   total_share: "0",
   total_deposit: "0",
 };
-
 export const gov_config: GovConfig = {
   owner: "",
   halo_token: "",

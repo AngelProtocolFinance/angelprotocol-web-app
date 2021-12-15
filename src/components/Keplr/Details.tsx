@@ -6,11 +6,14 @@ import Disconnect from "components/WalletSuite/Disconnect";
 import Balance from "components/WalletSuite/Balance";
 import { useGetKeplr, useSetKeplr } from "wallets/Keplr";
 import { chains } from "contracts/types";
+
 type Props = { closeHandler: () => void };
+
 export default function Details(props: Props) {
   const { disconnect } = useSetKeplr();
   const { address, connected, balance } = useGetKeplr();
   const disp_balance = +balance[0]?.amount || 0;
+
   return (
     <>
       <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-2xl">

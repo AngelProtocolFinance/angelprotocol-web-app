@@ -23,7 +23,6 @@ export default function handleTerraError(error: any, handler: ErrorHandler) {
     handler("Transaction timeout");
   } else if (error instanceof TxUnspecifiedError) {
     handler("Unspecified error occured");
-    //uknown error
   } else {
     handler("Unknown error occured");
   }

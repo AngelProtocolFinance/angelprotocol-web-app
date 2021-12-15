@@ -3,7 +3,6 @@ import { useGetter } from "store/accessors";
 
 export default function Status() {
   const { form_error } = useGetter((state) => state.transaction);
-
   if (!form_error) {
     return null;
   }

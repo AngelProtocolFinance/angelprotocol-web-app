@@ -13,7 +13,6 @@ export const terra_mainnet_rpc =
   "https://columbus-5--rpc--archive.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
 export const terra_mainnet_lcd =
   "https://columbus-5--lcd--full.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
-
 export const info_terra_mainnet: ChainInfo = {
   chainId: chains.mainnet,
   chainName: "Terra (UST)",

@@ -19,7 +19,6 @@ export const AdminLoginSchema = Yup.object().shape({
 export const useAdminLogin = () => {
   const { saveToken } = useSetToken();
   const history = useHistory();
-
   const handleAPLogin = async (data: AdminLoginData) => {
     // test
     history.push(admin.charity_applications);

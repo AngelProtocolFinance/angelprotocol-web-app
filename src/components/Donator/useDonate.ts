@@ -16,7 +16,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
   const UST_balance = useUSTBalance();
   const [logDonationTransaction] = useLogDonationTransactionMutation();
 
-
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
     //values.amount is properly formatted string | number at this point due to validation
@@ -24,7 +23,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
     //values.split = split to locked acc
     const splitToLiquid = 100 - values.split
-
 
     actions.setSubmitting(true);
     if (!wallet) {
@@ -46,7 +44,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
     try {
       let contract; 
-
       //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
       if(typeof receiver === 'number' || typeof receiver === 'undefined'){
         contract = new Indexfund(wallet, receiver)
@@ -59,11 +56,9 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           });
           return;
         }
-
       } else {
         contract = new Account(receiver, wallet)
       }
-
 
       //createTx errors will be on catch block
       const transaction = await contract.createDepositTx(
@@ -74,8 +69,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
         transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
       const transactionMessage: any = transaction.msgs[0];
       const fundId = transactionMessage.execute_msg.deposit.fund_id;
-
-    
 
       //prompt user to confirm transaction
       if (status.step !== Steps.ready) {
@@ -106,7 +99,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
         if (!txInfo.code) {
           const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
-
           // Every transaction is recorded in our APES AWS DynamoDB donations table
           // When a Tax Receipt is requested, an email will be sent to them
           let valuesToBeSubmitted: any = values;
@@ -116,10 +108,8 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           valuesToBeSubmitted["transactionId"] = txInfo.txhash;
           valuesToBeSubmitted["transactionDate"] = new Date().toISOString();
           Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
-
           // Auth token to be passed as part of the header of the request
           const authToken = createAuthToken("angelprotocol-web-app");
-
           // Call APES endpoint
           const postData = {
             token: authToken,
@@ -130,7 +120,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
           const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
           const result = response.error ? response.error.data.message : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
-
           setStatus({
             step: Steps.success,
             message: result,
@@ -154,7 +143,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
       setStatus(errorStatus);
     }
   }
-
   return handleDonate;
 }
 

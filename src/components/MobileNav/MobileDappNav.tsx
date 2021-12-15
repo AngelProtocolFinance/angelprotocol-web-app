@@ -8,7 +8,6 @@ export default function MobileDappNav() {
     className: `text-black hover:text-opacity-75 uppercase inline-flex items-center font-heading`,
     activeClassName: "font-bold",
   };
-
   return (
     <ul
       className={`text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}

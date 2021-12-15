@@ -23,7 +23,6 @@ export default function AdminSideNav() {
           <span className="inline-block">Admin Portal</span>
         </h2>
       </div>
-      {/* side nav body */}
       <div className="mt-10 flex flex-col flex-grow gap-4 align-items-start justify-start max-h-3/4 min-h-1/2">
         <NavLink
           activeClassName={activeStyles}

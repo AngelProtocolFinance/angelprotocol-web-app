@@ -61,6 +61,7 @@ export type Poll = {
   // total_balance_at_end_poll: null;
   total_balance_at_end_poll: any;
 };
+
 export type Polls = { polls: Poll[] };
 
 export type PollExecuteMsg = {
@@ -71,6 +72,7 @@ export type PollExecuteMsg = {
 
 type VoteInfo = { vote: Vote; balance: string };
 type LockedHolding = [number, VoteInfo]; //[poll_id, info]
+
 export type GovStaker = {
   balance: string;
   share: string;

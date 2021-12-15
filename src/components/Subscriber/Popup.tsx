@@ -21,7 +21,6 @@ export default function Popup(props: Props) {
   }
 
   //To use formik context, make sure Popup is also inside <Formik/> tree
-
   return (
     <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-115  rounded-xl shadow-lg overflow-hidden relative">
       <button className={`absolute top-3 right-3`} onClick={closePopup}>

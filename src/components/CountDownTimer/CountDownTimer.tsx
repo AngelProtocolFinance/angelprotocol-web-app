@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import formatTimer from "./formatTimer";
 
 type Props = {
-  deadline: number;
+  deadline: string | number;
+  start: number | any;
 };
 
 type FormattedProps = {
@@ -12,7 +13,7 @@ type FormattedProps = {
   seconds: string | number;
 };
 
-export default function CountdownTimer({ deadline }: Props) {
+export default function CountdownTimer({ deadline, start }: Props) {
   const [{ days, hours, minutes, seconds }, setFormattedDeadline] =
     useState<FormattedProps>({
       days: 0,
@@ -31,7 +32,7 @@ export default function CountdownTimer({ deadline }: Props) {
     if (showZeroValues) setShowZeroValues(false);
 
     const interval = setInterval(() => {
-      const formatted = formatTimer(deadline);
+      const formatted = formatTimer(deadline, start);
       setFormattedDeadline(formatted);
       if (
         formatted.days === 0 &&
@@ -47,6 +48,7 @@ export default function CountdownTimer({ deadline }: Props) {
     return () => {
       clearInterval(interval);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deadline, showZeroValues]);
   return (
     <div className="flex items-center justify-center font-heading">

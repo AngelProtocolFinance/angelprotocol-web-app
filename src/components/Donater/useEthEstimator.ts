@@ -20,7 +20,6 @@ export default function useEthEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<TransactionRequest>();
   const wallet = useWallet();
-
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
   const debounced_amount = useDebouncer(amount, 500);

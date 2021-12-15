@@ -21,7 +21,6 @@ function useStaker() {
 
   async function staker() {
     // const liquid_split = 100 - Number(data.split);
-
     try {
       if (!wallet) {
         dispatch(

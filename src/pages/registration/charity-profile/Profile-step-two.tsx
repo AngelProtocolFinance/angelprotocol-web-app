@@ -57,6 +57,7 @@ const ProfileStepTwo = (props: any) => {
     type === "logo" && setLogoFile(files);
     type === "banner" && setBannerFile(files);
   };
+
   return (
     <div>
       <div>
@@ -278,7 +279,7 @@ const ProfileStepTwo = (props: any) => {
               <Action
                 onClick={() => history.push(registration.status)}
                 title="Back"
-                classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
+                classes="bg-dark-grey w-48 h-10 mt-3 mr-10"
                 disabled={isLoading}
               />
               <Action

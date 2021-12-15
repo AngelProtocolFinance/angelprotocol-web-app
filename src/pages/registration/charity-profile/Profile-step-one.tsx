@@ -18,6 +18,8 @@ import { RevenueRanges } from "constants/revenueRanges";
 const ProfileStepOne = (props: any) => {
   //url = app/register/charity-profile
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenModal, setOpenModal] = useState(false);
+  const [modalType, setModalType] = useState("");
   const countries = useMemo(() => countryList().getData(), []);
   const currencies = Object.keys(CurrencyList.getAll("en_US"));
   const history = useHistory();
@@ -53,8 +55,6 @@ const ProfileStepOne = (props: any) => {
     setIsLoading(false);
   };
 
-  const [isOpenModal, setOpenModal] = useState(false);
-  const [modalType, setModalType] = useState("");
   const showInfoModal = (type: any) => {
     setModalType(type);
     setOpenModal(true);
@@ -269,7 +269,7 @@ const ProfileStepOne = (props: any) => {
               <Action
                 onClick={() => history.push(registration.status)}
                 title="Back"
-                classes="bg-thin-blue w-48 h-10 mt-3 mr-10"
+                classes="bg-dark-grey w-48 h-10 mt-3 mr-10"
                 disabled={isLoading}
               />
               <Action

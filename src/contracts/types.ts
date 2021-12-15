@@ -103,7 +103,6 @@ export type TokenInfo = {
 };
 
 //Halo gov
-
 export type Vote = "yes" | "no";
 
 export type PollExecuteMsg = {
@@ -143,6 +142,7 @@ export type PairResult = {
 export type Pairs = {
   pairs: Pair[];
 };
+
 export type Pair = {
   pair: TokenInfo[];
   contract: string;

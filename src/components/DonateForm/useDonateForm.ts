@@ -18,6 +18,7 @@ export default function useSubmit() {
   const atomSender = useAtomSender();
   const denomRef = useRef<denoms>(denoms.uusd);
   const currency = watch("currency");
+
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== currency) {
@@ -34,6 +35,7 @@ export default function useSubmit() {
     [denoms.sol]: solSender,
     [denoms.uatom]: atomSender,
   };
+
   return {
     submitHandler: handleSubmit(senders[currency]),
     isSubmitting: formState.isSubmitting,

@@ -36,6 +36,5 @@ export default function useWaiter() {
     })();
     //eslint-disable-next-line
   }, [pending_tx]);
-
   return { loading, pending_tx };
 }

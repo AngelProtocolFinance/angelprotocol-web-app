@@ -36,7 +36,6 @@ interface MirrorNetworkInfo {
   chainId?: string;
   lcd: string;
 }
-
 export const networks: Record<string, MirrorNetworkInfo> = {
   mainnet: mainnet,
   testnet: testnet,

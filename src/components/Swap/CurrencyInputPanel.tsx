@@ -37,6 +37,7 @@ export default function CurrencyInputPanel({
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState<string | boolean>(false);
 
+  const [focused, setFocused] = useState(false);
   const validateInput = () => {
     if (inputRef?.current?.validity.rangeOverflow) {
       setError(`cannot be greater than ${max}`);
@@ -46,7 +47,6 @@ export default function CurrencyInputPanel({
       setError(false);
     }
   };
-
   const onInputChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     validateInput();
     onAmountChange && onAmountChange(e.target.value); // once this function is called, the bug sets in
