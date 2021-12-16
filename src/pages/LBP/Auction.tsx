@@ -66,8 +66,6 @@ export default function Auction() {
   // An alternative would be using Error Boundaries
   //
   // https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
-  console.log(error);
-
   useEffect(() => {
     if (!isLoading && error) {
       displayTerraError(new LBPGraphDataUnavailable(error), showModal);
