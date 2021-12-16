@@ -140,7 +140,7 @@ const TableHeader = () => {
 };
 const TableRow = ({ data }: any) => {
   return (
-    <tr style={{ minWidth: "600px", maxHeight: "600px" }}>
+    <tr style={{ maxHeight: "600px" }}>
       <td className="px-5 py-5 border-b border-gray-200 bg-transparent text-white-grey text-sm">
         <span className="text-normal font-sans text-center">{data.time}</span>
       </td>

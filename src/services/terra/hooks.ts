@@ -14,6 +14,7 @@ import {
   simulation,
   staker,
 } from "./placeholders";
+import Registrar from "contracts/Registrar";
 
 function useHaloContract() {
   const wallet = useConnectedWallet();
@@ -24,6 +25,12 @@ function useHaloContract() {
 function useLBPContract() {
   const wallet = useConnectedWallet();
   const contract = useMemo(() => new LBP(wallet), [wallet]);
+  return { wallet, contract };
+}
+
+export function useRegistrarContract() {
+  const wallet = useConnectedWallet();
+  const contract = useMemo(() => new Registrar(wallet), [wallet]);
   return { wallet, contract };
 }
 

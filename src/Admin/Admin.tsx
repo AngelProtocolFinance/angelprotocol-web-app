@@ -14,6 +14,7 @@ import IndexFund from "pages/Admin/IndexFund/IndexFund";
 import AdminLogin from "pages/Admin/Login/AdminLogin";
 import CharityApps from "pages/Admin/CharityApps/CharityApps";
 import DappHead from "components/Headers/DappHead";
+import Endowments from "pages/Admin/Endowments/Endowments";
 
 const Admin = () => {
   //{match.path} is '/admin'
@@ -53,7 +54,7 @@ const Admin = () => {
                 />
                 <Route
                   path={`${path}/${admin.endowments}`}
-                  component={IndexFund}
+                  component={Endowments}
                 />
                 <Route
                   path={`${path}/${admin.alliance_members}`}
