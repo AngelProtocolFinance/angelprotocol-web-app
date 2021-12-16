@@ -10,10 +10,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { getGraphData } from "./getGraphData";
+import { getErrorGraphData, getGraphData } from "./getGraphData";
 import "./priceGraph.css";
 
 type Props = {
+  error: string | false;
   isLoading: boolean;
   lbpPairData: LBPPairData;
 };
@@ -32,8 +33,8 @@ const tickPriceFormatter = (value: number) =>
     maximumFractionDigits: 2,
   }).format(value);
 
-export default function PriceGraph({ isLoading, lbpPairData }: Props) {
-  const graphData = getGraphData(lbpPairData);
+export default function PriceGraph({ isLoading, lbpPairData, error }: Props) {
+  const graphData = !error ? getGraphData(lbpPairData) : getErrorGraphData();
 
   return (
     <>
@@ -85,15 +86,16 @@ export default function PriceGraph({ isLoading, lbpPairData }: Props) {
                 fill="url(#fillGradient)"
                 isAnimationActive={false}
               />
-              <Line
-                type="monotone"
-                strokeWidth={2}
-                dataKey="historicPrice"
-                stroke="#faac2e"
-                name={`${graphData.tokenName} price`}
-                dot={false}
-                isAnimationActive={false}
-              />
+              {!error && (
+                <Line
+                  type="monotone"
+                  strokeWidth={2}
+                  dataKey="historicPrice"
+                  stroke="#faac2e"
+                  dot={false}
+                  isAnimationActive={false}
+                />
+              )}
             </ComposedChart>
           </ResponsiveContainer>
         </div>

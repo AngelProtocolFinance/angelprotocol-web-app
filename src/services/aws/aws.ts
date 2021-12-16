@@ -1,10 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { aws_endpoint } from "constants/urls";
 import { RootState } from "store/store";
 
-export const aws = createApi({
-  reducerPath: "aws",
-  baseQuery: fetchBaseQuery({
+const awsBaseQuery = retry(
+  fetchBaseQuery({
     baseUrl: aws_endpoint,
     mode: "cors",
     prepareHeaders: (headers, { getState }) => {
@@ -16,5 +15,12 @@ export const aws = createApi({
       return headers;
     },
   }),
+  // current default for all endpoints, change if necessary
+  { maxRetries: 0 }
+);
+
+export const aws = createApi({
+  reducerPath: "aws",
+  baseQuery: awsBaseQuery,
   endpoints: () => ({}),
 });
