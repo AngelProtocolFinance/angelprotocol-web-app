@@ -11,7 +11,6 @@ export interface PriceData {
 }
 
 export interface LBPPairData {
-  tokenName: string;
   auctionStartDateTime: number;
   auctionEndDateTime: number;
   historicPriceData: PriceData[];
@@ -26,7 +25,6 @@ export function useGetLBPPairData() {
 
   const [error, setError] = useState("");
   const [lbpPairData, setLBPPairData] = useState({
-    tokenName: "HALO",
     historicPriceData: [],
     predictedPriceData: [],
     auctionStartDateTime: Date.now() - DAY_IN_MILISECONDS,
@@ -51,7 +49,6 @@ export function useGetLBPPairData() {
     const predictedPriceData = getPredictedPriceData(data);
 
     const newLBPPairData = {
-      tokenName: "HALO",
       auctionStartDateTime: data.lbp_start_time * 1000,
       auctionEndDateTime: data.lbp_end_time * 1000,
       historicPriceData,

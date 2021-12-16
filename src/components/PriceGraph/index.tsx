@@ -92,7 +92,6 @@ export default function PriceGraph({ isLoading, lbpPairData, error }: Props) {
                   strokeWidth={2}
                   dataKey="historicPrice"
                   stroke="#faac2e"
-                  name={`${graphData.tokenName} price`}
                   dot={false}
                   isAnimationActive={false}
                 />

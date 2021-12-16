@@ -22,14 +22,12 @@ interface AxisData {
 }
 
 interface GraphData {
-  tokenName: string;
   priceData: GraphPriceData[];
   dateAxisData: AxisData;
   priceAxisData: AxisData;
 }
 
 const NUMBER_OF_PRICE_TICKS = 8;
-const TOKEN_NAME = "HALO";
 
 export const getErrorGraphData = (): GraphData => {
   const dayBefore = new Date();
@@ -45,7 +43,6 @@ export const getErrorGraphData = (): GraphData => {
   const priceAxisData = getPriceAxisDataGeneric(1);
 
   return {
-    tokenName: TOKEN_NAME,
     priceData: [],
     dateAxisData,
     priceAxisData,
@@ -73,7 +70,6 @@ export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
   const priceAxisData = getPriceAxisData(priceData);
 
   return {
-    tokenName: lbpPairData.tokenName,
     priceData,
     dateAxisData,
     priceAxisData,
