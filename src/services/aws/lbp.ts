@@ -29,6 +29,7 @@ const lbp_api = aws.injectEndpoints({
           method: "Get",
         };
       },
+      extraOptions: { maxRetries: 5 },
     }),
   }),
 });
