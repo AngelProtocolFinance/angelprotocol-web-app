@@ -2,6 +2,7 @@ import haloIcon from "assets/icons/currencies/halo_solid.png";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
+import "./Portal.css";
 
 export default function Portal() {
   const { showModal } = useSetModal();
@@ -30,22 +31,26 @@ export default function Portal() {
           13.92% APR
         </span>
       </div>
-      <div className="flex flex-wrap gap-2 justify-center md:justify-self-end self-end">
+      <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
         <Action title="Trade Halo" action={() => {}} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
+        <Action title="Claim" action={() => {}} disabled={true} />
       </div>
     </div>
   );
 }
 
-function Action(props: { title: string; action: () => void }) {
+type ActionProps = {
+  title: string;
+  action: () => void;
+  disabled?: boolean;
+};
+
+function Action({ title, action, disabled = false }: ActionProps) {
   return (
-    <button
-      onClick={props.action}
-      className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb:0 rounded-md"
-    >
-      {props.title}
+    <button onClick={action} className="action-button" disabled={disabled}>
+      {title}
     </button>
   );
 }
