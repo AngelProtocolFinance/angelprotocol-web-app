@@ -64,9 +64,9 @@ export default function Auction() {
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
       <div className="content-section">
+        <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
           <div className="auction-data-section">
-            <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
