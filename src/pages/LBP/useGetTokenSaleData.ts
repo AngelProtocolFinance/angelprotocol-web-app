@@ -17,9 +17,6 @@ export interface LBPPairData {
   predictedPriceData: PriceData[];
 }
 
-// TODO: If the prediction price line is necessary, this should be read from the DB
-const DAY_IN_MILISECONDS = 24 * 36e5;
-
 export function useGetLBPPairData() {
   const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(null);
 
@@ -27,8 +24,8 @@ export function useGetLBPPairData() {
   const [lbpPairData, setLBPPairData] = useState({
     historicPriceData: [],
     predictedPriceData: [],
-    auctionStartDateTime: Date.now() - DAY_IN_MILISECONDS,
-    auctionEndDateTime: Date.now() + DAY_IN_MILISECONDS,
+    auctionStartDateTime: 0,
+    auctionEndDateTime: 0,
   } as LBPPairData);
 
   useEffect(() => {
