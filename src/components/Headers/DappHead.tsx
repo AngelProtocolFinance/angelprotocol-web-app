@@ -19,7 +19,7 @@ export default function DappHead() {
       className={`grid grid grid-cols-1a lg:grid-cols-a1a items-center w-full h-24 z-10 padded-container`}
     >
       <Logo />
-      <nav className="w-full grid grid-cols-a1a items-center justify-items-end lg:mx-5">
+      <nav className="w-fill grid grid-cols-a1a items-center justify-items-end lg:mx-5">
         <DappMenu />
         <WalletSuite />
         <button
