@@ -4,7 +4,7 @@ import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import Swap, { SwapModal } from "components/Swap/Swap";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
@@ -13,6 +13,8 @@ import AuctionHistory from "./AuctionHistory";
 import { usePairInfo, usePairSimul } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import displayTerraError from "helpers/displayTerraError";
+import { LBPGraphDataUnavailable } from "contracts/Errors";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
@@ -59,6 +61,16 @@ export default function Auction() {
   const { showModal } = useSetModal();
 
   const { isLoading, lbpPairData, error } = useGetLBPPairData();
+
+  // This could be extracted into a separate hook to be used accross the application.
+  // An alternative would be using Error Boundaries
+  //
+  // https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
+  useEffect(() => {
+    if (!isLoading && error) {
+      displayTerraError(new LBPGraphDataUnavailable(error), showModal);
+    }
+  }, [isLoading, error]);
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
