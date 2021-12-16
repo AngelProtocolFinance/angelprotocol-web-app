@@ -35,12 +35,12 @@ export const getErrorGraphData = (): GraphData => {
   const dayAfter = new Date();
   dayAfter.setDate(dayAfter.getDate() + 1);
 
-  const dateAxisData = getDateAxisDataGeneric(
+  const dateAxisData = getDateAxisDataByDateTimes(
     dayBefore.getTime(),
     dayAfter.getTime()
   );
 
-  const priceAxisData = getPriceAxisDataGeneric(1);
+  const priceAxisData = getPriceAxisDataByMaxPrice(1);
 
   return {
     priceData: [],
@@ -77,13 +77,13 @@ export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
 };
 
 const getDateAxisData = (lbpPairData: LBPPairData) => {
-  return getDateAxisDataGeneric(
+  return getDateAxisDataByDateTimes(
     lbpPairData.auctionStartDateTime,
     lbpPairData.auctionEndDateTime
   );
 };
 
-const getDateAxisDataGeneric = (startDate: number, endDate: number) => {
+const getDateAxisDataByDateTimes = (startDate: number, endDate: number) => {
   const ticks = getDateTicks(startDate, endDate);
   const axisDomain = [startDate, endDate];
 
@@ -119,10 +119,10 @@ const getPriceAxisData = (priceData: GraphPriceData[]) => {
     0
   );
 
-  return getPriceAxisDataGeneric(maxPrice);
+  return getPriceAxisDataByMaxPrice(maxPrice);
 };
 
-const getPriceAxisDataGeneric = (maxPrice: number) => {
+const getPriceAxisDataByMaxPrice = (maxPrice: number) => {
   const ticks = getPriceTicks(maxPrice);
   const axisDomain = [0, maxPrice * 1.05]; // multiply by 1.05 to improve graph UI
 
