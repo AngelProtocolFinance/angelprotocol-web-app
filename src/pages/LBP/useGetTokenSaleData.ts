@@ -22,7 +22,7 @@ export interface LBPPairData {
 const DAY_IN_MILISECONDS = 24 * 36e5;
 
 export function useGetLBPPairData() {
-  const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
+  const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(null);
 
   const [error, setError] = useState("");
   const [lbpPairData, setLBPPairData] = useState({
@@ -38,9 +38,11 @@ export function useGetLBPPairData() {
       return;
     }
 
-    if (data.error) {
+    if (isError || data.error) {
       setError(
-        `Failed to get LBP pair data. Error message: ${data.error.message}`
+        `Failed to get LBP pair data.${
+          data.error && ` Error message: ${data.error.message}`
+        }`
       );
       return;
     }

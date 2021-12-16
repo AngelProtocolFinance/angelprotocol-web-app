@@ -29,6 +29,28 @@ interface GraphData {
 }
 
 const NUMBER_OF_PRICE_TICKS = 8;
+const TOKEN_NAME = "HALO";
+
+export const getErrorGraphData = (): GraphData => {
+  const dayBefore = new Date();
+  dayBefore.setDate(dayBefore.getDate() - 1);
+  const dayAfter = new Date();
+  dayAfter.setDate(dayAfter.getDate() + 1);
+
+  const dateAxisData = getDateAxisDataGeneric(
+    dayBefore.getTime(),
+    dayAfter.getTime()
+  );
+
+  const priceAxisData = getPriceAxisDataGeneric(1);
+
+  return {
+    tokenName: TOKEN_NAME,
+    priceData: [],
+    dateAxisData,
+    priceAxisData,
+  };
+};
 
 export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
   // For the reason for merging historic price data with predicted price data, refer to the note above GraphPriceData interface
@@ -59,15 +81,15 @@ export const getGraphData = (lbpPairData: LBPPairData): GraphData => {
 };
 
 const getDateAxisData = (lbpPairData: LBPPairData) => {
-  const ticks = getDateTicks(
+  return getDateAxisDataGeneric(
     lbpPairData.auctionStartDateTime,
     lbpPairData.auctionEndDateTime
   );
+};
 
-  const axisDomain = [
-    lbpPairData.auctionStartDateTime,
-    lbpPairData.auctionEndDateTime,
-  ];
+const getDateAxisDataGeneric = (startDate: number, endDate: number) => {
+  const ticks = getDateTicks(startDate, endDate);
+  const axisDomain = [startDate, endDate];
 
   return {
     ticks,
@@ -96,8 +118,17 @@ const getDateTicks = (startDateTime: number, endDateTime: number) => {
 };
 
 const getPriceAxisData = (priceData: GraphPriceData[]) => {
-  const ticks = getPriceTicks(priceData);
-  const axisDomain = [0, ticks[ticks.length - 1] * 1.05]; // multiply by 1.05 to improve graph UI
+  const maxPrice = priceData.reduce(
+    (prev, data) => Math.max(prev, data.historicPrice || 0),
+    0
+  );
+
+  return getPriceAxisDataGeneric(maxPrice);
+};
+
+const getPriceAxisDataGeneric = (maxPrice: number) => {
+  const ticks = getPriceTicks(maxPrice);
+  const axisDomain = [0, maxPrice * 1.05]; // multiply by 1.05 to improve graph UI
 
   return {
     ticks,
@@ -105,13 +136,7 @@ const getPriceAxisData = (priceData: GraphPriceData[]) => {
   };
 };
 
-const getPriceTicks = (data: GraphPriceData[]) => {
-  // maximum price to be shown on the price axis
-  const maxPrice = data.reduce(
-    (prev, data) => Math.max(prev, data.historicPrice || 0),
-    0
-  );
-
+const getPriceTicks = (maxPrice: number) => {
   const result = [];
   for (let i = 1; i <= NUMBER_OF_PRICE_TICKS; i++) {
     result.push(maxPrice * (1 / NUMBER_OF_PRICE_TICKS) * i);

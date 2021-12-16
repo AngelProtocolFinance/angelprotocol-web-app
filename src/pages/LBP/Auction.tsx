@@ -58,7 +58,7 @@ function AuctionStats() {
 export default function Auction() {
   const { showModal } = useSetModal();
 
-  const { isLoading, lbpPairData } = useGetLBPPairData();
+  const { isLoading, lbpPairData, error } = useGetLBPPairData();
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
@@ -76,7 +76,11 @@ export default function Auction() {
               </button>
             </div>
             <AuctionStats />
-            <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
+            <PriceGraph
+              error={error}
+              isLoading={isLoading}
+              lbpPairData={lbpPairData}
+            />
           </div>
           <div className="hidden xl:w-2/5 xl:flex rounded items-center p-10">
             <Swap /> {/* hide and display as a modal on smaller screen sizes */}
