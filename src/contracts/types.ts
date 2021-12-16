@@ -22,12 +22,10 @@ export enum sc {
   registrar = "registrar",
   anchor = "anchor",
   halo_token = "halo_token",
-  halo_stake = "halo_stake",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",
-  lbp_token = "lbp_token",
-  lbp_pair = "lbp_pair",
   lbp_router = "lbp_router",
+  lbp_pair = "lbp_pair",
   lbp_lp = "lbp_lp",
 }
 

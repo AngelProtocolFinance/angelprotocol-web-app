@@ -5,7 +5,6 @@ import { sc } from "./types";
 
 export default class LBP extends Contract {
   factory_address: string;
-  token_address: string;
   pair_address: string;
   router_adddress: string;
   lp_address: string;
@@ -13,11 +12,10 @@ export default class LBP extends Contract {
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.factory_address = contracts[this.chainID][sc.lbp_factory];
-    this.token_address = contracts[this.chainID][sc.lbp_token];
-    this.pair_address = contracts[this.chainID][sc.lbp_pair];
     this.halo_token_address = contracts[this.chainID][sc.halo_token];
+    this.factory_address = contracts[this.chainID][sc.lbp_factory];
     this.router_adddress = contracts[this.chainID][sc.lbp_router];
+    this.pair_address = contracts[this.chainID][sc.lbp_pair];
     this.lp_address = contracts[this.chainID][sc.lbp_lp];
     this.getSimulation = this.getSimulation.bind(this);
     this.getReverseSimulation = this.getReverseSimulation.bind(this);
