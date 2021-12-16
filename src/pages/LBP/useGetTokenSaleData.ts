@@ -32,16 +32,16 @@ export function useGetLBPPairData() {
   } as LBPPairData);
 
   useEffect(() => {
-    if (!data) {
+    if (isError || (data && data.error)) {
+      setError(
+        `Failed to get LBP pair data.${
+          data?.error && ` Error message: ${data.error.message}`
+        }`
+      );
       return;
     }
 
-    if (isError || data.error) {
-      setError(
-        `Failed to get LBP pair data.${
-          data.error && ` Error message: ${data.error.message}`
-        }`
-      );
+    if (!data) {
       return;
     }
 
@@ -55,7 +55,7 @@ export function useGetLBPPairData() {
       predictedPriceData,
     };
     setLBPPairData(newLBPPairData);
-  }, [data]);
+  }, [data, isError]);
 
   return {
     error: !isLoading && error,
