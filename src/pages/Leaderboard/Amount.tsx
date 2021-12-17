@@ -21,7 +21,9 @@ export default function Amount(props: Props) {
       <button onClick={showSummary}>
         <BiInfoCircle className="mt-0.5 block text-angel-blue hover:text-angel-orange" />
       </button>
-      <p>${toCurrency(props.locked + props.liquid, 0)}</p>
+      <p className="text-angel-grey">
+        ${toCurrency(props.locked + props.liquid, 0)}
+      </p>
     </div>
   );
 }
