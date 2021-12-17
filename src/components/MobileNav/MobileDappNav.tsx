@@ -9,7 +9,7 @@ export default function MobileDappNav() {
   };
   return (
     <nav
-      className={`lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-body text-base gap-1 pt-2`}
+      className={`lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2`}
     >
       <a
         rel="noreferrer"
