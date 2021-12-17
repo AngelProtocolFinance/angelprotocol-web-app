@@ -1,7 +1,7 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
 import { CharityParam } from "./Charity";
-import useWithdraw from "../Withdraw/useWithdraw";
+import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import toCurrency from "helpers/toCurrency";
 
 function OverviewTab() {
@@ -75,7 +75,7 @@ function AccountAction() {
 function CharityEndowmentInfo() {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
-  const { locked, liquid, overall } = useWithdraw(charity_addr);
+  const { locked, liquid, overall } = useQueryEndowmentBal(charity_addr);
   const accountDetails = [
     {
       type: "Current Account",
