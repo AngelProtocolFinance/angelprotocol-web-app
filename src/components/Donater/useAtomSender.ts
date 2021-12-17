@@ -19,7 +19,11 @@ import handleKeplrError from "./handleKeplrError";
 const dwindow: DWindow = window;
 export default function useAtomSender() {
   const { provider } = useGetKeplr();
-  const { watch, setValue } = useFormContext<Values>();
+  const {
+    watch,
+    setValue,
+    formState: { isValid },
+  } = useFormContext<Values>();
   const handleTxError = useTxErrorHandler();
   const dispatch = useSetter();
   const currency = watch("currency");
@@ -27,6 +31,7 @@ export default function useAtomSender() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         //don't run this estimator when currency is not uatom
         if (currency !== denoms.uatom) return;
         dispatch(setFormError(""));

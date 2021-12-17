@@ -21,7 +21,7 @@ import {
 import toCurrency from "helpers/toCurrency";
 
 export default function useEstimator() {
-  const { watch } = useFormContext<Values>();
+  const { watch, formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
@@ -35,6 +35,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));

@@ -1,9 +1,7 @@
-import { Dec } from "@terra-money/terra.js";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import Swap, { SwapModal } from "components/Swap/Swap";
 import { useState, useMemo } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
@@ -59,7 +57,6 @@ function AuctionStats() {
 
 export default function Auction() {
   const { showModal } = useSetModal();
-
   const { isLoading, lbpPairData } = useGetLBPPairData();
 
   return (
@@ -162,3 +159,11 @@ const Tabs = ({ color }: { color: string }) => {
     </>
   );
 };
+
+function SwapModal() {
+  return (
+    <Swapper>
+      <SwapSuite inModal />
+    </Swapper>
+  );
+}

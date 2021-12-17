@@ -31,7 +31,7 @@ export default function SwapSuite(props: { inModal?: true }) {
 
   return (
     <div
-      className={`max-w-md w-full relative ${
+      className={`max-w-sm w-full relative ${
         props.inModal ? "bg-white rounded-md pt-4" : ""
       }`}
     >

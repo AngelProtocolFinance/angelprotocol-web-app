@@ -23,7 +23,7 @@ import {
 
 export default function useSolEstimator() {
   const dispatch = useSetter();
-  const { watch } = useFormContext<Values>();
+  const { watch, formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<Transaction>();
   const wallet = useGetPhantom();
   const amount = watch("amount");
@@ -33,6 +33,7 @@ export default function useSolEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         //don't run this estimator when currency is not UST
         if (currency !== denoms.sol) {
           return;

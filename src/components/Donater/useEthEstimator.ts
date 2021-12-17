@@ -17,7 +17,10 @@ import {
 
 export default function useEthEstimator() {
   const dispatch = useSetter();
-  const { watch } = useFormContext<Values>();
+  const {
+    watch,
+    formState: { isValid },
+  } = useFormContext<Values>();
   const [tx, setTx] = useState<TransactionRequest>();
   const wallet = useWallet();
   const amount = Number(watch("amount")) || 0;
@@ -27,6 +30,8 @@ export default function useEthEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
+
         if (currency !== denoms.ether) {
           return;
         }

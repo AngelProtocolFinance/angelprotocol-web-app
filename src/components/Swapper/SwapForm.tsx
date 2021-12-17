@@ -26,7 +26,7 @@ export default function SwapForm() {
   return (
     <form
       onSubmit={handleSubmit(swap)}
-      className="bg-white grid p-4 rounded-md w-full max-w-lg"
+      className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />

@@ -18,7 +18,7 @@ import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch, setValue, formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -35,6 +35,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
