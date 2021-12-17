@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 import Account from "contracts/Account";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 
 export default function useWithdraw(address: string) {
   const [redirect, setRedirect] = useState(false);
@@ -13,7 +13,7 @@ export default function useWithdraw(address: string) {
   const [liquid, setLiquid] = useState<number>();
   const [overall, setOverall] = useState<number>();
   const wallet = useConnectedWallet();
-  const isTestNet = wallet?.network.chainID === chains.testnet;
+  const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
   const { data } = useLookupQuery(isTestNet);
 

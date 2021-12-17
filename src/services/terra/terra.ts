@@ -4,8 +4,8 @@ import {
   BaseQueryFn,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { urls } from "App/chains";
-import { chains, GovState, HaloBalance } from "contracts/types";
+import { terra_lcds } from "constants/urls";
+import { GovState, HaloBalance } from "contracts/types";
 import { Dec, Coin } from "@terra-money/terra.js";
 import {
   BalanceRes,
@@ -23,15 +23,15 @@ import {
   TokenInfo,
 } from "./types";
 import { gov, halo, lbp, tags, user } from "./tags";
+import { RootState } from "store/store";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
 //a way to segragate queries to testnet | mainnet
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
-  //disable retries
-  //get state from api.getState
-  const is_mainnet = false;
-  const base_url = is_mainnet ? urls[chains.mainnet] : urls[chains.localterra];
+  const chainID = (api.getState() as RootState).chain.terra;
+  const base_url = terra_lcds[chainID];
+  console.log("*****", base_url);
   return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
     args,
     api,

@@ -5,7 +5,7 @@ import Backdrop from "components/WalletSuite/Backdrop";
 import Disconnect from "components/WalletSuite/Disconnect";
 import Balance from "components/WalletSuite/Balance";
 import { useGetKeplr, useSetKeplr } from "wallets/Keplr";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 
 type Props = { closeHandler: () => void };
 
@@ -24,7 +24,7 @@ export default function Details(props: Props) {
           <IoClose />
         </button>
         <div className="bg-angel-grey text-white-grey uppercase text-sm p-2">
-          {chains.cosmos_4}
+          {chainIDs.cosmos_4}
         </div>
         <Address address={address} />
         <Balance

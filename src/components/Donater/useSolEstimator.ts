@@ -12,8 +12,8 @@ import { useEffect, useState } from "react";
 import { useGetPhantom } from "wallets/Phantom";
 import useDebouncer from "../../hooks/useDebouncer";
 import { denoms } from "constants/currency";
-import { chains } from "contracts/types";
-import { ap_wallets } from "constants/contracts";
+import { chainIDs } from "contracts/types";
+import { ap_wallets } from "constants/ap_wallets";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -58,14 +58,14 @@ export default function useSolEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const endpoint = clusterApiUrl(chains.sol_dev);
+        const endpoint = clusterApiUrl(chainIDs.sol_dev);
         const connection = new Connection(endpoint);
         const recent_block = await connection.getRecentBlockhash();
         const num_signature = 1; //one signer only
         const dec_fee = new Dec(recent_block.feeCalculator.lamportsPerSignature)
           .div(1e9)
           .mul(num_signature);
-        let receiver = new PublicKey(ap_wallets[denoms.sol][chains.sol_dev]);
+        let receiver = new PublicKey(ap_wallets[denoms.sol][chainIDs.sol_dev]);
         const instruction = SystemProgram.transfer({
           toPubkey: receiver,
           fromPubkey: wallet.provider._publicKey,

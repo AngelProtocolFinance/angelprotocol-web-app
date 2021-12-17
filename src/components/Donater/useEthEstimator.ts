@@ -1,6 +1,6 @@
-import { ap_wallets } from "constants/contracts";
+import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { ethers, BigNumber, utils } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ export default function useEthEstimator() {
           return;
         }
 
-        if (wallet.chainId !== Number(chains.eth_ropsten)) {
+        if (wallet.chainId !== Number(chainIDs.eth_ropsten)) {
           dispatch(setFormError("Kindly set your network to Ropsten"));
           return;
         }
@@ -55,7 +55,7 @@ export default function useEthEstimator() {
           return;
         }
         const raw_transaction = {
-          to: ap_wallets[denoms.ether][chains.eth_ropsten],
+          to: ap_wallets[denoms.ether][chainIDs.eth_ropsten],
           value: wei_amount,
         };
 

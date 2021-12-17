@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { clusterApiUrl, Connection } from "@solana/web3.js";
 import { useGetPhantom } from "wallets/Phantom";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { Values } from "./types";
 import useSolEstimator from "./useSolEstimator";
 import handleSolError from "./handleSolError";
@@ -35,7 +35,7 @@ export default function useSolSender() {
         })
       );
       const signed_tx = await wallet.provider.signTransaction(tx);
-      const connection = new Connection(clusterApiUrl(chains.sol_dev));
+      const connection = new Connection(clusterApiUrl(chainIDs.sol_dev));
       dispatch(
         setStage({
           step: Step.broadcast,

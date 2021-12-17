@@ -1,7 +1,7 @@
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { useGetKeplr } from "wallets/Keplr";
 
 export default function useDisplay() {
@@ -14,7 +14,7 @@ export default function useDisplay() {
   return {
     toggleDetails,
     hideDetails,
-    chainId: chains.sol_dev,
+    chainId: chainIDs.sol_dev,
     maskedAddr,
     balance: toCurrency(display_bal / 1e6, 3, true),
     detailsShown,

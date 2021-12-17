@@ -1,9 +1,9 @@
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { useAccountsQuery } from "services/aws/endowments/endowments";
 
 export default function useDescription(address: string, chainID: string) {
-  const isTest = chainID === chains.testnet;
+  const isTest = chainID === chainIDs.testnet;
   const { data } = useAccountsQuery(isTest);
   const details = data?.[address];
 
