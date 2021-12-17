@@ -7,7 +7,6 @@ import Status from "./Status";
 import { Values } from "./types";
 import useSwapper from "./useSwapper";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
-import useSpotPrice from "./useSpotPrice";
 
 export default function SwapForm() {
   const {
@@ -48,7 +47,7 @@ export default function SwapForm() {
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {form_loading ? "estimating fee.." : "swap"}
+        {form_loading ? "simulating.." : "swap"}
       </button>
     </form>
   );

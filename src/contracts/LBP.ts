@@ -2,7 +2,7 @@ import { Dec, MsgExecuteContract, Coin } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
-import { Simulation } from "services/terra/types";
+import { Pool, PoolBalance, Simulation } from "services/terra/types";
 import Contract from "./Contract";
 import { sc } from "./types";
 
@@ -22,7 +22,7 @@ export default class LBP extends Contract {
     this.halo_address = contracts[this.chainID][sc.halo_token];
   }
 
-  //simul onDemand
+  //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
     const offer_uamount = new Dec(offer_amount).mul(1e6).toInt().toString();
     const offer_asset = from_native
@@ -48,7 +48,20 @@ export default class LBP extends Contract {
     return result;
   }
 
-  async createSellTx(halo_amount: number) {
+  //pool on demand
+  async getPoolBalance(): Promise<PoolBalance> {
+    const result = await this.query<Pool>(this.pair_address, { pool: {} });
+    return {
+      token: result.assets[0].amount,
+      native_token: result.assets[1].amount,
+    };
+  }
+
+  async createSellTx(
+    halo_amount: number,
+    belief_price: string, //"e.g '0.05413'"
+    max_spread: string //"e.g 0.02 for 0.02%"
+  ) {
     this.checkWallet();
     const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
     const sell_msg = new MsgExecuteContract(
@@ -58,7 +71,11 @@ export default class LBP extends Contract {
         send: {
           contract: this.pair_address,
           amount: uhalo_amount,
-          msg: btoa(JSON.stringify({ swap: {} })),
+          msg: btoa(
+            JSON.stringify({
+              swap: { belief_price, max_spread },
+            })
+          ),
         },
       },
       [new Coin(denoms.uusd, uhalo_amount)]
@@ -67,7 +84,11 @@ export default class LBP extends Contract {
     return { msgs: [sell_msg], fee };
   }
 
-  async createBuyTx(ust_amount: number) {
+  async createBuyTx(
+    ust_amount: number,
+    belief_price: string, //"e.g '0.05413'"
+    max_spread: string //"e.g 0.02 for 0.02%"
+  ) {
     this.checkWallet();
     const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
     const buy_msg = new MsgExecuteContract(
@@ -83,8 +104,8 @@ export default class LBP extends Contract {
             },
             amount: uust_amount,
           },
-          // max_spread: "0.1",
-          // belief_price: Option<Decimal>,
+          belief_price,
+          max_spread,
           // to: Option<HumanAddr>
         },
       },

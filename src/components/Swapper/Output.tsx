@@ -12,7 +12,7 @@ export default function Output() {
 
   return (
     <div className="grid mb-2">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <label
           htmlFor="amount"
           className="flex items-center justify-center text-angel-blue uppercase font-heading mb-2 rounded-md"
@@ -20,7 +20,7 @@ export default function Output() {
           <img className="w-6 h-6 mr-1 object-contain" src={icon} />
           <span className="block font-bold">{is_buy ? "HALO" : "UST"}</span>
         </label>
-        <p className="text-angel-blue uppercase text-xs font-semibold font-heading">
+        <p className="text-angel-blue uppercase text-xs font-semibold font-heading mb-0.5">
           You will receive
         </p>
       </div>

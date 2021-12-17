@@ -12,8 +12,8 @@ export default function Balance() {
   const balance = is_buy ? ust_balance : halo_balance;
 
   return (
-    <p className="text-xs font-light font-heading flex items-center text-angel-grey">
-      <span className="mr-1 text-xs uppercase">balance</span>
+    <p className="ml-auto text-xs font-light font-heading flex items-baseline text-angel-grey">
+      <span className="mr-1 text-2xs font-semibold uppercase">balance</span>
       <span>
         {toCurrency(balance, 3, true)} {is_buy ? "UST" : "HALO"}
       </span>

@@ -10,6 +10,7 @@ export default function Swapper(props: { children: ReactNode }) {
     defaultValues: {
       amount: "",
       is_buy: true,
+      slippage: "1.0",
 
       //metadata
       return_amount: "0.00",

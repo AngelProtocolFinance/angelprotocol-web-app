@@ -15,14 +15,17 @@ import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import Swapper from "components/Swapper/Swapper";
-import useSpotPrice from "components/Swapper/useSpotPrice";
+import { getSpotPrice } from "components/Swapper/getSpotPrice";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
   const pairSimul = usePairSimul();
   const pool = usePool();
 
-  const ust_price = useSpotPrice(pairSimul, pool);
+  const ust_price = useMemo(
+    () => getSpotPrice(pairSimul, pool),
+    [pairSimul, pool]
+  );
 
   const duration_days = useMemo(() => {
     const duration_time =
