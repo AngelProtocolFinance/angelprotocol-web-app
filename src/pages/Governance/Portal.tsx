@@ -1,7 +1,7 @@
-import haloIcon from "assets/icons/currencies/halo_solid.png";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
+import { currency_icons, denoms } from "constants/currency";
 
 export default function Portal() {
   const { showModal } = useSetModal();
@@ -20,7 +20,7 @@ export default function Portal() {
         <div className="relative">
           <div className="absolute w-full h-full border-4 border-white border-opacity-80 rounded-full animate-pulse shadow-md"></div>
           <img
-            src={haloIcon}
+            src={currency_icons[denoms.uhalo]}
             alt=""
             className="w-14 h-14 m-2 opacity-90 shadow-lg rounded-full"
           />

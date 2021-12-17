@@ -10,13 +10,19 @@ import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
-import { usePairInfo, usePairSimul } from "services/terra/hooks";
+import { usePairInfo, usePairSimul, usePool } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import SwapSuite from "components/TransactionSuite/SwapSuite";
+import Swapper from "components/Swapper/Swapper";
+import useSpotPrice from "components/Swapper/useSpotPrice";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
   const pairSimul = usePairSimul();
+  const pool = usePool();
+
+  const ust_price = useSpotPrice(pairSimul, pool);
 
   const duration_days = useMemo(() => {
     const duration_time =
@@ -25,13 +31,6 @@ function AuctionStats() {
 
     return duration_time / 1000 / 3600 / 24;
   }, [pairInfo]);
-
-  const ust_price = useMemo(() => {
-    const uhalo_amount = new Dec(pairSimul.return_amount);
-    //1_000_000 uusd was offered on useSimul call
-    const uusd_amount = new Dec(1e6);
-    return uusd_amount.div(uhalo_amount).toNumber();
-  }, [pairSimul]);
 
   return (
     <div className="w-full flex flex-wrap gap-5 mt-3">
@@ -65,7 +64,7 @@ export default function Auction() {
       <DappHead />
       <div className="content-section">
         <div className="auction-section">
-          <div className="auction-data-section">
+          {/* <div className="auction-data-section">
             <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
@@ -77,9 +76,12 @@ export default function Auction() {
             </div>
             <AuctionStats />
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
-          </div>
-          <div className="hidden xl:w-2/5 xl:flex rounded items-center p-10">
-            <Swap /> {/* hide and display as a modal on smaller screen sizes */}
+          </div> */}
+          <div className="xl:w-2/5 xl:flex rounded items-center p-10">
+            {/* hide and display as a modal on smaller screen sizes */}
+            <Swapper>
+              <SwapSuite />
+            </Swapper>
           </div>
         </div>
         <Tabs color="angel-blue" />

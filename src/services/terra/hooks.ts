@@ -9,10 +9,11 @@ import {
   gov_config,
   gov_state,
   halo_info,
-  pairInfo,
-  poll,
-  simulation,
   staker,
+  poll,
+  pairInfo,
+  simulation,
+  pool_balance,
 } from "./placeholders";
 
 function useHaloContract() {
@@ -167,7 +168,7 @@ export function usePairInfo() {
     msg: {
       pair: {
         asset_infos: [
-          { token: { contract_addr: contract.token_address } },
+          { token: { contract_addr: contract.lp_address } },
           { native_token: { denom: "uusd" } },
         ],
       },
@@ -178,9 +179,6 @@ export function usePairInfo() {
 }
 
 export function usePairSimul() {
-  //is_buy: true // your are buying HALO
-  //is_buy: false // you are selling HALO
-
   const { usePairSimulQuery } = terra;
   const { contract } = useLBPContract();
 
@@ -195,14 +193,26 @@ export function usePairSimul() {
                 denom: "uusd",
               },
             },
-            amount: (1e6).toString(),
+            //this query is only concerned with weights and not return value
+            amount: "0",
           },
           block_time: Math.round(new Date().getTime() / 1000 + 10),
         },
       },
     },
-    { pollingInterval: 3000 }
+    { pollingInterval: 6000 }
   );
+
+  return data;
+}
+
+export function usePool() {
+  const { usePoolQuery } = terra;
+  const { contract } = useLBPContract();
+  const { data = pool_balance } = usePoolQuery({
+    address: contract.pair_address,
+    msg: { pool: {} },
+  });
 
   return data;
 }

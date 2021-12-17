@@ -25,7 +25,7 @@ export default function Holdings(props: Props) {
               {currency_text[_denom] || currency_text.coin}
             </span>
             <span className="ml-auto text-angel-grey">
-              {toCurrency(Number(amount), 3)}
+              {toCurrency(Number(amount), 3, true)}
             </span>
           </li>
         );

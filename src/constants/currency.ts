@@ -8,6 +8,7 @@ import ether from "assets/icons/currencies/ether.png";
 import btc from "assets/icons/currencies/btc.png";
 import sol from "assets/icons/currencies/sol.svg";
 import atom from "assets/icons/currencies/atom.png";
+import halo from "assets/icons/currencies/halo_solid.png";
 
 export enum denoms {
   uluna = "uluna",
@@ -99,7 +100,7 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.btc]: btc,
   [denoms.sol]: sol,
   [denoms.uatom]: atom,
-  [denoms.uhalo]: token,
+  [denoms.uhalo]: halo,
 };
 
 export const UST: string = "UST";

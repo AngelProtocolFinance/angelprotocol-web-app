@@ -16,11 +16,13 @@ import {
   PairInfo,
   Poll,
   Polls,
+  Pool,
+  PoolBalance,
   QueryRes,
   Simulation,
   TokenInfo,
 } from "./types";
-import { gov, halo, tags, user } from "./tags";
+import { gov, halo, lbp, tags, user } from "./tags";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
@@ -29,7 +31,7 @@ const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
   //disable retries
   //get state from api.getState
   const is_mainnet = false;
-  const base_url = is_mainnet ? urls[chains.mainnet] : urls[chains.testnet];
+  const base_url = is_mainnet ? urls[chains.mainnet] : urls[chains.localterra];
   return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
     args,
     api,
@@ -40,7 +42,7 @@ const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo],
+  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
@@ -114,6 +116,17 @@ export const terra = createApi({
       },
     }),
     //lbp_pair
+    pool: builder.query<PoolBalance, ContractQueryArgs>({
+      providesTags: [{ type: tags.lbp, id: lbp.pool }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Pool>) => {
+        const pool = res.query_result;
+        return {
+          token: pool.assets[0].amount,
+          native_token: pool.assets[1].amount,
+        };
+      },
+    }),
     pairInfo: builder.query<PairInfo, ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<PairInfo>) => {

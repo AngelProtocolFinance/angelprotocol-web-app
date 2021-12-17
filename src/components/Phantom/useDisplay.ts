@@ -15,7 +15,7 @@ export default function useDisplay() {
     hideDetails,
     chainId: chains.sol_dev,
     maskedAddr,
-    balance: toCurrency(balance / 1e9, 3),
+    balance: toCurrency(balance / 1e9, 3, true),
     detailsShown,
   };
 }

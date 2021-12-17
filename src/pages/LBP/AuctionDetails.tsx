@@ -1,8 +1,10 @@
+import { Dec } from "@terra-money/terra.js";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
+import toCurrency from "helpers/toCurrency";
 import useTooltip from "hooks/useTooltip";
 import { IoMdInformationCircleOutline } from "react-icons/io";
-import { usePairInfo } from "services/terra/hooks";
+import { usePairInfo, usePool } from "services/terra/hooks";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -25,8 +27,10 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 
 export default function AuctionDetails() {
   const pairInfo = usePairInfo();
+  const pool = usePool();
   const startDate = new Date(pairInfo.start_time * 1000);
   const endDate = new Date(pairInfo.end_time * 1000);
+  const remaining_halo = new Dec(pool.token).div(1e6).toNumber();
   const is_active = endDate.getTime() > new Date().getTime();
 
   return (
@@ -52,8 +56,11 @@ export default function AuctionDetails() {
           HaloSwap Statistics
         </h1>
         <div className="w-full flex flex-wrap gap-5 mt-3">
-          <Details title="Starting HALO" value="80000000.00000" />
-          <Details title="Remaining HALO" value="1245851671.60214" />
+          {/* <Details title="Starting HALO" value="80000000.00000" /> */}
+          <Details
+            title="Remaining HALO"
+            value={toCurrency(remaining_halo, 2)}
+          />
         </div>
       </div>
       <div className="contract-details w-128 p-5">
