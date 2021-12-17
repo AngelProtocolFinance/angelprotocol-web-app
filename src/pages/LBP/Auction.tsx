@@ -96,6 +96,9 @@ export default function Auction() {
             />
           </div>
           <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
+            <p className="uppercase font-heading font-bold text-xl self-left mb-2">
+              buy halo
+            </p>
             <Swapper>
               <SwapSuite />
             </Swapper>
