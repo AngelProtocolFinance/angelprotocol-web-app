@@ -2,7 +2,7 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
@@ -14,6 +14,8 @@ import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import Swapper from "components/Swapper/Swapper";
 import { getSpotPrice } from "components/Swapper/getSpotPrice";
+import displayTerraError from "helpers/displayTerraError";
+import { LBPGraphDataUnavailable } from "contracts/Errors";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
@@ -57,15 +59,27 @@ function AuctionStats() {
 
 export default function Auction() {
   const { showModal } = useSetModal();
-  const { isLoading, lbpPairData } = useGetLBPPairData();
+
+  const { isLoading, lbpPairData, error } = useGetLBPPairData();
+
+  // This could be extracted into a separate hook to be used accross the application.
+  // An alternative would be using Error Boundaries
+  //
+  // https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
+  useEffect(() => {
+    if (!isLoading && error) {
+      displayTerraError(new LBPGraphDataUnavailable(error), showModal);
+    }
+    //eslint-disable-next-line
+  }, [isLoading, error]);
 
   return (
     <div className="grid grid-rows-a1 place-items-start pt-2">
       <DappHead />
       <div className="content-section">
+        <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
           <div className="auction-data-section">
-            <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
@@ -75,7 +89,11 @@ export default function Auction() {
               </button>
             </div>
             <AuctionStats />
-            <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
+            <PriceGraph
+              error={error}
+              isLoading={isLoading}
+              lbpPairData={lbpPairData}
+            />
           </div>
           <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
             <Swapper>

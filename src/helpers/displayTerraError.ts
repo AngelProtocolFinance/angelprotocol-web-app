@@ -6,7 +6,11 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { Opener } from "components/Nodal/types";
-import { Disconnected, TxResultFail } from "contracts/Errors";
+import {
+  Disconnected,
+  LBPGraphDataUnavailable,
+  TxResultFail,
+} from "contracts/Errors";
 import ErrPop, { Props as ErrProp } from "components/Popup/ErrPop";
 
 export default function displayTerraError(error: any, prompter: Opener) {
@@ -27,6 +31,10 @@ export default function displayTerraError(error: any, prompter: Opener) {
     prompter<ErrProp>(ErrPop, { desc: "Transaction timeout" });
   } else if (error instanceof TxUnspecifiedError) {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
+  } else if (error instanceof LBPGraphDataUnavailable) {
+    prompter<ErrProp>(ErrPop, {
+      desc: "HaloSwap price data is currently unavailable.",
+    });
   } else {
     prompter<ErrProp>(ErrPop, { desc: "Uknown error occured" });
   }

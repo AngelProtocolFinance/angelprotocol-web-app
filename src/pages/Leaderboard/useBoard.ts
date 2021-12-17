@@ -34,10 +34,12 @@ export default function useBoard() {
         setLoading(true);
         const registrar = new Registrar(wallet);
         const _endowments = await registrar.getEndowmentList();
-        const queries = _endowments.map((endowment: any) => {
-          const account = new Account(endowment.address, wallet);
-          return account.getBalance();
-        });
+        const queries = _endowments
+          .filter((endowment) => endowment.status === "Approved")
+          .map((endowment: any) => {
+            const account = new Account(endowment.address, wallet);
+            return account.getBalance();
+          });
 
         const results = await Promise.allSettled(queries);
         const _sums: any = {};

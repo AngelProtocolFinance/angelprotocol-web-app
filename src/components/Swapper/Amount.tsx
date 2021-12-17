@@ -30,6 +30,7 @@ export default function Amount() {
           <img
             className="w-6 h-6 mr-1 object-contain"
             src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
+            alt=""
           />
           <span className="block font-bold">{is_buy ? "UST" : "HALO"}</span>
         </label>

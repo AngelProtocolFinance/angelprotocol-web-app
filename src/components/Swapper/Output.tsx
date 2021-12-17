@@ -17,7 +17,7 @@ export default function Output() {
           htmlFor="amount"
           className="flex items-center justify-center text-angel-blue uppercase font-heading mb-2 rounded-md"
         >
-          <img className="w-6 h-6 mr-1 object-contain" src={icon} />
+          <img className="w-6 h-6 mr-1 object-contain" src={icon} alt="" />
           <span className="block font-bold">{is_buy ? "HALO" : "UST"}</span>
         </label>
         <p className="text-angel-blue uppercase text-xs font-semibold font-heading mb-0.5">

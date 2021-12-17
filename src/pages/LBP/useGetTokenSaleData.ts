@@ -11,37 +11,39 @@ export interface PriceData {
 }
 
 export interface LBPPairData {
-  tokenName: string;
   auctionStartDateTime: number;
   auctionEndDateTime: number;
   historicPriceData: PriceData[];
   predictedPriceData: PriceData[];
 }
 
-// TODO: If the prediction price line is necessary, this should be read from the DB
-const DAY_IN_MILISECONDS = 24 * 36e5;
-
 export function useGetLBPPairData() {
-  const { data, isLoading, isFetching } = useGetLBPPairDataQuery(null);
-
+  const [isPollingActive, setPollingActive] = useState(true);
   const [error, setError] = useState("");
   const [lbpPairData, setLBPPairData] = useState({
-    tokenName: "HALO",
     historicPriceData: [],
     predictedPriceData: [],
-    auctionStartDateTime: Date.now() - DAY_IN_MILISECONDS,
-    auctionEndDateTime: Date.now() + DAY_IN_MILISECONDS,
+    auctionStartDateTime: 0,
+    auctionEndDateTime: 0,
   } as LBPPairData);
 
+  const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(
+    null,
+    { pollingInterval: 36e5, skip: !isPollingActive }
+  );
+
   useEffect(() => {
-    if (!data) {
+    if (isError || (data && data.error)) {
+      setError(
+        `Failed to get LBP pair data.${
+          data?.error && ` Error message: ${data.error.message}`
+        }`
+      );
+      setPollingActive(false);
       return;
     }
 
-    if (data.error) {
-      setError(
-        `Failed to get LBP pair data. Error message: ${data.error.message}`
-      );
+    if (!data) {
       return;
     }
 
@@ -49,14 +51,13 @@ export function useGetLBPPairData() {
     const predictedPriceData = getPredictedPriceData(data);
 
     const newLBPPairData = {
-      tokenName: "HALO",
       auctionStartDateTime: data.lbp_start_time * 1000,
       auctionEndDateTime: data.lbp_end_time * 1000,
       historicPriceData,
       predictedPriceData,
     };
     setLBPPairData(newLBPPairData);
-  }, [data]);
+  }, [data, isError]);
 
   return {
     error: !isLoading && error,

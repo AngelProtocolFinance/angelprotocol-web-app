@@ -1,4 +1,3 @@
-import { ReactText } from "react";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 
