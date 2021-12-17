@@ -29,7 +29,7 @@ export function useGetLBPPairData() {
 
   const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(
     null,
-    { pollingInterval: 2000, skip: !isPollingActive }
+    { pollingInterval: 36e5, skip: !isPollingActive }
   );
 
   useEffect(() => {
