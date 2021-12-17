@@ -1,4 +1,5 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { Endowments, sc, SplitRes } from "./types";
@@ -21,5 +22,24 @@ export default class Registrar extends Contract {
       endowment_list: {},
     });
     return result.endowments;
+  }
+  async getEndowmentDetails(address: string) {
+    const result = await this.query<Endowments>(this.address, {
+      endowment: { address: address },
+    });
+    return result.endowments;
+  }
+
+  async createUpdateEndowmentTx(status: number, endowment_addr: string) {
+    this.checkWallet();
+    const msg = new MsgExecuteContract(this.walletAddr!, this.address, {
+      update_endowment_status: {
+        endowment_addr,
+        status,
+        beneficiary: this.walletAddr,
+      },
+    });
+    const fee = await this.estimateFee([msg]);
+    return { msgs: [msg], fee };
   }
 }

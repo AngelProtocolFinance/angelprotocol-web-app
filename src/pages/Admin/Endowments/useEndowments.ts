@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { aws_endpoint } from "constants/urls";
+import { useRegistrarContract } from "services/terra/hooks";
 
-type Endowment = {
+export type Endowment = {
   address: string;
   description: string;
   icon: string;
   name: string;
   owner: string;
   url: string;
+  status: string;
 };
 
 type EndowmentsResult = {
@@ -18,38 +20,54 @@ type EndowmentsResult = {
 };
 
 export default function useEndowments() {
+  console.log("new hook");
   // const { saveToken } = useSetToken();
   const [loading, setLoading] = useState(false);
   const [endowments, setEndowments] = useState<EndowmentsResult>();
+  const { contract: registrar } = useRegistrarContract();
+  const [endowmentDetails, setEndowmentsDetails] =
+    useState<Record<string, Endowment>>();
 
   useEffect(() => {
-    console.log("load: ", loading, endowments);
-    if (loading || (!loading && endowments)) return;
+    if (loading) return;
     fetchEndowments();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function fetchEndowments() {
-    console.log("called: ", loading, endowments);
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await fetch(`${aws_endpoint}/endowments`);
+      const approvals = await registrar.getEndowmentList();
+
       if (response.status === 200) {
         const data: EndowmentsResult = await response.json();
+        const detailsMap: Record<string, any> = {};
+
+        data.Items.forEach(
+          (endowment) => (detailsMap[endowment.address] = endowment)
+        );
+        approvals.forEach((data) => {
+          detailsMap[data.address] = {
+            ...detailsMap[data.address],
+            status: data.status,
+          };
+        });
+
+        setEndowmentsDetails(detailsMap);
         setEndowments(data);
-        return data;
+        setLoading(false);
       } else if (response.status === 403) {
         toast.error("Unauthorized");
-        return null;
       } else {
         toast.error("Something went wrong");
       }
     } catch (error) {
       toast.error("Something went wrong");
-      return null;
     } finally {
       setLoading(false);
     }
   }
 
-  return { endowments, loading };
+  return { endowmentDetails, endowments, loading };
 }
