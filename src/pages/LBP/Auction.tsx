@@ -67,7 +67,7 @@ export default function Auction() {
       <DappHead />
       <div className="content-section">
         <div className="auction-section">
-          {/* <div className="auction-data-section">
+          <div className="auction-data-section">
             <h1 className="text-4xl font-bold font-heading">HaloSwap</h1>
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
@@ -79,9 +79,8 @@ export default function Auction() {
             </div>
             <AuctionStats />
             <PriceGraph isLoading={isLoading} lbpPairData={lbpPairData} />
-          </div> */}
-          <div className="xl:w-2/5 xl:flex rounded items-center p-10">
-            {/* hide and display as a modal on smaller screen sizes */}
+          </div>
+          <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
             <Swapper>
               <SwapSuite />
             </Swapper>
