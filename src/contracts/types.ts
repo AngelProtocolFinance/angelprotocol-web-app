@@ -25,6 +25,10 @@ export enum sc {
   halo_stake = "halo_stake",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",
+  lbp_token = "lbp_token",
+  lbp_pair = "lbp_pair",
+  lbp_router = "lbp_router",
+  lbp_lp = "lbp_lp",
 }
 
 export type URLs = {

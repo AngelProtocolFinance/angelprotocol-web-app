@@ -1,22 +1,29 @@
 import Loader from "components/Loader/Loader";
+import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
+import React from "react";
 import {
-  Legend,
+  Area,
+  CartesianGrid,
+  ComposedChart,
   Line,
-  LineChart,
-  ReferenceDot,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import { getGraphData } from "./getGraphData";
-import { LegendLabel } from "./LegendLabel";
-import useGetTokenSaleData from "./useGetTokenSaleData";
+import { getErrorGraphData, getGraphData } from "./getGraphData";
+import "./priceGraph.css";
+
+type Props = {
+  error: string | false;
+  isLoading: boolean;
+  lbpPairData: LBPPairData;
+};
 
 const tickDateFormatter = (dateInMiliseconds: number) =>
-  new Date(dateInMiliseconds).toLocaleDateString(undefined, {
-    day: "numeric",
-    month: "short",
+  new Date(dateInMiliseconds).toLocaleString("en-us", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
   });
 
 const tickPriceFormatter = (value: number) =>
@@ -26,89 +33,72 @@ const tickPriceFormatter = (value: number) =>
     maximumFractionDigits: 2,
   }).format(value);
 
-const legendFormatter = (value: string, _: any, index: number) => {
-  return (
-    <LegendLabel>
-      {value}
-      {!!index && (
-        <span className="text-gray-500 text-sm ml-1">(without new buyers)</span>
-      )}
-    </LegendLabel>
-  );
-};
-
-export default function PriceGraph() {
-  const { isLoading, predictedPriceData, tokenSaleData } =
-    useGetTokenSaleData();
-  const graphData = getGraphData(tokenSaleData, predictedPriceData);
+export default function PriceGraph({ isLoading, lbpPairData, error }: Props) {
+  const graphData = !error ? getGraphData(lbpPairData) : getErrorGraphData();
 
   return (
     <>
       {isLoading && (
-        <Loader
-          gapClass="gap-4"
-          widthClass="w-4"
-          bgColorClass="bg-angel-grey"
-        />
+        <Loader gapClass="gap-4" widthClass="w-4" bgColorClass="bg-white" />
       )}
       {!isLoading && (
-        <ResponsiveContainer
-          width="90%"
-          aspect={2}
-          className="flex justify-center content-center m-5"
-        >
-          <LineChart
-            width={500}
-            height={400}
-            margin={{ top: 50, left: 70 }}
-            data={graphData.priceData}
-            className="bg-white rounded-md pb-2"
-          >
-            <Tooltip />
-            <XAxis
-              tickLine={false}
-              tickFormatter={tickDateFormatter}
-              dataKey="date"
-              allowDuplicatedCategory={false}
-              type="number"
-              ticks={graphData.dateTicks}
-              domain={graphData.dateAxisDomain}
-              dy={15}
-              height={60}
-            />
-            <YAxis
-              axisLine={false}
-              type="number"
-              ticks={graphData.priceTicks}
-              domain={graphData.priceAxisDomain}
-              dx={-15}
-              tickFormatter={tickPriceFormatter}
-            />
-            <Line
-              type="monotone"
-              strokeWidth={3}
-              dataKey="historicPrice"
-              stroke="#901ef2"
-              name={`${graphData.tokenName} price`}
-              dot={false}
-              isAnimationActive={false}
-            />
-            <Line
-              type="monotone"
-              dataKey="predictedPrice"
-              stroke="#ffa6f7"
-              dot={false}
-              name={`${graphData.tokenName} predicted price`}
-              isAnimationActive={false}
-            />
-            <ReferenceDot
-              r={4}
-              {...graphData.referenceDotCoordinates}
-              stroke="#901ef2"
-            />
-            <Legend iconType="circle" formatter={legendFormatter} />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="graph-container">
+          <ResponsiveContainer>
+            <ComposedChart data={graphData.priceData}>
+              <svg>
+                <defs>
+                  <linearGradient
+                    id="fillGradient"
+                    x1="0%"
+                    x2="0%"
+                    y1="0%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopOpacity="1" className="from-color" />
+                    <stop offset="30%" stopOpacity="0" className="to-color" />
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <CartesianGrid strokeDasharray="3" />
+              <XAxis
+                tickLine={false}
+                axisLine={false}
+                tickFormatter={tickDateFormatter}
+                dataKey="timestamp"
+                type="number"
+                ticks={graphData.dateAxisData.ticks}
+                domain={graphData.dateAxisData.axisDomain}
+                tick={{ fill: "white" }}
+                interval={0}
+              />
+              <YAxis
+                tickLine={false}
+                axisLine={false}
+                type="number"
+                ticks={graphData.priceAxisData.ticks}
+                domain={graphData.priceAxisData.axisDomain}
+                tickFormatter={tickPriceFormatter}
+                tick={{ fill: "white" }}
+              />
+              <Area
+                dataKey="historicPrice"
+                fill="url(#fillGradient)"
+                isAnimationActive={false}
+              />
+              {!error && (
+                <Line
+                  type="monotone"
+                  strokeWidth={2}
+                  dataKey="historicPrice"
+                  stroke="#faac2e"
+                  dot={false}
+                  isAnimationActive={false}
+                />
+              )}
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
       )}
     </>
   );

@@ -43,7 +43,7 @@ export default function Swap() {
   }, [isLoading, result.pairs.length]);
 
   return (
-    <div className="w-128 p-10 min-h-3/4">
+    <div className="w-128 min-h-3/4">
       <SwapHeader />
       <SwapForm
         loading={isLoading}
