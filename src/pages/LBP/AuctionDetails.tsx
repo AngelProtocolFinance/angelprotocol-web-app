@@ -97,39 +97,6 @@ export default function AuctionDetails() {
   );
 }
 
-// const InfoCard = ({
-//   content,
-//   Icon = IoMdInformationCircleOutline,
-// }: {
-//   content: string;
-//   Icon?: any;
-// }) => {
-//   const { enter, exit, Tooltip } = useTooltip(InfoPopup);
-
-//   function InfoPopup() {
-//     return (
-//       <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
-//         <p className="text-sm font-light text-black">{content}</p>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div
-//       className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
-//       style={{ width: "180px" }}
-//     >
-//       <span className="font-light text-sm">{content}</span>
-//       <Icon
-//         className="cursor-pointer"
-//         onMouseEnter={enter}
-//         onMouseLeave={exit}
-//       />
-//       <Tooltip />
-//     </div>
-//   );
-// };
-
 const Details = ({ title, value, Icon }: LaunchStatsProps) => {
   return (
     <div className="stats-item">
