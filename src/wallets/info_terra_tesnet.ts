@@ -1,6 +1,6 @@
 import { ChainInfo } from "@keplr-wallet/types";
 import { chains } from "contracts/types";
-import { bombay_rest } from "constants/urls";
+import { bombay_rest, bombay_rpc } from "constants/urls";
 import { currency_text, denoms } from "constants/currency";
 import { coin_types } from "./coin_types";
 import { coingecko_ids } from "./coingecko_ids";
@@ -21,7 +21,7 @@ const uusd_info = {
 export const info_terra_testnet: ChainInfo = {
   chainId: chains.testnet,
   chainName: "Terra (USD)",
-  rpc: bombay_rest,
+  rpc: bombay_rpc,
   rest: bombay_rest,
   stakeCurrency: luna_info,
   bip44: {
