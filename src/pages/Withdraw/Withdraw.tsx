@@ -86,7 +86,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
                     className="uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-56 h-12 text-sm font-bold"
                     onClick={openWithdrawForm}
                   >
-                    Withdraw
+                    Withdraw from Accounts
                   </button>
                 ) : null}
               </div>
