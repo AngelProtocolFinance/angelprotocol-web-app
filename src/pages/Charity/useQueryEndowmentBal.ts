@@ -3,12 +3,11 @@ import { LCDClient } from "@terra-money/terra.js";
 import { Holdings, Swap } from "contracts/types";
 
 function useQueryEndowmentBal(address: string) {
-  let pool = 1;
   const [locked, setLocked] = useState<number>();
   const [liquid, setLiquid] = useState<number>();
   const [overall, setOverall] = useState<number>();
 
-  const getPoolData = async () => {
+  const getOnChainData = async () => {
     const terra = new LCDClient({
       URL: "https://lcd.terra.dev",
       chainID: "columbus-5",
@@ -36,14 +35,13 @@ function useQueryEndowmentBal(address: string) {
 
   useEffect(() => {
     try {
-      getPoolData();
+      getOnChainData();
     } catch (err) {
       console.error(err);
     }
   }, [address]);
 
   return {
-    pool,
     locked,
     liquid,
     overall,
