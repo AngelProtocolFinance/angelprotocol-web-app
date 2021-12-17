@@ -4,8 +4,12 @@ export const apes_endpoint =
   "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com";
 export const cosmoshub_test_rpc = "https://rpc.testnet.cosmos.network:443";
 export const cosmoshub_test_rest = "https://api.testnet.cosmos.network:443";
-export const bombay_rest = "https://bombay-lcd.terra.dev";
-export const bombay_rpc = "";
+// API key copied from src/wallets/info_terra_mainnet.ts > terra_mainnet_rpc variable
+export const bombay_rest =
+  "https://bombay-12--lcd--full.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
+// API key copied from src/wallets/info_terra_mainnet.ts > terra_mainnet_rpc variable
+export const bombay_rpc =
+  "https://bombay-12--rcp--full.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
 //https://docs.tendermint.com/master/rpc/
 export const cosmos_4_rpc =
   "https://cosmoshub-4--rpc--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67";
