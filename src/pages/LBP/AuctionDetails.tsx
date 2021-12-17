@@ -1,7 +1,5 @@
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
-import useTooltip from "hooks/useTooltip";
-import { IoMdInformationCircleOutline } from "react-icons/io";
 import { usePairInfo } from "services/terra/hooks";
 import { LaunchStatsProps } from ".";
 
@@ -17,7 +15,11 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
       href={url}
       className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
     >
-      <img className="inline mr-2 w-5 text-angel-blue" src={PreIcon} />
+      <img
+        className="inline mr-2 w-5 text-angel-blue"
+        alt="link icon"
+        src={PreIcon}
+      />
       <span className="text-sm text-angel-grey font-light">{content}</span>
     </a>
   );
@@ -30,7 +32,7 @@ export default function AuctionDetails() {
   const is_active = endDate.getTime() > new Date().getTime();
 
   return (
-    <div className="flex flex-wrap justify-between items-start">
+    <div className="flex flex-wrap justify-between items-start font-heading">
       <div className="auction-details flex-grow">
         <div className="launch-description">
           <h1 className="text-md font-semibold text-white-grey mb-5">
@@ -61,7 +63,7 @@ export default function AuctionDetails() {
           HALO Token Contract Address
         </p>
         <div className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4">
-          <span className="text-sm text-angel-grey font-light pr-1">
+          <span className="text-xs text-angel-grey font-light pr-1">
             {"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"}
           </span>
           <Copier
@@ -95,38 +97,38 @@ export default function AuctionDetails() {
   );
 }
 
-const InfoCard = ({
-  content,
-  Icon = IoMdInformationCircleOutline,
-}: {
-  content: string;
-  Icon?: any;
-}) => {
-  const { enter, exit, Tooltip } = useTooltip(InfoPopup);
+// const InfoCard = ({
+//   content,
+//   Icon = IoMdInformationCircleOutline,
+// }: {
+//   content: string;
+//   Icon?: any;
+// }) => {
+//   const { enter, exit, Tooltip } = useTooltip(InfoPopup);
 
-  function InfoPopup() {
-    return (
-      <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
-        <p className="text-sm font-light text-black">{content}</p>
-      </div>
-    );
-  }
+//   function InfoPopup() {
+//     return (
+//       <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
+//         <p className="text-sm font-light text-black">{content}</p>
+//       </div>
+//     );
+//   }
 
-  return (
-    <div
-      className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
-      style={{ width: "180px" }}
-    >
-      <span className="font-light text-sm">{content}</span>
-      <Icon
-        className="cursor-pointer"
-        onMouseEnter={enter}
-        onMouseLeave={exit}
-      />
-      <Tooltip />
-    </div>
-  );
-};
+//   return (
+//     <div
+//       className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
+//       style={{ width: "180px" }}
+//     >
+//       <span className="font-light text-sm">{content}</span>
+//       <Icon
+//         className="cursor-pointer"
+//         onMouseEnter={enter}
+//         onMouseLeave={exit}
+//       />
+//       <Tooltip />
+//     </div>
+//   );
+// };
 
 const Details = ({ title, value, Icon }: LaunchStatsProps) => {
   return (
