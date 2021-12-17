@@ -18,8 +18,7 @@ export interface LBPPairData {
 }
 
 export function useGetLBPPairData() {
-  const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(null);
-
+  const [isPollingActive, setPollingActive] = useState(true);
   const [error, setError] = useState("");
   const [lbpPairData, setLBPPairData] = useState({
     historicPriceData: [],
@@ -28,6 +27,11 @@ export function useGetLBPPairData() {
     auctionEndDateTime: 0,
   } as LBPPairData);
 
+  const { data, isLoading, isFetching, isError } = useGetLBPPairDataQuery(
+    null,
+    { pollingInterval: 36e5, skip: !isPollingActive }
+  );
+
   useEffect(() => {
     if (isError || (data && data.error)) {
       setError(
@@ -35,6 +39,7 @@ export function useGetLBPPairData() {
           data?.error && ` Error message: ${data.error.message}`
         }`
       );
+      setPollingActive(false);
       return;
     }
 
