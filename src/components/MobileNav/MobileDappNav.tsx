@@ -9,7 +9,7 @@ export default function MobileDappNav() {
   };
   return (
     <nav
-      className={`sm:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-body text-base gap-1 pt-2`}
+      className={`lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-body text-base gap-1 pt-2`}
     >
       <a
         rel="noreferrer"
@@ -19,15 +19,12 @@ export default function MobileDappNav() {
       >
         About us
       </a>
-
       <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
         Donate now
       </NavLink>
-
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>
-
       <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
       </NavLink>
