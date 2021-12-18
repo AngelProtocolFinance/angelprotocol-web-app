@@ -6,7 +6,6 @@ import {
   PairInfo,
   Poll,
   PollStatus,
-  Pool,
   PoolBalance,
   Simulation,
 } from "./types";

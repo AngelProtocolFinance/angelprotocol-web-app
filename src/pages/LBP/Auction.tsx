@@ -2,63 +2,23 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
-import { usePairInfo, usePairSimul, usePool } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import Swapper from "components/Swapper/Swapper";
-import { getSpotPrice } from "components/Swapper/getSpotPrice";
 import displayTerraError from "helpers/displayTerraError";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
-
-function AuctionStats() {
-  const pairInfo = usePairInfo();
-  const pairSimul = usePairSimul();
-  const pool = usePool();
-
-  const ust_price = useMemo(
-    () => getSpotPrice(pairSimul, pool),
-    [pairSimul, pool]
-  );
-
-  const duration_days = useMemo(() => {
-    const duration_time =
-      new Date(pairInfo.end_time * 1000).getTime() -
-      new Date(pairInfo.start_time * 1000).getTime();
-
-    return duration_time / 1000 / 3600 / 24;
-  }, [pairInfo]);
-
-  return (
-    <div className="w-full flex flex-wrap gap-5 mt-3">
-      <StatsDetails
-        title="Duration"
-        value={`${duration_days} days`}
-        Icon={FaClock}
-      />
-      <StatsDetails
-        title="Ends in"
-        value={
-          <CountdownTimer
-            deadline={pairInfo.end_time * 1000}
-            start={pairInfo.start_time * 1000}
-          />
-        }
-        Icon={FaStopwatch}
-      />
-      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
-    </div>
-  );
-}
-
+import useAuctionStats from "./useAuctionStats";
+import useSaleStatus from "components/Swapper/useSaleStatus";
 export default function Auction() {
   const { showModal } = useSetModal();
 
+  const { is_live, message } = useSaleStatus();
   const { isLoading, lbpPairData, error } = useGetLBPPairData();
 
   // This could be extracted into a separate hook to be used accross the application.
@@ -79,13 +39,15 @@ export default function Auction() {
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
           <div className="auction-data-section font-heading">
-            <div className="flex items-center justify-center xl:hidden w-115 my-3">
+            <div className="flex items-baseline justify-start xl:hidden my-3">
               <button
+                disabled={!is_live}
                 onClick={() => showModal(SwapModal, {})}
-                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold text-white shadow-sm focus:outline-none"
+                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center px-6 h-12 rounded-3xl tracking-widest uppercase text-md font-bold text-white shadow-sm focus:outline-none mr-2"
               >
                 Buy Halo
               </button>
+              {message && <p>{message}</p>}
             </div>
             <AuctionStats />
             <PriceGraph
@@ -105,6 +67,28 @@ export default function Auction() {
         </div>
         <Tabs color="angel-blue" />
       </div>
+    </div>
+  );
+}
+
+function AuctionStats() {
+  const { duration_days, end, start, ust_price } = useAuctionStats();
+
+  return (
+    <div className="w-full flex flex-wrap gap-5 mt-3">
+      {duration_days !== -1 && duration_days !== 0 && (
+        <StatsDetails
+          title="Duration"
+          value={`${duration_days} days`}
+          Icon={FaClock}
+        />
+      )}
+      <StatsDetails
+        title="Ends in"
+        value={<CountdownTimer deadline={end * 1000} start={start * 1000} />}
+        Icon={FaStopwatch}
+      />
+      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
     </div>
   );
 }

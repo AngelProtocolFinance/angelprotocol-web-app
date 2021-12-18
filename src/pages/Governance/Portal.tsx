@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
@@ -7,6 +8,7 @@ import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
+  const history = useHistory();
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -17,7 +19,7 @@ export default function Portal() {
   }
 
   function goToLbpPage() {
-    return (window.location.href = `${site.app}/${app.auction}`);
+    history.push(`${site.app}/${app.auction}`);
   }
 
   return (

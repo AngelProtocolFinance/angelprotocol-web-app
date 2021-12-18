@@ -28,16 +28,15 @@ import { RootState } from "store/store";
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
 //a way to segragate queries to testnet | mainnet
-const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
-  const chainID = (api.getState() as RootState).chain.terra;
-  const base_url = terra_lcds[chainID];
-  console.log("*****", base_url);
-  return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
-    args,
-    api,
-    extraOptions
-  );
-};
+
+const customBaseQuery: BaseQueryFn = retry(
+  async (args, api, extraOptions) => {
+    const chainID = (api.getState() as RootState).chain.terra;
+    const base_url = terra_lcds[chainID];
+    return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
+  },
+  { maxRetries: 1 }
+);
 
 export const terra = createApi({
   reducerPath: "terra",
@@ -141,6 +140,8 @@ export const terra = createApi({
     }),
   }),
 });
+
+export const { usePoolQuery, usePairSimulQuery, usePairInfoQuery } = terra;
 
 function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));

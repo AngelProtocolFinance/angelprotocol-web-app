@@ -9,7 +9,7 @@ import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
-import Admin from "Admin/Admin";
+// import Admin from "Admin/Admin";
 import Website from "Website/Website";
 
 ReactDOM.render(

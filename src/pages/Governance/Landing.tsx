@@ -5,8 +5,7 @@ import Portal from "./Portal";
 import useGov from "./useGov";
 
 export default function Landing() {
-  const { staked, percentStaked } = useGov();
-
+  const { staked, percentStaked, spot_price } = useGov();
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4">
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
@@ -15,8 +14,9 @@ export default function Landing() {
       <div className="flex flex-wrap lg:grid lg:grid-cols-a1 xl:grid-cols-2 xl:grid-rows-2 gap-3">
         <Figure
           title="halo price"
-          value={0}
+          value={spot_price}
           denom={currency_text[denoms.uusd]}
+          precision={6}
         />
         <Figure
           position="lg:row-start-2"

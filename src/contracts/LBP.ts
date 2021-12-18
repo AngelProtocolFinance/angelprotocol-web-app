@@ -2,7 +2,12 @@ import { Dec, MsgExecuteContract, Coin } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
-import { Pool, PoolBalance, Simulation } from "services/terra/types";
+import {
+  ContractQueryArgs,
+  Pool,
+  PoolBalance,
+  Simulation,
+} from "services/terra/types";
 import Contract from "./Contract";
 import { sc } from "./types";
 
@@ -20,6 +25,43 @@ export default class LBP extends Contract {
     this.router_adddress = contracts[this.chainID][sc.lbp_router];
     this.lp_address = contracts[this.chainID][sc.lbp_lp];
     this.halo_address = contracts[this.chainID][sc.halo_token];
+  }
+
+  gen_simul_args(): ContractQueryArgs {
+    return {
+      address: this.pair_address,
+      msg: {
+        simulation: {
+          offer_asset: {
+            info: {
+              native_token: {
+                denom: "uusd",
+              },
+            },
+            amount: "0",
+          },
+          block_time: Math.round(new Date().getTime() / 1000 + 10),
+        },
+      },
+    };
+  }
+
+  gen_pool_args(): ContractQueryArgs {
+    return { address: this.pair_address, msg: { pool: {} } };
+  }
+
+  gen_pairInfo_args() {
+    return {
+      address: this.pair_address,
+      msg: {
+        pair: {
+          asset_infos: [
+            { token: { contract_addr: this.lp_address } },
+            { native_token: { denom: "uusd" } },
+          ],
+        },
+      },
+    };
   }
 
   //simul on demand
@@ -77,8 +119,7 @@ export default class LBP extends Contract {
             })
           ),
         },
-      },
-      [new Coin(denoms.uusd, uhalo_amount)]
+      }
     );
     const fee = await this.estimateFee([sell_msg]);
     return { msgs: [sell_msg], fee };

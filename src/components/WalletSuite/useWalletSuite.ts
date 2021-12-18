@@ -68,5 +68,6 @@ export default function useWalletSuite() {
       dispatch(terra.util.resetApiState());
       terra_chain_ref.current = network.chainID;
     }
+    //eslint-disable-next-line
   }, [network]);
 }

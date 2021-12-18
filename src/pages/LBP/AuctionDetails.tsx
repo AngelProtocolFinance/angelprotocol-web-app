@@ -1,10 +1,13 @@
 import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
+import useSaleStatus from "components/Swapper/useSaleStatus";
+import LBP from "contracts/LBP";
 import toCurrency from "helpers/toCurrency";
-import useTooltip from "hooks/useTooltip";
-import { IoMdInformationCircleOutline } from "react-icons/io";
-import { usePairInfo, usePool } from "services/terra/hooks";
+import { useMemo } from "react";
+import { pool_balance } from "services/terra/placeholders";
+import { terra } from "services/terra/terra";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -19,6 +22,7 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
       href={url}
       className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
       target="_blank"
+      rel="noopenner noreferrer"
     >
       <img
         className="inline mr-2 w-5 text-angel-blue"
@@ -31,12 +35,14 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 }
 
 export default function AuctionDetails() {
-  const pairInfo = usePairInfo();
-  const pool = usePool();
-  const startDate = new Date(pairInfo.start_time * 1000);
-  const endDate = new Date(pairInfo.end_time * 1000);
+  const wallet = useConnectedWallet();
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+
+  const { is_live, end, start } = useSaleStatus();
+  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
+    lbp.gen_pool_args()
+  );
   const remaining_halo = new Dec(pool.token).div(1e6).toNumber();
-  const is_active = endDate.getTime() > new Date().getTime();
 
   return (
     <div className="flex flex-wrap justify-between items-start font-heading">
@@ -53,9 +59,15 @@ export default function AuctionDetails() {
           Launch Description
         </h1>
         <div className="w-full flex flex-wrap gap-5 mt-3">
-          <Details title="status" value={is_active ? "Active" : "Inactive"} />
-          <Details title="start date" value={startDate.toLocaleString()} />
-          <Details title="end date" value={endDate.toLocaleString()} />
+          <Details title="status" value={is_live ? "Active" : "Inactive"} />
+          <Details
+            title="start date"
+            value={new Date(start * 1000).toLocaleString()}
+          />
+          <Details
+            title="end date"
+            value={new Date(end * 1000).toLocaleString()}
+          />
         </div>
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
           HaloSwap Statistics

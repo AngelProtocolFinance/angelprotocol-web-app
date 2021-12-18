@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
@@ -16,6 +16,8 @@ import {
 import toCurrency from "helpers/toCurrency";
 import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
+import { terra } from "services/terra/terra";
+import { pool_balance, simulation } from "services/terra/placeholders";
 
 export default function useEstimator() {
   const { watch, setValue, formState: isValid } = useFormContext<Values>();
@@ -25,6 +27,16 @@ export default function useEstimator() {
   const halo_balance = useHaloBalance();
 
   const wallet = useConnectedWallet();
+
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
+    lbp.gen_pool_args()
+  );
+  const { data: simul = simulation } = terra.endpoints.pairSimul.useQueryState(
+    lbp.gen_simul_args()
+  );
+  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
+
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
@@ -64,12 +76,12 @@ export default function useEstimator() {
 
         const contract = new LBP(wallet);
 
-        //on demand pool query to get latest pool balance
-        const pool = await contract.getPoolBalance();
+        // //on demand pool query to get latest pool balance
+        // const pool = await contract.getPoolBalance();
 
-        //non-invasive simul just to get current asset weights
-        const init_simul = await contract.pairSimul(0, true);
-        const ust_price = getSpotPrice(init_simul, pool);
+        // //non-invasive simul just to get current asset weights
+        // const init_simul = await contract.pairSimul(0, true);
+        // const ust_price = getSpotPrice(init_simul, pool);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -85,7 +97,7 @@ export default function useEstimator() {
         const pct_change = getPercentPriceChange(
           debounced_amount,
           simul,
-          ust_price,
+          spot_price,
           is_buy
         );
 
@@ -93,14 +105,14 @@ export default function useEstimator() {
         if (is_buy) {
           tx = await contract.createBuyTx(
             debounced_amount,
-            ust_price.toString(),
+            spot_price.toString(),
             debounced_slippage
           );
         } else {
           tx = await contract.createSellTx(
             debounced_amount,
             //just reverse price for sell tx
-            new Dec(1).div(new Dec(ust_price)).toString(),
+            new Dec(1).div(new Dec(spot_price)).toString(),
             debounced_slippage
           );
         }
