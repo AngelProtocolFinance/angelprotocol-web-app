@@ -100,7 +100,7 @@ export default function AuctionDetails() {
         <AuctionLink
           content="HaloSwap Documentation"
           PreIcon={"/favicon.png"}
-          url="#"
+          url="https://bit.ly/HaloSwap"
         />
       </div>
     </div>
