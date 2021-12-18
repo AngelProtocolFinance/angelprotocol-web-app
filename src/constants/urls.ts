@@ -7,10 +7,8 @@ export const apes_endpoint =
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.testnet]:
-    "https://bombay-12--lcd--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
-  [chainIDs.mainnet]:
-    "https://columbus-5--lcd--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
+  [chainIDs.testnet]: "https://bombay-lcd.terra.dev",
+  [chainIDs.mainnet]: "https://lcd.terra.dev",
   [chainIDs.localterra]: "http://localhost:3060",
 };
 
