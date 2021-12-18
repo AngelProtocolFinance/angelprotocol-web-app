@@ -4,9 +4,9 @@ import { Values } from "./types";
 
 function Misc(props: { title: string; value: string }) {
   return (
-    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-blue-accent mb-1">
-      <p className="text-2xs font-semibold uppercase">{props.title}</p>
-      <p className="text-2xs font-bold">{props.value}</p>
+    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey mt-1 mb-1">
+      <p className="text-xs font-semibold uppercase">{props.title}</p>
+      <p className="text-xs font-light">{props.value}</p>
     </div>
   );
 }
@@ -25,5 +25,10 @@ export function Commission() {
 export function Effect() {
   const { watch } = useFormContext<Values>();
   const pct_change = watch("pct_change");
-  return <Misc title="HALO price impact" value={`${pct_change} %`} />;
+  return (
+    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey mb-1 border-t border-angel-blue border-opacity-20 pt-2">
+      <p className="text-sm font-bold uppercase">Price impact</p>
+      <p className="text-sm font-semibold">{`${pct_change} %`}</p>
+    </div>
+  );
 }

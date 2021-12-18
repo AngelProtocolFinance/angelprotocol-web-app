@@ -47,7 +47,7 @@ export default function SwapForm() {
       {(is_live && (
         <button
           disabled={isSubmitting || form_loading || !!form_error}
-          className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+          className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
           type="submit"
         >
           {form_loading ? "simulating.." : "swap"}
@@ -55,7 +55,7 @@ export default function SwapForm() {
       )) || (
         <button
           disabled={!is_live}
-          className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+          className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
           type="submit"
         >
           {message}

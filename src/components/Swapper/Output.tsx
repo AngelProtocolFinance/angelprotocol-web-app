@@ -11,24 +11,24 @@ export default function Output() {
   const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
 
   return (
-    <div className="grid mb-2">
-      <div className="flex justify-between items-center">
+    <div className="flex flex-row justify-between items-center p-2 border-b-2 border-t-2 border-angel-blue border-opacity-20 text-angel-grey">
+      <div className="flex flex-col">
+        <p className="text-angel-grey uppercase text-md font-semibold font-heading m-2">
+          To:
+        </p>
         <label
           htmlFor="amount"
-          className="flex items-center justify-center text-angel-blue uppercase font-heading mb-2 rounded-md"
+          className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading mb-2 rounded-md"
         >
-          <img className="w-6 h-6 mr-1 object-contain" src={icon} alt="" />
-          <span className="block font-bold">{is_buy ? "HALO" : "UST"}</span>
+          <img className="w-10 h-10 mr-1 object-contain" src={icon} alt="" />
+          <span className="block font-bold text-2xl">
+            {is_buy ? "HALO" : "UST"}
+          </span>
         </label>
-        <p className="text-angel-blue uppercase text-xs font-semibold font-heading mb-0.5">
-          You will receive
-        </p>
       </div>
-
-      <p className="text-right p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-lg">
-        <span className="">{return_amount}</span>
-        <span className="text-xs font-semibold ml-1">{currency}</span>
-      </p>
+      <div className="text-right p-2 text-angel-grey text-2xl float-right">
+        {return_amount}
+      </div>
     </div>
   );
 }
