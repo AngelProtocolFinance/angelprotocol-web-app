@@ -7,7 +7,6 @@ import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
-import AuctionHistory from "./AuctionHistory";
 import { usePairInfo, usePairSimul, usePool } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
@@ -163,14 +162,6 @@ const Tabs = ({ color }: { color: string }) => {
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                   <AuctionDetails />
-                </div>
-                <div
-                  className={`max-h-600 overflow-scroll ${
-                    openTab === 2 ? "block" : "hidden"
-                  }`}
-                  id="link2"
-                >
-                  <AuctionHistory />
                 </div>
               </div>
             </div>
