@@ -1,5 +1,5 @@
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { app, web, site } from "types/routes";
+import { web, site } from "types/routes";
 
 //Will be for WebNav
 export default function MobileNav() {
@@ -7,7 +7,6 @@ export default function MobileNav() {
   const { url } = useRouteMatch();
   const linkStyles = {
     className: `uppercase text-angel-blue hover:text-opacity-75`,
-    activeClassName: "font-bold",
   };
 
   return (

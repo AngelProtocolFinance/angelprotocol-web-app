@@ -6,16 +6,16 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import Login from "pages/Login/Login";
-import Register from "pages/registration/index";
+// import Register from "pages/registration/index";
 import TCA from "pages/TCA/TCA";
 import { app, site } from "../types/routes";
-import Charity from "pages/Charity/Charity";
+// import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Withdraw from "pages/Withdraw/Withdraw";
-import Market from "pages/Market/Market";
+// import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
-import Fund from "pages/Fund/Fund";
+// import Fund from "pages/Fund/Fund";
 
 export default function Views() {
   const { path } = useRouteMatch();

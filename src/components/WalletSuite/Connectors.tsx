@@ -1,10 +1,11 @@
 import { ConnectType } from "@terra-money/wallet-provider";
 import TerraAction from "components/TerraStation/TerraAction";
 import { IoClose } from "react-icons/io5";
-import Keplr from "components/Keplr/Action";
-import EthAction from "components/Ethereum/Action";
-import Phantom from "components/Phantom/Action";
-import { Connectors as Connects, Icons } from "./types";
+// import Keplr from "components/Keplr/Action";
+// import EthAction from "components/Ethereum/Action";
+// import Phantom from "components/Phantom/Action";
+// import { Connectors as Connects, Icons } from "./types";
+import { Icons } from "./types";
 import Backdrop from "./Backdrop";
 import Nodal from "components/Nodal/Nodal";
 

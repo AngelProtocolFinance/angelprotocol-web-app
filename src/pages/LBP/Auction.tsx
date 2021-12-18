@@ -2,12 +2,11 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
-import AuctionHistory from "./AuctionHistory";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
@@ -147,14 +146,6 @@ const Tabs = ({ color }: { color: string }) => {
               <div className="tab-content tab-space">
                 <div className={openTab === 1 ? "block" : "hidden"} id="link1">
                   <AuctionDetails />
-                </div>
-                <div
-                  className={`max-h-600 overflow-scroll ${
-                    openTab === 2 ? "block" : "hidden"
-                  }`}
-                  id="link2"
-                >
-                  <AuctionHistory />
                 </div>
               </div>
             </div>

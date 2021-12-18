@@ -22,6 +22,7 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
       href={url}
       className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
       target="_blank"
+      rel="noopenner noreferrer"
     >
       <img
         className="inline mr-2 w-5 text-angel-blue"
@@ -117,39 +118,6 @@ export default function AuctionDetails() {
     </div>
   );
 }
-
-// const InfoCard = ({
-//   content,
-//   Icon = IoMdInformationCircleOutline,
-// }: {
-//   content: string;
-//   Icon?: any;
-// }) => {
-//   const { enter, exit, Tooltip } = useTooltip(InfoPopup);
-
-//   function InfoPopup() {
-//     return (
-//       <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
-//         <p className="text-sm font-light text-black">{content}</p>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div
-//       className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
-//       style={{ width: "180px" }}
-//     >
-//       <span className="font-light text-sm">{content}</span>
-//       <Icon
-//         className="cursor-pointer"
-//         onMouseEnter={enter}
-//         onMouseLeave={exit}
-//       />
-//       <Tooltip />
-//     </div>
-//   );
-// };
 
 const Details = ({ title, value, Icon }: LaunchStatsProps) => {
   return (

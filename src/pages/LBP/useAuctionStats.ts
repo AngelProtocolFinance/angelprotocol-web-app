@@ -35,11 +35,11 @@ export default function useAuctionStats() {
 
   const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args(), {
     pollingInterval: 3000,
-    skip: duration_days == -1 || duration_days === 0,
+    skip: duration_days === -1 || duration_days === 0,
   });
   const { data: pairSimul = simulation } = usePairSimulQuery(
     lbp.gen_simul_args(),
-    { pollingInterval: 3000, skip: duration_days == -1 || duration_days === 0 }
+    { pollingInterval: 3000, skip: duration_days === -1 || duration_days === 0 }
   );
 
   const ust_price = useMemo(

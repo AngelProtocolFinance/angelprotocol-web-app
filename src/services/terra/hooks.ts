@@ -2,7 +2,6 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import LBP from "contracts/LBP";
 import { useMemo } from "react";
 import { terra } from "services/terra/terra";
 import { gov_config, gov_state, halo_info, staker, poll } from "./placeholders";
