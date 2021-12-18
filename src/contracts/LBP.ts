@@ -13,7 +13,7 @@ export default class LBP extends Contract {
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.factory_address = contracts[this.chainID][sc.lbp_factory];
-    this.token_address = contracts[this.chainID][sc.lbp_token];
+    this.token_address = contracts[this.chainID][sc.halo_token];
     this.pair_address = contracts[this.chainID][sc.lbp_pair];
     this.router_adddress = contracts[this.chainID][sc.lbp_router];
     this.lp_address = contracts[this.chainID][sc.lbp_lp];
