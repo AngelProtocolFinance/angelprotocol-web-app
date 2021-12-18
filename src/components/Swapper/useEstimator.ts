@@ -16,7 +16,7 @@ import {
 import toCurrency from "helpers/toCurrency";
 import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
-import { usePairSimulQuery, usePoolQuery } from "services/terra/terra";
+import { terra } from "services/terra/terra";
 import { pool_balance, simulation } from "services/terra/placeholders";
 
 export default function useEstimator() {
@@ -29,8 +29,12 @@ export default function useEstimator() {
   const wallet = useConnectedWallet();
 
   const lbp = useMemo(() => new LBP(wallet), [wallet]);
-  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
-  const { data: simul = simulation } = usePairSimulQuery(lbp.gen_simul_args());
+  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
+    lbp.gen_pool_args()
+  );
+  const { data: simul = simulation } = terra.endpoints.pairSimul.useQueryState(
+    lbp.gen_simul_args()
+  );
   const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
 
   const is_buy = watch("is_buy");

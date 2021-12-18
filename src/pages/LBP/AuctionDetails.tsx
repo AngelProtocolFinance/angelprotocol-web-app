@@ -9,7 +9,7 @@ import {
   pool_balance,
   pairInfo as pair_placeholder,
 } from "services/terra/placeholders";
-import { usePairInfoQuery, usePoolQuery } from "services/terra/terra";
+import { terra, usePairInfoQuery, usePoolQuery } from "services/terra/terra";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -38,10 +38,12 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 export default function AuctionDetails() {
   const wallet = useConnectedWallet();
   const lbp = useMemo(() => new LBP(wallet), [wallet]);
-  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
-  const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
-    lbp.gen_pairInfo_args()
+
+  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
+    lbp.gen_pool_args()
   );
+  const { data: pairInfo = pair_placeholder } =
+    terra.endpoints.pairInfo.useQueryState(lbp.gen_pairInfo_args());
 
   const startDate = new Date(pairInfo.start_time * 1000);
   const endDate = new Date(pairInfo.end_time * 1000);

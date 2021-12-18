@@ -12,61 +12,25 @@ import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import Swapper from "components/Swapper/Swapper";
-import { getSpotPrice } from "components/Swapper/getSpotPrice";
 import displayTerraError from "helpers/displayTerraError";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import {
-  pool_balance,
-  simulation,
-  pairInfo as pair_placeholder,
-} from "services/terra/placeholders";
-import {
-  usePoolQuery,
-  usePairSimulQuery,
-  usePairInfoQuery,
-} from "services/terra/terra";
-import LBP from "contracts/LBP";
+import useAuctionStats from "./useAuctionStats";
 
 function AuctionStats() {
-  const wallet = useConnectedWallet();
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
-  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
-  const { data: pairSimul = simulation } = usePairSimulQuery(
-    lbp.gen_simul_args()
-  );
-
-  const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
-    lbp.gen_pairInfo_args()
-  );
-  const ust_price = useMemo(
-    () => getSpotPrice(pairSimul, pool),
-    [pairSimul, pool]
-  );
-
-  const duration_days = useMemo(() => {
-    const duration_time =
-      new Date(pairInfo.end_time * 1000).getTime() -
-      new Date(pairInfo.start_time * 1000).getTime();
-
-    return duration_time / 1000 / 3600 / 24;
-  }, [pairInfo]);
+  const { duration_days, end, start, ust_price } = useAuctionStats();
 
   return (
     <div className="w-full flex flex-wrap gap-5 mt-3">
-      <StatsDetails
-        title="Duration"
-        value={`${duration_days} days`}
-        Icon={FaClock}
-      />
+      {duration_days !== -1 && duration_days !== 0 && (
+        <StatsDetails
+          title="Duration"
+          value={`${duration_days} days`}
+          Icon={FaClock}
+        />
+      )}
       <StatsDetails
         title="Ends in"
-        value={
-          <CountdownTimer
-            deadline={pairInfo.end_time * 1000}
-            start={pairInfo.start_time * 1000}
-          />
-        }
+        value={<CountdownTimer deadline={end * 1000} start={start * 1000} />}
         Icon={FaStopwatch}
       />
       <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />

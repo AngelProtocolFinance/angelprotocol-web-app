@@ -2,7 +2,6 @@ import {
   createApi,
   fetchBaseQuery,
   BaseQueryFn,
-  FetchArgs,
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { terra_lcds } from "constants/urls";
@@ -135,7 +134,6 @@ export const terra = createApi({
       transformResponse: (res: QueryRes<Simulation>) => {
         return res.query_result;
       },
-      extraOptions: { maxRetries: 0 },
     }),
   }),
 });
