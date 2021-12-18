@@ -14,10 +14,10 @@ export const contracts: Contracts = {
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
     //terraswap
-    [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
 
     //halo
-    [sc.halo_gov]: "terra1lzdqv40fd8am5ac5tr9kvrmplqywmrgh4dslvk ",
+    [sc.halo_gov]: "terra1lzdqv40fd8am5ac5tr9kvrmplqywmrgh4dslvk",
 
     //lbp
     [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",

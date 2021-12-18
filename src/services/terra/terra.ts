@@ -29,11 +29,14 @@ import { RootState } from "store/store";
 //to enhance speed & efficiency thru caching
 //a way to segragate queries to testnet | mainnet
 
-const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
-  const chainID = (api.getState() as RootState).chain.terra;
-  const base_url = terra_lcds[chainID];
-  return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
-};
+const customBaseQuery: BaseQueryFn = retry(
+  async (args, api, extraOptions) => {
+    const chainID = (api.getState() as RootState).chain.terra;
+    const base_url = terra_lcds[chainID];
+    return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
+  },
+  { maxRetries: 1 }
+);
 
 export const terra = createApi({
   reducerPath: "terra",
