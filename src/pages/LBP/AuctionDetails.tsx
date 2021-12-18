@@ -1,10 +1,15 @@
 import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
+import LBP from "contracts/LBP";
 import toCurrency from "helpers/toCurrency";
-import useTooltip from "hooks/useTooltip";
-import { IoMdInformationCircleOutline } from "react-icons/io";
-import { usePairInfo, usePool } from "services/terra/hooks";
+import { useMemo } from "react";
+import {
+  pool_balance,
+  pairInfo as pair_placeholder,
+} from "services/terra/placeholders";
+import { usePairInfoQuery, usePoolQuery } from "services/terra/terra";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -31,9 +36,13 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 }
 
 export default function AuctionDetails() {
-  const pairInfo = usePairInfo();
-  const pool = usePool();
-  console.log(pool);
+  const wallet = useConnectedWallet();
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
+  const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
+    lbp.gen_pairInfo_args()
+  );
+
   const startDate = new Date(pairInfo.start_time * 1000);
   const endDate = new Date(pairInfo.end_time * 1000);
   const remaining_halo = new Dec(pool.token).div(1e6).toNumber();

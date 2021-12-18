@@ -5,14 +5,9 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import LBP from "contracts/LBP";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-import {
-  useBalances,
-  useHaloBalance,
-  usePairSimul,
-  usePool,
-} from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/hooks";
 import { Values } from "./types";
-import { useSetter, useGetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -21,6 +16,8 @@ import {
 import toCurrency from "helpers/toCurrency";
 import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
+import { usePairSimulQuery, usePoolQuery } from "services/terra/terra";
+import { pool_balance, simulation } from "services/terra/placeholders";
 
 export default function useEstimator() {
   const { watch, setValue, formState: isValid } = useFormContext<Values>();
@@ -29,14 +26,13 @@ export default function useEstimator() {
   const { main: UST_balance } = useBalances(denoms.uusd);
   const halo_balance = useHaloBalance();
 
-  const pool = usePool();
-  const pairSimul = usePairSimul();
-  const spot_price = useMemo(
-    () => getSpotPrice(pairSimul, pool),
-    [pool, pairSimul]
-  );
-
   const wallet = useConnectedWallet();
+
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
+  const { data: simul = simulation } = usePairSimulQuery(lbp.gen_simul_args());
+  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
+
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;

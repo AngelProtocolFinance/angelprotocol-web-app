@@ -8,7 +8,6 @@ import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
-import { usePairInfo, usePairSimul, usePool } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
@@ -16,12 +15,30 @@ import Swapper from "components/Swapper/Swapper";
 import { getSpotPrice } from "components/Swapper/getSpotPrice";
 import displayTerraError from "helpers/displayTerraError";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import {
+  pool_balance,
+  simulation,
+  pairInfo as pair_placeholder,
+} from "services/terra/placeholders";
+import {
+  usePoolQuery,
+  usePairSimulQuery,
+  usePairInfoQuery,
+} from "services/terra/terra";
+import LBP from "contracts/LBP";
 
 function AuctionStats() {
-  const pairInfo = usePairInfo();
-  const pairSimul = usePairSimul();
-  const pool = usePool();
+  const wallet = useConnectedWallet();
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
+  const { data: pairSimul = simulation } = usePairSimulQuery(
+    lbp.gen_simul_args()
+  );
 
+  const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
+    lbp.gen_pairInfo_args()
+  );
   const ust_price = useMemo(
     () => getSpotPrice(pairSimul, pool),
     [pairSimul, pool]

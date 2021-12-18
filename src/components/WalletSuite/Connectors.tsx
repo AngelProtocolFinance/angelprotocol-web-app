@@ -33,17 +33,17 @@ export default function Connectors(props: Props) {
             type={ConnectType.WALLETCONNECT}
             label="Terra Station Mobile"
           />
-          <EthAction
+          {/*<EthAction
             type={Connects.injected}
             label="Metamask"
             icon={Icons.metamask}
-          />
-          <EthAction
+          />*/}
+          {/*          <EthAction
             type={Connects.injected}
             label="XDEFI"
             icon={Icons.xdefi}
-          />
-          <EthAction type={Connects.torus} label="Torus" icon={Icons.torus} />
+          />*/}
+          {/*<EthAction type={Connects.torus} label="Torus" icon={Icons.torus} />
           <EthAction
             type={Connects.ledger}
             label="Ledger"
@@ -55,7 +55,7 @@ export default function Connectors(props: Props) {
             icon={Icons.walletconnect}
           />
           <Phantom label="Phantom" icon={Icons.phantom} />
-          <Keplr label="Keplr" icon={Icons.keplr} />
+          <Keplr label="Keplr" icon={Icons.keplr} />*/}
         </Nodal>
       </div>
       <Backdrop closeHandler={props.closeHandler} />

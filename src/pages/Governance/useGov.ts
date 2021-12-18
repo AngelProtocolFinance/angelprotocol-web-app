@@ -1,18 +1,19 @@
 import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { getSpotPrice } from "components/Swapper/getSpotPrice";
+import LBP from "contracts/LBP";
+import { usePairSimulQuery, usePoolQuery } from "services/terra/terra";
 import { useState, useEffect, useMemo } from "react";
-import {
-  useGovBalance,
-  useHaloInfo,
-  usePairSimul,
-  usePool,
-} from "services/terra/hooks";
+import { useGovBalance, useHaloInfo } from "services/terra/hooks";
+import { pool_balance, simulation } from "services/terra/placeholders";
 
 export default function useGov() {
+  const wallet = useConnectedWallet();
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
-  const pool = usePool(0);
-  const simul = usePairSimul(0);
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args());
+  const { data: simul = simulation } = usePairSimulQuery(lbp.gen_simul_args());
   const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
   const token_info = useHaloInfo();
   const gov_balance = useGovBalance();

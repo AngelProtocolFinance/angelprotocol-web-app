@@ -2,6 +2,7 @@ import {
   createApi,
   fetchBaseQuery,
   BaseQueryFn,
+  FetchArgs,
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { terra_lcds } from "constants/urls";
@@ -28,14 +29,11 @@ import { RootState } from "store/store";
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
 //a way to segragate queries to testnet | mainnet
+
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
   const chainID = (api.getState() as RootState).chain.terra;
   const base_url = terra_lcds[chainID];
-  return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 0 })(
-    args,
-    api,
-    extraOptions
-  );
+  return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
 };
 
 export const terra = createApi({
@@ -137,9 +135,12 @@ export const terra = createApi({
       transformResponse: (res: QueryRes<Simulation>) => {
         return res.query_result;
       },
+      extraOptions: { maxRetries: 0 },
     }),
   }),
 });
+
+export const { usePoolQuery, usePairSimulQuery, usePairInfoQuery } = terra;
 
 function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));
