@@ -54,7 +54,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "craco build export --max-old-space-size=8192",
     "test": "craco test",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
