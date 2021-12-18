@@ -32,6 +32,7 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 export default function AuctionDetails() {
   const pairInfo = usePairInfo();
   const pool = usePool();
+  console.log(pool);
   const startDate = new Date(pairInfo.start_time * 1000);
   const endDate = new Date(pairInfo.end_time * 1000);
   const remaining_halo = new Dec(pool.token).div(1e6).toNumber();

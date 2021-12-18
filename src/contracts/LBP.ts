@@ -77,8 +77,7 @@ export default class LBP extends Contract {
             })
           ),
         },
-      },
-      [new Coin(denoms.uusd, uhalo_amount)]
+      }
     );
     const fee = await this.estimateFee([sell_msg]);
     return { msgs: [sell_msg], fee };

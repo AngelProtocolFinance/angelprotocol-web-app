@@ -31,7 +31,6 @@ import { RootState } from "store/store";
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
   const chainID = (api.getState() as RootState).chain.terra;
   const base_url = terra_lcds[chainID];
-  console.log("*****", base_url);
   return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
     args,
     api,
