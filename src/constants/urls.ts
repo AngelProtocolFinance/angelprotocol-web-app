@@ -7,15 +7,18 @@ export const apes_endpoint =
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.testnet]: "https://bombay-lcd.terra.dev",
-  [chainIDs.mainnet]: "https://lcd.terra.dev",
+  [chainIDs.testnet]:
+    "https://bombay-12--lcd--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
+  [chainIDs.mainnet]:
+    "https://columbus-5--lcd--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
   [chainIDs.localterra]: "http://localhost:3060",
 };
 
 export const terra_rpcs: URL_GROUP = {
-  [chainIDs.testnet]: "",
+  [chainIDs.testnet]:
+    "https://bombay-12--rcp--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
   [chainIDs.mainnet]:
-    "https://columbus-5--rpc--archive.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff",
+    "https://columbus-5--rpc--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
   [chainIDs.localterra]: "",
 };
 
