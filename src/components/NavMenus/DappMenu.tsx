@@ -3,7 +3,7 @@ import { app, site } from "types/routes";
 
 export default function DappMenu() {
   const linkStyles = {
-    className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold`,
+    className: `text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold ml-2 mr-2`,
     activeClassName: "font-bold",
   };
 
@@ -14,9 +14,9 @@ export default function DappMenu() {
       <Link className={linkStyles.className} to={`${site.home}`}>
         About us
       </Link>
-      <NavLink to={`${site.app}/${app.charity}`} {...linkStyles}>
+      {/*      <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
         Donate now
-      </NavLink>
+      </NavLink>*/}
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>

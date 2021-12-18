@@ -3,6 +3,7 @@ import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
+import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
@@ -13,6 +14,10 @@ export default function Portal() {
 
   function showUnstaker() {
     showModal(UnstakeModal, {});
+  }
+
+  function goToLbpPage() {
+    return (window.location.href = `${site.app}/${app.auction}`);
   }
 
   return (
@@ -28,11 +33,11 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          13.92% APR
+          0.00% APR
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <Action title="Trade Halo" action={() => {}} />
+        <Action title="Trade Halo" action={goToLbpPage} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
         <Action title="Claim" action={() => {}} disabled={true} />

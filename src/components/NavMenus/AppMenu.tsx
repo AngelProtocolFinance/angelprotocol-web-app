@@ -17,7 +17,8 @@ export default function AppMenu() {
         </Link>
       </li>
       <li>
-        <Link to={`${url}/${app.register}`} {...linkStyles}>
+        // ${url}/${app.register}
+        <Link to={`https://angelprotocol.io/contact`} {...linkStyles}>
           REGISTER
         </Link>
       </li>
@@ -28,7 +29,7 @@ export default function AppMenu() {
       </li>
       <li>
         <Link to={`${url}/${app.auction}`} {...linkStyles}>
-          BUY HALO
+          HALOSWAP
         </Link>
       </li>
     </ul>
