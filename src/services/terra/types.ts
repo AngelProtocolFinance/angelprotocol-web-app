@@ -119,9 +119,7 @@ export type PairInfo = {
   start_time: number;
   end_time: number;
   description?: string;
-  commission_rate: string; //""0.03""
-  collector_addr: string;
-  split_to_collector: string; //""0.01""
+  commission_rate: string; //""0.02""
 };
 
 export type Simulation = {

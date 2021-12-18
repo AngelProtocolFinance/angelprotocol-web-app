@@ -17,10 +17,14 @@ export default function AppMenu() {
         </Link>
       </li>
       <li>
-        // ${url}/${app.register}
-        <Link to={`https://angelprotocol.io/contact`} {...linkStyles}>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://www.angelprotocol.io/contact"
+          {...linkStyles}
+        >
           REGISTER
-        </Link>
+        </a>
       </li>
       <li>
         <Link to={`${url}/${app.tca}`} {...linkStyles}>
