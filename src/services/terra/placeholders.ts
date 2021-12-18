@@ -57,7 +57,7 @@ export const gov_config: GovConfig = {
 const token_info = {
   info: {
     token: {
-      contract_addr: "terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq",
+      contract_addr: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
     },
   },
   amount: "0",

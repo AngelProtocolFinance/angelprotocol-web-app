@@ -18,6 +18,7 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
     <a
       href={url}
       className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
+      target="_blank"
     >
       <img
         className="inline mr-2 w-5 text-angel-blue"
@@ -73,10 +74,10 @@ export default function AuctionDetails() {
         </p>
         <div className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4">
           <span className="text-xs text-angel-grey font-light pr-1">
-            {"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"}
+            {"terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9"}
           </span>
           <Copier
-            text={"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq" as Addr}
+            text={"terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9" as Addr}
             colorClass="text-angel-blue"
           />
         </div>
@@ -84,7 +85,7 @@ export default function AuctionDetails() {
         <AuctionLink
           content="HALO Token on ET Finder"
           PreIcon={"/favicon.png"}
-          url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
+          url="https://finder.extraterrestrial.money/testnet/address/terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9"
         />
         <AuctionLink
           content="HaloSwap Owner on ET Finder"
