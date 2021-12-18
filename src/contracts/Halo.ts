@@ -13,13 +13,11 @@ import { PollExecuteMsg, sc, Vote } from "./types";
 
 export default class Halo extends Contract {
   token_address: string;
-  stake_address: string;
   gov_address: string;
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.token_address = contracts[this.chainID][sc.halo_token];
-    this.stake_address = contracts[this.chainID][sc.halo_stake];
     this.gov_address = contracts[this.chainID][sc.halo_gov];
   }
 

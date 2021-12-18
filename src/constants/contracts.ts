@@ -11,51 +11,52 @@ export const contracts: Contracts = {
     [sc.anchor]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
-
-    //halo
-    [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
-    [sc.halo_stake]: "",
-    [sc.halo_gov]: "",
-
-    //lbp
-    [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
-    [sc.lbp_pair]: "terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e",
-    [sc.lbp_router]: "terra1l32eafhapmn9c8m7epyraxa2yty4xngamvewfs",
-    [sc.lbp_lp]: "terra1kt26adtzwu4yefw37snr73n393vsu8w0hmazxc",
-  },
-  /********************************************************************* */
-  [chainIDs.testnet]: {
-    [sc.anchor]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
-    [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
-    [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
-
-    //halo
-    [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
-    [sc.halo_stake]: "terra1y5klltj4u3ggel25n5ew26sndsd805fr8ngav3",
-    [sc.halo_gov]: "terra1t0ughmzr4u4r09lsj7z97q56fpde8qqmrxg2df",
-
-    //lbp
+    [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    [sc.halo_gov]: "terra1lzdqv40fd8am5ac5tr9kvrmplqywmrgh4dslvk",
     [sc.lbp_factory]: "terra1rg723ngfpwn2yfnvmrg4jlcq0dw0al9haxch09",
-    [sc.lbp_pair]: "terra1mmqdr6es5fz2hm2l6qw26vv8g0jvvu4rfdsman  ",
+    [sc.lbp_pair]: "terra1mmqdr6es5fz2hm2l6qw26vv8g0jvvu4rfdsman",
     [sc.lbp_router]: "terra1vc6wxu2adjr63df8hfc2jtfeh9nktfq59slwf5",
     [sc.lbp_lp]: "terra1udawd5mvys5xkwq8gqdq5frjkmn4feztel4m5r",
   },
-  /********************************************************************* */
-  [chainIDs.localterra]: {
-    //same as testnet
-    [sc.anchor]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
-    [sc.index_fund]: "terra1gv07846a3867ezn3uqkk082c5ftke7hpemzu9q",
-    [sc.registrar]: "terra18vd8fpwxzck93qlwghaj6arh4p7c5n896xzem5",
-
-    //halo
-    [sc.halo_token]: "terra1pcmqku8swxdsfl6dtp04c08hpc3crwmqrz2spp",
-    [sc.halo_stake]: "",
+  [chains.testnet]: {
+    [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
+    [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+    [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+    [sc.halo_token]: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    [sc.halo_gov]: "terra19e8yx8x5m5radap4plecnl4cppa0tyupzwesx6",
+    [sc.lbp_factory]: "terra167m64seqj7cucxm5wep3hyu4suqw4sl5s8uzjz",
+    [sc.lbp_pair]: "terra17al3hudq2vcxtyvw9008edjhyqaw74mayva2d8",
+    [sc.lbp_router]: "terra19dpanzuhtmdsw8ds5zschrh4mnxcejc0ut6dnk",
+    [sc.lbp_lp]: "terra19zgdunfrx79nqvznqmx4satj5kxndvmrsx502m",
+  },
+  [chains.localterra]: {
+    [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
+    [sc.index_fund]: "",
+    [sc.registrar]: "",
+    [sc.halo_token]: "",
     [sc.halo_gov]: "",
-
-    //lbp
-    [sc.lbp_factory]: "terra193lv5grxfjuppsku56ldx90qxlg2mdsfpk5uw0",
-    [sc.lbp_pair]: "terra174u76knkvh9c9va2ktjlwus35jtmdsh6cjyxeu",
-    [sc.lbp_router]: "terra1v5l3yfxnmu4j3e2z7s73try82jg5kjnclxtctz",
-    [sc.lbp_lp]: "terra1am7gpv35q80c6x2w8vfg4kp9mnedujjj73g3dr",
+    [sc.lbp_factory]: "",
+    [sc.lbp_pair]: "",
+    [sc.lbp_router]: "",
+    [sc.lbp_lp]: "",
+  },
+};
+export const ap_wallets: { [index: string]: { [index: string]: string } } = {
+  [denoms.ether]: {
+    [chains.eth_kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
+    [chains.eth_ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
+  },
+  [denoms.btc]: {
+    [chains.btc_test]: "tb1qp6r3j2xr07f0qs2dvxx9xy4hk98c8f5r4l7xva",
+  },
+  [denoms.uusd]: {
+    [chains.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
+    [chains.mainnet]: "terra1y07m37w0g8nwclthv5wn3vwuf985cz0z6v9n6w", //replace with ap_wallet
+  },
+  [denoms.sol]: {
+    [chains.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",
+  },
+  [denoms.uatom]: {
+    [chains.cosmos_4]: "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x", //replace with ap_wallet
   },
 };

@@ -79,11 +79,11 @@ export default function Auction() {
       <div className="content-section">
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
-          <div className="auction-data-section">
+          <div className="auction-data-section font-heading">
             <div className="flex items-center justify-center xl:hidden w-115 my-3">
               <button
                 onClick={() => showModal(SwapModal, {})}
-                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
+                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold text-white shadow-sm focus:outline-none"
               >
                 Buy Halo
               </button>
@@ -141,7 +141,7 @@ const Tabs = ({ color }: { color: string }) => {
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
               <a
                 className={
-                  "text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " +
+                  "text-lg font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal tracking-wider font-heading" +
                   (openTab === 1
                     ? "text-white bg-angel-blue"
                     : "text-gray-600 bg-white")
