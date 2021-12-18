@@ -19,9 +19,9 @@ export default function MobileDappNav() {
       >
         About us
       </a>
-      <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
+      {/*<NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
         Donate now
-      </NavLink>
+      </NavLink>*/}
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>

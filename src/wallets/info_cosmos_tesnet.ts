@@ -1,11 +1,11 @@
 import { ChainInfo } from "@keplr-wallet/types";
-import { chains } from "contracts/types";
-import { cosmoshub_test_rest, cosmoshub_test_rpc } from "constants/urls";
+import { chainIDs } from "contracts/types";
+import { cosmos4_lcds, cosmos4_rpcs } from "constants/urls";
 export const info_cosmos_tesnet: ChainInfo = {
-  chainId: chains.cosmos_test,
+  chainId: chainIDs.cosmos_test,
   chainName: "Photon",
-  rpc: cosmoshub_test_rpc,
-  rest: cosmoshub_test_rest,
+  rpc: cosmos4_rpcs[chainIDs.cosmos_test],
+  rest: cosmos4_lcds[chainIDs.cosmos_test],
   // Staking coin information
   stakeCurrency: {
     // Coin denomination to be displayed to the user.

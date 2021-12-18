@@ -1,6 +1,6 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import { chains, Balance } from "contracts/types";
+import { chainIDs, Balance } from "contracts/types";
 import Registrar from "contracts/Registrar";
 import Account from "contracts/Account";
 
@@ -13,7 +13,7 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [charities, setCharities] = useState<Array<[string, Balance]>>([]);
   const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID || chains.mainnet;
+  const chainID = wallet?.network.chainID || chainIDs.mainnet;
   const storage_key = `leaderboard_${chainID}`;
 
   useEffect(() => {

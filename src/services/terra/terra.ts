@@ -4,8 +4,8 @@ import {
   BaseQueryFn,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { urls } from "App/chains";
-import { chains, GovState, HaloBalance } from "contracts/types";
+import { terra_lcds } from "constants/urls";
+import { GovState, HaloBalance } from "contracts/types";
 import { Dec, Coin } from "@terra-money/terra.js";
 import {
   BalanceRes,
@@ -16,20 +16,22 @@ import {
   PairInfo,
   Poll,
   Polls,
+  Pool,
+  PoolBalance,
   QueryRes,
   Simulation,
   TokenInfo,
 } from "./types";
-import { gov, halo, tags, user } from "./tags";
+import { gov, halo, lbp, tags, user } from "./tags";
+import { RootState } from "store/store";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
 //a way to segragate queries to testnet | mainnet
 const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
-  //disable retries
-  //get state from api.getState
-  const is_mainnet = false;
-  const base_url = is_mainnet ? urls[chains.mainnet] : urls[chains.testnet];
+  const chainID = (api.getState() as RootState).chain.terra;
+  const base_url = terra_lcds[chainID];
+  console.log("*****", base_url);
   return retry(fetchBaseQuery({ baseUrl: base_url }), { maxRetries: 1 })(
     args,
     api,
@@ -40,7 +42,7 @@ const customBaseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo],
+  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
@@ -114,6 +116,17 @@ export const terra = createApi({
       },
     }),
     //lbp_pair
+    pool: builder.query<PoolBalance, ContractQueryArgs>({
+      providesTags: [{ type: tags.lbp, id: lbp.pool }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Pool>) => {
+        const pool = res.query_result;
+        return {
+          token: pool.assets[0].amount,
+          native_token: pool.assets[1].amount,
+        };
+      },
+    }),
     pairInfo: builder.query<PairInfo, ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<PairInfo>) => {

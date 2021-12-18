@@ -1,6 +1,10 @@
+import { Dec } from "@terra-money/terra.js";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
-import { usePairInfo } from "services/terra/hooks";
+import toCurrency from "helpers/toCurrency";
+import useTooltip from "hooks/useTooltip";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+import { usePairInfo, usePool } from "services/terra/hooks";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -14,6 +18,7 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
     <a
       href={url}
       className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
+      target="_blank"
     >
       <img
         className="inline mr-2 w-5 text-angel-blue"
@@ -27,8 +32,10 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 
 export default function AuctionDetails() {
   const pairInfo = usePairInfo();
+  const pool = usePool();
   const startDate = new Date(pairInfo.start_time * 1000);
   const endDate = new Date(pairInfo.end_time * 1000);
+  const remaining_halo = new Dec(pool.token).div(1e6).toNumber();
   const is_active = endDate.getTime() > new Date().getTime();
 
   return (
@@ -54,8 +61,11 @@ export default function AuctionDetails() {
           HaloSwap Statistics
         </h1>
         <div className="w-full flex flex-wrap gap-5 mt-3">
-          <Details title="Starting HALO" value="80000000.00000" />
-          <Details title="Remaining HALO" value="1245851671.60214" />
+          {/* <Details title="Starting HALO" value="80000000.00000" /> */}
+          <Details
+            title="Remaining HALO"
+            value={toCurrency(remaining_halo, 2)}
+          />
         </div>
       </div>
       <div className="contract-details w-128 p-5">
@@ -64,10 +74,10 @@ export default function AuctionDetails() {
         </p>
         <div className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4">
           <span className="text-xs text-angel-grey font-light pr-1">
-            {"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"}
+            {"terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9"}
           </span>
           <Copier
-            text={"terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq" as Addr}
+            text={"terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9" as Addr}
             colorClass="text-angel-blue"
           />
         </div>
@@ -75,7 +85,7 @@ export default function AuctionDetails() {
         <AuctionLink
           content="HALO Token on ET Finder"
           PreIcon={"/favicon.png"}
-          url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
+          url="https://finder.extraterrestrial.money/testnet/address/terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9"
         />
         <AuctionLink
           content="HaloSwap Owner on ET Finder"
@@ -90,7 +100,7 @@ export default function AuctionDetails() {
         <AuctionLink
           content="HaloSwap Documentation"
           PreIcon={"/favicon.png"}
-          url="#"
+          url="https://bit.ly/HaloSwap"
         />
       </div>
     </div>

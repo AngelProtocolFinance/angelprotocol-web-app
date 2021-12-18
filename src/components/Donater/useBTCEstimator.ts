@@ -10,13 +10,17 @@ import { setFormError } from "services/transaction/transactionSlice";
 const dwindow: DWindow = window;
 export default function useBTCEstimator() {
   const dispatch = useSetter();
-  const { watch } = useFormContext<Values>();
+  const {
+    watch,
+    formState: { isValid },
+  } = useFormContext<Values>();
   const wallet = useWallet();
   const currency = watch("currency");
 
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         //don't run this estimator when currency is not UST
         if (currency !== denoms.btc) {
           return;

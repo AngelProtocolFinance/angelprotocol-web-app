@@ -19,7 +19,7 @@ ReactDOM.render(
         <AuthProvider>
           <Switch>
             <Route path={site.app} component={App} />
-            <Route path={site.admin} component={Admin} />
+            {/*<Route path={site.admin} component={Admin} />*/}
             <Route path={site.home} component={Website} />
           </Switch>
         </AuthProvider>

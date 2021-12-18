@@ -1,10 +1,10 @@
 import { StargateClient, Coin } from "@cosmjs/stargate";
 import { Keplr } from "@keplr-wallet/types";
-import { cosmos_4_rpc } from "constants/urls";
-import { chains } from "contracts/types";
+import { cosmos4_rpcs, terra_rpcs } from "constants/urls";
+import { chainIDs } from "contracts/types";
 import { useState } from "react";
 import { DWindow } from "types/window";
-import { terra_mainnet_rpc, info_terra_mainnet } from "./info_terra_mainnet";
+import { info_terra_mainnet } from "./info_terra_mainnet";
 
 const dwindow: DWindow = window;
 export default function useKeplr() {
@@ -25,10 +25,10 @@ export default function useKeplr() {
       // await dwindow.keplr.experimentalSuggestChain(info_cosmos_tesnet);
 
       await dwindow.keplr.experimentalSuggestChain(info_terra_mainnet);
-      await dwindow.keplr.enable([chains.mainnet, chains.cosmos_4]);
+      await dwindow.keplr.enable([chainIDs.mainnet, chainIDs.cosmos_4]);
 
-      const terra_signer = dwindow.getOfflineSigner!(chains.mainnet);
-      const cosmos_signer = dwindow.getOfflineSigner!(chains.cosmos_4);
+      const terra_signer = dwindow.getOfflineSigner!(chainIDs.mainnet);
+      const cosmos_signer = dwindow.getOfflineSigner!(chainIDs.cosmos_4);
 
       //show only cosmos address
       const terra_accounts = await terra_signer.getAccounts();
@@ -37,11 +37,15 @@ export default function useKeplr() {
       const cosmos_accounts = await cosmos_signer.getAccounts();
       const cosmos_addr = cosmos_accounts[0].address;
 
-      const terra_client = await StargateClient.connect(terra_mainnet_rpc);
+      const terra_client = await StargateClient.connect(
+        terra_rpcs[chainIDs.mainnet]
+      );
       const terra_balances = await terra_client.getAllBalances(terra_addr);
       terra_client.disconnect();
 
-      const cosmos_client = await StargateClient.connect(cosmos_4_rpc);
+      const cosmos_client = await StargateClient.connect(
+        cosmos4_rpcs[chainIDs.cosmos_4]
+      );
       const cosmos_balances = await cosmos_client.getAllBalances(cosmos_addr);
       cosmos_client.disconnect();
 
