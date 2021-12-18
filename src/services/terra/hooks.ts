@@ -220,7 +220,7 @@ export function usePairInfo() {
   return data;
 }
 
-export function usePairSimul() {
+export function usePairSimul(interval = 3000) {
   const { usePairSimulQuery } = terra;
   const { contract } = useLBPContract();
 
@@ -242,13 +242,13 @@ export function usePairSimul() {
         },
       },
     },
-    { pollingInterval: 3000 }
+    { pollingInterval: interval }
   );
 
   return data;
 }
 
-export function usePool() {
+export function usePool(interval = 3000) {
   const { usePoolQuery } = terra;
   const { contract } = useLBPContract();
   const { data = pool_balance } = usePoolQuery(
@@ -256,7 +256,7 @@ export function usePool() {
       address: contract.pair_address,
       msg: { pool: {} },
     },
-    { pollingInterval: 3000 }
+    { pollingInterval: interval }
   );
 
   return data;

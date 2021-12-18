@@ -1,10 +1,19 @@
 import { Dec } from "@terra-money/terra.js";
-import { useState, useEffect } from "react";
-import { useGovBalance, useHaloInfo } from "services/terra/hooks";
+import { getSpotPrice } from "components/Swapper/getSpotPrice";
+import { useState, useEffect, useMemo } from "react";
+import {
+  useGovBalance,
+  useHaloInfo,
+  usePairSimul,
+  usePool,
+} from "services/terra/hooks";
 
 export default function useGov() {
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
+  const pool = usePool(0);
+  const simul = usePairSimul(0);
+  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
   const token_info = useHaloInfo();
   const gov_balance = useGovBalance();
 
@@ -23,5 +32,5 @@ export default function useGov() {
     })();
   }, [token_info, gov_balance]);
 
-  return { staked, percentStaked };
+  return { staked, percentStaked, spot_price };
 }

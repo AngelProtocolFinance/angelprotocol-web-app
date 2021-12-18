@@ -12,7 +12,7 @@ import {
   usePool,
 } from "services/terra/hooks";
 import { Values } from "./types";
-import { useSetter } from "store/accessors";
+import { useSetter, useGetter } from "store/accessors";
 import {
   setFee,
   setFormError,

@@ -18,8 +18,12 @@ export function getSpotPrice(simul: Simulation, pool_balance: PoolBalance) {
    * https://dev.balancer.fi/resources/pool-math/weighted-math
    * spot price = (BO/WO)/(BR/WR)
    */
-  const native_ratio = native_balance.div(native_weight);
-  const token_ratio = token_balance.div(token_weight);
+  const native_ratio = native_weight.lte(0)
+    ? new Dec(0)
+    : native_balance.div(native_weight);
+  const token_ratio = token_weight.lte(0)
+    ? new Dec(0)
+    : token_balance.div(token_weight);
   //if offer is ust, ust/halo
-  return native_ratio.div(token_ratio).toNumber();
+  return native_ratio.lte(0) ? 0 : native_ratio.div(token_ratio).toNumber();
 }
