@@ -17,8 +17,7 @@ export default function AppMenu() {
         </Link>
       </li>
       <li>
-        // ${url}/${app.register}
-        <Link to={`https://angelprotocol.io/contact`} {...linkStyles}>
+        <Link to={`${url}/${app.register}`} {...linkStyles}>
           REGISTER
         </Link>
       </li>
