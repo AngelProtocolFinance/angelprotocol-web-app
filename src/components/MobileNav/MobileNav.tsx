@@ -25,7 +25,7 @@ export default function MobileNav() {
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={`${site.app}/${app.register}`} {...linkStyles}>
+        <NavLink to={`${site.app}/`} {...linkStyles}>
           Launch App
         </NavLink>
       </li>
