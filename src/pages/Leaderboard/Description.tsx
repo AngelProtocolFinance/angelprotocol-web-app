@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { useAccountsQuery } from "services/aws/endowments/endowments";
 import { charity_details } from "services/aws/endowments/placeholders";
 
@@ -7,7 +7,7 @@ type Props = { address: string };
 
 export default function Description(props: Props) {
   const wallet = useConnectedWallet();
-  const is_test = wallet?.network.chainID === chains.testnet;
+  const is_test = wallet?.network.chainID === chainIDs.testnet;
   const { data: accounts = {} } = useAccountsQuery(is_test);
   const details = accounts[props.address] || charity_details;
 

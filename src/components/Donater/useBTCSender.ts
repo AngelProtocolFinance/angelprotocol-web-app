@@ -2,10 +2,10 @@ import { useFormContext } from "react-hook-form";
 import { Dec } from "@terra-money/terra.js";
 import { useWallet } from "use-wallet";
 import { denoms } from "constants/currency";
-import { ap_wallets } from "constants/contracts";
+import { ap_wallets } from "constants/ap_wallets";
 import { DWindow, Values } from "./types";
 import useBTCEstimator from "./useBTCEstimator";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import handleEthError from "./handleEthError";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { useSetter } from "store/accessors";
@@ -59,7 +59,7 @@ export default function useBTCSender() {
         {
           feeRate: 10,
           from: _main,
-          recipient: ap_wallets[denoms.btc][chains.btc_test],
+          recipient: ap_wallets[denoms.btc][chainIDs.btc_test],
           amount: {
             amount: dec_satoshi.toNumber(),
             decimals: 8,

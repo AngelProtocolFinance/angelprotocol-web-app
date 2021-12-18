@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Connection, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import { DWindow } from "types/window";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 
 enum events {
   connect = "connect",
@@ -80,7 +80,7 @@ export default function usePhantom() {
 
   const onConnect = async (pub_key: PublicKey) => {
     const [, phantom] = get_phantom();
-    const connection = new Connection(clusterApiUrl(chains.sol_dev));
+    const connection = new Connection(clusterApiUrl(chainIDs.sol_dev));
     const lamports = await connection.getBalance(pub_key);
     setAddress(pub_key.toString());
     setProvider(phantom);

@@ -19,7 +19,7 @@ import { useBalances } from "services/terra/hooks";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
-  const { watch } = useFormContext<Values>();
+  const { watch, formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
@@ -39,6 +39,7 @@ export default function useUSTEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         //don't run this estimator when currency is not UST
         if (currency !== denoms.uusd) {
           return;

@@ -7,10 +7,10 @@ import {
   TxInfo,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { urls } from "App/chains";
+import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { Disconnected, TxResultFail } from "./Errors";
-import { chains } from "./types";
+import { chainIDs } from "./types";
 
 export default class Contract {
   wallet?: ConnectedWallet;
@@ -21,8 +21,8 @@ export default class Contract {
 
   constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;
-    this.chainID = this.wallet?.network.chainID || chains.mainnet;
-    this.url = this.wallet?.network.lcd || urls[chains.mainnet];
+    this.chainID = this.wallet?.network.chainID || chainIDs.mainnet;
+    this.url = this.wallet?.network.lcd || terra_lcds[chainIDs.mainnet];
     this.walletAddr = this.wallet?.walletAddress;
     this.client = new LCDClient({
       chainID: this.chainID,

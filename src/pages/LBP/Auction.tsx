@@ -1,24 +1,31 @@
-import { Dec } from "@terra-money/terra.js";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import Swap, { SwapModal } from "components/Swap/Swap";
 import { useState, useMemo, useEffect } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import AuctionHistory from "./AuctionHistory";
-import { usePairInfo, usePairSimul } from "services/terra/hooks";
+import { usePairInfo, usePairSimul, usePool } from "services/terra/hooks";
 import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import SwapSuite from "components/TransactionSuite/SwapSuite";
+import Swapper from "components/Swapper/Swapper";
+import { getSpotPrice } from "components/Swapper/getSpotPrice";
 import displayTerraError from "helpers/displayTerraError";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
 
 function AuctionStats() {
   const pairInfo = usePairInfo();
   const pairSimul = usePairSimul();
+  const pool = usePool();
+
+  const ust_price = useMemo(
+    () => getSpotPrice(pairSimul, pool),
+    [pairSimul, pool]
+  );
 
   const duration_days = useMemo(() => {
     const duration_time =
@@ -27,13 +34,6 @@ function AuctionStats() {
 
     return duration_time / 1000 / 3600 / 24;
   }, [pairInfo]);
-
-  const ust_price = useMemo(() => {
-    const uhalo_amount = new Dec(pairSimul.return_amount);
-    //1_000_000 uusd was offered on useSimul call
-    const uusd_amount = new Dec(1e6);
-    return uusd_amount.div(uhalo_amount).toNumber();
-  }, [pairSimul]);
 
   return (
     <div className="w-full flex flex-wrap gap-5 mt-3">
@@ -70,6 +70,7 @@ export default function Auction() {
     if (!isLoading && error) {
       displayTerraError(new LBPGraphDataUnavailable(error), showModal);
     }
+    //eslint-disable-next-line
   }, [isLoading, error]);
 
   return (
@@ -94,8 +95,13 @@ export default function Auction() {
               lbpPairData={lbpPairData}
             />
           </div>
-          <div className="hidden xl:w-2/5 xl:flex rounded items-center p-10">
-            <Swap /> {/* hide and display as a modal on smaller screen sizes */}
+          <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
+            <p className="uppercase font-heading font-bold text-xl self-left mb-2">
+              buy halo
+            </p>
+            <Swapper>
+              <SwapSuite />
+            </Swapper>
           </div>
         </div>
         <Tabs color="angel-blue" />
@@ -174,3 +180,11 @@ const Tabs = ({ color }: { color: string }) => {
     </>
   );
 };
+
+function SwapModal() {
+  return (
+    <Swapper>
+      <SwapSuite inModal />
+    </Swapper>
+  );
+}
