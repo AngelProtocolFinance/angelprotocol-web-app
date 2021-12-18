@@ -18,7 +18,7 @@ export const contracts: Contracts = {
     [sc.lbp_router]: "terra1vc6wxu2adjr63df8hfc2jtfeh9nktfq59slwf5",
     [sc.lbp_lp]: "terra1udawd5mvys5xkwq8gqdq5frjkmn4feztel4m5r",
   },
-  [chains.testnet]: {
+  [chainIDs.testnet]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
@@ -29,7 +29,7 @@ export const contracts: Contracts = {
     [sc.lbp_router]: "terra19dpanzuhtmdsw8ds5zschrh4mnxcejc0ut6dnk",
     [sc.lbp_lp]: "terra19zgdunfrx79nqvznqmx4satj5kxndvmrsx502m",
   },
-  [chains.localterra]: {
+  [chainIDs.localterra]: {
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
     [sc.index_fund]: "",
     [sc.registrar]: "",
@@ -41,22 +41,22 @@ export const contracts: Contracts = {
     [sc.lbp_lp]: "",
   },
 };
-export const ap_wallets: { [index: string]: { [index: string]: string } } = {
-  [denoms.ether]: {
-    [chains.eth_kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
-    [chains.eth_ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
-  },
-  [denoms.btc]: {
-    [chains.btc_test]: "tb1qp6r3j2xr07f0qs2dvxx9xy4hk98c8f5r4l7xva",
-  },
-  [denoms.uusd]: {
-    [chains.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
-    [chains.mainnet]: "terra1y07m37w0g8nwclthv5wn3vwuf985cz0z6v9n6w", //replace with ap_wallet
-  },
-  [denoms.sol]: {
-    [chains.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",
-  },
-  [denoms.uatom]: {
-    [chains.cosmos_4]: "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x", //replace with ap_wallet
-  },
-};
+// export const ap_wallets: { [index: string]: { [index: string]: string } } = {
+//   [denoms.ether]: {
+//     [chainIDs.eth_kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
+//     [chainIDs.eth_ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
+//   },
+//   [denoms.btc]: {
+//     [chainIDs.btc_test]: "tb1qp6r3j2xr07f0qs2dvxx9xy4hk98c8f5r4l7xva",
+//   },
+//   [denoms.uusd]: {
+//     [chainIDs.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
+//     [chainIDs.mainnet]: "terra1y07m37w0g8nwclthv5wn3vwuf985cz0z6v9n6w", //replace with ap_wallet
+//   },
+//   [denoms.sol]: {
+//     [chainIDs.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",
+//   },
+//   [denoms.uatom]: {
+//     [chainIDs.cosmos_4]: "cosmos1epw9e02r3cdgem0c74847v2fm529rxatsm2v3x", //replace with ap_wallet
+//   },
+// };
