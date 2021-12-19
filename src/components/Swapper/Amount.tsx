@@ -65,7 +65,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-angel-grey text-2xl w-1/3 mt-8"
+          className="text-right p-2 text-angel-grey text-2xl w-2/3 mt-8"
         />
       </div>
       <ErrorMessage

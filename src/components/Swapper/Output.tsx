@@ -32,7 +32,7 @@ export default function Output() {
           </span>
         </label>
       </div>
-      <div className="text-right p-2 text-angel-grey text-2xl w-1/3 mt-8">
+      <div className="text-right p-2 text-angel-grey text-2xl w-2/3 mt-8">
         {return_amount}
       </div>
     </div>
