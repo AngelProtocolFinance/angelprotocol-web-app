@@ -20,13 +20,19 @@ export default function Output() {
           htmlFor="amount"
           className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading mb-2 rounded-md"
         >
-          <img className="w-10 h-10 mr-1 object-contain" src={icon} alt="" />
+          <img
+            className={`${
+              is_buy ? "w-9 h-9" : "w-10 h-10"
+            } mr-1 object-contain`}
+            src={icon}
+            alt=""
+          />
           <span className="block font-bold text-2xl">
             {is_buy ? "HALO" : "UST"}
           </span>
         </label>
       </div>
-      <div className="text-right p-2 text-angel-grey text-2xl float-right">
+      <div className="text-right p-2 text-angel-grey text-2xl w-1/3 mt-8">
         {return_amount}
       </div>
     </div>

@@ -48,7 +48,9 @@ export default function Amount() {
             className="flex items-center justify-center text-angel-grey text-lg uppercase font-heading mb-2 rounded-md"
           >
             <img
-              className="w-10 h-10 mr-1 object-contain"
+              className={`${
+                is_buy ? "w-10 h-10" : "w-9 h-9"
+              } mr-1 object-contain`}
               src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
               alt=""
             />
@@ -63,7 +65,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-angel-grey text-2xl w-20 float-right"
+          className="text-right p-2 text-angel-grey text-2xl w-1/3 mt-8"
         />
       </div>
       <ErrorMessage
