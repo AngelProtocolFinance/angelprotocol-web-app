@@ -52,7 +52,36 @@ export default function AuctionDetails() {
             Launch Description
           </h1>
           <p className="text-md font-light text-white-grey mb-4">
-            HALO is the governance token of Angel Protocol
+            HALO is the governance token of Angel Protocol, launched following a
+            number of months work together with Delphi Labs. Details of how the
+            token works can be found{" "}
+            <a
+              className="inline mr-2 w-5 text-angel-blue"
+              href="https://members.delphidigital.io/reports/angel-protocol-token-design/"
+            >
+              here.
+            </a>
+          </p>
+          <p>
+            Expanding on these tokenomics, do take a look at the recent
+            four-part series starting with{" "}
+            <a
+              className="inline mr-2 w-5 text-angel-blue"
+              href="https://angelprotocol.medium.com/halo-the-charitable-token-part-1-dc9e667b7dea?source=friends_link&sk=a62acb7590231090bb3da0febc7808cd"
+            >
+              Article One
+            </a>
+            from Angel Protocol.
+          </p>
+          <p>
+            Finally, for a quick video introduction to the $HALO token and what
+            it enables. Do watch and share{" "}
+            <a
+              className="inline mr-2 w-5 text-angel-blue"
+              href="https://youtu.be/sDAVEc2UYd4"
+            >
+              this short video.
+            </a>
           </p>
         </div>
         <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
