@@ -5,7 +5,7 @@ export default function Slippage() {
   return (
     <div className="bg-angel-blue bg-opacity-10 rounded-md p-1.5 flex items-center text-angel-grey gap-1">
       <p className="text-2xs uppercase font-bold font-heading mr-auto">
-        slippage tolerance
+        Slippage
       </p>
       <Option value="0.1" id={"slip_1"} />
       <Option value="0.5" id={"slip_2"} />
