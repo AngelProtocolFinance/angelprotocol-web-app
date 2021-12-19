@@ -12,6 +12,7 @@ export default function Amount(props: Props) {
   const { showModal } = useSetModal();
   function showSummary() {
     showModal<SummaryProps>(Summary, {
+      type: props.type,
       principal: props.locked,
       impact: props.liquid,
     });

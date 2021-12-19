@@ -1,7 +1,7 @@
 import { useSetModal } from "components/Nodal/Nodal";
 import toCurrency from "helpers/toCurrency";
 import { ReactText } from "react";
-export type SummaryProps = { principal: number; impact: number };
+export type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
   const { hideModal } = useSetModal();
   return (
@@ -14,25 +14,37 @@ export default function Summary(props: SummaryProps) {
       >
         ok
       </button>
-      <Text title="Principal">
-        The Principal is how much has been donated and earned from yield at this
-        date, less that transferred to the Current Account for immediate use. Of
-        the 20% yield, 75% goes to the Current Account, 25% reinvested
-      </Text>
-      <Text title="Impact">
-        The Impact is the cumulative total of direct donations to the Current
-        Account plus the funds distributed from the Principal. Assuming these
-        funds were used immediately, the Impact is how much the Charity has been
-        able to use day to day without touching the Principal.
-      </Text>
+      <Text type={props.type} title="Principal" />
+      <Text type={props.type} title="Impact" />
     </div>
   );
 }
 
-function Text(props: { title: string; children: ReactText }) {
+function Text(props: { type: string; title: string }) {
+  let textBlob;
+  if (props.type === "10years") {
+    if (props.title === "Principal") {
+      textBlob =
+        "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded at 20% per year.";
+    }
+    if (props.title === "Impact") {
+      textBlob =
+        "The Impact is the cumulative total of direct donations to the Current Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity will have been able to use day to day over 10 years without touching the Principal.";
+    }
+  } else {
+    if (props.title === "Principal") {
+      textBlob =
+        "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Current Account for immediate use. Of the 20% yield, 75% goes to the Current Account, 25% reinvested";
+    }
+    if (props.title === "Impact") {
+      textBlob =
+        "The Impact is the cumulative total of direct donations to the Current Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity has been able to use day to day without touching the Principal.";
+    }
+  }
+
   return (
     <p className="font-semibold text-xs text-grey-accent leading-snug mb-2">
-      <span className="font-bold">{props.title} :</span> {props.children}
+      <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );
 }
