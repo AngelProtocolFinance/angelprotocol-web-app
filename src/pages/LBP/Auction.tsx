@@ -149,16 +149,6 @@ const Tabs = ({ color }: { color: string }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-10 text-md text-angel-white mb-5">
-              HaloSwap{" "}
-              <a
-                className="text-angel-blue"
-                href="https://drive.google.com/file/d/19R5CiaZny7UYAIKNlRc4ssvqJDhETzKk/view?usp=sharing"
-                target="_blank"
-              >
-                Terms & Conditions
-              </a>
-            </div>
           </div>
         </div>
       </div>

@@ -114,6 +114,11 @@ export default function AuctionDetails() {
           PreIcon={"/favicon.png"}
           url="https://bit.ly/HaloSwap"
         />
+        <AuctionLink
+          content="HaloSwap Terms & Conditions"
+          PreIcon={"/favicon.png"}
+          url="https://drive.google.com/file/d/19R5CiaZny7UYAIKNlRc4ssvqJDhETzKk/view?usp=sharing"
+        />
       </div>
     </div>
   );
