@@ -3,7 +3,7 @@ import { useGetToken } from "contexts/AuthProvider";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
-import IndexFundTable from "./Table";
+import AllianceMembersTable from "./Table";
 import NewIndexFundModal from "./NewAllianceMemberModal";
 import UpdateMembersModal from "./UpdateMembersModal";
 import AdminSideNav from "../AdminSideNav";
@@ -32,9 +32,9 @@ export default function IndexFund() {
         </button>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
           <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-            <IndexFundTable
+            <AllianceMembersTable
               onEditClick={() => setShowUpdateModal(true)}
-            ></IndexFundTable>
+            ></AllianceMembersTable>
           </div>
         </div>
       </div>
