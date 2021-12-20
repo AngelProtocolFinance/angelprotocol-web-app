@@ -25,10 +25,12 @@ export default function AllianceMembers() {
     const result = prepareData(data);
     if (!equals(result, members)) {
       setMembers(result);
+      if (isLoading) {
+        setIsLoading(false);
+      }
     }
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members, isLoading]);
+  }, [members, isLoading, data]);
 
   const prepareData = (prevData: Details[] | undefined) => {
     let result: Member[] = [];
@@ -79,12 +81,14 @@ export default function AllianceMembers() {
           {isLoading ? (
             <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
           ) : (
-            <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-              <AllianceMembersTable
-                members={members}
-                onEditClick={(index: number) => onClickEdit(index)}
-              />
-            </div>
+            members.length > 0 && (
+              <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+                <AllianceMembersTable
+                  members={members}
+                  onEditClick={(index: number) => onClickEdit(index)}
+                />
+              </div>
+            )
           )}
         </div>
       </div>

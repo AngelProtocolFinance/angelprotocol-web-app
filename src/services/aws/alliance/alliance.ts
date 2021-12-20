@@ -6,7 +6,6 @@ const alliance_api = aws.injectEndpoints({
     donors: builder.query<Details[], unknown>({
       query: () => "alliance",
       transformResponse: (res: Result) => {
-        // const _donors: Donors = {};
         const _result = res.Items.map((donor) => {
           return {
             name: donor.name,
@@ -15,6 +14,7 @@ const alliance_api = aws.injectEndpoints({
             address: donor.address,
           };
         });
+
         _result.sort((a, b) => {
           const nameA = a.name.toUpperCase();
           const nameB = b.name.toUpperCase();
