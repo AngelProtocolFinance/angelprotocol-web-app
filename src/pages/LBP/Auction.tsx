@@ -87,19 +87,24 @@ function AuctionStats() {
         title="Ends in"
         value={<CountdownTimer deadline={end * 1000} start={start * 1000} />}
         Icon={FaStopwatch}
+        exClass="timeout-controls"
       />
       <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
     </div>
   );
 }
 
-const StatsDetails = ({ title, value, Icon }: LaunchStatsProps) => {
+const StatsDetails = ({ title, value, Icon, exClass }: LaunchStatsProps) => {
   return (
     <div className="stats-item">
       <span className="text-xs font-light text-light-grey uppercase">
         {title}
       </span>
-      <div className="flex items-center justify-center text-base xl:text-xl tracking-wide font-semibold text-white-grey font-heading">
+      <div
+        className={`flex items-center justify-center text-base xl:text-xl tracking-wide font-semibold text-white-grey font-heading ${
+          exClass ? exClass : ""
+        }`}
+      >
         {typeof value === "string" ? (
           <span className="mr-2 capitalize">{value}</span>
         ) : (

@@ -37,3 +37,8 @@
   @apply border-opacity-10;
   @apply shadow-xl;
 }
+
+.timeout-controls {
+  min-width: 140px;
+  justify-content: flex-start;
+}
