@@ -68,6 +68,7 @@ export default function SwapForm() {
           className="text-angel-blue"
           target="_blank"
           href="https://drive.google.com/file/d/19R5CiaZny7UYAIKNlRc4ssvqJDhETzKk/view?usp=sharing"
+          rel="noreferrer"
         >
           Terms & Conditions
         </a>

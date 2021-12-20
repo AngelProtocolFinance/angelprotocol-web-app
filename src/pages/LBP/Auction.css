@@ -37,3 +37,13 @@
   @apply border-opacity-10;
   @apply shadow-xl;
 }
+
+.stats-item .duration {
+  min-width: 110px;
+  justify-content: flex-start;
+}
+
+.stats-item .ends-in {
+  min-width: 160px;
+  justify-content: flex-start;
+}
