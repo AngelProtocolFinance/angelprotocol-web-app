@@ -13,6 +13,7 @@ import { UseWalletProvider } from "use-wallet";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
 import AdminLogin from "pages/Admin/Login/AdminLogin";
 import CharityApps from "pages/Admin/CharityApps/CharityApps";
+import AllianceMembers from "pages/Admin/AllianceMembers/AllianceMembers";
 import DappHead from "components/Headers/DappHead";
 
 const Admin = () => {
@@ -57,7 +58,7 @@ const Admin = () => {
                 />
                 <Route
                   path={`${path}/${admin.alliance_members}`}
-                  component={IndexFund}
+                  component={AllianceMembers}
                 />
                 <Route path={`${path}/${admin.login}`} component={AdminLogin} />
                 <Route path={`${path}/${admin.index}`} component={IndexFund} />
