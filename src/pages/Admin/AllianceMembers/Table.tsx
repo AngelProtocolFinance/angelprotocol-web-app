@@ -14,7 +14,7 @@ const MemberHeader = () => {
         </th>
         <th>
           <span className="uppercase text-xs font-semibold text-gray-700 text-center tracking-wider">
-            Members
+            Wallets
           </span>
         </th>
       </tr>
@@ -22,14 +22,19 @@ const MemberHeader = () => {
   );
 };
 
-const MemberRow = ({ onUpdateClick, member }: any) => {
+const MemberRow = ({ onUpdateClick, member, index }: any) => {
   return (
-    <tr className="grid grid-cols-4 bg-white border-b border-gray-200 bg-white">
+    <tr
+      key={index}
+      className="grid grid-cols-4 bg-white border-b border-gray-200 bg-white"
+    >
       <td className="justify-self-center">
         <img
           src={member.icon}
           alt=""
-          className="row-span-2 w-32 h-24 p-3 rounded-sm object-contain mr-4 m-1"
+          className={`w-20 h-16 rounded-sm object-contain m-4 ${
+            member.iconLight && "bg-gray-500"
+          }`}
         />
       </td>
       <td className="col-span-2 self-center px-5 py-5 text-sm">
@@ -47,14 +52,20 @@ const MemberRow = ({ onUpdateClick, member }: any) => {
   );
 };
 
-const AllianceMembersTable = ({ onEditClick }: any) => {
+const AllianceMembersTable = ({ members, onEditClick }: any) => {
   return (
     <table className="min-w-full leading-normal">
       <MemberHeader />
       <tbody>
-        {mockDataList.map((member: any) => (
-          <MemberRow member={member} onUpdateClick={onEditClick}></MemberRow>
-        ))}
+        {members &&
+          members.map((member: any, index: number) => (
+            <MemberRow
+              key={index}
+              member={member}
+              index={index}
+              onUpdateClick={onEditClick}
+            />
+          ))}
       </tbody>
     </table>
   );

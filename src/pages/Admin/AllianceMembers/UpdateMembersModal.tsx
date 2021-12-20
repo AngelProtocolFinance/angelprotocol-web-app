@@ -12,7 +12,7 @@ const UpdateMembersModal = () => {
   return (
     <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-115 p-5 text-center">
       <span className="text-2xl font-semibold inline-block mb-1">
-        Update Members
+        Update Wallets
       </span>
 
       <AddressSelector></AddressSelector>
