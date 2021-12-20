@@ -22,7 +22,7 @@ export default class Contract {
   constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;
     this.chainID = this.wallet?.network.chainID || chainIDs.mainnet;
-    this.url = this.wallet?.network.lcd || terra_lcds[chainIDs.mainnet];
+    this.url = terra_lcds[this.chainID];
     this.walletAddr = this.wallet?.walletAddress;
     this.client = new LCDClient({
       chainID: this.chainID,
