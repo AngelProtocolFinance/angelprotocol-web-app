@@ -35,7 +35,7 @@ export default function SwapForm() {
       <Amount />
       <button
         type="button"
-        className="text-blue-accent active:text-angel-blue hover:text-angel-blue justify-self-center my-6"
+        className="text-blue-accent active:text-angel-blue hover:text-angel-blue justify-self-center my-3"
         onClick={switch_currency}
       >
         <CgArrowsExchangeAltV className="text-3xl" />
