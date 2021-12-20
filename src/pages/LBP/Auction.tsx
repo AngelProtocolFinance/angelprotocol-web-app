@@ -81,13 +81,14 @@ function AuctionStats() {
           title="Duration"
           value={`${duration_days} days`}
           Icon={FaClock}
+          exClass="duration"
         />
       )}
       <StatsDetails
         title="Ends in"
         value={<CountdownTimer deadline={end * 1000} start={start * 1000} />}
         Icon={FaStopwatch}
-        exClass="timeout-controls"
+        exClass="ends-in"
       />
       <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
     </div>

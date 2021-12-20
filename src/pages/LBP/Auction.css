@@ -38,7 +38,12 @@
   @apply shadow-xl;
 }
 
-.timeout-controls {
+.stats-item .duration {
+  min-width: 110px;
+  justify-content: flex-start;
+}
+
+.stats-item .ends-in {
   min-width: 160px;
   justify-content: flex-start;
 }
