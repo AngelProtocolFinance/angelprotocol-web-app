@@ -23,7 +23,7 @@ export default function Display() {
   // include $HALO token in list of tokens to show in wallet
   const coins = others.concat({
     amount: halo_balance.toString(),
-    denom: "uhalo",
+    denom: denoms.uhalo,
   });
 
   return (
