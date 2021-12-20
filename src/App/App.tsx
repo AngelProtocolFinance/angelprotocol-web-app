@@ -8,7 +8,8 @@ import Nodal from "components/Nodal/Nodal";
 import Views from "./Views";
 import Phantom from "wallets/Phantom";
 import Keplr from "wallets/Keplr";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
+import { eth_rpcs } from "constants/urls";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
@@ -38,20 +39,17 @@ export default function App() {
 
 //ethereum
 const eth_connectors = {
-  torus: { chainId: +chains.eth_main },
+  torus: { chainId: +chainIDs.eth_main },
   walletconnect: {
     rpc: {
-      [chains.eth_main]:
-        "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-      [chains.eth_ropsten]:
-        "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-      [chains.eth_kovan]:
-        "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+      [chainIDs.eth_main]: eth_rpcs[chainIDs.eth_main],
+      [chainIDs.eth_ropsten]: eth_rpcs[chainIDs.eth_ropsten],
+      [chainIDs.eth_kovan]: eth_rpcs[chainIDs.eth_kovan],
     },
     qrcode: false,
   },
   ledger: {
-    chainId: +chains.eth_main,
-    url: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+    chainId: +chainIDs.eth_main,
+    url: eth_rpcs[chainIDs.eth_main],
   },
 };

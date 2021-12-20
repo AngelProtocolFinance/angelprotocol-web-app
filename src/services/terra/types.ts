@@ -9,9 +9,9 @@ export interface BalanceRes {
   balances: Coin.Data[];
 }
 
-export type ContractQueryArgs = {
+export type ContractQueryArgs<T = object> = {
   address: string;
-  msg: object;
+  msg: T;
 };
 
 //Block
@@ -94,4 +94,50 @@ export type GovConfig = {
   timelock_period: number; //1000 lock period of deposit?
   proposal_deposit: string; //"10000000000"need 10k HALO to make poll
   snapshot_period: number; //10 num blocks passed when fresh update is made available
+};
+
+//lbp_factor
+export type Token = {
+  contract_addr: string;
+};
+export type NativeToken = {
+  denom: string;
+};
+export interface WeightedAssetInfo<T> {
+  info: T extends Token ? { token: T } : { native_token: T };
+  start_weight: string; //"96"
+  end_weight: string; //"50"
+}
+
+export interface WeightedPoolAssetInfo<T> extends WeightedAssetInfo<T> {
+  amount: string; //for simul and pool result
+}
+
+export type PairInfo = {
+  asset_infos: [WeightedAssetInfo<Token>, WeightedAssetInfo<NativeToken>];
+  token_code_id: number;
+  start_time: number;
+  end_time: number;
+  description?: string;
+  commission_rate: string; //""0.02""
+};
+
+export type Simulation = {
+  return_amount: string;
+  spread_amount: string;
+  commission_amount: string;
+  ask_weight: string;
+  offer_weight: string;
+  is_placeholder?: true;
+};
+
+export type Pool = {
+  assets: [WeightedPoolAssetInfo<Token>, WeightedPoolAssetInfo<NativeToken>];
+  total_share: string;
+};
+
+export type PoolBalance = {
+  native_token: string;
+  token: string;
+  is_placeholder?: true;
 };

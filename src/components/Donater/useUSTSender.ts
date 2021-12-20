@@ -11,16 +11,16 @@ import handleTerraError from "helpers/handleTerraError";
 import useUSTEstimator from "./useUSTEstimator";
 import Contract from "contracts/Contract";
 import { useGetKeplr } from "wallets/Keplr";
-import { chains } from "contracts/types";
-import { terra_mainnet_rpc } from "wallets/info_terra_mainnet";
+import { chainIDs } from "contracts/types";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
 import { setStage } from "services/transaction/transactionSlice";
 import { Wallets } from "services/wallet/types";
-import { ap_wallets } from "constants/contracts";
+import { ap_wallets } from "constants/ap_wallets";
 import handleKeplrError from "./handleKeplrError";
 import { Step } from "services/transaction/types";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
+import { terra_rpcs } from "constants/urls";
 
 function useUSTSender() {
   const dispatch = useSetter();
@@ -108,11 +108,11 @@ function useUSTSender() {
         sign: { preferNoSetFee: true },
       };
 
-      const offline_signer = provider.getOfflineSigner!(chains.mainnet);
+      const offline_signer = provider.getOfflineSigner!(chainIDs.mainnet);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
       const client = await SigningStargateClient.connectWithSigner(
-        terra_mainnet_rpc,
+        terra_rpcs[chainIDs.mainnet],
         offline_signer
       );
 
@@ -137,7 +137,7 @@ function useUSTSender() {
 
       const res = await client.sendTokens(
         address,
-        ap_wallets[denoms.uusd][chains.mainnet],
+        ap_wallets[denoms.uusd][chainIDs.mainnet],
         [create_coin(dec_amount.toNumber(), denoms.uusd)],
         fee
       );
@@ -149,7 +149,7 @@ function useUSTSender() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
+                url: `https://finder.terra.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
               },
             })
           );
@@ -163,7 +163,7 @@ function useUSTSender() {
           step: Step.success,
           content: {
             message: "Thank you for your donation!",
-            url: `https://finder.terra.money/${chains.mainnet}/tx/${res.transactionHash}`,
+            url: `https://finder.terra.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
           },
         })
       );

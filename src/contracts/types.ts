@@ -1,6 +1,4 @@
-import { AccAddress } from "@terra-money/terra.js";
-
-export enum chains {
+export enum chainIDs {
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
@@ -22,9 +20,11 @@ export enum sc {
   registrar = "registrar",
   anchor = "anchor",
   halo_token = "halo_token",
-  halo_stake = "halo_stake",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",
+  lbp_pair = "lbp_pair",
+  lbp_router = "lbp_router",
+  lbp_lp = "lbp_lp",
 }
 
 export type URLs = {
@@ -33,7 +33,7 @@ export type URLs = {
 
 //Contract types
 export type ContractAddrs = {
-  [index: string]: AccAddress;
+  [index: string]: string;
 };
 
 //Index Fund types
@@ -71,7 +71,7 @@ export type Balance = {
 };
 
 export interface OwnedBalance extends Balance {
-  address: AccAddress;
+  address: string;
 }
 
 export interface Holdings {

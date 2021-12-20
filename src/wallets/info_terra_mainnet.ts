@@ -1,6 +1,7 @@
 import { ChainInfo } from "@keplr-wallet/types";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { currency_text, denoms } from "constants/currency";
+import { terra_lcds, terra_rpcs } from "constants/urls";
 
 const uusd_info = {
   coinDenom: currency_text[denoms.uusd],
@@ -9,15 +10,11 @@ const uusd_info = {
   // coinGeckoId: coingecko_ids[denoms.uusd],
 };
 
-export const terra_mainnet_rpc =
-  "https://columbus-5--rpc--archive.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
-export const terra_mainnet_lcd =
-  "https://columbus-5--lcd--full.datahub.figment.io/apikey/6a264141abfde52c7f2ac6473e587eff";
 export const info_terra_mainnet: ChainInfo = {
-  chainId: chains.mainnet,
+  chainId: chainIDs.mainnet,
   chainName: "Terra (UST)",
-  rpc: terra_mainnet_rpc,
-  rest: terra_mainnet_lcd,
+  rpc: terra_rpcs[chainIDs.mainnet],
+  rest: terra_lcds[chainIDs.mainnet],
   stakeCurrency: uusd_info,
   bip44: {
     //no cointype for UST BIP44 - just use coin_type of cosmos

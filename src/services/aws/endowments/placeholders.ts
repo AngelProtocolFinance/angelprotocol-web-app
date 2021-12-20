@@ -1,3 +1,4 @@
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import image from "assets/images/home-banner.jpg";
 import { Profile } from "./types";
 
@@ -20,4 +21,12 @@ export const profile: Profile = {
   un_sdg: "0", //"4"
   facebook_page: "", //
   is_placeholder: true,
+};
+
+export const charity_details = {
+  description: "",
+  url: "https://angelprotocol.io",
+  name: "Charity",
+  icon: defaultIcon,
+  iconLight: false,
 };

@@ -264,7 +264,7 @@ export const ConnectButton = ({
     <button
       onClick={onHandleClick}
       disabled={disabled}
-      className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-3xl tracking-widest uppercase text-md font-bold font-heading text-white shadow-sm focus:outline-none"
+      className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center w-full h-12 rounded-md shadow-sm font-heading tracking-widest uppercase text-md font-semibold font-heading text-white shadow-sm focus:outline-none"
     >
       {loading ? "Connecting..." : "Connect wallet"}
     </button>

@@ -1,6 +1,6 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import { chains, Balance } from "contracts/types";
+import { chainIDs, Balance } from "contracts/types";
 import Registrar from "contracts/Registrar";
 import Account from "contracts/Account";
 
@@ -13,7 +13,7 @@ export default function useBoard() {
   const [error, setError] = useState("");
   const [charities, setCharities] = useState<Array<[string, Balance]>>([]);
   const wallet = useConnectedWallet();
-  const chainID = wallet?.network.chainID || chains.mainnet;
+  const chainID = wallet?.network.chainID || chainIDs.mainnet;
   const storage_key = `leaderboard_${chainID}`;
 
   useEffect(() => {
@@ -34,10 +34,12 @@ export default function useBoard() {
         setLoading(true);
         const registrar = new Registrar(wallet);
         const _endowments = await registrar.getEndowmentList();
-        const queries = _endowments.map((endowment: any) => {
-          const account = new Account(endowment.address, wallet);
-          return account.getBalance();
-        });
+        const queries = _endowments
+          .filter((endowment) => endowment.status === "Approved")
+          .map((endowment: any) => {
+            const account = new Account(endowment.address, wallet);
+            return account.getBalance();
+          });
 
         const results = await Promise.allSettled(queries);
         const _sums: any = {};

@@ -21,7 +21,7 @@ export default function useDisplay() {
     hideDetails,
     chainId,
     maskedAddr,
-    balance: toCurrency(balance, 3),
+    balance: toCurrency(balance, 3, true),
     detailsShown,
   };
 }

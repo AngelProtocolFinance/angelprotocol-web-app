@@ -1,11 +1,11 @@
-import CharityLeaderboard from "./Charity/Board";
+import CharityLeaderboard from "./Board";
 import DappHead from "components/Headers/DappHead";
 
 export default function Leaderboard() {
   return (
-    <section className="grid content-start">
+    <section className="grid content-start padded-container">
       <DappHead />
-      <h3 className="mt-6 padded-container uppercase text-white-grey text-3xl font-bold">
+      <h3 className="mt-6 uppercase text-white-grey text-3xl font-bold">
         Leaderboard
       </h3>
       <CharityLeaderboard />

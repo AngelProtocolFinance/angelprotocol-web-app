@@ -3,6 +3,7 @@ import formatTimer from "./formatTimer";
 
 type Props = {
   deadline: string | number;
+  start: number | any;
 };
 
 type FormattedProps = {
@@ -12,7 +13,7 @@ type FormattedProps = {
   seconds: string | number;
 };
 
-export default function CountdownTimer({ deadline }: Props) {
+export default function CountdownTimer({ deadline, start }: Props) {
   const [{ days, hours, minutes, seconds }, setFormattedDeadline] =
     useState<FormattedProps>({
       days: 0,
@@ -22,13 +23,13 @@ export default function CountdownTimer({ deadline }: Props) {
     });
   useEffect(() => {
     const interval = setInterval(() => {
-      const formatted = formatTimer(deadline);
+      const formatted = formatTimer(deadline, start);
       setFormattedDeadline(formatted);
     }, 1000);
     return () => {
       clearInterval(interval);
     };
-  }, [deadline]);
+  }, [deadline, start]);
 
   return (
     <div className="flex items-center justify-center font-heading">

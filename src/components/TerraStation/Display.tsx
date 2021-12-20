@@ -28,7 +28,7 @@ export default function Display() {
           {maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm text-white-grey sm:border-l">
-          UST {toCurrency(ustAmount, 3)}
+          UST {toCurrency(ustAmount, 3, true)}
         </span>
       </button>
       {detailsShown && (

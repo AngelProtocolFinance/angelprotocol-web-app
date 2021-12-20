@@ -1,136 +1,161 @@
-import useTooltip from "hooks/useTooltip";
-import { FaEthereum } from "react-icons/fa";
-import { IoIosCopy, IoMdInformationCircleOutline } from "react-icons/io";
+import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Copier from "components/Copier/Copier";
+import { Addr } from "components/Copier/types";
+import useSaleStatus from "components/Swapper/useSaleStatus";
+import LBP from "contracts/LBP";
+import toCurrency from "helpers/toCurrency";
+import { useMemo } from "react";
+import { pool_balance } from "services/terra/placeholders";
+import { terra } from "services/terra/terra";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
   PreIcon?: any;
   content: string;
-  PostIcon?: any;
   url: string;
-  type?: "copy" | "link";
 };
 
-function AuctionLink({
-  PreIcon,
-  content,
-  PostIcon,
-  url,
-  type = "copy",
-}: AuctionLinkProps) {
+function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
   return (
     <a
-      href="{url}"
-      className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
+      href={url}
+      className="icon-link py-1 pb-1.5 pr-4 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4"
+      target="_blank"
+      rel="noopenner noreferrer"
     >
-      {PreIcon && <PreIcon className="inline mr-2 text-angel-blue" />}
-      <span className="text-sm text-angel-grey font-light">{content}</span>
-      {PostIcon && (
-        <PostIcon className="inline ml-2 text-angel-blue" size={15} />
-      )}
+      <img
+        className="inline mr-2 w-5 text-angel-blue"
+        alt="link icon"
+        src={PreIcon}
+      />
+      <span className="text-md text-angel-grey font-light">{content}</span>
     </a>
   );
 }
 
 export default function AuctionDetails() {
+  const wallet = useConnectedWallet();
+  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+
+  const { is_live, end, start } = useSaleStatus();
+  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
+    lbp.gen_pool_args()
+  );
+  const remaining_halo = new Dec(pool.token).div(1e6).toNumber();
+
   return (
-    <div className="flex flex-wrap justify-between items-start">
-      <div className="auction-details flex-grow">
-        <div className="launch-description">
-          <h1 className="text-md font-semibold text-white-grey mb-5">
-            Launch Description
-          </h1>
-          <p className="text-md font-light text-white-grey mb-4">
-            HALO is the governance token of Angel Protocol
-          </p>
-        </div>
-        <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
+    <div className="auction-details font-heading">
+      <div className="launch-description mb-10">
+        <h1 className="text-md font-semibold text-white-grey mb-5">
           Launch Description
         </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-          <Details title="status" value="Inactive" />
-          <Details title="start date" value="December 19, 2021, 15:00 AM GMT" />
-          <Details title="end date" value="December 21, 2021, 15:00 AM GMT" />
-        </div>
-        <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
-          Auction statistics
-        </h1>
-        <div className="auction-stats w-full flex flex-wrap gap-5 mt-3">
-          <Details title="Starting HALO" value="80000000.00000" />
-          <Details title="Remaining HALO" value="1245851671.60214" />
-        </div>
-      </div>
-      <div className="contract-details w-128 p-5">
-        <p className="font-semibold text-md mb-4">
-          HALO Token Contract Address
+        <p className="text-md font-light text-white-grey mb-4">
+          HALO is the governance token of Angel Protocol, launched following a
+          number of months work together with Delphi Labs. Details of how the
+          token works can be found{" "}
+          <a
+            className="font-light text-angel-blue"
+            href="https://members.delphidigital.io/reports/angel-protocol-token-design/"
+          >
+            here
+          </a>
+          .
         </p>
-        <AuctionLink
-          content="terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
-          PostIcon={IoIosCopy}
-          url="#"
-        ></AuctionLink>
-        <p className="font-semibold text-md my-4">Links </p>
-        <AuctionLink
-          content="HALO Token on ET Finder"
-          PreIcon={FaEthereum}
-          url="https://finder.extraterrestrial.money/testnet/address/terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq"
-          type="link"
-        ></AuctionLink>
-        <AuctionLink
-          content="Auction Owner on ET Finder"
-          PreIcon={FaEthereum}
-          url="https://finder.extraterrestrial.money/testnet/address/terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
-          type="link"
-        ></AuctionLink>
-        <AuctionLink
-          content="Auction Liquidity Bootstrapping Pool Pair"
-          PreIcon={FaEthereum}
-          url="https://finder.extraterrestrial.money/testnet/address/terra1j0zd9flhdckzlwulkaqzc4vlzg02nk4e4srcgl"
-          type="link"
-        ></AuctionLink>
-        <AuctionLink
-          content="Token Launch Auction Documentation"
-          PreIcon={FaEthereum}
-          url="#"
-          type="link"
-        ></AuctionLink>
+        <p className="text-md font-light text-white-grey mb-4">
+          Expanding on these tokenomics, do take a look at the recent four-part
+          series starting with{" "}
+          <a
+            className="font-light text-angel-blue"
+            href="https://angelprotocol.medium.com/halo-the-charitable-token-part-1-dc9e667b7dea?source=friends_link&sk=a62acb7590231090bb3da0febc7808cd"
+          >
+            Article One
+          </a>{" "}
+          from Angel Protocol.
+        </p>
+        <p className="text-md font-light text-white-grey mb-4">
+          Finally, for a quick video introduction to the $HALO token and what it
+          enables. Do watch and share{" "}
+          <a
+            className="font-light text-angel-blue"
+            href="https://youtu.be/sDAVEc2UYd4"
+          >
+            this short video
+          </a>
+          .
+        </p>
+      </div>
+      <div className="launch-details flex flex-row">
+        <div className="lg:w-2/3 md:w-full">
+          <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
+            Launch Details
+          </h1>
+          <div className="w-full flex flex-wrap gap-5 mt-3">
+            <Details title="status" value={is_live ? "Active" : "Inactive"} />
+            <Details
+              title="start date"
+              value={new Date(start * 1000).toLocaleString()}
+            />
+            <Details
+              title="end date"
+              value={new Date(end * 1000).toLocaleString()}
+            />
+          </div>
+          <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
+            HaloSwap Statistics
+          </h1>
+          <div className="w-full flex flex-wrap gap-5 mt-3">
+            {/* <Details title="Starting HALO" value="80000000.00000" /> */}
+            <Details
+              title="Remaining HALO"
+              value={toCurrency(remaining_halo, 2)}
+            />
+          </div>
+        </div>
+        <div className="contract-details lg:w-1/3 md:w-full flex flex-col">
+          <p className="font-semibold text-md mb-4">
+            HALO Token Contract Address
+          </p>
+          <div className="icon-link py-1 pb-1.5 px-3 bg-gray-100 inline-block shadow-md rounded-full mb-4">
+            <span className="text-xs text-angel-grey font-light pr-1">
+              {"terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"}
+            </span>
+            <Copier
+              text={"terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq" as Addr}
+              colorClass="text-angel-blue"
+            />
+          </div>
+          <p className="font-semibold text-md my-4">Links </p>
+          <AuctionLink
+            content="HALO Token on ET Finder"
+            PreIcon={"/favicon.png"}
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"
+          />
+          <AuctionLink
+            content="HaloSwap Owner on ET Finder"
+            PreIcon={"/favicon.png"}
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1numzqm5mgr56ftd4y8mfen7705nfs4vpz5jf0s"
+          />
+          <AuctionLink
+            content="HaloSwap Pair  on ET Finder"
+            PreIcon={"/favicon.png"}
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e"
+          />
+          <AuctionLink
+            content="HaloSwap Documentation"
+            PreIcon={"/favicon.png"}
+            url="https://bit.ly/HaloSwap"
+          />
+          <AuctionLink
+            content="HaloSwap Terms & Conditions"
+            PreIcon={"/favicon.png"}
+            url="https://drive.google.com/file/d/19R5CiaZny7UYAIKNlRc4ssvqJDhETzKk/view?usp=sharing"
+          />
+        </div>
       </div>
     </div>
   );
 }
-
-const InfoCard = ({
-  content,
-  Icon = IoMdInformationCircleOutline,
-}: {
-  content: string;
-  Icon?: any;
-}) => {
-  const { enter, exit, Tooltip } = useTooltip(InfoPopup);
-
-  function InfoPopup() {
-    return (
-      <div className="absolute left-2 bg-white font-heading rounded-md text-sm shadow-lg z-10 p-4 text-left">
-        <p className="text-sm font-light text-black">{content}</p>
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className="flex justify-between relative bg-white text-angel-grey shadow-md rounded-lg p-3 mb-3"
-      style={{ width: "180px" }}
-    >
-      <span className="font-light text-sm">{content}</span>
-      <Icon
-        className="cursor-pointer"
-        onMouseEnter={enter}
-        onMouseLeave={exit}
-      />
-      <Tooltip />
-    </div>
-  );
-};
 
 const Details = ({ title, value, Icon }: LaunchStatsProps) => {
   return (

@@ -5,6 +5,7 @@ import useWalletSuite from "components/WalletSuite/useWalletSuite";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
+import { IoClose } from "react-icons/io5";
 
 export default function DappHead() {
   useWalletSuite();
@@ -16,17 +17,18 @@ export default function DappHead() {
 
   return (
     <header
-      className={`grid grid grid-cols-1a lg:grid-cols-a1a items-center w-full h-24 z-10 padded-container`}
+      className={`mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3`}
     >
       <Logo />
       <nav className="w-fill grid grid-cols-a1a items-center justify-items-end lg:mx-5">
         <DappMenu />
         <WalletSuite />
-        <button
-          className={`text-angel-grey block lg:hidden ml-5`}
-          onClick={toggleNav}
-        >
-          <FiMenu className="text-2xl" />
+        <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
+          {navShown ? (
+            <IoClose className="text-2xl" />
+          ) : (
+            <FiMenu className="text-2xl" />
+          )}
         </button>
         {navShown && <MobileDappNav />}
       </nav>

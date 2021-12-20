@@ -1,0 +1,49 @@
+.content-section {
+  @apply flex;
+  @apply flex-col;
+  @apply justify-start;
+  @apply w-full;
+  @apply md:mx-auto;
+  @apply md:container;
+  @apply text-white;
+  @apply min-h-3/4;
+  @apply gap-0;
+  @apply mt-10;
+
+  max-height: 1700px;
+}
+
+.auction-section {
+  @apply flex;
+  @apply w-full;
+  @apply px-10;
+  @apply gap-5;
+
+  height: 700px;
+}
+
+.auction-data-section {
+  @apply flex;
+  @apply flex-col;
+  @apply w-full;
+  @apply xl:w-3/5;
+  @apply h-full;
+  @apply p-5;
+  @apply gap-3;
+  @apply rounded-md;
+  @apply bg-white;
+  @apply bg-opacity-10;
+  @apply border;
+  @apply border-opacity-10;
+  @apply shadow-xl;
+}
+
+.stats-item .duration {
+  min-width: 110px;
+  justify-content: flex-start;
+}
+
+.stats-item .ends-in {
+  min-width: 160px;
+  justify-content: flex-start;
+}
