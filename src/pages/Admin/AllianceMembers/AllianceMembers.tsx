@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import AllianceMembersTable from "./Table";
-import NewIndexFundModal from "./NewAllianceMemberModal";
+import NewMemberModal from "./NewMemberModal";
 import UpdateMembersModal from "./UpdateMembersModal";
 import AdminSideNav from "../AdminSideNav";
 
-export default function IndexFund() {
-  const [showIndexModal, setShowIndexModal] = useState(false);
+export default function AllianceMembers() {
+  const [showNewModal, setShowNewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const decodedToken = useGetToken();
 
@@ -26,7 +26,7 @@ export default function IndexFund() {
         </h2>
         <button
           className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-semibold "
-          onClick={() => setShowIndexModal(true)}
+          onClick={() => setShowNewModal(true)}
         >
           Add New Member
         </button>
@@ -38,9 +38,9 @@ export default function IndexFund() {
           </div>
         </div>
       </div>
-      {showIndexModal && (
-        <Modal setShown={() => setShowIndexModal(false)}>
-          <NewIndexFundModal />
+      {showNewModal && (
+        <Modal setShown={() => setShowNewModal(false)}>
+          <NewMemberModal />
         </Modal>
       )}
       {showUpdateModal && (

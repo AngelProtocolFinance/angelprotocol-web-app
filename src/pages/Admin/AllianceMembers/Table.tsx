@@ -1,16 +1,24 @@
 const MemberHeader = () => {
   return (
-    <tr className="grid grid-cols-4 border-b border-gray-200 bg-white">
-      <td className="px-5 py-5 text-sm">
-        <span className="text-normal font-sans text-center">Icon</span>
-      </td>
-      <td className="col-span-2 px-5 py-5 text-sm">
-        <span className="text-normal font-sans text-center">Name</span>
-      </td>
-      <td className="px-5 py-5 text-sm">
-        <span className="text-normal font-sans text-center">Members</span>
-      </td>
-    </tr>
+    <thead>
+      <tr className="grid grid-cols-4 border-b-2 border-gray-200 bg-gray-100 py-2">
+        <th>
+          <span className="uppercase text-xs font-semibold text-gray-700 text-center tracking-wider">
+            Icon
+          </span>
+        </th>
+        <th className="col-span-2">
+          <span className="uppercase text-xs font-semibold text-gray-700 text-center tracking-wider">
+            Name
+          </span>
+        </th>
+        <th>
+          <span className="uppercase text-xs font-semibold text-gray-700 text-center tracking-wider">
+            Members
+          </span>
+        </th>
+      </tr>
+    </thead>
   );
 };
 
