@@ -20,18 +20,16 @@ export default function DappHead() {
       className={`mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3`}
     >
       <Logo />
-      <nav className="w-fill grid grid-cols-a1a items-center justify-items-end lg:mx-5">
-        <DappMenu />
-        <WalletSuite />
-        <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
-          {navShown ? (
-            <IoClose className="text-2xl" />
-          ) : (
-            <FiMenu className="text-2xl" />
-          )}
-        </button>
-        {navShown && <MobileDappNav />}
-      </nav>
+      <DappMenu />
+      <WalletSuite />
+      <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
+        {navShown ? (
+          <IoClose className="text-2xl" />
+        ) : (
+          <FiMenu className="text-2xl" />
+        )}
+      </button>
+      {navShown && <MobileDappNav />}
     </header>
   );
 }
