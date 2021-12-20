@@ -2,14 +2,14 @@ import { Dec } from "@terra-money/terra.js";
 import { StdFee, coin as create_coin } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { denoms } from "constants/currency";
-import { chains } from "contracts/types";
+import { chainIDs } from "contracts/types";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { DWindow } from "types/window";
 import { useGetKeplr } from "wallets/Keplr";
 import { Values } from "./types";
-import { cosmos_4_rpc } from "constants/urls";
-import { ap_wallets } from "constants/contracts";
+import { cosmos4_rpcs } from "constants/urls";
+import { ap_wallets } from "constants/ap_wallets";
 import { useSetter } from "store/accessors";
 import { setStage, setFormError } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
@@ -19,7 +19,11 @@ import handleKeplrError from "./handleKeplrError";
 const dwindow: DWindow = window;
 export default function useAtomSender() {
   const { provider } = useGetKeplr();
-  const { watch, setValue } = useFormContext<Values>();
+  const {
+    watch,
+    setValue,
+    formState: { isValid },
+  } = useFormContext<Values>();
   const handleTxError = useTxErrorHandler();
   const dispatch = useSetter();
   const currency = watch("currency");
@@ -27,6 +31,7 @@ export default function useAtomSender() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid) return;
         //don't run this estimator when currency is not uatom
         if (currency !== denoms.uatom) return;
         dispatch(setFormError(""));
@@ -54,11 +59,11 @@ export default function useAtomSender() {
         return;
       }
 
-      const offline_signer = dwindow.getOfflineSigner!(chains.cosmos_4);
+      const offline_signer = dwindow.getOfflineSigner!(chainIDs.cosmos_4);
       const accounts = await offline_signer.getAccounts();
       const address = accounts[0].address;
       const client = await SigningStargateClient.connectWithSigner(
-        cosmos_4_rpc,
+        cosmos4_rpcs[chainIDs.cosmos_4],
         offline_signer
       );
 
@@ -81,7 +86,7 @@ export default function useAtomSender() {
 
       const res = await client.sendTokens(
         address,
-        ap_wallets[denoms.uatom][chains.cosmos_4],
+        ap_wallets[denoms.uatom][chainIDs.cosmos_4],
         [create_coin(dec_amount.toNumber(), denoms.uatom)],
         fee
       );

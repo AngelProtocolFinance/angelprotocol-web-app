@@ -29,7 +29,7 @@ export default function CountdownTimer({ deadline, start }: Props) {
     return () => {
       clearInterval(interval);
     };
-  }, [deadline]);
+  }, [deadline, start]);
 
   return (
     <div className="flex items-center justify-center font-heading">

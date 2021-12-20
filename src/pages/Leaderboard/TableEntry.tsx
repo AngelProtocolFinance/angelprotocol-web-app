@@ -6,14 +6,9 @@ import projectFunds from "./projectFunds";
 type Props = {
   address: string;
   balance: Balance;
-  chainID: string;
 };
 
-function show10yrModal() {
-  console.log("Clicked me!! hahaha!");
-}
-
-export default function Entry({ address, balance, chainID }: Props) {
+export default function TableEntry({ address, balance }: Props) {
   const { locked, liquid } = projectFunds(
     10,
     balance.total_locked,
@@ -25,7 +20,7 @@ export default function Entry({ address, balance, chainID }: Props) {
   return (
     <tr className="border-b">
       <td>
-        <Description address={address} chainID={chainID} />
+        <Description address={address} />
       </td>
       <td>
         <div className="flex flex-col w-40">

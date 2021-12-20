@@ -1,11 +1,15 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { useWallet as useEthWallet } from "use-wallet";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSetter } from "store/accessors";
 import { setLoading, setActive } from "services/wallet/walletSlice";
 import { Wallets, WalletStates } from "services/wallet/types";
 import { useGetPhantom } from "wallets/Phantom";
 import { useGetKeplr } from "wallets/Keplr";
+import { updateChainID } from "services/chain/chainSlice";
+import { chainIDs } from "contracts/types";
+import { chains } from "services/chain/types";
+import { terra } from "services/terra/terra";
 
 export default function useWalletSuite() {
   const { loading: phantomLoading, connected: phantomConnected } =
@@ -15,7 +19,9 @@ export default function useWalletSuite() {
   const { status: ethStatus } = useEthWallet();
   const ethConnected = ethStatus === "connected";
   const ethLoading = ethStatus === "connecting";
-  const { status: terraStatus } = useWallet();
+
+  const terra_chain_ref = useRef<string>(chainIDs.mainnet);
+  const { status: terraStatus, network } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
   const isLoading =
@@ -47,4 +53,21 @@ export default function useWalletSuite() {
     };
     //eslint-disable-next-line
   }, [connectedWallet]);
+
+  //update chain for terra
+  useEffect(() => {
+    dispatch(
+      updateChainID({
+        chain: chains.terra,
+        chainID: network.chainID as chainIDs,
+      })
+    );
+    //if network is changed invalidate terra services
+    if (terra_chain_ref.current !== network.chainID) {
+      console.log("reset");
+      dispatch(terra.util.resetApiState());
+      terra_chain_ref.current = network.chainID;
+    }
+    //eslint-disable-next-line
+  }, [network]);
 }

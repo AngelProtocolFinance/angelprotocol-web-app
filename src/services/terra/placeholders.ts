@@ -6,6 +6,7 @@ import {
   PairInfo,
   Poll,
   PollStatus,
+  PoolBalance,
   Simulation,
 } from "./types";
 
@@ -52,34 +53,34 @@ export const gov_config: GovConfig = {
 };
 
 //lbp
+const token_info = {
+  info: {
+    token: {
+      contract_addr: "terra1aw8704nry2gaemjur65j3ervpxtvt0s2lj2jw9",
+    },
+  },
+  amount: "0",
+  start_weight: "96",
+  end_weight: "50",
+};
+
+const native_info = {
+  info: {
+    native_token: {
+      denom: "uusd",
+    },
+  },
+  amount: "0",
+  start_weight: "4",
+  end_weight: "50",
+};
 
 export const pairInfo: PairInfo = {
-  asset_infos: [
-    {
-      info: {
-        token: {
-          contract_addr: "terra1a2u20znw23hax47dmx6amuf33kk59pmg4q3ayq",
-        },
-      },
-      start_weight: "96",
-      end_weight: "50",
-    },
-    {
-      info: {
-        native_token: {
-          denom: "uusd",
-        },
-      },
-      start_weight: "4",
-      end_weight: "50",
-    },
-  ],
+  asset_infos: [token_info, native_info],
   token_code_id: 25641,
-  start_time: 1638974838,
-  end_time: 1639234038,
-  commission_rate: "0.03",
-  collector_addr: "terra1wlr3fq2thnkzxw2flagle8w6yl52vx46mgrm5l",
-  split_to_collector: "0.01",
+  start_time: 1938974838,
+  end_time: 1939234038,
+  commission_rate: "0.02",
 };
 
 export const simulation: Simulation = {
@@ -88,4 +89,11 @@ export const simulation: Simulation = {
   commission_amount: "0",
   ask_weight: "96",
   offer_weight: "4",
+  is_placeholder: true,
+};
+
+export const pool_balance: PoolBalance = {
+  token: "0",
+  native_token: "0",
+  is_placeholder: true,
 };

@@ -103,21 +103,23 @@ export type Token = {
 export type NativeToken = {
   denom: string;
 };
-export type WeightedInfo<T> = {
+export interface WeightedAssetInfo<T> {
   info: T extends Token ? { token: T } : { native_token: T };
   start_weight: string; //"96"
   end_weight: string; //"50"
-};
+}
+
+export interface WeightedPoolAssetInfo<T> extends WeightedAssetInfo<T> {
+  amount: string; //for simul and pool result
+}
 
 export type PairInfo = {
-  asset_infos: [WeightedInfo<Token>, WeightedInfo<NativeToken>];
+  asset_infos: [WeightedAssetInfo<Token>, WeightedAssetInfo<NativeToken>];
   token_code_id: number;
   start_time: number;
   end_time: number;
   description?: string;
-  commission_rate: string; //""0.03""
-  collector_addr: string;
-  split_to_collector: string; //""0.01""
+  commission_rate: string; //""0.02""
 };
 
 export type Simulation = {
@@ -126,4 +128,16 @@ export type Simulation = {
   commission_amount: string;
   ask_weight: string;
   offer_weight: string;
+  is_placeholder?: true;
+};
+
+export type Pool = {
+  assets: [WeightedPoolAssetInfo<Token>, WeightedPoolAssetInfo<NativeToken>];
+  total_share: string;
+};
+
+export type PoolBalance = {
+  native_token: string;
+  token: string;
+  is_placeholder?: true;
 };

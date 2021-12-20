@@ -2,29 +2,15 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import LBP from "contracts/LBP";
 import { useMemo } from "react";
 import { terra } from "services/terra/terra";
-import {
-  gov_config,
-  gov_state,
-  halo_info,
-  pairInfo,
-  poll,
-  simulation,
-  staker,
-} from "./placeholders";
+import { gov_config, gov_state, halo_info, poll, staker } from "./placeholders";
 import Registrar from "contracts/Registrar";
+import { chainIDs } from "contracts/types";
 
 function useHaloContract() {
   const wallet = useConnectedWallet();
   const contract = useMemo(() => new Halo(wallet), [wallet]);
-  return { wallet, contract };
-}
-
-function useLBPContract() {
-  const wallet = useConnectedWallet();
-  const contract = useMemo(() => new LBP(wallet), [wallet]);
   return { wallet, contract };
 }
 
@@ -98,7 +84,9 @@ export function useGovStaker() {
       address: contract.gov_address,
       msg: { staker: { address: wallet?.walletAddress } },
     },
-    { skip: wallet === undefined }
+    {
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    }
   );
 
   return data;
@@ -106,40 +94,55 @@ export function useGovStaker() {
 
 export function useGovBalance() {
   const { useGovBalanceQuery } = terra;
-  const { contract } = useHaloContract();
-  const { data = 0 } = useGovBalanceQuery({
-    address: contract.token_address,
-    //this query will only run if wallet is not undefined
-    msg: { balance: { address: contract.gov_address } },
-  });
+  const { contract, wallet } = useHaloContract();
+  const { data = 0 } = useGovBalanceQuery(
+    {
+      address: contract.token_address,
+      //this query will only run if wallet is not undefined
+      msg: { balance: { address: contract.gov_address } },
+    },
+    {
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    }
+  );
   return data;
 }
 
 export function useGovState() {
   const { useGovStateQuery } = terra;
-  const { contract } = useHaloContract();
-  const { data = gov_state } = useGovStateQuery({
-    address: contract.gov_address,
-    msg: { state: {} },
-  });
+  const { contract, wallet } = useHaloContract();
+  const { data = gov_state } = useGovStateQuery(
+    {
+      address: contract.gov_address,
+      msg: { state: {} },
+    },
+    {
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    }
+  );
 
   return data;
 }
 
 export function useGovPolls() {
   const { useGovPollsQuery } = terra;
-  const { contract } = useHaloContract();
-  const { data = [] } = useGovPollsQuery({
-    address: contract.gov_address,
-    msg: { polls: {} },
-  });
+  const { contract, wallet } = useHaloContract();
+  const { data = [] } = useGovPollsQuery(
+    {
+      address: contract.gov_address,
+      msg: { polls: {} },
+    },
+    {
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    }
+  );
 
   return data;
 }
 
 export function useGovPoll(poll_id?: string) {
   const { useGovPollsQuery } = terra;
-  const { contract } = useHaloContract();
+  const { contract, wallet } = useHaloContract();
   const { data = poll } = useGovPollsQuery(
     {
       address: contract.gov_address,
@@ -149,6 +152,7 @@ export function useGovPoll(poll_id?: string) {
       selectFromResult: ({ data }) => ({
         data: data?.find((poll) => poll.id === +(poll_id || "0")),
       }),
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
     }
   );
   return data;
@@ -156,59 +160,15 @@ export function useGovPoll(poll_id?: string) {
 
 export function useGovConfig() {
   const { useGovConfigQuery } = terra;
-  const { contract } = useHaloContract();
-  const { data = gov_config } = useGovConfigQuery({
-    address: contract.gov_address,
-    msg: { config: {} },
-  });
-
-  return data;
-}
-
-//PairContract
-export function usePairInfo() {
-  const { usePairInfoQuery } = terra;
-  const { contract } = useLBPContract();
-  const { data = pairInfo } = usePairInfoQuery({
-    address: contract.pair_address,
-    msg: {
-      pair: {
-        asset_infos: [
-          { token: { contract_addr: contract.token_address } },
-          { native_token: { denom: "uusd" } },
-        ],
-      },
-    },
-  });
-
-  return data;
-}
-
-export function usePairSimul() {
-  //is_buy: true // your are buying HALO
-  //is_buy: false // you are selling HALO
-
-  const { usePairSimulQuery } = terra;
-  const { contract } = useLBPContract();
-
-  const { data = simulation } = usePairSimulQuery(
+  const { contract, wallet } = useHaloContract();
+  const { data = gov_config } = useGovConfigQuery(
     {
-      address: contract.pair_address,
-      msg: {
-        simulation: {
-          offer_asset: {
-            info: {
-              native_token: {
-                denom: "uusd",
-              },
-            },
-            amount: (1e6).toString(),
-          },
-          block_time: Math.round(new Date().getTime() / 1000 + 10),
-        },
-      },
+      address: contract.gov_address,
+      msg: { config: {} },
     },
-    { pollingInterval: 3000 }
+    {
+      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    }
   );
 
   return data;

@@ -8,7 +8,7 @@ type Props = {
 export default function Updator({ lastUpdate, isLoading, refresh }: Props) {
   return (
     <div className="flex absolute top-3 right-6 gap-2 text-sm font-body">
-      <p className="text-angel-grey italic">
+      <p className="text-angel-grey text-opacity-80 italic">
         last update:{" "}
         {new Date(lastUpdate).toLocaleString([], {
           dateStyle: "short",
