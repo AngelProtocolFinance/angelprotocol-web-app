@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import AllianceMembersTable from "./Table";
 import NewMemberModal from "./AddMemberModal";
-import UpdateMembersModal from "./EditMembersModal";
+import EditMembersModal from "./EditMembersModal";
 import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
@@ -14,10 +14,10 @@ import { equals } from "ramda";
 
 export default function AllianceMembers() {
   const [members, setMembers] = useState<Member[]>([]);
-  const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
+  const [selectedMember, setSelectedMember] = useState<Member>();
   const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const decodedToken = useGetToken();
   const { data } = useDonorsQuery("");
 
@@ -53,8 +53,8 @@ export default function AllianceMembers() {
 
   const onClickEdit = (index: number) => {
     if (members) {
-      setSelectedAddresses(members[index].addresses);
-      setShowUpdateModal(true);
+      setSelectedMember(members[index]);
+      setShowEditModal(true);
     }
   };
 
@@ -93,9 +93,9 @@ export default function AllianceMembers() {
           <NewMemberModal />
         </Modal>
       )}
-      {showUpdateModal && (
-        <Modal setShown={() => setShowUpdateModal(false)}>
-          <UpdateMembersModal addressList={selectedAddresses} />
+      {showEditModal && (
+        <Modal setShown={() => setShowEditModal(false)}>
+          <EditMembersModal member={selectedMember} />
         </Modal>
       )}
     </div>
