@@ -68,7 +68,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
         </div>
       )}
       {isReady && (
-        <div className="flex flex-wrap padded-container justify-center">
+        <div className="padded-container justify-center">
           <div className="mt-0 md:mt-8 mx-auto w-auto text-white-grey">
             <h2 className="uppercase mb-2">
               <span className="uppercase text-xs mr-0.5">Total Balance </span>
@@ -97,7 +97,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
               </getContext.Provider>
             </div>
           </div>
-          <div className="self-start mb-6 mt-0 md:mt-8 w-full lg:w-1/2 xl:w-3/5 font-heading">
+          <div className="self-start mb-6 mt-4 w-full font-heading">
             <TransactionList />
           </div>
         </div>
