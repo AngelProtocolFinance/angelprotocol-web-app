@@ -1,42 +1,43 @@
 import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 
-type LiquidBalance = {
-  liquidBalance: number | undefined;
-};
-
-export default function Liquid(props: LiquidBalance) {
+type Props = { liquidBalance?: number; isOwner: boolean; opener: () => void };
+export default function Liquid(props: Props) {
   return (
-    <div className="flex-none pl-2 pr-2 mb-3 md:mb-0">
-      <div className="p-4 md:p-5 block bg-grey-accent overflow-hidden h-full rounded-lg">
-        <h3 className="mb-2 text-lg font-bold uppercase">
-          Liquid Account
-          <div className="float-right">
-            <span className="inline-block">
-              <FaCog size={16} title="Coming Soon!" />
-            </span>
-          </div>
-        </h3>
-        <p className="text-4xl md:text-5xl font-bold">
-          $ {toCurrency(props.liquidBalance)}
-        </p>
-        <div className="grid grid-cols-1">
-          <table className="table-auto mt-4">
-            <thead>
-              <tr className="text-md text-left">
-                <th className="pr-8">Strategy</th>
-                <th>Allocation</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="pr-8">Anchor Protocol</td>
-                <td>100%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md">
+      <h3 className="text-lg font-bold uppercase flex items-center justify-end">
+        <span>Current Account</span>
+        <FaCog
+          size={16}
+          className="ml-1 text-grey-accent"
+          title="Coming Soon!"
+        />
+      </h3>
+      <p className="text-3xl md:text-4xl font-heading mt-8 text-right">
+        $ {toCurrency(props.liquidBalance)}
+      </p>
+      {props.isOwner && (
+        <button
+          onClick={props.opener}
+          className="my-2 bg-blue-accent hover:bg-angel-blue bg-opacity-60 px-2 py-1 rounded-md uppercase text-xs  border-2 border-opacity-20 font-heading self-end"
+        >
+          withdraw
+        </button>
+      )}
+      <table className="mt-4 w-full">
+        <thead>
+          <tr className="text-md text-left font-heading uppercase text-xs">
+            <th className="pr-8">Strategy</th>
+            <th className="text-right">Allocation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="">
+            <td className="pr-8">Anchor Protocol</td>
+            <td className="font-heading text-right">100%</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 }
