@@ -57,7 +57,7 @@ const AllianceMembersTable = ({ members, onEditClick }: any) => {
     <table className="min-w-full leading-normal">
       <MemberHeader />
       <tbody>
-        {members &&
+        {members.length > 0 &&
           members.map((member: any, index: number) => (
             <MemberRow
               key={index}
@@ -70,20 +70,5 @@ const AllianceMembersTable = ({ members, onEditClick }: any) => {
     </table>
   );
 };
-
-const mockDataList = [
-  {
-    name: "Global Brigades",
-    icon: "https://charity-profile-images.s3.amazonaws.com/logo/global-brigades-logo.png",
-  },
-  {
-    name: "Solar Electric Light Fund",
-    icon: "https://charity-profile-images.s3.amazonaws.com/logo/self_logo_500px_transparent.png",
-  },
-  {
-    name: "5Gyres",
-    icon: "https://charity-profile-images.s3.amazonaws.com/logo/5gyres.jpg",
-  },
-];
 
 export default AllianceMembersTable;

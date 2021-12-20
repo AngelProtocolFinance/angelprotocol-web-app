@@ -9,10 +9,13 @@ import UpdateMembersModal from "./EditMembersModal";
 import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
+import Loader from "components/Loader/Loader";
+import { equals } from "ramda";
 
 export default function AllianceMembers() {
   const [members, setMembers] = useState<Member[]>([]);
   const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const decodedToken = useGetToken();
@@ -20,8 +23,12 @@ export default function AllianceMembers() {
 
   useEffect(() => {
     const result = prepareData(data);
-    setMembers(result);
-  }, []);
+    if (!equals(result, members)) {
+      setMembers(result);
+    }
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [members, isLoading]);
 
   const prepareData = (prevData: Details[] | undefined) => {
     let result: Member[] = [];
@@ -69,12 +76,16 @@ export default function AllianceMembers() {
           Add New Member
         </button>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-          <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
-            <AllianceMembersTable
-              members={members}
-              onEditClick={(index: number) => onClickEdit(index)}
-            ></AllianceMembersTable>
-          </div>
+          {isLoading ? (
+            <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+          ) : (
+            <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
+              <AllianceMembersTable
+                members={members}
+                onEditClick={(index: number) => onClickEdit(index)}
+              />
+            </div>
+          )}
         </div>
       </div>
       {showNewModal && (

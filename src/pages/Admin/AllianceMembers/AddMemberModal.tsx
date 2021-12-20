@@ -1,5 +1,3 @@
-import AddressSelector from "./AddressSelector";
-// import { newIndexFundSchema } from "./newIndexSchema";
 import { useForm } from "react-hook-form";
 import { useModalCloser } from "components/Modal/Modal";
 

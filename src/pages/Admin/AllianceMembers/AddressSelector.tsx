@@ -1,12 +1,6 @@
 import maskAddress from "helpers/maskAddress";
 import { IoClose } from "react-icons/io5";
 
-const mockAddressList: string[] = [
-  "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
-  "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
-  "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
-];
-
 function AddressSelector({ addressList }: any) {
   return (
     <table className="min-w-full leading-normal my-5">
