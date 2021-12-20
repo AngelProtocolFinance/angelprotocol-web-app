@@ -31,7 +31,15 @@ export default function Views() {
       <Route path={`${path}/${app.tca}`} component={TCA} />
       <Route path={`${path}/${app.govern}`} component={Governance} />
       {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
-      <Route path={`${path}/${app.auction}`} component={Auction} />
+      {/* <Route path={`${path}/${app.auction}`} component={Auction} /> */}
+      <Route
+        path={`${path}/${app.auction}`}
+        component={() => {
+          window.location.href =
+            "https://coinhall.org/charts/terra/terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e";
+          return null;
+        }}
+      />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />
       <Redirect from="*" to={site.home} />
