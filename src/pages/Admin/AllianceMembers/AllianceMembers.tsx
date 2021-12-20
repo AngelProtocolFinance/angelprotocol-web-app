@@ -4,14 +4,15 @@ import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import AllianceMembersTable from "./Table";
-import NewMemberModal from "./NewMemberModal";
-import UpdateMembersModal from "./UpdateMembersModal";
+import NewMemberModal from "./AddMemberModal";
+import UpdateMembersModal from "./EditMembersModal";
 import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
 
 export default function AllianceMembers() {
-  const [members, setMembers] = useState<Member[]>();
+  const [members, setMembers] = useState<Member[]>([]);
+  const [selectedAddresses, setSelectedAddresses] = useState<string[]>([]);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const decodedToken = useGetToken();
@@ -43,6 +44,13 @@ export default function AllianceMembers() {
     return result;
   };
 
+  const onClickEdit = (index: number) => {
+    if (members) {
+      setSelectedAddresses(members[index].addresses);
+      setShowUpdateModal(true);
+    }
+  };
+
   //user can't access TCA page when not logged in or his prev token expired
   if (!decodedToken?.apToken) {
     return <Redirect to={`${site.admin}/${app.login}`} />;
@@ -64,7 +72,7 @@ export default function AllianceMembers() {
           <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
             <AllianceMembersTable
               members={members}
-              onEditClick={() => setShowUpdateModal(true)}
+              onEditClick={(index: number) => onClickEdit(index)}
             ></AllianceMembersTable>
           </div>
         </div>
@@ -76,7 +84,7 @@ export default function AllianceMembers() {
       )}
       {showUpdateModal && (
         <Modal setShown={() => setShowUpdateModal(false)}>
-          <UpdateMembersModal />
+          <UpdateMembersModal addressList={selectedAddresses} />
         </Modal>
       )}
     </div>

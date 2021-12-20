@@ -7,7 +7,7 @@ const mockAddressList: string[] = [
   "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
 ];
 
-function AddressSelector() {
+function AddressSelector({ addressList }: any) {
   return (
     <table className="min-w-full leading-normal my-5">
       <thead>
@@ -19,8 +19,8 @@ function AddressSelector() {
         </tr>
       </thead>
       <tbody>
-        {mockAddressList.map((address: string) => (
-          <tr>
+        {addressList.map((address: string, index: number) => (
+          <tr key={index}>
             <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
               <span className="text-normal font-sans text-left">
                 {maskAddress(address)}

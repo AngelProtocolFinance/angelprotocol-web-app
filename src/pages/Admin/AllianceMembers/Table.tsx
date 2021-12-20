@@ -42,7 +42,7 @@ const MemberRow = ({ onUpdateClick, member, index }: any) => {
       </td>
       <td className="self-center px-5 py-5 text-sm">
         <button
-          onClick={onUpdateClick}
+          onClick={() => onUpdateClick(index)}
           className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
         >
           Edit
