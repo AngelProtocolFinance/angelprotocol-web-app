@@ -71,6 +71,7 @@ export default function PriceGraph({ isLoading, lbpPairData, error }: Props) {
                 domain={graphData.dateAxisData.axisDomain}
                 tick={{ fill: "white" }}
                 interval={0}
+                angle={45}
               />
               <YAxis
                 tickLine={false}
