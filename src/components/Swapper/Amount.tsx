@@ -21,7 +21,7 @@ export default function Amount() {
 
   const is_buy = watch("is_buy");
   return (
-    <div className="grid m-2">
+    <div className="grid m-2 h-25">
       <div className="flex justify-between items-center">
         <button
           onClick={toggle_settings}
@@ -40,7 +40,7 @@ export default function Amount() {
       </div>
       <div className="flex flex-row justify-between items-center mt-2 border-b-2 border-t-2 border-angel-blue border-opacity-20 text-angel-grey">
         <div className="flex flex-col">
-          <p className="text-angel-grey uppercase text-md font-semibold font-heading m-2">
+          <p className="text-angel-grey uppercase text-md font-semibold font-heading mt-2 mb-2">
             From:
           </p>
           <label
