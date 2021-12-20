@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { aws_endpoint } from "constants/urls";
 import { useRegistrarContract } from "services/terra/hooks";
+import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 
 export type Endowment = {
   address: string;
@@ -13,55 +13,48 @@ export type Endowment = {
   status: string;
 };
 
-type EndowmentsResult = {
-  Items: Endowment[];
-  Count: number;
-  ScannedCount: number;
-};
+// type EndowmentsResult = {
+//   Items: Endowment[];
+//   Count: number;
+//   ScannedCount: number;
+// };
 
 export default function useEndowments() {
-  console.log("new hook");
-  // const { saveToken } = useSetToken();
   const [loading, setLoading] = useState(false);
-  const [endowments, setEndowments] = useState<EndowmentsResult>();
-  const { contract: registrar } = useRegistrarContract();
+  // const [endowments, setEndowments] = useState<EndowmentsResult>();
+  const { contract: registrar, wallet } = useRegistrarContract();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [walletAddr, setWalletAddr] = useState(wallet?.walletAddress);
   const [endowmentDetails, setEndowmentsDetails] =
     useState<Record<string, Endowment>>();
 
+  const isTest = wallet?.network.name !== "mainnet";
+  const { data: endowments, isSuccess, isLoading } = useEndowmentsQuery(isTest); // change to false
+
   useEffect(() => {
-    if (loading) return;
+    if (isSuccess !== true || isLoading) return;
+    if (loading && walletAddr === wallet?.walletAddress) return;
     fetchEndowments();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [wallet, isSuccess, isLoading]);
 
   async function fetchEndowments() {
     setLoading(true);
     try {
-      const response = await fetch(`${aws_endpoint}/endowments`);
+      // const response = await fetch(`${aws_endpoint}/endowments/testnet`);
       const approvals = await registrar.getEndowmentList();
-
-      if (response.status === 200) {
-        const data: EndowmentsResult = await response.json();
-        const detailsMap: Record<string, any> = {};
-
-        data.Items.forEach(
-          (endowment) => (detailsMap[endowment.address] = endowment)
-        );
-        approvals.forEach((data) => {
-          detailsMap[data.address] = {
-            ...detailsMap[data.address],
-            status: data.status,
-          };
-        });
-
-        setEndowmentsDetails(detailsMap);
-        setEndowments(data);
-        setLoading(false);
-      } else if (response.status === 403) {
-        toast.error("Unauthorized");
-      } else {
-        toast.error("Something went wrong");
-      }
+      const detailsMap: Record<string, any> = {};
+      endowments?.forEach(
+        (endowment) => (detailsMap[endowment.address] = endowment)
+      );
+      approvals.forEach((data) => {
+        detailsMap[data.address] = {
+          ...detailsMap[data.address],
+          status: data.status,
+        };
+      });
+      setEndowmentsDetails(detailsMap);
+      setLoading(false);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
@@ -69,5 +62,5 @@ export default function useEndowments() {
     }
   }
 
-  return { endowmentDetails, endowments, loading };
+  return { endowmentDetails, endowments, loading: loading || isLoading };
 }

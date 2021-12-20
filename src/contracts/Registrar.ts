@@ -31,6 +31,7 @@ export default class Registrar extends Contract {
   }
 
   async createUpdateEndowmentTx(status: number, endowment_addr: string) {
+    console.log("args: ", endowment_addr, status);
     this.checkWallet();
     const msg = new MsgExecuteContract(this.walletAddr!, this.address, {
       update_endowment_status: {

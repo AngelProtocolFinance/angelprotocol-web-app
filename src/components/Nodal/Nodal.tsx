@@ -5,7 +5,6 @@ export default function Nodal(props: Props) {
   const [Content, setContent] = useState<ReactNode>();
 
   const showModal: Opener = (Content, props) => {
-    console.log("open");
     setContent(<Content {...props} />);
   };
 
