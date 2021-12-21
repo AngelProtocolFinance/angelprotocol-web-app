@@ -16,9 +16,18 @@ type Token = null | {
   apToken: string;
 };
 
+type Authorized = null | {
+  isAuthorized: boolean;
+};
+
 interface Handlers {
   saveToken: (token: string, type?: string) => void;
   deleteToken: (type?: string) => void;
+}
+
+interface AuthorizeHandler {
+  saveAuthorize: (authorize: string) => void;
+  deleteAuthorize: () => void;
 }
 
 export const getContext = createContext<Token>(null);
@@ -27,15 +36,23 @@ export const setContext = createContext<Handlers>({
   deleteToken: () => {},
 });
 
+export const getAuthorized = createContext<Authorized>(null);
+export const setAuthorized = createContext<AuthorizeHandler>({
+  saveAuthorize: () => {},
+  deleteAuthorize: () => {},
+});
+
 let initialToken: Token = null;
 
 export default function AuthProvider(props: Props) {
   const [token, setToken] = useState<string>(initialToken?.token || "");
   const [apToken, setAPToken] = useState<string>(initialToken?.apToken || "");
+  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
 
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     const savedAPToken = localStorage.getItem("aptoken");
+    const savedAuthorized = localStorage.getItem("authorized");
     if (savedToken) {
       const decodedToken: JwtPayload = jwtDecode(savedToken);
       const expiry = decodedToken.exp!;
@@ -54,6 +71,10 @@ export default function AuthProvider(props: Props) {
       } else {
         setAPToken(savedAPToken);
       }
+    }
+
+    if (savedAuthorized) {
+      setIsAuthorized(true);
     }
     // eslint-disable-next-line
   }, []);
@@ -80,10 +101,24 @@ export default function AuthProvider(props: Props) {
     //sync delete token
   }
 
+  async function saveAuthorize(authorize: string) {
+    setIsAuthorized(true);
+    await localStorage.setItem("authorized", authorize);
+  }
+
+  async function deleteAuthorize() {
+    setIsAuthorized(false);
+    await localStorage.removeItem("authorized");
+  }
+
   return (
     <getContext.Provider value={{ token, apToken }}>
       <setContext.Provider value={{ saveToken, deleteToken }}>
-        {props.children}
+        <getAuthorized.Provider value={{ isAuthorized }}>
+          <setAuthorized.Provider value={{ saveAuthorize, deleteAuthorize }}>
+            {props.children}
+          </setAuthorized.Provider>
+        </getAuthorized.Provider>
       </setContext.Provider>
     </getContext.Provider>
   );
@@ -92,3 +127,5 @@ export default function AuthProvider(props: Props) {
 //you may use these hooks on a component inside AuthProvider
 export const useSetToken = () => useContext(setContext);
 export const useGetToken = () => useContext(getContext);
+export const useSetAuthorized = () => useContext(setAuthorized);
+export const useGetAuthorized = () => useContext(getAuthorized);

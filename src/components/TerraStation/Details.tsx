@@ -7,6 +7,7 @@ import Portal from "./Portal";
 import { useState } from "react";
 import { denoms } from "constants/currency";
 import Filter from "./Filter";
+import { useSetAuthorized } from "contexts/AuthProvider";
 
 type Props = {
   coinData: Coin.Data[];
@@ -26,10 +27,14 @@ export default function Details(props: Props) {
   const handleFilter = () => setFilter((p) => !p);
   const { disconnect, status, wallets } = useWallet();
   const isConnected = status === WalletStatus.WALLET_CONNECTED;
+  const { deleteAuthorize } = useSetAuthorized();
 
   const isEmpty = coins.length <= 0;
   const addr = wallets[0]?.terraAddress;
-  const handleDisconnect = () => disconnect();
+  const handleDisconnect = () => {
+    deleteAuthorize();
+    disconnect();
+  };
 
   return (
     <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">

@@ -10,10 +10,10 @@ export default class CW4Group extends Contract {
     this.address = contracts[this.chainID][sc.cw4_group];
   }
 
-  async getMember(addr: string, weight: number | undefined) {
+  async isMember(addr: string, weight?: number | undefined) {
     const result = await this.query<MemberRes>(this.address, {
       member: { addr, weight },
     });
-    return result.weight;
+    return result.weight ? true : false;
   }
 }
