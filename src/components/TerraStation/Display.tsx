@@ -7,17 +7,24 @@ import Details from "./Details";
 import Icon from "components/WalletSuite/Icon";
 // import useTerraBalance from "hooks/useTerraBalance";
 import { denoms } from "constants/currency";
-import { useBalances } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/hooks";
 
 export default function Display() {
   //this component won't be rendered if wallet is not connected
   const [detailsShown, showDetails] = useState(false);
-  const { main: ustAmount, others: coins } = useBalances(denoms.uusd);
+  const { main: ustAmount, others } = useBalances(denoms.uusd);
+  const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
   const chainId = wallet?.network.chainID || "unknown";
   const maskedAddr = maskAddress(wallet?.terraAddress);
   const toggleDetails = () => showDetails((p) => !p);
   const hideDetails = () => showDetails(false);
+
+  // include $HALO token in list of tokens to show in wallet
+  const coins = others.concat({
+    amount: halo_balance.toString(),
+    denom: denoms.uhalo,
+  });
 
   return (
     <div className="flex">
