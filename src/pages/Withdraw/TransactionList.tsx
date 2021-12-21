@@ -2,8 +2,8 @@ import { useState } from "react";
 
 const TransactionItemInfo = ({ data: any }: any) => {
   return (
-    <tr className="h-20 hover:bg-angel-blue text-white">
-      <td className="pl-4">
+    <tr className="hover:bg-angel-blue text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
+      <td className="p-3">
         <p className="text-base font-bold">$198</p>
         <p className="text-base">One-time</p>
       </td>
@@ -21,46 +21,27 @@ const TransactionList = () => {
   const transactionList = [0, 1, 2];
   const [type, setType] = useState(0);
   return (
-    <div className="bg-white bg-opacity-10 rounded-md p-6 shadow-md border border-opacity-10 w-full">
-      <div className="md:text-lg text-md font-bold uppercase">
-        <button
-          className={
-            type === 0
-              ? "mr-4 text-lg font-bold uppercase text-angel-blue"
-              : "mr-4 text-lg font-bold uppercase text-gray-200"
-          }
-          onClick={() => setType(0)}
-        >
-          Transaction history
-        </button>
-        {/* <button
-          className={
-            type == 1
-              ? "mr-4 text-lg font-bold uppercase text-angel-blue"
-              : "mr-4 text-lg font-bold uppercase text-gray-200"
-          }
-          onClick={() => setType(1)}
-        >
-          Account balances
-        </button> */}
-      </div>
-      <table className="border-collapse table-auto w-fill md:mx-6 my-10">
+    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10">
+      <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
+        <span>Transaction History</span>
+      </h3>
+      <table className="mt-4 w-full">
         <thead>
-          <tr>
+          <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue border-opacity-20">
             <th className="text-white text-sm text-left pl-4">Amount/Type</th>
             <th className="text-white text-sm text-left">Date</th>
             <th className="text-white text-sm text-left">Wallet</th>
           </tr>
         </thead>
-        <tbody className="overflow-y-scroll divide-y divide-gray-200">
+        <tbody>
           {transactionList.map((item) => (
             <TransactionItemInfo data={item} />
           ))}
         </tbody>
       </table>
-      <div className="w-full flex justify-end">
+      {/*<div className="w-full flex justify-end">
         <button className="action-button">Export as CSV</button>
-      </div>
+      </div>*/}
     </div>
   );
 };
