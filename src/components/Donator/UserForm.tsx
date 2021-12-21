@@ -49,7 +49,7 @@ export default function UserForm(props: Props) {
               type="radio"
               name="amount"
               value={"0"}
-              className=""
+              className="cursor-pointer"
             />
             <div className="h-12 flex flex-col w-5/6">
               {(!amounts.includes(values.amount) && touched.amount && (
@@ -63,12 +63,12 @@ export default function UserForm(props: Props) {
                 </label>
               )}
             </div>
-            <ErrorMessage
-              name="amount"
-              component="div"
-              className="cols-start-1 col-span-2 text-sm text-white text-left ml-6 mt-2"
-            />
           </div>
+          <ErrorMessage
+            name="amount"
+            component="div"
+            className="text-sm text-center w-5/6 ml-6 mt-2"
+          />
         </div>
         <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
           <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">

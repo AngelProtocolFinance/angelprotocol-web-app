@@ -15,7 +15,7 @@ export default function CustomAmount() {
   return (
     <Field
       innerRef={inputRef}
-      className="border-transparent outline-none text-black w-52 rounded-md pl-2 py-2"
+      className="flex text-grey-accent w-full rounded-md pl-2 items-center bg-white h-full"
       type="text"
       name="amount"
     />
