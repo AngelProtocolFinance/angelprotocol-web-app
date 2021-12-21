@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { DepositTransactions } from "services/aws/endowment_admin/types";
 
 export type RouteParam = { address: string };
 
@@ -28,6 +29,14 @@ export interface EstimatesProps {
 
 export interface ResultProps {
   onCloseModal: Handler;
+}
+
+export interface EndowmentAddrProps {
+  address: string;
+}
+
+export interface TransactionItemProps {
+  item: DepositTransactions;
 }
 
 export enum Steps {
