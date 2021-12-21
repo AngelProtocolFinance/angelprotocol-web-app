@@ -41,7 +41,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Donate split={split} loading={loading} error={error} />
         )) || <Overview fund_id={fund_id} />}
 
-        <div className="col-start-2 col-span-1 row-start-2 row-span-1 self-start">
+        <div className="flex flex-col gap-2">
           <button
             onClick={toggleDonate}
             className={`${
@@ -51,7 +51,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
             {isDonating ? "Back to Index" : "Donate"}
           </button>
           <button
-            className={`ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
+            className={`bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
           >
             Share
           </button>
