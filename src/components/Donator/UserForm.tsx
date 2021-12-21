@@ -1,6 +1,6 @@
 import "rc-slider/assets/index.css";
 import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
-import Slider from "rc-slider";
+import Slider, { SliderProps } from "rc-slider";
 import useSlider from "./useSlider";
 import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
@@ -13,6 +13,27 @@ type Props = {
   minSplitLiq?: number;
 };
 
+const SliderComponent = (props: SliderProps) => {
+  const { min, max, value, onChange, onAfterChange } = props;
+
+  return (
+    <div className="w-3/4">
+      <Slider
+        min={min}
+        max={max}
+        value={value}
+        onChange={onChange}
+        onAfterChange={onAfterChange}
+        className="w-full"
+      />
+      <p className="flex justify-between mt-2 text-lg">
+        <span>{min}%</span>
+        <span>{max}%</span>
+      </p>
+    </div>
+  );
+};
+
 export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values, touched } = useFormikContext<Values>();
@@ -22,7 +43,7 @@ export default function UserForm(props: Props) {
 
   return (
     <Form className="flex flex-col text-white-grey text-lg lg:text-xl">
-      <div className="flex gap-10">
+      <div className="flex gap-5">
         <div className="flex flex-col w-2/5 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
           <div className="flex">
@@ -68,25 +89,18 @@ export default function UserForm(props: Props) {
             className="text-sm text-center w-5/6"
           />
         </div>
-        <div className="w-1/2">
-          <p className="lg:ml-4 mt-4 lg:mt-0 text-white-grey font-semibold">
+        <div className="w-1/2 flex flex-col gap-5">
+          <p className="font-semibold">
             How much of your donation should be compounded forever for this
             Index?
           </p>
-          <div className="p-5">
-            <Slider
-              min={minLocked}
-              max={maxLocked}
-              value={percentage}
-              onChange={handleSlide}
-              onAfterChange={handleSlideEnd}
-              className="w-full"
-            />
-            <p className="flex justify-between mt-2 text-white">
-              <span>{minLocked}%</span>
-              <span>{maxLocked}%</span>
-            </p>
-          </div>
+          <SliderComponent
+            min={minLocked}
+            max={maxLocked}
+            value={percentage}
+            onChange={handleSlide}
+            onAfterChange={handleSlideEnd}
+          />
         </div>
       </div>
 
