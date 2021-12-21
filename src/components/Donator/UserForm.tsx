@@ -17,7 +17,10 @@ const SliderComponent = (props: SliderProps) => {
   const { min, max, value, onChange, onAfterChange } = props;
 
   return (
-    <div className="w-3/4">
+    <div className="w-3/4 flex flex-col gap-3">
+      <span className="text-dark-grey text-base font-semibold">
+        Percentage<sup className="text-red-500">*</sup>
+      </span>
       <Slider
         min={min}
         max={max}
@@ -26,7 +29,7 @@ const SliderComponent = (props: SliderProps) => {
         onAfterChange={onAfterChange}
         className="w-full"
       />
-      <p className="flex justify-between mt-2 text-lg">
+      <p className="flex justify-between text-base">
         <span>{min}%</span>
         <span>{max}%</span>
       </p>
