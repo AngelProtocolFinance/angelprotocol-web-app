@@ -8,7 +8,7 @@ import ether from "assets/icons/currencies/ether.png";
 import btc from "assets/icons/currencies/btc.png";
 import sol from "assets/icons/currencies/sol.svg";
 import atom from "assets/icons/currencies/atom.png";
-import halo from "assets/icons/currencies/halo_solid.png";
+import halo from "assets/icons/currencies/halo_outline.png";
 
 export enum denoms {
   uluna = "uluna",

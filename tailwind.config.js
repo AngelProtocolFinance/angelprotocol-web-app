@@ -35,6 +35,7 @@ module.exports = {
         grabbing: "grabbing",
       },
       colors: {
+        "bright-green": "#6ED482",
         "angel-orange": "#FAAC2E",
         "angel-blue": "#3FA9F5",
         "thin-blue": "#54A3D9",
@@ -165,6 +166,7 @@ module.exports = {
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
+        fill: "-webkit-fill-available",
       },
     },
   },
