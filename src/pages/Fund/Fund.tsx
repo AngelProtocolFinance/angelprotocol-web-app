@@ -1,18 +1,27 @@
-import FundVid from "./FundVid";
+import DappHead from "components/Headers/DappHead";
+import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
+import useProfiles from "pages/Market/useProfiles";
+import { MouseEventHandler, PropsWithChildren } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import Donate from "./Donate";
+import FundVid from "./FundVid";
 import Overview from "./Overview";
 import useFund from "./useFund";
-import Donate from "./Donate";
-import useProfiles from "pages/Market/useProfiles";
-import { RouteComponentProps } from "react-router-dom";
-import { unsdgs } from "pages/Fund/unsdgs";
-import DappHead from "components/Headers/DappHead";
 
-//props
-//fundBgClass
-//fundLogo
-//heading
-//description
+type ButtonProps = PropsWithChildren<{
+  bgColor: string;
+  onClick?: MouseEventHandler | undefined;
+}>;
+
+const Button = ({ bgColor, onClick, children }: ButtonProps) => (
+  <button
+    onClick={onClick}
+    className={`${bgColor} uppercase text-white text-sm w-48 py-2 rounded-lg font-semibold shadow-md`}
+  >
+    {children}
+  </button>
+);
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
@@ -42,17 +51,10 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         )) || <Overview fund_id={fund_id} />}
 
         <div className="flex flex-col gap-2">
-          <button
-            onClick={toggleDonate}
-            className="bg-yellow-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md"
-          >
+          <Button onClick={toggleDonate} bgColor="bg-yellow-blue">
             {isDonating ? "Back to Index" : "Donate"}
-          </button>
-          <button
-            className={`bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
-          >
-            Share
-          </button>
+          </Button>
+          <Button bgColor="bg-angel-blue">Share</Button>
         </div>
       </div>
       <div className="mt-8 container mx-auto text-white-grey">
