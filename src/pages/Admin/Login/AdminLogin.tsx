@@ -46,7 +46,7 @@ const AdminLogin = () => {
   }
 
   if (decodedToken?.apToken) {
-    return <Redirect to={`${site.admin}/${admin.index_fund_management}`} />;
+    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
   }
 
   return (

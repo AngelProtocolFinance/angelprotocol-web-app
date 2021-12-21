@@ -16,7 +16,7 @@ type Token = null | {
   apToken: string;
 };
 
-type Authorized = null | {
+type Authorized = {
   isAuthorized: boolean;
 };
 
@@ -36,7 +36,9 @@ export const setContext = createContext<Handlers>({
   deleteToken: () => {},
 });
 
-export const getAuthorized = createContext<Authorized>(null);
+export const getAuthorized = createContext<Authorized>({
+  isAuthorized: false,
+});
 export const setAuthorized = createContext<AuthorizeHandler>({
   saveAuthorize: () => {},
   deleteAuthorize: () => {},
