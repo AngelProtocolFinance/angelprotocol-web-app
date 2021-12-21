@@ -67,7 +67,7 @@ export default function UserForm(props: Props) {
           <ErrorMessage
             name="amount"
             component="div"
-            className="text-sm text-center w-5/6 ml-6 mt-2"
+            className="text-sm text-center w-full"
           />
         </div>
         <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
