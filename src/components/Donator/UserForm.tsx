@@ -5,6 +5,7 @@ import useSlider from "./useSlider";
 import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
 import KYCForm from "./KYCForm";
+import "./UserForm.css";
 
 type Props = {
   //for charity donations, no split data yet
@@ -20,71 +21,73 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="grid grid-cols-1 xl:justify-start p-4 pl-0 rounded-md mt-5 ">
-      <div className="col-span-4 justify-center xl:justify-start">
-        <p className="text-xl text-left text-white-grey font-semibold">
-          Choose the amount of your donation
-        </p>
-        <div className="mt-4 text-left">
-          {amounts.map((amount) => (
-            <label
-              key={amount}
-              className="cursor-pointer text-xl text-white-grey font-semibold mr-4"
-            >
-              <FastField
-                type="radio"
-                name="amount"
-                value={amount}
-                className="mr-1"
-              />
-              {`$${Number(amount).toFixed(0)}`}
-            </label>
-          ))}
-        </div>
-        <div className="mt-4 grid grid-cols-a1 lg:items-left mt-10">
-          <Field
-            id="custom"
-            type="radio"
-            name="amount"
-            value={"0"}
-            className=""
-          />
-          <div className="ml-2 h-10 flex flex-col">
-            {(!amounts.includes(values.amount) && touched.amount && (
-              <CustomAmount />
-            )) || (
-              <label
-                htmlFor="custom"
-                className={`text-angel-grey w-52 rounded-md pl-2 py-2 bg-white`}
-              >
-                other amount
-              </label>
-            )}
-          </div>
-          <ErrorMessage
-            name="amount"
-            component="div"
-            className="cols-start-1 col-span-2 text-sm text-white text-left ml-6 mt-2"
-          />
-        </div>
-      </div>
-      <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
-        <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
-          How much of your donation should be compounded forever?
-        </p>
-        <div className="p-5">
-          <Slider
-            min={minLocked}
-            max={maxLocked}
-            value={percentage}
-            onChange={handleSlide}
-            onAfterChange={handleSlideEnd}
-            className="w-full"
-          />
-          <p className="flex justify-between mt-2 text-white">
-            <span>{minLocked}%</span>
-            <span>{maxLocked}%</span>
+    <Form className="flex flex-col text-white-grey">
+      <div className="flex">
+        <div className="flex flex-col gap-2 justify-center xl:justify-start">
+          <p className="text-xl font-semibold">
+            Choose the amount of your donation:
           </p>
+          <div className="flex">
+            {amounts.map((amount) => (
+              <label
+                key={amount}
+                className="cursor-pointer text-xl font-semibold mr-4 flex items-center"
+              >
+                <FastField
+                  type="radio"
+                  name="amount"
+                  value={amount}
+                  className="mr-1 cursor-pointer"
+                />
+                {`$${Number(amount).toFixed(0)}`}
+              </label>
+            ))}
+          </div>
+          <div className="flex gap-3 items-center mt-4">
+            <Field
+              id="custom"
+              type="radio"
+              name="amount"
+              value={"0"}
+              className=""
+            />
+            <div className="h-12 flex flex-col w-5/6">
+              {(!amounts.includes(values.amount) && touched.amount && (
+                <CustomAmount />
+              )) || (
+                <label
+                  htmlFor="custom"
+                  className={`flex text-grey-accent w-full rounded-md pl-2 items-center bg-white h-full`}
+                >
+                  Other amount
+                </label>
+              )}
+            </div>
+            <ErrorMessage
+              name="amount"
+              component="div"
+              className="cols-start-1 col-span-2 text-sm text-white text-left ml-6 mt-2"
+            />
+          </div>
+        </div>
+        <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
+          <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
+            How much of your donation should be compounded forever?
+          </p>
+          <div className="p-5">
+            <Slider
+              min={minLocked}
+              max={maxLocked}
+              value={percentage}
+              onChange={handleSlide}
+              onAfterChange={handleSlideEnd}
+              className="w-full"
+            />
+            <p className="flex justify-between mt-2 text-white">
+              <span>{minLocked}%</span>
+              <span>{maxLocked}%</span>
+            </p>
+          </div>
         </div>
       </div>
 

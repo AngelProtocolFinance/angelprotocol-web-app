@@ -1,0 +1,12 @@
+input[type="radio"] {
+  appearance: none;
+  @apply bg-white-grey;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+input[type="radio"]:checked {
+  @apply bg-sdg5;
+  border: 4px solid theme("colors.white-grey");
+}
