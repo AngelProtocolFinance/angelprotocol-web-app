@@ -44,9 +44,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         <div className="flex flex-col gap-2">
           <button
             onClick={toggleDonate}
-            className={`${
-              isDonating ? "bg-yellow-blue" : "bg-angel-orange"
-            } uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
+            className="bg-yellow-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md"
           >
             {isDonating ? "Back to Index" : "Donate"}
           </button>
