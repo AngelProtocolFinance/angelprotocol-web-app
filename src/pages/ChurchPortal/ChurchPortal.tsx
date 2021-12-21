@@ -1,23 +1,27 @@
-import { useGetToken } from "contexts/AuthProvider";
-import { Redirect } from "react-router-dom";
-import { app, site } from "types/routes";
+import { RouteComponentProps } from "react-router-dom";
+import DappHead from "components/Headers/DappHead";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
-import DappHead from "components/Headers/DappHead";
 
-export default function ChurchPortal() {
-  const decodedToken = useGetToken();
-  //user can't access ChurchPortal page when not logged in or his prev token expired
-  if (!decodedToken?.token) {
-    return <Redirect to={`${site.app}/${app.login}`} />;
-  }
+export type ChurchPortalParam = { address: string };
 
+const ChurchPortal = (props: RouteComponentProps<ChurchPortalParam>) => {
+  const endowment_addr = props.match.params.address;
   return (
     <div className="grid grid-rows-a1 place-items-center pt-2">
       <DappHead />
-      <Donater to="tca">
+      <h2 className="text-2xl font-bold text-white mt-20 m-5">
+        Church Endowment Donation Portal
+      </h2>
+      <p className="text-white pb-10">
+        <span className="font-semibold">Donation Address: </span>
+        {endowment_addr || "N/A"}
+      </p>
+      <Donater to="charity" receiver={endowment_addr}>
         <DonateSuite />
       </Donater>
     </div>
   );
-}
+};
+
+export default ChurchPortal;
