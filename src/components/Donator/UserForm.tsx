@@ -21,17 +21,15 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey">
+    <Form className="flex flex-col text-white-grey text-xl">
       <div className="flex">
         <div className="flex flex-col gap-2 justify-center xl:justify-start">
-          <p className="text-xl font-semibold">
-            Choose the amount of your donation:
-          </p>
+          <p className="font-semibold">Choose the amount of your donation:</p>
           <div className="flex">
             {amounts.map((amount) => (
               <label
                 key={amount}
-                className="cursor-pointer text-xl font-semibold mr-4 flex items-center"
+                className="cursor-pointer font-semibold mr-4 flex items-center"
               >
                 <FastField
                   type="radio"
@@ -70,9 +68,10 @@ export default function UserForm(props: Props) {
             className="text-sm text-center w-full"
           />
         </div>
-        <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
-          <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
-            How much of your donation should be compounded forever?
+        <div className="w-full lg:w-1/2">
+          <p className="lg:ml-4 mt-4 lg:mt-0 text-white-grey font-semibold">
+            How much of your donation should be compounded forever for this
+            Index?
           </p>
           <div className="p-5">
             <Slider
