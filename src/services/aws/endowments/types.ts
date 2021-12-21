@@ -6,6 +6,7 @@ export interface Endowment {
   url: string;
   name: string;
   iconLight?: boolean;
+  tier: number;
 }
 export interface Details {
   description: string;
@@ -13,6 +14,7 @@ export interface Details {
   name: string;
   icon: string;
   iconLight?: boolean;
+  tier: number;
 }
 export interface Profile {
   charity_image: string; //url of image
