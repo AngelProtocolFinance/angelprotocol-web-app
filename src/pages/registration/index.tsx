@@ -21,7 +21,7 @@ const Register = () => {
   return (
     <section>
       <DappHead />
-      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white">
+      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white mx-auto">
         <Switch>
           <Route
             exact
