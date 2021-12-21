@@ -7,6 +7,7 @@ import Status from "./Status";
 import { useFormContext } from "react-hook-form";
 import { Values } from "components/Donater/types";
 import Split from "./Split";
+import SelectChurch from "./SelectChurch";
 import { useGetter } from "store/accessors";
 
 export default function DonateForm() {
@@ -36,21 +37,7 @@ export default function DonateForm() {
           <Currency currency={denoms.uatom} withTooltip />
         </div>
         <Breakdown />
-        {to === "churchportal" && (
-          <div className="w-full text-center my-2">
-            <select
-              className="w-full border border-gray-200 p-2"
-              {...register("contractAddress")}
-            >
-              <option value="terra14qsv7t0vwuv2fjxa73ylv0thda5f6kytq8p47u">
-                New Life Church
-              </option>
-              <option value="terra1uf9rzfr0ktr5d9ar4e46peh7f4sysxy5j4mvxc">
-                Walk Church
-              </option>
-            </select>
-          </div>
-        )}
+        {to === "churchportal" && <SelectChurch />}
         {to !== "tca" && <Split />}
         <button
           disabled={isSubmitting || form_loading || !!form_error}
