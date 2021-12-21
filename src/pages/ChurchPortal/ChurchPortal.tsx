@@ -17,7 +17,7 @@ const ChurchPortal = (props: RouteComponentProps<ChurchPortalParam>) => {
         <span className="font-semibold">Donation Address: </span>
         {endowment_addr || "N/A"}
       </p>
-      <Donater to="charity" receiver={endowment_addr} min_liq={100}>
+      <Donater to="charity" receiver={endowment_addr}>
         <DonateSuite />
       </Donater>
     </div>
