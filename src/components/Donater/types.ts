@@ -8,8 +8,9 @@ export interface Values {
   currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   min_liq: number;
   max_liq: number;
-  to: "tca" | "fund" | "charity";
+  to: "churchportal" | "tca" | "fund" | "charity";
   receiver?: number | string;
+  contractAddress?: string;
 }
 
 export type ErrorHandler = (message: string, url?: string) => void;
@@ -33,6 +34,14 @@ interface FromTCA {
   min_liq?: never;
 }
 
+interface FromChurchPortal {
+  to: "churchportal";
+  receiver?: never;
+  children: ReactNode;
+  max_liq?: never;
+  min_liq?: never;
+}
+
 interface ToFund {
   to: "fund";
   receiver?: number;
@@ -50,4 +59,4 @@ interface ToCharity {
   min_liq?: never;
 }
 
-export type Props = ToFund | ToCharity | FromTCA;
+export type Props = ToFund | ToCharity | FromTCA | FromChurchPortal;

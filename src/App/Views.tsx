@@ -8,6 +8,7 @@ import {
 import Login from "pages/Login/Login";
 // import Register from "pages/registration/index";
 import TCA from "pages/TCA/TCA";
+import ChurchPortal from "pages/ChurchPortal/ChurchPortal";
 import { app, site } from "../types/routes";
 // import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
@@ -29,6 +30,7 @@ export default function Views() {
       <Route path={`${path}/${app.login}`} component={Login} />
       {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
       <Route path={`${path}/${app.tca}`} component={TCA} />
+      <Route path={`${path}/${app.churchportal}`} component={ChurchPortal} />
       <Route path={`${path}/${app.govern}`} component={Governance} />
       {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
       <Route path={`${path}/${app.auction}`} component={Auction} />

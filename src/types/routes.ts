@@ -33,6 +33,7 @@ export enum app {
   unsdgs = "unsdgs",
   charity = "charity",
   tca = "tca",
+  churchportal = "church-portal",
   fund = "fund",
   withdraw = "withdraw",
   govern = "govern",
