@@ -21,9 +21,9 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-xl">
-      <div className="flex">
-        <div className="flex flex-col gap-2 justify-center xl:justify-start">
+    <Form className="flex flex-col text-white-grey text-lg lg:text-xl">
+      <div className="flex gap-10">
+        <div className="flex flex-col w-2/5 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
           <div className="flex">
             {amounts.map((amount) => (
@@ -55,7 +55,7 @@ export default function UserForm(props: Props) {
               )) || (
                 <label
                   htmlFor="custom"
-                  className={`flex text-grey-accent w-full rounded-md pl-2 items-center bg-white h-full`}
+                  className={`flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full`}
                 >
                   Other amount
                 </label>
@@ -65,10 +65,10 @@ export default function UserForm(props: Props) {
           <ErrorMessage
             name="amount"
             component="div"
-            className="text-sm text-center w-full"
+            className="text-sm text-center w-5/6"
           />
         </div>
-        <div className="w-full lg:w-1/2">
+        <div className="w-1/2">
           <p className="lg:ml-4 mt-4 lg:mt-0 text-white-grey font-semibold">
             How much of your donation should be compounded forever for this
             Index?
