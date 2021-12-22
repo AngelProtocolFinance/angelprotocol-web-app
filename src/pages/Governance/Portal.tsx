@@ -32,7 +32,9 @@ export default function Portal() {
   }
 
   const hasStake = +gov_staker.balance > 0;
-  const hasClaim = !!gov_staker.claims?.length;
+  const hasClaim = !!gov_staker.claims?.find(
+    (claim) => +claim.release_at.at_time <= Date.now() * 1e6
+  );
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
