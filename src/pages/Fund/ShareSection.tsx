@@ -1,10 +1,10 @@
-import React, { PropsWithChildren } from "react";
+import React from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
-type IconProps = PropsWithChildren<{
+type IconProps = {
   link: string;
   icon: React.ComponentType<any>;
-}>;
+};
 
 const IconLink = ({ link, icon: Icon }: IconProps) => {
   return (
