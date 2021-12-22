@@ -9,8 +9,8 @@ const TransactionItemInfo = (props: TransactionItemProps) => {
 
   return (
     <tr className="hover:bg-angel-blue text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
-      <td className="p-3">
-        <p className="text-base font-bold">${toCurrency(data.amount)}</p>
+      <td className="py-2 pl-4">
+        <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
         <p className="text-base capitalize">{data.transaction_type}</p>
       </td>
       <td>
