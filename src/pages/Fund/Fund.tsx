@@ -2,27 +2,14 @@ import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
-import React, { MouseEventHandler, PropsWithChildren } from "react";
+import React from "react";
 import { RouteComponentProps } from "react-router-dom";
+import Button from "./Button";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
 import ShareSection from "./ShareSection";
 import useFund from "./useFund";
-
-type ButtonProps = PropsWithChildren<{
-  bgColor: string;
-  onClick?: MouseEventHandler | undefined;
-}>;
-
-const Button = ({ bgColor, onClick, children }: ButtonProps) => (
-  <button
-    onClick={onClick}
-    className={`${bgColor} uppercase text-white text-sm w-48 py-2 rounded-lg font-semibold shadow-md`}
-  >
-    {children}
-  </button>
-);
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const {
