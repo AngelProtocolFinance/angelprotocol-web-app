@@ -2,6 +2,9 @@ import { useHistory } from "react-router-dom";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
+import SwapSuite from "components/TransactionSuite/SwapSuite";
+import Swapper from "components/Swapper/Swapper";
+import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
 import { app, site } from "types/routes";
@@ -16,6 +19,10 @@ export default function Portal() {
 
   function showUnstaker() {
     showModal(UnstakeModal, {});
+  }
+
+  function showSwapper() {
+    showModal(SwapModal, { inModal: true });
   }
 
   function goToLbpPage() {
@@ -39,7 +46,7 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <Action title="Trade Halo" action={goToLbpPage} />
+        <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
         <Action title="Claim" action={() => {}} disabled={true} />
@@ -75,5 +82,13 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
+  );
+}
+
+function SwapModal() {
+  return (
+    <Swapper>
+      <SwapSuite inModal />
+    </Swapper>
   );
 }

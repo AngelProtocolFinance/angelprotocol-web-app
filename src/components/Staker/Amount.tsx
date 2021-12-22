@@ -34,12 +34,10 @@ export default function Amount() {
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance />
       </label>
-      {!is_stake && (
-        <span className="my-3 text-angel-grey italic text-xs sm:text-sm">
-          NOTE: There is a 7 day withdraw holding period. You will not be able
-          to claim your HALO until this period has passed.
-        </span>
-      )}
+      <span className="my-3 text-angel-grey italic text-xs">
+        NOTE: There is a 7 day wait period to unstake HALO. You will not be able
+        to claim your HALO until this period has passed.
+      </span>
       <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
         <input
           {...register("amount")}
@@ -50,7 +48,7 @@ export default function Amount() {
           className="flex-auto p-1 pl-0 outline-none text-angel-grey text-lg"
         />
         <div
-          className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800"
+          className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"
           onClick={onMaxClick}
         >
           max

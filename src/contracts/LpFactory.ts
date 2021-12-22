@@ -8,16 +8,16 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { PairResult, PairsResult, sc } from "./types";
 
-export default class LbpFactory extends Contract {
+export default class LpFactory extends Contract {
   address: string;
   //contract address
   //may need to re-implement to handle multiple currencies in the future
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.address = contracts[this.chainID][sc.lbp_factory];
+    this.address = contracts[this.chainID][sc.loop_factory];
   }
 
-  async getLBPs() {
+  async getLPs() {
     const result = await this.query<PairsResult>(this.address, {
       pairs: {},
     });

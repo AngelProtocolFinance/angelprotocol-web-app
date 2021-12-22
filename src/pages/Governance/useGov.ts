@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { getSpotPrice } from "components/Swapper/getSpotPrice";
-import LBP from "contracts/LBP";
+import LP from "contracts/LP";
 import {
   usePairInfoQuery,
   usePairSimulQuery,
@@ -19,7 +19,7 @@ export default function useGov() {
   const wallet = useConnectedWallet();
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const lbp = useMemo(() => new LP(wallet), [wallet]);
   const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
     lbp.gen_pairInfo_args()
   );
