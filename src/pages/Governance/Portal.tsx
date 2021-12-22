@@ -35,7 +35,11 @@ export default function Portal() {
   const hasClaim = !!gov_staker.claims?.find(
     (claim) => +claim.release_at.at_time <= Date.now() * 1e6
   );
-
+  
+  function goToLpPage() {
+    return (window.location.href = `https://dex.loop.markets/swap#Swap`);
+  }
+  
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
@@ -53,7 +57,7 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <Action title="Trade Halo" action={showSwapper} />
+        <Action title="Trade Halo" action={goToLpPage} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} disabled={!hasStake} />
         <Action title="Claim" action={showClaimer} disabled={!hasClaim} />
