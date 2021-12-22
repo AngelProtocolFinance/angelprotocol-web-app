@@ -71,14 +71,18 @@ export default function UserForm(props: Props) {
             />
           </div>
 
-          <div className="text-left mt-5">
-            <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
-              <Field type="checkbox" name="receiptRequested" /> I want a Tax
-              Receipt
+          <div className="text-left mt-7">
+            <label className="font-semibold cursor-pointer">
+              <Field
+                type="checkbox"
+                name="receiptRequested"
+                className="cursor-pointer mr-2"
+              />
+              I want a Tax Receipt
             </label>
           </div>
         </div>
-        <div className="w-1/2 flex flex-col gap-5">
+        <div className="w-1/2 flex flex-col justify-between">
           <p className="font-semibold">
             How much of your donation should be compounded forever for this
             Index?
