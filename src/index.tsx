@@ -9,7 +9,7 @@ import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
-// import Admin from "Admin/Admin";
+import Admin from "Admin/Admin";
 import Website from "Website/Website";
 
 ReactDOM.render(
@@ -19,7 +19,7 @@ ReactDOM.render(
         <AuthProvider>
           <Switch>
             <Route path={site.app} component={App} />
-            {/*<Route path={site.admin} component={Admin} />*/}
+            <Route path={site.admin} component={Admin} />
             <Route path={site.home} component={Website} />
           </Switch>
         </AuthProvider>
