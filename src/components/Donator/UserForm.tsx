@@ -22,7 +22,7 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl">
+    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl gap-3">
       <div className="flex justify-between">
         <div className="flex flex-col w-1/2 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
@@ -97,11 +97,7 @@ export default function UserForm(props: Props) {
         </div>
       </div>
 
-      {showKYCForm ? (
-        <div className="col-span-2 text-white-grey font-semibold">
-          <KYCForm />
-        </div>
-      ) : null}
+      {showKYCForm && <KYCForm />}
 
       <div className="col-span-4 lg:col-span-2 mt-10 text-left lg:justify-start">
         <button
