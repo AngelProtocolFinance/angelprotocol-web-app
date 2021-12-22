@@ -29,7 +29,7 @@ export default function Amount() {
     <div className="grid">
       <label
         htmlFor="amount"
-        className="flex justify-between text-angel-grey uppercase font-bold mb-2 items-end"
+        className="flex justify-between text-angel-grey font-bold mb-2 items-end"
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
         <Balance />
