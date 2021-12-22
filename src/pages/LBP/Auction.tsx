@@ -43,10 +43,10 @@ export default function Auction() {
             />
           </div>
           <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
-            <p className="uppercase font-heading font-bold text-lg self-left mb-2">
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
               HaloSwap LBP has ended!
             </p>
-            <p className="uppercase font-heading font-bold text-lg self-left mb-2">
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
               Thank you to everyone who participated!
             </p>
           </div>
