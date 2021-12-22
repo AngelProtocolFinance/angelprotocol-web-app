@@ -98,7 +98,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
             </div>
           </div>
           <div className="self-start mb-6 mt-4 w-full font-heading">
-            <TransactionList />
+            <TransactionList address={address} />
           </div>
         </div>
         // <div className="flex justify-end padded-container mb-6 md:px-10 xl:px-6 px-6">

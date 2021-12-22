@@ -12,7 +12,7 @@ import ChurchPortal from "pages/ChurchPortal/ChurchPortal";
 import { app, site } from "../types/routes";
 // import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
-import Withdraw from "pages/Withdraw/Withdraw";
+import Endowment_Admin from "pages/Endowment_Admin/Endowment_Admin";
 // import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
@@ -37,7 +37,10 @@ export default function Views() {
       <Route path={`${path}/${app.govern}`} component={Governance} />
       {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
       <Route path={`${path}/${app.auction}`} component={Auction} />
-      <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
+      <Route
+        path={`${path}/${app.endowment_admin}/:address`}
+        component={Endowment_Admin}
+      />
       <Route path={`${path}${app.index}`} component={Leaderboard} />
       <Redirect from="*" to={site.home} />
     </Switch>
