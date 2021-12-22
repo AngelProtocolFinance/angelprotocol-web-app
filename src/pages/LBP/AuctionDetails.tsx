@@ -95,7 +95,7 @@ export default function AuctionDetails() {
           </h1>
           <div className="w-full flex flex-wrap gap-5 mt-3">
             <Details title="Starting HALO" value="80,000,000.00" />
-            <Details title="Ending HALO" value="49,562,362.15" />
+            <Details title="Ending HALO" value="40,000,000.00" />
           </div>
         </div>
         <div className="contract-details lg:w-1/3 md:w-full flex flex-col">
