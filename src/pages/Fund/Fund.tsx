@@ -2,22 +2,17 @@ import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
-import React, { MouseEventHandler, PropsWithChildren, ReactNode } from "react";
-import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import React, { MouseEventHandler, PropsWithChildren } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
+import ShareSection from "./ShareSection";
 import useFund from "./useFund";
 
 type ButtonProps = PropsWithChildren<{
   bgColor: string;
   onClick?: MouseEventHandler | undefined;
-}>;
-
-type IconProps = PropsWithChildren<{
-  link: string;
-  icon: React.ComponentType<any>;
 }>;
 
 const Button = ({ bgColor, onClick, children }: ButtonProps) => (
@@ -28,18 +23,6 @@ const Button = ({ bgColor, onClick, children }: ButtonProps) => (
     {children}
   </button>
 );
-
-const IconLink = ({ link, icon: Icon }: IconProps) => {
-  return (
-    <a
-      href={link}
-      target="_blank"
-      className="flex justify-center items-center border-2 border-angel-blue hover:border-blue-accent hover:text-blue-accent rounded-full w-9 h-9"
-    >
-      <Icon size={25} />
-    </a>
-  );
-};
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const {
@@ -84,19 +67,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
             <Button bgColor="bg-angel-blue" onClick={toggleShare}>
               Share
             </Button>
-            {isSharing && (
-              <div className="flex gap-2 text-angel-blue h-full">
-                <IconLink
-                  link="https://twitter.com/angelprotocol"
-                  icon={FaTwitter}
-                />
-                <IconLink
-                  link="https://www.linkedin.com/company/angel-protocol"
-                  icon={FaLinkedinIn}
-                />
-                <IconLink link="" icon={FaFacebookSquare} />
-              </div>
-            )}
+            {isSharing && <ShareSection />}
           </div>
         </div>
       </div>
