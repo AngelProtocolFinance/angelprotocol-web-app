@@ -34,7 +34,7 @@ const IconLink = ({ link, icon: Icon }: IconProps) => {
     <a
       href={link}
       target="_blank"
-      className="flex justify-center items-center border-2 border-angel-blue hover:border-blue-dark hover:text-blue-dark rounded-full w-9 h-9"
+      className="flex justify-center items-center border-2 border-angel-blue hover:border-blue-accent hover:text-blue-accent rounded-full w-9 h-9"
     >
       <Icon size={25} />
     </a>
