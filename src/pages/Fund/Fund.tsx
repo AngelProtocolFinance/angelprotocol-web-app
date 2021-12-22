@@ -8,19 +8,11 @@ import Button from "./Button";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
-import ShareSection from "./ShareSection";
+import ShareButton from "./ShareButton";
 import useFund from "./useFund";
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const {
-    isDonating,
-    toggleDonate,
-    error,
-    loading,
-    split,
-    isSharing,
-    toggleShare,
-  } = useFund();
+  const { isDonating, toggleDonate, error, loading, split } = useFund();
   const id_param = props.match.params?.id;
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
@@ -50,12 +42,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Button onClick={toggleDonate} bgColor="bg-yellow-blue">
             {isDonating ? "Back to Index" : "Donate"}
           </Button>
-          <div className="flex gap-5">
-            <Button bgColor="bg-angel-blue" onClick={toggleShare}>
-              Share
-            </Button>
-            {isSharing && <ShareSection />}
-          </div>
+          <ShareButton />
         </div>
       </div>
       <div className="mt-8 container mx-auto text-white-grey">
