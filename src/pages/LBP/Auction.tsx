@@ -2,18 +2,16 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { useState, useEffect } from "react";
+import Swapper from "components/Swapper/Swapper";
+import SwapSuite from "components/TransactionSuite/SwapSuite";
+import { LBPGraphDataUnavailable } from "contracts/Errors";
+import displayTerraError from "helpers/displayTerraError";
+import { useEffect, useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
-import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
-import displayTerraError from "helpers/displayTerraError";
-import { LBPGraphDataUnavailable } from "contracts/Errors";
-import useAuctionStats from "./useAuctionStats";
 
 export default function Auction() {
   const { showModal } = useSetModal();
@@ -45,10 +43,10 @@ export default function Auction() {
             />
           </div>
           <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
-            <p className="uppercase font-heading font-bold text-lg self-left mb-2 text-center">
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
               HaloSwap LBP has ended!
             </p>
-            <p className="uppercase font-heading font-bold text-lg self-left mb-2 text-center">
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
               Thank you to everyone who participated!
             </p>
           </div>
