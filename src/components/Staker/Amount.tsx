@@ -53,7 +53,7 @@ export default function Amount() {
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800"
           onClick={onMaxClick}
         >
-          Max
+          max
         </div>
       </div>
       <ErrorMessage
