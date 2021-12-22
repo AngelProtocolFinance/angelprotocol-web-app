@@ -1,10 +1,12 @@
 import "rc-slider/assets/index.css";
 import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
-import Slider from "rc-slider";
+import Slider, { SliderProps } from "rc-slider";
 import useSlider from "./useSlider";
 import { Values } from "./types";
 import CustomAmount from "./CustomAmount";
 import KYCForm from "./KYCForm";
+import "./UserForm.css";
+import SliderComponent from "./SliderComponent";
 
 type Props = {
   //for charity donations, no split data yet
@@ -20,91 +22,93 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="grid grid-cols-1 xl:justify-start p-4 pl-0 rounded-md mt-5 ">
-      <div className="col-span-4 justify-center xl:justify-start">
-        <p className="text-xl text-left text-white-grey font-semibold">
-          Choose the amount of your donation
-        </p>
-        <div className="mt-4 text-left">
-          {amounts.map((amount) => (
-            <label
-              key={amount}
-              className="cursor-pointer text-xl text-white-grey font-semibold mr-4"
-            >
-              <FastField
+    <Form className="flex flex-col text-white-grey text-xs lg:text-sm 3xl:text-lg gap-5">
+      <div className="flex justify-between">
+        <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
+          <p className="font-semibold">Choose the amount of your donation:</p>
+          <div className="flex flex-col gap-2 2xl:gap-4 xl:flex-row">
+            {amounts.map((amount) => (
+              <label
+                key={amount}
+                className="cursor-pointer font-semibold flex items-center"
+              >
+                <FastField
+                  type="radio"
+                  name="amount"
+                  value={amount}
+                  className="mr-1 cursor-pointer"
+                />
+                {`$${Number(amount).toFixed(0)}`}
+              </label>
+            ))}
+          </div>
+          <div className="flex flex-col relative">
+            <div className="flex gap-3 items-center">
+              <Field
+                id="custom"
                 type="radio"
                 name="amount"
-                value={amount}
-                className="mr-1"
+                value={"0"}
+                className="cursor-pointer"
               />
-              {`$${Number(amount).toFixed(0)}`}
-            </label>
-          ))}
-        </div>
-        <div className="mt-4 grid grid-cols-a1 lg:items-left mt-10">
-          <Field
-            id="custom"
-            type="radio"
-            name="amount"
-            value={"0"}
-            className=""
-          />
-          <div className="ml-2 h-10 flex flex-col">
-            {(!amounts.includes(values.amount) && touched.amount && (
-              <CustomAmount />
-            )) || (
-              <label
-                htmlFor="custom"
-                className={`text-angel-grey w-52 rounded-md pl-2 py-2 bg-white`}
-              >
-                other amount
-              </label>
-            )}
+              <div className="h-11 flex flex-col w-5/6">
+                {(!amounts.includes(values.amount) && touched.amount && (
+                  <CustomAmount />
+                )) || (
+                  <label
+                    htmlFor="custom"
+                    className={`flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full`}
+                  >
+                    Other amount
+                  </label>
+                )}
+              </div>
+            </div>
+            <ErrorMessage
+              name="amount"
+              component="div"
+              className="text-sm text-center absolute top-11 left-0 w-5/6 text-sdg5"
+            />
           </div>
-          <ErrorMessage
-            name="amount"
-            component="div"
-            className="cols-start-1 col-span-2 text-sm text-white text-left ml-6 mt-2"
-          />
         </div>
-      </div>
-      <div className="col-span-4 text-left mt-10 w-full lg:w-1/2">
-        <p className="lg:ml-4 mt-4 lg:mt-0 text-xl text-white-grey font-semibold">
-          How much of your donation should be compounded forever?
-        </p>
-        <div className="p-5">
-          <Slider
+        <div className="w-1/2 flex flex-col justify-between">
+          <p className="font-semibold">
+            How much of your donation should be compounded forever for this
+            Index?
+          </p>
+          <SliderComponent
             min={minLocked}
             max={maxLocked}
             value={percentage}
             onChange={handleSlide}
             onAfterChange={handleSlideEnd}
-            className="w-full"
           />
-          <p className="flex justify-between mt-2 text-white">
-            <span>{minLocked}%</span>
-            <span>{maxLocked}%</span>
-          </p>
         </div>
       </div>
 
-      <div className="xl:flex col-span-4 xl:col-span-2 lg:mt-4 text-left">
-        <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
-          <Field type="checkbox" name="receiptRequested" /> I want a Tax Receipt
+      <div className="flex flex-col gap-3 mt-7">
+        <p>
+          Depending on the country in which you are located, you may required a
+          tax receipt for administrative obligations. If you wish to receive a
+          tax receipt, please check the chechbox below and fill in the form.
+        </p>
+        <label className="font-semibold cursor-pointer">
+          <Field
+            type="checkbox"
+            name="receiptRequested"
+            className="cursor-pointer mr-2"
+          />
+          I want a Tax Receipt
         </label>
       </div>
 
-      {showKYCForm ? (
-        <div className="col-span-2 text-white-grey font-semibold">
-          <KYCForm />
-        </div>
-      ) : null}
+      {showKYCForm && <KYCForm />}
 
-      <div className="col-span-4 lg:col-span-2 mt-10 text-left lg:justify-start">
+      <div className="w-full flex justify-center">
         <button
           disabled={isSubmitting}
           type="submit"
-          className="bg-angel-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+          className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
           // onClick={donate}
         >
           Donate

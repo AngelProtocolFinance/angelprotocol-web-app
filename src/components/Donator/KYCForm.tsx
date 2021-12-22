@@ -5,7 +5,7 @@ export default function KYCForm() {
   const inputRef = useRef<HTMLInputElement>();
 
   return (
-    <>
+    <div className="font-semibold">
       <p className="my-2 text-sm text-center">
         Please note that our tax receipts are issued by an US-based 501(c)(3)
         nonprofit. Please consult with your local lawyer, accountant or tax
@@ -134,6 +134,6 @@ export default function KYCForm() {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

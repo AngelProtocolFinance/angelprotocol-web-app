@@ -15,7 +15,7 @@ import Withdraw from "pages/Withdraw/Withdraw";
 // import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
-// import Fund from "pages/Fund/Fund";
+import Fund from "pages/Fund/Fund";
 
 export default function Views() {
   const { path } = useRouteMatch();
@@ -30,7 +30,7 @@ export default function Views() {
       {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
       <Route path={`${path}/${app.tca}`} component={TCA} />
       <Route path={`${path}/${app.govern}`} component={Governance} />
-      {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
+      <Route path={`${path}/${app.fund}/:id`} component={Fund} />
       <Route path={`${path}/${app.auction}`} component={Auction} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />

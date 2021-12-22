@@ -1,18 +1,15 @@
-import FundVid from "./FundVid";
-import CharityCard from "pages/Market/CharityCard";
-import Overview from "./Overview";
-import useFund from "./useFund";
-import Donate from "./Donate";
-import useProfiles from "pages/Market/useProfiles";
-import { RouteComponentProps } from "react-router-dom";
-import { unsdgs } from "pages/Fund/unsdgs";
 import DappHead from "components/Headers/DappHead";
-
-//props
-//fundBgClass
-//fundLogo
-//heading
-//description
+import { unsdgs } from "pages/Fund/unsdgs";
+import CharityCard from "pages/Market/CharityCard";
+import useProfiles from "pages/Market/useProfiles";
+import React from "react";
+import { RouteComponentProps } from "react-router-dom";
+import Button from "./Button";
+import Donate from "./Donate";
+import FundVid from "./FundVid";
+import Overview from "./Overview";
+import ShareButton from "./ShareButton";
+import useFund from "./useFund";
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
@@ -41,20 +38,11 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Donate split={split} loading={loading} error={error} />
         )) || <Overview fund_id={fund_id} />}
 
-        <div className="col-start-2 col-span-1 row-start-2 row-span-1 self-start">
-          <button
-            onClick={toggleDonate}
-            className={`${
-              isDonating ? "bg-yellow-blue" : "bg-angel-orange"
-            } uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
-          >
+        <div className="flex flex-col gap-2">
+          <Button onClick={toggleDonate} bgColor="bg-yellow-blue">
             {isDonating ? "Back to Index" : "Donate"}
-          </button>
-          <button
-            className={`ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
-          >
-            Share
-          </button>
+          </Button>
+          <ShareButton />
         </div>
       </div>
       <div className="mt-8 container mx-auto text-white-grey">
