@@ -9,6 +9,7 @@ export interface SplitLiq {
 
 export default function useFund() {
   const [isDonating, setDonating] = useState(false);
+  const [isSharing, setSharing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
   const [split, setSplit] = useState<SplitLiq>();
@@ -37,5 +38,17 @@ export default function useFund() {
     setDonating((prev) => !prev);
   }
 
-  return { isDonating, toggleDonate, split, error, loading };
+  function toggleShare() {
+    setSharing((prev) => !prev);
+  }
+
+  return {
+    isDonating,
+    toggleDonate,
+    split,
+    error,
+    loading,
+    isSharing,
+    toggleShare,
+  };
 }

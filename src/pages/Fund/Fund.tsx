@@ -1,3 +1,4 @@
+import { Twitter } from "@material-ui/icons";
 import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
@@ -14,6 +15,10 @@ type ButtonProps = PropsWithChildren<{
   onClick?: MouseEventHandler | undefined;
 }>;
 
+type IconProps = PropsWithChildren<{
+  link: string;
+}>;
+
 const Button = ({ bgColor, onClick, children }: ButtonProps) => (
   <button
     onClick={onClick}
@@ -23,8 +28,28 @@ const Button = ({ bgColor, onClick, children }: ButtonProps) => (
   </button>
 );
 
+const Icon = ({ link, children }: IconProps) => {
+  return (
+    <a
+      href={link}
+      target="_blank"
+      className="flex justify-center items-center border-2 border-angel-blue hover:border-blue-dark hover:text-blue-dark rounded-full w-9 h-9"
+    >
+      {children}
+    </a>
+  );
+};
+
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const { isDonating, toggleDonate, error, loading, split } = useFund();
+  const {
+    isDonating,
+    toggleDonate,
+    error,
+    loading,
+    split,
+    isSharing,
+    toggleShare,
+  } = useFund();
   const id_param = props.match.params?.id;
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
@@ -54,7 +79,18 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Button onClick={toggleDonate} bgColor="bg-yellow-blue">
             {isDonating ? "Back to Index" : "Donate"}
           </Button>
-          <Button bgColor="bg-angel-blue">Share</Button>
+          <div className="flex gap-5">
+            <Button bgColor="bg-angel-blue" onClick={toggleShare}>
+              Share
+            </Button>
+            {isSharing && (
+              <div className="text-angel-blue h-full">
+                <Icon link="https://twitter.com/angelprotocol">
+                  <Twitter />
+                </Icon>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="mt-8 container mx-auto text-white-grey">
