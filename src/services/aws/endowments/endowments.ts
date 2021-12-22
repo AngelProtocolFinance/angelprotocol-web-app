@@ -19,13 +19,22 @@ const endowments_api = aws.injectEndpoints({
       transformResponse: (res: QueryRes<Endowment[]>) => {
         const _accounts: Accounts = {};
         res.Items.forEach(
-          ({ address, name, description, url, icon, iconLight = false }) => {
+          ({
+            address,
+            name,
+            description,
+            url,
+            icon,
+            iconLight = false,
+            tier,
+          }) => {
             _accounts[address] = {
               name,
               description,
               url,
               icon,
               iconLight,
+              tier,
             };
           }
         );

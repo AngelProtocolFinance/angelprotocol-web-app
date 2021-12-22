@@ -14,5 +14,7 @@ export default function useDescription(address: string, chainID: string) {
   const icon = details?.icon || defaultIcon;
   const iconLight = details?.iconLight;
 
-  return { name, description, url, icon, iconLight };
+  const tier = details?.tier || 3;
+
+  return { name, description, url, icon, iconLight, tier };
 }
