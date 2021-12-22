@@ -16,7 +16,7 @@ export default function Amount() {
   const gov_staker = useGovStaker();
 
   const balance = gov_staker.claims
-    ?.filter((claim) => +claim.release_at.at_time <= Date.now())
+    ?.filter((claim) => +claim.release_at.at_time <= Date.now() * 1e6)
     .reduce((prev, claim) => prev + +claim.amount / 1e6, 0);
 
   return (
