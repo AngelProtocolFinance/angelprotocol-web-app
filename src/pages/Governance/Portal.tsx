@@ -3,7 +3,9 @@ import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
+import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import Swapper from "components/Swapper/Swapper";
+import Claimer from "components/Claimer/Claimer";
 import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
@@ -21,12 +23,12 @@ export default function Portal() {
     showModal(UnstakeModal, {});
   }
 
-  function showSwapper() {
-    showModal(SwapModal, { inModal: true });
+  function showClaimer() {
+    showModal(ClaimModal, {});
   }
 
-  function goToLbpPage() {
-    history.push(`${site.app}/${app.auction}`);
+  function showSwapper() {
+    showModal(SwapModal, { inModal: true });
   }
 
   return (
@@ -49,7 +51,7 @@ export default function Portal() {
         <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
-        <Action title="Claim" action={() => {}} disabled={true} />
+        <Action title="Claim" action={showClaimer} />
       </div>
     </div>
   );
@@ -82,6 +84,14 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
+  );
+}
+
+function ClaimModal() {
+  return (
+    <Claimer>
+      <ClaimSuite inModal />
+    </Claimer>
   );
 }
 
