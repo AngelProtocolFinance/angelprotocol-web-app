@@ -32,6 +32,7 @@ const SliderComponent = (props: SliderProps) => {
           height: 10,
           backgroundColor: "lightgrey",
         }}
+        // bg color is the same as angel blue, but since rc-slider doesn't support tailwind, we needed to hardcode the color
         trackStyle={{ height: 10, backgroundColor: "#3FA9F5" }}
         handleStyle={{
           borderColor: "white",
@@ -57,11 +58,11 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-lg 3xl:text-xl">
+    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl">
       <div className="flex justify-between">
         <div className="flex flex-col w-1/2 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
-          <div className="flex flex-col gap-4 xl:flex-row">
+          <div className="flex flex-col gap-2 2xl:gap-4 2xl:flex-row">
             {amounts.map((amount) => (
               <label
                 key={amount}
