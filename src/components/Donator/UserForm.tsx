@@ -18,7 +18,7 @@ const SliderComponent = (props: SliderProps) => {
 
   return (
     <div className="w-3/4 flex flex-col gap-3">
-      <span className="text-dark-grey text-base font-semibold">
+      <span className="text-dark-grey text-xs 2xl:text-base font-semibold">
         Percentage<sup className="text-red-500">*</sup>
       </span>
       <Slider
