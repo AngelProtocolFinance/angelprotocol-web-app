@@ -1,9 +1,9 @@
-import { Twitter } from "@material-ui/icons";
 import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import { MouseEventHandler, PropsWithChildren } from "react";
+import { FaTwitter } from "react-icons/fa";
 import { RouteComponentProps } from "react-router-dom";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
@@ -84,9 +84,9 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
               Share
             </Button>
             {isSharing && (
-              <div className="text-angel-blue h-full">
+              <div className="flex gap-2 text-angel-blue h-full">
                 <Icon link="https://twitter.com/angelprotocol">
-                  <Twitter />
+                  <FaTwitter />
                 </Icon>
               </div>
             )}
