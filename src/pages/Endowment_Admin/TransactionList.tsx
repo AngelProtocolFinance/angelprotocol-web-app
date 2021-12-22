@@ -36,7 +36,7 @@ const TransactionList = (props: EndowmentAddrProps) => {
     if (data === undefined) {
       setIsError(true);
     }
-  }, [isError]);
+  }, [data, isError]);
 
   return (
     <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto h-96">
