@@ -19,7 +19,6 @@ function useClaimer() {
   const tx = useEstimator();
 
   async function claimer() {
-    // const liquid_split = 100 - Number(data.split);
     try {
       if (!wallet) {
         dispatch(
@@ -56,9 +55,6 @@ function useClaimer() {
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          //refetching staker here isn't good since state isn't yet reflected in the backend
-          //refetch will only get the old data
-          // refetch_staker();
           dispatch(
             setStage({
               step: Step.success,
