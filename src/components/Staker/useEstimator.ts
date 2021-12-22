@@ -49,7 +49,7 @@ export default function useEstimator() {
 
         if (is_stake) {
           //check $HALO balance
-          if (debounced_amount >= halo_balance) {
+          if (debounced_amount > halo_balance) {
             dispatch(setFormError("Not enough Halo balance"));
             return;
           }
