@@ -32,7 +32,7 @@ export default function Portal() {
   }
 
   const hasStake = +gov_staker.balance > 0;
-  console.log(gov_staker);
+  const hasClaim = !!gov_staker.claims?.length;
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
@@ -54,7 +54,7 @@ export default function Portal() {
         <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} disabled={!hasStake} />
-        <Action title="Claim" action={showClaimer} disabled={!hasStake} />
+        <Action title="Claim" action={showClaimer} disabled={!hasClaim} />
       </div>
     </div>
   );

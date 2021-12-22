@@ -76,7 +76,6 @@ export const terra = createApi({
       providesTags: [{ type: tags.gov, id: gov.staker }],
       query: contract_querier,
       transformResponse: (res: QueryRes<GovStaker>) => {
-        console.log(res);
         return res.query_result;
       },
     }),

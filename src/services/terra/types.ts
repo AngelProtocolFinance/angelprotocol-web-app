@@ -72,11 +72,13 @@ export type PollExecuteMsg = {
 
 type VoteInfo = { vote: Vote; balance: string };
 type LockedHolding = [number, VoteInfo]; //[poll_id, info]
+type Claim = { amount: string; release_at: { at_time: string } };
 
 export type GovStaker = {
   balance: string;
   share: string;
   locked_balance: LockedHolding[];
+  claims?: Claim[];
 };
 
 export type GovState = {
