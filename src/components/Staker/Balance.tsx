@@ -16,7 +16,7 @@ export default function Balance() {
   return (
     <p className="text-xs font-light font-heading flex items-center">
       <span className="mr-1 text-xs">{is_stake ? "Balance:" : "Staked:"}</span>
-      <span>{toCurrency(balance, 2, true)} HALO</span>
+      <span>{toCurrency(balance, 3, true)} HALO</span>
     </p>
   );
 }
