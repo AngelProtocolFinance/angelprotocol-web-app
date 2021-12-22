@@ -11,7 +11,7 @@ import {
 import Contract from "./Contract";
 import { sc } from "./types";
 
-export default class LBP extends Contract {
+export default class LP extends Contract {
   factory_address: string;
   pair_address: string;
   router_adddress: string;
@@ -20,10 +20,10 @@ export default class LBP extends Contract {
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.factory_address = contracts[this.chainID][sc.lbp_factory];
-    this.pair_address = contracts[this.chainID][sc.lbp_pair];
-    this.router_adddress = contracts[this.chainID][sc.lbp_router];
-    this.lp_address = contracts[this.chainID][sc.lbp_lp];
+    this.factory_address = contracts[this.chainID][sc.loop_factory];
+    this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
+    this.router_adddress = contracts[this.chainID][sc.loop_router];
+    this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
     this.halo_address = contracts[this.chainID][sc.halo_token];
   }
 
