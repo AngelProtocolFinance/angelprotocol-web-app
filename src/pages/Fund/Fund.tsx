@@ -2,8 +2,8 @@ import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
-import { MouseEventHandler, PropsWithChildren } from "react";
-import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import React, { MouseEventHandler, PropsWithChildren, ReactNode } from "react";
+import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { RouteComponentProps } from "react-router-dom";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
@@ -17,6 +17,7 @@ type ButtonProps = PropsWithChildren<{
 
 type IconProps = PropsWithChildren<{
   link: string;
+  icon: React.ComponentType<any>;
 }>;
 
 const Button = ({ bgColor, onClick, children }: ButtonProps) => (
@@ -28,14 +29,14 @@ const Button = ({ bgColor, onClick, children }: ButtonProps) => (
   </button>
 );
 
-const Icon = ({ link, children }: IconProps) => {
+const IconLink = ({ link, icon: Icon }: IconProps) => {
   return (
     <a
       href={link}
       target="_blank"
       className="flex justify-center items-center border-2 border-angel-blue hover:border-blue-dark hover:text-blue-dark rounded-full w-9 h-9"
     >
-      {children}
+      <Icon size={25} />
     </a>
   );
 };
@@ -85,12 +86,15 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
             </Button>
             {isSharing && (
               <div className="flex gap-2 text-angel-blue h-full">
-                <Icon link="https://twitter.com/angelprotocol">
-                  <FaTwitter />
-                </Icon>
-                <Icon link="https://www.linkedin.com/company/angel-protocol">
-                  <FaLinkedinIn />
-                </Icon>
+                <IconLink
+                  link="https://twitter.com/angelprotocol"
+                  icon={FaTwitter}
+                />
+                <IconLink
+                  link="https://www.linkedin.com/company/angel-protocol"
+                  icon={FaLinkedinIn}
+                />
+                <IconLink link="" icon={FaFacebookSquare} />
               </div>
             )}
           </div>
