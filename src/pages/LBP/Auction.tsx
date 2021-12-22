@@ -14,11 +14,9 @@ import Swapper from "components/Swapper/Swapper";
 import displayTerraError from "helpers/displayTerraError";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
 import useAuctionStats from "./useAuctionStats";
-import useSaleStatus from "components/Swapper/useSaleStatus";
+
 export default function Auction() {
   const { showModal } = useSetModal();
-
-  const { is_live, message } = useSaleStatus();
   const { isLoading, lbpPairData, error } = useGetLBPPairData();
 
   // This could be extracted into a separate hook to be used accross the application.
@@ -62,8 +60,6 @@ export default function Auction() {
 }
 
 function AuctionStats() {
-  const { duration_days, end, start, ust_price } = useAuctionStats();
-
   return (
     <div className="w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails
@@ -78,7 +74,7 @@ function AuctionStats() {
         Icon={FaStopwatch}
         exClass="ends-in"
       />
-      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
+      <StatsDetails title="Price" value={`UST 0.087069`} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import LBP from "contracts/LBP";
+import LP from "contracts/LP";
 import {
   pool_balance,
   simulation,
@@ -15,7 +15,7 @@ import { getSpotPrice } from "components/Swapper/getSpotPrice";
 
 export default function useAuctionStats() {
   const wallet = useConnectedWallet();
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const lbp = useMemo(() => new LP(wallet), [wallet]);
   const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
     lbp.gen_pairInfo_args()
   );

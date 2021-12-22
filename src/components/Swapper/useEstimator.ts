@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import LBP from "contracts/LBP";
+import LP from "contracts/LP";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 import { useBalances, useHaloBalance } from "services/terra/hooks";
@@ -28,7 +28,7 @@ export default function useEstimator() {
 
   const wallet = useConnectedWallet();
 
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
+  const lbp = useMemo(() => new LP(wallet), [wallet]);
   const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
     lbp.gen_pool_args()
   );
@@ -74,7 +74,7 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LBP(wallet);
+        const contract = new LP(wallet);
 
         // //on demand pool query to get latest pool balance
         // const pool = await contract.getPoolBalance();

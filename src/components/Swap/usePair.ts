@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useConnectedWallet } from "@terra-dev/use-wallet";
 import { Pair, PairResult, Pairs, TokenInfo } from "contracts/types";
-import LbpFactory from "contracts/LbpFactory";
+import LpFactory from "contracts/LpFactory";
 import { currency_icons, currency_text, UUSD } from "constants/currency";
 
 export interface TokenResult {
@@ -31,7 +31,7 @@ export default function usePair() {
   const [networkName, setNetworkName] = useState<any>("");
 
   async function getPairInfo(contract_addr: string) {
-    const factoryContract = new LbpFactory(wallet);
+    const factoryContract = new LpFactory(wallet);
     const tokenResult: PairResult = await factoryContract.getPairInfo(
       contract_addr
     );
@@ -39,7 +39,7 @@ export default function usePair() {
   }
 
   async function fetchTokenInfo(token_contract: string) {
-    const factoryContract = new LbpFactory(wallet);
+    const factoryContract = new LpFactory(wallet);
     console.log("deby: ", token_contract, factoryContract);
     const tokenResult: TokenResult = await factoryContract.getTokenInfo(
       token_contract
@@ -56,7 +56,7 @@ export default function usePair() {
       )
         return;
       setNetworkName(wallet?.network.name);
-      const factoryContract = new LbpFactory(wallet);
+      const factoryContract = new LpFactory(wallet);
       const getTokenInfo = async (info: NativeInfo | AssetInfo) => {
         let tokenInfo: TokenInfo | undefined;
         if (isAssetInfo(info)) {
@@ -89,7 +89,7 @@ export default function usePair() {
       };
 
       const fetchPairs = async () => {
-        const res = await factoryContract.getLBPs();
+        const res = await factoryContract.getLPs();
         setIsLoading(false);
         const pairs = await Promise.all(
           res.map(async (pairResult: PairResult) => {

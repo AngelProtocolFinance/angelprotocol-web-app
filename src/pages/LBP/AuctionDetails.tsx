@@ -2,8 +2,6 @@ import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
-import useSaleStatus from "components/Swapper/useSaleStatus";
-import LBP from "contracts/LBP";
 import toCurrency from "helpers/toCurrency";
 import { useMemo } from "react";
 import { pool_balance } from "services/terra/placeholders";
