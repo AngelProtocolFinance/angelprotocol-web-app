@@ -15,16 +15,12 @@ export default function Amount() {
   } = useFormContext<Values>();
   const gov_staker = useGovStaker();
 
-  // sum up all the claims for a Gov Staker addr to get total claimable amount
-  let balance = 0;
-  // TO DO: check if claims exist for staker
-  // gov_staker.claims.forEach((c) => (balance += <claim amount>.div(1e6).toNumber()));
+  let balance = +gov_staker.balance / 1e6; // converting uHALO to HALO (1 HALO = 1e6 uHALO)
 
   return (
     <div className="grid">
       <div className="flex text-angel-grey font-bold mb-5">
-        <p>Claimable:</p>
-        <p>{balance} HALO</p>
+        <p>Claimable: {balance} HALO</p>
       </div>
       <ErrorMessage
         errors={errors}
