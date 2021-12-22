@@ -25,8 +25,8 @@ export default function Portal() {
     showModal(SwapModal, { inModal: true });
   }
 
-  function goToLbpPage() {
-    history.push(`${site.app}/${app.auction}`);
+  function goToLpPage() {
+    return (window.location.href = `https://dex.loop.markets/swap#Swap`);
   }
 
   return (
@@ -46,7 +46,7 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <Action title="Trade Halo" action={showSwapper} />
+        <Action title="Trade Halo" action={goToLpPage} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
         <Action title="Claim" action={() => {}} disabled={true} />
