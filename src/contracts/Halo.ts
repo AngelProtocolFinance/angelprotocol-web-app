@@ -46,7 +46,7 @@ export default class Halo extends Contract {
     const claim_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.gov_address,
-      { claim: {} }
+      { claim_voting_tokens: {} }
     );
     const fee = await this.estimateFee([claim_msg]);
     return { msgs: [claim_msg], fee };
