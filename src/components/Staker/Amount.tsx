@@ -35,8 +35,8 @@ export default function Amount() {
         <Balance />
       </label>
       <span className="my-3 text-angel-grey italic text-xs">
-        NOTE: There is a 7 day withdraw holding period. You will not be able to
-        claim your HALO until this period has passed.
+        NOTE: There is a 7 day wait period to unstake HALO. You will not be able
+        to claim your HALO until this period has passed.
       </span>
       <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
         <input
