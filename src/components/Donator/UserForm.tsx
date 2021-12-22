@@ -22,7 +22,7 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl gap-3">
+    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl gap-5">
       <div className="flex justify-between">
         <div className="flex flex-col w-1/2 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
@@ -99,11 +99,11 @@ export default function UserForm(props: Props) {
 
       {showKYCForm && <KYCForm />}
 
-      <div className="col-span-4 lg:col-span-2 mt-10 text-left lg:justify-start">
+      <div className="w-full flex justify-center">
         <button
           disabled={isSubmitting}
           type="submit"
-          className="bg-angel-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+          className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
           // onClick={donate}
         >
           Donate
