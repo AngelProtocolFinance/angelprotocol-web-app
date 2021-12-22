@@ -42,32 +42,41 @@ export default function UserForm(props: Props) {
               </label>
             ))}
           </div>
-          <div className="flex gap-3 items-center">
-            <Field
-              id="custom"
-              type="radio"
-              name="amount"
-              value={"0"}
-              className="cursor-pointer"
-            />
-            <div className="h-11 flex flex-col w-5/6">
-              {(!amounts.includes(values.amount) && touched.amount && (
-                <CustomAmount />
-              )) || (
-                <label
-                  htmlFor="custom"
-                  className={`flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full`}
-                >
-                  Other amount
-                </label>
-              )}
+          <div className="flex flex-col relative">
+            <div className="flex gap-3 items-center">
+              <Field
+                id="custom"
+                type="radio"
+                name="amount"
+                value={"0"}
+                className="cursor-pointer"
+              />
+              <div className="h-11 flex flex-col w-5/6">
+                {(!amounts.includes(values.amount) && touched.amount && (
+                  <CustomAmount />
+                )) || (
+                  <label
+                    htmlFor="custom"
+                    className={`flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full`}
+                  >
+                    Other amount
+                  </label>
+                )}
+              </div>
             </div>
+            <ErrorMessage
+              name="amount"
+              component="div"
+              className="text-sm text-center absolute top-11 left-0 w-5/6 text-sdg5"
+            />
           </div>
-          <ErrorMessage
-            name="amount"
-            component="div"
-            className="text-sm text-center w-5/6"
-          />
+
+          <div className="text-left mt-5">
+            <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
+              <Field type="checkbox" name="receiptRequested" /> I want a Tax
+              Receipt
+            </label>
+          </div>
         </div>
         <div className="w-1/2 flex flex-col gap-5">
           <p className="font-semibold">
@@ -82,12 +91,6 @@ export default function UserForm(props: Props) {
             onAfterChange={handleSlideEnd}
           />
         </div>
-      </div>
-
-      <div className="xl:flex col-span-4 xl:col-span-2 lg:mt-4 text-left">
-        <label className="lg:ml-4 text-white-grey font-semibold cursor-pointer">
-          <Field type="checkbox" name="receiptRequested" /> I want a Tax Receipt
-        </label>
       </div>
 
       {showKYCForm ? (
