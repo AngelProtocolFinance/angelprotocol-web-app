@@ -22,11 +22,11 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-base lg:text-lg 3xl:text-xl gap-5">
+    <Form className="flex flex-col text-white-grey text-xs lg:text-sm 3xl:text-lg gap-5">
       <div className="flex justify-between">
-        <div className="flex flex-col w-1/2 gap-2 justify-center xl:justify-start">
+        <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
-          <div className="flex flex-col gap-2 2xl:gap-4 2xl:flex-row">
+          <div className="flex flex-col gap-2 2xl:gap-4 xl:flex-row">
             {amounts.map((amount) => (
               <label
                 key={amount}
@@ -70,17 +70,6 @@ export default function UserForm(props: Props) {
               className="text-sm text-center absolute top-11 left-0 w-5/6 text-sdg5"
             />
           </div>
-
-          <div className="text-left mt-7">
-            <label className="font-semibold cursor-pointer">
-              <Field
-                type="checkbox"
-                name="receiptRequested"
-                className="cursor-pointer mr-2"
-              />
-              I want a Tax Receipt
-            </label>
-          </div>
         </div>
         <div className="w-1/2 flex flex-col justify-between">
           <p className="font-semibold">
@@ -95,6 +84,22 @@ export default function UserForm(props: Props) {
             onAfterChange={handleSlideEnd}
           />
         </div>
+      </div>
+
+      <div className="flex flex-col gap-3 mt-7">
+        <p>
+          Depending on the country in which you are located, you may required a
+          tax receipt for administrative obligations. If you wish to receive a
+          tax receipt, please check the chechbox below and fill in the form.
+        </p>
+        <label className="font-semibold cursor-pointer">
+          <Field
+            type="checkbox"
+            name="receiptRequested"
+            className="cursor-pointer mr-2"
+          />
+          I want a Tax Receipt
+        </label>
       </div>
 
       {showKYCForm && <KYCForm />}
