@@ -74,7 +74,7 @@ function AuctionStats() {
         Icon={FaStopwatch}
         exClass="ends-in"
       />
-      <StatsDetails title="Price" value={`UST 0.087069`} />
+      <StatsDetails title="Price" value={`UST 0.074994`} />
     </div>
   );
 }
