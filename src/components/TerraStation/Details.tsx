@@ -21,6 +21,7 @@ export default function Details(props: Props) {
     (coin) =>
       filtered ||
       coin.denom === denoms.uusd ||
+      coin.denom === denoms.uhalo ||
       Number(coin.amount) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);
