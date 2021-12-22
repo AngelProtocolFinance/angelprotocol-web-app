@@ -1,16 +1,7 @@
-import { useSetToken } from "contexts/AuthProvider";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { admin } from "types/routes";
 
 export default function AdminSideNav() {
-  const history = useHistory();
-  const { deleteToken } = useSetToken();
-
-  const logout = () => {
-    deleteToken("admin");
-    history.push(admin.login);
-  };
-
   const linkStyles =
     "block uppercase text-sm md:text-lg text-gray-400 hover:text-gray-700 py-1 p-5 text-center rounded-sm border-t border-b border-opacity-20 font-semibold";
   const activeStyles = "bg-white bg-opacity-40 text-angel-blue";
@@ -53,15 +44,6 @@ export default function AdminSideNav() {
         >
           Alliance Members
         </NavLink>
-      </div>
-      {/* side nav footer  */}
-      <div className="flex justify-center h-20 relative justify-end">
-        <button
-          className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-bold justify-self-center absolute bottom-0"
-          onClick={logout}
-        >
-          Logout
-        </button>
       </div>
     </div>
   );
