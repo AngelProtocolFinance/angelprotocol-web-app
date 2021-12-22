@@ -28,6 +28,18 @@ const SliderComponent = (props: SliderProps) => {
         onChange={onChange}
         onAfterChange={onAfterChange}
         className="w-full"
+        railStyle={{
+          height: 10,
+          backgroundColor: "lightgrey",
+        }}
+        trackStyle={{ height: 10, backgroundColor: "#3FA9F5" }}
+        handleStyle={{
+          borderColor: "white",
+          height: 28,
+          width: 28,
+          marginTop: -9,
+          backgroundColor: "white",
+        }}
       />
       <p className="flex justify-between text-base">
         <span>{min}%</span>
@@ -45,15 +57,15 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-lg lg:text-xl">
-      <div className="flex gap-5">
-        <div className="flex flex-col w-2/5 gap-2 justify-center xl:justify-start">
+    <Form className="flex flex-col text-white-grey text-lg 3xl:text-xl">
+      <div className="flex justify-between">
+        <div className="flex flex-col w-1/2 gap-2 justify-center xl:justify-start">
           <p className="font-semibold">Choose the amount of your donation:</p>
-          <div className="flex">
+          <div className="flex flex-col gap-4 xl:flex-row">
             {amounts.map((amount) => (
               <label
                 key={amount}
-                className="cursor-pointer font-semibold mr-4 flex items-center"
+                className="cursor-pointer font-semibold flex items-center"
               >
                 <FastField
                   type="radio"
@@ -65,7 +77,7 @@ export default function UserForm(props: Props) {
               </label>
             ))}
           </div>
-          <div className="flex gap-3 items-center mt-4">
+          <div className="flex gap-3 items-center">
             <Field
               id="custom"
               type="radio"
@@ -73,7 +85,7 @@ export default function UserForm(props: Props) {
               value={"0"}
               className="cursor-pointer"
             />
-            <div className="h-12 flex flex-col w-5/6">
+            <div className="h-11 flex flex-col w-5/6">
               {(!amounts.includes(values.amount) && touched.amount && (
                 <CustomAmount />
               )) || (
