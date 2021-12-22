@@ -22,7 +22,7 @@ export default function Amount() {
     : new Dec(gov_staker.balance).div(1e6).toNumber();
 
   const onMaxClick = () => {
-    setValue("amount", toCurrency(balance, 3, true));
+    setValue("amount", balance + "");
   };
 
   return (
