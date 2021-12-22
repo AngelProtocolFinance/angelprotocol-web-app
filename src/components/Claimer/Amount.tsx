@@ -15,7 +15,9 @@ export default function Amount() {
   } = useFormContext<Values>();
   const gov_staker = useGovStaker();
 
-  let balance = +gov_staker.balance / 1e6; // converting uHALO to HALO (1 HALO = 1e6 uHALO)
+  const balance = gov_staker.claims
+    ?.filter((claim) => +claim.release_at.at_time <= Date.now())
+    .reduce((prev, claim) => prev + +claim.amount / 1e6, 0);
 
   return (
     <div className="grid">
