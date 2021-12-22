@@ -1,19 +1,19 @@
-import { useHistory } from "react-router-dom";
+import Claimer from "components/Claimer/Claimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
+import Swapper from "components/Swapper/Swapper";
+import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
-import ClaimSuite from "components/TransactionSuite/ClaimSuite";
-import Swapper from "components/Swapper/Swapper";
-import Claimer from "components/Claimer/Claimer";
-import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
+import { useHistory } from "react-router-dom";
+import { useGovStaker } from "services/terra/hooks";
 import "./Portal.css";
-import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
   const history = useHistory();
+  const gov_staker = useGovStaker();
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -30,6 +30,9 @@ export default function Portal() {
   function showSwapper() {
     showModal(SwapModal, { inModal: true });
   }
+
+  const hasStake = +gov_staker.balance > 0;
+  console.log(gov_staker);
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
@@ -50,8 +53,8 @@ export default function Portal() {
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
         <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={showUnstaker} />
-        <Action title="Claim" action={showClaimer} />
+        <Action title="Unstake" action={showUnstaker} disabled={!hasStake} />
+        <Action title="Claim" action={showClaimer} disabled={!hasStake} />
       </div>
     </div>
   );
