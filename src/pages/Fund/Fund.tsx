@@ -3,7 +3,7 @@ import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import { MouseEventHandler, PropsWithChildren } from "react";
-import { FaTwitter } from "react-icons/fa";
+import { FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { RouteComponentProps } from "react-router-dom";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
@@ -87,6 +87,9 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
               <div className="flex gap-2 text-angel-blue h-full">
                 <Icon link="https://twitter.com/angelprotocol">
                   <FaTwitter />
+                </Icon>
+                <Icon link="https://www.linkedin.com/company/angel-protocol">
+                  <FaLinkedinIn />
                 </Icon>
               </div>
             )}
