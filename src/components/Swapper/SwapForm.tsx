@@ -61,18 +61,6 @@ export default function SwapForm() {
           {message}
         </button>
       )}
-      <p className="text-angel-grey text-2xs justify-self-center pt-3 p-2">
-        By clicking this button and participating in the HaloSwap, you
-        acknowledge that you've read and accept the HaloSwap{" "}
-        <a
-          className="text-angel-blue"
-          target="_blank"
-          href="https://drive.google.com/file/d/19R5CiaZny7UYAIKNlRc4ssvqJDhETzKk/view?usp=sharing"
-          rel="noreferrer"
-        >
-          Terms & Conditions
-        </a>
-      </p>
     </form>
   );
 }
