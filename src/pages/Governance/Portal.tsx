@@ -46,8 +46,17 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
+        <span className="m-3 mt-5 text-white-grey font-light text-sm">
+          <span className="text-lg font-semibold underline">NOTE:</span> Staking
+          & Withdrawals from Governance are temporarily on-hold until the Claims
+          step is finalized. We expect this feature to be ready no later than
+          January 6, 2022. We’ll be providing additional{" "}
+          <span className="text-angel-blue">$HALO</span> incentives to the pool
+          in the interim for the inconvenience to the early stakers. Thank you
+          for your patience!
+        </span>
         <Action title="Trade Halo" action={goToLpPage} />
-        <Action title="Stake" action={showStaker} />
+        <Action title="Stake" action={showStaker} disabled={true} />
         <Action title="Unstake" action={showUnstaker} disabled={true} />
         <Action title="Claim" action={() => {}} disabled={true} />
       </div>
