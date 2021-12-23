@@ -35,9 +35,14 @@ export default function Amount() {
         <Balance />
       </label>
       <span className="my-3 text-angel-grey italic text-xs">
-        NOTE: There is a 7 day wait period to unstake HALO. You will not be able
-        to claim your HALO until this period has passed.
+        NOTE: Withdrawals from Governance are temporarily on-hold until the
+        Claims step is finalized. We expect this feature to be ready no later
+        than January 6, 2022. We’ll be providing additional $HALO incentives to
+        the pool in the interim for the inconvenience. Thank you for your
+        patience!
       </span>
+      {/*      There is a 7 day wait period to unstake HALO. You will not be able
+        to claim your HALO until this period has passed.*/}
       <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
         <input
           {...register("amount")}

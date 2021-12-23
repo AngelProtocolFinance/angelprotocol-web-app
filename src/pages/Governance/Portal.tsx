@@ -48,7 +48,7 @@ export default function Portal() {
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
         <Action title="Trade Halo" action={goToLpPage} />
         <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={showUnstaker} />
+        <Action title="Unstake" action={showUnstaker} disabled={true} />
         <Action title="Claim" action={() => {}} disabled={true} />
       </div>
     </div>
