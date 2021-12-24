@@ -11,6 +11,7 @@ export default function Board() {
   const tier1Charities = [
     "terra1mcf9lhce23znkpmvg6c5pxx0a36s03yamsklad",
     "terra1d5phnyr7e7l44yaathtwrh4f4mv5agajcy508f",
+    "terra1jacwxa5gp2cwfmhhmqmvrhgzn96hvssnm4gevc",
   ];
 
   return (
