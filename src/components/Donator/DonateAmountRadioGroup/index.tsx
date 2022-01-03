@@ -1,7 +1,7 @@
-import { ErrorMessage, FastField, Field, useFormikContext } from "formik";
-import "rc-slider/assets/index.css";
+import { FastField, useFormikContext } from "formik";
 import React, { useCallback, useRef } from "react";
-import { Values } from "./types";
+import { Values } from "../types";
+import OtherAmountRadioButton from "./OtherAmountRadioButton";
 
 type Props = {
   amounts: string[];
@@ -45,36 +45,15 @@ function DonateAmountRadioGroup({ amounts }: Props) {
           </label>
         ))}
       </div>
-      <div className="flex flex-col relative">
-        <div className="flex gap-3 items-center">
-          <Field
-            id="custom"
-            type="radio"
-            name="otherAmount"
-            className="cursor-pointer"
-            onClick={focusOtherAmountInput}
-            checked={
-              !!values.otherAmount ||
-              otherAmountInputRef.current === document.activeElement
-            }
-          />
-          <div className="h-11 flex flex-col w-5/6">
-            <Field
-              innerRef={otherAmountInputRef}
-              className="flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full"
-              type="text"
-              name="otherAmount"
-              placeholder="Other amount"
-              onFocus={resetAmount}
-            />
-          </div>
-        </div>
-        <ErrorMessage
-          name="otherAmount"
-          component="div"
-          className="text-sm text-center absolute top-11 left-0 w-5/6 text-sdg5"
-        />
-      </div>
+      <OtherAmountRadioButton
+        onClick={focusOtherAmountInput}
+        onFocus={resetAmount}
+        checked={
+          !!values.otherAmount ||
+          otherAmountInputRef.current === document.activeElement
+        }
+        innerRef={otherAmountInputRef}
+      />
     </div>
   );
 }
