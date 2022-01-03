@@ -51,12 +51,12 @@ export default function useEstimator() {
 
         //first balance check
         if (is_buy) {
-          if (amount >= UST_balance) {
+          if (amount > UST_balance) {
             dispatch(setFormError("Not enough UST"));
             return;
           }
         } else {
-          if (amount >= halo_balance) {
+          if (amount > halo_balance) {
             dispatch(setFormError("Not enough HALO"));
             return;
           }
@@ -98,7 +98,11 @@ export default function useEstimator() {
           .amount.toNumber();
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (is_buy && estimatedFee + debounced_amount >= UST_balance) {
+          dispatch(setFormError("Not enough UST to pay fees"));
+          return;
+        }
+        if (!is_buy && estimatedFee >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
