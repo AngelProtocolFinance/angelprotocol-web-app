@@ -4,6 +4,7 @@ import React from "react";
 import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
 import KYCForm from "./KYCForm";
 import SliderComponent from "./SliderComponent";
+import TaxReceipt from "./TaxReceipt";
 import { Values } from "./types";
 import "./UserForm.css";
 import useSlider from "./useSlider";
@@ -34,21 +35,7 @@ export default function UserForm(props: Props) {
         />
       </div>
 
-      <div className="flex flex-col gap-3 mt-7">
-        <p>
-          Depending on the country in which you are located, you may required a
-          tax receipt for administrative obligations. If you wish to receive a
-          tax receipt, please check the chechbox below and fill in the form.
-        </p>
-        <label className="font-semibold cursor-pointer">
-          <Field
-            type="checkbox"
-            name="receiptRequested"
-            className="cursor-pointer mr-2"
-          />
-          I want a Tax Receipt
-        </label>
-      </div>
+      <TaxReceipt />
 
       {showKYCForm && <KYCForm />}
 
