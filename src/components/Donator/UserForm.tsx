@@ -25,7 +25,7 @@ export default function UserForm(props: Props) {
     <Form className="flex flex-col text-white-grey text-xs lg:text-sm 3xl:text-lg gap-5">
       <div className="flex justify-between">
         <DonateAmountRadioGroup amounts={amounts} />
-        <div className="w-1/2 flex flex-col justify-between">
+        <div className="w-1/2 flex flex-col gap-8 xl:gap-0 xl:justify-between">
           <p className="font-semibold">
             How much of your donation should be compounded forever for this
             Index?
