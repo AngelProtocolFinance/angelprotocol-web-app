@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import { useBalances, useGovStaker } from "services/terra/queriers";
@@ -14,7 +14,7 @@ import {
 } from "services/transaction/transactionSlice";
 
 export default function useEstimator() {
-  const { formState: isValid, setValue } = useFormContext<Values>();
+  const { formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();

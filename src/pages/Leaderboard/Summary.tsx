@@ -1,6 +1,5 @@
 import { useSetModal } from "components/Nodal/Nodal";
 import toCurrency from "helpers/toCurrency";
-import { ReactText } from "react";
 export type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
   const { hideModal } = useSetModal();

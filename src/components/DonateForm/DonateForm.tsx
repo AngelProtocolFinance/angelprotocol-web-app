@@ -1,5 +1,5 @@
-import { denoms } from "constants/currency";
-import Currency from "./Currency";
+// import { denoms } from "constants/currency";
+// import Currency from "./Currency";
 import Amount from "./Amount";
 import useDonateForm from "./useDonateForm";
 import Breakdown from "./Breakdown";

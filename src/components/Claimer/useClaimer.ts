@@ -1,5 +1,4 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useFormContext } from "react-hook-form";
 import useEstimator from "./useEstimator";
 import Contract from "contracts/Contract";
 import { useSetter } from "store/accessors";
@@ -7,12 +6,10 @@ import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
-import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { gov, tags, user } from "services/terra/tags";
 
 function useClaimer() {
-  const { watch } = useFormContext<Values>();
   const dispatch = useSetter();
   const handleTxError = useTxErrorHandler();
   const wallet = useConnectedWallet();
