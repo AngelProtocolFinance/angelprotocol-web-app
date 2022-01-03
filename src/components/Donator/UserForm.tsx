@@ -44,7 +44,6 @@ export default function UserForm(props: Props) {
           disabled={isSubmitting}
           type="submit"
           className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
-          // onClick={donate}
         >
           Donate
         </button>
