@@ -1,14 +1,33 @@
 import { useForm } from "react-hook-form";
 import { useModalCloser } from "components/Modal/Modal";
 
+let selectedFile: any = "";
 const NewMemberModal = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data: any) => console.log("submit", data);
+
+  const onSubmit = (data: any) => {
+    data["logo"] = selectedFile;
+    console.log("submit", data);
+  };
+
   const closeModal = useModalCloser();
+
+  const handleInputChange = (event: any) => {
+    const file = event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    reader.onload = (e) => {
+      let result = e.target?.result;
+      if (result) {
+        selectedFile = result;
+      }
+    };
+  };
 
   return (
     <div className="container mx-auto w-full sm:w-3/4 max-w-600 bg-white rounded-lg min-h-115 p-5 text-center max-h-3/4 overflow-y-scroll">
@@ -29,12 +48,22 @@ const NewMemberModal = () => {
               className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
               placeholder="Wallet address"
               id="wallet"
-              {...register("wallet", { required: true })}
+              {...register("wallet", {
+                required: true,
+                pattern: /^terra[a-z0-9]{39}$/i,
+                maxLength: 44,
+              })}
             />
           </div>
-          {errors.wallet && (
+          {errors.wallet?.type === "required" && (
             <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
               Wallet is required
+            </p>
+          )}
+          {(errors.wallet?.type === "pattern" ||
+            errors.wallet?.type === "maxLength") && (
+            <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
+              Wallet is invalid
             </p>
           )}
           <label
@@ -66,9 +95,10 @@ const NewMemberModal = () => {
           <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
             <input
               type="file"
-              accept="image/*"
+              accept="image/png, image/jpeg, image/svg+xml"
               id="logo"
               {...register("logo", { required: true })}
+              onChange={handleInputChange}
             />
           </div>
           {errors.logo && (
