@@ -1,6 +1,6 @@
 import { ErrorMessage, FastField, Field, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
-import React, { useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import { Values } from "./types";
 
 type Props = {
@@ -12,6 +12,18 @@ type Props = {
 function DonateAmountRadioGroup({ amounts }: Props) {
   const { values, setFieldValue } = useFormikContext<Values>();
   const otherAmountInputRef = useRef<HTMLInputElement>();
+
+  const resetAmount = useCallback(() => setFieldValue("amount", ""), []);
+
+  const resetOtherAmount = useCallback(
+    () => setFieldValue("otherAmount", ""),
+    []
+  );
+
+  const focusOtherAmountInput = useCallback(
+    () => otherAmountInputRef.current?.focus(),
+    []
+  );
 
   return (
     <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
@@ -27,7 +39,7 @@ function DonateAmountRadioGroup({ amounts }: Props) {
               name="amount"
               value={amount}
               className="mr-1 cursor-pointer"
-              onFocus={() => setFieldValue("otherAmount", "")}
+              onFocus={resetOtherAmount}
             />
             {`$${Number(amount).toFixed(0)}`}
           </label>
@@ -40,7 +52,7 @@ function DonateAmountRadioGroup({ amounts }: Props) {
             type="radio"
             name="otherAmount"
             className="cursor-pointer"
-            onClick={() => otherAmountInputRef.current?.focus()}
+            onClick={focusOtherAmountInput}
             checked={
               !!values.otherAmount ||
               otherAmountInputRef.current === document.activeElement
@@ -53,7 +65,7 @@ function DonateAmountRadioGroup({ amounts }: Props) {
               type="text"
               name="otherAmount"
               placeholder="Other amount"
-              onFocus={() => setFieldValue("amount", "")}
+              onFocus={resetAmount}
             />
           </div>
         </div>
