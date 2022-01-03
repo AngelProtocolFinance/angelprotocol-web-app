@@ -71,6 +71,10 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transaction"));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [wallet, halo_balance, UST_balance]);
 

@@ -1,4 +1,4 @@
-import Amount from "./Amount";
+import Claims from "./Claims";
 import Status from "./Status";
 import { useFormContext } from "react-hook-form";
 import { Values } from "../Claimer/types";
@@ -21,14 +21,14 @@ export default function ClaimForm() {
       autoComplete="off"
     >
       <Status />
-      <Amount />
+      <Claims />
       <Fee />
       <button
         disabled={isSubmitting || form_loading || !!form_error}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
-        {form_loading ? "estimating fee.." : "proceed"}
+        {form_loading ? "estimating fee.." : "claim"}
       </button>
     </form>
   );

@@ -113,6 +113,9 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [
     debounced_amount,

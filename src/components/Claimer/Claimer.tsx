@@ -9,7 +9,9 @@ type Props = { children: ReactNode; claim?: true };
 export default function Claimer(props: Props) {
   const methods = useForm<Values>({
     reValidateMode: "onChange",
-    defaultValues: {},
+    defaultValues: {
+      amount: "0",
+    },
     resolver: yupResolver(schema),
   });
   return <FormProvider {...methods}>{props.children}</FormProvider>;

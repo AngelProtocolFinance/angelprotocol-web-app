@@ -12,31 +12,43 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import toCurrency from "helpers/toCurrency";
 
 export default function useEstimator() {
-  const { watch, formState: isValid } = useFormContext<Values>();
+  const { formState: isValid, setValue } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
-  const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
+  const { main: UST_balance } = useBalances(denoms.uusd);
 
   useEffect(() => {
     (async () => {
       try {
         if (!isValid) return;
+
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
 
-        dispatch(setFormLoading(true));
+        if ((gov_staker?.claims || []).length <= 0) {
+          dispatch(setFormError("No recent unstaked tokens"));
+          return;
+        }
 
-        let tx: CreateTxOptions;
+        const hasClaim = !!gov_staker.claims?.find(
+          (claim) => +claim.release_at.at_time <= Date.now() * 1e6
+        );
+
+        if (!hasClaim) {
+          dispatch(setFormError("No claimable tokens at the moment"));
+          return;
+        }
+
+        dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        tx = await contract.createGovClaimTx();
+        const tx = await contract.createGovClaimTx();
 
         const estimatedFee = tx
           .fee!.amount.get(denoms.uusd)!
@@ -57,8 +69,13 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(""));
+    };
+
     //eslint-disable-next-line
-  }, [wallet, UST_balance]);
+  }, [wallet, UST_balance, gov_staker]);
 
   return tx;
 }

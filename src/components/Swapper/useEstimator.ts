@@ -136,6 +136,9 @@ export default function useEstimator() {
         dispatch(setFormError("transaction simulation failed"));
       }
     })();
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, is_buy, debounced_slippage]);
 
