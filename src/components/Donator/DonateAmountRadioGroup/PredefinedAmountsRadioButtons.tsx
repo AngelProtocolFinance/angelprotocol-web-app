@@ -9,7 +9,7 @@ function PredefinedAmountsRadioButtons({ amounts, onFocus }: Props) {
       {amounts.map((amount) => (
         <label
           key={amount}
-          className="cursor-pointer font-semibold flex items-center"
+          className="cursor-pointer font-semibold flex items-center max-w-max"
         >
           <FastField
             type="radio"
