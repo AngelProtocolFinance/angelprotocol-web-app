@@ -17,7 +17,7 @@ export const contracts: Contracts = {
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
 
     //halo
-    [sc.halo_gov]: "terra125utsxfwgr58ruf6j6uk7jmssu73x0exnc79sz",
+    [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
 
     //lbp
     [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
