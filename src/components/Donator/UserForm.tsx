@@ -16,7 +16,7 @@ type Props = {
 
 export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
-  const { isSubmitting, values, touched } = useFormikContext<Values>();
+  const { isSubmitting, values } = useFormikContext<Values>();
   const showKYCForm = values.receiptRequested;
   const minLocked = 100 - (props?.maxSplitLiq || 50);
   const maxLocked = 100 - (props?.minSplitLiq || 0);

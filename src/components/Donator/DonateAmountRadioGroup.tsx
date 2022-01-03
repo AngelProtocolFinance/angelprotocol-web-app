@@ -7,6 +7,8 @@ type Props = {
   amounts: string[];
 };
 
+// Note: If at any point there comes a need to pull this component out and make it a shared one, know
+// that this component uses the surrounding Formik fields to initialize and manage its radio buttons.
 function DonateAmountRadioGroup({ amounts }: Props) {
   const { values, setFieldValue } = useFormikContext<Values>();
   const otherAmountInputRef = useRef<HTMLInputElement>();
