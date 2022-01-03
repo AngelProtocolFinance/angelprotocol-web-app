@@ -1,17 +1,17 @@
-import { useGetToken } from "contexts/AuthProvider";
+import Loader from "components/Loader/Loader";
+import { useGetAuthorized } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
-import { app, site } from "types/routes";
+import { admin, site } from "types/routes";
+import AdminSideNav from "../AdminSideNav";
 import DataTable from "./Table";
 import useEndowments from "./useEndowments";
-import Loader from "components/Loader/Loader";
-import withSideNav from "Admin/withSideNav";
 
-function Endowments() {
-  const decodedToken = useGetToken();
+export default function Endowments() {
+  const auth = useGetAuthorized();
   const { loading, endowments, endowmentDetails } = useEndowments();
 
-  if (!decodedToken?.apToken) {
-    return <Redirect to={`${site.admin}/${app.login}`} />;
+  if (!auth.isAuthorized) {
+    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
   }
   return (
     <>

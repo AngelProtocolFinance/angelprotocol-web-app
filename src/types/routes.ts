@@ -15,7 +15,7 @@ export enum site {
 
 export enum admin {
   index = "dashboard",
-  login = "login",
+  authentication = "authentication",
   index_fund_management = "index-fund",
   endowments = "endowments",
   alliance_members = "alliance-members",

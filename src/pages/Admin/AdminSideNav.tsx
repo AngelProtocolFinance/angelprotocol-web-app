@@ -4,14 +4,6 @@ import { NavLink, useHistory } from "react-router-dom";
 import { admin } from "types/routes";
 
 export default function AdminSideNav() {
-  const history = useHistory();
-  const { deleteToken } = useSetToken();
-
-  const logout = () => {
-    deleteToken("admin");
-    history.push(admin.login);
-  };
-
   const linkStyles =
     "block uppercase text-sm md:text-lg hover:text-white py-1 px-5 text-center rounded-sm border-0 border-b border-opacity-20 font-semibold";
   const activeStyles = "text-white";

@@ -13,6 +13,9 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
+    // guardian-angels
+    [sc.cw4_group]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
+
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
 
@@ -31,6 +34,9 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
 
+    // guardian-angels
+    [sc.cw4_group]: "terra1jngs5xj00e9fq0hfmpr2pqyq96x3aj8la8kr3p",
+
     //terraswap
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
 
@@ -48,6 +54,9 @@ export const contracts: Contracts = {
     [sc.anchor]: "",
     [sc.index_fund]: "",
     [sc.registrar]: "",
+
+    // guardian-angels
+    [sc.cw4_group]: "",
 
     //terraswap
     [sc.halo_token]: "",
