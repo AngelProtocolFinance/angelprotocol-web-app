@@ -1,8 +1,10 @@
+import Claimer from "components/Claimer/Claimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
+import Swapper from "components/Swapper/Swapper";
+import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
 
@@ -19,6 +21,13 @@ export default function Portal() {
 
   function goToLpPage() {
     return (window.location.href = `https://dex.loop.markets/swap#Swap`);
+  }
+  function showClaimer() {
+    showModal(ClaimModal, {});
+  }
+
+  function showSwapper() {
+    showModal(SwapModal, { inModal: true });
   }
 
   return (
@@ -50,7 +59,7 @@ export default function Portal() {
         <Action title="Trade Halo" action={goToLpPage} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
-        <Action title="Claim" action={() => {}} />
+        <Action title="Claim" action={showClaimer} />
       </div>
     </div>
   );
@@ -83,6 +92,14 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
+  );
+}
+
+function ClaimModal() {
+  return (
+    <Claimer>
+      <ClaimSuite inModal />
+    </Claimer>
   );
 }
 

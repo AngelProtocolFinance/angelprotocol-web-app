@@ -67,6 +67,17 @@ export default class Halo extends Contract {
     return { msgs: [stake_msg], fee };
   }
 
+  async createGovClaimTx(): Promise<CreateTxOptions> {
+    this.checkWallet();
+    const claim_msg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.gov_address,
+      { claim_voting_tokens: {} }
+    );
+    const fee = await this.estimateFee([claim_msg]);
+    return { msgs: [claim_msg], fee };
+  }
+
   async createPoll(
     amount: number,
     title: string,
