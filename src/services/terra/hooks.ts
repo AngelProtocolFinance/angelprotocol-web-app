@@ -4,12 +4,19 @@ import { denoms } from "constants/currency";
 import Halo from "contracts/Halo";
 import { useMemo } from "react";
 import { terra } from "services/terra/terra";
-import { gov_config, gov_state, halo_info, staker, poll } from "./placeholders";
+import { gov_config, gov_state, halo_info, poll, staker } from "./placeholders";
+import Registrar from "contracts/Registrar";
 import { chainIDs } from "contracts/types";
 
 function useHaloContract() {
   const wallet = useConnectedWallet();
   const contract = useMemo(() => new Halo(wallet), [wallet]);
+  return { wallet, contract };
+}
+
+export function useRegistrarContract() {
+  const wallet = useConnectedWallet();
+  const contract = useMemo(() => new Registrar(wallet), [wallet]);
   return { wallet, contract };
 }
 
