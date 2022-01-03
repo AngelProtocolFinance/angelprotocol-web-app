@@ -1,12 +1,12 @@
+import { FastField, Field, Form, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
-import { ErrorMessage, FastField, Field, Form, useFormikContext } from "formik";
-import Slider, { SliderProps } from "rc-slider";
-import useSlider from "./useSlider";
-import { Values } from "./types";
-import CustomAmount from "./CustomAmount";
+import React from "react";
+import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
 import KYCForm from "./KYCForm";
-import "./UserForm.css";
 import SliderComponent from "./SliderComponent";
+import { Values } from "./types";
+import "./UserForm.css";
+import useSlider from "./useSlider";
 
 type Props = {
   //for charity donations, no split data yet
@@ -42,34 +42,7 @@ export default function UserForm(props: Props) {
               </label>
             ))}
           </div>
-          <div className="flex flex-col relative">
-            <div className="flex gap-3 items-center">
-              <Field
-                id="custom"
-                type="radio"
-                name="amount"
-                value={"0"}
-                className="cursor-pointer"
-              />
-              <div className="h-11 flex flex-col w-5/6">
-                {(!amounts.includes(values.amount) && touched.amount && (
-                  <CustomAmount />
-                )) || (
-                  <label
-                    htmlFor="custom"
-                    className={`flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full`}
-                  >
-                    Other amount
-                  </label>
-                )}
-              </div>
-            </div>
-            <ErrorMessage
-              name="amount"
-              component="div"
-              className="text-sm text-center absolute top-11 left-0 w-5/6 text-sdg5"
-            />
-          </div>
+          <DonateAmountRadioGroup amounts={amounts} />
         </div>
         <div className="w-1/2 flex flex-col justify-between">
           <p className="font-semibold">
