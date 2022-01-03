@@ -1,7 +1,8 @@
-import { FastField, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React, { useCallback, useRef } from "react";
 import { Values } from "../types";
 import OtherAmountRadioButton from "./OtherAmountRadioButton";
+import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
 
 type Props = {
   amounts: string[];
@@ -28,23 +29,10 @@ function DonateAmountRadioGroup({ amounts }: Props) {
   return (
     <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
       <p className="font-semibold">Choose the amount of your donation:</p>
-      <div className="flex flex-col gap-2 2xl:gap-4 xl:flex-row">
-        {amounts.map((amount) => (
-          <label
-            key={amount}
-            className="cursor-pointer font-semibold flex items-center"
-          >
-            <FastField
-              type="radio"
-              name="amount"
-              value={amount}
-              className="mr-1 cursor-pointer"
-              onFocus={resetOtherAmount}
-            />
-            {`$${Number(amount).toFixed(0)}`}
-          </label>
-        ))}
-      </div>
+      <PredefinedAmountsRadioButtons
+        amounts={amounts}
+        onFocus={resetOtherAmount}
+      />
       <OtherAmountRadioButton
         onClick={focusOtherAmountInput}
         onFocus={resetAmount}
