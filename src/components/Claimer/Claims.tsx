@@ -32,7 +32,11 @@ export default function Claims() {
       {(hasClaim && (
         <ul className="flex flex-col mt-3 mb-2 mx-1">
           {(staker?.claims || []).map((claim, i) => (
-            <Claim time={claim.release_at.at_time} amount={claim.amount} />
+            <Claim
+              key={i}
+              time={claim.release_at.at_time}
+              amount={claim.amount}
+            />
           ))}
         </ul>
       )) ||

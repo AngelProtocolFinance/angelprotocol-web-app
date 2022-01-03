@@ -11,10 +11,8 @@ export default function Swapper(props: { children: ReactNode }) {
       amount: "",
       is_buy: true,
       slippage: "1.0",
-
       //metadata
       return_amount: "0.00",
-      pct_change: "0.00",
       pct_commission: "0.00",
     },
     resolver: yupResolver(schema),

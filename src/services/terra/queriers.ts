@@ -77,7 +77,8 @@ export function useGovStaker() {
   const { useGovStakerQuery } = terra;
   const { wallet, contract } = useHaloContract();
   const { data = staker } = useGovStakerQuery(contract.staker, {
-    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    skip:
+      wallet === undefined || wallet.network.chainID === chainIDs.localterra,
   });
   return data;
 }
@@ -148,16 +149,18 @@ export function usePairInfo() {
   return data;
 }
 
-export function usePairSimul(skip: boolean) {
+export function usePairSimul(interval = 0, skip = false) {
   const { usePairSimulQuery } = terra;
   const { contract, wallet } = useLPContract();
   const { data = simulation } = usePairSimulQuery(contract.simul, {
     skip: skip || wallet?.network.chainID === chainIDs.testnet,
+    pollingInterval: interval,
   });
+
   return data;
 }
 
-export function usePool(skip: boolean) {
+export function usePool(skip = false) {
   const { usePoolQuery } = terra;
   const { contract, wallet } = useLPContract();
   const { data = pool_balance } = usePoolQuery(contract.pool, {

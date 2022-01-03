@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
@@ -14,9 +14,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import toCurrency from "helpers/toCurrency";
-import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
-import { usePairSimulState, usePoolState } from "services/terra/states";
 
 export default function useEstimator() {
   const { watch, setValue, formState: isValid } = useFormContext<Values>();
@@ -26,11 +24,8 @@ export default function useEstimator() {
   const halo_balance = useHaloBalance();
 
   const wallet = useConnectedWallet();
-
-  const pool = usePoolState();
-  const simul = usePairSimulState();
-
-  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
+  // const simul = usePairSimul(3000);
+  // const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
 
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
@@ -71,15 +66,9 @@ export default function useEstimator() {
 
         const contract = new LP(wallet);
 
-        // //on demand pool query to get latest pool balance
-        // const pool = await contract.getPoolBalance();
-
-        // //non-invasive simul just to get current asset weights
-        // const init_simul = await contract.pairSimul(0, true);
-        // const ust_price = getSpotPrice(init_simul, pool);
-
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
+        const spot_price = getSpotPrice(simul, debounced_amount);
         //get commission and price impact
         const return_uamount = new Dec(simul.return_amount);
         const ucommission = new Dec(simul.commission_amount);
@@ -87,14 +76,6 @@ export default function useEstimator() {
           .div(return_uamount.add(ucommission))
           .mul(100)
           .toNumber();
-
-        //get price change of actual simul from previous non-invasive simul
-        const pct_change = getPercentPriceChange(
-          debounced_amount,
-          simul,
-          spot_price,
-          is_buy
-        );
 
         let tx: CreateTxOptions;
         if (is_buy) {
@@ -107,7 +88,7 @@ export default function useEstimator() {
           tx = await contract.createSellTx(
             debounced_amount,
             //just reverse price for sell tx
-            new Dec(1).div(new Dec(spot_price)).toString(),
+            spot_price.toString(),
             debounced_slippage
           );
         }
@@ -123,7 +104,6 @@ export default function useEstimator() {
         }
 
         dispatch(setFee(estimatedFee));
-        setValue("pct_change", toCurrency(pct_change, 2));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

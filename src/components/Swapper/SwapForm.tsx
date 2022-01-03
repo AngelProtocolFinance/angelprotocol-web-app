@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import Amount from "./Amount";
-import { Fee, Commission, Effect } from "./Misc";
+import { Fee, Commission } from "./Misc";
 import Output from "./Output";
 import Status from "./Status";
 import { Values } from "./types";
@@ -42,7 +42,6 @@ export default function SwapForm() {
       <Output />
       <Fee />
       <Commission />
-      <Effect />
       <button
         disabled={isSubmitting || form_loading || !!form_error}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
