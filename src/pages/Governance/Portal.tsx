@@ -1,10 +1,8 @@
 import Claimer from "components/Claimer/Claimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
-import Swapper from "components/Swapper/Swapper";
 import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
 
@@ -26,10 +24,6 @@ export default function Portal() {
     showModal(ClaimModal, {});
   }
 
-  function showSwapper() {
-    showModal(SwapModal, { inModal: true });
-  }
-
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-2 p-8 pb-6 grid grid-rows-a1">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
@@ -47,15 +41,6 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <span className="m-3 mt-5 text-white-grey font-light text-sm">
-          <span className="text-lg font-semibold underline">NOTE:</span> Staking
-          & Withdrawals from Governance are temporarily on-hold until the Claims
-          step is finalized. We expect this feature to be ready no later than
-          January 6, 2022. We’ll be providing additional{" "}
-          <span className="text-angel-blue">$HALO</span> incentives to the pool
-          in the interim for the inconvenience to the early stakers. Thank you
-          for your patience!
-        </span>
         <Action title="Trade Halo" action={goToLpPage} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
@@ -100,13 +85,5 @@ function ClaimModal() {
     <Claimer>
       <ClaimSuite inModal />
     </Claimer>
-  );
-}
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
   );
 }
