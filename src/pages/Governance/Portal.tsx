@@ -1,8 +1,10 @@
 import Claimer from "components/Claimer/Claimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
+import Swapper from "components/Swapper/Swapper";
 import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
+import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
 
@@ -17,9 +19,10 @@ export default function Portal() {
     showModal(UnstakeModal, {});
   }
 
-  function goToLpPage() {
-    return (window.location.href = `https://dex.loop.markets/swap#Swap`);
+  function showSwapper() {
+    return showModal(SwapModal, {});
   }
+
   function showClaimer() {
     showModal(ClaimModal, {});
   }
@@ -41,7 +44,7 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <Action title="Trade Halo" action={goToLpPage} />
+        <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} />
         <Action title="Claim" action={showClaimer} />
@@ -77,6 +80,14 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
+  );
+}
+
+function SwapModal() {
+  return (
+    <Swapper>
+      <SwapSuite inModal />
+    </Swapper>
   );
 }
 

@@ -4,28 +4,16 @@ import { useState, useEffect, useMemo } from "react";
 import {
   useGovBalance,
   useHaloInfo,
-  usePairInfo,
   usePairSimul,
-  usePool,
 } from "services/terra/queriers";
 
 export default function useGov() {
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
 
-  const pairInfo = usePairInfo();
+  const simul = usePairSimul();
 
-  const is_live = useMemo(() => {
-    const now = new Date().getTime();
-    const end = new Date(pairInfo.end_time * 1000).getTime();
-    const start = new Date(pairInfo.start_time * 1000).getTime();
-    return now >= start && now < end;
-  }, [pairInfo]);
-
-  const pool = usePool(!is_live);
-  const simul = usePairSimul(!is_live);
-
-  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
+  const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
   const token_info = useHaloInfo();
   const gov_balance = useGovBalance();
 
@@ -44,5 +32,5 @@ export default function useGov() {
     })();
   }, [token_info, gov_balance]);
 
-  return { staked, percentStaked, spot_price };
+  return { staked, percentStaked, spot_price: spot_price.toNumber() };
 }

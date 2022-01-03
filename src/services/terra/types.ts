@@ -128,8 +128,6 @@ export type Simulation = {
   return_amount: string;
   spread_amount: string;
   commission_amount: string;
-  ask_weight: string;
-  offer_weight: string;
   is_placeholder?: true;
 };
 

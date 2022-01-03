@@ -41,7 +41,7 @@ export default class LP extends Contract {
                 denom: denoms.uusd,
               },
             },
-            amount: "0",
+            amount: "1000000",
           },
           block_time: Math.round(new Date().getTime() / 1000 + 10),
         },
@@ -56,7 +56,7 @@ export default class LP extends Contract {
         pair: {
           asset_infos: [
             { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: "uusd" } },
+            { native_token: { denom: denoms.uusd } },
           ],
         },
       },
@@ -69,7 +69,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: "uusd",
+            denom: denoms.uusd,
           },
         }
       : {
