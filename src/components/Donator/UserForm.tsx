@@ -1,4 +1,4 @@
-import { FastField, Field, Form, useFormikContext } from "formik";
+import { Field, Form, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
 import React from "react";
 import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
@@ -24,26 +24,7 @@ export default function UserForm(props: Props) {
   return (
     <Form className="flex flex-col text-white-grey text-xs lg:text-sm 3xl:text-lg gap-5">
       <div className="flex justify-between">
-        <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
-          <p className="font-semibold">Choose the amount of your donation:</p>
-          <div className="flex flex-col gap-2 2xl:gap-4 xl:flex-row">
-            {amounts.map((amount) => (
-              <label
-                key={amount}
-                className="cursor-pointer font-semibold flex items-center"
-              >
-                <FastField
-                  type="radio"
-                  name="amount"
-                  value={amount}
-                  className="mr-1 cursor-pointer"
-                />
-                {`$${Number(amount).toFixed(0)}`}
-              </label>
-            ))}
-          </div>
-          <DonateAmountRadioGroup amounts={amounts} />
-        </div>
+        <DonateAmountRadioGroup amounts={amounts} />
         <div className="w-1/2 flex flex-col justify-between">
           <p className="font-semibold">
             How much of your donation should be compounded forever for this

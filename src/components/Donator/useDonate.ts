@@ -18,8 +18,9 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
-    //values.amount is properly formatted string | number at this point due to validation
-    const UST_Amount = values.amount;
+    // values.amount and values.otherAmount are properly formatted string | number at this point due to validation
+    // if values.otherAmount is 0 (or invalid), it must mean that values.amount's value was set
+    const UST_Amount = values.otherAmount || values.amount;
 
     //values.split = split to locked acc
     const splitToLiquid = 100 - values.split

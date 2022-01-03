@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 export type Handler = () => void;
 
 export interface Values {
+  otherAmount: string;
   amount: string;
   split: number;
   receiptRequested: boolean;

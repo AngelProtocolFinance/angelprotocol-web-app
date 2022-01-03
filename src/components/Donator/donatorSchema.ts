@@ -1,10 +1,14 @@
 import * as Yup from "yup";
 
 export const donatorSchema = Yup.object().shape({
-  amount: Yup.number()
-    .typeError("Amount must be a number")
-    .required("Kindly specify amount")
-    .positive("Amount must be greater than zero "),
+  otherAmount: Yup.number().when("amount", {
+    is: (amount: string) => !amount,
+    then: Yup.number()
+      .typeError("Amount must be a number")
+      .required("Kindly specify amount")
+      .positive("Amount must be greater than zero "),
+  }),
+  amount: Yup.number(),
   receiptRequested: Yup.boolean(),
   fullName: Yup.string().when("receiptRequested", {
     is: true,
