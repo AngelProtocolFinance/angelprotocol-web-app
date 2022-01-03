@@ -1,7 +1,7 @@
 import maskAddress from "helpers/maskAddress";
 import { IoClose } from "react-icons/io5";
 
-function AddressSelector({ addressList }: any) {
+function AddressSelector({ addressList, onRemove }: any) {
   return (
     <table className="min-w-full leading-normal my-5">
       <thead>
@@ -24,6 +24,7 @@ function AddressSelector({ addressList }: any) {
               <button
                 type="button"
                 className="inline-block text-gray-500 hover:text-gray-700"
+                onClick={() => onRemove(address)}
               >
                 <IoClose />
               </button>

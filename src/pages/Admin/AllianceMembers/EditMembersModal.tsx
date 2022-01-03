@@ -2,19 +2,37 @@ import { useState } from "react";
 import AddressSelector from "./AddressSelector";
 import { useModalCloser } from "components/Modal/Modal";
 
+let add: string[] = [];
+let remove: string[] = [];
+
 const EditMembersModal = ({ member }: any) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [wallet, setWallet] = useState("");
+  const [addresses, setAddresses] = useState(member.addresses);
   const [error, setError] = useState("");
   const closeModal = useModalCloser();
+
   const handleUpdate = () => {
     setSubmitting(true);
   };
+
   const handleAdd = () => {
     if (wallet === "") {
       setError("Wallet is required");
+      return;
+    } else if (!isValidWalletAddress(wallet)) {
+      setError("Invalid wallet address");
+      return;
     }
+    processAddresses(wallet);
+    setWallet("");
+    setError("");
   };
+
+  const handleRemove = (address: string) => {
+    processAddresses(address, false);
+  };
+
   const handleOnChange = (event: any) => {
     const value = event.target.value;
     if (isValidWalletAddress(value)) {
@@ -30,6 +48,30 @@ const EditMembersModal = ({ member }: any) => {
       return true;
     }
     return false;
+  };
+
+  const processAddresses = (address: string, isAdd: boolean = true) => {
+    let newAddresses: string[] = [];
+    if (isAdd) {
+      if (!addresses.includes(address)) {
+        add.push(address);
+      }
+    } else {
+      if (add.length > 0 && add.includes(address)) {
+        add = add.filter((val) => val !== address);
+      } else {
+        remove.push(address);
+      }
+    }
+    newAddresses = member.addresses.concat(add);
+    newAddresses = newAddresses.filter((val) => !remove.includes(val));
+    setAddresses(newAddresses);
+  };
+
+  const handleOnClose = () => {
+    add = [];
+    remove = [];
+    closeModal();
   };
 
   return (
@@ -68,7 +110,7 @@ const EditMembersModal = ({ member }: any) => {
           </p>
         )}
       </div>
-      <AddressSelector addressList={member.addresses} />
+      <AddressSelector addressList={addresses} onRemove={handleRemove} />
       <div className="w-full flex flex-cols-2 align-items-center justify-between gap-2">
         <div>
           <button
@@ -82,7 +124,7 @@ const EditMembersModal = ({ member }: any) => {
         </div>
         <div>
           <button
-            onClick={closeModal}
+            onClick={handleOnClose}
             className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
           >
             Cancel
