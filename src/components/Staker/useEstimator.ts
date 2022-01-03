@@ -10,7 +10,7 @@ import {
   useBalances,
   useGovStaker,
   useHaloBalance,
-} from "services/terra/hooks";
+} from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {

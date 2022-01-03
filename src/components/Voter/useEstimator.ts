@@ -6,7 +6,7 @@ import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 // import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -16,7 +16,7 @@ import {
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
-import { useGovStaker } from "services/terra/hooks";
+import { useGovStaker } from "services/terra/queriers";
 
 export default function useEstimator() {
   const {

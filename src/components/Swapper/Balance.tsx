@@ -1,6 +1,6 @@
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
-import { useHaloBalance, useBalances } from "services/terra/hooks";
+import { useHaloBalance, useBalances } from "services/terra/queriers";
 import { denoms } from "constants/currency";
 import { Values } from "./types";
 export default function Balance() {

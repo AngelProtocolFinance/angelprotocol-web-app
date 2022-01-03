@@ -5,7 +5,7 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import LP from "contracts/LP";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -16,8 +16,7 @@ import {
 import toCurrency from "helpers/toCurrency";
 import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
-import { terra } from "services/terra/terra";
-import { pool_balance, simulation } from "services/terra/placeholders";
+import { usePairSimulState, usePoolState } from "services/terra/states";
 
 export default function useEstimator() {
   const { watch, setValue, formState: isValid } = useFormContext<Values>();
@@ -28,13 +27,9 @@ export default function useEstimator() {
 
   const wallet = useConnectedWallet();
 
-  const lbp = useMemo(() => new LP(wallet), [wallet]);
-  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
-    lbp.gen_pool_args()
-  );
-  const { data: simul = simulation } = terra.endpoints.pairSimul.useQueryState(
-    lbp.gen_simul_args()
-  );
+  const pool = usePoolState();
+  const simul = usePairSimulState();
+
   const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
 
   const is_buy = watch("is_buy");

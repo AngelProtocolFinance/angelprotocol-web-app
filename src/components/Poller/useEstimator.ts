@@ -11,7 +11,7 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {

@@ -7,7 +7,7 @@ import Details from "./Details";
 import Icon from "components/WalletSuite/Icon";
 // import useTerraBalance from "hooks/useTerraBalance";
 import { denoms } from "constants/currency";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 
 export default function Display() {
   //this component won't be rendered if wallet is not connected

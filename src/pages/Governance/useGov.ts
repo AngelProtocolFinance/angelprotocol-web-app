@@ -1,28 +1,20 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { getSpotPrice } from "components/Swapper/getSpotPrice";
-import LP from "contracts/LP";
-import {
-  usePairInfoQuery,
-  usePairSimulQuery,
-  usePoolQuery,
-} from "services/terra/terra";
 import { useState, useEffect, useMemo } from "react";
-import { useGovBalance, useHaloInfo } from "services/terra/hooks";
 import {
-  pool_balance,
-  simulation,
-  pairInfo as pair_placeholder,
-} from "services/terra/placeholders";
+  useGovBalance,
+  useHaloInfo,
+  usePairInfo,
+  usePairSimul,
+  usePool,
+} from "services/terra/queriers";
 
 export default function useGov() {
-  const wallet = useConnectedWallet();
   const [staked, setStaked] = useState(0);
   const [percentStaked, setPercentStaked] = useState(0);
-  const lbp = useMemo(() => new LP(wallet), [wallet]);
-  const { data: pairInfo = pair_placeholder } = usePairInfoQuery(
-    lbp.gen_pairInfo_args()
-  );
+
+  const pairInfo = usePairInfo();
+
   const is_live = useMemo(() => {
     const now = new Date().getTime();
     const end = new Date(pairInfo.end_time * 1000).getTime();
@@ -30,12 +22,9 @@ export default function useGov() {
     return now >= start && now < end;
   }, [pairInfo]);
 
-  const { data: pool = pool_balance } = usePoolQuery(lbp.gen_pool_args(), {
-    skip: !is_live,
-  });
-  const { data: simul = simulation } = usePairSimulQuery(lbp.gen_simul_args(), {
-    skip: !is_live,
-  });
+  const pool = usePool(!is_live);
+  const simul = usePairSimul(!is_live);
+
   const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
   const token_info = useHaloInfo();
   const gov_balance = useGovBalance();

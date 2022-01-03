@@ -18,6 +18,10 @@ export default class LP extends Contract {
   lp_address: string;
   halo_address: string;
 
+  simul: ContractQueryArgs;
+  pool: ContractQueryArgs;
+  pairInfo: ContractQueryArgs;
+
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.factory_address = contracts[this.chainID][sc.loop_factory];
@@ -25,17 +29,16 @@ export default class LP extends Contract {
     this.router_adddress = contracts[this.chainID][sc.loop_router];
     this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
     this.halo_address = contracts[this.chainID][sc.halo_token];
-  }
 
-  gen_simul_args(): ContractQueryArgs {
-    return {
+    //query args
+    this.simul = {
       address: this.pair_address,
       msg: {
         simulation: {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: denoms.uusd,
               },
             },
             amount: "0",
@@ -44,14 +47,10 @@ export default class LP extends Contract {
         },
       },
     };
-  }
 
-  gen_pool_args(): ContractQueryArgs {
-    return { address: this.pair_address, msg: { pool: {} } };
-  }
+    this.pool = { address: this.pair_address, msg: { pool: {} } };
 
-  gen_pairInfo_args() {
-    return {
+    this.pairInfo = {
       address: this.pair_address,
       msg: {
         pair: {
