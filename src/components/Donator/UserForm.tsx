@@ -15,6 +15,24 @@ type Props = {
   minSplitLiq?: number;
 };
 
+type ButtonSectionProps = {
+  isSubmitting: boolean;
+};
+
+function ButtonSection({ isSubmitting }: ButtonSectionProps) {
+  return (
+    <div className="w-full flex justify-center">
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
+      >
+        Donate
+      </button>
+    </div>
+  );
+}
+
 export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values } = useFormikContext<Values>();
@@ -39,15 +57,7 @@ export default function UserForm(props: Props) {
 
       {showKYCForm && <KYCForm />}
 
-      <div className="w-full flex justify-center">
-        <button
-          disabled={isSubmitting}
-          type="submit"
-          className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
-        >
-          Donate
-        </button>
-      </div>
+      <ButtonSection isSubmitting={isSubmitting} />
     </Form>
   );
 }
