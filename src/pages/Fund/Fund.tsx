@@ -3,22 +3,26 @@ import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
-import React from "react";
+import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
-import ShareButton from "./ShareButton";
+import ShareSection from "./ShareSection";
 import useFund from "./useFund";
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
+  const [isSharing, setSharing] = useState(false);
+
   const id_param = props.match.params?.id;
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
     (id_param && sdg_ids.includes(id_param) && Number(id_param)) || 1;
   const profiles = useProfiles(fund_id);
   const sdg = unsdgs[fund_id];
+
+  const toggleShare = () => setSharing((prev) => !prev);
 
   return (
     <section className="grid content-start pb-24">
@@ -41,10 +45,17 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         <div className="flex flex-col">
           <Action
             title={isDonating ? "Back to Index" : "Donate"}
-            onClick={toggleDonate}
             classes="bg-yellow-blue w-52 h-12"
+            onClick={toggleDonate}
           />
-          <ShareButton />
+          <div className="flex gap-5">
+            <Action
+              title="Share"
+              classes="bg-angel-blue w-52 h-12"
+              onClick={toggleShare}
+            />
+            <ShareSection isOpen={isSharing} />
+          </div>
         </div>
       </div>
       <div className="mt-8 container mx-auto text-white-grey">
