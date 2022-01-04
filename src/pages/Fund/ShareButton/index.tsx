@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-import Button from "./Button";
+import { CSSTransition } from "react-transition-group";
+import Button from "../Button";
+import "./styles.css";
 
 type IconProps = {
   link: string;
@@ -19,9 +21,9 @@ const IconLink = ({ link, icon: Icon }: IconProps) => {
   );
 };
 
-const ShareSection = ({ isOpen }: any) =>
-  isOpen && (
-    <div className={`flex gap-2 text-angel-blue h-full`}>
+const ShareSection = ({ isOpen }: any) => (
+  <CSSTransition in={isOpen} timeout={300} classNames="share" unmountOnExit>
+    <div className="flex gap-2 text-angel-blue h-full">
       <IconLink link="https://twitter.com/angelprotocol" icon={FaTwitter} />
       <IconLink
         link="https://www.linkedin.com/company/angel-protocol"
@@ -29,7 +31,8 @@ const ShareSection = ({ isOpen }: any) =>
       />
       <IconLink link="" icon={FaFacebookSquare} />
     </div>
-  );
+  </CSSTransition>
+);
 
 export default function ShareButton() {
   const [isSharing, setSharing] = useState(false);
