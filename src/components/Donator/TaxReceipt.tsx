@@ -9,7 +9,7 @@ type Props = {
 function TaxReceipt({ showKYCForm }: Props) {
   return (
     <>
-      <div className="flex flex-col gap-3 mt-7">
+      <div className="flex flex-col gap-3 mt-7 text-xs lg:text-sm">
         <p>
           Depending on the country in which you are located, you may required a
           tax receipt for administrative obligations. If you wish to receive a
