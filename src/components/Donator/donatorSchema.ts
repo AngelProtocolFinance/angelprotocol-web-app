@@ -8,6 +8,10 @@ export const donatorSchema = Yup.object().shape({
       .required("Kindly specify amount")
       .positive("Amount must be greater than zero "),
   }),
+  // No need to add more validations to 'amount' due to the following:
+  // 1. This value is hardcoded in radio buttons
+  // 2. When no radio button associated with this field is selected, that must mean
+  //    that the 'otherAmount' radio button IS selected, in which case its validations apply
   amount: Yup.number(),
   receiptRequested: Yup.boolean(),
   fullName: Yup.string().when("receiptRequested", {
