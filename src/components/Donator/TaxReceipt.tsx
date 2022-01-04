@@ -15,7 +15,7 @@ function TaxReceipt({ showKYCForm }: Props) {
           tax receipt for administrative obligations. If you wish to receive a
           tax receipt, please check the chechbox below and fill in the form.
         </p>
-        <label className="font-semibold cursor-pointer">
+        <label className="font-semibold cursor-pointer max-w-max">
           <Field
             type="checkbox"
             name="receiptRequested"
