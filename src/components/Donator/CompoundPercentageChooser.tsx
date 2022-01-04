@@ -1,7 +1,7 @@
 import Slider, { SliderProps } from "rc-slider";
 import "rc-slider/assets/index.css";
 
-export default function PercentageCompounded(props: SliderProps) {
+export default function CompoundPercentageChooser(props: SliderProps) {
   const { min, max, value, onChange, onAfterChange } = props;
 
   return (
