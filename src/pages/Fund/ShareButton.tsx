@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Button from "./Button";
 
@@ -33,7 +33,7 @@ const ShareSection = () => (
 export default function ShareButton() {
   const [isSharing, setSharing] = useState(false);
 
-  const toggleShare = useCallback(() => setSharing((prev) => !prev), []);
+  const toggleShare = () => setSharing((prev) => !prev);
 
   return (
     <div className="flex gap-5">

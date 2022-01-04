@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import React, { useCallback, useRef } from "react";
+import React, { useRef } from "react";
 import { Values } from "../types";
 import OtherAmountRadioButton from "./OtherAmountRadioButton";
 import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
@@ -15,17 +15,11 @@ function DonateAmountRadioGroup({ amounts }: Props) {
   const { values, setFieldValue } = useFormikContext<Values>();
   const otherAmountInputRef = useRef<HTMLInputElement>();
 
-  const resetAmount = useCallback(() => setFieldValue("amount", ""), []);
+  const resetAmount = () => setFieldValue("amount", "");
 
-  const resetOtherAmount = useCallback(
-    () => setFieldValue("otherAmount", ""),
-    []
-  );
+  const resetOtherAmount = () => setFieldValue("otherAmount", "");
 
-  const focusOtherAmountInput = useCallback(
-    () => otherAmountInputRef.current?.focus(),
-    []
-  );
+  const focusOtherAmountInput = () => otherAmountInputRef.current?.focus();
 
   return (
     <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
