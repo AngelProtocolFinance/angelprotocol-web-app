@@ -167,6 +167,7 @@ export function useGovConfig() {
   return data;
 }
 
+// TODO: implement fetching
 export function useGovStakingAPY() {
   return 13.45;
 }
