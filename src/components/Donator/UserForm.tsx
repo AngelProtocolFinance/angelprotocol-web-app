@@ -2,7 +2,7 @@ import { Form, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
 import React from "react";
 import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
-import SliderComponent from "./SliderComponent";
+import PercentageCompounded from "./PercentageCompounded";
 import TaxReceipt from "./TaxReceipt";
 import { Values } from "./types";
 import useSlider from "./useSlider";
@@ -42,7 +42,7 @@ export default function UserForm(props: Props) {
     <Form className="flex flex-col text-white-grey text-xs lg:text-xl 3xl:text-lg gap-5">
       <div className="flex justify-between">
         <DonateAmountRadioGroup amounts={amounts} />
-        <SliderComponent
+        <PercentageCompounded
           min={minLocked}
           max={maxLocked}
           value={percentage}
