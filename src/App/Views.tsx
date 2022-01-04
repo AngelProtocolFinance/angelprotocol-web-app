@@ -15,7 +15,7 @@ import Withdraw from "pages/Withdraw/Withdraw";
 // import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
-import Fund from "pages/Fund/Fund";
+// import Fund from "pages/Fund/Fund";
 
 export default function Views() {
   const { path } = useRouteMatch();
