@@ -20,6 +20,7 @@ export enum sc {
   registrar = "registrar",
   anchor = "anchor",
   cw4_group = "cw4_group",
+  cw3_multisig = "cw3_multisig",
   halo_token = "halo_token",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",
