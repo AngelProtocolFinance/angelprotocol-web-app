@@ -1,8 +1,54 @@
-import Slider, { SliderProps } from "rc-slider";
+import Slider, { SliderProps, SliderTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
 
-export default function CompoundPercentageChooser(props: SliderProps) {
+const { Handle } = Slider;
+
+const handle = (props: any) => {
+  const { value, dragging, index, ...restProps } = props;
+  return (
+    <SliderTooltip
+      prefixCls="rc-slider-tooltip"
+      overlay={`${value} %`}
+      visible={dragging}
+      placement="top"
+      key={index}
+    >
+      <Handle value={value} {...restProps} />
+    </SliderTooltip>
+  );
+};
+
+function SliderWithTooltip(props: SliderProps) {
   const { min, max, value, onChange, onAfterChange } = props;
+
+  return (
+    <Slider
+      handle={handle}
+      min={min}
+      max={max}
+      value={value}
+      onChange={onChange}
+      onAfterChange={onAfterChange}
+      className="w-full"
+      railStyle={{
+        height: 6,
+        backgroundColor: "lightgrey",
+      }}
+      // bg color is the same as angel blue, but since rc-slider doesn't support tailwind, we needed to hardcode the color
+      trackStyle={{ height: 6, backgroundColor: "#3FA9F5" }}
+      handleStyle={{
+        borderColor: "white",
+        height: 24,
+        width: 24,
+        marginTop: -9,
+        backgroundColor: "white",
+      }}
+    />
+  );
+}
+
+export default function CompoundPercentageChooser(props: SliderProps) {
+  const { min, max } = props;
 
   return (
     <div className="w-1/2 flex flex-col gap-8 xl:gap-0 xl:justify-between">
@@ -13,27 +59,7 @@ export default function CompoundPercentageChooser(props: SliderProps) {
         <span className="text-dark-grey text-xs 3xl:text-sm font-semibold">
           Percentage<sup className="text-red-500">*</sup>
         </span>
-        <Slider
-          min={min}
-          max={max}
-          value={value}
-          onChange={onChange}
-          onAfterChange={onAfterChange}
-          className="w-full"
-          railStyle={{
-            height: 6,
-            backgroundColor: "lightgrey",
-          }}
-          // bg color is the same as angel blue, but since rc-slider doesn't support tailwind, we needed to hardcode the color
-          trackStyle={{ height: 6, backgroundColor: "#3FA9F5" }}
-          handleStyle={{
-            borderColor: "white",
-            height: 24,
-            width: 24,
-            marginTop: -9,
-            backgroundColor: "white",
-          }}
-        />
+        <SliderWithTooltip {...props} />
         <p className="flex justify-between ">
           <span>{min}%</span>
           <span>{max}%</span>
