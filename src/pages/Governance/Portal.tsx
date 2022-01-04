@@ -1,17 +1,17 @@
-import { useHistory } from "react-router-dom";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
+import Swapper from "components/Swapper/Swapper";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
-import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
+import { useHistory } from "react-router-dom";
+import { useGovStakingAPY } from "services/terra/hooks";
 import "./Portal.css";
-import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
   const history = useHistory();
+  const stakingAPY = useGovStakingAPY();
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -21,9 +21,9 @@ export default function Portal() {
     showModal(UnstakeModal, {});
   }
 
-  function showSwapper() {
-    showModal(SwapModal, { inModal: true });
-  }
+  // function showSwapper() {
+  //   showModal(SwapModal, { inModal: true });
+  // }
 
   function goToLpPage() {
     return (window.location.href = `https://dex.loop.markets/swap#Swap`);
@@ -42,7 +42,7 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          0.00% APR
+          {Number(stakingAPY).toFixed(2)}% APR
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">

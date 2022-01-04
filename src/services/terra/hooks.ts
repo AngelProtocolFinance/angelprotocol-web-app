@@ -166,3 +166,7 @@ export function useGovConfig() {
 
   return data;
 }
+
+export function useGovStakingAPY() {
+  return 13.45;
+}
