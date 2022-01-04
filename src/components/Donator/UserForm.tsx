@@ -1,3 +1,4 @@
+import Action from "components/ActionButton/Action";
 import { Form, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
 import React from "react";
@@ -12,24 +13,6 @@ type Props = {
   maxSplitLiq?: number;
   minSplitLiq?: number;
 };
-
-type ButtonSectionProps = {
-  isSubmitting: boolean;
-};
-
-function ButtonSection({ isSubmitting }: ButtonSectionProps) {
-  return (
-    <div className="w-full flex justify-center">
-      <button
-        disabled={isSubmitting}
-        type="submit"
-        className="bg-angel-orange font-semibold rounded-xl w-52 h-12"
-      >
-        Donate
-      </button>
-    </div>
-  );
-}
 
 export default function UserForm(props: Props) {
   const { percentage, handleSlide, handleSlideEnd } = useSlider();
@@ -51,7 +34,12 @@ export default function UserForm(props: Props) {
         />
       </div>
       <TaxReceipt showKYCForm={showKYCForm} />
-      <ButtonSection isSubmitting={isSubmitting} />
+      <Action
+        disabled={isSubmitting}
+        submit
+        title="Donate"
+        classes="bg-angel-orange font-semibold rounded-xl w-52 h-12 self-center"
+      />
     </Form>
   );
 }
