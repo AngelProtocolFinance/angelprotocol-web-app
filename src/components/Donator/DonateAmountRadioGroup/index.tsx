@@ -5,13 +5,17 @@ import OtherAmountRadioButton from "./OtherAmountRadioButton";
 import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
 import "./styles.css";
 
-type Props = {
-  amounts: string[];
-};
+const amounts = [
+  "5.000000",
+  "20.000000",
+  "50.000000",
+  "100.000000",
+  "1000.000000",
+];
 
 // Note: If at any point there comes a need to pull this component out and make it a shared one, know
 // that this component uses the surrounding Formik fields to initialize and manage its radio buttons.
-function DonateAmountRadioGroup({ amounts }: Props) {
+function DonateAmountRadioGroup() {
   const { values, setFieldValue } = useFormikContext<Values>();
   const otherAmountInputRef = useRef<HTMLInputElement>();
 

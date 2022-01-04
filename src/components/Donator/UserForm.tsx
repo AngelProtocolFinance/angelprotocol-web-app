@@ -24,7 +24,7 @@ export default function UserForm(props: Props) {
   return (
     <Form className="flex flex-col text-white-grey text-xs lg:text-xl 3xl:text-lg gap-5">
       <div className="flex justify-between">
-        <DonateAmountRadioGroup amounts={amounts} />
+        <DonateAmountRadioGroup />
         <CompoundPercentageChooser
           min={minLocked}
           max={maxLocked}
@@ -43,11 +43,3 @@ export default function UserForm(props: Props) {
     </Form>
   );
 }
-
-const amounts = [
-  "5.000000",
-  "20.000000",
-  "50.000000",
-  "100.000000",
-  "1000.000000",
-];
