@@ -30,7 +30,7 @@ export default function Views() {
       {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
       <Route path={`${path}/${app.tca}`} component={TCA} />
       <Route path={`${path}/${app.govern}`} component={Governance} />
-      {/* <Route path={`${path}/${app.fund}/:id`} component={Fund} /> */}
+      {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
       <Route path={`${path}/${app.auction}`} component={Auction} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
       <Route path={`${path}${app.index}`} component={Leaderboard} />
