@@ -39,7 +39,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         )) || <Overview fund_id={fund_id} />}
 
         <div className="flex flex-col gap-2">
-          <Button onClick={toggleDonate} bgColor="bg-yellow-blue">
+          <Button onClick={toggleDonate} className="bg-yellow-blue">
             {isDonating ? "Back to Index" : "Donate"}
           </Button>
           <ShareButton />

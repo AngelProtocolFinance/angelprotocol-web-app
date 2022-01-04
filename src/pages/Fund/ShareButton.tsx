@@ -19,16 +19,17 @@ const IconLink = ({ link, icon: Icon }: IconProps) => {
   );
 };
 
-const ShareSection = () => (
-  <div className="flex gap-2 text-angel-blue h-full">
-    <IconLink link="https://twitter.com/angelprotocol" icon={FaTwitter} />
-    <IconLink
-      link="https://www.linkedin.com/company/angel-protocol"
-      icon={FaLinkedinIn}
-    />
-    <IconLink link="" icon={FaFacebookSquare} />
-  </div>
-);
+const ShareSection = ({ isOpen }: any) =>
+  isOpen && (
+    <div className={`flex gap-2 text-angel-blue h-full`}>
+      <IconLink link="https://twitter.com/angelprotocol" icon={FaTwitter} />
+      <IconLink
+        link="https://www.linkedin.com/company/angel-protocol"
+        icon={FaLinkedinIn}
+      />
+      <IconLink link="" icon={FaFacebookSquare} />
+    </div>
+  );
 
 export default function ShareButton() {
   const [isSharing, setSharing] = useState(false);
@@ -37,10 +38,10 @@ export default function ShareButton() {
 
   return (
     <div className="flex gap-5">
-      <Button bgColor="bg-angel-blue" onClick={toggleShare}>
+      <Button className="bg-angel-blue" onClick={toggleShare}>
         Share
       </Button>
-      {isSharing && <ShareSection />}
+      <ShareSection isOpen={isSharing} />
     </div>
   );
 }
