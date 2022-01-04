@@ -21,9 +21,9 @@ export default function Portal() {
     showModal(UnstakeModal, {});
   }
 
-  // function showSwapper() {
-  //   showModal(SwapModal, { inModal: true });
-  // }
+  function showSwapper() {
+    showModal(SwapModal, { inModal: true });
+  }
 
   function goToLpPage() {
     return (window.location.href = `https://dex.loop.markets/swap#Swap`);
