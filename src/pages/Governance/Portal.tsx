@@ -56,7 +56,7 @@ export default function Portal() {
           for your patience!
         </span>
         <Action title="Trade Halo" action={goToLpPage} />
-        <Action title="Stake" action={showStaker} disabled={true} />
+        <Action title="Stake" action={showStaker} />
         <Action title="Unstake" action={showUnstaker} disabled={true} />
         <Action title="Claim" action={() => {}} disabled={true} />
       </div>
