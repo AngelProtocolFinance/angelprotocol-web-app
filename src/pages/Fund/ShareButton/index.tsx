@@ -1,7 +1,7 @@
+import Action from "components/ActionButton/Action";
 import React, { useState } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { CSSTransition } from "react-transition-group";
-import Button from "../Button";
 import "./styles.css";
 
 type IconProps = {
@@ -41,9 +41,11 @@ export default function ShareButton() {
 
   return (
     <div className="flex gap-5">
-      <Button className="bg-angel-blue" onClick={toggleShare}>
-        Share
-      </Button>
+      <Action
+        title="Share"
+        classes="bg-angel-blue w-52 h-12"
+        onClick={toggleShare}
+      />
       <ShareSection isOpen={isSharing} />
     </div>
   );

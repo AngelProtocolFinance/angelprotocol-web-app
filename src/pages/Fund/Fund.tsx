@@ -1,10 +1,10 @@
+import Action from "components/ActionButton/Action";
 import DappHead from "components/Headers/DappHead";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import React from "react";
 import { RouteComponentProps } from "react-router-dom";
-import Button from "./Button";
 import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
@@ -38,10 +38,12 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Donate split={split} loading={loading} error={error} />
         )) || <Overview fund_id={fund_id} />}
 
-        <div className="flex flex-col gap-2">
-          <Button onClick={toggleDonate} className="bg-yellow-blue">
-            {isDonating ? "Back to Index" : "Donate"}
-          </Button>
+        <div className="flex flex-col">
+          <Action
+            title={isDonating ? "Back to Index" : "Donate"}
+            onClick={toggleDonate}
+            classes="bg-yellow-blue w-52 h-12"
+          />
           <ShareButton />
         </div>
       </div>
