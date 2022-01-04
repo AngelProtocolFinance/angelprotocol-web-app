@@ -26,7 +26,7 @@ export default function Donator(props: Props) {
         <Formik<Values>
           initialValues={{
             otherAmount: "",
-            amount: "",
+            amount: "5.000000",
             split: minLocked,
             receiptRequested: false,
             fullName: "",
