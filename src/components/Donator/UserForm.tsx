@@ -5,7 +5,6 @@ import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
 import SliderComponent from "./SliderComponent";
 import TaxReceipt from "./TaxReceipt";
 import { Values } from "./types";
-import "./UserForm.css";
 import useSlider from "./useSlider";
 
 type Props = {

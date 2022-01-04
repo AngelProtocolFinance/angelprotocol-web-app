@@ -3,6 +3,7 @@ import React, { useCallback, useRef } from "react";
 import { Values } from "../types";
 import OtherAmountRadioButton from "./OtherAmountRadioButton";
 import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
+import "./styles.css";
 
 type Props = {
   amounts: string[];
