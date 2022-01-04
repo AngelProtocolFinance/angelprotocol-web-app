@@ -1,8 +1,7 @@
-import { Field, Form, useFormikContext } from "formik";
+import { Form, useFormikContext } from "formik";
 import "rc-slider/assets/index.css";
 import React from "react";
 import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
-import KYCForm from "./KYCForm";
 import SliderComponent from "./SliderComponent";
 import TaxReceipt from "./TaxReceipt";
 import { Values } from "./types";
@@ -52,11 +51,7 @@ export default function UserForm(props: Props) {
           onAfterChange={handleSlideEnd}
         />
       </div>
-
-      <TaxReceipt />
-
-      {showKYCForm && <KYCForm />}
-
+      <TaxReceipt showKYCForm={showKYCForm} />
       <ButtonSection isSubmitting={isSubmitting} />
     </Form>
   );
