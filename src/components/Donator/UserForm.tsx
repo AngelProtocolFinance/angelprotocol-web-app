@@ -6,7 +6,6 @@ import DonateAmountRadioGroup from "./DonateAmountRadioGroup";
 import CompoundPercentageChooser from "./CompoundPercentageChooser";
 import TaxReceipt from "./TaxReceipt";
 import { Values } from "./types";
-import useSlider from "./useSlider";
 
 type Props = {
   //for charity donations, no split data yet
@@ -15,7 +14,6 @@ type Props = {
 };
 
 export default function UserForm(props: Props) {
-  const { percentage, handleSlide, handleSlideEnd } = useSlider();
   const { isSubmitting, values } = useFormikContext<Values>();
   const showKYCForm = values.receiptRequested;
   const minLocked = 100 - (props?.maxSplitLiq || 50);
@@ -25,13 +23,7 @@ export default function UserForm(props: Props) {
     <Form className="flex flex-col text-white-grey text-xs lg:text-xl 3xl:text-lg gap-5">
       <div className="flex justify-between">
         <DonateAmountRadioGroup />
-        <CompoundPercentageChooser
-          min={minLocked}
-          max={maxLocked}
-          value={percentage}
-          onChange={handleSlide}
-          onAfterChange={handleSlideEnd}
-        />
+        <CompoundPercentageChooser min={minLocked} max={maxLocked} />
       </div>
       <TaxReceipt showKYCForm={showKYCForm} />
       <Action

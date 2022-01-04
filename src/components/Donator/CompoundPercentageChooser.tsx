@@ -1,5 +1,7 @@
+import { useFormikContext } from "formik";
 import Slider, { SliderProps, SliderTooltip } from "rc-slider";
 import "rc-slider/assets/index.css";
+import { Values } from "components/Donator/types";
 
 const { Handle } = Slider;
 
@@ -48,7 +50,11 @@ function SliderWithTooltip(props: SliderProps) {
 }
 
 export default function CompoundPercentageChooser(props: SliderProps) {
+  const { setFieldValue, values } = useFormikContext<Values>();
+
   const { min, max } = props;
+  const percentage = values.split;
+  const handleChange = (value: number) => setFieldValue("split", value);
 
   return (
     <div className="w-1/2 flex flex-col gap-8 xl:gap-0 xl:justify-between">
@@ -59,7 +65,11 @@ export default function CompoundPercentageChooser(props: SliderProps) {
         <span className="text-dark-grey text-xs 3xl:text-sm font-semibold">
           Percentage<sup className="text-red-500">*</sup>
         </span>
-        <SliderWithTooltip {...props} />
+        <SliderWithTooltip
+          {...props}
+          value={percentage}
+          onChange={handleChange}
+        />
         <p className="flex justify-between ">
           <span>{min}%</span>
           <span>{max}%</span>
