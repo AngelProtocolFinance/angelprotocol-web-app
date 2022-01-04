@@ -2,6 +2,7 @@ import AddressSelector from "./AddressSelector";
 // import { newIndexFundSchema } from "./newIndexSchema";
 import { useForm } from "react-hook-form";
 import { useModalCloser } from "components/Modal/Modal";
+import Action from "components/ActionButton/Action";
 
 const NewIndexFundModal = () => {
   const {
@@ -76,20 +77,18 @@ const NewIndexFundModal = () => {
         <AddressSelector></AddressSelector>
         <div className="w-full flex flex-cols-2 align-items-center justify-between gap-2">
           <div>
-            <button
-              type="submit"
-              className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
-            >
-              Submit
-            </button>
+            <Action
+              title="Submit"
+              classes="action-button"
+              onClick={closeModal}
+            />
           </div>
           <div>
-            <button
+            <Action
+              title="Cancel"
+              classes="action-button"
               onClick={closeModal}
-              className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
-            >
-              Cancel
-            </button>
+            />
           </div>
         </div>
       </form>
