@@ -16,9 +16,7 @@ function DonateAmountRadioGroup({ amounts }: Props) {
   const otherAmountInputRef = useRef<HTMLInputElement>();
 
   const resetAmount = () => setFieldValue("amount", "");
-
   const resetOtherAmount = () => setFieldValue("otherAmount", "");
-
   const focusOtherAmountInput = () => otherAmountInputRef.current?.focus();
 
   return (
