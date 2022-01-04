@@ -5,14 +5,6 @@ import OtherAmountRadioButton from "./OtherAmountRadioButton";
 import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
 import "./styles.css";
 
-const amounts = [
-  "5.000000",
-  "20.000000",
-  "50.000000",
-  "100.000000",
-  "1000.000000",
-];
-
 // Note: If at any point there comes a need to pull this component out and make it a shared one, know
 // that this component uses the surrounding Formik fields to initialize and manage its radio buttons.
 function DonateAmountRadioGroup() {
@@ -26,10 +18,7 @@ function DonateAmountRadioGroup() {
   return (
     <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
       <p className="font-semibold">Choose the amount of your donation:</p>
-      <PredefinedAmountsRadioButtons
-        amounts={amounts}
-        onFocus={resetOtherAmount}
-      />
+      <PredefinedAmountsRadioButtons onFocus={resetOtherAmount} />
       <OtherAmountRadioButton
         onClick={focusOtherAmountInput}
         onFocus={resetAmount}

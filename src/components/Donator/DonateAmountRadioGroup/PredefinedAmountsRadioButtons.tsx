@@ -1,9 +1,17 @@
 import { FastField } from "formik";
 import React from "react";
 
-type Props = { amounts: string[]; onFocus: () => void };
+const amounts = [
+  "5.000000",
+  "20.000000",
+  "50.000000",
+  "100.000000",
+  "1000.000000",
+];
 
-function PredefinedAmountsRadioButtons({ amounts, onFocus }: Props) {
+type Props = { onFocus: () => void };
+
+function PredefinedAmountsRadioButtons({ onFocus }: Props) {
   return (
     <div className="flex flex-col gap-2 2xl:gap-4 xl:flex-row">
       {amounts.map((amount) => (
