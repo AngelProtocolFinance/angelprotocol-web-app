@@ -19,6 +19,8 @@ export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  cw4_group = "cw4_group",
+  cw3_multisig = "cw3_multisig",
   halo_token = "halo_token",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",
@@ -83,6 +85,12 @@ export interface Holdings {
 
 //Vaults
 export type Swap = { exchange_rate: string; yield_token_supply: string };
+
+// CW4 Group
+export type Member = { addr: string; weight: number };
+export interface MemberRes {
+  weight: number | undefined;
+}
 
 //Halo token
 export type HaloBalance = {
