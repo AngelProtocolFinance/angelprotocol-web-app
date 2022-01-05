@@ -1,6 +1,4 @@
-import Action from "components/ActionButton/Action";
-import { useSetToken } from "contexts/AuthProvider";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { admin } from "types/routes";
 
 export default function AdminSideNav() {
@@ -49,19 +47,6 @@ export default function AdminSideNav() {
         </NavLink>
       </div>
       {/* side nav footer  */}
-      <div className="flex items-end justify-center h-20 relative">
-        {/* <button
-          className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-bold justify-self-center absolute bottom-0"
-          onClick={logout}
-        >
-          Logout
-        </button> */}
-        <Action
-          title="Logout"
-          classes="action-button font-light"
-          onClick={logout}
-        />
-      </div>
     </div>
   );
 }

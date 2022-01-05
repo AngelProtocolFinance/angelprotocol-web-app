@@ -3,7 +3,6 @@ import Loader from "components/Loader/Loader";
 import { useGetAuthorized } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
-import AdminSideNav from "../AdminSideNav";
 import DataTable from "./Table";
 import useEndowments from "./useEndowments";
 
