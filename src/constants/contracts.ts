@@ -13,8 +13,9 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
-    // guardian-angels
+    // AP Team Multisig / Group
     [sc.cw4_group]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
+    [sc.cw3_multisig]: "terra1m6rqwmxlpztjf3zfhza906d44c9rpf2t6vn37n",
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
@@ -34,8 +35,9 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
 
-    // guardian-angels
+    // AP Team Multisig / Group
     [sc.cw4_group]: "terra1jngs5xj00e9fq0hfmpr2pqyq96x3aj8la8kr3p",
+    [sc.cw3_multisig]: "terra1yp5we2meetcfxql522q9ve3dsl29epye86528j",
 
     //terraswap
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
@@ -55,8 +57,9 @@ export const contracts: Contracts = {
     [sc.index_fund]: "",
     [sc.registrar]: "",
 
-    // guardian-angels
+    // AP Team Multisig / Group
     [sc.cw4_group]: "",
+    [sc.cw3_multisig]: "",
 
     //terraswap
     [sc.halo_token]: "",
