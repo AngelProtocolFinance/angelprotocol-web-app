@@ -1,11 +1,13 @@
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import Swapper from "components/Swapper/Swapper";
+import Claimer from "components/Claimer/Claimer";
+import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
 import { useHistory } from "react-router-dom";
-import { useGovStakingAPY } from "services/terra/hooks";
+import { useGovStakingAPY } from "services/terra/queriers";
 import "./Portal.css";
 
 export default function Portal() {
@@ -22,11 +24,11 @@ export default function Portal() {
   }
 
   function showSwapper() {
-    showModal(SwapModal, { inModal: true });
+    return showModal(SwapModal, {});
   }
 
-  function goToLpPage() {
-    return (window.location.href = `https://dex.loop.markets/swap#Swap`);
+  function showClaimer() {
+    showModal(ClaimModal, {});
   }
 
   return (
@@ -46,19 +48,10 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <span className="m-3 mt-5 text-white-grey font-light text-sm">
-          <span className="text-lg font-semibold underline">NOTE:</span> Staking
-          & Withdrawals from Governance are temporarily on-hold until the Claims
-          step is finalized. We expect this feature to be ready no later than
-          January 6, 2022. We’ll be providing additional{" "}
-          <span className="text-angel-blue">$HALO</span> incentives to the pool
-          in the interim for the inconvenience to the early stakers. Thank you
-          for your patience!
-        </span>
-        <Action title="Trade Halo" action={goToLpPage} />
+        <Action title="Trade Halo" action={showSwapper} />
         <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={showUnstaker} disabled={true} />
-        <Action title="Claim" action={() => {}} disabled={true} />
+        <Action title="Unstake" action={showUnstaker} />
+        <Action title="Claim" action={showClaimer} />
       </div>
     </div>
   );
@@ -99,5 +92,13 @@ function SwapModal() {
     <Swapper>
       <SwapSuite inModal />
     </Swapper>
+  );
+}
+
+function ClaimModal() {
+  return (
+    <Claimer>
+      <ClaimSuite inModal />
+    </Claimer>
   );
 }

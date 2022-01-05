@@ -15,7 +15,7 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 // import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances } from "services/terra/hooks";
+import { useBalances } from "services/terra/queriers";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
