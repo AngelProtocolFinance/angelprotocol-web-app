@@ -40,11 +40,7 @@ function CharityApps() {
 
   const showApproved = () => {
     const status = isShowApproved ? "Available-Soon" : "Active";
-    setTableData(
-      data?.filter(
-        (item: any) => item.EndowmentStatus === status
-      )
-    );
+    setTableData(data?.filter((item: any) => item.EndowmentStatus === status));
     setIsShowApproved(!isShowApproved);
   };
 

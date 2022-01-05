@@ -19,7 +19,9 @@ const TableRow = ({ onUpdateClick, onDeleteClick, charity }: any) => {
       />
       <TableChip data={charity.CharityName} />
       <TableChip data={charity.Docs} link={charity.Docs} type="anchor" />
-      <TableChip data={charity.EndowmentStatus === "Active" ? "Approved" : "Pending"} />
+      <TableChip
+        data={charity.EndowmentStatus === "Active" ? "Approved" : "Pending"}
+      />
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left">
         <button
           onClick={onUpdateClick}
