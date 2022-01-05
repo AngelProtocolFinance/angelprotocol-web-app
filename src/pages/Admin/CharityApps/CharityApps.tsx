@@ -17,14 +17,12 @@ function CharityApps() {
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
   const auth = useGetAuthorized();
-  const { data } = useGetCharityListEndowmentQuery("Active");
+  const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list
   useEffect(() => {
     setCharityList(data);
-    setTableData(
-      data?.filter((item: any) => item.EndowmentStatus === "Active")
-    );
+    setTableData(data);
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,12 +39,13 @@ function CharityApps() {
   };
 
   const showApproved = () => {
-    setIsShowApproved(!isShowApproved);
+    const status = isShowApproved ? "Available-Soon" : "Active";
     setTableData(
       data?.filter(
-        (item: any) => item.EndowmentStatus === "Active" || isShowApproved
+        (item: any) => item.EndowmentStatus === status
       )
     );
+    setIsShowApproved(!isShowApproved);
   };
 
   const handleActivateCharity = () => {};
