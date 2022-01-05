@@ -149,11 +149,6 @@ export function usePairInfo() {
   return data;
 }
 
-// TODO: implement fetching
-export function useGovStakingAPY() {
-  return 13.45;
-}
-
 export function usePairSimul(interval = 0, skip = false) {
   const { usePairSimulQuery } = terra;
   const { contract, wallet } = useLPContract();
