@@ -3,7 +3,6 @@ import { useGetAuthorized } from "contexts/AuthProvider";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
-import AdminSideNav from "../AdminSideNav";
 import NewIndexFundModal from "./NewIndexFundModal";
 import IndexFundTable from "./Table";
 import UpdateMembersModal from "./UpdateMembersModal";

@@ -1,12 +1,12 @@
+import withSideNav from "Admin/withSideNav";
 import Loader from "components/Loader/Loader";
 import { useGetAuthorized } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
-import AdminSideNav from "../AdminSideNav";
 import DataTable from "./Table";
 import useEndowments from "./useEndowments";
 
-export default function Endowments() {
+function Endowments() {
   const auth = useGetAuthorized();
   const { loading, endowments, endowmentDetails } = useEndowments();
 
