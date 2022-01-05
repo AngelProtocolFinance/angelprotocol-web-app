@@ -6,7 +6,7 @@ export interface StakingAPRQueryResult {
   error: any;
 }
 
-const gov_api = aws.injectEndpoints({
+const governance_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     stakingAPR: builder.query<StakingAPRQueryResult, any>({
       query: () => {
@@ -19,4 +19,4 @@ const gov_api = aws.injectEndpoints({
   }),
 });
 
-export const { useStakingAPRQuery } = gov_api;
+export const { useStakingAPRQuery } = governance_api;
