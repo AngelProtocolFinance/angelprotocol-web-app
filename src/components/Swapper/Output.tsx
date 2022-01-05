@@ -1,4 +1,4 @@
-import { currency_icons, currency_text, denoms } from "constants/currency";
+import { currency_icons, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 
@@ -7,7 +7,6 @@ export default function Output() {
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");
-  const currency = currency_text[is_buy ? denoms.uhalo : denoms.uusd];
   const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
 
   return (

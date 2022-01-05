@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { currency_icons, currency_text, denoms } from "constants/currency";
+import { currency_icons, denoms } from "constants/currency";
 import { ErrorMessage } from "@hookform/error-message";
 import { Values } from "./types";
 import Balance from "./Balance";

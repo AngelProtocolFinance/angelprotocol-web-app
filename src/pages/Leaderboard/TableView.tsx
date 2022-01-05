@@ -1,10 +1,10 @@
 import TableEntry from "./TableEntry";
 import Heading from "./Heading";
-import { Balance } from "contracts/types";
+import { Update } from "services/aws/leaderboard/types";
 
-export default function TableView(props: { charities: [string, Balance][] }) {
+export default function TableView(props: Update) {
   return (
-    <div className="hidden md:block self-start w-full h-leader-table pl-4 overflow-y-scroll">
+    <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">
         <thead className="">
           <tr>
@@ -14,11 +14,19 @@ export default function TableView(props: { charities: [string, Balance][] }) {
           </tr>
         </thead>
         <tbody>
-          {props.charities.map(([address, balance], idx) => (
-            <TableEntry key={idx} balance={balance} address={address} />
-          ))}
+          {props.endowments
+            .filter((endowment) => !tier1Charities.includes(endowment.address))
+            .map((endowment) => (
+              <TableEntry key={endowment.address} {...endowment} />
+            ))}
         </tbody>
       </table>
     </div>
   );
 }
+const tier1Charities = [
+  "terra1mcf9lhce23znkpmvg6c5pxx0a36s03yamsklad",
+  "terra1d5phnyr7e7l44yaathtwrh4f4mv5agajcy508f",
+  "terra1g6ryawleq5ly9p8dygslpayarmraddkg3c6xc9",
+  "terra16jm9vflz8ltw9yrrnarcuwt623ampadhhhyxke",
+];

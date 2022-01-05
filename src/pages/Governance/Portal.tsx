@@ -1,17 +1,11 @@
-import { useHistory } from "react-router-dom";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
-import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
 import "./Portal.css";
-import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
-  const history = useHistory();
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -19,10 +13,6 @@ export default function Portal() {
 
   function showUnstaker() {
     showModal(UnstakeModal, {});
-  }
-
-  function showSwapper() {
-    showModal(SwapModal, { inModal: true });
   }
 
   function goToLpPage() {
@@ -91,13 +81,5 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
-  );
-}
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
   );
 }
