@@ -7,7 +7,7 @@ export default class CW4Group extends Contract {
   address: string;
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.address = contracts[this.chainID][sc.cw4_group];
+    this.address = contracts[this.chainID][sc.cw3_multisig];
   }
 
   async isMember(addr: string, weight?: number | undefined) {

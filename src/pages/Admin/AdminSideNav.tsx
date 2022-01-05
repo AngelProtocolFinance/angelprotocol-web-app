@@ -8,6 +8,7 @@ export default function AdminSideNav() {
     "block uppercase text-sm md:text-lg hover:text-white py-1 px-5 text-center rounded-sm border-0 border-b border-opacity-20 font-semibold";
   const activeStyles = "text-white";
 
+  const logout = () => {};
   return (
     <div className="flex flex-col w-128 min-h-3/4 hidden md:block bg-white bg-opacity-10 py-10 rounded-l-xl font-heading">
       <div className="flex-none">

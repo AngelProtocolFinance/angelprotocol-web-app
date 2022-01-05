@@ -6,7 +6,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
-import AdminLogin from "pages/Admin/Login/AdminLogin";
+// import AdminLogin from "pages/Admin/Login/AdminLogin";
 import CharityApps from "pages/Admin/CharityApps/CharityApps";
 import DappHead from "components/Headers/DappHead";
 import Endowments from "pages/Admin/Endowments/Endowments";
@@ -35,9 +35,9 @@ export default function Views() {
             path={`${path}/${admin.alliance_members}`}
             component={IndexFund}
           />
-          <Route path={`${path}/${admin.login}`} component={AdminLogin} />
+          {/* <Route path={`${path}/${admin.login}`} component={AdminLogin} /> */}
           <Route path={`${path}/${admin.index}`} component={IndexFund} />
-          <Redirect from="*" to={`${path}/${admin.login}`} />
+          <Redirect from="*" to={`${path}/${admin.index}`} />
         </Switch>
       </div>
     </div>
