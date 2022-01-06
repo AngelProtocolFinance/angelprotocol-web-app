@@ -44,7 +44,6 @@ export default function usePair() {
     const tokenResult: TokenResult = await factoryContract.getTokenInfo(
       token_contract
     );
-    console.log("token info", tokenResult);
     return tokenResult;
   }
 
