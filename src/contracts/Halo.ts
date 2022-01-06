@@ -9,16 +9,42 @@ import {
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { PollExecuteMsg, sc, Vote } from "./types";
+import { ContractQueryArgs } from "services/terra/types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
   token_address: string;
   gov_address: string;
+  staker: ContractQueryArgs;
+  gov_balance: ContractQueryArgs;
+  gov_state: ContractQueryArgs;
+  polls: ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.token_address = contracts[this.chainID][sc.halo_token];
     this.gov_address = contracts[this.chainID][sc.halo_gov];
+
+    //query args
+    this.staker = {
+      address: this.gov_address,
+      msg: { staker: { address: wallet?.walletAddress } },
+    };
+
+    this.gov_balance = {
+      address: this.token_address,
+      msg: { balance: { address: this.gov_address } },
+    };
+
+    this.gov_state = {
+      address: this.gov_address,
+      msg: { state: {} },
+    };
+
+    this.polls = {
+      address: this.gov_address,
+      msg: { polls: {} },
+    };
   }
 
   //halo_token
@@ -39,6 +65,17 @@ export default class Halo extends Contract {
     const fee = await this.estimateFee([stake_msg]);
     // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
     return { msgs: [stake_msg], fee };
+  }
+
+  async createGovClaimTx(): Promise<CreateTxOptions> {
+    this.checkWallet();
+    const claim_msg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.gov_address,
+      { claim_voting_tokens: {} }
+    );
+    const fee = await this.estimateFee([claim_msg]);
+    return { msgs: [claim_msg], fee };
   }
 
   async createPoll(
