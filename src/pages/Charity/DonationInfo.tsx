@@ -52,11 +52,11 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         value: profile.country_city_origin,
         rating: false,
       },
-      {
-        title: " annual avg overhead",
-        value: profile.average_annual_budget,
-        rating: false,
-      },
+      // {
+      //   title: " annual avg overhead",
+      //   value: profile.average_annual_budget,
+      //   rating: false,
+      // },
       {
         title: " annual avg donations",
         value: profile.annual_revenue,
@@ -78,9 +78,9 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   return (
     <div className="font-heading flex flex-col lg:flex-row self-start justify-between w-full 2xl:p-0 2xl:justify-start md:-mt-0 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 py-2">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 2xl:mt-0">
-        <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
+        {/* <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
           SDG #{profile.un_sdg}: {sdg.title}
-        </span>
+        </span> */}
         <h2 className="text:4xl lg:text-4xl font-bold text-white uppercase mt-4 tracking-wide">
           {profile.charity_name}
         </h2>

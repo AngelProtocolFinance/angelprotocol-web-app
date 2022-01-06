@@ -7,7 +7,7 @@ export default function CharityInfoNav({
 }) {
   const getClassNames = (tab: string) => {
     const isActive = activeTab === tab;
-    const classes = `inline-block w-52 disabled:bg-grey-accent disabled:text-white-grey ${
+    const classes = `block w-full disabled:bg-grey-accent disabled:text-white-grey ${
       !isActive && "text-dark-grey"
     } hover:text-white hover:text-opacity-80 font-semibold bg-white uppercase border-0 py-3 px-4 hover:bg-angel-blue active:bg-angel-blue active:text-white ${
       isActive ? "bg-angel-blue text-light-grey" : ""
@@ -19,9 +19,9 @@ export default function CharityInfoNav({
   };
 
   return (
-    <nav className="overflow-y-hidden overflow-x-scroll scroll-hidden grid grid-cols-a1a items-center justify-between md:justify-items-center 2xl:padded-container my-5 2xl:mb-0 md:pl-0">
-      <ul className={`flex font-body text-sm lg:text-base ml-1 `}>
-        <li className="mr-1 flex">
+    <nav className="overflow-y-hidden overflow-x-scroll scroll-hidden grid items-start justify-stretch 2xl:padded-container my-5 2xl:mb-0 md:pl-0">
+      <ul className={`flex font-body text-sm lg:text-base ml-1 block w-full`}>
+        <li className="mr-1 flex block w-full">
           {/**just use buttons since page switching is programmatic and no involved page semantics*/}
           <button
             className={getClassNames("overview")}
@@ -30,7 +30,7 @@ export default function CharityInfoNav({
             Overview
           </button>
         </li>
-        <li className="mr-1">
+        <li className="mr-1 block w-full">
           <button
             className={getClassNames("endowment")}
             onClick={() => onTabChange("endowment")}
@@ -38,7 +38,7 @@ export default function CharityInfoNav({
             endowment
           </button>
         </li>
-        <li className="mr-1">
+        {/* <li className="mr-1">
           <button
             disabled
             className={getClassNames("programs")}
@@ -64,7 +64,7 @@ export default function CharityInfoNav({
           >
             governance (dano)
           </button>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );

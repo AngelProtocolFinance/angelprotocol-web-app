@@ -32,7 +32,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
         <DonationInfo openModal={showDonationForm} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <img
-            className="bg-white rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
+            className="bg-white rounded-2xl 2xl:mt-4 shadow-md mb-1 object-cover object-center"
             style={{ width: "100%", maxHeight: "350px" }}
             src={profile.charity_image}
             alt=""
