@@ -1,3 +1,4 @@
+/* eslint-disable no-fallthrough */
 import whiteLogo from "assets/images/angelprotocol-horiz-wht.png";
 import blueLogo from "assets/images/angelprotocol-horiz-blu.png";
 import { app, site, web } from "types/routes";
@@ -28,7 +29,7 @@ export default function Logo() {
     case `${site.app}/${app.dashboard}`:
     case `${site.app}/${app.tca}`:
     case `${site.app}/${app.auction}`:
-    case `${site.app}/${app.endowment_admin}`:
+    // case `${site.app}/${app.endowment_admin}`:
     case `${site.app}/${app.marketplace}`:
       return (
         <Link to={site.home} title="to home">

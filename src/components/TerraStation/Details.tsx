@@ -45,7 +45,7 @@ export default function Details(props: Props) {
       </div>
       {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
       <Address address={addr} />
-      <Portal />
+      {/* <Portal /> */}
       {(!isEmpty && <Holdings coinData={coins} />) || (
         <span className="text-angel-grey p-10 text-center text-sm uppercase">
           Wallet is empty
