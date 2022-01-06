@@ -1,9 +1,0 @@
-input[type="radio"]:checked {
-  border: 3px solid theme("colors.white-grey");
-}
-
-@media screen and (min-width: 1536px) {
-  input[type="radio"]:checked {
-    border-width: 4px;
-  }
-}

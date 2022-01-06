@@ -173,6 +173,9 @@ module.exports = {
       backgroundColor: ["disabled", "checked"],
       textColor: ["disabled"],
       translate: ["active"],
+      borderColor: ["checked"],
+      borderWidth: ["checked"],
+      borderStyle: ["checked"],
     },
   },
 };

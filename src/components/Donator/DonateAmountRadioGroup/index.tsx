@@ -3,7 +3,6 @@ import React, { useRef } from "react";
 import { Values } from "../types";
 import OtherAmountRadioButton from "./OtherAmountRadioButton";
 import PredefinedAmountsRadioButtons from "./PredefinedAmountsRadioButtons";
-import "./styles.css";
 
 // Note: If at any point there comes a need to pull this component out and make it a shared one, know
 // that this component uses the surrounding Formik fields to initialize and manage its radio buttons.
