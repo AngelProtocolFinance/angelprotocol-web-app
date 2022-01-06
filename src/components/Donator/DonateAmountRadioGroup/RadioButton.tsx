@@ -14,7 +14,7 @@ function RadioButton({ name, value, onFocus, checked }: Props) {
       type="radio"
       name={name}
       value={value}
-      className="mr-1 cursor-pointer w-3 h-3 2xl:w-5 2xl:h-5 rounded-full appearance-none bg-white-grey"
+      className="mr-1 cursor-pointer w-3 h-3 2xl:w-5 2xl:h-5 rounded-full appearance-none bg-white-grey checked:bg-sdg5"
       onFocus={onFocus}
       {...(checked !== undefined && { checked })}
     />

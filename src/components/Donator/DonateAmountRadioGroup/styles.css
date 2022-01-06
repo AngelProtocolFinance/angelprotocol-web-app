@@ -1,5 +1,4 @@
 input[type="radio"]:checked {
-  @apply bg-sdg5;
   border: 3px solid theme("colors.white-grey");
 }
 
