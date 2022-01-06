@@ -20,7 +20,7 @@ export default function UserForm(props: Props) {
   const maxLocked = 100 - (props?.minSplitLiq || 0);
 
   return (
-    <Form className="flex flex-col text-white-grey text-xs lg:text-xl 3xl:text-lg gap-5">
+    <Form className="flex flex-col text-white-grey text-xs lg:text-base 3xl:text-lg gap-5">
       <div className="flex justify-between">
         <DonateAmountRadioGroup />
         <CompoundPercentageChooser min={minLocked} max={maxLocked} />
