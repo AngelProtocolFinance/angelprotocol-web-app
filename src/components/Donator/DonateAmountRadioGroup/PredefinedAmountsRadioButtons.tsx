@@ -23,7 +23,7 @@ function PredefinedAmountsRadioButtons({ onFocus }: Props) {
             type="radio"
             name="amount"
             value={amount}
-            className="mr-1 cursor-pointer"
+            className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6 rounded-full appearance-none bg-white-grey"
             onFocus={onFocus}
           />
           {`$${Number(amount).toFixed(0)}`}

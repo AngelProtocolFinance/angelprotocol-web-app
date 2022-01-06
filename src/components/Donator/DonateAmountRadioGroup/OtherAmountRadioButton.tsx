@@ -15,7 +15,7 @@ function OtherAmountRadioButton({ onFocus, checked, innerRef }: Props) {
           id="custom"
           type="radio"
           name="otherAmount"
-          className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6"
+          className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6 rounded-full appearance-none bg-white-grey"
           onFocus={onFocus}
           checked={checked}
         />
