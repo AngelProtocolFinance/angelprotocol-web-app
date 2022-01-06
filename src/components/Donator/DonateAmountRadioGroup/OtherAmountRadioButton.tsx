@@ -1,21 +1,21 @@
 import { ErrorMessage, Field } from "formik";
 import React from "react";
+import RadioButton from "./RadioButton";
 
 type Props = {
+  value: string;
   onFocus: () => void;
   checked: boolean;
   innerRef: React.MutableRefObject<HTMLInputElement | undefined>;
 };
 
-function OtherAmountRadioButton({ onFocus, checked, innerRef }: Props) {
+function OtherAmountRadioButton({ value, onFocus, checked, innerRef }: Props) {
   return (
     <div className="flex flex-col relative">
       <div className="flex gap-3 items-center">
-        <Field
-          id="custom"
-          type="radio"
+        <RadioButton
           name="otherAmount"
-          className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6 rounded-full appearance-none bg-white-grey"
+          value={value}
           onFocus={onFocus}
           checked={checked}
         />

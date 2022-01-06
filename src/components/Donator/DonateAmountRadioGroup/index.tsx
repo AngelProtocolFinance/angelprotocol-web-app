@@ -32,6 +32,7 @@ function DonateAmountRadioGroup() {
       <p className="font-semibold">Choose the amount of your donation:</p>
       <PredefinedAmountsRadioButtons onFocus={resetOtherAmount} />
       <OtherAmountRadioButton
+        value={values.otherAmount}
         onFocus={handleFocusOtherAmount}
         checked={!!values.otherAmount || isOtherAmountInputFocused()}
         innerRef={otherAmountInputRef}

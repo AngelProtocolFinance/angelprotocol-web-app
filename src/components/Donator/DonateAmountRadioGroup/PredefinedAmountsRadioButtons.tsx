@@ -1,5 +1,5 @@
-import { FastField } from "formik";
 import React from "react";
+import RadioButton from "./RadioButton";
 
 const amounts = [
   "5.000000",
@@ -19,13 +19,7 @@ function PredefinedAmountsRadioButtons({ onFocus }: Props) {
           key={amount}
           className="cursor-pointer font-semibold flex items-center max-w-max"
         >
-          <FastField
-            type="radio"
-            name="amount"
-            value={amount}
-            className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6 rounded-full appearance-none bg-white-grey"
-            onFocus={onFocus}
-          />
+          <RadioButton name="amount" value={amount} onFocus={onFocus} />
           {`$${Number(amount).toFixed(0)}`}
         </label>
       ))}
