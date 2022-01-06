@@ -1,15 +1,19 @@
-import Claimer from "components/Claimer/Claimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
 import Swapper from "components/Swapper/Swapper";
+import Claimer from "components/Claimer/Claimer";
 import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
+import { useHistory } from "react-router-dom";
+import { useStakingAPRQuery } from "services/aws/governance";
 import "./Portal.css";
 
 export default function Portal() {
   const { showModal } = useSetModal();
+  const history = useHistory();
+  const { data } = useStakingAPRQuery(null);
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -40,7 +44,7 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          0.00% APR
+          {data && `${Number(data.stakingAPR).toFixed(2)}% APR`}
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
