@@ -2,18 +2,12 @@ import { ErrorMessage, Field } from "formik";
 import React from "react";
 
 type Props = {
-  onClick: () => void;
   onFocus: () => void;
   checked: boolean;
   innerRef: React.MutableRefObject<HTMLInputElement | undefined>;
 };
 
-function OtherAmountRadioButton({
-  onClick,
-  onFocus,
-  checked,
-  innerRef,
-}: Props) {
+function OtherAmountRadioButton({ onFocus, checked, innerRef }: Props) {
   return (
     <div className="flex flex-col relative">
       <div className="flex gap-3 items-center">
@@ -21,8 +15,8 @@ function OtherAmountRadioButton({
           id="custom"
           type="radio"
           name="otherAmount"
-          className="cursor-pointer"
-          onClick={onClick}
+          className="mr-1 cursor-pointer w-4 h-4 2xl:w-6 2xl:h-6"
+          onFocus={onFocus}
           checked={checked}
         />
         <div className="h-11 flex flex-col w-5/6">
