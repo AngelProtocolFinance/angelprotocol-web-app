@@ -11,11 +11,21 @@ function DonateAmountRadioGroup() {
   const { values, setFieldValue } = useFormikContext<Values>();
   const otherAmountInputRef = useRef<HTMLInputElement>();
 
-  const resetOtherAmount = () => setFieldValue("otherAmount", "");
-  const handleFocusOtherAmount = () => {
-    setFieldValue("amount", "");
-    otherAmountInputRef.current?.focus();
+  const resetOtherAmount = () => {
+    if (values.otherAmount) {
+      setFieldValue("otherAmount", "");
+    }
   };
+  const handleFocusOtherAmount = () => {
+    if (values.amount) {
+      setFieldValue("amount", "");
+    }
+    if (!isOtherAmountInputFocused()) {
+      otherAmountInputRef.current?.focus();
+    }
+  };
+  const isOtherAmountInputFocused = () =>
+    otherAmountInputRef.current === document.activeElement;
 
   return (
     <div className="flex flex-col w-1/2 gap-5 justify-center xl:justify-start">
@@ -23,10 +33,7 @@ function DonateAmountRadioGroup() {
       <PredefinedAmountsRadioButtons onFocus={resetOtherAmount} />
       <OtherAmountRadioButton
         onFocus={handleFocusOtherAmount}
-        checked={
-          !!values.otherAmount ||
-          otherAmountInputRef.current === document.activeElement
-        }
+        checked={!!values.otherAmount || isOtherAmountInputFocused()}
         innerRef={otherAmountInputRef}
       />
     </div>
