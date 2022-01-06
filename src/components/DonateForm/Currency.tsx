@@ -59,7 +59,7 @@ export default memo(Currency);
 function Tooltip_() {
   return (
     <span className="fixed bg-white text-angel-grey p-1.5 rounded-md text-sm shadow-md z-10">
-      comming soon!
+      coming soon!
     </span>
   );
 }

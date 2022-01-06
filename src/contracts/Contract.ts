@@ -22,7 +22,7 @@ export default class Contract {
   constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;
     this.chainID = this.wallet?.network.chainID || chainIDs.mainnet;
-    this.url = this.wallet?.network.lcd || terra_lcds[chainIDs.mainnet];
+    this.url = terra_lcds[this.chainID];
     this.walletAddr = this.wallet?.walletAddress;
     this.client = new LCDClient({
       chainID: this.chainID,
@@ -34,9 +34,9 @@ export default class Contract {
     this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
-  static gasAdjustment = 1.2; //use gas units 20% greater than estimate
+  static gasAdjustment = 1.25; //use gas units 25% greater than estimate
 
-  //https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
+  // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
   static gasPrices = [new Coin(denoms.uusd, 0.15)];
 
   async query<T>(source: AccAddress, message: object) {

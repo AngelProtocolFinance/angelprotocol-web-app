@@ -1,4 +1,4 @@
-import { useGetStatus, useSetStatus } from "./Withdraw";
+import { useGetStatus, useSetStatus } from "./Endowment_Admin";
 import toCurrency from "helpers/toCurrency";
 import { EstimatesProps, Steps } from "./types";
 

@@ -1,17 +1,22 @@
+/**
+ * queriers are hooks that calls the API when there's no entry on cache
+ */
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
-import Halo from "contracts/Halo";
-import { useMemo } from "react";
 import { terra } from "services/terra/terra";
-import { gov_config, gov_state, halo_info, staker, poll } from "./placeholders";
+import {
+  gov_config,
+  gov_state,
+  halo_info,
+  staker,
+  poll,
+  pairInfo,
+  simulation,
+  pool_balance,
+} from "./placeholders";
 import { chainIDs } from "contracts/types";
-
-function useHaloContract() {
-  const wallet = useConnectedWallet();
-  const contract = useMemo(() => new Halo(wallet), [wallet]);
-  return { wallet, contract };
-}
+import { useHaloContract, useLPContract } from "./contracts";
 
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;
@@ -71,48 +76,28 @@ export function useHaloBalance() {
 export function useGovStaker() {
   const { useGovStakerQuery } = terra;
   const { wallet, contract } = useHaloContract();
-
-  const { data = staker } = useGovStakerQuery(
-    {
-      address: contract.gov_address,
-      msg: { staker: { address: wallet?.walletAddress } },
-    },
-    {
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
-    }
-  );
-
+  const { data = staker } = useGovStakerQuery(contract.staker, {
+    skip:
+      wallet === undefined || wallet.network.chainID === chainIDs.localterra,
+  });
   return data;
 }
 
 export function useGovBalance() {
   const { useGovBalanceQuery } = terra;
   const { contract, wallet } = useHaloContract();
-  const { data = 0 } = useGovBalanceQuery(
-    {
-      address: contract.token_address,
-      //this query will only run if wallet is not undefined
-      msg: { balance: { address: contract.gov_address } },
-    },
-    {
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
-    }
-  );
+  const { data = 0 } = useGovBalanceQuery(contract.gov_balance, {
+    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+  });
   return data;
 }
 
 export function useGovState() {
   const { useGovStateQuery } = terra;
   const { contract, wallet } = useHaloContract();
-  const { data = gov_state } = useGovStateQuery(
-    {
-      address: contract.gov_address,
-      msg: { state: {} },
-    },
-    {
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
-    }
-  );
+  const { data = gov_state } = useGovStateQuery(contract.gov_state, {
+    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+  });
 
   return data;
 }
@@ -120,15 +105,9 @@ export function useGovState() {
 export function useGovPolls() {
   const { useGovPollsQuery } = terra;
   const { contract, wallet } = useHaloContract();
-  const { data = [] } = useGovPollsQuery(
-    {
-      address: contract.gov_address,
-      msg: { polls: {} },
-    },
-    {
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
-    }
-  );
+  const { data = [] } = useGovPollsQuery(contract.polls, {
+    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+  });
 
   return data;
 }
@@ -136,18 +115,12 @@ export function useGovPolls() {
 export function useGovPoll(poll_id?: string) {
   const { useGovPollsQuery } = terra;
   const { contract, wallet } = useHaloContract();
-  const { data = poll } = useGovPollsQuery(
-    {
-      address: contract.gov_address,
-      msg: { polls: {} },
-    },
-    {
-      selectFromResult: ({ data }) => ({
-        data: data?.find((poll) => poll.id === +(poll_id || "0")),
-      }),
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
-    }
-  );
+  const { data = poll } = useGovPollsQuery(contract.polls, {
+    selectFromResult: ({ data }) => ({
+      data: data?.find((poll) => poll.id === +(poll_id || "0")),
+    }),
+    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+  });
   return data;
 }
 
@@ -163,6 +136,35 @@ export function useGovConfig() {
       skip: wallet && wallet.network.chainID === chainIDs.localterra,
     }
   );
+  return data;
+}
 
+export function usePairInfo() {
+  const { usePairInfoQuery } = terra;
+  const { contract, wallet } = useLPContract();
+  const { data = pairInfo } = usePairInfoQuery(contract.pairInfo, {
+    skip: wallet?.network.chainID === chainIDs.testnet,
+  });
+
+  return data;
+}
+
+export function usePairSimul(interval = 0, skip = false) {
+  const { usePairSimulQuery } = terra;
+  const { contract, wallet } = useLPContract();
+  const { data = simulation } = usePairSimulQuery(contract.simul, {
+    skip: skip || wallet?.network.chainID === chainIDs.testnet,
+    pollingInterval: interval,
+  });
+
+  return data;
+}
+
+export function usePool(skip = false) {
+  const { usePoolQuery } = terra;
+  const { contract, wallet } = useLPContract();
+  const { data = pool_balance } = usePoolQuery(contract.pool, {
+    skip: skip || wallet?.network.chainID === chainIDs.testnet,
+  });
   return data;
 }

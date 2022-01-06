@@ -12,7 +12,8 @@ export default function Slider() {
   return (
     <div className="my-2 select-none">
       <input
-        disabled={!amount || max_liq === 0 || !!form_error}
+        hidden={max_liq === 0}
+        disabled={!amount || !!form_error}
         type="range"
         {...register("split_liq")}
         min={min_liq}

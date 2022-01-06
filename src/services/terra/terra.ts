@@ -141,8 +141,6 @@ export const terra = createApi({
   }),
 });
 
-export const { usePoolQuery, usePairSimulQuery, usePairInfoQuery } = terra;
-
 function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));
   return {

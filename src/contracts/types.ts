@@ -25,6 +25,10 @@ export enum sc {
   lbp_pair = "lbp_pair",
   lbp_router = "lbp_router",
   lbp_lp = "lbp_lp",
+  loop_factory = "loop_factory",
+  loop_router = "loop_router",
+  loop_haloust_pair = "loop_haloust_pair",
+  loop_haloust_lp = "loop_haloust_lp",
 }
 
 export type URLs = {

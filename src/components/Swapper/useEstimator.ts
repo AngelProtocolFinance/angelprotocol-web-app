@@ -1,11 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import LBP from "contracts/LBP";
+import LP from "contracts/LP";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -14,10 +14,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import toCurrency from "helpers/toCurrency";
-import getPercentPriceChange from "./getPercentPriceChange";
 import { getSpotPrice } from "./getSpotPrice";
-import { terra } from "services/terra/terra";
-import { pool_balance, simulation } from "services/terra/placeholders";
 
 export default function useEstimator() {
   const { watch, setValue, formState: isValid } = useFormContext<Values>();
@@ -27,15 +24,8 @@ export default function useEstimator() {
   const halo_balance = useHaloBalance();
 
   const wallet = useConnectedWallet();
-
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
-  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
-    lbp.gen_pool_args()
-  );
-  const { data: simul = simulation } = terra.endpoints.pairSimul.useQueryState(
-    lbp.gen_simul_args()
-  );
-  const spot_price = useMemo(() => getSpotPrice(simul, pool), [simul, pool]);
+  // const simul = usePairSimul(3000);
+  // const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
 
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
@@ -61,12 +51,12 @@ export default function useEstimator() {
 
         //first balance check
         if (is_buy) {
-          if (amount >= UST_balance) {
+          if (amount > UST_balance) {
             dispatch(setFormError("Not enough UST"));
             return;
           }
         } else {
-          if (amount >= halo_balance) {
+          if (amount > halo_balance) {
             dispatch(setFormError("Not enough HALO"));
             return;
           }
@@ -74,17 +64,11 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LBP(wallet);
-
-        // //on demand pool query to get latest pool balance
-        // const pool = await contract.getPoolBalance();
-
-        // //non-invasive simul just to get current asset weights
-        // const init_simul = await contract.pairSimul(0, true);
-        // const ust_price = getSpotPrice(init_simul, pool);
+        const contract = new LP(wallet);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
+        const spot_price = getSpotPrice(simul, debounced_amount);
         //get commission and price impact
         const return_uamount = new Dec(simul.return_amount);
         const ucommission = new Dec(simul.commission_amount);
@@ -92,14 +76,6 @@ export default function useEstimator() {
           .div(return_uamount.add(ucommission))
           .mul(100)
           .toNumber();
-
-        //get price change of actual simul from previous non-invasive simul
-        const pct_change = getPercentPriceChange(
-          debounced_amount,
-          simul,
-          spot_price,
-          is_buy
-        );
 
         let tx: CreateTxOptions;
         if (is_buy) {
@@ -112,7 +88,7 @@ export default function useEstimator() {
           tx = await contract.createSellTx(
             debounced_amount,
             //just reverse price for sell tx
-            new Dec(1).div(new Dec(spot_price)).toString(),
+            spot_price.toString(),
             debounced_slippage
           );
         }
@@ -122,13 +98,16 @@ export default function useEstimator() {
           .amount.toNumber();
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (is_buy && estimatedFee + debounced_amount >= UST_balance) {
+          dispatch(setFormError("Not enough UST to pay fees"));
+          return;
+        }
+        if (!is_buy && estimatedFee >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
         dispatch(setFee(estimatedFee));
-        setValue("pct_change", toCurrency(pct_change, 2));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",
@@ -141,6 +120,9 @@ export default function useEstimator() {
         dispatch(setFormError("transaction simulation failed"));
       }
     })();
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, is_buy, debounced_slippage]);
 
