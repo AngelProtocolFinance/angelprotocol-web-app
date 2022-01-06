@@ -17,7 +17,6 @@ import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
 import Market from "pages/Market/Market";
 import Withdraw from "pages/Endowment_Admin/Endowment_Admin";
-import Charity from "pages/Charity/Charity";
 // import Fund from "pages/Fund/Fund";
 
 export default function Views() {
@@ -28,7 +27,7 @@ export default function Views() {
     <Switch>
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
       <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-      <Route path={`${path}/${app.charity}/:address`} component={Charity} />
+      {/* <Route path={`${path}/${app.charity}/:address`} component={Charity} /> */}
       <Route path={`${path}/${app.login}`} component={Login} />
       {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
       <Route path={`${path}/${app.tca}`} component={TCA} />
