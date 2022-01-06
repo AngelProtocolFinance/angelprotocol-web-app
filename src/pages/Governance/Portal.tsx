@@ -1,17 +1,19 @@
-import { useHistory } from "react-router-dom";
 import { useSetModal } from "components/Nodal/Nodal";
 import Staker from "components/Staker/Staker";
+import Swapper from "components/Swapper/Swapper";
+import Claimer from "components/Claimer/Claimer";
+import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
-import displayTerraError from "helpers/displayTerraError";
 import { currency_icons, denoms } from "constants/currency";
+import { useHistory } from "react-router-dom";
+import { useStakingAPRQuery } from "services/aws/governance";
 import "./Portal.css";
-import { app, site } from "types/routes";
 
 export default function Portal() {
   const { showModal } = useSetModal();
   const history = useHistory();
+  const { data } = useStakingAPRQuery(null);
 
   function showStaker() {
     showModal(StakeModal, {});
@@ -22,11 +24,11 @@ export default function Portal() {
   }
 
   function showSwapper() {
-    showModal(SwapModal, { inModal: true });
+    return showModal(SwapModal, {});
   }
 
-  function goToLpPage() {
-    return (window.location.href = `https://dex.loop.markets/swap#Swap`);
+  function showClaimer() {
+    showModal(ClaimModal, {});
   }
 
   return (
@@ -42,23 +44,14 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          0.00% APR
+          {data && `${Number(data.stakingAPR).toFixed(2)}% APR`}
         </span>
       </div>
       <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-        <span className="m-3 mt-5 text-white-grey font-light text-sm">
-          <span className="text-lg font-semibold underline">NOTE:</span> Staking
-          & Withdrawals from Governance are temporarily on-hold until the Claims
-          step is finalized. We expect this feature to be ready no later than
-          January 6, 2022. We’ll be providing additional{" "}
-          <span className="text-angel-blue">$HALO</span> incentives to the pool
-          in the interim for the inconvenience to the early stakers. Thank you
-          for your patience!
-        </span>
-        <Action title="Trade Halo" action={goToLpPage} />
-        <Action title="Stake" action={showStaker} disabled={true} />
-        <Action title="Unstake" action={showUnstaker} disabled={true} />
-        <Action title="Claim" action={() => {}} disabled={true} />
+        <Action title="Trade Halo" action={showSwapper} />
+        <Action title="Stake" action={showStaker} />
+        <Action title="Unstake" action={showUnstaker} />
+        <Action title="Claim" action={showClaimer} />
       </div>
     </div>
   );
@@ -91,6 +84,14 @@ function UnstakeModal() {
     <Staker>
       <StakeSuite inModal />
     </Staker>
+  );
+}
+
+function ClaimModal() {
+  return (
+    <Claimer>
+      <ClaimSuite inModal />
+    </Claimer>
   );
 }
 
