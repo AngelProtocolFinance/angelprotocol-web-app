@@ -1,18 +1,13 @@
-import { Balance } from "contracts/types";
+import { Endowment } from "services/aws/leaderboard/types";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
 
-type Props = {
-  address: string;
-  balance: Balance;
-};
-
-export default function TableEntry({ address, balance }: Props) {
+export default function TableEntry(props: Endowment) {
   const { locked, liquid } = projectFunds(
     10,
-    balance.total_locked,
-    balance.total_liq,
+    props.total_lock,
+    props.total_liq,
     20,
     15
   );
@@ -20,14 +15,14 @@ export default function TableEntry({ address, balance }: Props) {
   return (
     <tr className="border-b">
       <td>
-        <Description address={address} />
+        <Description address={props.address} />
       </td>
       <td>
         <div className="flex flex-col w-40">
           <Amount
             type="total"
-            locked={balance.total_locked}
-            liquid={balance.total_liq}
+            locked={props.total_lock}
+            liquid={props.total_liq}
           />
         </div>
       </td>

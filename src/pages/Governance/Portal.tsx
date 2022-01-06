@@ -87,18 +87,18 @@ function UnstakeModal() {
   );
 }
 
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
-  );
-}
-
 function ClaimModal() {
   return (
     <Claimer>
       <ClaimSuite inModal />
     </Claimer>
+  );
+}
+
+function SwapModal() {
+  return (
+    <Swapper>
+      <SwapSuite inModal />
+    </Swapper>
   );
 }
