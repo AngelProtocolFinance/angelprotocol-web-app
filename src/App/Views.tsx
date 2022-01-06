@@ -15,6 +15,7 @@ import Withdraw from "pages/Withdraw/Withdraw";
 // import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
+import Market from "pages/Market/Market";
 // import Fund from "pages/Fund/Fund";
 
 export default function Views() {
@@ -33,7 +34,7 @@ export default function Views() {
       {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
       <Route path={`${path}/${app.auction}`} component={Auction} />
       <Route path={`${path}/${app.withdraw}/:address`} component={Withdraw} />
-      <Route path={`${path}${app.index}`} component={Leaderboard} />
+      <Route path={`${path}${app.index}`} component={Market} />
       <Redirect from="*" to={site.home} />
     </Switch>
   );
