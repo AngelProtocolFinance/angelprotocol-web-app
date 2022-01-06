@@ -37,5 +37,11 @@ export default function useFund() {
     setDonating((prev) => !prev);
   }
 
-  return { isDonating, toggleDonate, split, error, loading };
+  return {
+    isDonating,
+    toggleDonate,
+    split,
+    error,
+    loading,
+  };
 }

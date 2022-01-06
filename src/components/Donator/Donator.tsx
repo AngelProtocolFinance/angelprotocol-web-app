@@ -25,7 +25,8 @@ export default function Donator(props: Props) {
       <setContext.Provider value={setStatus}>
         <Formik<Values>
           initialValues={{
-            amount: "",
+            otherAmount: "",
+            amount: "5.000000",
             split: minLocked,
             receiptRequested: false,
             fullName: "",
