@@ -26,7 +26,6 @@ export enum app {
   index = "/",
   dashboard = "dashboard",
   charities = "charities",
-  churchportal = "church-portal",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
   register = "register",
@@ -39,6 +38,7 @@ export enum app {
   govern = "govern",
   test = "test",
   auction = "auction",
+  churchportal = "church-portal",
 }
 
 export enum govern {

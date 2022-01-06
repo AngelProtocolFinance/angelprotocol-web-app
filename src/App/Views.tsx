@@ -10,13 +10,13 @@ import Login from "pages/Login/Login";
 import TCA from "pages/TCA/TCA";
 import ChurchPortal from "pages/ChurchPortal/ChurchPortal";
 import { app, site } from "../types/routes";
-// import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
-import Endowment_Admin from "pages/Endowment_Admin/Endowment_Admin";
-// import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
 // import Test from "pages/Test";
+import Market from "pages/Market/Market";
+import Endowment_Admin from "pages/Endowment_Admin/Endowment_Admin";
+// import Charity from "pages/Charity/Charity";
 // import Fund from "pages/Fund/Fund";
 
 export default function Views() {
@@ -43,7 +43,7 @@ export default function Views() {
         component={Endowment_Admin}
       />
       {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
-      <Route path={`${path}${app.index}`} component={Leaderboard} />
+      <Route path={`${path}${app.index}`} component={Market} />
       <Redirect from="*" to={site.home} />
     </Switch>
   );

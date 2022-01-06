@@ -31,11 +31,6 @@ export default function AppMenu() {
           DONATE
         </Link>
       </li>
-      <li>
-        <Link to={`${url}/${app.auction}`} {...linkStyles}>
-          HALOSWAP
-        </Link>
-      </li>
     </ul>
   );
 }
