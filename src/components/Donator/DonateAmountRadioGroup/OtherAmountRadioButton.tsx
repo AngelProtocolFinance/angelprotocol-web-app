@@ -19,16 +19,14 @@ function OtherAmountRadioButton({ value, onFocus, checked, innerRef }: Props) {
           onFocus={onFocus}
           checked={checked}
         />
-        <div className="h-11 flex flex-col w-5/6">
-          <Field
-            innerRef={innerRef}
-            className="flex text-grey-accent w-5/6 rounded-md pl-2 items-center bg-white h-full"
-            type="text"
-            name="otherAmount"
-            placeholder="Other amount"
-            onFocus={onFocus}
-          />
-        </div>
+        <Field
+          innerRef={innerRef}
+          className="flex text-grey-accent w-2/3 rounded-md pl-2 items-center bg-white h-11"
+          type="text"
+          name="otherAmount"
+          placeholder="Other amount"
+          onFocus={onFocus}
+        />
       </div>
       <ErrorMessage
         name="otherAmount"
