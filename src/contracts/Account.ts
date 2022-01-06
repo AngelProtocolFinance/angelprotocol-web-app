@@ -4,7 +4,6 @@ import {
   CreateTxOptions,
   Dec,
   MsgExecuteContract,
-  StdFee,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { denoms } from "constants/currency";

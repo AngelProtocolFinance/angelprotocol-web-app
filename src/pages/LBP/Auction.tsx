@@ -2,8 +2,6 @@ import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import Swapper from "components/Swapper/Swapper";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
 import displayTerraError from "helpers/displayTerraError";
 import { useEffect, useState } from "react";
@@ -143,11 +141,3 @@ const Tabs = ({ color }: { color: string }) => {
     </>
   );
 };
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
-  );
-}
