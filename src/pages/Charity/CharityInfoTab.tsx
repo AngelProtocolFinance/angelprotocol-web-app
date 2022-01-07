@@ -26,7 +26,7 @@ function AccountInfo({
 }) {
   return (
     <div
-      className={`w-full md:w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${className}`}
+      className={`w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${className}`}
     >
       <p className="uppercase font-semibold text-white text-xl">
         {account.type}
@@ -100,8 +100,8 @@ function CharityEndowmentInfo() {
 
   return (
     <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10">
-      <div className="flex flex-col gap-5 justify-between items-start min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
-        <div className="endowment_stats bg-white w-full md:w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-5">
+      <div className="flex flex-col gap-5 justify-between items-center lg:items-start min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
+        <div className="endowment_stats bg-white w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5">
           <p className="uppercase font-semibold text-thin-blue text-xl">
             Endowment Balance
           </p>

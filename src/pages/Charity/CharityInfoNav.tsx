@@ -19,7 +19,7 @@ export default function CharityInfoNav({
   };
 
   return (
-    <nav className="overflow-y-hidden overflow-x-scroll scroll-hidden grid items-start justify-stretch 2xl:padded-container my-5 2xl:mb-0 md:pl-0">
+    <nav className="overflow-y-hidden overflow-x-scroll scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
       <ul className={`flex font-body text-sm lg:text-base ml-1 block w-full`}>
         <li className="mr-1 flex block w-full">
           {/**just use buttons since page switching is programmatic and no involved page semantics*/}
