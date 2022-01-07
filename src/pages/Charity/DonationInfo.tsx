@@ -76,15 +76,15 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   }, [profile]);
 
   return (
-    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start md:-mt-0 lg:mt-0 2xl:mt-0 2xl:flex-col 2xl:w-130 py-2">
-      <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 2xl:mt-0">
+    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130 py-2">
+      <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
         {/* <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
           SDG #{profile.un_sdg}: {sdg.title}
         </span> */}
         <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
           {profile.charity_name}
         </h2>
-        <div className="flex flex-row gap-2 mt-4">
+        <div className="flex flex-row lg:flex-col gap-2 mt-4">
           <button
             disabled={profile.is_placeholder}
             onClick={openModal}
@@ -93,36 +93,38 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             DONATE NOW
           </button>
           {/* create a customizable IconButton component to replace all occurrences of this */}
-          {profile.twitter_handle && (
-            <a
-              href={`https://twitter.com/${profile.twitter_handle}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-            >
-              <FaTwitter color="#3FA9F5" size="25" />
-            </a>
-          )}
-          {profile.linkedin_page && (
-            <a
-              href={`https://linkedin.com/${profile.linkedin_page}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-            >
-              <FaLinkedinIn color="#3FA9F5" size="25" />
-            </a>
-          )}
-          {profile.facebook_page && (
-            <a
-              href={`https://facebook.com/${profile.facebook_page}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-            >
-              <FaFacebookSquare color="#3FA9F5" size="25" />
-            </a>
-          )}
+          <div className="flex flex-row gap-2 lg:gap-5 lg:justify-start">
+            {profile.twitter_handle && (
+              <a
+                href={`https://twitter.com/${profile.twitter_handle}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+              >
+                <FaTwitter color="#3FA9F5" size="25" />
+              </a>
+            )}
+            {profile.linkedin_page && (
+              <a
+                href={`https://linkedin.com/${profile.linkedin_page}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+              >
+                <FaLinkedinIn color="#3FA9F5" size="25" />
+              </a>
+            )}
+            {profile.facebook_page && (
+              <a
+                href={`https://facebook.com/${profile.facebook_page}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+              >
+                <FaFacebookSquare color="#3FA9F5" size="25" />
+              </a>
+            )}
+          </div>
         </div>
       </div>
       {/* charity stats */}
