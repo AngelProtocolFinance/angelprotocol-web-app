@@ -93,7 +93,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             DONATE NOW
           </button>
           {/* create a customizable IconButton component to replace all occurrences of this */}
-          <div className="flex flex-row gap-2 lg:gap-5 lg:justify-start">
+          <div className="flex flex-row gap-2 lg:gap-5 lg:-mt-2 items-start lg:justify-start">
             {profile.twitter_handle && (
               <a
                 href={`https://twitter.com/${profile.twitter_handle}`}
@@ -129,7 +129,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       </div>
       {/* charity stats */}
 
-      <div className="flex flex-col h-full 2xl:h-80 px-0 2xl:px-10 lg:mt-10 2xl:mt-0 hidden lg:block">
+      <div className="flex flex-col h-full 2xl:h-80 px-0 2xl:px-10 lg:mt-10 hidden lg:block">
         {stats.map(({ title, value, rating }: any, i: number) => (
           <StatsItem
             key={i}
