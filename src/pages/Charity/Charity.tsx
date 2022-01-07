@@ -26,26 +26,28 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   };
 
   return (
-    <section className="container mx-auto grid pb-16 content-start gap-0">
+    <section className="padded-container mx-auto grid pb-16 content-start gap-0">
       <DappHead />
-      <div className="flex flex-col-reverse 2xl:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
+      <div className="flex flex-col xl:flex-row items-start w-full md:mx-auto padded-container min-h-r15 gap-2 lg:mt-3 p-5">
         <DonationInfo openModal={showDonationForm} />
-        <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
+        <div className="flex-grow w-full items-center text-center bg-indigo lg:mb-0">
           <img
-            className="bg-white rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
+            className="bg-white rounded-2xl lg:-mt-6 shadow-md mb-1 object-cover object-center"
             style={{ width: "100%", maxHeight: "350px" }}
             src={profile.charity_image}
             alt=""
           />
-          {/* charity info */}
-          <CharityInfoNav
-            activeTab={activeTab}
-            onTabChange={(tab: string) => setActiveTab(tab)}
-          />
-          {/* charity info */}
-          {/* Information tabs  */}
-          <CharityInfoTab activeTab={activeTab} />
-          {/* Information tabs  */}
+          <div className="flex flex-row md:flex-col md:flex-grow">
+            {/* charity info */}
+            <CharityInfoNav
+              activeTab={activeTab}
+              onTabChange={(tab: string) => setActiveTab(tab)}
+            />
+            {/* charity info */}
+            {/* Information tabs  */}
+            <CharityInfoTab activeTab={activeTab} />
+            {/* Information tabs  */}
+          </div>
         </div>
       </div>
     </section>

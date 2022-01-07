@@ -9,7 +9,7 @@ function OverviewTab() {
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
   return (
-    <div className="w-full lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left">
+    <div className="w-full lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left bg-white bg-opacity-10 md:bg-opacity-0 rounded-2xl p-5 md:p-0">
       <span className="text-white font-normal text-md inline-block mb-4">
         {profile.charity_overview}
       </span>
@@ -26,7 +26,7 @@ function AccountInfo({
 }) {
   return (
     <div
-      className={`w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${className}`}
+      className={`w-124 min-h-r15 shadow-xl border-0 w-full md:w-max rounded-2xl p-5 ${className}`}
     >
       <p className="uppercase font-semibold text-white text-xl">
         {account.type}
@@ -99,9 +99,9 @@ function CharityEndowmentInfo() {
   ];
 
   return (
-    <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10">
-      <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
-        <div className="endowment_stats bg-white w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-6">
+    <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-0 md:mt-10 bg-white bg-opacity-10 md:bg-opacity-0 rounded-2xl p-5 md:p-0 flex justify-center">
+      <div className="flex flex-wrap gap-5 justify-center md:justify-start items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
+        <div className="endowment_stats bg-white w-full md:w-max min-h-r15 shadow-xl border-0 rounded-2xl p-6">
           <p className="uppercase font-semibold text-thin-blue text-xl">
             Endowment Balance
           </p>
@@ -140,7 +140,7 @@ function CharityEndowmentInfo() {
 function CharityPrograms() {
   function ProgramItem() {
     return (
-      <div className="flex justify-between gap-5 w-full h-40 font-heading">
+      <div className="flex justify-between gap-5 w-full h-40 font-heading bg-white bg-opacity-10 md:bg-opacity-0 rounded-2xl">
         <div className="w-128 h-full bg-blue-200"></div>
         <div className="w-full flex-grow h-full text-white">
           <p className="uppercase text-2xl font-medium tracking-wide m-0">
