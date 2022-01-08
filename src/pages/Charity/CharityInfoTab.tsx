@@ -9,8 +9,8 @@ function OverviewTab() {
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
   return (
-    <div className="w-full lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left">
-      <span className="text-white font-normal text-md inline-block mb-4">
+    <div className="w-full max-h-3/4 md:max-h-auto bg-light-grey md:bg-transparent md:p-0 p-4 rounded-2xl lg:min-h-1/2 lg:py-10 lg:mt-2 2xl:mb-5 text-left overflow-y-scroll scroll-hidden">
+      <span className="text-black md:text-white font-normal text-md inline-block mb-4">
         {profile.charity_overview}
       </span>
     </div>
@@ -26,12 +26,12 @@ function AccountInfo({
 }) {
   return (
     <div
-      className={`w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${className}`}
+      className={`w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5 ${className}`}
     >
       <p className="uppercase font-semibold text-white text-xl">
         {account.type}
       </p>
-      <p className="uppercase font-bold text-white text-7xl my-5 tracking-wide">
+      <p className="uppercase font-bold text-white text-6xl my-5 tracking-wide">
         {account.balance}
       </p>
       <div className="flex justify-between w-30 h-16">
@@ -100,12 +100,12 @@ function CharityEndowmentInfo() {
 
   return (
     <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10">
-      <div className="flex flex-wrap gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
-        <div className="endowment_stats bg-white w-124 min-h-r15 shadow-xl border-0 rounded-2xl p-6">
+      <div className="flex flex-col gap-5 justify-between items-center lg:items-start min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
+        <div className="endowment_stats bg-white w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5">
           <p className="uppercase font-semibold text-thin-blue text-xl">
             Endowment Balance
           </p>
-          <p className="uppercase font-bold text-thin-blue text-7xl my-5">
+          <p className="uppercase font-bold text-thin-blue text-6xl my-5">
             ${toCurrency(overall)}
           </p>
           <p className="uppercase font-medium text-thin-blue text-sm">
@@ -123,14 +123,6 @@ function CharityEndowmentInfo() {
           ></AccountInfo>
         ))}
       </div>
-      {/* <div className="flex gap-2 flex-col lg:flex-row">
-        {mockAccountDetails.map((account) => (
-          <AccountInfo
-            account={account}
-            className={`${account.color}`}
-          ></AccountInfo>
-        ))}
-      </div> */}
       {/* <AccountAction /> turn on for admin features after V1 */}
     </div>
   );
@@ -182,9 +174,9 @@ export default function CharityInfoTab({
     <>
       {activeTab === "overview" && <OverviewTab />}
       {activeTab === "endowment" && <CharityEndowmentInfo />}
-      {activeTab === "programs" && <CharityPrograms />}
+      {/* {activeTab === "programs" && <CharityPrograms />}
       {activeTab === "media" && <OverviewTab />}
-      {activeTab === "governance" && <OverviewTab />}
+      {activeTab === "governance" && <OverviewTab />} */}
     </>
   );
 }
