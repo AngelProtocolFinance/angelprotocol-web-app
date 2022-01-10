@@ -1,33 +1,17 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useGetAuthorized } from "contexts/AuthProvider";
-import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
-import { AuthResponse, useAuthentication } from "./useAuthentication";
 import warningIcon from "assets/images/warning.png";
+import Loader from "components/Loader/Loader";
+import { useGetter } from "store/accessors";
 
-const Authentication = () => {
-  const wallet = useConnectedWallet();
-  const auth = useGetAuthorized();
-  const handleAuthorize = useAuthentication();
-  const [error, setError] = useState<string>("");
+const Authentication = (props: { loading: boolean }) => {
+  const authStatus = useGetter((state) => state.auth.admin.status);
 
-  (async () => {
-    const res = await handleAuthorize(wallet);
-    switch (res) {
-      case AuthResponse.NotConnect:
-        setError("Connect your wallet to view this page");
-        break;
-      case AuthResponse.NotAuthorized:
-        setError("Not Authorized");
-        break;
-      case AuthResponse.Authorized:
-        setError("Authorized");
-        break;
-    }
-  })();
+  if (props.loading) {
+    return <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-2" />;
+  }
 
-  if (auth.isAuthorized) {
+  if (authStatus === "authorized") {
     return <Redirect to={`${site.admin}/${admin.index_fund_management}`} />;
   }
 
@@ -40,7 +24,11 @@ const Authentication = () => {
         </span>
       </div>
       <div className="w-full px-5 py-8">
-        <span className="text-base font-sans">{error}</span>
+        <span className="text-base font-sans">
+          {authStatus === "disconnected"
+            ? "You need to connect your wallet to view this page"
+            : "You are not authorized to view this page"}
+        </span>
       </div>
     </div>
   );

@@ -8,15 +8,16 @@ import IndexFundTable from "./Table";
 import UpdateMembersModal from "./UpdateMembersModal";
 import withSideNav from "Admin/withSideNav";
 import Action from "components/ActionButton/Action";
+import { useGetter } from "store/accessors";
 
 function IndexFund() {
   const [showIndexModal, setShowIndexModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const auth = useGetAuthorized();
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
 
   //user can't access TCA page when not logged in or his prev token expired
-  if (!auth.isAuthorized) {
-    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
+  if (adminAuthStatus !== "authorized") {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (
     <>
