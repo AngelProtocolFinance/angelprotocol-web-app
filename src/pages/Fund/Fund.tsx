@@ -36,8 +36,6 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const toggleShare = () => setSharing((prev) => !prev);
 
   const showDonationForm = () => {
-    //the button firing this function is disabled when
-    //param address is wrong
     showModal(FundForm, {
       fund_id,
     });
