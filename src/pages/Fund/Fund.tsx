@@ -33,11 +33,8 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const profiles = useProfiles(fund_id);
   const sdg = unsdgs[fund_id];
 
+  const showDonationForm = () => showModal(FundForm, { fund_id });
   const toggleShare = () => setSharing((prev) => !prev);
-
-  const showDonationForm = () => {
-    showModal(FundForm, { fund_id });
-  };
 
   return (
     <section className="grid content-start pb-24">
