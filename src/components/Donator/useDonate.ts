@@ -43,14 +43,12 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     }
 
     try {
-      let contract; 
       //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
-      if(typeof receiver === 'number' || typeof receiver === 'undefined'){
-        contract = new Indexfund(wallet, receiver)
-      } else {
-        contract = new Account(receiver, wallet)
-      }
-
+      const contract =
+        typeof receiver === 'number' || typeof receiver === 'undefined' 
+          ? new Indexfund(wallet, receiver) 
+          : new Account(receiver, wallet); 
+      
       //createTx errors will be on catch block
       const transaction = await contract.createDepositTx(
         UST_Amount,
