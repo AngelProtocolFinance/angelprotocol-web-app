@@ -8,11 +8,9 @@ import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import Donate from "./Donate";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
 import ShareSection from "./ShareSection";
-import useFund from "./useFund";
 
 type FundProps = { fund_id: number };
 
@@ -25,7 +23,6 @@ function FundForm(props: FundProps) {
 }
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const { isDonating, toggleDonate, error, loading, split } = useFund();
   const [isSharing, setSharing] = useState(false);
   const { showModal } = useSetModal();
 
@@ -60,13 +57,11 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           </h1>
         </div>
         <FundVid url={sdg.youtube} />
-        {(isDonating && (
-          <Donate split={split} loading={loading} error={error} />
-        )) || <Overview fund_id={fund_id} />}
+        <Overview fund_id={fund_id} />
 
         <div className="flex flex-col">
           <Action
-            title={isDonating ? "Back to Index" : "Donate"}
+            title="Donate"
             classes="bg-yellow-blue w-52 h-12"
             onClick={showDonationForm}
           />
