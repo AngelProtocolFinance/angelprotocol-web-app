@@ -1,17 +1,17 @@
 import withSideNav from "Admin/withSideNav";
 import Loader from "components/Loader/Loader";
-import { useGetAuthorized } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
+import { useGetter } from "store/accessors";
 import { admin, site } from "types/routes";
 import DataTable from "./Table";
 import useEndowments from "./useEndowments";
 
 function Endowments() {
-  const auth = useGetAuthorized();
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
   const { loading, endowments, endowmentDetails } = useEndowments();
 
-  if (!auth.isAuthorized) {
-    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
+  if (adminAuthStatus !== "authorized") {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (
     <>

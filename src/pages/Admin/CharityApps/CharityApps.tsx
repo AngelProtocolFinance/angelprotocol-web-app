@@ -1,4 +1,3 @@
-import { useGetAuthorized } from "contexts/AuthProvider";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { Redirect } from "react-router-dom";
@@ -7,6 +6,7 @@ import { admin, site } from "types/routes";
 import CharityTable from "./CharityTable";
 import Loader from "components/Loader/Loader";
 import withSideNav from "Admin/withSideNav";
+import { useGetter } from "store/accessors";
 
 function CharityApps() {
   const [isShowApproved, setIsShowApproved] = useState(false);
@@ -14,7 +14,7 @@ function CharityApps() {
   const [isLoading, setIsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  const auth = useGetAuthorized();
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
   const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list
@@ -49,7 +49,7 @@ function CharityApps() {
 
   const handleDeleteCharity = () => {};
   //user can't access TCA page when not logged in or his prev token expired
-  if (!auth.isAuthorized) {
+  if (adminAuthStatus !== "authorized") {
     return <Redirect to={`${site.admin}/${admin.authentication}`} />;
   }
 
