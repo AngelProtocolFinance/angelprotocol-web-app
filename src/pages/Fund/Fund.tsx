@@ -36,9 +36,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const toggleShare = () => setSharing((prev) => !prev);
 
   const showDonationForm = () => {
-    showModal(FundForm, {
-      fund_id,
-    });
+    showModal(FundForm, { fund_id });
   };
 
   return (
