@@ -47,15 +47,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
       //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
       if(typeof receiver === 'number' || typeof receiver === 'undefined'){
         contract = new Indexfund(wallet, receiver)
-        const tcaMembers = await contract.getTCAList();
-        const isTca = tcaMembers.includes(wallet.walletAddress)
-        if(!isTca){
-          setStatus({
-            step: Steps.error,
-            message: "Your wallet is not included in TCA list",
-          });
-          return;
-        }
       } else {
         contract = new Account(receiver, wallet)
       }
