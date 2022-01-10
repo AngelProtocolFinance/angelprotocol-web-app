@@ -1,17 +1,23 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import DappHead from "components/Headers/DappHead";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
-// import Voter from "components/Voter/Voter";
-// import VoterForm from "components/Voter/VoterForm";
-// import { useGovStaker } from "services/terra/hooks";
+import Airdrop from "contracts/Airdrop";
+import { useEffect } from "react";
+
 export default function Test() {
-  const { data } = useLeaderboardsQuery(true);
-  console.log(data);
+  const wallet = useConnectedWallet();
+  useEffect(() => {
+    if (!wallet) return;
+    (async () => {
+      const contract = new Airdrop(wallet);
+      const res = await contract.createClaimTx();
+      console.log(res);
+    })();
+  }, [wallet]);
+
   return (
     <div className="grid grid-rows-a1 place-items-center">
       <DappHead />
-      {/* <Voter poll_id="5">
-        <VoterForm />
-      </Voter> */}
+      <h3>some test</h3>
     </div>
   );
 }

@@ -13,7 +13,7 @@ import { app, site } from "../types/routes";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
-// import Test from "pages/Test";
+import Test from "pages/Test";
 import Market from "pages/Market/Market";
 import Endowment_Admin from "pages/Endowment_Admin/Endowment_Admin";
 // import Charity from "pages/Charity/Charity";
@@ -42,7 +42,7 @@ export default function Views() {
         path={`${path}/${app.endowment_admin}/:address`}
         component={Endowment_Admin}
       />
-      {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
+      <Route path={`${path}/${app.test}`} component={Test} />
       <Route path={`${path}${app.index}`} component={Market} />
       <Redirect from="*" to={site.home} />
     </Switch>
