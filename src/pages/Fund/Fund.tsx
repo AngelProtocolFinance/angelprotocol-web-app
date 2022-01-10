@@ -1,5 +1,8 @@
 import Action from "components/ActionButton/Action";
+import Donater from "components/Donater/Donater";
 import DappHead from "components/Headers/DappHead";
+import { useSetModal } from "components/Nodal/Nodal";
+import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { unsdgs } from "pages/Fund/unsdgs";
 import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
@@ -11,9 +14,20 @@ import Overview from "./Overview";
 import ShareSection from "./ShareSection";
 import useFund from "./useFund";
 
+type FundProps = { fund_id: number };
+
+function FundForm(props: FundProps) {
+  return (
+    <Donater to="fund" receiver={props.fund_id}>
+      <DonateSuite inModal />
+    </Donater>
+  );
+}
+
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const { isDonating, toggleDonate, error, loading, split } = useFund();
   const [isSharing, setSharing] = useState(false);
+  const { showModal } = useSetModal();
 
   const id_param = props.match.params?.id;
   const fund_id =
@@ -23,6 +37,14 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const sdg = unsdgs[fund_id];
 
   const toggleShare = () => setSharing((prev) => !prev);
+
+  const showDonationForm = () => {
+    //the button firing this function is disabled when
+    //param address is wrong
+    showModal(FundForm, {
+      fund_id,
+    });
+  };
 
   return (
     <section className="grid content-start pb-24">
@@ -46,7 +68,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <Action
             title={isDonating ? "Back to Index" : "Donate"}
             classes="bg-yellow-blue w-52 h-12"
-            onClick={toggleDonate}
+            onClick={showDonationForm}
           />
           <div className="flex gap-5">
             <Action
