@@ -12,11 +12,9 @@ export default function CharitiesList({ profiles }: Props) {
       <p className="uppercase text-2xl font-heading font-semibold mb-4">
         Charities in this index
       </p>
-      <ul className="flex flex-wrap gap-4">
+      <ul className="flex flex-row gap-4 overflow-x-auto">
         {profiles.map((profile) => (
-          <div className="max-h-116 overflow-hidden">
-            <CharityCard address={profile.endowment_address} />
-          </div>
+          <CharityCard address={profile.endowment_address} />
         ))}
       </ul>
     </div>
