@@ -6,7 +6,7 @@ type Props = {
   profiles: Profile[];
 };
 
-export function CharitiesList({ profiles }: Props) {
+export default function CharitiesList({ profiles }: Props) {
   return (
     <div className="mt-8 text-white-grey">
       <p className="uppercase text-2xl font-heading font-semibold mb-4">

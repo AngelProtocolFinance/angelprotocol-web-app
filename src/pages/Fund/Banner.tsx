@@ -7,7 +7,7 @@ type Props = {
   fund_id: number;
 };
 
-export function Banner({ bg, icon, title, fund_id }: Props) {
+export default function Banner({ bg, icon, title, fund_id }: Props) {
   return (
     <div
       className={`${bg} flex-1 order-1 col-start-1 col-span-1 self-stretch grid grid-cols-a1 items-center rounded-xl shadow-md`}
