@@ -107,7 +107,7 @@ function useDonate(
           Object.keys(valuesToBeSubmitted).forEach(
             (key) =>
               valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]
-          ); // Removes blank strings ("")
+          );
           // Auth token to be passed as part of the header of the request
           const authToken = createAuthToken("angelprotocol-web-app");
           // Call APES endpoint
