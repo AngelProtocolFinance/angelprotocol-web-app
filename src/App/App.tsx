@@ -15,7 +15,7 @@ export default function App() {
   //TODO: refactor non-terra providers to redux
   return (
     <div
-      className={`grid content-between bg-gradient-to-b from-blue-accent to-black-blue relative`}
+      className={`grid content-between bg-gradient-angel md:bg-gradient-angel-md relative`}
     >
       <TerraProvider
         defaultNetwork={mainnet}
