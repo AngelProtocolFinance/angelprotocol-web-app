@@ -41,7 +41,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
     <div className="flex flex-col pb-24">
       <DappHead />
       <div className="padded-container">
-        <div className="grid grid-rows-fund grid-cols-1a mx-auto gap-4">
+        <div className="grid lg:grid-rows-fund lg:grid-cols-1a gap-4">
           <Banner
             bg={sdg.bg}
             icon={sdg.icon}
@@ -49,9 +49,10 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
             fund_id={fund_id}
           />
           <FundVid url={sdg.youtube} />
-          <Overview fund_id={fund_id} />
-
-          <div className="flex flex-col">
+          <div className="order-4 lg:order-3">
+            <Overview fund_id={fund_id} />
+          </div>
+          <div className="flex flex-col order-3 lg:order-4">
             <Action
               title="Donate"
               classes="bg-yellow-blue w-52 h-12"

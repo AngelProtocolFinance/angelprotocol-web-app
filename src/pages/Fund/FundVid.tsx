@@ -1,7 +1,7 @@
 export default function FundVid(props: { url: string }) {
   return (
     <iframe
-      className="rounded-lg shadow-md h-full w-128 hidden lg:block"
+      className="rounded-lg shadow-md h-full w-128 hidden lg:block order-2"
       src={props.url.replace("watch?v=", "embed/")}
       title="YouTube video player"
       frameBorder="0"
