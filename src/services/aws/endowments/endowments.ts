@@ -49,13 +49,23 @@ const endowments_api = aws.injectEndpoints({
         return res.Items;
       },
     }),
-    profiles: builder.query<Profile[], undefined>({
+    profiles: builder.query<Profile[], boolean>({
       //TODO:refactor this query pattern - how?
-      query: () => `endowments/profiles`,
+      query: (isTest) => `endowments/profiles${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Profile[]>) => {
         return res.Items;
       },
+    }),
+    updateProfile: builder.mutation<any, { body: Profile; isTest: boolean }>({
+      query: (data) => {
+        return {
+          url: `endowments/profiles${data.isTest ? "/testnet" : ""}`,
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      transformResponse: (response: { data: any }) => response,
     }),
   }),
 });
@@ -64,4 +74,5 @@ export const {
   useAccountsQuery,
   useEndowmentsQuery,
   useProfilesQuery,
+  useUpdateProfileMutation,
 } = endowments_api;

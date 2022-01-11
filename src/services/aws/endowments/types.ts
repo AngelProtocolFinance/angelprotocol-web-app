@@ -16,8 +16,11 @@ export interface Details {
   iconLight?: boolean;
   tier: number;
 }
+
+export type ProfileUpdateProps = { profile: Profile };
 export interface Profile {
   charity_image: string; //url of image
+  charity_owner: string; // charity owner wallet address
   charity_registration_number: string; //"CN201225725"
   annual_revenue: string; //"Under $100k"
   country_city_origin: string; //"Philippines, Zamboanga City"

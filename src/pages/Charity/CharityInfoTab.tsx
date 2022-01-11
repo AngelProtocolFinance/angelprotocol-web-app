@@ -116,8 +116,9 @@ function CharityEndowmentInfo() {
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
         </div> */}
-        {accountDetails.map((account) => (
+        {accountDetails.map((account, i) => (
           <AccountInfo
+            key={i}
             account={account}
             className={`${account.color}`}
           ></AccountInfo>

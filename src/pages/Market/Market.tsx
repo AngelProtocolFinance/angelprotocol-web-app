@@ -2,9 +2,13 @@ import { useMemo } from "react";
 import DappHead from "components/Headers/DappHead";
 import Index from "./Index";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
+import { chainIDs } from "contracts/types";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 
 export default function Market() {
-  const { data: profiles = [] } = useProfilesQuery(undefined);
+  const wallet = useConnectedWallet();
+  const is_test = wallet?.network.chainID === chainIDs.testnet;
+  const { data: profiles = [] } = useProfilesQuery(is_test);
   const sdg_ids = useMemo(
     () =>
       Array.from(
