@@ -38,36 +38,38 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const toggleShare = () => setSharing((prev) => !prev);
 
   return (
-    <section className="flex flex-col pb-24">
+    <div className="flex flex-col pb-24">
       <DappHead />
-      <div className="grid grid-rows-fund grid-cols-1a container mx-auto gap-4">
-        <Banner
-          bg={sdg.bg}
-          icon={sdg.icon}
-          title={sdg.title}
-          fund_id={fund_id}
-        />
-        <FundVid url={sdg.youtube} />
-        <Overview fund_id={fund_id} />
-
-        <div className="flex flex-col">
-          <Action
-            title="Donate"
-            classes="bg-yellow-blue w-52 h-12"
-            onClick={showDonationForm}
+      <div className="padded-container">
+        <div className="grid grid-rows-fund grid-cols-1a mx-auto gap-4">
+          <Banner
+            bg={sdg.bg}
+            icon={sdg.icon}
+            title={sdg.title}
+            fund_id={fund_id}
           />
-          <div className="flex gap-5">
+          <FundVid url={sdg.youtube} />
+          <Overview fund_id={fund_id} />
+
+          <div className="flex flex-col">
             <Action
-              title="Share"
-              classes="bg-angel-blue w-52 h-12"
-              onClick={toggleShare}
+              title="Donate"
+              classes="bg-yellow-blue w-52 h-12"
+              onClick={showDonationForm}
             />
-            <ShareSection isOpen={isSharing} />
+            <div className="flex gap-5">
+              <Action
+                title="Share"
+                classes="bg-angel-blue w-52 h-12"
+                onClick={toggleShare}
+              />
+              <ShareSection isOpen={isSharing} />
+            </div>
           </div>
         </div>
+        <CharitiesList profiles={profiles} />
       </div>
-      <CharitiesList profiles={profiles} />
-    </section>
+    </div>
   );
 }
 

@@ -8,7 +8,7 @@ type Props = {
 
 export function CharitiesList({ profiles }: Props) {
   return (
-    <div className="mt-8 container mx-auto text-white-grey">
+    <div className="mt-8 text-white-grey">
       <p className="uppercase text-2xl font-heading font-semibold mb-4">
         Charities in this index
       </p>
