@@ -9,7 +9,7 @@ import Login from "pages/Login/Login";
 // import Register from "pages/registration/index";
 import TCA from "pages/TCA/TCA";
 import { app, site } from "../types/routes";
-// import Charity from "pages/Charity/Charity";
+import Charity from "pages/Charity/Charity";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Withdraw from "pages/Withdraw/Withdraw";
 // import Market from "pages/Market/Market";
@@ -25,7 +25,7 @@ export default function Views() {
     <Switch>
       <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
       <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-      {/*<Route path={`${path}/${app.charity}/:address`} component={Charity} />*/}
+      <Route path={`${path}/${app.charity}/:address`} component={Charity} />
       <Route path={`${path}/${app.login}`} component={Login} />
       {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
       <Route path={`${path}/${app.tca}`} component={TCA} />
