@@ -13,7 +13,7 @@
 @layer utilities {
   @variants responsive {
     .bg-gradient-angel {
-      @apply bg-gradient-to-b from-blue-accent via-black-blue to-black;
+      @apply bg-gradient-to-b from-blue-accent via-black-blue to-gray-800;
     }
 
     .bg-gradient-angel-md {
