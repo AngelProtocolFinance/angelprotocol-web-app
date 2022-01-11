@@ -1,4 +1,3 @@
-import Action from "components/ActionButton/Action";
 import Donater from "components/Donater/Donater";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
@@ -8,10 +7,10 @@ import useProfiles from "pages/Market/useProfiles";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Banner } from "./Banner";
+import ButtonSection from "./ButtonSection";
 import { CharitiesList } from "./CharitiesList";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
-import ShareSection from "./ShareSection";
 
 type FundProps = { fund_id: number };
 
@@ -24,7 +23,7 @@ function FundForm(props: FundProps) {
 }
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const [isSharing, setSharing] = useState(false);
+  const [showShare, setShowShare] = useState(false);
   const { showModal } = useSetModal();
 
   const id_param = props.match.params?.id;
@@ -35,7 +34,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const sdg = unsdgs[fund_id];
 
   const showDonationForm = () => showModal(FundForm, { fund_id });
-  const toggleShare = () => setSharing((prev) => !prev);
+  const toggleShare = () => setShowShare((prev) => !prev);
 
   return (
     <div className="flex flex-col pb-24">
@@ -52,21 +51,11 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <div className="order-4 lg:order-3">
             <Overview fund_id={fund_id} />
           </div>
-          <div className="flex justify-center lg:justify-start gap-4 lg:gap-0 lg:flex-col order-3 lg:order-4">
-            <Action
-              title="Donate"
-              classes="bg-orange w-2/5 lg:w-1/2 h-12"
-              onClick={showDonationForm}
-            />
-            <div className="flex gap-5">
-              <Action
-                title="Share"
-                classes="bg-angel-blue w-2/5 lg:w-1/2 h-12"
-                onClick={toggleShare}
-              />
-              <ShareSection isOpen={isSharing} />
-            </div>
-          </div>
+          <ButtonSection
+            showShare={showShare}
+            onDonate={showDonationForm}
+            onShare={toggleShare}
+          />
         </div>
         <CharitiesList profiles={profiles} />
       </div>
