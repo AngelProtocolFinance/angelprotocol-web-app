@@ -8,6 +8,7 @@ import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { Banner } from "./Banner";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
 import ShareSection from "./ShareSection";
@@ -40,15 +41,12 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
     <section className="grid content-start pb-24">
       <DappHead />
       <div className="grid grid-rows-fund grid-cols-1a container mx-auto gap-4">
-        <div
-          className={`col-start-1 col-span-1 ${sdg.bg} self-stretch grid grid-cols-a1 items-center rounded-xl shadow-md`}
-        >
-          <img src={sdg.icon} alt="" className="h-44 m-9" />
-          <h1 className="text-5xl text-white uppercase font-bold ">
-            <div className="mb-2">{`UNSDG#${fund_id}`}</div>
-            <div>{sdg.title}</div>
-          </h1>
-        </div>
+        <Banner
+          bg={sdg.bg}
+          icon={sdg.icon}
+          title={sdg.title}
+          fund_id={fund_id}
+        />
         <FundVid url={sdg.youtube} />
         <Overview fund_id={fund_id} />
 
