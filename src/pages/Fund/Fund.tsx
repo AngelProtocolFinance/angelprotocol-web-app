@@ -37,7 +37,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const toggleShare = () => setShowShare((prev) => !prev);
 
   return (
-    <div className="flex flex-col pb-24">
+    <div className="flex flex-col pb-12 lg:pb-24">
       <DappHead />
       <div className="padded-container w-screen">
         <div className="grid lg:grid-rows-fund lg:grid-cols-1a gap-4">
