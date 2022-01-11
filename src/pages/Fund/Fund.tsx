@@ -4,11 +4,11 @@ import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { unsdgs } from "pages/Fund/unsdgs";
-import CharityCard from "pages/Market/CharityCard";
 import useProfiles from "pages/Market/useProfiles";
 import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { Banner } from "./Banner";
+import { CharitiesList } from "./CharitiesList";
 import FundVid from "./FundVid";
 import Overview from "./Overview";
 import ShareSection from "./ShareSection";
@@ -66,18 +66,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           </div>
         </div>
       </div>
-      <div className="mt-8 container mx-auto text-white-grey">
-        <p className="uppercase text-2xl font-heading font-semibold mb-4">
-          Charities in this index
-        </p>
-        <ul className="flex flex-wrap gap-4">
-          {profiles.map((profile) => (
-            <div className="max-h-116 overflow-hidden">
-              <CharityCard address={profile.endowment_address} />
-            </div>
-          ))}
-        </ul>
-      </div>
+      <CharitiesList profiles={profiles} />
     </section>
   );
 }
