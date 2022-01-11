@@ -52,16 +52,16 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           <div className="order-4 lg:order-3">
             <Overview fund_id={fund_id} />
           </div>
-          <div className="flex flex-col order-3 lg:order-4">
+          <div className="flex justify-center lg:justify-start gap-4 lg:gap-0 lg:flex-col order-3 lg:order-4">
             <Action
               title="Donate"
-              classes="bg-orange w-52 h-12"
+              classes="bg-orange w-2/5 lg:w-1/2 h-12"
               onClick={showDonationForm}
             />
             <div className="flex gap-5">
               <Action
                 title="Share"
-                classes="bg-angel-blue w-52 h-12"
+                classes="bg-angel-blue w-2/5 lg:w-1/2 h-12"
                 onClick={toggleShare}
               />
               <ShareSection isOpen={isSharing} />
