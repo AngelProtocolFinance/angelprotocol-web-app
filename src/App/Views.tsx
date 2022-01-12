@@ -16,8 +16,10 @@ import Withdraw from "pages/Withdraw/Withdraw";
 import Governance from "pages/Governance/Governance";
 import Auction from "pages/LBP/Auction";
 import Fund from "pages/Fund/Fund";
+import useWalletSuite from "components/WalletSuite/useWalletSuite";
 
 export default function Views() {
+  useWalletSuite();
   const { path } = useRouteMatch();
   const location = useLocation();
 
