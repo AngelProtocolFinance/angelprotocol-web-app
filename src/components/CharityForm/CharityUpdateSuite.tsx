@@ -36,7 +36,7 @@ export default function CharityUpdateSuite(props: CharityEditProps) {
   return (
     <FormProvider {...methods}>
       <div
-        className={`max-w-md w-full max-h-75vh relative overflow-hidden overflow-y-scroll ${
+        className={`max-w-md w-full max-h-75vh relative overflow-hidden overflow-y-scroll scroll-hidden ${
           props.inModal ? "bg-white rounded-md pt-4" : ""
         }`}
       >

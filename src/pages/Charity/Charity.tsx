@@ -7,24 +7,25 @@ import { DonationInfo } from "./DonationInfo";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
-import useProfile from "pages/Market/useProfile";
 import { RiPencilFill } from "react-icons/ri";
 import CharityProfileEditForm from "./CharityProfileEditForm";
 import { Profile } from "services/aws/endowments/types";
 import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { ToastContainer } from "react-toastify";
+import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import { useProfileQuery } from "services/aws/endowments/endowments";
 
 export type CharityParam = { address: string };
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
-  const profile = useProfile(endowment_addr);
+  const { data: profile = profile_placeholder } =
+    useProfileQuery(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const wallet = useConnectedWallet();
 
-  // console.log("profile: ", endowment_addr, profile);
   const showDonationForm = () => {
     //the button firing this function is disabled when
     //param address is wrong
@@ -43,7 +44,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
       <DappHead />
-      <div className="flex flex-col-reverse 2xl:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
+      <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
         <DonationInfo openModal={showDonationForm} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <div className="relative group">

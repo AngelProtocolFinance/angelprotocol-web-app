@@ -44,15 +44,17 @@ const endowments_api = aws.injectEndpoints({
       },
     }),
     endowments: builder.query<Endowment[], boolean>({
-      //TODO:refactor this query pattern - how?
       query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
-      //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Endowment[]>) => {
         return res.Items;
       },
     }),
+
+    profile: builder.query<Profile, string>({
+      query: (charity_address) => `endowments/profiles/${charity_address}`,
+    }),
+
     profiles: builder.query<Profile[], boolean>({
-      //TODO:refactor this query pattern - how?
       query: (isTest) => `endowments/profiles${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Profile[]>) => {
@@ -82,6 +84,7 @@ export const {
   useLookupQuery,
   useAccountsQuery,
   useEndowmentsQuery,
+  useProfileQuery,
   useProfilesQuery,
   useUpdateProfileMutation,
 } = endowments_api;
