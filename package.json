@@ -90,6 +90,7 @@
     ]
   },
   "devDependencies": {
+    "@peculiar/webcrypto": "^1.2.3",
     "@types/jest": "^26.0.15",
     "@types/jsonwebtoken": "^8.5.5",
     "@types/node": "^16.11.12",
