@@ -19,11 +19,7 @@ export default function Nodal(props: Props) {
         hideModal: closeModal,
       }}
     >
-      {!!Content && (
-        <>
-          <div className={props.classes}>{Content}</div>
-        </>
-      )}
+      {!!Content && <div className={props.classes}>{Content}</div>}
 
       {props.children}
     </setContext.Provider>
