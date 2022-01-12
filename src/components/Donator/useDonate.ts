@@ -127,7 +127,7 @@ function useDonate(
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
-              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
             },
           });
         } else {
