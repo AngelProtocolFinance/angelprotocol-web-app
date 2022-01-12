@@ -10,6 +10,7 @@ import Account from "contracts/Account";
 import { denoms } from "constants/currency";
 import { useLogDonationTransactionMutation } from "services/apes/donations";
 import createAuthToken from "helpers/createAuthToken";
+import { UserTypes } from "services/user/types";
 //prettier-ignore
 function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
   const wallet = useConnectedWallet();
@@ -109,7 +110,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           valuesToBeSubmitted["transactionDate"] = new Date().toISOString();
           Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
           // Auth token to be passed as part of the header of the request
-          const authToken = createAuthToken("angelprotocol-web-app");
+          const authToken = createAuthToken(UserTypes.WEB_APP);
           // Call APES endpoint
           const postData = {
             token: authToken,
