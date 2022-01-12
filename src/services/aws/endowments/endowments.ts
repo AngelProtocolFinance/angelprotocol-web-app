@@ -1,4 +1,5 @@
 import createAuthToken from "helpers/createAuthToken";
+import { cha, tags } from "services/terra/tags";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
@@ -51,6 +52,7 @@ const endowments_api = aws.injectEndpoints({
     }),
 
     profile: builder.query<Profile, string>({
+      providesTags: [{ type: tags.cha, id: cha.profile }],
       query: (charity_address) => `endowments/profiles/${charity_address}`,
     }),
 
@@ -77,6 +79,7 @@ const endowments_api = aws.injectEndpoints({
         };
       },
       transformResponse: (response: { data: any }) => response,
+      invalidatesTags: [{ type: tags.cha, id: cha.profile }],
     }),
   }),
 });
