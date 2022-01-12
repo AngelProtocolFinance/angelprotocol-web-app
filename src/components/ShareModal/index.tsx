@@ -11,12 +11,12 @@ type Props = {
   onClose: () => void;
 };
 
-type IconProps = {
+type IconLinkProps = {
   link: string;
   icon: React.ComponentType<any>;
 };
 
-const IconLink = ({ link, icon: Icon }: IconProps) => {
+const IconLink = ({ link, icon: Icon }: IconLinkProps) => {
   return (
     <a
       href={link}
