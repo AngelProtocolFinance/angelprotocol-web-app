@@ -57,7 +57,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         Update Profile
       </h1>
       <div className="grid">
-        <FormLabel title="Email" htmlFor="charity_email"></FormLabel>
+        <FormLabel title="Email" htmlFor="charity_email" />
         <input
           {...register("charity_email")}
           autoComplete="off"
@@ -68,7 +68,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Name" htmlFor="charity_name"></FormLabel>
+        <FormLabel title="Name" htmlFor="charity_name" />
         <input
           {...register("charity_name")}
           autoComplete="off"
@@ -79,7 +79,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Overview" htmlFor="charity_overview"></FormLabel>
+        <FormLabel title="Overview" htmlFor="charity_overview" />
         <textarea
           {...register("charity_overview")}
           autoComplete="off"
@@ -89,7 +89,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Country" htmlFor="country_city_origin"></FormLabel>
+        <FormLabel title="Country" htmlFor="country_city_origin" />
         <input
           {...register("country_city_origin")}
           autoComplete="off"
@@ -100,10 +100,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel
-          title="No of Employees"
-          htmlFor="number_of_employees"
-        ></FormLabel>
+        <FormLabel title="No of Employees" htmlFor="number_of_employees" />
         <input
           {...register("number_of_employees")}
           autoComplete="off"
@@ -114,7 +111,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Facebook" htmlFor="facebook_page"></FormLabel>
+        <FormLabel title="Facebook" htmlFor="facebook_page" />
         <input
           {...register("facebook_page")}
           autoComplete="off"
@@ -125,7 +122,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Linkedin" htmlFor="linkedin_page"></FormLabel>
+        <FormLabel title="Linkedin" htmlFor="linkedin_page" />
         <input
           {...register("linkedin_page")}
           autoComplete="off"
@@ -136,7 +133,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         />
       </div>
       <div className="grid">
-        <FormLabel title="Twitter" htmlFor="twitter_handle"></FormLabel>
+        <FormLabel title="Twitter" htmlFor="twitter_handle" />
         <input
           {...register("twitter_handle")}
           autoComplete="off"
