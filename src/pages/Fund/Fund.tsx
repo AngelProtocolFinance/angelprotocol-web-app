@@ -1,6 +1,7 @@
 import Donater from "components/Donater/Donater";
 import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
+import ShareModal from "components/ShareModal";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { unsdgs } from "pages/Fund/unsdgs";
 import useProfiles from "pages/Market/useProfiles";
@@ -23,8 +24,7 @@ function FundForm(props: FundProps) {
 }
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const [showShare, setShowShare] = useState(false);
-  const { showModal } = useSetModal();
+  const { showModal, hideModal } = useSetModal();
 
   const id_param = props.match.params?.id;
   const fund_id =
@@ -33,8 +33,8 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const profiles = useProfiles(fund_id);
   const sdg = unsdgs[fund_id];
 
-  const showDonationForm = () => showModal(FundForm, { fund_id });
-  const toggleShare = () => setShowShare((prev) => !prev);
+  const openDonationForm = () => showModal(FundForm, { fund_id });
+  const openShareModal = () => showModal(ShareModal, { onClose: hideModal });
 
   return (
     <div className="flex flex-col pb-12 lg:pb-24">
@@ -51,9 +51,8 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           />
           <FundVid url={sdg.youtube} className="hidden lg:block order-2" />
           <ButtonSection
-            showShare={showShare}
-            onDonate={showDonationForm}
-            onShare={toggleShare}
+            onDonate={openDonationForm}
+            onShare={openShareModal}
             className="order-3 lg:order-4"
           />
           <Overview fund_id={fund_id} className="order-4 lg:order-3" />
