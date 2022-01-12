@@ -54,7 +54,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
       autoComplete="off"
     >
       <h1 className="font-heading text-lg font-semibold text-grey-600">
-        Endowment Profile
+        Update Profile
       </h1>
       <div className="grid">
         <FormLabel title="Email" htmlFor="charity_email"></FormLabel>
@@ -64,7 +64,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="charity_email"
           type="text"
           placeholder="Email"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -75,7 +75,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="charity_name"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -85,7 +85,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           autoComplete="off"
           id="charity_overview"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -96,7 +96,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="country_city_origin"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -110,7 +110,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="number_of_employees"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -121,7 +121,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="facebook_page"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -132,7 +132,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="linkedin_page"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="grid">
@@ -143,7 +143,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           id="twitter_handle"
           type="text"
           placeholder="Name"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
       <div className="w-full">
