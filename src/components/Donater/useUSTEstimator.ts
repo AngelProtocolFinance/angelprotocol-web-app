@@ -76,12 +76,6 @@ export default function useUSTEstimator() {
         let tx: CreateTxOptions;
         if (typeof receiver === "undefined" || typeof receiver === "number") {
           const index_fund = new Indexfund(wallet, receiver);
-          const tcaMembers = await index_fund.getTCAList();
-          const isTca = tcaMembers.includes(wallet!.walletAddress);
-          if (!isTca) {
-            dispatch(setFormError("Wallet not included in TCA list"));
-            return;
-          }
           tx = await index_fund.createDepositTx(
             debounced_amount,
             debounced_split

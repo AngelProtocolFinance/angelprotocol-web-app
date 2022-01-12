@@ -37,9 +37,6 @@ export type ContractAddrs = {
 };
 
 //Index Fund types
-export interface TCAList {
-  tca_members: string[];
-}
 export type Donation = { address: string; total_ust: string };
 export interface Donors {
   donors: Donation[];
