@@ -4,7 +4,7 @@ import toCurrency from "helpers/toCurrency";
 type Props = { liquidBalance?: number; isOwner: boolean; opener: () => void };
 export default function Liquid(props: Props) {
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md">
+    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>Current Account</span>
         <FaCog

@@ -21,7 +21,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 1. `git clone git@github.com:AngelProtocolFinance/angelprotocol-web-app.git`
 2. `cd angelprotocol-web-app`
 3. `./bin/setup`
-4. Create a file, `.env.local` on your project's root directory.
+4. Create a file, `.envl` on your project's root directory.
     * This is where you will store all of your app's LCD/RPC endpoint URLs for testnet/mainnet.
     * Please contact one of the Angel Protocol Engineering Team members for the complete list of nodes.
 

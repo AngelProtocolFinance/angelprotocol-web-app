@@ -1,4 +1,4 @@
-import { useGetStatus } from "./Withdraw";
+import { useGetStatus } from "./Endowment_Admin";
 import toCurrency from "helpers/toCurrency";
 import { ResultProps } from "./types";
 

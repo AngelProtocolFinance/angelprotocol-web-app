@@ -11,53 +11,52 @@ import {
 import Contract from "./Contract";
 import { sc } from "./types";
 
-export default class LBP extends Contract {
+export default class LP extends Contract {
   factory_address: string;
   pair_address: string;
   router_adddress: string;
   lp_address: string;
   halo_address: string;
 
+  simul: ContractQueryArgs;
+  pool: ContractQueryArgs;
+  pairInfo: ContractQueryArgs;
+
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.factory_address = contracts[this.chainID][sc.lbp_factory];
-    this.pair_address = contracts[this.chainID][sc.lbp_pair];
-    this.router_adddress = contracts[this.chainID][sc.lbp_router];
-    this.lp_address = contracts[this.chainID][sc.lbp_lp];
+    this.factory_address = contracts[this.chainID][sc.loop_factory];
+    this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
+    this.router_adddress = contracts[this.chainID][sc.loop_router];
+    this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
     this.halo_address = contracts[this.chainID][sc.halo_token];
-  }
 
-  gen_simul_args(): ContractQueryArgs {
-    return {
+    //query args
+    this.simul = {
       address: this.pair_address,
       msg: {
         simulation: {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: denoms.uusd,
               },
             },
-            amount: "0",
+            amount: "1000000",
           },
           block_time: Math.round(new Date().getTime() / 1000 + 10),
         },
       },
     };
-  }
 
-  gen_pool_args(): ContractQueryArgs {
-    return { address: this.pair_address, msg: { pool: {} } };
-  }
+    this.pool = { address: this.pair_address, msg: { pool: {} } };
 
-  gen_pairInfo_args() {
-    return {
+    this.pairInfo = {
       address: this.pair_address,
       msg: {
         pair: {
           asset_infos: [
             { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: "uusd" } },
+            { native_token: { denom: denoms.uusd } },
           ],
         },
       },
@@ -70,7 +69,7 @@ export default class LBP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: "uusd",
+            denom: denoms.uusd,
           },
         }
       : {

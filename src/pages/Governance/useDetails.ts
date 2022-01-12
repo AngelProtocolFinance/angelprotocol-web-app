@@ -6,12 +6,12 @@ import {
   useGovState,
   useGovConfig,
   useGovStaker,
-  useGovBalance,
   useLatestBlock,
-} from "services/terra/hooks";
+} from "services/terra/queriers";
 import { PollStatus } from "services/terra/types";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
+import { useGovBalanceState } from "services/terra/states";
 
 type ProcessedPollData = {
   id: number;
@@ -39,7 +39,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
   const gov_state = useGovState();
-  const gov_staked = useGovBalance();
+  const gov_staked = useGovBalanceState();
   const gov_staker = useGovStaker();
   const block_height = useLatestBlock();
 

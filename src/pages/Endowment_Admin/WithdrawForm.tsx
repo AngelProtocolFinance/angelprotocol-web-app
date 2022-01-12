@@ -11,7 +11,7 @@ import toCurrency from "helpers/toCurrency";
 import useHoldings from "./useHoldings";
 import useWithdrawHoldings from "./useWithdrawHoldings";
 import useConfirmWithdraw from "./useConfirmWithdraw";
-import { useGetStatus, useSetStatus } from "./Withdraw";
+import { useGetStatus, useSetStatus } from "./Endowment_Admin";
 import { Steps, Values, WithdrawProps } from "./types";
 
 export default function WithdrawForm(props: WithdrawProps) {
