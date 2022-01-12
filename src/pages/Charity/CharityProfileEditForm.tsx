@@ -1,4 +1,5 @@
 import Action from "components/ActionButton/Action";
+import { useSetModal } from "components/Nodal/Nodal";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -18,6 +19,7 @@ function FormLabel({ title, htmlFor }: any) {
 
 export default function CharityProfileEditForm(props: ProfileUpdateProps) {
   const { setValue, register, handleSubmit } = useFormContext<Profile>();
+  const { hideModal } = useSetModal();
   const [formLoading, setFormLoading] = useState(false);
   const { saveEndowmentProfile, readFileToBase64 } =
     useUpdateEndowmentProfile();
@@ -27,8 +29,14 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
 
   const onSubmit = async (body: any) => {
     setFormLoading(true);
-    await saveEndowmentProfile(body);
+    const updated = await saveEndowmentProfile(
+      body,
+      props.profile.endowment_address
+    );
     setFormLoading(false);
+    if (updated) {
+      hideModal();
+    }
   };
 
   const readFiles = async (files: any) => {
@@ -138,7 +146,7 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
           className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
         />
       </div>
-      <div className="w-full pl-10">
+      <div className="w-full">
         <div className="item mb-5">
           <p className="text-sm text-gray-400 font-bold mb-1 text-left">
             Charity Image{" "}

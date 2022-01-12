@@ -17,9 +17,8 @@ export interface Details {
   tier: number;
 }
 
-export type ProfileUpdateProps = { profile: Profile };
 export interface Profile {
-  charity_image: string; //url of image
+  charity_image?: string; //url of image
   charity_owner: string; // charity owner wallet address
   charity_registration_number: string; //"CN201225725"
   annual_revenue: string; //"Under $100k"
@@ -39,6 +38,9 @@ export interface Profile {
   facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
   is_placeholder?: true;
 }
+
+export type ProfileUpdateProps = { profile: Profile };
+
 export interface QueryRes<T> {
   Count: number;
   ScannedCount: number;

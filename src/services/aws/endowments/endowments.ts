@@ -1,3 +1,5 @@
+import createAuthToken from "helpers/createAuthToken";
+import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
 
@@ -57,12 +59,19 @@ const endowments_api = aws.injectEndpoints({
         return res.Items;
       },
     }),
-    updateProfile: builder.mutation<any, { body: Profile; isTest: boolean }>({
+    updateProfile: builder.mutation<
+      any,
+      { body: Partial<Profile>; endowment_address: string }
+    >({
       query: (data) => {
+        const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
         return {
-          url: `endowments/profiles${data.isTest ? "/testnet" : ""}`,
+          url: `endowments/profiles/${data.endowment_address}`,
           method: "PUT",
           body: data.body,
+          headers: {
+            authorization: generatedToken,
+          },
         };
       },
       transformResponse: (response: { data: any }) => response,

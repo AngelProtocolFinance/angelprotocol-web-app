@@ -29,7 +29,6 @@ export default function CharityUpdateSuite(props: CharityEditProps) {
       number_of_employees: props.profile.number_of_employees,
       twitter_handle: props.profile.twitter_handle,
       charity_owner: props.profile.charity_owner,
-      endowment_address: props.profile.endowment_address,
       charity_image: "",
     },
   });

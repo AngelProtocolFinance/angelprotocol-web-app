@@ -13,6 +13,7 @@ import CharityProfileEditForm from "./CharityProfileEditForm";
 import { Profile } from "services/aws/endowments/types";
 import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { ToastContainer } from "react-toastify";
 
 export type CharityParam = { address: string };
 
@@ -23,7 +24,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   const { showModal } = useSetModal();
   const wallet = useConnectedWallet();
 
-  // console.log("profile: ", wallet?.walletAddress, profile);
+  // console.log("profile: ", endowment_addr, profile);
   const showDonationForm = () => {
     //the button firing this function is disabled when
     //param address is wrong
@@ -75,6 +76,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
           {/* Information tabs  */}
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

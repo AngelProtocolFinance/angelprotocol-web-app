@@ -1,13 +1,9 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
 import { toast } from "react-toastify";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { Profile } from "services/aws/endowments/types";
 
 export default function useUpdateEndowmentProfile() {
   const [updateProfile] = useUpdateProfileMutation();
-  const wallet = useConnectedWallet();
-  const isTest = wallet?.network.chainID === chainIDs.testnet;
 
   const readFileToBase64 = (file: File) =>
     new Promise((resolve, reject) => {
@@ -20,19 +16,22 @@ export default function useUpdateEndowmentProfile() {
       reader.onerror = (error) => reject(error);
     });
 
-  const saveEndowmentProfile = async (metaData: Profile) => {
+  const saveEndowmentProfile = async (
+    metaData: Partial<Profile>,
+    endowment_address: string
+  ) => {
     const body = {
       ...metaData,
-    } as Profile;
+    } as Partial<Profile>;
 
-    console.log("body ", body);
+    delete body.endowment_address;
+    if (!body.charity_image) delete body.charity_image;
     let result: any;
+
     try {
-      const response: any = await updateProfile({ body, isTest });
+      const response: any = await updateProfile({ body, endowment_address });
       result = response.data ? response : response.error;
-      console.log("result: ", result);
     } catch (e) {
-      console.log("EE: ", e);
       toast.error("Saving data was failed. Please try again.");
     }
 
@@ -49,7 +48,7 @@ export default function useUpdateEndowmentProfile() {
       ) {
         toast.error(result.data.message);
       } else {
-        toast.success("Your profile data was saved successfully.");
+        toast.success("Endowment profile updated ✅");
         return true;
       }
     }
