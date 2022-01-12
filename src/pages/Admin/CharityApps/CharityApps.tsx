@@ -1,28 +1,29 @@
+import Loader from "components/Loader/Loader";
+import { useGetAuthorized } from "contexts/AuthProvider";
 import { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import { Redirect } from "react-router-dom";
 import { useGetCharityListEndowmentQuery } from "services/aws/charity";
 import { admin, site } from "types/routes";
+import AdminSideNav from "../AdminSideNav";
 import CharityTable from "./CharityTable";
-import Loader from "components/Loader/Loader";
-import withSideNav from "Admin/withSideNav";
-import { useGetter } from "store/accessors";
 
-function CharityApps() {
+export default function CharityApps() {
   const [isShowApproved, setIsShowApproved] = useState(false);
   const [charityList, setCharityList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
+  const auth = useGetAuthorized();
   const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list
   useEffect(() => {
     setCharityList(data);
-    setTableData(data);
+    setTableData(
+      data?.filter((item: any) => item.EndowmentStatus !== "Active")
+    );
     setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const searchCharity = (event: any) => {
@@ -37,29 +38,30 @@ function CharityApps() {
   };
 
   const showApproved = () => {
+    setIsShowApproved(!isShowApproved);
     setTableData(
       data?.filter(
-        (item: any) => item.EndowmentStatus === "Active" || isShowApproved
+        (item: any) => item.EndowmentStatus !== "Active" || isShowApproved
       )
     );
-    setIsShowApproved(!isShowApproved);
   };
 
   const handleActivateCharity = () => {};
 
   const handleDeleteCharity = () => {};
   //user can't access TCA page when not logged in or his prev token expired
-  if (adminAuthStatus !== "authorized") {
+  if (!auth.isAuthorized) {
     return <Redirect to={`${site.admin}/${admin.authentication}`} />;
   }
 
   return (
-    <>
+    <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10 rounded-xl">
+      <AdminSideNav />
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
-        <h2 className="text-2xl font-semibold capitalize text-center text-white">
+        <h2 className="text-2xl font-semibold capitalize text-center">
           Charity Application Management
         </h2>
-        <div className="flex justify-between w-full mt-10">
+        <div className="flex justify-between w-full mt-3">
           <div className="search px-3 py-2 flex items-center bg-white rounded-md border-gray-200 w-80">
             <FiSearch
               className={`text-gray-600 text-xl mr-2 hover:text-orange`}
@@ -97,8 +99,6 @@ function CharityApps() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
-
-export default withSideNav(CharityApps);

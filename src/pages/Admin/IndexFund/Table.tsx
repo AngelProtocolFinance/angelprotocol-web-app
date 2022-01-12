@@ -1,4 +1,3 @@
-import Action from "components/ActionButton/Action";
 import { TableHeader, TableChip } from "components/Table";
 
 const headerNames = ["ID", "Name", "Description", "Members"];
@@ -9,7 +8,12 @@ const FundRow = ({ onUpdateClick, fund }: any) => {
       <TableChip data={fund.name} />
       <TableChip data={fund.description} />
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left text-center">
-        <Action title="Edit" classes="action-button" onClick={onUpdateClick} />
+        <button
+          onClick={onUpdateClick}
+          className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
+        >
+          Edit
+        </button>
       </td>
     </tr>
   );

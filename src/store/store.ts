@@ -4,7 +4,6 @@ import { terra } from "services/terra/terra";
 import userReducer from "../services/user/userSlice";
 import chainReducer from "../services/chain/chainSlice";
 import walletReducer from "../services/wallet/walletSlice";
-import authReducer from "../services/auth/authSlice";
 import transactionReducer from "../services/transaction/transactionSlice";
 
 export const store = configureStore({
@@ -13,9 +12,9 @@ export const store = configureStore({
     wallet: walletReducer,
     transaction: transactionReducer,
     chain: chainReducer,
-    auth: authReducer,
     [aws.reducerPath]: aws.reducer,
     [terra.reducerPath]: terra.reducer,
+    //auth: authReducer,
     //future: futureReducer,
   },
   middleware: (getDefaultMiddleware) =>
