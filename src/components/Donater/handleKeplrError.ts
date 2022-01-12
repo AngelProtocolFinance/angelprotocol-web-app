@@ -14,7 +14,7 @@ export default function handleKeplrError(
     const url =
       denom === denoms.uatom
         ? `https://www.mintscan.io/cosmos/txs/${error.txId}`
-        : `https://finder.terra.money/${chainIDs.mainnet}/tx/${error.txId}`;
+        : `https://finder.extraterrestrial.money/${chainIDs.mainnet}/tx/${error.txId}`;
 
     handler("Transaction timed out", url);
   } else {

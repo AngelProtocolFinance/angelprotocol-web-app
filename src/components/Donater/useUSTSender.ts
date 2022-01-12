@@ -55,7 +55,7 @@ function useUSTSender() {
             step: Step.broadcast,
             content: {
               message: "Transaction submitted, waiting for transaction result",
-              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
             },
           })
         );
@@ -70,7 +70,7 @@ function useUSTSender() {
               step: Step.success,
               content: {
                 message: "Thank you for your donation!",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
@@ -80,7 +80,7 @@ function useUSTSender() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
@@ -149,7 +149,7 @@ function useUSTSender() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
+                url: `https://finder.extraterrestrial.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
               },
             })
           );
@@ -163,7 +163,7 @@ function useUSTSender() {
           step: Step.success,
           content: {
             message: "Thank you for your donation!",
-            url: `https://finder.terra.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
+            url: `https://finder.extraterrestrial.money/${chainIDs.mainnet}/tx/${res.transactionHash}`,
           },
         })
       );

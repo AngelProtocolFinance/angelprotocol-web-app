@@ -36,7 +36,7 @@ export default function usePollAction(poll_id?: string) {
       if (response.success) {
         showModal<WaitProps>(Waiter, {
           desc: "Waiting for transaction result",
-          url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+          url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
         });
 
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
@@ -45,7 +45,7 @@ export default function usePollAction(poll_id?: string) {
         if (!txInfo.code) {
           showModal<ResultProps>(Result, {
             desc: "Poll sucessfully ended",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
           });
 
           dispatch(
@@ -58,7 +58,7 @@ export default function usePollAction(poll_id?: string) {
         } else {
           showModal<ErrProps>(ErrPop, {
             desc: "Transaction failed",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
           });
         }
       }

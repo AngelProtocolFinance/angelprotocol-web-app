@@ -129,17 +129,17 @@ export default function AuctionDetails() {
           <AuctionLink
             content="HALO Token on ET Finder"
             PreIcon={"/favicon.png"}
-            url="https://finder.terra.money/mainnet/address/terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"
           />
           <AuctionLink
             content="HaloSwap Owner on ET Finder"
             PreIcon={"/favicon.png"}
-            url="https://finder.terra.money/mainnet/address/terra1numzqm5mgr56ftd4y8mfen7705nfs4vpz5jf0s"
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1numzqm5mgr56ftd4y8mfen7705nfs4vpz5jf0s"
           />
           <AuctionLink
             content="HaloSwap Pair  on ET Finder"
             PreIcon={"/favicon.png"}
-            url="https://finder.terra.money/mainnet/address/terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e"
+            url="https://finder.extraterrestrial.money/mainnet/address/terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e"
           />
           <AuctionLink
             content="HaloSwap Documentation"
