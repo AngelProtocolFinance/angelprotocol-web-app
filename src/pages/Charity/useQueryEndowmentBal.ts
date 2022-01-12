@@ -50,6 +50,7 @@ function useQueryEndowmentBal(
     } catch (err) {
       console.error(err);
     }
+    //eslint-disable-next-line
   }, [address, placeholder]);
 
   return {
