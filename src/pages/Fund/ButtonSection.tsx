@@ -1,6 +1,4 @@
 import Action from "components/ActionButton/Action";
-import React from "react";
-import ShareSection from "./ShareSection";
 
 type Props = {
   className: string;

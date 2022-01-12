@@ -5,7 +5,6 @@ import ShareModal from "components/ShareModal";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { unsdgs } from "pages/Fund/unsdgs";
 import useProfiles from "pages/Market/useProfiles";
-import React, { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import Banner from "./Banner";
 import ButtonSection from "./ButtonSection";
