@@ -1,8 +1,31 @@
 import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { MdOutlineClose } from "react-icons/md";
+import {
+  encodedText,
+  FACEBOOK_SHARE_URL,
+  LINKEDIN_SHARE_URL,
+  TWITTER_SHARE_URL,
+} from "./shareUrls";
 
 type Props = {
   onClose: () => void;
+};
+
+type IconProps = {
+  link: string;
+  icon: React.ComponentType<any>;
+};
+
+const IconLink = ({ link, icon: Icon }: IconProps) => {
+  return (
+    <a
+      href={link}
+      target="_blank"
+      className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1 text-3xl text-thin-blue"
+    >
+      <Icon />
+    </a>
+  );
 };
 
 export default function ShareModal({ onClose }: Props) {
@@ -21,22 +44,13 @@ export default function ShareModal({ onClose }: Props) {
         </div>
         <div className="rounded-xl bg-white-grey p-3 w-2/3 flex justify-center mx-auto">
           <span className="text-gray-400 text-sm">
-            I just donated on @AngelProtocol! Every gift is invested to provide
-            sustainable funding for non-profits: Give once, give forever. Please
-            join me in providing charities with financial freedom:
-            https://app.angelprotocol.io
+            {decodeURIComponent(encodedText)}
           </span>
         </div>
-        <div className="flex justify-center my-5 text-3xl text-thin-blue">
-          <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaTwitter />
-          </div>
-          <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaLinkedin />
-          </div>
-          <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaFacebookSquare />
-          </div>
+        <div className="flex justify-center my-5 ">
+          <IconLink link={TWITTER_SHARE_URL} icon={FaTwitter} />
+          <IconLink link={LINKEDIN_SHARE_URL} icon={FaLinkedin} />
+          <IconLink link={FACEBOOK_SHARE_URL} icon={FaFacebookSquare} />
         </div>
       </div>
     </div>
