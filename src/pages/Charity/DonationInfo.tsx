@@ -1,4 +1,4 @@
-import { unsdgs } from "pages/Fund/unsdgs";
+// import { unsdgs } from "pages/Fund/unsdgs";
 import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
@@ -38,7 +38,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
-  const sdg = unsdgs[+profile.un_sdg];
+  // const sdg = unsdgs[+profile.un_sdg];
 
   const stats = useMemo(() => {
     return [

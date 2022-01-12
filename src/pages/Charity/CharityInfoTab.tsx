@@ -116,11 +116,12 @@ function CharityEndowmentInfo() {
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
         </div> */}
-        {accountDetails.map((account) => (
+        {accountDetails.map((account, idx) => (
           <AccountInfo
             account={account}
             className={`${account.color}`}
-          ></AccountInfo>
+            key={idx}
+          />
         ))}
       </div>
       {/* <AccountAction /> turn on for admin features after V1 */}
@@ -129,6 +130,7 @@ function CharityEndowmentInfo() {
 }
 
 //TODO: remove this component declaration inside component
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function CharityPrograms() {
   function ProgramItem() {
     return (

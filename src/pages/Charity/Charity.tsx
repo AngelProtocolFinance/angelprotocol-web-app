@@ -7,13 +7,15 @@ import { DonationInfo } from "./DonationInfo";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
-import useProfile from "pages/Market/useProfile";
+import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import { useProfileQuery } from "services/aws/endowments/endowments";
 
 export type CharityParam = { address: string };
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
-  const profile = useProfile(endowment_addr);
+  const { data: profile = profile_placeholder } =
+    useProfileQuery(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
 
