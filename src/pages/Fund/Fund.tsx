@@ -41,21 +41,22 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
       <DappHead />
       <div className="padded-container w-screen">
         <div className="grid lg:grid-rows-fund lg:grid-cols-1a gap-4">
+          {/* Components have specific 'className' props so that the parent (this component)
+            can decide how the component fits into it */}
           <Banner
-            bg={sdg.bg}
             icon={sdg.icon}
             title={sdg.title}
             fund_id={fund_id}
+            className={`${sdg.bg} flex-1 order-1`}
           />
-          <FundVid url={sdg.youtube} />
-          <div className="order-4 lg:order-3">
-            <Overview fund_id={fund_id} />
-          </div>
+          <FundVid url={sdg.youtube} className="hidden lg:block order-2" />
           <ButtonSection
             showShare={showShare}
             onDonate={showDonationForm}
             onShare={toggleShare}
+            className="order-3 lg:order-4"
           />
+          <Overview fund_id={fund_id} className="order-4 lg:order-3" />
         </div>
         <CharitiesList profiles={profiles} />
       </div>

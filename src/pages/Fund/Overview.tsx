@@ -1,10 +1,15 @@
 import { unsdgs } from "pages/Fund/unsdgs";
 
-export default function Overview(props: { fund_id: number }) {
-  const sdg = unsdgs[props.fund_id];
+type Props = {
+  fund_id: number;
+  className: string;
+};
+
+export default function Overview({ fund_id, className }: Props) {
+  const sdg = unsdgs[fund_id];
 
   return (
-    <article className="col-start-1 col-span-1 row-start-2 row-span-1">
+    <article className={className}>
       <h3 className="text-2xl text-white mb-4 font-semibold">{sdg.desc}</h3>
       <p className="text-white-grey pr-4 max-h-96 overflow-y-auto">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Totam vero

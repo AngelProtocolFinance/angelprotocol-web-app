@@ -1,16 +1,16 @@
 import React from "react";
 
 type Props = {
-  bg: string;
+  className: string;
   icon: string;
   title: string;
   fund_id: number;
 };
 
-export default function Banner({ bg, icon, title, fund_id }: Props) {
+export default function Banner({ className, icon, title, fund_id }: Props) {
   return (
     <div
-      className={`${bg} flex-1 order-1 flex flex-col sm:flex-row items-center rounded-xl shadow-md`}
+      className={`${className} flex flex-col sm:flex-row items-center rounded-xl shadow-md`}
     >
       <img
         src={icon}
