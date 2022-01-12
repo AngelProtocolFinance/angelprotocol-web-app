@@ -14,7 +14,10 @@ export default function CharitiesList({ profiles }: Props) {
       </p>
       <ul className="flex flex-row gap-4 overflow-x-auto">
         {profiles.map((profile) => (
-          <CharityCard address={profile.endowment_address} />
+          <CharityCard
+            key={profile.endowment_address}
+            address={profile.endowment_address}
+          />
         ))}
       </ul>
     </div>
