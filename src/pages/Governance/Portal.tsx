@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 import { useStakingAPRQuery } from "services/aws/governance";
 import "./Portal.css";
 
-export default function Portal() {
+export default function Portal(props: { spot_price: number }) {
   const { showModal } = useSetModal();
   const history = useHistory();
   const { data } = useStakingAPRQuery(null);
@@ -24,7 +24,7 @@ export default function Portal() {
   }
 
   function showSwapper() {
-    return showModal(SwapModal, {});
+    return showModal(SwapModal, { spot_price: props.spot_price });
   }
 
   function showClaimer() {
@@ -95,9 +95,9 @@ function ClaimModal() {
   );
 }
 
-function SwapModal() {
+function SwapModal(props: { spot_price: number }) {
   return (
-    <Swapper>
+    <Swapper spot_price={props.spot_price}>
       <SwapSuite inModal />
     </Swapper>
   );

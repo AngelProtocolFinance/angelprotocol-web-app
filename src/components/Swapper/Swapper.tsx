@@ -4,7 +4,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
 import { Values } from "./types";
 
-export default function Swapper(props: { children: ReactNode }) {
+export default function Swapper(props: {
+  children: ReactNode;
+  spot_price: number;
+}) {
   const methods = useForm<Values>({
     reValidateMode: "onChange",
     defaultValues: {
@@ -14,6 +17,8 @@ export default function Swapper(props: { children: ReactNode }) {
       //metadata
       return_amount: "0.00",
       pct_commission: "0.00",
+      swap_fee: 0.0,
+      ratio: props.spot_price,
     },
     resolver: yupResolver(schema),
   });
