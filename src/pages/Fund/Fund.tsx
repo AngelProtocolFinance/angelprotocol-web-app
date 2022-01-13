@@ -6,7 +6,6 @@ import Donate from "./Donate";
 import useProfiles from "pages/Market/useProfiles";
 import { RouteComponentProps } from "react-router-dom";
 import { unsdgs } from "pages/Fund/unsdgs";
-import DappHead from "components/Headers/DappHead";
 
 //props
 //fundBgClass
@@ -25,7 +24,6 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
 
   return (
     <section className="grid content-start pb-24">
-      <DappHead />
       <div className="grid grid-rows-fund grid-cols-1a container mx-auto gap-4">
         <div
           className={`col-start-1 col-span-1 ${sdg.bg} self-stretch grid grid-cols-a1 items-center rounded-xl shadow-md`}

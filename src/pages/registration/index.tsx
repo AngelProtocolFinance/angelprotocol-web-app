@@ -12,15 +12,14 @@ import UpdateProfile from "./charity-profile/Update-profile";
 import OtherWallets from "./connect-wallet/OtherWallets";
 import SelfCustody from "./connect-wallet/Self-custody";
 import { registration } from "types/routes";
-// import AppHead from "components/Headers/AppHead";
 import KeyPersonProfile from "./keyPerson-profile/KeyPersonProfile";
-import DappHead from "components/Headers/DappHead";
+
 const Register = () => {
   //this component will only render under '/app/register/'
   const { path } = useRouteMatch();
+
   return (
     <section>
-      <DappHead />
       <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white mx-auto">
         <Switch>
           <Route

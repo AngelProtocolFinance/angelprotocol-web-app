@@ -1,5 +1,4 @@
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
 import { LBPGraphDataUnavailable } from "contracts/Errors";
@@ -27,8 +26,7 @@ export default function Auction() {
   }, [isLoading, error]);
 
   return (
-    <div className="grid grid-rows-a1 place-items-start pt-2">
-      <DappHead />
+    <div className="grid place-items-start pt-2">
       <div className="content-section">
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
