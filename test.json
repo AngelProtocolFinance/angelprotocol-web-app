@@ -1,0 +1,39 @@
+[
+  {
+    "chainId": "bombay-12",
+    "merkleRoot": "f32584f7c93d800a50523ce58fee913781156fdb1f949dcfa055a562a439d8df",
+    "stage": 1,
+    "claimable": true,
+    "haloTokens": "10000000",
+    "proof": [
+      "7bd45ffb3c9e6a1b24c5ec00401dd453314c4f2f95284ca854b82160783bb98f"
+    ],
+    "address": "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
+    "pk": "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
+  },
+  {
+    "chainId": "bombay-12",
+    "merkleRoot": "f32584f7c93d800a50523ce58fee913781156fdb1f949dcfa055a562a439d8df",
+    "stage": 2,
+    "claimable": true,
+    "haloTokens": "10000000",
+    "proof": [
+      "7bd45ffb3c9e6a1b24c5ec00401dd453314c4f2f95284ca854b82160783bb98f"
+    ],
+    "address": "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
+    "pk": "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
+  },
+  {
+    "chainId": "bombay-12",
+    "merkleRoot": "f32584f7c93d800a50523ce58fee913781156fdb1f949dcfa055a562a439d8df",
+    "stage": 3,
+    "claimable": true,
+    "haloTokens": "10000000",
+    "proof": [
+      "478fa5381148da54cda75b36106ec8cc7802c833c1a10dfdc754f860046c8cef",
+      "dfd47fc3509682a9646548ee3a5a3e6dd2c8b6b50005a7c299d78a31262f3e59"
+    ],
+    "address": "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
+    "pk": "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l"
+  }
+]
