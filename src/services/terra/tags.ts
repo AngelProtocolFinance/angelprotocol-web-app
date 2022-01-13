@@ -3,7 +3,6 @@ export enum tags {
   user = "user",
   halo = "halo",
   lbp = "lbp",
-  cha = "charity",
 }
 export enum gov {
   polls = "polls",
@@ -22,8 +21,4 @@ export enum halo {
 
 export enum lbp {
   pool = "pool",
-}
-
-export enum cha {
-  profile = "profile",
 }

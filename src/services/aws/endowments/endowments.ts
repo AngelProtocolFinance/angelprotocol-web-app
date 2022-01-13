@@ -1,7 +1,7 @@
 import createAuthToken from "helpers/createAuthToken";
-import { cha, tags } from "services/terra/tags";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
+import { cha, tags } from "../tags";
 import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
 
 const endowments_api = aws.injectEndpoints({
