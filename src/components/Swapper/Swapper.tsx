@@ -17,7 +17,6 @@ export default function Swapper(props: {
       //metadata
       return_amount: "0.00",
       pct_commission: "0.00",
-      swap_fee: 0.0,
       ratio: props.spot_price,
     },
     resolver: yupResolver(schema),
