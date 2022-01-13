@@ -1,13 +1,11 @@
-import { useSetModal } from "components/Nodal/Nodal";
-import Details from "./Details";
 import { FaParachuteBox } from "react-icons/fa";
+import useAirdrop from "./useAirdrop";
 export default function Airdrop() {
-  const { showModal } = useSetModal();
+  const { airdrop_shown, showDetails } = useAirdrop();
 
-  function showDetails() {
-    showModal(Details, {});
+  if (!airdrop_shown) {
+    return null;
   }
-
   return (
     <div>
       <button

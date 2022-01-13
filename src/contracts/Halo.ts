@@ -10,9 +10,11 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { PollExecuteMsg, sc, Vote } from "./types";
 import { ContractQueryArgs } from "services/terra/types";
+import { Airdrops } from "services/aws/airdrop/types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
+  airdrop_addr: string;
   token_address: string;
   gov_address: string;
   staker: ContractQueryArgs;
@@ -24,6 +26,7 @@ export default class Halo extends Contract {
     super(wallet);
     this.token_address = contracts[this.chainID][sc.halo_token];
     this.gov_address = contracts[this.chainID][sc.halo_gov];
+    this.airdrop_addr = contracts[this.chainID][sc.airdrop];
 
     //query args
     this.staker = {
@@ -47,21 +50,22 @@ export default class Halo extends Contract {
     };
   }
 
+  createGovStakeMsg(amount: number | string): MsgExecuteContract {
+    this.checkWallet();
+    const uhalo = new Dec(amount).mul(1e6).toInt();
+    return new MsgExecuteContract(this.walletAddr!, this.token_address, {
+      send: {
+        amount: uhalo.toString(),
+        contract: this.gov_address,
+        msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
+      },
+    });
+  }
+
   //halo_token
   async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
     this.checkWallet();
-    const uhalo = new Dec(amount).mul(1e6).toInt();
-    const stake_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.token_address,
-      {
-        send: {
-          amount: uhalo.toString(),
-          contract: this.gov_address,
-          msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
-        },
-      }
-    );
+    const stake_msg = this.createGovStakeMsg(amount);
     const fee = await this.estimateFee([stake_msg]);
     // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
     return { msgs: [stake_msg], fee };
@@ -141,5 +145,27 @@ export default class Halo extends Contract {
     );
     const fee = await this.estimateFee([vote_msg]);
     return { msgs: [vote_msg], fee };
+  }
+
+  async createAirdropClaimTx(
+    airdrops: Airdrops,
+    is_stake = false,
+    stake_amount = "0"
+  ): Promise<CreateTxOptions> {
+    this.checkWallet();
+    const claim_msgs = airdrops.map(
+      ({ stage, haloTokens, proof }) =>
+        new MsgExecuteContract(this.walletAddr!, this.airdrop_addr, {
+          claim: { stage, amount: haloTokens, proof },
+        })
+    );
+
+    if (is_stake) {
+      const stake_msg = this.createGovStakeMsg(stake_amount);
+      claim_msgs.push(stake_msg);
+    }
+
+    const fee = await this.estimateFee(claim_msgs);
+    return { msgs: claim_msgs, fee };
   }
 }
