@@ -6,13 +6,11 @@ import ClaimSuite from "components/TransactionSuite/ClaimSuite";
 import StakeSuite from "components/TransactionSuite/StakeSuite";
 import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
-import { useHistory } from "react-router-dom";
 import { useStakingAPRQuery } from "services/aws/governance";
 import "./Portal.css";
 
 export default function Portal() {
   const { showModal } = useSetModal();
-  const history = useHistory();
   const { data } = useStakingAPRQuery(null);
 
   function showStaker() {
