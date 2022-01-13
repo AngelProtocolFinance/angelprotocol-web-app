@@ -1,16 +1,16 @@
-import DonateForm from "components/DonateForm/DonateForm";
-import { ReactNode } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
 import Broadcast from "./Broadcast";
-import Success from "./Success";
+// import Success from "./Success";
 import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Nodal/Nodal";
+import DonateForm from "components/DonateForm/DonateForm";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-
-type Display = { [key in Step]: ReactNode };
+import { Display } from "./types";
+import ReceiptForm from "./Receipt";
+import SuccessTx from "./SuccessTx";
 
 export default function DonateSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
@@ -20,7 +20,8 @@ export default function DonateSuite(props: { inModal?: true }) {
     [Step.form]: <DonateForm />,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
-    [Step.success]: <Success />,
+    [Step.success]: <SuccessTx />,
+    [Step.receipt]: <ReceiptForm />,
     [Step.error]: <ErrPop />,
   };
 
@@ -31,7 +32,7 @@ export default function DonateSuite(props: { inModal?: true }) {
 
   return (
     <div
-      className={`max-w-md w-full relative ${
+      className={`max-w-md w-full max-h-75vh relative overflow-hidden overflow-y-scroll scroll-hidden ${
         props.inModal ? "bg-white rounded-md pt-4" : ""
       }`}
     >

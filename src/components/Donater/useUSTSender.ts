@@ -25,7 +25,7 @@ import { terra_rpcs } from "constants/urls";
 function useUSTSender() {
   const dispatch = useSetter();
   const active_wallet = useGetter((state) => state.wallet.activeWallet);
-  const { reset, setValue } = useFormContext<Values>();
+  const { reset, setValue, getValues } = useFormContext<Values>();
   const { provider } = useGetKeplr();
   const wallet = useConnectedWallet();
   const tx = useUSTEstimator();
@@ -70,6 +70,11 @@ function useUSTSender() {
               step: Step.success,
               content: {
                 message: "Thank you for your donation!",
+                tx: {
+                  txHash: txInfo.txhash,
+                  amount: getValues("amount"),
+                  to: getValues("to"),
+                },
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
@@ -91,6 +96,7 @@ function useUSTSender() {
       handleTerraError(err, handleTxError);
     } finally {
       reset();
+      console.log("reset: ", reset);
     }
   }
 

@@ -4,11 +4,21 @@ export enum Step {
   broadcast = "broadcast",
   success = "success",
   error = "error",
+  receipt = "receipt",
 }
+
+export type Tx = {
+  txHash: string;
+  amount?: string;
+  to?: string;
+};
+
 export type Content = {
   message: string;
   url?: string;
+  tx?: Tx;
 };
+
 export type Stage = {
   step: Step;
   content: Content | null;
