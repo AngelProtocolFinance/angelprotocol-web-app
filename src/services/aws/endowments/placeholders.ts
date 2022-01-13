@@ -4,6 +4,7 @@ import { Profile } from "./types";
 
 export const profile: Profile = {
   charity_image: image, //url of image
+  charity_owner: "",
   charity_registration_number: "00000", //"CN201225725"
   annual_revenue: "0", //"Under $100k"
   country_city_origin: "unknown", //"Philippines, Zamboanga City"
