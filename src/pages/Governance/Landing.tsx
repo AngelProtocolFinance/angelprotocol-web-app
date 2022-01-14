@@ -25,7 +25,7 @@ export default function Landing() {
           denom={currency_text[denoms.uhalo]}
           percent={percentStaked}
         />
-        <Portal spot_price={spot_price} />
+        <Portal />
       </div>
       <Polls />
     </div>

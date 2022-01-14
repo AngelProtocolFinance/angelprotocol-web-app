@@ -34,8 +34,8 @@ export function Ratio() {
         title="ratio"
         value={
           is_buy
-            ? `1 UST = ${toCurrency(1 / ratio, 6, true)} HALO`
-            : `1 HALO = ${toCurrency(ratio, 6, true)} UST`
+            ? `1 UST = ${ratio === 0 ? 0 : toCurrency(1 / ratio, 6, true)} HALO`
+            : `1 HALO = ${ratio === 0 ? 0 : toCurrency(ratio, 6, true)} UST`
         }
         class="font-semibold"
       />
@@ -43,8 +43,8 @@ export function Ratio() {
         title=""
         value={
           is_buy
-            ? `1 HALO = ${toCurrency(ratio, 6, true)} UST`
-            : `1 UST = ${toCurrency(1 / ratio, 6, true)} HALO`
+            ? `1 HALO = ${ratio === 0 ? 0 : toCurrency(ratio, 6, true)} UST`
+            : `1 UST = ${ratio === 0 ? 0 : toCurrency(1 / ratio, 6, true)} HALO`
         }
       />
     </>

@@ -49,7 +49,7 @@ export default function useEstimator() {
           return;
         }
 
-        //first balance check
+        // first balance check
         if (is_buy) {
           if (amount > UST_balance) {
             dispatch(setFormError("Not enough UST"));
@@ -69,6 +69,8 @@ export default function useEstimator() {
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
         const spot_price = getSpotPrice(simul, debounced_amount);
+        setValue("ratio", spot_price.mul(1e6).toNumber());
+
         //get commission and price impact
         const return_uamount = new Dec(simul.return_amount);
         const ucommission = new Dec(simul.commission_amount);
