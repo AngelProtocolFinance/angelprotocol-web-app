@@ -31,7 +31,7 @@ export function SwapRate() {
   return (
     <>
       <Misc
-        title="ratio"
+        title="Rate"
         value={
           is_buy
             ? `1 UST = ${ratio === 0 ? 0 : toCurrency(1 / ratio, 6, true)} HALO`
