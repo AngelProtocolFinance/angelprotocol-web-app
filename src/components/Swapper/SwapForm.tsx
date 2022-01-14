@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import Amount from "./Amount";
-import { Fee, Commission, Ratio } from "./Misc";
+import { Fee, Commission, SwapRate } from "./Misc";
 import Output from "./Output";
 import Status from "./Status";
 import { Values } from "./types";
@@ -40,7 +40,7 @@ export default function SwapForm() {
         <CgArrowsExchangeAltV className="text-3xl" />
       </button>
       <Output />
-      <Ratio />
+      <SwapRate />
       <Fee />
       <Commission />
       <button

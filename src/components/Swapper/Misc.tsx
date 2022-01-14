@@ -24,7 +24,7 @@ export function Commission() {
   return <Misc title="commission" value={`${pct_commission || 0.0} %`} />;
 }
 
-export function Ratio() {
+export function SwapRate() {
   const { watch } = useFormContext<Values>();
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");

@@ -69,7 +69,6 @@ export default function useEstimator() {
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
         const spot_price = getSpotPrice(simul, debounced_amount);
-        setValue("ratio", spot_price.mul(1e6).toNumber());
 
         //get commission and price impact
         const return_uamount = new Dec(simul.return_amount);
@@ -115,6 +114,7 @@ export default function useEstimator() {
           "return_amount",
           toCurrency(return_uamount.div(1e6).toNumber(), 3)
         );
+        setValue("ratio", spot_price.mul(1e6).toNumber());
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
