@@ -1,22 +1,13 @@
-import { useSetModal } from "components/Nodal/Nodal";
 import toCurrency from "helpers/toCurrency";
 import { FaParachuteBox } from "react-icons/fa";
-import { MdOutlineClose } from "react-icons/md";
 import { Airdrops } from "services/aws/airdrop/types";
 import useCatcher from "./useCatcher";
 
 export type Props = { airdrops: Airdrops };
 export default function Catcher(props: { airdrops: Airdrops }) {
   const { total_claimable, claim } = useCatcher(props.airdrops);
-  const { hideModal } = useSetModal();
   return (
-    <div className="relative bg-white flex flex-col items-center p-4 rounded-md w-full shadow-lg min-h-115 max-w-md w-full">
-      <button
-        onClick={hideModal}
-        className="absolute right-2 top-2 text-angel-grey hover:text-black"
-      >
-        <MdOutlineClose />
-      </button>
+    <div className="bg-white flex flex-col items-center p-4 pt-0 shadow-lg min-h-115 w-full">
       <FaParachuteBox className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop

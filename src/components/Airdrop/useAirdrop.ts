@@ -1,9 +1,11 @@
 import { useSetModal } from "components/Nodal/Nodal";
-import Catcher, { Props as CatchProps } from "./Catcher";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "contracts/types";
 import { useAirdropQuery } from "services/aws/airdrop/airdrop";
 import { useCallback } from "react";
+import AirdropSuite, {
+  AirdropProps,
+} from "components/TransactionSuite/AirdropSuite";
 
 export default function useAirdrop() {
   const wallet = useConnectedWallet();
@@ -19,7 +21,8 @@ export default function useAirdrop() {
   );
 
   const showDetails = useCallback(() => {
-    showModal<CatchProps>(Catcher, { airdrops: data });
+    showModal<AirdropProps>(AirdropSuite, { airdrops: data });
+    //eslint-disable-next-line
   }, [data]);
 
   return { airdrop_shown: !!wallet && data.length > 0, showDetails };
