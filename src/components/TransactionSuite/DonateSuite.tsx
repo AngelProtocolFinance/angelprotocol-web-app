@@ -9,7 +9,7 @@ import DonateForm from "components/DonateForm/DonateForm";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { Display } from "./types";
-import ReceiptForm from "./Receipt";
+import Receipt from "./Receipt";
 import Success from "./Success";
 
 export default function DonateSuite(props: { inModal?: true }) {
@@ -21,7 +21,7 @@ export default function DonateSuite(props: { inModal?: true }) {
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
     [Step.success]: <Success />,
-    [Step.receipt]: <ReceiptForm />,
+    [Step.receipt]: <Receipt />,
     [Step.error]: <ErrPop />,
   };
 

@@ -1,4 +1,4 @@
-import { Receipt } from "components/Donater/types";
+import { Values } from "components/Receipter/types";
 import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { apes } from "./apes";
@@ -16,21 +16,20 @@ const donations_api = apes.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    requestReceipt: builder.mutation<
-      any,
-      { receipt: Receipt; address: string }
-    >({
-      query: ({ receipt, address }) => {
-        const generatedToken = createAuthToken(UserTypes.WEB_APP);
-        return {
-          url: "donation",
-          method: "POST",
-          headers: { authorization: generatedToken },
-          body: receipt,
-        };
-      },
-      transformResponse: (response: any) => response, // TODO:  assign type to the response object
-    }),
+    requestReceipt: builder.mutation<any, { receipt: Values; address: string }>(
+      {
+        query: ({ receipt, address }) => {
+          const generatedToken = createAuthToken(UserTypes.WEB_APP);
+          return {
+            url: "donation",
+            method: "POST",
+            headers: { authorization: generatedToken },
+            body: receipt,
+          };
+        },
+        transformResponse: (response: any) => response, // TODO:  assign type to the response object
+      }
+    ),
   }),
 });
 
