@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.16.7",
     "@craco/craco": "^6.2.0",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",
