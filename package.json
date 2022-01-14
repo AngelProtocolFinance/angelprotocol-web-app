@@ -17,6 +17,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "babel-jest": "^26.6.0",
     "babel-loader": "8.1.0",
     "currency-list": "^1.0.6",
     "eslint": "^7.0.0",
