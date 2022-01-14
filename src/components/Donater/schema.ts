@@ -19,7 +19,14 @@ export const receiptSchema = Yup.object().shape({
     .test("max precision", "must not be greater than 6 digits", (number) =>
       /^\d+(\.\d{1,6})?$/.test(number as any)
     ),
-
-  // taken care of by <Slider/> restrictions
-  // split: Yup.number().min(50).max(100),
+  transactionDate: Yup.string().typeError("transactionDate is invalid"),
+  transactionId: Yup.string().typeError("transactionId is invalid"),
+  chainId: Yup.string().typeError("chainId is invalid"),
+  email: Yup.string().email("email is invalid"),
+  fullName: Yup.string(),
+  streetAddress: Yup.string().typeError("fullName is invalid"),
+  city: Yup.string().typeError("city is invalid"),
+  state: Yup.string().typeError("state is invalid"),
+  zipCode: Yup.string().typeError("zipCode is invalid"),
+  country: Yup.string().typeError("country is invalid"),
 });

@@ -10,7 +10,7 @@ import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { Display } from "./types";
 import ReceiptForm from "./Receipt";
-import SuccessTx from "./SuccessTx";
+import Success from "./Success";
 
 export default function DonateSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
@@ -20,7 +20,7 @@ export default function DonateSuite(props: { inModal?: true }) {
     [Step.form]: <DonateForm />,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
-    [Step.success]: <SuccessTx />,
+    [Step.success]: <Success />,
     [Step.receipt]: <ReceiptForm />,
     [Step.error]: <ErrPop />,
   };

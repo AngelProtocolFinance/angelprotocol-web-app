@@ -74,11 +74,13 @@ function useUSTSender() {
                   txHash: txInfo.txhash,
                   amount: getValues("amount"),
                   to: getValues("to"),
+                  receiver: getValues("receiver"),
                 },
                 url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
+          reset();
         } else {
           dispatch(
             setStage({

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useForm, useFormContext } from "react-hook-form";
-import { Receipt, Values } from "components/Donater/types";
+import { useForm } from "react-hook-form";
+import { Receipt } from "components/Donater/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { receiptSchema } from "components/Donater/schema";
 import { useGetter, useSetter } from "store/accessors";
@@ -39,13 +39,12 @@ export default function ReceiptForm() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
-  const { watch } = useFormContext<Values>();
-  const endowment_addr = watch("receiver");
+
   const {
     register,
     handleSubmit,
     getValues,
-    formState: { isValid, errors },
+    formState: { isValid },
   } = useForm<Receipt>({
     reValidateMode: "onChange",
     defaultValues: {
@@ -67,24 +66,27 @@ export default function ReceiptForm() {
 
   const [submitting, setSubmitting] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
-  const to = watch("to");
+  const endowment_addr = stage.content?.tx?.receiver;
+  const to = stage.content?.tx?.to;
 
   const onSubmit = async (body: Receipt) => {
     setSubmitting(true);
     const key = to === "charity" ? "charityId" : "fundId";
     const receipt = { ...body, [key]: endowment_addr };
-    console.log("submit: ", receipt);
+
     const response: any = await requestReceipt({
       receipt,
       address: wallet?.walletAddress + "",
     });
     setSubmitting(false);
-    if (response.success) {
+    if (response.data) {
       dispatch(
         setStage({
           step: Step.success,
           content: {
+            url: stage.content?.url,
             message:
+              response?.data?.message ||
               "Receipt request successfully sent, Your receipt will be sent to your email address",
           },
         })
@@ -99,10 +101,8 @@ export default function ReceiptForm() {
         })
       );
     }
-    console.log("response: ", response);
   };
 
-  console.log("values, ", to);
   const receiptData: DataProps[] = [
     {
       name: "Transaction date",
@@ -123,6 +123,7 @@ export default function ReceiptForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="bg-white grid gap-4 p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
+      autoSave="off"
     >
       <h1 className="font-heading text-lg font-semibold text-grey-600">
         Request Receipt
