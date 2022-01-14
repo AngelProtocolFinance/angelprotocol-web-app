@@ -34,11 +34,12 @@ export enum app {
   charity = "charity",
   tca = "tca",
   fund = "fund",
-  endowment_admin = "endowment-admin",
+  withdraw = "withdraw",
   govern = "govern",
   test = "test",
   auction = "auction",
-  churchportal = "church-portal",
+  churchportal = "churchportal",
+  endowment_admin = "endowment_admin",
 }
 
 export enum govern {

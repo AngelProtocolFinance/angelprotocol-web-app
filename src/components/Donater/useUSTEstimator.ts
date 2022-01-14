@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
@@ -7,28 +7,20 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 import useDebouncer from "../../hooks/useDebouncer";
-import { useGetKeplr } from "wallets/Keplr";
 import { useSetter } from "store/accessors";
 import {
   setFormError,
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-// import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
   const { watch, formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
-  const { provider: keplr_provider, balance: keplr_balance } = useGetKeplr();
   const wallet = useConnectedWallet();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const keplr_ust = new Dec(
-    keplr_balance.find((coin) => coin.denom === denoms.uusd)?.amount || "0"
-  )
-    .div(1e6)
-    .toNumber();
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const currency = watch("currency");
@@ -40,26 +32,12 @@ export default function useUSTEstimator() {
     (async () => {
       try {
         if (!isValid) return;
-        //don't run this estimator when currency is not UST
+
         if (currency !== denoms.uusd) {
           return;
         }
 
         dispatch(setFormError(""));
-
-        if (!wallet && !keplr_provider) {
-          dispatch(setFormError("UST wallet is not connected"));
-          return;
-        }
-
-        //if the connected wallet is keplr, no need to estimate
-        if (keplr_provider) {
-          if (debounced_amount >= keplr_ust) {
-            dispatch(setFormError("Not enough balance"));
-            return;
-          }
-          return;
-        }
 
         if (!debounced_amount) {
           dispatch(setFee(0));
@@ -104,14 +82,7 @@ export default function useUSTEstimator() {
       }
     })();
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_split,
-    wallet,
-    UST_balance,
-    currency,
-    keplr_provider,
-  ]);
+  }, [debounced_amount, debounced_split, wallet, UST_balance, currency]);
 
   return tx;
 }
