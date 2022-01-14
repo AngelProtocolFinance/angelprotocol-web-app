@@ -10,18 +10,20 @@ import Phantom from "wallets/Phantom";
 import Keplr from "wallets/Keplr";
 import { chainIDs } from "contracts/types";
 import { eth_rpcs } from "constants/urls";
+import DappHead from "components/Headers/DappHead";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
   return (
     <div
-      className={`grid content-between bg-gradient-to-b from-blue-accent to-black-blue relative`}
+      className={`grid grid-rows-a1a bg-gradient-to-b from-blue-accent to-black-blue relative`}
     >
       <TerraProvider
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}
       >
         <EthProvider connectors={eth_connectors}>
+          <DappHead />
           <Phantom>
             <Keplr>
               <Nodal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
