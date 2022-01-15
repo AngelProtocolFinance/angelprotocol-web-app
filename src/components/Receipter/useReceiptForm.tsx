@@ -1,4 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import { Step } from "services/transaction/types";
@@ -8,7 +7,6 @@ import { Values } from "./types";
 
 export default function useReceiptForm() {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
   const [processing, setProcessing] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
@@ -21,7 +19,6 @@ export default function useReceiptForm() {
     setProcessing(true);
     const response: any = await requestReceipt({
       receipt,
-      address: wallet?.walletAddress + "",
     });
     setProcessing(false);
     if (response.data) {
