@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Airdrops } from "services/aws/airdrop/types";
 import { useSetter } from "store/accessors";
 import { setStage } from "services/transaction/transactionSlice";
@@ -16,6 +16,7 @@ import { tags, gov, user } from "services/terra/tags";
 import handleTerraError from "helpers/handleTerraError";
 
 export default function useCatcher(airdrops: Airdrops) {
+  const [loading, setLoading] = useState(false);
   const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
@@ -41,6 +42,8 @@ export default function useCatcher(airdrops: Airdrops) {
         );
         return;
       }
+
+      setLoading(true);
       //create tx and estimate fee
       const contract = new Halo(wallet);
       const tx = await contract.createAirdropClaimTx(
@@ -114,11 +117,14 @@ export default function useCatcher(airdrops: Airdrops) {
           );
         }
       }
+
+      setLoading(false);
     } catch (err) {
       console.error(err);
       handleTerraError(err, handleTxError);
+      setLoading(false);
     }
   }
 
-  return { total_claimable: total_claimable.toNumber(), claim };
+  return { total_claimable: total_claimable.toNumber(), claim, loading };
 }
