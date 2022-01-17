@@ -102,7 +102,7 @@
     "@types/react-select-country-list": "^2.2.0",
     "eslint-config-prettier": "^8.3.0",
     "postcss": "^7",
-    "prettier": "^2.3.2",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
-  }
+    "prettier": "^2.3.2"
+  },
+  "packageManager": "yarn@3.1.1"
 }
