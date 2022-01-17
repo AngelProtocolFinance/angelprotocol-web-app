@@ -26,7 +26,6 @@ export enum app {
   index = "/",
   dashboard = "dashboard",
   charities = "charities",
-  churchportal = "church-portal",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
   register = "register",
@@ -35,10 +34,12 @@ export enum app {
   charity = "charity",
   tca = "tca",
   fund = "fund",
-  endowment_admin = "endowment-admin",
+  withdraw = "withdraw",
   govern = "govern",
   test = "test",
   auction = "auction",
+  churchportal = "churchportal",
+  endowment_admin = "endowment_admin",
 }
 
 export enum govern {
