@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Loader from "components/Loader/Loader";
-// import Admin from "Admin/Admin";
 
 const App = lazy(() => import("./App/App"));
 // const Admin = lazy(() => import("./Admin/Admin"));
