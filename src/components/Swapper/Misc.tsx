@@ -29,24 +29,14 @@ export function SwapRate() {
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
   return (
-    <>
-      <Misc
-        title="Rate"
-        value={
-          is_buy
-            ? `1 UST = ${ratio === 0 ? 0 : toCurrency(1 / ratio, 6, true)} HALO`
-            : `1 HALO = ${ratio === 0 ? 0 : toCurrency(ratio, 6, true)} UST`
-        }
-        class="font-semibold"
-      />
-      <Misc
-        title=""
-        value={
-          is_buy
-            ? `1 HALO = ${ratio === 0 ? 0 : toCurrency(ratio, 6, true)} UST`
-            : `1 UST = ${ratio === 0 ? 0 : toCurrency(1 / ratio, 6, true)} HALO`
-        }
-      />
-    </>
+    <Misc
+      title="Rate"
+      value={
+        is_buy
+          ? `${toCurrency(ratio, 6, true)} UST = 1 HALO`
+          : `${toCurrency(ratio, 6, true)} HALO = 1 UST`
+      }
+      class="font-semibold"
+    />
   );
 }
