@@ -55,7 +55,7 @@ export default function UserForm(props: Props) {
             )) || (
               <label
                 htmlFor="custom"
-                className={`text-angel-grey w-52 rounded-md pl-2 py-2 bg-white`}
+                className="text-angel-grey w-52 rounded-md pl-2 py-2 bg-white"
               >
                 other amount
               </label>

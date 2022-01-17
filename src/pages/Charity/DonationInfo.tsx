@@ -88,7 +88,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
           <button
             disabled={profile.is_placeholder}
             onClick={openModal}
-            className={`disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4`}
+            className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
           >
             DONATE NOW
           </button>
