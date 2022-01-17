@@ -47,7 +47,7 @@ export default function useSwapper() {
           step: Step.broadcast,
           content: {
             message: "Waiting for transaction result",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
           },
         })
       );
@@ -65,7 +65,7 @@ export default function useSwapper() {
                 message: is_buy
                   ? "Successfully swapped UST for HALO"
                   : "Successfully swapped HALO for UST",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
@@ -84,7 +84,7 @@ export default function useSwapper() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );

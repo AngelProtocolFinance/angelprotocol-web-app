@@ -77,6 +77,7 @@ export default class LP extends Contract {
             contract_addr: this.halo_address,
           },
         };
+
     const result = await this.query<Simulation>(this.pair_address, {
       simulation: {
         offer_asset: {

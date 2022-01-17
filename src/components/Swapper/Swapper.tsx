@@ -14,6 +14,7 @@ export default function Swapper(props: { children: ReactNode }) {
       //metadata
       return_amount: "0.00",
       pct_commission: "0.00",
+      ratio: 0,
     },
     resolver: yupResolver(schema),
   });
