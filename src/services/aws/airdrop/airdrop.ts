@@ -4,10 +4,12 @@ import { chainIDs, sc } from "contracts/types";
 import { contracts } from "constants/contracts";
 import { Airdrops, ClaimInquiry, QueryArg } from "./types";
 import { QueryRes } from "services/terra/types";
+import { tags } from "../tags";
 
 const airdrop_api = aws.injectEndpoints({
   endpoints: (build) => ({
     airdrop: build.query<Airdrops, QueryArg>({
+      providesTags: [{ type: tags.airdrop }],
       async queryFn(
         { wallet_addr, is_test },
         queryApi,
