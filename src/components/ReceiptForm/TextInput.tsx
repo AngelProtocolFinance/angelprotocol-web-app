@@ -1,15 +1,18 @@
+import { Values } from "components/Receipter/types";
+import { useFormContext } from "react-hook-form";
+
 type TextInputProps = {
-  register: any;
   placeholder: string;
   id: string;
-  name: string;
+  name: keyof Values;
 };
 
 export default function TextInput(props: TextInputProps) {
+  const { register } = useFormContext<Values>();
   return (
     <div className="grid">
       <input
-        {...props.register(props.name)}
+        {...register(props.name)}
         autoComplete="off"
         id={props.id}
         type="text"

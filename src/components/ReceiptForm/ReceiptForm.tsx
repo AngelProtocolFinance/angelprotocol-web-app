@@ -55,18 +55,8 @@ export default function ReceiptForm() {
       {receiptData.map(({ name, value }, idx) => (
         <ReceiptDetails name={name} value={value} key={idx} />
       ))}
-      <TextInput
-        register={register}
-        name="email"
-        id="email"
-        placeholder="john@doe.com"
-      ></TextInput>
-      <TextInput
-        register={register}
-        name="fullName"
-        id="fullName"
-        placeholder="full Name"
-      ></TextInput>
+      <TextInput name="email" id="email" placeholder="john@doe.com" />
+      <TextInput name="fullName" id="fullName" placeholder="full Name" />
       <div className="grid">
         <textarea
           {...register("streetAddress")}
@@ -76,30 +66,9 @@ export default function ReceiptForm() {
           className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
         />
       </div>
-      <TextInput
-        register={register}
-        name="city"
-        id="city"
-        placeholder="city"
-      ></TextInput>
-      <TextInput
-        register={register}
-        name="state"
-        id="state"
-        placeholder="state"
-      ></TextInput>
-      <TextInput
-        register={register}
-        name="zipCode"
-        id="zipCode"
-        placeholder="zip code"
-      ></TextInput>
-      <TextInput
-        register={register}
-        name="country"
-        id="country"
-        placeholder="country"
-      ></TextInput>
+      <TextInput name="state" id="state" placeholder="state" />
+      <TextInput name="zipCode" id="zipCode" placeholder="zip code" />
+      <TextInput name="country" id="country" placeholder="country" />
       <button
         disabled={processing || !isValid}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
