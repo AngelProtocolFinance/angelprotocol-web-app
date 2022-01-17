@@ -28,16 +28,12 @@ export default function Views() {
   const { path } = useRouteMatch();
   const location = useLocation();
 
+  const LoaderComponent = () => (
+    <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
+  );
+
   return (
-    <Suspense
-      fallback={
-        <Loader
-          bgColorClass="bg-white-grey"
-          gapClass="gap-2"
-          widthClass="w-4"
-        />
-      }
-    >
+    <Suspense fallback={<LoaderComponent />}>
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />

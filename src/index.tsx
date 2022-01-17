@@ -14,20 +14,16 @@ const App = lazy(() => import("./App/App"));
 // const Admin = lazy(() => import("./Admin/Admin"));
 const Website = lazy(() => import("./Website/Website"));
 
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+);
+
 ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <AuthProvider>
-          <Suspense
-            fallback={
-              <Loader
-                bgColorClass="bg-angel-blue"
-                gapClass="gap-2"
-                widthClass="w-4"
-              />
-            }
-          >
+          <Suspense fallback={<LoaderComponent />}>
             <Switch>
               <Route path={site.app} component={App} />
               {/*<Route path={site.admin} component={Admin} />*/}

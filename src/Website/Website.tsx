@@ -20,18 +20,15 @@ const Contact = lazy(() => import("pages/Contact/Contact"));
 const Website = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
+
+  const LoaderComponent = () => (
+    <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+  );
+
   return (
     <div className={`grid grid-rows-1a bg-white`}>
       <WebHead />
-      <Suspense
-        fallback={
-          <Loader
-            bgColorClass="bg-angel-blue"
-            gapClass="gap-2"
-            widthClass="w-4"
-          />
-        }
-      >
+      <Suspense fallback={<LoaderComponent />}>
         <Switch>
           <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
           <Route path={`${path}${web.contact}`} component={Contact} />

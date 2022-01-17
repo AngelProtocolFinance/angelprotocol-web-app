@@ -22,6 +22,10 @@ const Admin = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
 
+  const LoaderComponent = () => (
+    <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
+  );
+
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
@@ -30,15 +34,7 @@ const Admin = () => {
       >
         <div className="grid grid-rows-a1 place-items-start min-h-screen pt-2 pb-16">
           <DappHead />
-          <Suspense
-            fallback={
-              <Loader
-                bgColorClass="bg-white"
-                gapClass="gap-2"
-                widthClass="w-4"
-              />
-            }
-          >
+          <Suspense fallback={<LoaderComponent />}>
             <div className="flex justify-center w-full">
               <Switch>
                 <Redirect
