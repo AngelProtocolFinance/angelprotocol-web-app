@@ -17,7 +17,7 @@ import toCurrency from "helpers/toCurrency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useEstimator() {
-  const { watch, setValue, formState: isValid } = useFormContext<Values>();
+  const { watch, setValue } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -37,7 +37,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
@@ -114,7 +113,7 @@ export default function useEstimator() {
           "return_amount",
           toCurrency(return_uamount.div(1e6).toNumber(), 3)
         );
-        setValue("ratio", spot_price.mul(1e6).toNumber());
+        setValue("ratio", spot_price.toNumber());
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {

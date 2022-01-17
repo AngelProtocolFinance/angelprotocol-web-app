@@ -46,7 +46,9 @@ export default function useSubmit() {
         Number(data.amount),
         data.title,
         data.description,
-        data.link
+        data.link,
+        undefined,
+        true //on submission, snapshot the poll
       );
       const response = await wallet.post(tx);
 
