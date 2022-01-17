@@ -25,7 +25,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        // if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
