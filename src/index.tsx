@@ -1,6 +1,6 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -13,7 +13,7 @@ import { store } from "store/store";
 import Website from "Website/Website";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <AuthProvider>
@@ -25,7 +25,7 @@ ReactDOM.render(
         </AuthProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById("root")
 );
 // If you want to start measuring performance in your app, pass a function

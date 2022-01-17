@@ -12,7 +12,7 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${url}/${app.leaderboard}`} {...linkStyles}>
+        <Link to={`${url}/${app.index}`} {...linkStyles}>
           LEADERBOARD
         </Link>
       </li>
