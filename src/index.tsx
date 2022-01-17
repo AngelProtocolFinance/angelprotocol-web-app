@@ -1,27 +1,40 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import { StrictMode } from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import App from "./App/App";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
+import Loader from "components/Loader/Loader";
 // import Admin from "Admin/Admin";
-import Website from "Website/Website";
+
+const App = lazy(() => import("./App/App"));
+// const Admin = lazy(() => import("./Admin/Admin"));
+const Website = lazy(() => import("./Website/Website"));
 
 ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <AuthProvider>
-          <Switch>
-            <Route path={site.app} component={App} />
-            {/*<Route path={site.admin} component={Admin} />*/}
-            <Route path={site.home} component={Website} />
-          </Switch>
+          <Suspense
+            fallback={
+              <Loader
+                bgColorClass="bg-angel-blue"
+                gapClass="gap-2"
+                widthClass="w-4"
+              />
+            }
+          >
+            <Switch>
+              <Route path={site.app} component={App} />
+              {/*<Route path={site.admin} component={Admin} />*/}
+              <Route path={site.home} component={Website} />
+            </Switch>
+          </Suspense>
         </AuthProvider>
       </BrowserRouter>
     </Provider>
