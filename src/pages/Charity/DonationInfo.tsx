@@ -1,4 +1,5 @@
-import { unsdgs } from "pages/Fund/unsdgs";
+// import { unsdgs } from "pages/Fund/unsdgs";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
@@ -31,14 +32,15 @@ function StatsItem({
 }
 
 interface DonationInfoProps {
-  openModal: () => void;
+  openModal: (type: "edit" | "donation") => void;
 }
 
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
+  const wallet = useConnectedWallet();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
-  const sdg = unsdgs[+profile.un_sdg];
+  // const sdg = unsdgs[+profile.un_sdg];
 
   const stats = useMemo(() => {
     return [
@@ -75,6 +77,8 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
     ];
   }, [profile]);
 
+  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
+
   return (
     <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130 py-2">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
@@ -84,10 +88,18 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
           {profile.charity_name}
         </h2>
-        <div className="flex flex-row lg:flex-col gap-2 mt-4">
+        <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-4">
+          {isCharityOwner && (
+            <button
+              onClick={() => openModal("edit")}
+              className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+            >
+              Edit Profile
+            </button>
+          )}
           <button
             disabled={profile.is_placeholder}
-            onClick={openModal}
+            onClick={() => openModal("donation")}
             className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
           >
             DONATE NOW

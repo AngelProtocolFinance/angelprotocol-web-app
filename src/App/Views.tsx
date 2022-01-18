@@ -19,7 +19,7 @@ const Auction = lazy(() => import("pages/LBP/Auction"));
 const Endowment_Admin = lazy(
   () => import("pages/Endowment_Admin/Endowment_Admin")
 );
-// const Charity = lazy(() => import("pages/Charity/Charity"));
+const Charity = lazy(() => import("pages/Charity/Charity"));
 // const Fund = lazy(() => import("pages/Fund/Fund"));
 // const Test = lazy(() => import("pages/Test"));
 // const Register = lazy(() => import("pages/registration/index"));
@@ -37,7 +37,7 @@ export default function Views() {
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-        {/* <Route path={`${path}/${app.charity}/:address`} component={Charity} /> */}
+        <Route path={`${path}/${app.charity}/:address`} component={Charity} />
         <Route path={`${path}/${app.login}`} component={Login} />
         {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
         <Route path={`${path}/${app.tca}`} component={TCA} />

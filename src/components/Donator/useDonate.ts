@@ -7,6 +7,7 @@ import { FormikHelpers } from "formik";
 import createAuthToken from "helpers/createAuthToken";
 import useUSTBalance from "hooks/useUSTBalance";
 import { useLogDonationTransactionMutation } from "services/apes/donations";
+import { UserTypes } from "services/user/types";
 import createStatusFromError from "./createStatusFromError";
 import getDepositAmount from "./getDepositAmount";
 import { SetStatus, Status, Steps, Values } from "./types";
@@ -108,7 +109,7 @@ function useDonate(
               valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]
           );
           // Auth token to be passed as part of the header of the request
-          const authToken = createAuthToken("angelprotocol-web-app");
+          const authToken = createAuthToken(UserTypes.WEB_APP);
           // Call APES endpoint
           const postData = {
             token: authToken,

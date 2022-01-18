@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { LCDClient } from "@terra-money/terra.js";
 import { Holdings, Swap } from "contracts/types";
+import { useCallback, useEffect, useState } from "react";
 
 function useQueryEndowmentBal(
   address: string,
@@ -11,7 +11,7 @@ function useQueryEndowmentBal(
   const [overall, setOverall] = useState<number>();
 
   // Allows fetching of endowment balance even if wallet is not connected
-  const getOnChainData = async () => {
+  const getOnChainData = useCallback(async () => {
     const terra = new LCDClient({
       URL: "https://lcd.terra.dev",
       chainID: "columbus-5",
@@ -35,7 +35,7 @@ function useQueryEndowmentBal(
     setLocked(microLocked);
     setLiquid(microLiquid);
     setOverall(microLocked + microLiquid);
-  };
+  }, [address]);
 
   useEffect(() => {
     try {
@@ -50,7 +50,7 @@ function useQueryEndowmentBal(
     } catch (err) {
       console.error(err);
     }
-  }, [address, placeholder]);
+  }, [address, placeholder, getOnChainData]);
 
   return {
     locked,

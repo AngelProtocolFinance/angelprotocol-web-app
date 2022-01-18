@@ -11,7 +11,7 @@ import useTxErrorHandler from "hooks/useTxErrorHandler";
 
 function useUSTSender() {
   const dispatch = useSetter();
-  const { reset } = useFormContext<Values>();
+  const { reset, getValues } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const tx = useUSTEstimator();
   const handleTxError = useTxErrorHandler();
@@ -55,10 +55,17 @@ function useUSTSender() {
               step: Step.success,
               content: {
                 message: "Thank you for your donation!",
+                tx: {
+                  txHash: txInfo.txhash,
+                  amount: getValues("amount"),
+                  to: getValues("to"),
+                  receiver: getValues("receiver"),
+                },
                 url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
+          reset();
         } else {
           dispatch(
             setStage({

@@ -10,7 +10,7 @@ export default function CharityInfoNav({
     const classes = `block w-full disabled:bg-grey-accent disabled:text-white-grey ${
       !isActive && "text-dark-grey"
     } hover:text-white hover:text-opacity-80 font-semibold bg-white uppercase border-0 py-3 px-4 hover:bg-angel-blue active:bg-angel-blue active:text-white ${
-      isActive ? "bg-angel-blue text-light-grey" : ""
+      isActive && "bg-angel-blue text-light-grey"
     }`;
     return classes;
   };

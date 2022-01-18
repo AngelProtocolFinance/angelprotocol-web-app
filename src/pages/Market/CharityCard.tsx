@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { app, site } from "types/routes";
-import useProfile from "./useProfile";
+import useCharityCard from "./useCharityCard";
 
 export default function CharityCard(props: { address: string }) {
-  const profile = useProfile(props.address);
+  const profile = useCharityCard(props.address);
   return (
     <div className="relative w-72 flex-none break-words">
       <img
