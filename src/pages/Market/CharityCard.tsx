@@ -13,7 +13,7 @@ export default function CharityCard(props: { address: string }) {
 
   return (
     <div
-      className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-1"
+      className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-2"
       onClick={open}
     >
       <img
