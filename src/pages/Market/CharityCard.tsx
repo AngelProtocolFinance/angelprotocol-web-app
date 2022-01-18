@@ -1,11 +1,21 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { app, site } from "types/routes";
 import useCharityCard from "./useCharityCard";
 
 export default function CharityCard(props: { address: string }) {
   const profile = useCharityCard(props.address);
+  const history = useHistory();
+  const { path } = useRouteMatch();
+
+  const open = () => {
+    history.push(`${path}${app.charity}/${props.address}`);
+  };
+
   return (
-    <div className="relative w-72 flex-none break-words">
+    <div
+      className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-1"
+      onClick={open}
+    >
       <img
         className="bg-white rounded-lg img-no-drag w-full h-32 object-cover"
         src={profile.charity_image}
