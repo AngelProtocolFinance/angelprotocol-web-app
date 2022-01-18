@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import { useBalances, useGovStaker } from "services/terra/queriers";
-import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -14,7 +12,6 @@ import {
 } from "services/transaction/transactionSlice";
 
 export default function useEstimator() {
-  const { formState: isValid } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
@@ -24,8 +21,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
-
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
