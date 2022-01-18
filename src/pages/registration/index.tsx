@@ -1,18 +1,22 @@
+import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import Registration from "./Registration";
-import ContactDetails from "./ContactDetails";
-import ConfirmEmail from "./ConfirmEmail";
-import VerifiedEmail from "./VerifiedEmail";
-import RegistrationStatus from "./RegistrationStatus";
-import WalletCheck from "./connect-wallet/WalletCheck";
-import ConnectWallet from "./connect-wallet/ConnectWallet";
-import SelectWallet from "./connect-wallet/SelectWallet";
-import StepsDocs from "./register-docs/Steps-docs";
-import UpdateProfile from "./charity-profile/Update-profile";
-import OtherWallets from "./connect-wallet/OtherWallets";
-import SelfCustody from "./connect-wallet/Self-custody";
 import { registration } from "types/routes";
-import KeyPersonProfile from "./keyPerson-profile/KeyPersonProfile";
+import Registration from "./Registration";
+
+const ContactDetails = lazy(() => import("./ContactDetails"));
+const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
+const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
+const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
+const WalletCheck = lazy(() => import("./connect-wallet/WalletCheck"));
+const ConnectWallet = lazy(() => import("./connect-wallet/ConnectWallet"));
+const SelectWallet = lazy(() => import("./connect-wallet/SelectWallet"));
+const StepsDocs = lazy(() => import("./register-docs/Steps-docs"));
+const UpdateProfile = lazy(() => import("./charity-profile/Update-profile"));
+const OtherWallets = lazy(() => import("./connect-wallet/OtherWallets"));
+const SelfCustody = lazy(() => import("./connect-wallet/Self-custody"));
+const KeyPersonProfile = lazy(
+  () => import("./keyPerson-profile/KeyPersonProfile")
+);
 
 const Register = () => {
   //this component will only render under '/app/register/'
