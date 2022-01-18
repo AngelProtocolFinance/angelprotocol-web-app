@@ -98,7 +98,6 @@ function useUSTSender() {
       handleTerraError(err, handleTxError);
     } finally {
       reset();
-      console.log("reset: ", reset);
     }
   }
 
