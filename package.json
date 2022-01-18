@@ -100,9 +100,11 @@
     "@types/react-modal": "^3.12.1",
     "@types/react-router-dom": "^5.1.8",
     "@types/react-select-country-list": "^2.2.0",
+    "autoprefixer": "^9.8.6",
     "eslint-config-prettier": "^8.3.0",
-    "postcss": "^7",
-    "prettier": "^2.3.2"
+    "postcss": "^8.4.5",
+    "prettier": "^2.3.2",
+    "tailwindcss": "^2.2.19"
   },
   "packageManager": "yarn@3.1.1"
 }
