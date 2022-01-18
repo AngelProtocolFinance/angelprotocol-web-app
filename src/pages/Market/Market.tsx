@@ -4,18 +4,20 @@ import Index from "./Index";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "contracts/types";
+import Loader from "components/Loader/Loader";
 
 export default function Market() {
   const wallet = useConnectedWallet();
   const isTest = wallet?.network.chainID === chainIDs.testnet;
 
-  const { data: profiles = [] } = useProfilesQuery(isTest);
+  const { data: profiles = [], isLoading } = useProfilesQuery(isTest);
+
   const sdg_ids = useMemo(
     () =>
       Array.from(
         //consolidate present sdgs then render sdg list
         profiles.reduce((prev: Set<number>, curr) => {
-          prev.add(+curr.un_sdg);
+          curr.un_sdg && prev.add(+curr.un_sdg);
           return prev;
         }, new Set<number>())
         //sort acc to sdg number
@@ -44,6 +46,15 @@ export default function Market() {
           </a>
         </div>
       </div>
+      {isLoading && (
+        <div className="h-40 bg-opacity-5 rounded-lg grid place-items-center">
+          <Loader
+            bgColorClass="bg-white-grey bg-opacity-80"
+            gapClass="gap-2"
+            widthClass="w-4"
+          />
+        </div>
+      )}
       <section className="flex-auto padded-container mx-auto px-5 mt-5">
         {sdg_ids.map((id) => (
           <Index id={id} key={id} />
