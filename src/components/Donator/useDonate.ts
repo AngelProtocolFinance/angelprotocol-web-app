@@ -1,18 +1,22 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Values, Steps, SetStatus, Status } from "./types";
-import createStatusFromError from "./createStatusFromError";
-import Indexfund from "contracts/IndexFund";
-import useUSTBalance from "hooks/useUSTBalance";
-import { FormikHelpers } from "formik";
 import { AccAddress } from "@terra-money/terra.js";
-import getDepositAmount from "./getDepositAmount";
-import Account from "contracts/Account";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { denoms } from "constants/currency";
-import { useLogDonationTransactionMutation } from "services/apes/donations";
+import Account from "contracts/Account";
+import Indexfund from "contracts/IndexFund";
+import { FormikHelpers } from "formik";
 import createAuthToken from "helpers/createAuthToken";
+import useUSTBalance from "hooks/useUSTBalance";
+import { useLogDonationTransactionMutation } from "services/apes/donations";
 import { UserTypes } from "services/user/types";
-//prettier-ignore
-function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress | number ) {
+import createStatusFromError from "./createStatusFromError";
+import getDepositAmount from "./getDepositAmount";
+import { SetStatus, Status, Steps, Values } from "./types";
+
+function useDonate(
+  status: Status,
+  setStatus: SetStatus,
+  receiver?: AccAddress | number
+) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
   const [logDonationTransaction] = useLogDonationTransactionMutation();
@@ -23,7 +27,7 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     const UST_Amount = values.amount;
 
     //values.split = split to locked acc
-    const splitToLiquid = 100 - values.split
+    const splitToLiquid = 100 - values.split;
 
     actions.setSubmitting(true);
     if (!wallet) {
@@ -44,22 +48,11 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
     }
 
     try {
-      let contract; 
       //typeof receiver for IndexFund is number | undefined as enforced by <Donator/> Props
-      if(typeof receiver === 'number' || typeof receiver === 'undefined'){
-        contract = new Indexfund(wallet, receiver)
-        const tcaMembers = await contract.getTCAList();
-        const isTca = tcaMembers.includes(wallet.walletAddress)
-        if(!isTca){
-          setStatus({
-            step: Steps.error,
-            message: "Your wallet is not included in TCA list",
-          });
-          return;
-        }
-      } else {
-        contract = new Account(receiver, wallet)
-      }
+      const contract =
+        typeof receiver === "number" || typeof receiver === "undefined"
+          ? new Indexfund(wallet, receiver)
+          : new Account(receiver, wallet);
 
       //createTx errors will be on catch block
       const transaction = await contract.createDepositTx(
@@ -95,11 +88,14 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           message: "Waiting for transaction result",
         });
 
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000)
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          const depositAmount = getDepositAmount(txInfo.logs!, wallet.network.chainID);
+          const depositAmount = getDepositAmount(
+            txInfo.logs!,
+            wallet.network.chainID
+          );
           // Every transaction is recorded in our APES AWS DynamoDB donations table
           // When a Tax Receipt is requested, an email will be sent to them
           let valuesToBeSubmitted: any = values;
@@ -108,7 +104,10 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           valuesToBeSubmitted["fundId"] = fundId;
           valuesToBeSubmitted["transactionId"] = txInfo.txhash;
           valuesToBeSubmitted["transactionDate"] = new Date().toISOString();
-          Object.keys(valuesToBeSubmitted).forEach(key => valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]); // Removes blank strings ("")
+          Object.keys(valuesToBeSubmitted).forEach(
+            (key) =>
+              valuesToBeSubmitted[key] === "" && delete valuesToBeSubmitted[key]
+          );
           // Auth token to be passed as part of the header of the request
           const authToken = createAuthToken(UserTypes.WEB_APP);
           // Call APES endpoint
@@ -120,14 +119,16 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
           };
 
           const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
-          const result = response.error ? response.error.data.message : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
+          const result = response.error
+            ? response.error.data.message
+            : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
           setStatus({
             step: Steps.success,
             message: result,
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
-              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
             },
           });
         } else {
@@ -136,7 +137,6 @@ function useDonate(status: Status, setStatus: SetStatus, receiver?: AccAddress |
             message: `The transaction ran but failed`,
           });
         }
-  
       }
     } catch (error) {
       console.error(error);

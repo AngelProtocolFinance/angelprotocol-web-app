@@ -26,12 +26,10 @@ export default function Ways() {
             key={article.id}
             className="w-full max-w-lg shadow-md flex flex-col items-start p-6 border-4 border-blue-accent"
           >
-            <h4
-              className={`uppercase text-lg lg:text-xl font-bold text-angel-grey my-4`}
-            >
+            <h4 className="uppercase text-lg lg:text-xl font-bold text-angel-grey my-4">
               {article.title}
             </h4>
-            <p className={`text-angel-grey `}>{article.desc}</p>
+            <p className="text-angel-grey ">{article.desc}</p>
           </article>
         ))}
       </div>

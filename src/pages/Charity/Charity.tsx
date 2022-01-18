@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import DappHead from "components/Headers/DappHead";
 import CharityInfoNav from "./CharityInfoNav";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
@@ -46,7 +45,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
-      <DappHead />
       <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
         <DonationInfo openModal={openModal} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">

@@ -36,9 +36,7 @@ export default function Process() {
             >
               <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg backdrop-blur-xl">
                 <img src={icon} alt="" className="w-14 m-8" />
-                <span
-                  className={`font-bold uppercase text-xs text-angel-grey absolute top-1 -right-6 bg-angel-orange py-2 px-4 rounded-full shadow-md`}
-                >
+                <span className="font-bold uppercase text-xs text-angel-grey absolute top-1 -right-6 bg-angel-orange py-2 px-4 rounded-full shadow-md">
                   {toolkit}
                 </span>
               </div>

@@ -54,23 +54,22 @@ function AccountInfo({
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function AccountAction() {
-  return (
-    <div className="flex flex-col items-start lg:justify-end gap-2 w-115 min-h-r15">
-      <div>
-        <button className="capitalize bg-green-400 text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center">
-          Withdraw (current)
-        </button>
-      </div>
-      <div>
-        <button className="capitalize bg-gray-300 text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center">
-          Change (Strategy)
-        </button>
-      </div>
-    </div>
-  );
-}
+// function AccountAction() {
+//   return (
+//     <div className="flex flex-col items-start lg:justify-end gap-2 w-115 min-h-r15">
+//       <div>
+//         <button className="capitalize bg-green-400 text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center">
+//           Withdraw (current)
+//         </button>
+//       </div>
+//       <div>
+//         <button className="capitalize bg-gray-300 text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center">
+//           Change (Strategy)
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }
 
 function CharityEndowmentInfo() {
   const match = useRouteMatch<CharityParam>();
@@ -130,41 +129,40 @@ function CharityEndowmentInfo() {
 }
 
 //TODO: remove this component declaration inside component
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function CharityPrograms() {
-  function ProgramItem() {
-    return (
-      <div className="flex justify-between gap-5 w-full h-40 font-heading">
-        <div className="w-128 h-full bg-blue-200"></div>
-        <div className="w-full flex-grow h-full text-white">
-          <p className="uppercase text-2xl font-medium tracking-wide m-0">
-            Program name
-          </p>
-          <span className="text-xs inline-block">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-            perspiciatis alias facilis dolorem! Eum non temporibus porro itaque
-            aliquam beatae laudantium quaerat ex dolor atque. Porro non id vel
-            aliquam. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Sequi perspiciatis alias facilis dolorem! Eum non temporibus porro
-            itaque aliquam beatae laudantium quaerat ex dolor atque. Porro non
-            id vel aliquam. Lorem ipsum dolor sit amet consectetur adipisicing
-            elit. Sequi perspiciatis alias facilis dolorem! Eum non temporibus
-            porro itaque aliquam beatae laudantium quaerat ex dolor atque. Porro
-            non id vel aliquam.
-          </span>
-        </div>
-      </div>
-    );
-  }
+// function CharityPrograms() {
+//   function ProgramItem() {
+//     return (
+//       <div className="flex justify-between gap-5 w-full h-40 font-heading">
+//         <div className="w-128 h-full bg-blue-200"></div>
+//         <div className="w-full flex-grow h-full text-white">
+//           <p className="uppercase text-2xl font-medium tracking-wide m-0">
+//             Program name
+//           </p>
+//           <span className="text-xs inline-block">
+//             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
+//             perspiciatis alias facilis dolorem! Eum non temporibus porro itaque
+//             aliquam beatae laudantium quaerat ex dolor atque. Porro non id vel
+//             aliquam. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+//             Sequi perspiciatis alias facilis dolorem! Eum non temporibus porro
+//             itaque aliquam beatae laudantium quaerat ex dolor atque. Porro non
+//             id vel aliquam. Lorem ipsum dolor sit amet consectetur adipisicing
+//             elit. Sequi perspiciatis alias facilis dolorem! Eum non temporibus
+//             porro itaque aliquam beatae laudantium quaerat ex dolor atque. Porro
+//             non id vel aliquam.
+//           </span>
+//         </div>
+//       </div>
+//     );
+//   }
 
-  return (
-    <div className="flex flex-col gap-2 w-full lg:min-h-1/2 lg:mt-5 text-left pb-10">
-      <ProgramItem></ProgramItem>
-      <ProgramItem></ProgramItem>
-      <ProgramItem></ProgramItem>
-    </div>
-  );
-}
+//   return (
+//     <div className="flex flex-col gap-2 w-full lg:min-h-1/2 lg:mt-5 text-left pb-10">
+//       <ProgramItem></ProgramItem>
+//       <ProgramItem></ProgramItem>
+//       <ProgramItem></ProgramItem>
+//     </div>
+//   );
+// }
 
 export default function CharityInfoTab({
   activeTab = "overview",
