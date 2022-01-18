@@ -27,7 +27,7 @@ const Admin = () => {
   );
 
   return (
-    <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
+    <div className="grid bg-gradient-to-b from-blue-accent to-black-blue">
       <WalletProvider
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}

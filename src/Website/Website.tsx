@@ -26,7 +26,7 @@ const Website = () => {
   );
 
   return (
-    <div className={`grid grid-rows-1a bg-white`}>
+    <div className="grid grid-rows-1a bg-white">
       <WebHead />
       <Suspense fallback={<LoaderComponent />}>
         <Switch>
