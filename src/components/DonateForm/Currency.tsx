@@ -34,7 +34,7 @@ function Currency(props: Props) {
       />
       <label
         htmlFor={props.currency}
-        className={`uppercase flex items-center text-sm`}
+        className="uppercase flex items-center text-sm"
       >
         <img
           src={currency_icons[props.currency]}

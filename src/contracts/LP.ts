@@ -78,7 +78,6 @@ export default class LP extends Contract {
           },
         };
 
-    console.log(this.pair_address);
     const result = await this.query<Simulation>(this.pair_address, {
       simulation: {
         offer_asset: {

@@ -54,7 +54,7 @@ const SelectWallet = () => {
       </div>
       <div className="back-btn">
         <p className="mb-5">
-          Thanks, we've been notified and we'll get in tough with you very soon!
+          Thanks, we've been notified and we'll get in touch with you very soon!
         </p>
         <Action
           onClick={() => history.push(registration.wallet_check)}
