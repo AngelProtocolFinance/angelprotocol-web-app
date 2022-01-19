@@ -88,11 +88,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   );
 };
 
-type CharityProps = { charity_addr: string };
-
-type CharityEditProps = { profile: Profile };
-
-function CharityForm(props: CharityProps) {
+function CharityForm(props: { charity_addr: string }) {
   return (
     <Donater to="charity" receiver={props.charity_addr}>
       <DonateSuite inModal />
@@ -100,7 +96,7 @@ function CharityForm(props: CharityProps) {
   );
 }
 
-function CharityProfileForm(props: CharityEditProps) {
+function CharityProfileForm(props: { profile: Profile }) {
   return (
     <CharityUpdateSuite inModal profile={props.profile}>
       <CharityProfileEditForm {...props} />
