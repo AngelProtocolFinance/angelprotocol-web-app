@@ -24,6 +24,7 @@ function useQueryEndowmentBal(
     });
 
     const rateQuery: Swap = await terra.wasm.contractQuery(
+      // TODO: update to read data from testnet as well
       contracts[chainIDs.mainnet][sc.anchor],
       { exchange_rate: { input_denom: "uust" } }
     );
