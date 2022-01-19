@@ -1,5 +1,6 @@
 import { LCDClient } from "@terra-money/terra.js";
-import { Holdings, Swap } from "contracts/types";
+import { contracts } from "constants/contracts";
+import { chainIDs, Holdings, sc, Swap } from "contracts/types";
 import { useCallback, useEffect, useState } from "react";
 import { EndowmentBalanceData } from "./types";
 
@@ -23,7 +24,7 @@ function useQueryEndowmentBal(
     });
 
     const rateQuery: Swap = await terra.wasm.contractQuery(
-      "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
+      contracts[chainIDs.mainnet][sc.anchor],
       { exchange_rate: { input_denom: "uust" } }
     );
 
