@@ -5,7 +5,7 @@ import { EndowmentBalanceData } from "./types";
 
 function useQueryEndowmentBal(
   address: string,
-  placeholder: boolean | undefined
+  placeholder?: boolean
 ): EndowmentBalanceData {
   const [locked, setLocked] = useState(0);
   const [liquid, setLiquid] = useState(0);
