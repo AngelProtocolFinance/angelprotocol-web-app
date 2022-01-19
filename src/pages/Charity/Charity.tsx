@@ -73,18 +73,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          {/* charity info */}
           <CharityInfoNav
             activeTab={activeTab}
             onTabChange={(tab: string) => setActiveTab(tab)}
           />
-          {/* charity info */}
-          {/* Information tabs  */}
           <CharityInfoTab
             activeTab={activeTab}
             endowmentBalanceData={endowmentBalanceData}
           />
-          {/* Information tabs  */}
         </div>
       </div>
       <ToastContainer />
