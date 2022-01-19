@@ -1,24 +1,26 @@
 import { ReactNode } from "react";
+import { MdOutlineClose } from "react-icons/md";
+
+import { useSetModal } from "components/Nodal/Nodal";
+import { Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
 import Broadcast from "./Broadcast";
 import Success from "./Success";
-import { MdOutlineClose } from "react-icons/md";
-import { useSetModal } from "components/Nodal/Nodal";
+import Confirm from "./Confirm";
+import WithdrawForm from "components/Withdraw/WithdrawForm";
 import { setStage } from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
-import ClaimForm from "components/Claimer/ClaimForm";
 
 type Display = { [key in Step]: ReactNode };
 
-export default function ClaimSuite(props: { inModal?: true }) {
+export default function WithdrawSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
   const dispatch = useSetter();
   const { stage } = useGetter((state) => state.transaction);
   const display: Display = {
-    [Step.form]: <ClaimForm />,
-    [Step.confirm]: <></>,
+    [Step.form]: <WithdrawForm />,
+    [Step.confirm]: <Confirm />,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
     [Step.success]: <Success />,
@@ -33,7 +35,7 @@ export default function ClaimSuite(props: { inModal?: true }) {
   return (
     <div
       className={`max-w-md w-full relative ${
-        props.inModal ? "bg-white rounded-md pt-4" : ""
+        props.inModal ? "bg-white rounded-md pt-8" : ""
       }`}
     >
       {props.inModal && (

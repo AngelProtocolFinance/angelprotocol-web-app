@@ -1,41 +1,44 @@
-import { useGetStatus, useSetStatus } from "./Endowment_Admin";
+import { useFormContext } from "react-hook-form";
+
+import { useGetter } from "../../store/accessors";
+import { Values } from "../Withdraw/types";
+import { useSetModal } from "../../components/Nodal/Nodal";
 import toCurrency from "helpers/toCurrency";
-import { EstimatesProps, Steps } from "./types";
+import useConfirmWithdraw from "../Withdraw/useConfirmWithdraw";
 
-export default function Estimates(props: EstimatesProps) {
-  const { message, estimates } = useGetStatus();
-  const setStatus = useSetStatus();
-
-  const amount = toCurrency(estimates?.amount);
-  const fee = toCurrency(estimates?.txFee);
-  const total = toCurrency(estimates?.total);
+export default function Confirm() {
+  const { hideModal } = useSetModal();
+  const { watch } = useFormContext<Values>();
+  const { fee, stage } = useGetter((state) => state.transaction);
+  const handleConfirmWithdraw = useConfirmWithdraw();
+  const amount = watch("withdrawAmount");
+  const total = watch("total");
 
   function handleProceed() {
-    setStatus({ step: Steps.ready });
-    props.handleConfirm();
+    handleConfirmWithdraw();
   }
 
   return (
-    <div className="p-3 md:p-6 bg-white-grey w-full max-w-xs rounded-xl shadow-lg overflow-hidden relative">
+    <div className="p-3 md:p-6 bg-white-grey w-full rounded-xl shadow-lg overflow-hidden relative">
       <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
-        {message}
+        {stage?.content?.message}
       </h3>
       <div className="p-2 font-heading text-angel-grey">
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-4 text-xs text-right font-semibold">
             Amount :
           </span>
-          <span className="">~{amount} UST</span>
+          <span className="">~{toCurrency(amount, 6)} UST</span>
         </p>
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-4 text-xs text-right font-semibold">
             TX Fee :
           </span>
-          <span className="">~{fee} UST</span>
+          <span className="">~{toCurrency(fee, 6)} UST</span>
         </p>
         <p className="w-full mb-1 uppercase grid grid-cols-2 items-center">
           <span className="mr-4 text-xs text-right font-semibold">Total :</span>
-          <span className="">~{total} UST</span>
+          <span className="">~{toCurrency(total, 6)} UST</span>
         </p>
       </div>
 
@@ -47,7 +50,7 @@ export default function Estimates(props: EstimatesProps) {
           Proceed
         </button>
         <button
-          onClick={props.onCloseModal}
+          onClick={hideModal}
           className="m-auto uppercase hover:bg-angel-orange hover:text-white-grey hover:border-opacity-0 rounded-lg w-28 h-8 text-angel-orange border-2 border-angel-orange text-sm font-bold"
         >
           Cancel

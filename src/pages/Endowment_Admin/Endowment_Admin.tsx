@@ -1,35 +1,25 @@
-import { createContext, useContext, useState } from "react";
 import Loader from "components/Loader/Loader";
 import toCurrency from "helpers/toCurrency";
 import Liquid from "./Liquid";
 import Locked from "./Locked";
-import WithdrawForm from "./WithdrawForm";
-import useWithdraw from "./useWithdraw";
+import useWithdraw from "../../components/Withdraw/useWithdraw";
 import { RouteComponentProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
-import { RouteParam, Steps, Status, SetStatus } from "./types";
+import { RouteParam } from "./types";
 import DappHead from "components/Headers/DappHead";
 import TransactionList from "./TransactionList";
-
-const initialStatus = {
-  step: Steps.initial,
-};
-
-const getContext = createContext<Status>(initialStatus);
-const setContext = createContext<SetStatus>(() => initialStatus);
-//use these hooks only in components inside Withdraw.tsx
-export const useGetStatus = () => useContext(getContext);
-export const useSetStatus = () => useContext(setContext);
+import { useSetModal } from "components/Nodal/Nodal";
+import Withdrawer from "components/Withdraw/Withdrawer";
+import WithdrawSuite from "components/TransactionSuite/WithdrawSuite";
 
 export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   //use can malinger this address url param
   //can also pass address as state but no guarantee that user will go to this page using
   //only the in-app link provided
   const address = props.match.params.address;
-  const [status, setStatus] = useState<Status>(initialStatus);
+  const { showModal } = useSetModal();
 
-  const [withdrawFormIsOpen, setWithdrawForm] = useState(false);
   const {
     redirect,
     isReady,
@@ -42,11 +32,9 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
   } = useWithdraw(address);
 
   function openWithdrawForm() {
-    setWithdrawForm(true);
-  }
-
-  function closeWithdrawForm() {
-    setWithdrawForm(false);
+    showModal(WithdrawModal, {
+      address: address,
+    });
   }
 
   return (
@@ -84,7 +72,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
               />
               <Locked lockedBalance={locked} />
             </div>
-            <div>
+            {/* <div>
               <getContext.Provider value={status}>
                 <setContext.Provider value={setStatus}>
                   <WithdrawForm
@@ -95,7 +83,7 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
                   />
                 </setContext.Provider>
               </getContext.Provider>
-            </div>
+            </div> */}
           </div>
           <div className="self-start mb-6 mt-4 w-full font-heading">
             <TransactionList address={address} />
@@ -111,5 +99,15 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
         // </div>
       )}
     </div>
+  );
+}
+
+type WithdrawProps = { address: string };
+
+function WithdrawModal(props: WithdrawProps) {
+  return (
+    <Withdrawer receiver={props.address}>
+      <WithdrawSuite inModal />
+    </Withdrawer>
   );
 }
