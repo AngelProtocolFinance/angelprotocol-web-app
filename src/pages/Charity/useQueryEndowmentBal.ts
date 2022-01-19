@@ -7,9 +7,9 @@ function useQueryEndowmentBal(
   address: string,
   placeholder: boolean | undefined
 ): EndowmentBalanceData {
-  const [locked, setLocked] = useState<number>();
-  const [liquid, setLiquid] = useState<number>();
-  const [overall, setOverall] = useState<number>();
+  const [locked, setLocked] = useState(0);
+  const [liquid, setLiquid] = useState(0);
+  const [overall, setOverall] = useState(0);
 
   // Allows fetching of endowment balance even if wallet is not connected
   const getOnChainData = useCallback(async () => {
@@ -39,19 +39,16 @@ function useQueryEndowmentBal(
   }, [address]);
 
   useEffect(() => {
+    if (placeholder) {
+      return;
+    }
+
     try {
-      // If invalid endowment addr is entered in the url, return 0 values
-      if (placeholder) {
-        setLocked(0);
-        setLiquid(0);
-        setOverall(0);
-      } else {
-        getOnChainData();
-      }
+      getOnChainData();
     } catch (err) {
       console.error(err);
     }
-  }, [address, placeholder, getOnChainData]);
+  }, [placeholder, getOnChainData]); // when the address changes, getOnChainData changes as well
 
   return {
     locked,
