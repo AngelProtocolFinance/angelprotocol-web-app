@@ -2,8 +2,8 @@
 
 
 
-`src/components/` - where all shared components of prominent [app pages](#top-level-app-pages) should be located
-`src/pages/[page name] - 
+`src/components/` - where all shared components of prominent [app pages](#top-level-app-pages) should be located  
+`src/pages/[page name]` - 
 
 
 
