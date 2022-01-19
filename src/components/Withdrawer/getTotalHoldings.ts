@@ -1,5 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { Holding } from "services/terra/types";
+import { Holding } from "services/terra/account/types";
 import { ExchangeMap } from "services/terra/vaults/types";
 
 export default function getTotalHoldings(
