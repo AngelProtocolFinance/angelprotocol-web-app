@@ -60,4 +60,5 @@ Lints the codebase using [`ESlint`](https://eslint.org). Errors and warnings are
 
 Runs `yarn lint` with the `--fix` flag allowing [`ESlint`](https://eslint.org) to fix the issue automatically where possible.
 
+[style guide](style-guide.md)
 
