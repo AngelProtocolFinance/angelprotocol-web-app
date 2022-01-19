@@ -39,8 +39,6 @@ function useQueryEndowmentBal(
   }, [address]);
 
   useEffect(() => {
-    console.log("entered");
-
     try {
       // If invalid endowment addr is entered in the url, return 0 values
       if (placeholder) {
