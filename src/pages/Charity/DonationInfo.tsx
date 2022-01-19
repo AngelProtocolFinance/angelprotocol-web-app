@@ -4,7 +4,7 @@ import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { useRouteMatch } from "react-router-dom";
-import { CharityParam } from "./Charity";
+import { CharityParam } from "./types";
 
 function StatsItem({
   title,

@@ -1,9 +1,7 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
-import { CharityParam } from "./Charity";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import toCurrency from "helpers/toCurrency";
-import { EndowmentBalanceData } from "./types";
+import { CharityParam, EndowmentBalanceData } from "./types";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();

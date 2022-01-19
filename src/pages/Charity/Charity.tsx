@@ -16,8 +16,7 @@ import { profile as profile_placeholder } from "services/aws/endowments/placehol
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useQueryEndowmentBal from "./useQueryEndowmentBal";
-
-export type CharityParam = { address: string };
+import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;

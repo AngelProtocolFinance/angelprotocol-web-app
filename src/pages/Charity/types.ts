@@ -3,3 +3,5 @@ export type EndowmentBalanceData = {
   liquid?: number;
   overall?: number;
 };
+
+export type CharityParam = { address: string };
