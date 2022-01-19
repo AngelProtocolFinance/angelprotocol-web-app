@@ -43,7 +43,7 @@ const endowments_api = aws.injectEndpoints({
     }),
     endowments: builder.query<Endowment[], boolean>({
       //TODO:refactor this query pattern - how?
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
+      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Endowment[]>) => {
         return res.Items;

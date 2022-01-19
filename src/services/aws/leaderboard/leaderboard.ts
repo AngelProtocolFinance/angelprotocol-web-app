@@ -5,7 +5,7 @@ const leaderboard_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     leaderboards: builder.query<Update, boolean>({
       //TODO:refactor this query pattern - how?
-      query: (isTest) => `leaderboard${isTest ? "/test" : "/"}`,
+      query: (isTest) => `leaderboard${isTest ? "/test" : "/"}?except_tier=1`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Endowment[]>) => {
         return { endowments: res.Items, last_update: res.LastUpdate };

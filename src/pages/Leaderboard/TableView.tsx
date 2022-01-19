@@ -3,6 +3,10 @@ import Heading from "./Heading";
 import { Update } from "services/aws/leaderboard/types";
 
 export default function TableView(props: Update) {
+  const filtered = props.endowments.filter(
+    (endw) => !tier1Charities.includes(endw.address)
+  );
+  console.log("endow ", props.endowments.length, filtered.length);
   return (
     <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">
@@ -14,11 +18,9 @@ export default function TableView(props: Update) {
           </tr>
         </thead>
         <tbody>
-          {props.endowments
-            .filter((endowment) => !tier1Charities.includes(endowment.address))
-            .map((endowment) => (
-              <TableEntry key={endowment.address} {...endowment} />
-            ))}
+          {props.endowments.map((endowment) => (
+            <TableEntry key={endowment.address} {...endowment} />
+          ))}
         </tbody>
       </table>
     </div>
