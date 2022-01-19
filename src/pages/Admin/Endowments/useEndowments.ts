@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRegistrarContract } from "services/terra/hooks";
+import { useRegistrarContract } from "services/terra/queriers";
 import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 
 export type Endowment = {

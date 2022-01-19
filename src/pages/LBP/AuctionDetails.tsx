@@ -1,13 +1,5 @@
-import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { Addr } from "components/Copier/types";
-import useSaleStatus from "components/Swapper/useSaleStatus";
-import LBP from "contracts/LBP";
-import toCurrency from "helpers/toCurrency";
-import { useMemo } from "react";
-import { pool_balance } from "services/terra/placeholders";
-import { terra } from "services/terra/terra";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -35,15 +27,6 @@ function AuctionLink({ PreIcon, content, url }: AuctionLinkProps) {
 }
 
 export default function AuctionDetails() {
-  const wallet = useConnectedWallet();
-  const lbp = useMemo(() => new LBP(wallet), [wallet]);
-
-  const { is_live, end, start } = useSaleStatus();
-  const { data: pool = pool_balance } = terra.endpoints.pool.useQueryState(
-    lbp.gen_pool_args()
-  );
-  const remaining_halo = new Dec(pool.token).div(1e6).toNumber();
-
   return (
     <div className="auction-details font-heading">
       <div className="launch-description mb-10">
@@ -91,25 +74,22 @@ export default function AuctionDetails() {
             Launch Details
           </h1>
           <div className="w-full flex flex-wrap gap-5 mt-3">
-            <Details title="status" value={is_live ? "Active" : "Inactive"} />
+            <Details title="status" value={"Inactive"} />
             <Details
               title="start date"
-              value={new Date(start * 1000).toLocaleString()}
+              value={new Date(1639926000000).toLocaleString()}
             />
             <Details
               title="end date"
-              value={new Date(end * 1000).toLocaleString()}
+              value={new Date(1640185200000).toLocaleString()}
             />
           </div>
           <h1 className="text-md font-semibold text-white-grey mb-3 mt-5">
             HaloSwap Statistics
           </h1>
           <div className="w-full flex flex-wrap gap-5 mt-3">
-            {/* <Details title="Starting HALO" value="80000000.00000" /> */}
-            <Details
-              title="Remaining HALO"
-              value={toCurrency(remaining_halo, 2)}
-            />
+            <Details title="Starting HALO" value="80,000,000.00" />
+            <Details title="Ending HALO" value="49,562,362.15" />
           </div>
         </div>
         <div className="contract-details lg:w-1/3 md:w-full flex flex-col">

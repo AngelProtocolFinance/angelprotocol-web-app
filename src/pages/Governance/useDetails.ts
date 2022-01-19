@@ -3,15 +3,14 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import {
   useGovPoll,
-  useGovState,
   useGovConfig,
   useGovStaker,
-  useGovBalance,
   useLatestBlock,
-} from "services/terra/hooks";
+} from "services/terra/queriers";
 import { PollStatus } from "services/terra/types";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
+import { useGovBalanceState } from "services/terra/states";
 
 type ProcessedPollData = {
   id: number;
@@ -38,8 +37,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
   const wallet = useConnectedWallet();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
-  const gov_state = useGovState();
-  const gov_staked = useGovBalance();
+  const gov_staked = useGovBalanceState();
   const gov_staker = useGovStaker();
   const block_height = useLatestBlock();
 
@@ -60,7 +58,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
       vote = vote_info.vote;
     }
 
-    const _gov_staked = new Dec(gov_staked).mul(1e6);
+    const _gov_staked = new Dec(poll.staked_amount);
 
     const num_yes = new Dec(poll.yes_votes);
     const num_no = new Dec(poll.no_votes);
@@ -107,16 +105,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
     };
 
     setData(processed);
-  }, [
-    wallet,
-    gov_config,
-    poll,
-    gov_state,
-    gov_staker,
-    block_height,
-    poll_id,
-    gov_staked,
-  ]);
+  }, [wallet, gov_config, poll, gov_staker, block_height, poll_id, gov_staked]);
 
   return data;
 

@@ -34,7 +34,7 @@ function Currency(props: Props) {
       />
       <label
         htmlFor={props.currency}
-        className={`uppercase flex items-center text-sm`}
+        className="uppercase flex items-center text-sm"
       >
         <img
           src={currency_icons[props.currency]}
@@ -59,7 +59,7 @@ export default memo(Currency);
 function Tooltip_() {
   return (
     <span className="fixed bg-white text-angel-grey p-1.5 rounded-md text-sm shadow-md z-10">
-      comming soon!
+      coming soon!
     </span>
   );
 }
