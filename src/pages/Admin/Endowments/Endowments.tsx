@@ -1,17 +1,18 @@
-import withSideNav from "Admin/withSideNav";
+import withSideNav from "pages/Admin/withSideNav";
 import Loader from "components/Loader/Loader";
-import { Redirect } from "react-router-dom";
+import { Redirect, useRouteMatch } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import { admin, site } from "types/routes";
+import { admin } from "types/routes";
 import DataTable from "./Table";
 import useEndowments from "./useEndowments";
 
 function Endowments() {
+  const { path } = useRouteMatch();
   const adminAuthStatus = useGetter((state) => state.auth.admin.status);
   const { loading, endowments, endowmentDetails } = useEndowments();
 
   if (adminAuthStatus !== "authorized") {
-    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+    return <Redirect to={`${path}/${admin.auth}`} />;
   }
   return (
     <>

@@ -6,11 +6,8 @@ import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 // import useTerraBalance from "hooks/useTerraBalance";
-import {
-  useBalances,
-  useGovStaker,
-  useHaloBalance,
-} from "services/terra/queriers";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useGovStaker } from "services/terra/gov/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {

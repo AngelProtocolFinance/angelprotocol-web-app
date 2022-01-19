@@ -16,7 +16,7 @@ import {
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
-import { useGovStaker } from "services/terra/queriers";
+import { useGovStaker } from "services/terra/gov/queriers";
 
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();

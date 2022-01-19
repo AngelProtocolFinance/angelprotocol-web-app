@@ -21,6 +21,9 @@ export default function DappMenu() {
       <NavLink to={`${site.app}/${app.index}`} {...linkStyles}>
         Leaderboard
       </NavLink>
+      <NavLink to={`${site.app}/${app.admin}`} {...linkStyles}>
+        Admin
+      </NavLink>
     </nav>
   );
 }

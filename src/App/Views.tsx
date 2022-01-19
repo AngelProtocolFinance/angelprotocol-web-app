@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 
+const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
 const ChurchPortal = lazy(() => import("pages/ChurchPortal/ChurchPortal"));
@@ -36,6 +37,7 @@ export default function Views() {
     <Suspense fallback={<LoaderComponent />}>
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+        <Route path={`${path}/${app.admin}`} component={Admin} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
         <Route path={`${path}/${app.charity}/:address`} component={Charity} />
         <Route path={`${path}/${app.login}`} component={Login} />

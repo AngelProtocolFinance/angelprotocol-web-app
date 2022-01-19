@@ -1,23 +1,23 @@
 import Modal from "components/Modal/Modal";
-import { useGetAuthorized } from "contexts/AuthProvider";
 import { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useRouteMatch } from "react-router-dom";
 import { admin, site } from "types/routes";
 import NewIndexFundModal from "./NewIndexFundModal";
 import IndexFundTable from "./Table";
 import UpdateMembersModal from "./UpdateMembersModal";
-import withSideNav from "Admin/withSideNav";
+import withSideNav from "pages/Admin/withSideNav";
 import Action from "components/ActionButton/Action";
 import { useGetter } from "store/accessors";
 
 function IndexFund() {
+  const { path } = useRouteMatch();
   const [showIndexModal, setShowIndexModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const adminAuthStatus = useGetter((state) => state.auth.admin.status);
 
   //user can't access TCA page when not logged in or his prev token expired
   if (adminAuthStatus !== "authorized") {
-    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+    return <Redirect to={`${path}/${admin.auth}`} />;
   }
   return (
     <>

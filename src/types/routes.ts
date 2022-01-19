@@ -10,7 +10,6 @@ export enum web {
 export enum site {
   home = "/",
   app = "/app",
-  admin = "/admin",
 }
 
 export enum admin {
@@ -29,6 +28,7 @@ export enum app {
   charities = "charities",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
+  admin = "admin",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",

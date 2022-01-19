@@ -13,6 +13,8 @@ export default function useAdminAuth() {
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
 
+  console.log(wallet);
+
   useEffect(() => {
     (async () => {
       try {

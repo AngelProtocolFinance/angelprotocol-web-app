@@ -3,7 +3,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useSetModal } from "components/Nodal/Nodal";
 import VoteSuite from "components/TransactionSuite/VoteSuite";
 import Voter from "components/Voter/Voter";
-import { PollStatus } from "services/terra/types";
+import { PollStatus } from "services/terra/gov/types";
 import useDetails from "./useDetails";
 import usePollAction from "./usePollAction";
 

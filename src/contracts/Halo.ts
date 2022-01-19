@@ -9,7 +9,8 @@ import {
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { PollExecuteMsg, sc, Vote } from "./types";
-import { ContractQueryArgs, GovState } from "services/terra/types";
+import { GovState } from "services/terra/gov/types";
+import { ContractQueryArgs } from "services/terra/types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {

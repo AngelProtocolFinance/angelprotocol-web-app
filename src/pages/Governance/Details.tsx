@@ -2,7 +2,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import useDetails from "./useDetails";
 import PollAction from "./PollAction";
-import { PollStatus } from "services/terra/types";
+import { PollStatus } from "services/terra/gov/types";
 
 export default function Details(props: RouteComponentProps<{ id?: string }>) {
   const details = useDetails(props.match.params.id);
