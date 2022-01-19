@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import useQueryEndowmentBal from "./useQueryEndowmentBal";
 
 export type CharityParam = { address: string };
 
@@ -25,6 +26,10 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const wallet = useConnectedWallet();
+  const endowmentBalanceData = useQueryEndowmentBal(
+    endowment_addr,
+    profile.is_placeholder
+  );
 
   const showDonationForm = () => {
     //the button firing this function is disabled when
@@ -75,7 +80,10 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
           />
           {/* charity info */}
           {/* Information tabs  */}
-          <CharityInfoTab activeTab={activeTab} />
+          <CharityInfoTab
+            activeTab={activeTab}
+            endowmentBalanceData={endowmentBalanceData}
+          />
           {/* Information tabs  */}
         </div>
       </div>

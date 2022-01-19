@@ -1,11 +1,12 @@
 import { LCDClient } from "@terra-money/terra.js";
 import { Holdings, Swap } from "contracts/types";
 import { useCallback, useEffect, useState } from "react";
+import { EndowmentBalanceData } from "./types";
 
 function useQueryEndowmentBal(
   address: string,
   placeholder: boolean | undefined
-) {
+): EndowmentBalanceData {
   const [locked, setLocked] = useState<number>();
   const [liquid, setLiquid] = useState<number>();
   const [overall, setOverall] = useState<number>();
@@ -38,6 +39,8 @@ function useQueryEndowmentBal(
   }, [address]);
 
   useEffect(() => {
+    console.log("entered");
+
     try {
       // If invalid endowment addr is entered in the url, return 0 values
       if (placeholder) {
