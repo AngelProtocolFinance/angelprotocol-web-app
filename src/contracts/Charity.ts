@@ -14,18 +14,12 @@ export default class Charity extends Contract {
     this.endowmentAddress = endowmentAddress;
   }
 
-  async getEndowmentBalanceData(): Promise<BalanceData> {
+  async getEndowmentBalanceData() {
     const anchorRateData = await this.getAnchorRateData();
-    const endowmentHoldings = await this.getHoldings();
+    const holdings = await this.getHoldings();
+    const data = this.calculateBalanceData(anchorRateData, holdings);
 
-    const exchangeRate = Number(anchorRateData.exchange_rate);
-    // we divide by 1e6 to convert UUST to UST
-    const locked =
-      (Number(endowmentHoldings.locked_cw20[0].amount!) * exchangeRate) / 1e6;
-    const liquid =
-      (Number(endowmentHoldings.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
-
-    return { locked, liquid };
+    return data;
   }
 
   private async getAnchorRateData() {
@@ -40,5 +34,19 @@ export default class Charity extends Contract {
       balance: {},
     });
     return result;
+  }
+
+  private calculateBalanceData(
+    anchorRateData: Swap,
+    holdings: Holdings
+  ): BalanceData {
+    const exchangeRate = Number(anchorRateData.exchange_rate);
+    // we divide by 1e6 to convert UUST to UST
+    const locked =
+      (Number(holdings.locked_cw20[0].amount!) * exchangeRate) / 1e6;
+    const liquid =
+      (Number(holdings.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
+
+    return { locked, liquid };
   }
 }
