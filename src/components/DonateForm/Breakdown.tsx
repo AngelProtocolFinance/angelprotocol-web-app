@@ -10,7 +10,6 @@ export default function Breakdown() {
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
 
-  console.log("fee =>", fee);
   return (
     <div className="pb-1">
       <Entry title="tx fee" amount={fee} currency={currency} />

@@ -8,7 +8,7 @@ export default function Amount() {
   const { fee } = useGetter((state) => state.transaction);
   const { register, watch } = useFormContext<Values>();
   const address = watch("receiver");
-  const withdrawAmount = watch("withdrawAmount") || 0;
+  const withdrawAmount = watch("total") || 0;
   const { liquidCW20Tokens } = useHoldings(address || "");
 
   return (
@@ -39,10 +39,6 @@ export default function Amount() {
         <div className="flex justify-between">
           <p className="text-angel-grey text-xs">Withdraw Amount</p>
           <p className="text-angel-grey text-sm">{withdrawAmount} UST</p>
-        </div>
-        <div className="flex justify-between">
-          <p className="text-angel-grey text-xs">TX Fee</p>
-          <p className="text-angel-grey text-sm">{fee} UST</p>
         </div>
       </div>
     </div>

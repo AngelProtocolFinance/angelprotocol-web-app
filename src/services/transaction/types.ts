@@ -1,6 +1,5 @@
 export enum Step {
   form = "form",
-  confirm = "confirm",
   submit = "submit",
   broadcast = "broadcast",
   success = "success",

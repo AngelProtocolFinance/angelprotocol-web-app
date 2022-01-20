@@ -18,7 +18,6 @@ export default function DonateSuite(props: { inModal?: true }) {
   const { stage } = useGetter((state) => state.transaction);
   const display: Display = {
     [Step.form]: <DonateForm />,
-    [Step.confirm]: <></>,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
     [Step.success]: <Success />,

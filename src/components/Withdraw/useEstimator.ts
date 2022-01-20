@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 
 import { useSetter } from "store/accessors";
-import toCurrency from "helpers/toCurrency";
 import { Values } from "./types";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import {
@@ -45,27 +44,41 @@ export default function useEstimator(
           return;
         }
 
-        if (amount > Number(toCurrency(liquidCW20Tokens! / 1e6, 3))) {
+        const balance = new Dec(liquidCW20Tokens).div(1e6);
+        if (balance.lt(amount)) {
           dispatch(setFormError("Not enough Token"));
           return;
         }
 
-        dispatch(setFormLoading(true));
-
-        const account = new Account(address, wallet);
-        const transaction = await account.createWithdrawTx(
-          anchorVault,
-          withdrawTokenQty
-        );
-
-        // Computing for fees
-        const estimatedFee =
-          transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
-        setValue("withdrawAmount", withdrawAmount);
-
         if (amount === 0) {
           dispatch(setFee(0));
+          setValue("total", 0);
         } else {
+          setValue("total", 0);
+          dispatch(setFormLoading(true));
+
+          const account = new Account(address, wallet);
+          const transaction = await account.createWithdrawTx(
+            anchorVault,
+            withdrawTokenQty
+          );
+
+          // Computing for fees
+          const estimatedFee =
+            transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
+          setValue("withdrawAmount", withdrawAmount);
+          setValue("total", withdrawAmount - estimatedFee);
+
+          // Withdraw amount should be at least $2
+          const withdraw_amount = new Dec(withdrawAmount - estimatedFee);
+          if (withdraw_amount.lte(2)) {
+            dispatch(
+              setFormError(
+                "Withdraw amount is too low. You can withdraw more than $2"
+              )
+            );
+            return;
+          }
           dispatch(setFee(estimatedFee));
         }
 

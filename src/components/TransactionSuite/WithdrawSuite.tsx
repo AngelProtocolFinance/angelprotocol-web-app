@@ -11,8 +11,7 @@ import Success from "./Success";
 import Confirm from "./Confirm";
 import WithdrawForm from "components/Withdraw/WithdrawForm";
 import { setStage } from "services/transaction/transactionSlice";
-
-type Display = { [key in Step]: ReactNode };
+import { Display } from "./types";
 
 export default function WithdrawSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();
@@ -20,7 +19,6 @@ export default function WithdrawSuite(props: { inModal?: true }) {
   const { stage } = useGetter((state) => state.transaction);
   const display: Display = {
     [Step.form]: <WithdrawForm />,
-    [Step.confirm]: <Confirm />,
     [Step.submit]: <Submit />,
     [Step.broadcast]: <Broadcast />,
     [Step.success]: <Success />,

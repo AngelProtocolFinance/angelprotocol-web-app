@@ -3,7 +3,6 @@ import Account from "../../contracts/Account";
 import { denoms } from "../../constants/currency";
 import { Values } from "./types";
 import { Step } from "services/transaction/types";
-import toCurrency from "../../helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { useSetter } from "store/accessors";
 import { setFormError, setStage } from "services/transaction/transactionSlice";
@@ -11,7 +10,7 @@ import useHoldings from "./useHoldings";
 import useEstimator from "./useEstimator";
 
 export default function useWithdrawHoldings() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const address = watch("receiver") || "";
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
@@ -22,22 +21,10 @@ export default function useWithdrawHoldings() {
 
   async function handleWithdrawHoldings() {
     const amount = watch("withdraw");
-    const withdrawAmount = (liquidCW20TokenValue! * Number(amount)) / 100;
     const withdrawTokenQty = Math.round(
       (liquidCW20Tokens! * Number(amount)) / 100
     ).toString();
     try {
-      // Withdraw amount should be at least $2
-      if (toCurrency(withdrawAmount) <= "1.99") {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Withdraw amount is too low" },
-          })
-        );
-        return;
-      }
-
       // Initiate withdraw transaction
       const account = new Account(address, wallet);
       const transaction = await account.createWithdrawTx(
@@ -45,20 +32,29 @@ export default function useWithdrawHoldings() {
         withdrawTokenQty
       );
 
-      // Computing for fees
-      const estimatedFee =
-        transaction.fee!.amount.get(denoms.uusd)!.amount.toNumber() / 1e6;
       // Let the user confirm the transaction
       dispatch(
         setStage({
-          step: Step.confirm,
-          content: {
-            message: "Kindly confirm the transaction details",
-          },
+          step: Step.submit,
+          content: { message: "Submitting transaction..." },
         })
       );
-      setValue("withdrawAmount", withdrawAmount);
-      setValue("total", withdrawAmount - estimatedFee);
+      const response = await wallet!.post(transaction);
+
+      // Get transaction info
+      if (response.success) {
+        dispatch(
+          setStage({
+            step: Step.success,
+            content: {
+              message: "Successfully withdrawn!",
+              url: `https://finder.terra.money/${wallet!.network.chainID}/tx/${
+                response.result.txhash
+              }`,
+            },
+          })
+        );
+      }
     } catch (err) {
       console.error(err);
       dispatch(setFormError("Withdraw failed"));
