@@ -20,15 +20,18 @@ import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
-  const wallet = useConnectedWallet();
   const endowmentBalanceData = useQueryEndowmentBal(
     endowment_addr,
     profile.is_placeholder
   );
+
+  const wallet = useConnectedWallet();
+  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
 
   const showDonationForm = () => {
     //the button firing this function is disabled when
@@ -45,8 +48,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
-
-  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

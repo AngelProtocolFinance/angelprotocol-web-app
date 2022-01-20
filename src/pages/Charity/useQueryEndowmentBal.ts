@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { EndowmentBalanceData } from "./types";
 
 function useQueryEndowmentBal(
-  address: string,
+  endowmentAddress: string,
   placeholder?: boolean
 ): EndowmentBalanceData {
   const [locked, setLocked] = useState(0);
@@ -14,7 +14,7 @@ function useQueryEndowmentBal(
   const wallet = useConnectedWallet();
 
   const getOnChainData = useCallback(async () => {
-    const contract = new Charity(address, wallet);
+    const contract = new Charity(endowmentAddress, wallet);
     const { locked, liquid } = await contract.getEndowmentBalanceData();
 
     setLocked(locked);
@@ -24,7 +24,7 @@ function useQueryEndowmentBal(
     // `wallet` doesn't need to be included in the dep. array since the endowment balance data
     // does not depend on the (dis)connected wallet
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [endowmentAddress]);
 
   useEffect(() => {
     if (placeholder) return;
@@ -34,7 +34,7 @@ function useQueryEndowmentBal(
     } catch (err) {
       console.error(err);
     }
-    // when the address changes, getOnChainData changes as well
+    // when the endowmentAddress changes, getOnChainData changes as well
   }, [placeholder, getOnChainData]);
 
   return {
