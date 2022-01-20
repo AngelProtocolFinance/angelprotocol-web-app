@@ -30,6 +30,9 @@ module.exports = {
         comet: "url('assets/images/comet.jpg')",
         auction: "linear-gradient(67deg, #9cc9e924, #66accd59)",
       },
+      boxShadow: {
+        "3xl": "0 1px 9px 1px  rgba(0, 0, 0, 0.3)",
+      },
       cursor: {
         grab: "grab",
         grabbing: "grabbing",
