@@ -16,14 +16,14 @@ export default class Charity extends Contract {
 
   async getEndowmentBalanceData(): Promise<BalanceData> {
     const anchorRateData = await this.getAnchorRateData();
-    const endowmentBal = await this.getHoldings();
+    const endowmentHoldings = await this.getHoldings();
 
     const exchangeRate = Number(anchorRateData.exchange_rate);
     // we divide by 1e6 to convert UUST to UST
     const locked =
-      (Number(endowmentBal.locked_cw20[0].amount!) * exchangeRate) / 1e6;
+      (Number(endowmentHoldings.locked_cw20[0].amount!) * exchangeRate) / 1e6;
     const liquid =
-      (Number(endowmentBal.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
+      (Number(endowmentHoldings.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
 
     return { locked, liquid };
   }
