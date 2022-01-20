@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
@@ -10,8 +9,7 @@ import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { Airdrops } from "services/aws/airdrop/types";
 import Catcher from "components/Airdrop/Catcher";
-
-type Display = { [key in Step]: ReactNode };
+import { Display } from "./types";
 
 export type AirdropProps = { airdrops: Airdrops };
 export default function AirdropSuite(props: AirdropProps) {

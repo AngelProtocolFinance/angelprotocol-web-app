@@ -176,6 +176,8 @@ module.exports = {
       backgroundColor: ["disabled"],
       textColor: ["disabled"],
       translate: ["active"],
+      display: ["hover", "group-hover"],
+      brightness: ["hover", "group-hover"],
     },
   },
 };

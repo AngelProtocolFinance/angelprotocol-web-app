@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { MouseEvent, useRef, useState } from "react";
 
 export default function useClickScroll() {
   const [down, setDown] = useState<Boolean>(false);
@@ -6,7 +6,7 @@ export default function useClickScroll() {
   const scrollLefRef = useRef<number>(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  function handleMouseDown(e: React.MouseEvent) {
+  function handleMouseDown(e: MouseEvent) {
     if (!sliderRef.current) {
       return;
     }
@@ -23,7 +23,7 @@ export default function useClickScroll() {
     setDown(false);
   }
 
-  function handleMouseMove(e: React.MouseEvent) {
+  function handleMouseMove(e: MouseEvent) {
     e.preventDefault();
     if (!down || !sliderRef.current) return;
     const x = e.pageX - sliderRef.current.offsetLeft;

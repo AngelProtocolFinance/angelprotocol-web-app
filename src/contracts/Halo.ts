@@ -9,8 +9,8 @@ import {
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 import { PollExecuteMsg, sc, Vote } from "./types";
-import { ContractQueryArgs } from "services/terra/types";
 import { Airdrops } from "services/aws/airdrop/types";
+import { ContractQueryArgs, GovState } from "services/terra/types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
@@ -61,6 +61,9 @@ export default class Halo extends Contract {
       },
     });
   }
+  async getGovState() {
+    return this.query<GovState>(this.gov_address, this.gov_state.msg);
+  }
 
   //halo_token
   async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
@@ -87,10 +90,12 @@ export default class Halo extends Contract {
     title: string,
     description: string,
     link?: string,
-    msgs?: PollExecuteMsg[]
+    msgs?: PollExecuteMsg[],
+    snapshot = false
   ) {
     this.checkWallet();
     const u_amount = new Dec(amount).mul(1e6).toInt();
+    const poll_msgs: MsgExecuteContract[] = [];
     const poll_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.token_address,
@@ -104,9 +109,24 @@ export default class Halo extends Contract {
         },
       }
     );
-    const fee = await this.estimateFee([poll_msg]);
+
+    poll_msgs.push(poll_msg);
+
+    if (snapshot) {
+      const gov_state = await this.getGovState();
+      const snapshot_msg = new MsgExecuteContract(
+        this.walletAddr!,
+        this.gov_address,
+        {
+          snapshot_poll: { poll_id: gov_state.poll_count + 1 },
+        }
+      );
+      poll_msgs.push(snapshot_msg);
+    }
+
+    const fee = await this.estimateFee(poll_msgs);
     // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
-    return { msgs: [poll_msg], fee };
+    return { msgs: poll_msgs, fee };
   }
 
   //halo_gov
