@@ -22,6 +22,7 @@ export default class Charity extends Contract {
     });
 
     const exchangeRate = Number(rateQuery.exchange_rate);
+    // we divide by 1e6 to convert UUST to UST
     const locked =
       (Number(endowmentBal.locked_cw20[0].amount!) * exchangeRate) / 1e6;
     const liquid =
