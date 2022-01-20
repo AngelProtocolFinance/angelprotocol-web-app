@@ -15,9 +15,7 @@ export default function CharityCard(props: { address: string }) {
         src={profile.charity_image}
         alt="charity banner"
       />
-      <p
-        className={`block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5`}
-      >
+      <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
         {profile.charity_name}
       </p>
       <span className="text-opacity-80 line-clamp-2 text-sm text-white-grey">
