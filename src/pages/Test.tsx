@@ -1,4 +1,3 @@
-import DappHead from "components/Headers/DappHead";
 import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 // import Voter from "components/Voter/Voter";
 // import VoterForm from "components/Voter/VoterForm";
@@ -7,8 +6,7 @@ export default function Test() {
   const { data } = useLeaderboardsQuery(true);
   console.log(data);
   return (
-    <div className="grid grid-rows-a1 place-items-center">
-      <DappHead />
+    <div className="grid place-items-center">
       {/* <Voter poll_id="5">
         <VoterForm />
       </Voter> */}

@@ -35,9 +35,9 @@ function useConfirmWithdraw(
           message: "Successfully withdrawn!",
           result: {
             withdrawn: withdrawAmount,
-            url: `https://finder.terra.money/${wallet!.network.chainID}/tx/${
-              response.result.txhash
-            }`,
+            url: `https://finder.extraterrestrial.money/${
+              wallet!.network.chainID
+            }/tx/${response.result.txhash}`,
           },
         });
       }

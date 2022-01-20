@@ -19,10 +19,7 @@ import toCurrency from "helpers/toCurrency";
 import { useGovStaker } from "services/terra/queriers";
 
 export default function useEstimator() {
-  const {
-    watch,
-    formState: { isValid },
-  } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -41,8 +38,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
-
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));

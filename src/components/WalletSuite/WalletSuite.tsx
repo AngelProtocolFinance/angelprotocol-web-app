@@ -1,8 +1,5 @@
 import { IoWalletSharp } from "react-icons/io5";
 import TerraDisplay from "components/TerraStation/Display";
-import EthDisplay from "components/Ethereum/Display";
-import PhantomDisp from "components/Phantom/Display";
-import KeplrDisp from "components/Keplr/Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
@@ -43,8 +40,13 @@ export default function WalletSuite() {
 
 const displays = {
   [Wallets.none]: null,
-  [Wallets.ethereum]: <EthDisplay />,
   [Wallets.terra]: <TerraDisplay />,
-  [Wallets.phantom]: <PhantomDisp />,
-  [Wallets.keplr]: <KeplrDisp />,
 };
+
+// const displays = {
+// [Wallets.none]: null,
+// [Wallets.terra]: <TerraDisplay />,
+// [Wallets.ethereum]: <EthDisplay />,
+// [Wallets.phantom]: <PhantomDisp />,
+// [Wallets.keplr]: <KeplrDisp />,
+// };

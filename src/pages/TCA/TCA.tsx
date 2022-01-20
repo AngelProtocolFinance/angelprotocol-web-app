@@ -3,7 +3,6 @@ import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
-import DappHead from "components/Headers/DappHead";
 
 export default function TCA() {
   const decodedToken = useGetToken();
@@ -13,8 +12,7 @@ export default function TCA() {
   }
 
   return (
-    <div className="grid grid-rows-a1 place-items-center pt-2">
-      <DappHead />
+    <div className="grid place-items-center pt-2">
       <Donater to="tca">
         <DonateSuite />
       </Donater>
