@@ -10,7 +10,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { Disconnected, TxResultFail } from "./Errors";
-import { chainIDs } from "./types";
+import { chainIDs, EmbeddedWasmMsg } from "./types";
 
 export default class Contract {
   wallet?: ConnectedWallet;
@@ -73,6 +73,23 @@ export default class Contract {
         `https://finder.extraterrestrial.money/${this.chainID}/tx/${txhash}`
       );
     });
+  }
+
+  createdEmbeddedWasmMsg(
+    funds: Coin.Data[],
+    to: string,
+    msg: object
+  ): EmbeddedWasmMsg {
+    const binary_msg = btoa(JSON.stringify(msg));
+    return {
+      wasm: {
+        execute: {
+          contract_addr: to,
+          funds,
+          msg: binary_msg,
+        },
+      },
+    };
   }
 
   checkWallet() {

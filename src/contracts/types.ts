@@ -1,3 +1,4 @@
+import { Coins } from "@terra-money/terra.js";
 export enum chainIDs {
   testnet = "bombay-12",
   mainnet = "columbus-5",
@@ -43,6 +44,16 @@ export type URLs = {
 //Contract types
 export type ContractAddrs = {
   [index: string]: string;
+};
+
+export type EmbeddedWasmMsg = {
+  wasm: {
+    execute: {
+      contract_addr: string;
+      funds: Coins.Data;
+      msg: string; //base64 endocoded msg object
+    };
+  };
 };
 
 //Index Fund types
