@@ -1,5 +1,4 @@
 import { RouteComponentProps } from "react-router-dom";
-import DappHead from "components/Headers/DappHead";
 import Donater from "components/Donater/Donater";
 import DonateSuite from "components/TransactionSuite/DonateSuite";
 
@@ -8,8 +7,7 @@ export type ChurchPortalParam = { address: string };
 const ChurchPortal = (props: RouteComponentProps<ChurchPortalParam>) => {
   const endowment_addr = props.match.params.address;
   return (
-    <div className="grid grid-rows-a1 place-items-center pt-2">
-      <DappHead />
+    <div className="grid place-items-center pt-2">
       <h2 className="text-2xl font-bold text-white mt-20 m-5">
         Church Endowment Donation Portal
       </h2>

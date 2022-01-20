@@ -7,7 +7,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 import { RouteParam } from "./types";
-import DappHead from "components/Headers/DappHead";
 import TransactionList from "./TransactionList";
 import { useSetModal } from "components/Nodal/Nodal";
 import Withdrawer from "components/Withdraw/Withdrawer";
@@ -39,7 +38,6 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
 
   return (
     <div className="grid content-start">
-      <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (
         <div className="min-h-withdraw-table grid place-items-center">
@@ -72,18 +70,6 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
               />
               <Locked lockedBalance={locked} />
             </div>
-            {/* <div>
-              <getContext.Provider value={status}>
-                <setContext.Provider value={setStatus}>
-                  <WithdrawForm
-                    address={address}
-                    liquid={liquid!}
-                    isModalOpened={withdrawFormIsOpen}
-                    onCloseModal={closeWithdrawForm}
-                  />
-                </setContext.Provider>
-              </getContext.Provider>
-            </div> */}
           </div>
           <div className="self-start mb-6 mt-4 w-full font-heading">
             <TransactionList address={address} />

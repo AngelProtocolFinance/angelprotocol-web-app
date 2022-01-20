@@ -29,9 +29,7 @@ export default function Description(props: Props) {
       >
         {details.name}
       </a>
-      <p
-        className={`relative pr-16 text-sm text-angel-grey  leading-normal mb-2 line-clamp-3`}
-      >
+      <p className="relative pr-16 text-sm text-angel-grey  leading-normal mb-2 line-clamp-3">
         {details.description}
       </p>
     </div>

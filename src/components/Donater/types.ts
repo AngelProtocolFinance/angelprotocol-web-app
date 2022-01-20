@@ -11,7 +11,6 @@ export interface Values {
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
 }
-
 export type ErrorHandler = (message: string, url?: string) => void;
 
 export interface XFI {

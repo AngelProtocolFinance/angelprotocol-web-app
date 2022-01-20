@@ -21,7 +21,7 @@ const Registration = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<{ refer: string }>({
     resolver: yupResolver(FormInfoSchema),
   });
 

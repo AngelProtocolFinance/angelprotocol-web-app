@@ -16,13 +16,11 @@ export default function DappHead() {
   }
 
   return (
-    <header
-      className={`mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3`}
-    >
+    <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3">
       <Logo />
       <DappMenu />
       <WalletSuite />
-      <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
+      <button className="text-white-grey ml-2 lg:hidden" onClick={toggleNav}>
         {navShown ? (
           <IoClose className="text-2xl" />
         ) : (
