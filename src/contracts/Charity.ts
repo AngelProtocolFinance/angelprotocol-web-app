@@ -1,5 +1,6 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/currency";
 import Contract from "./Contract";
 import { BalanceData, Holdings, sc, Swap } from "./types";
 
@@ -17,7 +18,7 @@ export default class Charity extends Contract {
     const endowmentBal: Holdings = await this.getHoldings();
 
     const rateQuery = await this.query<Swap>(this.anchorAddress, {
-      exchange_rate: { input_denom: "uust" },
+      exchange_rate: { input_denom: denoms.uusd },
     });
 
     const exchangeRate = Number(rateQuery.exchange_rate);
