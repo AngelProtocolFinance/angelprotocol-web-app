@@ -1,10 +1,15 @@
+import contract_querier from "../contract_querier";
 import { terra } from "../terra";
+import { ContractQueryArgs, QueryRes } from "../types";
+import { Member, MemberRes } from "./types";
 
-const admin_api = terra.injectEndpoints({
+export const admin_api = terra.injectEndpoints({
   endpoints: (builder) => ({
-    donors: builder.query<any, any>({
-      query: () => "alliance",
-      transformResponse: (res: any) => {},
+    members: builder.query<Member[], ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<MemberRes>) => {
+        return res.query_result.members;
+      },
     }),
   }),
 });

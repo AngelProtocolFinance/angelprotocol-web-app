@@ -11,6 +11,7 @@ import {
 import { admin } from "types/routes";
 import Dashboard from "./Dashboard";
 import useAdminAuth from "./useAdminAuth";
+import Proposer from "./Proposer";
 
 const Authentication = lazy(() => import("pages/Admin/Authentication"));
 const CharityApps = lazy(() => import("pages/Admin/CharityApps/CharityApps"));
@@ -29,21 +30,9 @@ const Admin = () => {
     <Suspense fallback={<LoaderComponent />}>
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-        <Route
-          path={`${path}/${admin.index_fund_management}`}
-          component={IndexFund}
-        />
-        <Route
-          path={`${path}/${admin.charity_applications}`}
-          component={CharityApps}
-        />
-        <Route path={`${path}/${admin.endowments}`} component={IndexFund} />
-        <Route
-          path={`${path}/${admin.alliance_members}`}
-          component={IndexFund}
-        />
         <Route path={`${path}/${admin.auth}`} component={Authentication} />
-        <Route path={`${path}/${admin.index}`} component={Dashboard} />
+        <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
+        <Route exact path={`${path}/${admin.index}`} component={Dashboard} />
         <Redirect from="*" to={`${path}/${admin.auth}`} />
       </Switch>
     </Suspense>

@@ -13,13 +13,19 @@ export enum site {
 }
 
 export enum admin {
-  index = "dashboard",
+  index = "",
   authentication = "authentication",
   index_fund_management = "index-fund",
   endowments = "endowments",
   alliance_members = "alliance-members",
   charity_applications = "charity-applications",
+  proposal_types = "proposal-types",
   auth = "auth",
+}
+
+export enum proposal_types {
+  admin_add_member = "admin-add-member",
+  admin_remove_member = "admin-remove-member",
 }
 
 export enum app {

@@ -13,8 +13,6 @@ export default function useAdminAuth() {
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
 
-  console.log(wallet);
-
   useEffect(() => {
     (async () => {
       try {
@@ -38,8 +36,6 @@ export default function useAdminAuth() {
         const apCW4_member = await contract.get_apCW4_member(
           wallet.walletAddress
         );
-
-        console.log(apCW4_member);
 
         if (!apCW4_member.weight) {
           dispatch(updateAdminStatus("unauthorized"));
