@@ -31,7 +31,8 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   );
 
   const wallet = useConnectedWallet();
-  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
+  const isCharityOwner =
+    wallet && wallet?.walletAddress === profile.charity_owner;
 
   const showDonationForm = () => {
     //the button firing this function is disabled when
