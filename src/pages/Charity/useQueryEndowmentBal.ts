@@ -1,7 +1,5 @@
-import { LCDClient } from "@terra-money/terra.js";
-import { contracts } from "constants/contracts";
-import { terra_lcds } from "constants/urls";
-import { chainIDs, Holdings, sc, Swap } from "contracts/types";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Charity from "contracts/Charity";
 import { useCallback, useEffect, useState } from "react";
 import { EndowmentBalanceData } from "./types";
 
@@ -13,45 +11,31 @@ function useQueryEndowmentBal(
   const [liquid, setLiquid] = useState(0);
   const [overall, setOverall] = useState(0);
 
-  // Allows fetching of endowment balance even if wallet is not connected
+  const wallet = useConnectedWallet();
+
   const getOnChainData = useCallback(async () => {
-    const terra = new LCDClient({
-      URL: terra_lcds[chainIDs.mainnet],
-      chainID: chainIDs.mainnet,
-    });
+    const contract = new Charity(address, wallet);
+    const { locked, liquid } = await contract.getEndowmentBalanceData();
 
-    const endowmentBal: Holdings = await terra.wasm.contractQuery(address, {
-      balance: {},
-    });
+    setLocked(locked);
+    setLiquid(liquid);
+    setOverall(locked + liquid);
 
-    const rateQuery: Swap = await terra.wasm.contractQuery(
-      // TODO: update to read data from testnet as well
-      contracts[chainIDs.mainnet][sc.anchor],
-      { exchange_rate: { input_denom: "uust" } }
-    );
-
-    const exchangeRate = Number(rateQuery.exchange_rate);
-    const microLocked =
-      (Number(endowmentBal.locked_cw20[0].amount!) * exchangeRate) / 1e6;
-    const microLiquid =
-      (Number(endowmentBal.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
-
-    setLocked(microLocked);
-    setLiquid(microLiquid);
-    setOverall(microLocked + microLiquid);
+    // `wallet` doesn't need to be included in the dep. array since the endowment balance data
+    // does not depend on the (dis)connected wallet
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
 
   useEffect(() => {
-    if (placeholder) {
-      return;
-    }
+    if (placeholder) return;
 
     try {
       getOnChainData();
     } catch (err) {
       console.error(err);
     }
-  }, [placeholder, getOnChainData]); // when the address changes, getOnChainData changes as well
+    // when the address changes, getOnChainData changes as well
+  }, [placeholder, getOnChainData]);
 
   return {
     locked,
