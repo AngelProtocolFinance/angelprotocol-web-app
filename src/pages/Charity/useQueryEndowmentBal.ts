@@ -1,5 +1,6 @@
 import { LCDClient } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
+import { terra_lcds } from "constants/urls";
 import { chainIDs, Holdings, sc, Swap } from "contracts/types";
 import { useCallback, useEffect, useState } from "react";
 import { EndowmentBalanceData } from "./types";
@@ -15,8 +16,8 @@ function useQueryEndowmentBal(
   // Allows fetching of endowment balance even if wallet is not connected
   const getOnChainData = useCallback(async () => {
     const terra = new LCDClient({
-      URL: "https://lcd.terra.dev",
-      chainID: "columbus-5",
+      URL: terra_lcds[chainIDs.mainnet],
+      chainID: chainIDs.mainnet,
     });
 
     const endowmentBal: Holdings = await terra.wasm.contractQuery(address, {
