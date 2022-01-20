@@ -3,43 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-<<<<<<< HEAD
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-proposal-logical-assignment-operators": "^7.16.7",
-=======
->>>>>>> main
     "@craco/craco": "^6.2.0",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
     "@reduxjs/toolkit": "^1.6.1",
-<<<<<<< HEAD
-    "@tailwindcss/line-clamp": "^0.3.0",
-=======
->>>>>>> main
     "@terra-money/wallet-provider": "^2.3.0",
     "@testing-library/dom": "^8.11.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-<<<<<<< HEAD
-    "babel-jest": "^26.6.0",
-    "babel-loader": "8.1.0",
     "currency-list": "^1.0.6",
-    "eslint": "^7.0.0",
-    "eslint-plugin-prettier": "^3.4.0",
-=======
-    "currency-list": "^1.0.6",
->>>>>>> main
     "formik": "^2.2.9",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "material-ui-dropzone": "^3.5.0",
-<<<<<<< HEAD
-    "prop-types": "^15.8.1",
-=======
->>>>>>> main
     "rc-slider": "^9.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
