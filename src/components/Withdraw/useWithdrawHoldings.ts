@@ -1,6 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Account from "../../contracts/Account";
-import { denoms } from "../../constants/currency";
 import { Values } from "./types";
 import { Step } from "services/transaction/types";
 import { useFormContext } from "react-hook-form";
@@ -17,7 +16,7 @@ export default function useWithdrawHoldings() {
   const { liquidCW20Tokens, liquidCW20TokenValue, anchorVault } = useHoldings(
     address || ""
   );
-  const tx = useEstimator(liquidCW20Tokens, liquidCW20TokenValue, anchorVault);
+  useEstimator(liquidCW20Tokens, liquidCW20TokenValue, anchorVault);
 
   async function handleWithdrawHoldings() {
     const amount = watch("withdraw");

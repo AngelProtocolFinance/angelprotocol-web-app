@@ -13,6 +13,7 @@ import {
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
 import { useSetModal } from "components/Nodal/Nodal";
+import useDebouncer from "hooks/useDebouncer";
 
 export default function useEstimator(
   liquidCW20Tokens: number | undefined,
@@ -31,6 +32,7 @@ export default function useEstimator(
   const withdrawTokenQty = Math.round(
     (liquidCW20TokenValue! * Number(amount)) / 100 || 0
   ).toString();
+  const debounced_amount = useDebouncer(amount, 500);
 
   useEffect(() => {
     (async () => {
@@ -45,12 +47,12 @@ export default function useEstimator(
         }
 
         const balance = new Dec(liquidCW20Tokens).div(1e6);
-        if (balance.lt(amount)) {
+        if (balance.lt(debounced_amount)) {
           dispatch(setFormError("Not enough Token"));
           return;
         }
 
-        if (amount === 0) {
+        if (debounced_amount === 0) {
           dispatch(setFee(0));
           setValue("total", 0);
         } else {
@@ -92,7 +94,7 @@ export default function useEstimator(
     return () => {
       dispatch(setFormError(""));
     };
-  }, [amount, wallet]);
+  }, [debounced_amount, wallet]);
 
   return tx;
 }

@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { MdOutlineClose } from "react-icons/md";
 
 import { useSetModal } from "components/Nodal/Nodal";
@@ -8,7 +7,6 @@ import ErrPop from "./ErrPop";
 import Submit from "./Submit";
 import Broadcast from "./Broadcast";
 import Success from "./Success";
-import Confirm from "./Confirm";
 import WithdrawForm from "components/Withdraw/WithdrawForm";
 import { setStage } from "services/transaction/transactionSlice";
 import { Display } from "./types";

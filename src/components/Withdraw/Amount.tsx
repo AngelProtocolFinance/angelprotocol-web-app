@@ -1,11 +1,9 @@
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
 import { Values } from "./types";
 import useHoldings from "./useHoldings";
 
 export default function Amount() {
-  const { fee } = useGetter((state) => state.transaction);
   const { register, watch } = useFormContext<Values>();
   const address = watch("receiver");
   const withdrawAmount = watch("total") || 0;
