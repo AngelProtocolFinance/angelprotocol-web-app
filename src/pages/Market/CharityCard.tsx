@@ -1,4 +1,4 @@
-import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
 import { app, site } from "types/routes";
 import useCharityCard from "./useCharityCard";
@@ -11,7 +11,7 @@ export default function CharityCard(props: { address: string }) {
       to={`${site.app}/${app.charity}/${props.address}`}
       className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-2"
     >
-      <ImageWrapper
+      <LazyImage
         classes="bg-white rounded-lg img-no-drag w-full h-32 object-cover"
         src={profile.charity_image}
         alt="charity banner"
