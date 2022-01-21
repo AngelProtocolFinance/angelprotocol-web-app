@@ -1,4 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Account from "contracts/Account";
 import Halo from "contracts/Halo";
 import LP from "contracts/LP";
 import { useMemo } from "react";

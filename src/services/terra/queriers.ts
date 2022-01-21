@@ -4,6 +4,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
+import Account from "contracts/Account";
 import { terra } from "services/terra/terra";
 import {
   gov_config,
@@ -14,6 +15,7 @@ import {
   pairInfo,
   simulation,
   pool_balance,
+  holdings,
 } from "./placeholders";
 import { chainIDs } from "contracts/types";
 import { useHaloContract, useLPContract } from "./contracts";
@@ -166,5 +168,15 @@ export function usePool(skip = false) {
   const { data = pool_balance } = usePoolQuery(contract.pool, {
     skip: skip || wallet?.network.chainID === chainIDs.testnet,
   });
+  return data;
+}
+
+export function useEndowmentHoldings(address: string, skip = false) {
+  const { useEndowmentHoldingsQuery } = terra;
+  const contract = new Account(address);
+  const { data = holdings } = useEndowmentHoldingsQuery(contract.balance, {
+    skip: skip,
+  });
+
   return data;
 }

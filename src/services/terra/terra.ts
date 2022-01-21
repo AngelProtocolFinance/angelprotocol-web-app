@@ -13,6 +13,7 @@ import {
   ContractQueryArgs,
   GovConfig,
   GovStaker,
+  Holdings,
   PairInfo,
   Poll,
   Polls,
@@ -24,6 +25,7 @@ import {
 } from "./types";
 import { gov, halo, lbp, tags, user } from "./tags";
 import { RootState } from "store/store";
+import { AnyRecord } from "dns";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
@@ -138,10 +140,10 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
-    vaultRates: builder.query<any, any>({
+    endowmentHoldings: builder.query<Holdings, ContractQueryArgs>({
       query: contract_querier,
-      transformResponse: (res: any) => {
-        return res;
+      transformResponse: (res: QueryRes<Holdings>) => {
+        return res.query_result;
       },
     }),
   }),

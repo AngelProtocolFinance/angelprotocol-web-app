@@ -1,43 +1,34 @@
+import { Dec } from "@terra-money/terra.js";
+import { VaultInfo } from "constants/contracts";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
-import useHoldings from "./useHoldings";
 
-export default function Amount() {
-  const { register, watch } = useFormContext<Values>();
-  const address = watch("receiver");
-  const withdrawAmount = watch("total") || 0;
-  const { liquidCW20Tokens } = useHoldings(address || "");
-
+export default function Amount(props: VaultInfo & { balance: string }) {
+  const { register } = useFormContext<Values>();
+  const balance = new Dec(props.balance).div(1e6).toNumber();
   return (
     <div>
       <div className="grid">
         <div className="flex flex-row justify-between">
           <label htmlFor="withdraw" className="font-bold">
-            Tokens
+            {props.name}
           </label>
           <span className="text-sm">
             Available:{" "}
             <span className="font-bold">
-              {toCurrency(liquidCW20Tokens! / 1e6, 3)}
+              {toCurrency(balance)} {props.symbol}
             </span>
-            {} tokens
           </span>
         </div>
         <input
-          {...register("withdraw")}
+          {...register(props.field_id)}
           autoComplete="off"
           type="text"
           placeholder="Number of Tokens"
           className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
-          disabled={!liquidCW20Tokens}
+          disabled={true}
         />
-      </div>
-      <div className="fee-info mt-3">
-        <div className="flex justify-between">
-          <p className="text-angel-grey text-xs">Withdraw Amount</p>
-          <p className="text-angel-grey text-sm">{withdrawAmount} UST</p>
-        </div>
       </div>
     </div>
   );

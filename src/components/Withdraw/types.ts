@@ -1,18 +1,17 @@
 import { ReactNode } from "react";
 
-export interface Values {
-  withdraw: string;
-  withdrawAmount?: number;
-  receiver?: string;
-  total?: number;
-  liquidCW20Tokens?: number;
-  liquidCW20TokenValue?: number;
-  anchorVault?: string;
-}
+export enum VaultFields {
+  anchor1_amount = "anchor1_amount",
+  anchor2_amount = "anchor2_amount",
+} // others
 
-interface WithdrawProps {
-  receiver: string;
+export type Values = { [key in VaultFields]: string } & {
+  total_ust: number;
+  total_receive: number;
+  account_addr: string;
+};
+
+export interface WithdrawProps {
+  account_addr: string;
   children: ReactNode;
 }
-
-export type Props = WithdrawProps;

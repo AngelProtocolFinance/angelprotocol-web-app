@@ -19,6 +19,8 @@ export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  anchor_vault1 = "anchor_vault1",
+  anchor_vault2 = "anchor_vault2", //mainnet doesn't have anchor vault2
   halo_token = "halo_token",
   halo_gov = "halo_gov",
   lbp_factory = "lbp_factory",

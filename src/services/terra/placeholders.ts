@@ -1,4 +1,4 @@
-import { TokenInfo } from "contracts/types";
+import { Holdings, TokenInfo } from "contracts/types";
 import {
   GovConfig,
   GovStaker,
@@ -94,4 +94,11 @@ export const pool_balance: PoolBalance = {
   token: "0",
   native_token: "0",
   is_placeholder: true,
+};
+
+export const holdings: Holdings = {
+  locked_cw20: [],
+  locked_native: [],
+  liquid_cw20: [],
+  liquid_native: [],
 };
