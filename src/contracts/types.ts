@@ -157,6 +157,7 @@ export type Pair = {
 };
 
 export type EndowmentBalanceData = {
+  endowment_address: string;
   locked: number;
   liquid: number;
 };

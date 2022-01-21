@@ -14,12 +14,15 @@ export default class Charity extends Contract {
     this.endowmentAddress = endowmentAddress;
   }
 
-  async getEndowmentBalanceData() {
+  async getEndowmentBalanceData(): Promise<EndowmentBalanceData> {
     const anchorRateData = await this.getAnchorRateData();
     const holdings = await this.getHoldings();
-    const data = this.calculateBalanceData(anchorRateData, holdings);
+    const { locked, liquid } = this.calculateBalanceData(
+      anchorRateData,
+      holdings
+    );
 
-    return data;
+    return { locked, liquid, endowment_address: this.endowmentAddress };
   }
 
   private async getAnchorRateData() {
@@ -36,10 +39,7 @@ export default class Charity extends Contract {
     return result;
   }
 
-  private calculateBalanceData(
-    anchorRateData: Swap,
-    holdings: Holdings
-  ): EndowmentBalanceData {
+  private calculateBalanceData(anchorRateData: Swap, holdings: Holdings) {
     const exchangeRate = Number(anchorRateData.exchange_rate);
     // we divide by 1e6 to convert UUST to UST
     const locked =

@@ -7,17 +7,19 @@ function useQueryEndowmentBal(
   endowmentAddress: string,
   placeholder?: boolean
 ): EndowmentBalanceData {
-  const [locked, setLocked] = useState(0);
-  const [liquid, setLiquid] = useState(0);
+  const [data, setData] = useState<EndowmentBalanceData>({
+    endowment_address: endowmentAddress,
+    liquid: 0,
+    locked: 0,
+  });
 
   const wallet = useConnectedWallet();
 
   const getOnChainData = useCallback(async () => {
     const contract = new Charity(endowmentAddress, wallet);
-    const { locked, liquid } = await contract.getEndowmentBalanceData();
+    const newData = await contract.getEndowmentBalanceData();
 
-    setLocked(locked);
-    setLiquid(liquid);
+    setData(newData);
   }, [endowmentAddress, wallet]);
 
   useEffect(() => {
@@ -31,10 +33,7 @@ function useQueryEndowmentBal(
     // when the endowmentAddress changes, getOnChainData changes as well
   }, [placeholder, getOnChainData]);
 
-  return {
-    locked,
-    liquid,
-  };
+  return data;
 }
 
 export default useQueryEndowmentBal;
