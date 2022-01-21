@@ -2,6 +2,8 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Charity from "contracts/Charity";
 import { EndowmentBalanceData } from "contracts/types";
 import { useCallback, useEffect, useState } from "react";
+import { useGetter, useSetter } from "store/accessors";
+import { addEndowmentBalance } from "./charitySlice";
 
 function useQueryEndowmentBal(
   endowmentAddress: string,
@@ -12,7 +14,10 @@ function useQueryEndowmentBal(
     liquid: 0,
     locked: 0,
   });
-
+  const dispatch = useSetter();
+  const endowmentBalances = useGetter(
+    (state) => state.charity.endowmentBalances
+  );
   const wallet = useConnectedWallet();
 
   const getOnChainData = useCallback(async () => {
@@ -20,10 +25,19 @@ function useQueryEndowmentBal(
     const newData = await contract.getEndowmentBalanceData();
 
     setData(newData);
-  }, [endowmentAddress, wallet]);
+    dispatch(addEndowmentBalance(newData));
+  }, [endowmentAddress, wallet, dispatch]);
 
   useEffect(() => {
     if (placeholder) return;
+
+    const existingData = endowmentBalances.find(
+      (x) => x.endowment_address === endowmentAddress
+    );
+    if (existingData) {
+      setData(existingData);
+      return;
+    }
 
     try {
       getOnChainData();
@@ -31,7 +45,7 @@ function useQueryEndowmentBal(
       console.error(err);
     }
     // when the endowmentAddress changes, getOnChainData changes as well
-  }, [placeholder, getOnChainData]);
+  }, [placeholder, getOnChainData, endowmentAddress, endowmentBalances]);
 
   return data;
 }
