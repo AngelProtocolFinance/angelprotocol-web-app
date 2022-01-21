@@ -2,7 +2,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import Contract from "./Contract";
-import { BalanceData, Holdings, sc, Swap } from "./types";
+import { EndowmentBalanceData, Holdings, sc, Swap } from "./types";
 
 export default class Charity extends Contract {
   anchorAddress: string;
@@ -39,7 +39,7 @@ export default class Charity extends Contract {
   private calculateBalanceData(
     anchorRateData: Swap,
     holdings: Holdings
-  ): BalanceData {
+  ): EndowmentBalanceData {
     const exchangeRate = Number(anchorRateData.exchange_rate);
     // we divide by 1e6 to convert UUST to UST
     const locked =

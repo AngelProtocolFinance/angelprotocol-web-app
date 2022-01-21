@@ -1,7 +1,8 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
-import { CharityParam, EndowmentBalanceData } from "./types";
+import { CharityParam } from "./types";
+import { EndowmentBalanceData } from "contracts/types";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -71,7 +72,8 @@ function AccountInfo({
 // }
 
 function CharityEndowmentInfo({ data }: { data: EndowmentBalanceData }) {
-  const { liquid, locked, overall } = data;
+  const { liquid, locked } = data;
+  const overall = liquid + locked;
 
   const accountDetails = [
     {

@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Charity from "contracts/Charity";
+import { EndowmentBalanceData } from "contracts/types";
 import { useCallback, useEffect, useState } from "react";
-import { EndowmentBalanceData } from "./types";
 
 function useQueryEndowmentBal(
   endowmentAddress: string,
@@ -9,7 +9,6 @@ function useQueryEndowmentBal(
 ): EndowmentBalanceData {
   const [locked, setLocked] = useState(0);
   const [liquid, setLiquid] = useState(0);
-  const [overall, setOverall] = useState(0);
 
   const wallet = useConnectedWallet();
 
@@ -19,7 +18,6 @@ function useQueryEndowmentBal(
 
     setLocked(locked);
     setLiquid(liquid);
-    setOverall(locked + liquid);
   }, [endowmentAddress, wallet]);
 
   useEffect(() => {
@@ -36,7 +34,6 @@ function useQueryEndowmentBal(
   return {
     locked,
     liquid,
-    overall,
   };
 }
 

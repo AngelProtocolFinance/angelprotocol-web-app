@@ -156,7 +156,7 @@ export type Pair = {
   liquidity_token: string;
 };
 
-export type BalanceData = {
+export type EndowmentBalanceData = {
   locked: number;
   liquid: number;
 };
