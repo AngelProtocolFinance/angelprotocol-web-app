@@ -87,8 +87,6 @@ export const simulation: Simulation = {
   return_amount: "1000000",
   spread_amount: "0",
   commission_amount: "0",
-  ask_weight: "96",
-  offer_weight: "4",
   is_placeholder: true,
 };
 

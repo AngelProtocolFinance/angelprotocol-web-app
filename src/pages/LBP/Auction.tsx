@@ -1,24 +1,17 @@
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import DappHead from "components/Headers/DappHead";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { useState, useEffect } from "react";
+import { LBPGraphDataUnavailable } from "contracts/Errors";
+import displayTerraError from "helpers/displayTerraError";
+import { useEffect, useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
-import toCurrency from "helpers/toCurrency";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
-import Swapper from "components/Swapper/Swapper";
-import displayTerraError from "helpers/displayTerraError";
-import { LBPGraphDataUnavailable } from "contracts/Errors";
-import useAuctionStats from "./useAuctionStats";
-import useSaleStatus from "components/Swapper/useSaleStatus";
+
 export default function Auction() {
   const { showModal } = useSetModal();
-
-  const { is_live, message } = useSaleStatus();
   const { isLoading, lbpPairData, error } = useGetLBPPairData();
 
   // This could be extracted into a separate hook to be used accross the application.
@@ -33,22 +26,11 @@ export default function Auction() {
   }, [isLoading, error]);
 
   return (
-    <div className="grid grid-rows-a1 place-items-start pt-2">
-      <DappHead />
+    <div className="grid place-items-start pt-2">
       <div className="content-section">
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
           <div className="auction-data-section font-heading">
-            <div className="flex items-baseline justify-start xl:hidden my-3">
-              <button
-                disabled={!is_live}
-                onClick={() => showModal(SwapModal, {})}
-                className="disabled:bg-grey-accent bg-angel-blue hover:bg-thin-blue focus:bg-thin-blue text-center px-6 h-12 rounded-3xl tracking-widest uppercase text-md font-bold text-white shadow-sm focus:outline-none mr-2"
-              >
-                Buy Halo
-              </button>
-              {message && <p>{message}</p>}
-            </div>
             <AuctionStats />
             <PriceGraph
               error={error}
@@ -57,12 +39,12 @@ export default function Auction() {
             />
           </div>
           <div className="hidden xl:w-2/5 xl:flex flex-col rounded items-center justify-center p-10">
-            <p className="uppercase font-heading font-bold text-xl self-left mb-2">
-              buy halo
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
+              HaloSwap LBP has ended!
             </p>
-            <Swapper>
-              <SwapSuite />
-            </Swapper>
+            <p className="uppercase font-heading font-bold text-lg mb-2 text-center">
+              Thank you to everyone who participated!
+            </p>
           </div>
         </div>
         <Tabs color="angel-blue" />
@@ -72,25 +54,21 @@ export default function Auction() {
 }
 
 function AuctionStats() {
-  const { duration_days, end, start, ust_price } = useAuctionStats();
-
   return (
     <div className="w-full flex flex-wrap gap-5 mt-3">
-      {duration_days !== -1 && duration_days !== 0 && (
-        <StatsDetails
-          title="Duration"
-          value={`${duration_days} days`}
-          Icon={FaClock}
-          exClass="duration"
-        />
-      )}
+      <StatsDetails
+        title="Duration"
+        value="3 days"
+        Icon={FaClock}
+        exClass="duration"
+      />
       <StatsDetails
         title="Ends in"
-        value={<CountdownTimer deadline={end * 1000} start={start * 1000} />}
+        value={<CountdownTimer deadline={0} start={0} />}
         Icon={FaStopwatch}
         exClass="ends-in"
       />
-      <StatsDetails title="Price" value={`UST ${toCurrency(ust_price, 6)}`} />
+      <StatsDetails title="Price" value="UST 0.074994" />
     </div>
   );
 }
@@ -161,11 +139,3 @@ const Tabs = ({ color }: { color: string }) => {
     </>
   );
 };
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
-  );
-}

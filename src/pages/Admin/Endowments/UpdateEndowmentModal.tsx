@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSetModal } from "components/Nodal/Nodal";
 import "./endowments.css";
-import { useRegistrarContract } from "services/terra/hooks";
+import { useRegistrarContract } from "services/terra/queriers";
 import { MdOutlineClose } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
 

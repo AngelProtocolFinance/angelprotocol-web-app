@@ -1,31 +1,40 @@
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
-import React from "react";
+import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import App from "./App/App";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Admin from "Admin/Admin";
-import Website from "Website/Website";
+import Loader from "components/Loader/Loader";
+
+const App = lazy(() => import("./App/App"));
+// const Admin = lazy(() => import("./Admin/Admin"));
+const Website = lazy(() => import("./Website/Website"));
+
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
+);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
         <AuthProvider>
-          <Switch>
-            <Route path={site.app} component={App} />
-            <Route path={site.admin} component={Admin} />
-            <Route path={site.home} component={Website} />
-          </Switch>
+          <Suspense fallback={<LoaderComponent />}>
+            <Switch>
+              <Route path={site.app} component={App} />
+              <Route path={site.admin} component={Admin} />
+              <Route path={site.home} component={Website} />
+            </Switch>
+          </Suspense>
         </AuthProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById("root")
 );
 // If you want to start measuring performance in your app, pass a function

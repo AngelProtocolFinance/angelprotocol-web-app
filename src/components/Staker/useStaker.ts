@@ -46,7 +46,7 @@ function useStaker() {
           step: Step.broadcast,
           content: {
             message: "Waiting for transaction result",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
           },
         })
       );
@@ -67,7 +67,7 @@ function useStaker() {
                 message: is_stake
                   ? "Staking successfull!"
                   : "HALO successfully withdrawn",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
@@ -85,7 +85,7 @@ function useStaker() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
