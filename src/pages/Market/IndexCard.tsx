@@ -10,7 +10,7 @@ export default function IndexCard(props: { id: number }) {
         className="hidden sm:block w-36 h-16 object-contain img-no-drag object-left"
         alt="icon representing category"
       />
-      <p className={`font-heading font-bold uppercase mt-2 text-left`}>
+      <p className="font-heading font-bold uppercase mt-2 text-left">
         {sdg.title}
       </p>
       <p className="text-sm mb-1.5 line-clamp-2 text-left">{sdg.desc}</p>

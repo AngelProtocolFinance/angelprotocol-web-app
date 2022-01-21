@@ -1,7 +1,9 @@
+import { lazy } from "react";
 import { Switch, Route, useRouteMatch } from "react-router-dom";
 import { govern } from "types/routes";
 import Landing from "./Landing";
-import Details from "./Details";
+
+const Details = lazy(() => import("./Details"));
 
 export default function Governance() {
   const { path } = useRouteMatch();

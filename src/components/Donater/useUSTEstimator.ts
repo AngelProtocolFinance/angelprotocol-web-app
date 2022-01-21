@@ -17,7 +17,7 @@ import { useBalances } from "services/terra/queriers";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
-  const { watch, formState: isValid } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const wallet = useConnectedWallet();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -31,8 +31,6 @@ export default function useUSTEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
-
         if (currency !== denoms.uusd) {
           return;
         }
@@ -54,12 +52,6 @@ export default function useUSTEstimator() {
         let tx: CreateTxOptions;
         if (typeof receiver === "undefined" || typeof receiver === "number") {
           const index_fund = new Indexfund(wallet, receiver);
-          const tcaMembers = await index_fund.getTCAList();
-          const isTca = tcaMembers.includes(wallet!.walletAddress);
-          if (!isTca) {
-            dispatch(setFormError("Wallet not included in TCA list"));
-            return;
-          }
           tx = await index_fund.createDepositTx(
             debounced_amount,
             debounced_split

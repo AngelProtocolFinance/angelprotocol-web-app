@@ -17,9 +17,7 @@ export default function DappHead() {
   }
 
   return (
-    <header
-      className={`mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3`}
-    >
+    <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3">
       <Logo />
       <DappMenu />
       <div className="ml-auto grid grid-cols-1a gap-1">

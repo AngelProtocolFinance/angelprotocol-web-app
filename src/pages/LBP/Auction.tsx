@@ -58,7 +58,7 @@ function AuctionStats() {
     <div className="w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails
         title="Duration"
-        value={`3 days`}
+        value="3 days"
         Icon={FaClock}
         exClass="duration"
       />
@@ -68,7 +68,7 @@ function AuctionStats() {
         Icon={FaStopwatch}
         exClass="ends-in"
       />
-      <StatsDetails title="Price" value={`UST 0.074994`} />
+      <StatsDetails title="Price" value="UST 0.074994" />
     </div>
   );
 }

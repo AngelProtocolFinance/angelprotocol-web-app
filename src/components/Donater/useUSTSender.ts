@@ -11,7 +11,7 @@ import useTxErrorHandler from "hooks/useTxErrorHandler";
 
 function useUSTSender() {
   const dispatch = useSetter();
-  const { reset } = useFormContext<Values>();
+  const { reset, getValues } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const tx = useUSTEstimator();
   const handleTxError = useTxErrorHandler();
@@ -40,7 +40,7 @@ function useUSTSender() {
             step: Step.broadcast,
             content: {
               message: "Transaction submitted, waiting for transaction result",
-              url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
             },
           })
         );
@@ -55,17 +55,24 @@ function useUSTSender() {
               step: Step.success,
               content: {
                 message: "Thank you for your donation!",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                tx: {
+                  txHash: txInfo.txhash,
+                  amount: getValues("amount"),
+                  to: getValues("to"),
+                  receiver: getValues("receiver"),
+                },
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );
+          reset();
         } else {
           dispatch(
             setStage({
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
           );

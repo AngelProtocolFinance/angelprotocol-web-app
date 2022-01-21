@@ -48,9 +48,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           >
             {isDonating ? "Back to Index" : "Donate"}
           </button>
-          <button
-            className={`ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
-          >
+          <button className="ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md">
             Share
           </button>
         </div>

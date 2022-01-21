@@ -70,7 +70,7 @@ export default class Contract {
         return this.pollTxInfo(txhash, retries - 1, interval);
       }
       throw new TxResultFail(
-        `https://finder.terra.money/${this.chainID}/tx/${txhash}`
+        `https://finder.extraterrestrial.money/${this.chainID}/tx/${txhash}`
       );
     });
   }
