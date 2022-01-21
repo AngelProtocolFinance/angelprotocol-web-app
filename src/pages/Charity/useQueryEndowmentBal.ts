@@ -20,11 +20,7 @@ function useQueryEndowmentBal(
     setLocked(locked);
     setLiquid(liquid);
     setOverall(locked + liquid);
-
-    // `wallet` doesn't need to be included in the dep. array since the endowment balance data
-    // does not depend on the (dis)connected wallet
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [endowmentAddress]);
+  }, [endowmentAddress, wallet]);
 
   useEffect(() => {
     if (placeholder) return;
