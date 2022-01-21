@@ -138,6 +138,12 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
+    vaultRates: builder.query<any, any>({
+      query: contract_querier,
+      transformResponse: (res: any) => {
+        return res;
+      },
+    }),
   }),
 });
 
