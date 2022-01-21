@@ -59,6 +59,12 @@ export type Endowments = { endowments: Endowment[] };
 
 //Accounts
 
+export interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
+
 export interface AccountDetails {
   name: string;
   description: string;
@@ -82,6 +88,7 @@ export interface Holdings {
   locked_cw20: Holding[];
   liquid_native: Holding[];
   liquid_cw20: Holding[];
+  is_placeholder: boolean;
 }
 
 //Vaults

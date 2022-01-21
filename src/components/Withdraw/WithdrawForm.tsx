@@ -23,7 +23,11 @@ export default function WithdrawForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   return (
-    <form onSubmit={handleSubmit(handleWithdrawHoldings)} autoComplete="off">
+    <form
+      onSubmit={handleSubmit(handleWithdrawHoldings)}
+      autoComplete="off"
+      className="grid p-4 pt-0"
+    >
       <Status />
       <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
         Withdraw from Accounts
@@ -44,15 +48,13 @@ export default function WithdrawForm() {
         }
       })}
 
-      <div className="flex flex-row mt-6">
-        <button
-          type="submit"
-          className="m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent"
-          disabled={isSubmitting || form_loading || !!form_error}
-        >
-          {form_loading ? "Estimating..." : "Withdraw"}
-        </button>
-      </div>
+      <button
+        type="submit"
+        className="m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
+        disabled={isSubmitting || form_loading || !!form_error}
+      >
+        {form_loading ? "Estimating..." : "Withdraw"}
+      </button>
     </form>
   );
 }

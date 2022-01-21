@@ -5,6 +5,11 @@ export enum VaultFields {
   anchor2_amount = "anchor2_amount",
 } // others
 
+export enum VaultAddrFields {
+  anchor1_addr = "anchor1_addr",
+  anchor2_addr = "anchor2_addr",
+}
+
 export type Values = { [key in VaultFields]: string } & {
   total_ust: number;
   total_receive: number;
