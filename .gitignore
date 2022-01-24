@@ -6,6 +6,7 @@
 .pnp.js
 /.vscode
 
+
 # testing
 /coverage
 
@@ -25,3 +26,7 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#yarn
+.yarn/*
+!.yarn/releases
