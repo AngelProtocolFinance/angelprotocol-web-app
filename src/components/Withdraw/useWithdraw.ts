@@ -1,80 +1,93 @@
-import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useLookupQuery } from "services/aws/endowments/endowments";
-import Account from "contracts/Account";
-import { chainIDs } from "contracts/types";
+import { useFormContext } from "react-hook-form";
+import useEstimator from "./useEstimator";
+import Contract from "contracts/Contract";
+import { useSetter } from "store/accessors";
+import { setStage } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
+import useTxErrorHandler from "hooks/useTxErrorHandler";
+import handleTerraError from "helpers/handleTerraError";
+import { Values } from "./types";
+import { terra } from "services/terra/terra";
+import { tags } from "services/terra/tags";
 
-export default function useWithdraw(address: string) {
-  const [redirect, setRedirect] = useState(false);
-  const [isLoading, setLoading] = useState(false);
-  const [isEndowmentOwner, setEndowmentOwner] = useState(false);
-  const [error, setError] = useState("");
-  const [locked, setLocked] = useState<number>();
-  const [liquid, setLiquid] = useState<number>();
-  const [overall, setOverall] = useState<number>();
+export default function useWithdrawHoldings() {
+  const { reset } = useFormContext<Values>();
+  const dispatch = useSetter();
+  const handleTxError = useTxErrorHandler();
   const wallet = useConnectedWallet();
-  const isTestNet = wallet?.network.chainID === chainIDs.testnet;
-  //on testnet --> url resolves to endpoint/endowments/testnet
-  const { data } = useLookupQuery(isTestNet);
+  const tx = useEstimator();
 
-  const getEndowmentBalance = async () => {
-    const account = new Account(address, wallet);
-    const result = await account.getBalance(); // Returned value is the sum of all liquidCW20 holdings in UST
-    setLocked(result.total_locked);
-    setLiquid(result.total_liq);
-    setOverall(result.overall);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    (async () => {
-      try {
-        // Check for the endowment address in the url and compare it to the returned value of the useLookupQuery
-        const addressFilter = Object.values(data!).filter(
-          (dataAddress) => dataAddress === address
+  async function withdraw() {
+    try {
+      if (!wallet) {
+        dispatch(
+          setStage({
+            step: Step.error,
+            content: { message: "Wallet is disconnected" },
+          })
         );
-        setError("");
-        setLoading(true);
-        if (!wallet) {
-          // If no wallet is connected
-          setError("Please connect a wallet to view this page.");
-          setLoading(false);
-        } else if (!data?.[wallet?.walletAddress]) {
-          // If wallet connected is not whitelisted, always redirect
-          if (addressFilter.length < 1) {
-            // If addressFilter returns an empty array, it means that an invalid endowment address is used
-            setRedirect(true);
-          } else {
-            setEndowmentOwner(false);
-            setRedirect(true);
-          }
-        } else {
-          // Else, wallet connected matches that of the endowment owner's
-          if (data?.[wallet?.walletAddress] !== address) {
-            // Redirects if endowment address is invalid
-            setRedirect(true);
-          } else {
-            setEndowmentOwner(true);
-            getEndowmentBalance();
-          }
-        }
-      } catch (err) {
-        console.error(err);
-        setError("Failed to get balance.");
-        setLoading(false);
+        return;
       }
-    })();
-    //eslint-disable-next-line
-  }, [data, wallet]);
 
-  return {
-    redirect,
-    isReady: !isLoading && !error,
-    isLoading,
-    isEndowmentOwner,
-    error: !isLoading && error,
-    locked,
-    liquid,
-    overall,
-  };
+      dispatch(
+        setStage({
+          step: Step.submit,
+          content: { message: "Submitting transaction..." },
+        })
+      );
+
+      const response = await wallet.post(tx!);
+
+      dispatch(
+        setStage({
+          step: Step.broadcast,
+          content: {
+            message: "Waiting for transaction result",
+            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+          },
+        })
+      );
+
+      if (response.success) {
+        const contract = new Contract(wallet);
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
+        const txInfo = await getTxInfo;
+
+        if (!txInfo.code) {
+          dispatch(
+            setStage({
+              step: Step.success,
+              content: {
+                message: "Withdraw successful!",
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              },
+            })
+          );
+
+          dispatch(
+            //invalidate all gov related cache
+            terra.util.invalidateTags([{ type: tags.endowment }])
+          );
+        } else {
+          dispatch(
+            setStage({
+              step: Step.error,
+              content: {
+                message: "Transaction failed",
+                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              },
+            })
+          );
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      handleTerraError(err, handleTxError);
+    } finally {
+      reset();
+    }
+  }
+
+  return withdraw;
 }

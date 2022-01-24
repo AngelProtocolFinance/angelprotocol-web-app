@@ -1,5 +1,4 @@
 import {
-  AccAddress,
   Coin,
   CreateTxOptions,
   Dec,
@@ -7,16 +6,29 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { denoms } from "constants/currency";
+import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { AccountDetails, Holding, Holdings, OwnedBalance } from "./types";
+import {
+  AccountDetails,
+  Holding,
+  Holdings,
+  OwnedBalance,
+  Source,
+} from "./types";
 import Vault from "./Vault";
 
 export default class Account extends Contract {
-  address: AccAddress;
+  address: string;
+  balance: ContractQueryArgs;
 
-  constructor(accountAddr: AccAddress, wallet?: ConnectedWallet) {
+  constructor(accountAddr: string, wallet?: ConnectedWallet) {
     super(wallet);
     this.address = accountAddr;
+
+    this.balance = {
+      address: accountAddr,
+      msg: { balance: {} },
+    };
   }
 
   async createDepositTx(
@@ -43,14 +55,11 @@ export default class Account extends Contract {
     return { msgs: [depositMsg], fee };
   }
 
-  async createWithdrawTx(
-    anchorVault: string,
-    tokenQty: string
-  ): Promise<CreateTxOptions> {
+  async createWithdrawTx(sources: Source[]): Promise<CreateTxOptions> {
     this.checkWallet();
     const withdrawMsg = new MsgExecuteContract(this.walletAddr!, this.address, {
       withdraw: {
-        sources: [{ vault: anchorVault, locked: "0", liquid: tokenQty }],
+        sources: sources,
       },
     });
     const fee = await this.estimateFee([withdrawMsg]);

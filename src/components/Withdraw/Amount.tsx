@@ -1,44 +1,59 @@
+import { Dec } from "@terra-money/terra.js";
+import { VaultInfo } from "constants/contracts";
+import { ErrorMessage } from "@hookform/error-message";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
-import useHoldings from "./useHoldings";
 
-export default function Amount() {
-  const { register, watch } = useFormContext<Values>();
-  const address = watch("receiver");
-  const withdrawAmount = watch("total") || 0;
-  const { liquidCW20Tokens } = useHoldings(address || "");
+export default function Amount(props: VaultInfo & { balance: string }) {
+  const {
+    register,
+    setValue,
+    formState: { errors },
+  } = useFormContext<Values>();
+  const balance = new Dec(props.balance).div(1e6).toNumber();
+
+  function setMax() {
+    setValue(props.field_id, toCurrency(balance, 2), {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }
 
   return (
-    <div>
-      <div className="grid">
-        <div className="flex flex-row justify-between">
-          <label htmlFor="withdraw" className="font-bold">
-            Tokens
-          </label>
-          <span className="text-sm">
-            Available:{" "}
-            <span className="font-bold">
-              {toCurrency(liquidCW20Tokens! / 1e6, 3)}
-            </span>
-            {} tokens
-          </span>
-        </div>
-        <input
-          {...register("withdraw")}
-          autoComplete="off"
-          type="text"
-          placeholder="Number of Tokens"
-          className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
-          disabled={!liquidCW20Tokens}
-        />
+    <div className="grid my-2">
+      <div className="flex flex-row justify-between">
+        <label
+          htmlFor={props.field_id}
+          className="text-angel-grey font-bold font-heading text-sm uppercase"
+        >
+          {props.name}
+        </label>
+        <p className="text-xs text-angel-grey font-heading flex gap-1 items-baseline">
+          <span>balance</span>
+          <button
+            tabIndex={-1}
+            onClick={setMax}
+            type="button"
+            className="font-bold hover:text-angel-blue"
+          >
+            {toCurrency(balance, 2, true)} {props.symbol}
+          </button>
+        </p>
       </div>
-      <div className="fee-info mt-3">
-        <div className="flex justify-between">
-          <p className="text-angel-grey text-xs">Withdraw Amount</p>
-          <p className="text-angel-grey text-sm">{withdrawAmount} UST</p>
-        </div>
-      </div>
+      <input
+        {...register(props.field_id)}
+        id={props.field_id}
+        type="number"
+        autoComplete="off"
+        className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+      />
+      <ErrorMessage
+        errors={errors}
+        name={props.field_id}
+        as="span"
+        className="text-right text-red-400 text-xs mb-1 mr-1"
+      />
     </div>
   );
 }
