@@ -61,6 +61,7 @@ export default class Halo extends Contract {
       },
     });
   }
+
   async getGovState() {
     return this.query<GovState>(this.gov_address, this.gov_state.msg);
   }
