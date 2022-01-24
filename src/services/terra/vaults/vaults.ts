@@ -4,7 +4,6 @@ import { denoms } from "constants/currency";
 import { chainIDs, sc } from "contracts/types";
 import { contracts } from "constants/contracts";
 import { QueryRes } from "services/terra/types";
-import { tags } from "../tags";
 import { ExchangeInfo, ExchangeMap } from "./types";
 
 export const vault_api = terra.injectEndpoints({

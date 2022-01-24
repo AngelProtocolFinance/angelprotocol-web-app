@@ -1,6 +1,5 @@
-import { VaultAddrFields, VaultFields } from "components/Withdraw/types";
+import { VaultFields } from "components/Withdraw/types";
 import { chainIDs, sc } from "contracts/types";
-import { string } from "prop-types";
 
 type Contracts = {
   [index: string]: {

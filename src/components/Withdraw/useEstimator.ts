@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
@@ -145,6 +145,7 @@ export default function useEstimator() {
     return () => {
       dispatch(setFormError(""));
     };
+    //eslint-disable-next-line
   }, [wallet, deb_anchor1_amount, deb_anchor2_amount, rates, holdings]);
 
   return tx;

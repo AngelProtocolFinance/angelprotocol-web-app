@@ -25,7 +25,6 @@ import {
 } from "./types";
 import { endowment, gov, halo, lbp, tags, user } from "./tags";
 import { RootState } from "store/store";
-import { AnyRecord } from "dns";
 
 //initial works on migrating terra SDK queries into lower level
 //to enhance speed & efficiency thru caching
