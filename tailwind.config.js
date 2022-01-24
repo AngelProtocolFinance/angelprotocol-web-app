@@ -159,6 +159,7 @@ module.exports = {
         modal: "300px",
         280: "280px",
         "75vh": "75vh",
+        350: "350px",
       },
       width: {
         115: "15rem",
