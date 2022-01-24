@@ -1,3 +1,4 @@
+import Airdrop from "components/Airdrop/Airdrop";
 import Logo from "components/Logo/Logo";
 import MobileDappNav from "components/MobileNav/MobileDappNav";
 import DappMenu from "components/NavMenus/DappMenu";
@@ -19,8 +20,11 @@ export default function DappHead() {
     <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3">
       <Logo />
       <DappMenu />
-      <WalletSuite />
-      <button className="text-white-grey ml-2 lg:hidden" onClick={toggleNav}>
+      <div className="ml-auto grid grid-cols-1a gap-1">
+        <WalletSuite />
+        <Airdrop />
+      </div>
+      <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
         {navShown ? (
           <IoClose className="text-2xl" />
         ) : (
