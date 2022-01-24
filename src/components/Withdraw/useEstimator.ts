@@ -22,8 +22,17 @@ import { Source } from "contracts/types";
 
 export default function useEstimator() {
   const { hideModal } = useSetModal();
-  const { watch, setValue, getValues, setError, clearErrors } =
-    useFormContext<Values>();
+  const {
+    watch,
+    setValue,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { isValid },
+  } = useFormContext<Values>();
+
+  console.log(isValid);
+
   const [tx, setTx] = useState<CreateTxOptions>();
 
   const dispatch = useSetter();
@@ -44,6 +53,10 @@ export default function useEstimator() {
     (async () => {
       try {
         dispatch(setFormError(""));
+        if (!isValid) {
+          return;
+        }
+
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           hideModal();

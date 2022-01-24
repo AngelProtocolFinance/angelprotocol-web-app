@@ -14,7 +14,7 @@ export default function WithdrawForm() {
   const {
     handleSubmit,
     getValues,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isValid },
   } = useFormContext<Values>();
 
   const account_addr = getValues("account_addr");
@@ -51,7 +51,7 @@ export default function WithdrawForm() {
       <button
         type="submit"
         className="m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
-        disabled={isSubmitting || form_loading || !!form_error}
+        disabled={isSubmitting || form_loading || !!form_error || !isValid}
       >
         {form_loading ? "Estimating..." : "Withdraw"}
       </button>
