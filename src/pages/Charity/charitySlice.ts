@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { EndowmentBalanceData } from "contracts/types";
+import { Update } from "services/aws/leaderboard/types";
 import { State } from "./types";
 
 const initialState: State = {
@@ -10,10 +10,7 @@ const charitySlice = createSlice({
   name: "charity",
   initialState,
   reducers: {
-    addEndowmentBalance: (
-      state,
-      { payload }: PayloadAction<EndowmentBalanceData>
-    ) => {
+    addEndowmentBalance: (state, { payload }: PayloadAction<Update>) => {
       state.endowmentBalances.push(payload);
     },
   },

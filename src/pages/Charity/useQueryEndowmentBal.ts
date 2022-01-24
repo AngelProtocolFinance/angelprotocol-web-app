@@ -1,49 +1,24 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Charity from "contracts/Charity";
-import { EndowmentBalanceData } from "contracts/types";
-import { useCallback, useEffect, useState } from "react";
-import { useGetter, useSetter } from "store/accessors";
-import { addEndowmentBalance } from "./charitySlice";
+import { chainIDs } from "contracts/types";
+import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+import { update } from "services/aws/leaderboard/placeholders";
+import { Endowment } from "services/aws/leaderboard/types";
 
 export default function useQueryEndowmentBal(
   endowmentAddress: string,
   placeholder?: boolean
-): EndowmentBalanceData {
-  const [data, setData] = useState<EndowmentBalanceData>({
-    endowment_address: endowmentAddress,
-    liquid: 0,
-    locked: 0,
-  });
-  const dispatch = useSetter();
-  const endowmentBalances = useGetter(
-    (state) => state.charity.endowmentBalances
-  );
+): Endowment {
   const wallet = useConnectedWallet();
+  const is_test = wallet?.network.chainID === chainIDs.testnet;
+  const { data = update } = useLeaderboardsQuery(is_test);
 
-  const getOnChainData = useCallback(async () => {
-    const contract = new Charity(endowmentAddress, wallet);
-    const newData = await contract.getEndowmentBalanceData();
-
-    dispatch(addEndowmentBalance(newData));
-  }, [endowmentAddress, wallet, dispatch]);
-
-  useEffect(() => {
-    if (placeholder) return;
-
-    const existingData = endowmentBalances.find(
-      (x) => x.endowment_address === endowmentAddress
-    );
-    if (existingData) {
-      setData(existingData);
-      return;
-    }
-
-    try {
-      getOnChainData();
-    } catch (err) {
-      console.error(err);
-    }
-  }, [placeholder, getOnChainData, endowmentAddress, endowmentBalances]);
-
-  return data;
+  const balance = data.endowments.find((x) => x.address === endowmentAddress);
+  const placeholderBalance = {
+    address: endowmentAddress,
+    chain: is_test ? "testnet" : "mainnet",
+    total_liq: 0,
+    total_lock: 0,
+    overall: 0,
+  } as Endowment;
+  return !placeholder && balance ? balance : placeholderBalance;
 }

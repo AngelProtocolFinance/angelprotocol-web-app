@@ -1,7 +1,5 @@
-import { EndowmentBalanceData } from "contracts/types";
+import { Update } from "services/aws/leaderboard/types";
 
 export type CharityParam = { address: string };
 
-export type State = {
-  endowmentBalances: EndowmentBalanceData[];
-};
+export type State = { endowmentBalances: Update[] };

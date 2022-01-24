@@ -2,7 +2,7 @@ import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
-import { EndowmentBalanceData } from "contracts/types";
+import { Endowment } from "services/aws/leaderboard/types";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -71,21 +71,20 @@ function AccountInfo({
 //   );
 // }
 
-function CharityEndowmentInfo({ data }: { data: EndowmentBalanceData }) {
-  const { liquid, locked } = data;
-  const overall = liquid + locked;
+function CharityEndowmentInfo({ data }: { data: Endowment }) {
+  const { total_liq, total_lock, overall } = data;
 
   const accountDetails = [
     {
       type: "Current Account",
-      balance: `$${toCurrency(liquid)}`,
+      balance: `$${toCurrency(total_liq)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-green-400",
     },
     {
       type: "Principal Account",
-      balance: `$${toCurrency(locked)}`,
+      balance: `$${toCurrency(total_lock)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
@@ -164,7 +163,7 @@ export default function CharityInfoTab({
   endowmentBalanceData,
 }: {
   activeTab: string;
-  endowmentBalanceData: EndowmentBalanceData;
+  endowmentBalanceData: Endowment;
 }) {
   //TODO: use enums or maybe just implement this over react-router
   return (
