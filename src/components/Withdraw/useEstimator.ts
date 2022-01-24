@@ -17,7 +17,7 @@ import { denoms } from "constants/currency";
 import { useSetModal } from "components/Nodal/Nodal";
 import useDebouncer from "hooks/useDebouncer";
 import { AmountInfo, filter_infos } from "./helpers";
-import { vault_addr_map, vault_field_map } from "constants/contracts";
+import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
 
 export default function useEstimator() {
@@ -28,23 +28,20 @@ export default function useEstimator() {
     getValues,
     setError,
     clearErrors,
-    formState: { isValid },
+    formState: { isValid, isDirty },
   } = useFormContext<Values>();
 
-  console.log(isValid);
-
   const [tx, setTx] = useState<CreateTxOptions>();
-
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
-  //query fresh exchange rate upon opening form
 
   const anchor1_amount = watch("anchor1_amount");
   const anchor2_amount = watch("anchor2_amount");
   const account_addr = getValues("account_addr");
 
-  const rates = useExchangeRate();
-  const holdings = useEndowmentHoldingsState(account_addr);
+  //query fresh exchange rate upon opening form
+  const { rates, isRatesError } = useExchangeRate();
+  const { holdings } = useEndowmentHoldingsState(account_addr);
 
   const deb_anchor1_amount = useDebouncer<string>(anchor1_amount, 300);
   const deb_anchor2_amount = useDebouncer<string>(anchor2_amount, 300);
@@ -53,7 +50,12 @@ export default function useEstimator() {
     (async () => {
       try {
         dispatch(setFormError(""));
-        if (!isValid) {
+        //rates is needed to estimate transaction
+        if (isRatesError) {
+          return;
+        }
+
+        if (!isValid || !isDirty) {
           return;
         }
 
@@ -82,22 +84,24 @@ export default function useEstimator() {
         for (const holding of liq_holdings) {
           const field = vault_field_map[holding.address] as VaultFields;
           //a holding may be present but user may opt not to withdraw
-          const to_withdraw = getValues(field) || "0";
-          if (new Dec(to_withdraw).mul(1e6).gt(new Dec(holding.amount))) {
+          const to_withdraw = new Dec(getValues(field) || "0");
+          if (to_withdraw.mul(1e6).gt(new Dec(holding.amount))) {
             setError(field, { message: "not enough token" });
           } else {
             clearErrors(field);
-            if (to_withdraw !== "0") {
+            if (!to_withdraw.eq(0)) {
               sources.push({
                 vault: holding.address,
                 locked: "0",
-                liquid: to_withdraw,
+                liquid: to_withdraw.mul(1e6).toInt().toString(),
               });
             }
           }
         }
 
+        //don't continue of no withdraw args
         if (sources.length <= 0) {
+          dispatch(setFormError("No valid withdraw amount is set"));
           return;
         }
 
@@ -111,26 +115,27 @@ export default function useEstimator() {
           .mul(1e-6)
           .amount.toNumber();
 
-        console.log(estimatedFee, sources);
-        dispatch(setFormLoading(false));
-        return;
-
-        const ust_amount = new Dec(10)
-          .mul(new Dec(rates[account_addr] || "0"))
+        //get usd total of of sources
+        const usd_total = sources
+          .reduce(
+            (total, source) =>
+              total.add(new Dec(source.liquid).mul(rates[source.vault] || "0")),
+            new Dec(0)
+          )
           .div(1e6)
           .toNumber();
 
-        if (estimatedFee > ust_amount) {
+        if (estimatedFee > usd_total) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receive_amount = ust_amount - estimatedFee;
+        const receive_amount = usd_total - estimatedFee;
 
-        setValue("total_ust", ust_amount);
+        setValue("total_ust", usd_total);
         setValue("total_receive", receive_amount);
         dispatch(setFee(estimatedFee));
-        setTx(tx);
+        setTx(transaction);
         dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);

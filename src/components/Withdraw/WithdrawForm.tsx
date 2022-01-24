@@ -1,30 +1,31 @@
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
-import { setFee, setStage } from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
-import useWithdrawHoldings from "./useWithdrawHoldings";
+import { useGetter } from "store/accessors";
+import useWithdraw from "./useWithdraw";
 import Status from "./Status";
 import Amount from "./Amount";
-import { useSetModal } from "components/Nodal/Nodal";
 import { vaults } from "constants/contracts";
 import { useEndowmentHoldingsState } from "services/terra/states";
+import { Fee, ToReceive, Total } from "./Misc";
 
 export default function WithdrawForm() {
   const {
     handleSubmit,
     getValues,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<Values>();
 
   const account_addr = getValues("account_addr");
-  const holdings = useEndowmentHoldingsState(account_addr);
-  const handleWithdrawHoldings = useWithdrawHoldings();
+  const { holdings } = useEndowmentHoldingsState(account_addr);
+  const handleWithdraw = useWithdraw();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+
+  const isFormDisabled =
+    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
 
   return (
     <form
-      onSubmit={handleSubmit(handleWithdrawHoldings)}
+      onSubmit={handleSubmit(handleWithdraw)}
       autoComplete="off"
       className="grid p-4 pt-0"
     >
@@ -42,16 +43,25 @@ export default function WithdrawForm() {
           (holding) => holding.address === vault.address
         );
         if (holding) {
-          return <Amount {...{ ...vault, balance: holding.amount }} />;
+          return (
+            <Amount
+              key={holding.address}
+              {...{ ...vault, balance: holding.amount }}
+            />
+          );
         } else {
           return null;
         }
       })}
 
+      <Total />
+      <Fee />
+      <ToReceive />
+
       <button
         type="submit"
         className="m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
-        disabled={isSubmitting || form_loading || !!form_error || !isValid}
+        disabled={isFormDisabled}
       >
         {form_loading ? "Estimating..." : "Withdraw"}
       </button>

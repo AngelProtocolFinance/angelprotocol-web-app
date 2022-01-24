@@ -41,10 +41,18 @@ export function useGovBalanceState() {
 
 export function useEndowmentHoldingsState(address: string, skip = false) {
   const contract = new Account(address);
-  const { data = holdings } = terra.endpoints.endowmentHoldings.useQueryState(
-    contract.balance,
-    { skip }
-  );
+  const {
+    data = holdings,
+    isError,
+    isLoading,
+    isFetching,
+  } = terra.endpoints.endowmentHoldings.useQueryState(contract.balance, {
+    skip,
+  });
 
-  return data;
+  return {
+    holdings: data,
+    isHoldingsError: isError,
+    isHoldingsLoading: isLoading || isFetching,
+  };
 }

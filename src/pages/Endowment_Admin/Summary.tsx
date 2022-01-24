@@ -6,7 +6,7 @@ import { useMemo } from "react";
 import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
-  const rates = useExchangeRateState();
+  const { rates } = useExchangeRateState();
   const total_holding = useMemo(() => {
     const total_dec = props.holdings.reduce(
       (total, holding) =>
@@ -23,7 +23,7 @@ export default function Summary(props: HoldingSummary) {
     props.type === "liquid" ? "Current Account" : "Principal Account";
 
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10">
+    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 text-white text-opacity-80">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
         <FaCog

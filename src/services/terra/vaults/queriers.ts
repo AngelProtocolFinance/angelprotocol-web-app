@@ -7,8 +7,8 @@ export function useExchangeRate() {
   const { useExchangeRateQuery } = vault_api;
   const wallet = useConnectedWallet();
   const is_test = wallet?.network.chainID === chainIDs.testnet;
-  const { data = exchange_map } = useExchangeRateQuery(is_test, {
+  const { data = exchange_map, isError } = useExchangeRateQuery(is_test, {
     skip: wallet?.network.chainID === chainIDs.localterra,
   });
-  return data;
+  return { rates: data, isRatesError: isError };
 }

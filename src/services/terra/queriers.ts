@@ -172,11 +172,21 @@ export function usePool(skip = false) {
 }
 
 export function useEndowmentHoldings(address: string, skip = false) {
+  const wallet = useConnectedWallet();
   const { useEndowmentHoldingsQuery } = terra;
   const contract = new Account(address);
-  const { data = holdings } = useEndowmentHoldingsQuery(contract.balance, {
-    skip: skip,
+  const {
+    data = holdings,
+    isError,
+    isLoading,
+    isFetching,
+  } = useEndowmentHoldingsQuery(contract.balance, {
+    skip: skip || !wallet,
   });
 
-  return data;
+  return {
+    holdings: data,
+    isHoldingsError: isError,
+    isHoldingsLoading: isLoading || isFetching,
+  };
 }

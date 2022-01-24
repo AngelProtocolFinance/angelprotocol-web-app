@@ -126,9 +126,3 @@ export const vault_field_map: { [index: string]: VaultFields } = {
   [contracts[chainIDs.testnet][sc.anchor_vault2]]: VaultFields.anchor2_amount,
   [contracts[chainIDs.mainnet][sc.anchor_vault1]]: VaultFields.anchor1_amount,
 };
-
-export const vault_addr_map: { [index: string]: VaultAddrFields } = {
-  [contracts[chainIDs.testnet][sc.anchor_vault1]]: VaultAddrFields.anchor1_addr,
-  [contracts[chainIDs.testnet][sc.anchor_vault2]]: VaultAddrFields.anchor2_addr,
-  [contracts[chainIDs.mainnet][sc.anchor_vault1]]: VaultAddrFields.anchor1_addr,
-};

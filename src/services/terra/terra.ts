@@ -23,7 +23,7 @@ import {
   Simulation,
   TokenInfo,
 } from "./types";
-import { gov, halo, lbp, tags, user } from "./tags";
+import { endowment, gov, halo, lbp, tags, user } from "./tags";
 import { RootState } from "store/store";
 import { AnyRecord } from "dns";
 
@@ -43,7 +43,7 @@ const customBaseQuery: BaseQueryFn = retry(
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp],
+  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp, tags.endowment],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
@@ -141,6 +141,7 @@ export const terra = createApi({
       },
     }),
     endowmentHoldings: builder.query<Holdings, ContractQueryArgs>({
+      providesTags: [{ type: tags.endowment, id: endowment.holdings }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Holdings>) => {
         return res.query_result;

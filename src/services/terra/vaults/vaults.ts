@@ -10,7 +10,6 @@ import { ExchangeInfo, ExchangeMap } from "./types";
 export const vault_api = terra.injectEndpoints({
   endpoints: (build) => ({
     exchangeRate: build.query<ExchangeMap, boolean>({
-      providesTags: [{ type: tags.gov }],
       async queryFn(is_test) {
         try {
           const chainId = is_test ? chainIDs.testnet : chainIDs.mainnet;
