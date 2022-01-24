@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import { addEndowmentBalance } from "./charitySlice";
 
-function useQueryEndowmentBal(
+export default function useQueryEndowmentBal(
   endowmentAddress: string,
   placeholder?: boolean
 ): EndowmentBalanceData {
@@ -24,7 +24,6 @@ function useQueryEndowmentBal(
     const contract = new Charity(endowmentAddress, wallet);
     const newData = await contract.getEndowmentBalanceData();
 
-    setData(newData);
     dispatch(addEndowmentBalance(newData));
   }, [endowmentAddress, wallet, dispatch]);
 
@@ -44,10 +43,7 @@ function useQueryEndowmentBal(
     } catch (err) {
       console.error(err);
     }
-    // when the endowmentAddress changes, getOnChainData changes as well
   }, [placeholder, getOnChainData, endowmentAddress, endowmentBalances]);
 
   return data;
 }
-
-export default useQueryEndowmentBal;
