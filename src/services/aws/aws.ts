@@ -21,7 +21,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [tags.cha],
+  tagTypes: [tags.cha, tags.airdrop],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: () => ({}),

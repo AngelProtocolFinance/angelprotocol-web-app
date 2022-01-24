@@ -21,6 +21,7 @@ export enum sc {
   anchor = "anchor",
   halo_token = "halo_token",
   halo_gov = "halo_gov",
+  airdrop = "airdrop",
   lbp_factory = "lbp_factory",
   lbp_pair = "lbp_pair",
   lbp_router = "lbp_router",
