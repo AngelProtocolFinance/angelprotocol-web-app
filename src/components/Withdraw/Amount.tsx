@@ -44,6 +44,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
       <input
         {...register(props.field_id)}
         id={props.field_id}
+        type="number"
         autoComplete="off"
         className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
       />

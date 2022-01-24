@@ -28,6 +28,7 @@ export default function WithdrawForm() {
       onSubmit={handleSubmit(handleWithdraw)}
       autoComplete="off"
       className="grid p-4 pt-0"
+      noValidate
     >
       <Status />
       <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
