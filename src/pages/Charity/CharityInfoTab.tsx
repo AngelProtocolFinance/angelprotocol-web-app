@@ -158,13 +158,15 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
 //   );
 // }
 
+type Props = {
+  activeTab: string;
+  endowmentBalanceData: Endowment;
+};
+
 export default function CharityInfoTab({
   activeTab = "overview",
   endowmentBalanceData,
-}: {
-  activeTab: string;
-  endowmentBalanceData: Endowment;
-}) {
+}: Props) {
   //TODO: use enums or maybe just implement this over react-router
   return (
     <>

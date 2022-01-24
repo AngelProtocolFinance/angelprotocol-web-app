@@ -1,5 +1,4 @@
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
-import image from "assets/images/home-banner.jpeg";
 import { Profile } from "./types";
 
 export const profile: Profile = {
