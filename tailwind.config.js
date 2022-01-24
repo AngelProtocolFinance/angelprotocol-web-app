@@ -145,7 +145,7 @@ module.exports = {
         modal: "300px",
         "leader-table": "50rem",
         "withdraw-table": "36rem",
-        10: "10",
+        110: "10rem",
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",

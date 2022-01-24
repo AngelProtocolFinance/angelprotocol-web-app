@@ -8,7 +8,6 @@ import Loader from "components/Loader/Loader";
 export default function Market() {
   const wallet = useConnectedWallet();
   const isTest = wallet?.network.chainID === chainIDs.testnet;
-
   const { data: profiles = [], isLoading } = useProfilesQuery(isTest);
 
   const sdg_ids = useMemo(

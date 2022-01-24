@@ -19,6 +19,7 @@ export const contracts: Contracts = {
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
+    [sc.airdrop]: "",
 
     //halo
     [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
@@ -50,6 +51,7 @@ export const contracts: Contracts = {
 
     //halo
     [sc.halo_gov]: "terra16tw444h6qtzxr4kf2p276qt0u6w3ggtc20xgly",
+    [sc.airdrop]: "terra15n2j80ufyrup8ply5nhjwwerfjpz7cx3m2hcqq",
 
     //lbp
     [sc.lbp_factory]: "terra167m64seqj7cucxm5wep3hyu4suqw4sl5s8uzjz",
@@ -78,6 +80,7 @@ export const contracts: Contracts = {
 
     //halo
     [sc.halo_gov]: "",
+    [sc.airdrop]: "",
 
     //lbp
     [sc.lbp_factory]: "",
