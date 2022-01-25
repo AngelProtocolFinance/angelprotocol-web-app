@@ -38,7 +38,7 @@ const charity_api = aws.injectEndpoints({
       query: (status) => {
         return {
           url: `charity/list`,
-          params: status ? { endowmentStatus: status } : {},
+          params: { endowmentStatus: status },
           method: "GET",
         };
       },

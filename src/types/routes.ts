@@ -20,7 +20,6 @@ export enum admin {
   endowments = "endowments",
   alliance_members = "alliance-members",
   charity_applications = "charity-applications",
-  auth = "auth",
 }
 
 export enum app {

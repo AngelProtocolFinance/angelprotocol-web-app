@@ -1,11 +1,24 @@
+import {
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
+import { admin } from "../types/routes";
 import AppFoot from "components/Footers/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "../App/chains";
 import { UseWalletProvider } from "use-wallet";
 import Nodal from "components/Nodal/Nodal";
-import Views from "./Views";
+import { useGetAuthorized } from "contexts/AuthProvider";
 
 const Admin = () => {
+  //{match.path} is '/admin'
+  const { path } = useRouteMatch();
+  const location = useLocation();
+  const auth = useGetAuthorized();
+
   return (
     <div className={`grid bg-gradient-to-b from-blue-accent to-black-blue`}>
       <WalletProvider
