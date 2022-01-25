@@ -4,7 +4,6 @@ import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
 import AllianceMembersTable from "./Table";
 import NewMemberModal from "./AddMemberModal";
-import EditMembersModal from "./EditMembersModal";
 import RemoveMemberModal from "./RemoveMemberModal";
 import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
