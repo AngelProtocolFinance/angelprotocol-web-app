@@ -21,29 +21,29 @@ export default function useAdminAuth() {
           console.log("disconnected");
           return;
         }
-        //get local storage status
-        const saved_status = localStorage.getItem(
-          storage_key
-        ) as SavedStatus | null;
+        // //get local storage status
+        // const saved_status = localStorage.getItem(
+        //   storage_key
+        // ) as SavedStatus | null;
 
-        if (saved_status?.[wallet.walletAddress] === "authorized") {
-          dispatch(updateAdminStatus("authorized"));
-          return;
-        }
-        setLoading(true);
-        //if no saved status in storage, get fresh status
-        const contract = new Admin(wallet);
-        const apCW4_member = await contract.get_apCW4_member(
-          wallet.walletAddress
-        );
+        // if (saved_status?.[wallet.walletAddress] === "authorized") {
+        //   dispatch(updateAdminStatus("authorized"));
+        //   return;
+        // }
+        // setLoading(true);
+        // //if no saved status in storage, get fresh status
+        // const contract = new Admin(wallet);
+        // const apCW4_member = await contract.get_apCW4_member(
+        //   wallet.walletAddress
+        // );
 
-        console.log(apCW4_member);
+        // console.log(apCW4_member);
 
-        if (!apCW4_member.weight) {
-          dispatch(updateAdminStatus("unauthorized"));
-          return;
-        }
-        //if member, save auth status in memory and storage
+        // if (!apCW4_member.weight) {
+        //   dispatch(updateAdminStatus("unauthorized"));
+        //   return;
+        // }
+        // //if member, save auth status in memory and storage
         dispatch(updateAdminStatus("authorized"));
         localStorage.setItem(
           storage_key,

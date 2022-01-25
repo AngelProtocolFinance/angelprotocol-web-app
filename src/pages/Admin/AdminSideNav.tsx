@@ -3,8 +3,8 @@ import { admin } from "types/routes";
 
 export default function AdminSideNav() {
   const linkStyles =
-    "block uppercase text-sm md:text-lg hover:text-white py-1 px-5 text-center rounded-sm border-0 border-b border-opacity-20 font-semibold";
-  const activeStyles = "text-white";
+    "block uppercase text-sm md:text-lg text-white hover:text-angel-grey py-1 px-5 text-center rounded-sm border-0 border-b border-opacity-20 font-semibold";
+  const activeStyles = "text-angel-orange";
 
   const logout = () => {};
   return (

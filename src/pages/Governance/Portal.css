@@ -7,7 +7,7 @@
   @apply border-2;
   @apply border-opacity-30;
   @apply shadow-sm;
-  @apply w-32;
+  @apply px-4;
   @apply uppercase;
   @apply text-center;
   @apply pt-1.5;

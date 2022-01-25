@@ -43,16 +43,17 @@ const MemberRow = ({ onUpdateClick, member, index }: any) => {
       <td className="self-center px-5 py-5 text-sm">
         <button
           onClick={() => onUpdateClick(index)}
-          className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
+          className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
         >
-          Edit
+          Remove {/* Edit */}
         </button>
       </td>
     </tr>
   );
 };
 
-const AllianceMembersTable = ({ members, onEditClick }: any) => {
+// const AllianceMembersTable = ({ members, onEditClick }: any) => {
+const AllianceMembersTable = ({ members, onRemoveClick }: any) => {
   return (
     <table className="min-w-full leading-normal">
       <MemberHeader />
@@ -63,7 +64,8 @@ const AllianceMembersTable = ({ members, onEditClick }: any) => {
               key={index}
               member={member}
               index={index}
-              onUpdateClick={onEditClick}
+              // onUpdateClick={onEditClick}
+              onUpdateClick={onRemoveClick}
             />
           ))}
       </tbody>

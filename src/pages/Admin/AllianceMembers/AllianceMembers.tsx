@@ -1,16 +1,17 @@
 import Modal from "components/Modal/Modal";
-import { useGetToken } from "contexts/AuthProvider";
 import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { app, site } from "types/routes";
+import { admin, site } from "types/routes";
 import AllianceMembersTable from "./Table";
 import NewMemberModal from "./AddMemberModal";
 import EditMembersModal from "./EditMembersModal";
+import RemoveMemberModal from "./RemoveMemberModal";
 import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
 import Loader from "components/Loader/Loader";
 import { equals } from "ramda";
+import { useGetter } from "store/accessors";
 
 export default function AllianceMembers() {
   const [members, setMembers] = useState<Member[]>([]);
@@ -18,7 +19,7 @@ export default function AllianceMembers() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const decodedToken = useGetToken();
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
   const { data } = useDonorsQuery("");
 
   useEffect(() => {
@@ -53,26 +54,26 @@ export default function AllianceMembers() {
     return result;
   };
 
-  const onClickEdit = (index: number) => {
+  const onClickRemove = (index: number) => {
     if (members) {
       setSelectedMember(members[index]);
       setShowEditModal(true);
     }
   };
 
-  //user can't access TCA page when not logged in or his prev token expired
-  if (!decodedToken?.apToken) {
-    return <Redirect to={`${site.admin}/${app.login}`} />;
+  // user can't access TCA page when not logged in or his prev token expired
+  if (adminAuthStatus !== "authorized") {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (
-    <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10 rounded-xl">
+    <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-white bg-opacity-10 min-h-3/4 gap-0 mt-10 rounded-xl">
       <AdminSideNav />
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
-        <h2 className="text-2xl font-semibold capitalize text-center">
+        <h2 className="text-2xl font-semibold capitalize text-center text-white">
           Alliance Members Management
         </h2>
         <button
-          className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-semibold "
+          className="mt-8 disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
           onClick={() => setShowNewModal(true)}
         >
           Add New Member
@@ -85,7 +86,8 @@ export default function AllianceMembers() {
               <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                 <AllianceMembersTable
                   members={members}
-                  onEditClick={(index: number) => onClickEdit(index)}
+                  // onEditClick={(index: number) => onClickEdit(index)}
+                  onRemoveClick={(index: number) => onClickRemove(index)}
                 />
               </div>
             )
@@ -99,7 +101,8 @@ export default function AllianceMembers() {
       )}
       {showEditModal && (
         <Modal setShown={() => setShowEditModal(false)}>
-          <EditMembersModal member={selectedMember} />
+          {/* <EditMembersModal member={selectedMember} /> */}
+          <RemoveMemberModal member={selectedMember} />
         </Modal>
       )}
     </div>

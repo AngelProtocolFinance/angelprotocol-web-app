@@ -115,7 +115,7 @@ const EditMembersModal = ({ member }: any) => {
         <div>
           <button
             type="submit"
-            className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+            className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
             disabled={isSubmitting}
             onClick={handleUpdate}
           >
@@ -125,7 +125,7 @@ const EditMembersModal = ({ member }: any) => {
         <div>
           <button
             onClick={handleOnClose}
-            className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+            className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
           >
             Cancel
           </button>

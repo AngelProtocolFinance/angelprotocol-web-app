@@ -12,6 +12,7 @@ import Endowments from "pages/Admin/Endowments/Endowments";
 import { admin } from "../types/routes";
 import Authentication from "pages/Admin/Authentication/Authentication";
 import useAdminAuth from "./useAdminAuth";
+import AllianceMembers from "pages/Admin/AllianceMembers/AllianceMembers";
 
 export default function Views() {
   const { path } = useRouteMatch();
@@ -38,7 +39,7 @@ export default function Views() {
           <Route path={`${path}/${admin.endowments}`} component={Endowments} />
           <Route
             path={`${path}/${admin.alliance_members}`}
-            component={IndexFund}
+            component={AllianceMembers}
           />
           <Route path={`${path}/${admin.index}`} component={IndexFund} />
           <Redirect from="*" to={`${path}/${admin.auth}`} />

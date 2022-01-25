@@ -87,6 +87,26 @@ const NewMemberModal = () => {
             </p>
           )}
           <label
+            htmlFor="url"
+            className="text-md text-gray-600 font-bold my-2 inline-block"
+          >
+            URL
+          </label>
+          <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+            <input
+              type="text"
+              className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
+              placeholder="URL of alliance member"
+              id="url"
+              {...register("url", { required: true })}
+            />
+          </div>
+          {errors.url && (
+            <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
+              URL of alliance member is required
+            </p>
+          )}
+          <label
             htmlFor="logo"
             className="text-md text-gray-600 font-bold my-2 inline-block"
           >
@@ -111,7 +131,7 @@ const NewMemberModal = () => {
           <div>
             <button
               type="submit"
-              className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+              className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
             >
               Submit
             </button>
@@ -119,7 +139,7 @@ const NewMemberModal = () => {
           <div>
             <button
               onClick={closeModal}
-              className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+              className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
             >
               Cancel
             </button>
