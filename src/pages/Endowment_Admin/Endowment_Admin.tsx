@@ -9,7 +9,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import { site } from "types/routes";
 import { RouteParam, Steps, Status, SetStatus } from "./types";
-import DappHead from "components/Headers/DappHead";
 import TransactionList from "./TransactionList";
 
 const initialStatus = {
@@ -51,7 +50,6 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
 
   return (
     <div className="grid content-start">
-      <DappHead />
       {redirect ? <Redirect to={site.app} /> : null}
       {error && (
         <div className="min-h-withdraw-table grid place-items-center">

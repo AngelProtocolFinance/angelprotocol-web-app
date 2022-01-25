@@ -11,14 +11,11 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-import { useBalances, useHaloBalance } from "services/terra/hooks";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {
-  const {
-    watch,
-    formState: { isValid },
-  } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const halo_balance = useHaloBalance();
@@ -28,7 +25,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
@@ -71,6 +67,10 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transaction"));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [wallet, halo_balance, UST_balance]);
 

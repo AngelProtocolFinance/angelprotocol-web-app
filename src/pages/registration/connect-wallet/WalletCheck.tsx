@@ -1,4 +1,3 @@
-import useAction from "components/Ethereum/useAction";
 import Modal from "components/Modal/Modal";
 import { useState } from "react";
 import { BsExclamationCircle } from "react-icons/bs";
@@ -6,10 +5,8 @@ import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
 import Action from "../../../components/ActionButton/Action";
 import TerraInfoModal from "../modals/TerraInfoModal";
-import { Connectors as Connects, Icons } from "components/WalletSuite/types";
 
 const WalletCheck = () => {
-  const { handleConnect, isLoading } = useAction(Connects.torus, Icons.torus);
   //url = app/register/wallet-check
   const history = useHistory();
   const [isOpenModal, setOpenModal] = useState(false);
@@ -38,8 +35,9 @@ const WalletCheck = () => {
         </div>
         <div>
           <Action
-            // onClick={() => history.push(registration.others)}
-            onClick={handleConnect}
+            onClick={() => {
+              alert("clicked NO");
+            }}
             title="NO"
             classes="bg-orange w-48 h-10"
           />

@@ -1,10 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { Dec } from "@terra-money/terra.js";
 import { currency_text, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
-import { useGovStaker, useHaloBalance } from "services/terra/hooks";
 import Balance from "./Balance";
 import { Values } from "./types";
+import useStakerBalance from "./useStakerBalance";
 
 export default function Amount() {
   const {
@@ -14,25 +13,25 @@ export default function Amount() {
     setValue,
   } = useFormContext<Values>();
   const is_stake = watch("is_stake");
-  const gov_staker = useGovStaker();
-  const halo_balance = useHaloBalance();
-  const balance = is_stake
-    ? halo_balance
-    : new Dec(gov_staker.balance).div(1e6).toNumber();
-
+  const { balance, locked } = useStakerBalance(is_stake);
   const onMaxClick = () => {
-    setValue("amount", balance + "");
+    setValue("amount", balance.sub(locked).div(1e6).toInt().toString());
   };
-
   return (
     <div className="grid">
       <label
         htmlFor="amount"
-        className="flex justify-between text-angel-grey font-bold mb-2 items-end"
+        className="flex justify-between text-angel-grey font-bold items-end"
       >
         <span>{is_stake ? "Stake amount" : "Amount to withdraw"}</span>
-        <Balance />
+        <Balance
+          amount={balance.div(1e6).toNumber()}
+          title={is_stake ? "Balance" : "Staked"}
+        />
       </label>
+      {!is_stake && (
+        <Balance amount={locked.div(1e6).toNumber()} title={"Vote Locked"} />
+      )}
       <span className="my-3 text-angel-grey italic text-xs">
         There is a 7 day wait period to unstake HALO. You will not be able to
         claim your HALO until this period has passed.

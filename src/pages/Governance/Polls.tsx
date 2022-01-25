@@ -1,4 +1,4 @@
-import { useGovPolls, useLatestBlock } from "services/terra/hooks";
+import { useGovPolls, useLatestBlock } from "services/terra/queriers";
 import Poll from "./Poll";
 import Poller from "components/Poller/Poller";
 import PollSuite from "components/TransactionSuite/PollSuite";
