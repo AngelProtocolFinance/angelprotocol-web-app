@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
@@ -39,11 +39,15 @@ export const ContactDetailsForm = (props: any) => {
     },
   });
 
-  const onSumbitContactDetails = async (values: ContactDetails) => {
-    setIsLoading(true);
-    await saveContactInfo(values);
-    setIsLoading(false);
-  };
+  const onSumbitContactDetails = useCallback(
+    async (values: ContactDetails) => {
+      setIsLoading(true);
+      await saveContactInfo(values);
+      setIsLoading(false);
+    },
+    [saveContactInfo]
+  );
+
   return (
     <div className="flex items-center justify-center">
       <form
