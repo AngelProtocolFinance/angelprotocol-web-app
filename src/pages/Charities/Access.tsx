@@ -36,12 +36,10 @@ export default function Access() {
             className="w-full max-w-lg shadow-md flex flex-col items-center p-6 border-4 border-blue-accent"
           >
             <img className="w-32 h-32" src={article.icon} alt="" />
-            <h4
-              className={`uppercase text-lg lg:text-xl text-center font-bold text-angel-grey my-4`}
-            >
+            <h4 className="uppercase text-lg lg:text-xl text-center font-bold text-angel-grey my-4">
               {article.title}
             </h4>
-            <p className={`text-angel-grey text-center`}>{article.desc}</p>
+            <p className="text-angel-grey text-center">{article.desc}</p>
           </article>
         ))}
       </div>

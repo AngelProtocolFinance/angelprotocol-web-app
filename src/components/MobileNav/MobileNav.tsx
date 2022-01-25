@@ -10,9 +10,7 @@ export default function MobileNav() {
   };
 
   return (
-    <ul
-      className={`text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base`}
-    >
+    <ul className="text-angel-blue bg-white md:hidden p-5 rounded-sm shadow-lg fixed top-28 right-0 flex flex-col items-end w-full max-w-xs font-body text-base">
       <li className="mr-4">
         <NavLink to={`${url}${web.charities}`} {...linkStyles}>
           For Charities

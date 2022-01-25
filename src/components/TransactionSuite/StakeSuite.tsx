@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { useGetter, useSetter } from "store/accessors";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
@@ -9,8 +8,7 @@ import { useSetModal } from "components/Nodal/Nodal";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import StakeForm from "components/Staker/StakeForm";
-
-type Display = { [key in Step]: ReactNode };
+import { Display } from "./types";
 
 export default function PollSuite(props: { inModal?: true }) {
   const { hideModal } = useSetModal();

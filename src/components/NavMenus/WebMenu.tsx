@@ -9,9 +9,7 @@ export default function WebMenu() {
     activeClassName: "font-bold",
   };
   return (
-    <ul
-      className={`hidden md:flex justify-self-end items-center font-body text-sm lg:text-base`}
-    >
+    <ul className="hidden md:flex justify-self-end items-center font-body text-sm lg:text-base">
       <li className="mr-4">
         <NavLink to={`${url}${web.charities}`} {...linkStyles}>
           For Charities

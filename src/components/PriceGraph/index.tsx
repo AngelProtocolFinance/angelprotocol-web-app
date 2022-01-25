@@ -1,6 +1,5 @@
 import Loader from "components/Loader/Loader";
 import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
-import React from "react";
 import {
   Area,
   CartesianGrid,

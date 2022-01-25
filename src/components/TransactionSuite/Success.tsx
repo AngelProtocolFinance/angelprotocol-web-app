@@ -9,7 +9,12 @@ export default function Success() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
+  const tx = stage.content?.tx;
+  const canRequestReceipt = tx && tx.to === "charity";
+
   function acknowledge() {
+    if (canRequestReceipt)
+      return dispatch(setStage({ step: Step.receipt, content: stage.content }));
     dispatch(setStage({ step: Step.form, content: null }));
     hideModal();
   }
@@ -34,7 +39,7 @@ export default function Success() {
         onClick={acknowledge}
         className="bg-angel-orange text-white rounded-md uppercase py-1 px-4"
       >
-        ok
+        {canRequestReceipt ? "get receipt" : "ok"}
       </button>
     </div>
   );

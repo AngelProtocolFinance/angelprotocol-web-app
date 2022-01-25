@@ -21,6 +21,7 @@ export enum sc {
   anchor = "anchor",
   halo_token = "halo_token",
   halo_gov = "halo_gov",
+  airdrop = "airdrop",
   lbp_factory = "lbp_factory",
   lbp_pair = "lbp_pair",
   lbp_router = "lbp_router",
@@ -41,9 +42,6 @@ export type ContractAddrs = {
 };
 
 //Index Fund types
-export interface TCAList {
-  tca_members: string[];
-}
 export type Donation = { address: string; total_ust: string };
 export interface Donors {
   donors: Donation[];

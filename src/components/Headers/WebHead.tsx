@@ -18,13 +18,13 @@ export default function WebHead() {
   return (
     <header
       ref={shadowRef}
-      className={`grid fixed bg-white w-full h-24 z-10 transition-shadow `}
+      className="grid fixed bg-white w-full h-24 z-10 transition-shadow "
     >
       <nav className="w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center padded-container">
         <Logo />
         <WebMenu />
         <button
-          className={`text-angel-grey block md:hidden ml-5`}
+          className="text-angel-grey block md:hidden ml-5"
           onClick={toggleNav}
         >
           <FiMenu className="text-2xl" />
