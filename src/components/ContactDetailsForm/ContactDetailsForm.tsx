@@ -13,7 +13,7 @@ import {
   useContactDetails,
 } from "./useContactDetails";
 
-export const ContactDetailsForm = (props: any) => {
+export default function ContactDetailsForm(props: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [orgRole, setOrgRole] = useState(props.contactData?.Role || "");
   const { saveContactInfo } = useContactDetails();
@@ -236,4 +236,4 @@ export const ContactDetailsForm = (props: any) => {
       </form>
     </div>
   );
-};
+}

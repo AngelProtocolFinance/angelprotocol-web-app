@@ -1,4 +1,4 @@
-import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsForm";
+import ContactDetailsForm from "components/ContactDetailsForm";
 import { ToastContainer } from "react-toastify";
 import { useGetter } from "store/accessors";
 
