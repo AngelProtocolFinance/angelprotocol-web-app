@@ -9,7 +9,7 @@ import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
-import { tags } from "services/terra/tags";
+import { tags, user } from "services/terra/tags";
 
 export default function useWithdrawHoldings() {
   const { reset } = useFormContext<Values>();
@@ -66,8 +66,10 @@ export default function useWithdrawHoldings() {
           );
 
           dispatch(
-            //invalidate all gov related cache
-            terra.util.invalidateTags([{ type: tags.endowment }])
+            terra.util.invalidateTags([
+              { type: tags.endowment },
+              { type: tags.user, id: user.terra_balance },
+            ])
           );
         } else {
           dispatch(
