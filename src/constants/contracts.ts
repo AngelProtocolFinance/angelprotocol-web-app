@@ -39,6 +39,7 @@ export const contracts: Contracts = {
   },
   [chainIDs.testnet]: {
     //core
+    // WARNING: below sc.anchor address will not work
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
     [sc.anchor_vault1]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
     [sc.anchor_vault2]: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",

@@ -1,6 +1,6 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
-import { CharityParam } from "./Charity";
+import { CharityParam } from "./types";
 
 export function CharityInfo() {
   const match = useRouteMatch<CharityParam>();

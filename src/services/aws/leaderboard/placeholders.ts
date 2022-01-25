@@ -1,6 +1,6 @@
 import { Update } from "./types";
 
-export const update: Update = {
+export const placeholderUpdate: Update = {
   endowments: [],
   last_update: new Date().toISOString(),
 };

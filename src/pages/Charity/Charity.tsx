@@ -15,16 +15,24 @@ import { ToastContainer } from "react-toastify";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
-
-export type CharityParam = { address: string };
+import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
+  const endowmentBalanceData = useQueryEndowmentBal(
+    endowment_addr,
+    profile.is_placeholder
+  );
+
   const wallet = useConnectedWallet();
+  const isCharityOwner =
+    wallet && wallet.walletAddress === profile.charity_owner;
 
   const showDonationForm = () => {
     //the button firing this function is disabled when
@@ -41,8 +49,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
-
-  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
@@ -68,15 +74,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          {/* charity info */}
           <CharityInfoNav
             activeTab={activeTab}
             onTabChange={(tab: string) => setActiveTab(tab)}
           />
-          {/* charity info */}
-          {/* Information tabs  */}
-          <CharityInfoTab activeTab={activeTab} />
-          {/* Information tabs  */}
+          <CharityInfoTab
+            activeTab={activeTab}
+            endowmentBalanceData={endowmentBalanceData}
+          />
         </div>
       </div>
       <ToastContainer />
@@ -84,11 +89,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   );
 };
 
-type CharityProps = { charity_addr: string };
-
-type CharityEditProps = { profile: Profile };
-
-function CharityForm(props: CharityProps) {
+function CharityForm(props: { charity_addr: string }) {
   return (
     <Donater to="charity" receiver={props.charity_addr}>
       <DonateSuite inModal />
@@ -96,7 +97,7 @@ function CharityForm(props: CharityProps) {
   );
 }
 
-function CharityProfileForm(props: CharityEditProps) {
+function CharityProfileForm(props: { profile: Profile }) {
   return (
     <CharityUpdateSuite inModal profile={props.profile}>
       <CharityProfileEditForm {...props} />

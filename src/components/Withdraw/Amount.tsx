@@ -11,10 +11,10 @@ export default function Amount(props: VaultInfo & { balance: string }) {
     setValue,
     formState: { errors },
   } = useFormContext<Values>();
-  const balance = new Dec(props.balance).div(1e6).toNumber();
+  const balance = new Dec(props.balance).div(1e6);
 
   function setMax() {
-    setValue(props.field_id, toCurrency(balance, 2), {
+    setValue(props.field_id, balance.toFixed(3, Dec.ROUND_DOWN), {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -37,7 +37,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
             type="button"
             className="font-bold hover:text-angel-blue"
           >
-            {toCurrency(balance, 2, true)} {props.symbol}
+            {toCurrency(balance.toNumber(), 3, true)} {props.symbol}
           </button>
         </p>
       </div>

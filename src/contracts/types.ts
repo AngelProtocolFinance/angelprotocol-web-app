@@ -155,3 +155,9 @@ export type Pair = {
   contract: string;
   liquidity_token: string;
 };
+
+export type EndowmentBalanceData = {
+  endowment_address: string;
+  locked: number;
+  liquid: number;
+};

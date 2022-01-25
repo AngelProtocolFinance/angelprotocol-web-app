@@ -1,5 +1,5 @@
 import DappHead from "components/Headers/DappHead";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+// import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 // import Voter from "components/Voter/Voter";
 // import VoterForm from "components/Voter/VoterForm";
 // import { useGovStaker } from "services/terra/hooks";

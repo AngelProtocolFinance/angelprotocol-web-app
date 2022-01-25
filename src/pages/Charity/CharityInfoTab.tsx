@@ -1,8 +1,8 @@
 import useProfile from "pages/Market/useProfile";
 import { useRouteMatch } from "react-router-dom";
-import { CharityParam } from "./Charity";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import toCurrency from "helpers/toCurrency";
+import { CharityParam } from "./types";
+import { Endowment } from "services/aws/leaderboard/types";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -71,26 +71,20 @@ function AccountInfo({
 //   );
 // }
 
-function CharityEndowmentInfo() {
-  const match = useRouteMatch<CharityParam>();
-  const charity_addr = match.params.address;
-  const profile = useProfile(charity_addr);
-  const { locked, liquid, overall } = useQueryEndowmentBal(
-    charity_addr,
-    profile.is_placeholder
-  );
+function CharityEndowmentInfo({ data }: { data: Endowment }) {
+  const { total_liq, total_lock, overall } = data;
 
   const accountDetails = [
     {
       type: "Current Account",
-      balance: `$${toCurrency(liquid)}`,
+      balance: `$${toCurrency(total_liq)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-green-400",
     },
     {
       type: "Principal Account",
-      balance: `$${toCurrency(locked)}`,
+      balance: `$${toCurrency(total_lock)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
@@ -164,16 +158,22 @@ function CharityEndowmentInfo() {
 //   );
 // }
 
+type Props = {
+  activeTab: string;
+  endowmentBalanceData: Endowment;
+};
+
 export default function CharityInfoTab({
   activeTab = "overview",
-}: {
-  activeTab: string;
-}) {
+  endowmentBalanceData,
+}: Props) {
   //TODO: use enums or maybe just implement this over react-router
   return (
     <>
       {activeTab === "overview" && <OverviewTab />}
-      {activeTab === "endowment" && <CharityEndowmentInfo />}
+      {activeTab === "endowment" && (
+        <CharityEndowmentInfo data={endowmentBalanceData} />
+      )}
       {/* {activeTab === "programs" && <CharityPrograms />}
       {activeTab === "media" && <OverviewTab />}
       {activeTab === "governance" && <OverviewTab />} */}
