@@ -10,6 +10,7 @@ export enum Step {
 export type Tx = {
   txHash: string;
   amount?: string;
+  split_liq?: string;
   to?: "charity" | "fund" | "tca";
   receiver?: number | string;
 };
