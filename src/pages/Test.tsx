@@ -5,6 +5,8 @@ import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 // import { useGovStaker } from "services/terra/hooks";
 
 export default function Test() {
+  const { data } = useLeaderboardsQuery(true);
+  console.log(data);
   return (
     <div className="grid grid-rows-a1 place-items-center">
       <DappHead />
