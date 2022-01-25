@@ -58,6 +58,7 @@ function useUSTSender() {
                 tx: {
                   txHash: txInfo.txhash,
                   amount: getValues("amount"),
+                  split_liq: getValues("split_liq"),
                   to: getValues("to"),
                   receiver: getValues("receiver"),
                 },
