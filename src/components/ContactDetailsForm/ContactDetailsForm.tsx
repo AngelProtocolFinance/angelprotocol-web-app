@@ -34,7 +34,7 @@ export const ContactDetailsForm = (props: any) => {
       phone: props.contactData?.PhoneNumber || "",
       orgRole: props.contactData?.Role || "ceo",
       otherRole: props.contactData?.otherRole || "",
-      checkedPolicy: props.contactData ? true : false,
+      checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
     },
   });
