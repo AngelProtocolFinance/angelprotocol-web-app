@@ -30,12 +30,6 @@ const Login = () => {
 
   return (
     <section className="grid grid-rows-a1 place-items-center">
-      <header className="flex items-center justify-between w-full h-24 padded-container">
-        <Logo />
-        <p className="uppercase font-bold text-white font-heading text-lg text-right">
-          Give once, give forever
-        </p>
-      </header>
       <div className="rounded-3xl bg-white w-full max-w-lg p-5 sm:p-10 mt-5 shadow-lg">
         <p className="text-3xl sm:text-4.5xl font-bold uppercase text-thin-blue mt-5 sm:mt-10 text-center leading-snug">
           Private access

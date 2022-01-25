@@ -80,7 +80,7 @@ function useUSTSender() {
         }
       }
     } catch (err) {
-      console.error(err);
+      console.log(err);
       handleTerraError(err, handleTxError);
     } finally {
       reset();

@@ -20,7 +20,7 @@ export default function useTerraBalance(main: denoms, others?: denoms[]) {
         URL: wallet.network.lcd,
         chainID: wallet.network.chainID,
       });
-      const coins = await client.bank.balance(wallet.terraAddress);
+      const [coins] = await client.bank.balance(wallet.terraAddress);
       const coin_main = coins.get(main);
       const _others = coins
         .map((coin) => coin.mul(1e-6).toData())

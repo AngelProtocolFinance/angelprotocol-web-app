@@ -3,7 +3,7 @@ import {
   Coin,
   LCDClient,
   Msg,
-  StdFee,
+  Fee,
   TxInfo,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
@@ -43,10 +43,13 @@ export default class Contract {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[]): Promise<StdFee> {
-    return this.client.tx.estimateFee(this.walletAddr!, msgs, {
-      feeDenoms: [denoms.uusd],
-    });
+  async estimateFee(msgs: Msg[]): Promise<Fee> {
+    this.checkWallet();
+    const account = await this.client.auth.accountInfo(this.walletAddr!);
+    return this.client.tx.estimateFee(
+      [{ sequenceNumber: account.getSequenceNumber() }],
+      { msgs, feeDenoms: [denoms.uusd] }
+    );
   }
 
   async pollTxInfo(
