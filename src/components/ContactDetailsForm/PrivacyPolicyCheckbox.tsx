@@ -14,21 +14,24 @@ export default function PrivacyPolicyCheckbox(props: Props) {
     <div className="grid grid-cols-1 items-center justify-center mb-4 mt-10">
       <div className="mx-auto">
         <div className="mr-5 items-center pt-2 text-center justify-center">
-          <label>
-            <input type="checkbox" {...registerReturn} className="mr-2" />
-            <span className="text-base">
-              By checking this box, you declare that you have read and agreed to
-              our{" "}
-              <Link
-                to={`${site.home}${web.privacy}`}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="underline text-angel-blue"
-              >
-                Privacy Policy
-              </Link>
-              <span className="text-base text-failed-red">*</span>
-            </span>
+          <input
+            id={registerReturn.name}
+            type="checkbox"
+            {...registerReturn}
+            className="mr-2 cursor-pointer"
+          />
+          <label htmlFor={registerReturn.name} className="cursor-pointer">
+            By checking this box, you declare that you have read and agreed to
+            our{" "}
+            <Link
+              to={`${site.home}${web.privacy}`}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="underline text-angel-blue"
+            >
+              Privacy Policy
+            </Link>
+            <span className="text-failed-red">*</span>
           </label>
         </div>
         {error && (
