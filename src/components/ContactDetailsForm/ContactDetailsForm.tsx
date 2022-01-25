@@ -43,6 +43,7 @@ export const ContactDetailsForm = (props: any) => {
     await saveContactInfo(values);
     setIsLoading(false);
   };
+
   return (
     <div className="flex items-center justify-center">
       <form
@@ -203,36 +204,33 @@ export const ContactDetailsForm = (props: any) => {
           </div>
         </div>
         <div className="grid grid-cols-1 items-center justify-center mb-4 mt-10">
-          {!props.contactData && (
-            <div className="mx-auto">
-              <div className="mr-5 items-center pt-2 text-center justify-center">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="checkedPolicy"
-                    className="mr-2"
-                  />
-                  <span className="text-base">
-                    {" "}
-                    By checking this box, you declare that you have read and
-                    agreed our{" "}
-                    <Link
-                      to={`${site.home}${web.privacy}`}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="underline"
-                    >
-                      Privacy Policy
-                    </Link>
-                    <span className="text-base text-failed-red">*</span>
-                  </span>
-                </label>
-              </div>
-              <p className="text-sm text-failed-red">
-                {errors.checkedPolicy?.message}
-              </p>
+          <div className="mx-auto">
+            <div className="mr-5 items-center pt-2 text-center justify-center">
+              <label>
+                <input
+                  type="checkbox"
+                  {...register("checkedPolicy")}
+                  className="mr-2"
+                />
+                <span className="text-base">
+                  By checking this box, you declare that you have read and
+                  agreed to our{" "}
+                  <Link
+                    to={`${site.home}${web.privacy}`}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="underline text-angel-blue"
+                  >
+                    Privacy Policy
+                  </Link>
+                  <span className="text-base text-failed-red">*</span>
+                </span>
+              </label>
             </div>
-          )}
+            <p className="text-sm text-failed-red text-center">
+              {errors.checkedPolicy?.message}
+            </p>
+          </div>
         </div>
         <div className="text-center flex justify-center">
           {props.contactData?.PK && (
