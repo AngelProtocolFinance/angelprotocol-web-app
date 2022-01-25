@@ -30,17 +30,6 @@ export default function WebHead() {
           <FiMenu className="text-2xl" />
         </button>
         {navShown && <MobileNav />}
-        <a
-          href="https://restore-earth.angelprotocol.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute -bottom-6 font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
-        >
-          <Word icon={heart_icon} title="donate" />
-          <Word icon={star_icon} title="get rewards" />
-          <Word icon={earth_icon} title="help restore earth" />
-          <GoLinkExternal className="text-lg" />
-        </a>
       </nav>
     </header>
   );
