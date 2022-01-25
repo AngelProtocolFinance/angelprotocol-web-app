@@ -7,9 +7,9 @@ export default function Slippage() {
       <p className="text-2xs uppercase font-bold font-heading mr-auto">
         Slippage
       </p>
-      <Option value="0.1" id={"slip_1"} />
-      <Option value="0.5" id={"slip_2"} />
-      <Option value="1.0" id={"slip_3"} />
+      <Option value="0.5" id={"slip_1"} />
+      <Option value="1.0" id={"slip_2"} />
+      <Option value="1.5" id={"slip_3"} />
       <Option value="2.0" id={"slip_4"} />
     </div>
   );
@@ -22,6 +22,7 @@ type OptionProps = {
 function Option(props: OptionProps) {
   const { register, watch } = useFormContext<Values>();
   const slippage = watch("slippage");
+  console.log(slippage);
   const is_active = slippage === props.value;
 
   return (

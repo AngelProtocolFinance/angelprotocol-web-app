@@ -21,7 +21,7 @@ export default function Index(props: { id: number }) {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         onMouseMove={handleMouseMove}
-        className={`flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0 sm:ml-4`}
+        className="flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0 sm:ml-4"
       >
         {profiles.map((profile) => (
           <CharityCard

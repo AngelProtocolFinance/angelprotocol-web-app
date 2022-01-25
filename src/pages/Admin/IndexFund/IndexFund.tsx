@@ -1,5 +1,4 @@
 import Modal from "components/Modal/Modal";
-import { useGetAuthorized } from "contexts/AuthProvider";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";

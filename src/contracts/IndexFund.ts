@@ -10,7 +10,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import Contract from "./Contract";
-import { Donors, sc, TCAList } from "./types";
+import { Donors, sc } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -27,13 +27,6 @@ export default class Indexfund extends Contract {
     return await this.query<Donors>(this.address, {
       active_fund_donations: {},
     });
-  }
-
-  async getTCAList() {
-    const result = await this.query<TCAList>(this.address, {
-      tca_list: {},
-    });
-    return result.tca_members;
   }
 
   async createDepositTx(

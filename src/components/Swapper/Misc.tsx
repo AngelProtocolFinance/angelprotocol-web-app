@@ -1,12 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import { Values } from "./types";
+import toCurrency from "helpers/toCurrency";
 
-function Misc(props: { title: string; value: string }) {
+function Misc(props: { title: string; value: string; class?: string }) {
+  const classes = `text-xs font-light ${props.class}`;
   return (
     <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey mt-1 mb-1">
       <p className="text-xs font-semibold uppercase">{props.title}</p>
-      <p className="text-xs font-light">{props.value}</p>
+      <p className={classes}>{props.value}</p>
     </div>
   );
 }
@@ -19,16 +21,22 @@ export function Fee() {
 export function Commission() {
   const { watch } = useFormContext<Values>();
   const pct_commission = watch("pct_commission");
-  return <Misc title="commission" value={`${pct_commission} %`} />;
+  return <Misc title="commission" value={`${pct_commission || 0.0} %`} />;
 }
 
-export function Effect() {
+export function SwapRate() {
   const { watch } = useFormContext<Values>();
-  const pct_change = watch("pct_change");
+  const ratio = watch("ratio");
+  const is_buy = watch("is_buy");
   return (
-    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey mb-1 border-t border-angel-blue border-opacity-20 pt-2">
-      <p className="text-sm font-bold uppercase">Price impact</p>
-      <p className="text-sm font-semibold">{`${pct_change} %`}</p>
-    </div>
+    <Misc
+      title="Rate"
+      value={
+        is_buy
+          ? `${toCurrency(ratio, 6, true)} UST = 1 HALO`
+          : `${toCurrency(ratio, 6, true)} HALO = 1 UST`
+      }
+      class="font-semibold"
+    />
   );
 }

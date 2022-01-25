@@ -11,7 +11,6 @@ export interface Values {
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
 }
-
 export type ErrorHandler = (message: string, url?: string) => void;
 
 export interface XFI {
@@ -46,8 +45,8 @@ interface ToCharity {
   receiver: string;
   children: ReactNode;
   //doesn't know yet limits on charity donations
-  max_liq?: never;
-  min_liq?: never;
+  max_liq?: number;
+  min_liq?: number;
 }
 
 export type Props = ToFund | ToCharity | FromTCA;

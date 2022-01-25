@@ -10,7 +10,7 @@ import {
   useBalances,
   useGovStaker,
   useHaloBalance,
-} from "services/terra/hooks";
+} from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -21,7 +21,7 @@ import {
 import toCurrency from "helpers/toCurrency";
 
 export default function useEstimator() {
-  const { watch, formState: isValid } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
@@ -35,7 +35,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
@@ -49,7 +48,7 @@ export default function useEstimator() {
 
         if (is_stake) {
           //check $HALO balance
-          if (debounced_amount >= halo_balance) {
+          if (debounced_amount > halo_balance) {
             dispatch(setFormError("Not enough Halo balance"));
             return;
           }
@@ -97,6 +96,10 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(""));
+    };
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, halo_balance]);
 
