@@ -1,10 +1,11 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Coin, LCDClient } from "@terra-money/terra.js";
+import { LCDClient } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { denoms } from "constants/currency";
+import { Coin } from "services/wallet/types";
 
 export default function useTerraBalance(main: denoms, others?: denoms[]) {
-  const [_others, set_others] = useState<Coin.Data[]>([]);
+  const [_others, set_others] = useState<Coin[]>([]);
   const [_main, set_main] = useState<number>(0);
   const wallet = useConnectedWallet();
 
@@ -23,7 +24,10 @@ export default function useTerraBalance(main: denoms, others?: denoms[]) {
       const [coins] = await client.bank.balance(wallet.terraAddress);
       const coin_main = coins.get(main);
       const _others = coins
-        .map((coin) => coin.mul(1e-6).toData())
+        .map((coin) => {
+          const data = coin.mul(1e-6).toData();
+          return { amount: +data.amount, denom: data.denom as denoms };
+        })
         .filter((coin) =>
           others ? others.includes(coin.denom as denoms) : true
         );

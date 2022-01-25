@@ -1,11 +1,8 @@
-import { ConnectType } from "@terra-money/wallet-provider";
-import TerraAction from "components/TerraStation/TerraAction";
 import { IoClose } from "react-icons/io5";
-import { Icons } from "./types";
 import { useWallet } from "@terra-money/wallet-provider";
 import Backdrop from "./Backdrop";
 import Nodal from "components/Nodal/Nodal";
-import Connector from "./Terra/Connector";
+import TerraAction from "components/TerraStation/TerraAction";
 
 type Props = {
   closeHandler: () => void;
@@ -24,7 +21,7 @@ export default function Connectors(props: Props) {
         </button>
         <Nodal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableConnections.map((connection) => {
-            return <Connector key={connection.name} {...connection} />;
+            return <TerraAction key={connection.name} {...connection} />;
           })}
         </Nodal>
       </div>

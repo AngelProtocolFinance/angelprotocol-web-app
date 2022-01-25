@@ -3,12 +3,14 @@ import TerraDisplay from "components/TerraStation/Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
-import { Wallets } from "services/wallet/types";
+import { Providers } from "services/wallet/types";
+import useTerraUpdator from "./useTerraUpdator";
 
 export default function WalletSuite() {
+  useTerraUpdator();
   const [connectorsShown, showConnectors] = useState(false);
-  const { activeWallet, isLoading } = useGetter((state) => state.wallet);
-  const isConnected = activeWallet !== Wallets.none;
+  const { provider, isSwitching } = useGetter((state) => state.wallet);
+  const isConnected = provider !== Providers.none;
   const toggleConnector = () => showConnectors((p) => !p);
   const hideConnectors = () => showConnectors(false);
 
@@ -23,30 +25,22 @@ export default function WalletSuite() {
       {!isConnected && (
         <button
           className="flex py-2 px-3 items-center text-white  "
-          disabled={isLoading}
+          disabled={isSwitching}
           onClick={toggleConnector}
         >
-          {activeWallet === Wallets.none && (
+          {provider === Providers.none && (
             <IoWalletSharp className="text-white text-xl mr-2" />
           )}
-          <span>{isLoading ? "Loading" : "Connect"}</span>
+          <span>{isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {displays[activeWallet]}
+      {displays[provider]}
       {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
   );
 }
 
 const displays = {
-  [Wallets.none]: null,
-  [Wallets.terra]: <TerraDisplay />,
+  [Providers.none]: null,
+  [Providers.terra]: <TerraDisplay />,
 };
-
-// const displays = {
-// [Wallets.none]: null,
-// [Wallets.terra]: <TerraDisplay />,
-// [Wallets.ethereum]: <EthDisplay />,
-// [Wallets.phantom]: <PhantomDisp />,
-// [Wallets.keplr]: <KeplrDisp />,
-// };

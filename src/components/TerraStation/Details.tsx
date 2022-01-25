@@ -1,4 +1,4 @@
-import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import { useWallet } from "@terra-money/wallet-provider";
 import { Coin } from "@terra-money/terra.js";
 import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
@@ -7,17 +7,14 @@ import Portal from "./Portal";
 import { useState } from "react";
 import { denoms } from "constants/currency";
 import Filter from "./Filter";
-
-type Props = {
-  coinData: Coin.Data[];
-  closeHandler: () => void;
-  chainId: string;
-};
+import { useGetter } from "store/accessors";
 
 const criterionAmount = 10;
-export default function Details(props: Props) {
+export default function Details(props: { closeHandler: () => void }) {
+  const { disconnect } = useWallet();
   const [filtered, setFilter] = useState(false);
-  const coins = props.coinData.filter(
+  const { coins, chainId, address } = useGetter((state) => state.wallet);
+  const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
       coin.denom === denoms.uusd ||
@@ -25,11 +22,8 @@ export default function Details(props: Props) {
       Number(coin.amount) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);
-  const { disconnect, status, wallets } = useWallet();
-  const isConnected = status === WalletStatus.WALLET_CONNECTED;
 
-  const isEmpty = coins.length <= 0;
-  const addr = wallets[0]?.terraAddress;
+  const isEmpty = filtered_coins.length <= 0;
   const handleDisconnect = () => disconnect();
 
   return (
@@ -41,18 +35,17 @@ export default function Details(props: Props) {
         <IoClose />
       </button>
       <div className="bg-angel-grey text-white-grey text-sm p-2">
-        <p className="uppercase">network : {props.chainId}</p>
+        <p className="uppercase">network : {chainId}</p>
       </div>
       {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
-      <Address address={addr} />
+      <Address address={address} />
       <Portal />
-      {(!isEmpty && <Holdings coinData={coins} />) || (
+      {(!isEmpty && <Holdings coins={filtered_coins} />) || (
         <span className="text-angel-grey p-10 text-center text-sm uppercase">
           Wallet is empty
         </span>
       )}
       <button
-        disabled={!isConnected}
         onClick={handleDisconnect}
         className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
       >

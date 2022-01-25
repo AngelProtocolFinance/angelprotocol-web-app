@@ -1,27 +1,52 @@
+import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PendingTx, State, Wallets } from "./types";
+import { denoms } from "constants/currency";
+import { chainIDs } from "contracts/types";
+import { State, Providers, WalletDetail } from "./types";
 
 const initialState: State = {
-  activeWallet: Wallets.none,
-  isLoading: false,
-  pending_tx: null,
+  provider: Providers.none,
+  isSwitching: false,
+  isDetailsLoading: false,
+  displayCoin: {
+    amount: 0,
+    denom: denoms.uusd,
+  },
+  coins: [],
+  icon: icon,
+  address: "walletaddrs",
+  chainId: chainIDs.mainnet,
 };
 
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    setActive: (state, { payload }: PayloadAction<Wallets>) => {
-      state.activeWallet = payload;
+    setProvider: (state, { payload }: PayloadAction<Providers>) => {
+      state.provider = payload;
     },
-    setLoading: (state, { payload }: PayloadAction<boolean>) => {
-      state.isLoading = payload;
+    setWalletDetails: (
+      state,
+      {
+        payload: { icon, displayCoin, coins, address, chainId },
+      }: PayloadAction<WalletDetail>
+    ) => {
+      console.log("runs");
+      state.icon = icon;
+      state.displayCoin = displayCoin;
+      state.coins = coins;
+      state.address = address;
+      state.chainId = chainId;
     },
-    setPending: (state, { payload }: PayloadAction<PendingTx>) => {
-      state.pending_tx = payload;
+    setIsSwitching: (state, { payload }: PayloadAction<boolean>) => {
+      state.isSwitching = payload;
+    },
+    setIsUpdating: (state, { payload }: PayloadAction<boolean>) => {
+      state.isDetailsLoading = payload;
     },
   },
 });
 
 export default walletSlice.reducer;
-export const { setActive, setLoading, setPending } = walletSlice.actions;
+export const { setProvider, setIsSwitching, setIsUpdating, setWalletDetails } =
+  walletSlice.actions;

@@ -1,39 +1,41 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import { useSetter } from "store/accessors";
-import { setLoading, setActive } from "services/wallet/walletSlice";
-import { Wallets, WalletStates } from "services/wallet/types";
+import { setIsSwitching, setProvider } from "services/wallet/walletSlice";
+import { Providers, ProviderStates } from "services/wallet/types";
 import { updateChainID } from "services/chain/chainSlice";
 import { chainIDs } from "contracts/types";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 
-export default function useWalletSuite() {
+export default function useWalletSwitcher() {
   const dispatch = useSetter();
   const terra_chain_ref = useRef<string>(chainIDs.mainnet);
   const { status: terraStatus, network } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
-  const isLoading = isTerraLoading;
-  const walletStates: WalletStates = [[Wallets.terra, terraConnected]];
-  //find first connected wallet
+  const isLoading = isTerraLoading; // || other provider loading state;
+  const providerStates: ProviderStates = [[Providers.terra, terraConnected]];
+  //find first connected provider
   //undefined if not wallet is connected
-  const connectedWallet = walletStates.find((walletState) => walletState[1]);
+  const connectedWallet = providerStates.find(
+    ([, isProviderConnected]) => isProviderConnected
+  );
 
   useEffect(() => {
-    dispatch(setLoading(isLoading));
+    dispatch(setIsSwitching(isLoading));
     //eslint-disable-next-line
   }, [isLoading]);
 
   useEffect(() => {
     if (connectedWallet) {
       const [wallet] = connectedWallet;
-      dispatch(setActive(wallet));
+      dispatch(setProvider(wallet));
     } else {
-      dispatch(setActive(Wallets.none));
+      dispatch(setProvider(Providers.none));
     }
     return () => {
-      dispatch(setActive(Wallets.none));
+      dispatch(setProvider(Providers.none));
     };
     //eslint-disable-next-line
   }, [connectedWallet]);
