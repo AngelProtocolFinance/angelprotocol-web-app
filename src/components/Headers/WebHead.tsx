@@ -3,11 +3,7 @@ import { FiMenu } from "react-icons/fi";
 import MobileNav from "components/MobileNav/MobileNav";
 import useScrollShadow from "hooks/useScrollShadow";
 import Logo from "components/Logo/Logo";
-import { GoLinkExternal } from "react-icons/go";
 import WebMenu from "components/NavMenus/WebMenu";
-import earth_icon from "assets/icons/earth.svg";
-import heart_icon from "assets/icons/heart.svg";
-import star_icon from "assets/icons/star.svg";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();
@@ -32,14 +28,5 @@ export default function WebHead() {
         {navShown && <MobileNav />}
       </nav>
     </header>
-  );
-}
-
-function Word(props: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center mr-2">
-      <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
-      <span className="md:uppercase">{props.title}</span>
-    </div>
   );
 }
