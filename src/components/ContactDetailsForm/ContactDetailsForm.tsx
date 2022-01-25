@@ -7,6 +7,7 @@ import { registration } from "types/routes";
 import { Selector } from "../../components/Selector/Selector";
 import { userRoles } from "../../constants/userRoles";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
+import Input from "./Input";
 import {
   ContactDetails,
   ContactInfoSchema,
@@ -48,6 +49,8 @@ export default function ContactDetailsForm(props: any) {
     [saveContactInfo]
   );
 
+  console.log(control._formValues);
+
   return (
     <div className="flex items-center justify-center">
       <form
@@ -56,109 +59,42 @@ export default function ContactDetailsForm(props: any) {
       >
         <div className=" grid grid-cols-1 sm:grid-cols-2">
           <div className="">
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base">
-                  Name of your organization
-                  <span className="text-base text-failed-red">*</span>
-                  <input {...register("uniqueID")} type="hidden" />
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("charityName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="Organization"
-                    disabled={props.contactData?.PK !== ""}
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.charityName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  First name
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("firstName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="First Name"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.firstName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  Last name
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("lastName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="Last Name"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.lastName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  E-mail address
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("email")}
-                    type="email"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="email Address"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.email?.message}
-                </p>
-              </div>
-            </div>
+            <Input
+              label="Name of your organization"
+              placeholder="Organization"
+              registerReturn={register("charityName")}
+              errorMessage={errors.charityName?.message}
+              required
+            />
+            <Input
+              label="First name"
+              placeholder="First name"
+              registerReturn={register("firstName")}
+              errorMessage={errors.firstName?.message}
+              required
+            />
+            <Input
+              label="Last name"
+              placeholder="Last name"
+              registerReturn={register("lastName")}
+              errorMessage={errors.lastName?.message}
+              required
+            />
+            <Input
+              type="email"
+              label="E-mail address"
+              placeholder="E-mail address"
+              registerReturn={register("email")}
+              errorMessage={errors.email?.message}
+              required
+            />
           </div>
           <div className="">
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">phone number</span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("phone")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="phone Number"
-                  />
-                </div>
-              </div>
-            </div>
+            <Input
+              label="Phone number"
+              placeholder="Phone number"
+              registerReturn={register("phone")}
+            />
             <div className="items-center justify-center mb-4">
               <div className="text-left">
                 <span className="text-base text-left">
@@ -183,27 +119,13 @@ export default function ContactDetailsForm(props: any) {
               </div>
             </div>
             {orgRole === "other" && (
-              <div className="items-center justify-center mb-4">
-                <div className="text-left">
-                  <span className="text-base text-left">
-                    please specify
-                    <span className="text-base text-failed-red">*</span>
-                  </span>
-                </div>
-                <div className="">
-                  <div className="mr-5 rounded-md bg-white flex items-center w-2/5text-black py-2">
-                    <input
-                      {...register("otherRole")}
-                      type="text"
-                      className="outline-none border-none w-full px-3 text-black"
-                      placeholder="Specify Your Role"
-                    />
-                  </div>
-                  <p className="text-sm text-failed-red">
-                    {errors.otherRole?.message}
-                  </p>
-                </div>
-              </div>
+              <Input
+                label="Specify your role"
+                placeholder="Specify your role"
+                registerReturn={register("otherRole")}
+                errorMessage={errors.otherRole?.message}
+                required
+              />
             )}
           </div>
         </div>
