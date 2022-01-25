@@ -247,7 +247,7 @@ export const ContactDetailsForm = (props: any) => {
           <div className="mr-2">
             <Action
               submit
-              title="Save"
+              title="Continue"
               classes="bg-thin-blue w-48 h-12"
               disabled={isLoading}
               isLoading={isLoading}
