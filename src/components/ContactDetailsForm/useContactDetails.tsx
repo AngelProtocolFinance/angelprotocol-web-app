@@ -9,6 +9,7 @@ import {
 } from "services/aws/registration";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { useCallback } from "react";
 
 export type ContactDetails = {
   charityName: string;
@@ -45,61 +46,65 @@ export const useContactDetails = () => {
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  async function saveContactInfo(contactData: ContactDetails) {
-    // call API to add or update contact details information(contactData)
-    const is_create = !contactData?.uniqueID;
-    const postData = {
-      Registration: {
-        CharityName: contactData.charityName,
-      },
-      ContactPerson: {
-        UUID: contactData.uniqueID,
-        FirstName: contactData.firstName,
-        LastName: contactData.lastName,
-        Email: contactData.email,
-        PhoneNumber: contactData.phone,
-        Role: contactData.orgRole,
-        OtherRole: contactData.otherRole || "",
-      },
-    };
+  const saveContactInfo = useCallback(
+    async (contactData: ContactDetails) => {
+      // call API to add or update contact details information(contactData)
+      const is_create = !contactData?.uniqueID;
+      const postData = {
+        Registration: {
+          CharityName: contactData.charityName,
+        },
+        ContactPerson: {
+          UUID: contactData.uniqueID,
+          FirstName: contactData.firstName,
+          LastName: contactData.lastName,
+          Email: contactData.email,
+          PhoneNumber: contactData.phone,
+          Role: contactData.orgRole,
+          OtherRole: contactData.otherRole || "",
+        },
+      };
 
-    let result: any = {};
-    if (is_create) {
-      const response: any = await registerCharity(postData);
-      result = response.data ? response.data : response.error.data;
-    } else {
-      const response: any = await updateContactPerson(postData);
-      result = response.data ? response.data : response.error.data;
-    }
-
-    if (result.UUID || result.message === "Updated successfully!") {
-      if (!is_create) {
-        toast.success(result.message);
+      let result: any = {};
+      if (is_create) {
+        const response: any = await registerCharity(postData);
+        result = response.data ? response.data : response.error.data;
       } else {
-        await resendEmail({
-          uuid: result.UUID,
-          type: "verify-email",
-          body: {
-            ...postData.ContactPerson,
-            CharityName: postData.Registration.CharityName,
-          },
-        });
-        dispatch(
-          updateUserData({
-            ...user,
-            ...postData.ContactPerson,
-            CharityName: postData.Registration.CharityName,
-            RegistrationDate: new Date().toISOString(),
-            RegistrationStatus: "Not Complete",
-            EmailVerified: false,
-            PK: result.UUID || contactData.uniqueID,
-          })
-        );
-        history.push(registration.confirm);
+        const response: any = await updateContactPerson(postData);
+        result = response.data ? response.data : response.error.data;
       }
-    } else {
-      toast.error(result.message);
-    }
-  }
+
+      if (result.UUID || result.message === "Updated successfully!") {
+        if (!is_create) {
+          toast.success(result.message);
+        } else {
+          await resendEmail({
+            uuid: result.UUID,
+            type: "verify-email",
+            body: {
+              ...postData.ContactPerson,
+              CharityName: postData.Registration.CharityName,
+            },
+          });
+          dispatch(
+            updateUserData({
+              ...user,
+              ...postData.ContactPerson,
+              CharityName: postData.Registration.CharityName,
+              RegistrationDate: new Date().toISOString(),
+              RegistrationStatus: "Not Complete",
+              EmailVerified: false,
+              PK: result.UUID || contactData.uniqueID,
+            })
+          );
+          history.push(registration.confirm);
+        }
+      } else {
+        toast.error(result.message);
+      }
+    },
+    [dispatch, history, registerCharity, resendEmail, updateContactPerson, user]
+  );
+
   return { saveContactInfo };
 };
