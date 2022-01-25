@@ -11,7 +11,7 @@ import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
 import Loader from "components/Loader/Loader";
 import { equals } from "ramda";
-import { useGetter } from "store/accessors";
+import { useGetAuthorized } from "contexts/AuthProvider";
 
 export default function AllianceMembers() {
   const [members, setMembers] = useState<Member[]>([]);
@@ -19,7 +19,7 @@ export default function AllianceMembers() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
+  const auth = useGetAuthorized();
   const { data } = useDonorsQuery("");
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function AllianceMembers() {
   };
 
   // user can't access TCA page when not logged in or his prev token expired
-  if (adminAuthStatus !== "authorized") {
+  if (!auth.isAuthorized) {
     return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (

@@ -4,6 +4,7 @@ export interface Details {
   url: string;
   name: string;
   description: string;
+  tier: number;
 }
 
 export type Charities = {

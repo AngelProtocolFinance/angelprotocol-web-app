@@ -51,7 +51,7 @@ export default function CharityApps() {
   const handleDeleteCharity = () => {};
   //user can't access TCA page when not logged in or his prev token expired
   if (!auth.isAuthorized) {
-    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
 
   return (
@@ -63,9 +63,7 @@ export default function CharityApps() {
         </h2>
         <div className="flex justify-between w-full mt-3">
           <div className="search px-3 py-2 flex items-center bg-white rounded-md border-gray-200 w-80">
-            <FiSearch
-              className={`text-gray-600 text-xl mr-2 hover:text-orange`}
-            />
+            <FiSearch className="text-gray-600 text-xl mr-2 hover:text-orange" />
             <input
               type="text"
               value={searchWord}

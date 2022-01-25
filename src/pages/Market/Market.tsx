@@ -1,10 +1,14 @@
 import { useMemo } from "react";
-import DappHead from "components/Headers/DappHead";
 import Index from "./Index";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { chainIDs } from "contracts/types";
 
 export default function Market() {
-  const { data: profiles = [] } = useProfilesQuery(undefined);
+  const wallet = useConnectedWallet();
+  const isTest = wallet?.network.chainID === chainIDs.testnet;
+
+  const { data: profiles = [] } = useProfilesQuery(isTest);
   const sdg_ids = useMemo(
     () =>
       Array.from(
@@ -20,8 +24,7 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
-        <DappHead />
+      <div className="grid items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
         <div className="px-2">
           <p className="uppercase text-lg md:text-2xl xl:text-4xl">
             we categorize our charities based on the

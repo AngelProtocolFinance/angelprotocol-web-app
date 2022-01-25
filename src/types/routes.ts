@@ -15,7 +15,7 @@ export enum site {
 
 export enum admin {
   index = "dashboard",
-  authentication = "authentication",
+  auth = "auth",
   index_fund_management = "index-fund",
   endowments = "endowments",
   alliance_members = "alliance-members",
@@ -38,6 +38,8 @@ export enum app {
   govern = "govern",
   test = "test",
   auction = "auction",
+  churchportal = "churchportal",
+  endowment_admin = "endowment_admin",
 }
 
 export enum govern {

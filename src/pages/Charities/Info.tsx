@@ -25,12 +25,10 @@ export default function Info() {
           Direction.fromRight
         )} justify-self-center lg:justify-self-start max-w-2xl mt-5 lg:mt-0 lg:pl-2`}
       >
-        <h3
-          className={`text-xl sm:text-2xl font-semibold text-white font-body mb-3 relative transition-all uppercase`}
-        >
+        <h3 className="text-xl sm:text-2xl font-semibold text-white font-body mb-3 relative transition-all uppercase">
           High-yield, low-risk
         </h3>
-        <p className={`text-white-grey mb-3 text-xl`}>
+        <p className="text-white-grey mb-3 text-xl">
           Angel Protocol leverages decentralized financial products and offers
           them to charities through a simple platform. Your endowment earns{" "}
           <span className="font-semibold">~20%</span> interest through a savings

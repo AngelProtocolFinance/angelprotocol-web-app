@@ -15,7 +15,7 @@ export default function IndexFund() {
 
   //user can't access TCA page when not logged in or his prev token expired
   if (!auth.isAuthorized) {
-    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (
     <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-gray-400 min-h-3/4 gap-0 mt-10 rounded-xl">

@@ -1,12 +1,12 @@
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { useGetLambdaAuthTokenMutation } from "services/aws/auth";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
 import createAuthToken from "helpers/createAuthToken";
+import { UserTypes } from "services/user/types";
 
 export type ReferInfo = {
   refer: string;
@@ -18,7 +18,6 @@ export const FormInfoSchema = Yup.object().shape({
 
 export const useRegistration = () => {
   const [checkData] = useCheckPreviousRegistrationMutation();
-  const [getTokenData] = useGetLambdaAuthTokenMutation();
   const dispatch = useSetter();
   const history = useHistory();
   const { url } = useRouteMatch();
@@ -29,7 +28,7 @@ export const useRegistration = () => {
       toast.error(response.error.data.message);
     } else {
       // const token: any = await getTokenData(values.refer);
-      const token: any = createAuthToken("charity-owner");
+      const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
       console.log(token);
       const data = {
         ...response.data.ContactPerson,

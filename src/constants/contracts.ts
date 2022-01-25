@@ -20,13 +20,20 @@ export const contracts: Contracts = {
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
 
     //halo
-    [sc.halo_gov]: "terra1lzdqv40fd8am5ac5tr9kvrmplqywmrgh4dslvk",
+    [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
 
     //lbp
     [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
     [sc.lbp_pair]: "terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e",
     [sc.lbp_router]: "terra1l32eafhapmn9c8m7epyraxa2yty4xngamvewfs",
     [sc.lbp_lp]: "terra1kt26adtzwu4yefw37snr73n393vsu8w0hmazxc",
+
+    //loop
+    [sc.loop_factory]: "terra16hdjuvghcumu6prg22cdjl96ptuay6r0hc6yns",
+    [sc.loop_router]: "",
+    [sc.loop_haloust_pair]: "terra1yjg0tuhc6kzwz9jl8yqgxnf2ctwlfumnvscupp",
+    [sc.loop_haloust_lp]: "terra17pzt8t2hmx6587zn6yh5ensylm3s9mm4m72v2n",
+    // terra12aazc56hv7aj2fcvmhuxve0l4pmayhpn794m0p /// HALO-LOOP PAIR
   },
   [chainIDs.testnet]: {
     //core
@@ -41,13 +48,20 @@ export const contracts: Contracts = {
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
 
     //halo
-    [sc.halo_gov]: "terra19e8yx8x5m5radap4plecnl4cppa0tyupzwesx6",
+    [sc.halo_gov]: "terra16tw444h6qtzxr4kf2p276qt0u6w3ggtc20xgly",
 
     //lbp
     [sc.lbp_factory]: "terra167m64seqj7cucxm5wep3hyu4suqw4sl5s8uzjz",
     [sc.lbp_pair]: "terra17al3hudq2vcxtyvw9008edjhyqaw74mayva2d8",
     [sc.lbp_router]: "terra19dpanzuhtmdsw8ds5zschrh4mnxcejc0ut6dnk",
     [sc.lbp_lp]: "terra19zgdunfrx79nqvznqmx4satj5kxndvmrsx502m",
+
+    //loop
+    [sc.loop_factory]: "terra16hdjuvghcumu6prg22cdjl96ptuay6r0hc6yns",
+    [sc.loop_router]: "",
+    [sc.loop_haloust_pair]: "",
+    [sc.loop_haloust_lp]: "",
+    // terra12aazc56hv7aj2fcvmhuxve0l4pmayhpn794m0p /// HALO-LOOP PAIR
   },
   [chainIDs.localterra]: {
     //core
@@ -69,5 +83,11 @@ export const contracts: Contracts = {
     [sc.lbp_pair]: "",
     [sc.lbp_router]: "",
     [sc.lbp_lp]: "",
+
+    //lbp
+    [sc.loop_factory]: "",
+    [sc.loop_router]: "",
+    [sc.loop_haloust_pair]: "",
+    [sc.loop_haloust_lp]: "",
   },
 };

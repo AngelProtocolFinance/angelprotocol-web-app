@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import {
   ConnectType,
   NetworkInfo,
@@ -16,7 +16,7 @@ const testnet: NetworkInfo = {
 //                    TestWalletProvider takes two optional args: walletStatus, and walletInfo
 //                    which can be used to set the state.
 // NOTE(borodanov): also for now this component is using in the storybook stories
-const TestWalletProvider: React.FC<{
+const TestWalletProvider: FC<{
   children?: ReactNode;
   walletStatus?: WalletStatus;
   walletInfo?: WalletInfo;
