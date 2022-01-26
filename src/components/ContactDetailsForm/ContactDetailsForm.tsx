@@ -118,7 +118,7 @@ export default function ContactDetailsForm(props: any) {
           {props.contactData?.PK && (
             <Action
               title="Back"
-              classes="disabled:bg-gray-300 disabled:cursor-auto bg-green-400 w-48 h-12 mr-2"
+              classes="bg-green-400 w-48 h-12 mr-2"
               disabled={isLoading}
               onClick={() => history.push(registration.status)}
             />
