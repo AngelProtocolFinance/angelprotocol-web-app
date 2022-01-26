@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useModalCloser } from "components/Modal/Modal";
+import { useCreateNewMemberMutation } from "services/aws/alliance/alliance";
 
 let selectedFile: any = "";
 const NewMemberModal = () => {
@@ -8,10 +9,13 @@ const NewMemberModal = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [createNewMember] = useCreateNewMemberMutation();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     data["logo"] = selectedFile;
     console.log("submit", data);
+    const response: any = await createNewMember(data);
+    console.log("response of addAPI => ", response);
   };
 
   const closeModal = useModalCloser();
@@ -131,7 +135,7 @@ const NewMemberModal = () => {
           <div>
             <button
               type="submit"
-              className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+              className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
             >
               Submit
             </button>
@@ -139,7 +143,7 @@ const NewMemberModal = () => {
           <div>
             <button
               onClick={closeModal}
-              className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+              className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
             >
               Cancel
             </button>

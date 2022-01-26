@@ -1,17 +1,21 @@
 import { useState } from "react";
+import { useRemoveMemberMutation } from "services/aws/alliance/alliance";
 import { useModalCloser } from "../../../components/Modal/Modal";
 
 const RemoveMemberModal = ({ member }: any) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const closeModal = useModalCloser();
+  const [removeMember] = useRemoveMemberMutation();
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     setSubmitting(true);
-    processAddresses();
+    const response: any = await removeMember({
+      name: member.name,
+      wallet: "",
+    });
     setSubmitting(false);
+    console.log("response of removeAPI => ", response);
   };
-
-  const processAddresses = () => {};
 
   const handleOnClose = () => {
     closeModal();
@@ -33,7 +37,7 @@ const RemoveMemberModal = ({ member }: any) => {
         <div>
           <button
             type="submit"
-            className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+            className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
             disabled={isSubmitting}
             onClick={handleRemove}
           >
@@ -43,7 +47,7 @@ const RemoveMemberModal = ({ member }: any) => {
         <div>
           <button
             onClick={handleOnClose}
-            className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+            className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
           >
             Cancel
           </button>

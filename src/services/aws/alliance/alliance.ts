@@ -29,7 +29,27 @@ const alliance_api = aws.injectEndpoints({
         return _result;
       },
     }),
+    createNewMember: builder.mutation<any, any>({
+      query: (body) => ({
+        url: "alliance",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: { data: any }) => response,
+    }),
+    removeMember: builder.mutation<any, any>({
+      query: (data) => ({
+        url: `alliance/${data.wallet}`,
+        params: { name: data.name },
+        method: "DELETE",
+      }),
+      transformResponse: (response: { data: any }) => response,
+    }),
   }),
 });
 
-export const { useDonorsQuery } = alliance_api;
+export const {
+  useDonorsQuery,
+  useCreateNewMemberMutation,
+  useRemoveMemberMutation,
+} = alliance_api;

@@ -9,7 +9,6 @@ import AdminSideNav from "../AdminSideNav";
 import { useDonorsQuery } from "services/aws/alliance/alliance";
 import { Details, Member } from "services/aws/alliance/types";
 import Loader from "components/Loader/Loader";
-import { equals } from "ramda";
 import { useGetAuthorized } from "contexts/AuthProvider";
 
 export default function AllianceMembers() {
@@ -18,19 +17,17 @@ export default function AllianceMembers() {
   const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const auth = useGetAuthorized();
+  // const auth = useGetAuthorized();
   const { data } = useDonorsQuery("");
 
   useEffect(() => {
     const result = prepareData(data);
-    if (!equals(result, members)) {
-      setMembers(result);
-      if (isLoading) {
-        setIsLoading(false);
-      }
+    setMembers(result);
+    if (isLoading) {
+      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [members, isLoading, data]);
+  }, [isLoading, data]);
 
   const prepareData = (prevData: Details[] | undefined) => {
     let result: Member[] = [];
@@ -61,9 +58,9 @@ export default function AllianceMembers() {
   };
 
   // user can't access TCA page when not logged in or his prev token expired
-  if (!auth.isAuthorized) {
-    return <Redirect to={`${site.admin}/${admin.auth}`} />;
-  }
+  // if (!auth.isAuthorized) {
+  //   return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  // }
   return (
     <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-white bg-opacity-10 min-h-3/4 gap-0 mt-10 rounded-xl">
       <AdminSideNav />
@@ -72,7 +69,7 @@ export default function AllianceMembers() {
           Alliance Members Management
         </h2>
         <button
-          className="mt-8 disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+          className="mt-8 cols-start-1 col-span-2 capitalize hover:text-gray-500 text-white bg-orange disabled:bg-thin-grey shadow-md rounded-md w-48 py-2 font-semibold"
           onClick={() => setShowNewModal(true)}
         >
           Add New Member

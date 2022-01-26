@@ -12,6 +12,8 @@ import Loader from "components/Loader/Loader";
 import DappHead from "components/Headers/DappHead";
 import { mainnet, walletConnectChainIds } from "../App/chains";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
+import AllianceMembers from "pages/Admin/AllianceMembers/AllianceMembers";
+import Endowments from "pages/Admin/Endowments/Endowments";
 import { admin } from "types/routes";
 
 const Authentication = lazy(
@@ -53,11 +55,11 @@ const Admin = () => {
                 />
                 <Route
                   path={`${path}/${admin.endowments}`}
-                  component={IndexFund}
+                  component={Endowments}
                 />
                 <Route
                   path={`${path}/${admin.alliance_members}`}
-                  component={IndexFund}
+                  component={AllianceMembers}
                 />
                 <Route
                   path={`${path}/${admin.auth}`}

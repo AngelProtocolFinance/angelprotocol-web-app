@@ -43,7 +43,7 @@ const MemberRow = ({ onUpdateClick, member, index }: any) => {
       <td className="self-center px-5 py-5 text-sm">
         <button
           onClick={() => onUpdateClick(index)}
-          className="disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 action-button font-light"
+          className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
         >
           Remove {/* Edit */}
         </button>
