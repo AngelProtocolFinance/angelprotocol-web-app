@@ -8,6 +8,7 @@ import { Selector } from "../../components/Selector/Selector";
 import { userRoles } from "../../constants/userRoles";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
+import RoleSelector from "./RoleSelector";
 import {
   ContactDetails,
   ContactInfoSchema,
@@ -16,7 +17,7 @@ import {
 
 export default function ContactDetailsForm(props: any) {
   const [isLoading, setIsLoading] = useState(false);
-  const [orgRole, setOrgRole] = useState(props.contactData?.Role || "");
+  const [orgRole, setOrgRole] = useState(props.contactData?.Role || "ceo");
   const { saveContactInfo } = useContactDetails();
   const history = useHistory();
 
@@ -25,7 +26,7 @@ export default function ContactDetailsForm(props: any) {
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm({
+  } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
       charityName: props.contactData?.CharityName || "",
@@ -33,7 +34,7 @@ export default function ContactDetailsForm(props: any) {
       lastName: props.contactData?.LastName || "",
       email: props.contactData?.Email || "",
       phone: props.contactData?.PhoneNumber || "",
-      orgRole: props.contactData?.Role || "ceo",
+      orgRole: orgRole,
       otherRole: props.contactData?.otherRole || "",
       checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
@@ -47,6 +48,11 @@ export default function ContactDetailsForm(props: any) {
       setIsLoading(false);
     },
     [saveContactInfo]
+  );
+
+  const handleRoleChange = useCallback(
+    (value: string) => setOrgRole(value),
+    []
   );
 
   console.log(control._formValues);
@@ -95,38 +101,15 @@ export default function ContactDetailsForm(props: any) {
               placeholder="Phone number"
               registerReturn={register("phone")}
             />
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  What's your role within the organization?
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black">
-                  <Selector
-                    name="orgRole"
-                    placeholder="Role"
-                    options={userRoles}
-                    control={control}
-                    register={register}
-                    onChange={(value: string) => setOrgRole(value)}
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.orgRole?.message}
-                </p>
-              </div>
-            </div>
-            {orgRole === "other" && (
-              <Input
-                label="Specify your role"
-                placeholder="Specify your role"
-                registerReturn={register("otherRole")}
-                errorMessage={errors.otherRole?.message}
-                required
-              />
-            )}
+            <RoleSelector
+              label="What's your role within the organization?"
+              name="orgRole"
+              control={control}
+              onChange={handleRoleChange}
+              errorMessage={errors.orgRole?.message}
+              otherRoleErrorMessage={errors.otherRole?.message}
+              register={register}
+            />
           </div>
         </div>
         <PrivacyPolicyCheckbox
@@ -151,7 +134,6 @@ export default function ContactDetailsForm(props: any) {
               title="Continue"
               classes="bg-thin-blue w-48 h-12"
               disabled={isLoading}
-              isLoading={isLoading}
             />
           </div>
         </div>
