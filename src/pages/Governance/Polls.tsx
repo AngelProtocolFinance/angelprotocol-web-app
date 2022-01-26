@@ -22,7 +22,7 @@ export default function Polls() {
         <p className="uppercase text-2xl font-bold text-white-grey mr-4">
           Polls
         </p>
-        <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center mr-2">
+        <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center mr-2 px-3">
           <span className="font-heading uppercase text-2xs mr-2">
             current block{" "}
           </span>
