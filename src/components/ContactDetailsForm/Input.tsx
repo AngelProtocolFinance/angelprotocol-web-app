@@ -18,7 +18,7 @@ export default function Input(props: Props) {
           {required && <span className="ml-0.5 text-failed-red">*</span>}
         </label>
       </div>
-      <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
+      <div className="rounded-md bg-white flex items-center text-black py-2">
         <input
           id={registerReturn.name}
           type={type}

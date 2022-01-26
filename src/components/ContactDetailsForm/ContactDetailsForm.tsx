@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
+import { userRoles } from "constants/userRoles";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -61,7 +62,7 @@ export default function ContactDetailsForm(props: any) {
         className="md:w-4/5 text-left"
         onSubmit={handleSubmit(onSumbitContactDetails)}
       >
-        <div className=" grid grid-cols-1 sm:grid-cols-2">
+        <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="">
             <Input
               label="Name of your organization"
@@ -102,9 +103,9 @@ export default function ContactDetailsForm(props: any) {
             <RoleSelector
               label="What's your role within the organization?"
               name="orgRole"
+              options={userRoles}
               control={control}
               onChange={handleRoleChange}
-              errorMessage={errors.orgRole?.message}
               otherRoleErrorMessage={errors.otherRole?.message}
               register={register}
             />

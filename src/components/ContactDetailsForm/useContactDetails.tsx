@@ -32,6 +32,7 @@ export const ContactInfoSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
     .required("Please enter your email."),
+  // since selector logic has a default value selected, this error message should never appear
   orgRole: Yup.string().required(
     "Please select your role within your organization."
   ),
