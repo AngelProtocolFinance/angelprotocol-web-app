@@ -1,3 +1,4 @@
+import { RequestArguments } from "types/eip1993";
 export enum Providers {
   none = "none",
   // ethereum = "ethereum",
@@ -12,3 +13,13 @@ export type State = {
   active: Providers;
   isSwitching: boolean;
 };
+
+export interface XdefiWindow extends Window {
+  xfi?: {
+    ethereum?: {
+      chainId: number;
+      getaccounts: () => Promise<string[]>;
+      request: (args: RequestArguments) => Promise<any>;
+    };
+  };
+}

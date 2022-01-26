@@ -20,6 +20,9 @@ const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
+    resetWallet: (state) => {
+      state = initialState;
+    },
     setWalletDetails: (state, { payload }: PayloadAction<WalletInfo>) => {
       state.icon = payload.icon;
       state.displayCoin = payload.displayCoin;
@@ -34,4 +37,5 @@ const walletSlice = createSlice({
 });
 
 export default walletSlice.reducer;
-export const { setIsUpdating, setWalletDetails } = walletSlice.actions;
+export const { setIsUpdating, setWalletDetails, resetWallet } =
+  walletSlice.actions;
