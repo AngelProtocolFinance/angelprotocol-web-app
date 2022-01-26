@@ -1,3 +1,4 @@
+import { VaultFields } from "components/Withdraw/types";
 import { chainIDs, sc } from "contracts/types";
 
 type Contracts = {
@@ -10,6 +11,9 @@ export const contracts: Contracts = {
   [chainIDs.mainnet]: {
     //core
     [sc.anchor]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
+    [sc.anchor_vault1]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
+    [sc.anchor_vault2]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
+
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
@@ -35,7 +39,11 @@ export const contracts: Contracts = {
   },
   [chainIDs.testnet]: {
     //core
+    // WARNING: below sc.anchor address will not work
     [sc.anchor]: "terra15dwd5mj8v59wpj0wvt233mf5efdff808c5tkal",
+    [sc.anchor_vault1]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
+    [sc.anchor_vault2]: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
+
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
 
@@ -62,6 +70,9 @@ export const contracts: Contracts = {
   [chainIDs.localterra]: {
     //core
     [sc.anchor]: "",
+    [sc.anchor_vault1]: "",
+    [sc.anchor_vault2]: "",
+
     [sc.index_fund]: "",
     [sc.registrar]: "",
 
@@ -84,4 +95,37 @@ export const contracts: Contracts = {
     [sc.loop_haloust_pair]: "",
     [sc.loop_haloust_lp]: "",
   },
+};
+
+export type VaultInfo = {
+  address: string;
+  name: string;
+  symbol: string;
+  field_id: VaultFields;
+};
+export const vaults: VaultInfo[] = [
+  {
+    address: contracts[chainIDs.testnet][sc.anchor_vault1],
+    name: "Anchor Vault 1",
+    symbol: "aUST",
+    field_id: VaultFields.anchor1_amount,
+  },
+  {
+    address: contracts[chainIDs.testnet][sc.anchor_vault2],
+    name: "Anchor Vault 2",
+    symbol: "aUST",
+    field_id: VaultFields.anchor2_amount,
+  },
+  {
+    address: contracts[chainIDs.mainnet][sc.anchor_vault1],
+    name: "Anchor Vault 1",
+    symbol: "aUST",
+    field_id: VaultFields.anchor1_amount,
+  },
+];
+
+export const vault_field_map: { [index: string]: VaultFields } = {
+  [contracts[chainIDs.testnet][sc.anchor_vault1]]: VaultFields.anchor1_amount,
+  [contracts[chainIDs.testnet][sc.anchor_vault2]]: VaultFields.anchor2_amount,
+  [contracts[chainIDs.mainnet][sc.anchor_vault1]]: VaultFields.anchor1_amount,
 };

@@ -2,8 +2,9 @@
  * states are hooks that only uses existing cache entry and doesn't call the API when
  * there's no cache entry
  */
+import Account from "contracts/Account";
 import { useHaloContract, useLPContract } from "./contracts";
-import { pairInfo, pool_balance, simulation } from "./placeholders";
+import { holdings, pairInfo, pool_balance, simulation } from "./placeholders";
 import { terra } from "./terra";
 
 export function usePairInfoState() {
@@ -36,4 +37,22 @@ export function useGovBalanceState() {
     contract.gov_balance
   );
   return data;
+}
+
+export function useEndowmentHoldingsState(address: string, skip = false) {
+  const contract = new Account(address);
+  const {
+    data = holdings,
+    isError,
+    isLoading,
+    isFetching,
+  } = terra.endpoints.endowmentHoldings.useQueryState(contract.balance, {
+    skip,
+  });
+
+  return {
+    holdings: data,
+    isHoldingsError: isError,
+    isHoldingsLoading: isLoading || isFetching,
+  };
 }

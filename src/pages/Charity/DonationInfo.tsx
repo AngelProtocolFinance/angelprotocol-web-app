@@ -4,7 +4,7 @@ import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { useRouteMatch } from "react-router-dom";
-import { CharityParam } from "./Charity";
+import { CharityParam } from "./types";
 
 function StatsItem({
   title,
@@ -37,10 +37,13 @@ interface DonationInfoProps {
 
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
-  const wallet = useConnectedWallet();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
   // const sdg = unsdgs[+profile.un_sdg];
+
+  const wallet = useConnectedWallet();
+  const isCharityOwner =
+    wallet && wallet.walletAddress === profile.charity_owner;
 
   const stats = useMemo(() => {
     return [
@@ -76,8 +79,6 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       },
     ];
   }, [profile]);
-
-  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
 
   return (
     <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130 py-2">
