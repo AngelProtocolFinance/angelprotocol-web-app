@@ -1,16 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import Action from "components/ActionButton/Action";
 import { useState } from "react";
-import { registration, site, web } from "types/routes";
+import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
+import { registration } from "types/routes";
+import { Selector } from "../../components/Selector/Selector";
+import { userRoles } from "../../constants/userRoles";
+import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import {
   ContactDetails,
   ContactInfoSchema,
   useContactDetails,
 } from "./useContactDetails";
-import { userRoles } from "../../constants/userRoles";
-import { Selector } from "../../components/Selector/Selector";
-import Action from "components/ActionButton/Action";
 
 export const ContactDetailsForm = (props: any) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,7 +34,7 @@ export const ContactDetailsForm = (props: any) => {
       phone: props.contactData?.PhoneNumber || "",
       orgRole: props.contactData?.Role || "ceo",
       otherRole: props.contactData?.otherRole || "",
-      checkedPolicy: props.contactData ? true : false,
+      checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
     },
   });
@@ -202,38 +203,10 @@ export const ContactDetailsForm = (props: any) => {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 items-center justify-center mb-4 mt-10">
-          {!props.contactData && (
-            <div className="mx-auto">
-              <div className="mr-5 items-center pt-2 text-center justify-center">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="checkedPolicy"
-                    className="mr-2"
-                  />
-                  <span className="text-base">
-                    {" "}
-                    By checking this box, you declare that you have read and
-                    agreed our{" "}
-                    <Link
-                      to={`${site.home}${web.privacy}`}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="underline"
-                    >
-                      Privacy Policy
-                    </Link>
-                    <span className="text-base text-failed-red">*</span>
-                  </span>
-                </label>
-              </div>
-              <p className="text-sm text-failed-red">
-                {errors.checkedPolicy?.message}
-              </p>
-            </div>
-          )}
-        </div>
+        <PrivacyPolicyCheckbox
+          error={errors.checkedPolicy?.message}
+          registerReturn={register("checkedPolicy")}
+        />
         <div className="text-center flex justify-center">
           {props.contactData?.PK && (
             <div className="mr-2">
@@ -249,7 +222,7 @@ export const ContactDetailsForm = (props: any) => {
           <div className="mr-2">
             <Action
               submit
-              title="Save"
+              title="Continue"
               classes="bg-thin-blue w-48 h-12"
               disabled={isLoading}
               isLoading={isLoading}
