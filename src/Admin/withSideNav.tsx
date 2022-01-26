@@ -1,4 +1,4 @@
-import AdminSideNav from "../pages/Admin/AdminSideNav";
+import AdminSideNav from "pages/Admin/AdminSideNav";
 import React from "react";
 
 export default function withSideNav(Component: React.FC) {
