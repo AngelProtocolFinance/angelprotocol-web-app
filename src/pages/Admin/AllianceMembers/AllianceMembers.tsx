@@ -1,54 +1,22 @@
 import Modal from "components/Modal/Modal";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
 import AllianceMembersTable from "./Table";
 import NewMemberModal from "./AddMemberModal";
 import RemoveMemberModal from "./RemoveMemberModal";
-import AdminSideNav from "../AdminSideNav";
-import { useDonorsQuery } from "services/aws/alliance/alliance";
-import { Details, Member } from "services/aws/alliance/types";
+import { Member } from "services/aws/alliance/types";
 import Loader from "components/Loader/Loader";
-import { useGetAuthorized } from "contexts/AuthProvider";
+import withSideNav from "Admin/withSideNav";
+import { useGetter } from "store/accessors";
+import useAllianceMembers from "./useAllianceMembers";
 
-export default function AllianceMembers() {
-  const [members, setMembers] = useState<Member[]>([]);
+function AllianceMembers() {
   const [selectedMember, setSelectedMember] = useState<Member>();
-  const [isLoading, setIsLoading] = useState(true);
   const [showNewModal, setShowNewModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const auth = useGetAuthorized();
-  const { data } = useDonorsQuery("");
-
-  useEffect(() => {
-    const result = prepareData(data);
-    setMembers(result);
-    if (isLoading) {
-      setIsLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, data]);
-
-  const prepareData = (prevData: Details[] | undefined) => {
-    let result: Member[] = [];
-    if (prevData) {
-      let prevName = "";
-      prevData.forEach((item) => {
-        if (prevName === item.name) {
-          result[result.length - 1].addresses.push(item.address);
-        } else {
-          result.push({
-            name: item.name,
-            icon: item.icon,
-            iconLight: item.iconLight,
-            addresses: [item.address],
-          });
-        }
-        prevName = item.name;
-      });
-    }
-    return result;
-  };
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
+  const { members, isLoading } = useAllianceMembers();
 
   const onClickRemove = (index: number) => {
     if (members) {
@@ -58,12 +26,11 @@ export default function AllianceMembers() {
   };
 
   // user can't access TCA page when not logged in or his prev token expired
-  if (!auth.isAuthorized) {
+  if (adminAuthStatus !== "authorized") {
     return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
   return (
-    <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-white bg-opacity-10 min-h-3/4 gap-0 mt-10 rounded-xl">
-      <AdminSideNav />
+    <>
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
         <h2 className="text-2xl font-semibold capitalize text-center text-white">
           Alliance Members Management
@@ -101,6 +68,8 @@ export default function AllianceMembers() {
           <RemoveMemberModal member={selectedMember} />
         </Modal>
       )}
-    </div>
+    </>
   );
 }
+
+export default withSideNav(AllianceMembers);
