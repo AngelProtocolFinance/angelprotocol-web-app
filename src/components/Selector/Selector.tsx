@@ -8,7 +8,6 @@ interface SelectorProps {
   control: any;
   register: Function;
   onChange?: Function;
-  isMulti?: boolean;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -30,7 +29,6 @@ export const Selector = (props: SelectorProps) => {
               props.onChange && props.onChange(option?.value);
             }}
             options={props.options}
-            isMulti={props.isMulti}
           />
         );
       }}
