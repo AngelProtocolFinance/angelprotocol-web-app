@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
-import { aws_endpoint } from "constants/urls";
+// import { aws_endpoint } from "constants/urls";
 import { useSetToken } from "contexts/AuthProvider";
 import { useHistory } from "react-router-dom";
 import { admin } from "types/routes";
@@ -29,26 +29,26 @@ export const useAdminLogin = () => {
     return;
     // test
 
-    try {
-      const response = await fetch(aws_endpoint + "/ap-login", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+    // try {
+    //   const response = await fetch(aws_endpoint + "/ap-login", {
+    //     method: "POST",
+    //     body: JSON.stringify(data),
+    //   });
 
-      if (response.status === 200) {
-        const data = await response.json();
-        //don't perform state update because form would unmount
-        saveToken(data.accessToken, "admin");
-        //no need to push, Redirect/> on Login/> will detect state change and have page redirected
-        history.push(admin.charity_applications);
-      } else if (response.status === 403) {
-        toast.error("Unauthorized");
-      } else {
-        toast.error("Something went wrong");
-      }
-    } catch (error) {
-      toast.error("Something went wrong");
-    }
+    //   if (response.status === 200) {
+    //     const data = await response.json();
+    //     //don't perform state update because form would unmount
+    //     saveToken(data.accessToken, "admin");
+    //     //no need to push, Redirect/> on Login/> will detect state change and have page redirected
+    //     history.push(admin.charity_applications);
+    //   } else if (response.status === 403) {
+    //     toast.error("Unauthorized");
+    //   } else {
+    //     toast.error("Something went wrong");
+    //   }
+    // } catch (error) {
+    //   toast.error("Something went wrong");
+    // }
   };
   return handleAPLogin;
 };

@@ -24,6 +24,7 @@ export default function CharityApps() {
       data?.filter((item: any) => item.EndowmentStatus !== "Active")
     );
     setIsLoading(false);
+    //eslint-disable-next-line
   }, []);
 
   const searchCharity = (event: any) => {

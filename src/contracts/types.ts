@@ -2,6 +2,8 @@ export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  anchor_vault1 = "anchor_vault1",
+  anchor_vault2 = "anchor_vault2", //mainnet doesn't have anchor vault2
   halo_token = "halo_token",
   halo_gov = "halo_gov",
   airdrop = "airdrop",
@@ -41,6 +43,12 @@ export type Endowments = { endowments: Endowment[] };
 
 //Accounts
 
+export interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
+
 export interface AccountDetails {
   name: string;
   description: string;
@@ -64,6 +72,7 @@ export interface Holdings {
   locked_cw20: Holding[];
   liquid_native: Holding[];
   liquid_cw20: Holding[];
+  is_placeholder: boolean;
 }
 
 //Vaults
@@ -128,4 +137,10 @@ export type Pair = {
   pair: TokenInfo[];
   contract: string;
   liquidity_token: string;
+};
+
+export type EndowmentBalanceData = {
+  endowment_address: string;
+  locked: number;
+  liquid: number;
 };

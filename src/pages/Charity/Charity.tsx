@@ -14,16 +14,25 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { ToastContainer } from "react-toastify";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import { useProfileQuery } from "services/aws/endowments/endowments";
-
-export type CharityParam = { address: string };
+import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
   const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
+  const endowmentBalanceData = useQueryEndowmentBal(
+    endowment_addr,
+    profile.is_placeholder
+  );
+
   const wallet = useConnectedWallet();
+  const isCharityOwner =
+    wallet && wallet.walletAddress === profile.charity_owner;
 
   const showDonationForm = () => {
     //the button firing this function is disabled when
@@ -37,11 +46,9 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       profile,
     });
   };
-
+  console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
-
-  const isCharityOwner = wallet?.walletAddress === profile?.charity_owner;
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
@@ -49,14 +56,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
         <DonationInfo openModal={openModal} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <div className="relative group">
-            <img
-              className={`bg-white rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
+            <ImageWrapper
+              height="350"
+              src={profile.charity_image}
+              alt="charity image"
+              classes={`max-h-350 w-full bg-gray-400 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
                 isCharityOwner &&
                 "filter group-hover:brightness-50 transition ease-in-out"
               }`}
-              style={{ width: "100%", maxHeight: "350px" }}
-              src={profile.charity_image}
-              alt=""
             />
             {isCharityOwner && (
               <button
@@ -67,15 +74,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          {/* charity info */}
           <CharityInfoNav
             activeTab={activeTab}
             onTabChange={(tab: string) => setActiveTab(tab)}
           />
-          {/* charity info */}
-          {/* Information tabs  */}
-          <CharityInfoTab activeTab={activeTab} />
-          {/* Information tabs  */}
+          <CharityInfoTab
+            activeTab={activeTab}
+            endowmentBalanceData={endowmentBalanceData}
+          />
         </div>
       </div>
       <ToastContainer />
@@ -83,11 +89,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   );
 };
 
-type CharityProps = { charity_addr: string };
-
-type CharityEditProps = { profile: Profile };
-
-function CharityForm(props: CharityProps) {
+function CharityForm(props: { charity_addr: string }) {
   return (
     <Donater to="charity" receiver={props.charity_addr}>
       <DonateSuite inModal />
@@ -95,7 +97,7 @@ function CharityForm(props: CharityProps) {
   );
 }
 
-function CharityProfileForm(props: CharityEditProps) {
+function CharityProfileForm(props: { profile: Profile }) {
   return (
     <CharityUpdateSuite inModal profile={props.profile}>
       <CharityProfileEditForm {...props} />

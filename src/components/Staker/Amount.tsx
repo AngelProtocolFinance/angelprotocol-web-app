@@ -1,3 +1,4 @@
+import { Dec } from "@terra-money/terra.js";
 import { ErrorMessage } from "@hookform/error-message";
 import { currency_text, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
@@ -15,7 +16,7 @@ export default function Amount() {
   const is_stake = watch("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const onMaxClick = () => {
-    setValue("amount", balance.sub(locked).div(1e6).toInt().toString());
+    setValue("amount", balance.sub(locked).div(1e6).toFixed(3, Dec.ROUND_DOWN));
   };
   return (
     <div className="grid">
