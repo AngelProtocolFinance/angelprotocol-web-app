@@ -11,7 +11,7 @@ export default function Input(props: Props) {
   const { type = "text" } = rest;
 
   return (
-    <div className="items-center justify-center mb-4">
+    <div className="">
       <div className="text-left">
         <label htmlFor={registerReturn.name}>
           {label}

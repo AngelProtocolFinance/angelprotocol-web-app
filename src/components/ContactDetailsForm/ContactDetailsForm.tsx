@@ -1,12 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
 import { userRoles } from "constants/userRoles";
-import { useCallback, useState } from "react";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
 import { Selector } from "../../components/Selector/Selector";
-import { userRoles } from "../../constants/userRoles";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
 import RoleSelector from "./RoleSelector";
@@ -62,8 +61,8 @@ export default function ContactDetailsForm(props: any) {
         className="md:w-4/5 text-left"
         onSubmit={handleSubmit(onSumbitContactDetails)}
       >
-        <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <ColumnContainer>
             <Input
               label="Name of your organization"
               placeholder="Organization"
@@ -93,8 +92,8 @@ export default function ContactDetailsForm(props: any) {
               errorMessage={errors.email?.message}
               required
             />
-          </div>
-          <div className="">
+          </ColumnContainer>
+          <ColumnContainer>
             <Input
               label="Phone number"
               placeholder="Phone number"
@@ -109,13 +108,13 @@ export default function ContactDetailsForm(props: any) {
               otherRoleErrorMessage={errors.otherRole?.message}
               register={register}
             />
-          </div>
+          </ColumnContainer>
         </div>
         <PrivacyPolicyCheckbox
           error={errors.checkedPolicy?.message}
           registerReturn={register("checkedPolicy")}
         />
-        <div className="text-center flex justify-center">
+        <div className="flex justify-center">
           {props.contactData?.PK && (
             <Action
               title="Back"
@@ -134,4 +133,8 @@ export default function ContactDetailsForm(props: any) {
       </form>
     </div>
   );
+}
+
+function ColumnContainer({ children }: PropsWithChildren<{}>) {
+  return <div className="flex flex-col gap-4">{children}</div>;
 }
