@@ -11,6 +11,7 @@ import { Step } from "services/transaction/types";
 import { terra } from "services/terra/terra";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { gov, tags } from "services/terra/tags";
+import getFinderUrl from "helpers/getFinderUrl";
 
 export default function useSubmit() {
   useEstimator();
@@ -58,7 +59,7 @@ export default function useSubmit() {
             step: Step.broadcast,
             content: {
               message: "Waiting for transaction result",
-              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+              url: getFinderUrl(wallet.network.chainID, response.result.txhash),
             },
           })
         );
@@ -73,7 +74,7 @@ export default function useSubmit() {
               step: Step.success,
               content: {
                 message: "Poll successfully created!",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
@@ -86,7 +87,7 @@ export default function useSubmit() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
