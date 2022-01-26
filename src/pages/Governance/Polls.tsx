@@ -29,8 +29,12 @@ export default function Polls() {
           <SiHiveBlockchain className="mr-1" />
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
-        <div className="flex flex-wrap gap-2 justify-start md:justify-self-end self-end">
-          <a href="https://forum.angelprotocol.io" target="_blank">
+        <div className="flex flex-wrap gap-2 justify-end self-end">
+          <a
+            href="https://forum.angelprotocol.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <button className="action-button">Join Forum</button>
           </a>
           <button
