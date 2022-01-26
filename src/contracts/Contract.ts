@@ -10,7 +10,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { Disconnected, TxResultFail } from "./Errors";
-import { chainIDs } from "./types";
+import { chainIDs } from "constants/chainIDs";
 
 export default class Contract {
   wallet?: ConnectedWallet;

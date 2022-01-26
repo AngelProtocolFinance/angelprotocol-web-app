@@ -1,4 +1,5 @@
-import { chainIDs, sc } from "contracts/types";
+import { sc } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 type Contracts = {
   [index: string]: {
@@ -44,7 +45,7 @@ export const contracts: Contracts = {
 
     //halo
     [sc.halo_gov]: "terra16tw444h6qtzxr4kf2p276qt0u6w3ggtc20xgly",
-    [sc.airdrop]: "terra15n2j80ufyrup8ply5nhjwwerfjpz7cx3m2hcqq",
+    [sc.airdrop]: "terra1drmtlm4d9lps8jcecpw2erea0eg3lwnyvu4xjn",
 
     //lbp
     [sc.lbp_factory]: "terra167m64seqj7cucxm5wep3hyu4suqw4sl5s8uzjz",

@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { chains, State } from "./types";
 
 const initialState: State = {
   [chains.terra]: chainIDs.mainnet,
+  [chains.ethereum]: chainIDs.eth_main,
 };
 
 const chainSlice = createSlice({

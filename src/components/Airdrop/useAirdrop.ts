@@ -1,6 +1,6 @@
 import { useSetModal } from "components/Nodal/Nodal";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useAirdropQuery } from "services/aws/airdrop/airdrop";
 import { useCallback } from "react";
 import AirdropSuite, {

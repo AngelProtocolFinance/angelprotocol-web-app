@@ -1,7 +1,7 @@
 import TableView from "./TableView";
 import { update as leaderboard_update } from "services/aws/leaderboard/placeholders";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 
 export default function Board() {

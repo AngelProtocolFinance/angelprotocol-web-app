@@ -1,9 +1,11 @@
 import { denoms } from "constants/currency";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export enum TerraIdentifiers {
+  //watch for this to change in @terra-money/wallet-provider updates
   station = "station",
   xdefi = "xdefi-wallet",
+  leap = "leap-wallet",
 }
 
 export enum Providers {

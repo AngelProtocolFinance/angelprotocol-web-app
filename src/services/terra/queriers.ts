@@ -15,7 +15,7 @@ import {
   simulation,
   pool_balance,
 } from "./placeholders";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useHaloContract, useLPContract } from "./contracts";
 
 export function useLatestBlock() {

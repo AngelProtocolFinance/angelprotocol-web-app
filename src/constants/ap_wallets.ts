@@ -1,4 +1,4 @@
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { denoms } from "./currency";
 
 type Wallets = {

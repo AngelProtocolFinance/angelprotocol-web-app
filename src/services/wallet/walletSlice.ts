@@ -1,7 +1,7 @@
 import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { WalletInfo, State } from "./types";
 
 const initialState: State = {

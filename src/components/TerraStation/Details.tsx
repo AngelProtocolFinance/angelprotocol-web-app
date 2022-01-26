@@ -1,13 +1,13 @@
 import { useWallet } from "@terra-money/wallet-provider";
-import { Coin } from "@terra-money/terra.js";
 import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
-import Address from "./Address";
 import Portal from "./Portal";
 import { useState } from "react";
 import { denoms } from "constants/currency";
 import Filter from "./Filter";
 import { useGetter } from "store/accessors";
+import maskAddress from "helpers/maskAddress";
+import Copier from "components/Copier/Copier";
 
 const criterionAmount = 10;
 export default function Details(props: { closeHandler: () => void }) {
@@ -38,7 +38,10 @@ export default function Details(props: { closeHandler: () => void }) {
         <p className="uppercase">network : {chainId}</p>
       </div>
       {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
-      <Address address={address} />
+      <div className="flex gap-2 items-center p-2  pb-0">
+        <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
+        <Copier text={address} colorClass="text-angel-grey text-lg" />
+      </div>
       <Portal />
       {(!isEmpty && <Holdings coins={filtered_coins} />) || (
         <span className="text-angel-grey p-10 text-center text-sm uppercase">

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import Index from "./Index";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function Market() {
   const wallet = useConnectedWallet();

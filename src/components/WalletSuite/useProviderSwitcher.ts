@@ -7,7 +7,7 @@ import {
 } from "services/provider/providerSlice";
 import { Providers, ProviderStates } from "services/provider/types";
 import { updateChainID } from "services/chain/chainSlice";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 
