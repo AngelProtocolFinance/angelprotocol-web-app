@@ -7,12 +7,12 @@ import DataTable from "./Table";
 import useEndowments from "./useEndowments";
 
 export default function Endowments() {
-  // const auth = useGetAuthorized();
+  const auth = useGetAuthorized();
   const { loading, endowments, endowmentDetails } = useEndowments();
 
-  // if (!auth.isAuthorized) {
-  //   return <Redirect to={`${site.admin}/${admin.auth}`} />;
-  // }
+  if (!auth.isAuthorized) {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  }
   return (
     <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-white bg-opacity-10 min-h-3/4 gap-0 mt-10 rounded-xl">
       <AdminSideNav />

@@ -14,7 +14,7 @@ export default function CharityApps() {
   const [isLoading, setIsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  // const auth = useGetAuthorized();
+  const auth = useGetAuthorized();
   const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list
@@ -51,9 +51,9 @@ export default function CharityApps() {
 
   const handleDeleteCharity = () => {};
   //user can't access TCA page when not logged in or his prev token expired
-  // if (!auth.isAuthorized) {
-  //   return <Redirect to={`${site.admin}/${admin.auth}`} />;
-  // }
+  if (!auth.isAuthorized) {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  }
 
   return (
     <div className="flex md:grid-cols-2 justify-start w-full md:mx-auto md:container bg-white bg-opacity-10 min-h-3/4 gap-0 mt-10 rounded-xl">
