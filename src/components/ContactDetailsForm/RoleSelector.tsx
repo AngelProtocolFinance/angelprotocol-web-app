@@ -20,7 +20,7 @@ export default function RoleSelector(props: Props) {
       <div>
         <span>
           {props.label}
-          <span className="text-failed-red">*</span>
+          <span className="text-failed-red ml-0.5">*</span>
         </span>
         <Selector
           name={props.name}

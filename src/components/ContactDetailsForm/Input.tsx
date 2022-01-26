@@ -11,22 +11,18 @@ export default function Input(props: Props) {
   const { type = "text" } = rest;
 
   return (
-    <div className="">
-      <div className="text-left">
-        <label htmlFor={registerReturn.name}>
-          {label}
-          {required && <span className="ml-0.5 text-failed-red">*</span>}
-        </label>
-      </div>
-      <div className="rounded-md bg-white flex items-center text-black py-2">
-        <input
-          id={registerReturn.name}
-          type={type}
-          className="outline-none border-none w-full px-3"
-          {...rest}
-          {...registerReturn}
-        />
-      </div>
+    <div>
+      <label htmlFor={registerReturn.name}>
+        {label}
+        {required && <span className="ml-0.5 text-failed-red">*</span>}
+      </label>
+      <input
+        id={registerReturn.name}
+        type={type}
+        className="rounded-md outline-none border-none w-full px-3 py-2 text-black"
+        {...rest}
+        {...registerReturn}
+      />
       {errorMessage && (
         <p className="text-sm text-failed-red">{errorMessage}</p>
       )}
