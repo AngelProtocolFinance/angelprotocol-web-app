@@ -7,14 +7,18 @@ type Contracts = {
 };
 
 export const contracts: Contracts = {
+  //latest address here - https://github.com/AngelProtocolFinance/angelprotocol-test-suite/blob/main/src/config/constants.ts
   [chainIDs.mainnet]: {
     //core
     [sc.anchor]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
-    // guardian-angels
-    [sc.cw4_group]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
+    // Multisig
+    [sc.apCW3]: "terra1m6rqwmxlpztjf3zfhza906d44c9rpf2t6vn37n",
+    [sc.apCW4]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
+    [sc.gaCW3]: "terra1jd2n0ze7er80x9h8k3x006aypaxs7mvrggdmn9",
+    [sc.coCW4]: "terra1lycc2zyhd676294c604euh8hxw7h6jrjd68x83",
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
@@ -41,8 +45,11 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
 
-    // guardian-angels
-    [sc.cw4_group]: "terra1jngs5xj00e9fq0hfmpr2pqyq96x3aj8la8kr3p",
+    // Multisig
+    [sc.apCW3]: "terra1yp5we2meetcfxql522q9ve3dsl29epye86528j",
+    [sc.apCW4]: "terra1jngs5xj00e9fq0hfmpr2pqyq96x3aj8la8kr3p",
+    [sc.gaCW3]: "terra1ydp9qd9xgdq63ua6axfvauye3l7a3476lm6l28",
+    [sc.coCW4]: "terra1ldrkpnysrasq4sg4zu9mgh74wt9nxvk9qgvxtd",
 
     //terraswap
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
@@ -69,8 +76,11 @@ export const contracts: Contracts = {
     [sc.index_fund]: "",
     [sc.registrar]: "",
 
-    // guardian-angels
-    [sc.cw4_group]: "",
+    // Multisig
+    [sc.apCW3]: "",
+    [sc.apCW4]: "",
+    [sc.gaCW3]: "",
+    [sc.coCW4]: "",
 
     //terraswap
     [sc.halo_token]: "",

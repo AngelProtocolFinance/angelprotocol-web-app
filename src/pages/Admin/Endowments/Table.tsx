@@ -1,3 +1,4 @@
+import Action from "components/ActionButton/Action";
 import { useSetModal } from "components/Nodal/Nodal";
 import { TableHeader, TableChip } from "components/Table";
 import maskAddress from "helpers/maskAddress";
@@ -34,13 +35,7 @@ const FundRow = ({ data }: { data: Endowment }) => {
       <TableChip data={data.name} />
       <TableChip data={status || data.status || "-"} />
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm text-left text-center">
-        <button
-          onClick={openModal}
-          // disabled={!data.status}
-          className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange disabled:bg-grey-400 shadow-md text-white hover:text-gray-600 font-heading"
-        >
-          Edit
-        </button>
+        <Action title="Edit" classes="action-button" onClick={openModal} />
       </td>
     </tr>
   );
