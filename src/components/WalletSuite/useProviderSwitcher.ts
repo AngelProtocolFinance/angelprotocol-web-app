@@ -1,24 +1,33 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import { useSetter } from "store/accessors";
-import { setIsSwitching, setProvider } from "services/wallet/walletSlice";
-import { Providers, ProviderStates } from "services/wallet/types";
+import {
+  setActiveProvider,
+  setIsSwitching,
+} from "services/provider/providerSlice";
+import { Providers, ProviderStates } from "services/provider/types";
 import { updateChainID } from "services/chain/chainSlice";
 import { chainIDs } from "contracts/types";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 
-export default function useWalletSwitcher() {
+export default function useProviderSwitcher() {
   const dispatch = useSetter();
   const terra_chain_ref = useRef<string>(chainIDs.mainnet);
+
+  //terra states
   const { status: terraStatus, network } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
   const isLoading = isTerraLoading; // || other provider loading state;
+
+  //other states
+
   const providerStates: ProviderStates = [[Providers.terra, terraConnected]];
+
   //find first connected provider
   //undefined if not wallet is connected
-  const connectedWallet = providerStates.find(
+  const activeProvider = providerStates.find(
     ([, isProviderConnected]) => isProviderConnected
   );
 
@@ -28,17 +37,17 @@ export default function useWalletSwitcher() {
   }, [isLoading]);
 
   useEffect(() => {
-    if (connectedWallet) {
-      const [wallet] = connectedWallet;
-      dispatch(setProvider(wallet));
+    if (activeProvider) {
+      const [wallet] = activeProvider;
+      dispatch(setActiveProvider(wallet));
     } else {
-      dispatch(setProvider(Providers.none));
+      dispatch(setActiveProvider(Providers.none));
     }
     return () => {
-      dispatch(setProvider(Providers.none));
+      dispatch(setActiveProvider(Providers.none));
     };
     //eslint-disable-next-line
-  }, [connectedWallet]);
+  }, [activeProvider]);
 
   //update chain for terra
   useEffect(() => {

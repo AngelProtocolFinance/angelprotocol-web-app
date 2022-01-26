@@ -2,15 +2,14 @@ import Airdrop from "components/Airdrop/Airdrop";
 import Logo from "components/Logo/Logo";
 import MobileDappNav from "components/MobileNav/MobileDappNav";
 import DappMenu from "components/NavMenus/DappMenu";
-import useTerraUpdator from "components/WalletSuite/useTerraUpdator";
-import useWalletSwitcher from "components/WalletSuite/useWalletSwitcher";
+import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import { useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 
 export default function DappHead() {
-  useWalletSwitcher();
+  useProviderSwitcher();
   const [navShown, showNav] = useState(false);
   function toggleNav() {
     showNav((prevState) => !prevState);

@@ -7,7 +7,8 @@ import { setIcon } from "components/WalletSuite/manageIcon";
 import { useGetter } from "store/accessors";
 
 export default function useTerraAction(options: Connection) {
-  const { isSwitching } = useGetter((state) => state.wallet);
+  const { isUpdating } = useGetter((state) => state.wallet);
+  console.log(isUpdating);
   const { connect, status } = useWallet();
 
   const shouldConnect = status === WalletStatus.WALLET_NOT_CONNECTED;
@@ -21,6 +22,6 @@ export default function useTerraAction(options: Connection) {
   }
   return {
     handleClick,
-    isSwitching,
+    isUpdating,
   };
 }

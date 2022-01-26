@@ -14,14 +14,13 @@ export enum Providers {
   // phantom = "phantom",
   // keplr = "keplr",
 }
-export type ProviderStates = Array<[Providers, boolean]>;
 
 export type Coin = {
   amount: number; // "1000"
   denom: denoms; //"denoms.uusd, denoms.uluna"
 };
 
-export type WalletDetail = {
+export type WalletInfo = {
   icon: string;
   displayCoin: Coin;
   coins: Coin[];
@@ -29,8 +28,4 @@ export type WalletDetail = {
   chainId: chainIDs;
 };
 
-export type State = {
-  provider: Providers;
-  isSwitching: boolean;
-  isDetailsLoading: boolean;
-} & WalletDetail;
+export type State = { isUpdating: boolean } & WalletInfo;

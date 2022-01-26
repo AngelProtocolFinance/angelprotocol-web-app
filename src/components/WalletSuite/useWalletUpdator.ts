@@ -3,23 +3,18 @@ import { denoms } from "constants/currency";
 import { chainIDs } from "contracts/types";
 import useTerraBalance from "hooks/useTerraBalance";
 import { useEffect } from "react";
-import { Providers, TerraIdentifiers } from "services/wallet/types";
+import { Providers } from "services/provider/types";
+import { TerraIdentifiers } from "services/wallet/types";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 
-export default function useTerraUpdator() {
-  const { provider } = useGetter((state) => {
-    console.log(state.wallet);
-    return state.wallet;
-  });
+export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { main, others } = useTerraBalance(denoms.uusd);
 
-  console.log(wallet?.connection.identifier);
-
   useEffect(() => {
-    if (provider !== Providers.terra) {
+    if (activeProvider !== Providers.terra) {
       return;
     }
     if (!wallet) {
@@ -47,5 +42,5 @@ export default function useTerraUpdator() {
       })
     );
     dispatch(setIsUpdating(false));
-  }, [main, others, wallet, provider]);
+  }, [main, others, wallet, activeProvider]);
 }

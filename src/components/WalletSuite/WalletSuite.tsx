@@ -4,43 +4,37 @@ import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
-import useTerraUpdator from "./useTerraUpdator";
+import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
-  useTerraUpdator();
+  const provider = useGetter((state) => state.provider);
+  useWalletUpdator(provider.active);
+
   const [connectorsShown, showConnectors] = useState(false);
-  const { provider, isSwitching } = useGetter((state) => state.wallet);
-  const isConnected = provider !== Providers.none;
+
   const toggleConnector = () => showConnectors((p) => !p);
   const hideConnectors = () => showConnectors(false);
-
+  const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isConnected && showConnectors(false);
+    isProviderActive && showConnectors(false);
     //eslint-disable-next-line
-  }, [isConnected]);
+  }, [isProviderActive]);
 
   return (
     <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">
-      {!isConnected && (
+      {!isProviderActive && (
         <button
           className="flex py-2 px-3 items-center text-white  "
-          disabled={isSwitching}
+          disabled={provider.isSwitching}
           onClick={toggleConnector}
         >
-          {provider === Providers.none && (
-            <IoWalletSharp className="text-white text-xl mr-2" />
-          )}
-          <span>{isSwitching ? "Loading" : "Connect"}</span>
+          <IoWalletSharp className="text-white text-xl mr-2" />
+          <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {displays[provider]}
+      {isProviderActive && <TerraDisplay />}
       {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
   );
 }
-
-const displays = {
-  [Providers.none]: null,
-  [Providers.terra]: <TerraDisplay />,
-};
