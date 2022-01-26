@@ -21,7 +21,7 @@ type Props = Submit | Button;
 export default function Action(props: Props) {
   return (
     <button
-      className={`disabled:bg-gray-300 rounded-xl uppercase text-sm font-bold text-white mb-3 ${props.classes}`}
+      className={`disabled:bg-gray-300 rounded-xl uppercase font-bold text-white mb-3 ${props.classes}`}
       type={props.submit ? "submit" : "button"}
       disabled={props.disabled}
       onClick={props.onClick}

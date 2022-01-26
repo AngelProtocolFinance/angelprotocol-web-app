@@ -55,8 +55,6 @@ export default function ContactDetailsForm(props: any) {
     []
   );
 
-  console.log(control._formValues);
-
   return (
     <div className="flex items-center justify-center">
       <form
@@ -118,24 +116,19 @@ export default function ContactDetailsForm(props: any) {
         />
         <div className="text-center flex justify-center">
           {props.contactData?.PK && (
-            <div className="mr-2">
-              <button
-                className="disabled:bg-gray-300 bg-dark-grey w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
-                onClick={() => history.push(registration.status)}
-                disabled={isLoading}
-              >
-                back
-              </button>
-            </div>
-          )}
-          <div className="mr-2">
             <Action
-              submit
-              title="Continue"
-              classes="bg-thin-blue w-48 h-12"
+              title="Back"
+              classes="disabled:bg-gray-300 disabled:cursor-auto bg-green-400 w-48 h-12 mr-2"
               disabled={isLoading}
+              onClick={() => history.push(registration.status)}
             />
-          </div>
+          )}
+          <Action
+            submit
+            title="Save"
+            classes="bg-thin-blue w-48 h-12"
+            disabled={isLoading}
+          />
         </div>
       </form>
     </div>
