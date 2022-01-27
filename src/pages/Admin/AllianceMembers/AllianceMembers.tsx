@@ -38,9 +38,9 @@ function AllianceMembers() {
   }
 
   // user can't access TCA page when not logged in or his prev token expired
-  // if (adminAuthStatus !== "authorized") {
-  //   return <Redirect to={`${site.admin}/${admin.auth}`} />;
-  // }
+  if (adminAuthStatus !== "authorized") {
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  }
   return (
     <>
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
