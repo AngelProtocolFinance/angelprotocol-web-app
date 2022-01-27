@@ -11,33 +11,26 @@ export default function PrivacyPolicyCheckbox(props: Props) {
   const { error, registerReturn } = props;
 
   return (
-    <div className="grid grid-cols-1 items-center justify-center mb-4 mt-10">
-      <div className="mx-auto">
-        <div className="mr-5 items-center pt-2 text-center justify-center">
-          <input
-            id={registerReturn.name}
-            type="checkbox"
-            {...registerReturn}
-            className="mr-2 cursor-pointer"
-          />
-          <label htmlFor={registerReturn.name} className="cursor-pointer">
-            By checking this box, you declare that you have read and agreed to
-            our{" "}
-            <Link
-              to={`${site.home}${web.privacy}`}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="underline text-angel-blue"
-            >
-              Privacy Policy
-            </Link>
-            <span className="text-failed-red">*</span>
-          </label>
-        </div>
-        {error && (
-          <p className="text-sm text-failed-red text-center">{error}</p>
-        )}
-      </div>
+    <div className="mb-4 mt-10 text-center">
+      <input
+        id={registerReturn.name}
+        type="checkbox"
+        className="mr-2 cursor-pointer"
+        {...registerReturn}
+      />
+      <label htmlFor={registerReturn.name} className="cursor-pointer">
+        By checking this box, you declare that you have read and agreed to our{" "}
+        <Link
+          to={`${site.home}${web.privacy}`}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="underline text-angel-blue"
+        >
+          Privacy Policy
+        </Link>
+        <span className="text-failed-red ml-0.5">*</span>
+      </label>
+      {error && <p className="text-sm text-failed-red">{error}</p>}
     </div>
   );
 }
