@@ -8,6 +8,7 @@ import { useSetter } from "store/accessors";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import useTxErrorHandler from "hooks/useTxErrorHandler";
+import getFinderUrl from "helpers/getFinderUrl";
 
 function useUSTSender() {
   const dispatch = useSetter();
@@ -40,7 +41,7 @@ function useUSTSender() {
             step: Step.broadcast,
             content: {
               message: "Transaction submitted, waiting for transaction result",
-              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+              url: getFinderUrl(wallet.network.chainID, response.result.txhash),
             },
           })
         );
@@ -62,7 +63,7 @@ function useUSTSender() {
                   to: getValues("to"),
                   receiver: getValues("receiver"),
                 },
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
@@ -73,7 +74,7 @@ function useUSTSender() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
