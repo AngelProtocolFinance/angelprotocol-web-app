@@ -13,7 +13,7 @@ export default function DappMenu() {
         className={linkStyles.className}
         to={`${site.app}/${app.marketplace}`}
       >
-        About us
+        Marketplace
       </Link>
       {/*      <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
         Donate now
