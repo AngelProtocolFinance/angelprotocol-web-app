@@ -13,6 +13,7 @@ type Props = {
   otherRoleErrorMessage: string | undefined;
   onChange: (value: string) => void;
   register: UseFormRegister<ContactDetails>;
+  disabled: boolean;
 };
 
 export default function RoleSelector(props: Props) {
@@ -29,6 +30,7 @@ export default function RoleSelector(props: Props) {
           control={props.control}
           register={props.register}
           onChange={props.onChange}
+          disabled={props.disabled}
         />
       </div>
       {props.control._formValues[props.name] === UserRoles.other && (
@@ -38,6 +40,7 @@ export default function RoleSelector(props: Props) {
           registerReturn={props.register("otherRole")}
           errorMessage={props.otherRoleErrorMessage}
           required
+          disabled={props.disabled}
         />
       )}
     </div>

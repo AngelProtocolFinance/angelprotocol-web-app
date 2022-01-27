@@ -23,7 +23,7 @@ export default function ContactDetailsForm(props: any) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
@@ -67,6 +67,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("charityName")}
             errorMessage={errors.charityName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             label="First name"
@@ -74,6 +75,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("firstName")}
             errorMessage={errors.firstName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             label="Last name"
@@ -81,6 +83,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("lastName")}
             errorMessage={errors.lastName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             type="email"
@@ -89,6 +92,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("email")}
             errorMessage={errors.email?.message}
             required
+            disabled={isSubmitting}
           />
         </ColumnContainer>
         <ColumnContainer>
@@ -96,6 +100,7 @@ export default function ContactDetailsForm(props: any) {
             label="Phone number"
             placeholder="Phone number"
             registerReturn={register("phone")}
+            disabled={isSubmitting}
           />
           <RoleSelector
             label="What's your role within the organization?"
@@ -105,12 +110,14 @@ export default function ContactDetailsForm(props: any) {
             onChange={handleRoleChange}
             otherRoleErrorMessage={errors.otherRole?.message}
             register={register}
+            disabled={isSubmitting}
           />
         </ColumnContainer>
       </div>
       <PrivacyPolicyCheckbox
         error={errors.checkedPolicy?.message}
         registerReturn={register("checkedPolicy")}
+        disabled={isSubmitting}
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
