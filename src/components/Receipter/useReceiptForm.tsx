@@ -10,16 +10,22 @@ export default function useReceiptForm() {
   const [processing, setProcessing] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
-  const endowment_addr = stage.content?.tx?.receiver;
-  const to = stage.content?.tx?.to;
 
   const submitHandler = async (body: Values) => {
-    const key = to === "charity" ? "charityId" : "fundId";
-    const receipt = { ...body, [key]: endowment_addr };
+    const receipt = {
+      transactionId: body.transactionId,
+      body: {
+        fullName: body.fullName,
+        email: body.email,
+        streetAddress: body.streetAddress,
+        city: body.city,
+        state: body.state,
+        zipCode: body.zipCode,
+        country: body.country,
+      },
+    };
     setProcessing(true);
-    const response: any = await requestReceipt({
-      receipt,
-    });
+    const response: any = await requestReceipt({ receipt });
     setProcessing(false);
     if (response.data) {
       dispatch(
@@ -28,8 +34,7 @@ export default function useReceiptForm() {
           content: {
             url: stage.content?.url,
             message:
-              response?.data?.message ||
-              "Receipt request successfully sent, Your receipt will be sent to your email address",
+              "Receipt request successfully sent. Your receipt will be sent to your email address.",
           },
         })
       );
@@ -38,7 +43,9 @@ export default function useReceiptForm() {
         setStage({
           step: Step.error,
           content: {
-            message: "Error processing your receipt,",
+            url: stage.content?.url,
+            message:
+              response?.error.data.message || "Error processing your receipt.",
           },
         })
       );
