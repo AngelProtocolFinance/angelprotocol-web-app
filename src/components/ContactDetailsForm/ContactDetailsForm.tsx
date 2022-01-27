@@ -17,7 +17,10 @@ import {
 
 export default function ContactDetailsForm(props: any) {
   const [isLoading, setIsLoading] = useState(false);
-  const [orgRole, setOrgRole] = useState(props.contactData?.Role || "ceo");
+  // 'orgRole' in the form changes automatically, but we need this state setter
+  // just to cause a re-render when the role selection changes, mainly because
+  // we need the "Other role" field rendering when role "other" is selected
+  const [, setOrgRole] = useState("");
   const { saveContactInfo } = useContactDetails();
   const history = useHistory();
 
@@ -34,7 +37,7 @@ export default function ContactDetailsForm(props: any) {
       lastName: props.contactData?.LastName || "",
       email: props.contactData?.Email || "",
       phone: props.contactData?.PhoneNumber || "",
-      orgRole: orgRole,
+      orgRole: props.contactData?.Role || "ceo",
       otherRole: props.contactData?.otherRole || "",
       checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
@@ -54,6 +57,8 @@ export default function ContactDetailsForm(props: any) {
     (value: string) => setOrgRole(value),
     []
   );
+
+  console.log(control._formValues);
 
   return (
     <div className="flex items-center justify-center">
