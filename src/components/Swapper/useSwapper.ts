@@ -10,6 +10,7 @@ import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { lbp, tags, user } from "services/terra/tags";
+import getFinderUrl from "helpers/getFinderUrl";
 
 export default function useSwapper() {
   const { reset, watch } = useFormContext<Values>();
@@ -47,7 +48,7 @@ export default function useSwapper() {
           step: Step.broadcast,
           content: {
             message: "Waiting for transaction result",
-            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            url: getFinderUrl(wallet.network.chainID, response.result.txhash),
           },
         })
       );
@@ -65,7 +66,7 @@ export default function useSwapper() {
                 message: is_buy
                   ? "Successfully swapped UST for HALO"
                   : "Successfully swapped HALO for UST",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
@@ -84,7 +85,7 @@ export default function useSwapper() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );

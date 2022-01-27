@@ -13,6 +13,7 @@ export default function Receipter(props: any) {
     reValidateMode: "onChange",
     defaultValues: {
       amount: parseInt(stage.content?.tx?.amount || ""),
+      splitLiq: stage.content?.tx?.split_liq,
       transactionDate: new Date().toISOString(),
       transactionId: stage.content?.tx?.txHash,
       chainId: wallet?.network.chainID,

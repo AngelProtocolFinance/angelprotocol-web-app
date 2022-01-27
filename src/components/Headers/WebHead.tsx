@@ -3,11 +3,7 @@ import { FiMenu } from "react-icons/fi";
 import MobileNav from "components/MobileNav/MobileNav";
 import useScrollShadow from "hooks/useScrollShadow";
 import Logo from "components/Logo/Logo";
-import { GoLinkExternal } from "react-icons/go";
 import WebMenu from "components/NavMenus/WebMenu";
-import earth_icon from "assets/icons/earth.svg";
-import heart_icon from "assets/icons/heart.svg";
-import star_icon from "assets/icons/star.svg";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();
@@ -30,27 +26,7 @@ export default function WebHead() {
           <FiMenu className="text-2xl" />
         </button>
         {navShown && <MobileNav />}
-        <a
-          href="https://restore-earth.angelprotocol.io"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="absolute -bottom-6 font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
-        >
-          <Word icon={heart_icon} title="donate" />
-          <Word icon={star_icon} title="get rewards" />
-          <Word icon={earth_icon} title="help restore earth" />
-          <GoLinkExternal className="text-lg" />
-        </a>
       </nav>
     </header>
-  );
-}
-
-function Word(props: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center mr-2">
-      <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
-      <span className="md:uppercase">{props.title}</span>
-    </div>
   );
 }

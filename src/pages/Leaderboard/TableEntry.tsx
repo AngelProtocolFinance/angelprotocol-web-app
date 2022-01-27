@@ -1,13 +1,15 @@
-import { Endowment } from "services/aws/leaderboard/types";
+import { Endowment } from "services/aws/endowments/types";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
+import useLeaderboard from "./useLeaderboard";
 
 export default function TableEntry(props: Endowment) {
+  const details = useLeaderboard(props.address);
   const { locked, liquid } = projectFunds(
     10,
-    props.total_lock,
-    props.total_liq,
+    details.total_lock,
+    details.total_liq,
     20,
     15
   );
@@ -21,8 +23,8 @@ export default function TableEntry(props: Endowment) {
         <div className="flex flex-col w-40">
           <Amount
             type="total"
-            locked={props.total_lock}
-            liquid={props.total_liq}
+            locked={details.total_lock}
+            liquid={details.total_liq}
           />
         </div>
       </td>
