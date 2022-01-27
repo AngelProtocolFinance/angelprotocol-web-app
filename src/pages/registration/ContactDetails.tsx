@@ -1,4 +1,4 @@
-import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsForm";
+import ContactDetailsForm from "components/ContactDetailsForm";
 import { useGetter } from "store/accessors";
 
 const ContactDetails = () => {

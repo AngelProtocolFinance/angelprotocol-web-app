@@ -1,22 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
-import { useState } from "react";
+import { userRoleOptions, UserRoles } from "constants/userRoles";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
-import { Selector } from "../../components/Selector/Selector";
-import { userRoles } from "../../constants/userRoles";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
-import {
-  ContactDetails,
-  ContactInfoSchema,
-  useContactDetails,
-} from "./useContactDetails";
+import Input from "./Input";
+import RoleSelector from "./RoleSelector";
+import useSaveContactDetails from "./useContactDetails";
+import { ContactDetails, ContactInfoSchema } from "./types";
 
-export const ContactDetailsForm = (props: any) => {
+export default function ContactDetailsForm(props: any) {
   const [isLoading, setIsLoading] = useState(false);
-  const [orgRole, setOrgRole] = useState(props.contactData?.Role || "");
-  const { saveContactInfo } = useContactDetails();
+  // 'orgRole' in the form changes automatically, but we need this state setter
+  // just to cause a re-render when the role selection changes, mainly because
+  // we need the "Other role" field rendering when role "other" is selected
+  const [, setOrgRole] = useState("");
+  const saveContactDetails = useSaveContactDetails();
   const history = useHistory();
 
   const {
@@ -24,7 +25,7 @@ export const ContactDetailsForm = (props: any) => {
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm({
+  } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
       charityName: props.contactData?.CharityName || "",
@@ -32,204 +33,105 @@ export const ContactDetailsForm = (props: any) => {
       lastName: props.contactData?.LastName || "",
       email: props.contactData?.Email || "",
       phone: props.contactData?.PhoneNumber || "",
-      orgRole: props.contactData?.Role || "ceo",
+      orgRole: props.contactData?.Role || UserRoles.ceo,
       otherRole: props.contactData?.otherRole || "",
       checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
     },
   });
 
-  const onSumbitContactDetails = async (values: ContactDetails) => {
-    setIsLoading(true);
-    await saveContactInfo(values);
-    setIsLoading(false);
-  };
-  return (
-    <div className="flex items-center justify-center">
-      <form
-        className="md:w-4/5 text-left"
-        onSubmit={handleSubmit(onSumbitContactDetails)}
-      >
-        <div className=" grid grid-cols-1 sm:grid-cols-2">
-          <div className="">
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base">
-                  Name of your organization
-                  <span className="text-base text-failed-red">*</span>
-                  <input {...register("uniqueID")} type="hidden" />
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("charityName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="Organization"
-                    disabled={props.contactData?.PK !== ""}
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.charityName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  First name
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("firstName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="First Name"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.firstName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  Last name
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("lastName")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="Last Name"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.lastName?.message}
-                </p>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  E-mail address
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("email")}
-                    type="email"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="email Address"
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.email?.message}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="">
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">phone number</span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black py-2">
-                  <input
-                    {...register("phone")}
-                    type="text"
-                    className="outline-none border-none w-full px-3"
-                    placeholder="phone Number"
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="items-center justify-center mb-4">
-              <div className="text-left">
-                <span className="text-base text-left">
-                  What's your role within the organization?
-                  <span className="text-base text-failed-red">*</span>
-                </span>
-              </div>
-              <div className="">
-                <div className="mr-5 rounded-md bg-white flex items-center text-black">
-                  <Selector
-                    name="orgRole"
-                    placeholder="Role"
-                    options={userRoles}
-                    control={control}
-                    register={register}
-                    onChange={(value: string) => setOrgRole(value)}
-                  />
-                </div>
-                <p className="text-sm text-failed-red">
-                  {errors.orgRole?.message}
-                </p>
-              </div>
-            </div>
-            {orgRole === "other" && (
-              <div className="items-center justify-center mb-4">
-                <div className="text-left">
-                  <span className="text-base text-left">
-                    please specify
-                    <span className="text-base text-failed-red">*</span>
-                  </span>
-                </div>
-                <div className="">
-                  <div className="mr-5 rounded-md bg-white flex items-center w-2/5text-black py-2">
-                    <input
-                      {...register("otherRole")}
-                      type="text"
-                      className="outline-none border-none w-full px-3 text-black"
-                      placeholder="Specify Your Role"
-                    />
-                  </div>
-                  <p className="text-sm text-failed-red">
-                    {errors.otherRole?.message}
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <PrivacyPolicyCheckbox
-          error={errors.checkedPolicy?.message}
-          registerReturn={register("checkedPolicy")}
-        />
-        <div className="text-center flex justify-center">
-          {props.contactData?.PK && (
-            <div className="mr-2">
-              <button
-                className="disabled:bg-gray-300 bg-dark-grey w-48 h-12 rounded-xl uppercase text-base font-bold text-white"
-                onClick={() => history.push(registration.status)}
-                disabled={isLoading}
-              >
-                back
-              </button>
-            </div>
-          )}
-          <div className="mr-2">
-            <Action
-              submit
-              title="Continue"
-              classes="bg-thin-blue w-48 h-12"
-              disabled={isLoading}
-              isLoading={isLoading}
-            />
-          </div>
-        </div>
-      </form>
-    </div>
+  const onSumbitContactDetails = useCallback(
+    async (values: ContactDetails) => {
+      setIsLoading(true);
+      await saveContactDetails(values);
+      setIsLoading(false);
+    },
+    [saveContactDetails]
   );
-};
+
+  const handleRoleChange = useCallback(
+    (value: string) => setOrgRole(value),
+    []
+  );
+
+  return (
+    <form
+      className="mx-auto md:w-4/5 flex flex-col gap-6"
+      onSubmit={handleSubmit(onSumbitContactDetails)}
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+        <ColumnContainer>
+          <Input
+            label="Name of your organization"
+            placeholder="Organization"
+            registerReturn={register("charityName")}
+            errorMessage={errors.charityName?.message}
+            required
+          />
+          <Input
+            label="First name"
+            placeholder="First name"
+            registerReturn={register("firstName")}
+            errorMessage={errors.firstName?.message}
+            required
+          />
+          <Input
+            label="Last name"
+            placeholder="Last name"
+            registerReturn={register("lastName")}
+            errorMessage={errors.lastName?.message}
+            required
+          />
+          <Input
+            type="email"
+            label="E-mail address"
+            placeholder="E-mail address"
+            registerReturn={register("email")}
+            errorMessage={errors.email?.message}
+            required
+          />
+        </ColumnContainer>
+        <ColumnContainer>
+          <Input
+            label="Phone number"
+            placeholder="Phone number"
+            registerReturn={register("phone")}
+          />
+          <RoleSelector
+            label="What's your role within the organization?"
+            name="orgRole"
+            options={userRoleOptions}
+            control={control}
+            onChange={handleRoleChange}
+            otherRoleErrorMessage={errors.otherRole?.message}
+            register={register}
+          />
+        </ColumnContainer>
+      </div>
+      <PrivacyPolicyCheckbox
+        error={errors.checkedPolicy?.message}
+        registerReturn={register("checkedPolicy")}
+      />
+      <div className="flex justify-center">
+        {props.contactData?.PK && (
+          <Action
+            title="Back"
+            classes="bg-green-400 w-48 h-12 mr-2"
+            disabled={isLoading}
+            onClick={() => history.push(registration.status)}
+          />
+        )}
+        <Action
+          submit
+          title="Continue"
+          classes="bg-thin-blue w-48 h-12"
+          disabled={isLoading}
+        />
+      </div>
+    </form>
+  );
+}
+
+function ColumnContainer({ children }: PropsWithChildren<{}>) {
+  return <div className="flex flex-col gap-4">{children}</div>;
+}
