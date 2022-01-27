@@ -1,6 +1,5 @@
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
 import {
   useCreateNewCharityMutation,
@@ -11,22 +10,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { useCallback } from "react";
 import { ContactDetails } from "./types";
-
-export const ContactInfoSchema = Yup.object().shape({
-  charityName: Yup.string().required(
-    "Please enter the name of your organization."
-  ),
-  firstName: Yup.string().required("Please enter your first name."),
-  lastName: Yup.string().required("Please enter your last name"),
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Please enter your email."),
-  // since selector logic has a default value selected, this error message should never appear
-  orgRole: Yup.string().required(
-    "Please select your role within your organization."
-  ),
-  checkedPolicy: Yup.bool().isTrue("Checkbox must be checked"),
-});
 
 export const useContactDetails = () => {
   const [registerCharity] = useCreateNewCharityMutation();

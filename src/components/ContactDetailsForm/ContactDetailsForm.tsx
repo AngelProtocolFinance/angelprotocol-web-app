@@ -8,8 +8,8 @@ import { registration } from "types/routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
 import RoleSelector from "./RoleSelector";
-import { ContactInfoSchema, useContactDetails } from "./useContactDetails";
-import { ContactDetails } from "./types";
+import { useContactDetails } from "./useContactDetails";
+import { ContactDetails, ContactInfoSchema } from "./types";
 
 export default function ContactDetailsForm(props: any) {
   const [isLoading, setIsLoading] = useState(false);
