@@ -133,6 +133,7 @@ export default function ContactDetailsForm(props: any) {
           title="Continue"
           classes="bg-thin-blue w-48 h-12"
           disabled={isLoading}
+          isLoading={isLoading}
         />
       </div>
     </form>
