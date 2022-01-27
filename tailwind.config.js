@@ -181,6 +181,7 @@ module.exports = {
       translate: ["active"],
       display: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
+      cursor: ["disabled"],
     },
   },
 };
