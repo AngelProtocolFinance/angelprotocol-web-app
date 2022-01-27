@@ -1,17 +1,17 @@
+import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import { registration } from "types/routes";
 import { toast } from "react-toastify";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
-import { useCallback } from "react";
+import { useGetter, useSetter } from "store/accessors";
+import { registration } from "types/routes";
 import { ContactDetails } from "./types";
 
-export const useContactDetails = () => {
+export default function useContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
@@ -80,4 +80,4 @@ export const useContactDetails = () => {
   );
 
   return { saveContactInfo };
-};
+}

@@ -8,7 +8,7 @@ import { registration } from "types/routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
 import RoleSelector from "./RoleSelector";
-import { useContactDetails } from "./useContactDetails";
+import useContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
 
 export default function ContactDetailsForm(props: any) {
