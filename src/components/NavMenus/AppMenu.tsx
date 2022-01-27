@@ -4,33 +4,25 @@ import { useRouteMatch } from "react-router-dom";
 
 export default function AppMenu() {
   const { url } = useRouteMatch();
-  const linkStyles = {
-    className:
-      "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
-  };
 
   return (
     <ul className="flex lg:items-center">
-      <li>
-        <Link to={`${url}/${app.index}`} {...linkStyles}>
-          LEADERBOARD
-        </Link>
-      </li>
-      <li>
-        <a
-          rel="noreferrer"
-          target="_blank"
-          href="https://www.angelprotocol.io/contact"
-          {...linkStyles}
-        >
-          REGISTER
-        </a>
-      </li>
-      <li>
-        <Link to={`${url}/${app.tca}`} {...linkStyles}>
-          DONATE
-        </Link>
-      </li>
+      <ListLinkItem to={`${url}/${app.index}`} text="LEADERBOARD" />
+      <ListLinkItem to={`${url}/${app.register}`} text="REGISTER" />
+      <ListLinkItem to={`${url}/${app.tca}`} text="DONATE" />
     </ul>
+  );
+}
+
+function ListLinkItem({ to, text }: { to: string; text: string }) {
+  return (
+    <li>
+      <Link
+        to={to}
+        className="text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2"
+      >
+        {text}
+      </Link>
+    </li>
   );
 }
