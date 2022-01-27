@@ -3,19 +3,18 @@ import { useFormContext } from "react-hook-form";
 import useEstimator from "./useEstimator";
 import Contract from "contracts/Contract";
 import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
-import getFinderUrl from "helpers/getFinderUrl";
+import useTxUpdator from "services/transaction/updators";
+import { chainIDs } from "contracts/types";
 
 export default function useVoter() {
   const { reset } = useFormContext<Values>();
   const dispatch = useSetter();
-  const handleTxError = useTxErrorHandler();
+  const { updateTx } = useTxUpdator();
   const wallet = useConnectedWallet();
   const tx = useEstimator();
 
@@ -23,33 +22,18 @@ export default function useVoter() {
     // const liquid_split = 100 - Number(data.split);
     try {
       if (!wallet) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Wallet is disconnected" },
-          })
-        );
+        updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
-
-      dispatch(
-        setStage({
-          step: Step.submit,
-          content: { message: "Submitting transaction..." },
-        })
-      );
-
+      updateTx({ step: Step.submit, message: "Submitting transaction..." });
       const response = await wallet.post(tx!);
 
-      dispatch(
-        setStage({
-          step: Step.broadcast,
-          content: {
-            message: "Waiting for transaction result",
-            url: getFinderUrl(wallet.network.chainID, response.result.txhash),
-          },
-        })
-      );
+      updateTx({
+        step: Step.broadcast,
+        message: "Waiting for transaction result",
+        txHash: response.result.txhash,
+        chainId: wallet.network.chainID as chainIDs,
+      });
 
       if (response.success) {
         const contract = new Contract(wallet);
@@ -57,15 +41,12 @@ export default function useVoter() {
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          dispatch(
-            setStage({
-              step: Step.success,
-              content: {
-                message: "Vote is successfully casted",
-                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
-              },
-            })
-          );
+          updateTx({
+            step: Step.success,
+            message: "Vote is successfully casted",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
 
           dispatch(
             //invalidate all gov related cache
@@ -75,25 +56,21 @@ export default function useVoter() {
             ])
           );
         } else {
-          dispatch(
-            setStage({
-              step: Step.error,
-              content: {
-                message: "Transaction failed",
-                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
-              },
-            })
-          );
+          updateTx({
+            step: Step.error,
+            message: "Transaction failed",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
         }
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleTxError);
+      handleTerraError(err, updateTx);
     } finally {
       reset();
     }
   }
 
-  //choose sender depending on active wallet
   return voter;
 }

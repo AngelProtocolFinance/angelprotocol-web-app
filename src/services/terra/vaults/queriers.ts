@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "contracts/types";
 import { exchange_map } from "./placeholders";
 import { vault_api } from "./vaults";

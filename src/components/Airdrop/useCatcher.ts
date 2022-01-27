@@ -3,10 +3,8 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useMemo, useState } from "react";
 import { Airdrops } from "services/aws/airdrop/types";
 import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { denoms } from "constants/currency";
-import useTxErrorHandler from "hooks/useTxErrorHandler";
 import { useBalances } from "services/terra/queriers";
 import Halo from "contracts/Halo";
 import { terra } from "services/terra/terra";
@@ -14,13 +12,14 @@ import { aws } from "services/aws/aws";
 import { tags as aws_tags } from "services/aws/tags";
 import { tags, gov, user } from "services/terra/tags";
 import handleTerraError from "helpers/handleTerraError";
+import useTxUpdator from "services/transaction/updators";
 
 export default function useCatcher(airdrops: Airdrops) {
   const [loading, setLoading] = useState(false);
   const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
-  const handleTxError = useTxErrorHandler();
+  const { updateTx } = useTxUpdator();
 
   const total_claimable = useMemo(
     () =>
@@ -34,12 +33,7 @@ export default function useCatcher(airdrops: Airdrops) {
   async function claim(is_stake = false) {
     try {
       if (!wallet) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Wallet is disconnected" },
-          })
-        );
+        updateTx({ step: Step.error, message: "Wallet is disconnected" });
         return;
       }
 
@@ -59,43 +53,37 @@ export default function useCatcher(airdrops: Airdrops) {
 
       //check if user has enough balance to pay for fees
       if (estimatedFee > UST_balance) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Not enough UST to pay for fees" },
-          })
-        );
+        updateTx({
+          step: Step.error,
+          message: "Not enough UST to pay for fees",
+        });
+
         return;
       }
 
       const response = await wallet.post(tx!);
 
-      dispatch(
-        setStage({
-          step: Step.broadcast,
-          content: {
-            message: "Waiting for transaction result",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
-          },
-        })
-      );
+      updateTx({
+        step: Step.broadcast,
+        message: "Waiting for transaction result",
+        chainId: wallet.network.chainID,
+        txHash: response.result.txhash,
+      });
 
       if (response.success) {
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          dispatch(
-            setStage({
-              step: Step.success,
-              content: {
-                message: `HALO successfully claimed${
-                  is_stake ? " and staked" : ""
-                }`,
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            })
-          );
+          updateTx({
+            step: Step.success,
+            message: `HALO successfully claimed${
+              is_stake ? " and staked" : ""
+            }`,
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID,
+          });
+
           //refetch new data
           dispatch(
             terra.util.invalidateTags([
@@ -106,22 +94,19 @@ export default function useCatcher(airdrops: Airdrops) {
           );
           dispatch(aws.util.invalidateTags([{ type: aws_tags.airdrop }]));
         } else {
-          dispatch(
-            setStage({
-              step: Step.error,
-              content: {
-                message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            })
-          );
+          updateTx({
+            step: Step.error,
+            message: "Transaction failed",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID,
+          });
         }
       }
 
       setLoading(false);
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleTxError);
+      handleTerraError(err, updateTx);
       setLoading(false);
     }
   }

@@ -20,5 +20,9 @@ export default function Donater(props: Props) {
     },
     resolver: yupResolver(schema),
   });
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <props.Form />
+    </FormProvider>
+  );
 }

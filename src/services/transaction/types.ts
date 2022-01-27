@@ -1,3 +1,6 @@
+import { chainIDs } from "contracts/types";
+import { number, string } from "prop-types";
+
 export enum Step {
   form = "form",
   submit = "submit",
@@ -15,16 +18,19 @@ export type Tx = {
   receiver?: number | string;
 };
 
+export type Details = {
+  amount: string;
+  to: "charity" | "fund" | "tca";
+  receiver?: string | number;
+  split_liq: string;
+};
+
 export type Content = {
   message: string;
   url?: string;
   tx?: Tx;
 };
 
-export type Stage = {
-  step: Step;
-  content: Content | null;
-};
 export type PendingTx = { amount: number; hash: string };
 export type State = {
   form_loading: boolean;
@@ -32,3 +38,60 @@ export type State = {
   fee: number;
   stage: Stage;
 };
+
+export type InitialStage = {
+  step: Step.form;
+  message?: never;
+  txHash?: never;
+  chainId?: never;
+  details?: never;
+};
+
+export type SubmitStage = {
+  step: Step.submit;
+  message: string;
+  txHash?: never;
+  chainId?: never;
+  details?: never;
+};
+
+export type BroadcastStage = {
+  step: Step.broadcast;
+  message: string;
+  txHash: string;
+  chainId: string;
+  details?: never;
+};
+
+export type SuccessStage = {
+  step: Step.success;
+  message: string;
+  txHash: string;
+  chainId: string;
+  details?: Details;
+};
+
+export type ReceiptStage = {
+  step: Step.receipt;
+  message?: never;
+  txHash: string;
+  chainId: string;
+  details: Details;
+};
+
+export type ErrorStage = {
+  step: Step.error;
+  message: string;
+  txHash?: string;
+  chainId?: string;
+  details?: never;
+};
+
+export type Stage =
+  | InitialStage
+  | SubmitStage
+  | BroadcastStage
+  | SuccessStage
+  | ReceiptStage
+  | ErrorStage;
+export type StageUpdator = (update: Stage) => void;

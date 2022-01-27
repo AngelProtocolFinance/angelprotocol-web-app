@@ -8,7 +8,7 @@ import WithdrawSuite from "components/TransactionSuite/WithdrawSuite";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import { useEndowmentHoldings } from "services/terra/queriers";
 import useProfile from "pages/Market/useProfile";
-import { useConnectedWallet } from "@terra-dev/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import PageMeta from "./PageMeta";
 
 export default function Withdraw(props: RouteComponentProps<RouteParam>) {

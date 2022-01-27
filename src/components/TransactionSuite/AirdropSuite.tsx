@@ -26,7 +26,7 @@ export default function AirdropSuite(props: AirdropProps) {
   };
 
   function close() {
-    dispatch(setStage({ step: Step.form, content: null }));
+    dispatch(setStage({ step: Step.form }));
     hideModal();
   }
 

@@ -1,56 +1,38 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-import useEstimator from "./useEstimator";
-import Contract from "contracts/Contract";
-import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
-import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
-import { Values } from "./types";
+import { Step } from "services/transaction/types";
 import { terra } from "services/terra/terra";
 import { gov, tags, user } from "services/terra/tags";
-import getFinderUrl from "helpers/getFinderUrl";
+import useTxUpdator from "services/transaction/updators";
+import Contract from "contracts/Contract";
+import { useSetter } from "store/accessors";
+import { chainIDs } from "contracts/types";
+import { Values } from "./types";
+import useEstimator from "./useEstimator";
 
 function useStaker() {
   const { watch } = useFormContext<Values>();
   const dispatch = useSetter();
-  const handleTxError = useTxErrorHandler();
+  const { updateTx } = useTxUpdator();
   const wallet = useConnectedWallet();
   const tx = useEstimator();
   const is_stake = watch("is_stake");
 
   async function staker() {
-    // const liquid_split = 100 - Number(data.split);
+    if (!wallet) {
+      updateTx({ step: Step.error, message: "Wallet is not connected" });
+      return;
+    }
     try {
-      if (!wallet) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Wallet is disconnected" },
-          })
-        );
-        return;
-      }
-
-      dispatch(
-        setStage({
-          step: Step.submit,
-          content: { message: "Submitting transaction..." },
-        })
-      );
-
+      updateTx({ step: Step.submit, message: "Submitting transaction..." });
       const response = await wallet.post(tx!);
-
-      dispatch(
-        setStage({
-          step: Step.broadcast,
-          content: {
-            message: "Waiting for transaction result",
-            url: getFinderUrl(wallet.network.chainID, response.result.txhash),
-          },
-        })
-      );
+      updateTx({
+        step: Step.broadcast,
+        message: "Waiting for transaction result",
+        txHash: response.result.txhash,
+        chainId: wallet.network.chainID as chainIDs,
+      });
 
       if (response.success) {
         const contract = new Contract(wallet);
@@ -58,21 +40,16 @@ function useStaker() {
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          //refetching staker here isn't good since state isn't yet reflected in the backend
-          //refetch will only get the old data
-          // refetch_staker();
-          dispatch(
-            setStage({
-              step: Step.success,
-              content: {
-                message: is_stake
-                  ? "Staking successfull!"
-                  : "HALO successfully withdrawn",
-                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
-              },
-            })
-          );
-          //refetch new data
+          updateTx({
+            step: Step.success,
+            message: is_stake
+              ? "Staking successfull!"
+              : "HALO successfully withdrawn",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
+
+          //invalidate cache to fetch new data
           dispatch(
             terra.util.invalidateTags([
               { type: tags.gov, id: gov.staker },
@@ -81,24 +58,20 @@ function useStaker() {
             ])
           );
         } else {
-          dispatch(
-            setStage({
-              step: Step.error,
-              content: {
-                message: "Transaction failed",
-                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
-              },
-            })
-          );
+          updateTx({
+            step: Step.error,
+            message: "Transaction failed",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
         }
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleTxError);
+      handleTerraError(err, updateTx);
     }
   }
 
-  //choose sender depending on active wallet
   return staker;
 }
 

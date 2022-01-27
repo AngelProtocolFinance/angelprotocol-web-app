@@ -2,49 +2,33 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import useEstimator from "./useEstimator";
 import Contract from "contracts/Contract";
 import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
 import { terra } from "services/terra/terra";
 import { gov, tags, user } from "services/terra/tags";
+import useTxUpdator from "services/transaction/updators";
+import { chainIDs } from "contracts/types";
 
 function useClaimer() {
   const dispatch = useSetter();
-  const handleTxError = useTxErrorHandler();
+  const { updateTx } = useTxUpdator();
   const wallet = useConnectedWallet();
   const tx = useEstimator();
 
   async function claimer() {
     try {
       if (!wallet) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Wallet is disconnected" },
-          })
-        );
+        updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
-
-      dispatch(
-        setStage({
-          step: Step.submit,
-          content: { message: "Submitting transaction..." },
-        })
-      );
-
+      updateTx({ step: Step.error, message: "Submitting transaction.." });
       const response = await wallet.post(tx!);
-
-      dispatch(
-        setStage({
-          step: Step.broadcast,
-          content: {
-            message: "Waiting for transaction result",
-            url: `https://finder.terra.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
-          },
-        })
-      );
+      updateTx({
+        step: Step.broadcast,
+        message: "Waiting for transaction result",
+        txHash: response.result.txhash,
+        chainId: wallet.network.chainID as chainIDs,
+      });
 
       if (response.success) {
         const contract = new Contract(wallet);
@@ -52,15 +36,12 @@ function useClaimer() {
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
-          dispatch(
-            setStage({
-              step: Step.success,
-              content: {
-                message: "HALO successfully claimed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            })
-          );
+          updateTx({
+            step: Step.success,
+            message: "HALO successfully claimed",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
           //refetch new data
           dispatch(
             terra.util.invalidateTags([
@@ -70,20 +51,17 @@ function useClaimer() {
             ])
           );
         } else {
-          dispatch(
-            setStage({
-              step: Step.error,
-              content: {
-                message: "Transaction failed",
-                url: `https://finder.terra.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-              },
-            })
-          );
+          updateTx({
+            step: Step.error,
+            message: "Transaction failed",
+            txHash: txInfo.txhash,
+            chainId: wallet.network.chainID as chainIDs,
+          });
         }
       }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleTxError);
+      handleTerraError(err, updateTx);
     }
   }
 

@@ -5,22 +5,40 @@ import Broadcast from "./Broadcast";
 import Success from "./Success";
 import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Nodal/Nodal";
-import { Step } from "services/transaction/types";
-import ClaimForm from "components/Claimer/ClaimForm";
-import { Display } from "./types";
+import {
+  BroadcastStage,
+  ErrorStage,
+  ReceiptStage,
+  Step,
+  SubmitStage,
+  SuccessStage,
+} from "services/transaction/types";
+import { Display, TxProps } from "./types";
 import useTxUpdator from "services/transaction/updators";
+import { useMemo } from "react";
+import Receipter from "components/Receipter/Receipter";
+import ReceiptForm from "components/ReceiptForm/ReceiptForm";
 
-export default function ClaimSuite(props: { inModal?: true }) {
+export default function TransactionSuite<C>(props: TxProps<C>) {
   const { hideModal } = useSetModal();
   const { updateTx } = useTxUpdator();
   const { stage } = useGetter((state) => state.transaction);
-  const display: Display = {
-    [Step.form]: <ClaimForm />,
-    [Step.submit]: <Submit />,
-    [Step.broadcast]: <Broadcast />,
-    [Step.success]: <Success />,
-    [Step.error]: <ErrPop />,
-  };
+
+  const display: Display = useMemo(
+    () => ({
+      [Step.form]: <props.Context {...props.contextProps} />,
+      [Step.submit]: <Submit {...(stage as SubmitStage)} />,
+      [Step.broadcast]: <Broadcast {...(stage as BroadcastStage)} />,
+      [Step.success]: <Success {...(stage as SuccessStage)} />,
+      [Step.error]: <ErrPop {...(stage as ErrorStage)} />,
+      [Step.receipt]: (
+        <Receipter {...(stage as ReceiptStage)}>
+          <ReceiptForm />
+        </Receipter>
+      ),
+    }),
+    [props, stage]
+  );
 
   function close() {
     updateTx({ step: Step.form });

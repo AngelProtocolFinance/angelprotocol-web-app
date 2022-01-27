@@ -1,22 +1,29 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { ReceiptStage, Step } from "services/transaction/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
 import { Values } from "./types";
-import { useGetter } from "store/accessors";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { ReactNode } from "react";
 
-export default function Receipter(props: any) {
-  const { stage } = useGetter((state) => state.transaction);
-  const wallet = useConnectedWallet();
+export default function Receipter(
+  props: { children: ReactNode } & ReceiptStage
+) {
+  if (props.step !== Step.receipt) throw new Error("wrong component rendered");
+  const {
+    chainId,
+    txHash,
+    details: { amount, split_liq },
+    //need a guarantee that this component is called when stage is Receipt
+  } = props;
 
   const methods = useForm<Values>({
     reValidateMode: "onChange",
     defaultValues: {
-      amount: parseInt(stage.content?.tx?.amount || ""),
-      splitLiq: stage.content?.tx?.split_liq,
+      amount: parseInt(amount || ""),
+      splitLiq: split_liq,
       transactionDate: new Date().toISOString(),
-      transactionId: stage.content?.tx?.txHash,
-      chainId: wallet?.network.chainID,
+      transactionId: txHash,
+      chainId: chainId,
       fullName: "",
       email: "",
       streetAddress: "",

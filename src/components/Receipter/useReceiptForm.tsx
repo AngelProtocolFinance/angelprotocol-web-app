@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import { Step } from "services/transaction/types";
-import { setStage } from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
+import { Step, ReceiptStage } from "services/transaction/types";
+import useTxUpdator from "services/transaction/updators";
+import { useGetter } from "store/accessors";
 import { Values } from "./types";
 
 export default function useReceiptForm() {
-  const dispatch = useSetter();
+  const { updateTx } = useTxUpdator();
   const [processing, setProcessing] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
-  const endowment_addr = stage.content?.tx?.receiver;
-  const to = stage.content?.tx?.to;
+
+  const {
+    chainId,
+    txHash,
+    details: { receiver, to },
+  } = stage as ReceiptStage; //check made on Receipter
+
+  const endowment_addr = receiver;
 
   const submitHandler = async (body: Values) => {
     const key = to === "charity" ? "charityId" : "fundId";
@@ -22,26 +28,20 @@ export default function useReceiptForm() {
     });
     setProcessing(false);
     if (response.data) {
-      dispatch(
-        setStage({
-          step: Step.success,
-          content: {
-            url: stage.content?.url,
-            message:
-              response?.data?.message ||
-              "Receipt request successfully sent, Your receipt will be sent to your email address",
-          },
-        })
-      );
+      updateTx({
+        step: Step.success,
+        message:
+          "Receipt request successfully sent, Your receipt will be sent to your email address",
+        txHash,
+        chainId,
+      });
     } else {
-      dispatch(
-        setStage({
-          step: Step.error,
-          content: {
-            message: "Error processing your receipt,",
-          },
-        })
-      );
+      updateTx({
+        step: Step.error,
+        message: "Error processing your receipt",
+        txHash,
+        chainId,
+      });
     }
   };
 

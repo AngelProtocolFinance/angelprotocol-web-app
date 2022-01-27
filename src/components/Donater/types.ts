@@ -1,5 +1,5 @@
 import { denoms } from "constants/currency";
-import { ReactNode } from "react";
+import { FC } from "react";
 
 export interface Values {
   amount: string;
@@ -27,7 +27,7 @@ export interface DWindow extends Window {
 interface FromTCA {
   to: "tca";
   receiver?: never;
-  children: ReactNode;
+  Form: FC;
   max_liq?: never;
   min_liq?: never;
 }
@@ -35,7 +35,7 @@ interface FromTCA {
 interface ToFund {
   to: "fund";
   receiver?: number;
-  children: ReactNode;
+  Form: FC;
   max_liq?: number;
   min_liq?: number;
 }
@@ -43,7 +43,7 @@ interface ToFund {
 interface ToCharity {
   to: "charity";
   receiver: string;
-  children: ReactNode;
+  Form: FC;
   //doesn't know yet limits on charity donations
   max_liq?: number;
   min_liq?: number;

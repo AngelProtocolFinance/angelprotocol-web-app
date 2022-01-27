@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import CharityInfoNav from "./CharityInfoNav";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
 import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
+import { Props as C } from "components/Donater/types";
+import DonateForm from "components/DonateForm/DonateForm";
 import { useSetModal } from "components/Nodal/Nodal";
 import { RiPencilFill } from "react-icons/ri";
 import CharityProfileEditForm from "./CharityProfileEditForm";
@@ -17,6 +18,8 @@ import { useProfileQuery } from "services/aws/endowments/endowments";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import { CharityParam } from "./types";
+import TransactionSuite from "components/TransactionSuite/TransactionSuite";
+import { TxProps } from "components/TransactionSuite/types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
@@ -34,18 +37,24 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   const isCharityOwner =
     wallet && wallet.walletAddress === profile.charity_owner;
 
-  const showDonationForm = () => {
-    //the button firing this function is disabled when
-    //param address is wrong
-    showModal(CharityForm, {
-      charity_addr: endowment_addr,
-    });
-  };
   const showEditForm = () => {
     showModal(CharityProfileForm, {
       profile,
     });
   };
+
+  const showDonationForm = useCallback(() => {
+    showModal<TxProps<C>>(TransactionSuite, {
+      inModal: true,
+      Context: Donater,
+      contextProps: {
+        to: "charity",
+        receiver: endowment_addr,
+        Form: DonateForm,
+      },
+    });
+  }, [profile]);
+
   console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
@@ -88,14 +97,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
     </section>
   );
 };
-
-function CharityForm(props: { charity_addr: string }) {
-  return (
-    <Donater to="charity" receiver={props.charity_addr}>
-      <DonateSuite inModal />
-    </Donater>
-  );
-}
 
 function CharityProfileForm(props: { profile: Profile }) {
   return (
