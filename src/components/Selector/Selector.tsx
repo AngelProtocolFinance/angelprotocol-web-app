@@ -9,6 +9,7 @@ interface SelectorProps {
   control: any;
   register: Function;
   onChange?: Function;
+  disabled?: boolean;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -30,6 +31,7 @@ export const Selector = (props: SelectorProps) => {
               props.onChange && props.onChange(option?.value);
             }}
             options={props.options}
+            isDisabled={props.disabled}
           />
         );
       }}

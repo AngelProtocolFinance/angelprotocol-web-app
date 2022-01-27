@@ -2,13 +2,13 @@ import { UseFormRegisterReturn } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { site, web } from "types/routes";
 
-type Props = {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   error?: string;
   registerReturn: UseFormRegisterReturn;
 };
 
 export default function PrivacyPolicyCheckbox(props: Props) {
-  const { error, registerReturn } = props;
+  const { error, registerReturn, ...rest } = props;
 
   return (
     <div>
@@ -17,6 +17,7 @@ export default function PrivacyPolicyCheckbox(props: Props) {
         type="checkbox"
         className="mr-2 cursor-pointer"
         {...registerReturn}
+        {...rest}
       />
       <label htmlFor={registerReturn.name} className="cursor-pointer">
         By checking this box, you declare that you have read and agreed to our{" "}
