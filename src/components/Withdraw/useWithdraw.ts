@@ -10,6 +10,7 @@ import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
+import getFinderUrl from "helpers/getFinderUrl";
 
 export default function useWithdrawHoldings() {
   const { reset } = useFormContext<Values>();
@@ -44,7 +45,7 @@ export default function useWithdrawHoldings() {
           step: Step.broadcast,
           content: {
             message: "Waiting for transaction result",
-            url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
+            url: getFinderUrl(wallet.network.chainID, response.result.txhash),
           },
         })
       );
@@ -60,7 +61,7 @@ export default function useWithdrawHoldings() {
               step: Step.success,
               content: {
                 message: "Withdraw successful!",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );
@@ -77,7 +78,7 @@ export default function useWithdrawHoldings() {
               step: Step.error,
               content: {
                 message: "Transaction failed",
-                url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+                url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
               },
             })
           );

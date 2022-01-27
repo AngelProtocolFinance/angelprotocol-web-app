@@ -16,12 +16,19 @@ export default function Catcher(props: { airdrops: Airdrops }) {
         {toCurrency(total_claimable)} HALO
       </p>
 
-      <Action title="claim" onClick={() => claim(false)} disabled={loading} />
       <Action
         title="claim & stake"
         onClick={() => claim(true)}
         disabled={loading}
       />
+      <span
+        title="claim"
+        onClick={() => claim(false)}
+        data-disabled={loading}
+        className="underline text-angel-grey disabled:text-gray-300 cursor-pointer"
+      >
+        claim
+      </span>
     </div>
   );
 }
@@ -35,7 +42,7 @@ function Action(props: {
     <button
       disabled={props.disabled}
       onClick={props.onClick}
-      className="bg-angel-orange text-white-grey hover:opacity-80 disabled:bg-grey-accent w-32 py-1 rounded-md uppercase font-heading text-xs font-bold mb-2"
+      className="bg-angel-orange text-white-grey hover:opacity-80 disabled:bg-grey-accent w-32 py-2 rounded-md uppercase font-heading text-sm font-bold mb-2"
     >
       {props.title}
     </button>

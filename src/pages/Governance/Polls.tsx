@@ -22,19 +22,28 @@ export default function Polls() {
         <p className="uppercase text-2xl font-bold text-white-grey mr-4">
           Polls
         </p>
-        <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center mr-2">
+        <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center mr-2 px-3">
           <span className="font-heading uppercase text-2xs mr-2">
             current block{" "}
           </span>
           <SiHiveBlockchain className="mr-1" />
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
-        <button
-          onClick={showPoller}
-          className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm font-heading text-sm uppercase text-center rounded-md"
-        >
-          Create Poll
-        </button>
+        <div className="flex flex-wrap gap-2 justify-end self-end">
+          <a
+            href="https://forum.angelprotocol.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="action-button">Join Forum</button>
+          </a>
+          <button
+            onClick={showPoller}
+            className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm font-heading text-sm uppercase text-center rounded-md"
+          >
+            Create Poll
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {gov_polls.map((poll) => (

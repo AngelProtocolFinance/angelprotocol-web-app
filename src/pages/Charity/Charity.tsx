@@ -46,7 +46,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       profile,
     });
   };
-
+  console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
 
