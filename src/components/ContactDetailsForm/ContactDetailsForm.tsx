@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
-import { userRoles } from "constants/userRoles";
+import { userRoleOptions } from "constants/userRoles";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -100,7 +100,7 @@ export default function ContactDetailsForm(props: any) {
           <RoleSelector
             label="What's your role within the organization?"
             name="orgRole"
-            options={userRoles}
+            options={userRoleOptions}
             control={control}
             onChange={handleRoleChange}
             otherRoleErrorMessage={errors.otherRole?.message}
