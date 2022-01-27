@@ -8,7 +8,7 @@ import { registration } from "types/routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
 import RoleSelector from "./RoleSelector";
-import useContactDetails from "./useContactDetails";
+import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
 
 export default function ContactDetailsForm(props: any) {
@@ -17,7 +17,7 @@ export default function ContactDetailsForm(props: any) {
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
   const [, setOrgRole] = useState("");
-  const { saveContactInfo } = useContactDetails();
+  const saveContactDetails = useSaveContactDetails();
   const history = useHistory();
 
   const {
@@ -43,10 +43,10 @@ export default function ContactDetailsForm(props: any) {
   const onSumbitContactDetails = useCallback(
     async (values: ContactDetails) => {
       setIsLoading(true);
-      await saveContactInfo(values);
+      await saveContactDetails(values);
       setIsLoading(false);
     },
-    [saveContactInfo]
+    [saveContactDetails]
   );
 
   const handleRoleChange = useCallback(

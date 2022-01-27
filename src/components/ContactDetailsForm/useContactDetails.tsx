@@ -11,7 +11,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { registration } from "types/routes";
 import { ContactDetails } from "./types";
 
-export default function useContactDetails() {
+export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
@@ -19,7 +19,7 @@ export default function useContactDetails() {
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  const saveContactInfo = useCallback(
+  const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
       const is_create = !contactData?.uniqueID;
@@ -79,5 +79,5 @@ export default function useContactDetails() {
     [dispatch, history, registerCharity, resendEmail, updateContactPerson, user]
   );
 
-  return { saveContactInfo };
+  return saveContactDetails;
 }
