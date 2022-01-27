@@ -1,7 +1,6 @@
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { ToastContainer } from "react-toastify";
 import Action from "../../components/ActionButton/Action";
 import { useSetter } from "store/accessors";
 import { removeUserData } from "services/user/userSlice";
@@ -93,7 +92,6 @@ const Registration = () => {
       <p className="text-base mt-6">
         Can't find a registration file with this reference?
       </p>
-      <ToastContainer />
     </div>
   );
 };

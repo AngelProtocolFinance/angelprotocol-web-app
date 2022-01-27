@@ -11,7 +11,6 @@ import CharityProfileEditForm from "./CharityProfileEditForm";
 import { Profile } from "services/aws/endowments/types";
 import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { ToastContainer } from "react-toastify";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
@@ -84,7 +83,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
           />
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 };
