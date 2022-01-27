@@ -10,18 +10,7 @@ import {
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { useCallback } from "react";
-
-export type ContactDetails = {
-  charityName: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  orgRole: string;
-  otherRole: string;
-  checkedPolicy: boolean;
-  uniqueID: string;
-};
+import { ContactDetails } from "./types";
 
 export const ContactInfoSchema = Yup.object().shape({
   charityName: Yup.string().required(

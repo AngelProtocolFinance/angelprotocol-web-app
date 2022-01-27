@@ -2,7 +2,7 @@ import { Selector } from "components/Selector";
 import { Control, UseFormRegister } from "react-hook-form";
 import { OptionType } from "types/optionType";
 import Input from "./Input";
-import { ContactDetails } from "./useContactDetails";
+import { ContactDetails } from "./types";
 
 type Props = {
   label: string;
@@ -18,10 +18,10 @@ export default function RoleSelector(props: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <span>
+        <label htmlFor={props.name}>
           {props.label}
           <span className="text-failed-red ml-0.5">*</span>
-        </span>
+        </label>
         <Selector
           name={props.name}
           options={props.options}
