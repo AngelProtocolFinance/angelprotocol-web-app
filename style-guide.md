@@ -53,6 +53,16 @@ import { Values } from "./types";
 ```
 
 
+### Typescript
+avoid explicit `any` 
+```typescript
+ const response: any = await requestReceipt({
+      receipt,
+ });
+
+```
+always type your code where possible
+
 
 
 
