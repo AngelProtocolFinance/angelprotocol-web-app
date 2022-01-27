@@ -51,7 +51,7 @@ const Registration = () => {
           Thank you for registering, we'd love to have you on board!
         </span>
       </div>
-      <div className="mb-10 mt-5">
+      <div className="mb-10 mt-2">
         <span className="text-xl">
           You're just steps away from bringing all the benefits of endowments to
           your organization.
