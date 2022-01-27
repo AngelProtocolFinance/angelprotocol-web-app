@@ -20,7 +20,7 @@ export default function RoleSelector(props: Props) {
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <label htmlFor={props.name}>
+        <label htmlFor={props.name} className="text-dark-grey">
           {props.label}
           <span className="text-failed-red ml-0.5">*</span>
         </label>
