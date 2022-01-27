@@ -11,7 +11,7 @@ export default function PrivacyPolicyCheckbox(props: Props) {
   const { error, registerReturn } = props;
 
   return (
-    <div className="mb-4 mt-10 text-center">
+    <div>
       <input
         id={registerReturn.name}
         type="checkbox"

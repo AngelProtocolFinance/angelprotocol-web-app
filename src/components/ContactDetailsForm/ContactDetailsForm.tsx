@@ -55,82 +55,80 @@ export default function ContactDetailsForm(props: any) {
   );
 
   return (
-    <div className="flex items-center justify-center">
-      <form
-        className="md:w-4/5 text-left"
-        onSubmit={handleSubmit(onSumbitContactDetails)}
-      >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <ColumnContainer>
-            <Input
-              label="Name of your organization"
-              placeholder="Organization"
-              registerReturn={register("charityName")}
-              errorMessage={errors.charityName?.message}
-              required
-            />
-            <Input
-              label="First name"
-              placeholder="First name"
-              registerReturn={register("firstName")}
-              errorMessage={errors.firstName?.message}
-              required
-            />
-            <Input
-              label="Last name"
-              placeholder="Last name"
-              registerReturn={register("lastName")}
-              errorMessage={errors.lastName?.message}
-              required
-            />
-            <Input
-              type="email"
-              label="E-mail address"
-              placeholder="E-mail address"
-              registerReturn={register("email")}
-              errorMessage={errors.email?.message}
-              required
-            />
-          </ColumnContainer>
-          <ColumnContainer>
-            <Input
-              label="Phone number"
-              placeholder="Phone number"
-              registerReturn={register("phone")}
-            />
-            <RoleSelector
-              label="What's your role within the organization?"
-              name="orgRole"
-              options={userRoles}
-              control={control}
-              onChange={handleRoleChange}
-              otherRoleErrorMessage={errors.otherRole?.message}
-              register={register}
-            />
-          </ColumnContainer>
-        </div>
-        <PrivacyPolicyCheckbox
-          error={errors.checkedPolicy?.message}
-          registerReturn={register("checkedPolicy")}
-        />
-        <div className="flex justify-center">
-          {props.contactData?.PK && (
-            <Action
-              title="Back"
-              classes="bg-green-400 w-48 h-12 mr-2"
-              disabled={isLoading}
-              onClick={() => history.push(registration.status)}
-            />
-          )}
-          <Action
-            submit
-            title="Continue"
-            classes="bg-thin-blue w-48 h-12"
-            disabled={isLoading}
+    <form
+      className="mx-auto md:w-4/5 flex flex-col gap-6"
+      onSubmit={handleSubmit(onSumbitContactDetails)}
+    >
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+        <ColumnContainer>
+          <Input
+            label="Name of your organization"
+            placeholder="Organization"
+            registerReturn={register("charityName")}
+            errorMessage={errors.charityName?.message}
+            required
           />
-        </div>
-      </form>
-    </div>
+          <Input
+            label="First name"
+            placeholder="First name"
+            registerReturn={register("firstName")}
+            errorMessage={errors.firstName?.message}
+            required
+          />
+          <Input
+            label="Last name"
+            placeholder="Last name"
+            registerReturn={register("lastName")}
+            errorMessage={errors.lastName?.message}
+            required
+          />
+          <Input
+            type="email"
+            label="E-mail address"
+            placeholder="E-mail address"
+            registerReturn={register("email")}
+            errorMessage={errors.email?.message}
+            required
+          />
+        </ColumnContainer>
+        <ColumnContainer>
+          <Input
+            label="Phone number"
+            placeholder="Phone number"
+            registerReturn={register("phone")}
+          />
+          <RoleSelector
+            label="What's your role within the organization?"
+            name="orgRole"
+            options={userRoles}
+            control={control}
+            onChange={handleRoleChange}
+            otherRoleErrorMessage={errors.otherRole?.message}
+            register={register}
+          />
+        </ColumnContainer>
+      </div>
+      <PrivacyPolicyCheckbox
+        error={errors.checkedPolicy?.message}
+        registerReturn={register("checkedPolicy")}
+      />
+      <div className="flex justify-center">
+        {props.contactData?.PK && (
+          <Action
+            title="Back"
+            classes="bg-green-400 w-48 h-12 mr-2"
+            disabled={isLoading}
+            onClick={() => history.push(registration.status)}
+          />
+        )}
+        <Action
+          submit
+          title="Continue"
+          classes="bg-thin-blue w-48 h-12"
+          disabled={isLoading}
+        />
+      </div>
+    </form>
   );
 }
 
