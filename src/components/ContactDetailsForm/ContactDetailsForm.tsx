@@ -5,7 +5,6 @@ import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
-import { Selector } from "../../components/Selector/Selector";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import Input from "./Input";
 import RoleSelector from "./RoleSelector";
