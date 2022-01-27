@@ -25,5 +25,11 @@ export const ContactInfoSchema = Yup.object().shape({
   orgRole: Yup.string().required(
     "Please select your role within your organization."
   ),
+  otherRole: Yup.string().when("orgRole", {
+    is: "other",
+    then: Yup.string().required(
+      "Please enter your role within your organization."
+    ),
+  }),
   checkedPolicy: Yup.bool().isTrue("Checkbox must be checked"),
 });

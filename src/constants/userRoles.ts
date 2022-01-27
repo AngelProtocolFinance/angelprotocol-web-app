@@ -1,11 +1,24 @@
 import { OptionType } from "../types/optionType";
 
+export enum UserRoleValues {
+  PRESIDENT = "president",
+  VICE_PRESIDENT = "vice-president",
+  SECRETARY = "secretary",
+  TREASURER = "treasurer",
+  CEO = "ceo",
+  CFO = "cfo",
+  OTHER = "other",
+}
+
 export const userRoles: OptionType[] = [
-  { label: "Chairperson / President", value: "president" },
-  { label: "Vice-chairperson / Vice president", value: "vice-president" },
-  { label: "Secretary", value: "secretary" },
-  { label: "Treasurer", value: "treasurer" },
-  { label: "CEO", value: "ceo" },
-  { label: "CFO", value: "cfo" },
-  { label: "Other", value: "other" },
+  { label: "Chairperson / President", value: UserRoleValues.PRESIDENT },
+  {
+    label: "Vice-chairperson / Vice president",
+    value: UserRoleValues.VICE_PRESIDENT,
+  },
+  { label: "Secretary", value: UserRoleValues.SECRETARY },
+  { label: "Treasurer", value: UserRoleValues.TREASURER },
+  { label: "CEO", value: UserRoleValues.CEO },
+  { label: "CFO", value: UserRoleValues.CFO },
+  { label: "Other", value: UserRoleValues.OTHER },
 ];
