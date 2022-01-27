@@ -8,6 +8,7 @@ const leaderboard_api = aws.injectEndpoints({
       query: (isTest) => `leaderboard${isTest ? "/test" : "/"}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: QueryRes<Endowment[]>) => {
+        console.log("response: ", res.Items.length);
         return { endowments: res.Items, last_update: res.LastUpdate };
       },
     }),

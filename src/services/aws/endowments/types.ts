@@ -8,6 +8,14 @@ export interface Endowment {
   iconLight?: boolean;
   tier: number;
 }
+
+export type MergeEndowment = Endowment & {
+  address: string;
+  total_liq: number;
+  total_lock: number;
+  overall: number;
+  chain: "mainnet" | "testnet";
+};
 export interface Details {
   description: string;
   url: string;
