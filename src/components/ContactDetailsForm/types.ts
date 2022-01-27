@@ -1,3 +1,4 @@
+import { UserRoles } from "constants/userRoles";
 import * as Yup from "yup";
 
 export type ContactDetails = {
@@ -26,7 +27,7 @@ export const ContactInfoSchema = Yup.object().shape({
     "Please select your role within your organization."
   ),
   otherRole: Yup.string().when("orgRole", {
-    is: "other",
+    is: UserRoles.other,
     then: Yup.string().required(
       "Please enter your role within your organization."
     ),

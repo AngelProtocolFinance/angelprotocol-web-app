@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
-import { userRoleOptions } from "constants/userRoles";
+import { userRoleOptions, UserRoles } from "constants/userRoles";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
@@ -33,7 +33,7 @@ export default function ContactDetailsForm(props: any) {
       lastName: props.contactData?.LastName || "",
       email: props.contactData?.Email || "",
       phone: props.contactData?.PhoneNumber || "",
-      orgRole: props.contactData?.Role || "ceo",
+      orgRole: props.contactData?.Role || UserRoles.ceo,
       otherRole: props.contactData?.otherRole || "",
       checkedPolicy: false,
       uniqueID: props.contactData?.PK || "",
