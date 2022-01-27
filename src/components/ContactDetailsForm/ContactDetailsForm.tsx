@@ -58,8 +58,6 @@ export default function ContactDetailsForm(props: any) {
     []
   );
 
-  console.log(control._formValues);
-
   return (
     <div className="flex items-center justify-center">
       <form
