@@ -12,7 +12,6 @@ import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
 
 export default function ContactDetailsForm(props: any) {
-  const [isLoading, setIsLoading] = useState(false);
   // 'orgRole' in the form changes automatically, but we need this state setter
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
@@ -23,7 +22,7 @@ export default function ContactDetailsForm(props: any) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
@@ -40,15 +39,6 @@ export default function ContactDetailsForm(props: any) {
     },
   });
 
-  const onSumbitContactDetails = useCallback(
-    async (values: ContactDetails) => {
-      setIsLoading(true);
-      await saveContactDetails(values);
-      setIsLoading(false);
-    },
-    [saveContactDetails]
-  );
-
   const handleRoleChange = useCallback(
     (value: string) => setOrgRole(value),
     []
@@ -57,7 +47,7 @@ export default function ContactDetailsForm(props: any) {
   return (
     <form
       className="mx-auto md:w-4/5 flex flex-col gap-6"
-      onSubmit={handleSubmit(onSumbitContactDetails)}
+      onSubmit={handleSubmit(saveContactDetails)}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
         <ColumnContainer>
@@ -67,6 +57,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("charityName")}
             errorMessage={errors.charityName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             label="First name"
@@ -74,6 +65,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("firstName")}
             errorMessage={errors.firstName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             label="Last name"
@@ -81,6 +73,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("lastName")}
             errorMessage={errors.lastName?.message}
             required
+            disabled={isSubmitting}
           />
           <Input
             type="email"
@@ -89,6 +82,7 @@ export default function ContactDetailsForm(props: any) {
             registerReturn={register("email")}
             errorMessage={errors.email?.message}
             required
+            disabled={isSubmitting}
           />
         </ColumnContainer>
         <ColumnContainer>
@@ -96,6 +90,7 @@ export default function ContactDetailsForm(props: any) {
             label="Phone number"
             placeholder="Phone number"
             registerReturn={register("phone")}
+            disabled={isSubmitting}
           />
           <RoleSelector
             label="What's your role within the organization?"
@@ -105,19 +100,21 @@ export default function ContactDetailsForm(props: any) {
             onChange={handleRoleChange}
             otherRoleErrorMessage={errors.otherRole?.message}
             register={register}
+            disabled={isSubmitting}
           />
         </ColumnContainer>
       </div>
       <PrivacyPolicyCheckbox
         error={errors.checkedPolicy?.message}
         registerReturn={register("checkedPolicy")}
+        disabled={isSubmitting}
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
           <Action
             title="Back"
             classes="bg-green-400 w-48 h-12 mr-2"
-            disabled={isLoading}
+            disabled={isSubmitting}
             onClick={() => history.push(registration.status)}
           />
         )}
@@ -125,7 +122,8 @@ export default function ContactDetailsForm(props: any) {
           submit
           title="Continue"
           classes="bg-thin-blue w-48 h-12"
-          disabled={isLoading}
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
         />
       </div>
     </form>
