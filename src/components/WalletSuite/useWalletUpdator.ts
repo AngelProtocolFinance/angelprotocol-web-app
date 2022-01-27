@@ -6,7 +6,7 @@ import { useHaloBalance } from "services/terra/queriers";
 import { Providers, XdefiWindow } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import useTerraBalance from "hooks/useTerraBalance";
-import { chainIDs, ethChainNames } from "constants/chainIDs";
+import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import { EIP1993Methods } from "types/eip1993";
@@ -97,11 +97,14 @@ export default function useWalletUpdator(activeProvider: Providers) {
         dispatch(
           setWalletDetails({
             icon: wallet.connection.icon,
-            displayCoin: { amount: eth_balance, denom: denoms.ether },
+            displayCoin: { amount: main, denom: denoms.uusd },
             coins: coinsWithEth,
             address: wallet.terraAddress,
             //for multi-chain wallets, should just be testnet or mainnet
-            chainId: ethChainNames[provider.chainId] as chainIDs,
+            chainId:
+              wallet.network.chainID === chainIDs.mainnet
+                ? chainIDs.gen_mainnet
+                : chainIDs.gen_testnet,
           })
         );
         dispatch(setIsUpdating(false));

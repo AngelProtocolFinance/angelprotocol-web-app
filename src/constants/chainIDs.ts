@@ -1,4 +1,7 @@
 export enum chainIDs {
+  //for multi-chain wallets, generalize as either mainnet or testnet only
+  gen_testnet = "testnet",
+  gen_mainnet = "mainnet",
   testnet = "bombay-12",
   mainnet = "columbus-5",
   localterra = "localterra",
@@ -14,10 +17,3 @@ export enum chainIDs {
   cosmos_4 = "cosmoshub-4",
   cosmos_test = "cosmoshub-testnet",
 }
-
-export const ethChainNames: { [index: number]: string } = {
-  [chainIDs.eth_main]: "mainnet",
-  [chainIDs.eth_ropsten]: "testnet",
-  [chainIDs.eth_kovan]: "testnet",
-  [chainIDs.eth_rinkeby]: "testnet",
-};

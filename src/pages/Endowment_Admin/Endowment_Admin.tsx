@@ -38,7 +38,6 @@ export default function Withdraw(props: RouteComponentProps<RouteParam>) {
         isOwner={is_owner}
       />
       <Liquid type="locked" holdings={holdings.locked_cw20} />
-
       <TransactionList address={address} />
     </div>
   );
