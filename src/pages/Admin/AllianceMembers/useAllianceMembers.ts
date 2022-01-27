@@ -1,9 +1,32 @@
 import { useEffect, useState } from "react";
 import { useDonorsQuery } from "../../../services/aws/alliance/alliance";
-import { Details, Member } from "../../../services/aws/alliance/types";
+import { Details } from "../../../services/aws/alliance/types";
 
-export default function useAllianceMembers() {
-  const [members, setMembers] = useState<Member[]>([]);
+export const prepareData = (prevData: Details[] | undefined) => {
+  let result: Details[] = [];
+  if (prevData) {
+    let prevName = "";
+    prevData.forEach((item) => {
+      if (prevName === item.name) {
+        result[result.length - 1].otherWallets?.push(item.address);
+      } else {
+        result.push({
+          address: item.address,
+          name: item.name,
+          icon: item.icon || "",
+          url: item.url || "",
+          iconLight: item.iconLight || false,
+          otherWallets: [item.address],
+        });
+      }
+      prevName = item.name;
+    });
+  }
+  return result;
+};
+
+export function useAllianceMembers() {
+  const [members, setMembers] = useState<Details[]>([]);
   const { data, isLoading } = useDonorsQuery("");
 
   useEffect(() => {
@@ -11,27 +34,6 @@ export default function useAllianceMembers() {
     setMembers(result);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
-  const prepareData = (prevData: Details[] | undefined) => {
-    let result: Member[] = [];
-    if (prevData) {
-      let prevName = "";
-      prevData.forEach((item) => {
-        if (prevName === item.name) {
-          result[result.length - 1].addresses.push(item.address);
-        } else {
-          result.push({
-            name: item.name,
-            icon: item.icon,
-            iconLight: item.iconLight,
-            addresses: [item.address],
-          });
-        }
-        prevName = item.name;
-      });
-    }
-    return result;
-  };
 
   return { members, isLoading };
 }

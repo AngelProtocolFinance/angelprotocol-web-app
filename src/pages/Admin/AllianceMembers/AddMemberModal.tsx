@@ -1,36 +1,55 @@
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { DropzoneArea } from "material-ui-dropzone";
+import { useState } from "react";
 import { useModalCloser } from "components/Modal/Modal";
-import { useCreateNewMemberMutation } from "services/aws/alliance/alliance";
+import { useAddMember, MemberDataSchema } from "./useAddMember";
+import Action from "components/ActionButton/Action";
+import { Details } from "services/aws/alliance/types";
 
-let selectedFile: any = "";
-const NewMemberModal = () => {
+const NewMemberModal = ({ reloadMembers }: any) => {
+  const [fileContent, setFileContent] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const closeModal = useModalCloser();
+  const { readFileToBase64, addMember } = useAddMember();
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const [createNewMember] = useCreateNewMemberMutation();
+  } = useForm({
+    resolver: yupResolver(MemberDataSchema),
+    defaultValues: {
+      address: "",
+      name: "",
+      url: "",
+      icon: "",
+    } as Details,
+  });
 
-  const onSubmit = async (data: any) => {
-    data["logo"] = selectedFile;
-    console.log("submit", data);
-    const response: any = await createNewMember(data);
-    console.log("response of addAPI => ", response);
+  const onSubmit = async (data: Details) => {
+    setIsLoading(true);
+    const postData = {
+      ...data,
+      icon: fileContent,
+      iconLight: false,
+      otherWallets: [],
+    } as Details;
+    const response: any = await addMember(postData);
+    if (response) {
+      reloadMembers(response.data);
+    } else {
+      reset();
+      setIsLoading(false);
+    }
   };
 
-  const closeModal = useModalCloser();
-
-  const handleInputChange = (event: any) => {
-    const file = event.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onload = (e) => {
-      let result = e.target?.result;
-      if (result) {
-        selectedFile = result;
-      }
-    };
+  const readFiles = async (files: any) => {
+    let content: any;
+    if (files.length > 0) {
+      content = await readFileToBase64(files[0]);
+      setFileContent(content);
+    }
   };
 
   return (
@@ -52,20 +71,16 @@ const NewMemberModal = () => {
               className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
               placeholder="Wallet address"
               id="wallet"
-              {...register("wallet", {
-                required: true,
-                pattern: /^terra[a-z0-9]{39}$/i,
-                maxLength: 44,
-              })}
+              {...register("address")}
             />
           </div>
-          {errors.wallet?.type === "required" && (
+          {errors.address?.type === "required" && (
             <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
               Wallet is required
             </p>
           )}
-          {(errors.wallet?.type === "pattern" ||
-            errors.wallet?.type === "maxLength") && (
+          {(errors.address?.type === "pattern" ||
+            errors.address?.type === "maxLength") && (
             <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
               Wallet is invalid
             </p>
@@ -111,42 +126,37 @@ const NewMemberModal = () => {
             </p>
           )}
           <label
-            htmlFor="logo"
+            htmlFor="icon"
             className="text-md text-gray-600 font-bold my-2 inline-block"
           >
             Logo
           </label>
           <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/svg+xml"
-              id="logo"
-              {...register("logo", { required: true })}
-              onChange={handleInputChange}
-            />
+            <div className="form-control rounded-md flex justify-between items-center w-full h-64">
+              <DropzoneArea
+                onChange={readFiles}
+                dropzoneClass="text-gray-400"
+                filesLimit={1}
+                acceptedFiles={["image/*"]}
+              />
+            </div>
           </div>
-          {errors.logo && (
-            <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
-              Logo is required
-            </p>
-          )}
         </div>
-        <div className="w-full flex flex-cols-2 align-items-center justify-between gap-2">
+        <div className="w-full flex flex-cols-2 align-items-center justify-end gap-2">
           <div>
-            <button
-              type="submit"
-              className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
-            >
-              Submit
-            </button>
-          </div>
-          <div>
-            <button
+            <Action
               onClick={closeModal}
-              className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
-            >
-              Cancel
-            </button>
+              title="Cancel"
+              classes="bg-orange w-32 h-10 mr-10"
+              disabled={isLoading}
+            />
+            <Action
+              submit
+              title="Create"
+              classes="bg-orange w-32 h-10"
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </form>

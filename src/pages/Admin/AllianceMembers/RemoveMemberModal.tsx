@@ -1,24 +1,22 @@
+import Action from "components/ActionButton/Action";
 import { useState } from "react";
-import { useRemoveMemberMutation } from "services/aws/alliance/alliance";
-import { useModalCloser } from "../../../components/Modal/Modal";
+import useRemoveMember from "./useRemoveMember";
+import { useModalCloser } from "components/Modal/Modal";
 
-const RemoveMemberModal = ({ member }: any) => {
+const RemoveMemberModal = ({ member, reloadMembers }: any) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const closeModal = useModalCloser();
-  const [removeMember] = useRemoveMemberMutation();
+  const removeAllianceMember = useRemoveMember();
 
   const handleRemove = async () => {
     setSubmitting(true);
-    const response: any = await removeMember({
-      name: member.name,
-      wallet: "",
-    });
-    setSubmitting(false);
-    console.log("response of removeAPI => ", response);
-  };
-
-  const handleOnClose = () => {
-    closeModal();
+    console.log("member name => ", member.name);
+    const response: any = await removeAllianceMember(member.name);
+    if (response) {
+      reloadMembers(response.data);
+    } else {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -33,25 +31,20 @@ const RemoveMemberModal = ({ member }: any) => {
           Alliance?
         </span>
       </div>
-      <div className="w-full flex flex-cols-2 align-items-center justify-between gap-2 mt-10">
-        <div>
-          <button
-            type="submit"
-            className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
-            disabled={isSubmitting}
-            onClick={handleRemove}
-          >
-            Remove
-          </button>
-        </div>
-        <div>
-          <button
-            onClick={handleOnClose}
-            className="w-32 h-10 rounded-lg px-3 py-1 font-semibold bg-orange shadow-md text-white hover:text-gray-600 font-heading"
-          >
-            Cancel
-          </button>
-        </div>
+      <div className="w-2/3 mx-auto flex flex-cols-2 align-items-center justify-between gap-2 mt-10">
+        <Action
+          onClick={closeModal}
+          title="Cancel"
+          classes="bg-orange w-32 h-10 mr-10"
+          disabled={isSubmitting}
+        />
+        <Action
+          onClick={handleRemove}
+          title="Remove"
+          classes="bg-orange w-32 h-10"
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
+        />
       </div>
     </div>
   );

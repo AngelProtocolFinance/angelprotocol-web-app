@@ -1,34 +1,46 @@
 import Modal from "components/Modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { admin, site } from "types/routes";
 import AllianceMembersTable from "./Table";
 import NewMemberModal from "./AddMemberModal";
 import RemoveMemberModal from "./RemoveMemberModal";
-import { Member } from "services/aws/alliance/types";
+import { Details } from "services/aws/alliance/types";
 import Loader from "components/Loader/Loader";
 import withSideNav from "Admin/withSideNav";
 import { useGetter } from "store/accessors";
-import useAllianceMembers from "./useAllianceMembers";
+import { prepareData, useAllianceMembers } from "./useAllianceMembers";
+import { ToastContainer } from "react-toastify";
 
 function AllianceMembers() {
-  const [selectedMember, setSelectedMember] = useState<Member>();
-  const [showNewModal, setShowNewModal] = useState(false);
-  const [showEditModal, setShowEditModal] = useState(false);
-  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
   const { members, isLoading } = useAllianceMembers();
+  const [displayData, setDisplayData] = useState<Details[]>(members);
+  const [selectedMember, setSelectedMember] = useState<Details>();
+  const [showNewModal, setShowNewModal] = useState(false);
+  const [showRemoveModal, setShowRemoveModal] = useState(false);
+  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
+
+  useEffect(() => {
+    setDisplayData(members);
+  }, [members]);
 
   const onClickRemove = (index: number) => {
     if (members) {
       setSelectedMember(members[index]);
-      setShowEditModal(true);
+      setShowRemoveModal(true);
     }
   };
 
-  // user can't access TCA page when not logged in or his prev token expired
-  if (adminAuthStatus !== "authorized") {
-    return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  function reload(data: Details[]) {
+    setShowNewModal(false);
+    setShowRemoveModal(false);
+    setDisplayData(prepareData(data));
   }
+
+  // user can't access TCA page when not logged in or his prev token expired
+  // if (adminAuthStatus !== "authorized") {
+  //   return <Redirect to={`${site.admin}/${admin.auth}`} />;
+  // }
   return (
     <>
       <div className="flex-grow w-full min-h-3/4 p-10 text-center font-heading">
@@ -45,11 +57,10 @@ function AllianceMembers() {
           {isLoading ? (
             <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
           ) : (
-            members.length > 0 && (
+            displayData.length > 0 && (
               <div className="inline-block min-w-full shadow-md rounded-lg overflow-hidden">
                 <AllianceMembersTable
-                  members={members}
-                  // onEditClick={(index: number) => onClickEdit(index)}
+                  members={displayData}
                   onRemoveClick={(index: number) => onClickRemove(index)}
                 />
               </div>
@@ -59,15 +70,15 @@ function AllianceMembers() {
       </div>
       {showNewModal && (
         <Modal setShown={() => setShowNewModal(false)}>
-          <NewMemberModal />
+          <NewMemberModal reloadMembers={reload} />
         </Modal>
       )}
-      {showEditModal && (
-        <Modal setShown={() => setShowEditModal(false)}>
-          {/* <EditMembersModal member={selectedMember} /> */}
-          <RemoveMemberModal member={selectedMember} />
+      {showRemoveModal && (
+        <Modal setShown={() => setShowRemoveModal(false)}>
+          <RemoveMemberModal member={selectedMember} reloadMembers={reload} />
         </Modal>
       )}
+      <ToastContainer />
     </>
   );
 }
