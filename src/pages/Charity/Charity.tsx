@@ -46,7 +46,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       profile,
     });
   };
-  console.log("profile", profile.charity_image);
+
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonationForm();
 
@@ -57,10 +57,10 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <div className="relative group">
             <ImageWrapper
-              height="350"
+              height="300"
               src={profile.charity_image}
               alt="charity image"
-              classes={`max-h-350 w-full bg-gray-400 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
+              classes={`max-h-modal w-full bg-gray-400 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
                 isCharityOwner &&
                 "filter group-hover:brightness-50 transition ease-in-out"
               }`}
