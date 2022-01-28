@@ -4,7 +4,7 @@ import { Airdrops } from "services/aws/airdrop/types";
 import useCatcher from "./useCatcher";
 
 export type Props = { airdrops: Airdrops };
-export default function Catcher(props: { airdrops: Airdrops }) {
+export default function Catcher(props: Props) {
   const { total_claimable, claim, loading } = useCatcher(props.airdrops);
   return (
     <div className="bg-white flex flex-col items-center p-4 pt-0 shadow-lg min-h-115 w-full">

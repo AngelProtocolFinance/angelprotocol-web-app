@@ -2,18 +2,19 @@ import { useCallback } from "react";
 import { TxProps } from "components/TransactionSuite/types";
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { useSetModal } from "components/Nodal/Nodal";
-import Voter from "./Voter";
-import VoterForm from "./VoterForm";
+import Poller from "./Poller";
+import PollerForm from "./PollerForm";
 import { Props } from "./types";
 
-export default function useVoter(poll_id?: string) {
+export default function usePoller() {
   const { showModal } = useSetModal();
-  const showVoter = useCallback(() => {
+  const showPoller = useCallback(() => {
     showModal<TxProps<Props>>(TransactionSuite, {
-      Context: Voter,
-      contextProps: { Form: VoterForm, poll_id },
+      inModal: true,
+      Context: Poller,
+      contextProps: { Form: PollerForm },
     });
-  }, [poll_id]);
+  }, []);
 
-  return showVoter;
+  return showPoller;
 }

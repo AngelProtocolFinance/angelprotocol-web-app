@@ -27,7 +27,6 @@ export interface DWindow extends Window {
 interface FromTCA {
   to: "tca";
   receiver?: never;
-  Form: FC;
   max_liq?: never;
   min_liq?: never;
 }
@@ -35,7 +34,6 @@ interface FromTCA {
 interface ToFund {
   to: "fund";
   receiver?: number;
-  Form: FC;
   max_liq?: number;
   min_liq?: number;
 }
@@ -43,10 +41,10 @@ interface ToFund {
 interface ToCharity {
   to: "charity";
   receiver: string;
-  Form: FC;
   //doesn't know yet limits on charity donations
   max_liq?: number;
   min_liq?: number;
 }
 
-export type Props = ToFund | ToCharity | FromTCA;
+export type FundFlow = ToFund | ToCharity | FromTCA;
+export type Props = FundFlow & { Form: FC };

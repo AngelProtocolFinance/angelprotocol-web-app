@@ -3,18 +3,13 @@ import Poll from "./Poll";
 import Poller from "components/Poller/Poller";
 import PollSuite from "components/TransactionSuite/PollSuite";
 import { SiHiveBlockchain } from "react-icons/si";
-import { useSetModal } from "components/Nodal/Nodal";
 import toCurrency from "helpers/toCurrency";
+import usePoller from "components/Poller/usePoller";
 
 export default function Polls() {
-  const { showModal } = useSetModal();
-
   const block_height = useLatestBlock();
   const gov_polls = useGovPolls();
-
-  function showPoller() {
-    showModal(PollerModal, {});
-  }
+  const showPoller = usePoller();
 
   return (
     <div className="mt-4">
@@ -51,13 +46,5 @@ export default function Polls() {
         ))}
       </div>
     </div>
-  );
-}
-
-function PollerModal() {
-  return (
-    <Poller>
-      <PollSuite inModal />
-    </Poller>
   );
 }

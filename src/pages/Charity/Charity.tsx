@@ -1,28 +1,25 @@
-import { useCallback, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
-import CharityInfoNav from "./CharityInfoNav";
-import CharityInfoTab from "./CharityInfoTab";
-import { DonationInfo } from "./DonationInfo";
-import Donater from "components/Donater/Donater";
-import { Props as C } from "components/Donater/types";
-import DonateForm from "components/DonateForm/DonateForm";
-import { useSetModal } from "components/Nodal/Nodal";
-import { RiPencilFill } from "react-icons/ri";
-import CharityProfileEditForm from "./CharityProfileEditForm";
-import { Profile } from "services/aws/endowments/types";
-import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
+import { useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { ToastContainer } from "react-toastify";
+import { RouteComponentProps } from "react-router-dom";
+import { RiPencilFill } from "react-icons/ri";
+import { Profile } from "services/aws/endowments/types";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import { useProfileQuery } from "services/aws/endowments/endowments";
+import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
+import { useSetModal } from "components/Nodal/Nodal";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import useDonater from "components/Donater/useDonater";
 import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import CharityProfileEditForm from "./CharityProfileEditForm";
+import CharityInfoTab from "./CharityInfoTab";
+import { DonationInfo } from "./DonationInfo";
+import CharityInfoNav from "./CharityInfoNav";
 import { CharityParam } from "./types";
-import TransactionSuite from "components/TransactionSuite/TransactionSuite";
-import { TxProps } from "components/TransactionSuite/types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+  const showDonater = useDonater({ to: "charity", receiver: endowment_addr });
 
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
@@ -43,21 +40,8 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
     });
   };
 
-  const showDonationForm = useCallback(() => {
-    showModal<TxProps<C>>(TransactionSuite, {
-      inModal: true,
-      Context: Donater,
-      contextProps: {
-        to: "charity",
-        receiver: endowment_addr,
-        Form: DonateForm,
-      },
-    });
-  }, [profile]);
-
-  console.log("profile", profile.charity_image);
   const openModal = (type: "edit" | "donation") =>
-    type === "edit" ? showEditForm() : showDonationForm();
+    type === "edit" ? showEditForm() : showDonater();
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

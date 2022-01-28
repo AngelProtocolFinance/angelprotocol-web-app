@@ -3,7 +3,7 @@ import Status from "./Status";
 import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 import Fee from "./Fee";
-import useSubmit from "./useSubmit";
+import useCreatePoll from "./useCreatePoll";
 import { useGetter } from "store/accessors";
 
 export default function PollerForm() {
@@ -11,11 +11,11 @@ export default function PollerForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<Values>();
-  const sender = useSubmit();
+  const createPoll = useCreatePoll();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   return (
     <form
-      onSubmit={handleSubmit(sender)}
+      onSubmit={handleSubmit(createPoll)}
       className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >

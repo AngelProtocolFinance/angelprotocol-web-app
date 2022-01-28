@@ -1,10 +1,9 @@
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { Values } from "./types";
+import { Props, Values } from "./types";
 
-export default function Swapper(props: { children: ReactNode }) {
+export default function Swapper(props: Props) {
   const methods = useForm<Values>({
     reValidateMode: "onChange",
     defaultValues: {
@@ -19,5 +18,9 @@ export default function Swapper(props: { children: ReactNode }) {
     resolver: yupResolver(schema),
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <props.Form />
+    </FormProvider>
+  );
 }

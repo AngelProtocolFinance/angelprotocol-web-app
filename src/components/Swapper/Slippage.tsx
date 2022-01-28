@@ -22,7 +22,6 @@ type OptionProps = {
 function Option(props: OptionProps) {
   const { register, watch } = useFormContext<Values>();
   const slippage = watch("slippage");
-  console.log(slippage);
   const is_active = slippage === props.value;
 
   return (

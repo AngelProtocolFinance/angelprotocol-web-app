@@ -1,33 +1,15 @@
-import { useSetModal } from "components/Nodal/Nodal";
-import Staker from "components/Staker/Staker";
-import Swapper from "components/Swapper/Swapper";
-import Claimer from "components/Claimer/Claimer";
-import ClaimSuite from "components/TransactionSuite/ClaimSuite";
-import StakeSuite from "components/TransactionSuite/StakeSuite";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
 import { useStakingAPRQuery } from "services/aws/governance";
 import "./Portal.css";
+import useSwapper from "components/Swapper/useSwapper";
+import useStaker from "components/Staker/useStaker";
+import useClaimer from "components/Claimer/useClaimer";
 
 export default function Portal() {
-  const { showModal } = useSetModal();
   const { data } = useStakingAPRQuery(null);
-
-  function showStaker() {
-    showModal(StakeModal, {});
-  }
-
-  function showUnstaker() {
-    showModal(UnstakeModal, {});
-  }
-
-  function showSwapper() {
-    return showModal(SwapModal, {});
-  }
-
-  function showClaimer() {
-    showModal(ClaimModal, {});
-  }
+  const showSwapper = useSwapper();
+  const showStaker = useStaker();
+  const showClaimer = useClaimer();
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
@@ -47,56 +29,26 @@ export default function Portal() {
       </div>
       <div className="flex flex-wrap gap-2 self-end justify-end">
         <Action title="Trade Halo" action={showSwapper} />
-        <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={showUnstaker} />
+        <Action title="Stake" action={showStaker(true)} />
+        <Action title="Unstake" action={showStaker(false)} />
         <Action title="Claim" action={showClaimer} />
       </div>
     </div>
   );
 }
 
-type ActionProps = {
+function Action(props: {
   title: string;
   action: () => void;
   disabled?: boolean;
-};
-
-function Action({ title, action, disabled = false }: ActionProps) {
+}) {
   return (
-    <button onClick={action} className="action-button" disabled={disabled}>
-      {title}
+    <button
+      onClick={props.action}
+      className="font-heading text-sm text-white-grey bg- blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
+      disabled={props.disabled}
+    >
+      {props.title}
     </button>
-  );
-}
-
-function StakeModal() {
-  return (
-    <Staker stake>
-      <StakeSuite inModal />
-    </Staker>
-  );
-}
-
-function UnstakeModal() {
-  return (
-    <Staker>
-      <StakeSuite inModal />
-    </Staker>
-  );
-}
-
-function ClaimModal() {
-  return (
-    <Claimer>
-      <ClaimSuite inModal />
-    </Claimer>
-  );
-}
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
   );
 }

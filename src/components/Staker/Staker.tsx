@@ -1,10 +1,7 @@
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { Values } from "./types";
-
-type Props = { children: ReactNode; stake?: true };
+import { Props, Values } from "./types";
 
 export default function Staker(props: Props) {
   const methods = useForm<Values>({
@@ -15,5 +12,9 @@ export default function Staker(props: Props) {
     },
     resolver: yupResolver(schema),
   });
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <props.Form />
+    </FormProvider>
+  );
 }

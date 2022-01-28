@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 export interface Values {
   is_buy: boolean;
   amount: string;
@@ -6,3 +8,7 @@ export interface Values {
   pct_commission: string;
   ratio: number;
 }
+
+export type Props = {
+  Form: FC;
+};

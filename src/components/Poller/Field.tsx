@@ -2,14 +2,12 @@ import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { Values } from "./types";
 
-type Props = {
+export default function Title(props: {
   id: keyof Values;
   label: string;
   wide?: true;
   frozen?: true;
-};
-
-export default function Title(props: Props) {
+}) {
   const {
     register,
     formState: { errors },

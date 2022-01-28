@@ -5,7 +5,7 @@ import { Fee, Commission, SwapRate } from "./Misc";
 import Output from "./Output";
 import Status from "./Status";
 import { Values } from "./types";
-import useSwapper from "./useSwapper";
+import useSwap from "./useSwap";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 
 export default function SwapForm() {
@@ -15,7 +15,7 @@ export default function SwapForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<Values>();
-  const swap = useSwapper();
+  const swap = useSwap();
 
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const is_buy = watch("is_buy");

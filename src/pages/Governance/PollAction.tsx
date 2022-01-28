@@ -1,27 +1,21 @@
 import { ReactNode } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useSetModal } from "components/Nodal/Nodal";
-import VoteSuite from "components/TransactionSuite/VoteSuite";
-import Voter from "components/Voter/Voter";
 import { PollStatus } from "services/terra/types";
 import useDetails from "./useDetails";
 import usePollAction from "./usePollAction";
+import useVoter from "components/Voter/useVoter";
 
 export default function PollAction(props: { poll_id?: string }) {
   const wallet = useConnectedWallet();
   const details = useDetails(props.poll_id);
   const end_poll = usePollAction(props.poll_id);
+  const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const { showModal } = useSetModal();
   const W = !!wallet;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== PollStatus.in_progress;
   let node: ReactNode = null;
-
-  function showVoterForm() {
-    showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
-  }
 
   //poll has ended
   if (P) {
@@ -39,7 +33,7 @@ export default function PollAction(props: { poll_id?: string }) {
       if (V && W) {
         node = <Text>you voted {details.vote}</Text>;
       } else {
-        node = <Action title="Vote" action={showVoterForm} />;
+        node = <Action title="Vote" action={showVoter} />;
       }
       //voting period hasn't ended
     }
@@ -61,15 +55,6 @@ export default function PollAction(props: { poll_id?: string }) {
  * end poll = V && P
  * poll has ended = P
  */
-
-type VoterProps = { poll_id?: string };
-function VoterModal(props: VoterProps) {
-  return (
-    <Voter poll_id={props.poll_id}>
-      <VoteSuite inModal />
-    </Voter>
-  );
-}
 
 type ActionProps =
   | { disabled?: false; action: () => void; title: string }

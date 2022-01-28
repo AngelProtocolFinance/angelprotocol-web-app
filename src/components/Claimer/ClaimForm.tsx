@@ -2,7 +2,7 @@ import Claims from "./Claims";
 import Status from "./Status";
 import { useFormContext } from "react-hook-form";
 import { Values } from "../Claimer/types";
-import useClaimer from "./useClaimer";
+import useClaim from "./useClaim";
 import Fee from "./Fee";
 import { useGetter } from "store/accessors";
 
@@ -12,11 +12,11 @@ export default function ClaimForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<Values>();
-  const claimer = useClaimer();
+  const claim = useClaim();
 
   return (
     <form
-      onSubmit={handleSubmit(claimer)}
+      onSubmit={handleSubmit(claim)}
       className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >

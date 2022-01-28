@@ -5,7 +5,7 @@ import Status from "./Status";
 import Amount from "./Amount";
 import { Values } from "./types";
 import Option from "./Option";
-import useVoter from "./useVoter";
+import useVote from "./useVote";
 
 export default function VoterForm() {
   const {
@@ -13,10 +13,10 @@ export default function VoterForm() {
     formState: { isSubmitting },
   } = useFormContext<Values>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const voter = useVoter();
+  const vote = useVote();
   return (
     <form
-      onSubmit={handleSubmit(voter)}
+      onSubmit={handleSubmit(vote)}
       className="bg-white grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >

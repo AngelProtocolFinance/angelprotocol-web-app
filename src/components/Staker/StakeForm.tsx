@@ -2,7 +2,7 @@ import Amount from "./Amount";
 import Status from "./Status";
 import { useFormContext } from "react-hook-form";
 import { Values } from "../Staker/types";
-import useStaker from "./useStaker";
+import useStake from "./useStake";
 import Fee from "./Fee";
 import { useGetter } from "store/accessors";
 
@@ -12,7 +12,7 @@ export default function StakeForm() {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<Values>();
-  const staker = useStaker();
+  const staker = useStake();
 
   return (
     <form

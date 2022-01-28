@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 export interface Values {
   amount: string;
   title: string;
@@ -5,3 +7,5 @@ export interface Values {
   link: string;
   // execute_msgs: predefined fields
 }
+
+export type Props = { Form: FC };

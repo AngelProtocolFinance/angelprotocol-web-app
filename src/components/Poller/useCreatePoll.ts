@@ -11,14 +11,14 @@ import { gov, tags } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
 import { chainIDs } from "contracts/types";
 
-export default function useSubmit() {
+export default function useCreatePoll() {
   useEstimator();
   const dispatch = useSetter();
   const { updateTx } = useTxUpdator();
   const { reset } = useFormContext<Values>();
   const wallet = useConnectedWallet();
 
-  async function sender(data: Values) {
+  async function createPoll(data: Values) {
     try {
       if (!wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
@@ -77,5 +77,5 @@ export default function useSubmit() {
     }
   }
 
-  return sender;
+  return createPoll;
 }
