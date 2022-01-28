@@ -7,7 +7,7 @@ import Action from "../../components/ActionButton/Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const VerifiedEmail = () => {
   const history = useHistory();
@@ -43,10 +43,12 @@ const VerifiedEmail = () => {
     [jwtData, pathNames]
   );
 
-  if (!is_expired) {
-    dispatch(updateUserData(responseData));
-    localStorage.setItem("userData", JSON.stringify(responseData));
-  }
+  useEffect(() => {
+    if (!is_expired) {
+      dispatch(updateUserData(responseData));
+      localStorage.setItem("userData", JSON.stringify(responseData));
+    }
+  }, [is_expired, responseData]);
 
   const resendVerificationEmail = async () => {
     if (responseData.PK) {
