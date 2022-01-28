@@ -29,7 +29,6 @@ export const useRegistration = () => {
     } else {
       // const token: any = await getTokenData(values.refer);
       const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
-      console.log(token);
       const data = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,

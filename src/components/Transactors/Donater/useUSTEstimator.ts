@@ -17,17 +17,15 @@ import { useBalances } from "services/terra/queriers";
 
 export default function useUSTEstimator() {
   const dispatch = useSetter();
-  const { watch } = useFormContext<Values>();
+  const { watch, getValues } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const wallet = useConnectedWallet();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const currency = watch("currency");
-  const receiver = watch("receiver");
   const debounced_amount = useDebouncer(amount, 500);
   const debounced_split = useDebouncer(split_liq, 500);
-  console.log(debounced_split);
 
   useEffect(() => {
     (async () => {
@@ -50,6 +48,7 @@ export default function useUSTEstimator() {
         }
 
         dispatch(setFormLoading(true));
+        const receiver = getValues("receiver");
         let tx: CreateTxOptions;
         if (typeof receiver === "undefined" || typeof receiver === "number") {
           const index_fund = new Indexfund(wallet, receiver);
