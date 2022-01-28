@@ -8,7 +8,7 @@ export default function useRemoveMember() {
 
   async function removeAllianceMember(name: string) {
     const response: any = await removeMember({
-      name: name,
+      name: name.replace(/\s+/g, "-"),
       wallet: wallet?.terraAddress,
     });
     const result = response.data ? response : response.error;
