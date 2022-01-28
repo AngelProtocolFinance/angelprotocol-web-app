@@ -13,7 +13,6 @@ const ConfirmEmail = () => {
   let user = useGetter((state) => state.user);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
-  //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendEmail = useCallback(
@@ -100,7 +99,7 @@ const ConfirmEmail = () => {
         <Action
           onClick={sendEmailNoticeToAPTeam}
           title="I'm having trouble with my email"
-          classes="bg-yellow-blue w-96 h-12 text-sm"
+          classes="bg-yellow-blue w-80 h-12 text-sm"
         />
       </div>
       <div className="mb-2">
