@@ -16,7 +16,7 @@ const ConfirmEmail = () => {
   //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
-  const resendVerificationEmail = async () => {
+  const resendVerificationEmail = useCallback(async () => {
     if (user.PK) {
       const response: any = await resendEmail({
         uuid: user.PK,
@@ -29,7 +29,7 @@ const ConfirmEmail = () => {
     } else {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
-  };
+  }, [user, resendEmail]);
 
   const sendEmailNoticeToAPTeam = useCallback(async () => {
     if (user.PK) {
@@ -46,10 +46,10 @@ const ConfirmEmail = () => {
     }
   }, [user, resendEmail]);
 
-  const returnMain = () => {
+  const returnMain = useCallback(() => {
     dispatch(removeUserData());
     history.push("/");
-  };
+  }, [dispatch, history]);
 
   if (!user.PK) {
     user = JSON.parse(localStorage.getItem("userData") || "{}");
