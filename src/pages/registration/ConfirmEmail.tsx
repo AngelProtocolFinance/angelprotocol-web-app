@@ -1,5 +1,5 @@
 import banner2 from "assets/images/banner-register-2.jpg";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
@@ -51,10 +51,13 @@ const ConfirmEmail = () => {
     history.push("/");
   }, [dispatch, history]);
 
-  if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
-  }
+  useEffect(() => {
+    if (user.PK) {
+      return;
+    }
+    const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(newUserData));
+  }, [user, dispatch]);
 
   return (
     <div>
