@@ -16,35 +16,34 @@ const ConfirmEmail = () => {
   //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
-  const resendVerificationEmail = useCallback(async () => {
-    if (user.PK) {
-      const response: any = await resendEmail({
-        uuid: user.PK,
-        type: "verify-email",
-        body: user,
-      });
-      response.data
-        ? toast.info(response.data?.message)
-        : toast.error(response.error?.data.message);
-    } else {
-      toast.error("Invalid Data. Please ask the administrator about that.");
-    }
-  }, [user, resendEmail]);
+  const sendEmail = useCallback(
+    async (emailType) => {
+      if (!user.PK) {
+        toast.error("Invalid Data. Please ask the administrator about that.");
+        return;
+      }
 
-  const sendEmailNoticeToAPTeam = useCallback(async () => {
-    if (user.PK) {
       const response: any = await resendEmail({
         uuid: user.PK,
-        type: "help-verify-email",
+        type: emailType,
         body: user,
       });
       response.data
         ? toast.info(response.data?.message)
         : toast.error(response.error?.data.message);
-    } else {
-      toast.error("Invalid Data. Please ask the administrator about that.");
-    }
-  }, [user, resendEmail]);
+    },
+    [user, resendEmail]
+  );
+
+  const resendVerificationEmail = useCallback(
+    () => sendEmail("verify-email"),
+    [sendEmail]
+  );
+
+  const sendEmailNoticeToAPTeam = useCallback(
+    () => sendEmail("help-verify-email"),
+    [sendEmail]
+  );
 
   const returnMain = useCallback(() => {
     dispatch(removeUserData());
