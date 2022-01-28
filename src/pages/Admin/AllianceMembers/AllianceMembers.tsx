@@ -25,8 +25,8 @@ function AllianceMembers() {
   }, [members]);
 
   const onClickRemove = (index: number) => {
-    if (members) {
-      setSelectedMember(members[index]);
+    if (displayData) {
+      setSelectedMember(displayData[index]);
       setShowRemoveModal(true);
     }
   };

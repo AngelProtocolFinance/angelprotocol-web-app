@@ -11,7 +11,10 @@ const RemoveMemberModal = ({ member, reloadMembers }: any) => {
   const handleRemove = async () => {
     setSubmitting(true);
     console.log("member name => ", member.name);
-    const response: any = await removeAllianceMember(member.name);
+    const response: any = await removeAllianceMember(
+      member.name,
+      member.address
+    );
     if (response) {
       reloadMembers(response.data);
     } else {

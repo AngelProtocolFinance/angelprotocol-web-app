@@ -1,15 +1,13 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { toast } from "react-toastify";
 import { useRemoveMemberMutation } from "../../../services/aws/alliance/alliance";
 
 export default function useRemoveMember() {
   const [removeMember] = useRemoveMemberMutation();
-  const wallet = useConnectedWallet();
 
-  async function removeAllianceMember(name: string) {
+  async function removeAllianceMember(name: string, address: string) {
     const response: any = await removeMember({
       name: name.replace(/\s+/g, "-"),
-      wallet: wallet?.terraAddress,
+      wallet: address,
     });
     const result = response.data ? response : response.error;
     if (result.status === 500) {
@@ -21,6 +19,7 @@ export default function useRemoveMember() {
         result.status === 400 ||
         result.status === 401 ||
         result.status === 403 ||
+        result.status === 404 ||
         result.status === 415
       ) {
         toast.error(result.data.message);
