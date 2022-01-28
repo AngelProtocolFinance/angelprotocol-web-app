@@ -1,10 +1,11 @@
-import { useHistory, useLocation } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
+import { useCallback } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import Action from "../../components/ActionButton/Action";
-import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
+import { useGetter, useSetter } from "store/accessors";
+import Action from "../../components/ActionButton/Action";
 
 const ConfirmEmail = () => {
   const history = useHistory();
@@ -14,6 +15,7 @@ const ConfirmEmail = () => {
   const is_sent = location.state?.is_sent;
   //eslint-disable-next-line
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
+
   const resendVerificationEmail = async () => {
     if (user.PK) {
       const response: any = await resendEmail({
@@ -28,6 +30,22 @@ const ConfirmEmail = () => {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
   };
+
+  const sendEmailNoticeToAPTeam = useCallback(async () => {
+    if (user.PK) {
+      const response: any = await resendEmail({
+        uuid: user.PK,
+        type: "help-verify-email",
+        body: user,
+      });
+      response.data
+        ? toast.info(response.data?.message)
+        : toast.error(response.error?.data.message);
+    } else {
+      toast.error("Invalid Data. Please ask the administrator about that.");
+    }
+  }, [user, resendEmail]);
+
   const returnMain = () => {
     dispatch(removeUserData());
     history.push("/");
@@ -78,7 +96,7 @@ const ConfirmEmail = () => {
       </div>
       <div className="mb-2">
         <Action
-          onClick={resendVerificationEmail}
+          onClick={sendEmailNoticeToAPTeam}
           title="I'm having trouble with my email"
           classes="bg-yellow-blue w-96 h-12 text-sm"
         />
