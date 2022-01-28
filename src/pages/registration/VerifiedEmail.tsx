@@ -7,7 +7,7 @@ import Action from "../../components/ActionButton/Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 
 const VerifiedEmail = () => {
   const history = useHistory();
@@ -48,9 +48,9 @@ const VerifiedEmail = () => {
       dispatch(updateUserData(responseData));
       localStorage.setItem("userData", JSON.stringify(responseData));
     }
-  }, [is_expired, responseData]);
+  }, [is_expired, dispatch, responseData]);
 
-  const resendVerificationEmail = async () => {
+  const resendVerificationEmail = useCallback(async () => {
     if (responseData.PK) {
       const response: any = await resendEmail({
         uuid: responseData.PK,
@@ -63,7 +63,7 @@ const VerifiedEmail = () => {
     } else {
       toast.error("Invalid Data. Please ask the administrator about that.");
     }
-  };
+  }, [responseData, resendEmail]);
 
   return (
     <div>
