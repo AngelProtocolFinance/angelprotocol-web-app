@@ -87,7 +87,7 @@ const VerifiedEmail = () => {
       {is_expired ? (
         <div className="my-10">
           <span className="text-2xl font-bold">
-            Your verification link was expired. please resend the verification
+            Your verification link has expired. Please resend the verification
             email.
           </span>
         </div>
