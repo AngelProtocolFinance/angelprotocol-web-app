@@ -21,7 +21,7 @@ function useUSTSender() {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
-      updateTx({ step: Step.error, message: "Submitting transaction.." });
+      updateTx({ step: Step.submit, message: "Submitting transaction.." });
       const response = await wallet.post(tx!);
 
       if (response.success) {

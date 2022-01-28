@@ -15,22 +15,23 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {
-  const { watch } = useFormContext<Values>();
+  const { getValues } = useFormContext<Values>();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
-  const amount = Number(watch("amount")) || 0;
 
   useEffect(() => {
     (async () => {
       try {
         dispatch(setFormError(""));
+
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
 
+        const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
         if (amount >= halo_balance) {
           dispatch(setFormError("Not enough halo balance"));

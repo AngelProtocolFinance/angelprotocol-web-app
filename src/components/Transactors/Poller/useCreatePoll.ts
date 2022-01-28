@@ -25,7 +25,7 @@ export default function useCreatePoll() {
         return;
       }
 
-      updateTx({ step: Step.error, message: "Submitting transaction.." });
+      updateTx({ step: Step.submit, message: "Submitting transaction.." });
 
       //recreate tx here with actual form contents
       const contract = new Halo(wallet);

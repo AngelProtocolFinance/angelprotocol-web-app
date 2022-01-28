@@ -9,7 +9,7 @@ import useCreatePoll from "./useCreatePoll";
 export default function PollerForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<Values>();
   const createPoll = useCreatePoll();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
@@ -26,7 +26,9 @@ export default function PollerForm() {
       <Field id="amount" label="Halo deposit" frozen />
       <Fee />
       <button
-        disabled={isSubmitting || form_loading || !!form_error}
+        disabled={
+          isSubmitting || form_loading || !!form_error || !isValid || !isDirty
+        }
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >

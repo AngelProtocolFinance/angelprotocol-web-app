@@ -6,11 +6,7 @@ import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 // import useTerraBalance from "hooks/useTerraBalance";
-import {
-  useBalances,
-  useGovStaker,
-  useHaloBalance,
-} from "services/terra/queriers";
+import { useBalances } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
@@ -18,17 +14,16 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import toCurrency from "helpers/toCurrency";
+import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
-  const { watch } = useFormContext<Values>();
+  const { watch, getValues } = useFormContext<Values>();
+  const wallet = useConnectedWallet();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const gov_staker = useGovStaker();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const wallet = useConnectedWallet();
-  const halo_balance = useHaloBalance();
-  const is_stake = watch("is_stake");
+  const is_stake = getValues("is_stake");
+  const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
   const debounced_amount = useDebouncer(amount, 500);
 
@@ -48,21 +43,13 @@ export default function useEstimator() {
 
         if (is_stake) {
           //check $HALO balance
-          if (debounced_amount > halo_balance) {
+          if (balance.div(1e6).lt(debounced_amount)) {
             dispatch(setFormError("Not enough Halo balance"));
             return;
           }
         } else {
-          const staker_balance = new Dec(gov_staker.balance).div(1e6);
-          if (staker_balance.lt(debounced_amount)) {
-            dispatch(
-              setFormError(
-                `Current balance is ${toCurrency(
-                  staker_balance.toNumber(),
-                  2
-                )} HALO`
-              )
-            );
+          if (balance.sub(locked).div(1e6).sub(debounced_amount).lt(0)) {
+            dispatch(setFormError("Not enough staked less locked"));
             return;
           }
         }
@@ -101,7 +88,13 @@ export default function useEstimator() {
       dispatch(setFormError(""));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, halo_balance]);
+  }, [
+    debounced_amount,
+    wallet,
+    UST_balance,
+    balance.toString(),
+    locked.toString(),
+  ]);
 
   return tx;
 }

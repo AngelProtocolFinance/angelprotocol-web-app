@@ -15,7 +15,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
-import toCurrency from "helpers/toCurrency";
 import { useGovStaker } from "services/terra/queriers";
 
 export default function useEstimator() {
@@ -23,7 +22,6 @@ export default function useEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  //TODO:check staked_balance instead
   const halo_balance = useHaloBalance();
   const wallet = useConnectedWallet();
   const gov_staker = useGovStaker();
@@ -65,19 +63,16 @@ export default function useEstimator() {
           return;
         }
 
-        //check if voter has enough staked
-        const staked_amount = new Dec(gov_staker.balance).div(1e6);
-        const vote_amount = new Dec(debounced_amount);
+        //check if voter has enough staked and not yet used to vote for other polls
+        const staked_amount = new Dec(gov_staker.balance);
+        const locked_amount = gov_staker.locked_balance.reduce(
+          (total, [, vote]) => total.add(vote.balance),
+          new Dec(0)
+        );
+        const vote_amount = new Dec(debounced_amount).mul(1e6);
 
-        if (vote_amount.gt(staked_amount)) {
-          dispatch(
-            setFormError(
-              `You only have ${toCurrency(
-                staked_amount.toNumber(),
-                2
-              )} HALO staked `
-            )
-          );
+        if (staked_amount.sub(locked_amount).sub(vote_amount).lt(0)) {
+          dispatch(setFormError(`Not enough staked or is locked`));
           return;
         }
 

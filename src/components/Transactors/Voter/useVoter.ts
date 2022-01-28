@@ -10,6 +10,7 @@ export default function useVoter(poll_id?: string) {
   const { showModal } = useSetModal();
   const showVoter = useCallback(() => {
     showModal<TxProps<Props>>(TransactionSuite, {
+      inModal: true,
       Context: Voter,
       contextProps: { Form: VoterForm, poll_id },
     });

@@ -3,6 +3,7 @@ import Poll from "./Poll";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";
 import usePoller from "components/Transactors/Poller/usePoller";
+import Action from "./Action";
 
 export default function Polls() {
   const block_height = useLatestBlock();
@@ -23,19 +24,17 @@ export default function Polls() {
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
         <div className="flex flex-wrap gap-2 justify-end self-end">
-          <a
-            href="https://forum.angelprotocol.io"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <button className="action-button">Join Forum</button>
-          </a>
-          <button
-            onClick={showPoller}
-            className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm font-heading text-sm uppercase text-center rounded-md"
-          >
-            Create Poll
-          </button>
+          <Action
+            title="Join Forum"
+            action={() => {
+              window.open(
+                "https://forum.angelprotocol.io",
+                "_blank",
+                "noopener noreferrer"
+              );
+            }}
+          />
+          <Action title="Create Poll" action={showPoller} />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

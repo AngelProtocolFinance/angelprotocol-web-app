@@ -3,6 +3,7 @@ import { useStakingAPRQuery } from "services/aws/governance";
 import useSwapper from "components/Transactors/Swapper/useSwapper";
 import useStaker from "components/Transactors/Staker/useStaker";
 import useClaimer from "components/Transactors/Claimer/useClaimer";
+import Action from "./Action";
 
 export default function Portal() {
   const { data } = useStakingAPRQuery(null);
@@ -33,21 +34,5 @@ export default function Portal() {
         <Action title="Claim" action={showClaimer} />
       </div>
     </div>
-  );
-}
-
-function Action(props: {
-  title: string;
-  action: () => void;
-  disabled?: boolean;
-}) {
-  return (
-    <button
-      onClick={props.action}
-      className="font-heading text-sm text-white-grey bg- blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
-      disabled={props.disabled}
-    >
-      {props.title}
-    </button>
   );
 }
