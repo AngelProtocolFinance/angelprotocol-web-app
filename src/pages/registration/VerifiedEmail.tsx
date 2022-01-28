@@ -65,64 +65,95 @@ const VerifiedEmail = () => {
     }
   }, [responseData, resendEmail]);
 
-  return (
-    <div>
-      <div className="flex justify-center rounded-xl mb-5">
-        {is_expired ? (
-          <FaExclamation className="text-4xl text-red-500" />
-        ) : (
-          <FaCheck className="text-4xl text-yellow-blue" />
-        )}
-      </div>
-      {!is_expired && (
-        <div>
-          <p className="text-2xl font-bold">Thank you for registering.</p>
-          <p className="text-2xl font-bold mb-10">
-            {responseData.CharityName}, {responseData.FirstName}!
-          </p>
-          <p className="text-2xl font-bold">Your registration reference is </p>
-          <p className="text-2xl font-bold text-yellow-600">
-            {responseData.PK}
-          </p>
-        </div>
-      )}
-      {is_expired ? (
-        <div className="my-10">
-          <span className="text-2xl font-bold">
-            Your verification link has expired. Please resend the verification
-            email.
-          </span>
-        </div>
-      ) : (
-        <div className="my-10">
-          <span className="text-base">
-            We have sent it to your email address for your future reference.
-          </span>
-        </div>
-      )}
-      <div className="mb-2">
-        {is_expired ? (
-          <Action
-            classes="bg-thin-blue w-48 h-12"
-            onClick={resendVerificationEmail}
-            title="resend"
-            disabled={isLoading}
-          />
-        ) : (
-          <Action
-            //TODO:simplify link
-            classes="bg-thin-blue w-48 h-12"
-            onClick={() =>
-              history.push(`${site.app}/${app.register}/${registration.status}`)
-            }
-            title="Continue"
-            disabled={isLoading}
-          />
-        )}
-      </div>
-      <ToastContainer />
-    </div>
+  const navigateToRegistrationStatusPage = useCallback(
+    () => history.push(`${site.app}/${app.register}/${registration.status}`),
+    [history]
+  );
+
+  return is_expired ? (
+    <LinkExpiredContent
+      onClick={resendVerificationEmail}
+      isLoading={isLoading}
+    />
+  ) : (
+    <VerificationSuccessfulContent
+      responseData={responseData}
+      onClick={navigateToRegistrationStatusPage}
+      isLoading={isLoading}
+    />
   );
 };
 
 export default VerifiedEmail;
+
+function LinkExpiredContent({
+  onClick,
+  isLoading,
+}: {
+  onClick: () => void;
+  isLoading: boolean;
+}) {
+  return (
+    <div>
+      <div className="flex justify-center rounded-xl mb-5">
+        <FaExclamation className="text-4xl text-red-500" />
+      </div>
+      <div className="my-10">
+        <span className="text-2xl font-bold">
+          Your verification link has expired. Please resend the verification
+          email.
+        </span>
+      </div>
+      <div className="mb-2">
+        <Action
+          classes="bg-thin-blue w-48 h-12"
+          onClick={onClick}
+          title="resend"
+          disabled={isLoading}
+        />
+      </div>
+      <ToastContainer />
+    </div>
+  );
+}
+
+function VerificationSuccessfulContent({
+  responseData,
+  onClick,
+  isLoading,
+}: {
+  responseData: any;
+  onClick: () => void;
+  isLoading: boolean;
+}) {
+  return (
+    <div>
+      <div className="flex justify-center rounded-xl mb-5">
+        <FaCheck className="text-4xl text-yellow-blue" />
+      </div>
+      <div>
+        <p className="text-2xl font-bold">Thank you for registering.</p>
+        <p className="text-2xl font-bold mb-10">
+          {responseData.CharityName}, {responseData.FirstName}!
+        </p>
+        <p className="text-2xl font-bold">Your registration reference is </p>
+        <p className="text-2xl font-bold text-yellow-600">{responseData.PK}</p>
+      </div>
+
+      <div className="my-10">
+        <span className="text-base">
+          We have sent it to your email address for your future reference.
+        </span>
+      </div>
+      <div className="mb-2">
+        <Action
+          //TODO:simplify link
+          classes="bg-thin-blue w-48 h-12"
+          onClick={onClick}
+          title="Continue"
+          disabled={isLoading}
+        />
+      </div>
+    </div>
+  );
+}
