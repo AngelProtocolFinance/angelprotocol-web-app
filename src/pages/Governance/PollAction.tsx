@@ -2,13 +2,13 @@ import { ReactNode } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PollStatus } from "services/terra/types";
 import useDetails from "./useDetails";
-import usePollAction from "./usePollAction";
-import useVoter from "components/Voter/useVoter";
+import useVoter from "components/Transactors/Voter/useVoter";
+import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 
 export default function PollAction(props: { poll_id?: string }) {
   const wallet = useConnectedWallet();
   const details = useDetails(props.poll_id);
-  const end_poll = usePollAction(props.poll_id);
+  const showPollEnder = usePollEnder(props.poll_id);
   const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
   const W = !!wallet;
@@ -25,7 +25,7 @@ export default function PollAction(props: { poll_id?: string }) {
     if (E) {
       //voting period ended
       if (V) {
-        node = <Action title="End poll" action={end_poll} />;
+        node = <Action title="End poll" action={showPollEnder} />;
       } else {
         node = <Text>vote period has ended</Text>;
       }

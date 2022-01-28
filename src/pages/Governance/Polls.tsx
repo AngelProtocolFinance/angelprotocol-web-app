@@ -1,10 +1,8 @@
 import { useGovPolls, useLatestBlock } from "services/terra/queriers";
 import Poll from "./Poll";
-import Poller from "components/Poller/Poller";
-import PollSuite from "components/TransactionSuite/PollSuite";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";
-import usePoller from "components/Poller/usePoller";
+import usePoller from "components/Transactors/Poller/usePoller";
 
 export default function Polls() {
   const block_height = useLatestBlock();

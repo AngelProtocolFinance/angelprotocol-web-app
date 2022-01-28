@@ -1,8 +1,8 @@
 import { RouteComponentProps } from "react-router-dom";
-import Donater from "components/Donater/Donater";
-import { Props as C } from "components/Donater/types";
+import Donater from "components/Transactors/Donater/Donater";
+import { Props as C } from "components/Transactors/Donater/types";
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
-import DonateForm from "components/DonateForm/DonateForm";
+import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 
 export type ChurchPortalParam = { address: string };
 

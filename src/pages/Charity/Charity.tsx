@@ -9,7 +9,7 @@ import { useProfileQuery } from "services/aws/endowments/endowments";
 import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
-import useDonater from "components/Donater/useDonater";
+import useDonater from "components/Transactors/Donater/useDonater";
 import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import CharityProfileEditForm from "./CharityProfileEditForm";
 import CharityInfoTab from "./CharityInfoTab";

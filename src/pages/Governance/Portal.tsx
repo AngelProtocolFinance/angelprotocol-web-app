@@ -1,9 +1,8 @@
 import { currency_icons, denoms } from "constants/currency";
 import { useStakingAPRQuery } from "services/aws/governance";
-import "./Portal.css";
-import useSwapper from "components/Swapper/useSwapper";
-import useStaker from "components/Staker/useStaker";
-import useClaimer from "components/Claimer/useClaimer";
+import useSwapper from "components/Transactors/Swapper/useSwapper";
+import useStaker from "components/Transactors/Staker/useStaker";
+import useClaimer from "components/Transactors/Claimer/useClaimer";
 
 export default function Portal() {
   const { data } = useStakingAPRQuery(null);
