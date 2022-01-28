@@ -15,7 +15,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
-import toCurrency from "helpers/toCurrency";
 import { useGovStaker } from "services/terra/queriers";
 
 export default function useEstimator() {
@@ -66,18 +65,15 @@ export default function useEstimator() {
         }
 
         //check if voter has enough staked
-        const staked_amount = new Dec(gov_staker.balance).div(1e6);
-        const vote_amount = new Dec(debounced_amount);
+        const staked_amount = new Dec(gov_staker.balance);
+        const locked_amount = gov_staker.locked_balance.reduce(
+          (total, [, vote]) => total.add(new Dec(vote.balance)),
+          new Dec(0)
+        );
+        const vote_amount = new Dec(debounced_amount).mul(1e6);
 
-        if (vote_amount.gt(staked_amount)) {
-          dispatch(
-            setFormError(
-              `You only have ${toCurrency(
-                staked_amount.toNumber(),
-                2
-              )} HALO staked `
-            )
-          );
+        if (staked_amount.sub(locked_amount).lt(vote_amount)) {
+          dispatch(setFormError("Not enough staked tokens less locked"));
           return;
         }
 
