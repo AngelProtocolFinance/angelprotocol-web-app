@@ -58,51 +58,43 @@ const ConfirmEmail = () => {
   }, [user, dispatch]);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4 font-bold">
       {is_sent && (
-        <div className="rounded-xl mb-5">
-          <img src={banner2} width="100%" className="rounded-xl" alt="" />
-        </div>
+        <img src={banner2} width="100%" className="rounded-xl" alt="" />
       )}
       {is_sent ? (
-        <div>
-          <p className="text-4xl font-bold">Hi {user.FirstName}!</p>
-          <span className="text-4xl font-bold">
+        <div className="text-4xl">
+          <p>Hi {user.FirstName}!</p>
+          <span>
             We're still waiting for you to confirm your email address.
           </span>
         </div>
       ) : (
-        <div>
-          <p className="text-2xl font-bold">Thank you for registering</p>
-          <p className="text-2xl font-bold mb-10">
-            {user.FirstName}, {user.CharityName}!{" "}
+        <div className="text-2xl">
+          <p>Thank you for registering</p>
+          <p className="mb-10">
+            {user.FirstName}, {user.CharityName}!
           </p>
-          <p className="text-2xl font-bold">Your registration reference is</p>
-          <p className="text-orange text-2xl font-bold">{user.PK || ""}</p>
+          <p>Your registration reference is</p>
+          <p className="text-orange">{user.PK}</p>
         </div>
       )}
-      <div className="mt-3 mb-10">
-        <span className="text-base">
-          Please click on the link in the email and you'll be able to continue
-          with the registration of {user.CharityName} on Angel.
-        </span>
-      </div>
-      <div className="mb-2">
+      <span className="font-normal">
+        Please click on the link in the email and you'll be able to continue
+        with the registration of {user.CharityName} on Angel.
+      </span>
+      <div className="flex flex-col gap-1 items-center mt-3">
         <Action
           onClick={resendVerificationEmail}
           classes="bg-orange w-64 h-12 text-sm"
           title="Resend verification email"
           isLoading={isLoading}
         />
-      </div>
-      <div className="mb-2">
         <Action
           onClick={sendEmailNoticeToAPTeam}
           title="I'm having trouble with my email"
           classes="bg-yellow-blue w-80 h-12 text-sm"
         />
-      </div>
-      <div className="mb-2">
         <Action
           onClick={returnMain}
           title="close"
