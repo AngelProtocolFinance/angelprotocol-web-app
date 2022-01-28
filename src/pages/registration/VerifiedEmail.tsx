@@ -7,31 +7,41 @@ import Action from "../../components/ActionButton/Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { useMemo } from "react";
 
 const VerifiedEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-  const location = history.location;
-  const pathNames = location.pathname.split("/");
-  const jwtData: any = jwtDecode(pathNames[pathNames.length - 1]);
-  const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
-  const responseData = {
-    ...jwtData.ContactPerson,
-    CharityName: jwtData.Registration.CharityName,
-    CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
-    RegistrationDate: jwtData.Registration.RegistrationDate,
-    RegistrationStatus: jwtData.Registration.RegistrationStatus,
-    userType: jwtData.user,
-    authorization: jwtData.authorization,
-    token: pathNames[pathNames.length - 1],
-    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
-    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
-  };
+  const pathNames = history.location.pathname.split("/");
+  const jwtData: any = useMemo(
+    () => jwtDecode(pathNames[pathNames.length - 1]),
+    [pathNames]
+  );
+  const is_expired = useMemo(
+    () => Math.floor(Date.now() / 1000) >= jwtData.exp,
+    [jwtData]
+  );
+  const responseData = useMemo(
+    () => ({
+      ...jwtData.ContactPerson,
+      CharityName: jwtData.Registration.CharityName,
+      CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
+      RegistrationDate: jwtData.Registration.RegistrationDate,
+      RegistrationStatus: jwtData.Registration.RegistrationStatus,
+      userType: jwtData.user,
+      authorization: jwtData.authorization,
+      token: pathNames[pathNames.length - 1],
+      ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
+      ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
+      EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
+      ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
+      ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
+      EndowmentAgreementVerified:
+        jwtData.Registration.EndowmentAgreementVerified,
+    }),
+    [jwtData, pathNames]
+  );
 
   if (!is_expired) {
     dispatch(updateUserData(responseData));
