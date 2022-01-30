@@ -14,6 +14,8 @@ export type MergeEndowment = Endowment & {
   total_liq: number;
   total_lock: number;
   overall: number;
+  liquid: number;
+  locked: number;
   chain: "mainnet" | "testnet";
 };
 export interface Details {
