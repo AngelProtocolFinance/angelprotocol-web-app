@@ -14,6 +14,7 @@ export default function usePoller() {
       Context: Poller,
       contextProps: { Form: PollerForm },
     });
+    //eslint-disable-next-line
   }, []);
 
   return showPoller;

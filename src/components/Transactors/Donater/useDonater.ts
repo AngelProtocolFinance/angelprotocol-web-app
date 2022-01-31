@@ -14,6 +14,7 @@ export default function useDonater(args: FundFlow) {
       Context: Donater,
       contextProps: { Form: DonateForm, ...args },
     });
+    //eslint-disable-next-line
   }, [args]);
   return showDonater;
 }

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 export enum VaultFields {
   anchor1_amount = "anchor1_amount",

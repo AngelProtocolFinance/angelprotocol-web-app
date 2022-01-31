@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
@@ -88,13 +88,7 @@ export default function useEstimator() {
       dispatch(setFormError(""));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    wallet,
-    UST_balance,
-    balance.toString(),
-    locked.toString(),
-  ]);
+  }, [debounced_amount, wallet, UST_balance, balance, locked]);
 
   return tx;
 }

@@ -16,6 +16,7 @@ export default function useStaker() {
         contextProps: { Form: StakeForm, stake: is_stake },
       });
     },
+    //eslint-disable-next-line
     []
   );
   return showStaker;

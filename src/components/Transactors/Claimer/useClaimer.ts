@@ -14,6 +14,7 @@ export default function useClaimer() {
       Context: Claimer,
       contextProps: { Form: ClaimForm },
     });
+    //eslint-disable-next-line
   }, []);
 
   return showClaimer;

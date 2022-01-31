@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Airdrops } from "services/aws/airdrop/types";
 import { useSetter } from "store/accessors";
 import { Step } from "services/transaction/types";

@@ -14,6 +14,7 @@ export default function useSwapper() {
       Context: Swapper,
       contextProps: { Form: SwapForm },
     });
+    //eslint-disable-next-line
   }, []);
 
   return showSwapper;

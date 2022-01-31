@@ -1,6 +1,3 @@
-import { chainIDs } from "contracts/types";
-import { number, string } from "prop-types";
-
 export enum Step {
   form = "form",
   submit = "submit",

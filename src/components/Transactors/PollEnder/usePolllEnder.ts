@@ -12,6 +12,7 @@ export default function usePollEnder(poll_id?: string) {
       Context: EnderForm,
       contextProps: { poll_id },
     });
+    //eslint-disable-next-line
   }, [poll_id]);
 
   return showPollEnder;

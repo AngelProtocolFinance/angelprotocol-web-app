@@ -14,6 +14,7 @@ export default function useVoter(poll_id?: string) {
       Context: Voter,
       contextProps: { Form: VoterForm, poll_id },
     });
+    //eslint-disable-next-line
   }, [poll_id]);
 
   return showVoter;
