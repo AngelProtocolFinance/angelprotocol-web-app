@@ -6,13 +6,13 @@ import { Step } from "services/transaction/types";
 import { Values } from "components/Transactors/Donater/types";
 import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";
-import useUSTEstimator from "./useUSTEstimator";
+import useEstimator from "./useEstimator";
 
 function useUSTSender() {
   const { reset, getValues } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
-  const tx = useUSTEstimator();
+  const tx = useEstimator();
 
   //data:Data
   async function terra_sender() {

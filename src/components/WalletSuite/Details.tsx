@@ -1,7 +1,8 @@
 import { useWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { denoms } from "constants/currency";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { resetWallet } from "services/wallet/walletSlice";
 import maskAddress from "helpers/maskAddress";
 import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
@@ -12,6 +13,7 @@ import Filter from "./Filter";
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const { disconnect } = useWallet();
+  const dispatch = useSetter();
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
   const filtered_coins = coins.filter(
@@ -24,7 +26,10 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleFilter = () => setFilter((p) => !p);
 
   const isEmpty = filtered_coins.length <= 0;
-  const handleDisconnect = () => disconnect();
+  const handleDisconnect = () => {
+    disconnect();
+    dispatch(resetWallet());
+  };
 
   return (
     <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">

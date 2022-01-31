@@ -45,11 +45,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
     ];
     dispatch(
       setWalletDetails({
+        id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
         displayCoin: { amount: main, denom: denoms.uusd },
         coins: halo_balance !== 0 ? coinsWithHalo : others,
         address: wallet.walletAddress,
         chainId: wallet.network.chainID as chainIDs,
+        supported_denoms: [denoms.uusd],
       })
     );
     dispatch(setIsUpdating(false));
@@ -96,6 +98,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         dispatch(
           setWalletDetails({
+            id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
             displayCoin: { amount: main, denom: denoms.uusd },
             coins: coinsWithEth,
@@ -105,6 +108,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
               wallet.network.chainID === chainIDs.mainnet
                 ? chainIDs.gen_mainnet
                 : chainIDs.gen_testnet,
+            supported_denoms: [denoms.uusd, denoms.ether],
           })
         );
         dispatch(setIsUpdating(false));

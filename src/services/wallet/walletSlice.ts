@@ -2,7 +2,7 @@ import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
-import { WalletInfo, State } from "./types";
+import { WalletInfo, State, TerraIdentifiers } from "./types";
 
 const initialState: State = {
   isUpdating: false,
@@ -13,6 +13,8 @@ const initialState: State = {
   coins: [],
   icon: icon,
   address: "walletaddrs",
+  supported_denoms: [],
+  id: undefined,
   chainId: chainIDs.mainnet,
 };
 
@@ -29,6 +31,8 @@ const walletSlice = createSlice({
       state.coins = payload.coins;
       state.address = payload.address;
       state.chainId = payload.chainId;
+      state.supported_denoms = payload.supported_denoms;
+      state.id = payload.id;
     },
     setIsUpdating: (state, { payload }: PayloadAction<boolean>) => {
       state.isUpdating = payload;
