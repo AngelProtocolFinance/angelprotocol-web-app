@@ -56,7 +56,7 @@ export default function VerifiedEmail() {
     [history]
   );
 
-  const content = !is_expired ? (
+  const content = is_expired ? (
     <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
   ) : (
     <VerificationSuccessful
