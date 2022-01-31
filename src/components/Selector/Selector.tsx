@@ -1,4 +1,4 @@
-import Select from "react-select";
+import Select, { GroupBase, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
 import { OptionType } from "types/optionType";
 
@@ -22,7 +22,7 @@ export const Selector = (props: SelectorProps) => {
       render={({ field: { value, onChange } }) => {
         return (
           <Select
-            className="outline-none border-none w-full text-black"
+            styles={selectStyles}
             placeholder={props.placeholder}
             value={props.options.filter((option) => value === option.value)}
             onChange={(option) => {
@@ -36,4 +36,13 @@ export const Selector = (props: SelectorProps) => {
       }}
     />
   );
+};
+
+const selectStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
+  control: (provided, state) => ({
+    ...provided,
+    border: "none",
+    backgroundColor: state.isDisabled ? "#efefef4d" : provided.backgroundColor,
+  }),
+  menu: (provided) => ({ ...provided, color: "black" }),
 };

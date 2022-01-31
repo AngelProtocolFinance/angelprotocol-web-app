@@ -1,22 +1,14 @@
 import Loader from "components/Loader/Loader";
+import { MouseEventHandler } from "react";
 
-type Submit = {
-  submit?: true;
+type Props = {
+  submit?: true | never;
   disabled?: boolean;
   title: string;
-  classes: string;
-  onClick?: never;
+  classes?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
 };
-type Button = {
-  submit?: never;
-  disabled?: boolean;
-  title: string;
-  classes: string;
-  onClick: () => void;
-  isLoading?: boolean;
-};
-type Props = Submit | Button;
 
 export default function Action(props: Props) {
   return (
