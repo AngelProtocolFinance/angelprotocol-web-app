@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { ToastContainer } from "react-toastify";
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
@@ -86,7 +85,6 @@ const Login = () => {
           learn more about angel protocol
         </Link>
       </div>
-      <ToastContainer />
     </section>
   );
 };

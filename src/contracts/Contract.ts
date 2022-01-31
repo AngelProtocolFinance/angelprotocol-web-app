@@ -72,9 +72,7 @@ export default class Contract {
       if (retries > 0 || res.status === 400) {
         return this.pollTxInfo(txhash, retries - 1, interval);
       }
-      throw new TxResultFail(
-        `https://finder.extraterrestrial.money/${this.chainID}/tx/${txhash}`
-      );
+      throw new TxResultFail(this.chainID, txhash);
     });
   }
 

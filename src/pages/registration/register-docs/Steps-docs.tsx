@@ -4,7 +4,6 @@ import { registration } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
 import { useUploadFiles } from "./useUploadFiles";
 import Action from "../../../components/ActionButton/Action";
-import { ToastContainer } from "react-toastify";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 
@@ -199,7 +198,6 @@ const StepsDocs = () => {
         showFileNamesInPreview={true}
         filesLimit={1}
       />
-      <ToastContainer />
     </div>
   );
 };

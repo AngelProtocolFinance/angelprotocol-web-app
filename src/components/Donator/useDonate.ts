@@ -5,6 +5,7 @@ import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
 import { FormikHelpers } from "formik";
 import createAuthToken from "helpers/createAuthToken";
+import getFinderUrl from "helpers/getFinderUrl";
 import useUSTBalance from "hooks/useUSTBalance";
 import { useLogDonationTransactionMutation } from "services/apes/donations";
 import { UserTypes } from "services/user/types";
@@ -128,7 +129,7 @@ function useDonate(
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
-              url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
+              url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
             },
           });
         } else {
