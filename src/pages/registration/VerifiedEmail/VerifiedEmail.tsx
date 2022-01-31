@@ -9,7 +9,7 @@ import { app, registration, site } from "types/routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
-const VerifiedEmail = () => {
+export default function VerifiedEmail() {
   const history = useHistory();
   const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
@@ -23,23 +23,7 @@ const VerifiedEmail = () => {
     [jwtData]
   );
   const responseData = useMemo(
-    () => ({
-      ...jwtData.ContactPerson,
-      CharityName: jwtData.Registration.CharityName,
-      CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
-      RegistrationDate: jwtData.Registration.RegistrationDate,
-      RegistrationStatus: jwtData.Registration.RegistrationStatus,
-      userType: jwtData.user,
-      authorization: jwtData.authorization,
-      token: pathNames[pathNames.length - 1],
-      ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-      ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-      EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
-      ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-      ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-      EndowmentAgreementVerified:
-        jwtData.Registration.EndowmentAgreementVerified,
-    }),
+    () => createUserData(jwtData, pathNames),
     [jwtData, pathNames]
   );
 
@@ -51,18 +35,19 @@ const VerifiedEmail = () => {
   }, [is_expired, dispatch, responseData]);
 
   const resendVerificationEmail = useCallback(async () => {
-    if (responseData.PK) {
-      const response: any = await resendEmail({
-        uuid: responseData.PK,
-        type: "verify-email",
-        body: responseData,
-      });
-      response.data
-        ? toast.info(response.data?.message)
-        : toast.error(response.error?.data.message);
-    } else {
+    if (!responseData.PK) {
       toast.error("Invalid Data. Please ask the administrator about that.");
+      return;
     }
+
+    const response: any = await resendEmail({
+      uuid: responseData.PK,
+      type: "verify-email",
+      body: responseData,
+    });
+    response.data
+      ? toast.info(response.data?.message)
+      : toast.error(response.error?.data.message);
   }, [responseData, resendEmail]);
 
   const navigateToRegistrationStatusPage = useCallback(
@@ -79,6 +64,21 @@ const VerifiedEmail = () => {
       isLoading={isLoading}
     />
   );
-};
+}
 
-export default VerifiedEmail;
+const createUserData = (jwtData: any, pathNames: string[]) => ({
+  ...jwtData.ContactPerson,
+  CharityName: jwtData.Registration.CharityName,
+  CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
+  RegistrationDate: jwtData.Registration.RegistrationDate,
+  RegistrationStatus: jwtData.Registration.RegistrationStatus,
+  userType: jwtData.user,
+  authorization: jwtData.authorization,
+  token: pathNames[pathNames.length - 1],
+  ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
+  ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
+  EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
+  ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
+  ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
+  EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
+});
