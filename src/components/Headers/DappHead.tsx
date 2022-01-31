@@ -1,4 +1,4 @@
-import Airdrop from "components/Airdrop/Airdrop";
+import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import Logo from "components/Logo/Logo";
 import MobileDappNav from "components/MobileNav/MobileDappNav";
 import DappMenu from "components/NavMenus/DappMenu";

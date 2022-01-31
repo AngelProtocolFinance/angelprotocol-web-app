@@ -1,8 +1,10 @@
-import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
+import { useGetToken } from "contexts/AuthProvider";
+import Donater from "components/Transactors/Donater/Donater";
+import { Props as C } from "components/Transactors/Donater/types";
+import TransactionSuite from "components/TransactionSuite/TransactionSuite";
+import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import { app, site } from "types/routes";
-import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
 
 export default function TCA() {
   const decodedToken = useGetToken();
@@ -13,9 +15,13 @@ export default function TCA() {
 
   return (
     <div className="grid place-items-center pt-2">
-      <Donater to="tca">
-        <DonateSuite />
-      </Donater>
+      <TransactionSuite<C>
+        Context={Donater}
+        contextProps={{
+          Form: DonateForm,
+          to: "tca",
+        }}
+      />
     </div>
   );
 }

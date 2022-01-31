@@ -9,17 +9,7 @@ export interface Values {
   state: string;
   zipCode: string; //2000
   country: string;
-}
 
-export interface PutRequestValues {
-  transactionId: string;
-  body: {
-    fullName: string;
-    email: string;
-    streetAddress: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    country: string;
-  };
+  //metadata
+  splitLiq: string;
 }

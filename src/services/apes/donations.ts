@@ -1,4 +1,4 @@
-import { PutRequestValues } from "components/Receipter/types";
+import { PutRequestValues } from "./types";
 import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { apes } from "./apes";
