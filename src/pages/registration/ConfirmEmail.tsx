@@ -55,7 +55,7 @@ const ConfirmEmail = () => {
     }
     const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
     dispatch(updateUserData(newUserData));
-  }, [user, dispatch]);
+  }, []);
 
   return (
     <div className="flex flex-col gap-4 font-bold">

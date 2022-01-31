@@ -8,7 +8,7 @@ import { removeUserData } from "services/user/userSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ReferInfo, FormInfoSchema, useRegistration } from "./useRegistration";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Registration = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,15 +31,19 @@ const Registration = () => {
     setIsLoading(false);
   };
 
-  if (userData && userData.EmailVerified === false) {
-    history.push({
-      pathname: `${url}/${registration.confirm}`,
-      state: { is_sent: true },
-    });
-  } else {
-    localStorage.setItem("userData", JSON.stringify({}));
-    dispatch(removeUserData());
-  }
+  console.log(localStorage.getItem("userData"));
+
+  useEffect(() => {
+    if (userData && userData.EmailVerified === false) {
+      history.push({
+        pathname: `${url}/${registration.confirm}`,
+        state: { is_sent: true },
+      });
+    } else {
+      localStorage.setItem("userData", JSON.stringify({}));
+      dispatch(removeUserData());
+    }
+  }, [userData, history, dispatch]);
 
   return (
     <div>
