@@ -1,14 +1,15 @@
 import Action from "components/ActionButton/Action";
+import { MouseEventHandler } from "react";
 import { FaCheck } from "react-icons/fa";
 
 type Props = {
-  responseData: any;
-  onClick: () => void;
+  userData: any;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading: boolean;
 };
 
 export default function VerificationSuccessfulContent(props: Props) {
-  const { responseData, onClick, isLoading } = props;
+  const { userData, onClick, isLoading } = props;
 
   return (
     <div>
@@ -18,10 +19,10 @@ export default function VerificationSuccessfulContent(props: Props) {
       <div>
         <p className="text-2xl font-bold">Thank you for registering.</p>
         <p className="text-2xl font-bold mb-10">
-          {responseData.CharityName}, {responseData.FirstName}!
+          {userData.CharityName}, {userData.FirstName}!
         </p>
         <p className="text-2xl font-bold">Your registration reference is </p>
-        <p className="text-2xl font-bold text-yellow-600">{responseData.PK}</p>
+        <p className="text-2xl font-bold text-yellow-600">{userData.PK}</p>
       </div>
 
       <div className="my-10">

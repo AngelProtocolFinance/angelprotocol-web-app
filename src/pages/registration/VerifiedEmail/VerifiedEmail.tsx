@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { app, registration, site } from "types/routes";
@@ -22,33 +23,33 @@ export default function VerifiedEmail() {
     () => Math.floor(Date.now() / 1000) >= jwtData.exp,
     [jwtData]
   );
-  const responseData = useMemo(
+  const userData = useMemo(
     () => createUserData(jwtData, pathNames),
     [jwtData, pathNames]
   );
 
   useEffect(() => {
     if (!is_expired) {
-      dispatch(updateUserData(responseData));
-      localStorage.setItem("userData", JSON.stringify(responseData));
+      dispatch(updateUserData(userData));
+      localStorage.setItem("userData", JSON.stringify(userData));
     }
-  }, [is_expired, dispatch, responseData]);
+  }, [is_expired, dispatch, userData]);
 
   const resendVerificationEmail = useCallback(async () => {
-    if (!responseData.PK) {
+    if (!userData.PK) {
       toast.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
     const response: any = await resendEmail({
-      uuid: responseData.PK,
+      uuid: userData.PK,
       type: "verify-email",
-      body: responseData,
+      body: userData,
     });
     response.data
       ? toast.info(response.data?.message)
       : toast.error(response.error?.data.message);
-  }, [responseData, resendEmail]);
+  }, [userData, resendEmail]);
 
   const navigateToRegistrationStatusPage = useCallback(
     () => history.push(`${site.app}/${app.register}/${registration.status}`),
@@ -59,7 +60,7 @@ export default function VerifiedEmail() {
     <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
   ) : (
     <VerificationSuccessful
-      responseData={responseData}
+      userData={userData}
       onClick={navigateToRegistrationStatusPage}
       isLoading={isLoading}
     />
@@ -73,19 +74,21 @@ export default function VerifiedEmail() {
   );
 }
 
-const createUserData = (jwtData: any, pathNames: string[]) => ({
-  ...jwtData.ContactPerson,
-  CharityName: jwtData.Registration.CharityName,
-  CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
-  RegistrationDate: jwtData.Registration.RegistrationDate,
-  RegistrationStatus: jwtData.Registration.RegistrationStatus,
-  userType: jwtData.user,
-  authorization: jwtData.authorization,
-  token: pathNames[pathNames.length - 1],
-  ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-  ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-  EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
-  ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-  ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-  EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
-});
+function createUserData(jwtData: any, pathNames: string[]): User {
+  return {
+    ...jwtData.ContactPerson,
+    CharityName: jwtData.Registration.CharityName,
+    CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
+    RegistrationDate: jwtData.Registration.RegistrationDate,
+    RegistrationStatus: jwtData.Registration.RegistrationStatus,
+    userType: jwtData.user,
+    authorization: jwtData.authorization,
+    token: pathNames[pathNames.length - 1],
+    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
+    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
+    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
+    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
+    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
+    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
+  };
+}
