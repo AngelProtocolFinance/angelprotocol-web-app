@@ -27,7 +27,6 @@ export default function useUSTEstimator() {
   const receiver = watch("receiver");
   const debounced_amount = useDebouncer(amount, 500);
   const debounced_split = useDebouncer(split_liq, 500);
-  console.log(debounced_split);
 
   useEffect(() => {
     (async () => {
@@ -76,7 +75,6 @@ export default function useUSTEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transaction"));
       }
     })();

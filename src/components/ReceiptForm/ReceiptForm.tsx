@@ -1,8 +1,13 @@
+import { useMemo } from "react";
+import countryList from "react-select-country-list";
+import { useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
 import maskAddress from "helpers/maskAddress";
 import { Values } from "components/Receipter/types";
-import { useFormContext } from "react-hook-form";
 import useReceiptForm from "components/Receipter/useReceiptForm";
 import TextInput from "./TextInput";
+import { Selector } from "components/Selector";
 
 type DataProps = {
   name: string;
@@ -23,9 +28,11 @@ export default function ReceiptForm() {
     getValues,
     handleSubmit,
     register,
-    formState: { isValid },
+    formState: { errors },
+    control,
   } = useFormContext<Values>();
   const { submitHandler, processing } = useReceiptForm();
+  const countries = useMemo(() => countryList().getData(), []);
 
   const receiptData: DataProps[] = [
     {
@@ -56,25 +63,52 @@ export default function ReceiptForm() {
         <ReceiptDetails name={name} value={value} key={idx} />
       ))}
       <TextInput name="email" id="email" placeholder="john@doe.com" />
-      <TextInput name="fullName" id="fullName" placeholder="full Name" />
+      <TextInput name="fullName" id="fullName" placeholder="Full Name" />
       <div className="grid">
         <textarea
           {...register("streetAddress")}
           autoComplete="off"
           id="streetAddress"
-          placeholder="street Address"
-          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
+          placeholder="Street Address"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-xl pl-2 rounded-md"
+        />
+        <ErrorMessage
+          errors={errors}
+          name="streetAddress"
+          as="span"
+          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
         />
       </div>
-      <TextInput name="state" id="state" placeholder="state" />
-      <TextInput name="zipCode" id="zipCode" placeholder="zip code" />
-      <TextInput name="country" id="country" placeholder="country" />
+      <TextInput name="city" id="city" placeholder="City" />
+      <TextInput name="state" id="state" placeholder="State" />
+      <TextInput name="zipCode" id="zipCode" placeholder="Zip code" />
+      {/* <TextInput name="country" id="country" placeholder="Country" /> */}
+      <div className="grid">
+        <div className="form-control rounded-md bg-gray-200 flex justify-between items-center text-dark-grey">
+          <Selector
+            name="country"
+            placeholder="Country"
+            options={countries.map((item) => ({
+              value: item.label,
+              label: item.label,
+            }))}
+            control={control}
+            register={register}
+          />
+        </div>
+        <ErrorMessage
+          errors={errors}
+          name="country"
+          as="span"
+          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+        />
+      </div>
       <button
-        disabled={processing || !isValid}
+        disabled={processing}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {processing ? "processing..." : "submit"}
+        {processing ? "Processing..." : "Submit"}
       </button>
     </form>
   );
