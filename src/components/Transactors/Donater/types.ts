@@ -11,18 +11,6 @@ export interface Values {
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
 }
-export type ErrorHandler = (message: string, url?: string) => void;
-
-export interface XFI {
-  bitcoin?: any;
-  ethereum?: any;
-  //others to add if needed
-}
-
-export interface DWindow extends Window {
-  ethereum: any;
-  xfi?: XFI;
-}
 
 interface FromTCA {
   to: "tca";

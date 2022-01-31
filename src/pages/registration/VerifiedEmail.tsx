@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import { FaCheck, FaExclamation } from "react-icons/fa";
 import { app, registration, site } from "types/routes";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Action from "../../components/ActionButton/Action";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
@@ -108,7 +108,6 @@ const VerifiedEmail = () => {
           />
         )}
       </div>
-      <ToastContainer />
     </div>
   );
 };

@@ -7,14 +7,6 @@ export enum Step {
   receipt = "receipt",
 }
 
-export type Tx = {
-  txHash: string;
-  amount?: string;
-  split_liq?: string;
-  to?: "charity" | "fund" | "tca";
-  receiver?: number | string;
-};
-
 export type Details = {
   amount: string;
   to: "charity" | "fund" | "tca";
@@ -22,13 +14,6 @@ export type Details = {
   split_liq: string;
 };
 
-export type Content = {
-  message: string;
-  url?: string;
-  tx?: Tx;
-};
-
-export type PendingTx = { amount: number; hash: string };
 export type State = {
   form_loading: boolean;
   form_error: string;

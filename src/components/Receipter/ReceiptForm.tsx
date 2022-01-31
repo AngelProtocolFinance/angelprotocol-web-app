@@ -1,8 +1,8 @@
-import maskAddress from "helpers/maskAddress";
-import { Values } from "components/Receipter/types";
 import { useFormContext } from "react-hook-form";
 import useReceiptForm from "components/Receipter/useReceiptForm";
+import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
+import { Values } from "./types";
 
 type DataProps = {
   name: string;

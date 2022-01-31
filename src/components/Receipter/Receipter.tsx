@@ -10,7 +10,6 @@ export default function Receipter(
 ) {
   if (props.step !== Step.receipt) throw new Error("wrong component rendered");
   const {
-    chainId,
     txHash,
     details: { amount, split_liq },
     //need a guarantee that this component is called when stage is Receipt
@@ -23,7 +22,6 @@ export default function Receipter(
       splitLiq: split_liq,
       transactionDate: new Date().toISOString(),
       transactionId: txHash,
-      chainId: chainId,
       fullName: "",
       email: "",
       streetAddress: "",
@@ -31,7 +29,6 @@ export default function Receipter(
       state: "",
       zipCode: "",
       country: "",
-      denomination: "UST",
     },
     resolver: yupResolver(schema),
   });

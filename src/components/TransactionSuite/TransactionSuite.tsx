@@ -17,7 +17,7 @@ import { Display, TxProps } from "./types";
 import useTxUpdator from "services/transaction/updators";
 import { useMemo } from "react";
 import Receipter from "components/Receipter/Receipter";
-import ReceiptForm from "components/ReceiptForm/ReceiptForm";
+import ReceiptForm from "components/Receipter/ReceiptForm";
 
 export default function TransactionSuite<C>(props: TxProps<C>) {
   const { hideModal } = useSetModal();

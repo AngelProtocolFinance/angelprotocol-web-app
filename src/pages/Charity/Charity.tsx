@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { ToastContainer } from "react-toastify";
 import { RouteComponentProps } from "react-router-dom";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RiPencilFill } from "react-icons/ri";
-import { Profile } from "services/aws/endowments/types";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import { Profile } from "services/aws/endowments/types";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
@@ -77,7 +76,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
           />
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 };
