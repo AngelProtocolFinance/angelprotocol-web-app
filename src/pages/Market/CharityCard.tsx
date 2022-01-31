@@ -1,14 +1,29 @@
 import LazyImage from "components/LazyImage/LazyImage";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { app, site } from "types/routes";
+import useCardGesture from "./useCardGesture";
 import useCharityCard from "./useCharityCard";
 
 export default function CharityCard(props: { address: string }) {
   const profile = useCharityCard(props.address);
+  const history = useHistory();
+  const navigate = () =>
+    history.push(`${site.app}/${app.charity}/${props.address}`);
+  const {
+    cardRef,
+    handleMouseDown,
+    handleMouseMove,
+    handleMouseLeave,
+    handleMouseUp,
+  } = useCardGesture(navigate);
 
   return (
-    <Link
-      to={`${site.app}/${app.charity}/${props.address}`}
+    <div
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      ref={cardRef}
       className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-2"
     >
       <LazyImage
@@ -24,6 +39,6 @@ export default function CharityCard(props: { address: string }) {
       <span className="text-opacity-80 line-clamp-2 text-sm text-white-grey">
         {profile.charity_overview}
       </span>
-    </Link>
+    </div>
   );
 }
