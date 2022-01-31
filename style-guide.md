@@ -61,6 +61,45 @@ avoid explicit `any`
  });
 
 ```
+
+### Abstractions
+when tailwind classes are redundant, it's recommended to factor out the redundancy via separate component
+https://tailwindcss.com/docs/reusing-styles#extracting-components-and-partials
+
+example, this text has redundant classes on `<p/>`
+```jsx
+<div>
+  <p className="text-2xl font-bold">Thank you for registering.</p>
+  <p className="text-2xl font-bold mb-10">
+    {responseData.CharityName}, {responseData.FirstName}!
+  </p>
+  <p className="text-2xl font-bold">Your registration reference is </p>
+  <p className="text-2xl font-bold text-yellow-600">{responseData.PK}</p>
+</div>
+```
+instead of creating custom class with
+```css
+.text-class{
+  @apply text-2xl;
+  @apply font-bold;
+}
+```
+it's better to just factor out this redundancy to a separate component
+```jsx
+<Text className="text-2xl font-bold">{props.content}</Text>
+```
+
+and use as
+
+```jsx
+<div>
+  <Text>Thank you for registering.</Text>
+  <Text>Your registration reference is </Text>
+  //..others
+</div>
+
+```
+
 always type your code where possible
 
 
