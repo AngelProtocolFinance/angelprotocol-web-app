@@ -6,7 +6,7 @@ import { useSetter } from "store/accessors";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
 import createAuthToken from "helpers/createAuthToken";
-import { UserTypes } from "services/user/types";
+import { User, UserTypes } from "services/user/types";
 
 export type ReferInfo = {
   refer: string;
@@ -29,8 +29,7 @@ export const useRegistration = () => {
     } else {
       // const token: any = await getTokenData(values.refer);
       const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
-      console.log(token);
-      const data = {
+      const data: User = {
         ...response.data.ContactPerson,
         CharityName: response.data.Registration.CharityName,
         CharityName_ContactEmail:
