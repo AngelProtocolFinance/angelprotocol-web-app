@@ -1,5 +1,5 @@
 import { IoWalletSharp } from "react-icons/io5";
-import TerraDisplay from "components/TerraStation/Display";
+import Display from "./Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
@@ -33,7 +33,7 @@ export default function WalletSuite() {
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {isProviderActive && <TerraDisplay />}
+      {isProviderActive && <Display />}
       {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
   );

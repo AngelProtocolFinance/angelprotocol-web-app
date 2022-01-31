@@ -76,7 +76,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         dispatch(setIsUpdating(true));
         const xwindow: XdefiWindow = window;
-        console.log(xwindow.xfi?.terra);
         //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
         const provider = xwindow.xfi?.ethereum!;

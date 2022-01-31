@@ -9,7 +9,7 @@ import useUSTSender from "../useUSTSender";
 import { useEffect, useRef } from "react";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
-export default function useSubmit() {
+export default function useDonateForm() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
   const ustSender = useUSTSender();
   // const ethSender = useEthSender();

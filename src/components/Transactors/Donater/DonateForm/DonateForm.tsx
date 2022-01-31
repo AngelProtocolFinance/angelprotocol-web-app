@@ -1,5 +1,5 @@
-// import { denoms } from "constants/currency";
-// import Currency from "./Currency";
+import { denoms } from "constants/currency";
+import Currency from "./Currency";
 import { useFormContext } from "react-hook-form";
 import { Values } from "components/Transactors/Donater/types";
 import { useGetter } from "store/accessors";
@@ -24,11 +24,11 @@ export default function DonateForm() {
       <Status />
       <Amount />
       <div className="flex gap-2 mb-6">
-        {/*<Currency currency={denoms.uusd} />
-        <Currency currency={denoms.ether} withTooltip />
-        <Currency currency={denoms.btc} withTooltip />
-        <Currency currency={denoms.sol} withTooltip />
-        <Currency currency={denoms.uatom} withTooltip />*/}
+        <Currency currency={denoms.uusd} />
+        <Currency currency={denoms.ether} />
+        {/* <Currency currency={denoms.btc} withTooltip /> */}
+        {/* <Currency currency={denoms.sol} withTooltip /> */}
+        {/* <Currency currency={denoms.uatom} withTooltip /> */}
       </div>
       <Breakdown />
       {to !== "tca" && <Split />}

@@ -2,7 +2,7 @@ import { IoClose } from "react-icons/io5";
 import { useWallet, ConnectType } from "@terra-money/wallet-provider";
 import Backdrop from "./Backdrop";
 import Nodal from "components/Nodal/Nodal";
-import TerraAction from "components/TerraStation/TerraAction";
+import TerraAction from "./Terra/TerraAction";
 import Installer from "./Installer";
 
 type Props = {

@@ -1,15 +1,15 @@
 import { useWallet } from "@terra-money/wallet-provider";
+import Copier from "components/Copier/Copier";
+import { denoms } from "constants/currency";
+import { useGetter } from "store/accessors";
+import maskAddress from "helpers/maskAddress";
 import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
 import { useState } from "react";
-import { denoms } from "constants/currency";
 import Filter from "./Filter";
-import { useGetter } from "store/accessors";
-import maskAddress from "helpers/maskAddress";
-import Copier from "components/Copier/Copier";
 
-const criterionAmount = 10;
+const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const { disconnect } = useWallet();
   const [filtered, setFilter] = useState(false);
