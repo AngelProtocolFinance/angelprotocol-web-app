@@ -53,6 +53,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
       })
     );
     dispatch(setIsUpdating(false));
+    //eslint-disable-next-line
   }, [main, others, wallet, activeProvider, halo_balance]);
 
   //updator of xdefi
@@ -75,7 +76,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         dispatch(setIsUpdating(true));
         const xwindow: XdefiWindow = window;
-        console.log(xwindow.xfi?.ethereum);
+        console.log(xwindow.xfi?.terra);
         //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
         const provider = xwindow.xfi?.ethereum!;
@@ -112,6 +113,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
         console.error(err);
       }
     })();
-    //get ethereum balance
-  }, [main, others, wallet, activeProvider]);
+    //eslint-disable-next-line
+  }, [main, others, wallet, activeProvider, halo_balance]);
 }

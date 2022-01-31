@@ -9,7 +9,6 @@ import { Redirect } from "react-router-dom";
 import { site, app } from "types/routes";
 import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";
-import Logo from "components/Logo/Logo";
 
 export type Values = {
   password: string;

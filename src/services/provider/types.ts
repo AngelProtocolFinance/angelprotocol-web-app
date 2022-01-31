@@ -21,5 +21,6 @@ export interface XdefiWindow extends Window {
       getaccounts: () => Promise<string[]>;
       request: (args: RequestArguments) => Promise<any>;
     };
+    terra?: any;
   };
 }
