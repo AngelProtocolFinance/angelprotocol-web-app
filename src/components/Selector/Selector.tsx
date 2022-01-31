@@ -22,7 +22,7 @@ export const Selector = (props: SelectorProps) => {
       render={({ field: { value, onChange } }) => {
         return (
           <Select
-            className="outline-none border-none w-full text-black"
+            className="text-black"
             placeholder={props.placeholder}
             value={props.options.filter((option) => value === option.value)}
             onChange={(option) => {
