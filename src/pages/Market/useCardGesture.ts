@@ -1,19 +1,18 @@
+import useDebouncer from "hooks/useDebouncer";
 import { MouseEvent, useRef, useState } from "react";
 
 export default function useCardGesture(callback: Function) {
   const [down, setDown] = useState<Boolean>(false);
-  const startRef = useRef<number>(0);
-  const scrollLeftRef = useRef<number>(0);
   const cardRef = useRef<HTMLDivElement>(null);
   const [moved, setMoved] = useState(false);
+
+  const debounceMoved = useDebouncer<boolean>(moved, 150);
 
   function handleMouseDown(e: MouseEvent) {
     if (!cardRef.current) {
       return;
     }
     setDown(true);
-    startRef.current = e.pageX - cardRef.current.offsetLeft;
-    scrollLeftRef.current = cardRef.current.scrollLeft;
   }
 
   function handleMouseLeave() {
@@ -22,9 +21,10 @@ export default function useCardGesture(callback: Function) {
   }
 
   function handleMouseUp() {
-    if (!down || moved) return;
+    if (!down) return;
     setDown(false);
     setMoved(false);
+    if (debounceMoved) return;
     callback && callback();
   }
 

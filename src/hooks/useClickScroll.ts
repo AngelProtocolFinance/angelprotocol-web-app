@@ -16,7 +16,6 @@ export default function useClickScroll() {
   }
 
   function handleMouseLeave() {
-    console.log("mouse left");
     setDown(false);
   }
 
