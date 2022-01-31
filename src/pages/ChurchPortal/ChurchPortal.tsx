@@ -1,6 +1,8 @@
 import { RouteComponentProps } from "react-router-dom";
-import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
+import Donater from "components/Transactors/Donater/Donater";
+import { Props as C } from "components/Transactors/Donater/types";
+import TransactionSuite from "components/TransactionSuite/TransactionSuite";
+import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 
 export type ChurchPortalParam = { address: string };
 
@@ -15,9 +17,15 @@ const ChurchPortal = (props: RouteComponentProps<ChurchPortalParam>) => {
         <span className="font-semibold">Donation Address: </span>
         {endowment_addr || "N/A"}
       </p>
-      <Donater to="charity" receiver={endowment_addr} max_liq={0}>
-        <DonateSuite />
-      </Donater>
+      <TransactionSuite<C>
+        Context={Donater}
+        contextProps={{
+          to: "charity",
+          receiver: endowment_addr,
+          max_liq: 0,
+          Form: DonateForm,
+        }}
+      />
       <p className="p-5 p-10 text-white font-light text-md">
         If you would like a tax receipt issued please email{" "}
         <a className="text-angel-blue" href="mailto:support@angelprotocol.io">

@@ -1,24 +1,24 @@
 import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import CharityInfoNav from "./CharityInfoNav";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { RiPencilFill } from "react-icons/ri";
+import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import { Profile } from "services/aws/endowments/types";
+import { useProfileQuery } from "services/aws/endowments/endowments";
+import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
+import { useSetModal } from "components/Nodal/Nodal";
+import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import useDonater from "components/Transactors/Donater/useDonater";
+import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import CharityProfileEditForm from "./CharityProfileEditForm";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
-import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
-import { useSetModal } from "components/Nodal/Nodal";
-import { RiPencilFill } from "react-icons/ri";
-import CharityProfileEditForm from "./CharityProfileEditForm";
-import { Profile } from "services/aws/endowments/types";
-import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
-import { useProfileQuery } from "services/aws/endowments/endowments";
-import ImageWrapper from "components/ImageWrapper/ImageWrapper";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import CharityInfoNav from "./CharityInfoNav";
 import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+  const showDonater = useDonater({ to: "charity", receiver: endowment_addr });
 
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
@@ -33,21 +33,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   const isCharityOwner =
     wallet && wallet.walletAddress === profile.charity_owner;
 
-  const showDonationForm = () => {
-    //the button firing this function is disabled when
-    //param address is wrong
-    showModal(CharityForm, {
-      charity_addr: endowment_addr,
-    });
-  };
   const showEditForm = () => {
     showModal(CharityProfileForm, {
       profile,
     });
   };
-  console.log("profile", profile.charity_image);
+
   const openModal = (type: "edit" | "donation") =>
-    type === "edit" ? showEditForm() : showDonationForm();
+    type === "edit" ? showEditForm() : showDonater();
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
@@ -86,14 +79,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
     </section>
   );
 };
-
-function CharityForm(props: { charity_addr: string }) {
-  return (
-    <Donater to="charity" receiver={props.charity_addr}>
-      <DonateSuite inModal />
-    </Donater>
-  );
-}
 
 function CharityProfileForm(props: { profile: Profile }) {
   return (
