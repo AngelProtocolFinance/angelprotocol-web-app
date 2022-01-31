@@ -10,10 +10,12 @@ import useVoter from "./useVoter";
 export default function VoterForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<Values>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const voter = useVoter();
+  const isDisabled =
+    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
   return (
     <form
       onSubmit={handleSubmit(voter)}
@@ -33,7 +35,7 @@ export default function VoterForm() {
       <Amount />
       <Fee />
       <button
-        disabled={isSubmitting || form_loading || !!form_error}
+        disabled={isDisabled}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >

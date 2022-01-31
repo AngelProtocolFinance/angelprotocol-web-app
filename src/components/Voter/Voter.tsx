@@ -9,6 +9,7 @@ export default function Voter(props: {
   children: ReactNode;
 }) {
   const methods = useForm<Values>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",
