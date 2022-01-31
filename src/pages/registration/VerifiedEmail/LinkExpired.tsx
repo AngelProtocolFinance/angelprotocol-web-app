@@ -1,32 +1,28 @@
 import Action from "components/ActionButton/Action";
+import { MouseEventHandler } from "react";
 import { FaExclamation } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 
 type Props = {
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading: boolean;
 };
 
 export default function LinkExpired({ onClick, isLoading }: Props) {
   return (
-    <div>
-      <div className="flex justify-center rounded-xl mb-5">
-        <FaExclamation className="text-4xl text-red-500" />
-      </div>
-      <div className="my-10">
-        <span className="text-2xl font-bold">
-          Your verification link has expired. Please resend the verification
-          email.
-        </span>
-      </div>
-      <div className="mb-2">
-        <Action
-          classes="bg-thin-blue w-48 h-12"
-          onClick={onClick}
-          title="resend"
-          disabled={isLoading}
-        />
-      </div>
+    <div className="flex flex-col gap-10 items-center">
+      <FaExclamation className="text-4xl text-red-500" />
+      <span className="text-2xl font-bold">
+        Your verification link has expired. Please resend the verification
+        email.
+      </span>
+      <Action
+        classes="bg-thin-blue w-64 h-12 text-sm"
+        onClick={onClick}
+        title="Resend verification email"
+        disabled={isLoading}
+        isLoading={isLoading}
+      />
       <ToastContainer />
     </div>
   );

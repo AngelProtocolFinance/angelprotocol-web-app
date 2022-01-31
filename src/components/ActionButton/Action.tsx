@@ -1,4 +1,5 @@
 import Loader from "components/Loader/Loader";
+import { MouseEventHandler } from "react";
 
 type Submit = {
   submit?: true;
@@ -13,7 +14,7 @@ type Button = {
   disabled?: boolean;
   title: string;
   classes: string;
-  onClick: () => void;
+  onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
 };
 type Props = Submit | Button;

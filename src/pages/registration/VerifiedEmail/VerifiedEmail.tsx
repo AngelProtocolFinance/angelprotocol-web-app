@@ -55,7 +55,7 @@ export default function VerifiedEmail() {
     [history]
   );
 
-  return is_expired ? (
+  return !is_expired ? (
     <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
   ) : (
     <VerificationSuccessful
