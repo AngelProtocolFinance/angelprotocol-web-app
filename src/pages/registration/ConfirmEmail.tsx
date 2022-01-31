@@ -11,7 +11,7 @@ import Action from "../../components/ActionButton/Action";
 const ConfirmEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
+  const user = useGetter((state) => state.user);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
