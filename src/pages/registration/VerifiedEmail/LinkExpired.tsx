@@ -1,7 +1,6 @@
 import Action from "components/ActionButton/Action";
 import { MouseEventHandler } from "react";
 import { FaExclamation } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -23,7 +22,6 @@ export default function LinkExpired({ onClick, isLoading }: Props) {
         disabled={isLoading}
         isLoading={isLoading}
       />
-      <ToastContainer />
     </div>
   );
 }
