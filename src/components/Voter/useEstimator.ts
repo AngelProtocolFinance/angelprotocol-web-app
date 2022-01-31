@@ -15,11 +15,14 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
-import toCurrency from "helpers/toCurrency";
 import { useGovStaker } from "services/terra/queriers";
+import toCurrency from "helpers/toCurrency";
 
 export default function useEstimator() {
-  const { watch } = useFormContext<Values>();
+  const {
+    watch,
+    formState: { isValid, isDirty },
+  } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -39,6 +42,10 @@ export default function useEstimator() {
     (async () => {
       try {
         dispatch(setFormError(""));
+        if (!isValid || !isDirty) {
+          return;
+        }
+
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -66,16 +73,16 @@ export default function useEstimator() {
         }
 
         //check if voter has enough staked
-        const staked_amount = new Dec(gov_staker.balance).div(1e6);
-        const vote_amount = new Dec(debounced_amount);
+        const staked_amount = new Dec(gov_staker.balance);
+        const vote_amount = new Dec(debounced_amount).mul(1e6);
 
-        if (vote_amount.gt(staked_amount)) {
+        if (staked_amount.lt(vote_amount)) {
           dispatch(
             setFormError(
               `You only have ${toCurrency(
-                staked_amount.toNumber(),
+                staked_amount.div(1e6).toNumber(),
                 2
-              )} HALO staked `
+              )} HALO staked`
             )
           );
           return;
