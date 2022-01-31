@@ -1,9 +1,9 @@
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload as DefaultJwtPayload } from "jwt-decode";
 import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { User } from "services/user/types";
+import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { app, registration, site } from "types/routes";
@@ -15,17 +15,18 @@ export default function VerifiedEmail() {
   const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const pathNames = history.location.pathname.split("/");
-  const jwtData: any = useMemo(
-    () => jwtDecode(pathNames[pathNames.length - 1]),
+  const jwtPayload = useMemo(
+    () => jwtDecode<JwtPayload>(pathNames[pathNames.length - 1]),
     [pathNames]
   );
+
   const is_expired = useMemo(
-    () => Math.floor(Date.now() / 1000) >= jwtData.exp,
-    [jwtData]
+    () => jwtPayload.exp && Math.floor(Date.now() / 1000) >= jwtPayload.exp,
+    [jwtPayload]
   );
   const userData = useMemo(
-    () => createUserData(jwtData, pathNames),
-    [jwtData, pathNames]
+    () => createUserData(jwtPayload, pathNames),
+    [jwtPayload, pathNames]
   );
 
   useEffect(() => {
@@ -49,6 +50,7 @@ export default function VerifiedEmail() {
     response.data
       ? toast.info(response.data?.message)
       : toast.error(response.error?.data.message);
+    history.push(registration.confirm);
   }, [userData, resendEmail]);
 
   const navigateToRegistrationStatusPage = useCallback(
@@ -74,21 +76,28 @@ export default function VerifiedEmail() {
   );
 }
 
-function createUserData(jwtData: any, pathNames: string[]): User {
+function createUserData(jwtPayload: JwtPayload, pathNames: string[]): User {
   return {
-    ...jwtData.ContactPerson,
-    CharityName: jwtData.Registration.CharityName,
-    CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
-    RegistrationDate: jwtData.Registration.RegistrationDate,
-    RegistrationStatus: jwtData.Registration.RegistrationStatus,
-    userType: jwtData.user,
-    authorization: jwtData.authorization,
+    ...jwtPayload.ContactPerson,
+    CharityName: jwtPayload.Registration.CharityName,
+    CharityName_ContactEmail: jwtPayload.Registration.CharityName_ContactEmail,
+    RegistrationDate: jwtPayload.Registration.RegistrationDate,
+    RegistrationStatus: jwtPayload.Registration.RegistrationStatus,
     token: pathNames[pathNames.length - 1],
-    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
-    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
+    ProofOfIdentity: jwtPayload.Registration.ProofOfIdentity,
+    ProofOfEmployment: jwtPayload.Registration.ProofOfEmployment,
+    EndowmentAgreement: jwtPayload.Registration.EndowmentAgreement,
+    ProofOfIdentityVerified: jwtPayload.Registration.ProofOfIdentityVerified,
+    ProofOfEmploymentVerified:
+      jwtPayload.Registration.ProofOfEmploymentVerified,
+    EndowmentAgreementVerified:
+      jwtPayload.Registration.EndowmentAgreementVerified,
   };
 }
+
+type JwtPayload = DefaultJwtPayload & {
+  ContactPerson: any;
+  Registration: any;
+  authorization: string;
+  user: UserTypes;
+};

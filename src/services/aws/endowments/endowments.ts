@@ -5,6 +5,7 @@ import { cha, tags } from "../tags";
 import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
 
 const endowments_api = aws.injectEndpoints({
+  overrideExisting: true,
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
       query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
