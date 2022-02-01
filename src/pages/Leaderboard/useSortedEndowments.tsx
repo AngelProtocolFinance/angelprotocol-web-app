@@ -5,7 +5,6 @@ import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 import { MergeEndowment } from "services/aws/endowments/types";
 import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
-import projectFunds from "./projectFunds";
 
 export default function useSortedEndowments() {
   const wallet = useConnectedWallet();
@@ -23,16 +22,13 @@ export default function useSortedEndowments() {
         const details = update.endowments.find(
           (a) => a.address === end.address
         );
-        const { liquid, locked } = projectFunds(
-          10,
-          details?.total_lock || 0,
-          details?.total_liq || 0,
-          20,
-          15
-        );
-        return { ...end, ...details, liquid, locked };
+        return { ...end, ...details };
       })
-      .sort((a, b) => b.liquid + b.locked - (a.liquid + a.locked));
+      .sort(
+        (a, b) =>
+          (b.total_liq ?? 0 + (b.total_lock ?? 0)) -
+          (a.total_liq ?? 0 + (a.total_lock ?? 0))
+      );
     return data as MergeEndowment[];
   }, [endowments, update.endowments]);
 
