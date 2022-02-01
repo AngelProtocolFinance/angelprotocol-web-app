@@ -55,7 +55,7 @@ const ConfirmEmail = () => {
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
-  }, [user, dispatch]);
+  }, [user.PK, dispatch]);
 
   if (user.EmailVerified) {
     return (
