@@ -6,16 +6,16 @@ import { Step } from "services/transaction/types";
 import { Values } from "components/Transactors/Donater/types";
 import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";
-import useEstimator from "./useEstimator";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import { useCallback } from "react";
 
-function useUSTSender() {
+export default function useUSTSender(tx: CreateTxOptions) {
   const { reset, getValues } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
-  const tx = useEstimator();
 
   //data:Data
-  async function terra_sender() {
+  const ustSender = useCallback(async () => {
     try {
       if (!wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
@@ -65,8 +65,7 @@ function useUSTSender() {
     } finally {
       reset();
     }
-  }
-  return terra_sender;
-}
+  }, [tx]);
 
-export default useUSTSender;
+  return ustSender;
+}

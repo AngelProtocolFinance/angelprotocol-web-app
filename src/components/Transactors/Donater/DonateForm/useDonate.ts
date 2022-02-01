@@ -7,11 +7,13 @@ import useUSTSender from "../useUSTSender";
 // import useSolSender from "components/Donater/useSolSender";
 // import useAtomSender from "components/Donater/useAtomSender";
 import { useEffect, useRef } from "react";
+import useEstimator from "../useEstimator";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
-export default function useDonateForm() {
+export default function useDonate() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
-  const ustSender = useUSTSender();
+  const { terraTx } = useEstimator();
+  const ustSender = useUSTSender(terraTx!);
   // const ethSender = useEthSender();
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
@@ -37,7 +39,7 @@ export default function useDonateForm() {
   };
 
   return {
-    submitHandler: handleSubmit(senders[currency]),
+    donate: handleSubmit(senders[currency]),
     isSubmitting: formState.isSubmitting,
   };
 }

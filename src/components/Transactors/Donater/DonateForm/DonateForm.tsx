@@ -5,19 +5,19 @@ import { Values } from "components/Transactors/Donater/types";
 import { useGetter } from "store/accessors";
 import Status from "../../Status";
 import Amount from "./Amount";
-import useDonateForm from "./useDonateForm";
+import useDonate from "./useDonate";
 import Breakdown from "./Breakdown";
 import Split from "./Split";
 
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<Values>();
-  const { submitHandler, isSubmitting } = useDonateForm();
+  const { donate, isSubmitting } = useDonate();
   const to = watch("to");
 
   return (
     <form
-      onSubmit={submitHandler}
+      onSubmit={donate}
       className="bg-white grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >

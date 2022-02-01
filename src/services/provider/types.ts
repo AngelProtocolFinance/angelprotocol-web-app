@@ -1,4 +1,4 @@
-import { RequestArguments } from "types/eip1993";
+import { ExternalProvider } from "@ethersproject/providers/src.ts/web3-provider";
 export enum Providers {
   none = "none",
   // ethereum = "ethereum",
@@ -16,11 +16,7 @@ export type State = {
 
 export interface XdefiWindow extends Window {
   xfi?: {
-    ethereum?: {
-      chainId: number;
-      getaccounts: () => Promise<string[]>;
-      request: (args: RequestArguments) => Promise<any>;
-    };
+    ethereum?: ExternalProvider;
     terra?: any;
   };
 }

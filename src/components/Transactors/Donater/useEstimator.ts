@@ -1,5 +1,7 @@
+import { ethers } from "ethers";
+import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
@@ -13,7 +15,9 @@ import {
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
-import { Providers } from "services/provider/types";
+import { Providers, XdefiWindow } from "services/provider/types";
+import { ap_wallets } from "constants/ap_wallets";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -27,11 +31,10 @@ export default function useEstimator() {
   const currency = watch("currency");
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
+  const [ethTx, setEthTx] = useState<TransactionRequest>();
 
   const debounced_amount = useDebouncer(amount, 500);
   const debounced_split = useDebouncer(split_liq, 500);
-
-  console.log(coins);
 
   useEffect(() => {
     (async () => {
@@ -102,7 +105,37 @@ export default function useEstimator() {
           }
         }
 
+        //estimates for eth
         if (currency === denoms.ether) {
+          dispatch(setFormLoading(true));
+          const xwindow = window as XdefiWindow;
+          //provider is present at this point
+          const provider = new ethers.providers.Web3Provider(
+            xwindow.xfi?.ethereum!
+          );
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
+          const chainId = await signer.getChainId();
+          //--
+
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets[denoms.ether][`${chainId}` as chainIDs],
+            value: wei_amount,
+          };
+
+          const gasLimit = await signer.estimateGas(tx);
+          const fee_wei = gasLimit.mul(gasPrice);
+
+          const fee_eth = ethers.utils.formatEther(fee_wei);
+
+          setEthTx(tx);
+          dispatch(setFee(parseFloat(fee_eth)));
+          dispatch(setFormLoading(false));
         }
       } catch (err) {
         console.error(err);
@@ -112,5 +145,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
 
-  return terraTx;
+  return { terraTx, ethTx };
 }

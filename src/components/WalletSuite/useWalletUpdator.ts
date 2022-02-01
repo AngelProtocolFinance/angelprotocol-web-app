@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ethers } from "ethers";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
@@ -9,7 +10,6 @@ import useTerraBalance from "hooks/useTerraBalance";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
-import { EIP1993Methods } from "types/eip1993";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -80,14 +80,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const xwindow: XdefiWindow = window;
         //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
-        const provider = xwindow.xfi?.ethereum!;
-        const accounts = await provider.getaccounts();
-        //wei_balance in hex encoded string
-        const wei_balance: string = await provider.request({
-          method: EIP1993Methods.eth_getBalance,
-          params: [accounts[0], "latest"],
-        });
-        const eth_balance = new Dec(parseInt(wei_balance, 16))
+
+        const provider = new ethers.providers.Web3Provider(
+          xwindow.xfi?.ethereum!
+        );
+        const signer = provider.getSigner();
+        const wei_balance = await signer.getBalance();
+        const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
 
