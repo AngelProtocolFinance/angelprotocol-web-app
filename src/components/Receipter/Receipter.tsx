@@ -2,25 +2,37 @@ import { FormProvider, useForm } from "react-hook-form";
 import { ReceiptStage, Step } from "services/transaction/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { Values } from "./types";
+import { Receiver, MetaData, ReceiptPayload } from "./types";
 import { ReactNode } from "react";
+import { currency_text } from "constants/currency";
 
 export default function Receipter(
   props: { children: ReactNode } & ReceiptStage
 ) {
+  //need a guarantee that this component is called when stage is Receipt
   if (props.step !== Step.receipt) throw new Error("wrong component rendered");
   const {
     txHash,
-    details: { amount, split_liq },
-    //need a guarantee that this component is called when stage is Receipt
+    chainId,
+    details: { amount, split_liq, denom, receiver },
   } = props;
 
-  const methods = useForm<Values>({
+  const metaData: MetaData = {
+    chainId,
+    amount,
+    splitLiq: split_liq,
+    transactionDate: new Date().toISOString(),
+    denomination: currency_text[denom],
+  };
+  const _receiver: Receiver =
+    typeof receiver === "string"
+      ? { charityId: receiver }
+      : { fundId: receiver };
+
+  const methods = useForm<ReceiptPayload>({
     reValidateMode: "onChange",
     defaultValues: {
-      amount: parseInt(amount || ""),
-      splitLiq: split_liq,
-      transactionDate: new Date().toISOString(),
+      //keep txId for receipt request that come from tx history
       transactionId: txHash,
       fullName: "",
       email: "",
@@ -29,6 +41,8 @@ export default function Receipter(
       state: "",
       zipCode: "",
       country: "",
+      ...metaData,
+      ..._receiver,
     },
     resolver: yupResolver(schema),
   });

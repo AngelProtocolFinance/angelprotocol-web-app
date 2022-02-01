@@ -9,10 +9,9 @@ export default function Success(props: SuccessStage) {
   const { hideModal } = useSetModal();
   const { updateTx } = useTxUpdator();
   const { details, chainId, txHash, message } = props;
-  const canRequestReceipt = details?.to === "charity";
 
   function acknowledge() {
-    if (canRequestReceipt) {
+    if (details) {
       updateTx({ step: Step.receipt, chainId, txHash, details });
     } else {
       updateTx({ step: Step.form });
@@ -38,7 +37,7 @@ export default function Success(props: SuccessStage) {
         onClick={acknowledge}
         className="bg-angel-orange text-white rounded-md uppercase py-1 px-4"
       >
-        {canRequestReceipt ? "get receipt" : "ok"}
+        {details !== undefined ? "get receipt" : "ok"}
       </button>
     </div>
   );

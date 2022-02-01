@@ -1,3 +1,5 @@
+import { denoms } from "constants/currency";
+
 export enum Step {
   form = "form",
   submit = "submit",
@@ -9,9 +11,9 @@ export enum Step {
 
 export type Details = {
   amount: string;
-  to: "charity" | "fund" | "tca";
-  receiver?: string | number;
+  receiver: string | number;
   split_liq: string;
+  denom: denoms;
 };
 
 export type State = {

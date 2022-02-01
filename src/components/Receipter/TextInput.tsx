@@ -1,16 +1,16 @@
-import { Values } from "components/Receipter/types";
+import { ReceiptFormInput } from "./types";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 type TextInputProps = {
   placeholder: string;
   id: string;
-  name: keyof Values;
+  name: keyof ReceiptFormInput;
   errors?: any;
 };
 
 export default function TextInput(props: TextInputProps) {
-  const { register } = useFormContext<Values>();
+  const { register } = useFormContext<ReceiptFormInput>();
   return (
     <>
       <div className="grid">

@@ -3,7 +3,7 @@ import countryList from "react-select-country-list";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
-import { Values } from "./types";
+import { ReceiptPayload } from "./types";
 import useReceiptForm from "components/Receipter/useReceiptForm";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
@@ -30,14 +30,14 @@ export default function ReceiptForm() {
     register,
     formState: { errors },
     control,
-  } = useFormContext<Values>();
+  } = useFormContext<ReceiptPayload>();
   const { submitHandler, processing } = useReceiptForm();
   const countries = useMemo(() => countryList().getData(), []);
 
   const receiptData: DataProps[] = [
     {
       name: "Transaction date",
-      value: new Date(getValues("transactionDate")).toDateString(),
+      value: new Date().toDateString(),
     },
     {
       name: "Transaction id",
