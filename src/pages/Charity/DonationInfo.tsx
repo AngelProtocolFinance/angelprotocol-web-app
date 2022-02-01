@@ -35,6 +35,26 @@ interface DonationInfoProps {
   openModal: (type: "edit" | "donation") => void;
 }
 
+type IconButtonProps = {
+  url: string;
+  Icon: any;
+  color: string;
+  size: string | number;
+};
+
+function IconButton(props: IconButtonProps) {
+  return (
+    <a
+      href={props.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="h-8 w-8 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+    >
+      <props.Icon color="#3FA9F5" size={props.size} />
+    </a>
+  );
+}
+
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
@@ -89,7 +109,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
           {profile.charity_name}
         </h2>
-        <div className="flex flex-wrap gap-4 mt-4 items-center">
+        <div className="flex flex-col items-start sm:items-center sm:flex-wrap sm:flex-row  gap-4 mt-4">
           {isCharityOwner && (
             <button
               onClick={() => openModal("edit")}
@@ -108,34 +128,28 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
           {/* create a customizable IconButton component to replace all occurrences of this */}
           <div className="flex flex-row gap-2 lg:gap-5 lg:-mt-2 items-start lg:justify-start">
             {profile.twitter_handle && (
-              <a
-                href={`https://twitter.com/${profile.twitter_handle}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-              >
-                <FaTwitter color="#3FA9F5" size="25" />
-              </a>
+              <IconButton
+                url={`https://twitter.com/${profile.twitter_handle}`}
+                size={25}
+                color="#3FA8F5"
+                Icon={FaTwitter}
+              />
             )}
             {profile.linkedin_page && (
-              <a
-                href={`https://linkedin.com/${profile.linkedin_page}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-              >
-                <FaLinkedinIn color="#3FA9F5" size="25" />
-              </a>
+              <IconButton
+                url={`https://linkedin.com/${profile.linkedin_page}`}
+                size={25}
+                color="#3FA8F5"
+                Icon={FaLinkedinIn}
+              />
             )}
             {profile.facebook_page && (
-              <a
-                href={`https://facebook.com/${profile.facebook_page}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-              >
-                <FaFacebookSquare color="#3FA9F5" size="25" />
-              </a>
+              <IconButton
+                url={`https://facebook.com/${profile.facebook_page}`}
+                size={25}
+                color="#3FA8F5"
+                Icon={FaFacebookSquare}
+              />
             )}
           </div>
         </div>
