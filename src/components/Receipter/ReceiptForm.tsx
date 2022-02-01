@@ -16,9 +16,9 @@ type DataProps = {
 
 function ReceiptDetails({ name, value }: DataProps) {
   return (
-    <p className="text-lg border-b-2 border-grey-500 pb-1">
-      <span className="inline-block mr-2 capitalize">{name}:</span>
-      <span className="inline-block">{value}</span>
+    <p>
+      <span className="font-medium inline-block mr-2 capitalize">{name}:</span>
+      <span className="font-normal inline-block">{value}</span>
     </p>
   );
 }
@@ -56,7 +56,7 @@ export default function ReceiptForm() {
       autoComplete="off"
       autoSave="off"
     >
-      <h1 className="font-heading text-lg font-semibold text-grey-600">
+      <h1 className="font-heading text-xl font-bold text-grey-600">
         Request Receipt
       </h1>
       {receiptData.map(({ name, value }, idx) => (
