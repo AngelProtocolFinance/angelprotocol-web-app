@@ -10,9 +10,7 @@ const WalletCheck = () => {
   //url = app/register/wallet-check
   const history = useHistory();
   const [isOpenModal, setOpenModal] = useState(false);
-  const showTerraInfoModal = () => {
-    setOpenModal(true);
-  };
+  const showTerraInfoModal = () => setOpenModal(true);
 
   return (
     <div className="text-center">
