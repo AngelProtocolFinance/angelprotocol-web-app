@@ -89,11 +89,11 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
           {profile.charity_name}
         </h2>
-        <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-4">
+        <div className="flex flex-wrap gap-4 mt-4 items-center">
           {isCharityOwner && (
             <button
               onClick={() => openModal("edit")}
-              className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+              className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
             >
               Edit Profile
             </button>
@@ -101,7 +101,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
           <button
             disabled={profile.is_placeholder}
             onClick={() => openModal("donation")}
-            className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center mb-4"
+            className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
           >
             DONATE NOW
           </button>
