@@ -3,6 +3,7 @@ import { useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
 import { Endowment } from "services/aws/leaderboard/types";
+import anchorProtocol from "../../assets/images/anchor_protocol.png";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -37,7 +38,12 @@ function AccountInfo({
       <div className="flex justify-between w-30 h-16">
         <div className="flex flex-col items-start justify-around">
           <p className="uppercase font-bold text-white text-md">Strategy</p>
-          <p className="uppercase font-normal text-white text-xs">
+          <p className="uppercase font-normal text-white text-sm tracking-wide flex flex-row items-center gap-2">
+            <img
+              src={anchorProtocol}
+              alt="anchor protocol icon"
+              className="h-6 w-6 rounded-xl inline-block"
+            />{" "}
             {account.strategy}
           </p>
         </div>
