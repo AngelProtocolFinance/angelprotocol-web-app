@@ -1,5 +1,6 @@
 // import { unsdgs } from "pages/Fund/unsdgs";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { unsdgs } from "pages/Fund/unsdgs";
 import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
@@ -39,7 +40,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
-  // const sdg = unsdgs[+profile.un_sdg];
+  const sdg = unsdgs[+profile.un_sdg];
 
   const wallet = useConnectedWallet();
   const isCharityOwner =
@@ -81,11 +82,13 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   }, [profile]);
 
   return (
-    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130 py-2">
+    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
-        {/* <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
-          SDG #{profile.un_sdg}: {sdg.title}
-        </span> */}
+        {profile.un_sdg && (
+          <span className="inline-block text-center text-md py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
+            SDG #{profile.un_sdg}: {sdg.title}
+          </span>
+        )}
         <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
           {profile.charity_name}
         </h2>
