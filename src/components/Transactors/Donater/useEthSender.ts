@@ -1,22 +1,20 @@
 import { ethers } from "ethers";
-import { Values } from "./types";
+import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useFormContext } from "react-hook-form";
-import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-import { useSetModal } from "components/Nodal/Nodal";
 import useTxUpdator from "services/transaction/updators";
 import { XdefiWindow } from "services/provider/types";
+import handleEthError from "helpers/handleEthError";
+import { useCallback } from "react";
+import { chainIDs } from "constants/chainIDs";
 
-export default function useEthSender() {
+export default function useEthSender(tx: TransactionRequest) {
   const { updateTx } = useTxUpdator();
-  const { hideModal } = useSetModal();
   const { setValue } = useFormContext();
 
-  async function sender(data: Values) {
+  const ethSender = useCallback(async () => {
     try {
       const xwindow = window as XdefiWindow;
-
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(
@@ -24,23 +22,18 @@ export default function useEthSender() {
       );
       const signer = provider.getSigner();
       const response = await signer.sendTransaction(tx!);
-      dispatch(setPending({ amount: +data.amount, hash: response.hash }));
-      dispatch(
-        setStage({
-          step: Step.form,
-          content: null,
-        })
-      );
-
-      if (hideModal !== undefined) {
-        hideModal();
-      }
+      updateTx({
+        step: Step.success,
+        message: "Thank you!!",
+        chainId: chainIDs.eth_ropsten,
+        txHash: response.hash,
+      });
     } catch (error) {
-      handleEthError(error, handleTxError);
+      handleEthError(error, updateTx);
     } finally {
       setValue("amount", "");
     }
-  }
+  }, [tx]);
 
-  return sender;
+  return ethSender;
 }

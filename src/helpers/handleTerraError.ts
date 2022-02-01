@@ -5,6 +5,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import { StageUpdator, Step } from "services/transaction/types";
 
@@ -22,7 +23,7 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
       step: Step.error,
       message: "Timeout: failed to get transaction result",
       txHash: error.txHash,
-      chainId: error.chainId,
+      chainId: error.chainId as chainIDs,
     });
   } else if (error instanceof Timeout) {
     handler({ step: Step.error, message: "Transaction timeout" });

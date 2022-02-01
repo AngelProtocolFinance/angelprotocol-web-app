@@ -8,13 +8,14 @@ import useUSTSender from "../useUSTSender";
 // import useAtomSender from "components/Donater/useAtomSender";
 import { useEffect, useRef } from "react";
 import useEstimator from "../useEstimator";
+import useEthSender from "../useEthSender";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useDonate() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
-  const { terraTx } = useEstimator();
+  const { terraTx, ethTx } = useEstimator();
   const ustSender = useUSTSender(terraTx!);
-  // const ethSender = useEthSender();
+  const ethSender = useEthSender(ethTx!);
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
@@ -32,7 +33,7 @@ export default function useDonate() {
 
   const senders: Senders = {
     [denoms.uusd]: ustSender,
-    // [denoms.ether]: ethSender,
+    [denoms.ether]: ethSender,
     // [denoms.btc]: btcSender,
     // [denoms.sol]: solSender,
     // [denoms.uatom]: atomSender,

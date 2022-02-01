@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
