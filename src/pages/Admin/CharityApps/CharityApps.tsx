@@ -50,7 +50,7 @@ function CharityApps() {
   const handleDeleteCharity = () => {};
   //user can't access TCA page when not logged in or his prev token expired
   if (adminAuthStatus !== "authorized") {
-    return <Redirect to={`${site.admin}/${admin.authentication}`} />;
+    return <Redirect to={`${site.admin}/${admin.auth}`} />;
   }
 
   return (

@@ -15,12 +15,11 @@ export enum site {
 
 export enum admin {
   index = "dashboard",
-  authentication = "authentication",
+  auth = "auth",
   index_fund_management = "index-fund",
   endowments = "endowments",
   alliance_members = "alliance-members",
   charity_applications = "charity-applications",
-  auth = "auth",
 }
 
 export enum app {

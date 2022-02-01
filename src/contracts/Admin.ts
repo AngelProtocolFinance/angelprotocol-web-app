@@ -1,5 +1,5 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { contracts } from "constants/contracts";
+import { contracts } from "../constants/contracts";
 import Contract from "./Contract";
 import { Member, sc } from "./types";
 
