@@ -9,14 +9,10 @@ export interface Endowment {
   tier: number;
 }
 
-export type MergeEndowment = Endowment & {
-  address: string;
+export type MergedEndowment = Endowment & {
   total_liq: number;
   total_lock: number;
   overall: number;
-  liquid: number;
-  locked: number;
-  chain: "mainnet" | "testnet";
 };
 export interface Details {
   description: string;
