@@ -1,12 +1,12 @@
-import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useFormContext } from "react-hook-form";
+import { chainIDs } from "constants/chainIDs";
 import { Step } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
 import { XdefiWindow } from "services/provider/types";
 import handleEthError from "helpers/handleEthError";
 import { useCallback } from "react";
-import { chainIDs } from "constants/chainIDs";
+import { ethers } from "ethers";
 
 export default function useEthSender(tx: TransactionRequest) {
   const { updateTx } = useTxUpdator();
@@ -24,7 +24,7 @@ export default function useEthSender(tx: TransactionRequest) {
       const response = await signer.sendTransaction(tx!);
       updateTx({
         step: Step.success,
-        message: "Thank you!!",
+        message: "Thank you for your donation!",
         chainId: chainIDs.eth_ropsten,
         txHash: response.hash,
       });
