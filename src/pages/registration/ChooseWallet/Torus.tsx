@@ -1,14 +1,8 @@
 import gmailIcon from "assets/images/gmail.png";
-import {
-  ChangeEvent,
-  ChangeEventHandler,
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from "react";
+import { ChangeEvent, ChangeEventHandler, useCallback, useState } from "react";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaTwitch } from "react-icons/fa";
-import { ButtonHTMLAttributes } from "react";
+import Button from "./Button";
 import PartnerContent from "./PartnerContent";
 
 export default function Torus() {
@@ -39,21 +33,6 @@ export default function Torus() {
 
       <PartnerContent />
     </div>
-  );
-}
-
-type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
-
-function Button(props: ButtonProps) {
-  const { children, className, ...buttonProps } = props;
-
-  return (
-    <button
-      className={`flex gap-3 h-12 w-full justify-center items-center rounded-sm bg-white hover:bg-light-grey ${className}`}
-      {...buttonProps}
-    >
-      {children}
-    </button>
   );
 }
 
