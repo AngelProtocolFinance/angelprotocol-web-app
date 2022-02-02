@@ -172,9 +172,9 @@ export default function CharityInfoTab({
       {activeTab === "endowment" && (
         <CharityEndowmentInfo data={endowmentBalanceData} />
       )}
-      {/* {activeTab === "programs" && <CharityPrograms />}
+      {activeTab === "programs" && <OverviewTab />}
       {activeTab === "media" && <OverviewTab />}
-      {activeTab === "governance" && <OverviewTab />} */}
+      {activeTab === "governance" && <OverviewTab />}
     </>
   );
 }

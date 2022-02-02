@@ -33,38 +33,38 @@ export default function CharityInfoNav({
         <li className="mr-1 block w-full">
           <button
             className={getClassNames("endowment")}
-            onClick={() => onTabChange("endowment")}
+            // onClick={() => onTabChange("endowment")}
           >
             endowment
           </button>
         </li>
-        {/* <li className="mr-1">
+        <li className="mr-1 block w-full">
           <button
-            disabled
             className={getClassNames("programs")}
-            onClick={() => onTabChange("programs")}
+            disabled
+            // onClick={() => onTabChange("programs")}
           >
-            Programs
+            programs
           </button>
         </li>
-        <li className="mr-1">
+        <li className="mr-1 block w-full">
           <button
-            disabled
             className={getClassNames("media")}
-            onClick={() => onTabChange("media")}
+            disabled
+            // onClick={() => onTabChange("media")}
           >
-            News/media
+            media
           </button>
         </li>
-        <li className="mr-1">
+        <li className="mr-1 block w-full">
           <button
-            disabled
             className={getClassNames("governance")}
-            onClick={() => onTabChange("governance")}
+            disabled
+            // onClick={() => onTabChange("governance")}
           >
-            governance (dano)
+            governance
           </button>
-        </li> */}
+        </li>
       </ul>
     </nav>
   );
