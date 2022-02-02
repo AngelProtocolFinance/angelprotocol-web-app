@@ -39,7 +39,7 @@ export default function Torus() {
 
       <InputEmail onChange={handleChange} />
       <Button
-        className="bg-opacity-40"
+        className="bg-opacity-40 hover:bg-opacity-50"
         onClick={() => console.log("continue with email")}
       >
         Continue with Email
@@ -57,7 +57,7 @@ function Button(props: ButtonProps) {
 
   return (
     <button
-      className={`flex gap-3 h-12 w-full justify-center items-center bg-white rounded-sm ${className}`}
+      className={`flex gap-3 h-12 w-full justify-center items-center rounded-sm bg-white hover:bg-light-grey ${className}`}
       {...buttonProps}
     >
       {children}
