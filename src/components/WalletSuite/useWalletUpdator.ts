@@ -3,10 +3,9 @@ import { ethers } from "ethers";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
-import { useHaloBalance } from "services/terra/queriers";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { Providers, XdefiWindow } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
-import useTerraBalance from "hooks/useTerraBalance";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
@@ -14,7 +13,7 @@ import { useSetter } from "store/accessors";
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
-  const { main, others } = useTerraBalance(denoms.uusd);
+  const { main, others } = useBalances(denoms.uusd);
   const halo_balance = useHaloBalance();
 
   //updator for terra-station and wallet connect
@@ -90,17 +89,17 @@ export default function useWalletUpdator(activeProvider: Providers) {
           .div(1e18)
           .toNumber();
 
-        const coinsWithEth = [
-          ...others,
-          { amount: eth_balance, denom: denoms.ether },
-        ];
+        console.log(others);
+
+        const coins_copy = [...others];
+        coins_copy.push({ amount: eth_balance, denom: denoms.ether });
 
         dispatch(
           setWalletDetails({
             id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
             displayCoin: { amount: main, denom: denoms.uusd },
-            coins: coinsWithEth,
+            coins: coins_copy,
             address: wallet.terraAddress,
             //for multi-chain wallets, should just be testnet or mainnet
             chainId:

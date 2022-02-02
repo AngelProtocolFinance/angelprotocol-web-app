@@ -1,19 +1,19 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
-import { useSetter } from "store/accessors";
 import {
   setActiveProvider,
   setIsSwitching,
 } from "services/provider/providerSlice";
 import { Providers, ProviderStates } from "services/provider/types";
 import { updateChainID } from "services/chain/chainSlice";
-import { chainIDs } from "constants/chainIDs";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
+import { chainIDs } from "constants/chainIDs";
+import { useSetter } from "store/accessors";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
-  const terra_chain_ref = useRef<string>(chainIDs.mainnet);
+  const terra_chain_ref = useRef<string>(chainIDs.testnet);
 
   //terra states
   const { status: terraStatus, network } = useWallet();
@@ -57,6 +57,7 @@ export default function useProviderSwitcher() {
         chainID: network.chainID as chainIDs,
       })
     );
+
     //if network is changed invalidate terra services
     if (terra_chain_ref.current !== network.chainID) {
       dispatch(terra.util.resetApiState());
