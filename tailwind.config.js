@@ -183,6 +183,7 @@ module.exports = {
       opacity: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
       cursor: ["disabled"],
+      backgroundOpacity: ["disabled"],
     },
   },
 };

@@ -1,43 +1,60 @@
-import { ChangeEvent, ChangeEventHandler, useCallback, useState } from "react";
-import Button from "./Button";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCallback, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
+import { Button } from "./ButtonSocial";
 
 type Props = { onClick: (value: string) => void };
 
 export default function ContinueWithEmail({ onClick }: Props) {
-  const [value, setValue] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>({
+    resolver: yupResolver(SCHEMA),
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value),
-    []
+  const handleClick = useCallback(
+    (formData: FormData) => onClick(formData.email),
+    [onClick]
   );
-  const handleClick = useCallback(() => onClick(value), [onClick, value]);
+
+  const error = useMemo(() => errors?.email?.message, [errors?.email?.message]);
 
   return (
-    <div className="flex flex-col gap-3">
-      <InputEmail value={value} onChange={handleChange} />
+    <form
+      className={`flex flex-col ${error ? "gap-1" : "gap-3"}`}
+      onSubmit={handleSubmit(handleClick)}
+    >
+      <div className="flex flex-col">
+        <input
+          className="flex h-12 w-full justify-center rounded-sm pl-4 outline-none bg-white text-angel-grey text-sm"
+          placeholder="Enter your email"
+          {...register("email")}
+        />
+        {error && <p className="text-sm text-failed-red">{error}</p>}
+      </div>
       <Button
-        className="bg-opacity-40 hover:bg-opacity-50"
-        onClick={handleClick}
+        type="submit"
+        className={`bg-opacity-40 disabled:bg-opacity-75 ${
+          !isSubmitting ? "hover:bg-opacity-50" : "cursor-auto"
+        }`}
+        disabled={isSubmitting}
       >
         Continue with Email
       </Button>
-    </div>
+    </form>
   );
 }
 
-type InputEmailProps = {
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-};
+type FormData = { email: string };
 
-function InputEmail({ value, onChange }: InputEmailProps) {
-  return (
-    <input
-      type="string"
-      className="flex h-12 w-full justify-center rounded-sm pl-4 outline-none bg-white text-angel-grey text-sm"
-      placeholder="Enter your email"
-      value={value}
-      onChange={onChange}
-    />
-  );
-}
+const SCHEMA = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter your email."),
+});
