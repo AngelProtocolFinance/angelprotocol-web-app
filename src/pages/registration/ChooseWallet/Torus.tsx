@@ -27,7 +27,7 @@ export default function Torus() {
           <FaTwitch className="text-purple-500" size={30} />
         </ButtonSocial>
         <ButtonSocial onClick={() => console.log("connect with Discord")}>
-          <BsDiscord className="text-indigo-400" size={30} />
+          <BsDiscord className="text-indigo-500" size={30} />
         </ButtonSocial>
       </div>
 
