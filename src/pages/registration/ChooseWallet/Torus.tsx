@@ -4,6 +4,7 @@ import {
   ChangeEventHandler,
   PropsWithChildren,
   useCallback,
+  useState,
 } from "react";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaTwitch } from "react-icons/fa";
@@ -11,11 +12,6 @@ import { ButtonHTMLAttributes } from "react";
 import PartnerContent from "./PartnerContent";
 
 export default function Torus() {
-  const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => console.log(event.target.value),
-    []
-  );
-
   return (
     <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4 rounded-xs">
       <Button onClick={() => console.log("connect with Google")}>
@@ -37,13 +33,9 @@ export default function Torus() {
 
       <Separator />
 
-      <InputEmail onChange={handleChange} />
-      <Button
-        className="bg-opacity-40 hover:bg-opacity-50"
-        onClick={() => console.log("continue with email")}
-      >
-        Continue with Email
-      </Button>
+      <ContinueWithEmail
+        onClick={(value: string) => console.log(`continue with Email ${value}`)}
+      />
 
       <PartnerContent />
     </div>
@@ -75,15 +67,45 @@ function Separator() {
   );
 }
 
-type InputEmailProps = { onChange: ChangeEventHandler<HTMLInputElement> };
+type InputEmailProps = {
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+};
 
-function InputEmail({ onChange }: InputEmailProps) {
+function InputEmail({ onChange, value }: InputEmailProps) {
   return (
     <input
       type="string"
       className="flex h-12 w-full justify-center rounded-sm pl-4 outline-none bg-white text-angel-grey text-sm"
       placeholder="Enter your email"
       onChange={onChange}
+      value={value}
     />
+  );
+}
+
+type ContinueWithEmailProps = {
+  onClick: (value: string) => void;
+};
+
+function ContinueWithEmail({ onClick }: ContinueWithEmailProps) {
+  const [value, setValue] = useState("");
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value),
+    []
+  );
+  const handleClick = useCallback(() => onClick(value), [onClick]);
+
+  return (
+    <div className="flex flex-col gap-3">
+      <InputEmail value={value} onChange={handleChange} />
+      <Button
+        className="bg-opacity-40 hover:bg-opacity-50"
+        onClick={handleClick}
+      >
+        Continue with Email
+      </Button>
+    </div>
   );
 }
