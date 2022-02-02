@@ -8,9 +8,10 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export default function ButtonSocial(props: Props) {
   const { icon, text, alt = "", className, ...buttonProps } = props;
+
   return (
     <button
-      className={`flex gap-3 h-12 w-full justify-center items-center bg-white text-dark-grey rounded-sm ${className}`}
+      className={`flex gap-3 h-12 w-full justify-center items-center bg-white rounded-sm ${className}`}
       {...buttonProps}
     >
       {typeof icon === "string" ? (

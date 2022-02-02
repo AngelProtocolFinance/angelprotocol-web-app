@@ -13,6 +13,7 @@ export default function Torus() {
   return (
     <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4">
       <ButtonSocial
+        className="text-dark-grey"
         icon={gmailIcon}
         text="Continue with Google"
         alt="Google"
@@ -37,6 +38,11 @@ export default function Torus() {
       </div>
       <Separator />
       <InputEmail onChange={handleChange} />
+      <ButtonSocial
+        className="bg-opacity-40"
+        text="Continue with Email"
+        onClick={() => console.log("continue with email")}
+      />
     </div>
   );
 }
