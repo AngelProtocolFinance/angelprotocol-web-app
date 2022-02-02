@@ -3,7 +3,7 @@ import { useRequestReceiptMutation } from "services/apes/donations";
 import { Step, ReceiptStage } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
 import { useGetter } from "store/accessors";
-import { Values } from "./types";
+import { ReceiptPayload } from "./types";
 
 export default function useReceiptForm() {
   const { updateTx } = useTxUpdator();
@@ -13,22 +13,9 @@ export default function useReceiptForm() {
 
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
 
-  const submitHandler = async (body: Values) => {
-    const receipt = {
-      transactionId: body.transactionId,
-      body: {
-        fullName: body.fullName,
-        email: body.email,
-        streetAddress: body.streetAddress,
-        city: body.city,
-        state: body.state,
-        zipCode: body.zipCode,
-        country: body.country,
-        split_liq: body.splitLiq,
-      },
-    };
+  const submitHandler = async (data: ReceiptPayload) => {
     setProcessing(true);
-    const response: any = await requestReceipt({ receipt });
+    const response: any = await requestReceipt(data);
     setProcessing(false);
     if (response.data) {
       updateTx({
@@ -39,6 +26,7 @@ export default function useReceiptForm() {
         chainId,
       });
     } else {
+      console.error(response);
       updateTx({
         step: Step.error,
         message: "Error processing your receipt",

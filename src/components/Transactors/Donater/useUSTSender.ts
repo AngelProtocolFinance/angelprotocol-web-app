@@ -7,6 +7,7 @@ import { Values } from "components/Transactors/Donater/types";
 import Contract from "contracts/Contract";
 import { chainIDs } from "contracts/types";
 import useUSTEstimator from "./useUSTEstimator";
+import { denoms } from "constants/currency";
 
 function useUSTSender() {
   const { reset, getValues } = useFormContext<Values>();
@@ -36,18 +37,24 @@ function useUSTSender() {
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
+        const receiver = getValues("receiver");
         if (!txInfo.code) {
           updateTx({
             step: Step.success,
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
             chainId: wallet.network.chainID as chainIDs,
-            details: {
-              amount: getValues("amount"),
-              split_liq: getValues("split_liq"),
-              to: getValues("to"),
-              receiver: getValues("receiver"),
-            },
+            details:
+              typeof receiver === "undefined"
+                ? //if details is undefined, no request option is shown at the end of tx
+                  undefined
+                : {
+                    amount: getValues("amount"),
+                    split_liq: getValues("split_liq"),
+                    //undefined is eliminated
+                    receiver: receiver as string | number,
+                    denom: denoms.uusd,
+                  },
           });
           //TODO:invalidate tags here
         } else {
