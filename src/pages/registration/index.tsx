@@ -7,7 +7,7 @@ const ContactDetails = lazy(() => import("./ContactDetails"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
-const ChooseWallet = lazy(() => import("./connect-wallet/ChooseWallet"));
+const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const ConnectWallet = lazy(() => import("./connect-wallet/ConnectWallet"));
 const SelectWallet = lazy(() => import("./connect-wallet/SelectWallet"));
 const StepsDocs = lazy(() => import("./register-docs/Steps-docs"));
