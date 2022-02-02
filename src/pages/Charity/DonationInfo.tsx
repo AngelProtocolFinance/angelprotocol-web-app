@@ -2,7 +2,12 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
-import { FaFacebookSquare, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebookSquare,
+  FaLink,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 import { useRouteMatch } from "react-router-dom";
 import { CharityParam } from "./types";
 
@@ -86,9 +91,20 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         {/* <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-semibold uppercase text-gray-200 bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl border-t border-b border-opacity-20 2xl:-mt-4">
           SDG #{profile.un_sdg}: {sdg.title}
         </span> */}
-        <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
-          {profile.charity_name}
-        </h2>
+        {profile.url ? (
+          <a
+            href="##"
+            target="_blank"
+            rel="noreferrer"
+            className="text-4xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
+          >
+            <span>{profile.charity_name}</span> <FaLink size={20} />
+          </a>
+        ) : (
+          <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
+            {profile.charity_name}
+          </h2>
+        )}
         <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-4">
           {isCharityOwner && (
             <button
