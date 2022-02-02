@@ -8,8 +8,8 @@ export default function PartnerContent() {
         <img src={web3AuthLogo} alt="Web3Auth" />
       </span>
       <p>
-        Angel Protocol is partnered with Web3Auth to provide you with the hights
-        level of security for your Angel Protocol account.
+        Angel Protocol is partnered with Web3Auth to provide you with the
+        highest level of security for your Angel Protocol account.
       </p>
     </div>
   );
