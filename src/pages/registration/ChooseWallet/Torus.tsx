@@ -1,9 +1,15 @@
 import gmailIcon from "assets/images/gmail.png";
+import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaTwitch } from "react-icons/fa";
 import ButtonSocial from "./ButtonSocial";
 
 export default function Torus() {
+  const handleChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => console.log(event.target.value),
+    []
+  );
+
   return (
     <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4">
       <ButtonSocial
@@ -30,6 +36,7 @@ export default function Torus() {
         />
       </div>
       <Separator />
+      <InputEmail onChange={handleChange} />
     </div>
   );
 }
@@ -41,5 +48,20 @@ function Separator() {
       <span>or</span>
       <span className="h-px w-full bg-white" />
     </div>
+  );
+}
+
+function InputEmail({
+  onChange,
+}: {
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}) {
+  return (
+    <input
+      type="string"
+      className="flex h-12 w-full justify-center rounded-sm pl-4 outline-none bg-white text-angel-grey text-sm"
+      placeholder="Enter your email"
+      onChange={onChange}
+    />
   );
 }
