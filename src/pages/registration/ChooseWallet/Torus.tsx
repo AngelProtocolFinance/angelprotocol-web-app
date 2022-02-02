@@ -1,8 +1,13 @@
 import gmailIcon from "assets/images/gmail.png";
-import { ChangeEvent, ChangeEventHandler, useCallback } from "react";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  PropsWithChildren,
+  useCallback,
+} from "react";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaTwitch } from "react-icons/fa";
-import ButtonSocial from "./ButtonSocial";
+import { ButtonHTMLAttributes } from "react";
 
 export default function Torus() {
   const handleChange = useCallback(
@@ -12,38 +17,45 @@ export default function Torus() {
 
   return (
     <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4">
-      <ButtonSocial
-        className="text-dark-grey"
-        icon={gmailIcon}
-        text="Continue with Google"
-        alt="Google"
-        onClick={() => console.log("connect with Google")}
-      />
+      <Button onClick={() => console.log("connect with Google")}>
+        <img src={gmailIcon} alt="Google" height={30} width={30} />
+        <span className="text-dark-grey">Continue with Google</span>
+      </Button>
       <div className="flex justify-between gap-4">
-        <ButtonSocial
-          icon={<FaFacebook className="text-angel-blue" size={30} />}
-          alt="Facebook"
-          onClick={() => console.log("connect with Facebook")}
-        />
-        <ButtonSocial
-          icon={<FaTwitch className="text-purple-500" size={30} />}
-          alt="Twitch"
-          onClick={() => console.log("connect with Twitch")}
-        />
-        <ButtonSocial
-          icon={<BsDiscord className="text-indigo-400" size={30} />}
-          alt="Discord"
-          onClick={() => console.log("connect with Discord")}
-        />
+        <Button onClick={() => console.log("connect with Facebook")}>
+          <FaFacebook className="text-angel-blue" size={30} />
+        </Button>
+        <Button onClick={() => console.log("connect with Twitch")}>
+          <FaTwitch className="text-purple-500" size={30} />
+        </Button>
+        <Button onClick={() => console.log("connect with Discord")}>
+          <BsDiscord className="text-indigo-400" size={30} />
+        </Button>
       </div>
       <Separator />
       <InputEmail onChange={handleChange} />
-      <ButtonSocial
+      <Button
         className="bg-opacity-40"
-        text="Continue with Email"
         onClick={() => console.log("continue with email")}
-      />
+      >
+        Continue with Email
+      </Button>
     </div>
+  );
+}
+
+type ButtonProps = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
+
+function Button(props: ButtonProps) {
+  const { children, className, ...buttonProps } = props;
+
+  return (
+    <button
+      className={`flex gap-3 h-12 w-full justify-center items-center bg-white rounded-sm ${className}`}
+      {...buttonProps}
+    >
+      {children}
+    </button>
   );
 }
 
@@ -57,11 +69,9 @@ function Separator() {
   );
 }
 
-function InputEmail({
-  onChange,
-}: {
-  onChange: ChangeEventHandler<HTMLInputElement>;
-}) {
+type InputEmailProps = { onChange: ChangeEventHandler<HTMLInputElement> };
+
+function InputEmail({ onChange }: InputEmailProps) {
   return (
     <input
       type="string"
