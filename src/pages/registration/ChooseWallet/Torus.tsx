@@ -17,7 +17,7 @@ export default function Torus() {
   );
 
   return (
-    <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4">
+    <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4 rounded-xs">
       <Button onClick={() => console.log("connect with Google")}>
         <img src={gmailIcon} alt="Google" height={30} width={30} />
         <span className="text-dark-grey">Continue with Google</span>
