@@ -8,6 +8,7 @@ import {
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaTwitch } from "react-icons/fa";
 import { ButtonHTMLAttributes } from "react";
+import PartnerContent from "./PartnerContent";
 
 export default function Torus() {
   const handleChange = useCallback(
@@ -21,6 +22,7 @@ export default function Torus() {
         <img src={gmailIcon} alt="Google" height={30} width={30} />
         <span className="text-dark-grey">Continue with Google</span>
       </Button>
+
       <div className="flex justify-between gap-4">
         <Button onClick={() => console.log("connect with Facebook")}>
           <FaFacebook className="text-angel-blue" size={30} />
@@ -32,7 +34,9 @@ export default function Torus() {
           <BsDiscord className="text-indigo-400" size={30} />
         </Button>
       </div>
+
       <Separator />
+
       <InputEmail onChange={handleChange} />
       <Button
         className="bg-opacity-40"
@@ -40,6 +44,8 @@ export default function Torus() {
       >
         Continue with Email
       </Button>
+
+      <PartnerContent />
     </div>
   );
 }
