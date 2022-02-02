@@ -29,6 +29,17 @@ export default function Torus() {
           onClick={() => console.log("connect with Discord")}
         />
       </div>
+      <Separator />
+    </div>
+  );
+}
+
+function Separator() {
+  return (
+    <div className="flex gap-3 items-center">
+      <span className="h-px w-full bg-white" />
+      <span>or</span>
+      <span className="h-px w-full bg-white" />
     </div>
   );
 }
