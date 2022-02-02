@@ -6,7 +6,7 @@ export default function ChooseWallet() {
     <div className="flex flex-col gap-5 items-center">
       <h2 className="text-3xl font-semibold">Register your wallet</h2>
       <Torus />
-      <Link to="" className="uppercase underline text-bright-blue text-sm">
+      <Link to="" className="uppercase text-bright-blue text-sm">
         Connect a terra station wallet
       </Link>
     </div>
