@@ -14,9 +14,9 @@ export default function MobileDappNav() {
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>
-      <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
+      {/* <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 }

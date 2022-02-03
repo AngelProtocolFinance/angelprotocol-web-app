@@ -22,10 +22,10 @@ export default function WebMenu() {
       </li>
       <li className="mr-4">
         <NavLink
-          to={`${site.app}${app.index}`}
+          to={`${site.app}/${app.marketplace}`}
           className={`${linkStyles.className} border py-2 px-4 border-angel-blue rounded-full hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
         >
-          Launch App
+          Donate
         </NavLink>
       </li>
     </ul>

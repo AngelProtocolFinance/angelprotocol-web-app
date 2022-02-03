@@ -26,11 +26,11 @@ export default function AppMenu() {
           REGISTER
         </a>
       </li>
-      <li>
+      {/* <li>
         <Link to={`${url}/${app.tca}`} {...linkStyles}>
           DONATE
         </Link>
-      </li>
+      </li> */}
     </ul>
   );
 }
