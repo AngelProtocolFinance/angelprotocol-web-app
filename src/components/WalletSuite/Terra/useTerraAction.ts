@@ -8,7 +8,6 @@ import { useGetter } from "store/accessors";
 
 export default function useTerraAction(options: Connection) {
   const { isUpdating } = useGetter((state) => state.wallet);
-  console.log(isUpdating);
   const { connect, status } = useWallet();
 
   const shouldConnect = status === WalletStatus.WALLET_NOT_CONNECTED;

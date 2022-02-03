@@ -30,19 +30,11 @@ export default function useEthSender(tx: TransactionRequest) {
         const chainId = `${chainNum}` as chainIDs;
         const response = await signer.sendTransaction(tx!);
 
-        updateTx({
-          step: Step.broadcast,
-          message: "Waiting for transaction to be confirmed.",
-          txHash: response.hash,
-          chainId,
-        });
-        const receipt = await response.wait(1);
-
         updateTx({ step: Step.submit, message: "Saving donation info.." });
         const receiver = getValues("receiver");
         if (typeof receiver !== "undefined") {
           const logResponse = await logDonation(
-            receipt.transactionHash,
+            response.hash,
             chainId,
             data.amount,
             denoms.ether,
@@ -67,6 +59,7 @@ export default function useEthSender(tx: TransactionRequest) {
           message: "Thank you for your donation!",
           txHash: response.hash,
           chainId,
+          isReceiptEnabled: true,
         });
       } catch (error) {
         handleEthError(error, updateTx);
@@ -74,6 +67,7 @@ export default function useEthSender(tx: TransactionRequest) {
         setValue("amount", "");
       }
     },
+    //eslint-disable-next-line
     [tx]
   );
 

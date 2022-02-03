@@ -9,7 +9,7 @@ type Wallets = {
 
 export const ap_wallets: Wallets = {
   [denoms.ether]: {
-    [chainIDs.eth_kovan]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
+    [chainIDs.mainnet]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",
     [chainIDs.eth_ropsten]: "0xcDA0D6adCD0f1CCeA6795F9b1F23a27ae643FE7C", //ropsten faucet
   },
   [denoms.btc]: {

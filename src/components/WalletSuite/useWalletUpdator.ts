@@ -89,8 +89,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
           .div(1e18)
           .toNumber();
 
-        console.log(others);
-
         const coins_copy = [...others];
         coins_copy.push({ amount: eth_balance, denom: denoms.ether });
 

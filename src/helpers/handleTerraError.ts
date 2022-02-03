@@ -21,8 +21,7 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
   } else if (error instanceof TxResultFail) {
     handler({
       step: Step.error,
-      message:
-        "Timeout: failed to wait for transaction result. If you need a receipt, you can request one by going to your donation history",
+      message: "Timeout: failed to wait for transaction result.",
       txHash: error.txHash,
       chainId: error.chainId as chainIDs,
     });

@@ -2,7 +2,7 @@ import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
-import { WalletInfo, State, TerraIdentifiers } from "./types";
+import { WalletInfo, State } from "./types";
 
 const initialState: State = {
   isUpdating: false,

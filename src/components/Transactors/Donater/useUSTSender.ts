@@ -93,6 +93,7 @@ export default function useUSTSender(tx: CreateTxOptions) {
         reset();
       }
     },
+    //eslint-disable-next-line
     [tx]
   );
 
