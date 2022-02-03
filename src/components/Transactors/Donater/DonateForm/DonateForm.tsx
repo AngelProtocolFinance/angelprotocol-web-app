@@ -14,8 +14,8 @@ export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<Values>();
   const { submitHandler, isSubmitting } = useDonateForm();
-  const to = watch("to");
   const [showSplit, setShowSplit] = useState(false);
+  const to = watch("to");
 
   const toggleAdvancedOptions = () => setShowSplit(!showSplit);
 
@@ -38,14 +38,22 @@ export default function DonateForm() {
         <Currency currency={denoms.uatom} withTooltip />*/}
       </div>
       <Breakdown />
-      {to !== "tca" && showSplit && <Split />}
+      {to !== "tca" && showSplit && (
+        <>
+          <Split />
+          <span className="inline-block text-angel-grey font-normal text-sm mt-1 mb-2">
+            Note: Donations into the endowment provide sustainable financial
+            runaway and allow your gift to give forever
+          </span>
+        </>
+      )}
       <div className="flex flex-row gap-2">
         {to !== "tca" && (
           <span
             onClick={toggleAdvancedOptions}
             className="w-full bg-transparent p-1 rounded-md mt-2 capitalize text-md text-grey-accent font-semibold hover:text-angel-grey cursor-pointer"
           >
-            Advanced Options
+            {showSplit ? "Hide options" : "Advanced Options"}
           </span>
         )}
         <button
