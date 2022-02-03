@@ -117,13 +117,13 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             href="##"
             target="_blank"
             rel="noreferrer"
-            className="text-4xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
+            className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
           >
             <span>{profile.charity_name}</span>
             <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
           </a>
         ) : (
-          <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
+          <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
             {profile.charity_name}
           </h2>
         )}

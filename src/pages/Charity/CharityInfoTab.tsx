@@ -106,21 +106,24 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
             ${toCurrency(overall)}
           </p>
-          <p className="uppercase font-bold text-thin-blue text-sm">
+          {/*          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations
           </p>
-          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>
+          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>*/}
         </div>
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
+
         </div> */}
-        {accountDetails.map((account, i) => (
-          <AccountInfo
-            key={i}
-            account={account}
-            className={`${account.color}`}
-          />
-        ))}
+        <div className="flex flex-col md:flex-row gap-5 w-full">
+          {accountDetails.map((account, i) => (
+            <AccountInfo
+              key={i}
+              account={account}
+              className={`${account.color}`}
+            />
+          ))}
+        </div>
       </div>
       {/* <AccountAction /> turn on for admin features after V1 */}
     </div>
