@@ -62,6 +62,21 @@ avoid explicit `any`
 
 ```
 
+### Component
+In a component file, always put `default` export at the top 
+
+```jsx
+//Component.tsx
+
+export default function Component(){
+  return <div><SubComponent/></div>
+}
+
+function SubComponent(){
+  return <p>SubComponent</p>
+}
+```
+
 ### Abstractions
 when tailwind classes are redundant, it's recommended to factor out the redundancy via separate component
 https://tailwindcss.com/docs/reusing-styles#extracting-components-and-partials
