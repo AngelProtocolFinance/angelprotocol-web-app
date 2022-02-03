@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import { Step, SuccessStage } from "services/transaction/types";
+import { Step, ReceiptStage } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
 import { useGetter } from "store/accessors";
 import { Values } from "./types";
@@ -11,7 +11,7 @@ export default function useReceiptForm() {
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
 
-  const { chainId, txHash } = stage as SuccessStage; //check made on Receipter
+  const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
 
   const submitHandler = async (data: Values) => {
     setProcessing(true);
