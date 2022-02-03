@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RiPencilFill } from "react-icons/ri";
