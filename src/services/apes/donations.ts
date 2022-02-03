@@ -1,35 +1,36 @@
 import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
+import { ReceiptPayload, TxDetails } from "./types";
 import { apes } from "./apes";
-import { ReceiptPayload } from "components/Receipter/types";
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
-    logDonationTransaction: builder.mutation<any, any>({
-      query: (data) => {
+    logDonation: builder.mutation<any, TxDetails>({
+      query: (txPayload) => {
+        const generatedToken = createAuthToken(UserTypes.WEB_APP);
         return {
           url: "donation",
           method: "POST",
-          headers: { authorization: data.token },
-          body: data.body,
+          headers: { authorization: generatedToken },
+          body: txPayload,
         };
       },
-      transformResponse: (response: { data: any }) => response,
     }),
     requestReceipt: builder.mutation<any, ReceiptPayload>({
       query: (receiptPayload) => {
         const generatedToken = createAuthToken(UserTypes.WEB_APP);
+        const { transactionId, ...restOfPayload } = receiptPayload;
         return {
           url: `donation`,
-          method: "POST",
+          params: { transactionId },
+          method: "PUT",
           headers: { authorization: generatedToken },
-          body: receiptPayload,
+          body: restOfPayload,
         };
       },
-      transformResponse: (response: any) => response, // TODO:  assign type to the response object
     }),
   }),
 });
 
-export const { useLogDonationTransactionMutation, useRequestReceiptMutation } =
+export const { useLogDonationMutation, useRequestReceiptMutation } =
   donations_api;

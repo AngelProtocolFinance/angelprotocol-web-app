@@ -1,5 +1,3 @@
-import { denoms } from "constants/currency";
-
 export enum Step {
   form = "form",
   submit = "submit",
@@ -8,13 +6,6 @@ export enum Step {
   error = "error",
   receipt = "receipt",
 }
-
-export type Details = {
-  amount: string;
-  receiver: string | number;
-  split_liq: string;
-  denom: denoms;
-};
 
 export type State = {
   form_loading: boolean;
@@ -52,7 +43,7 @@ export type SuccessStage = {
   message: string;
   txHash: string;
   chainId: string;
-  details?: Details;
+  isReceiptEnabled?: true;
 };
 
 export type ReceiptStage = {
@@ -60,7 +51,6 @@ export type ReceiptStage = {
   message?: never;
   txHash: string;
   chainId: string;
-  details: Details;
 };
 
 export type ErrorStage = {
