@@ -1,8 +1,9 @@
 import useProfile from "pages/Market/useProfile";
-import { useRouteMatch } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
 import { Endowment } from "services/aws/leaderboard/types";
+import { charity } from "types/routes";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -157,24 +158,23 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
 // }
 
 type Props = {
-  activeTab: string;
   endowmentBalanceData: Endowment;
 };
 
-export default function CharityInfoTab({
-  activeTab = "overview",
-  endowmentBalanceData,
-}: Props) {
-  //TODO: use enums or maybe just implement this over react-router
+export default function CharityInfoTab({ endowmentBalanceData }: Props) {
+  const { path } = useRouteMatch();
+
   return (
-    <>
-      {activeTab === "overview" && <OverviewTab />}
-      {activeTab === "endowment" && (
-        <CharityEndowmentInfo data={endowmentBalanceData} />
-      )}
-      {activeTab === "programs" && <OverviewTab />}
-      {activeTab === "media" && <OverviewTab />}
-      {activeTab === "governance" && <OverviewTab />}
-    </>
+    <Switch>
+      <Route path={`${path}${charity.overview}`} component={OverviewTab} />
+      <Route
+        path={`${path}${charity.endowment}`}
+        render={() => <CharityEndowmentInfo data={endowmentBalanceData} />}
+      />
+      <Route path={`${path}${charity.programs}`} component={OverviewTab} />
+      <Route path={`${path}${charity.media}`} component={OverviewTab} />
+      <Route path={`${path}${charity.governance}`} component={OverviewTab} />
+      <Route path={`${path}`} component={OverviewTab} />
+    </Switch>
   );
 }

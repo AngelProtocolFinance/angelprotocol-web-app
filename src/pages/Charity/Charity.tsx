@@ -23,7 +23,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
 
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
-  const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const endowmentBalanceData = useQueryEndowmentBal(
     endowment_addr,
@@ -73,14 +72,8 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          <CharityInfoNav
-            activeTab={activeTab}
-            onTabChange={(tab: string) => setActiveTab(tab)}
-          />
-          <CharityInfoTab
-            activeTab={activeTab}
-            endowmentBalanceData={endowmentBalanceData}
-          />
+          <CharityInfoNav />
+          <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
         </div>
       </div>
       <ToastContainer />
