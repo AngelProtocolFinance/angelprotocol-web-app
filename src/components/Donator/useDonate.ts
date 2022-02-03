@@ -8,7 +8,6 @@ import { FormikHelpers } from "formik";
 import createAuthToken from "helpers/createAuthToken";
 import getTxUrl from "helpers/getTxUrl";
 import useUSTBalance from "hooks/useUSTBalance";
-import { useLogDonationTransactionMutation } from "services/apes/donations";
 import { UserTypes } from "services/user/types";
 import createStatusFromError from "./createStatusFromError";
 import getDepositAmount from "./getDepositAmount";
@@ -21,7 +20,6 @@ function useDonate(
 ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
-  const [logDonationTransaction] = useLogDonationTransactionMutation();
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
@@ -120,7 +118,7 @@ function useDonate(
             },
           };
 
-          const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
+          const response: any = {}; // Logs all donation transactions in APES' donations DynamoDB table
           const result = response.error
             ? response.error.data.message
             : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS

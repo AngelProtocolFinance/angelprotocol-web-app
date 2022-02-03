@@ -65,10 +65,11 @@ export default function useEstimator() {
           return;
         }
 
+        dispatch(setFormLoading(true));
+
         //checks for uusd
         if (currency === denoms.uusd) {
           if (activeProvider === Providers.terra) {
-            dispatch(setFormLoading(true));
             const receiver = getValues("receiver");
             let tx: CreateTxOptions;
             if (
@@ -100,8 +101,6 @@ export default function useEstimator() {
             }
             dispatch(setFee(estimatedFee));
             setTerraTx(tx);
-            dispatch(setFormLoading(false));
-            return;
           }
         }
 
@@ -135,8 +134,9 @@ export default function useEstimator() {
 
           setEthTx(tx);
           dispatch(setFee(parseFloat(fee_eth)));
-          dispatch(setFormLoading(false));
         }
+
+        dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
         dispatch(setFormError("Error estimating transaction"));
