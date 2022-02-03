@@ -40,12 +40,14 @@ export default function DonateForm() {
       <Breakdown />
       {to !== "tca" && showSplit && <Split />}
       <div className="flex flex-row gap-2">
-        <span
-          onClick={toggleAdvancedOptions}
-          className="w-full bg-transparent p-1 rounded-md mt-2 capitalize text-md text-grey-accent font-semibold hover:text-angel-grey cursor-pointer"
-        >
-          Advanced Options
-        </span>
+        {to !== "tca" && (
+          <span
+            onClick={toggleAdvancedOptions}
+            className="w-full bg-transparent p-1 rounded-md mt-2 capitalize text-md text-grey-accent font-semibold hover:text-angel-grey cursor-pointer"
+          >
+            Advanced Options
+          </span>
+        )}
         <button
           disabled={isSubmitting || form_loading || !!form_error}
           className="w-full bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
