@@ -4,8 +4,8 @@ import { unsdgs } from "pages/Fund/unsdgs";
 import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import {
+  FaExternalLinkAlt,
   FaFacebookSquare,
-  FaLink,
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
@@ -54,7 +54,7 @@ function IconButton(props: IconButtonProps) {
       href={props.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="h-8 w-8 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
     >
       <props.Icon color="#3FA9F5" size={props.size} />
     </a>
@@ -109,7 +109,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   return (
     <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130">
       <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
-        <span className="inline-block text-center text-md py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
+        <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
           SDG #{profile.un_sdg}: {sdg.title}
         </span>
         {profile.url ? (
@@ -119,7 +119,8 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             rel="noreferrer"
             className="text-4xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
           >
-            <span>{profile.charity_name}</span> <FaLink size={20} />
+            <span>{profile.charity_name}</span>
+            <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
           </a>
         ) : (
           <h2 className="text-4xl font-bold text-white uppercase tracking-wide">
