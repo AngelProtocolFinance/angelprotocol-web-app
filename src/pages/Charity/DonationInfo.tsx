@@ -54,7 +54,7 @@ function IconButton(props: IconButtonProps) {
       href={props.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="h-8 w-8 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
     >
       <props.Icon color="#3FA9F5" size={props.size} />
     </a>
