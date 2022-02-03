@@ -9,21 +9,21 @@ export default function DappMenu() {
 
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex gap-2 justify-self-end items-center font-body text-sm lg:text-base ml-2">
-      <Link
+      {/* <Link
         className={linkStyles.className}
         to={`${site.app}/${app.marketplace}`}
       >
         Marketplace
-      </Link>
+      </Link> */}
       {/*      <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
         Donate now
       </NavLink>*/}
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>
-      <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
+      {/* <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 }

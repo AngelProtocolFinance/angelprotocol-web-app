@@ -1,5 +1,5 @@
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { web, site } from "types/routes";
+import { web, site, app } from "types/routes";
 
 //Will be for WebNav
 export default function MobileNav() {
@@ -22,8 +22,8 @@ export default function MobileNav() {
         </NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to={`${site.app}/`} {...linkStyles}>
-          Launch App
+        <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
+          Marketplace
         </NavLink>
       </li>
     </ul>

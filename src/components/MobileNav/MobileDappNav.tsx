@@ -8,15 +8,15 @@ export default function MobileDappNav() {
   };
   return (
     <nav className="lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2">
-      <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
+      {/* <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
         Marketplace
-      </NavLink>
+      </NavLink> */}
       <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
         Governance
       </NavLink>
-      <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
+      {/* <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
-      </NavLink>
+      </NavLink> */}
     </nav>
   );
 }
