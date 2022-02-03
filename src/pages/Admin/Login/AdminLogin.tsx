@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { ToastContainer } from "react-toastify";
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import {
@@ -105,7 +104,6 @@ const AdminLogin = () => {
       >
         learn more about angel protocol
       </Link>
-      <ToastContainer />
     </div>
   );
 };

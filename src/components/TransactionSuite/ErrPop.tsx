@@ -1,25 +1,24 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { setStage } from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
-import { useGetter, useSetter } from "store/accessors";
+import getFinderUrl from "helpers/getFinderUrl";
+import useTxUpdator from "services/transaction/updators";
+import { Step, ErrorStage } from "services/transaction/types";
 
-export default function ErrPop() {
-  const { stage } = useGetter((state) => state.transaction);
-  const dispatch = useSetter();
+export default function ErrPop(props: ErrorStage) {
+  if (props.step !== Step.error) throw new Error("wrong component rendered");
+  const { updateTx } = useTxUpdator();
+  const { message, chainId, txHash } = props;
 
   function acknowledge() {
-    dispatch(setStage({ step: Step.form, content: null }));
+    updateTx({ step: Step.form });
   }
 
   return (
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
       <AiOutlineInfoCircle className="text-angel-grey text-2xl mb-2 " />
-      <p className="text-center text-angel-grey mb-2 ">
-        {stage.content?.message}
-      </p>
-      {stage.content?.url && (
+      <p className="text-center text-angel-grey mb-2 ">{message}</p>
+      {chainId && txHash && (
         <a
-          href={stage.content?.url}
+          href={getFinderUrl(chainId, txHash)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-red-400 cursor-pointer mb-6 text-sm"

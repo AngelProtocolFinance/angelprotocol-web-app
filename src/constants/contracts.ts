@@ -1,4 +1,4 @@
-import { VaultFields } from "components/Withdraw/types";
+import { VaultFields } from "components/Withdrawer/types";
 import { chainIDs, sc } from "contracts/types";
 
 type Contracts = {

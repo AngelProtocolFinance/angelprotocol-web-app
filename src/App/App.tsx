@@ -4,6 +4,7 @@ import AppFoot from "components/Footers/AppFoot";
 import Nodal from "components/Nodal/Nodal";
 import Views from "./Views";
 import DappHead from "components/Headers/DappHead";
+import { ToastContainer } from "react-toastify";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
@@ -18,6 +19,7 @@ export default function App() {
           <Views />
         </Nodal>
         <AppFoot />
+        <ToastContainer />
       </TerraProvider>
     </div>
   );
