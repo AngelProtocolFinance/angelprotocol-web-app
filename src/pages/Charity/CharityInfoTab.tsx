@@ -50,7 +50,7 @@ function AccountInfo({
         </div>
         <div className="flex flex-col items-start justify-around">
           <p className="uppercase font-bold text-white text-md">Allocation</p>
-          <p className="uppercase font-normal text-white text-xs">
+          <p className="uppercase font-normal text-white text-sm">
             {account.allocation}
           </p>
         </div>

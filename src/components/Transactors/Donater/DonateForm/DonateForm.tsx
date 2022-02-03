@@ -41,7 +41,7 @@ export default function DonateForm() {
       {to !== "tca" && showSplit && (
         <>
           <Split />
-          <span className="inline-block text-angel-grey font-normal text-sm mt-1 mb-2">
+          <span className="inline-block text-grey-accent font-normal text-sm mt-1 mb-2 pl-2">
             Note: Donations into the endowment provide sustainable financial
             runaway and allow your gift to give forever
           </span>

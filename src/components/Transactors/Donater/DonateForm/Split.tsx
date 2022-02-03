@@ -9,13 +9,15 @@ export default function Split() {
           type="locked"
           border_class="border-green-500"
           text_class="text-green-500"
-          title="Compounded forever"
+          title="Endowment"
+          action="Compounded forever"
         />
         <Portion
           type="liquid"
           border_class="border-angel-blue"
           text_class="text-blue-accent"
-          title="Instantly available"
+          title="Liquid"
+          action="Instantly available"
         >
           <Slider />
         </Portion>
