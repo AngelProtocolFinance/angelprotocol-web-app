@@ -18,6 +18,7 @@ export interface Details {
 }
 
 export interface Profile {
+  url?: string;
   charity_image?: string; //url of image
   charity_owner: string; // charity owner wallet address
   charity_registration_number: string; //"CN201225725"
