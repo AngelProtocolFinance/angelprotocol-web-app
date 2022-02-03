@@ -8,11 +8,11 @@ export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
   const { hideModal } = useSetModal();
   const { updateTx } = useTxUpdator();
-  const { details, chainId, txHash, message } = props;
+  const { chainId, txHash, message, isReceiptEnabled } = props;
 
   function acknowledge() {
-    if (details) {
-      updateTx({ step: Step.receipt, chainId, txHash, details });
+    if (isReceiptEnabled) {
+      updateTx({ step: Step.receipt, chainId, txHash });
     } else {
       updateTx({ step: Step.form });
       hideModal();
@@ -37,7 +37,7 @@ export default function Success(props: SuccessStage) {
         onClick={acknowledge}
         className="bg-angel-orange text-white rounded-md uppercase py-1 px-4"
       >
-        {details !== undefined ? "get receipt" : "ok"}
+        {isReceiptEnabled ? "get receipt" : "ok"}
       </button>
     </div>
   );

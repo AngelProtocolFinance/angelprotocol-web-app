@@ -3,7 +3,7 @@ import { useRequestReceiptMutation } from "services/apes/donations";
 import { Step, ReceiptStage } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
 import { useGetter } from "store/accessors";
-import { ReceiptPayload } from "./types";
+import { Values } from "./types";
 
 export default function useReceiptForm() {
   const { updateTx } = useTxUpdator();
@@ -13,7 +13,7 @@ export default function useReceiptForm() {
 
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
 
-  const submitHandler = async (data: ReceiptPayload) => {
+  const submitHandler = async (data: Values) => {
     setProcessing(true);
     const response: any = await requestReceipt(data);
     setProcessing(false);
