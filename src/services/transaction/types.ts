@@ -7,13 +7,6 @@ export enum Step {
   receipt = "receipt",
 }
 
-export type Details = {
-  amount: string;
-  to: "charity" | "fund" | "tca";
-  receiver?: string | number;
-  split_liq: string;
-};
-
 export type State = {
   form_loading: boolean;
   form_error: string;
@@ -50,7 +43,7 @@ export type SuccessStage = {
   message: string;
   txHash: string;
   chainId: string;
-  details?: Details;
+  isReceiptEnabled?: true;
 };
 
 export type ReceiptStage = {
@@ -58,7 +51,6 @@ export type ReceiptStage = {
   message?: never;
   txHash: string;
   chainId: string;
-  details: Details;
 };
 
 export type ErrorStage = {
