@@ -54,12 +54,22 @@ export default function ReceiptForm() {
       {receiptData.map(({ name, value }, idx) => (
         <ReceiptDetails name={name} value={value} key={idx} />
       ))}
-      <TextInput name="email" id="email" placeholder="john@doe.com" />
-      <TextInput name="fullName" id="fullName" placeholder="Full Name" />
+      <TextInput
+        name="email"
+        id="email"
+        placeholder="john@doe.com"
+        label="Email Address"
+      />
+      <TextInput
+        name="fullName"
+        id="fullName"
+        placeholder="John Mark"
+        label="Full Name"
+      />
       <div className="grid">
         <label
           htmlFor="streetAddress"
-          className="text-angel-grey text-sm uppercase font-bold"
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
         >
           Street Address
         </label>
@@ -67,8 +77,8 @@ export default function ReceiptForm() {
           {...register("streetAddress")}
           autoComplete="off"
           id="streetAddress"
-          placeholder="Street Address"
-          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-md"
+          placeholder=""
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-sm"
         />
         <ErrorMessage
           errors={errors}
@@ -77,17 +87,17 @@ export default function ReceiptForm() {
           className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
         />
       </div>
-      <TextInput name="city" id="city" placeholder="City" />
-      <TextInput name="state" id="state" placeholder="State" />
-      <TextInput name="zipCode" id="zipCode" placeholder="Zip code" />
+      <TextInput name="city" id="city" placeholder="" label="City" />
+      <TextInput name="state" id="state" placeholder="" label="State" />
+      <TextInput name="zipCode" id="zipCode" placeholder="" label="Zip Code" />
       <div className="grid">
         <label
           htmlFor="country"
-          className="text-angel-grey text-sm uppercase font-bold"
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
         >
           Country
         </label>
-        <div className="form-control rounded-md bg-gray-200 flex justify-between items-center text-dark-grey">
+        <div className="form-control rounded-sm bg-gray-200 flex justify-between items-center text-dark-grey">
           <Selector
             name="country"
             placeholder="Country"

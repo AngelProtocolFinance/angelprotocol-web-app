@@ -7,6 +7,7 @@ type TextInputProps = {
   id: string;
   name: keyof Values;
   errors?: any;
+  label?: string;
 };
 
 export default function TextInput(props: TextInputProps) {
@@ -16,9 +17,9 @@ export default function TextInput(props: TextInputProps) {
       <div className="grid">
         <label
           htmlFor={props.id}
-          className="text-angel-grey text-sm uppercase font-bold"
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
         >
-          {props.name == "email" ? "Email Address" : props.placeholder}
+          {props.label}
         </label>
         <input
           {...register(props.name)}
@@ -26,7 +27,7 @@ export default function TextInput(props: TextInputProps) {
           id={props.id}
           type="text"
           placeholder={props.placeholder}
-          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-md"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-sm"
         />
       </div>
       <ErrorMessage
