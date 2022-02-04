@@ -3,10 +3,10 @@ import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
 type TextInputProps = {
-  placeholder: string;
   id: string;
   name: keyof Values;
   errors?: any;
+  label?: string;
 };
 
 export default function TextInput(props: TextInputProps) {
@@ -14,13 +14,18 @@ export default function TextInput(props: TextInputProps) {
   return (
     <>
       <div className="grid">
+        <label
+          htmlFor={props.id}
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
+        >
+          {props.label}
+        </label>
         <input
           {...register(props.name)}
           autoComplete="off"
           id={props.id}
           type="text"
-          placeholder={props.placeholder}
-          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-md"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-sm"
         />
       </div>
       <ErrorMessage

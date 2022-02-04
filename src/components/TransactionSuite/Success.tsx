@@ -35,7 +35,7 @@ export default function Success(props: SuccessStage) {
 
       <button
         onClick={acknowledge}
-        className="bg-angel-orange text-white rounded-md uppercase py-1 px-4"
+        className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
       >
         {isReceiptEnabled ? "get receipt" : "ok"}
       </button>
