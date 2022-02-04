@@ -1,7 +1,7 @@
 import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, Dec, MsgSend, Coin } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
@@ -18,6 +18,7 @@ import {
 import { Providers, XdefiWindow } from "services/provider/types";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
+import Contract from "contracts/Contract";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -96,11 +97,39 @@ export default function useEstimator() {
 
             //2nd balance check including fees
             if (debounced_amount + estimatedFee >= balance) {
-              dispatch(setFormError("Not enough balance"));
+              dispatch(setFormError("Not enough balance to pay fees"));
               return;
             }
             dispatch(setFee(estimatedFee));
             setTerraTx(tx);
+          }
+        }
+
+        //checks for uluna
+        if (currency === denoms.uluna) {
+          if (activeProvider === Providers.terra) {
+            //this block won't run if wallet is not connected
+            //activeProvider === Providers.none
+            const contract = new Contract(wallet);
+            const sender = wallet!.walletAddress;
+            const receiver = ap_wallets[denoms.uluna][wallet!.network.chainID];
+            const amount = new Dec(debounced_amount).mul(1e6);
+
+            const msg = new MsgSend(sender, receiver, [
+              new Coin(denoms.uluna, amount.toNumber()),
+            ]);
+            const aminoFee = await contract.estimateFee([msg], denoms.uluna);
+            const numFee = aminoFee.amount
+              .mul(1e-6)
+              .get(denoms.uluna)
+              ?.amount.toNumber()!;
+
+            if (debounced_amount + numFee >= balance) {
+              dispatch(setFormError("Not enough balance to pay fees"));
+              return;
+            }
+            dispatch(setFee(numFee));
+            setTerraTx({ msgs: [msg], fee: aminoFee });
           }
         }
 

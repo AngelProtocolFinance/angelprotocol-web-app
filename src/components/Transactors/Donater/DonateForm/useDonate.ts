@@ -2,7 +2,7 @@ import { Values } from "components/Transactors/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 // import useEthSender from "../Donater/useEthSender";
-import useUSTSender from "../useUSTSender";
+import useTerraSender from "../useTerraSender";
 // import useBTCSender from "../Donater/useBTCSender";
 // import useSolSender from "components/Donater/useSolSender";
 // import useAtomSender from "components/Donater/useAtomSender";
@@ -14,7 +14,7 @@ type Senders = { [index: string]: (data: Values) => Promise<void> };
 export default function useDonate() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
   const { terraTx, ethTx } = useEstimator();
-  const ustSender = useUSTSender(terraTx!);
+  const terraSender = useTerraSender(terraTx!);
   const ethSender = useEthSender(ethTx!);
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
@@ -32,7 +32,8 @@ export default function useDonate() {
   }, [currency]);
 
   const senders: Senders = {
-    [denoms.uusd]: ustSender,
+    [denoms.uusd]: terraSender,
+    [denoms.uluna]: terraSender,
     [denoms.ether]: ethSender,
     // [denoms.btc]: btcSender,
     // [denoms.sol]: solSender,

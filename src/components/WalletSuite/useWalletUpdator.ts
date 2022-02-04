@@ -50,7 +50,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         coins: halo_balance !== 0 ? coinsWithHalo : others,
         address: wallet.walletAddress,
         chainId: wallet.network.chainID as chainIDs,
-        supported_denoms: [denoms.uusd],
+        supported_denoms: [denoms.uusd, denoms.uluna],
       })
     );
     dispatch(setIsUpdating(false));
@@ -104,7 +104,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
               wallet.network.chainID === chainIDs.mainnet
                 ? chainIDs.gen_mainnet
                 : chainIDs.gen_testnet,
-            supported_denoms: [denoms.uusd, denoms.ether],
+            supported_denoms: [denoms.uusd, denoms.ether, denoms.uluna],
           })
         );
         dispatch(setIsUpdating(false));

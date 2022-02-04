@@ -17,7 +17,11 @@ export const ap_wallets: Wallets = {
   },
   [denoms.uusd]: {
     [chainIDs.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
-    [chainIDs.mainnet]: "terra1y07m37w0g8nwclthv5wn3vwuf985cz0z6v9n6w", //replace with ap_wallet
+    [chainIDs.mainnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
+  },
+  [denoms.uluna]: {
+    [chainIDs.testnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
+    [chainIDs.mainnet]: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx",
   },
   [denoms.sol]: {
     [chainIDs.sol_dev]: "CkiKLEa9eSEoG6CoTSuaahsF2WqNgArnvoCSbNZjJ7BQ",

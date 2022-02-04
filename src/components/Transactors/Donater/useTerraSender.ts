@@ -11,7 +11,7 @@ import { denoms } from "constants/currency";
 import useDonationLogger from "./useDonationLogger";
 import { Values } from "./types";
 
-export default function useUSTSender(tx: CreateTxOptions) {
+export default function useTerraSender(tx: CreateTxOptions) {
   const { reset, getValues } = useFormContext<Values>();
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
