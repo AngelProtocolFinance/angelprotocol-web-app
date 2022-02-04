@@ -2,7 +2,7 @@ export type TxDetails = {
   transactionId: string;
   transactionDate: string;
   chainId: string;
-  amount: string;
+  amount: number;
   splitLiq: string;
   denomination: string;
 };

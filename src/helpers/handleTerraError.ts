@@ -5,6 +5,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import { StageUpdator, Step } from "services/transaction/types";
 
@@ -20,10 +21,9 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
   } else if (error instanceof TxResultFail) {
     handler({
       step: Step.error,
-      message:
-        "Timeout: failed to wait for transaction result. If you need a receipt, you can request one by going to your donation history",
+      message: "Timeout: failed to wait for transaction result.",
       txHash: error.txHash,
-      chainId: error.chainId,
+      chainId: error.chainId as chainIDs,
     });
   } else if (error instanceof Timeout) {
     handler({ step: Step.error, message: "Transaction timeout" });

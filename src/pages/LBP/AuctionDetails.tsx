@@ -1,5 +1,4 @@
 import Copier from "components/Copier/Copier";
-import { Addr } from "components/Copier/types";
 import { LaunchStatsProps } from ".";
 
 type AuctionLinkProps = {
@@ -101,7 +100,7 @@ export default function AuctionDetails() {
               {"terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"}
             </span>
             <Copier
-              text={"terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq" as Addr}
+              text={"terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq"}
               colorClass="text-angel-blue"
             />
           </div>

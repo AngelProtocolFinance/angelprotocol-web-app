@@ -1,6 +1,6 @@
 import { useLogDonationMutation } from "services/apes/donations";
 import { Receiver, TxLogPayload } from "services/apes/types";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
 
 export default function useDonationLogger() {
@@ -23,9 +23,9 @@ export default function useDonationLogger() {
       transactionDate: new Date().toISOString(),
       transactionId: txhash,
       denomination: currency_text[denom],
+      amount: parseFloat(amount),
       splitLiq,
       chainId,
-      amount,
     };
     return await logTx(txLogPayload);
   }

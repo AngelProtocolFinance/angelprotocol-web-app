@@ -1,5 +1,5 @@
 import { useSetModal } from "components/Nodal/Nodal";
-import getFinderUrl from "helpers/getFinderUrl";
+import getTxUrl from "helpers/getTxUrl";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Step, SuccessStage } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
@@ -25,7 +25,7 @@ export default function Success(props: SuccessStage) {
       <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
 
       <a
-        href={getFinderUrl(chainId, txHash)}
+        href={getTxUrl(chainId, txHash)}
         target="_blank"
         rel="noreferrer noopener"
         className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
