@@ -16,7 +16,7 @@ export default function Web3Auth() {
     <div className="flex flex-col justify-between bg-angel-blue h-96 w-96 p-4 rounded-xs">
       <ButtonSocial onClick={() => console.log("connect with Google")}>
         <img src={gmailIcon} alt="Google" height={30} width={30} />
-        <span className="text-dark-grey">Continue with Google</span>
+        <span className="text-gray-500">Continue with Google</span>
       </ButtonSocial>
 
       <div className="flex justify-between gap-4">
