@@ -17,7 +17,6 @@ import {
 } from "services/transaction/transactionSlice";
 import { Providers, XdefiWindow } from "services/provider/types";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIDs } from "constants/chainIDs";
 import Contract from "contracts/Contract";
 
 export default function useEstimator() {
@@ -112,7 +111,7 @@ export default function useEstimator() {
             //activeProvider === Providers.none
             const contract = new Contract(wallet);
             const sender = wallet!.walletAddress;
-            const receiver = ap_wallets[denoms.uluna][wallet!.network.chainID];
+            const receiver = ap_wallets[denoms.uluna];
             const amount = new Dec(debounced_amount).mul(1e6);
 
             const msg = new MsgSend(sender, receiver, [
@@ -144,15 +143,13 @@ export default function useEstimator() {
           //no network request
           const signer = provider.getSigner();
           const sender = await signer.getAddress();
-          const chainId = await signer.getChainId();
-          //--
 
           const gasPrice = await signer.getGasPrice();
           const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether][`${chainId}` as chainIDs],
+            to: ap_wallets[denoms.ether],
             value: wei_amount,
           };
 
