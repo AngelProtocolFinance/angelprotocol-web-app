@@ -1,23 +1,23 @@
+import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec, MsgSend, Coin } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import Account from "contracts/Account";
-import Indexfund from "contracts/IndexFund";
-import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
-import useDebouncer from "../../../hooks/useDebouncer";
-import { useGetter, useSetter } from "store/accessors";
 import {
   setFormError,
   setFormLoading,
   setFee,
 } from "services/transaction/transactionSlice";
+import { useGetter, useSetter } from "store/accessors";
 import { Providers, XdefiWindow } from "services/provider/types";
-import { ap_wallets } from "constants/ap_wallets";
+import useDebouncer from "hooks/useDebouncer";
 import Contract from "contracts/Contract";
+import Account from "contracts/Account";
+import Indexfund from "contracts/IndexFund";
+import { ap_wallets } from "constants/ap_wallets";
+import { denoms } from "constants/currency";
+import { Values } from "./types";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -134,7 +134,6 @@ export default function useEstimator() {
 
         //estimates for eth
         if (currency === denoms.ether) {
-          dispatch(setFormLoading(true));
           const xwindow = window as XdefiWindow;
           //provider is present at this point
           const provider = new ethers.providers.Web3Provider(
@@ -161,7 +160,6 @@ export default function useEstimator() {
           setEthTx(tx);
           dispatch(setFee(parseFloat(fee_eth)));
         }
-
         dispatch(setFormLoading(false));
       } catch (err) {
         console.error(err);
