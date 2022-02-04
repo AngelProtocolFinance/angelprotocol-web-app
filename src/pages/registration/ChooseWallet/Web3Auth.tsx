@@ -13,7 +13,7 @@ export default function Web3Auth() {
   );
 
   return (
-    <div className="flex flex-col justify-between bg-green-500 h-96 w-96 p-4 rounded-xs">
+    <div className="flex flex-col justify-between bg-angel-blue h-96 w-96 p-4 rounded-xs">
       <ButtonSocial onClick={() => console.log("connect with Google")}>
         <img src={gmailIcon} alt="Google" height={30} width={30} />
         <span className="text-dark-grey">Continue with Google</span>
@@ -21,13 +21,13 @@ export default function Web3Auth() {
 
       <div className="flex justify-between gap-4">
         <ButtonSocial onClick={() => console.log("connect with Facebook")}>
-          <FaFacebook className="text-angel-blue" size={30} />
+          <FaFacebook className="text-blue-accent" size={30} />
         </ButtonSocial>
         <ButtonSocial onClick={() => console.log("connect with Twitch")}>
           <FaTwitch className="text-purple-500" size={30} />
         </ButtonSocial>
         <ButtonSocial onClick={() => console.log("connect with Discord")}>
-          <BsDiscord className="text-indigo-500" size={30} />
+          <BsDiscord className="text-purple-600" size={30} />
         </ButtonSocial>
       </div>
 
