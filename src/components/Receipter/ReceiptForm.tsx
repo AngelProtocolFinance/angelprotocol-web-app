@@ -54,18 +54,8 @@ export default function ReceiptForm() {
       {receiptData.map(({ name, value }, idx) => (
         <ReceiptDetails name={name} value={value} key={idx} />
       ))}
-      <TextInput
-        name="email"
-        id="email"
-        placeholder="john@doe.com"
-        label="Email Address"
-      />
-      <TextInput
-        name="fullName"
-        id="fullName"
-        placeholder="John Mark"
-        label="Full Name"
-      />
+      <TextInput name="email" id="email" label="Email Address" />
+      <TextInput name="fullName" id="fullName" label="Full Name" />
       <div className="grid">
         <label
           htmlFor="streetAddress"
@@ -77,7 +67,6 @@ export default function ReceiptForm() {
           {...register("streetAddress")}
           autoComplete="off"
           id="streetAddress"
-          placeholder=""
           className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-sm"
         />
         <ErrorMessage
@@ -87,9 +76,9 @@ export default function ReceiptForm() {
           className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
         />
       </div>
-      <TextInput name="city" id="city" placeholder="" label="City" />
-      <TextInput name="state" id="state" placeholder="" label="State" />
-      <TextInput name="zipCode" id="zipCode" placeholder="" label="Zip Code" />
+      <TextInput name="city" id="city" label="City" />
+      <TextInput name="state" id="state" label="State" />
+      <TextInput name="zipCode" id="zipCode" label="Zip Code" />
       <div className="grid">
         <label
           htmlFor="country"
