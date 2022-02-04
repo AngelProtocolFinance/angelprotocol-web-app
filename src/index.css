@@ -126,3 +126,8 @@
   max-width: 30px; */
   -moz-appearance: textfield; /* Firefox */
 }
+
+.css-14el2xx-placeholder,
+.css-qc6sy-singleValue {
+  color: hsl(0, 0%, 60%) !important;
+}

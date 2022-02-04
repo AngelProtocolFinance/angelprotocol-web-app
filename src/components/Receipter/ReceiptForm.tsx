@@ -62,7 +62,7 @@ export default function ReceiptForm() {
           autoComplete="off"
           id="streetAddress"
           placeholder="Street Address"
-          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-xl pl-2 rounded-md"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-md"
         />
         <ErrorMessage
           errors={errors}
@@ -74,7 +74,6 @@ export default function ReceiptForm() {
       <TextInput name="city" id="city" placeholder="City" />
       <TextInput name="state" id="state" placeholder="State" />
       <TextInput name="zipCode" id="zipCode" placeholder="Zip code" />
-      {/* <TextInput name="country" id="country" placeholder="Country" /> */}
       <div className="grid">
         <div className="form-control rounded-md bg-gray-200 flex justify-between items-center text-dark-grey">
           <Selector

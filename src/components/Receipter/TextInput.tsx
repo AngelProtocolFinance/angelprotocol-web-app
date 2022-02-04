@@ -20,7 +20,7 @@ export default function TextInput(props: TextInputProps) {
           id={props.id}
           type="text"
           placeholder={props.placeholder}
-          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-xl pl-2 rounded-md"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-md"
         />
       </div>
       <ErrorMessage
