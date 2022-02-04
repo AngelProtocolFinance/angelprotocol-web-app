@@ -8,7 +8,7 @@ const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
 const ChooseWallet = lazy(() => import("./WalletRegistration/ChooseWallet"));
-const ConnectWallet = lazy(() => import("./connect-wallet/ConnectWallet"));
+const ConnectWallet = lazy(() => import("./WalletRegistration/ConnectWallet"));
 const SelectWallet = lazy(() => import("./connect-wallet/SelectWallet"));
 const StepsDocs = lazy(() => import("./register-docs/Steps-docs"));
 const UpdateProfile = lazy(() => import("./charity-profile/Update-profile"));
@@ -17,6 +17,7 @@ const SelfCustody = lazy(() => import("./connect-wallet/Self-custody"));
 const KeyPersonProfile = lazy(
   () => import("./keyPerson-profile/KeyPersonProfile")
 );
+const RedirectAuth = lazy(() => import("./WalletRegistration/RedirectAuth"));
 
 const Register = () => {
   //this component will only render under '/app/register/'
@@ -85,6 +86,11 @@ const Register = () => {
             exact
             path={`${path}/${registration.key_person}`}
             component={KeyPersonProfile}
+          />
+          <Route
+            exact
+            path={`${path}/${registration.wallet_check}/auth`}
+            component={RedirectAuth}
           />
           <Route
             exact
