@@ -6,7 +6,7 @@ import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
 import PartnerContent from "./PartnerContent";
 
-export default function Torus() {
+export default function Web3Auth() {
   const handleContinueWithEmail = useCallback(
     (value: string) => console.log(`continue with Email ${value}`),
     []
