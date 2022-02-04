@@ -45,7 +45,7 @@ export type SuccessStage = {
   message: string;
   txHash: string;
   chainId: chainIDs;
-  isReceiptEnabled?: true;
+  isReceiptEnabled?: boolean;
 };
 
 export type ReceiptStage = {

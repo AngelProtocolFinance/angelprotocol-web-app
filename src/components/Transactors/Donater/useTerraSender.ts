@@ -7,7 +7,6 @@ import { Step } from "services/transaction/types";
 import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";
 import handleTerraError from "helpers/handleTerraError";
-import { denoms } from "constants/currency";
 import useDonationLogger from "./useDonationLogger";
 import { Values } from "./types";
 
@@ -31,12 +30,13 @@ export default function useTerraSender(tx: CreateTxOptions) {
           updateTx({ step: Step.submit, message: "Saving donation details" });
 
           const receiver = getValues("receiver");
+          const currency = getValues("currency");
           if (typeof receiver !== "undefined") {
             const logResponse = await logDonation(
               response.result.txhash,
               chainId,
               data.amount,
-              denoms.uusd,
+              currency,
               data.split_liq,
               receiver
             );
@@ -75,7 +75,7 @@ export default function useTerraSender(tx: CreateTxOptions) {
               message: "Thank you for your donation",
               txHash: txInfo.txhash,
               chainId,
-              isReceiptEnabled: true,
+              isReceiptEnabled: typeof receiver !== "undefined",
             });
           } else {
             updateTx({

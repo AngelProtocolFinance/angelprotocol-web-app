@@ -59,7 +59,7 @@ export default function useEthSender(tx: TransactionRequest) {
           message: "Thank you for your donation!",
           txHash: response.hash,
           chainId,
-          isReceiptEnabled: true,
+          isReceiptEnabled: typeof receiver !== "undefined",
         });
       } catch (error) {
         handleEthError(error, updateTx);
