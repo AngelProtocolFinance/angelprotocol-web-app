@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RiPencilFill } from "react-icons/ri";
@@ -22,7 +21,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
 
   const { data: profile = profile_placeholder } =
     useProfileQuery(endowment_addr);
-  const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
   const endowmentBalanceData = useQueryEndowmentBal(
     endowment_addr,
@@ -65,14 +63,8 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          <CharityInfoNav
-            activeTab={activeTab}
-            onTabChange={(tab: string) => setActiveTab(tab)}
-          />
-          <CharityInfoTab
-            activeTab={activeTab}
-            endowmentBalanceData={endowmentBalanceData}
-          />
+          <CharityInfoNav />
+          <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
         </div>
       </div>
     </section>

@@ -1,8 +1,8 @@
 import TableEntry from "./TableEntry";
 import Heading from "./Heading";
-import { Endowment } from "services/aws/endowments/types";
+import { MergedEndowment } from "services/aws/endowments/types";
 
-export default function TableView(props: { endowments: Endowment[] }) {
+export default function TableView(props: { endowments: MergedEndowment[] }) {
   return (
     <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">

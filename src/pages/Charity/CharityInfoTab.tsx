@@ -1,8 +1,10 @@
 import useProfile from "pages/Market/useProfile";
-import { useRouteMatch } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
 import { Endowment } from "services/aws/leaderboard/types";
+import { charity } from "types/routes";
+import anchorProtocol from "../../assets/images/anchor_protocol.png";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -37,13 +39,18 @@ function AccountInfo({
       <div className="flex justify-between w-30 h-16">
         <div className="flex flex-col items-start justify-around">
           <p className="uppercase font-bold text-white text-md">Strategy</p>
-          <p className="uppercase font-normal text-white text-xs">
+          <p className="uppercase font-normal text-white text-sm tracking-wide flex flex-row items-center gap-2">
+            <img
+              src={anchorProtocol}
+              alt="anchor protocol icon"
+              className="h-6 w-6 rounded-xl inline-block"
+            />{" "}
             {account.strategy}
           </p>
         </div>
         <div className="flex flex-col items-start justify-around">
           <p className="uppercase font-bold text-white text-md">Allocation</p>
-          <p className="uppercase font-normal text-white text-xs">
+          <p className="uppercase font-normal text-white text-sm">
             {account.allocation}
           </p>
         </div>
@@ -99,21 +106,24 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
             ${toCurrency(overall)}
           </p>
-          <p className="uppercase font-bold text-thin-blue text-sm">
+          {/*          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations
           </p>
-          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>
+          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>*/}
         </div>
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
+
         </div> */}
-        {accountDetails.map((account, i) => (
-          <AccountInfo
-            key={i}
-            account={account}
-            className={`${account.color}`}
-          />
-        ))}
+        <div className="flex flex-col md:flex-row gap-5 w-full">
+          {accountDetails.map((account, i) => (
+            <AccountInfo
+              key={i}
+              account={account}
+              className={`${account.color}`}
+            />
+          ))}
+        </div>
       </div>
       {/* <AccountAction /> turn on for admin features after V1 */}
     </div>
@@ -157,24 +167,23 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
 // }
 
 type Props = {
-  activeTab: string;
   endowmentBalanceData: Endowment;
 };
 
-export default function CharityInfoTab({
-  activeTab = "overview",
-  endowmentBalanceData,
-}: Props) {
-  //TODO: use enums or maybe just implement this over react-router
+export default function CharityInfoTab({ endowmentBalanceData }: Props) {
+  const { path } = useRouteMatch();
+
   return (
-    <>
-      {activeTab === "overview" && <OverviewTab />}
-      {activeTab === "endowment" && (
-        <CharityEndowmentInfo data={endowmentBalanceData} />
-      )}
-      {/* {activeTab === "programs" && <CharityPrograms />}
-      {activeTab === "media" && <OverviewTab />}
-      {activeTab === "governance" && <OverviewTab />} */}
-    </>
+    <Switch>
+      <Route path={`${path}${charity.overview}`} component={OverviewTab} />
+      <Route
+        path={`${path}${charity.endowment}`}
+        render={() => <CharityEndowmentInfo data={endowmentBalanceData} />}
+      />
+      <Route path={`${path}${charity.programs}`} component={OverviewTab} />
+      <Route path={`${path}${charity.media}`} component={OverviewTab} />
+      <Route path={`${path}${charity.governance}`} component={OverviewTab} />
+      <Route path={`${path}`} component={OverviewTab} />
+    </Switch>
   );
 }
