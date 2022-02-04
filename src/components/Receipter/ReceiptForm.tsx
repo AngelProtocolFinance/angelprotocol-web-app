@@ -57,6 +57,12 @@ export default function ReceiptForm() {
       <TextInput name="email" id="email" placeholder="john@doe.com" />
       <TextInput name="fullName" id="fullName" placeholder="Full Name" />
       <div className="grid">
+        <label
+          htmlFor="streetAddress"
+          className="text-angel-grey text-sm uppercase font-bold"
+        >
+          Street Address
+        </label>
         <textarea
           {...register("streetAddress")}
           autoComplete="off"
@@ -75,6 +81,12 @@ export default function ReceiptForm() {
       <TextInput name="state" id="state" placeholder="State" />
       <TextInput name="zipCode" id="zipCode" placeholder="Zip code" />
       <div className="grid">
+        <label
+          htmlFor="country"
+          className="text-angel-grey text-sm uppercase font-bold"
+        >
+          Country
+        </label>
         <div className="form-control rounded-md bg-gray-200 flex justify-between items-center text-dark-grey">
           <Selector
             name="country"

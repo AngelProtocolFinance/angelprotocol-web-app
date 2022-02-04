@@ -14,6 +14,12 @@ export default function TextInput(props: TextInputProps) {
   return (
     <>
       <div className="grid">
+        <label
+          htmlFor={props.id}
+          className="text-angel-grey text-sm uppercase font-bold"
+        >
+          {props.name == "email" ? "Email Address" : props.placeholder}
+        </label>
         <input
           {...register(props.name)}
           autoComplete="off"
