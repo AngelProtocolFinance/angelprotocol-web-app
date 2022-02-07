@@ -21,7 +21,7 @@ const Endowment_Admin = lazy(
   () => import("pages/Endowment_Admin/Endowment_Admin")
 );
 const Charity = lazy(() => import("pages/Charity/Charity"));
-// const Fund = lazy(() => import("pages/Fund/Fund"));
+const Fund = lazy(() => import("pages/Fund/Fund"));
 // const Test = lazy(() => import("pages/Test"));
 // const Register = lazy(() => import("pages/registration/index"));
 
@@ -47,7 +47,7 @@ export default function Views() {
           component={ChurchPortal}
         />
         <Route path={`${path}/${app.govern}`} component={Governance} />
-        {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
+        <Route path={`${path}/${app.fund}/:id`} component={Fund} />
         <Route path={`${path}/${app.auction}`} component={Auction} />
         <Route
           path={`${path}/${app.endowment_admin}/:address`}
