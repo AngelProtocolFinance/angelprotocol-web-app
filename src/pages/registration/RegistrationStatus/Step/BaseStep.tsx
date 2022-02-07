@@ -1,23 +1,21 @@
 import Action from "components/ActionButton/Action";
+import { BaseProps } from "./types";
 
-type Props = {
-  title: string;
-  isComplete?: boolean;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-};
+type Props = BaseProps & { statusComponent?: JSX.Element };
 
-export default function Step(props: Props) {
-  const { title, isComplete, onClick } = props;
+export default function BaseStep(props: Props) {
+  const { title, isComplete, onClick, statusComponent } = props;
 
   return (
     <div className="flex justify-between md:w-3/5 xl:w-1/2">
       <div className="text-left font-bold">
         <p>{title}</p>
-        {isComplete ? (
-          <p className="uppercase text-green-500">Complete</p>
-        ) : (
-          <p className="uppercase text-yellow-500">Missing</p>
-        )}
+        {statusComponent ||
+          (isComplete ? (
+            <p className="uppercase text-green-500">Complete</p>
+          ) : (
+            <p className="uppercase text-yellow-500">Missing</p>
+          ))}
       </div>
       {isComplete ? (
         <Action

@@ -8,7 +8,7 @@ import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { User } from "services/user/types";
-import Step from "./Step";
+import Step, { DocumentationStep } from "./Step";
 
 export default function RegistrationStatus() {
   //url is app/register/status
@@ -63,12 +63,14 @@ export default function RegistrationStatus() {
             onClick={navigate(registration.detail)}
             isComplete={!!status.wallet_address}
           />
-          <Step
+          <DocumentationStep
             title="Step #3: Documentation"
             onClick={navigate(registration.upload_docs, {
               data: data?.Registration,
             })}
-            isComplete={status.document === 2}
+            isComplete={status.documentationStep === 2}
+            // TODO: implement level logic
+            level={1}
           />
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
@@ -123,7 +125,7 @@ export default function RegistrationStatus() {
 function getStatus(user: User, data: any) {
   return {
     wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
-    document:
+    documentationStep:
       (user.ProofOfIdentityVerified ||
         data?.Registration?.ProofOfIdentityVerified) &&
       (user.ProofOfEmploymentVerified ||
