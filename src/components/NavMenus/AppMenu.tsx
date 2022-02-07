@@ -31,11 +31,6 @@ export default function AppMenu() {
           REGISTER
         </a>
       </li>
-      <li>
-        <Link to={`${url}/${app.tca}`} {...linkStyles}>
-          DONATE
-        </Link>
-      </li>
     </ul>
   );
 }
