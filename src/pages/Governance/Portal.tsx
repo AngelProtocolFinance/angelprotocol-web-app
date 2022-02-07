@@ -24,7 +24,7 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          {data && `${Number(data.stakingAPR).toFixed(2)}% APY`}
+          {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>
       </div>
       <div className="flex flex-wrap gap-2 self-end justify-end">
