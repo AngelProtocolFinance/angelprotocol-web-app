@@ -16,7 +16,7 @@ const ConfirmEmail = () => {
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendEmail = useCallback(
-    async (emailType) => {
+    async (emailType: string) => {
       if (!user.PK) {
         toast.error("Invalid Data. Please ask the administrator about that.");
         return;
@@ -50,11 +50,10 @@ const ConfirmEmail = () => {
   }, [dispatch, history]);
 
   useEffect(() => {
-    if (user.PK) {
-      return;
+    if (!user.PK) {
+      const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+      dispatch(updateUserData(newUserData));
     }
-    const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(newUserData));
   }, [user, dispatch]);
 
   return (
