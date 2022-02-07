@@ -61,8 +61,8 @@ export default function Web3Auth() {
         const { typeOfLogin, clientId, verifier } =
           verifierMap[selectedVerifier];
         // in redirect mode, login result will be handled in redirect page
-        // (Check auth.tsx file)
-        await torusdirectsdk?.triggerLogin({
+        // (Check RedirectAuth.tsx file)
+        await torusdirectsdk.triggerLogin({
           typeOfLogin,
           verifier,
           clientId,
