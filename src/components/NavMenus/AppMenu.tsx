@@ -12,7 +12,7 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${url}/${app.marketplace}`} {...linkStyles}>
+        <Link to={`/`} {...linkStyles}>
           ABOUT US
         </Link>
       </li>
