@@ -25,7 +25,7 @@ export default function WebMenu() {
           to={`${site.app}/${app.marketplace}`}
           className={`${linkStyles.className} border py-2 px-4 border-angel-blue rounded-full hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
         >
-          Marketplace
+          Donate
         </NavLink>
       </li>
     </ul>
