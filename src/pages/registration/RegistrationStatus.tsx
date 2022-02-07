@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { registration } from "types/routes";
@@ -7,22 +7,27 @@ import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { User } from "services/user/types";
 
-const RegistrationStatus = () => {
+export default function RegistrationStatus() {
   //url is app/register/status
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
-  if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
-  }
-
-  if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
-    history.go(0);
-  }
-
+  const user = useGetter((state) => state.user);
   const { data, error } = useGetCharityDataQuery(user.PK);
+
+  useEffect(() => {
+    if (!user.PK) {
+      const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+      dispatch(updateUserData(newUserData));
+    }
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
+      history.go(0);
+    }
+  }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, history]);
 
   useEffect(() => {
     if (error) {
@@ -31,33 +36,12 @@ const RegistrationStatus = () => {
     }
   }, [error]);
 
-  const status = {
-    wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
-    document:
-      (user.ProofOfIdentityVerified ||
-        data?.Registration?.ProofOfIdentityVerified) &&
-      (user.ProofOfEmploymentVerified ||
-        data?.Registration?.ProofOfEmploymentVerified) &&
-      (user.EndowmentAgreementVerified ||
-        data?.Registration?.EndowmentAgreementVerified)
-        ? 2
-        : (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
-          (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
-          (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
-        ? 1
-        : 0,
-    endowment:
-      data?.Metadata?.EndowmentStatus === "Active"
-        ? 2
-        : user.IsMetaDataCompleted
-        ? 1
-        : 0,
-    completed: user?.RegistrationStatus === "Complete",
-  };
+  const status = useMemo(() => getStatus(user, data), [user, data]);
 
-  const navigate = (dest: string) => () => {
-    history.push(dest);
-  };
+  const navigate = useCallback(
+    (dest: string) => () => history.push(dest),
+    [history]
+  );
 
   return (
     <div className="">
@@ -188,76 +172,6 @@ const RegistrationStatus = () => {
           </div>
         </div>
       </div>
-      {/* <div className="optional-information my-5">
-        <div className="">
-          <h3 className="text-3xl font-bold">Optional Information</h3>
-          <span className="">
-            Without the following information, you will still be able to create
-            your endowment but your organization won't appear publicly on our
-            platform. You will be able to edit this information at any time.
-          </span>
-        </div>
-        <div className="infor-status my-2">
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p className="">Step #1: Charity Profile</p>
-              {data?.Metadata?.CompanyNumber ? (
-                <p className="status-text uppercase text-green-500">complete</p>
-              ) : (
-                <p className="status-text uppercase text-yellow-500">Missing</p>
-              )}
-            </div>
-            <div className="">
-              <Action
-                classes={
-                  data?.Metadata?.CompanyNumber
-                    ? "bg-yellow-blue w-40 h-10"
-                    : "bg-thin-blue w-40 h-10"
-                }
-                onClick={() =>
-                  history.push({
-                    pathname: registration.charity_profile,
-                    state: {
-                      data: data?.Metadata,
-                    },
-                  })
-                }
-                disabled={user.PK === ""}
-                title={data?.Metadata?.CompanyNumber ? "Change" : "Continue"}
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p className="">Step #2: Key Person Profile</p>
-              {data?.KeyPerson ? (
-                <p className="status-text uppercase text-green-500">complete</p>
-              ) : (
-                <p className="status-text uppercase text-yellow-500">Missing</p>
-              )}
-            </div>
-            <div className="">
-              <Action
-                classes={
-                  data?.KeyPerson
-                    ? "bg-yellow-blue w-40 h-10"
-                    : "bg-thin-blue w-40 h-10"
-                }
-                onClick={() =>
-                  history.push({
-                    pathname: registration.key_person,
-                    state: {
-                      data: data?.KeyPerson,
-                    },
-                  })
-                }
-                title={data?.KeyPerson ? "Change" : "Continue"}
-                disabled={user.PK === ""}
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
       <div className="my-10">
         <Action
           classes="bg-thin-blue w-64 h-10"
@@ -270,6 +184,30 @@ const RegistrationStatus = () => {
       <ToastContainer />
     </div>
   );
-};
+}
 
-export default RegistrationStatus;
+function getStatus(user: User, data: any) {
+  return {
+    wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
+    document:
+      (user.ProofOfIdentityVerified ||
+        data?.Registration?.ProofOfIdentityVerified) &&
+      (user.ProofOfEmploymentVerified ||
+        data?.Registration?.ProofOfEmploymentVerified) &&
+      (user.EndowmentAgreementVerified ||
+        data?.Registration?.EndowmentAgreementVerified)
+        ? 2
+        : (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
+          (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
+          (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
+        ? 1
+        : 0,
+    endowment:
+      data?.Metadata?.EndowmentStatus === "Active"
+        ? 2
+        : user.IsMetaDataCompleted
+        ? 1
+        : 0,
+    completed: user?.RegistrationStatus === "Complete",
+  };
+}
