@@ -2,17 +2,20 @@ import { Values } from "components/Transactors/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 // import useEthSender from "../Donater/useEthSender";
-import useUSTSender from "../useUSTSender";
+import useTerraSender from "../useTerraSender";
 // import useBTCSender from "../Donater/useBTCSender";
 // import useSolSender from "components/Donater/useSolSender";
 // import useAtomSender from "components/Donater/useAtomSender";
 import { useEffect, useRef } from "react";
+import useEstimator from "../useEstimator";
+import useEthSender from "../useEthSender";
 
 type Senders = { [index: string]: (data: Values) => Promise<void> };
-export default function useSubmit() {
+export default function useDonate() {
   const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
-  const ustSender = useUSTSender();
-  // const ethSender = useEthSender();
+  const { terraTx, ethTx } = useEstimator();
+  const terraSender = useTerraSender(terraTx!);
+  const ethSender = useEthSender(ethTx!);
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
@@ -29,15 +32,16 @@ export default function useSubmit() {
   }, [currency]);
 
   const senders: Senders = {
-    [denoms.uusd]: ustSender,
-    // [denoms.ether]: ethSender,
+    [denoms.uusd]: terraSender,
+    [denoms.uluna]: terraSender,
+    [denoms.ether]: ethSender,
     // [denoms.btc]: btcSender,
     // [denoms.sol]: solSender,
     // [denoms.uatom]: atomSender,
   };
 
   return {
-    submitHandler: handleSubmit(senders[currency]),
+    donate: handleSubmit(senders[currency]),
     isSubmitting: formState.isSubmitting,
   };
 }

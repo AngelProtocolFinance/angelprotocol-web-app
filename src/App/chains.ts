@@ -1,6 +1,6 @@
 import { NetworkInfo } from "@terra-money/wallet-provider";
 import { terra_lcds } from "constants/urls";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 const localterra = {
   name: "localterra",

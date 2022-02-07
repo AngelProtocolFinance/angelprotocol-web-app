@@ -7,7 +7,7 @@ import handleTerraError from "helpers/handleTerraError";
 import { terra } from "services/terra/terra";
 import { gov, tags, user } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 function useClaim() {
   const dispatch = useSetter();

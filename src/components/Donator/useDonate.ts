@@ -1,13 +1,13 @@
 import { AccAddress } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
 import { FormikHelpers } from "formik";
 import createAuthToken from "helpers/createAuthToken";
-import getFinderUrl from "helpers/getFinderUrl";
+import getTxUrl from "helpers/getTxUrl";
 import useUSTBalance from "hooks/useUSTBalance";
-import { useLogDonationTransactionMutation } from "services/apes/donations";
 import { UserTypes } from "services/user/types";
 import createStatusFromError from "./createStatusFromError";
 import getDepositAmount from "./getDepositAmount";
@@ -20,7 +20,6 @@ function useDonate(
 ) {
   const wallet = useConnectedWallet();
   const UST_balance = useUSTBalance();
-  const [logDonationTransaction] = useLogDonationTransactionMutation();
 
   //executing message (needs gas)
   async function handleDonate(values: Values, actions: FormikHelpers<Values>) {
@@ -119,7 +118,7 @@ function useDonate(
             },
           };
 
-          const response: any = await logDonationTransaction(postData); // Logs all donation transactions in APES' donations DynamoDB table
+          const response: any = {}; // Logs all donation transactions in APES' donations DynamoDB table
           const result = response.error
             ? response.error.data.message
             : response.data.message; // Contains the success messages or some instructions if an error occured in APES AWS
@@ -129,7 +128,7 @@ function useDonate(
             result: {
               received: +UST_Amount,
               deposited: depositAmount,
-              url: getFinderUrl(wallet.network.chainID, txInfo.txhash),
+              url: getTxUrl(wallet.network.chainID as chainIDs, txInfo.txhash),
             },
           });
         } else {

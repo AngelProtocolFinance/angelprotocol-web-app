@@ -1,5 +1,5 @@
 import Loader from "components/Loader/Loader";
-import getFinderUrl from "helpers/getFinderUrl";
+import getTxUrl from "helpers/getTxUrl";
 import { BroadcastStage, Step } from "services/transaction/types";
 
 export default function Broadcast(props: BroadcastStage) {
@@ -12,7 +12,7 @@ export default function Broadcast(props: BroadcastStage) {
     <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center">
       <p className="text-center text-angel-grey mb-2">{message}</p>
       <a
-        href={getFinderUrl(chainId, txHash)}
+        href={getTxUrl(chainId, txHash)}
         target="_blank"
         rel="noreferrer noopener"
         className="text-center text-angel-blue cursor-pointer mb-6"

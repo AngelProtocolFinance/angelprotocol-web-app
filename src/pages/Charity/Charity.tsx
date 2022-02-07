@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RiPencilFill } from "react-icons/ri";
@@ -37,7 +36,6 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       profile,
     });
   };
-
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonater();
 

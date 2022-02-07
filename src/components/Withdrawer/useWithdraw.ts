@@ -9,7 +9,7 @@ import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useWithdrawHoldings() {
   const { reset } = useFormContext<Values>();

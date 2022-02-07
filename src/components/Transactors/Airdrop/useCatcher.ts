@@ -13,6 +13,7 @@ import { tags as aws_tags } from "services/aws/tags";
 import { tags, gov, user } from "services/terra/tags";
 import handleTerraError from "helpers/handleTerraError";
 import useTxUpdator from "services/transaction/updators";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useCatcher(airdrops: Airdrops) {
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,7 @@ export default function useCatcher(airdrops: Airdrops) {
       }
 
       setLoading(true);
+      const chainId = wallet.network.chainID as chainIDs;
       //create tx and estimate fee
       const contract = new Halo(wallet);
       const tx = await contract.createAirdropClaimTx(
@@ -66,8 +68,8 @@ export default function useCatcher(airdrops: Airdrops) {
       updateTx({
         step: Step.broadcast,
         message: "Waiting for transaction result",
-        chainId: wallet.network.chainID,
         txHash: response.result.txhash,
+        chainId,
       });
 
       if (response.success) {
@@ -81,7 +83,7 @@ export default function useCatcher(airdrops: Airdrops) {
               is_stake ? " and staked" : ""
             }`,
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID,
+            chainId,
           });
 
           //refetch new data
@@ -98,7 +100,7 @@ export default function useCatcher(airdrops: Airdrops) {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID,
+            chainId,
           });
         }
       }
