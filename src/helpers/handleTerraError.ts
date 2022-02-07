@@ -5,25 +5,31 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
 import { Disconnected, TxResultFail } from "contracts/Errors";
-import { ErrorHandler } from "components/Donater/types";
+import { StageUpdator, Step } from "services/transaction/types";
 
-export default function handleTerraError(error: any, handler: ErrorHandler) {
+export default function handleTerraError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {
-    handler("Transaction aborted");
+    handler({ step: Step.error, message: "Transaction aborted" });
   } else if (error instanceof Disconnected) {
-    handler("Wallet is not connected");
+    handler({ step: Step.error, message: "Wallet is not connected" });
   } else if (error instanceof CreateTxFailed) {
-    handler("Failed to create transaction");
+    handler({ step: Step.error, message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
-    handler("Transaction failed");
+    handler({ step: Step.error, message: "Transaction failed" });
   } else if (error instanceof TxResultFail) {
-    handler("Timeout: failed to get transaction result", error.url);
+    handler({
+      step: Step.error,
+      message: "Timeout: failed to wait for transaction result.",
+      txHash: error.txHash,
+      chainId: error.chainId as chainIDs,
+    });
   } else if (error instanceof Timeout) {
-    handler("Transaction timeout");
+    handler({ step: Step.error, message: "Transaction timeout" });
   } else if (error instanceof TxUnspecifiedError) {
-    handler("Unspecified error occured");
+    handler({ step: Step.error, message: "Unspecified error occured" });
   } else {
-    handler("Unknown error occured");
+    handler({ step: Step.error, message: "Unknown error occured" });
   }
 }

@@ -22,7 +22,7 @@ function CharityApps() {
     setCharityList(data);
     setTableData(data);
     setIsLoading(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line
   }, []);
 
   const searchCharity = (event: any) => {

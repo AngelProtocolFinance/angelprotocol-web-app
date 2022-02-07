@@ -9,8 +9,11 @@ export default function DappMenu() {
 
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex gap-2 justify-self-end items-center font-body text-sm lg:text-base ml-2">
-      <Link className={linkStyles.className} to={`${site.home}`}>
-        About us
+      <Link
+        className={linkStyles.className}
+        to={`${site.app}/${app.marketplace}`}
+      >
+        Marketplace
       </Link>
       {/*      <NavLink to={`${site.app}/${app.tca}`} {...linkStyles}>
         Donate now

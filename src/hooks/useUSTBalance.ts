@@ -19,7 +19,7 @@ export default function useUSTBalance(): number {
         chainID: wallet.network.chainID,
       });
 
-      const coins = await client.bank.balance(wallet.terraAddress);
+      const [coins] = await client.bank.balance(wallet.terraAddress);
       const UUST_coin = coins.get(denoms.uusd);
       if (!UUST_coin) {
         setBalance(0);

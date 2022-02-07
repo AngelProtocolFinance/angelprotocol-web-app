@@ -21,7 +21,6 @@ export default function createStatusFromError(error: unknown): Status {
     return {
       step: Steps.no_result,
       message: "Failed to get transaction details",
-      url: error.url,
     };
   } else if (error instanceof Timeout) {
     return { step: Steps.error, message: "Transaction timeout" };

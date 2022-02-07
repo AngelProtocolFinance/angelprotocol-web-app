@@ -1,62 +1,28 @@
-import { LCDClient } from "@terra-money/terra.js";
-import { Holdings, Swap } from "contracts/types";
-import { useCallback, useEffect, useState } from "react";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
+import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+import { placeholderUpdate } from "services/aws/leaderboard/placeholders";
+import { Endowment } from "services/aws/leaderboard/types";
 
-function useQueryEndowmentBal(
-  address: string,
-  placeholder: boolean | undefined
-) {
-  const [locked, setLocked] = useState<number>();
-  const [liquid, setLiquid] = useState<number>();
-  const [overall, setOverall] = useState<number>();
+export default function useQueryEndowmentBal(
+  endowmentAddress: string,
+  placeholder?: boolean
+): Endowment {
+  const wallet = useConnectedWallet();
+  const is_test = wallet?.network.chainID === chainIDs.testnet;
+  const { data = placeholderUpdate } = useLeaderboardsQuery(is_test);
 
-  // Allows fetching of endowment balance even if wallet is not connected
-  const getOnChainData = useCallback(async () => {
-    const terra = new LCDClient({
-      URL: "https://lcd.terra.dev",
-      chainID: "columbus-5",
-    });
+  const balance = data.endowments.find((x) => x.address === endowmentAddress);
+  const placeholderBalance = getPlaceholderBalance(endowmentAddress, is_test);
 
-    const endowmentBal: Holdings = await terra.wasm.contractQuery(address, {
-      balance: {},
-    });
-
-    const rateQuery: Swap = await terra.wasm.contractQuery(
-      "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
-      { exchange_rate: { input_denom: "uust" } }
-    );
-
-    const exchangeRate = Number(rateQuery.exchange_rate);
-    const microLocked =
-      (Number(endowmentBal.locked_cw20[0].amount!) * exchangeRate) / 1e6;
-    const microLiquid =
-      (Number(endowmentBal.liquid_cw20[0].amount!) * exchangeRate) / 1e6;
-
-    setLocked(microLocked);
-    setLiquid(microLiquid);
-    setOverall(microLocked + microLiquid);
-  }, [address]);
-
-  useEffect(() => {
-    try {
-      // If invalid endowment addr is entered in the url, return 0 values
-      if (placeholder) {
-        setLocked(0);
-        setLiquid(0);
-        setOverall(0);
-      } else {
-        getOnChainData();
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [address, placeholder, getOnChainData]);
-
-  return {
-    locked,
-    liquid,
-    overall,
-  };
+  return !placeholder && balance ? balance : placeholderBalance;
 }
 
-export default useQueryEndowmentBal;
+const getPlaceholderBalance = (endowmentAddress: string, is_test: boolean) =>
+  ({
+    address: endowmentAddress,
+    chain: is_test ? "testnet" : "mainnet",
+    total_liq: 0,
+    total_lock: 0,
+    overall: 0,
+  } as Endowment);

@@ -1,6 +1,7 @@
+import { useConnectedWallet } from "@terra-money/use-wallet";
+import Registrar from "contracts/Registrar";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRegistrarContract } from "services/terra/queriers";
 import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 
 export type Endowment = {
@@ -20,11 +21,11 @@ export type Endowment = {
 // };
 
 export default function useEndowments() {
+  const wallet = useConnectedWallet();
   const [loading, setLoading] = useState(false);
   // const [endowments, setEndowments] = useState<EndowmentsResult>();
-  const { contract: registrar, wallet } = useRegistrarContract();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [walletAddr, setWalletAddr] = useState(wallet?.walletAddress);
+  const [walletAddr] = useState(wallet?.walletAddress);
   const [endowmentDetails, setEndowmentsDetails] =
     useState<Record<string, Endowment>>();
 
@@ -42,7 +43,8 @@ export default function useEndowments() {
     setLoading(true);
     try {
       // const response = await fetch(`${aws_endpoint}/endowments/testnet`);
-      const approvals = await registrar.getEndowmentList();
+      const contract = new Registrar(wallet);
+      const approvals = await contract.getEndowmentList();
       const detailsMap: Record<string, any> = {};
       endowments?.forEach(
         (endowment) => (detailsMap[endowment.address] = endowment)

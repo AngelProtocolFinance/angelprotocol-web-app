@@ -11,12 +11,12 @@ interface SelectorProps {
 }
 
 export const MultiSelector = (props: SelectorProps) => {
-  console.log(props.register(props.name));
   return (
     <Controller
       {...props.register(props.name)}
       name={props.name}
       control={props.control}
+      ref={null}
       render={({ field: { value, onChange } }) => {
         return (
           <Select

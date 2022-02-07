@@ -4,8 +4,8 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
+import Account from "contracts/Account";
 import { terra } from "services/terra/terra";
-import Registrar from "contracts/Registrar";
 import {
   gov_config,
   gov_state,
@@ -15,16 +15,10 @@ import {
   pairInfo,
   simulation,
   pool_balance,
+  holdings,
 } from "./placeholders";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useHaloContract, useLPContract } from "./contracts";
-import { useMemo } from "react";
-
-export function useRegistrarContract() {
-  const wallet = useConnectedWallet();
-  const contract = useMemo(() => new Registrar(wallet), [wallet]);
-  return { wallet, contract };
-}
 
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;
@@ -37,19 +31,18 @@ export function useBalances(main: denoms, others?: denoms[]) {
   const { useBalancesQuery } = terra;
   const { data = [] } = useBalancesQuery(wallet?.walletAddress, {
     skip: wallet === undefined,
-    refetchOnMountOrArgChange: true,
   });
 
   //convert from utoken to token
   const coins = data.map(({ denom, amount }) => ({
-    denom,
-    amount: new Dec(amount).mul(1e-6).toString(),
+    denom: denom as denoms,
+    amount: new Dec(amount).mul(1e-6).toNumber(),
   }));
 
   const found_main = coins.find((coin) => coin.denom === main);
   const _main = new Dec(found_main?.amount || "0").toNumber();
   const _others = coins.filter((coin) =>
-    others ? others.includes(coin.denom as denoms) : true
+    others ? others.includes(coin.denom) : true
   );
 
   return { main: _main, others: _others };
@@ -175,4 +168,24 @@ export function usePool(skip = false) {
     skip: skip || wallet?.network.chainID === chainIDs.testnet,
   });
   return data;
+}
+
+export function useEndowmentHoldings(address: string, skip = false) {
+  const wallet = useConnectedWallet();
+  const { useEndowmentHoldingsQuery } = terra;
+  const contract = new Account(address);
+  const {
+    data = holdings,
+    isError,
+    isLoading,
+    isFetching,
+  } = useEndowmentHoldingsQuery(contract.balance, {
+    skip: skip || !wallet,
+  });
+
+  return {
+    holdings: data,
+    isHoldingsError: isError,
+    isHoldingsLoading: isLoading || isFetching,
+  };
 }

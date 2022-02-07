@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useSetModal } from "components/Nodal/Nodal";
 import "./endowments.css";
-import { useRegistrarContract } from "services/terra/queriers";
 import { MdOutlineClose } from "react-icons/md";
 import { toast, ToastContainer } from "react-toastify";
+import { useConnectedWallet } from "@terra-money/use-wallet";
+import Registrar from "contracts/Registrar";
 
 const updateOptions = ["approved", "frozen", "terminated"];
 
@@ -24,13 +25,14 @@ const UpdateEndowmentModal = ({
   onClose?: Function;
 }) => {
   const [isSubmitting, setSubmitting] = useState(false);
+  const wallet = useConnectedWallet();
   const { hideModal } = useSetModal();
   const [value, setValue] = useState(status);
-  const { contract: registrar, wallet } = useRegistrarContract();
 
   async function updateStatus() {
     try {
       setSubmitting(true);
+      const registrar = new Registrar(wallet);
       const tx = await registrar.createUpdateEndowmentTx(
         statusMap[value],
         address

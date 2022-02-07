@@ -30,6 +30,9 @@ module.exports = {
         comet: "url('assets/images/comet.jpg')",
         auction: "linear-gradient(67deg, #9cc9e924, #66accd59)",
       },
+      boxShadow: {
+        "3xl": "0 1px 9px 1px  rgba(0, 0, 0, 0.3)",
+      },
       cursor: {
         grab: "grab",
         grabbing: "grabbing",
@@ -52,7 +55,6 @@ module.exports = {
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
         "failed-red": "#FE4454",
-        "dark-grey": "#999999",
         "light-blue": "#1b9cef",
         "bright-blue": "#64c1fc",
         sdg1: "#e5233d",
@@ -141,7 +143,7 @@ module.exports = {
         modal: "300px",
         "leader-table": "50rem",
         "withdraw-table": "36rem",
-        10: "10",
+        110: "10rem",
         "1/3": "25%",
         "1/2": "50%",
         "3/4": "75%",
@@ -155,6 +157,7 @@ module.exports = {
         modal: "300px",
         280: "280px",
         "75vh": "75vh",
+        350: "350px",
       },
       width: {
         115: "15rem",

@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
 
 export default function useProfiles(fund_id: number) {
