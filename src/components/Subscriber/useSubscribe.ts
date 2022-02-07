@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetModal } from "components/Nodal/Nodal";
 import { subscriberSchema } from "./subscriberSchema";
-import Popup from "./Popup";
 
 export default function useSubscribe() {
   const {
@@ -52,7 +52,9 @@ export default function useSubscribe() {
       });
 
       if (response.status !== 200) {
-        showModal(Popup, {});
+        showModal<PopupProps>(Popup, {
+          message: "Failed to subscribe, please try again",
+        });
       }
       reset();
     } catch (error) {
