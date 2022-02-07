@@ -42,7 +42,7 @@ export enum denoms {
 }
 
 export const currency_text: { [key in denoms]: string } = {
-  [denoms.uluna]: "Luna",
+  [denoms.uluna]: "LUNA",
   [denoms.uaud]: "AUD",
   [denoms.ucad]: "CAD",
   [denoms.uchf]: "CHF",

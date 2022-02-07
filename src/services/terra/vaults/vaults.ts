@@ -1,8 +1,9 @@
 import { terra } from "../terra";
 import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
-import { chainIDs, sc } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { sc } from "contracts/types";
 import { QueryRes } from "services/terra/types";
 import { ExchangeInfo, ExchangeMap } from "./types";
 

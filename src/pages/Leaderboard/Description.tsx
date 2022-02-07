@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useAccountsQuery } from "services/aws/endowments/endowments";
 import { charity_details } from "services/aws/endowments/placeholders";
 

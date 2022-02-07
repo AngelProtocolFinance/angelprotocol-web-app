@@ -9,7 +9,7 @@ import { Step } from "services/transaction/types";
 import { terra } from "services/terra/terra";
 import { gov, tags } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useCreatePoll() {
   useEstimator();

@@ -4,7 +4,7 @@ import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
 import { Step } from "services/transaction/types";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
 import handleTerraError from "helpers/handleTerraError";
 

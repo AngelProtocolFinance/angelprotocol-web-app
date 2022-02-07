@@ -1,11 +1,11 @@
 import { Values } from "components/Transactors/Donater/types";
-import { denoms, currency_text, currency_icons } from "constants/currency";
+import { currency_text, currency_icons } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { memo } from "react";
 import useTooltip from "hooks/useTooltip";
 
 type Props = {
-  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
+  currency: Values["currency"];
   withTooltip?: true;
 };
 
@@ -34,7 +34,7 @@ function Currency(props: Props) {
       />
       <label
         htmlFor={props.currency}
-        className="uppercase flex items-center text-sm"
+        className="uppercase flex items-center text-sm cursor-pointer"
       >
         <img
           src={currency_icons[props.currency]}
