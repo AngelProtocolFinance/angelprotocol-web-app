@@ -2,12 +2,13 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { registration } from "types/routes";
-import Action from "../../components/ActionButton/Action";
+import Action from "../../../components/ActionButton/Action";
 import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { User } from "services/user/types";
+import Step from "./Step";
 
 export default function RegistrationStatus() {
   //url is app/register/status
@@ -39,106 +40,39 @@ export default function RegistrationStatus() {
   const status = useMemo(() => getStatus(user, data), [user, data]);
 
   const navigate = useCallback(
-    (dest: string) => () => history.push(dest),
+    (dest: string, state?: unknown) => () => history.push(dest, state),
     [history]
   );
 
   return (
-    <div className="">
-      <div className="necessary-information">
-        <div className="">
-          <h3 className="text-3xl font-bold">Necessary Information</h3>
-          <span className="">
-            Please complete all the following steps to be able to create your
-            endowment
-          </span>
-        </div>
-        <div className="infor-status my-2">
+    <div>
+      <div className="flex flex-col gap-4">
+        <h3 className="text-3xl font-bold">Necessary Information</h3>
+        <span>
+          Please complete all the following steps to be able to create your
+          endowment
+        </span>
+        <div className="flex flex-col gap-4 items-center my-2">
+          <Step
+            title="Step #1: Contact Details"
+            onClick={navigate(registration.detail)}
+            isComplete
+          />
+          <Step
+            title="Step #2: Wallet Address"
+            onClick={navigate(registration.detail)}
+            isComplete={!!status.wallet_address}
+          />
+          <Step
+            title="Step #3: Documentation"
+            onClick={navigate(registration.upload_docs, {
+              data: data?.Registration,
+            })}
+            isComplete={status.document === 2}
+          />
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
             <div className="status text-left font-bold">
-              <p className="">Step #1: Contact Details</p>
-              <p className="status-text uppercase text-green-500">Complete</p>
-            </div>
-            <div className="">
-              <Action
-                classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(registration.detail)}
-                title="Change"
-                disabled={user.PK === ""}
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p className="">Step #2: Wallet Address</p>
-              {status.wallet_address ? (
-                <p className="status-text uppercase text-green-500">Complete</p>
-              ) : (
-                <p className="status-text uppercase text-yellow-500">Missing</p>
-              )}
-            </div>
-            <div className="">
-              <Action
-                classes={
-                  status.wallet_address
-                    ? "bg-dark-grey w-40 h-10"
-                    : "bg-thin-blue w-40 h-10"
-                }
-                onClick={navigate(registration.wallet_check)}
-                title={status.wallet_address ? "Completed" : "Continue"}
-                disabled={user.PK === ""}
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p className="">Step #3: Documentation</p>
-              {status.document === 2 && (
-                <p className="status-text uppercase text-green-500">Complete</p>
-              )}
-              {status.document === 1 && (
-                <p className="status-text uppercase text-yellow-500">
-                  Under Review
-                </p>
-              )}
-              {status.document === 0 && (
-                <p className="status-text uppercase text-yellow-500">Missing</p>
-              )}
-            </div>
-            <div className="">
-              <Action
-                onClick={() =>
-                  history.push({
-                    pathname: registration.upload_docs,
-                    state: {
-                      data: data?.Registration,
-                    },
-                  })
-                }
-                classes={
-                  status.document === 2
-                    ? "bg-dark-grey w-40 h-10"
-                    : status.document === 1
-                    ? "bg-orange w-40 h-10"
-                    : "bg-thin-blue w-40 h-10"
-                }
-                title={
-                  status.document === 2
-                    ? "Completed"
-                    : status.document === 1
-                    ? "Under Review"
-                    : "Continue"
-                }
-                disabled={
-                  user.PK === "" ||
-                  !(user.TerraWallet || data?.Metadata?.TerraWallet)
-                }
-              />
-            </div>
-          </div>
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p className="">Status of Your Endowment</p>
+              <p>Status of Your Endowment</p>
               {status.endowment === 0 && (
                 <p className="status-text uppercase text-yellow-500">
                   Available soon
@@ -150,7 +84,7 @@ export default function RegistrationStatus() {
                 </p>
               )}
             </div>
-            <div className="">
+            <div>
               {status.endowment === 2 ? (
                 <p className="text-green-500 uppercase">
                   Created:{" "}
