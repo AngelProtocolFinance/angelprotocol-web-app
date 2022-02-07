@@ -181,7 +181,7 @@ const StepsDocs = () => {
       <div className="mt-5 text-center flex justify-center">
         <div>
           <Action
-            onClick={() => history.push(registration.status)}
+            onClick={() => history.push(registration.endowment_data)}
             title="back"
             classes="bg-dark-grey w-48 h-10 mt-3"
             disabled={loading}

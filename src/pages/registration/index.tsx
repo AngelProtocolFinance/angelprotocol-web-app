@@ -6,7 +6,7 @@ import Registration from "./Registration";
 const ContactDetails = lazy(() => import("./ContactDetails"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
-const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
+const EndowmentData = lazy(() => import("./EndowmentData"));
 const WalletCheck = lazy(() => import("./connect-wallet/WalletCheck"));
 const ConnectWallet = lazy(() => import("./connect-wallet/ConnectWallet"));
 const SelectWallet = lazy(() => import("./connect-wallet/SelectWallet"));
@@ -43,8 +43,8 @@ const Register = () => {
           />
           <Route
             exact
-            path={`${path}/${registration.status}`}
-            component={RegistrationStatus}
+            path={`${path}/${registration.endowment_data}`}
+            component={EndowmentData}
           />
           <Route
             exact

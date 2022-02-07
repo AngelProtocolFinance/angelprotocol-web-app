@@ -43,7 +43,7 @@ const WalletCheck = () => {
           />
         </div>
         <Action
-          onClick={() => history.push(registration.status)}
+          onClick={() => history.push(registration.endowment_data)}
           title="Back"
           classes="bg-dark-grey w-48 h-10"
         />

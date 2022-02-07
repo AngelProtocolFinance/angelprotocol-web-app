@@ -52,7 +52,7 @@ export enum registration {
   detail = "detail",
   confirm = "confirm",
   verify = "verify/:token",
-  status = "status",
+  endowment_data = "endowment-data",
   wallet_check = "wallet-check",
   connect_wallet = "connect-wallet",
   register_wallet = "register-wallet",

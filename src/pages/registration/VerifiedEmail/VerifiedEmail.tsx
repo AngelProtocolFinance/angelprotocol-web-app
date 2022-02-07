@@ -52,7 +52,10 @@ export default function VerifiedEmail() {
   }, [userData, resendEmail]);
 
   const navigateToRegistrationStatusPage = useCallback(
-    () => history.push(`${site.app}/${app.register}/${registration.status}`),
+    () =>
+      history.push(
+        `${site.app}/${app.register}/${registration.endowment_data}`
+      ),
     [history]
   );
 

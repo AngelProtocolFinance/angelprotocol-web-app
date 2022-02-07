@@ -115,7 +115,7 @@ export default function ContactDetailsForm(props: any) {
             title="Back"
             classes="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
-            onClick={() => history.push(registration.status)}
+            onClick={() => history.push(registration.endowment_data)}
           />
         )}
         <Action
