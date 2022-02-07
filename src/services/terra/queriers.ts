@@ -17,7 +17,7 @@ import {
   pool_balance,
   holdings,
 } from "./placeholders";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useHaloContract, useLPContract } from "./contracts";
 
 export function useLatestBlock() {
@@ -31,19 +31,18 @@ export function useBalances(main: denoms, others?: denoms[]) {
   const { useBalancesQuery } = terra;
   const { data = [] } = useBalancesQuery(wallet?.walletAddress, {
     skip: wallet === undefined,
-    refetchOnMountOrArgChange: true,
   });
 
   //convert from utoken to token
   const coins = data.map(({ denom, amount }) => ({
-    denom,
-    amount: new Dec(amount).mul(1e-6).toString(),
+    denom: denom as denoms,
+    amount: new Dec(amount).mul(1e-6).toNumber(),
   }));
 
   const found_main = coins.find((coin) => coin.denom === main);
   const _main = new Dec(found_main?.amount || "0").toNumber();
   const _others = coins.filter((coin) =>
-    others ? others.includes(coin.denom as denoms) : true
+    others ? others.includes(coin.denom) : true
   );
 
   return { main: _main, others: _others };

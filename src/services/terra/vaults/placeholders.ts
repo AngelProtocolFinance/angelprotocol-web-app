@@ -1,5 +1,6 @@
 import { contracts } from "constants/contracts";
-import { chainIDs, sc } from "contracts/types";
+import { sc } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { ExchangeMap } from "./types";
 
 export const exchange_map: ExchangeMap = {

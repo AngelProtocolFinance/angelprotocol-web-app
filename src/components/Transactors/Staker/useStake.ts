@@ -7,7 +7,7 @@ import { gov, tags, user } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
 import Contract from "contracts/Contract";
 import { useSetter } from "store/accessors";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { Values } from "./types";
 import useEstimator from "./useEstimator";
 

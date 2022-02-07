@@ -127,7 +127,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             {profile.charity_name}
           </h2>
         )}
-        <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-4">
+        <div className="flex flex-row gap-2 mt-4">
           {isCharityOwner && (
             <button
               onClick={() => openModal("edit")}
@@ -144,7 +144,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
             DONATE NOW
           </button>
           {/* create a customizable IconButton component to replace all occurrences of this */}
-          <div className="flex flex-row gap-2 lg:gap-5 lg:mt-2 items-center lg:items-start lg:justify-start">
+          <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
             {profile.twitter_handle && (
               <IconButton
                 url={`https://twitter.com/${profile.twitter_handle}`}

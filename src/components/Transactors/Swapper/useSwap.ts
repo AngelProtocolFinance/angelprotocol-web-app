@@ -9,7 +9,7 @@ import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { lbp, tags, user } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useSwap() {
   const { reset, getValues } = useFormContext<Values>();

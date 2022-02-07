@@ -1,11 +1,11 @@
-// import { denoms } from "constants/currency";
-// import Currency from "./Currency";
+import { denoms } from "constants/currency";
+import Currency from "./Currency";
 import { useFormContext } from "react-hook-form";
 import { Values } from "components/Transactors/Donater/types";
 import { useGetter } from "store/accessors";
 import Status from "../../Status";
 import Amount from "./Amount";
-import useDonateForm from "./useDonateForm";
+import useDonate from "./useDonate";
 import Breakdown from "./Breakdown";
 import Split from "./Split";
 import { useState } from "react";
@@ -13,7 +13,7 @@ import { useState } from "react";
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<Values>();
-  const { submitHandler, isSubmitting } = useDonateForm();
+  const { donate, isSubmitting } = useDonate();
   const [showSplit, setShowSplit] = useState(false);
   const to = watch("to");
 
@@ -21,21 +21,19 @@ export default function DonateForm() {
 
   return (
     <form
-      onSubmit={() => {
-        console.log("submit");
-        submitHandler();
-      }}
+      onSubmit={donate}
       className="bg-white grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >
       <Status />
       <Amount />
       <div className="flex gap-2 mb-6">
-        {/*<Currency currency={denoms.uusd} />
-        <Currency currency={denoms.ether} withTooltip />
-        <Currency currency={denoms.btc} withTooltip />
-        <Currency currency={denoms.sol} withTooltip />
-        <Currency currency={denoms.uatom} withTooltip />*/}
+        <Currency currency={denoms.uusd} />
+        <Currency currency={denoms.uluna} />
+        <Currency currency={denoms.ether} />
+        {/* <Currency currency={denoms.btc} withTooltip /> */}
+        {/* <Currency currency={denoms.sol} withTooltip /> */}
+        {/* <Currency currency={denoms.uatom} withTooltip /> */}
       </div>
       <Breakdown />
       {to !== "tca" && showSplit && (

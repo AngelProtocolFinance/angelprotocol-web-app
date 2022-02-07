@@ -126,3 +126,17 @@
   max-width: 30px; */
   -moz-appearance: textfield; /* Firefox */
 }
+
+.css-qc6sy-singleValue {
+  color: hsl(0, 0%, 0%) !important;
+}
+
+.css-1pahdxg-control {
+  box-shadow: none !important;
+  border-color: rgba(153, 153, 153, var(--tw-border-opacity)) !important;
+  --tw-border-opacity: 0.6;
+}
+
+#react-select-3-listbox {
+  color: black !important;
+}

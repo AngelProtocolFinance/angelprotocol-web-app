@@ -1,5 +1,6 @@
+import { sc } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { VaultFields } from "components/Withdrawer/types";
-import { chainIDs, sc } from "contracts/types";
 
 type Contracts = {
   [index: string]: {

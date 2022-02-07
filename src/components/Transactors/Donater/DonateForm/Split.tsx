@@ -8,14 +8,14 @@ export default function Split() {
         <Portion
           type="locked"
           border_class="border-green-500"
-          text_class="text-green-500"
+          text_class="text-green-500 uppercase"
           title="Endowment"
           action="Compounded forever"
         />
         <Portion
           type="liquid"
           border_class="border-angel-blue"
-          text_class="text-blue-accent"
+          text_class="text-blue-accent uppercase"
           title="Liquid"
           action="Instantly available"
         >

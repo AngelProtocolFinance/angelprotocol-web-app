@@ -5,7 +5,7 @@ export interface Values {
   amount: string;
   split_liq: string;
   //metadata;
-  currency: denoms.uusd | denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
+  currency: denoms.uusd | denoms.ether | denoms.uluna; //denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
