@@ -5,7 +5,7 @@ import lockIcon from "assets/icons/16_security_lock.svg";
 import trackIcon from "assets/icons/market_analytics_dark.svg";
 import receiptIcon from "assets/icons/09_signing_contract.svg";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Specs() {
   const { ref, isVisible } = useObserve({ threshold: 0.15 });
