@@ -13,7 +13,7 @@ type Props = {
 export default function Action(props: Props) {
   return (
     <button
-      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white mb-3 ${props.classes}`}
+      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${props.classes}`}
       type={props.submit ? "submit" : "button"}
       disabled={props.disabled}
       onClick={props.onClick}
