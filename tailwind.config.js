@@ -180,6 +180,7 @@ module.exports = {
       textColor: ["disabled"],
       translate: ["active"],
       display: ["hover", "group-hover"],
+      opacity: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
     },
   },

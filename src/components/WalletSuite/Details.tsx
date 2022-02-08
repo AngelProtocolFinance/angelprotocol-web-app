@@ -27,8 +27,8 @@ export default function Details(props: { closeHandler: () => void }) {
 
   const isEmpty = filtered_coins.length <= 0;
   const handleDisconnect = () => {
-    disconnect();
     dispatch(resetWallet());
+    disconnect();
   };
 
   return (

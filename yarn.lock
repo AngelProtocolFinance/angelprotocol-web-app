@@ -3653,6 +3653,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-slick@npm:^0.23.8":
+  version: 0.23.8
+  resolution: "@types/react-slick@npm:0.23.8"
+  dependencies:
+    "@types/react": "*"
+  checksum: df71ab6b0f4d573add5c1e24b00885b94e1a3f1d78757cafa0f73a38c1c17e4ad46a75e450267e9f371a9d221e52ddaae5b59b4fd8ad9516676e8bca77c15709
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.2.0":
   version: 4.4.3
   resolution: "@types/react-transition-group@npm:4.4.3"
@@ -4549,13 +4558,13 @@ __metadata:
     "@types/react-modal": ^3.12.1
     "@types/react-router-dom": ^5.1.8
     "@types/react-select-country-list": ^2.2.0
+    "@types/react-slick": ^0.23.8
     autoprefixer: ^9
     currency-list: ^1.0.6
     eslint: ^7.0.0
     eslint-config-prettier: ^8.3.0
     eslint-plugin-prettier: ^3.4.0
     ethers: ^5.5.4
-    formik: ^2.2.9
     jsonwebtoken: ^8.5.1
     jwt-decode: ^3.1.2
     material-ui-dropzone: ^3.5.0
@@ -7129,13 +7138,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge@npm:^2.1.1":
-  version: 2.2.1
-  resolution: "deepmerge@npm:2.2.1"
-  checksum: 284b71065079e66096229f735a9a0222463c9ca9ee9dda7d5e9a0545bf254906dbc7377e3499ca3b2212073672b1a430d80587993b43b87d8de17edc6af649a8
-  languageName: node
-  linkType: hard
-
 "deepmerge@npm:^4.2.2":
   version: 4.2.2
   resolution: "deepmerge@npm:4.2.2"
@@ -8827,23 +8829,6 @@ __metadata:
     combined-stream: ^1.0.8
     mime-types: ^2.1.12
   checksum: b019e8d35c8afc14a2bd8a7a92fa4f525a4726b6d5a9740e8d2623c30e308fbb58dc8469f90415a856698933c8479b01646a9dff33c87cc4e76d72aedbbf860d
-  languageName: node
-  linkType: hard
-
-"formik@npm:^2.2.9":
-  version: 2.2.9
-  resolution: "formik@npm:2.2.9"
-  dependencies:
-    deepmerge: ^2.1.1
-    hoist-non-react-statics: ^3.3.0
-    lodash: ^4.17.21
-    lodash-es: ^4.17.21
-    react-fast-compare: ^2.0.1
-    tiny-warning: ^1.0.2
-    tslib: ^1.10.0
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: f07f80eee8423b4c5560546c48c4093c47530dae7d931a4e0d947d68ae1aab94291b1bf2e99ecaa5854ee50593b415fb5724c624c787338f0577f066009e8812
   languageName: node
   linkType: hard
 
@@ -14922,13 +14907,6 @@ pvutils@latest:
   languageName: node
   linkType: hard
 
-"react-fast-compare@npm:^2.0.1":
-  version: 2.0.4
-  resolution: "react-fast-compare@npm:2.0.4"
-  checksum: 06046595f90a4e3e3a56f40a8078c00aa71bdb064ddb98343f577f546aa22e888831fd45f009c93b34707cc842b4c637737e956fd13d6f80607ee92fb9cf9a1c
-  languageName: node
-  linkType: hard
-
 "react-hook-form@npm:^7.20.0":
   version: 7.20.1
   resolution: "react-hook-form@npm:7.20.1"
@@ -17406,7 +17384,7 @@ pvutils@latest:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.10.0, tslib@npm:^1.8.1":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: dbe628ef87f66691d5d2959b3e41b9ca0045c3ee3c7c7b906cc1e328b39f199bb1ad9e671c39025bd56122ac57dfbf7385a94843b1cc07c60a4db74795829acd

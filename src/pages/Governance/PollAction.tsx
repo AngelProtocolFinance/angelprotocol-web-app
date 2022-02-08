@@ -15,6 +15,7 @@ export default function PollAction(props: { poll_id?: string }) {
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== PollStatus.in_progress;
+  const C = details.creator === wallet?.walletAddress;
   let node: ReactNode = null;
 
   //poll has ended
@@ -24,8 +25,8 @@ export default function PollAction(props: { poll_id?: string }) {
   } else {
     if (E) {
       //voting period ended
-      if (V) {
-        node = <Action title="End poll" action={showPollEnder} />;
+      if (V || C) {
+        node = <Action title="End poll" action={end_poll} />;
       } else {
         node = <Text>vote period has ended</Text>;
       }
@@ -52,7 +53,7 @@ export default function PollAction(props: { poll_id?: string }) {
  * vote = !V && !E
  * you voted yes | no = W && V && !P
  * voting period ended = E && !P
- * end poll = V && P
+ * end poll = E && (V || C)
  * poll has ended = P
  */
 
