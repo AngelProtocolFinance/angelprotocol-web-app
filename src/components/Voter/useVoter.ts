@@ -60,7 +60,7 @@ export default function useVoter() {
             setStage({
               step: Step.success,
               content: {
-                message: "Vote is successfully casted",
+                message: "Vote is successfully cast",
                 url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
               },
             })
