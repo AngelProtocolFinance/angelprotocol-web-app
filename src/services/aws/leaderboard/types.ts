@@ -3,7 +3,6 @@ export interface Endowment {
   total_liq: number;
   total_lock: number;
   overall: number;
-  chain: "mainnet" | "testnet";
 }
 
 export interface Update {

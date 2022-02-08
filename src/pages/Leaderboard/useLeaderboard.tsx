@@ -8,7 +8,6 @@ const placeholder: Endowment = {
   total_liq: 0,
   total_lock: 0,
   overall: 0,
-  chain: "testnet",
 };
 
 export default function useLeaderboard(address: string) {

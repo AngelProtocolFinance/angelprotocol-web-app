@@ -31,7 +31,8 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
     setFormLoading(true);
     const updated = await saveEndowmentProfile(
       body,
-      props.profile.endowment_address
+      props.profile.endowment_address,
+      props.profile.charity_owner
     );
     setFormLoading(false);
     if (updated) {

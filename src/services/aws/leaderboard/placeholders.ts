@@ -11,5 +11,4 @@ export const endowment: Endowment = {
   overall: 0,
   total_liq: 0,
   total_lock: 0,
-  chain: "mainnet",
 };
