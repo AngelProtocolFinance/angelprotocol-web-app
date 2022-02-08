@@ -59,7 +59,9 @@ const ConfirmEmail = () => {
 
   if (user.EmailVerified) {
     return (
-      <Redirect to={`${site.app}/${app.register}/${registration.status}`} />
+      <Redirect
+        to={`${site.app}/${app.register}/${registration.endowment_data}`}
+      />
     );
   }
 
