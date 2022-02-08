@@ -58,7 +58,7 @@ export default function RegistrationStatus() {
       />
       <Step
         title="Step #2: Wallet Address"
-        onClick={navigate(registration.detail)}
+        onClick={navigate(registration.wallet_check)}
         isComplete={!!status.wallet_address}
       />
       <DocumentationStep
