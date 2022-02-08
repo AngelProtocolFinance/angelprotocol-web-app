@@ -2,6 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { useAccountsQuery } from "services/aws/endowments/endowments";
 import { charity_details } from "services/aws/endowments/placeholders";
+import { app, site } from "types/routes";
 
 type Props = { address: string };
 
@@ -22,9 +23,7 @@ export default function Description(props: Props) {
       />
 
       <a
-        href={details.url}
-        target="_blank"
-        rel="noreferrer noopener"
+        href={`${site.app}/${app.charity}/${props.address}`}
         className="col-start-2 text-lg text-angel-grey hover:text-angel-blgue active:text-angel-blue font-bold pt-2 mb-1"
       >
         {details.name}
