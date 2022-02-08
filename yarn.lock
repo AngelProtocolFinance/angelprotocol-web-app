@@ -3653,6 +3653,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-slick@npm:^0.23.8":
+  version: 0.23.8
+  resolution: "@types/react-slick@npm:0.23.8"
+  dependencies:
+    "@types/react": "*"
+  checksum: df71ab6b0f4d573add5c1e24b00885b94e1a3f1d78757cafa0f73a38c1c17e4ad46a75e450267e9f371a9d221e52ddaae5b59b4fd8ad9516676e8bca77c15709
+  languageName: node
+  linkType: hard
+
 "@types/react-transition-group@npm:^4.2.0":
   version: 4.4.3
   resolution: "@types/react-transition-group@npm:4.4.3"
@@ -4549,6 +4558,7 @@ __metadata:
     "@types/react-modal": ^3.12.1
     "@types/react-router-dom": ^5.1.8
     "@types/react-select-country-list": ^2.2.0
+    "@types/react-slick": ^0.23.8
     autoprefixer: ^9
     currency-list: ^1.0.6
     eslint: ^7.0.0

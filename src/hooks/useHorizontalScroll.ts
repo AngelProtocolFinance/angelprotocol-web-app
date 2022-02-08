@@ -100,7 +100,7 @@ export default function useHorizontalScroll() {
 
   function forward() {
     if (!sliderRef.current) return;
-    const scrollFactor = Math.floor(sliderRef.current.offsetWidth * 0.5);
+    const scrollFactor = Math.floor(sliderRef.current.offsetWidth * 0.4);
     const scrollLeft = sliderRef.current.scrollLeft;
     const scrollWidth = sliderRef.current.scrollWidth;
     const offsetWidth = sliderRef.current.offsetWidth;
@@ -114,7 +114,7 @@ export default function useHorizontalScroll() {
 
   function backward() {
     if (!sliderRef.current) return;
-    const scrollFactor = sliderRef.current.offsetWidth;
+    const scrollFactor = Math.floor(sliderRef.current.offsetWidth * 0.4);
     const scrollLeft = sliderRef.current.scrollLeft;
     const end = Math.max(0, scrollLeft - scrollFactor);
     tween(scrollLeft, end, 1000, easings["easeOutSine"]);
