@@ -3,14 +3,14 @@ import {
   Coin,
   LCDClient,
   Msg,
-  StdFee,
+  Fee,
   TxInfo,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { Disconnected, TxResultFail } from "./Errors";
-import { chainIDs } from "./types";
+import { chainIDs } from "constants/chainIDs";
 
 export default class Contract {
   wallet?: ConnectedWallet;
@@ -37,16 +37,22 @@ export default class Contract {
   static gasAdjustment = 1.25; //use gas units 25% greater than estimate
 
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [new Coin(denoms.uusd, 0.15)];
+  static gasPrices = [
+    new Coin(denoms.uusd, 0.15),
+    new Coin(denoms.uluna, 0.01133),
+  ];
 
   async query<T>(source: AccAddress, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[]): Promise<StdFee> {
-    return this.client.tx.estimateFee(this.walletAddr!, msgs, {
-      feeDenoms: [denoms.uusd],
-    });
+  async estimateFee(msgs: Msg[], denom = denoms.uusd): Promise<Fee> {
+    this.checkWallet();
+    const account = await this.client.auth.accountInfo(this.walletAddr!);
+    return this.client.tx.estimateFee(
+      [{ sequenceNumber: account.getSequenceNumber() }],
+      { msgs, feeDenoms: [denom] }
+    );
   }
 
   async pollTxInfo(

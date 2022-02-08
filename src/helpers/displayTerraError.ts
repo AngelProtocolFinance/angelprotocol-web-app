@@ -12,7 +12,8 @@ import {
   TxResultFail,
 } from "contracts/Errors";
 import ErrPop, { Props as ErrProp } from "components/Popup/ErrPop";
-import getFinderUrl from "./getFinderUrl";
+import { chainIDs } from "constants/chainIDs";
+import getTxUrl from "./getTxUrl";
 
 export default function displayTerraError(error: any, prompter: Opener) {
   if (error instanceof UserDenied) {
@@ -26,7 +27,7 @@ export default function displayTerraError(error: any, prompter: Opener) {
   } else if (error instanceof TxResultFail) {
     prompter<ErrProp>(ErrPop, {
       desc: "Timeout: failed to get transaction result",
-      url: getFinderUrl(error.chainId, error.txHash),
+      url: getTxUrl(error.chainId as chainIDs, error.txHash),
     });
   } else if (error instanceof Timeout) {
     prompter<ErrProp>(ErrPop, { desc: "Transaction timeout" });

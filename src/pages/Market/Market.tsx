@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import Index from "./Index";
 import { useProfilesQuery } from "services/aws/endowments/endowments";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
 import Loader from "components/Loader/Loader";
+import { chainIDs } from "constants/chainIDs";
 
 export default function Market() {
   const wallet = useConnectedWallet();
@@ -25,7 +25,7 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="grid items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
+      <div className="grid items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover py-10">
         <div className="px-2">
           <p className="uppercase text-lg md:text-2xl xl:text-4xl">
             we categorize our charities based on the
@@ -33,14 +33,6 @@ export default function Market() {
           <p className="font-extrabold text-xl md:text-xl xl:text-4xl my-2">
             17 UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)
           </p>
-          <a
-            href="https://sdgs.un.org/goals"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block w-48 uppercase bg-yellow-blue p-1.5 rounded-lg font-bold mt-5"
-          >
-            learn more
-          </a>
         </div>
       </div>
       {isLoading && (

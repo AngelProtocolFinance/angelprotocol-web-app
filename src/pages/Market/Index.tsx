@@ -20,7 +20,7 @@ export default function Index(props: { id: number }) {
   const profiles = useProfiles(props.id);
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
-  const [list, setList] = useState(profiles);
+  const [list] = useState(profiles);
 
   useEffect(() => {
     if (!showForward && !showBack) return;

@@ -1,3 +1,5 @@
+import { chainIDs } from "constants/chainIDs";
+
 export enum Step {
   form = "form",
   submit = "submit",
@@ -6,13 +8,6 @@ export enum Step {
   error = "error",
   receipt = "receipt",
 }
-
-export type Details = {
-  amount: string;
-  to: "charity" | "fund" | "tca";
-  receiver?: string | number;
-  split_liq: string;
-};
 
 export type State = {
   form_loading: boolean;
@@ -41,7 +36,7 @@ export type BroadcastStage = {
   step: Step.broadcast;
   message: string;
   txHash: string;
-  chainId: string;
+  chainId: chainIDs;
   details?: never;
 };
 
@@ -49,23 +44,22 @@ export type SuccessStage = {
   step: Step.success;
   message: string;
   txHash: string;
-  chainId: string;
-  details?: Details;
+  chainId: chainIDs;
+  isReceiptEnabled?: boolean;
 };
 
 export type ReceiptStage = {
   step: Step.receipt;
   message?: never;
   txHash: string;
-  chainId: string;
-  details: Details;
+  chainId: chainIDs;
 };
 
 export type ErrorStage = {
   step: Step.error;
   message: string;
   txHash?: string;
-  chainId?: string;
+  chainId?: chainIDs;
   details?: never;
 };
 

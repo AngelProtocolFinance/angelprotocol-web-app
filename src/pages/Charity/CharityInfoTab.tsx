@@ -33,7 +33,7 @@ function AccountInfo({
       <p className="uppercase font-semibold text-white text-xl">
         {account.type}
       </p>
-      <p className="uppercase font-bold text-white text-6xl my-5 tracking-wide">
+      <p className="uppercase font-bold text-white text-5xl my-5 tracking-wide">
         {account.balance}
       </p>
       <div className="flex justify-between w-30 h-16">
@@ -50,7 +50,7 @@ function AccountInfo({
         </div>
         <div className="flex flex-col items-start justify-around">
           <p className="uppercase font-bold text-white text-md">Allocation</p>
-          <p className="uppercase font-normal text-white text-xs">
+          <p className="uppercase font-normal text-white text-sm">
             {account.allocation}
           </p>
         </div>
@@ -98,29 +98,32 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
 
   return (
     <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10 font-heading">
-      <div className="flex flex-col gap-5 justify-between items-center lg:items-start min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
-        <div className="endowment_stats bg-white w-full lg:max-w-600 lg:w-3/4 min-h-r15 shadow-xl border-0 rounded-2xl p-5">
+      <div className="flex flex-col gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
+        <div className="endowment_stats bg-white w-full min-h-r15 shadow-xl border-0 rounded-2xl p-5">
           <p className="uppercase font-bold text-thin-blue text-xl">
             Endowment Balance
           </p>
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
             ${toCurrency(overall)}
           </p>
-          <p className="uppercase font-bold text-thin-blue text-sm">
+          {/*          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations
           </p>
-          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>
+          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>*/}
         </div>
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
+
         </div> */}
-        {accountDetails.map((account, i) => (
-          <AccountInfo
-            key={i}
-            account={account}
-            className={`${account.color}`}
-          />
-        ))}
+        <div className="flex flex-col md:flex-row gap-5 w-full">
+          {accountDetails.map((account, i) => (
+            <AccountInfo
+              key={i}
+              account={account}
+              className={`${account.color}`}
+            />
+          ))}
+        </div>
       </div>
       {/* <AccountAction /> turn on for admin features after V1 */}
     </div>

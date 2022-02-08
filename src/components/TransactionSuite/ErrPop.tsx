@@ -1,5 +1,5 @@
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import getFinderUrl from "helpers/getFinderUrl";
+import getTxUrl from "helpers/getTxUrl";
 import useTxUpdator from "services/transaction/updators";
 import { Step, ErrorStage } from "services/transaction/types";
 
@@ -18,7 +18,7 @@ export default function ErrPop(props: ErrorStage) {
       <p className="text-center text-angel-grey mb-2 ">{message}</p>
       {chainId && txHash && (
         <a
-          href={getFinderUrl(chainId, txHash)}
+          href={getTxUrl(chainId, txHash)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-red-400 cursor-pointer mb-6 text-sm"

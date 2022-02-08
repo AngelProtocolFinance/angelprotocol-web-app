@@ -16,6 +16,7 @@ export const MultiSelector = (props: SelectorProps) => {
       {...props.register(props.name)}
       name={props.name}
       control={props.control}
+      ref={null}
       render={({ field: { value, onChange } }) => {
         return (
           <Select

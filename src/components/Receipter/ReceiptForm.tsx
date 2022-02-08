@@ -1,8 +1,13 @@
+import { useMemo } from "react";
+import countryList from "react-select-country-list";
 import { useFormContext } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+
+import { Values } from "./types";
 import useReceiptForm from "components/Receipter/useReceiptForm";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
-import { Values } from "./types";
+import { Selector } from "components/Selector";
 
 type DataProps = {
   name: string;
@@ -11,9 +16,9 @@ type DataProps = {
 
 function ReceiptDetails({ name, value }: DataProps) {
   return (
-    <p className="text-lg border-b-2 border-grey-500 pb-1">
-      <span className="inline-block mr-2 capitalize">{name}:</span>
-      <span className="inline-block">{value}</span>
+    <p>
+      <span className="font-medium inline-block mr-2 capitalize">{name}:</span>
+      <span className="font-normal inline-block">{value}</span>
     </p>
   );
 }
@@ -23,22 +28,16 @@ export default function ReceiptForm() {
     getValues,
     handleSubmit,
     register,
-    formState: { isValid },
+    formState: { errors },
+    control,
   } = useFormContext<Values>();
   const { submitHandler, processing } = useReceiptForm();
+  const countries = useMemo(() => countryList().getData(), []);
 
   const receiptData: DataProps[] = [
     {
-      name: "Transaction date",
-      value: new Date(getValues("transactionDate")).toDateString(),
-    },
-    {
       name: "Transaction id",
       value: maskAddress(getValues("transactionId")),
-    },
-    {
-      name: "amount",
-      value: `${getValues("amount")} UST`,
     },
   ];
 
@@ -49,32 +48,69 @@ export default function ReceiptForm() {
       autoComplete="off"
       autoSave="off"
     >
-      <h1 className="font-heading text-lg font-semibold text-grey-600">
+      <h1 className="font-heading text-xl font-bold text-grey-600">
         Request Receipt
       </h1>
       {receiptData.map(({ name, value }, idx) => (
         <ReceiptDetails name={name} value={value} key={idx} />
       ))}
-      <TextInput name="email" id="email" placeholder="john@doe.com" />
-      <TextInput name="fullName" id="fullName" placeholder="full Name" />
+      <TextInput name="email" id="email" label="Email Address" />
+      <TextInput name="fullName" id="fullName" label="Full Name" />
       <div className="grid">
+        <label
+          htmlFor="streetAddress"
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
+        >
+          Street Address
+        </label>
         <textarea
           {...register("streetAddress")}
           autoComplete="off"
           id="streetAddress"
-          placeholder="street Address"
-          className="p-1 pl-0 outline-none border-2  border-dark-grey border-opacity-60 text-dark-grey text-xl pl-2 rounded-xl"
+          className="p-1 pl-0 outline-none border border-dark-grey border-opacity-60 text-black text-md pl-2 rounded-sm"
+        />
+        <ErrorMessage
+          errors={errors}
+          name="streetAddress"
+          as="span"
+          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
         />
       </div>
-      <TextInput name="state" id="state" placeholder="state" />
-      <TextInput name="zipCode" id="zipCode" placeholder="zip code" />
-      <TextInput name="country" id="country" placeholder="country" />
+      <TextInput name="city" id="city" label="City" />
+      <TextInput name="state" id="state" label="State" />
+      <TextInput name="zipCode" id="zipCode" label="Zip Code" />
+      <div className="grid">
+        <label
+          htmlFor="country"
+          className="text-angel-grey text-xs uppercase font-bold mb-1"
+        >
+          Country
+        </label>
+        <div className="form-control rounded-sm bg-gray-200 flex justify-between items-center text-dark-grey">
+          <Selector
+            name="country"
+            placeholder=""
+            options={countries.map((item) => ({
+              value: item.label,
+              label: item.label,
+            }))}
+            control={control}
+            register={register}
+          />
+        </div>
+        <ErrorMessage
+          errors={errors}
+          name="country"
+          as="span"
+          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+        />
+      </div>
       <button
-        disabled={processing || !isValid}
+        disabled={processing}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {processing ? "processing..." : "submit"}
+        {processing ? "Processing..." : "Submit"}
       </button>
     </form>
   );
