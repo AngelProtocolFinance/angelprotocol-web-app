@@ -1,10 +1,11 @@
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useCallback, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
+import { app, registration, site } from "types/routes";
 import Action from "../../components/ActionButton/Action";
 
 const ConfirmEmail = () => {
@@ -16,7 +17,7 @@ const ConfirmEmail = () => {
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
 
   const sendEmail = useCallback(
-    async (emailType) => {
+    async (emailType: string) => {
       if (!user.PK) {
         toast.error("Invalid Data. Please ask the administrator about that.");
         return;
@@ -50,12 +51,17 @@ const ConfirmEmail = () => {
   }, [dispatch, history]);
 
   useEffect(() => {
-    if (user.PK) {
-      return;
+    if (!user.PK) {
+      const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
+      dispatch(updateUserData(newUserData));
     }
-    const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(newUserData));
   }, [user, dispatch]);
+
+  if (user.EmailVerified) {
+    return (
+      <Redirect to={`${site.app}/${app.register}/${registration.status}`} />
+    );
+  }
 
   return (
     <div className="flex flex-col gap-4 font-bold">
