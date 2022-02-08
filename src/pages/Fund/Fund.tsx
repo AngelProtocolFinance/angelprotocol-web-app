@@ -2,7 +2,6 @@ import FundVid from "./FundVid";
 import CharityCard from "pages/Market/CharityCard";
 import Overview from "./Overview";
 import useFund from "./useFund";
-import Donate from "./Donate";
 import useProfiles from "pages/Market/useProfiles";
 import { RouteComponentProps } from "react-router-dom";
 import { unsdgs } from "pages/Fund/unsdgs";
@@ -14,7 +13,7 @@ import { unsdgs } from "pages/Fund/unsdgs";
 //description
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const { isDonating, toggleDonate, error, loading, split } = useFund();
+  const { isDonating, toggleDonate } = useFund();
   const id_param = props.match.params?.id;
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
@@ -36,7 +35,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         </div>
         <FundVid url={sdg.youtube} />
         {(isDonating && (
-          <Donate split={split} loading={loading} error={error} />
+          <p>this donation form is depracated, new form in RC-fund</p>
         )) || <Overview fund_id={fund_id} />}
 
         <div className="col-start-2 col-span-1 row-start-2 row-span-1 self-start">
