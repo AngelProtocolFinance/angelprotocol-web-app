@@ -30,7 +30,7 @@ function Currency(props: Props) {
         {...register("currency")}
         value={props.currency}
         type="radio"
-        className="w-0 h-0"
+        className="w-0 h-0 appearance-none"
       />
       <label
         htmlFor={props.currency}
