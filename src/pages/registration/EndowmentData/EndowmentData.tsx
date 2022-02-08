@@ -81,13 +81,14 @@ export default function RegistrationStatus() {
         onClick={navigate(registration.wallet_check)}
         disabled={status.endowmentStep === 0 || user.PK === ""}
       />
-      <Action
-        classes="bg-thin-blue min-w-fit h-10 mt-10 px-5"
-        title={"Go to " + user.CharityName + "'s profile"}
-        onClick={navigate(registration.charity_profile)}
-        disabled={!status.completed || user.PK === ""}
-        tooltip="Available soon"
-      />
+      {status.completed && !!user.PK && (
+        <Action
+          classes="bg-thin-blue min-w-fit h-10 mt-10 px-5"
+          title={"Go to " + user.CharityName + "'s profile"}
+          onClick={navigate(registration.charity_profile)}
+          tooltip="Available soon"
+        />
+      )}
       <ToastContainer />
     </div>
   );
