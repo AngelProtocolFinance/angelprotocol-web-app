@@ -6,6 +6,8 @@ import {
   useState,
 } from "react";
 import jwtDecode, { JwtPayload } from "jwt-decode";
+import { useGetter, useSetter } from "store/accessors";
+import { updateTokensData } from "services/tokens/tokenSlice";
 
 interface Props {
   children: ReactNode;
@@ -32,27 +34,23 @@ let initialToken: Token = null;
 export default function AuthProvider(props: Props) {
   const [token, setToken] = useState<string>(initialToken?.token || "");
   const [apToken, setAPToken] = useState<string>(initialToken?.apToken || "");
+  const dispatch = useSetter();
+  const tokens = useGetter((state) => state.tokens);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("token");
-    const savedAPToken = localStorage.getItem("aptoken");
-    if (savedToken) {
-      const decodedToken: JwtPayload = jwtDecode(savedToken);
+    if (tokens.token) {
+      const decodedToken: JwtPayload = jwtDecode(tokens.token);
       const expiry = decodedToken.exp!;
       if (expiry * 1000 <= Date.now()) {
         deleteToken("user");
-      } else {
-        setToken(savedToken);
       }
     }
 
-    if (savedAPToken) {
-      const decodedAPToken: JwtPayload = jwtDecode(savedAPToken);
+    if (tokens.apToken) {
+      const decodedAPToken: JwtPayload = jwtDecode(tokens.apToken);
       const expiryAP = decodedAPToken.exp!;
       if (expiryAP * 1000 <= Date.now()) {
         deleteToken("admin");
-      } else {
-        setAPToken(savedAPToken);
       }
     }
     // eslint-disable-next-line
@@ -60,10 +58,20 @@ export default function AuthProvider(props: Props) {
 
   function saveToken(token: string, type: string = "user") {
     if (type === "user") {
-      localStorage.setItem("token", token);
+      dispatch(
+        updateTokensData({
+          ...tokens,
+          token: token,
+        })
+      );
       setToken(token);
     } else {
-      localStorage.setItem("aptoken", token);
+      dispatch(
+        updateTokensData({
+          ...tokens,
+          apToken: token,
+        })
+      );
       setAPToken(token);
     }
     //sync save token
@@ -71,10 +79,20 @@ export default function AuthProvider(props: Props) {
 
   function deleteToken(type: string = "user") {
     if (type === "user") {
-      localStorage.removeItem("token");
+      dispatch(
+        updateTokensData({
+          ...tokens,
+          token: "",
+        })
+      );
       setToken("");
     } else {
-      localStorage.removeItem("aptoken");
+      dispatch(
+        updateTokensData({
+          ...tokens,
+          apToken: "",
+        })
+      );
       setAPToken("");
     }
     //sync delete token

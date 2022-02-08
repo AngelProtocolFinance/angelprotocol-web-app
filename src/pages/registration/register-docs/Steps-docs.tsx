@@ -140,13 +140,13 @@ const StepsDocs = () => {
         </div>
         <div className="step-1 md:flex justify-between">
           <div className="md:w-1/3 xl:w-1/2 mb-2 md:mb-0">
-            <p className="font-bold text-base max-w-xs text-left xl:ml-32">
+            <div className="font-bold text-base max-w-xs text-left xl:ml-32">
               Resolution approving the creation of an Endowment on Angel
               Protocol with the Terra address {userData?.TerraWallet}
               <p className="text-orange text-xs underline text-left cursor-pointer">
                 See Template
               </p>
-            </p>
+            </div>
           </div>
           <div className="flex items-center justify-end md:w-2/3 xl:w-1/2">
             <Action
@@ -186,17 +186,19 @@ const StepsDocs = () => {
           />
         </div>
       </div>
-      <DropzoneDialog
-        cancelButtonText={"cancel"}
-        submitButtonText={"submit"}
-        maxFileSize={5000000}
-        open={isOpenModal}
-        onClose={() => setOpenModal(false)}
-        onSave={uploadFile}
-        showPreviews={true}
-        showFileNamesInPreview={true}
-        filesLimit={1}
-      />
+      <div>
+        <DropzoneDialog
+          cancelButtonText={"cancel"}
+          submitButtonText={"submit"}
+          maxFileSize={5000000}
+          open={isOpenModal}
+          onClose={() => setOpenModal(false)}
+          onSave={uploadFile}
+          showPreviews={true}
+          showFileNamesInPreview={true}
+          filesLimit={1}
+        />
+      </div>
     </div>
   );
 };

@@ -2,20 +2,21 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { registration } from "types/routes";
 import banner1 from "assets/images/banner-register-1.jpg";
 import Action from "../../components/ActionButton/Action";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { removeUserData } from "services/user/userSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { ReferInfo, FormInfoSchema, useRegistration } from "./useRegistration";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Registration = () => {
   const [isLoading, setIsLoading] = useState(false);
+  let userData = useGetter((state) => state.user);
   const dispatch = useSetter();
   const { onResume } = useRegistration();
   const { url } = useRouteMatch();
   const history = useHistory();
-  const userData: any = JSON.parse(localStorage.getItem("userData") || "{}");
+
   const {
     register,
     handleSubmit,
@@ -30,14 +31,16 @@ const Registration = () => {
     setIsLoading(false);
   };
 
-  if (userData && userData.EmailVerified === false) {
-    history.push({
-      pathname: `${url}/${registration.confirm}`,
-      state: { is_sent: true },
-    });
-  } else {
-    dispatch(removeUserData());
-  }
+  useEffect(() => {
+    if (userData.PK && userData.EmailVerified === false) {
+      history.push({
+        pathname: `${url}/${registration.confirm}`,
+        state: { is_sent: true },
+      });
+    } else {
+      dispatch(removeUserData());
+    }
+  }, []);
 
   return (
     <div>

@@ -7,11 +7,9 @@ import rootReducer from "./reducers";
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware: any) =>
-    getDefaultMiddleware().concat([
-      aws.middleware,
-      terra.middleware,
-      apes.middleware,
-    ]),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat([aws.middleware, terra.middleware, apes.middleware]),
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
