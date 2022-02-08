@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { registration } from "types/routes";
 import { DropzoneDialog } from "material-ui-dropzone";
@@ -20,9 +20,11 @@ const StepsDocs = () => {
   const docData = location.state.data;
 
   let user = useGetter((state) => state.user);
-  if (!user.PK) {
-    history.push(registration.index);
-  }
+  useEffect(() => {
+    if (!user.PK) {
+      history.push(registration.index);
+    }
+  }, [user]);
 
   const [userData, setUserData] = useState({
     ...user,

@@ -11,13 +11,14 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   let user = useGetter((state) => state.user);
-  if (!user.PK) {
-    history.push(registration.index);
-  }
-
-  if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
-    history.go(0);
-  }
+  useEffect(() => {
+    if (!user.PK) {
+      history.push(registration.register);
+    }
+    if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
+      history.go(0);
+    }
+  }, [user]);
 
   const { data, error } = useGetCharityDataQuery(user.PK);
 

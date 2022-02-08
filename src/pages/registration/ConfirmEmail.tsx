@@ -6,6 +6,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { registration } from "types/routes";
+import { useEffect } from "react";
 
 const ConfirmEmail = () => {
   const history = useHistory();
@@ -31,12 +32,14 @@ const ConfirmEmail = () => {
   };
   const returnMain = () => {
     dispatch(removeUserData());
-    history.push("/");
+    history.push(registration.register);
   };
 
-  if (!user.PK) {
-    history.push(registration.index);
-  }
+  useEffect(() => {
+    if (!user.PK) {
+      history.push(registration.register);
+    }
+  }, [user]);
 
   return (
     <div>

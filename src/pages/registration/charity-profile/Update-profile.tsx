@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
@@ -24,13 +24,15 @@ const UpdateProfile = () => {
   let user = useGetter((state) => state.user);
   const { data } = useGetCharityDataQuery(user.PK);
 
-  if (!user.PK) {
-    history.push(registration.index);
-  }
+  useEffect(() => {
+    if (!user.PK) {
+      history.push(registration.register);
+    }
 
-  if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
-    metaData = data.Metadata;
-  }
+    if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
+      metaData = data.Metadata;
+    }
+  }, [user]);
 
   const is_create = !metaData?.CompanyNumber;
   const readFiles = async (files: any) => {

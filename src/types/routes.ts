@@ -62,6 +62,7 @@ export enum registration {
   others = "others",
   self_custody = "self-custody",
   key_person = "key-person",
+  register = "/app/register",
 }
 
 export enum charity {
