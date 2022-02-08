@@ -1,7 +1,7 @@
 import { gov_api } from "./gov";
 import { gov_config, gov_state, staker, poll } from "./placeholders";
-import { chainIDs } from "contracts/types";
 import { useHaloContract } from "../contracts";
+import { chainIDs } from "constants/chainIDs";
 
 export function useGovStaker() {
   const { useGovStakerQuery } = gov_api;

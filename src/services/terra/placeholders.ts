@@ -6,5 +6,3 @@ export const halo_info: TokenInfo = {
   decimals: 0,
   total_supply: "0",
 };
-
-//lbp

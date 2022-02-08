@@ -3,18 +3,15 @@ import { useEffect, useState } from "react";
 import { useMembers } from "services/terra/admin/queriers";
 import { Values, MemberCopy, MemberUpdateFn, Diffs } from "./types";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useSetter } from "store/accessors";
-import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import Admin from "contracts/Admin";
 import { Member } from "services/terra/admin/types";
-import useTxErrorHandler from "hooks/useTxErrorHandler";
 import handleTerraError from "helpers/handleTerraError";
+import useTxUpdator from "services/transaction/updators";
 
 export default function useMemberUpdator() {
   const wallet = useConnectedWallet();
-  const dispatch = useSetter();
-  const handleTxError = useTxErrorHandler();
+  const { updateTx } = useTxUpdator();
   const members = useMembers();
   const [membersCopy, setMemberCopy] = useState<MemberCopy[]>([]);
 
@@ -103,32 +100,16 @@ export default function useMemberUpdator() {
       );
 
       if (to_remove.length <= 0 && to_add.length <= 0) {
-        console.log(to_add, to_remove);
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "No changes we're made" },
-          })
-        );
+        updateTx({ step: Step.error, message: "No changes we're made" });
         return;
       }
 
       if (!wallet) {
-        dispatch(
-          setStage({
-            step: Step.error,
-            content: { message: "Wallet is not connected" },
-          })
-        );
+        updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
 
-      dispatch(
-        setStage({
-          step: Step.submit,
-          content: { message: "Submitting proposal" },
-        })
-      );
+      updateTx({ step: Step.error, message: "Submitting proposal" });
 
       const contract = new Admin(wallet);
       const execute_msg = contract.createUpdateMembersMsg(to_add, to_remove);
@@ -181,7 +162,7 @@ export default function useMemberUpdator() {
       // }
     } catch (err) {
       console.error(err);
-      handleTerraError(err, handleTxError);
+      handleTerraError(err, updateTx);
     }
   }
 

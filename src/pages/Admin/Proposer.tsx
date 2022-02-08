@@ -2,6 +2,7 @@ import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { NavLink, useRouteMatch, Switch, Route } from "react-router-dom";
 import { proposal_types } from "types/routes";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
+import { MemberUpdatorProps } from "./Templates/MemberUpdator/types";
 import UpdateForm from "./Templates/MemberUpdator/UpdateForm";
 
 export default function Proposer() {
@@ -12,7 +13,10 @@ export default function Proposer() {
       <div className="justify-self-center">
         <Switch>
           <Route path={`${path}/${proposal_types.admin_add_member}`}>
-            <TransactionSuite form={MemberUpdateForm} form_props={{}} />
+            <TransactionSuite<MemberUpdatorProps>
+              Context={MemberUpdator}
+              contextProps={{ Form: UpdateForm }}
+            />
           </Route>
         </Switch>
       </div>
@@ -29,13 +33,5 @@ function ProposalTypes() {
         update members
       </NavLink>
     </div>
-  );
-}
-
-function MemberUpdateForm() {
-  return (
-    <MemberUpdator>
-      <UpdateForm />
-    </MemberUpdator>
   );
 }

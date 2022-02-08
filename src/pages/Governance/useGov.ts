@@ -1,5 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { getSpotPrice } from "components/Swapper/getSpotPrice";
+import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 import { useState, useEffect, useMemo } from "react";
 import { useGovBalance } from "services/terra/gov/queriers";
 import { usePairSimul } from "services/terra/lp/queriers";

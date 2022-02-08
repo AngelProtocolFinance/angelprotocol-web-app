@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 import Account from "contracts/Account";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useWithdraw(address: string) {
   const [redirect, setRedirect] = useState(false);

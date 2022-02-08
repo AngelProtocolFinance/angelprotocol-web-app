@@ -71,4 +71,12 @@ export enum registration {
   key_person = "key-person",
 }
 
+export enum charity {
+  overview = "/overview",
+  endowment = "/endowment",
+  programs = "/programs",
+  media = "/media",
+  governance = "/governance",
+}
+
 export type Handler = () => void;

@@ -1,4 +1,4 @@
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useAdminContract } from "../contracts";
 import { admin_api } from "./admin";
 

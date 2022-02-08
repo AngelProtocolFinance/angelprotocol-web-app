@@ -42,7 +42,7 @@ export enum denoms {
 }
 
 export const currency_text: { [key in denoms]: string } = {
-  [denoms.uluna]: "Luna",
+  [denoms.uluna]: "LUNA",
   [denoms.uaud]: "AUD",
   [denoms.ucad]: "CAD",
   [denoms.uchf]: "CHF",
@@ -101,14 +101,4 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.sol]: sol,
   [denoms.uatom]: atom,
   [denoms.uhalo]: halo,
-};
-
-export const UST: string = "UST";
-export const HALO: string = "HALO";
-export const UUSD = "uusd";
-export const ULUNA = "uluna";
-export const NATIVE_TOKENS = [ULUNA, UUSD];
-export const NATIVE_TOKEN_DECIMALS = 6;
-export const NATIVE_TOKEN_SYMBOLS: Record<string, string> = {
-  uusd: "UST",
 };

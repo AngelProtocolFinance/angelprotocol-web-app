@@ -1,6 +1,6 @@
 import { useHistory, useLocation } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import Action from "../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
@@ -90,7 +90,6 @@ const ConfirmEmail = () => {
           classes="bg-thin-blue w-48 h-12 text-sm"
         />
       </div>
-      <ToastContainer />
     </div>
   );
 };

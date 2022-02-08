@@ -1,5 +1,4 @@
 import { ContactDetailsForm } from "components/ContactDetailsForm/ContactDetailsForm";
-import { ToastContainer } from "react-toastify";
 import { useGetter } from "store/accessors";
 
 const ContactDetails = () => {
@@ -16,7 +15,6 @@ const ContactDetails = () => {
           "This information will let us know more about your organization and who you are. Once this form is submitted, you will be able to resume your registration if it gets interrupted in the future."}
       </p>
       <ContactDetailsForm contactData={user} />
-      <ToastContainer />
     </div>
   );
 };

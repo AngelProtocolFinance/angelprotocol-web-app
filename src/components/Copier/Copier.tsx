@@ -1,13 +1,7 @@
 import { BiCopy, BiCheck } from "react-icons/bi";
-import { Addr } from "./types";
 import useCopier from "./useCopier";
 
-type Props = {
-  text?: Addr;
-  colorClass: string;
-};
-
-export default function Copier(props: Props) {
+export default function Copier(props: { text: string; colorClass: string }) {
   const { handleCopy, copied } = useCopier(props.text);
   return (
     <button onClick={handleCopy}>

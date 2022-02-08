@@ -1,17 +1,16 @@
-import { Endowment } from "services/aws/leaderboard/types";
+import { MergedEndowment } from "services/aws/endowments/types";
 import Amount from "./Amount";
 import Description from "./Description";
 import projectFunds from "./projectFunds";
 
-export default function TableEntry(props: Endowment) {
+export default function TableEntry(props: MergedEndowment) {
   const { locked, liquid } = projectFunds(
     10,
     props.total_lock,
     props.total_liq,
     20,
-    15
+    5
   );
-
   return (
     <tr className="border-b">
       <td>

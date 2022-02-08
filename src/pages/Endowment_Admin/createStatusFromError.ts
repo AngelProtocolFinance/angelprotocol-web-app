@@ -5,7 +5,9 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
 import { Disconnected, TxResultFail } from "contracts/Errors";
+import getTxUrl from "helpers/getTxUrl";
 import { Steps, Status } from "./types";
 
 export default function createStatusFromError(error: unknown): Status {
@@ -21,7 +23,7 @@ export default function createStatusFromError(error: unknown): Status {
     return {
       step: Steps.no_result,
       message: "Failed to get transaction details",
-      url: error.url,
+      url: getTxUrl(error.chainId as chainIDs, error.txHash),
     };
   } else if (error instanceof Timeout) {
     return { step: Steps.error, message: "Transaction timeout" };

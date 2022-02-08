@@ -3,13 +3,13 @@ import { admin } from "types/routes";
 
 export default function AdminSideNav() {
   const linkStyles =
-    "block uppercase text-sm md:text-lg hover:text-white py-1 px-5 text-center rounded-sm border-0 border-b border-opacity-20 font-semibold";
-  const activeStyles = "text-white";
+    "block uppercase text-sm md:text-lg text-white hover:text-gray-700 py-1 p-5 text-center rounded-sm border-b border-opacity-20 font-semibold";
+  const activeStyles = "text-angel-orange";
 
   return (
     <div className="flex flex-col w-128 min-h-3/4 hidden md:block bg-white bg-opacity-10 py-10 rounded-l-xl font-heading">
       <div className="flex-none">
-        <h2 className="flex-none text-2xl text-white font-semibold capitalize text-center">
+        <h2 className="flex-none text-2xl font-semibold capitalize text-center text-white">
           <span className="inline-block">Angel Protocol:</span>
           <span className="inline-block">Admin Portal</span>
         </h2>
@@ -24,15 +24,15 @@ export default function AdminSideNav() {
           Charity Applications
         </NavLink>
         <NavLink
-          className={linkStyles}
           activeClassName={activeStyles}
+          className={linkStyles}
           to={`${admin.endowments}`}
         >
           Endowments
         </NavLink>
         <NavLink
-          className={linkStyles}
           activeClassName={activeStyles}
+          className={linkStyles}
           to={`${admin.index_fund_management}`}
         >
           Index Funds
@@ -45,7 +45,6 @@ export default function AdminSideNav() {
           Alliance Members
         </NavLink>
       </div>
-      {/* side nav footer  */}
     </div>
   );
 }

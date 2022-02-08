@@ -1,7 +1,7 @@
-import { chainIDs } from "contracts/types";
 import { useLPContract } from "../contracts";
 import { pairInfo, pool_balance, simulation } from "./placeholders";
 import { lp_api } from "./lp";
+import { chainIDs } from "constants/chainIDs";
 
 export function usePairInfo() {
   const { usePairInfoQuery } = lp_api;
