@@ -2,7 +2,7 @@ import Banner from "./Banner";
 import Info from "./Info";
 import Specs from "./Specs";
 import Access from "./Access";
-import Portal from "pages/Home/Portal";
+import Portal from "Website/Home/Portal";
 
 export default function Charities() {
   return (
