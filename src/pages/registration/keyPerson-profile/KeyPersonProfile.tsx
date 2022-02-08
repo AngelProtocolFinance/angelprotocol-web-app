@@ -53,8 +53,7 @@ const KeyPersonProfile = () => {
   );
 
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    history.push(registration.index);
   }
 
   const readFiles = async (files: any) => {

@@ -23,7 +23,7 @@ const Endowment_Admin = lazy(
 const Charity = lazy(() => import("pages/Charity/Charity"));
 // const Fund = lazy(() => import("pages/Fund/Fund"));
 // const Test = lazy(() => import("pages/Test"));
-// const Register = lazy(() => import("pages/registration/index"));
+const Register = lazy(() => import("pages/registration/index"));
 
 export default function Views() {
   const { path } = useRouteMatch();
@@ -40,7 +40,7 @@ export default function Views() {
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
         <Route path={`${path}/${app.charity}/:address`} component={Charity} />
         <Route path={`${path}/${app.login}`} component={Login} />
-        {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
+        <Route path={`${path}/${app.register}`} component={Register} />
         <Route path={`${path}/${app.tca}`} component={TCA} />
         <Route
           path={`${path}/${app.churchportal}/:address`}

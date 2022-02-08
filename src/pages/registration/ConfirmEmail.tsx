@@ -5,6 +5,7 @@ import Action from "../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
+import { registration } from "types/routes";
 
 const ConfirmEmail = () => {
   const history = useHistory();
@@ -34,8 +35,7 @@ const ConfirmEmail = () => {
   };
 
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    history.push(registration.index);
   }
 
   return (

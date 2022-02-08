@@ -21,8 +21,7 @@ const StepsDocs = () => {
 
   let user = useGetter((state) => state.user);
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    history.push(registration.index);
   }
 
   const [userData, setUserData] = useState({

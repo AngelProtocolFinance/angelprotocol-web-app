@@ -9,10 +9,14 @@ import { Provider } from "react-redux";
 import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Loader from "components/Loader/Loader";
+import persistStore from "redux-persist/es/persistStore";
+import { PersistGate } from "redux-persist/integration/react";
 
 const App = lazy(() => import("./App/App"));
 // const Admin = lazy(() => import("./Admin/Admin"));
 const Website = lazy(() => import("./Website/Website"));
+
+const persistor = persistStore(store);
 
 const LoaderComponent = () => (
   <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
@@ -21,17 +25,19 @@ const LoaderComponent = () => (
 ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={<LoaderComponent />}>
-            <Switch>
-              <Route path={site.app} component={App} />
-              {/*<Route path={site.admin} component={Admin} />*/}
-              <Route path={site.home} component={Website} />
-            </Switch>
-          </Suspense>
-        </AuthProvider>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <AuthProvider>
+            <Suspense fallback={<LoaderComponent />}>
+              <Switch>
+                <Route path={site.app} component={App} />
+                {/*<Route path={site.admin} component={Admin} />*/}
+                <Route path={site.home} component={Website} />
+              </Switch>
+            </Suspense>
+          </AuthProvider>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </StrictMode>,
   document.getElementById("root")

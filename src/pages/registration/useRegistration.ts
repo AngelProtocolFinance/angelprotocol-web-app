@@ -27,7 +27,6 @@ export const useRegistration = () => {
     if (response.error) {
       toast.error(response.error.data.message);
     } else {
-      // const token: any = await getTokenData(values.refer);
       const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
       const data = {
         ...response.data.ContactPerson,
@@ -51,7 +50,6 @@ export const useRegistration = () => {
           response.data.Registration.EndowmentAgreementVerified,
       };
       dispatch(updateUserData(data));
-      localStorage.setItem("userData", JSON.stringify(data));
       if (data.EmailVerified)
         history.push({
           pathname: `${url}/${registration.status}`,

@@ -5,17 +5,14 @@ import { registration } from "types/routes";
 import Action from "../../components/ActionButton/Action";
 import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter, useSetter } from "store/accessors";
-import { updateUserData } from "services/user/userSlice";
+import { useGetter } from "store/accessors";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
-  const dispatch = useSetter();
   let user = useGetter((state) => state.user);
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    history.push(registration.index);
   }
 
   if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {

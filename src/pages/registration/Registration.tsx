@@ -36,7 +36,6 @@ const Registration = () => {
       state: { is_sent: true },
     });
   } else {
-    localStorage.setItem("userData", JSON.stringify({}));
     dispatch(removeUserData());
   }
 

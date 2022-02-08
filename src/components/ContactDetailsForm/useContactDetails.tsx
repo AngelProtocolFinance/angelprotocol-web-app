@@ -77,6 +77,12 @@ export const useContactDetails = () => {
     if (result.UUID || result.message === "Updated successfully!") {
       if (!is_create) {
         toast.success(result.message);
+        dispatch(
+          updateUserData({
+            ...user,
+            ...postData.ContactPerson,
+          })
+        );
       } else {
         await resendEmail({
           uuid: result.UUID,

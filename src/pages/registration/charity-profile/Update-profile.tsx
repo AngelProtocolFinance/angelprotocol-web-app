@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
+import { registration } from "types/routes";
 import ProfileStepOne from "./Profile-step-one";
 import ProfileStepTwo from "./Profile-step-two";
 import {
@@ -13,6 +14,7 @@ import {
 const UpdateProfile = () => {
   //url = app/register/charity-profile
   const location: any = useLocation();
+  const history = useHistory();
   const dispatch = useSetter();
   const [step, setStep] = useState(1);
   const [firstData, setFirstData] = useState({});
@@ -23,8 +25,7 @@ const UpdateProfile = () => {
   const { data } = useGetCharityDataQuery(user.PK);
 
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    history.push(registration.index);
   }
 
   if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
