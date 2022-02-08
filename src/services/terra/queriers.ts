@@ -29,7 +29,11 @@ export function useLatestBlock() {
 export function useBalances(main: denoms, others?: denoms[]) {
   const wallet = useConnectedWallet();
   const { useBalancesQuery } = terra;
-  const { data = [] } = useBalancesQuery(wallet?.walletAddress, {
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+  } = useBalancesQuery(wallet?.walletAddress, {
     skip: wallet === undefined,
   });
 
@@ -45,7 +49,11 @@ export function useBalances(main: denoms, others?: denoms[]) {
     others ? others.includes(coin.denom) : true
   );
 
-  return { main: _main, others: _others };
+  return {
+    main: _main,
+    others: _others,
+    terraBalancesLoading: isLoading || isFetching,
+  };
 }
 
 export function useHaloInfo() {
@@ -62,7 +70,11 @@ export function useHaloInfo() {
 export function useHaloBalance() {
   const { useHaloBalanceQuery } = terra;
   const { wallet, contract } = useHaloContract();
-  const { data = 0 } = useHaloBalanceQuery(
+  const {
+    data = 0,
+    isLoading,
+    isFetching,
+  } = useHaloBalanceQuery(
     {
       address: contract.token_address,
       //this query will only run if wallet is not undefined
@@ -71,7 +83,7 @@ export function useHaloBalance() {
     { skip: wallet === undefined }
   );
 
-  return data;
+  return { haloBalance: data, haloBalanceLoading: isLoading || isFetching };
 }
 
 export function useGovStaker() {
