@@ -9,6 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
 import { User } from "services/user/types";
 import Step, { DocumentationStep } from "./Step";
+import Status from "./Status";
 
 export default function RegistrationStatus() {
   //url is app/register/status
@@ -72,40 +73,12 @@ export default function RegistrationStatus() {
             // TODO: implement level logic
             level={1}
           />
-          <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
-            <div className="status text-left font-bold">
-              <p>Status of Your Endowment</p>
-              {status.endowment === 0 && (
-                <p className="status-text uppercase text-yellow-500">
-                  Available soon
-                </p>
-              )}
-              {status.endowment === 1 && (
-                <p className="status-text uppercase text-green-500">
-                  Available
-                </p>
-              )}
-            </div>
-            <div>
-              {status.endowment === 2 ? (
-                <p className="text-green-500 uppercase">
-                  Created:{" "}
-                  <span>{maskAddress(data?.Metadata?.TerraWallet)}</span>
-                </p>
-              ) : (
-                <Action
-                  classes={
-                    status.endowment === 1
-                      ? "bg-green-500 w-40 h-10"
-                      : "bg-thin-blue w-40 h-10"
-                  }
-                  onClick={navigate(registration.wallet_check)}
-                  title="Create"
-                  disabled={status.endowment === 0 || user.PK === ""}
-                />
-              )}
-            </div>
-          </div>
+          <Status
+            endowmentStep={status.endowmentStep}
+            walletAddress={data?.Metadata?.TerraWallet}
+            onClick={navigate(registration.wallet_check)}
+            disabled={status.endowmentStep === 0 || user.PK === ""}
+          />
         </div>
       </div>
       <div className="my-10">
@@ -138,7 +111,7 @@ function getStatus(user: User, data: any) {
           (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
         ? 1
         : 0,
-    endowment:
+    endowmentStep:
       data?.Metadata?.EndowmentStatus === "Active"
         ? 2
         : user.IsMetaDataCompleted
