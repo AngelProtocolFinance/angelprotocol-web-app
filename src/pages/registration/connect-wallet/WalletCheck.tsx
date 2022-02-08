@@ -25,27 +25,23 @@ const WalletCheck = () => {
           onClick={showTerraInfoModal}
         />
       </div>
-      <div className="text-center">
-        <div>
-          <Action
-            onClick={() => history.push(registration.select_wallet)}
-            title="YES"
-            classes="bg-thin-blue w-48 h-10"
-          />
-        </div>
-        <div>
-          <Action
-            onClick={() => {
-              alert("clicked NO");
-            }}
-            title="NO"
-            classes="bg-orange w-48 h-10"
-          />
-        </div>
+      <div className="flex flex-col items-center gap-3">
+        <Action
+          onClick={() => history.push(registration.select_wallet)}
+          title="YES"
+          classes="bg-thin-blue w-48 h-10"
+        />
+        <Action
+          onClick={() => {
+            alert("clicked NO");
+          }}
+          title="NO"
+          classes="bg-orange w-48 h-10"
+        />
         <Action
           onClick={() => history.push(registration.endowment_data)}
           title="Back"
-          classes="bg-dark-grey w-48 h-10"
+          classes="bg-dark-grey w-48 h-10 mt-5"
         />
       </div>
       {isOpenModal && (
