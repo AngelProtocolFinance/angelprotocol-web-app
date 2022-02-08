@@ -4,6 +4,8 @@ import { useProfilesQuery } from "services/aws/endowments/endowments";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
 import { chainIDs } from "constants/chainIDs";
+import transitionIn, { Direction } from "../../helpers/transitionIn";
+import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 
 export default function Market() {
   const wallet = useConnectedWallet();
@@ -25,13 +27,18 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="grid items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover py-10">
-        <div className="px-2">
-          <p className="uppercase text-lg md:text-2xl xl:text-4xl">
-            we categorize our charities based on the
+      <div className="flex flex-col md:flex-row w-full justify-center items-center text-white bg-no-repeat bg-banner-charity bg-cover py-10">
+        <img src={wingImage} alt="" className={`lg:w-80`} />
+        <div className="px-6">
+          <p className="font-extrabold text-3xl md:text-4xl xl:text-6xl my-4">
+            GIVE ONCE, GIVE FOREVER
           </p>
-          <p className="font-extrabold text-xl md:text-xl xl:text-4xl my-2">
-            17 UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)
+          <p className="text-lg md:text-2xl xl:text-4xl my-4">
+            Browse the charity marketplace below.
+          </p>
+          <p className="text-lg md:text-2xl xl:text-4xl">
+            Choose a charity, connect your wallet and donate to their perpetual
+            endowment.
           </p>
         </div>
       </div>
