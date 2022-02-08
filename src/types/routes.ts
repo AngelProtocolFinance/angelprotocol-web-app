@@ -62,6 +62,7 @@ export enum registration {
   others = "others",
   self_custody = "self-custody",
   key_person = "key-person",
+  additional_information = "additional-information",
 }
 
 export type Handler = () => void;

@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { registration } from "types/routes";
 import Action from "../../../components/ActionButton/Action";
-import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
@@ -46,50 +45,49 @@ export default function RegistrationStatus() {
   );
 
   return (
-    <div>
-      <div className="flex flex-col gap-4">
-        <h3 className="text-3xl font-bold">Necessary Information</h3>
-        <span>
-          Please complete all the following steps to be able to create your
-          endowment
-        </span>
-        <div className="flex flex-col gap-4 items-center my-2">
-          <Step
-            title="Step #1: Contact Details"
-            onClick={navigate(registration.detail)}
-            isComplete
-          />
-          <Step
-            title="Step #2: Wallet Address"
-            onClick={navigate(registration.detail)}
-            isComplete={!!status.wallet_address}
-          />
-          <DocumentationStep
-            title="Step #3: Documentation"
-            onClick={navigate(registration.upload_docs, {
-              data: data?.Registration,
-            })}
-            isComplete={status.documentationStep === 2}
-            // TODO: implement level logic
-            level={1}
-          />
-          <Status
-            endowmentStep={status.endowmentStep}
-            walletAddress={data?.Metadata?.TerraWallet}
-            onClick={navigate(registration.wallet_check)}
-            disabled={status.endowmentStep === 0 || user.PK === ""}
-          />
-        </div>
-      </div>
-      <div className="my-10">
-        <Action
-          classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + user.CharityName + "'s profile"}
-          onClick={navigate(registration.charity_profile)}
-          disabled={!status.completed || user.PK === ""}
-        />
-        <p className="mt-3 text-sm uppercase">coming soon</p>
-      </div>
+    <div className="flex flex-col gap-4 items-center">
+      <h3 className="text-3xl font-bold">Necessary Information</h3>
+      <span>
+        Please complete all the following steps to be able to create your
+        endowment
+      </span>
+      <Step
+        title="Step #1: Contact Details"
+        onClick={navigate(registration.detail)}
+        isComplete
+      />
+      <Step
+        title="Step #2: Wallet Address"
+        onClick={navigate(registration.detail)}
+        isComplete={!!status.wallet_address}
+      />
+      <DocumentationStep
+        title="Step #3: Documentation"
+        onClick={navigate(registration.upload_docs, {
+          data: data?.Registration,
+        })}
+        isComplete={status.documentationStep === 2}
+        // TODO: implement level logic
+        level={1}
+      />
+      <Step
+        title="Step #4: Additional Information"
+        onClick={navigate(registration.additional_information)}
+        isComplete={status.isAdditionalInformationProvided}
+      />
+      <Status
+        endowmentStep={status.endowmentStep}
+        walletAddress={data?.Metadata?.TerraWallet}
+        onClick={navigate(registration.wallet_check)}
+        disabled={status.endowmentStep === 0 || user.PK === ""}
+      />
+      <Action
+        classes="bg-thin-blue w-64 h-10 mt-5"
+        title={"Go to " + user.CharityName + "'s profile"}
+        onClick={navigate(registration.charity_profile)}
+        disabled={!status.completed || user.PK === ""}
+      />
+      <p className="text-sm uppercase">coming soon</p>
       <ToastContainer />
     </div>
   );
@@ -118,5 +116,7 @@ function getStatus(user: User, data: any) {
         ? 1
         : 0,
     completed: user?.RegistrationStatus === "Complete",
+    // TODO: implement logic for checking if additional info is provided
+    isAdditionalInformationProvided: false,
   };
 }
