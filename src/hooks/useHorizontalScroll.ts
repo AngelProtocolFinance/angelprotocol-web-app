@@ -40,12 +40,14 @@ const easings = {
 
 export default function useHorizontalScroll() {
   const sliderRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<number>(0);
   const [showBack, setShowBack] = useState(false);
   const [showForward, setShowForward] = useState(false);
   const DELAY = 1000;
 
   useEffect(() => {
     updateState();
+    return () => cancelAnimationFrame(frameRef.current);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sliderRef.current]);
 
@@ -90,14 +92,15 @@ export default function useHorizontalScroll() {
       let factor = easing(null, t, 0, 1, duration);
       sliderRef.current.scrollLeft = start + delta * factor;
       if (t < duration && sliderRef.current.scrollLeft !== end)
-        window.requestAnimationFrame(tweenLoop);
+        return window.requestAnimationFrame(tweenLoop);
+      cancelAnimationFrame(frameRef.current);
     };
-    tweenLoop();
+    frameRef.current = requestAnimationFrame(tweenLoop);
   };
 
   function forward() {
     if (!sliderRef.current) return;
-    const scrollFactor = sliderRef.current.offsetWidth;
+    const scrollFactor = Math.floor(sliderRef.current.offsetWidth * 0.5);
     const scrollLeft = sliderRef.current.scrollLeft;
     const scrollWidth = sliderRef.current.scrollWidth;
     const offsetWidth = sliderRef.current.offsetWidth;
