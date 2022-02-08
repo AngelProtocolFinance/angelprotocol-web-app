@@ -97,6 +97,7 @@ export default function RegistrationStatus() {
 function getStatus(user: User, data: any) {
   return {
     wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
+    // TODO: turn this into an enum (e.g. [Missing, Pending, Verified])
     documentationStep:
       (user.ProofOfIdentityVerified ||
         data?.Registration?.ProofOfIdentityVerified) &&
@@ -110,12 +111,14 @@ function getStatus(user: User, data: any) {
           (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
         ? 1
         : 0,
+    // TODO: turn this into an enum (e.g. [Missing, Pending, Active])
     endowmentStep:
       data?.Metadata?.EndowmentStatus === "Active"
         ? 2
         : user.IsMetaDataCompleted
         ? 1
         : 0,
+    // TODO: turn this into an enum (e.g. [In_Progress, Pending, Complete])
     completed: user?.RegistrationStatus === "Complete",
     // TODO: implement logic for checking if additional info is provided
     isAdditionalInformationProvided: false,
