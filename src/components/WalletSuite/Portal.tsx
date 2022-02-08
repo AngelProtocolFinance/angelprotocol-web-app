@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { app, site } from "types/routes";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 

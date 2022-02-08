@@ -1,6 +1,7 @@
 import { aws } from "../aws";
 import { terra_lcds } from "constants/urls";
-import { chainIDs, sc } from "contracts/types";
+import { sc } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { Airdrops, ClaimInquiry, QueryArg } from "./types";
 import { QueryRes } from "services/terra/types";

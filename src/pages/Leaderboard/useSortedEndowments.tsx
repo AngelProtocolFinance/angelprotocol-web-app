@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 import { useMemo } from "react";
 import { useEndowmentsQuery } from "services/aws/endowments/endowments";
 import { MergedEndowment } from "services/aws/endowments/types";

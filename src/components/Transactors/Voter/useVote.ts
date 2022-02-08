@@ -9,7 +9,7 @@ import { Values } from "./types";
 import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useVote() {
   const { reset } = useFormContext<Values>();

@@ -3,7 +3,6 @@ import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-// import useTerraBalance from "hooks/useTerraBalance";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
 import {
