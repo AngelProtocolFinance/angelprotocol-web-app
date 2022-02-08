@@ -62,6 +62,19 @@ export default function DonateForm() {
           {form_loading ? "estimating fee.." : "proceed"}
         </button>
       </div>
+      <div className="flex m-3">
+        <span className="text-angel-grey font-light text-xs">
+          By clicking this button and donating with Angel Protocol, you
+          acknowledge that you have read and accept the{" "}
+          <a
+            className="text-angel-blue"
+            href="/Donor Terms of Use - Angel Protocol - v1.pdf"
+          >
+            Donor Terms of Use
+          </a>
+          .
+        </span>
+      </div>
     </form>
   );
 }
