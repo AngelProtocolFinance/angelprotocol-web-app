@@ -82,12 +82,12 @@ export default function RegistrationStatus() {
         disabled={status.endowmentStep === 0 || user.PK === ""}
       />
       <Action
-        classes="bg-thin-blue w-64 h-10 mt-5"
+        classes="bg-thin-blue min-w-fit h-10 mt-5 px-5"
         title={"Go to " + user.CharityName + "'s profile"}
         onClick={navigate(registration.charity_profile)}
         disabled={!status.completed || user.PK === ""}
+        tooltip="Available soon"
       />
-      <p className="text-sm uppercase">coming soon</p>
       <ToastContainer />
     </div>
   );

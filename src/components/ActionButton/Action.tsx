@@ -8,6 +8,8 @@ type Props = {
   classes?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
+  // TODO: tooltip is actually the 'title' prop of the <button>, this component should be updated appropriately
+  tooltip?: string;
 };
 
 export default function Action(props: Props) {
@@ -17,6 +19,7 @@ export default function Action(props: Props) {
       type={props.submit ? "submit" : "button"}
       disabled={props.disabled}
       onClick={props.onClick}
+      title={props.tooltip}
     >
       {props.isLoading ? (
         <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
