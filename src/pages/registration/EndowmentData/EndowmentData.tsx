@@ -82,7 +82,7 @@ export default function RegistrationStatus() {
         disabled={status.endowmentStep === 0 || user.PK === ""}
       />
       <Action
-        classes="bg-thin-blue min-w-fit h-10 mt-5 px-5"
+        classes="bg-thin-blue min-w-fit h-10 mt-10 px-5"
         title={"Go to " + user.CharityName + "'s profile"}
         onClick={navigate(registration.charity_profile)}
         disabled={!status.completed || user.PK === ""}
