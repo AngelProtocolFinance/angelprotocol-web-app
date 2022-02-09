@@ -26,7 +26,7 @@ export default function PollAction(props: { poll_id?: string }) {
     if (E) {
       //voting period ended
       if (V || C) {
-        node = <Action title="End poll" action={end_poll} />;
+        node = <Action title="End poll" action={showPollEnder} />;
       } else {
         node = <Text>vote period has ended</Text>;
       }
