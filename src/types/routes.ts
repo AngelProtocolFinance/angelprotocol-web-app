@@ -62,6 +62,8 @@ export enum registration {
   others = "others",
   self_custody = "self-custody",
   key_person = "key-person",
+  auth = "auth",
+  register_wallet = "register-wallet",
 }
 
 export enum charity {

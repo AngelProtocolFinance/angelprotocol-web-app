@@ -18,6 +18,9 @@ const KeyPersonProfile = lazy(
   () => import("./keyPerson-profile/KeyPersonProfile")
 );
 const RedirectAuth = lazy(() => import("./WalletRegistration/RedirectAuth"));
+const RegisterWallet = lazy(
+  () => import("./WalletRegistration/RegisterWallet")
+);
 
 const Register = () => {
   //this component will only render under '/app/register/'
@@ -89,8 +92,13 @@ const Register = () => {
           />
           <Route
             exact
-            path={`${path}/${registration.wallet_check}/auth`}
+            path={`${path}/${registration.wallet_check}/${registration.auth}`}
             component={RedirectAuth}
+          />
+          <Route
+            exact
+            path={`${path}/${registration.register_wallet}`}
+            component={RegisterWallet}
           />
           <Route
             exact

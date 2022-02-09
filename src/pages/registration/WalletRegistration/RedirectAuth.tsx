@@ -1,17 +1,18 @@
-import { Wallet } from "@terra-money/terra.js";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import TorusSdk, { TorusLoginResponse, UX_MODE } from "@toruslabs/customauth";
 import Loader from "components/Loader/Loader";
 import { useEffect, useMemo, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Redirect, useRouteMatch } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useSetter } from "store/accessors";
 import { app, registration, site } from "types/routes";
+import { setConnectedWallet } from "../registrationSlice";
 import loadTerraWallet from "./loadTerraWallet";
 
 export default function RedirectAuth() {
   const { path } = useRouteMatch();
   const [isLoading, setLoading] = useState(true);
-  const [torusWallet, setTorusWallet] = useState<Wallet>();
+  const dispatch = useSetter();
   const [error, setError] = useState<Error>();
   const { status, network } = useWallet();
 
@@ -39,7 +40,7 @@ export default function RedirectAuth() {
         const redirectResult = await torusdirectsdk.getRedirectResult();
         const torusResponse = redirectResult.result as TorusLoginResponse;
         const wallet = loadTerraWallet(torusResponse.privateKey, network);
-        setTorusWallet(wallet);
+        dispatch(setConnectedWallet(wallet.key.accAddress));
       } catch (error) {
         console.log(error);
         setError(error as Error);
@@ -49,7 +50,7 @@ export default function RedirectAuth() {
     }
 
     getResult();
-  }, [torusdirectsdk, status, network]);
+  }, [torusdirectsdk, status, network, dispatch]);
 
   useEffect(() => {
     if (!error) {
@@ -68,23 +69,16 @@ export default function RedirectAuth() {
     }
   }, [error]);
 
-  if (isLoading) {
-    return (
-      <div className="h-full">
-        <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
-      </div>
-    );
-  }
-
   return (
     <div className="h-full">
-      <h1>Your wallet: {torusWallet?.key.accAddress}</h1>
-      <Link
-        to={`${site.app}/${app.register}/${registration.wallet_check}`}
-        className="uppercase text-bright-blue text-sm hover:underline"
-      >
-        Click here to go to wallet creation screen
-      </Link>
+      {isLoading && (
+        <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
+      )}
+      {!isLoading && !error && (
+        <Redirect
+          to={`${site.app}/${app.register}/${registration.register_wallet}`}
+        />
+      )}
       <ToastContainer />
     </div>
   );
