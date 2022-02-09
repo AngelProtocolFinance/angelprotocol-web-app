@@ -44,6 +44,7 @@ export interface Profile {
   un_sdg: string; //"4"
   facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
   is_placeholder?: true;
+  placeholderUrl?: string;
 }
 
 export type ProfileUpdateProps = { profile: Profile };

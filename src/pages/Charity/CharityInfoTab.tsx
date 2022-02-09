@@ -5,6 +5,7 @@ import { CharityParam } from "./types";
 import { Endowment } from "services/aws/leaderboard/types";
 import { charity } from "types/routes";
 import anchorProtocol from "../../assets/images/anchor_protocol.png";
+import { endowment } from "services/aws/leaderboard/placeholders";
 
 function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
@@ -78,7 +79,6 @@ function AccountInfo({
 
 function CharityEndowmentInfo({ data }: { data: Endowment }) {
   const { total_liq, total_lock, overall } = data;
-
   const accountDetails = [
     {
       type: "Current Account",

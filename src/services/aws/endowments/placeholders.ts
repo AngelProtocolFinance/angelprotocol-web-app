@@ -1,7 +1,9 @@
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Profile } from "./types";
+import image from "assets/images/home-banner.jpg";
 
 export const profile: Profile = {
+  placeholderUrl: image,
   charity_image: "", //url of image
   charity_owner: "",
   charity_registration_number: "00000", //"CN201225725"
