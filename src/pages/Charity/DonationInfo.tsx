@@ -1,7 +1,6 @@
 // import { unsdgs } from "pages/Fund/unsdgs";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { unsdgs } from "pages/Fund/unsdgs";
-import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -18,55 +17,9 @@ import {
   DonationStatsLoader,
 } from "components/Loader/Charity";
 
-function StatsItem({
-  title,
-  value,
-  rating,
-}: {
-  title: string;
-  value: string;
-  rating: Boolean;
-}) {
-  return (
-    <div className="paragraph mb-4">
-      <p className="text-base text-white font-light text-xs tracking-wide uppercase">
-        {title}
-      </p>
-      <p
-        className={`text-base text-white text-xl font-semibold capitalize break-words w-115 ${
-          rating && "text-leaf-green"
-        }`}
-      >
-        {value}
-      </p>
-    </div>
-  );
-}
-
 interface DonationInfoProps {
   openModal: (type: "edit" | "donation") => void;
 }
-
-type IconButtonProps = {
-  url: string;
-  Icon: any;
-  color: string;
-  size: string | number;
-};
-
-function IconButton(props: IconButtonProps) {
-  return (
-    <a
-      href={props.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-    >
-      <props.Icon color="#3FA9F5" size={props.size} />
-    </a>
-  );
-}
-
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
@@ -217,5 +170,50 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         </div>
       </Modal> */}
     </div>
+  );
+}
+
+function StatsItem({
+  title,
+  value,
+  rating,
+}: {
+  title: string;
+  value: string;
+  rating: Boolean;
+}) {
+  return (
+    <div className="paragraph mb-4">
+      <p className="text-base text-white font-light text-xs tracking-wide uppercase">
+        {title}
+      </p>
+      <p
+        className={`text-base text-white text-xl font-semibold capitalize break-words w-115 ${
+          rating && "text-leaf-green"
+        }`}
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
+
+type IconButtonProps = {
+  url: string;
+  Icon: any;
+  color: string;
+  size: string | number;
+};
+
+function IconButton(props: IconButtonProps) {
+  return (
+    <a
+      href={props.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+    >
+      <props.Icon color="#3FA9F5" size={props.size} />
+    </a>
   );
 }

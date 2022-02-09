@@ -1,4 +1,4 @@
-import { useEndowmentHoldingsState } from "services/terra/states";
+import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useExchangeRateState } from "services/terra/vaults/states";
 import { IconType } from "react-icons/lib";
 import { BsExclamationCircle } from "react-icons/bs";
