@@ -2,9 +2,10 @@ import * as Yup from "yup";
 // import { toast } from "react-toastify";
 
 // import { aws_endpoint } from "constants/urls";
-import { useSetToken } from "contexts/AuthProvider";
 import { useHistory } from "react-router-dom";
 import { admin } from "types/routes";
+import { useSetter } from "store/accessors";
+import { updateTokensData } from "services/tokens/tokenSlice";
 
 export interface AdminLoginData {
   UserName: string;
@@ -17,14 +18,17 @@ export const AdminLoginSchema = Yup.object().shape({
 });
 
 export const useAdminLogin = () => {
-  const { saveToken } = useSetToken();
+  const dispatch = useSetter();
   const history = useHistory();
   const handleAPLogin = async (data: AdminLoginData) => {
     // test
     history.push(admin.charity_applications);
-    saveToken(
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVVUlEIjoiMDhjM2QxNDYtNTBiZC00YTkxLWFlMDAtYzMxOWZlMzc1ZDRmIiwiaWF0IjoxNjM3MTQ4MzE2LCJleHAiOjE3MzcxOTE1MTZ9.UKxt1WQs6DyEXDvMm9IOZxl53KCo9pVJuE27akdkS_Q",
-      "admin"
+    dispatch(
+      updateTokensData({
+        type: "admin",
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVVUlEIjoiMDhjM2QxNDYtNTBiZC00YTkxLWFlMDAtYzMxOWZlMzc1ZDRmIiwiaWF0IjoxNjM3MTQ4MzE2LCJleHAiOjE3MzcxOTE1MTZ9.UKxt1WQs6DyEXDvMm9IOZxl53KCo9pVJuE27akdkS_Q",
+      })
     );
     return;
     // test
@@ -38,7 +42,12 @@ export const useAdminLogin = () => {
     //   if (response.status === 200) {
     //     const data = await response.json();
     //     //don't perform state update because form would unmount
-    //     saveToken(data.accessToken, "admin");
+    //     dispatch(
+    //       updateTokensData({
+    //         type: "admin",
+    //         token: data.accessToken,
+    //       })
+    //     );
     //     //no need to push, Redirect/> on Login/> will detect state change and have page redirected
     //     history.push(admin.charity_applications);
     //   } else if (response.status === 403) {

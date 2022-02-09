@@ -28,11 +28,11 @@ const UpdateProfile = () => {
     if (!user.PK) {
       history.push(registration.register);
     }
+  }, [user, history]);
 
-    if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
-      metaData = data.Metadata;
-    }
-  }, [user]);
+  if (!metaData?.CompanyNumber && user.IsMetaDataCompleted) {
+    metaData = data.Metadata;
+  }
 
   const is_create = !metaData?.CompanyNumber;
   const readFiles = async (files: any) => {

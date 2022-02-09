@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import Action from "../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUserData, updateUserData } from "services/user/userSlice";
+import { removeUserData } from "services/user/userSlice";
 import { registration } from "types/routes";
 import { useEffect } from "react";
 
@@ -39,7 +39,7 @@ const ConfirmEmail = () => {
     if (!user.PK) {
       history.push(registration.register);
     }
-  }, [user]);
+  }, [user, history]);
 
   return (
     <div>

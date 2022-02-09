@@ -1,13 +1,21 @@
-import { useSetToken } from "contexts/AuthProvider";
 import { NavLink, useHistory } from "react-router-dom";
+import { updateTokensData } from "services/tokens/tokenSlice";
+import { useSetter } from "store/accessors";
 import { admin } from "types/routes";
 
 export default function AdminSideNav() {
   const history = useHistory();
-  const { deleteToken } = useSetToken();
+  const dispatch = useSetter();
+  // const { deleteToken } = useSetToken();
 
   const logout = () => {
-    deleteToken("admin");
+    // deleteToken("admin");
+    dispatch(
+      updateTokensData({
+        type: "admin",
+        token: "",
+      })
+    );
     history.push(admin.login);
   };
 

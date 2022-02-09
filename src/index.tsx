@@ -6,7 +6,6 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { site } from "./types/routes";
 import { Provider } from "react-redux";
-import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Loader from "components/Loader/Loader";
 import persistStore from "redux-persist/es/persistStore";
@@ -26,14 +25,12 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <AuthProvider>
-            <Suspense fallback={<LoaderComponent />}>
-              <Switch>
-                <Route path={site.app} component={App} />
-                <Route path={site.home} component={Website} />
-              </Switch>
-            </Suspense>
-          </AuthProvider>
+          <Suspense fallback={<LoaderComponent />}>
+            <Switch>
+              <Route path={site.app} component={App} />
+              <Route path={site.home} component={Website} />
+            </Switch>
+          </Suspense>
         </BrowserRouter>
       </PersistGate>
     </Provider>

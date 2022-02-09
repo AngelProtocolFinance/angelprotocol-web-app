@@ -1,5 +1,4 @@
 import Modal from "components/Modal/Modal";
-import { useGetToken } from "contexts/AuthProvider";
 import { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { app, site } from "types/routes";
@@ -7,11 +6,12 @@ import IndexFundTable from "./Table";
 import NewIndexFundModal from "./NewIndexFundModal";
 import UpdateMembersModal from "./UpdateMembersModal";
 import AdminSideNav from "../AdminSideNav";
+import { useGetter } from "store/accessors";
 
 export default function IndexFund() {
   const [showIndexModal, setShowIndexModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const decodedToken = useGetToken();
+  const decodedToken = useGetter((state) => state.tokens);
 
   //user can't access TCA page when not logged in or his prev token expired
   if (!decodedToken?.apToken) {

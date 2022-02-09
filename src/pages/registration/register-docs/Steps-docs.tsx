@@ -24,7 +24,7 @@ const StepsDocs = () => {
     if (!user.PK) {
       history.push(registration.index);
     }
-  }, [user]);
+  }, [user, history]);
 
   const [userData, setUserData] = useState({
     ...user,

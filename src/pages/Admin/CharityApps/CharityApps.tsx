@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
-import { useGetToken } from "contexts/AuthProvider";
 import { app, site } from "types/routes";
 import AdminSideNav from "../AdminSideNav";
 import { useGetCharityListEndowmentQuery } from "services/aws/charity";
 import CharityTable from "./CharityTable";
 import Loader from "components/Loader/Loader";
+import { useGetter } from "store/accessors";
 
 export default function CharityApps() {
   const [isShowApproved, setIsShowApproved] = useState(false);
@@ -14,7 +14,7 @@ export default function CharityApps() {
   const [isLoading, setIsLoading] = useState(true);
   const [tableData, setTableData] = useState([]);
   const [searchWord, setSearchWord] = useState("");
-  const decodedToken = useGetToken();
+  const decodedToken = useGetter((state) => state.tokens);
   const { data } = useGetCharityListEndowmentQuery("");
 
   // get charity list

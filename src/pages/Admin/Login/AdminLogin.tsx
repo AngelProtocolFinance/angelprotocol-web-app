@@ -8,17 +8,17 @@ import {
   AdminLoginSchema,
   useAdminLogin,
 } from "./useAdminLogin";
-import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { site, admin } from "types/routes";
 import { Link } from "react-router-dom";
+import { useGetter } from "store/accessors";
 
 export type Values = {
   password: string;
 };
 
 const AdminLogin = () => {
-  const decodedToken = useGetToken();
+  const decodedToken = useGetter((state) => state.tokens);
   const handleLogin = useAdminLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

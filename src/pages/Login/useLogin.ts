@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
 import { aws_endpoint } from "constants/urls";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useGetToken, useSetToken } from "contexts/AuthProvider";
 import { loginSchema } from "./loginSchema";
 import { useSetModal } from "components/Nodal/Nodal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import { useGetter, useSetter } from "store/accessors";
+import { updateTokensData } from "services/tokens/tokenSlice";
 
 export default function useLogin() {
   const {
@@ -17,8 +18,8 @@ export default function useLogin() {
     resolver: yupResolver(loginSchema),
   });
 
-  const decodedToken = useGetToken();
-  const { saveToken } = useSetToken();
+  const dispatch = useSetter();
+  let decodedToken = useGetter((state) => state.tokens);
   const { showModal } = useSetModal();
 
   async function login(values: { message?: string; password: string }) {
@@ -32,7 +33,12 @@ export default function useLogin() {
       if (response.status === 200) {
         const data = await response.json();
         //don't perform state update because form would unmount
-        saveToken(data.accessToken);
+        dispatch(
+          updateTokensData({
+            type: "user",
+            token: data.accessToken,
+          })
+        );
         //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
         showModal<PopupProps>(Popup, { message: "Unauthorized" });

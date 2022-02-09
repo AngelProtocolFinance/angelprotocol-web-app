@@ -40,7 +40,7 @@ const Registration = () => {
     } else {
       dispatch(removeUserData());
     }
-  }, []);
+  }, [dispatch, history, url]);
 
   return (
     <div>
