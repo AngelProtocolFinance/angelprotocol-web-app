@@ -1,6 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { unsdgs } from "pages/Fund/unsdgs";
-import useProfile from "pages/Market/useProfile";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -9,61 +8,22 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { useRouteMatch } from "react-router-dom";
+import { useProfileQuery } from "services/aws/endowments/endowments";
 import { CharityParam } from "./types";
-
-function StatsItem({
-  title,
-  value,
-  rating,
-}: {
-  title: string;
-  value: string;
-  rating: Boolean;
-}) {
-  return (
-    <div className="paragraph mb-4">
-      <p className="text-base text-white font-light text-xs tracking-wide uppercase">
-        {title}
-      </p>
-      <p
-        className={`text-base text-white text-xl font-semibold capitalize break-words w-115 ${
-          rating && "text-leaf-green"
-        }`}
-      >
-        {value}
-      </p>
-    </div>
-  );
-}
+import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import {
+  DonationInfoLoader,
+  DonationStatsLoader,
+} from "components/Loader/Charity";
 
 interface DonationInfoProps {
   openModal: (type: "edit" | "donation") => void;
 }
-
-type IconButtonProps = {
-  url: string;
-  Icon: any;
-  color: string;
-  size: string | number;
-};
-
-function IconButton(props: IconButtonProps) {
-  return (
-    <a
-      href={props.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
-    >
-      <props.Icon color="#3FA9F5" size={props.size} />
-    </a>
-  );
-}
-
 export function DonationInfo({ openModal }: DonationInfoProps) {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
-  const profile = useProfile(charity_addr);
+  const { data: profile = profile_placeholder, isLoading } =
+    useProfileQuery(charity_addr);
   const sdg = unsdgs[+profile.un_sdg];
 
   const wallet = useConnectedWallet();
@@ -107,81 +67,91 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
 
   return (
     <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130">
-      <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
-        <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
-          SDG #{profile.un_sdg}: {sdg.title}
-        </span>
-        {profile.url ? (
-          <a
-            href="##"
-            target="_blank"
-            rel="noreferrer"
-            className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
-          >
-            <span>{profile.charity_name}</span>
-            <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
-          </a>
-        ) : (
-          <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
-            {profile.charity_name}
-          </h2>
-        )}
-        <div className="flex flex-row gap-2 mt-4">
-          {isCharityOwner && (
+      {isLoading ? (
+        <DonationInfoLoader />
+      ) : (
+        <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
+          <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
+            SDG #{profile.un_sdg}: {sdg.title}
+          </span>
+          {profile.url ? (
+            <a
+              href="##"
+              target="_blank"
+              rel="noreferrer"
+              className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
+            >
+              <span>{profile.charity_name}</span>
+              <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
+            </a>
+          ) : (
+            <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
+              {profile.charity_name}
+            </h2>
+          )}
+          <div className="flex flex-row gap-2 mt-4">
+            {isCharityOwner && (
+              <button
+                onClick={() => openModal("edit")}
+                className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
+              >
+                Edit Profile
+              </button>
+            )}
             <button
-              onClick={() => openModal("edit")}
+              disabled={profile.is_placeholder}
+              onClick={() => openModal("donation")}
               className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
             >
-              Edit Profile
+              DONATE NOW
             </button>
-          )}
-          <button
-            disabled={profile.is_placeholder}
-            onClick={() => openModal("donation")}
-            className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
-          >
-            DONATE NOW
-          </button>
-          {/* create a customizable IconButton component to replace all occurrences of this */}
-          <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
-            {profile.twitter_handle && (
-              <IconButton
-                url={`https://twitter.com/${profile.twitter_handle}`}
-                size={25}
-                color="#3FA8F5"
-                Icon={FaTwitter}
-              />
-            )}
-            {profile.linkedin_page && (
-              <IconButton
-                url={`https://linkedin.com/${profile.linkedin_page}`}
-                size={25}
-                color="#3FA8F5"
-                Icon={FaLinkedinIn}
-              />
-            )}
-            {profile.facebook_page && (
-              <IconButton
-                url={`https://facebook.com/${profile.facebook_page}`}
-                size={25}
-                color="#3FA8F5"
-                Icon={FaFacebookSquare}
-              />
-            )}
+            {/* create a customizable IconButton component to replace all occurrences of this */}
+            <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
+              {profile.twitter_handle && (
+                <IconButton
+                  url={`https://twitter.com/${profile.twitter_handle}`}
+                  size={25}
+                  color="#3FA8F5"
+                  Icon={FaTwitter}
+                />
+              )}
+              {profile.linkedin_page && (
+                <IconButton
+                  url={`https://linkedin.com/${profile.linkedin_page}`}
+                  size={25}
+                  color="#3FA8F5"
+                  Icon={FaLinkedinIn}
+                />
+              )}
+              {profile.facebook_page && (
+                <IconButton
+                  url={`https://facebook.com/${profile.facebook_page}`}
+                  size={25}
+                  color="#3FA8F5"
+                  Icon={FaFacebookSquare}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      )}
       {/* charity stats */}
 
       <div className="flex flex-col h-full 2xl:h-80 px-0 2xl:px-10 lg:mt-10 hidden lg:block">
-        {stats.map(({ title, value, rating }: any, i: number) => (
-          <StatsItem
-            key={i}
-            title={title}
-            value={value}
-            rating={rating}
-          ></StatsItem>
-        ))}
+        {isLoading ? (
+          <DonationStatsLoader />
+        ) : (
+          <>
+            {stats.map(({ title, value, rating }: any, i: number) => (
+              <StatsItem
+                key={i}
+                title={title}
+                value={value}
+                rating={rating}
+              ></StatsItem>
+            ))}
+          </>
+        )}
       </div>
 
       {/* charity stats */}
@@ -199,5 +169,50 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         </div>
       </Modal> */}
     </div>
+  );
+}
+
+function StatsItem({
+  title,
+  value,
+  rating,
+}: {
+  title: string;
+  value: string;
+  rating: Boolean;
+}) {
+  return (
+    <div className="paragraph mb-4">
+      <p className="text-base text-white font-light text-xs tracking-wide uppercase">
+        {title}
+      </p>
+      <p
+        className={`text-base text-white text-xl font-semibold capitalize break-words w-115 ${
+          rating && "text-leaf-green"
+        }`}
+      >
+        {value}
+      </p>
+    </div>
+  );
+}
+
+type IconButtonProps = {
+  url: string;
+  Icon: any;
+  color: string;
+  size: string | number;
+};
+
+function IconButton(props: IconButtonProps) {
+  return (
+    <a
+      href={props.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="h-10 w-10 bg-transparent py-2 px-2 mt-1 rounded-full inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
+    >
+      <props.Icon color="#3FA9F5" size={props.size} />
+    </a>
   );
 }

@@ -49,6 +49,7 @@ export interface Profile {
   total_liq: number;
   total_lock: number;
   is_placeholder?: true;
+  placeholderUrl?: string;
 }
 
 export type ProfileUpdateProps = { profile: Profile };

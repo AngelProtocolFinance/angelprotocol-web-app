@@ -6,17 +6,6 @@ import { useFormContext } from "react-hook-form";
 import { Profile, ProfileUpdateProps } from "services/aws/endowments/types";
 import useUpdateEndowmentProfile from "./useUpdateEndowmentProfile";
 
-function FormLabel({ title, htmlFor }: any) {
-  return (
-    <label
-      htmlFor={htmlFor}
-      className="text-angel-grey text-md uppercase font-semibold mb-1"
-    >
-      {title}
-    </label>
-  );
-}
-
 export default function CharityProfileEditForm(props: ProfileUpdateProps) {
   const { setValue, register, handleSubmit } = useFormContext<Profile>();
   const { hideModal } = useSetModal();
@@ -189,5 +178,16 @@ export default function CharityProfileEditForm(props: ProfileUpdateProps) {
         {formLoading ? "updating..." : "update"}
       </button>
     </form>
+  );
+}
+
+function FormLabel({ title, htmlFor }: any) {
+  return (
+    <label
+      htmlFor={htmlFor}
+      className="text-angel-grey text-md uppercase font-semibold mb-1"
+    >
+      {title}
+    </label>
   );
 }
