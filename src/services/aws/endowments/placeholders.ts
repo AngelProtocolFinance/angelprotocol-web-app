@@ -20,6 +20,9 @@ export const profile: Profile = {
   news_media_articles: "", //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
   un_sdg: "0", //"4"
   facebook_page: "", //
+  overall: 200,
+  total_liq: 100,
+  total_lock: 100, //overall, total_liq, and total_lock are in human-readable format base 10 numbers
   is_placeholder: true,
 };
 

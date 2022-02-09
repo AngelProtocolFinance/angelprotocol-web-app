@@ -1,5 +1,6 @@
 import { Endowment } from "./types";
 import { Update } from "./types";
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 
 export const placeholderUpdate: Update = {
   endowments: [],
@@ -7,9 +8,15 @@ export const placeholderUpdate: Update = {
 };
 
 export const endowment: Endowment = {
-  address: "",
-  overall: 0,
+  endowment_address: "",
+  charity_owner: "",
+  charity_name: "Charity",
   total_liq: 0,
   total_lock: 0,
-  chain: "mainnet",
+  overall: 0,
+  charity_logo: defaultIcon,
+  charity_overview: "",
+  url: "https://angelprotocol.io",
+  tier: 3,
+  iconLight: false,
 };

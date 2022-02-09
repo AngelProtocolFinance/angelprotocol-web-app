@@ -2,7 +2,7 @@ import useProfile from "pages/Market/useProfile";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
-import { Endowment } from "services/aws/leaderboard/types";
+import { CharityInfoBalance } from "services/aws/endowments/types";
 import { charity } from "types/routes";
 import anchorProtocol from "../../assets/images/anchor_protocol.png";
 
@@ -76,7 +76,7 @@ function AccountInfo({
 //   );
 // }
 
-function CharityEndowmentInfo({ data }: { data: Endowment }) {
+function CharityEndowmentInfo({ data }: { data: CharityInfoBalance }) {
   const { total_liq, total_lock, overall } = data;
 
   const accountDetails = [
@@ -167,7 +167,7 @@ function CharityEndowmentInfo({ data }: { data: Endowment }) {
 // }
 
 type Props = {
-  endowmentBalanceData: Endowment;
+  endowmentBalanceData: CharityInfoBalance;
 };
 
 export default function CharityInfoTab({ endowmentBalanceData }: Props) {

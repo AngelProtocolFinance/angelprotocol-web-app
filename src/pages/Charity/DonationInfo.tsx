@@ -1,4 +1,3 @@
-// import { unsdgs } from "pages/Fund/unsdgs";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { unsdgs } from "pages/Fund/unsdgs";
 import useProfile from "pages/Market/useProfile";
