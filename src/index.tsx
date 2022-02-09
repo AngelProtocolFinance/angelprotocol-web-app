@@ -11,7 +11,6 @@ import { store } from "store/store";
 import Loader from "components/Loader/Loader";
 
 const App = lazy(() => import("./App/App"));
-// const Admin = lazy(() => import("./Admin/Admin"));
 const Website = lazy(() => import("./Website/Website"));
 
 const LoaderComponent = () => (
@@ -26,7 +25,6 @@ ReactDOM.render(
           <Suspense fallback={<LoaderComponent />}>
             <Switch>
               <Route path={site.app} component={App} />
-              {/*<Route path={site.admin} component={Admin} />*/}
               <Route path={site.home} component={Website} />
             </Switch>
           </Suspense>

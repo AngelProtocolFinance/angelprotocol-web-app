@@ -3,7 +3,7 @@ import { BsHourglassSplit } from "react-icons/bs";
 import { FaCheck } from "react-icons/fa";
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { useGovStaker } from "services/terra/queriers";
+import { useGovStaker } from "services/terra/gov/queriers";
 import { Values } from "./types";
 import toCurrency from "helpers/toCurrency";
 import { useMemo } from "react";

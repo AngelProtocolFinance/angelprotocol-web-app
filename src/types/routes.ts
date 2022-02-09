@@ -28,6 +28,7 @@ export enum app {
   charities = "charities",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
+  admin = "admin",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
