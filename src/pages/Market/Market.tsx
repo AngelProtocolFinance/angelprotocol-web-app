@@ -27,20 +27,37 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="flex flex-col md:flex-row w-full justify-center items-center text-white bg-no-repeat bg-banner-charity bg-cover py-10">
-        <img src={wingImage} alt="" className={`lg:w-80`} />
-        <div className="px-6">
-          <p className="font-extrabold text-3xl md:text-4xl xl:text-6xl my-4">
-            GIVE ONCE, GIVE FOREVER
+      <div className="flex flex-row w-full items-center gap-10 bg-no-repeat bg-banner-charity bg-cover py-10">
+        <div className="w-1/6"></div>
+        <div className="relative w-2/6 place-content-center">
+          <figure>
+            <img
+              src="https://charity-profile-images.s3.amazonaws.com/banner/The+5+Gyres+Institute.png"
+              alt=""
+              className={`w-150`}
+            />
+            <figcaption className="text-white font-bold uppercasetext-left p-4">
+              <div className="pb-2 text-lg lg:text-xl xl:text-2xl">
+                The 5 Gyres Institute
+              </div>
+              <div className="text-md lg:text-lg xl:text-xl">SDG #5</div>
+            </figcaption>
+          </figure>
+        </div>
+        <div className="w-2/6 text-white">
+          <p className="font-extrabold text-4xl md:text-5xl xl:text-6xl my-4">
+            GIVE ONCE, GIVE <span className="text-angel-orange">FOREVER</span>.
           </p>
-          <p className="text-lg md:text-2xl xl:text-4xl my-4">
-            Browse the charity marketplace below.
-          </p>
-          <p className="text-lg md:text-2xl xl:text-4xl">
-            Choose a charity, connect your wallet and donate to their perpetual
-            endowment.
+          <p className="text-xl md:text-2xl xl:text-3xl my-4">
+            <span className="font-bold">
+              Want to empower a charity like The 5 Gyres Institute with
+              financial freedom?
+            </span>{" "}
+            Find a charity from the list below, connect your wallet and donate
+            to their perpetual endowment.
           </p>
         </div>
+        <div className="w-1/6"></div>
       </div>
       {isLoading && (
         <div className="h-40 bg-opacity-5 rounded-lg grid place-items-center">
