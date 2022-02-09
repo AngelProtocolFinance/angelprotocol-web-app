@@ -94,6 +94,7 @@ const VerifiedEmail = () => {
             onClick={resendVerificationEmail}
             title="resend"
             disabled={isLoading}
+            isLoading={isLoading}
           />
         ) : (
           <Action
