@@ -1,15 +1,21 @@
+import { Wallet } from "@terra-money/terra.js";
 import TorusSdk, {
   RedirectResult,
   TorusLoginResponse,
   UX_MODE,
 } from "@toruslabs/customauth";
+import Loader from "components/Loader/Loader";
 import { useEffect, useMemo, useState } from "react";
-import { useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { app, registration, site } from "types/routes";
 import useGetTerraWallet from "./useGetTerraWallet";
 
 export default function RedirectAuth() {
   const { path } = useRouteMatch();
-  const [loginDetails, setLoginDetails] = useState<RedirectResult>();
+  const [isLoading, setLoading] = useState(true);
+  const [torusWallet, setTorusWallet] = useState<Wallet>();
+  const [error, setError] = useState<Error>();
   const getTerraWallet = useGetTerraWallet();
 
   const torusdirectsdk = useMemo(
@@ -27,29 +33,58 @@ export default function RedirectAuth() {
 
   useEffect(() => {
     async function getResult() {
-      // TODO - DELETE THIS LOGIC BEFORE PR
-      const temp = localStorage.getItem("result");
-      let result = temp && (JSON.parse(temp) as TorusLoginResponse);
-      // ---
-
-      if (!result) {
+      try {
         const redirectResult = await torusdirectsdk.getRedirectResult();
-        setLoginDetails(redirectResult);
-        result = redirectResult.result as TorusLoginResponse;
-        localStorage.setItem("result", JSON.stringify(result));
+        const torusResponse = redirectResult.result as TorusLoginResponse;
+        const wallet = getTerraWallet(torusResponse.privateKey);
+        setTorusWallet(wallet);
+      } catch (error) {
+        console.log(error);
+        setError(error as Error);
+      } finally {
+        setLoading(false);
       }
-
-      console.log("result", result);
-      const wallet = getTerraWallet(result.privateKey);
-      console.log("w", wallet.key.accAddress);
     }
 
     getResult();
-  }, [torusdirectsdk, getTerraWallet]);
+    // the Torus redirect result can only be fetched once, so there is no need to run this
+  }, []);
+
+  useEffect(() => {
+    if (!error) {
+      return;
+    }
+
+    const isResultFetchError = error.message.includes(
+      "Unable to fetch result from redirect"
+    );
+    if (isResultFetchError) {
+      toast.error(
+        "Session expired, please repeat the wallet registration process"
+      );
+    } else {
+      toast.error(error.message);
+    }
+  }, [error]);
+
+  if (isLoading) {
+    return (
+      <div className="h-full">
+        <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>This is the redirected page</h1>
+    <div className="h-full">
+      <h1>Your wallet: {torusWallet?.key.accAddress}</h1>
+      <Link
+        to={`${site.app}/${app.register}/${registration.wallet_check}`}
+        className="uppercase text-bright-blue text-sm hover:underline"
+      >
+        Click here to go to wallet creation screen
+      </Link>
+      <ToastContainer />
     </div>
   );
 }

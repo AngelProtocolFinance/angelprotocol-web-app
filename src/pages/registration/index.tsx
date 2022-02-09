@@ -25,7 +25,7 @@ const Register = () => {
 
   return (
     <section>
-      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white mx-auto">
+      <div className="relative sm:w-4/5 max-w-6xl p-10 mt-5 text-center text-white mx-auto h-full">
         <Switch>
           <Route
             exact

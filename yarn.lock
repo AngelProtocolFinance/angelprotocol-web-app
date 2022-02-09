@@ -1598,6 +1598,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:*":
+  version: 7.17.2
+  resolution: "@babel/runtime@npm:7.17.2"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: a48702d271ecc59c09c397856407afa29ff980ab537b3da58eeee1aeaa0f545402d340a1680c9af58aec94dfdcbccfb6abb211991b74686a86d03d3f6956cacd
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:7.12.1":
   version: 7.12.1
   resolution: "@babel/runtime@npm:7.12.1"
@@ -4560,6 +4569,7 @@ __metadata:
     "@types/react-select-country-list": ^2.2.0
     "@types/react-slick": ^0.23.8
     autoprefixer: ^9
+    bip39: ^3.0.4
     currency-list: ^1.0.6
     eslint: ^7.0.0
     eslint-config-prettier: ^8.3.0
@@ -5378,7 +5388,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bip39@npm:^3.0.3":
+"bip39@npm:^3.0.3, bip39@npm:^3.0.4":
   version: 3.0.4
   resolution: "bip39@npm:3.0.4"
   dependencies:

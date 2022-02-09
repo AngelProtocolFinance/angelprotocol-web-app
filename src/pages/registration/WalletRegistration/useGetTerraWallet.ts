@@ -1,35 +1,33 @@
 import { LCDClient, MnemonicKey } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import bip39 from "bip39";
+import { useWallet } from "@terra-money/wallet-provider";
+import { entropyToMnemonic } from "bip39";
 import { terra_lcds } from "constants/urls";
 import { chainIDs } from "contracts/types";
 import { useCallback } from "react";
 
 export default function useGetTerraWallet() {
-  const wallet = useConnectedWallet();
+  const wallet = useWallet();
 
-  const getTerraWallet = useCallback(
-    (torusPrivateKey: string) => {
-      const terra = new LCDClient({
-        URL: wallet?.network?.lcd || terra_lcds[chainIDs.mainnet],
-        chainID: wallet?.network?.chainID || chainIDs.mainnet,
-      });
+  const getTerraWallet = useCallback((torusPrivateKey: string) => {
+    const terra = new LCDClient({
+      // URL: wallet?.network?.lcd || terra_lcds[chainIDs.mainnet],
+      // chainID: wallet?.network?.chainID || chainIDs.mainnet,
+      URL: terra_lcds[chainIDs.testnet],
+      chainID: chainIDs.testnet,
+    });
 
-      const mnemonic = bip39.entropyToMnemonic(torusPrivateKey);
+    const mnemonic = entropyToMnemonic(torusPrivateKey);
+    const mnemonicKey = new MnemonicKey({ mnemonic });
 
-      const mnemonicKey = new MnemonicKey({ mnemonic });
+    console.log(
+      "account 0, index 0 key",
+      mnemonicKey.privateKey.toString("hex")
+    );
 
-      console.log(
-        "account 0, index 0 key",
-        mnemonicKey.privateKey.toString("hex")
-      );
+    const newWallet = terra.wallet(mnemonicKey);
 
-      const newWallet = terra.wallet(mnemonicKey);
-
-      return newWallet;
-    },
-    [wallet]
-  );
+    return newWallet;
+  }, []);
 
   return getTerraWallet;
 }
