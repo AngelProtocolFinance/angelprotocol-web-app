@@ -24,36 +24,48 @@ export interface Details {
 }
 
 export interface Profile {
-  url?: string;
-  charity_image?: string; //url of image
+  //terra
   charity_owner: string; // charity owner wallet address
-  charity_registration_number: string; //"CN201225725"
-  annual_revenue: string; //"Under $100k"
-  country_city_origin: string; //"Philippines, Zamboanga City"
-  charity_overview: string; //long text
-  charity_email: string; //"jay@yellowboat.org"
-  linkedin_page: string; //"yellowboatph" used as https://linked.com/{linkedin_page}
-  charity_programs: string; //long text
-  charity_name: string; //"Yellow Boat of Hope Foundation"
-  number_of_employees: string; //"5-25"
-  average_annual_budget: string; //"$50,000"
   endowment_address: string; //"terra1k6v33x6sc9chztxgyh859npz740gmn9d4rnfkz"
+  url?: string;
+
+  //landing
+  un_sdg: string; //"4"
+  charity_name: string; //"Yellow Boat of Hope Foundation"
+  charity_image?: string; //url of image
+  charity_overview: string; //long text
+  charity_registration_number: string; //"CN201225725"
+  country_city_origin: string; //"Philippines, Zamboanga City"
+
+  //stats
+  average_annual_budget: string; //"$50,000"
+  annual_revenue: string; //"Under $100k"
+  number_of_employees: string; //"5-25"
+
+  //contacts
+  charity_email: string; //"jay@yellowboat.org"
+
+  //social
+  linkedin_page: string; //"yellowboatph" used as https://linked.com/{linkedin_page}
   twitter_handle: string; //"@YellowBoat" used as https://twitter.com/{twitter_handle}
+  facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
+
+  //content
+  charity_programs: string; //long text
   charity_navigator_rating: string; //""
   news_media_articles: string; //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
-  un_sdg: string; //"4"
-  facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
+
+  //meta
   is_placeholder?: true;
 }
 
 export type EditableProfileAttr = Omit<
   Profile,
   | "url"
-  | "charity_owner"
-  | "charity_programs"
-  | "endowment_address"
-  | "news_media_article"
-  | "unsdg"
+  | "charity_owner" //terra
+  | "endowment_address" //terra
+  | "charity_programs" //content
+  | "news_media_articles" //content
 >;
 
 export type ProfileUpdateProps = { profile: Profile };

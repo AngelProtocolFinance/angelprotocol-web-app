@@ -1,14 +1,13 @@
-import CharityProfileEditForm from "./Charity/CharityProfileEditForm";
+import CharityEditor from "./Charity/CharityEditor/CharityEditor";
+import EditForm from "./Charity/CharityEditor/EditForm";
+import { initialFormState } from "./Charity/CharityEditor/placeholders";
 
 export default function Test() {
   return (
     <div className="grid grid-rows-a1 place-items-center">
-      <form>
-        <p>charity image</p>
-        <p>charity image</p>
-        <p>charity image</p>
-        <p>charity image</p>
-      </form>
+      <CharityEditor {...initialFormState}>
+        <EditForm />
+      </CharityEditor>
     </div>
   );
 }
