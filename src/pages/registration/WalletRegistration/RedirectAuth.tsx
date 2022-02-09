@@ -5,16 +5,13 @@ import TorusSdk, {
 } from "@toruslabs/customauth";
 import { useEffect, useMemo, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
-import { LCDClient, Wallet } from "@terra-money/terra.js";
-import { RawKey } from "@terra-money/terra.js";
-
-const KEY =
-  "2c89e31e1109e1423f0b4b463ca73709755c80f97a2899dabf61bc299167ad8dmxQwVCruQ11cEbGLKuK84EykrdrCPOl7if34xD71x3TxHoUc6AyUiGpPYCRJ/50m/b3bLp8NX5RPcEreyqDQrj1Ykub056/fDXgQDOQPkCM=";
+import useGetTerraWallet from "./useGetTerraWallet";
 
 export default function RedirectAuth() {
-  const [loginDetails, setLoginDetails] = useState<RedirectResult>();
-
   const { path } = useRouteMatch();
+  const [loginDetails, setLoginDetails] = useState<RedirectResult>();
+  const getTerraWallet = useGetTerraWallet();
+
   const torusdirectsdk = useMemo(
     () =>
       new TorusSdk({
@@ -28,19 +25,12 @@ export default function RedirectAuth() {
     [path]
   );
 
-  const terra = useMemo(
-    () =>
-      new LCDClient({
-        URL: "https://bombay-lcd.terra.dev",
-        chainID: "bombay-12",
-      }),
-    []
-  );
-
   useEffect(() => {
     async function getResult() {
+      // TODO - DELETE THIS LOGIC BEFORE PR
       const temp = localStorage.getItem("result");
       let result = temp && (JSON.parse(temp) as TorusLoginResponse);
+      // ---
 
       if (!result) {
         const redirectResult = await torusdirectsdk.getRedirectResult();
@@ -50,13 +40,12 @@ export default function RedirectAuth() {
       }
 
       console.log("result", result);
-      const w = terra.wallet(new RawKey(Buffer.from(KEY, "hex")));
-      // const w = terra.wallet(new RawKey(Buffer.from(result.privateKey)));
-      console.log("w", w.key.accAddress);
+      const wallet = getTerraWallet(result.privateKey);
+      console.log("w", wallet.key.accAddress);
     }
 
     getResult();
-  }, [torusdirectsdk, terra]);
+  }, [torusdirectsdk, getTerraWallet]);
 
   return (
     <div>
