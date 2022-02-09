@@ -5,10 +5,10 @@ import { terra_lcds } from "constants/urls";
 import { chainIDs } from "contracts/types";
 import { useCallback } from "react";
 
-export default function useGetTerraWallet() {
+export default function useLoadTerraWallet() {
   const wallet = useWallet();
 
-  const getTerraWallet = useCallback((torusPrivateKey: string) => {
+  const loadTerraWallet = useCallback((torusPrivateKey: string) => {
     const terra = new LCDClient({
       // URL: wallet?.network?.lcd || terra_lcds[chainIDs.mainnet],
       // chainID: wallet?.network?.chainID || chainIDs.mainnet,
@@ -29,5 +29,5 @@ export default function useGetTerraWallet() {
     return newWallet;
   }, []);
 
-  return getTerraWallet;
+  return loadTerraWallet;
 }
