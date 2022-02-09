@@ -76,13 +76,14 @@ const endowments_api = aws.injectEndpoints({
       query: (data) => {
         const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
         return {
-          // URL of the request looks like this because the endowment_data DB table has a partition key (endowment_address) and sort key (charity_owner)
-          url: `endowments/info/${data.endowment_address}?charity_owner=${data.charity_owner}`,
+          // URL of the request needs a query param because the endowment_data DB table has a partition key (endowment_address) and sort key (charity_owner)
+          url: `endowments/info/${data.endowment_address}`,
           method: "PUT",
           body: data.body,
           headers: {
             authorization: generatedToken,
           },
+          params: { charity_owner: data.charity_owner },
         };
       },
       transformResponse: (response: { data: any }) => response,
