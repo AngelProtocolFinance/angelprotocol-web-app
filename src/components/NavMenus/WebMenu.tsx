@@ -23,7 +23,7 @@ export default function WebMenu() {
       <li className="mr-4">
         <NavLink
           to={`${site.app}${app.index}`}
-          className={`${linkStyles.className} border py-2 px-4 border-angel-blue rounded-full hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
+          className={`${linkStyles.className} border py-2 px-4 border-opacity-40 border-angel-blue rounded-md hover:bg-angel-blue hover:text-white active:bg-angel-blue active:text-white`}
         >
           Launch App
         </NavLink>

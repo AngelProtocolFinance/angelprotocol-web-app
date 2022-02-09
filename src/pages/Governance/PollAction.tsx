@@ -54,7 +54,7 @@ export default function PollAction(props: { poll_id?: string }) {
  * vote = !V && !E
  * you voted yes | no = W && V && !P
  * voting period ended = E && !P
- * end poll = E && ( V || C )
+ * end poll = E && (V || C)
  * poll has ended = P
  */
 
