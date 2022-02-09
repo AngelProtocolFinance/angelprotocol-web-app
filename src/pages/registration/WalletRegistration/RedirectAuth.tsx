@@ -1,18 +1,19 @@
 import { Wallet } from "@terra-money/terra.js";
+import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import TorusSdk, { TorusLoginResponse, UX_MODE } from "@toruslabs/customauth";
 import Loader from "components/Loader/Loader";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { app, registration, site } from "types/routes";
-import useLoadTerraWallet from "./useLoadTerraWallet";
+import loadTerraWallet from "./loadTerraWallet";
 
 export default function RedirectAuth() {
   const { path } = useRouteMatch();
   const [isLoading, setLoading] = useState(true);
   const [torusWallet, setTorusWallet] = useState<Wallet>();
   const [error, setError] = useState<Error>();
-  const loadTerraWallet = useLoadTerraWallet();
+  const { status, network } = useWallet();
 
   const torusdirectsdk = useMemo(
     () =>
@@ -28,11 +29,15 @@ export default function RedirectAuth() {
   );
 
   useEffect(() => {
+    if (status === WalletStatus.INITIALIZING) {
+      return;
+    }
+
     async function getResult() {
       try {
         const redirectResult = await torusdirectsdk.getRedirectResult();
         const torusResponse = redirectResult.result as TorusLoginResponse;
-        const wallet = loadTerraWallet(torusResponse.privateKey);
+        const wallet = loadTerraWallet(torusResponse.privateKey, network);
         setTorusWallet(wallet);
       } catch (error) {
         console.log(error);
@@ -43,9 +48,7 @@ export default function RedirectAuth() {
     }
 
     getResult();
-    // the Torus redirect result can only be fetched once, so this should be run only once on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [torusdirectsdk, status, network]);
 
   useEffect(() => {
     if (!error) {
