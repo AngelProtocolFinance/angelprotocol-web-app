@@ -23,6 +23,7 @@ export default function RedirectAuth() {
         redirectPathName: "auth",
         enableLogging: true,
         uxMode: UX_MODE.REDIRECT,
+        // TODO: change based on chainID used
         network: "testnet",
       }),
     [path]
