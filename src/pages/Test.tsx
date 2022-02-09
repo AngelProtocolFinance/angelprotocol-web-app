@@ -1,7 +1,14 @@
+import CharityProfileEditForm from "./Charity/CharityProfileEditForm";
+
 export default function Test() {
   return (
     <div className="grid grid-rows-a1 place-items-center">
-      <h3>some test</h3>
+      <form>
+        <p>charity image</p>
+        <p>charity image</p>
+        <p>charity image</p>
+        <p>charity image</p>
+      </form>
     </div>
   );
 }

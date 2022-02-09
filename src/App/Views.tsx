@@ -9,7 +9,8 @@ import { app, site } from "../types/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
-// import Test from "pages/Test";
+import Test from "pages/Test";
+console.log("remove test");
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -53,7 +54,7 @@ export default function Views() {
           path={`${path}/${app.endowment_admin}/:address`}
           component={Endowment_Admin}
         />
-        {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
+        <Route path={`${path}/${app.test}`} component={Test} />
         <Route path={`${path}${app.index}`} component={Market} />
         <Redirect from="*" to={site.home} />
       </Switch>

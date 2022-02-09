@@ -46,6 +46,16 @@ export interface Profile {
   is_placeholder?: true;
 }
 
+export type EditableProfileAttr = Omit<
+  Profile,
+  | "url"
+  | "charity_owner"
+  | "charity_programs"
+  | "endowment_address"
+  | "news_media_article"
+  | "unsdg"
+>;
+
 export type ProfileUpdateProps = { profile: Profile };
 
 export interface QueryRes<T> {
