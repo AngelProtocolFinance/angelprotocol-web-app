@@ -21,11 +21,9 @@ export default function useEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const halo_balance = useHaloBalance();
+  const { haloBalance } = useHaloBalance();
 
   const wallet = useConnectedWallet();
-  // const simul = usePairSimul(3000);
-  // const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
 
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
@@ -55,7 +53,7 @@ export default function useEstimator() {
             return;
           }
         } else {
-          if (amount > halo_balance) {
+          if (amount > haloBalance) {
             dispatch(setFormError("Not enough HALO"));
             return;
           }

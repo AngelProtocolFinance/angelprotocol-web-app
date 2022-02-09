@@ -5,7 +5,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-
+// import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";

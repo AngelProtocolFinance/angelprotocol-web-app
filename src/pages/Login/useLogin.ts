@@ -1,20 +1,28 @@
-import { FormikHelpers } from "formik";
-import { Values } from "./Login";
-import { useSetToken } from "contexts/AuthProvider";
-import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 import { aws_endpoint } from "constants/urls";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useGetToken, useSetToken } from "contexts/AuthProvider";
+import { loginSchema } from "./loginSchema";
+import { useSetModal } from "components/Nodal/Nodal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 
 export default function useLogin() {
-  //url = app/login
-  const { saveToken } = useSetToken();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm<{ password: string }>({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    resolver: yupResolver(loginSchema),
+  });
 
-  async function handleLogin(values: Values, actions: FormikHelpers<Values>) {
-    function resetStatus() {
-      actions.resetForm();
-      actions.setSubmitting(false);
-    }
+  const decodedToken = useGetToken();
+  const { saveToken } = useSetToken();
+  const { showModal } = useSetModal();
+
+  async function login(values: { message?: string; password: string }) {
     //start request
-    actions.setSubmitting(true);
     try {
       const response = await fetch(aws_endpoint + "/tca-login", {
         method: "POST",
@@ -27,17 +35,21 @@ export default function useLogin() {
         saveToken(data.accessToken);
         //no need to push, Redirect/> on Login/> will detect state change and have page redirected
       } else if (response.status === 403) {
-        toast.error("Unauthorized");
-        resetStatus();
+        showModal<PopupProps>(Popup, { message: "Unauthorized" });
       } else {
-        toast.error("Something went wrong");
-        resetStatus();
+        showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
       }
     } catch (error) {
-      toast.error("Something went wrong");
-      resetStatus();
+      console.error(error);
+      showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
     }
   }
 
-  return handleLogin;
+  return {
+    decodedToken,
+    register,
+    login: handleSubmit(login),
+    isSubmitting,
+    errors,
+  };
 }

@@ -5,10 +5,10 @@ import { denoms } from "constants/currency";
 import { Values } from "./types";
 export default function Balance() {
   const { watch, setValue } = useFormContext<Values>();
-  const halo_balance = useHaloBalance();
+  const { haloBalance } = useHaloBalance();
   const { main: ust_balance } = useBalances(denoms.uusd);
   const is_buy = watch("is_buy");
-  const balance = is_buy ? ust_balance : halo_balance;
+  const balance = is_buy ? ust_balance : haloBalance;
 
   function setAmount() {
     setValue("amount", `${balance}`);

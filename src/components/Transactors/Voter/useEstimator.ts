@@ -14,14 +14,14 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { Vote } from "contracts/types";
-import { useGovStaker } from "services/terra/queriers";
+import { useGovStaker } from "services/terra/gov/queriers";
 
 export default function useEstimator() {
   const { watch } = useFormContext<Values>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const halo_balance = useHaloBalance();
+  const { haloBalance } = useHaloBalance();
   const wallet = useConnectedWallet();
   const gov_staker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
@@ -112,7 +112,7 @@ export default function useEstimator() {
     debounced_id,
     wallet,
     UST_balance,
-    halo_balance,
+    haloBalance,
     gov_staker,
   ]);
 
