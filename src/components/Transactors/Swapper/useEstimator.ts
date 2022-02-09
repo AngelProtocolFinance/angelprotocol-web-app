@@ -24,8 +24,6 @@ export default function useEstimator() {
   const { haloBalance } = useHaloBalance();
 
   const wallet = useConnectedWallet();
-  // const simul = usePairSimul(3000);
-  // const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
 
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");

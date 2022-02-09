@@ -5,12 +5,12 @@ import {
   useGovPoll,
   useGovConfig,
   useGovStaker,
-  useLatestBlock,
-} from "services/terra/queriers";
-import { PollStatus } from "services/terra/types";
+} from "services/terra/gov/queriers";
+import { useLatestBlock } from "services/terra/queriers";
+import { PollStatus } from "services/terra/gov/types";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
-import { useGovBalanceState } from "services/terra/states";
+import { useGovBalanceState } from "services/terra/gov/states";
 
 type ProcessedPollData = {
   id: number;
