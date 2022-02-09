@@ -8,7 +8,6 @@ import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useDonater from "components/Transactors/Donater/useDonater";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import CharityProfileEditForm from "./CharityProfileEditForm";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
@@ -23,10 +22,12 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
   const { data: profile = profile_placeholder, isLoading } =
     useProfileQuery(endowment_addr);
   const { showModal } = useSetModal();
-  const endowmentBalanceData = useQueryEndowmentBal(
-    endowment_addr,
-    profile.is_placeholder
-  );
+  const endowmentBalanceData = {
+    address: profile.endowment_address,
+    overall: profile.overall,
+    total_liq: profile.total_liq,
+    total_lock: profile.total_lock,
+  };
 
   const wallet = useConnectedWallet();
   const isCharityOwner =

@@ -1,4 +1,3 @@
-// import { unsdgs } from "pages/Fund/unsdgs";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { unsdgs } from "pages/Fund/unsdgs";
 import { useMemo } from "react";

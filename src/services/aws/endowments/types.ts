@@ -9,11 +9,13 @@ export interface Endowment {
   tier: number;
 }
 
-export type MergedEndowment = Endowment & {
+export type CharityInfoBalance = {
+  address: string;
   total_liq: number;
   total_lock: number;
   overall: number;
 };
+
 export interface Details {
   description: string;
   url: string;
@@ -43,6 +45,9 @@ export interface Profile {
   news_media_articles: string; //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
   un_sdg: string; //"4"
   facebook_page: string; // "YellowBoatPH" used as https://facebook.com/{facebook_page}
+  overall: number;
+  total_liq: number;
+  total_lock: number;
   is_placeholder?: true;
   placeholderUrl?: string;
 }
