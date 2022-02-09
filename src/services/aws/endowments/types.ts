@@ -9,11 +9,13 @@ export interface Endowment {
   tier: number;
 }
 
-export type MergedEndowment = Endowment & {
+export type CharityInfoBalance = {
+  address: string;
   total_liq: number;
   total_lock: number;
   overall: number;
 };
+
 export interface Details {
   description: string;
   url: string;
