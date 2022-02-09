@@ -18,7 +18,7 @@ export default function Description(props: { endowments: Endowment }) {
 
       <Link
         to={`${app.charity}/${details.endowment_address}`}
-        className="col-start-2 text-lg text-angel-grey hover:text-angel-blgue active:text-angel-blue font-bold pt-2 mb-1"
+        className="col-start-2 text-lg text-angel-grey hover:text-angel-blue active:text-angel-blue font-bold pt-2 mb-1"
       >
         {details.charity_name}
       </Link>
