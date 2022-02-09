@@ -13,7 +13,6 @@ import persistStore from "redux-persist/es/persistStore";
 import { PersistGate } from "redux-persist/integration/react";
 
 const App = lazy(() => import("./App/App"));
-// const Admin = lazy(() => import("./Admin/Admin"));
 const Website = lazy(() => import("./Website/Website"));
 
 const persistor = persistStore(store);
@@ -31,7 +30,6 @@ ReactDOM.render(
             <Suspense fallback={<LoaderComponent />}>
               <Switch>
                 <Route path={site.app} component={App} />
-                {/*<Route path={site.admin} component={Admin} />*/}
                 <Route path={site.home} component={Website} />
               </Switch>
             </Suspense>
