@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Wallet } from "@terra-money/terra.js";
 
 // this is a temporary solution.
 // TODO: use new wallet logic after https://github.com/AngelProtocolFinance/angelprotocol-web-app/issues/655 is done
