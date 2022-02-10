@@ -76,7 +76,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
           </span>
           {profile.url ? (
             <a
-              href=""
+              href={profile.url}
               target="_blank"
               rel="noreferrer"
               className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
