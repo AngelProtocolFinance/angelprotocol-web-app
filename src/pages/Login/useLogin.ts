@@ -21,7 +21,7 @@ export default function useLogin() {
   const { saveToken } = useSetToken();
   const { showModal } = useSetModal();
 
-  async function login(values: { message?: string; password: string }) {
+  async function login(values: { password: string }) {
     //start request
     try {
       const response = await fetch(aws_endpoint + "/tca-login", {
