@@ -1,12 +1,11 @@
 import ContentLoader from "components/ContentLoader/ContentLoader";
 import { useState } from "react";
-// import image from "assets/images/home-banner.jpg";
+import image from "assets/images/home-banner.jpg";
 
 type Props = {
   src?: string;
   alt: string;
   classes: string;
-  placeholderUrl?: string;
   width?: string;
   height?: string;
 };
@@ -25,9 +24,7 @@ export default function ImageWrapper(props: Props) {
     setError(true);
   };
 
-  const imageUrl = error
-    ? props.placeholderUrl
-    : props.src || props.placeholderUrl;
+  const imageUrl = error ? image : props.src || image;
   return (
     <>
       {isLoading && <ContentLoader width={props.width} height={props.height} />}

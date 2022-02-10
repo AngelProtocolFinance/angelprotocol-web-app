@@ -34,12 +34,12 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
     return [
       {
         title: "Registration#",
-        value: profile.charity_registration_number,
+        value: profile.charity_registration_number || "N/A",
         rating: false,
       },
       {
         title: "Headquarters",
-        value: profile.country_city_origin,
+        value: profile.country_city_origin || "N/A",
         rating: false,
       },
       // {
@@ -49,12 +49,12 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       // },
       {
         title: " annual avg donations",
-        value: profile.annual_revenue,
+        value: profile.annual_revenue || "N/A",
         rating: false,
       },
       {
         title: " # of employees",
-        value: profile.number_of_employees,
+        value: profile.number_of_employees || "N/A",
         rating: false,
       },
       {
@@ -71,12 +71,14 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         <DonationInfoLoader />
       ) : (
         <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
-          <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
-            SDG #{profile.un_sdg}: {sdg.title}
-          </span>
+          {profile.un_sdg && (
+            <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
+              SDG #{profile.un_sdg}: {sdg?.title}
+            </span>
+          )}
           {profile.url ? (
             <a
-              href="##"
+              href={profile.url}
               target="_blank"
               rel="noreferrer"
               className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"

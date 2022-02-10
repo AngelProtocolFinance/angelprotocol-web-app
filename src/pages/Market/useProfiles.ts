@@ -8,7 +8,9 @@ export default function useProfiles(fund_id: number) {
 
   const { profiles = [] } = useProfilesQuery(isTest, {
     selectFromResult: ({ data }) => ({
-      profiles: data?.filter((profile) => profile.un_sdg === `${fund_id}`),
+      profiles: data?.filter(
+        (profile) => profile.tier !== 1 && profile.un_sdg === `${fund_id}`
+      ),
     }),
   });
 
