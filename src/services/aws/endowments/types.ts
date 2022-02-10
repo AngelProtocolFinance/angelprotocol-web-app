@@ -36,7 +36,7 @@ export interface Profile {
   //landing
   un_sdg: string; //"4"
   charity_name: string; //"Yellow Boat of Hope Foundation"
-  charity_image?: string; //url of image
+  charity_image: string; //url of image
   charity_overview: string; //long text
   charity_registration_number: string; //"CN201225725"
   country_city_origin: string; //"Philippines, Zamboanga City"

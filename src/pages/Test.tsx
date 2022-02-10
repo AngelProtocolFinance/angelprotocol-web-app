@@ -4,7 +4,7 @@ import { initialFormState } from "./Charity/CharityEditor/placeholders";
 
 export default function Test() {
   return (
-    <div className="grid grid-rows-a1 place-items-center">
+    <div className="grid padded-container justify-items-center">
       <CharityEditor {...initialFormState}>
         <EditForm />
       </CharityEditor>
