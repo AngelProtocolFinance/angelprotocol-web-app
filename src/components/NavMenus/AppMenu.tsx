@@ -8,9 +8,9 @@ export default function AppMenu() {
     <ul className="flex lg:items-center">
       <ListLinkItem to={`${url}/${app.leaderboard}`}>LEADERBOARD</ListLinkItem>
       <ListLinkItem
-        rel="noreferrer"
+        rel="noopener noreferer"
         target="_blank"
-        to="https://www.angelprotocol.io/contact"
+        to={{ pathname: "https://www.angelprotocol.io/contact" }}
       >
         REGISTER
       </ListLinkItem>
