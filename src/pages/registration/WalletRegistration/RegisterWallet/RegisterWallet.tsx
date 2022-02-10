@@ -1,30 +1,33 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
 import FormInput from "components/FormInput";
+import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { LocalStorageKey } from "../types";
 import NavigationToDashboard from "./NavigationToDashboard";
 import Title from "./Title";
 import { Values, WalletSchema } from "./types";
 import useRegisterWallet from "./useRegisterWallet";
+import { setConnectedWallet } from "../../registrationSlice";
 
 export default function RegisterWallet() {
+  const dispatch = useSetter();
   const user = useGetter((state) => state.user);
   const connectedWalletAddress = useGetter(
     (state) => state.registration.connectedWalletAddress
   );
   const { data } = useGetCharityDataQuery(user.PK);
-  const { isSuccess, registerWallet } = useRegisterWallet(user);
-
-  useEffect(() => console.log(user.PK));
+  const { isSuccess, registerWallet } = useRegisterWallet();
 
   const {
     control,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    resetField,
   } = useForm<Values>({
     resolver: yupResolver(WalletSchema),
     defaultValues: {
@@ -35,6 +38,18 @@ export default function RegisterWallet() {
         "",
     },
   });
+
+  useRehydrateUserState();
+
+  useEffect(() => {
+    if (!connectedWalletAddress) {
+      const local =
+        localStorage.getItem(LocalStorageKey.CONNECTED_WALLET_ADDRESS) || "";
+      dispatch(setConnectedWallet(local));
+      resetField("wallet_number", { defaultValue: local });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, resetField]);
 
   return (
     <div className="flex flex-col h-full items-center">

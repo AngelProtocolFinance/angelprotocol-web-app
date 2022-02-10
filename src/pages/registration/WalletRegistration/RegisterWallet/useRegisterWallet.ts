@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { useAddCharityMetadataMutation } from "services/aws/charity";
-import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { Values } from "./types";
 
-export default function useRegisterWallet(user: User) {
+export default function useRegisterWallet() {
   const [isSuccess, setSuccess] = useState(false);
   const [addCharityMetaProfile] = useAddCharityMetadataMutation();
   const dispatch = useSetter();
+  const user = useGetter((state) => state.user);
 
   const handleFailure = useCallback((error) => {
     toast.error(error);
