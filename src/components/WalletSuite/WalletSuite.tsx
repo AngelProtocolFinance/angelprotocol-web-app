@@ -1,52 +1,40 @@
 import { IoWalletSharp } from "react-icons/io5";
-import TerraDisplay from "components/TerraStation/Display";
+import Display from "./Display";
 import { useEffect, useState } from "react";
 import Connectors from "./Connectors";
 import { useGetter } from "store/accessors";
-import { Wallets } from "services/wallet/types";
+import { Providers } from "services/wallet/types";
+import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
+  const provider = useGetter((state) => state.provider);
+  useWalletUpdator(provider.active);
+
   const [connectorsShown, showConnectors] = useState(false);
-  const { activeWallet, isLoading } = useGetter((state) => state.wallet);
-  const isConnected = activeWallet !== Wallets.none;
+
   const toggleConnector = () => showConnectors((p) => !p);
   const hideConnectors = () => showConnectors(false);
-
+  const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isConnected && showConnectors(false);
+    isProviderActive && showConnectors(false);
     //eslint-disable-next-line
-  }, [isConnected]);
+  }, [isProviderActive]);
 
   return (
     <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">
-      {!isConnected && (
+      {!isProviderActive && (
         <button
           className="flex py-2 px-3 items-center text-white  "
-          disabled={isLoading}
+          disabled={provider.isSwitching}
           onClick={toggleConnector}
         >
-          {activeWallet === Wallets.none && (
-            <IoWalletSharp className="text-white text-xl mr-2" />
-          )}
-          <span>{isLoading ? "Loading" : "Connect"}</span>
+          <IoWalletSharp className="text-white text-xl mr-2" />
+          <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {displays[activeWallet]}
+      {isProviderActive && <Display />}
       {connectorsShown && <Connectors closeHandler={hideConnectors} />}
     </div>
   );
 }
-
-const displays = {
-  [Wallets.none]: null,
-  [Wallets.terra]: <TerraDisplay />,
-};
-
-// const displays = {
-// [Wallets.none]: null,
-// [Wallets.terra]: <TerraDisplay />,
-// [Wallets.ethereum]: <EthDisplay />,
-// [Wallets.phantom]: <PhantomDisp />,
-// [Wallets.keplr]: <KeplrDisp />,
-// };

@@ -1,14 +1,13 @@
+import { useEffect, useState } from "react";
+import { FaClock, FaStopwatch } from "react-icons/fa";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import { useSetModal } from "components/Nodal/Nodal";
 import PriceGraph from "components/PriceGraph";
-import { LBPGraphDataUnavailable } from "contracts/Errors";
-import displayTerraError from "helpers/displayTerraError";
-import { useEffect, useState } from "react";
-import { FaClock, FaStopwatch } from "react-icons/fa";
-import { LaunchStatsProps } from ".";
-import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import { LaunchStatsProps } from ".";
+import "./Auction.css";
 
 export default function Auction() {
   const { showModal } = useSetModal();
@@ -20,7 +19,7 @@ export default function Auction() {
   // https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
   useEffect(() => {
     if (!isLoading && error) {
-      displayTerraError(new LBPGraphDataUnavailable(error), showModal);
+      showModal<PopupProps>(Popup, { message: "Failed to get auction data" });
     }
     //eslint-disable-next-line
   }, [isLoading, error]);

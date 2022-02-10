@@ -1,6 +1,6 @@
 import TableEntry from "./TableEntry";
 import Heading from "./Heading";
-import { Endowment } from "services/aws/endowments/types";
+import { Endowment } from "services/aws/leaderboard/types";
 
 export default function TableView(props: { endowments: Endowment[] }) {
   return (
@@ -15,7 +15,7 @@ export default function TableView(props: { endowments: Endowment[] }) {
         </thead>
         <tbody>
           {props.endowments.map((endowment) => (
-            <TableEntry key={endowment.address} {...endowment} />
+            <TableEntry key={endowment.endowment_address} {...endowment} />
           ))}
         </tbody>
       </table>

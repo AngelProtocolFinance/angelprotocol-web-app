@@ -1,4 +1,4 @@
-import { chainIDs } from "contracts/types";
+import { chainIDs } from "constants/chainIDs";
 
 export const aws_endpoint =
   "https://mu2d2e0oj0.execute-api.us-east-1.amazonaws.com";
@@ -45,6 +45,8 @@ export const eth_rpcs: URL_GROUP = {
   [chainIDs.eth_kovan]:
     "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
 };
+
+export const TERRA_FINDER = "https://finder.extraterrestrial.money/";
 
 type URL_GROUP = {
   [index: string]: string;

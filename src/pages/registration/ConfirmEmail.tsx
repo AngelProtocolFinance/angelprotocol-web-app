@@ -1,7 +1,7 @@
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useCallback, useEffect } from "react";
-import { useHistory, useLocation, Redirect } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
@@ -107,7 +107,6 @@ const ConfirmEmail = () => {
           classes="bg-thin-blue w-48 h-12 text-sm"
         />
       </div>
-      <ToastContainer />
     </div>
   );
 };

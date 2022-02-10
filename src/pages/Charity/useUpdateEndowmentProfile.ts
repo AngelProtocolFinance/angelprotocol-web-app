@@ -18,18 +18,24 @@ export default function useUpdateEndowmentProfile() {
 
   const saveEndowmentProfile = async (
     metaData: Partial<Profile>,
-    endowment_address: string
+    endowment_address: string,
+    charity_owner: string
   ) => {
     const body = {
       ...metaData,
     } as Partial<Profile>;
 
     delete body.endowment_address;
+    delete body.charity_owner;
     if (!body.charity_image) delete body.charity_image;
     let result: any;
 
     try {
-      const response: any = await updateProfile({ body, endowment_address });
+      const response: any = await updateProfile({
+        body,
+        endowment_address,
+        charity_owner,
+      });
       result = response.data ? response : response.error;
     } catch (e) {
       toast.error("Saving data was failed. Please try again.");

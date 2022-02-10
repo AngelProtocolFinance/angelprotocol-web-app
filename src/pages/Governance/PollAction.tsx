@@ -1,27 +1,22 @@
 import { ReactNode } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useSetModal } from "components/Nodal/Nodal";
-import VoteSuite from "components/TransactionSuite/VoteSuite";
-import Voter from "components/Voter/Voter";
-import { PollStatus } from "services/terra/types";
+import { PollStatus } from "services/terra/gov/types";
 import useDetails from "./useDetails";
-import usePollAction from "./usePollAction";
+import useVoter from "components/Transactors/Voter/useVoter";
+import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 
 export default function PollAction(props: { poll_id?: string }) {
   const wallet = useConnectedWallet();
   const details = useDetails(props.poll_id);
-  const end_poll = usePollAction(props.poll_id);
+  const showPollEnder = usePollEnder(props.poll_id);
+  const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const { showModal } = useSetModal();
   const W = !!wallet;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== PollStatus.in_progress;
+  const C = details.creator === wallet?.walletAddress;
   let node: ReactNode = null;
-
-  function showVoterForm() {
-    showModal<VoterProps>(VoterModal, { poll_id: props.poll_id });
-  }
 
   //poll has ended
   if (P) {
@@ -30,8 +25,8 @@ export default function PollAction(props: { poll_id?: string }) {
   } else {
     if (E) {
       //voting period ended
-      if (V) {
-        node = <Action title="End poll" action={end_poll} />;
+      if (V || C) {
+        node = <Action title="End poll" action={showPollEnder} />;
       } else {
         node = <Text>vote period has ended</Text>;
       }
@@ -39,7 +34,7 @@ export default function PollAction(props: { poll_id?: string }) {
       if (V && W) {
         node = <Text>you voted {details.vote}</Text>;
       } else {
-        node = <Action title="Vote" action={showVoterForm} />;
+        node = <Action title="Vote" action={showVoter} />;
       }
       //voting period hasn't ended
     }
@@ -52,24 +47,16 @@ export default function PollAction(props: { poll_id?: string }) {
  * V - already voted ?
  * E - voting period done ?
  * P - poll ended ?
+ * C - is creator?
  */
 
 /** button displays
  * vote = !V && !E
  * you voted yes | no = W && V && !P
  * voting period ended = E && !P
- * end poll = V && P
+ * end poll = E && (V || C)
  * poll has ended = P
  */
-
-type VoterProps = { poll_id?: string };
-function VoterModal(props: VoterProps) {
-  return (
-    <Voter poll_id={props.poll_id}>
-      <VoteSuite inModal />
-    </Voter>
-  );
-}
 
 type ActionProps =
   | { disabled?: false; action: () => void; title: string }

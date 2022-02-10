@@ -28,6 +28,7 @@ export enum app {
   charities = "charities",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
+  admin = "admin",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
@@ -62,6 +63,14 @@ export enum registration {
   others = "others",
   self_custody = "self-custody",
   key_person = "key-person",
+}
+
+export enum charity {
+  overview = "/overview",
+  endowment = "/endowment",
+  programs = "/programs",
+  media = "/media",
+  governance = "/governance",
 }
 
 export type Handler = () => void;
