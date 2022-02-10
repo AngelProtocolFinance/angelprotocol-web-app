@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Input from "components/ContactDetailsForm/Input";
 import LinkButton from "components/LinkButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -106,24 +107,18 @@ export default function RegisterWallet() {
         ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
       </p>
       <form
-        className="flex flex-col gap-3 items-center w-1/2"
+        className="flex flex-col gap-10 items-center w-1/2"
         onSubmit={handleSubmit(onConnectWallet)}
       >
-        {!isSuccess && (
-          <p className="text-sm text-gray-400 font-bold">
-            Terra Wallet<span className="text-red-700">*</span>
-          </p>
-        )}
-        <input
-          {...register("wallet_number")}
-          type="text"
-          className="text-sm sm:text-base outline-none border-none w-full bg-gray-200 text-black rounded-md p-2 flex items-center"
-          placeholder="Wallet Address"
-          disabled={isSuccess}
+        <Input
+          label="Terra Wallet"
+          placeholder="terra1..."
+          registerReturn={register("wallet_number")}
+          errorMessage={errors.wallet_number?.message}
+          disabled={isSubmitting || isSuccess}
+          required
+          errorClassName="mx-auto"
         />
-        <p className="text-xs sm:text-sm text-failed-red mt-1 pl-1">
-          {errors.wallet_number?.message}
-        </p>
         <Action
           submit
           title="Submit"

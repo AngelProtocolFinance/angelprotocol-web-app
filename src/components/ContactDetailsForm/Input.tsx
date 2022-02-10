@@ -1,14 +1,23 @@
+import { InputHTMLAttributes } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
-type Props = React.InputHTMLAttributes<HTMLInputElement> & {
+type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   errorMessage?: string;
   registerReturn: UseFormRegisterReturn;
+  errorClassName?: string;
 };
 
 export default function Input(props: Props) {
-  const { label, errorMessage, registerReturn, required, className, ...rest } =
-    props;
+  const {
+    label,
+    errorMessage,
+    registerReturn,
+    required,
+    className,
+    errorClassName,
+    ...rest
+  } = props;
   const { type = "text" } = rest;
 
   return (
@@ -25,7 +34,9 @@ export default function Input(props: Props) {
         {...rest}
       />
       {errorMessage && (
-        <p className="text-sm text-failed-red">{errorMessage}</p>
+        <p className={`text-sm text-failed-red ${errorClassName}`}>
+          {errorMessage}
+        </p>
       )}
     </div>
   );
