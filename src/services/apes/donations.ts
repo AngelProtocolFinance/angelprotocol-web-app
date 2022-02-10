@@ -11,7 +11,6 @@ const donations_api = apes.injectEndpoints({
         return {
           url: "donation",
           method: "POST",
-          params: { app: "angel-protocol" },
           headers: { authorization: generatedToken },
           body: txPayload,
         };
