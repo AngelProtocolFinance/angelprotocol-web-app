@@ -1,8 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import LinkButton from "components/LinkButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCheck } from "react-icons/fa";
-import { Link, LinkProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useAddCharityMetadataMutation,
@@ -155,22 +156,5 @@ export default function RegisterWallet() {
         </>
       )}
     </div>
-  );
-}
-
-type LinkButtonProps = LinkProps & {
-  disabled?: boolean;
-  bgColorClass: string;
-};
-
-function LinkButton(props: LinkButtonProps) {
-  const { disabled, className, bgColorClass, ...rest } = props;
-  return (
-    <Link
-      className={`rounded-xl uppercase font-bold text-white flex justify-center items-center ${className} ${
-        disabled ? "bg-gray-300 cursor-default" : bgColorClass
-      }`}
-      {...rest}
-    />
   );
 }
