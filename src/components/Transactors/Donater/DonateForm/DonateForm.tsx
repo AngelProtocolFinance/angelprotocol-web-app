@@ -8,7 +8,7 @@ import Amount from "./Amount";
 import useDonate from "./useDonate";
 import Breakdown from "./Breakdown";
 import Split from "./Split";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
