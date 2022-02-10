@@ -67,7 +67,6 @@ function useStake() {
         }
       }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     }
   }

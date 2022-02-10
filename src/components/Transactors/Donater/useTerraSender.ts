@@ -87,7 +87,6 @@ export default function useTerraSender(tx: CreateTxOptions) {
           }
         }
       } catch (err) {
-        console.error(err);
         handleTerraError(err, updateTx);
       } finally {
         reset();

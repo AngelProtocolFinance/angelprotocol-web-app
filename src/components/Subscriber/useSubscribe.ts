@@ -58,7 +58,9 @@ export default function useSubscribe() {
       }
       reset();
     } catch (error) {
-      console.error(error);
+      showModal<PopupProps>(Popup, {
+        message: "Unknown error appeared, please try again.",
+      });
     }
   }
   return { subscribe: handleSubmit(subscribe), register, isSubmitting, errors };
