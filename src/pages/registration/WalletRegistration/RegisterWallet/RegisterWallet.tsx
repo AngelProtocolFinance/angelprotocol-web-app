@@ -1,10 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Action from "components/ActionButton/Action";
 import Input from "components/ContactDetailsForm/Input";
-import LinkButton from "components/LinkButton";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaCheck } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   useAddCharityMetadataMutation,
@@ -12,9 +10,9 @@ import {
 } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { app, registration, site } from "types/routes";
 import * as Yup from "yup";
-import Action from "../../../components/ActionButton/Action";
+import NavigationToDashboard from "./NavigationToDashboard";
+import Title from "./Title";
 
 export const WalletSchema = Yup.object().shape({
   wallet_number: Yup.string().required("Please enter your wallet address."),
@@ -93,19 +91,8 @@ export default function RegisterWallet() {
 
   return (
     <div className="flex flex-col h-full items-center">
-      {isSuccess ? (
-        <div className="text-center items-center">
-          <div className="flex justify-center mb-5">
-            <FaCheck className="text-3xl text-white" />
-          </div>
-          <p className="text-3xl font-bold uppercase">success!</p>
-        </div>
-      ) : (
-        <p className="text-3xl font-bold">Register your wallet</p>
-      )}
-      <p className="my-10">
-        ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
-      </p>
+      <Title isSuccess={isSuccess} />
+      <RegistrationExplanation />
       <form
         className="flex flex-col gap-10 items-center w-1/2"
         onSubmit={handleSubmit(onConnectWallet)}
@@ -127,29 +114,18 @@ export default function RegisterWallet() {
           isLoading={isSubmitting}
         />
       </form>
-      {!isSuccess ? (
-        <Link
-          to={`${site.app}/${app.register}/${registration.status}`}
-          className="uppercase text-bright-blue text-sm hover:underline"
-        >
-          Click here to go back to the registration dashboard
-        </Link>
-      ) : (
-        <>
-          <div>
-            <p>Thanks for registering your wallet:</p>
-            <p>your address is</p>
-            <p className="font-bold">{walletAddress}</p>
-          </div>
-          <LinkButton
-            to={`${site.app}/${app.register}/${registration.status}`}
-            className="w-60 h-10 mt-8"
-            bgColorClass="bg-angel-blue"
-          >
-            Back to dashboard
-          </LinkButton>
-        </>
-      )}
+      <NavigationToDashboard
+        isSuccess={isSuccess}
+        walletAddress={walletAddress}
+      />
     </div>
+  );
+}
+
+function RegistrationExplanation() {
+  return (
+    <p className="my-10">
+      ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
+    </p>
   );
 }
