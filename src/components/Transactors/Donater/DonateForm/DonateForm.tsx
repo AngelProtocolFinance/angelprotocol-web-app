@@ -15,9 +15,14 @@ export default function DonateForm() {
   const { watch } = useFormContext<Values>();
   const { donate, isSubmitting } = useDonate();
   const [showSplit, setShowSplit] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const to = watch("to");
 
   const toggleAdvancedOptions = () => setShowSplit(!showSplit);
+
+  const confirmRole = (event: any) => {
+    setIsChecked(event.target.checked);
+  };
 
   return (
     <form
@@ -55,15 +60,24 @@ export default function DonateForm() {
           </span>
         )}
         <button
-          disabled={isSubmitting || form_loading || !!form_error}
+          disabled={isSubmitting || form_loading || !!form_error || !isChecked}
           className="w-full bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
           type="submit"
         >
           {form_loading ? "estimating fee.." : "proceed"}
         </button>
       </div>
-      <div className="flex m-3">
-        <span className="text-angel-grey font-light text-xs">
+      <div className="my-3 flex items-start">
+        <input
+          type="checkbox"
+          className="mr-2 mt-0.5"
+          id="confirmRole"
+          onChange={confirmRole}
+        />
+        <label
+          htmlFor="confirmRole"
+          className="text-angel-grey font-light text-xs "
+        >
           By clicking this button and donating with Angel Protocol, you
           acknowledge that you have read and accept the{" "}
           <a
@@ -73,7 +87,7 @@ export default function DonateForm() {
             Donor Terms of Use
           </a>
           .
-        </span>
+        </label>
       </div>
     </form>
   );
