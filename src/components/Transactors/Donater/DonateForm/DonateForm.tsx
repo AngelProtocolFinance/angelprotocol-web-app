@@ -20,9 +20,9 @@ export default function DonateForm() {
 
   const toggleAdvancedOptions = () => setShowSplit(!showSplit);
 
-  const confirmRole = useCallback((event: any) => {
+  const confirmRole = (event: any) => {
     setIsChecked(event.target.checked);
-  }, []);
+  };
 
   return (
     <form
