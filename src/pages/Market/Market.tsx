@@ -25,13 +25,36 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="grid items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover py-10">
-        <div className="px-2">
-          <p className="uppercase text-lg md:text-2xl xl:text-4xl">
-            we categorize our charities based on the
+      <div className="flex flex-col-reverse md:flex-row padded-container md:p-20 gap-5">
+        <div className="relative w-full md:w-1/2 my-auto">
+          <figure>
+            <img
+              src="https://charity-profile-images.s3.amazonaws.com/banner/The+5+Gyres+Institute.png"
+              alt=""
+              className="w-150 rounded-lg"
+            />
+            <figcaption className="text-white font-bold uppercasetext-left p-4">
+              <div className="pb-2 text-2xl md:text-3xl">
+                The 5 Gyres Institute
+              </div>
+              <div className="text-md md:text-lg">
+                SDG #12 Responsible Consumption and Production
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div className="text-white w-full md:w-1/2 my-auto">
+          <p className="font-extrabold text-6xl lg:text-7xl mb-4">GIVE ONCE,</p>
+          <p className="font-extrabold text-6xl lg:text-7xl mb-4">
+            GIVE <span className="text-angel-orange">FOREVER</span>.
           </p>
-          <p className="font-extrabold text-xl md:text-xl xl:text-4xl my-2">
-            17 UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)
+          <p className="text-2xl md:text-3xl my-4">
+            <span className="font-bold">
+              Want to empower a charity like The 5 Gyres Institute with
+              financial freedom?
+            </span>{" "}
+            Find a charity from the list below, connect your wallet and donate
+            to their perpetual endowment.
           </p>
         </div>
       </div>

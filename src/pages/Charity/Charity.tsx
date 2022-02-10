@@ -8,24 +8,26 @@ import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
 import { useSetModal } from "components/Nodal/Nodal";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useDonater from "components/Transactors/Donater/useDonater";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
 import CharityProfileEditForm from "./CharityProfileEditForm";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
 import CharityInfoNav from "./CharityInfoNav";
 import { CharityParam } from "./types";
+import { CharityProfileTabLoader } from "components/Loader/Charity";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
   const showDonater = useDonater({ to: "charity", receiver: endowment_addr });
 
-  const { data: profile = profile_placeholder } =
+  const { data: profile = profile_placeholder, isLoading } =
     useProfileQuery(endowment_addr);
   const { showModal } = useSetModal();
-  const endowmentBalanceData = useQueryEndowmentBal(
-    endowment_addr,
-    profile.is_placeholder
-  );
+  const endowmentBalanceData = {
+    address: profile.endowment_address,
+    overall: profile.overall,
+    total_liq: profile.total_liq,
+    total_lock: profile.total_lock,
+  };
 
   const wallet = useConnectedWallet();
   const isCharityOwner =
@@ -36,6 +38,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       profile,
     });
   };
+
   const openModal = (type: "edit" | "donation") =>
     type === "edit" ? showEditForm() : showDonater();
 
@@ -47,11 +50,16 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
           <div className="relative group">
             <ImageWrapper
               height="300"
-              src={profile.charity_image}
+              width="100%"
+              src={
+                profile.is_placeholder
+                  ? profile.placeholderUrl
+                  : profile.charity_image
+              }
               alt="charity image"
-              classes={`max-h-modal w-full bg-gray-400 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
+              classes={`max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
                 isCharityOwner &&
-                "filter group-hover:brightness-50 transition ease-in-out"
+                "filter group-hover:brightness-30 transition ease-in-out"
               }`}
             />
             {isCharityOwner && (
@@ -63,8 +71,14 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          <CharityInfoNav />
-          <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
+          {isLoading ? (
+            <CharityProfileTabLoader />
+          ) : (
+            <>
+              <CharityInfoNav />
+              <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
+            </>
+          )}
         </div>
       </div>
     </section>

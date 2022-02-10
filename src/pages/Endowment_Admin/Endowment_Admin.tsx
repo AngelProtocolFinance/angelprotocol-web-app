@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { RouteParam } from "./types";
 import TransactionList from "./TransactionList";
 import { useExchangeRate } from "services/terra/vaults/queriers";
-import { useEndowmentHoldings } from "services/terra/queriers";
+import { useEndowmentHoldings } from "services/terra/account/queriers";
 import useProfile from "pages/Market/useProfile";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import PageMeta from "./PageMeta";

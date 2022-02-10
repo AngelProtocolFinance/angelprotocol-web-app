@@ -31,7 +31,7 @@ export default function ContentLoader(props: LoaderProps) {
       </defs>
       <style
         dangerouslySetInnerHTML={{
-          __html: `\n svg {\n background-color: transparent;\n      }\n\n rect {\n   width: 100%;\n height: 100%;\n x: 0;\n y: 0;\n      }\n      `,
+          __html: `\n svg {\n \n      }\n\n rect {\n   width: 100%;\n height: 100%;\n x: 0;\n y: 0;\n      }\n      `,
         }}
       />
 
