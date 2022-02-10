@@ -1,4 +1,5 @@
-import { useGovPolls, useLatestBlock } from "services/terra/queriers";
+import { useLatestBlock } from "services/terra/queriers";
+import { useGovPolls } from "services/terra/gov/queriers";
 import Poll from "./Poll";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";

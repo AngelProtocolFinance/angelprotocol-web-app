@@ -5,7 +5,7 @@ import useWithdraw from "./useWithdraw";
 import Status from "./Status";
 import Amount from "./Amount";
 import { vaults } from "constants/contracts";
-import { useEndowmentHoldingsState } from "services/terra/states";
+import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { Fee, ToReceive, Total } from "./Misc";
 
 export default function WithdrawForm() {
