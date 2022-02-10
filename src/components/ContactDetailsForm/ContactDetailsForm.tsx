@@ -46,10 +46,10 @@ export default function ContactDetailsForm(props: any) {
 
   return (
     <form
-      className="mx-auto md:w-4/5 flex flex-col gap-6"
+      className="mx-auto md:w-full flex flex-col gap-6"
       onSubmit={handleSubmit(saveContactDetails)}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ColumnContainer>
           <Input
             label="Name of your organization"

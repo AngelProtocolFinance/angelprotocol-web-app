@@ -18,21 +18,19 @@ type Props = {
 
 export default function RoleSelector(props: Props) {
   return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <label htmlFor={props.name} className="text-dark-grey">
-          {props.label}
-          <span className="text-failed-red ml-0.5">*</span>
-        </label>
-        <Selector
-          name={props.name}
-          options={props.options}
-          control={props.control}
-          register={props.register}
-          onChange={props.onChange}
-          disabled={props.disabled}
-        />
-      </div>
+    <div className="flex flex-col gap-1 w-full text-left">
+      <label htmlFor={props.name} className="text-dark-grey">
+        {props.label}
+        <span className="text-failed-red ml-0.5">*</span>
+      </label>
+      <Selector
+        name={props.name}
+        options={props.options}
+        control={props.control}
+        register={props.register}
+        onChange={props.onChange}
+        disabled={props.disabled}
+      />
       {props.control._formValues[props.name] === UserRoles.other && (
         <Input
           label="Specify your role"
@@ -41,6 +39,7 @@ export default function RoleSelector(props: Props) {
           errorMessage={props.otherRoleErrorMessage}
           required
           disabled={props.disabled}
+          className="mt-3"
         />
       )}
     </div>
