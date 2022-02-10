@@ -64,7 +64,6 @@ export default function useWithdrawHoldings() {
         }
       }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     } finally {
       reset();
