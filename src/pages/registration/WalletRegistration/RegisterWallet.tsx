@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCheck } from "react-icons/fa";
 import { Link, LinkProps } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import {
   useAddCharityMetadataMutation,
   useGetCharityDataQuery,
@@ -154,16 +154,16 @@ export default function RegisterWallet() {
           </LinkButton>
         </>
       )}
-      <ToastContainer />
     </div>
   );
 }
 
-type ButtonLink = LinkProps & {
+type LinkButtonProps = LinkProps & {
   disabled?: boolean;
   bgColorClass: string;
 };
-function LinkButton(props: ButtonLink) {
+
+function LinkButton(props: LinkButtonProps) {
   const { disabled, className, bgColorClass, ...rest } = props;
   return (
     <Link

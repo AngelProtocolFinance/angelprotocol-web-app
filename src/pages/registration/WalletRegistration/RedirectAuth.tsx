@@ -3,7 +3,7 @@ import TorusSdk, { TorusLoginResponse, UX_MODE } from "@toruslabs/customauth";
 import Loader from "components/Loader/Loader";
 import { useEffect, useMemo, useState } from "react";
 import { Redirect, useRouteMatch } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useSetter } from "store/accessors";
 import { app, registration, site } from "types/routes";
 import { setConnectedWallet } from "../registrationSlice";
@@ -79,7 +79,6 @@ export default function RedirectAuth() {
           to={`${site.app}/${app.register}/${registration.register_wallet}`}
         />
       )}
-      <ToastContainer />
     </div>
   );
 }
