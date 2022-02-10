@@ -1,3 +1,1 @@
-import ContactDetailsForm from "./ContactDetailsForm";
-
-export default ContactDetailsForm;
+export { default } from "./ContactDetailsForm";

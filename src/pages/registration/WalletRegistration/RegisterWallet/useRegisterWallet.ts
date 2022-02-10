@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useAddCharityMetadataMutation } from "services/aws/charity";
 import { User } from "services/user/types";

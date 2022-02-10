@@ -8,7 +8,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   errorClassName?: string;
 };
 
-export default function Input(props: Props) {
+export default function FormInput(props: Props) {
   const {
     label,
     errorMessage,

@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Action from "components/ActionButton/Action";
-import Input from "components/ContactDetailsForm/Input";
+import FormInput from "components/FormInput";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter } from "store/accessors";
@@ -16,6 +17,8 @@ export default function RegisterWallet() {
   );
   const { data } = useGetCharityDataQuery(user.PK);
   const { isSuccess, registerWallet } = useRegisterWallet(user);
+
+  useEffect(() => console.log(user.PK));
 
   const {
     control,
@@ -41,7 +44,7 @@ export default function RegisterWallet() {
         className="flex flex-col gap-10 items-center w-1/2"
         onSubmit={handleSubmit(registerWallet)}
       >
-        <Input
+        <FormInput
           label="Terra Wallet"
           placeholder="terra1..."
           registerReturn={register("wallet_number")}

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { registration } from "types/routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
-import Input from "./Input";
+import FormInput from "../FormInput";
 import RoleSelector from "./RoleSelector";
 import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
@@ -51,7 +51,7 @@ export default function ContactDetailsForm(props: any) {
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ColumnContainer>
-          <Input
+          <FormInput
             label="Name of your organization"
             placeholder="Organization"
             registerReturn={register("charityName")}
@@ -59,7 +59,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             label="First name"
             placeholder="First name"
             registerReturn={register("firstName")}
@@ -67,7 +67,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             label="Last name"
             placeholder="Last name"
             registerReturn={register("lastName")}
@@ -75,7 +75,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             type="email"
             label="E-mail address"
             placeholder="E-mail address"
@@ -86,7 +86,7 @@ export default function ContactDetailsForm(props: any) {
           />
         </ColumnContainer>
         <ColumnContainer>
-          <Input
+          <FormInput
             label="Phone number"
             placeholder="Phone number"
             registerReturn={register("phone")}

@@ -1,3 +1,1 @@
-import ChooseWallet from "./ChooseWallet";
-
-export default ChooseWallet;
+export { default } from "./ChooseWallet";
