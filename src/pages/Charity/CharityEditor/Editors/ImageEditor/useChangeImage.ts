@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "./types";
+import { EditableProfileAttr } from "../../types";
 
 export default function useChangeImage() {
   //TODO: make this reusable with other image changer on different context
@@ -27,7 +27,7 @@ export default function useChangeImage() {
       fileReader.readAsDataURL(fileList[0]);
       fileReader.onload = handleFileLoad;
       fileReader.onerror = handleFileError;
-      //no need to remove for will be garbage collected
+      //no need to remove  for will be garbage collected
     }
   }, [fileList]);
 
@@ -54,6 +54,7 @@ export default function useChangeImage() {
   }
 
   return {
+    fileList,
     handleFileChange,
     handleImageReset,
     loading,

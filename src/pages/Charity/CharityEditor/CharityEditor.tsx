@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { EditableProfileAttr } from "./types";
-import { ReactNode } from "react";
 
 export default function CharityEditor(
   props: EditableProfileAttr & { children: ReactNode }

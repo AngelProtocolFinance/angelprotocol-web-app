@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import { AiOutlineUpload } from "react-icons/ai";
 import { CgUndo } from "react-icons/cg";
-import { EditableProfileAttr } from "./types";
+import { EditableProfileAttr } from "../../types";
 import useChangeImage from "./useChangeImage";
 
 export default function ImageEditor() {
@@ -16,9 +16,9 @@ export default function ImageEditor() {
       style={{
         background: `no-repeat center/cover url(${charity_image})`,
       }}
-      className="grid place-items-center relative group bg-red-400 w-full h-48 p-1 rounded-md  "
+      className="grid place-items-center relative group bg-red-400 w-full h-48 p-1 rounded-md mb-4 shadow-inner"
     >
-      <div className="flex absolute">
+      <div className="hidden absolute group-hover:flex">
         <ImageControl
           type="upload"
           htmlFor="file__image"
