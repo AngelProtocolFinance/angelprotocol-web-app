@@ -2,10 +2,31 @@ import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
+import { Link, useRouteMatch } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { app } from "types/routes";
 
 export default function EditForm() {
   return (
-    <form className="max-w-2xl w-full">
+    <form className="max-w-3xl w-full">
+      <div className="flex justify-between items-center mb-2">
+        <Link
+          to={`../${app.charity}/terra1grjzys0n9n9h9ytkwjsjv5mdhz7dzurdsmrj4v`}
+          className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-orange mb-4"
+        >
+          <BiArrowBack size={15} /> back to profile
+        </Link>
+        <button
+          type="button"
+          className="px-6 py-2 bg-angel-blue hover:bg-angel-orange rounded-md uppercase text-white-grey text-sm font-bold"
+        >
+          save
+        </button>
+      </div>
+
+      <p className="text-xs font-heading font-semibold uppercase text-white text-opacity-100 mb-2">
+        Banner
+      </p>
       <ImageEditor />
       <SDGSelector />
       <TextInput

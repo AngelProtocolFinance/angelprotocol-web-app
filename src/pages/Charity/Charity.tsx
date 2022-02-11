@@ -47,26 +47,13 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
       <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
         <DonationInfo openModal={openModal} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
-          <div className="relative group">
-            <ImageWrapper
-              height="300"
-              width="100%"
-              src={profile.charity_image}
-              alt="charity image"
-              classes={`max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
-                isCharityOwner &&
-                "filter group-hover:brightness-30 transition ease-in-out"
-              }`}
-            />
-            {isCharityOwner && (
-              <button
-                className="absolute top-1 right-1 p-5 opacity-0 group-hover:opacity-100 transition ease-in-out"
-                onClick={showEditForm}
-              >
-                <RiPencilFill size={40} className="text-white-grey" />
-              </button>
-            )}
-          </div>
+          <ImageWrapper
+            height="300"
+            width="100%"
+            src={profile.charity_image}
+            alt="charity image"
+            classes="max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
+          />
           {isLoading ? (
             <CharityProfileTabLoader />
           ) : (

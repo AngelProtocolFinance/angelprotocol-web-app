@@ -1,6 +1,6 @@
-import CharityEditor from "./Charity/CharityEditor/CharityEditor";
-import EditForm from "./Charity/CharityEditor/EditForm";
-import { initialFormState } from "./Charity/CharityEditor/placeholders";
+import CharityEditor from "./CharityEdit/CharityEditor";
+import EditForm from "./CharityEdit/EditForm";
+import { initialFormState } from "./CharityEdit/placeholders";
 
 export default function Test() {
   return (

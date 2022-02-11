@@ -7,7 +7,7 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
-import { useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import { CharityParam } from "./types";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
@@ -15,6 +15,7 @@ import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
+import { app } from "types/routes";
 
 interface DonationInfoProps {
   openModal: (type: "edit" | "donation") => void;
@@ -93,12 +94,12 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
           )}
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
-              <button
-                onClick={() => openModal("edit")}
-                className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
+              <Link
+                to={`../${app.charity_edit}/${match.params.address}`}
+                className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center block"
               >
                 Edit Profile
-              </button>
+              </Link>
             )}
             <button
               disabled={profile.is_placeholder}

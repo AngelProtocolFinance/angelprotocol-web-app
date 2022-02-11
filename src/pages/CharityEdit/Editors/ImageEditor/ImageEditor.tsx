@@ -53,7 +53,7 @@ type ControlProps =
       htmlFor?: never;
     };
 function ImageControl(props: ControlProps & Common) {
-  const { Icon, ...valitAttrs } = props;
+  const { Icon, type, ...valitAttrs } = props;
   return React.createElement(props.type === "reset" ? "button" : "label", {
     ...valitAttrs,
     className:
