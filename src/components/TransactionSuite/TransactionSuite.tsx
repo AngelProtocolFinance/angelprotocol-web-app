@@ -56,7 +56,7 @@ export default function TransactionSuite<C>(props: TxProps<C>) {
           onClick={close}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
-          <MdOutlineClose />
+          <MdOutlineClose size={25} />
         </button>
       )}
       {display[stage.step]}
