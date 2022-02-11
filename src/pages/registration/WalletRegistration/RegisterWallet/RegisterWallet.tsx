@@ -52,7 +52,7 @@ export default function RegisterWallet() {
   }, [dispatch, resetField]);
 
   return (
-    <div className="flex flex-col h-full items-center">
+    <div className="flex flex-col h-full items-center justify-center">
       <Title isSuccess={isSuccess} />
       <RegistrationExplanation />
       <form
