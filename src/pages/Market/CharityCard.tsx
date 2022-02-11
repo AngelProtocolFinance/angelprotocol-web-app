@@ -18,6 +18,7 @@ export default function CharityCard(props: { address: string }) {
         alt="charity banner"
         width="272"
         height="128"
+        rounded
       />
       <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
         {profile.charity_name}
