@@ -12,7 +12,7 @@ export default function useOpenLogin() {
   const openlogin = useMemo(
     () =>
       new OpenLogin({
-        clientId: process.env.REACT_APP_WEB_3_AUTH_PROJECT_ID || "",
+        clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
         network: network.chainID === chainIDs.mainnet ? "mainnet" : "testnet",
       }),
     [network]
@@ -34,13 +34,13 @@ export default function useOpenLogin() {
   const login = useCallback(
     async (loginProvider: string) => {
       try {
-        const loginResult = await openlogin.login({
+        await openlogin.login({
           loginProvider: loginProvider,
           redirectUrl: `${window.location.origin}${path}/auth`,
+          relogin: true,
         });
-        setPrivateKey(loginResult.privKey);
       } catch (error) {
-        console.error(error, "login caught");
+        console.error("error", error);
       }
     },
     [openlogin, path]

@@ -1,7 +1,7 @@
 import Loader from "components/Loader/Loader";
 import { Link } from "react-router-dom";
 import Web3Auth from "./Web3Auth";
-import useOpenLogin from "./useOpenLogin";
+import useOpenLogin from "../useOpenLogin";
 
 export default function ChooseWallet() {
   const { isLoading, login } = useOpenLogin();

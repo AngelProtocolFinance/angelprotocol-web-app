@@ -1,26 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import Action from "components/ActionButton/Action";
 import FormInput from "components/FormInput";
-import useRehydrateUserState from "hooks/useRehydrateUserState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter, useSetter } from "store/accessors";
-import { LocalStorageKey } from "../types";
+import { useGetter } from "store/accessors";
+import useEntropyToTerraWallet from "../useEntropyToTerraWallet";
+import useOpenLogin from "../useOpenLogin";
 import NavigationToDashboard from "./NavigationToDashboard";
 import Title from "./Title";
 import { Values, WalletSchema } from "./types";
 import useRegisterWallet from "./useRegisterWallet";
-import { setConnectedWallet } from "../../registrationSlice";
 
 export default function RegisterWallet() {
-  const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const connectedWalletAddress = useGetter(
-    (state) => state.registration.connectedWalletAddress
-  );
+  const { isLoading, privateKey } = useOpenLogin();
   const { data } = useGetCharityDataQuery(user.PK);
   const { isSuccess, registerWallet } = useRegisterWallet();
+  const { status, wallets } = useWallet();
+  const entropyToTerraWallet = useEntropyToTerraWallet();
 
   const {
     control,
@@ -31,25 +30,31 @@ export default function RegisterWallet() {
   } = useForm<Values>({
     resolver: yupResolver(WalletSchema),
     defaultValues: {
-      wallet_number:
-        connectedWalletAddress ||
-        user.TerraWallet ||
-        data?.Metadata?.TerraWallet ||
-        "",
+      wallet_number: user.TerraWallet || data?.Metadata?.TerraWallet || "",
     },
   });
 
-  useRehydrateUserState();
-
   useEffect(() => {
-    if (!connectedWalletAddress) {
-      const local =
-        localStorage.getItem(LocalStorageKey.CONNECTED_WALLET_ADDRESS) || "";
-      dispatch(setConnectedWallet(local));
-      resetField("wallet_number", { defaultValue: local });
+    if (status === WalletStatus.INITIALIZING || isLoading || !privateKey) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, resetField]);
+
+    if (!!wallets.length) {
+      return resetField("wallet_number", {
+        defaultValue: wallets[0].terraAddress,
+      });
+    }
+
+    const wallet = entropyToTerraWallet(privateKey);
+    resetField("wallet_number", { defaultValue: wallet.key.accAddress });
+  }, [
+    status,
+    isLoading,
+    privateKey,
+    wallets.length,
+    resetField,
+    entropyToTerraWallet,
+  ]);
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
