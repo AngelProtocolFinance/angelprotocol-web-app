@@ -25,7 +25,7 @@ export default function Market() {
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="flex flex-col-reverse md:flex-row padded-container md:p-20 gap-5">
+      <div className="flex flex-col-reverse md:flex-row padded-container md:py-20 gap-5">
         <div className="relative w-full md:w-1/2 my-auto">
           <figure>
             <img
@@ -33,7 +33,7 @@ export default function Market() {
               alt=""
               className="w-150 rounded-lg"
             />
-            <figcaption className="text-white font-bold uppercasetext-left p-4">
+            <figcaption className="text-white font-bold uppercasetext-left py-4">
               <div className="pb-2 text-2xl md:text-3xl">
                 The 5 Gyres Institute
               </div>
@@ -67,7 +67,7 @@ export default function Market() {
           />
         </div>
       )}
-      <section className="flex-auto padded-container mx-auto px-5 mt-5">
+      <section className="flex-auto padded-container mx-auto mt-5">
         {sdg_ids.map((id) => (
           <Index id={id} key={id} />
         ))}

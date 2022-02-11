@@ -138,7 +138,6 @@ export default function useEstimator() {
         setTx(transaction);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("transaction simulation failed"));
       }
     })();

@@ -70,7 +70,6 @@ export default function useCreatePoll() {
         }
       }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     } finally {
       reset();

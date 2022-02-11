@@ -113,9 +113,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
           })
         );
         dispatch(setIsUpdating(false));
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
     })();
     //eslint-disable-next-line
   }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);

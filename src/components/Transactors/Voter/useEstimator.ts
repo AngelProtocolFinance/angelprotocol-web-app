@@ -98,7 +98,6 @@ export default function useEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transcation"));
       }
     })();

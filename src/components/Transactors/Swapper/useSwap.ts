@@ -68,7 +68,6 @@ export default function useSwap() {
         }
       }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     } finally {
       reset();

@@ -65,7 +65,6 @@ export default function useEndPoll(poll_id?: string) {
         }
       }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     }
   }

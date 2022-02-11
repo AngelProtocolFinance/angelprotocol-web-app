@@ -52,7 +52,6 @@ const airdrop_api = aws.injectEndpoints({
           }
           return { data: claimables };
         } catch (err) {
-          console.error(err);
           return {
             error: {
               status: 500,
