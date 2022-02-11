@@ -1,7 +1,9 @@
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Profile } from "./types";
+import image from "assets/images/home-banner.jpg";
 
 export const profile: Profile = {
+  placeholderUrl: image,
   charity_image: "", //url of image
   charity_owner: "",
   charity_registration_number: "00000", //"CN201225725"
@@ -20,6 +22,9 @@ export const profile: Profile = {
   news_media_articles: "", //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
   un_sdg: "0", //"4"
   facebook_page: "", //
+  overall: 200,
+  total_liq: 100,
+  total_lock: 100, //overall, total_liq, and total_lock are in human-readable format base 10 numbers
   is_placeholder: true,
 };
 

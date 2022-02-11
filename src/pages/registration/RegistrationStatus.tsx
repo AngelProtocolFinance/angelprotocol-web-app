@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { registration } from "types/routes";
 import Action from "../../components/ActionButton/Action";
 import maskAddress from "helpers/maskAddress";
@@ -267,7 +267,6 @@ const RegistrationStatus = () => {
         />
         <p className="mt-3 text-sm uppercase">coming soon</p>
       </div>
-      <ToastContainer />
     </div>
   );
 };

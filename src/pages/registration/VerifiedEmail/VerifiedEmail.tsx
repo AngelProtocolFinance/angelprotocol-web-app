@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
@@ -56,21 +56,18 @@ export default function VerifiedEmail() {
     [history]
   );
 
-  const content = is_expired ? (
-    <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
-  ) : (
+  if (is_expired) {
+    return (
+      <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
+    );
+  }
+
+  return (
     <VerificationSuccessful
       userData={userData}
       onClick={navigateToRegistrationStatusPage}
       isLoading={isLoading}
     />
-  );
-
-  return (
-    <>
-      {content}
-      <ToastContainer />
-    </>
   );
 }
 

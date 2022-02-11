@@ -1,33 +1,15 @@
-import { useSetModal } from "components/Nodal/Nodal";
-import Staker from "components/Staker/Staker";
-import Swapper from "components/Swapper/Swapper";
-import Claimer from "components/Claimer/Claimer";
-import ClaimSuite from "components/TransactionSuite/ClaimSuite";
-import StakeSuite from "components/TransactionSuite/StakeSuite";
-import SwapSuite from "components/TransactionSuite/SwapSuite";
 import { currency_icons, denoms } from "constants/currency";
 import { useStakingAPRQuery } from "services/aws/governance";
-import "./Portal.css";
+import useSwapper from "components/Transactors/Swapper/useSwapper";
+import useStaker from "components/Transactors/Staker/useStaker";
+import useClaimer from "components/Transactors/Claimer/useClaimer";
+import Action from "./Action";
 
 export default function Portal() {
-  const { showModal } = useSetModal();
   const { data } = useStakingAPRQuery(null);
-
-  function showStaker() {
-    showModal(StakeModal, {});
-  }
-
-  function showUnstaker() {
-    showModal(UnstakeModal, {});
-  }
-
-  function showSwapper() {
-    return showModal(SwapModal, {});
-  }
-
-  function showClaimer() {
-    showModal(ClaimModal, {});
-  }
+  const showSwapper = useSwapper();
+  const showStaker = useStaker();
+  const showClaimer = useClaimer();
 
   return (
     <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
@@ -42,61 +24,15 @@ export default function Portal() {
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
         <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
-          {data && `${Number(data.stakingAPR).toFixed(2)}% APR`}
+          {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>
       </div>
       <div className="flex flex-wrap gap-2 self-end justify-end">
         <Action title="Trade Halo" action={showSwapper} />
-        <Action title="Stake" action={showStaker} />
-        <Action title="Unstake" action={showUnstaker} />
+        <Action title="Stake" action={showStaker(true)} />
+        <Action title="Unstake" action={showStaker(false)} />
         <Action title="Claim" action={showClaimer} />
       </div>
     </div>
-  );
-}
-
-type ActionProps = {
-  title: string;
-  action: () => void;
-  disabled?: boolean;
-};
-
-function Action({ title, action, disabled = false }: ActionProps) {
-  return (
-    <button onClick={action} className="action-button" disabled={disabled}>
-      {title}
-    </button>
-  );
-}
-
-function StakeModal() {
-  return (
-    <Staker stake>
-      <StakeSuite inModal />
-    </Staker>
-  );
-}
-
-function UnstakeModal() {
-  return (
-    <Staker>
-      <StakeSuite inModal />
-    </Staker>
-  );
-}
-
-function ClaimModal() {
-  return (
-    <Claimer>
-      <ClaimSuite inModal />
-    </Claimer>
-  );
-}
-
-function SwapModal() {
-  return (
-    <Swapper>
-      <SwapSuite inModal />
-    </Swapper>
   );
 }

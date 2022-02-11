@@ -9,6 +9,7 @@ import { app, site } from "../types/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
+// import Test from "pages/Test";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -46,7 +47,7 @@ export default function Views() {
           component={ChurchPortal}
         />
         <Route path={`${path}/${app.govern}`} component={Governance} />
-        {/*<Route path={`${path}/${app.fund}/:id`} component={Fund} />*/}
+        {/* <Route path={`${path}/${app.fund}/:id`} component={Fund} /> */}
         <Route path={`${path}/${app.auction}`} component={Auction} />
         <Route
           path={`${path}/${app.endowment_admin}/:address`}

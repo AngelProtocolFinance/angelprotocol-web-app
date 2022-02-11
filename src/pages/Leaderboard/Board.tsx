@@ -1,17 +1,15 @@
-import TableView from "./TableView";
-import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { chainIDs } from "contracts/types";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
-import { useEndowmentsQuery } from "services/aws/endowments/endowments";
+import TableView from "./TableView";
 import Loader from "components/Loader/Loader";
+import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+import { chainIDs } from "constants/chainIDs";
+import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
 
 export default function Board() {
   const wallet = useConnectedWallet();
   const is_test = wallet?.network.chainID === chainIDs.testnet;
-  const { data: update = leaderboard_update } = useLeaderboardsQuery(is_test);
-  const { data: endowments = [], isLoading } = useEndowmentsQuery(is_test);
-
+  const { data: update = leaderboard_update, isLoading } =
+    useLeaderboardsQuery(is_test);
   return (
     <div className="relative min-h-leader-table p-6 pt-10 my-5 mt-2 grid place-items-center overflow-hidden bg-white rounded-xl shadow-lg">
       <p className="flex absolute top-3 right-6 gap-2 text-sm font-body text-angel-grey text-opacity-80 italic">
@@ -31,7 +29,7 @@ export default function Board() {
           />
         </div>
       )}
-      {!isLoading && <TableView endowments={endowments} />}
+      {!isLoading && <TableView endowments={update.endowments} />}
     </div>
   );
 }

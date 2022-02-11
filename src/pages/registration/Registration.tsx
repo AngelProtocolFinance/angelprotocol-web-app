@@ -1,34 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import { registration } from "types/routes";
 import Action from "../../components/ActionButton/Action";
-import { FormInfoSchema, ReferInfo, useRegistration } from "./useRegistration";
+import { FormInfoSchema, useRegistration } from "./useRegistration";
 
 const Registration = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const { onResume } = useRegistration();
   const { url } = useRouteMatch();
   const history = useHistory();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<{ refer: string }>({
     resolver: yupResolver(FormInfoSchema),
   });
-
-  const onResumeRefer = useCallback(
-    async (values: ReferInfo) => {
-      setIsLoading(true);
-      await onResume(values);
-      setIsLoading(false);
-    },
-    [onResume]
-  );
 
   const handleStart = useCallback(
     () => history.push(`${url}/${registration.detail}`),
@@ -52,7 +41,7 @@ const Registration = () => {
       />
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
-        onSubmit={handleSubmit(onResumeRefer)}
+        onSubmit={handleSubmit(onResume)}
         className="flex flex-col items-center gap-2 w-full"
       >
         <input
@@ -66,14 +55,13 @@ const Registration = () => {
           submit
           title="Resume"
           classes="bg-thin-blue w-48 h-12"
-          disabled={isLoading}
-          isLoading={isLoading}
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
         />
       </form>
       <p className="mt-5">
         Can't find a registration file with this reference?
       </p>
-      <ToastContainer />
     </div>
   );
 };

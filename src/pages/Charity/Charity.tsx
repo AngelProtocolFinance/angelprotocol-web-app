@@ -1,54 +1,46 @@
-import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import CharityInfoNav from "./CharityInfoNav";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { RiPencilFill } from "react-icons/ri";
+import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
+import { Profile } from "services/aws/endowments/types";
+import { useProfileQuery } from "services/aws/endowments/endowments";
+import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
+import { useSetModal } from "components/Nodal/Nodal";
+import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import useDonater from "components/Transactors/Donater/useDonater";
+import CharityProfileEditForm from "./CharityProfileEditForm";
 import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
-import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
-import { useSetModal } from "components/Nodal/Nodal";
-import { RiPencilFill } from "react-icons/ri";
-import CharityProfileEditForm from "./CharityProfileEditForm";
-import { Profile } from "services/aws/endowments/types";
-import CharityUpdateSuite from "components/CharityForm/CharityUpdateSuite";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { ToastContainer } from "react-toastify";
-import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
-import { useProfileQuery } from "services/aws/endowments/endowments";
-import ImageWrapper from "components/ImageWrapper/ImageWrapper";
-import useQueryEndowmentBal from "./useQueryEndowmentBal";
+import CharityInfoNav from "./CharityInfoNav";
 import { CharityParam } from "./types";
+import { CharityProfileTabLoader } from "components/Loader/Charity";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
+  const showDonater = useDonater({ to: "charity", receiver: endowment_addr });
 
-  const { data: profile = profile_placeholder } =
+  const { data: profile = profile_placeholder, isLoading } =
     useProfileQuery(endowment_addr);
-  const [activeTab, setActiveTab] = useState("endowment");
   const { showModal } = useSetModal();
-  const endowmentBalanceData = useQueryEndowmentBal(
-    endowment_addr,
-    profile.is_placeholder
-  );
+  const endowmentBalanceData = {
+    address: profile.endowment_address,
+    overall: profile.overall,
+    total_liq: profile.total_liq,
+    total_lock: profile.total_lock,
+  };
 
   const wallet = useConnectedWallet();
   const isCharityOwner =
     wallet && wallet.walletAddress === profile.charity_owner;
 
-  const showDonationForm = () => {
-    //the button firing this function is disabled when
-    //param address is wrong
-    showModal(CharityForm, {
-      charity_addr: endowment_addr,
-    });
-  };
   const showEditForm = () => {
     showModal(CharityProfileForm, {
       profile,
     });
   };
-  console.log("profile", profile.charity_image);
+
   const openModal = (type: "edit" | "donation") =>
-    type === "edit" ? showEditForm() : showDonationForm();
+    type === "edit" ? showEditForm() : showDonater();
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
@@ -57,12 +49,17 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <div className="relative group">
             <ImageWrapper
-              height="350"
-              src={profile.charity_image}
+              height="300"
+              width="100%"
+              src={
+                profile.is_placeholder
+                  ? profile.placeholderUrl
+                  : profile.charity_image
+              }
               alt="charity image"
-              classes={`max-h-350 w-full bg-gray-400 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
+              classes={`max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
                 isCharityOwner &&
-                "filter group-hover:brightness-50 transition ease-in-out"
+                "filter group-hover:brightness-30 transition ease-in-out"
               }`}
             />
             {isCharityOwner && (
@@ -74,28 +71,19 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
               </button>
             )}
           </div>
-          <CharityInfoNav
-            activeTab={activeTab}
-            onTabChange={(tab: string) => setActiveTab(tab)}
-          />
-          <CharityInfoTab
-            activeTab={activeTab}
-            endowmentBalanceData={endowmentBalanceData}
-          />
+          {isLoading ? (
+            <CharityProfileTabLoader />
+          ) : (
+            <>
+              <CharityInfoNav />
+              <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
+            </>
+          )}
         </div>
       </div>
-      <ToastContainer />
     </section>
   );
 };
-
-function CharityForm(props: { charity_addr: string }) {
-  return (
-    <Donater to="charity" receiver={props.charity_addr}>
-      <DonateSuite inModal />
-    </Donater>
-  );
-}
 
 function CharityProfileForm(props: { profile: Profile }) {
   return (

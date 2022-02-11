@@ -7,7 +7,6 @@ import {
 } from "./useKeyPersonProfile";
 import { DropzoneArea } from "material-ui-dropzone";
 import { useState } from "react";
-import { ToastContainer } from "react-toastify";
 import Action from "../../../components/ActionButton/Action";
 import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
@@ -249,7 +248,6 @@ const KeyPersonProfile = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
     </div>
   );
 };

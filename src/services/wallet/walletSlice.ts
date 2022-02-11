@@ -1,27 +1,45 @@
+import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PendingTx, State, Wallets } from "./types";
+import { denoms } from "constants/currency";
+import { chainIDs } from "constants/chainIDs";
+import { WalletInfo, State } from "./types";
 
 const initialState: State = {
-  activeWallet: Wallets.none,
-  isLoading: false,
-  pending_tx: null,
+  isUpdating: false,
+  displayCoin: {
+    amount: 0,
+    denom: denoms.uusd,
+  },
+  coins: [],
+  icon: icon,
+  address: "walletaddrs",
+  supported_denoms: [],
+  id: undefined,
+  chainId: chainIDs.mainnet,
 };
 
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    setActive: (state, { payload }: PayloadAction<Wallets>) => {
-      state.activeWallet = payload;
+    resetWallet: (state) => {
+      state = initialState;
     },
-    setLoading: (state, { payload }: PayloadAction<boolean>) => {
-      state.isLoading = payload;
+    setWalletDetails: (state, { payload }: PayloadAction<WalletInfo>) => {
+      state.icon = payload.icon;
+      state.displayCoin = payload.displayCoin;
+      state.coins = payload.coins;
+      state.address = payload.address;
+      state.chainId = payload.chainId;
+      state.supported_denoms = payload.supported_denoms;
+      state.id = payload.id;
     },
-    setPending: (state, { payload }: PayloadAction<PendingTx>) => {
-      state.pending_tx = payload;
+    setIsUpdating: (state, { payload }: PayloadAction<boolean>) => {
+      state.isUpdating = payload;
     },
   },
 });
 
 export default walletSlice.reducer;
-export const { setActive, setLoading, setPending } = walletSlice.actions;
+export const { setIsUpdating, setWalletDetails, resetWallet } =
+  walletSlice.actions;
