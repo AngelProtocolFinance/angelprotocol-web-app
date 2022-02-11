@@ -1,15 +1,19 @@
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { EditableProfileAttr } from "./types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./schema";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function CharityEditor(
   props: EditableProfileAttr & { children: ReactNode }
 ) {
   const methods = useForm<EditableProfileAttr>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       ...props,
     },
+    resolver: yupResolver(schema),
   });
   return <FormProvider {...methods}>{props.children}</FormProvider>;
 }

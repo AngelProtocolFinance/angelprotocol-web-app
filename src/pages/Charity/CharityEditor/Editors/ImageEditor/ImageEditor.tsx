@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import { AiOutlineUpload } from "react-icons/ai";
 import { CgUndo } from "react-icons/cg";
-import { EditableProfileAttr } from "../../types";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 import useChangeImage from "./useChangeImage";
 
 export default function ImageEditor() {

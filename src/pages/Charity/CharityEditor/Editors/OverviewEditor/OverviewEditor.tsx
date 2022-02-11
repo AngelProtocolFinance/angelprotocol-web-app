@@ -1,22 +1,23 @@
+import React from "react";
+import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListUl, FaListOl } from "react-icons/fa";
 import { Editor } from "draft-js";
 import Label from "../../Label";
 import useEditor from "./useEditor";
 import "draft-js/dist/Draft.css";
-import { IconType } from "react-icons";
 
-export default function OverviewEditor() {
+function OverviewEditor() {
   const {
     editorState,
     setEditorState,
     applyBlockStyle,
     applyInlineStyle,
-    handleEditorTab,
     handleKeyCommand,
+    keyBinder,
   } = useEditor();
   return (
-    <div className="text-white text-opacity-80 mb-4 border border-opacity-10 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
+    <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
       <Label id="editor__" text="Overview" />
       <div className="flex gap-2 mt-2 mb-4">
         <Control Icon={BiBold} onClick={applyInlineStyle("BOLD")} />
@@ -33,8 +34,8 @@ export default function OverviewEditor() {
       <Editor
         editorState={editorState}
         onChange={setEditorState}
-        onTab={handleEditorTab}
         handleKeyCommand={handleKeyCommand}
+        keyBindingFn={keyBinder}
         placeholder="An overview of your charity"
       />
     </div>
@@ -52,3 +53,5 @@ function Control(props: { onClick: () => void; Icon: IconType }) {
     </button>
   );
 }
+
+export default React.memo(OverviewEditor);

@@ -1,5 +1,5 @@
 import { profile } from "services/aws/endowments/placeholders";
-import { EditableProfileAttr } from "./types";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 
 const {
   url,

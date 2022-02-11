@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "../../types";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function useChangeImage() {
   //TODO: make this reusable with other image changer on different context

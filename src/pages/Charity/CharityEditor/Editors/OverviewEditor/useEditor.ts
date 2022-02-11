@@ -8,9 +8,10 @@ import {
   convertToRaw,
   convertFromRaw,
   ContentState,
+  getDefaultKeyBinding,
 } from "draft-js";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "../../types";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function useEditor() {
   const { setValue, watch, getValues } = useFormContext<EditableProfileAttr>();
@@ -53,7 +54,6 @@ export default function useEditor() {
   useEffect(() => {
     const rawState = convertToRaw(editorState.getCurrentContent());
     setValue("charity_overview", JSON.stringify(rawState));
-    console.log(getValues("charity_overview"));
   }, [editorState]);
 
   //map common key commands
@@ -66,6 +66,17 @@ export default function useEditor() {
     return "not-handled";
   }
 
+  //bind tab to enable nesting of list
+  function keyBinder(e: React.KeyboardEvent) {
+    if (e.code === "Tab" /* TAB */) {
+      const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
+      if (newEditorState !== editorState) {
+        setEditorState(newEditorState);
+        return "handled";
+      }
+    }
+    return getDefaultKeyBinding(e);
+  }
   //for tabbing of lists only
   function handleEditorTab(e: React.KeyboardEvent) {
     const newState = RichUtils.onTab(e, editorState, 4);
@@ -89,5 +100,6 @@ export default function useEditor() {
     applyInlineStyle,
     handleEditorTab,
     handleKeyCommand,
+    keyBinder,
   };
 }
