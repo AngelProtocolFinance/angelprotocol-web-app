@@ -63,6 +63,7 @@ export interface Profile {
   //meta
   is_placeholder?: true;
   placeholderUrl?: string;
+  tier?: number;
 }
 
 export type EditableProfileAttr = Omit<

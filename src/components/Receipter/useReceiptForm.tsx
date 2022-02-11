@@ -26,7 +26,6 @@ export default function useReceiptForm() {
         chainId,
       });
     } else {
-      console.error(response);
       updateTx({
         step: Step.error,
         message: "Error processing your receipt",
