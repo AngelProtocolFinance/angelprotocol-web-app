@@ -18,7 +18,7 @@ export default function useRegisterWallet() {
 
   const handleSuccess = useCallback(
     (values: Values) => {
-      const userData = { ...user, TerraWallet: values.wallet_number };
+      const userData = { ...user, TerraWallet: values.walletAddress };
 
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
@@ -32,7 +32,7 @@ export default function useRegisterWallet() {
   const registerWallet = useCallback(
     async (values: Values) => {
       const response: any = await addCharityMetaProfile({
-        body: { TerraWallet: values.wallet_number },
+        body: { TerraWallet: values.walletAddress },
         uuid: user.PK,
       });
 

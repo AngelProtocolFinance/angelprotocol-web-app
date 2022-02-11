@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import Action from "components/ActionButton/Action";
 import FormInput from "components/FormInput";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { useGetter } from "store/accessors";
@@ -30,7 +30,7 @@ export default function RegisterWallet() {
   } = useForm<Values>({
     resolver: yupResolver(WalletSchema),
     defaultValues: {
-      wallet_number: user.TerraWallet || data?.Metadata?.TerraWallet || "",
+      walletAddress: user.TerraWallet || data?.Metadata?.TerraWallet,
     },
   });
 
@@ -40,13 +40,13 @@ export default function RegisterWallet() {
     }
 
     if (!!wallets.length) {
-      return resetField("wallet_number", {
+      return resetField("walletAddress", {
         defaultValue: wallets[0].terraAddress,
       });
     }
 
     const wallet = entropyToTerraWallet(privateKey);
-    resetField("wallet_number", { defaultValue: wallet.key.accAddress });
+    resetField("walletAddress", { defaultValue: wallet.key.accAddress });
   }, [
     status,
     isLoading,
@@ -67,8 +67,8 @@ export default function RegisterWallet() {
         <FormInput
           label="Terra Wallet"
           placeholder="terra1..."
-          registerReturn={register("wallet_number")}
-          errorMessage={errors.wallet_number?.message}
+          registerReturn={register("walletAddress")}
+          errorMessage={errors.walletAddress?.message}
           disabled={isSubmitting || isSuccess}
           required
           errorClassName="mx-auto"
@@ -83,7 +83,7 @@ export default function RegisterWallet() {
       </form>
       <NavigationToDashboard
         isSuccess={isSuccess}
-        walletAddress={control._formValues.wallet_number}
+        walletAddress={control._formValues.walletAddress}
       />
     </div>
   );
