@@ -56,7 +56,7 @@ export default function RegisterWallet() {
       <Title isSuccess={isSuccess} />
       <RegistrationExplanation />
       <form
-        className="flex flex-col gap-10 items-center w-1/2"
+        className="flex flex-col gap-10 items-center w-3/4"
         onSubmit={handleSubmit(registerWallet)}
       >
         <FormInput

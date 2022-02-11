@@ -60,7 +60,7 @@ const RegistrationStatus = () => {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <div className="necessary-information">
         <div className="">
           <h3 className="text-3xl font-bold">Necessary Information</h3>
