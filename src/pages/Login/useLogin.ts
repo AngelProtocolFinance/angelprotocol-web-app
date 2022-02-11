@@ -40,7 +40,6 @@ export default function useLogin() {
         showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
       }
     } catch (error) {
-      console.error(error);
       showModal<PopupProps>(Popup, { message: "Something wen't wrong" });
     }
   }

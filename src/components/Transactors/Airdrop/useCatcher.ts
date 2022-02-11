@@ -107,7 +107,6 @@ export default function useCatcher(airdrops: Airdrops) {
 
       setLoading(false);
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
       setLoading(false);
     }
