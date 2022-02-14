@@ -12,8 +12,19 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${url}/${app.leaderboard}`} {...linkStyles}>
-          LEADERBOARD
+        <Link
+          to={`https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37`}
+          {...linkStyles}
+        >
+          SUPPORT
+        </Link>
+      </li>
+      <li>
+        <Link
+          to={`https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37`}
+          {...linkStyles}
+        >
+          FEEDBACK
         </Link>
       </li>
       <li>

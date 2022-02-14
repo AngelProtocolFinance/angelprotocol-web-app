@@ -44,9 +44,11 @@ export default function Market() {
           </figure>
         </div>
         <div className="text-white w-full md:w-1/2 my-auto">
-          <p className="font-extrabold text-6xl lg:text-7xl mb-4">GIVE ONCE,</p>
-          <p className="font-extrabold text-6xl lg:text-7xl mb-4">
-            GIVE <span className="text-angel-orange">FOREVER</span>.
+          <p className="font-extrabold text-6xl md:text-7xl lg:text-8xl">
+            GIVE ONCE,
+          </p>
+          <p className="font-extrabold text-6xl md:text-7xl lg:text-8xl text-angel-orange mb-4">
+            GIVE FOREVER.
           </p>
           <p className="text-2xl md:text-3xl my-4">
             <span className="font-bold">
