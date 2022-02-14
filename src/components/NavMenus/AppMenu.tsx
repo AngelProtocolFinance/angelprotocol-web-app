@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import { app } from "types/routes";
-import { useRouteMatch } from "react-router-dom";
 
 export default function AppMenu() {
-  const { url } = useRouteMatch();
   const linkStyles = {
     className:
       "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
