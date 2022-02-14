@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   EditorState,
   RichUtils,
@@ -6,51 +6,20 @@ import {
   DraftInlineStyleType,
   DraftBlockType,
   convertToRaw,
-  convertFromRaw,
-  ContentState,
   getDefaultKeyBinding,
 } from "draft-js";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
+import useEditorInit from "./useEditorInit";
 
 export default function useEditor() {
-  const { setValue, watch, getValues } = useFormContext<EditableProfileAttr>();
+  const { setValue, watch } = useFormContext<EditableProfileAttr>();
   const overview = watch("charity_overview");
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  const parseStatusRef = useRef<"init" | "error" | "success">("init");
 
-  //initialization of rt content, with edge of db content not yet in rt format
-  useEffect(() => {
-    (async () => {
-      const initialOverview = getValues("charity_overview");
-      try {
-        if (
-          parseStatusRef.current === "error" ||
-          parseStatusRef.current === "success"
-        ) {
-          return;
-        }
-        const rawContent = JSON.parse(initialOverview);
-        //if parsing is successful, "charity_overview" saved in db is already rich text
-        parseStatusRef.current = "success";
-        const contentState = convertFromRaw(rawContent);
-        setEditorState(EditorState.createWithContent(contentState));
-      } catch (err) {
-        if (err instanceof SyntaxError) {
-          parseStatusRef.current = "error";
-          setEditorState(
-            EditorState.createWithContent(
-              //TODO: remove this || when `endowments/info` properly returns correct
-              //status code on error
-              ContentState.createFromText(initialOverview || "")
-            )
-          );
-        }
-      }
-    })();
-  }, [overview]);
+  useEditorInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {

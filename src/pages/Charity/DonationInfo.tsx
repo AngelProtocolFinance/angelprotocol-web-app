@@ -27,7 +27,6 @@ export function DonationInfo() {
   const wallet = useConnectedWallet();
   const isCharityOwner =
     wallet && wallet.walletAddress === profileState.charity_owner;
-
   const stats = useMemo(() => {
     return [
       {
@@ -93,7 +92,11 @@ export function DonationInfo() {
             {isCharityOwner && (
               <Link
                 to={`${site.app}/${app.charity_edit}/${charity_addr}`}
-                className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center block"
+                className={`${
+                  !profileState.is_placeholder
+                    ? "bg-orange"
+                    : "pointer-events-none bg-grey-accent"
+                } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center block`}
               >
                 Edit Profile
               </Link>
@@ -109,7 +112,7 @@ export function DonationInfo() {
             <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
               {profileState.twitter_handle && (
                 <IconButton
-                  url={`https://twitter.com/${profileState.twitter_handle}`}
+                  url={formatUrl(profileState.twitter_handle, "twitter")}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaTwitter}
@@ -117,7 +120,7 @@ export function DonationInfo() {
               )}
               {profileState.linkedin_page && (
                 <IconButton
-                  url={`https://linkedin.com/${profileState.linkedin_page}`}
+                  url={formatUrl(profileState.linkedin_page, "linkedin")}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaLinkedinIn}
@@ -125,7 +128,7 @@ export function DonationInfo() {
               )}
               {profileState.facebook_page && (
                 <IconButton
-                  url={`https://facebook.com/${profileState.facebook_page}`}
+                  url={formatUrl(profileState.facebook_page, "facebook")}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaFacebookSquare}
@@ -215,4 +218,15 @@ function IconButton(props: IconButtonProps) {
       <props.Icon color="#3FA9F5" size={props.size} />
     </a>
   );
+}
+
+function formatUrl(
+  url: string,
+  socialMedia: "facebook" | "linkedin" | "twitter"
+) {
+  if (/http/.test(url)) {
+    return url;
+  } else {
+    return `https://${socialMedia}.com/${url}`;
+  }
 }
