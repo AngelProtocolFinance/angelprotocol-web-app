@@ -3,7 +3,6 @@ import donateIcon from "assets/icons/money_savings.svg";
 import growIcon from "assets/icons/market_analytics.svg";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
-import { app, site } from "types/routes";
 
 //can't interpolate delay val to class because of tailwind purge
 
@@ -37,7 +36,7 @@ export default function Process() {
             >
               <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg backdrop-blur-xl">
                 {link ? (
-                  <a href={link} target="_blank">
+                  <a href={link} target="_blank" rel="noreferrer">
                     <img src={icon} alt="" className="w-14 m-8" />
                   </a>
                 ) : (
