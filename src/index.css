@@ -3,6 +3,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
 
 @layer components {
   .padded-container {
@@ -139,4 +143,46 @@
 
 #react-select-3-listbox {
   color: black !important;
+}
+
+#full-width-tab-0,
+#full-width-tab-1,
+#full-width-tab-2,
+#full-width-tab-3,
+#full-width-tab-4 {
+  --tw-text-opacity: 0.8;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1rem;
+  margin-right: 5px;
+  width: 150px;
+}
+
+.css-k7y545-MuiButtonBase-root-MuiTab-root {
+  background-color: white !important;
+  color: rgba(153, 153, 153) !important;
+}
+
+.css-k7y545-MuiButtonBase-root-MuiTab-root:disabled {
+  background-color: rgba(173, 183, 190) !important;
+  color: rgba(250, 250, 250) !important;
+}
+
+.css-k7y545-MuiButtonBase-root-MuiTab-root.Mui-selected,
+.css-k7y545-MuiButtonBase-root-MuiTab-root:hover {
+  color: white !important;
+  background-color: rgba(63, 169, 245) !important;
+  border: 0px;
+}
+
+.css-19kzrtu.MuiBox-root {
+  padding: 24px 0px;
+}
+
+@media (min-width: 1535px) {
+  .css-k7y545-MuiButtonBase-root-MuiTab-root {
+    width: 200px !important;
+  }
 }

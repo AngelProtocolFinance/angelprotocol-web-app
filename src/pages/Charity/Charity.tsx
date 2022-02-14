@@ -9,7 +9,6 @@ import { useSetModal } from "components/Nodal/Nodal";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useDonater from "components/Transactors/Donater/useDonater";
 import CharityProfileEditForm from "./CharityProfileEditForm";
-import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
 import CharityInfoNav from "./CharityInfoNav";
 import { CharityParam } from "./types";
@@ -71,8 +70,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
             <CharityProfileTabLoader />
           ) : (
             <>
-              <CharityInfoNav />
-              <CharityInfoTab endowmentBalanceData={endowmentBalanceData} />
+              <CharityInfoNav endowmentBalanceData={endowmentBalanceData} />
             </>
           )}
         </div>

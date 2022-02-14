@@ -1,34 +1,11 @@
 import useProfile from "pages/Market/useProfile";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "./types";
 import { CharityInfoBalance } from "services/aws/endowments/types";
-import { charity } from "types/routes";
 import anchorProtocol from "../../assets/images/anchor_protocol.png";
 
-type Props = {
-  endowmentBalanceData: CharityInfoBalance;
-};
-
-export default function CharityInfoTab({ endowmentBalanceData }: Props) {
-  const { path } = useRouteMatch();
-
-  return (
-    <Switch>
-      <Route path={`${path}${charity.overview}`} component={OverviewTab} />
-      <Route
-        path={`${path}${charity.endowment}`}
-        render={() => <CharityEndowmentInfo data={endowmentBalanceData} />}
-      />
-      <Route path={`${path}${charity.programs}`} component={OverviewTab} />
-      <Route path={`${path}${charity.media}`} component={OverviewTab} />
-      <Route path={`${path}${charity.governance}`} component={OverviewTab} />
-      <Route path={`${path}`} component={OverviewTab} />
-    </Switch>
-  );
-}
-
-function OverviewTab() {
+export function OverviewTab() {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
   const profile = useProfile(charity_addr);
@@ -98,7 +75,7 @@ function AccountInfo({
 //   );
 // }
 
-function CharityEndowmentInfo({ data }: { data: CharityInfoBalance }) {
+export function CharityEndowmentInfo({ data }: { data: CharityInfoBalance }) {
   const { total_liq, total_lock, overall } = data;
   const accountDetails = [
     {
