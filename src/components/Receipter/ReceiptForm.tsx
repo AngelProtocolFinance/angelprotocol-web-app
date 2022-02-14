@@ -89,13 +89,13 @@ export default function ReceiptForm() {
         <div className="form-control rounded-sm bg-gray-200 flex justify-between items-center text-dark-grey">
           <Selector
             name="country"
-            placeholder=""
             options={countries.map((item) => ({
               value: item.label,
               label: item.label,
             }))}
             control={control}
             register={register}
+            menuPlacement="top"
           />
         </div>
         <ErrorMessage
