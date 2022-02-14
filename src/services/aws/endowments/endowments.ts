@@ -34,7 +34,7 @@ export const endowments_api = aws.injectEndpoints({
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: AWSQueryRes<Profile[]>) => {
-        const x = res.Items.reduce((result, profile) => {
+        return res.Items.reduce((result, profile) => {
           if (
             profile.un_sdg === undefined ||
             profile.un_sdg === "" ||
@@ -49,8 +49,6 @@ export const endowments_api = aws.injectEndpoints({
             return result;
           }
         }, {} as CategorizedProfiles);
-        console.log(x);
-        return x;
       },
     }),
     updateProfile: builder.mutation<

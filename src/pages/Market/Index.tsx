@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -11,13 +10,7 @@ import { Profile } from "services/aws/endowments/types";
 export default function Index(props: { id: number; profiles: Profile[] }) {
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
-  const [list] = useState(props.profiles);
-
-  useEffect(() => {
-    if (!showForward && !showBack) return;
-    list.push(...props.profiles);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showBack, showForward]);
+  //remove infinite scroll temporarily
 
   return (
     <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0 mb-10">

@@ -14,17 +14,6 @@ export function useProfile(charity_addr: string) {
   return { profile: data, isProfileLoading: isLoading || isFetching };
 }
 
-export function useProfiles() {
-  const { useProfilesQuery } = endowments_api;
-  const wallet = useConnectedWallet();
-  const isTest = wallet?.network.chainID === chainIDs.testnet;
-  const { data = [], isLoading, isFetching } = useProfilesQuery(isTest);
-  return {
-    profiles: data.filter((profile) => profile.tier !== 1),
-    isProfilesLoading: isFetching || isLoading,
-  };
-}
-
 export function useCategorizedProfiles() {
   const { useUseCategorizedProfilesQuery } = endowments_api;
   const wallet = useConnectedWallet();
