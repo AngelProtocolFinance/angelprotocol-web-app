@@ -1,5 +1,5 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
-import gmailIcon from "assets/images/gmail.png";
+import gmailIcon from "assets/images/gmail.webp";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import ButtonSocial from "./ButtonSocial";
@@ -12,7 +12,7 @@ export default function Web3Auth({ onLogin }: Props) {
   return (
     <div className="flex flex-col justify-between bg-angel-blue h-96 w-96 p-4 rounded-sm">
       <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.GOOGLE)}>
-        <img src={gmailIcon} alt="Google" height={30} width={30} />
+        <img src={gmailIcon} alt="Google" width={30} />
         <span className="text-gray-500">Continue with Google</span>
       </ButtonSocial>
 
