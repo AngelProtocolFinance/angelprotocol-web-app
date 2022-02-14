@@ -1,12 +1,12 @@
 import Subscriber from "components/Subscriber/Subscriber";
+import { Link } from "react-router-dom";
 import {
   AiOutlineTwitter,
   AiFillYoutube,
-  AiFillMediumSquare,
+  AiOutlineMedium,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
 import { FaTelegramPlane } from "react-icons/fa";
-import { RiDiscordFill } from "react-icons/ri";
+import { RiDiscordLine } from "react-icons/ri";
 
 export default function WebFoot() {
   return (
@@ -73,21 +73,21 @@ const links = [
     id: 3,
     Icon: AiFillYoutube,
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
-    textColor: "text-red-600",
+    textColor: "text-white",
     title: "YouTube",
   },
   {
     id: 4,
-    Icon: AiFillMediumSquare,
+    Icon: AiOutlineMedium,
     link: "https://angelprotocol.medium.com/",
-    textColor: "text-gray-800",
+    textColor: "text-white",
     title: "Medium",
   },
   {
     id: 5,
-    Icon: RiDiscordFill,
+    Icon: RiDiscordLine,
     link: "https://discord.gg/RhqA652ySA",
-    textColor: "text-gray-800",
+    textColor: "text-white",
     title: "Discord",
   },
 ];

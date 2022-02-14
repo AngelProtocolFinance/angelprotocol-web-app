@@ -26,10 +26,21 @@ export default function Ways() {
             key={article.id}
             className="w-full max-w-lg shadow-md flex flex-col items-start p-6 border-4 border-blue-accent"
           >
-            <h4 className="uppercase text-lg lg:text-xl font-bold text-angel-grey my-4">
-              {article.title}
-            </h4>
-            <p className="text-angel-grey ">{article.desc}</p>
+            {article.link ? (
+              <a href={article.link} target="_blank">
+                <h4 className="uppercase text-lg lg:text-xl font-bold text-angel-grey my-4">
+                  {article.title}
+                </h4>
+                <p className="text-angel-grey ">{article.desc}</p>
+              </a>
+            ) : (
+              <span>
+                <h4 className="uppercase text-lg lg:text-xl font-bold text-angel-grey my-4">
+                  {article.title}
+                </h4>
+                <p className="text-angel-grey ">{article.desc}</p>
+              </span>
+            )}
           </article>
         ))}
       </div>
@@ -42,12 +53,14 @@ const articles = [
     id: 1,
     icon: vaultIcon,
     title: "Find a charity",
+    link: `/app/marketplace`,
     desc: "Our charity marketplace makes it easy for donors to find a charity with highly customizable filters and sorting tools. Find charities around the world that are making an impact.",
   },
   {
     id: 2,
     icon: liquidIcon,
     title: "Select charity index",
+    link: null,
     desc: "Our team has curated a list of the most impactful charitable organizations and has grouped them into indexes that are aligned to the United Nations Sustainable Development Goals. Each index includes 10 charities. ",
   },
 ];
