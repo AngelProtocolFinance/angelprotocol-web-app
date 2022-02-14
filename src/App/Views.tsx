@@ -11,7 +11,6 @@ import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 import Test from "pages/Test";
 import CharityEdit from "pages/CharityEdit/CharityEdit";
-console.log("remove test");
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));

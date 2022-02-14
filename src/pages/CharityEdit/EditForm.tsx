@@ -15,7 +15,6 @@ export default function EditForm() {
   } = useFormContext<EditableProfileAttr>();
   const { endowment_addr, updateProfile } = useEditForm();
 
-  console.log(isSubmitting, isDirty, isValid, errors);
   return (
     <form className="max-w-3xl w-full" onSubmit={updateProfile}>
       <Link
