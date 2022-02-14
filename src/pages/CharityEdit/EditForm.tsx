@@ -11,7 +11,7 @@ import useEditForm from "./useEditForm";
 
 export default function EditForm() {
   const {
-    formState: { isSubmitting, isDirty, isValid, errors },
+    formState: { isSubmitting },
   } = useFormContext<EditableProfileAttr>();
   const { endowment_addr, updateProfile } = useEditForm();
 
