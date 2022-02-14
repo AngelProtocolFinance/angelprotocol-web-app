@@ -8,6 +8,7 @@ import { GoLinkExternal } from "react-icons/go";
 import earth_icon from "assets/icons/earth.svg";
 import heart_icon from "assets/icons/heart.svg";
 import star_icon from "assets/icons/star.svg";
+import { site } from "types/routes";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();
@@ -31,7 +32,7 @@ export default function WebHead() {
         </button>
         {navShown && <MobileNav />}
         <a
-          href="https://angelprotocol.io/app/markeplace"
+          href={`${site.app}/markeplace`}
           target="_blank"
           rel="noopener noreferrer"
           className="absolute -bottom-6 font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
