@@ -12,7 +12,7 @@ export default function Portal() {
           to={web.contact}
           className="text-center bg-angel-orange hover:bg-orange text-lg sm:text-xl lg:text-2xl py-1 px-2 lg:py-2 lg:px-5 rounded-sm text-white-grey font-semibold shadow-md"
         >
-          I want to know more!
+          I want to register!
         </Link>
       </div>
     </section>

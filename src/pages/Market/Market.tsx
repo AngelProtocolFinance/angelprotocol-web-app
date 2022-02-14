@@ -20,7 +20,7 @@ export default function Market() {
                 The 5 Gyres Institute
               </div>
               <div className="text-md md:text-lg">
-                SDG #12 Responsible Consumption and Production
+                SDG #12: Responsible Consumption and Production
               </div>
             </figcaption>
           </figure>
