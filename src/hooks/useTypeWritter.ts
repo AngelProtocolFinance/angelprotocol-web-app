@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
-const timeout = (millis: number) => new Promise((r) => setTimeout(r, millis));
+const timeout = (millis: number) =>
+  new Promise<NodeJS.Timeout>((r) => setTimeout(r, millis));
 
 export default function useTypeWriter(
   words: string[],
@@ -20,39 +21,45 @@ export default function useTypeWriter(
     charIdxRef.current = 0;
   }
 
-  async function typeAndDelete() {
-    const currWordLength = words[wordIdxRef.current].length;
-    const nextChar = words[wordIdxRef.current][charIdxRef.current];
-    //use value then increment
-    if (charIdxRef.current < currWordLength) {
-      setText((prev) => prev + nextChar);
-      charIdxRef.current++;
-      if (charIdxRef.current >= currWordLength) {
-        //wait a sec before popping
-        await timeout(showTime);
-      }
-    } else {
-      //once word is fully typed, start popping
-      setText((prev) => {
-        if (!prev) {
-          changeWord();
-          return "";
-        } else {
-          return prev.slice(0, -1);
-        }
-      });
-    }
-    //wait 100ms before typing next char
-    await timeout(speed);
-
-    showCursor((prev) => !prev);
-
-    frameRef.current = requestAnimationFrame(typeAndDelete);
-  }
-
   useEffect(() => {
-    frameRef.current = requestAnimationFrame(typeAndDelete);
-    return () => cancelAnimationFrame(frameRef.current);
+    let popTimeout: NodeJS.Timeout;
+    let typeTimeout: NodeJS.Timeout;
+
+    async function typeAndDelete() {
+      const currWordLength = words[wordIdxRef.current].length;
+      const nextChar = words[wordIdxRef.current][charIdxRef.current];
+
+      //use value then increment
+      if (charIdxRef.current < currWordLength) {
+        setText((prev) => prev + nextChar);
+        charIdxRef.current++;
+        if (charIdxRef.current >= currWordLength) {
+          //wait a sec before popping
+          popTimeout = await timeout(showTime);
+        }
+      } else {
+        //once word is fully typed, start popping
+        setText((prev) => {
+          if (!prev) {
+            changeWord();
+            return "";
+          } else {
+            return prev.slice(0, -1);
+          }
+        });
+      }
+      //wait 100ms before typing next char
+      typeTimeout = await timeout(speed);
+
+      showCursor((prev) => !prev);
+      frameRef.current = requestAnimationFrame(typeAndDelete);
+    }
+
+    return () => {
+      cancelAnimationFrame(frameRef.current);
+      clearTimeout(typeTimeout);
+      clearTimeout(popTimeout);
+    };
     //start animation and end only before this component unmounts
     //eslint-disable-next-line
   }, []);

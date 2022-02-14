@@ -1,19 +1,17 @@
 import useObserve from "hooks/useObserver";
 import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
-import useTypeWriter from "../../hooks/useTypeWritter";
+import useTypeWriter from "../../hooks/useTypeWritter2";
+
+const TEXT_TO_TYPE = [
+  "have funding, forever.",
+  "focus on impact.",
+  "spend less on fundraising.",
+];
 
 export default function Banner() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
-  const [typedText, cursorShown] = useTypeWriter(
-    [
-      "have funding, forever.",
-      "focus on impact.",
-      "spend less on fundraising.",
-    ],
-    70,
-    1000
-  );
+  const [typedText, cursorShown] = useTypeWriter(TEXT_TO_TYPE, 70, 1000);
 
   return (
     <section
