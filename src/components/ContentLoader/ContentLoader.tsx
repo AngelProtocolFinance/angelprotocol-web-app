@@ -4,11 +4,16 @@ type LoaderProps = {
   height?: string;
   width?: string;
   size?: string;
+  rounded?: boolean;
 };
 
 export default function ContentLoader(props: LoaderProps) {
   return (
-    <svg width={props.width || "100%"} height={props.height || "100%"}>
+    <svg
+      width={props.width || "100%"}
+      height={props.height || "100%"}
+      className={`${props.rounded && "rounded-lg"}`}
+    >
       <defs>
         <linearGradient id="myGradient" gradientTransform="rotate(35)">
           <stop offset="5%" stopColor="#eee">

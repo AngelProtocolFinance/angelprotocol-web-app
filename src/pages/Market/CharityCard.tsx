@@ -2,6 +2,7 @@ import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
 import { app, site } from "types/routes";
 import useCharityCard from "./useCharityCard";
+import { charity_details } from "services/aws/endowments/placeholders";
 
 export default function CharityCard(props: { address: string }) {
   const profile = useCharityCard(props.address);
@@ -13,10 +14,11 @@ export default function CharityCard(props: { address: string }) {
     >
       <LazyImage
         classes="bg-white rounded-lg img-no-drag w-full h-32 object-cover"
-        src={profile.charity_image}
+        src={profile.charity_image || charity_details.icon}
         alt="charity banner"
         width="272"
         height="128"
+        rounded
       />
       <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
         {profile.charity_name}

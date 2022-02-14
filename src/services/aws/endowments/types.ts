@@ -50,6 +50,7 @@ export interface Profile {
   total_lock: number;
   is_placeholder?: true;
   placeholderUrl?: string;
+  tier?: number;
 }
 
 export type ProfileUpdateProps = { profile: Profile };

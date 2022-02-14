@@ -26,7 +26,6 @@ export default function useFund() {
         setSplit(_split);
         setLoading(false);
       } catch (err) {
-        console.error(err);
         setError("Failed to get form resources");
         setLoading(false);
       }
