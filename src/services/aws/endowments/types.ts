@@ -9,22 +9,6 @@ export interface Endowment {
   tier: number;
 }
 
-export type CharityInfoBalance = {
-  address: string;
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-};
-
-export interface Details {
-  description: string;
-  url: string;
-  name: string;
-  icon: string;
-  iconLight?: boolean;
-  tier: number;
-}
-
 export interface Profile {
   //terra
   charity_owner: string; // charity owner wallet address
@@ -80,11 +64,9 @@ export type EditableProfileAttr = Omit<
 
 export type ProfileUpdateProps = { profile: Profile };
 
-export interface QueryRes<T> {
-  Count: number;
-  ScannedCount: number;
-  Items: T;
-}
+export type CategorizedProfiles = {
+  [index: number]: Profile[];
+};
+
 //owner:endowment
 export type Lookup = { [index: string]: string };
-export type Accounts = { [index: string]: Details };

@@ -1,27 +1,9 @@
-import { useMemo } from "react";
 import Index from "./Index";
-import { useProfilesQuery } from "services/aws/endowments/endowments";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
-import { chainIDs } from "constants/chainIDs";
+import { useCategorizedProfiles } from "services/aws/endowments/queriers";
 
 export default function Market() {
-  const wallet = useConnectedWallet();
-  const isTest = wallet?.network.chainID === chainIDs.testnet;
-  const { data: profiles = [], isLoading } = useProfilesQuery(isTest);
-
-  const sdg_ids = useMemo(
-    () =>
-      Array.from(
-        //consolidate present sdgs then render sdg list
-        profiles.reduce((prev: Set<number>, curr) => {
-          curr.un_sdg && prev.add(+curr.un_sdg);
-          return prev;
-        }, new Set<number>())
-        //sort acc to sdg number
-      ).sort((a, b) => a - b),
-    [profiles]
-  );
+  const { categorizedProfiles, isProfilesLoading } = useCategorizedProfiles();
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
@@ -58,7 +40,7 @@ export default function Market() {
           </p>
         </div>
       </div>
-      {isLoading && (
+      {(isProfilesLoading && (
         <div className="h-40 bg-opacity-5 rounded-lg grid place-items-center">
           <Loader
             bgColorClass="bg-white-grey bg-opacity-80"
@@ -66,12 +48,13 @@ export default function Market() {
             widthClass="w-4"
           />
         </div>
+      )) || (
+        <section className="flex-auto padded-container mx-auto mt-5">
+          {Object.entries(categorizedProfiles).map(([sdg_number, profiles]) => (
+            <Index key={sdg_number} id={+sdg_number} profiles={profiles} />
+          ))}
+        </section>
       )}
-      <section className="flex-auto padded-container mx-auto mt-5">
-        {sdg_ids.map((id) => (
-          <Index id={id} key={id} />
-        ))}
-      </section>
     </div>
   );
 }

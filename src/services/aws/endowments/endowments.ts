@@ -2,54 +2,19 @@ import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
-import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
+import { Lookup, Endowment, Profile, CategorizedProfiles } from "./types";
+import { AWSQueryRes } from "services/aws/types";
 
-const endowments_api = aws.injectEndpoints({
+export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
       query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      transformResponse: (res: QueryRes<Endowment[]>) => {
+      transformResponse: (res: AWSQueryRes<Endowment[]>) => {
         const _lookup: Lookup = {};
         res.Items.forEach((endowment) => {
           _lookup[endowment.owner] = endowment.address;
         });
         return _lookup;
-      },
-    }),
-    accounts: builder.query<Accounts, boolean>({
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Endowment[]>) => {
-        const _accounts: Accounts = {};
-        res.Items.forEach(
-          ({
-            address,
-            name,
-            description,
-            url,
-            icon,
-            iconLight = false,
-            tier,
-          }) => {
-            _accounts[address] = {
-              name,
-              description,
-              url,
-              icon,
-              iconLight,
-              tier,
-            };
-          }
-        );
-        return _accounts;
-      },
-    }),
-    endowments: builder.query<Endowment[], boolean>({
-      //TODO:refactor this query pattern - how?
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Endowment[]>) => {
-        return res.Items;
       },
     }),
 
@@ -61,8 +26,31 @@ const endowments_api = aws.injectEndpoints({
     profiles: builder.query<Profile[], boolean>({
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Profile[]>) => {
+      transformResponse: (res: AWSQueryRes<Profile[]>) => {
         return res.Items;
+      },
+    }),
+    useCategorizedProfiles: builder.query<CategorizedProfiles, boolean>({
+      query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
+      //transform response before saving to cache for easy lookup by component
+      transformResponse: (res: AWSQueryRes<Profile[]>) => {
+        const x = res.Items.reduce((result, profile) => {
+          if (
+            profile.un_sdg === undefined ||
+            profile.un_sdg === "" ||
+            profile.tier === 1
+          ) {
+            return result;
+          } else {
+            if (!result[+profile.un_sdg]) {
+              result[+profile.un_sdg] = [];
+            }
+            result[+profile.un_sdg].push(profile);
+            return result;
+          }
+        }, {} as CategorizedProfiles);
+        console.log(x);
+        return x;
       },
     }),
     updateProfile: builder.mutation<
@@ -93,8 +81,6 @@ const endowments_api = aws.injectEndpoints({
 });
 export const {
   useLookupQuery,
-  useAccountsQuery,
-  useEndowmentsQuery,
   useProfileQuery,
   useProfilesQuery,
   useUpdateProfileMutation,
