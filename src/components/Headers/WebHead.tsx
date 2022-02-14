@@ -20,7 +20,7 @@ export default function WebHead() {
       ref={shadowRef}
       className="grid fixed bg-white w-full h-24 z-10 transition-shadow "
     >
-      <nav className="w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center padded-container">
+      <nav className="w-full grid grid-cols-a1a items-center justify-items-end md:justify-items-center md:padded-container">
         <Logo />
         <WebMenu />
         <button
@@ -36,9 +36,9 @@ export default function WebHead() {
           rel="noopener noreferrer"
           className="absolute -bottom-6 font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
         >
-          <div className="flex items-center mr-2 md:uppercase">
+          <span className="hidden md:block flex w-fit items-center mr-2 md:uppercase">
             New Charity Marketplace is now live!
-          </div>
+          </span>
           <Word icon={heart_icon} title="Connect" />
           <Word icon={star_icon} title="Select" />
           <Word icon={earth_icon} title="Donate" />
