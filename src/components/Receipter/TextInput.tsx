@@ -32,7 +32,7 @@ export default function TextInput(props: TextInputProps) {
         errors={props.errors}
         name={props.name}
         as="span"
-        className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+        className="text-right text-red-400 text-xs mb-1 mt-0 mr-1"
       />
     </>
   );
