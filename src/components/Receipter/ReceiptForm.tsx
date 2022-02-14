@@ -17,7 +17,9 @@ type DataProps = {
 function ReceiptDetails({ name, value }: DataProps) {
   return (
     <p>
-      <span className="font-medium inline-block mr-2 capitalize">{name}:</span>
+      <span className="font-medium inline-block mr-2 mb-1 capitalize">
+        {name}:
+      </span>
       <span className="font-normal inline-block">{value}</span>
     </p>
   );
@@ -44,7 +46,7 @@ export default function ReceiptForm() {
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
-      className="bg-white grid gap-4 p-4 rounded-md w-full max-w-lg  max-h-600 overflow-y-scroll"
+      className="bg-white grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-hidden overflow-y-scroll"
       autoComplete="off"
       autoSave="off"
     >
@@ -73,7 +75,7 @@ export default function ReceiptForm() {
           errors={errors}
           name="streetAddress"
           as="span"
-          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+          className="text-right text-red-400 my-1 text-xs mr-1"
         />
       </div>
       <TextInput name="city" id="city" label="City" />
@@ -102,7 +104,7 @@ export default function ReceiptForm() {
           errors={errors}
           name="country"
           as="span"
-          className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+          className="text-right text-red-400 my-1 text-xs mr-1"
         />
       </div>
       <button
