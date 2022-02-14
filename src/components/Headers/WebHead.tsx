@@ -38,10 +38,10 @@ export default function WebHead() {
           className="absolute -bottom-6 font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
         >
           <span className="hidden md:block flex w-fit items-center mr-2 md:uppercase">
-            New Charity Marketplace is now live!
+            Charity Marketplace is now live!
           </span>
-          <Word icon={heart_icon} title="Connect" />
           <Word icon={star_icon} title="Select" />
+          <Word icon={heart_icon} title="Connect" />
           <Word icon={earth_icon} title="Donate" />
           <GoLinkExternal className="text-lg" />
         </a>
