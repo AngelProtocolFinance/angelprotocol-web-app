@@ -29,6 +29,7 @@ export default function useChangeImage() {
       fileReader.onerror = handleFileError;
       //no need to remove  for will be garbage collected
     }
+    //eslint-disable-next-line
   }, [fileList]);
 
   function handleFileLoad(e: ProgressEvent<FileReader>) {

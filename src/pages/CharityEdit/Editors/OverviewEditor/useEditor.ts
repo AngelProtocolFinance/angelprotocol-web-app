@@ -10,7 +10,7 @@ import {
 } from "draft-js";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
-import useEditorInit from "./useEditorInit";
+import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
 
 export default function useEditor() {
   const { setValue, watch } = useFormContext<EditableProfileAttr>();
@@ -19,12 +19,13 @@ export default function useEditor() {
     EditorState.createEmpty()
   );
 
-  useEditorInit(overview, setEditorState);
+  useRichTextInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
     const rawState = convertToRaw(editorState.getCurrentContent());
     setValue("charity_overview", JSON.stringify(rawState));
+    //eslint-disable-next-line
   }, [editorState]);
 
   //map common key commands

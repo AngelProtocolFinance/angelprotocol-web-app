@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { EditorState, convertFromRaw, ContentState } from "draft-js";
 
-export default function useEditorInit(
+//init rich text with edge case - content not in rt format
+export default function useRichTextInit(
   content: string,
   setEditorState: React.Dispatch<React.SetStateAction<EditorState>>
 ) {
@@ -34,5 +35,6 @@ export default function useEditorInit(
         }
       }
     })();
+    //eslint-disable-next-line
   }, [content]);
 }

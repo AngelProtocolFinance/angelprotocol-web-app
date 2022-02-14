@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { app, site } from "types/routes";
 import useCharityCard from "./useCharityCard";
 import { charity_details } from "services/aws/endowments/placeholders";
+import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 
 export default function CharityCard(props: { address: string }) {
   const profile = useCharityCard(props.address);
-
   return (
     <Link
       to={`${site.app}/${app.charity}/${props.address}`}
@@ -23,9 +23,9 @@ export default function CharityCard(props: { address: string }) {
       <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
         {profile.charity_name}
       </p>
-      <span className="text-opacity-80 line-clamp-2 text-sm text-white-grey">
-        {profile.charity_overview}
-      </span>
+      <div className="text-opacity-80 line-clamp-2 text-sm text-white-grey">
+        <RichTextRenderer text={profile.charity_overview} />
+      </div>
     </Link>
   );
 }
