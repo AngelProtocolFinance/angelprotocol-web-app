@@ -4,7 +4,6 @@ import Loader from "components/Loader/Loader";
 import CharityEditor from "./CharityEditor";
 import EditForm from "./EditForm";
 import { CharityParam } from "./types";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function CharityEdit(props: RouteComponentProps<CharityParam>) {
   const endowment_addr = props.match.params.address;

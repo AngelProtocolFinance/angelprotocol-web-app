@@ -50,8 +50,7 @@ export interface Profile {
   tier?: number;
 }
 
-export type EditableProfileAttr = Omit<
-  Profile,
+export type ReadOnlyAttr =
   | "url"
   | "charity_owner" //terra
   | "endowment_address" //terra
@@ -59,8 +58,9 @@ export type EditableProfileAttr = Omit<
   | "total_lock"
   | "overall"
   | "charity_programs" //content
-  | "news_media_articles" //content
->;
+  | "news_media_articles"; //content
+
+export type EditableProfileAttr = Omit<Profile, ReadOnlyAttr>;
 
 export type ProfileUpdateProps = { profile: Profile };
 
