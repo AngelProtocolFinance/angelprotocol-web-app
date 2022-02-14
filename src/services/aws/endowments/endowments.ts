@@ -30,6 +30,7 @@ export const endowments_api = aws.injectEndpoints({
     }),
 
     profiles: builder.query<Profile[], boolean>({
+      providesTags: [{ type: tags.cha, id: cha.profiles }],
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: AWSQueryRes<Profile[]>) => {
@@ -37,6 +38,7 @@ export const endowments_api = aws.injectEndpoints({
       },
     }),
     useCategorizedProfiles: builder.query<CategorizedProfiles, boolean>({
+      providesTags: [{ type: tags.cha, id: cha.profiles }],
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: AWSQueryRes<Profile[]>) => {
@@ -74,7 +76,10 @@ export const endowments_api = aws.injectEndpoints({
           params: { charity_owner: args.owner },
         };
       },
-      invalidatesTags: [{ type: tags.cha, id: cha.profile }],
+      invalidatesTags: [
+        { type: tags.cha, id: cha.profile },
+        { type: tags.cha, id: cha.profiles },
+      ],
     }),
   }),
 });

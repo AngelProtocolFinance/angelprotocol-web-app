@@ -22,10 +22,7 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
           className="flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0"
         >
           {props.profiles.map((profile) => (
-            <CharityCard
-              key={profile.endowment_address}
-              address={profile.endowment_address}
-            />
+            <CharityCard key={profile.endowment_address} {...profile} />
           ))}
         </div>
         {showBack && (

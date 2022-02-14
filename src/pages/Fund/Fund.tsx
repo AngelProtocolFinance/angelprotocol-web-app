@@ -59,7 +59,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         <ul className="flex flex-wrap gap-4">
           {profiles.map((profile) => (
             <div className="max-h-116 overflow-hidden">
-              <CharityCard address={profile.endowment_address} />
+              <CharityCard key={profile.endowment_address} {...profile} />
             </div>
           ))}
         </ul>
