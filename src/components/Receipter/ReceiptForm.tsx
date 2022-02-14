@@ -46,7 +46,7 @@ export default function ReceiptForm() {
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
-      className="bg-white grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-hidden overflow-y-scroll"
+      className="bg-white grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-hidden overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >
