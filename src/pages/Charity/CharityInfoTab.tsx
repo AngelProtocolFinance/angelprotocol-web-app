@@ -102,18 +102,18 @@ function CharityEndowmentInfo({ data }: { data: CharityInfoBalance }) {
   const { total_liq, total_lock, overall } = data;
   const accountDetails = [
     {
-      type: "Current Account",
-      balance: `$${toCurrency(total_liq)}`,
-      strategy: "Anchor Protocol",
-      allocation: "100%",
-      color: "bg-green-400",
-    },
-    {
-      type: "Principal Account",
+      type: "Endowment Account",
       balance: `$${toCurrency(total_lock)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
+    },
+    {
+      type: "Liquid Account",
+      balance: `$${toCurrency(total_liq)}`,
+      strategy: "Anchor Protocol",
+      allocation: "100%",
+      color: "bg-green-400",
     },
   ];
 
