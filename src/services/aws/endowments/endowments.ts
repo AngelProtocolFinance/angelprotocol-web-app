@@ -2,7 +2,13 @@ import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
-import { Lookup, Endowment, Profile, CategorizedProfiles } from "./types";
+import {
+  Lookup,
+  Endowment,
+  Profile,
+  CategorizedProfiles,
+  EditableProfileAttr,
+} from "./types";
 import { AWSQueryRes } from "services/aws/types";
 
 export const endowments_api = aws.injectEndpoints({
@@ -53,26 +59,21 @@ export const endowments_api = aws.injectEndpoints({
     }),
     updateProfile: builder.mutation<
       any,
-      {
-        body: Partial<Profile>;
-        endowment_address: string;
-        charity_owner: string;
-      }
+      { owner: string; address: string; edits: Partial<EditableProfileAttr> }
     >({
-      query: (data) => {
+      query: (args) => {
         const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
         return {
           // URL of the request needs a query param because the endowment_data DB table has a partition key (endowment_address) and sort key (charity_owner)
-          url: `endowments/info/${data.endowment_address}`,
+          url: `endowments/info/${args.address}`,
           method: "PUT",
-          body: data.body,
+          body: args.edits,
           headers: {
             authorization: generatedToken,
           },
-          params: { charity_owner: data.charity_owner },
+          params: { charity_owner: args.owner },
         };
       },
-      transformResponse: (response: { data: any }) => response,
       invalidatesTags: [{ type: tags.cha, id: cha.profile }],
     }),
   }),

@@ -42,7 +42,9 @@ export default function useEditor() {
           parseStatusRef.current = "error";
           setEditorState(
             EditorState.createWithContent(
-              ContentState.createFromText(initialOverview)
+              //TODO: remove this || when `endowments/info` properly returns correct
+              //status code on error
+              ContentState.createFromText(initialOverview || "")
             )
           );
         }

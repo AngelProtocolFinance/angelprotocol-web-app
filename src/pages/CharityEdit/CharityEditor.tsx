@@ -7,13 +7,13 @@ import { EditableProfileAttr } from "services/aws/endowments/types";
 export default function CharityEditor(
   props: EditableProfileAttr & { children: ReactNode }
 ) {
+  const { children, ...restProps } = props;
   const methods = useForm<EditableProfileAttr>({
-    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      ...props,
+      ...restProps,
     },
     resolver: yupResolver(schema),
   });
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return <FormProvider {...methods}>{children}</FormProvider>;
 }

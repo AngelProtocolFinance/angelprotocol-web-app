@@ -9,9 +9,14 @@ export function useProfile(charity_addr: string) {
     data = profile,
     isLoading,
     isFetching,
+    isError,
   } = useProfileQuery(charity_addr);
 
-  return { profile: data, isProfileLoading: isLoading || isFetching };
+  return {
+    profile: data,
+    isProfileLoading: isLoading || isFetching,
+    isProfileError: isError,
+  };
 }
 
 export function useCategorizedProfiles() {

@@ -1,28 +1,29 @@
+import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
-import { Link, useRouteMatch } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
-import { app } from "types/routes";
+import { site, app } from "types/routes";
+import useEditForm from "./useEditForm";
 
 export default function EditForm() {
+  const {
+    formState: { isSubmitting, isDirty, isValid, errors },
+  } = useFormContext<EditableProfileAttr>();
+  const { endowment_addr, updateProfile } = useEditForm();
+
+  console.log(isSubmitting, isDirty, isValid, errors);
   return (
-    <form className="max-w-3xl w-full">
-      <div className="flex justify-between items-center mb-2">
-        <Link
-          to={`../${app.charity}/terra1grjzys0n9n9h9ytkwjsjv5mdhz7dzurdsmrj4v`}
-          className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-orange mb-4"
-        >
-          <BiArrowBack size={15} /> back to profile
-        </Link>
-        <button
-          type="button"
-          className="px-6 py-2 bg-angel-blue hover:bg-angel-orange rounded-md uppercase text-white-grey text-sm font-bold"
-        >
-          save
-        </button>
-      </div>
+    <form className="max-w-3xl w-full" onSubmit={updateProfile}>
+      <Link
+        to={`${site.app}/${app.charity}/${endowment_addr}`}
+        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-orange mb-4"
+      >
+        <BiArrowBack size={15} /> back to profile
+      </Link>
 
       <p className="text-xs font-heading font-semibold uppercase text-white text-opacity-100 mb-2">
         Banner
@@ -83,6 +84,13 @@ export default function EditForm() {
         label="Email"
         placeholder="hello@angelprotocol.io"
       />
+      <button
+        disabled={isSubmitting}
+        type="submit"
+        className="bg-angel-blue hover:bg-angel-orange disabled:bg-grey-accent rounded-md uppercase text-white-grey text-sm font-bold w-full p-4 mb-6"
+      >
+        save
+      </button>
     </form>
   );
 }

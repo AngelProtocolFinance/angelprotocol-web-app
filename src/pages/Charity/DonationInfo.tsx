@@ -8,127 +8,124 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { Link, useRouteMatch } from "react-router-dom";
-import { useProfileQuery } from "services/aws/endowments/endowments";
 import { CharityParam } from "./types";
-import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
 import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
-import { app } from "types/routes";
+import { app, site } from "types/routes";
+import useDonater from "components/Transactors/Donater/useDonater";
+import { useProfileState } from "services/aws/endowments/states";
 
-interface DonationInfoProps {
-  openModal: (type: "edit" | "donation") => void;
-}
-export function DonationInfo({ openModal }: DonationInfoProps) {
+export function DonationInfo() {
   const match = useRouteMatch<CharityParam>();
   const charity_addr = match.params.address;
-  const { data: profile = profile_placeholder, isLoading } =
-    useProfileQuery(charity_addr);
-  const sdg = unsdgs[+profile.un_sdg];
+  const showDonater = useDonater({ to: "charity", receiver: charity_addr });
+  const { profileState, isProfileLoading } = useProfileState(charity_addr);
+  const sdg = unsdgs[+profileState.un_sdg];
 
   const wallet = useConnectedWallet();
   const isCharityOwner =
-    wallet && wallet.walletAddress === profile.charity_owner;
+    wallet && wallet.walletAddress === profileState.charity_owner;
 
   const stats = useMemo(() => {
     return [
       {
         title: "Registration#",
-        value: profile.charity_registration_number || "N/A",
+        value: profileState.charity_registration_number || "N/A",
         rating: false,
       },
       {
         title: "Headquarters",
-        value: profile.country_city_origin || "N/A",
+        value: profileState.country_city_origin || "N/A",
         rating: false,
       },
       // {
       //   title: " annual avg overhead",
-      //   value: profile.average_annual_budget,
+      //   value: profileState.average_annual_budget,
       //   rating: false,
       // },
       {
         title: " annual avg donations",
-        value: profile.annual_revenue || "N/A",
+        value: profileState.annual_revenue || "N/A",
         rating: false,
       },
       {
         title: " # of employees",
-        value: profile.number_of_employees || "N/A",
+        value: profileState.number_of_employees || "N/A",
         rating: false,
       },
       {
         title: " navigator rating",
-        value: profile.charity_navigator_rating || "N/A",
+        value: profileState.charity_navigator_rating || "N/A",
         rating: true,
       },
     ];
-  }, [profile]);
+  }, [profileState]);
 
   return (
     <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130">
-      {isLoading ? (
+      {isProfileLoading ? (
         <DonationInfoLoader />
       ) : (
         <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
-          {profile.un_sdg && (
+          {profileState.un_sdg && (
             <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
-              SDG #{profile.un_sdg}: {sdg?.title}
+              SDG #{profileState.un_sdg}: {sdg?.title}
             </span>
           )}
-          {profile.url ? (
+          {profileState.url ? (
             <a
-              href={profile.url}
+              href={profileState.url}
               target="_blank"
               rel="noreferrer"
               className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
             >
-              <span>{profile.charity_name}</span>
+              <span>{profileState.charity_name}</span>
               <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
             </a>
           ) : (
             <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
-              {profile.charity_name}
+              {profileState.charity_name}
             </h2>
           )}
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
               <Link
-                to={`../${app.charity_edit}/${match.params.address}`}
+                to={`${site.app}/${app.charity_edit}/${charity_addr}`}
                 className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center block"
               >
                 Edit Profile
               </Link>
             )}
             <button
-              disabled={profile.is_placeholder}
-              onClick={() => openModal("donation")}
+              disabled={profileState.is_placeholder}
+              onClick={showDonater}
               className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
             >
               DONATE NOW
             </button>
             {/* create a customizable IconButton component to replace all occurrences of this */}
             <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
-              {profile.twitter_handle && (
+              {profileState.twitter_handle && (
                 <IconButton
-                  url={`https://twitter.com/${profile.twitter_handle}`}
+                  url={`https://twitter.com/${profileState.twitter_handle}`}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaTwitter}
                 />
               )}
-              {profile.linkedin_page && (
+              {profileState.linkedin_page && (
                 <IconButton
-                  url={`https://linkedin.com/${profile.linkedin_page}`}
+                  url={`https://linkedin.com/${profileState.linkedin_page}`}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaLinkedinIn}
                 />
               )}
-              {profile.facebook_page && (
+              {profileState.facebook_page && (
                 <IconButton
-                  url={`https://facebook.com/${profile.facebook_page}`}
+                  url={`https://facebook.com/${profileState.facebook_page}`}
                   size={25}
                   color="#3FA8F5"
                   Icon={FaFacebookSquare}
@@ -141,7 +138,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
       {/* charity stats */}
 
       <div className="flex flex-col h-full 2xl:h-80 px-0 2xl:px-10 lg:mt-10 hidden lg:block">
-        {isLoading ? (
+        {isProfileLoading ? (
           <DonationStatsLoader />
         ) : (
           <>
