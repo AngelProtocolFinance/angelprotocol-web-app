@@ -24,9 +24,9 @@ export default function CharityInfoNav() {
 
   return (
     <nav className="overflow-y-hidden overflow-x-scroll scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
-      <ul className="flex font-body text-sm lg:text-base ml-1 block w-full">
+      <ul className="grid sm:flex font-body text-sm lg:text-base ml-1 block w-full">
         {charityNav.map((navItem, i) => (
-          <li className="mr-1 flex block w-full" key={i}>
+          <li className="mr-1 flex block w-full mb-2 md:mb-0" key={i}>
             {/**just use buttons since page switching is programmatic and no involved page semantics*/}
             {navItem.disabled ? (
               <button className={getClassNames(false, true)}>

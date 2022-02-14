@@ -66,7 +66,7 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
   }, [profile]);
 
   return (
-    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0  2xl:flex-col 2xl:w-130">
+    <div className="font-heading flex flex-row lg:flex-col self-start justify-between 2xl:p-0 2xl:justify-start lg:mt-0 2xl:flex-col 2xl:w-130">
       {isLoading ? (
         <DonationInfoLoader />
       ) : (
@@ -91,22 +91,24 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
               {profile.charity_name}
             </h2>
           )}
-          <div className="flex flex-row gap-2 mt-4">
-            {isCharityOwner && (
+          <div className="grid md:flex lg:grid xl:flex gap-2 mt-4 items-end w-full mb-4 lg:mb-0">
+            <div className="grid md:flex lg:grid gap-2">
+              {isCharityOwner && (
+                <button
+                  onClick={() => openModal("edit")}
+                  className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
+                >
+                  Edit Profile
+                </button>
+              )}
               <button
-                onClick={() => openModal("edit")}
+                disabled={profile.is_placeholder}
+                onClick={() => openModal("donation")}
                 className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
               >
-                Edit Profile
+                DONATE NOW
               </button>
-            )}
-            <button
-              disabled={profile.is_placeholder}
-              onClick={() => openModal("donation")}
-              className="disabled:bg-grey-accent uppercase bg-orange text-white font-semibold rounded-xl md:w-48 w-52 h-12 d-flex justify-center items-center"
-            >
-              DONATE NOW
-            </button>
+            </div>
             {/* create a customizable IconButton component to replace all occurrences of this */}
             <div className="flex flex-row gap-2 lg:mb-2 ml-2 items-center lg:items-start lg:justify-start">
               {profile.twitter_handle && (

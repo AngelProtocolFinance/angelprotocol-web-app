@@ -43,8 +43,8 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
     type === "edit" ? showEditForm() : showDonater();
 
   return (
-    <section className="container mx-auto grid pb-16 content-start gap-0">
-      <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
+    <section className="container mx-auto grid pb-16 content-start gap-0 lg:max-w-none xl:container">
+      <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5 lg:max-w-none xl:container">
         <DonationInfo openModal={openModal} />
         <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
           <div className="relative group">
