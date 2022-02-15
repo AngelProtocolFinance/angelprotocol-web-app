@@ -1,7 +1,7 @@
 import useObserve from "hooks/useObserver";
 import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
-import useTypeWriter from "../../hooks/useTypeWritter2";
+import useTypeWriter from "../../hooks/useTypeWriter";
 
 const TEXT_TO_TYPE = [
   "have funding, forever.",
@@ -11,7 +11,7 @@ const TEXT_TO_TYPE = [
 
 export default function Banner() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
-  const [typedText, cursorShown] = useTypeWriter(TEXT_TO_TYPE, 70, 1000);
+  const { typedText, isCursorShown } = useTypeWriter(TEXT_TO_TYPE, 70, 1000);
 
   return (
     <section
@@ -31,7 +31,7 @@ export default function Banner() {
             </span>
             <span
               className={`inline font-bold text-angel-orange border-r-4 transition-all ${
-                cursorShown ? "border-white-grey" : "border-transparent"
+                isCursorShown ? "border-white-grey" : "border-transparent"
               }`}
             >
               {typedText}
