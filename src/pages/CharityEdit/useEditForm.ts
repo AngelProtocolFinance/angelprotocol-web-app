@@ -23,13 +23,21 @@ export default function useEditForm() {
     const prevProfile = removeReadOnlyProfileAttr(profileState);
     const diff = getPayloadDiff(prevProfile, data);
     try {
+      if (Object.keys(diff).length === 0) {
+        showModal<PopupProps>(Popup, { message: "No changes detected" });
+        return;
+      }
+
+      showModal<PopupProps>(Popup, { message: "Saving changes.." });
       const response = await update({
         owner: profileState.charity_owner,
         address: profileState.endowment_address,
         edits: diff,
       });
       if ("error" in response) {
-        showModal<PopupProps>(Popup, { message: "Failed to save profile" });
+        showModal<PopupProps>(Popup, {
+          message: "Failed to save profile changes",
+        });
       } else {
         showModal<PopupProps>(Popup, { message: "Successfully saved changes" });
       }
