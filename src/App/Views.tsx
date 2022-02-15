@@ -10,6 +10,7 @@ import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 // import Test from "pages/Test";
+import CharityEdit from "pages/CharityEdit/CharityEdit";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -40,6 +41,10 @@ export default function Views() {
         <Route path={`${path}/${app.marketplace}`} component={Market} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
         <Route path={`${path}/${app.charity}/:address`} component={Charity} />
+        <Route
+          path={`${path}/${app.charity_edit}/:address`}
+          component={CharityEdit}
+        />
         <Route path={`${path}/${app.login}`} component={Login} />
         {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
         <Route path={`${path}/${app.tca}`} component={TCA} />

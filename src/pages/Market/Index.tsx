@@ -1,32 +1,16 @@
-import IndexCard from "./IndexCard";
-import CharityCard from "./CharityCard";
-import useProfiles from "./useProfiles";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
-import { useEffect, useState } from "react";
+import IndexCard from "./IndexCard";
+import CharityCard from "./CharityCard";
+import { Profile } from "services/aws/endowments/types";
 
-function SliderArrow(props: any) {
-  return (
-    <button onClick={props.onClick} className={props.classes}>
-      <MdOutlineArrowBackIosNew className="text-white text-4xl" />
-    </button>
-  );
-}
-
-export default function Index(props: { id: number }) {
-  const profiles = useProfiles(props.id);
+export default function Index(props: { id: number; profiles: Profile[] }) {
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
-  const [list] = useState(profiles);
-
-  useEffect(() => {
-    if (!showForward && !showBack) return;
-    list.push(...profiles);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showBack, showForward]);
+  //remove infinite scroll temporarily
 
   return (
     <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0 mb-10">
@@ -37,15 +21,15 @@ export default function Index(props: { id: number }) {
           ref={ref}
           className="flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0"
         >
-          {list.map((profile, i) => (
-            <CharityCard key={i} address={profile.endowment_address} />
+          {props.profiles.map((profile) => (
+            <CharityCard key={profile.endowment_address} {...profile} />
           ))}
         </div>
         {showBack && (
           <SliderArrow
             classes="absolute top-14 left-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
             onClick={backward}
-          ></SliderArrow>
+          />
         )}
         {showForward && (
           <button
@@ -57,5 +41,13 @@ export default function Index(props: { id: number }) {
         )}
       </section>
     </section>
+  );
+}
+
+function SliderArrow(props: any) {
+  return (
+    <button onClick={props.onClick} className={props.classes}>
+      <MdOutlineArrowBackIosNew className="text-white text-4xl" />
+    </button>
   );
 }
