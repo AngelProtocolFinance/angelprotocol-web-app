@@ -7,7 +7,8 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
-import { useRouteMatch } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { useRouteMatch, Link } from "react-router-dom";
 import { useProfileQuery } from "services/aws/endowments/endowments";
 import { CharityParam } from "./types";
 import { profile as profile_placeholder } from "services/aws/endowments/placeholders";
@@ -15,6 +16,7 @@ import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
+import { site, app } from "types/routes";
 
 interface DonationInfoProps {
   openModal: (type: "edit" | "donation") => void;
@@ -71,6 +73,12 @@ export function DonationInfo({ openModal }: DonationInfoProps) {
         <DonationInfoLoader />
       ) : (
         <div className="flex flex-col xl:w-128 2xl:min-h-1/2 bg-transparent px-0 2xl:px-10 mt-10 lg:mt-0 2xl:mt-0">
+          <Link
+            to={`${site.app}/${app.marketplace}`}
+            className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mb-4"
+          >
+            <BiArrowBack size={15} /> back to marketplace
+          </Link>
           {profile.un_sdg && (
             <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
               SDG #{profile.un_sdg}: {sdg?.title}
