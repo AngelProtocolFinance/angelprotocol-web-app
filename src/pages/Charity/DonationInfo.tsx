@@ -9,7 +9,6 @@ import {
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouteMatch, Link } from "react-router-dom";
-import { useProfileQuery } from "services/aws/endowments/endowments";
 import { CharityParam } from "./types";
 import {
   DonationInfoLoader,
@@ -76,7 +75,7 @@ export function DonationInfo() {
           >
             <BiArrowBack size={15} /> back to marketplace
           </Link>
-          {profile.un_sdg && (
+          {profileState.un_sdg && (
             <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
               SDG #{profileState.un_sdg}: {sdg?.title}
             </span>
