@@ -1,26 +1,24 @@
 import useObserve from "hooks/useObserver";
 import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
-import useTypeWriter from "../../hooks/useTypeWritter";
+import useTypeWriter from "../../hooks/useTypeWriter";
+
+const TEXT_TO_TYPE = [
+  "have funding, forever.",
+  "focus on impact.",
+  "spend less on fundraising.",
+];
 
 export default function Banner() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
-  const [typedText, cursorShown] = useTypeWriter(
-    [
-      "have funding, forever.",
-      "focus on impact.",
-      "spend less on fundraising.",
-    ],
-    70,
-    1000
-  );
+  const { typedText, isCursorShown } = useTypeWriter(TEXT_TO_TYPE, 70, 1000);
 
   return (
     <section
       ref={ref}
-      className="grid items-center bg-banner bg-no-repeat w-full bg-cover h-banner"
+      className="grid bg-banner bg-no-repeat w-full bg-cover h-banner"
     >
-      <div className="container mx-auto  grid grid-cols-1a items-center">
+      <div className="container mx-auto grid grid-cols-1a items-center">
         <section
           className={`max-w-3xl p-4 md:p-5 ${transitionIn(
             isVisible,
@@ -33,7 +31,7 @@ export default function Banner() {
             </span>
             <span
               className={`inline font-bold text-angel-orange border-r-4 transition-all ${
-                cursorShown ? "border-white-grey" : "border-transparent"
+                isCursorShown ? "border-white-grey" : "border-transparent"
               }`}
             >
               {typedText}
@@ -43,7 +41,7 @@ export default function Banner() {
         <img
           src={wingImage}
           alt=""
-          className={`hidden lg:w-80 lg:block ${transitionIn(
+          className={`hidden w-80 lg:block ${transitionIn(
             isVisible,
             Direction.fromBottom
           )}`}
