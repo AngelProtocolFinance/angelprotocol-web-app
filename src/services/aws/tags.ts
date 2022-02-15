@@ -5,4 +5,5 @@ export enum tags {
 
 export enum cha {
   profile = "profile",
+  profiles = "profiles",
 }

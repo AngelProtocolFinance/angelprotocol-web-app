@@ -23,7 +23,6 @@ export default function Logo() {
         </Link>
       );
     case `${site.app}`:
-    case `${site.app}/${app.charities}`:
     case `${site.app}/${app.login}`:
     case `${site.app}/${app.govern}`:
     case `${site.app}/${app.charity}`:

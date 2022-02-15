@@ -1,3 +1,5 @@
+import { AWSQueryRes } from "../types";
+
 export interface Endowment {
   endowment_address: string;
   charity_owner: string;
@@ -17,9 +19,6 @@ export interface Update {
   last_update: string;
 }
 
-export interface QueryRes<T> {
-  Count: number;
-  ScannedCount: number;
-  Items: T;
+export interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {
   LastUpdate: string;
 }
