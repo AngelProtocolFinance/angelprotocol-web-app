@@ -19,7 +19,7 @@ export default function EditForm() {
     <form className="max-w-3xl w-full" onSubmit={updateProfile}>
       <Link
         to={`${site.app}/${app.charity}/${endowment_addr}`}
-        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-orange mb-4"
+        className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
       >
         <BiArrowBack size={15} /> back to profile
       </Link>

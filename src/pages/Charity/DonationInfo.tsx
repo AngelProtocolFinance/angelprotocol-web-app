@@ -7,7 +7,7 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
-import { Link, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import { CharityParam } from "./types";
 import {
   DonationInfoLoader,
@@ -90,16 +90,18 @@ export function DonationInfo() {
           )}
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
-              <Link
-                to={`${site.app}/${app.charity_edit}/${charity_addr}`}
+              <a
+                href={`${site.app}/${app.charity_edit}/${charity_addr}`}
                 className={`${
                   !profileState.is_placeholder
                     ? "bg-orange"
                     : "pointer-events-none bg-grey-accent"
-                } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center block`}
+                } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center`}
               >
-                Edit Profile
-              </Link>
+                <button disabled={profileState.is_placeholder}>
+                  EDIT PROFILE
+                </button>
+              </a>
             )}
             <button
               disabled={profileState.is_placeholder}
