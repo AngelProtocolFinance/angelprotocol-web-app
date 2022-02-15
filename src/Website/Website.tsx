@@ -12,6 +12,7 @@ import Loader from "components/Loader/Loader";
 import { site, web } from "types/routes";
 import Home from "./Home/Home";
 import Nodal from "components/Nodal/Nodal";
+import useScrollTop from "hooks/useScrollTop";
 const Donors = lazy(() => import("./Donors/Donors"));
 const PrivacyPolicy = lazy(() => import("./PrivacyPolicy"));
 const Charities = lazy(() => import("./Charities/Charities"));
@@ -20,6 +21,7 @@ const Contact = lazy(() => import("./Contact/Contact"));
 const Website = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
+  useScrollTop(location.pathname);
 
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />

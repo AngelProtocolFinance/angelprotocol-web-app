@@ -11,6 +11,7 @@ import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 // import Test from "pages/Test";
 import CharityEdit from "pages/CharityEdit/CharityEdit";
+import useScrollTop from "hooks/useScrollTop";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -29,7 +30,7 @@ const Charity = lazy(() => import("pages/Charity/Charity"));
 export default function Views() {
   const { path } = useRouteMatch();
   const location = useLocation();
-
+  useScrollTop(location.pathname);
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
   );
