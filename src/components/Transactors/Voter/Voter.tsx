@@ -5,6 +5,7 @@ import { Values, Props } from "./types";
 
 export default function Voter(props: Props) {
   const methods = useForm<Values>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

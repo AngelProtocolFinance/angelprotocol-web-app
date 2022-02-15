@@ -14,7 +14,9 @@ export default function useStakerBalance(is_stake: boolean) {
     } else {
       //used in voting to a poll
       const vote_locked = gov_staker.locked_balance.reduce(
-        (res, bal) => res.add(new Dec(bal[1].balance)),
+        (res, [, vote]) =>
+          //get max vote locked
+          new Dec(vote.balance).gt(res) ? new Dec(vote.balance) : res,
         new Dec(0)
       );
       return [staked, vote_locked];
