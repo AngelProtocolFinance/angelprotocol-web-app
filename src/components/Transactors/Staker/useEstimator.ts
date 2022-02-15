@@ -48,8 +48,8 @@ export default function useEstimator() {
             return;
           }
         } else {
-          if (balance.sub(locked).div(1e6).sub(debounced_amount).lt(0)) {
-            dispatch(setFormError("Not enough staked less locked"));
+          if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
+            dispatch(setFormError("Not enough staked halo less locked"));
             return;
           }
         }
