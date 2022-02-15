@@ -37,6 +37,7 @@ export default function Views() {
     <Suspense fallback={<LoaderComponent />}>
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+        <Route path={`${path}/${app.marketplace}`} component={Market} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
         <Route path={`${path}/${app.charity}/:address`} component={Charity} />
         <Route path={`${path}/${app.login}`} component={Login} />
@@ -54,7 +55,9 @@ export default function Views() {
           component={Endowment_Admin}
         />
         {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
-        <Route path={`${path}${app.index}`} component={Market} />
+        <Route path={`${path}${app.index}`}>
+          <Redirect to={`${path}/${app.marketplace}`} />
+        </Route>
         <Redirect from="*" to={site.home} />
       </Switch>
     </Suspense>

@@ -6,8 +6,8 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-import WebHead from "components/Headers/WebHead";
-import WebFoot from "components/Footers/WebFoot";
+import WebHead from "Website/Header/WebHead";
+import WebFoot from "Website/WebFoot";
 import Loader from "components/Loader/Loader";
 import { site, web } from "types/routes";
 import Home from "./Home/Home";

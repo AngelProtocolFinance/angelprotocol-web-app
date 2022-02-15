@@ -1,4 +1,4 @@
-import Subscriber from "components/Subscriber/Subscriber";
+import Subscriber from "Website/Subscriber/Subscriber";
 import { Link } from "react-router-dom";
 import {
   AiOutlineTwitter,
