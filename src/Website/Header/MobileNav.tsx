@@ -6,12 +6,13 @@ export default function MobileNav() {
   //url = /
   const { url } = useRouteMatch();
   const linkStyles = {
-    className: `uppercase hover:text-opacity-75 text-angel-grey`,
-    activeClassName: "text-angel-orange",
+    className: `uppercase text-angel-grey hover:text-angel-blue font-semibold font-heading px-2 py-1 rounded-md`,
+    activeClassName:
+      "bg-angel-blue bg-opacity-10 shadow-inner pointer-events-none",
   };
 
   return (
-    <div className="grid mt-2 w-56 rounded-md justify-items-end gap-2 bg-white md:hidden p-4 rounded-sm font-body">
+    <div className="col-start-2 grid md:hidden justify-items-end gap-1 bg-white font-body">
       <NavLink to={`${url}${web.charities}`} {...linkStyles}>
         For Charities
       </NavLink>
@@ -20,7 +21,7 @@ export default function MobileNav() {
       </NavLink>
       <NavLink
         to={`${site.app}/`}
-        className={`text-white text-center uppercase font-bold border py-2 px-4 border-opacity-40 border-angel-orange rounded-md bg-angel-orange hover:bg-white hover:text-angel-orange`}
+        className="px-2 py-1 rounded-md font-semibold font-heading uppercase font-extrabold text-angel-orange hover:text-angel-blue"
       >
         Donate
       </NavLink>

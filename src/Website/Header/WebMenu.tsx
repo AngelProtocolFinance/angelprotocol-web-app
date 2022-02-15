@@ -10,7 +10,7 @@ export default function WebMenu() {
       "shadow-inner bg-angel-blue bg-opacity-10 pointer-events-none",
   };
   return (
-    <div className="hidden md:flex justify-self-end items-center font-body text-sm lg:text-base">
+    <nav className="hidden sm:flex justify-self-end items-center font-body text-sm lg:text-base">
       <NavLink to={`${url}${web.charities}`} {...linkStyles}>
         For Charities
       </NavLink>
@@ -18,13 +18,12 @@ export default function WebMenu() {
       <NavLink to={`${url}${web.donors}`} {...linkStyles}>
         For Donors
       </NavLink>
-
       <NavLink
         to={`${site.app}/${app.marketplace}`}
         className={`border ml-4 py-2 px-4 border-opacity-40 border-angel-orange rounded-md bg-angel-orange text-white transform hover:scale-105 hover:shadow-lg active:translate-x-1 active:shadow-md`}
       >
         Donate
       </NavLink>
-    </div>
+    </nav>
   );
 }
