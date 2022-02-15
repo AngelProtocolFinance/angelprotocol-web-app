@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export default function AppMenu() {
   const linkStyles = {
     className:
@@ -9,27 +7,31 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link
-          to={`https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37`}
-          {...linkStyles}
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37"
+          className={linkStyles.className}
         >
           SUPPORT
-        </Link>
+        </a>
       </li>
       <li>
-        <Link
-          to={`https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37`}
-          {...linkStyles}
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37"
+          className={linkStyles.className}
         >
           FEEDBACK
-        </Link>
+        </a>
       </li>
       <li>
         <a
           rel="noreferrer"
           target="_blank"
           href="https://www.angelprotocol.io/contact"
-          {...linkStyles}
+          className={linkStyles.className}
         >
           REGISTER
         </a>
