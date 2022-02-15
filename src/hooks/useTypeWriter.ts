@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TypeWriterResult = {
   typedText: string;
@@ -23,9 +23,10 @@ export default function useTypeWriter(
   const [charIndex, setCharIndex] = useState(0);
   const [isCursorShown, setCursorShown] = useState(true);
   const [inReverse, setReverse] = useState(false);
+  const currentString = useMemo(() => strings[index] || "", [strings, index]);
 
   useEffect(() => {
-    const shouldReverse = charIndex === strings[index].length && !inReverse;
+    const shouldReverse = charIndex === currentString.length && !inReverse;
     const delay = shouldReverse ? idleTime : durationBetweenTypes;
 
     // if we were going in reverse and are at the beginning of the string,
@@ -49,11 +50,17 @@ export default function useTypeWriter(
     }, delay);
 
     return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [charIndex, index, inReverse]);
+  }, [
+    charIndex,
+    currentString,
+    inReverse,
+    strings,
+    durationBetweenTypes,
+    idleTime,
+  ]);
 
   return {
     isCursorShown,
-    typedText: strings[index].substring(0, charIndex),
+    typedText: currentString.substring(0, charIndex),
   };
 }
