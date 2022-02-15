@@ -16,9 +16,9 @@ export default function Banner() {
   return (
     <section
       ref={ref}
-      className="grid items-center bg-banner bg-no-repeat w-full bg-cover h-banner"
+      className="grid bg-banner bg-no-repeat w-full bg-cover h-banner"
     >
-      <div className="container mx-auto  grid grid-cols-1a items-center">
+      <div className="container mx-auto grid grid-cols-1a items-center">
         <section
           className={`max-w-3xl p-4 md:p-5 ${transitionIn(
             isVisible,
@@ -41,7 +41,7 @@ export default function Banner() {
         <img
           src={wingImage}
           alt=""
-          className={`hidden lg:w-80 lg:block ${transitionIn(
+          className={`hidden w-80 lg:block ${transitionIn(
             isVisible,
             Direction.fromBottom
           )}`}
