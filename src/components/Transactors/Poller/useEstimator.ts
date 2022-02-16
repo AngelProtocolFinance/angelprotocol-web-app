@@ -63,7 +63,6 @@ export default function useEstimator() {
         dispatch(setFee(estimatedFee));
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transaction"));
       }
     })();

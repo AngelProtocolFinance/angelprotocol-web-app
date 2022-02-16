@@ -162,7 +162,6 @@ export default function useEstimator() {
         }
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transaction"));
       }
     })();

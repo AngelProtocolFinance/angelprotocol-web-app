@@ -51,11 +51,7 @@ const Charity = (props: RouteComponentProps<CharityParam>) => {
             <ImageWrapper
               height="300"
               width="100%"
-              src={
-                profile.is_placeholder
-                  ? profile.placeholderUrl
-                  : profile.charity_image
-              }
+              src={profile.charity_image}
               alt="charity image"
               classes={`max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center ${
                 isCharityOwner &&
