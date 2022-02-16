@@ -34,18 +34,10 @@ export const profile: Profile = {
   //content
   charity_navigator_rating: "0", //""
   news_media_articles: "", //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
-<<<<<<< HEAD
-  un_sdg: "0", //"4"
-  facebook_page: "", //
-  overall: 200,
-  total_liq: 100,
-  total_lock: 100, //overall, total_liq, and total_lock are in human-readable format base 10 numbers
-=======
   charity_programs: "", //long text
 
   //meta
   placeholderUrl: image,
->>>>>>> origin/staging
   is_placeholder: true,
 };
 
