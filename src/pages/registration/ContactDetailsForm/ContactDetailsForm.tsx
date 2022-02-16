@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import routes from "../routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
-import Input from "./Input";
+import Input from "../FormInput";
 import RoleSelector from "./RoleSelector";
 import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
