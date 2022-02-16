@@ -11,10 +11,10 @@ const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
+  const user = useGetter((state) => state.user);
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    const storedUser = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(storedUser));
   }
 
   if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
@@ -59,7 +59,7 @@ const RegistrationStatus = () => {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <div className="necessary-information">
         <div className="">
           <h3 className="text-3xl font-bold">Necessary Information</h3>
