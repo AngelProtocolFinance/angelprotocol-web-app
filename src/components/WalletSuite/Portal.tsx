@@ -16,7 +16,7 @@ export default function Portal() {
     return (
       <Link
         to={`${site.app}/${app.endowment_admin}/${endowmentAddr}`}
-        className="ml-4 mr-auto bg-blue-accent hover:bg-angel-blue active:bg-angel-blue text-sm text-white-grey rounded-sm py-1 px-2 mt-2"
+        className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY ENDOWMENT
       </Link>
