@@ -15,7 +15,6 @@ import useScrollTop from "hooks/useScrollTop";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
-const ChurchPortal = lazy(() => import("pages/ChurchPortal/ChurchPortal"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
 const Auction = lazy(() => import("pages/LBP/Auction"));
@@ -49,10 +48,6 @@ export default function Views() {
         <Route path={`${path}/${app.login}`} component={Login} />
         {/*<Route path={`${path}/${app.register}`} component={Register} />*/}
         <Route path={`${path}/${app.tca}`} component={TCA} />
-        <Route
-          path={`${path}/${app.churchportal}/:address`}
-          component={ChurchPortal}
-        />
         <Route path={`${path}/${app.govern}`} component={Governance} />
         {/* <Route path={`${path}/${app.fund}/:id`} component={Fund} /> */}
         <Route path={`${path}/${app.auction}`} component={Auction} />
