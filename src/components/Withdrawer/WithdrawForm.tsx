@@ -1,12 +1,12 @@
-import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
-import { useGetter } from "store/accessors";
-import useWithdraw from "./useWithdraw";
-import Status from "./Status";
-import Amount from "./Amount";
 import { vaults } from "constants/contracts";
+import { useFormContext } from "react-hook-form";
 import { useEndowmentHoldingsState } from "services/terra/account/states";
+import { useGetter } from "store/accessors";
+import Amount from "./Amount";
 import { Fee, ToReceive, Total } from "./Misc";
+import Status from "./Status";
+import { Values } from "./types";
+import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm() {
   const {
