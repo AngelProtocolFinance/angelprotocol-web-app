@@ -1,49 +1,62 @@
-import { useMemo } from "react";
-import DappHead from "components/Headers/DappHead";
 import Index from "./Index";
-import { useProfilesQuery } from "services/aws/endowments/endowments";
+import Loader from "components/Loader/Loader";
+import { useCategorizedProfiles } from "services/aws/endowments/queriers";
 
 export default function Market() {
-  const { data: profiles = [] } = useProfilesQuery(undefined);
-  const sdg_ids = useMemo(
-    () =>
-      Array.from(
-        //consolidate present sdgs then render sdg list
-        profiles.reduce((prev: Set<number>, curr) => {
-          prev.add(+curr.un_sdg);
-          return prev;
-        }, new Set<number>())
-        //sort acc to sdg number
-      ).sort((a, b) => a - b),
-    [profiles]
-  );
+  const { categorizedProfiles, isProfilesLoading } = useCategorizedProfiles();
 
   return (
     <div className="grid grid-rows-dashboard pb-16">
-      <div className="grid grid-rows-a1 items-center justify-items-center text-center text-white bg-no-repeat bg-banner-charity bg-cover pb-4">
-        <DappHead />
-        <div className="px-2">
-          <p className="uppercase text-lg md:text-2xl xl:text-4xl">
-            we categorize our charities based on the
+      <div className="flex flex-col-reverse md:flex-row padded-container md:py-20 gap-5">
+        <div className="relative w-full md:w-1/2 my-auto">
+          <figure>
+            <img
+              src="https://charity-profile-images.s3.amazonaws.com/banner/The+5+Gyres+Institute.png"
+              alt=""
+              className="w-150 rounded-lg"
+            />
+            <figcaption className="text-white font-bold uppercasetext-left py-4">
+              <div className="pb-2 text-2xl md:text-3xl">
+                The 5 Gyres Institute
+              </div>
+              <div className="text-md md:text-lg">
+                SDG #12: Responsible Consumption and Production
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div className="text-white w-full md:w-1/2 my-auto">
+          <p className="font-extrabold text-6xl md:text-7xl lg:text-8xl">
+            GIVE ONCE,
           </p>
-          <p className="font-extrabold text-xl md:text-xl xl:text-4xl my-2">
-            17 UNITED NATIONS SUSTAINABLE DEVELOPMENT GOALS (UNSDGs)
+          <p className="font-extrabold text-6xl md:text-7xl lg:text-8xl text-angel-orange mb-4">
+            GIVE FOREVER.
           </p>
-          <a
-            href="https://sdgs.un.org/goals"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block w-48 uppercase bg-yellow-blue p-1.5 rounded-lg font-bold mt-5"
-          >
-            learn more
-          </a>
+          <p className="text-2xl md:text-3xl my-4">
+            <span className="font-bold">
+              Want to empower a charity like The 5 Gyres Institute with
+              financial freedom?
+            </span>{" "}
+            Find a charity from the list below, connect your wallet and donate
+            to their perpetual endowment.
+          </p>
         </div>
       </div>
-      <section className="flex-auto padded-container mx-auto px-5 mt-5">
-        {sdg_ids.map((id) => (
-          <Index id={id} key={id} />
-        ))}
-      </section>
+      {(isProfilesLoading && (
+        <div className="h-40 bg-opacity-5 rounded-lg grid place-items-center">
+          <Loader
+            bgColorClass="bg-white-grey bg-opacity-80"
+            gapClass="gap-2"
+            widthClass="w-4"
+          />
+        </div>
+      )) || (
+        <section className="flex-auto padded-container mx-auto mt-5">
+          {Object.entries(categorizedProfiles).map(([sdg_number, profiles]) => (
+            <Index key={sdg_number} id={+sdg_number} profiles={profiles} />
+          ))}
+        </section>
+      )}
     </div>
   );
 }

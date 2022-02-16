@@ -1,12 +1,10 @@
-import FundVid from "./FundVid";
+import { RouteComponentProps } from "react-router-dom";
+import { useFundProfiles } from "services/aws/endowments/queriers";
 import CharityCard from "pages/Market/CharityCard";
+import { unsdgs } from "pages/Fund/unsdgs";
 import Overview from "./Overview";
 import useFund from "./useFund";
-import Donate from "./Donate";
-import useProfiles from "pages/Market/useProfiles";
-import { RouteComponentProps } from "react-router-dom";
-import { unsdgs } from "pages/Fund/unsdgs";
-import DappHead from "components/Headers/DappHead";
+import FundVid from "./FundVid";
 
 //props
 //fundBgClass
@@ -15,17 +13,16 @@ import DappHead from "components/Headers/DappHead";
 //description
 
 export default function Fund(props: RouteComponentProps<{ id?: string }>) {
-  const { isDonating, toggleDonate, error, loading, split } = useFund();
+  const { isDonating, toggleDonate } = useFund();
   const id_param = props.match.params?.id;
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
     (id_param && sdg_ids.includes(id_param) && Number(id_param)) || 1;
-  const profiles = useProfiles(fund_id);
+  const { profiles } = useFundProfiles(fund_id);
   const sdg = unsdgs[fund_id];
 
   return (
     <section className="grid content-start pb-24">
-      <DappHead />
       <div className="grid grid-rows-fund grid-cols-1a container mx-auto gap-4">
         <div
           className={`col-start-1 col-span-1 ${sdg.bg} self-stretch grid grid-cols-a1 items-center rounded-xl shadow-md`}
@@ -38,7 +35,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         </div>
         <FundVid url={sdg.youtube} />
         {(isDonating && (
-          <Donate split={split} loading={loading} error={error} />
+          <p>this donation form is depracated, new form in RC-fund</p>
         )) || <Overview fund_id={fund_id} />}
 
         <div className="col-start-2 col-span-1 row-start-2 row-span-1 self-start">
@@ -50,9 +47,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
           >
             {isDonating ? "Back to Index" : "Donate"}
           </button>
-          <button
-            className={`ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md`}
-          >
+          <button className="ml-2 bg-angel-blue uppercase text-white text-sm w-36 py-2 rounded-lg font-semibold shadow-md">
             Share
           </button>
         </div>
@@ -64,7 +59,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         <ul className="flex flex-wrap gap-4">
           {profiles.map((profile) => (
             <div className="max-h-116 overflow-hidden">
-              <CharityCard address={profile.endowment_address} />
+              <CharityCard key={profile.endowment_address} {...profile} />
             </div>
           ))}
         </ul>

@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { DepositTransactions } from "services/aws/endowment_admin/types";
+import { Holding } from "services/terra/account/types";
 
 export type RouteParam = { address: string };
 
@@ -81,3 +82,19 @@ interface WithoutResult {
 export type Status = WithEstimate & WithResult & WithoutResult;
 
 export type SetStatus = (result: Status) => void;
+
+type LockedSummary = {
+  type: "locked";
+  holdings: Holding[];
+  isOwner?: never;
+  opener?: never;
+};
+
+type LiquidSummary = {
+  type: "liquid";
+  holdings: Holding[];
+  isOwner?: boolean;
+  opener?: () => void;
+};
+
+export type HoldingSummary = LockedSummary | LiquidSummary;

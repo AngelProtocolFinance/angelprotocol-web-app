@@ -1,15 +1,13 @@
-import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import DappHead from "components/Headers/DappHead";
-import { useSetModal } from "components/Nodal/Nodal";
-import PriceGraph from "components/PriceGraph";
-import { LBPGraphDataUnavailable } from "contracts/Errors";
-import displayTerraError from "helpers/displayTerraError";
 import { useEffect, useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
-import { LaunchStatsProps } from ".";
-import "./Auction.css";
+import Popup, { PopupProps } from "components/Popup/Popup";
+import CountdownTimer from "components/CountDownTimer/CountDownTimer";
+import { useSetModal } from "components/Nodal/Nodal";
+import PriceGraph from "components/PriceGraph";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
+import { LaunchStatsProps } from ".";
+import "./Auction.css";
 
 export default function Auction() {
   const { showModal } = useSetModal();
@@ -21,14 +19,13 @@ export default function Auction() {
   // https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html
   useEffect(() => {
     if (!isLoading && error) {
-      displayTerraError(new LBPGraphDataUnavailable(error), showModal);
+      showModal<PopupProps>(Popup, { message: "Failed to get auction data" });
     }
     //eslint-disable-next-line
   }, [isLoading, error]);
 
   return (
-    <div className="grid grid-rows-a1 place-items-start pt-2">
-      <DappHead />
+    <div className="grid place-items-start pt-2">
       <div className="content-section">
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
         <div className="auction-section">
@@ -60,7 +57,7 @@ function AuctionStats() {
     <div className="w-full flex flex-wrap gap-5 mt-3">
       <StatsDetails
         title="Duration"
-        value={`3 days`}
+        value="3 days"
         Icon={FaClock}
         exClass="duration"
       />
@@ -70,7 +67,7 @@ function AuctionStats() {
         Icon={FaStopwatch}
         exClass="ends-in"
       />
-      <StatsDetails title="Price" value={`UST 0.074994`} />
+      <StatsDetails title="Price" value="UST 0.074994" />
     </div>
   );
 }

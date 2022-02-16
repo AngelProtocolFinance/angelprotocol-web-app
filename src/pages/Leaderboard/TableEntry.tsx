@@ -9,13 +9,12 @@ export default function TableEntry(props: Endowment) {
     props.total_lock,
     props.total_liq,
     20,
-    15
+    5
   );
-
   return (
     <tr className="border-b">
       <td>
-        <Description address={props.address} />
+        <Description endowments={props} />
       </td>
       <td>
         <div className="flex flex-col w-40">

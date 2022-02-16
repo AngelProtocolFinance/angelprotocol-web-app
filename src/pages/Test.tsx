@@ -1,17 +1,13 @@
-import DappHead from "components/Headers/DappHead";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
-// import Voter from "components/Voter/Voter";
-// import VoterForm from "components/Voter/VoterForm";
-// import { useGovStaker } from "services/terra/hooks";
+import CharityEditor from "./CharityEdit/CharityEditor";
+import EditForm from "./CharityEdit/EditForm";
+import { initialFormState } from "./CharityEdit/placeholders";
+
 export default function Test() {
-  const { data } = useLeaderboardsQuery(true);
-  console.log(data);
   return (
-    <div className="grid grid-rows-a1 place-items-center">
-      <DappHead />
-      {/* <Voter poll_id="5">
-        <VoterForm />
-      </Voter> */}
+    <div className="grid padded-container justify-items-center">
+      <CharityEditor {...initialFormState}>
+        <EditForm />
+      </CharityEditor>
     </div>
   );
 }

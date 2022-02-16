@@ -1,35 +1,53 @@
-import useClickScroll from "hooks/useClickScroll";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import useHorizontalScroll from "hooks/useHorizontalScroll";
 import IndexCard from "./IndexCard";
 import CharityCard from "./CharityCard";
-import useProfiles from "./useProfiles";
+import { Profile } from "services/aws/endowments/types";
 
-export default function Index(props: { id: number }) {
-  const profiles = useProfiles(props.id);
-  const {
-    ref,
-    handleMouseLeave,
-    handleMouseDown,
-    handleMouseUp,
-    handleMouseMove,
-  } = useClickScroll();
+export default function Index(props: { id: number; profiles: Profile[] }) {
+  const { ref, forward, backward, showBack, showForward } =
+    useHorizontalScroll();
+  //remove infinite scroll temporarily
+
   return (
-    <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0">
+    <section className="grid grid-cols-1 justify-items-left sm:grid-cols-charity mt-6 sm:mt-0 mb-10">
       <IndexCard id={props.id} />
-      <section
-        ref={ref}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
-        onMouseMove={handleMouseMove}
-        className={`flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0 sm:ml-4`}
-      >
-        {profiles.map((profile) => (
-          <CharityCard
-            key={profile.endowment_address}
-            address={profile.endowment_address}
+
+      <section className="overflow-hidden relative sm:pl-10 group">
+        <div
+          ref={ref}
+          className="flex flex-row gap-4 overflow-x-scroll scroll-hidden ml-0"
+        >
+          {props.profiles.map((profile) => (
+            <CharityCard key={profile.endowment_address} {...profile} />
+          ))}
+        </div>
+        {showBack && (
+          <SliderArrow
+            classes="absolute top-14 left-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
+            onClick={backward}
           />
-        ))}
+        )}
+        {showForward && (
+          <button
+            onClick={forward}
+            className="absolute top-14 right-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
+          >
+            <MdOutlineArrowForwardIos className="text-white text-4xl " />
+          </button>
+        )}
       </section>
     </section>
+  );
+}
+
+function SliderArrow(props: any) {
+  return (
+    <button onClick={props.onClick} className={props.classes}>
+      <MdOutlineArrowBackIosNew className="text-white text-4xl" />
+    </button>
   );
 }

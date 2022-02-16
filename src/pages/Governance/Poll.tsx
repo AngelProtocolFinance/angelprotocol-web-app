@@ -3,7 +3,7 @@ import { SiHiveBlockchain } from "react-icons/si";
 import { govern } from "types/routes";
 import toCurrency from "helpers/toCurrency";
 import useDetails from "./useDetails";
-import { PollStatus } from "services/terra/types";
+import { PollStatus } from "services/terra/gov/types";
 
 export default function Poll(props: { poll_id: number }) {
   const history = useHistory();

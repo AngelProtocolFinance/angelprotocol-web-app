@@ -1,65 +1,40 @@
-import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
-import DappHead from "components/Headers/DappHead";
+import { useProfile } from "services/aws/endowments/queriers";
+import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import { CharityProfileTabLoader } from "components/Loader/Charity";
+import InfoTabs from "./InfoTabs/InfoTabs";
 import CharityInfoNav from "./CharityInfoNav";
-import CharityInfoTab from "./CharityInfoTab";
 import { DonationInfo } from "./DonationInfo";
-import Donater from "components/Donater/Donater";
-import DonateSuite from "components/TransactionSuite/DonateSuite";
-import { useSetModal } from "components/Nodal/Nodal";
-import useProfile from "pages/Market/useProfile";
-
-export type CharityParam = { address: string };
+import { CharityParam } from "./types";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
-  const profile = useProfile(endowment_addr);
-  const [activeTab, setActiveTab] = useState("endowment");
-  const { showModal } = useSetModal();
-
-  const showDonationForm = () => {
-    //the button firing this function is disabled when
-    //param address is wrong
-    showModal(CharityForm, {
-      charity_addr: endowment_addr,
-    });
-  };
+  const { profile, isProfileLoading } = useProfile(endowment_addr);
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">
-      <DappHead />
       <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
-        <DonationInfo openModal={showDonationForm} />
-        <div className="flex-grow w-full items-center text-center bg-indigo lg:mb-0">
-          <img
-            className="bg-white rounded-2xl lg:mt-0 shadow-md mb-1 object-cover object-center hidden sm:block"
-            style={{ width: "100%", maxHeight: "350px" }}
+        <DonationInfo />
+        <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
+          <ImageWrapper
+            height="300"
+            width="100%"
             src={profile.charity_image}
-            alt=""
+            alt="charity image"
+            classes="max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
           />
-          {/* charity info */}
-          <CharityInfoNav
-            activeTab={activeTab}
-            onTabChange={(tab: string) => setActiveTab(tab)}
-          />
-          {/* charity info */}
-          {/* Information tabs  */}
-          <CharityInfoTab activeTab={activeTab} />
-          {/* Information tabs  */}
+          {isProfileLoading ? (
+            <CharityProfileTabLoader />
+          ) : (
+            <>
+              <CharityInfoNav />
+              <InfoTabs />
+            </>
+          )}
         </div>
       </div>
     </section>
   );
 };
-
-type CharityProps = { charity_addr: string };
-
-function CharityForm(props: CharityProps) {
-  return (
-    <Donater to="charity" receiver={props.charity_addr}>
-      <DonateSuite inModal />
-    </Donater>
-  );
-}
 
 export default Charity;

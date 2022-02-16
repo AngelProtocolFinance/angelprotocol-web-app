@@ -1,5 +1,7 @@
-import whiteLogo from "assets/images/angelprotocol-horiz-wht.png";
-import blueLogo from "assets/images/angelprotocol-horiz-blu.png";
+// import whiteLogo from "assets/images/angelprotocol-horiz-wht.png";
+import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
+import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
+// import blueLogo from "assets/images/angelprotocol-horiz-blu.png";
 import { app, site, web } from "types/routes";
 import { Link, useLocation } from "react-router-dom";
 import useScrollTop from "hooks/useScrollTop";
@@ -17,11 +19,10 @@ export default function Logo() {
     case `${site.home}${web.contact}`:
       return (
         <Link to={site.home} title="to home">
-          <img src={blueLogo} alt="" className="w-32 sm:w-36" />
+          <img src={betaBlueLogo} alt="" className="w-32 sm:w-36" />
         </Link>
       );
     case `${site.app}`:
-    case `${site.app}/${app.charities}`:
     case `${site.app}/${app.login}`:
     case `${site.app}/${app.govern}`:
     case `${site.app}/${app.charity}`:
@@ -32,13 +33,13 @@ export default function Logo() {
     case `${site.app}/${app.marketplace}`:
       return (
         <Link to={site.home} title="to home">
-          <img src={whiteLogo} alt="" className="w-32 sm:w-36" />
+          <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
         </Link>
       );
     default:
       return (
         <Link to={site.home} title="to home">
-          <img src={whiteLogo} alt="" width="150" />
+          <img src={betaWhiteLogo} alt="" width="150" />
         </Link>
       );
   }

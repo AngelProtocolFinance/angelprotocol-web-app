@@ -1,9 +1,4 @@
-import { Link } from "react-router-dom";
-import { app } from "types/routes";
-import { useRouteMatch } from "react-router-dom";
-
 export default function AppMenu() {
-  const { url } = useRouteMatch();
   const linkStyles = {
     className:
       "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
@@ -12,24 +7,34 @@ export default function AppMenu() {
   return (
     <ul className="flex lg:items-center">
       <li>
-        <Link to={`${url}/${app.index}`} {...linkStyles}>
-          LEADERBOARD
-        </Link>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37"
+          className={linkStyles.className}
+        >
+          SUPPORT
+        </a>
+      </li>
+      <li>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37"
+          className={linkStyles.className}
+        >
+          FEEDBACK
+        </a>
       </li>
       <li>
         <a
           rel="noreferrer"
           target="_blank"
           href="https://www.angelprotocol.io/contact"
-          {...linkStyles}
+          className={linkStyles.className}
         >
           REGISTER
         </a>
-      </li>
-      <li>
-        <Link to={`${url}/${app.tca}`} {...linkStyles}>
-          DONATE
-        </Link>
       </li>
     </ul>
   );

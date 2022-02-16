@@ -6,10 +6,12 @@ export class Disconnected extends Error {
 }
 
 export class TxResultFail extends Error {
-  url: string;
-  constructor(url: string) {
+  chainId: string;
+  txHash: string;
+  constructor(chainId: string, txHash: string) {
     super();
-    this.url = url;
+    this.chainId = chainId;
+    this.txHash = txHash;
     this.name = "TxResultFailt";
   }
 }

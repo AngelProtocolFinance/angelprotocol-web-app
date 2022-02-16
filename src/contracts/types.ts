@@ -1,26 +1,12 @@
-export enum chainIDs {
-  testnet = "bombay-12",
-  mainnet = "columbus-5",
-  localterra = "localterra",
-  eth_rinkeby = "4",
-  eth_kovan = "42",
-  eth_ropsten = "3",
-  eth_main = "1",
-  btc_test = "1",
-  sol_dev = "devnet",
-  sol_main = "mainnet-beta",
-  sol_test = "testnet",
-  cosmos_3 = "cosmoshub-3",
-  cosmos_4 = "cosmoshub-4",
-  cosmos_test = "cosmoshub-testnet",
-}
-
 export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
   anchor = "anchor",
+  anchor_vault1 = "anchor_vault1",
+  anchor_vault2 = "anchor_vault2", //mainnet doesn't have anchor vault2
   halo_token = "halo_token",
   halo_gov = "halo_gov",
+  airdrop = "airdrop",
   lbp_factory = "lbp_factory",
   lbp_pair = "lbp_pair",
   lbp_router = "lbp_router",
@@ -57,6 +43,12 @@ export type Endowments = { endowments: Endowment[] };
 
 //Accounts
 
+export interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
+
 export interface AccountDetails {
   name: string;
   description: string;
@@ -80,6 +72,7 @@ export interface Holdings {
   locked_cw20: Holding[];
   liquid_native: Holding[];
   liquid_cw20: Holding[];
+  is_placeholder: boolean;
 }
 
 //Vaults
@@ -144,4 +137,10 @@ export type Pair = {
   pair: TokenInfo[];
   contract: string;
   liquidity_token: string;
+};
+
+export type EndowmentBalanceData = {
+  endowment_address: string;
+  locked: number;
+  liquid: number;
 };
