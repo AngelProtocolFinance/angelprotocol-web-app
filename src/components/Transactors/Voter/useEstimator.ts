@@ -36,6 +36,7 @@ export default function useEstimator() {
     (async () => {
       try {
         dispatch(setFormError(""));
+
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;

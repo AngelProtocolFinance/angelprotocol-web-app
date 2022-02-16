@@ -1,4 +1,4 @@
-import Select, { GroupBase, StylesConfig } from "react-select";
+import Select, { MenuPlacement, GroupBase, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
 import { OptionType } from "types/optionType";
 
@@ -10,6 +10,7 @@ interface SelectorProps {
   register: Function;
   onChange?: Function;
   disabled?: boolean;
+  menuPlacement?: MenuPlacement;
 }
 
 export const Selector = (props: SelectorProps) => {
@@ -32,6 +33,7 @@ export const Selector = (props: SelectorProps) => {
             }}
             options={props.options}
             isDisabled={props.disabled}
+            menuPlacement={props.menuPlacement || "auto"}
           />
         );
       }}

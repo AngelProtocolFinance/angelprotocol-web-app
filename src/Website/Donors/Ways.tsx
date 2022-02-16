@@ -27,7 +27,7 @@ export default function Ways() {
             className="w-full max-w-lg shadow-md flex flex-col items-start p-6 border-4 border-blue-accent"
           >
             {article.link ? (
-              <a href={article.link} target="_blank">
+              <a href={article.link} target="_blank" rel="noreferrer">
                 <h4 className="uppercase text-lg lg:text-xl font-bold text-angel-grey my-4">
                   {article.title}
                 </h4>

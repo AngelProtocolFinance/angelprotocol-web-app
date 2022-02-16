@@ -7,9 +7,3 @@ export interface DepositTransactions {
   app_used: string; // "restore-earth"
   transaction_type: string; // "deposit"
 }
-
-export interface QueryRes<T> {
-  Count: number;
-  ScannedCount: number;
-  Items: T;
-}

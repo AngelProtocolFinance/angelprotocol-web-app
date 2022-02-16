@@ -13,6 +13,7 @@ export default function PollerForm() {
   } = useFormContext<Values>();
   const createPoll = useCreatePoll();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+
   return (
     <form
       onSubmit={handleSubmit(createPoll)}

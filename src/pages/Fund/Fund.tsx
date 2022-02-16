@@ -1,10 +1,10 @@
-import FundVid from "./FundVid";
+import { RouteComponentProps } from "react-router-dom";
+import { useFundProfiles } from "services/aws/endowments/queriers";
 import CharityCard from "pages/Market/CharityCard";
+import { unsdgs } from "pages/Fund/unsdgs";
 import Overview from "./Overview";
 import useFund from "./useFund";
-import useProfiles from "pages/Market/useProfiles";
-import { RouteComponentProps } from "react-router-dom";
-import { unsdgs } from "pages/Fund/unsdgs";
+import FundVid from "./FundVid";
 
 //props
 //fundBgClass
@@ -18,7 +18,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
   const fund_id =
     //if user goes to fund page with param not in ["1"..."17"], set id to 1
     (id_param && sdg_ids.includes(id_param) && Number(id_param)) || 1;
-  const profiles = useProfiles(fund_id);
+  const { profiles } = useFundProfiles(fund_id);
   const sdg = unsdgs[fund_id];
 
   return (
@@ -59,7 +59,7 @@ export default function Fund(props: RouteComponentProps<{ id?: string }>) {
         <ul className="flex flex-wrap gap-4">
           {profiles.map((profile) => (
             <div className="max-h-116 overflow-hidden">
-              <CharityCard address={profile.endowment_address} />
+              <CharityCard key={profile.endowment_address} {...profile} />
             </div>
           ))}
         </ul>
