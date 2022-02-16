@@ -7,7 +7,7 @@ import useGov from "./useGov";
 export default function Landing() {
   const { staked, percentStaked, spot_price } = useGov();
   return (
-    <div className="padded-container grid grid-rows-aa1 gap-4">
+    <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
         Governance
       </h2>

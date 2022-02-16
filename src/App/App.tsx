@@ -1,9 +1,9 @@
 import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "./chains";
-import AppFoot from "components/Footers/AppFoot";
+import AppFoot from "components/AppFoot/AppFoot";
 import Nodal from "components/Nodal/Nodal";
 import Views from "./Views";
-import DappHead from "components/Headers/DappHead";
+import DappHead from "components/DappHead/DappHead";
 import { ToastContainer } from "react-toastify";
 
 export default function App() {

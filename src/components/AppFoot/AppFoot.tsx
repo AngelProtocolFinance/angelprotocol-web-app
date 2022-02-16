@@ -1,4 +1,4 @@
-import AppMenu from "components/NavMenus/AppMenu";
+import AppMenu from "components/AppFoot/AppMenu";
 import { Link } from "react-router-dom";
 import {
   AiOutlineTwitter,
