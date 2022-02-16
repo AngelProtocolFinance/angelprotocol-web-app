@@ -1,5 +1,5 @@
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { web, site } from "types/routes";
+import { web } from "types/routes";
 
 //Will be for WebNav
 export default function MobileNav() {
@@ -12,18 +12,12 @@ export default function MobileNav() {
   };
 
   return (
-    <div className="col-start-2 grid md:hidden justify-items-end gap-1 bg-white font-body">
+    <div className="col-start-2 col-span-2  grid sm:hidden justify-items-end gap-1 bg-white font-body">
       <NavLink to={`${url}${web.charities}`} {...linkStyles}>
         For Charities
       </NavLink>
       <NavLink to={`${url}${web.donors}`} {...linkStyles}>
         For Donors
-      </NavLink>
-      <NavLink
-        to={`${site.app}/`}
-        className="px-2 py-1 rounded-md font-semibold font-heading uppercase font-extrabold text-angel-orange hover:text-angel-blue"
-      >
-        Donate
       </NavLink>
     </div>
   );

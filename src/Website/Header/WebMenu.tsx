@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { app, site, web } from "types/routes";
+import { web } from "types/routes";
 import { useRouteMatch } from "react-router-dom";
 
 export default function WebMenu() {
@@ -17,12 +17,6 @@ export default function WebMenu() {
 
       <NavLink to={`${url}${web.donors}`} {...linkStyles}>
         For Donors
-      </NavLink>
-      <NavLink
-        to={`${site.app}/${app.marketplace}`}
-        className={`border ml-4 py-2 px-4 border-opacity-40 border-angel-orange rounded-md bg-angel-orange text-white transform hover:scale-105 hover:shadow-lg active:translate-x-1 active:shadow-md`}
-      >
-        Donate
       </NavLink>
     </nav>
   );
