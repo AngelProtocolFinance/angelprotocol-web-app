@@ -1,5 +1,6 @@
 import { NavLink, useHistory, useParams } from "react-router-dom";
 import { charityNav } from "./constants";
+import ScrollableTabs from "./ScrollableTabs";
 
 type CharityParams = {
   address: string;
@@ -12,7 +13,7 @@ export default function CharityInfoNav() {
   } = useHistory();
 
   const getClassNames = (isActive: boolean, isDisabled: boolean = false) => {
-    const classes = `flex justify-center w-full ${
+    const classes = `block w-full ${
       isDisabled
         ? "text-white-grey bg-grey-accent"
         : isActive
@@ -23,10 +24,10 @@ export default function CharityInfoNav() {
   };
 
   return (
-    <nav className="max-w-full overflow-hidden scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
-      <ul className="flex font-body text-sm lg:text-base ml-1 block w-full overflow-hidden overflow-x-auto scroll-hidden">
+    <nav className="relative max-w-full overflow-hidden scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
+      <ScrollableTabs>
         {charityNav.map((navItem, i) => (
-          <li className="flex block min-w-200" key={i}>
+          <li className="flex block w-full min-w-200" key={i}>
             {/**just use buttons since page switching is programmatic and no involved page semantics*/}
             {navItem.disabled ? (
               <button className={getClassNames(false, true)}>
@@ -47,7 +48,7 @@ export default function CharityInfoNav() {
             )}
           </li>
         ))}
-      </ul>
+      </ScrollableTabs>
     </nav>
   );
 }
