@@ -11,7 +11,7 @@ import routes from "./routes";
 const ConfirmEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
+  const user = useGetter((state) => state.user);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
@@ -55,7 +55,7 @@ const ConfirmEmail = () => {
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
-  }, [user, dispatch]);
+  }, [user.PK, dispatch]);
 
   if (user.EmailVerified) {
     return <Redirect to={`${site.app}/${app.register}/${routes.status}`} />;
