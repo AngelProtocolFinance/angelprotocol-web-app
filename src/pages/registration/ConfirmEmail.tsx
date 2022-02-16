@@ -63,16 +63,16 @@ const ConfirmEmail = () => {
 
   return (
     <div className="flex flex-col gap-4 font-bold">
-      {is_sent && (
-        <img src={banner2} width="100%" className="rounded-xl" alt="" />
-      )}
       {is_sent ? (
-        <div className="text-4xl">
-          <p>Hi {user.FirstName}!</p>
-          <span>
-            We're still waiting for you to confirm your email address.
-          </span>
-        </div>
+        <>
+          <img src={banner2} width="100%" className="rounded-xl" alt="" />
+          <div className="text-4xl">
+            <p>Hi {user.FirstName}!</p>
+            <span>
+              We're still waiting for you to confirm your email address.
+            </span>
+          </div>
+        </>
       ) : (
         <div className="text-2xl">
           <p>Thank you for registering</p>
