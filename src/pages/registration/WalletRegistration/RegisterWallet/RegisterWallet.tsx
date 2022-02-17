@@ -35,17 +35,29 @@ export default function RegisterWallet() {
   });
 
   useEffect(() => {
+    console.log(
+      "status === WalletStatus.INITIALIZING",
+      status === WalletStatus.INITIALIZING,
+      "isLoading",
+      isLoading,
+      "privatekey",
+      privateKey
+    );
     if (status === WalletStatus.INITIALIZING || isLoading || !privateKey) {
       return;
     }
+
+    console.log(wallets);
 
     if (!!wallets.length) {
       return resetField("walletAddress", {
         defaultValue: wallets[0].terraAddress,
       });
     }
+    console.log(privateKey);
 
     const wallet = entropyToTerraWallet(privateKey);
+    console.log(wallet);
     resetField("walletAddress", { defaultValue: wallet.key.accAddress });
   }, [
     status,

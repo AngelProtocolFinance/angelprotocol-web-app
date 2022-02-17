@@ -3,8 +3,10 @@ import OpenLogin from "@toruslabs/openlogin";
 import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouteMatch } from "react-router";
+import { useGetter } from "store/accessors";
 
 export default function useOpenLogin() {
+  const user = useGetter((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [privateKey, setPrivateKey] = useState("");
   const { path } = useRouteMatch();
@@ -22,6 +24,8 @@ export default function useOpenLogin() {
     setLoading(true);
     async function initializeOpenlogin() {
       await openlogin.init();
+      console.log("init openlogin privkey", openlogin.privKey);
+
       if (openlogin.privKey) {
         setPrivateKey(openlogin.privKey);
       }
@@ -34,16 +38,22 @@ export default function useOpenLogin() {
   const login = useCallback(
     async (loginProvider: string) => {
       try {
-        await openlogin.login({
+        console.log(`${window.location.origin}${path}/auth`);
+
+        const privkey = await openlogin.login({
           loginProvider: loginProvider,
           redirectUrl: `${window.location.origin}${path}/auth`,
           relogin: true,
+          extraLoginOptions: {
+            login_hint: user.Email,
+          },
         });
+        console.log("login privkey", privkey);
       } catch (error) {
         console.error("error", error);
       }
     },
-    [openlogin, path]
+    [openlogin, path, user.Email]
   );
 
   return {
