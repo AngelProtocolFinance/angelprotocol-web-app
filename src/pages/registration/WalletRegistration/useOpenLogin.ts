@@ -4,6 +4,7 @@ import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { useGetter } from "store/accessors";
+import { routes } from "./constants";
 
 export default function useOpenLogin() {
   const user = useGetter((state) => state.user);
@@ -36,17 +37,14 @@ export default function useOpenLogin() {
   const login = useCallback(
     async (loginProvider: string) => {
       try {
-        console.log(`${window.location.origin}${path}/auth`);
-
-        const privkey = await openlogin.login({
+        await openlogin.login({
           loginProvider: loginProvider,
-          redirectUrl: `${window.location.origin}${path}/auth`,
+          redirectUrl: `${window.location.origin}${path}/${routes.auth}`,
           relogin: true,
           extraLoginOptions: {
             login_hint: user.Email,
           },
         });
-        console.log("login privkey", privkey);
       } catch (error) {
         console.error("error", error);
       }

@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { routes } from "./constants";
 
 const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const RedirectAuth = lazy(() => import("./RedirectAuth"));
@@ -20,10 +21,4 @@ export default function WalletRegistration() {
       />
     </Switch>
   );
-}
-
-export enum routes {
-  index = "/",
-  submit = "submit",
-  auth = "auth",
 }

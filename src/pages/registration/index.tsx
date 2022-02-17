@@ -7,11 +7,11 @@ const ContactDetails = lazy(() => import("./ContactDetails"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
-const ChooseWallet = lazy(() => import("./WalletRegistration/ChooseWallet"));
 const RedirectAuth = lazy(() => import("./WalletRegistration/RedirectAuth"));
 const RegisterWallet = lazy(
   () => import("./WalletRegistration/RegisterWallet")
 );
+const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Register() {
   //this component will only render under '/app/register/'
@@ -40,10 +40,10 @@ export default function Register() {
           path={`${path}/${routes.status}`}
           component={RegistrationStatus}
         />
+        {/* 'exact' prop is unnecessary, since this component has sub-routes */}
         <Route
-          exact
           path={`${path}/${routes.wallet}`}
-          component={ChooseWallet}
+          component={WalletRegistration}
         />
         <Route
           exact
