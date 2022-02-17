@@ -29,6 +29,7 @@ export default function useTerraSender(tx: CreateTxOptions) {
         if (response.success) {
           updateTx({ step: Step.submit, message: "Saving donation details" });
 
+          const walletAddress = wallet.walletAddress;
           const receiver = getValues("receiver");
           const currency = getValues("currency");
           if (typeof receiver !== "undefined") {
@@ -38,6 +39,7 @@ export default function useTerraSender(tx: CreateTxOptions) {
               data.amount,
               currency,
               data.split_liq,
+              walletAddress,
               receiver
             );
 
