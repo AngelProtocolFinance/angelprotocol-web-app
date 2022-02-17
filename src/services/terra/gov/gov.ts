@@ -1,8 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { terra } from "../terra";
-import { GovState, HaloBalance } from "contracts/types";
-import { GovConfig, GovStaker, Poll, Polls } from "./types";
-import { QueryRes, ContractQueryArgs } from "../types";
+import { GovState, GovConfig, GovStaker, Poll, Polls } from "./types";
+import { QueryRes, ContractQueryArgs, HaloBalance } from "../types";
 import { gov, tags } from "../tags";
 import contract_querier from "../contract_querier";
 

@@ -1,12 +1,10 @@
 import "./index.css";
-import "react-toastify/dist/ReactToastify.css";
 import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { site } from "./types/routes";
+import { site } from "./constants/routes";
 import { Provider } from "react-redux";
-import AuthProvider from "contexts/AuthProvider";
 import { store } from "store/store";
 import Loader from "components/Loader/Loader";
 
@@ -21,14 +19,12 @@ ReactDOM.render(
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AuthProvider>
-          <Suspense fallback={<LoaderComponent />}>
-            <Switch>
-              <Route path={site.app} component={App} />
-              <Route path={site.home} component={Website} />
-            </Switch>
-          </Suspense>
-        </AuthProvider>
+        <Suspense fallback={<LoaderComponent />}>
+          <Switch>
+            <Route path={site.app} component={App} />
+            <Route path={site.home} component={Website} />
+          </Switch>
+        </Suspense>
       </BrowserRouter>
     </Provider>
   </StrictMode>,

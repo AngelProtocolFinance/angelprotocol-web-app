@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 
 export default function Portal() {
@@ -21,7 +21,7 @@ export default function Portal() {
   } else {
     return (
       <Link
-        to={`${site.app}/${app.endowment_admin}/${endowmentAddr}`}
+        to={`${site.app}/${app.endowment}/${endowmentAddr}`}
         className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY ENDOWMENT

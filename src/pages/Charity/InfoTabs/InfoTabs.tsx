@@ -1,5 +1,5 @@
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { charity } from "types/routes";
+import { charity } from "constants/routes";
 import { EndowmentInfo } from "./EndowmentInfo";
 import Overview from "./Overview";
 

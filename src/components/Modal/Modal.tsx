@@ -1,35 +1,37 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-
-type Handler = () => void;
-
-interface Props {
-  setShown?: Function;
-  children: ReactNode;
-  onModalClose?: Function;
-  show?: Boolean;
-}
-
-const setContext = createContext<Handler>(() => {});
-//use this hook only on components inside Modal
-export const useModalCloser = () => useContext(setContext);
+import { Handlers, Opener, Props } from "./types";
 
 export default function Modal(props: Props) {
-  const [shown, setShown] = useState(props.show || true);
+  const [Content, setContent] = useState<ReactNode>();
+
+  const showModal: Opener = (Content, props) => {
+    setContent(<Content {...props} />);
+  };
 
   function closeModal() {
-    if (props.onModalClose && typeof props.onModalClose === "function")
-      props.onModalClose();
-    if (props.setShown) props.setShown(false);
-    setShown(false);
+    setContent(undefined);
   }
 
   return (
-    <setContext.Provider value={closeModal}>
-      {shown && (
-        <div className="fixed bg-gray-800 bg-opacity-80 w-full h-full top-0 left-0 right-0 bottom-0 z-50 grid place-items-center">
-          {props.children}
-        </div>
+    <setContext.Provider
+      value={{
+        showModal,
+        hideModal: closeModal,
+      }}
+    >
+      {!!Content && (
+        <>
+          <div className={props.classes}>{Content}</div>
+        </>
       )}
+
+      {props.children}
     </setContext.Provider>
   );
 }
+const setContext = createContext<Handlers>({
+  showModal: () => {},
+  hideModal: () => {},
+});
+
+export const useSetModal = () => useContext(setContext);

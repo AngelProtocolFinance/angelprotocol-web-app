@@ -7,6 +7,7 @@ import chainReducer from "../services/chain/chainSlice";
 import walletReducer from "../services/wallet/walletSlice";
 import providerReducer from "../services/provider/providerSlice";
 import transactionReducer from "../services/transaction/transactionSlice";
+import authReducer from "../services/auth/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     chain: chainReducer,
     provider: providerReducer,
     wallet: walletReducer,
+    auth: authReducer,
     [aws.reducerPath]: aws.reducer,
     [terra.reducerPath]: terra.reducer,
     [apes.reducerPath]: apes.reducer,

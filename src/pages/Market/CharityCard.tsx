@@ -1,6 +1,6 @@
 import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 import { Profile } from "services/aws/endowments/types";
 

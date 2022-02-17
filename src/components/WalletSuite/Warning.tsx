@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 export type Props = { text: string };

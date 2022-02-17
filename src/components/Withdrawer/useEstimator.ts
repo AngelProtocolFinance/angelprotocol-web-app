@@ -14,7 +14,7 @@ import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import useDebouncer from "hooks/useDebouncer";
 import { AmountInfo, filter_infos } from "./helpers";
 import { vault_field_map } from "constants/contracts";

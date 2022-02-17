@@ -1,15 +1,15 @@
-import Liquid from "./Summary";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RouteComponentProps } from "react-router-dom";
-import { RouteParam } from "./types";
-import TransactionList from "./TransactionList";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
 import { useProfile } from "services/aws/endowments/queriers";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import PageMeta from "./PageMeta";
 import useWithdrawer from "components/Withdrawer/useWithdrawer";
+import PageMeta from "./PageMeta";
+import Liquid from "./Summary";
+import { RouteParam } from "./types";
+import TransactionList from "./TransactionList";
 
-export default function Withdraw(props: RouteComponentProps<RouteParam>) {
+export default function Endowment(props: RouteComponentProps<RouteParam>) {
   const address = props.match.params.address;
   const wallet = useConnectedWallet();
   //fetch exchange rate here

@@ -1,5 +1,5 @@
 import { contracts } from "constants/contracts";
-import { sc } from "contracts/types";
+import { sc } from "constants/sc";
 import { chainIDs } from "constants/chainIDs";
 import { ExchangeMap } from "./types";
 

@@ -1,4 +1,4 @@
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 import { CharityNavProps } from "./types";
 
 export const charityNav: CharityNavProps[] = [
