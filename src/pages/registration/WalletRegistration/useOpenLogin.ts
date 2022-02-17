@@ -24,8 +24,6 @@ export default function useOpenLogin() {
     setLoading(true);
     async function initializeOpenlogin() {
       await openlogin.init();
-      console.log("init openlogin privkey", openlogin.privKey);
-
       if (openlogin.privKey) {
         setPrivateKey(openlogin.privKey);
       }
