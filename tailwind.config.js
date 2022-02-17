@@ -182,6 +182,7 @@ module.exports = {
       display: ["hover", "group-hover"],
       opacity: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
+      transform: ["hover", "active"],
     },
   },
 };

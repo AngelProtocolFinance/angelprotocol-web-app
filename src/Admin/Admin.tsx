@@ -6,11 +6,11 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { admin } from "../types/routes";
-import AppFoot from "components/Footers/AppFoot";
+import AppFoot from "components/AppFoot/AppFoot";
 import { WalletProvider } from "@terra-money/wallet-provider";
 import { mainnet, walletConnectChainIds } from "../App/chains";
 import IndexFund from "pages/Admin/IndexFund/IndexFund";
-import DappHead from "components/Headers/DappHead";
+import DappHead from "components/DappHead/DappHead";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 
