@@ -15,13 +15,3 @@ export class TxResultFail extends Error {
     this.name = "TxResultFailt";
   }
 }
-
-export class LBPGraphDataUnavailable extends Error {
-  // this field should be used for our internal logging
-  reason: string;
-  constructor(reason: string) {
-    super();
-    this.reason = reason;
-    this.name = "LBPGraphDataUnavailable";
-  }
-}

@@ -1,4 +1,4 @@
-import { TokenInfo } from "contracts/types";
+import { TokenInfo } from "./types";
 
 export const halo_info: TokenInfo = {
   name: "",

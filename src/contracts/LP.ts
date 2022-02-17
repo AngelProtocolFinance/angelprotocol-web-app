@@ -2,10 +2,10 @@ import { Dec, MsgExecuteContract, Coin } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
-import { Pool, PoolBalance, Simulation } from "services/terra/lp/types";
+import { sc } from "constants/sc";
+import { Simulation } from "services/terra/lp/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { sc } from "constants/sc";
 
 export default class LP extends Contract {
   factory_address: string;
@@ -84,15 +84,6 @@ export default class LP extends Contract {
       },
     });
     return result;
-  }
-
-  //pool on demand
-  async getPoolBalance(): Promise<PoolBalance> {
-    const result = await this.query<Pool>(this.pair_address, { pool: {} });
-    return {
-      token: result.assets[0].amount,
-      native_token: result.assets[1].amount,
-    };
   }
 
   async createSellTx(
