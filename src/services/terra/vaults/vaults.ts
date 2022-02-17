@@ -39,7 +39,6 @@ export const vault_api = terra.injectEndpoints({
 
           return { data: exchange_map };
         } catch (err) {
-          console.error(err);
           return {
             error: {
               status: 500,

@@ -17,7 +17,7 @@ export default function useEstimator() {
   const { getValues } = useFormContext<Values>();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
-  const halo_balance = useHaloBalance();
+  const { haloBalance } = useHaloBalance();
   const wallet = useConnectedWallet();
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function useEstimator() {
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
-        if (amount >= halo_balance) {
+        if (amount >= haloBalance) {
           dispatch(setFormError("Not enough halo balance"));
           return;
         }
@@ -63,7 +63,6 @@ export default function useEstimator() {
         dispatch(setFee(estimatedFee));
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transaction"));
       }
     })();
@@ -72,7 +71,7 @@ export default function useEstimator() {
       dispatch(setFormError(""));
     };
     //eslint-disable-next-line
-  }, [wallet, halo_balance, UST_balance]);
+  }, [wallet, haloBalance, UST_balance]);
 
   //return estimated fee computed using max constraints
 }

@@ -10,6 +10,7 @@ type Props = {
   altSrc?: string;
   width?: string;
   height?: string;
+  rounded?: boolean;
 };
 
 export default function LazyImage(props: Props) {
@@ -23,8 +24,8 @@ export default function LazyImage(props: Props) {
   }, [isVisible]);
 
   return (
-    <div ref={ref}>
-      {!entered && <ContentLoader width={props.width} height={props.height} />}
+    <div ref={ref} className={props.classes}>
+      {!entered && <ContentLoader {...props} />}
       {entered && <ImageWrapper {...props} />}
     </div>
   );

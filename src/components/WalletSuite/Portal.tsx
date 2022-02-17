@@ -8,15 +8,21 @@ export default function Portal() {
   const wallet = useConnectedWallet();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
-  const { data } = useLookupQuery(isTestNet);
+  const { data, isLoading, isFetching } = useLookupQuery(isTestNet);
+
   const endowmentAddr = data?.[wallet?.terraAddress || ""];
-  if (!endowmentAddr) {
+  if (isLoading || isFetching) {
+    //subtle skeleton
+    return (
+      <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
+    );
+  } else if (!endowmentAddr) {
     return null;
   } else {
     return (
       <Link
         to={`${site.app}/${app.endowment_admin}/${endowmentAddr}`}
-        className="ml-4 mr-auto bg-blue-accent hover:bg-angel-blue active:bg-angel-blue text-sm text-white-grey rounded-sm py-1 px-2 mt-2"
+        className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY ENDOWMENT
       </Link>

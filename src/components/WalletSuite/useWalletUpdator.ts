@@ -13,8 +13,8 @@ import { useSetter } from "store/accessors";
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
-  const { main, others } = useBalances(denoms.uusd);
-  const halo_balance = useHaloBalance();
+  const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
+  const { haloBalance, haloBalanceLoading } = useHaloBalance();
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -35,19 +35,21 @@ export default function useWalletUpdator(activeProvider: Providers) {
     ) {
       return;
     }
-
-    dispatch(setIsUpdating(true));
+    if (terraBalancesLoading || haloBalanceLoading) {
+      dispatch(setIsUpdating(true));
+      return;
+    }
     //append halo balance
     const coinsWithHalo = [
       ...others,
-      { amount: halo_balance, denom: denoms.uhalo },
+      { amount: haloBalance, denom: denoms.uhalo },
     ];
     dispatch(
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
         displayCoin: { amount: main, denom: denoms.uusd },
-        coins: halo_balance !== 0 ? coinsWithHalo : others,
+        coins: haloBalance !== 0 ? coinsWithHalo : others,
         address: wallet.walletAddress,
         chainId: wallet.network.chainID as chainIDs,
         supported_denoms: [denoms.uusd, denoms.uluna],
@@ -55,7 +57,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     );
     dispatch(setIsUpdating(false));
     //eslint-disable-next-line
-  }, [main, others, wallet, activeProvider, halo_balance]);
+  }, [wallet, activeProvider, terraBalancesLoading, haloBalanceLoading]);
 
   //updator of xdefi
   useEffect(() => {
@@ -75,7 +77,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
           return;
         }
 
-        dispatch(setIsUpdating(true));
+        if (terraBalancesLoading || haloBalanceLoading) {
+          dispatch(setIsUpdating(true));
+          return;
+        }
         const xwindow: XdefiWindow = window;
         //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
@@ -108,10 +113,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
           })
         );
         dispatch(setIsUpdating(false));
-      } catch (err) {
-        console.error(err);
-      }
+      } catch (err) {}
     })();
     //eslint-disable-next-line
-  }, [main, others, wallet, activeProvider, halo_balance]);
+  }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);
 }

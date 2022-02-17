@@ -25,20 +25,20 @@ export enum admin {
 export enum app {
   index = "/",
   dashboard = "dashboard",
-  charities = "charities",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
+  admin = "admin",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
   charity = "charity",
+  charity_edit = "charity-edit",
   tca = "tca",
   fund = "fund",
   withdraw = "withdraw",
   govern = "govern",
   test = "test",
   auction = "auction",
-  churchportal = "churchportal",
   endowment_admin = "endowment_admin",
 }
 

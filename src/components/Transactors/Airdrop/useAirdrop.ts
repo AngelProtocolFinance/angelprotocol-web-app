@@ -15,9 +15,9 @@ export default function useAirdrop() {
   const { data = [] } = useAirdropQuery(
     {
       wallet_addr: wallet?.walletAddress!,
-      is_test: true,
+      is_test,
     },
-    { skip: !is_test || wallet?.walletAddress === undefined }
+    { skip: wallet?.walletAddress === undefined }
   );
 
   const showDetails = useCallback(() => {

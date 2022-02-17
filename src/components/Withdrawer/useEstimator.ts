@@ -10,7 +10,7 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useEndowmentHoldingsState } from "services/terra/states";
+import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
@@ -138,7 +138,6 @@ export default function useEstimator() {
         setTx(transaction);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("transaction simulation failed"));
       }
     })();

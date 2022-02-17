@@ -3,7 +3,8 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-import { useBalances, useGovStaker } from "services/terra/queriers";
+import { useBalances } from "services/terra/queriers";
+import { useGovStaker } from "services/terra/gov/queriers";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -60,7 +61,6 @@ export default function useEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transcation"));
       }
     })();

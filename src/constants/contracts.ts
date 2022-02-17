@@ -23,13 +23,14 @@ export const contracts: Contracts = {
     [sc.apCW3]: "terra1m6rqwmxlpztjf3zfhza906d44c9rpf2t6vn37n",
     [sc.apCW4]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
     [sc.coCW4]: "terra1lycc2zyhd676294c604euh8hxw7h6jrjd68x83",
+    [sc.gaCW3]: "",
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
-    [sc.airdrop]: "",
 
     //halo
     [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
+    [sc.airdrop]: "terra1pe6mnf0ursz0h80h2hwk690hvrph8vgt9pnw0w",
 
     //lbp
     [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
@@ -58,6 +59,7 @@ export const contracts: Contracts = {
     [sc.apCW3]: "terra1qspgamxqn9slwe7ecca4n2fs2xsl5hxvkc9lzs",
     [sc.apCW4]: "terra1wpnzy6w9gd3tt9wkvnqkcmzkyc8v0tgz75nuue",
     [sc.coCW4]: "terra1ldrkpnysrasq4sg4zu9mgh74wt9nxvk9qgvxtd",
+    [sc.gaCW3]: "",
 
     //terraswap
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",

@@ -5,7 +5,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
-
+// import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
 import { Values } from "./types";
 import { useSetter } from "store/accessors";
@@ -48,8 +48,8 @@ export default function useEstimator() {
             return;
           }
         } else {
-          if (balance.sub(locked).div(1e6).sub(debounced_amount).lt(0)) {
-            dispatch(setFormError("Not enough staked less locked"));
+          if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
+            dispatch(setFormError("Not enough staked halo less locked"));
             return;
           }
         }
@@ -79,7 +79,6 @@ export default function useEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        console.error(err);
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
