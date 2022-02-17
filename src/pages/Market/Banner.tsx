@@ -7,10 +7,10 @@ export default function Banner() {
         className="rounded-lg"
       />
       <div className="order-first lg:order-none self-center">
-        <p className="font-heading text-white-grey font-extrabold text-4xl md:text-5xl lg:text-6xl">
+        <p className="font-heading text-white-grey font-extrabold text-6xl md:text-7xl lg:text-8xl">
           GIVE ONCE,
         </p>
-        <p className="font-heading text-angel-orange font-extrabold text-4xl md:text-5xl lg:text-6xl mb-4">
+        <p className="font-heading text-angel-orange font-extrabold  text-6xl md:text-7xl lg:text-8xl mb-4">
           GIVE FOREVER.
         </p>
         <p className="font-heading text-white-grey text-xl xl:text-2xl mb-0">
