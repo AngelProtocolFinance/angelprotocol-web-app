@@ -11,10 +11,6 @@ const strictShape: PartialRecord<
   //these fields are optional, owners can opt not to give details,
   //but when they do, make sure they give correct one
   charity_email: Yup.string().email("invalid email"),
-  facebook_page: Yup.string().url("invalid url"),
-  linkedin_page: Yup.string().url("invalid url"),
-  twitter_handle: Yup.string().url("invalid url"),
-
   //other fields are optional, due diligence of owner to update profile
 };
 
