@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 
 export type SummaryProps = { type: string; principal: number; impact: number };

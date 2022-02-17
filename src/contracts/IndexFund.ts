@@ -9,8 +9,9 @@ import {
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
+import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { Donors, sc } from "./types";
+import { Donors } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;

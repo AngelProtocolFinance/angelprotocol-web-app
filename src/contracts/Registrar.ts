@@ -1,7 +1,8 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { Endowments, sc, SplitRes } from "./types";
+import { Endowments, SplitRes } from "./types";
 
 export default class Registrar extends Contract {
   address: string;

@@ -1,5 +1,5 @@
 import { NavLink, useRouteMatch } from "react-router-dom";
-import { web } from "types/routes";
+import { web } from "constants/routes";
 
 //Will be for WebNav
 export default function MobileNav() {

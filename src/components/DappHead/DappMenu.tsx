@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 
 export default function DappMenu() {
   const linkStyles = {

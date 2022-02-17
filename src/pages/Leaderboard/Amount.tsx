@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 import { BiInfoCircle } from "react-icons/bi";
 import Summary, { SummaryProps } from "./Summary";

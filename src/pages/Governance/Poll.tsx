@@ -1,6 +1,6 @@
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
-import { govern } from "types/routes";
+import { govern } from "constants/routes";
 import toCurrency from "helpers/toCurrency";
 import useDetails from "./useDetails";
 import { PollStatus } from "services/terra/gov/types";

@@ -6,7 +6,7 @@ import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
-import { site, app } from "types/routes";
+import { site, app } from "constants/routes";
 import useEditForm from "./useEditForm";
 
 export default function EditForm() {

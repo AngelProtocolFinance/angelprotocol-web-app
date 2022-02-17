@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { TxProps } from "components/TransactionSuite/types";
 import { useCallback } from "react";

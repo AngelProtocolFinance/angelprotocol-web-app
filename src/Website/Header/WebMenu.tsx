@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { web } from "types/routes";
+import { web } from "constants/routes";
 import { useRouteMatch } from "react-router-dom";
 
 export default function WebMenu() {

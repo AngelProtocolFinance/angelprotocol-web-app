@@ -1,5 +1,5 @@
 import { NavLink, useHistory, useParams } from "react-router-dom";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 
 type CharityParams = {
   address: string;

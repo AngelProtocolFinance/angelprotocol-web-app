@@ -4,9 +4,10 @@ import {
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 // import { denoms } from "constants/currency";
 import Contract from "./Contract";
-import { PairResult, PairsResult, sc } from "./types";
+import { PairResult, PairsResult } from "./types";
 
 export default class LpFactory extends Contract {
   address: string;

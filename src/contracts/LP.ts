@@ -5,7 +5,7 @@ import { denoms } from "constants/currency";
 import { Pool, PoolBalance, Simulation } from "services/terra/lp/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { sc } from "./types";
+import { sc } from "constants/sc";
 
 export default class LP extends Contract {
   factory_address: string;

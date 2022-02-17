@@ -5,7 +5,7 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
-import { app, site } from "../types/routes";
+import { app, site } from "../constants/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
@@ -18,9 +18,7 @@ const TCA = lazy(() => import("pages/TCA/TCA"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
 const Auction = lazy(() => import("pages/LBP/Auction"));
-const Endowment_Admin = lazy(
-  () => import("pages/Endowment_Admin/Endowment_Admin")
-);
+const Endowment = lazy(() => import("pages/Endowment/Endowment"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 // const Fund = lazy(() => import("pages/Fund/Fund"));
 // const Test = lazy(() => import("pages/Test"));
@@ -52,8 +50,8 @@ export default function Views() {
         {/* <Route path={`${path}/${app.fund}/:id`} component={Fund} /> */}
         <Route path={`${path}/${app.auction}`} component={Auction} />
         <Route
-          path={`${path}/${app.endowment_admin}/:address`}
-          component={Endowment_Admin}
+          path={`${path}/${app.endowment}/:address`}
+          component={Endowment}
         />
         {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
         <Route path={`${path}${app.index}`}>
