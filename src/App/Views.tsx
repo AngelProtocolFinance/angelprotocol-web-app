@@ -30,7 +30,6 @@ export default function Views() {
   const { path } = useRouteMatch();
   const location = useLocation();
   useScrollTop(location.pathname);
-
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
   );
@@ -39,6 +38,7 @@ export default function Views() {
     <Suspense fallback={<LoaderComponent />}>
       <Switch>
         <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
+        <Route path={`${path}/${app.marketplace}`} component={Market} />
         <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
         <Route path={`${path}/${app.charity}/:address`} component={Charity} />
         <Route
@@ -56,7 +56,9 @@ export default function Views() {
           component={Endowment_Admin}
         />
         {/* <Route path={`${path}/${app.test}`} component={Test} /> */}
-        <Route path={`${path}${app.index}`} component={Market}></Route>
+        <Route path={`${path}${app.index}`}>
+          <Redirect to={`${path}/${app.marketplace}`} />
+        </Route>
         <Redirect from="*" to={site.home} />
       </Switch>
     </Suspense>

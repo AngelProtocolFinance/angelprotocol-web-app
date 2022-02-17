@@ -22,8 +22,8 @@ const Contact = lazy(() => import("./Contact/Contact"));
 const Website = () => {
   const { path } = useRouteMatch();
   const location = useLocation();
-
   useScrollTop(location.pathname);
+
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
   );

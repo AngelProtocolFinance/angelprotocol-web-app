@@ -8,9 +8,15 @@ export default function Portal() {
   const wallet = useConnectedWallet();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
-  const { data } = useLookupQuery(isTestNet);
+  const { data, isLoading, isFetching } = useLookupQuery(isTestNet);
+
   const endowmentAddr = data?.[wallet?.terraAddress || ""];
-  if (!endowmentAddr) {
+  if (isLoading || isFetching) {
+    //subtle skeleton
+    return (
+      <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
+    );
+  } else if (!endowmentAddr) {
     return null;
   } else {
     return (
