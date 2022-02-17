@@ -25,8 +25,8 @@ export default function VoterForm() {
       <Status />
       <h4 className="text-xl text-angel-grey text-center uppercase">Vote</h4>
       <p className="text-center text-angel-grey p-2 border-2 border-angel-blue rounded-md border-opacity-20 my-4">
-        Vote can't be changed after submission. Staked HALO use to vote are
-        locked and can't be withdrawn until the poll is finished.
+        Votes cannot be changed after submission. Staked HALO used to vote is
+        locked and cannot be withdrawn until the poll has finished.
       </p>
       <div className="grid grid-cols-2 gap-4 mb-6">
         <Option label="yes" vote="yes" />

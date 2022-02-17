@@ -133,6 +133,7 @@ module.exports = {
       },
       minWidth: {
         36: "36",
+        200: "200px",
         250: "250px",
         300: "300px",
         450: "450px",
@@ -182,6 +183,7 @@ module.exports = {
       display: ["hover", "group-hover"],
       opacity: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
+      transform: ["hover", "active"],
     },
   },
 };

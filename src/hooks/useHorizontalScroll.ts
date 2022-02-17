@@ -38,16 +38,27 @@ const easings = {
   },
 };
 
-export default function useHorizontalScroll() {
-  const sliderRef = useRef<HTMLDivElement>(null);
+// type RefType = HTMLDivElement | HTMLUListElement;
+
+type Props = {
+  duration?: number;
+};
+
+export default function useHorizontalScroll(props?: Props) {
+  const sliderRef = useRef<any>(null);
   const frameRef = useRef<number>(0);
   const [showBack, setShowBack] = useState(false);
   const [showForward, setShowForward] = useState(false);
-  const DELAY = 1000;
+  const duration = props?.duration || 1000;
+  const DELAY = duration + 100;
 
   useEffect(() => {
     updateState();
-    return () => cancelAnimationFrame(frameRef.current);
+    window.addEventListener("resize", updateState);
+    return () => {
+      window.removeEventListener("resize", updateState);
+      cancelAnimationFrame(frameRef.current);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sliderRef.current]);
 
@@ -59,7 +70,7 @@ export default function useHorizontalScroll() {
       sliderRef.current.scrollWidth > sliderRef.current.offsetWidth;
     const hasReachedScrollEnd =
       sliderRef.current.scrollWidth ===
-      sliderRef.current.scrollLeft + sliderRef.current.offsetWidth;
+      Math.floor(sliderRef.current.scrollLeft + sliderRef.current.offsetWidth);
     setShowForward(hasOverflow && !hasReachedScrollEnd);
   }
 
@@ -108,7 +119,7 @@ export default function useHorizontalScroll() {
       scrollWidth - (scrollLeft + offsetWidth) > scrollFactor
         ? scrollLeft + scrollFactor
         : scrollWidth;
-    tween(scrollLeft, end, 1000, easings["easeOutSine"]);
+    tween(scrollLeft, end, duration, easings["easeOutSine"]);
     updateState();
   }
 
@@ -117,10 +128,9 @@ export default function useHorizontalScroll() {
     const scrollFactor = Math.floor(sliderRef.current.offsetWidth * 0.4);
     const scrollLeft = sliderRef.current.scrollLeft;
     const end = Math.max(0, scrollLeft - scrollFactor);
-    tween(scrollLeft, end, 1000, easings["easeOutSine"]);
+    tween(scrollLeft, end, duration, easings["easeOutSine"]);
     updateState();
   }
-
   return {
     ref: sliderRef,
     forward,
