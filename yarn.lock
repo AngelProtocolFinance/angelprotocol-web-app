@@ -3222,7 +3222,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@toruslabs/openlogin@npm:^1.4.0":
+"@toruslabs/openlogin@npm:^1.5.0":
   version: 1.5.0
   resolution: "@toruslabs/openlogin@npm:1.5.0"
   dependencies:
@@ -4516,7 +4516,7 @@ __metadata:
     "@testing-library/jest-dom": ^5.11.4
     "@testing-library/react": ^12.1.3
     "@testing-library/user-event": ^13.5.0
-    "@toruslabs/openlogin": ^1.4.0
+    "@toruslabs/openlogin": ^1.5.0
     "@types/draft-js": ^0.11.9
     "@types/jest": ^26.0.15
     "@types/jsonwebtoken": ^8.5.5
