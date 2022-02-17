@@ -99,7 +99,7 @@ const RegistrationStatus = () => {
                     ? "bg-dark-grey w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                onClick={navigate(routes.wallet_check)}
+                onClick={navigate(routes.wallet)}
                 title={status.wallet_address ? "Completed" : "Continue"}
                 disabled={user.PK === ""}
               />
@@ -178,7 +178,7 @@ const RegistrationStatus = () => {
                       ? "bg-green-500 w-40 h-10"
                       : "bg-thin-blue w-40 h-10"
                   }
-                  onClick={navigate(routes.wallet_check)}
+                  onClick={navigate(routes.wallet)}
                   title="Create"
                   disabled={status.endowment === 0 || user.PK === ""}
                 />

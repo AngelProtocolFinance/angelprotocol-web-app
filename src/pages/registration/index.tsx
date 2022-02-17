@@ -42,12 +42,12 @@ export default function Register() {
         />
         <Route
           exact
-          path={`${path}/${routes.wallet_check}`}
+          path={`${path}/${routes.wallet}`}
           component={ChooseWallet}
         />
         <Route
           exact
-          path={`${path}/${routes.wallet_check}/${routes.auth}`}
+          path={`${path}/${routes.wallet}/${routes.auth}`}
           component={RedirectAuth}
         />
         <Route

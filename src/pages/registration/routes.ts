@@ -4,7 +4,7 @@ enum routes {
   status = "status",
   confirm = "confirm",
   verify = "verify/:token",
-  wallet_check = "wallet-check",
+  wallet = "wallet",
   register_wallet = "register-wallet",
   charity_profile = "charity-profile",
   auth = "auth",
