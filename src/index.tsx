@@ -1,5 +1,4 @@
 import "./index.css";
-import "react-toastify/dist/ReactToastify.css";
 import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";

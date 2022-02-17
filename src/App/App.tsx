@@ -4,7 +4,6 @@ import AppFoot from "components/AppFoot/AppFoot";
 import Modal from "components/Modal/Modal";
 import Views from "./Views";
 import DappHead from "components/DappHead/DappHead";
-import { ToastContainer } from "react-toastify";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
@@ -19,7 +18,6 @@ export default function App() {
           <Views />
         </Modal>
         <AppFoot />
-        <ToastContainer />
       </TerraProvider>
     </div>
   );
