@@ -5,8 +5,8 @@ import { EditableProfileAttr } from "services/aws/endowments/types";
 import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
-import TextInput from "./TextInput";
-import { site, app } from "constants/routes";
+import TextInput, { PrependedInput } from "./TextInput";
+import { site, app } from "types/routes";
 import useEditForm from "./useEditForm";
 
 export default function EditForm() {
@@ -63,20 +63,23 @@ export default function EditForm() {
       />
       <SectionHeader title="social media" />
       <TextInput id="url" label="Website" placeholder="https://website.org" />
-      <TextInput
+      <PrependedInput
         id="facebook_page"
         label="Facebook"
-        placeholder="https://facebook.com/angelprotocol"
+        prependText="https://facebook.com/"
+        placeholder="angelprotocol"
       />
-      <TextInput
+      <PrependedInput
         id="twitter_handle"
         label="Twitter"
-        placeholder="https://twitter.com/angelprotocol"
+        prependText="https://twitter.com/"
+        placeholder="@angelprotocol"
       />
-      <TextInput
+      <PrependedInput
         id="linkedin_page"
         label="Linkedin"
-        placeholder="https://linkedin.com/angelprotocol"
+        prependText="https://linkedin.com/"
+        placeholder="angelprotocol"
       />
       <SectionHeader title="contact" />
       <TextInput
