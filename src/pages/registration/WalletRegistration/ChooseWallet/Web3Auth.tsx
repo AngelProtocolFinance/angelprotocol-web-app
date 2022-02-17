@@ -10,7 +10,7 @@ type Props = { onLogin: (provider: string) => void };
 
 export default function Web3Auth({ onLogin }: Props) {
   return (
-    <div className="flex flex-col justify-between bg-angel-blue h-96 w-96 p-4 rounded-sm">
+    <div className="flex flex-col justify-between bg-angel-blue h-96 max-w-sm p-4 rounded-sm">
       <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.GOOGLE)}>
         <img src={gmailIcon} alt="Google" width={30} />
         <span className="text-gray-500">Continue with Google</span>
