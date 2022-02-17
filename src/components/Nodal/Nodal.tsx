@@ -1,8 +1,17 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Handlers, Opener, Props } from "./types";
 
-export default function Nodal(props: Props) {
+export default function Nodal({ backdropDismiss = true, ...props }: Props) {
   const [Content, setContent] = useState<ReactNode>();
+  const ref = useRef<HTMLDivElement>();
 
   const showModal: Opener = (Content, props) => {
     setContent(<Content {...props} />);
@@ -11,6 +20,27 @@ export default function Nodal(props: Props) {
   function closeModal() {
     setContent(undefined);
   }
+
+  const dismissModal = (event: any) => {
+    const path = event.path || (event.composedPath && event.composedPath());
+
+    if (path[0] === ref.current) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    return () => ref.current?.removeEventListener("click", dismissModal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleRef = useCallback((node) => {
+    if (node !== null && backdropDismiss) {
+      ref.current = node;
+      ref.current?.addEventListener("click", dismissModal);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <setContext.Provider
@@ -21,7 +51,9 @@ export default function Nodal(props: Props) {
     >
       {!!Content && (
         <>
-          <div className={props.classes}>{Content}</div>
+          <div ref={handleRef} className={props.classes}>
+            {Content}
+          </div>
         </>
       )}
 
