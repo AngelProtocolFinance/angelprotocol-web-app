@@ -64,6 +64,12 @@ export interface Source {
   vault: string; //"terra123addr"
 }
 
+export interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
+
 export interface AccountDetails {
   name: string;
   description: string;

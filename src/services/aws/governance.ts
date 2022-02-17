@@ -3,6 +3,7 @@ import { aws } from "./aws";
 export interface StakingAPRQueryResult {
   message: string;
   stakingAPR: number;
+  stakingAPY: number;
   error: any;
 }
 

@@ -7,7 +7,7 @@ export type Props = { airdrops: Airdrops };
 export default function Catcher(props: Props) {
   const { total_claimable, claim, loading } = useCatcher(props.airdrops);
   return (
-    <div className="bg-white flex flex-col items-center p-4 pt-0 shadow-lg min-h-115 w-full">
+    <div className="bg-white flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
       <FaParachuteBox className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop

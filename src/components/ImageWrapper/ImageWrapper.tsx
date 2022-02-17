@@ -6,9 +6,9 @@ type Props = {
   src?: string;
   alt: string;
   classes: string;
-  altSrc?: string;
   width?: string;
   height?: string;
+  rounded?: boolean;
 };
 
 export default function ImageWrapper(props: Props) {
@@ -17,6 +17,7 @@ export default function ImageWrapper(props: Props) {
 
   const removePlaceHolder = () => {
     setIsLoading(false);
+    setError(false);
   };
 
   const errorCallback = () => {
@@ -24,10 +25,16 @@ export default function ImageWrapper(props: Props) {
     setError(true);
   };
 
-  const imageUrl = error ? image : props.src;
+  const imageUrl = error ? image : props.src || image;
   return (
     <>
-      {isLoading && <ContentLoader width={props.width} height={props.height} />}
+      {isLoading && (
+        <ContentLoader
+          width={props.width}
+          height={props.height}
+          rounded={props.rounded}
+        />
+      )}
       <img
         alt={props.alt}
         src={imageUrl}

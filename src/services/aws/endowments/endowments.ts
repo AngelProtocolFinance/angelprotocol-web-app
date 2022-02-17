@@ -2,13 +2,20 @@ import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
-import { QueryRes, Lookup, Accounts, Endowment, Profile } from "./types";
+import {
+  Lookup,
+  Endowment,
+  Profile,
+  CategorizedProfiles,
+  EditableProfileAttr,
+} from "./types";
+import { AWSQueryRes } from "services/aws/types";
 
-const endowments_api = aws.injectEndpoints({
+export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      transformResponse: (res: QueryRes<Endowment[]>) => {
+      query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
+      transformResponse: (res: AWSQueryRes<Endowment[]>) => {
         const _lookup: Lookup = {};
         res.Items.forEach((endowment) => {
           _lookup[endowment.owner] = endowment.address;
@@ -16,79 +23,68 @@ const endowments_api = aws.injectEndpoints({
         return _lookup;
       },
     }),
-    accounts: builder.query<Accounts, boolean>({
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Endowment[]>) => {
-        const _accounts: Accounts = {};
-        res.Items.forEach(
-          ({
-            address,
-            name,
-            description,
-            url,
-            icon,
-            iconLight = false,
-            tier,
-          }) => {
-            _accounts[address] = {
-              name,
-              description,
-              url,
-              icon,
-              iconLight,
-              tier,
-            };
-          }
-        );
-        return _accounts;
-      },
-    }),
-    endowments: builder.query<Endowment[], boolean>({
-      //TODO:refactor this query pattern - how?
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
-      //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Endowment[]>) => {
-        return res.Items;
-      },
-    }),
 
     profile: builder.query<Profile, string>({
       providesTags: [{ type: tags.cha, id: cha.profile }],
-      query: (charity_address) => `endowments/profiles/${charity_address}`,
+      query: (charity_address) => `endowments/info/${charity_address}`,
     }),
 
     profiles: builder.query<Profile[], boolean>({
-      query: (isTest) => `endowments/profiles${isTest ? "/testnet" : ""}`,
+      providesTags: [{ type: tags.cha, id: cha.profiles }],
+      query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: QueryRes<Profile[]>) => {
+      transformResponse: (res: AWSQueryRes<Profile[]>) => {
         return res.Items;
+      },
+    }),
+    useCategorizedProfiles: builder.query<CategorizedProfiles, boolean>({
+      providesTags: [{ type: tags.cha, id: cha.profiles }],
+      query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
+      //transform response before saving to cache for easy lookup by component
+      transformResponse: (res: AWSQueryRes<Profile[]>) => {
+        return res.Items.reduce((result, profile) => {
+          if (
+            profile.un_sdg === undefined ||
+            profile.un_sdg === "" ||
+            profile.tier === 1
+          ) {
+            return result;
+          } else {
+            if (!result[+profile.un_sdg]) {
+              result[+profile.un_sdg] = [];
+            }
+            result[+profile.un_sdg].push(profile);
+            return result;
+          }
+        }, {} as CategorizedProfiles);
       },
     }),
     updateProfile: builder.mutation<
       any,
-      { body: Partial<Profile>; endowment_address: string }
+      { owner: string; address: string; edits: Partial<EditableProfileAttr> }
     >({
-      query: (data) => {
+      query: (args) => {
         const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
         return {
-          url: `endowments/profiles/${data.endowment_address}`,
+          // URL of the request needs a query param because the endowment_data DB table has a partition key (endowment_address) and sort key (charity_owner)
+          url: `endowments/info/${args.address}`,
           method: "PUT",
-          body: data.body,
+          body: args.edits,
           headers: {
             authorization: generatedToken,
           },
+          params: { charity_owner: args.owner },
         };
       },
-      transformResponse: (response: { data: any }) => response,
-      invalidatesTags: [{ type: tags.cha, id: cha.profile }],
+      invalidatesTags: [
+        { type: tags.cha, id: cha.profile },
+        { type: tags.cha, id: cha.profiles },
+      ],
     }),
   }),
 });
 export const {
   useLookupQuery,
-  useAccountsQuery,
-  useEndowmentsQuery,
   useProfileQuery,
   useProfilesQuery,
   useUpdateProfileMutation,

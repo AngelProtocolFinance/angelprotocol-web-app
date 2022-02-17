@@ -1,26 +1,18 @@
-import { useState } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { ErrorMessage } from "@hookform/error-message";
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
-import { useGetToken } from "contexts/AuthProvider";
 import { Redirect } from "react-router-dom";
 import { site, app } from "types/routes";
-import { loginSchema } from "./loginSchema";
 import { Link } from "react-router-dom";
-
-export type Values = {
-  password: string;
-};
+import { useState } from "react";
 
 const Login = () => {
-  const decodedToken = useGetToken();
-  const handleLogin = useLogin();
   const [isShowPassword, setIsShowPassword] = useState(false);
-
   function togglePasswordView() {
     setIsShowPassword((prevState) => !prevState);
   }
+  const { decodedToken, isSubmitting, errors, register, login } = useLogin();
 
   if (decodedToken?.token) {
     return <Redirect to={`${site.app}/${app.tca}`} />;
@@ -38,46 +30,41 @@ const Login = () => {
             Angel Alliance Members
           </p>
         </div>
-        <Formik
-          initialValues={{ password: "" }}
-          validationSchema={loginSchema}
-          onSubmit={handleLogin}
-        >
-          {({ isSubmitting, status }) => (
-            <Form className="text-center">
-              <div className="my-10 text-left relative">
-                {status}
-                <p className="text-sm text-gray-400 font-bold mb-1">Password</p>
-                <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
-                  <Field
-                    type={isShowPassword ? "text" : "password"}
-                    className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
-                    placeholder="Enter your password."
-                    name="password"
-                  />
-                  <img
-                    alt=""
-                    src={isShowPassword ? eyeIcon : eyeSlashIcon}
-                    width="16px"
-                    onClick={togglePasswordView}
-                  />
-                </div>
-                <ErrorMessage
-                  className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
-                  name="password"
-                  component="div"
-                />
-              </div>
-              <button
-                type="submit"
-                className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
-                disabled={isSubmitting}
-              >
-                Enter
-              </button>
-            </Form>
-          )}
-        </Formik>
+
+        <form className="text-center" onSubmit={login}>
+          <div className="my-10 text-left relative">
+            <p className="text-sm text-gray-400 font-bold mb-1">Password</p>
+            <div className="form-control rounded-md bg-gray-200 p-2 flex justify-between items-center">
+              <input
+                {...register("password")}
+                type={isShowPassword ? "text" : "password"}
+                className="text-sm sm:text-base outline-none border-none w-full px-3 bg-gray-200"
+                placeholder="Enter your password."
+                name="password"
+              />
+              <img
+                alt=""
+                src={isShowPassword ? eyeIcon : eyeSlashIcon}
+                width="16px"
+                onClick={togglePasswordView}
+              />
+            </div>
+            <ErrorMessage
+              errors={errors}
+              name="password"
+              as="div"
+              className="text-xs sm:text-sm text-failed-red mt-1 pl-1"
+            />
+          </div>
+          <button
+            type="submit"
+            className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange text-center w-48 h-12 rounded-2xl tracking-widest uppercase text-md font-bold text-white shadow-sm"
+            disabled={isSubmitting}
+          >
+            Enter
+          </button>
+        </form>
+
         <Link
           to={site.home}
           className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"

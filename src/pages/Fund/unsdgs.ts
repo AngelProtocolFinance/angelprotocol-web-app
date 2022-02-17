@@ -238,7 +238,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal16",
   },
   17: {
-    title: "parnerships for the goals",
+    title: "partnerships for the goals",
     desc: "Strengthen the means of implementation and revitalize the global partnership for sustainable development.",
     text_light: "text-white-grey",
     text_dark: "text-sdg",

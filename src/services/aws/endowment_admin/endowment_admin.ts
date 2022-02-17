@@ -1,11 +1,12 @@
 import { aws } from "../aws";
-import { DepositTransactions, QueryRes } from "./types";
+import { DepositTransactions } from "./types";
+import { AWSQueryRes } from "services/aws/types";
 
 const endowment_admin_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     depositTransactions: builder.query<DepositTransactions[], string>({
       query: (endowmentAddr) => `transactions/${endowmentAddr}`,
-      transformResponse: (res: QueryRes<DepositTransactions[]>) => {
+      transformResponse: (res: AWSQueryRes<DepositTransactions[]>) => {
         return res.Items;
       },
     }),

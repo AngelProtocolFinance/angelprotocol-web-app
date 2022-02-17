@@ -45,8 +45,8 @@ export default class Account extends Contract {
       this.address,
       {
         deposit: {
-          locked_percentage: pctLiquid.toFixed(2),
-          liquid_percentage: pctLocked.toFixed(2),
+          locked_percentage: pctLocked.toFixed(2),
+          liquid_percentage: pctLiquid.toFixed(2),
         },
       },
       [new Coin(denoms.uusd, micro_UST_Amount)]

@@ -1,8 +1,8 @@
 import TableEntry from "./TableEntry";
 import Heading from "./Heading";
-import { MergedEndowment } from "services/aws/endowments/types";
+import { Endowment } from "services/aws/leaderboard/types";
 
-export default function TableView(props: { endowments: MergedEndowment[] }) {
+export default function TableView(props: { endowments: Endowment[] }) {
   return (
     <div className="self-start w-full h-leader-table pl-4 overflow-y-scroll">
       <table className="border-collapse table-auto w-full">
@@ -15,7 +15,7 @@ export default function TableView(props: { endowments: MergedEndowment[] }) {
         </thead>
         <tbody>
           {props.endowments.map((endowment) => (
-            <TableEntry key={endowment.address} {...endowment} />
+            <TableEntry key={endowment.endowment_address} {...endowment} />
           ))}
         </tbody>
       </table>
