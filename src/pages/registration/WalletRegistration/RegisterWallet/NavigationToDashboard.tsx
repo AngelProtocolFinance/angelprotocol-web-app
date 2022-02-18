@@ -1,6 +1,7 @@
 import LinkButton from "components/LinkButton";
+import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
-import { app, registration, site } from "types/routes";
+import routes from "../../routes";
 
 type Props = { isSuccess: boolean; walletAddress: string };
 
@@ -16,7 +17,7 @@ export default function NavigationToDashboard(props: Props) {
           <p className="font-bold">{walletAddress}</p>
         </div>
         <LinkButton
-          to={`${site.app}/${app.register}/${registration.status}`}
+          to={`${site.app}/${app.register}/${routes.status}`}
           className="w-60 h-10 mt-8"
           bgColorClass="bg-angel-blue"
         >
@@ -28,7 +29,7 @@ export default function NavigationToDashboard(props: Props) {
 
   return (
     <Link
-      to={`${site.app}/${app.register}/${registration.status}`}
+      to={`${site.app}/${app.register}/${routes.status}`}
       className="uppercase text-bright-blue text-sm hover:underline"
     >
       Click here to go back to the registration dashboard

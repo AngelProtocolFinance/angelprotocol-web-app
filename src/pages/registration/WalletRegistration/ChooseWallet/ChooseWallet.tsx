@@ -1,6 +1,6 @@
 import Loader from "components/Loader/Loader";
 import { Link, useRouteMatch } from "react-router-dom";
-import { routes } from "../constants";
+import routes from "../routes";
 import useOpenLogin from "../useOpenLogin";
 import Title from "./Title";
 import Web3Auth from "./Web3Auth";

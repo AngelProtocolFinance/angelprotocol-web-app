@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { routes } from "./constants";
+import routes from "./routes";
 
 const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const RedirectAuth = lazy(() => import("./RedirectAuth"));

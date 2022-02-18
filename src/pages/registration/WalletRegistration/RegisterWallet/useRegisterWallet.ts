@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import { toast } from "react-toastify";
 import { useAddCharityMetadataMutation } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
@@ -12,7 +11,7 @@ export default function useRegisterWallet() {
   const user = useGetter((state) => state.user);
 
   const handleFailure = useCallback((error) => {
-    toast.error(error);
+    console.error(error);
     setSuccess(false);
   }, []);
 
@@ -23,7 +22,7 @@ export default function useRegisterWallet() {
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
 
-      toast.success("Your wallet address was saved successfully.");
+      console.log("Your wallet address was saved successfully.");
       setSuccess(true);
     },
     [dispatch, user]

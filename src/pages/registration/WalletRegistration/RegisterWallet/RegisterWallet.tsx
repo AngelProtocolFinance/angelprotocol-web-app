@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
-import Action from "components/ActionButton/Action";
+import Action from "../../Action";
 import FormInput from "components/FormInput";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";

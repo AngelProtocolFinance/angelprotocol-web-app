@@ -1,11 +1,11 @@
-import { IoWalletSharp } from "react-icons/io5";
-import Display from "./Display";
-import { useContext, useEffect, useState } from "react";
-import Connectors from "./Connectors";
-import { useGetter } from "store/accessors";
-import { Providers } from "services/wallet/types";
-import useWalletUpdator from "./useWalletUpdator";
 import { WalletSuiteContext } from "providers/WalletSuiteProvider";
+import { useContext, useEffect } from "react";
+import { IoWalletSharp } from "react-icons/io5";
+import { Providers } from "services/wallet/types";
+import { useGetter } from "store/accessors";
+import Connectors from "./Connectors";
+import Display from "./Display";
+import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);

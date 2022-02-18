@@ -1,6 +1,6 @@
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { Redirect, useRouteMatch } from "react-router-dom";
-import { routes } from "./constants";
+import routes from "./routes";
 
 export default function RedirectAuth() {
   // this will only render under '/app/register/wallet/auth', so we need to remove the '/auth' part

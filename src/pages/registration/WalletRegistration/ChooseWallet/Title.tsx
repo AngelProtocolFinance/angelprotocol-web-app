@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import TerraInfoModal from "pages/registration/modals/TerraInfoModal";
 import { BsExclamationCircle } from "react-icons/bs";
 

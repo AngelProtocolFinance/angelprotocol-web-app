@@ -4,7 +4,7 @@ import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouteMatch } from "react-router";
 import { useGetter } from "store/accessors";
-import { routes } from "./constants";
+import routes from "./routes";
 
 export default function useOpenLogin() {
   const user = useGetter((state) => state.user);

@@ -7,10 +7,6 @@ const ContactDetails = lazy(() => import("./ContactDetails"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
-const RedirectAuth = lazy(() => import("./WalletRegistration/RedirectAuth"));
-const RegisterWallet = lazy(
-  () => import("./WalletRegistration/RegisterWallet")
-);
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Register() {
@@ -18,7 +14,7 @@ export default function Register() {
   const { path } = useRouteMatch();
 
   return (
-    <section className="flex items-center justify-center relative sm:w-4/5 max-w-6xl text-center text-white mx-auto h-full">
+    <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">
       <Switch>
         <Route
           exact
@@ -44,16 +40,6 @@ export default function Register() {
         <Route
           path={`${path}/${routes.wallet}`}
           component={WalletRegistration}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.wallet}/${routes.auth}`}
-          component={RedirectAuth}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.register_wallet}`}
-          component={RegisterWallet}
         />
         <Route exact path={`${path}${routes.index}`} component={Registration} />
       </Switch>
