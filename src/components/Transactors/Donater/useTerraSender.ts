@@ -23,7 +23,8 @@ export default function useTerraSender(tx: CreateTxOptions) {
           updateTx({ step: Step.error, message: "Wallet is not connected" });
           return;
         }
-        updateTx({ step: Step.submit, message: "Submitting transaction.." });
+        // I think this step is unncessary because the wallet confirmation popup already indicates that(and the user never really sees this step for terra based donations) and for one reason that I am still not sure of yet it causes the memory leak during state transitions
+        // updateTx({ step: Step.submit, message: "Submitting transaction.." });
         const response = await wallet.post(tx!);
         const chainId = wallet.network.chainID as chainIDs;
         if (response.success) {
