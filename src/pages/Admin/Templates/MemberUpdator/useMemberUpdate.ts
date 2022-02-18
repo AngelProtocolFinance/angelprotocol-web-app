@@ -1,84 +1,38 @@
-import { SubmitHandler } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { useMembers } from "services/terra/admin/queriers";
-import { Values, MemberCopy, MemberUpdateFn, Diffs } from "./types";
+import { useEffect } from "react";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { useMembers } from "services/terra/admin/queriers";
 import { Step } from "services/transaction/types";
-import Admin from "contracts/Admin";
+import { setInitialMembers } from "services/admin/memberSlice";
 import { Member } from "services/terra/admin/types";
-import handleTerraError from "helpers/handleTerraError";
 import useTxUpdator from "services/transaction/updators";
+import handleTerraError from "helpers/handleTerraError";
 import { chainIDs } from "constants/chainIDs";
+import Admin from "contracts/Admin";
+import { useSetter, useGetter } from "store/accessors";
 
-export default function useMemberUpdator() {
+export default function useMemberUpdate() {
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
-  const members = useMembers();
-  const [membersCopy, setMemberCopy] = useState<MemberCopy[]>([]);
+  const membersCopy = useGetter((state) => state.admin.members);
+  const { members, isMembersLoading } = useMembers();
+  const dispatch = useSetter();
 
   useEffect(() => {
     if (members.length > 0) {
-      setMemberCopy(() =>
-        members.map((member) => ({
-          ...member,
-          is_deleted: false,
-          is_added: false,
-        }))
+      console.log("runs", members);
+      dispatch(
+        setInitialMembers(
+          members.map((member) => ({
+            ...member,
+            is_deleted: false,
+            is_added: false,
+          }))
+        )
       );
     }
-  }, [members]);
+  }, [members.length]);
 
-  const remove_member: MemberUpdateFn = (actual) => () => {
-    const modified = membersCopy.map((stored) => ({
-      ...stored,
-      is_deleted: actual.addr === stored.addr ? true : stored.is_deleted,
-    }));
-    setMemberCopy(modified);
-  };
-
-  const undo_remove: MemberUpdateFn = (actual) => () => {
-    const modified = membersCopy.map((stored) => ({
-      ...stored,
-      is_deleted: actual.addr === stored.addr ? false : stored.is_deleted,
-    }));
-    setMemberCopy(modified);
-  };
-
-  const add_member: SubmitHandler<Values> = (data) => {
-    const new_member: MemberCopy = {
-      addr: data.addr,
-      weight: +data.weight,
-      is_added: true,
-      is_deleted: false,
-    };
-    const existing_member = membersCopy.find(
-      (member) => member.addr === new_member.addr
-    );
-    if (existing_member) {
-      alert("existing");
-    } else {
-      const modified = [...membersCopy, new_member];
-      setMemberCopy(modified);
-    }
-  };
-
-  const undo_add: MemberUpdateFn = (actual) => () => {
-    const modified = membersCopy.filter(
-      (stored) => actual.addr !== stored.addr
-    );
-    setMemberCopy(modified);
-  };
-
-  function get_updator(member: MemberCopy) {
-    if (member.is_added) {
-      return undo_add(member);
-    } else if (member.is_deleted) {
-      return undo_remove(member);
-    } else {
-      return remove_member(member);
-    }
-  }
-
+  type Diffs = [Member[], string[]];
   async function submit_proposal() {
     try {
       if (!wallet) {
@@ -154,5 +108,5 @@ export default function useMemberUpdator() {
     }
   }
 
-  return { membersCopy, get_updator, add_member, submit_proposal };
+  return { membersCopy, submit_proposal, isMembersLoading };
 }

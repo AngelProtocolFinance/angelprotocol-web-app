@@ -6,7 +6,7 @@ import { Member } from "services/terra/admin/types";
 import { useMemo } from "react";
 
 export default function Members() {
-  const members = useMembers();
+  const { members } = useMembers();
   const total_weight = useMemo(
     () => members.reduce((sum, member) => sum + member.weight, 0),
     [members]

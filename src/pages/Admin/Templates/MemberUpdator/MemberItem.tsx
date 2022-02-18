@@ -2,14 +2,23 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgUndo } from "react-icons/cg";
 import { GiPieChart } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import { MemberCopy } from "./types";
 import maskAddress from "helpers/maskAddress";
+import { useSetter } from "store/accessors";
+import {
+  undoAddMember,
+  toggleDeleteExistingMember,
+} from "services/admin/memberSlice";
+import { MemberCopy } from "./MemberUpdator";
 
-export default function MemberItem(
-  props: MemberCopy & {
-    onClick: () => void;
+export default function MemberItem(props: MemberCopy) {
+  const dispatch = useSetter();
+  function memberItemAction() {
+    if (props.is_added) {
+      dispatch(undoAddMember(props.addr));
+    } else {
+      dispatch(toggleDeleteExistingMember(props.addr));
+    }
   }
-) {
   return (
     <li
       className={`flex gap-1 text-white text-opacity-80 items-center bg-opacity-10 shadow-inner ${
@@ -26,7 +35,7 @@ export default function MemberItem(
       <GiPieChart className="ml-auto" />
       <span> {props.weight}</span>
       <button
-        onClick={props.onClick}
+        onClick={memberItemAction}
         type="button"
         className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5"
       >

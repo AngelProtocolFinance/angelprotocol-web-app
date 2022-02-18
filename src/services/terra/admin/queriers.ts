@@ -6,10 +6,14 @@ import { member } from "./placeholders";
 export function useMembers() {
   const { useMembersQuery } = admin_api;
   const { wallet, contract } = useAdminContract();
-  const { data = [] } = useMembersQuery(contract.members, {
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useMembersQuery(contract.members, {
     skip: wallet?.network.chainID === chainIDs.localterra,
   });
-  return data;
+  return { members: data, isMembersLoading: isFetching || isLoading };
 }
 
 export function useMember() {
