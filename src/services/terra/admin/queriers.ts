@@ -28,3 +28,29 @@ export function useMember() {
   });
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
+
+export function useProposals() {
+  const { useProposalsQuery } = admin_api;
+  const { wallet, contract } = useAdminContract();
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useProposalsQuery(contract.proposals, {
+    skip: wallet?.network.chainID === chainIDs.localterra,
+  });
+  return { proposals: data, isMemberLoading: isFetching || isLoading };
+}
+
+export function useVoteList(pollId: number) {
+  const { useVotesQuery } = admin_api;
+  const { wallet, contract } = useAdminContract();
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useVotesQuery(contract.voteList(pollId), {
+    skip: wallet?.network.chainID === chainIDs.localterra,
+  });
+  return { votes: data, isVoteListLoading: isFetching || isLoading };
+}

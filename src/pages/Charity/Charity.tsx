@@ -6,10 +6,13 @@ import InfoTabs from "./InfoTabs/InfoTabs";
 import CharityInfoNav from "./CharityInfoNav";
 import { DonationInfo } from "./DonationInfo";
 import { CharityParam } from "./types";
+import { useGetter } from "store/accessors";
 
 const Charity = (props: RouteComponentProps<CharityParam>) => {
   const endowment_addr = props.match.params.address;
   const { profile, isProfileLoading } = useProfile(endowment_addr);
+  const x = useGetter((state) => state.transaction.stage);
+  console.log(x);
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

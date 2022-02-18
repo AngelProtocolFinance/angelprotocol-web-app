@@ -7,7 +7,7 @@ import usePoller from "components/Transactors/Poller/usePoller";
 import Action from "./Action";
 
 export default function Polls() {
-  const block_height = useLatestBlock();
+  const block_height = useLatestBlock(10_000);
   const gov_polls = useGovPolls();
   const showPoller = usePoller();
 

@@ -1,12 +1,15 @@
 import { Link, useRouteMatch } from "react-router-dom";
-import { useLatestBlock } from "services/terra/queriers";
 import { SiHiveBlockchain } from "react-icons/si";
+import { useLatestBlock } from "services/terra/queriers";
+import { useProposals } from "services/terra/admin/queriers";
 import toCurrency from "helpers/toCurrency";
 import { admin } from "constants/routes";
+import ProposalCard from "./ProposalCard";
 
 export default function Proposals() {
   const { path } = useRouteMatch();
-  const block_height = useLatestBlock();
+  const block_height = useLatestBlock(10_000);
+  const { proposals } = useProposals();
 
   return (
     <div className="mt-4">
@@ -29,7 +32,9 @@ export default function Proposals() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        <p>proposal</p>
+        {proposals.map((proposal) => (
+          <ProposalCard key={proposal.id} {...proposal} />
+        ))}
       </div>
     </div>
   );

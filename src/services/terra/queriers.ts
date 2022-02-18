@@ -16,9 +16,11 @@ export function useRegistrarContract() {
   return { wallet, contract };
 }
 
-export function useLatestBlock() {
+export function useLatestBlock(pollInterval = 0) {
   const { useLatestBlockQuery } = terra;
-  const { data = "0" } = useLatestBlockQuery("", { pollingInterval: 10_000 });
+  const { data = "0" } = useLatestBlockQuery("", {
+    pollingInterval: pollInterval,
+  });
   return data;
 }
 

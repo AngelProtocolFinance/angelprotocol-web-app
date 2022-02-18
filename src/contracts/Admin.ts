@@ -14,6 +14,9 @@ export default class Admin extends Contract {
 
   members: ContractQueryArgs;
   member: ContractQueryArgs;
+  proposals: ContractQueryArgs;
+  voteList: (arg: number) => ContractQueryArgs;
+
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.apCW4_addr = contracts[this.chainID][sc.apCW4];
@@ -30,6 +33,22 @@ export default class Admin extends Contract {
       address: this.apCW4_addr,
       msg: { member: { addr: this.walletAddr } },
     };
+
+    this.proposals = {
+      address: this.apCW3_addr,
+      msg: {
+        list_proposals: {},
+      },
+    };
+
+    this.voteList = (pollId: number) => ({
+      address: this.apCW3_addr,
+      msg: {
+        list_votes: {
+          proposal_id: pollId,
+        },
+      },
+    });
   }
 
   createUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
