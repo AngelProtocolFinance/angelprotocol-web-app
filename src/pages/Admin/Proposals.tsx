@@ -1,17 +1,12 @@
-import { Redirect, Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { useLatestBlock } from "services/terra/queriers";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";
-import { useGetter } from "store/accessors";
 import { admin } from "types/routes";
 
 export default function Proposals() {
   const { path } = useRouteMatch();
   const block_height = useLatestBlock();
-  const adminAuthStatus = useGetter((state) => state.auth.admin.status);
-  if (adminAuthStatus !== "authorized") {
-    return <Redirect to={admin.auth} />;
-  }
 
   return (
     <div className="mt-4">

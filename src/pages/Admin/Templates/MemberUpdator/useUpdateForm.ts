@@ -25,8 +25,7 @@ export default function useMemberUpdator() {
         }))
       );
     }
-    //to avoid render loop, only use state length as dep since 0 and something is a good indicator that data has arrived
-  }, [members.length]);
+  }, [members]);
 
   const add_member: SubmitHandler<Values> = (data) => {
     const new_member: MemberCopy = {

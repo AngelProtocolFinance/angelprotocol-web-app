@@ -2,8 +2,9 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { ContractQueryArgs } from "services/terra/types";
+import { InquiredMember, Member } from "services/terra/admin/types";
 import Contract from "./Contract";
-import { Member, sc, EmbeddedWasmMsg } from "./types";
+import { sc, EmbeddedWasmMsg } from "./types";
 
 export default class Admin extends Contract {
   apCW4_addr: string;
@@ -12,6 +13,7 @@ export default class Admin extends Contract {
   gaCW3_addr: string;
 
   members: ContractQueryArgs;
+  member: ContractQueryArgs;
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.apCW4_addr = contracts[this.chainID][sc.apCW4];
@@ -22,6 +24,11 @@ export default class Admin extends Contract {
     this.members = {
       address: this.apCW4_addr,
       msg: { list_members: {} },
+    };
+
+    this.member = {
+      address: this.apCW4_addr,
+      msg: { member: { addr: this.walletAddr } },
     };
   }
 
@@ -57,7 +64,7 @@ export default class Admin extends Contract {
   }
 
   async get_apCW4_member(addr: string) {
-    return this.query<Member>(this.apCW4_addr, {
+    return this.query<InquiredMember>(this.apCW4_addr, {
       member: { addr },
     });
   }

@@ -6,3 +6,7 @@ export type Member = {
 export type MemberRes = {
   members: Member[];
 };
+
+export type InquiredMember = {
+  weight: number | null;
+};

@@ -1,31 +1,48 @@
-import {
-  Redirect,
-  Route,
-  Switch,
-  useRouteMatch,
-  useLocation,
-} from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { useConnectedWallet } from "@terra-money/use-wallet";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { useMember } from "services/terra/admin/queriers";
+import Loader from "components/Loader/Loader";
 import { admin } from "types/routes";
 import Dashboard from "./Dashboard";
-import useAdminAuth from "./useAdminAuth";
 import Proposer from "./Proposer";
-import Authentication from "./Authentication";
 
 const Admin = () => {
-  useAdminAuth();
+  const wallet = useConnectedWallet();
   //{match.path} is '/admin'
+  const { member, isMemberLoading } = useMember();
   const { path } = useRouteMatch();
-  const location = useLocation();
 
+  if (!wallet) {
+    return <GuardPrompt message="Your wallet is not connected" />;
+  } else if (isMemberLoading) {
+    return <GuardPrompt message="Checking wallet credential" showLoader />;
+  } else if (!member.weight) {
+    return <GuardPrompt message="You are not authorized to view this page" />;
+  }
   return (
     <Switch>
-      <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-      <Route path={`${path}/${admin.auth}`} component={Authentication} />
       <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
       <Route exact path={`${path}/${admin.index}`} component={Dashboard} />
-      <Redirect from="*" to={`${path}/${admin.auth}`} />
     </Switch>
   );
 };
 
 export default Admin;
+
+function GuardPrompt(props: { message: string; showLoader?: true }) {
+  return (
+    <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-115 w-full max-w-sm p-4 rounded-md shadow-lg">
+      {props.showLoader ? (
+        <Loader
+          gapClass="gap-2"
+          bgColorClass="bg-angel-grey"
+          widthClass="w-4"
+        />
+      ) : (
+        <AiOutlineInfoCircle size={30} />
+      )}
+      <p className="mt-2">{props.message}</p>
+    </div>
+  );
+}

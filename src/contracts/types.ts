@@ -99,11 +99,6 @@ export interface Holdings {
 //Vaults
 export type Swap = { exchange_rate: string; yield_token_supply: string };
 
-// Admin
-export interface Member {
-  weight: number | null;
-}
-
 //Halo token
 export type HaloBalance = {
   balance: string;

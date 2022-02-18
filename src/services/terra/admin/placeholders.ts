@@ -1,1 +1,3 @@
-export const placeholder = 1;
+export const member = {
+  weight: null,
+};
