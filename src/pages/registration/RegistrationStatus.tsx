@@ -1,12 +1,11 @@
+import maskAddress from "helpers/maskAddress";
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
-import { registration } from "types/routes";
-import Action from "../../components/ActionButton/Action";
-import maskAddress from "helpers/maskAddress";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter, useSetter } from "store/accessors";
 import { updateUserData } from "services/user/userSlice";
+import { useGetter, useSetter } from "store/accessors";
+import Action from "./Action";
+import routes from "./routes";
 
 const RegistrationStatus = () => {
   //url is app/register/status
@@ -27,7 +26,7 @@ const RegistrationStatus = () => {
   useEffect(() => {
     if (error) {
       const messageData: any = error;
-      toast.error(messageData?.data?.message || "something went wrong");
+      console.log(messageData?.data?.message || "something went wrong");
     }
   }, [error]);
 
@@ -78,7 +77,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Action
                 classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(registration.detail)}
+                onClick={navigate(routes.detail)}
                 title="Change"
                 disabled={user.PK === ""}
               />
@@ -100,7 +99,7 @@ const RegistrationStatus = () => {
                     ? "bg-dark-grey w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                onClick={navigate(registration.wallet_check)}
+                onClick={navigate(routes.wallet_check)}
                 title={status.wallet_address ? "Completed" : "Continue"}
                 disabled={user.PK === ""}
               />
@@ -125,7 +124,7 @@ const RegistrationStatus = () => {
               <Action
                 onClick={() =>
                   history.push({
-                    pathname: registration.upload_docs,
+                    pathname: routes.upload_docs,
                     state: {
                       data: data?.Registration,
                     },
@@ -179,7 +178,7 @@ const RegistrationStatus = () => {
                       ? "bg-green-500 w-40 h-10"
                       : "bg-thin-blue w-40 h-10"
                   }
-                  onClick={navigate(registration.wallet_check)}
+                  onClick={navigate(routes.wallet_check)}
                   title="Create"
                   disabled={status.endowment === 0 || user.PK === ""}
                 />
@@ -262,7 +261,7 @@ const RegistrationStatus = () => {
         <Action
           classes="bg-thin-blue w-64 h-10"
           title={"Go to " + user.CharityName + "'s profile"}
-          onClick={navigate(registration.charity_profile)}
+          onClick={navigate(routes.charity_profile)}
           disabled={!status.completed || user.PK === ""}
         />
         <p className="mt-3 text-sm uppercase">coming soon</p>

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";

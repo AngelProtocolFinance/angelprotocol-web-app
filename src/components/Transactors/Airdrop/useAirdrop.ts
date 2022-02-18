@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { useAirdropQuery } from "services/aws/airdrop/airdrop";

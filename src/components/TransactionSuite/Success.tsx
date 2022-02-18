@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import getTxUrl from "helpers/getTxUrl";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Step, SuccessStage } from "services/transaction/types";

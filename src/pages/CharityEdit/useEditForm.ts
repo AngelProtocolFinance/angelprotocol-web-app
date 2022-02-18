@@ -3,7 +3,7 @@ import { useRouteMatch } from "react-router-dom";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { useProfileState } from "services/aws/endowments/states";
 import { EditableProfileAttr } from "services/aws/endowments/types";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import removeReadOnlyProfileAttr from "./helpers/removeReadOnlyProfileAttr";
 import getPayloadDiff from "./helpers/getPayloadDiff";

@@ -4,7 +4,7 @@ import Submit from "./Submit";
 import Broadcast from "./Broadcast";
 import Success from "./Success";
 import { MdOutlineClose } from "react-icons/md";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import {
   BroadcastStage,
   ErrorStage,

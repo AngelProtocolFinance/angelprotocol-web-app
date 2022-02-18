@@ -1,7 +1,7 @@
-import ContactDetailsForm from "components/ContactDetailsForm";
+import ContactDetailsForm from "./ContactDetailsForm";
 import { useGetter } from "store/accessors";
 
-const ContactDetails = () => {
+export default function ContactDetails() {
   const user = useGetter((state) => state.user);
   return (
     <div>
@@ -20,6 +20,4 @@ const ContactDetails = () => {
       <ContactDetailsForm contactData={user} />
     </div>
   );
-};
-
-export default ContactDetails;
+}

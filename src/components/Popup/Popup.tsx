@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
 
 export type PopupProps = { message: string };

@@ -1,3 +1,1 @@
-import VerifiedEmail from "./VerifiedEmail";
-
-export default VerifiedEmail;
+export { default } from "./VerifiedEmail";

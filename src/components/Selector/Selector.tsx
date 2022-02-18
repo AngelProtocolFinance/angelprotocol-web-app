@@ -1,6 +1,7 @@
 import Select, { MenuPlacement, GroupBase, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
-import { OptionType } from "types/optionType";
+
+type OptionType = { label: string; value: any };
 
 interface SelectorProps {
   name: string;

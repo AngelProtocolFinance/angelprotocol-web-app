@@ -1,12 +1,12 @@
 import banner2 from "assets/images/banner-register-2.jpg";
+import { app, site } from "constants/routes";
 import { useCallback, useEffect } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { app, registration, site } from "types/routes";
-import Action from "../../components/ActionButton/Action";
+import Action from "./Action";
+import routes from "./routes";
 
 const ConfirmEmail = () => {
   const history = useHistory();
@@ -19,7 +19,7 @@ const ConfirmEmail = () => {
   const sendEmail = useCallback(
     async (emailType: string) => {
       if (!user.PK) {
-        toast.error("Invalid Data. Please ask the administrator about that.");
+        console.error("Invalid Data. Please ask the administrator about that.");
         return;
       }
 
@@ -29,8 +29,8 @@ const ConfirmEmail = () => {
         body: user,
       });
       response.data
-        ? toast.info(response.data?.message)
-        : toast.error(response.error?.data.message);
+        ? console.info(response.data?.message)
+        : console.error(response.error?.data.message);
     },
     [user, resendEmail]
   );
@@ -58,9 +58,7 @@ const ConfirmEmail = () => {
   }, [user, dispatch]);
 
   if (user.EmailVerified) {
-    return (
-      <Redirect to={`${site.app}/${app.register}/${registration.status}`} />
-    );
+    return <Redirect to={`${site.app}/${app.register}/${routes.status}`} />;
   }
 
   return (

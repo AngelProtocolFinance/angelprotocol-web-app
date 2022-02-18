@@ -14,7 +14,7 @@ import { AWSQueryRes } from "services/aws/types";
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}?except_tier=1`,
+      query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
       transformResponse: (res: AWSQueryRes<Endowment[]>) => {
         const _lookup: Lookup = {};
         res.Items.forEach((endowment) => {

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { TxProps } from "components/TransactionSuite/types";
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import Withdrawer from "./Withdrawer";
 import WithdrawForm from "./WithdrawForm";
 import { Props } from "./types";

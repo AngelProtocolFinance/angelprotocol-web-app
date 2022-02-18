@@ -1,12 +1,12 @@
+import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
-import { app, registration, site } from "types/routes";
+import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
@@ -37,7 +37,7 @@ export default function VerifiedEmail() {
 
   const resendVerificationEmail = useCallback(async () => {
     if (!userData.PK) {
-      toast.error("Invalid Data. Please ask the administrator about that.");
+      console.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
@@ -47,12 +47,12 @@ export default function VerifiedEmail() {
       body: userData,
     });
     response.data
-      ? toast.info(response.data?.message)
-      : toast.error(response.error?.data.message);
+      ? console.info(response.data?.message)
+      : console.error(response.error?.data.message);
   }, [userData, resendEmail]);
 
   const navigateToRegistrationStatusPage = useCallback(
-    () => history.push(`${site.app}/${app.register}/${registration.status}`),
+    () => history.push(`${site.app}/${app.register}/${routes.status}`),
     [history]
   );
 

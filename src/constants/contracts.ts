@@ -1,4 +1,4 @@
-import { sc } from "contracts/types";
+import { sc } from "constants/sc";
 import { chainIDs } from "constants/chainIDs";
 import { VaultFields } from "components/Withdrawer/types";
 

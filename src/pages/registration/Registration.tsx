@@ -3,8 +3,8 @@ import banner1 from "assets/images/banner-register-1.jpg";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { registration } from "types/routes";
-import Action from "../../components/ActionButton/Action";
+import Action from "./Action";
+import routes from "./routes";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 
 const Registration = () => {
@@ -20,7 +20,7 @@ const Registration = () => {
   });
 
   const handleStart = useCallback(
-    () => history.push(`${url}/${registration.detail}`),
+    () => history.push(`${url}/${routes.detail}`),
     [history, url]
   );
 

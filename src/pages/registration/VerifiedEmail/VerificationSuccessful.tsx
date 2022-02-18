@@ -1,7 +1,7 @@
-import Action from "components/ActionButton/Action";
 import { MouseEventHandler } from "react";
 import { FaCheck } from "react-icons/fa";
 import { User } from "services/user/types";
+import Action from "../Action";
 
 type Props = {
   userData: User;
