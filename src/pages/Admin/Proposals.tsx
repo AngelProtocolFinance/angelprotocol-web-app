@@ -2,7 +2,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { useLatestBlock } from "services/terra/queriers";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";
-import { admin } from "types/routes";
+import { admin } from "constants/routes";
 
 export default function Proposals() {
   const { path } = useRouteMatch();

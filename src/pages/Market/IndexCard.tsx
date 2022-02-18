@@ -1,4 +1,4 @@
-import { unsdgs } from "pages/Fund/unsdgs";
+import { unsdgs } from "constants/unsdgs";
 
 export default function IndexCard(props: { id: number }) {
   const sdg = unsdgs[props.id];

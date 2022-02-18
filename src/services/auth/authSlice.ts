@@ -1,25 +1,24 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import getSavedToken from "./getSavedToken";
 
-import { AdminAuthStatus, AuthState } from "./types";
-
-const initialState: AuthState = {
-  tca: { token: null },
-  admin: {
-    status: "unauthorized",
-  },
-};
-
-//get sync stored token
+export const TCA_TOKEN_KEY = "tca";
+export type State = { tca: string | null };
 
 const authSlice = createSlice({
   name: "auth",
-  initialState,
+  initialState: getSavedToken(),
   reducers: {
-    updateAdminStatus(state, { payload }: PayloadAction<AdminAuthStatus>) {
-      state.admin.status = payload;
+    saveToken: (state, { payload }: PayloadAction<string>) => {
+      localStorage.setItem(TCA_TOKEN_KEY, payload);
+      state.tca = payload;
+    },
+
+    deleteToken: (state) => {
+      localStorage.removeItem(TCA_TOKEN_KEY);
+      state.tca = null;
     },
   },
 });
 
 export default authSlice.reducer;
-export const { updateAdminStatus } = authSlice.actions;
+export const { saveToken, deleteToken } = authSlice.actions;

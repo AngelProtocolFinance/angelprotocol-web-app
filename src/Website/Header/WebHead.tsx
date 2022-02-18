@@ -8,7 +8,7 @@ import useScrollShadow from "hooks/useScrollShadow";
 import earth_icon from "assets/icons/earth.svg";
 import heart_icon from "assets/icons/heart.svg";
 import star_icon from "assets/icons/star.svg";
-import { site, app } from "types/routes";
+import { site, app } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
 

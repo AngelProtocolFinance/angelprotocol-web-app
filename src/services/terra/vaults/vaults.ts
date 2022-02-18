@@ -3,7 +3,7 @@ import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
-import { sc } from "contracts/types";
+import { sc } from "constants/sc";
 import { QueryRes } from "services/terra/types";
 import { ExchangeInfo, ExchangeMap } from "./types";
 

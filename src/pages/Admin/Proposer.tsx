@@ -1,6 +1,6 @@
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { NavLink, useRouteMatch, Switch, Route } from "react-router-dom";
-import { proposal_types } from "types/routes";
+import { proposal_types } from "constants/routes";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import { MemberUpdatorProps } from "./Templates/MemberUpdator/types";
 import UpdateForm from "./Templates/MemberUpdator/UpdateForm";

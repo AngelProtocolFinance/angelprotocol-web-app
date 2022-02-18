@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaClock, FaStopwatch } from "react-icons/fa";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import PriceGraph from "components/PriceGraph";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";

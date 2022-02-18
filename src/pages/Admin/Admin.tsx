@@ -3,7 +3,7 @@ import { useConnectedWallet } from "@terra-money/use-wallet";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
-import { admin } from "types/routes";
+import { admin } from "constants/routes";
 import Dashboard from "./Dashboard";
 import Proposer from "./Proposer";
 

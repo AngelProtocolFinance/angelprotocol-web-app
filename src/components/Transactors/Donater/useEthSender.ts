@@ -26,6 +26,7 @@ export default function useEthSender(tx: TransactionRequest) {
           xwindow.xfi?.ethereum!
         );
         const signer = provider.getSigner();
+        const walletAddress = await signer.getAddress();
         const chainNum = await signer.getChainId();
         const chainId = `${chainNum}` as chainIDs;
         const response = await signer.sendTransaction(tx!);
@@ -39,6 +40,7 @@ export default function useEthSender(tx: TransactionRequest) {
             data.amount,
             denoms.ether,
             data.split_liq,
+            walletAddress,
             receiver
           );
 

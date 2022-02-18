@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { admin } from "types/routes";
+import { admin } from "constants/routes";
 
 export default function AdminSideNav() {
   const linkStyles =

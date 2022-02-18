@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { getContext } from "contexts/AuthProvider";
 import { ReactNode } from "react";
 import { MemoryRouter, Route } from "react-router-dom";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 import App from "./App";
 import {
   StaticWalletProvider,

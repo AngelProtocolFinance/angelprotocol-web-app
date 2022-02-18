@@ -1,4 +1,4 @@
-import { unsdgs } from "pages/Fund/unsdgs";
+import { unsdgs } from "constants/unsdgs";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import Label from "./Label";

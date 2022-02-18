@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { useWallet, ConnectType } from "@terra-money/wallet-provider";
 import Backdrop from "./Backdrop";
-import Nodal from "components/Nodal/Nodal";
+import Modal from "components/Modal/Modal";
 import TerraAction from "./Terra/TerraAction";
 import Installer from "./Installer";
 
@@ -20,13 +20,13 @@ export default function Connectors(props: Props) {
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
           <IoClose className="text-white-grey text-lg" />
         </button>
-        <Nodal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
+        <Modal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableConnections
             .filter((connection) => connection.type !== ConnectType.READONLY)
             .map((connection) => {
               return <TerraAction key={connection.name} {...connection} />;
             })}
-        </Nodal>
+        </Modal>
         <p className="uppercase font-heading text-angel-grey text-sm">
           supported wallets
         </p>

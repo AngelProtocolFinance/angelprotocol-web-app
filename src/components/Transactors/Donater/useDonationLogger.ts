@@ -11,6 +11,7 @@ export default function useDonationLogger() {
     amount: string,
     denom: denoms,
     splitLiq: string,
+    walletAddress: string,
     receipient: string | number
   ) {
     let receiver: Receiver =
@@ -25,6 +26,7 @@ export default function useDonationLogger() {
       denomination: currency_text[denom],
       amount: parseFloat(amount),
       splitLiq,
+      walletAddress,
       chainId,
     };
     return await logTx(txLogPayload);
