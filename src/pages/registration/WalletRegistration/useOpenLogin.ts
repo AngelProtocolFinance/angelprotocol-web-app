@@ -12,7 +12,7 @@ export default function useOpenLogin() {
   const [privateKey, setPrivateKey] = useState("");
   const { path } = useRouteMatch();
   const { network } = useWallet();
-  const openlogin = useMemo(
+  const openLogin = useMemo(
     () =>
       new OpenLogin({
         clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
@@ -24,20 +24,20 @@ export default function useOpenLogin() {
   useEffect(() => {
     setLoading(true);
     async function initializeOpenlogin() {
-      await openlogin.init();
-      if (openlogin.privKey) {
-        setPrivateKey(openlogin.privKey);
+      await openLogin.init();
+      if (openLogin.privKey) {
+        setPrivateKey(openLogin.privKey);
       }
       setLoading(false);
     }
 
     initializeOpenlogin();
-  }, [openlogin]);
+  }, [openLogin]);
 
   const login = useCallback(
     async (loginProvider: string) => {
       try {
-        const loginResult = await openlogin.login({
+        await openLogin.login({
           loginProvider: loginProvider,
           redirectUrl: `${window.location.origin}${path}/${routes.auth}`,
           relogin: true,
@@ -45,14 +45,11 @@ export default function useOpenLogin() {
             login_hint: user.Email,
           },
         });
-        if (loginResult?.privKey) {
-          setPrivateKey(loginResult.privKey);
-        }
       } catch (error) {
         console.error("error", error);
       }
     },
-    [openlogin, path, user.Email]
+    [openLogin, path, user.Email]
   );
 
   return {
