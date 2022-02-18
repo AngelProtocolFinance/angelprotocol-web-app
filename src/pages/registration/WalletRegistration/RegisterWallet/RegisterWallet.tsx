@@ -12,8 +12,11 @@ import NavigationToDashboard from "./NavigationToDashboard";
 import { Values, WalletSchema } from "./types";
 import useRegisterWallet from "./useRegisterWallet";
 import Title from "./Title";
+import useRehydrateUserState from "hooks/useRehydrateUserState";
 
 export default function RegisterWallet() {
+  useRehydrateUserState();
+
   const user = useGetter((state) => state.user);
   const { isLoading, privateKey } = useOpenLogin();
   const { data } = useGetCharityDataQuery(user.PK);
@@ -35,29 +38,17 @@ export default function RegisterWallet() {
   });
 
   useEffect(() => {
-    console.log(
-      "status === WalletStatus.INITIALIZING",
-      status === WalletStatus.INITIALIZING,
-      "isLoading",
-      isLoading,
-      "privatekey",
-      privateKey
-    );
     if (status === WalletStatus.INITIALIZING || isLoading || !privateKey) {
       return;
     }
-
-    console.log(wallets);
 
     if (!!wallets.length) {
       return resetField("walletAddress", {
         defaultValue: wallets[0].terraAddress,
       });
     }
-    console.log(privateKey);
 
     const wallet = entropyToTerraWallet(privateKey);
-    console.log(wallet);
     resetField("walletAddress", { defaultValue: wallet.key.accAddress });
   }, [
     status,

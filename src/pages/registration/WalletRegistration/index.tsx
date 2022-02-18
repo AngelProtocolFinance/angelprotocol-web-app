@@ -3,7 +3,6 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
 
 const ChooseWallet = lazy(() => import("./ChooseWallet"));
-const RedirectAuth = lazy(() => import("./RedirectAuth"));
 const RegisterWallet = lazy(() => import("./RegisterWallet"));
 const ConnectOwnWallet = lazy(() => import("./ConnectOwnWallet"));
 
@@ -19,7 +18,6 @@ export default function WalletRegistration() {
         path={`${path}/${routes.connect}`}
         component={ConnectOwnWallet}
       />
-      <Route exact path={`${path}/${routes.auth}`} component={RedirectAuth} />
       <Route
         exact
         path={`${path}/${routes.submit}`}
