@@ -37,7 +37,7 @@ export default function useOpenLogin() {
   const login = useCallback(
     async (loginProvider: string) => {
       try {
-        await openlogin.login({
+        const loginResult = await openlogin.login({
           loginProvider: loginProvider,
           redirectUrl: `${window.location.origin}${path}/${routes.auth}`,
           relogin: true,
@@ -45,6 +45,9 @@ export default function useOpenLogin() {
             login_hint: user.Email,
           },
         });
+        if (loginResult?.privKey) {
+          setPrivateKey(loginResult.privKey);
+        }
       } catch (error) {
         console.error("error", error);
       }
