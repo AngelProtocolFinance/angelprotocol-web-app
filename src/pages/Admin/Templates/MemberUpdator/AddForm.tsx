@@ -8,15 +8,18 @@ export default function Addform(props: { adder: SubmitHandler<Values> }) {
   return (
     <form
       onSubmit={handleSubmit(props.adder)}
-      className="border-4 p-2 border-opacity-20 rounded-md mb-2 grid"
+      className="mb-2 grid"
       autoComplete="off"
     >
-      <GroupTitle title="Add new member" />
+      <GroupTitle
+        title="Add new member"
+        colorClass="text-green-200 font-bold"
+      />
       <TextInput title="wallet address" name="addr" />
       <TextInput title="weight" name="weight" />
       <button
         type="submit"
-        className="justify-self-end bg-white bg-opacity-10 hover:bg-opacity-30 px-4 rounded-md text-xs uppercase py-1 text-white"
+        className="font-heading font-bold justify-self-end bg-green-200 hover:bg-white hover:text-green-300 bg-opacity-40 p-3 rounded-md text-xs uppercase text-white"
       >
         + add member
       </button>
@@ -30,12 +33,14 @@ function TextInput(props: { title: string; name: keyof Values }) {
     formState: { errors },
   } = useFormContext<Values>();
   return (
-    <div className="flex flex-col border-b-2 border-opacity-10 text-white text-opacity-80 mb-4">
-      <label className="text-xs font-heading uppercase">{props.title}</label>
+    <div className="flex flex-col text-white text-opacity-80 mb-4">
+      <label className="text-xs font-heading uppercase mb-1">
+        {props.title}
+      </label>
       <input
         {...register(props.name)}
         type="text"
-        className="bg-transparent focus:outline-none p-1"
+        className="bg-transparent focus:outline-none p-3 bg-white bg-opacity-10 shadow-inner rounded-md"
       />
       <ErrorMessage
         errors={errors}

@@ -85,13 +85,13 @@ export default class Contract {
     to: string,
     msg: object
   ): EmbeddedWasmMsg {
-    const binary_msg = btoa(JSON.stringify(msg));
+    const encodedMsg = btoa(JSON.stringify(msg));
     return {
       wasm: {
         execute: {
           contract_addr: to,
           funds,
-          msg: binary_msg,
+          msg: encodedMsg,
         },
       },
     };

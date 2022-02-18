@@ -2,7 +2,7 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { ContractQueryArgs } from "services/terra/types";
-import { InquiredMember, Member } from "services/terra/admin/types";
+import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
 import { sc, EmbeddedWasmMsg } from "./types";
 
@@ -61,11 +61,5 @@ export default class Admin extends Contract {
     );
     const fee = await this.estimateFee([proposal_msg]);
     return { msgs: [proposal_msg], fee };
-  }
-
-  async get_apCW4_member(addr: string) {
-    return this.query<InquiredMember>(this.apCW4_addr, {
-      member: { addr },
-    });
   }
 }

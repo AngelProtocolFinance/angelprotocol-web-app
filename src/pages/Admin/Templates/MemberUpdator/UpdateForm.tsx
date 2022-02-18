@@ -9,9 +9,12 @@ export default function UpdateForm() {
   const { membersCopy, get_updator, add_member, submit_proposal } =
     useUpdateForm();
   return (
-    <div className="bg-white bg-opacity-10 p-3 rounded-md shadow w-96">
-      <div className="border-4 p-2 border-opacity-20 rounded-md mb-2">
-        <GroupTitle title="Remove existing member" />
+    <div className="bg-white bg-opacity-10 p-3 rounded-md shadow-lg w-96">
+      <div className="mb-7">
+        <GroupTitle
+          title="Remove existing member"
+          colorClass="text-red-200 font-bold"
+        />
         <div className="flex flex-col gap-2 mb-2">
           {membersCopy.map((member) => (
             <MemberItem

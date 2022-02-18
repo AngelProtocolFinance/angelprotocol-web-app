@@ -21,9 +21,9 @@ export const contracts: Contracts = {
 
     // Multisig
     [sc.apCW3]: "terra1m6rqwmxlpztjf3zfhza906d44c9rpf2t6vn37n",
-    [sc.apCW4]: "terra1qzdgs73h3rnh9j7f4t6tyuw9lmrp5esn6yunyl",
+    [sc.apCW4]: "terra1lycc2zyhd676294c604euh8hxw7h6jrjd68x83",
     [sc.coCW4]: "terra1lycc2zyhd676294c604euh8hxw7h6jrjd68x83",
-    [sc.gaCW3]: "",
+    [sc.gaCW3]: "terra1jd2n0ze7er80x9h8k3x006aypaxs7mvrggdmn9",
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",

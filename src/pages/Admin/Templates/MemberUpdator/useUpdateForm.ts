@@ -8,6 +8,7 @@ import Admin from "contracts/Admin";
 import { Member } from "services/terra/admin/types";
 import handleTerraError from "helpers/handleTerraError";
 import useTxUpdator from "services/transaction/updators";
+import { chainIDs } from "constants/chainIDs";
 
 export default function useMemberUpdator() {
   const wallet = useConnectedWallet();
@@ -27,6 +28,22 @@ export default function useMemberUpdator() {
     }
   }, [members]);
 
+  const remove_member: MemberUpdateFn = (actual) => () => {
+    const modified = membersCopy.map((stored) => ({
+      ...stored,
+      is_deleted: actual.addr === stored.addr ? true : stored.is_deleted,
+    }));
+    setMemberCopy(modified);
+  };
+
+  const undo_remove: MemberUpdateFn = (actual) => () => {
+    const modified = membersCopy.map((stored) => ({
+      ...stored,
+      is_deleted: actual.addr === stored.addr ? false : stored.is_deleted,
+    }));
+    setMemberCopy(modified);
+  };
+
   const add_member: SubmitHandler<Values> = (data) => {
     const new_member: MemberCopy = {
       addr: data.addr,
@@ -45,26 +62,10 @@ export default function useMemberUpdator() {
     }
   };
 
-  const remove_member: MemberUpdateFn = (actual) => () => {
-    const modified = membersCopy.map((stored) => ({
-      ...stored,
-      is_deleted: actual.addr === stored.addr ? true : stored.is_deleted,
-    }));
-    setMemberCopy(modified);
-  };
-
   const undo_add: MemberUpdateFn = (actual) => () => {
     const modified = membersCopy.filter(
       (stored) => actual.addr !== stored.addr
     );
-    setMemberCopy(modified);
-  };
-
-  const undo_remove: MemberUpdateFn = (actual) => () => {
-    const modified = membersCopy.map((stored) => ({
-      ...stored,
-      is_deleted: actual.addr === stored.addr ? false : stored.is_deleted,
-    }));
     setMemberCopy(modified);
   };
 
@@ -80,6 +81,12 @@ export default function useMemberUpdator() {
 
   async function submit_proposal() {
     try {
+      if (!wallet) {
+        updateTx({ step: Step.error, message: "Wallet is not connected" });
+        return;
+      }
+      const chainId = wallet.network.chainID as chainIDs;
+
       //check if there are changes
       const [to_add, to_remove]: Diffs = membersCopy.reduce(
         ([to_add, to_remove]: Diffs, memberCopy) => {
@@ -103,12 +110,7 @@ export default function useMemberUpdator() {
         return;
       }
 
-      if (!wallet) {
-        updateTx({ step: Step.error, message: "Wallet is not connected" });
-        return;
-      }
-
-      updateTx({ step: Step.error, message: "Submitting proposal" });
+      updateTx({ step: Step.submit, message: "Submitting proposal" });
 
       const contract = new Admin(wallet);
       const execute_msg = contract.createUpdateMembersMsg(to_add, to_remove);
@@ -118,49 +120,36 @@ export default function useMemberUpdator() {
         [execute_msg]
       );
 
-      console.log(tx);
-      return;
+      const response = await wallet.post(tx);
 
-      // const response = await wallet.post(tx);
+      updateTx({
+        step: Step.broadcast,
+        message: "Waiting for transaction result",
+        chainId,
+        txHash: response.result.txhash,
+      });
 
-      // dispatch(
-      //   setStage({
-      //     step: Step.broadcast,
-      //     content: {
-      //       message: "Waiting for transaction result",
-      //       url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${response.result.txhash}`,
-      //     },
-      //   })
-      // );
+      if (response.success) {
+        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
+        const txInfo = await getTxInfo;
 
-      // if (response.success) {
-      //   const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
-      //   const txInfo = await getTxInfo;
-
-      //   if (!txInfo.code) {
-      //     dispatch(
-      //       setStage({
-      //         step: Step.success,
-      //         content: {
-      //           message: "Successfully submitted proposal",
-      //           url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-      //         },
-      //       })
-      //     );
-      //   } else {
-      //     dispatch(
-      //       setStage({
-      //         step: Step.error,
-      //         content: {
-      //           message: "Transaction failed",
-      //           url: `https://finder.extraterrestrial.money/${wallet.network.chainID}/tx/${txInfo.txhash}`,
-      //         },
-      //       })
-      //     );
-      //   }
-      // }
+        if (!txInfo.code) {
+          updateTx({
+            step: Step.success,
+            message: "Successfully submitted proposal",
+            chainId,
+            txHash: response.result.txhash,
+          });
+        } else {
+          updateTx({
+            step: Step.success,
+            message: "Failed to create proposal",
+            chainId,
+            txHash: response.result.txhash,
+          });
+        }
+      }
     } catch (err) {
-      console.error(err);
       handleTerraError(err, updateTx);
     }
   }

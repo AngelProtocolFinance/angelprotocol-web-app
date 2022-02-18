@@ -12,11 +12,11 @@ export default function MemberItem(
 ) {
   return (
     <li
-      className={`flex gap-1 text-white text-opacity-80 items-center ${
-        props.is_deleted ? "bg-failed-red" : "bg-white"
+      className={`flex gap-1 text-white text-opacity-80 items-center bg-opacity-10 shadow-inner ${
+        props.is_deleted ? "bg-red-400 bg-opacity-30" : "bg-white"
       } ${
-        props.is_added ? "bg-opacity-40" : "bg-opacity-10"
-      } rounded-md px-2 py-1 w-full`}
+        props.is_added ? "bg-green-400 bg-opacity-30" : ""
+      } rounded-md p-2 w-full`}
     >
       <FaUserCircle />
       <span className={`${props.is_deleted ? "line-through" : ""}`}>
