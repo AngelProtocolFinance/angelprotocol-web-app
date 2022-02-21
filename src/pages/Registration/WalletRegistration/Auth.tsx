@@ -2,14 +2,14 @@ import Loader from "components/Loader/Loader";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { WalletRegistrationContext } from ".";
 import routes from "./routes";
 import useEntropyToTerraWallet from "./useEntropyToTerraWallet";
-import useOpenLogin from "./useOpenLogin";
+import { WalletRegistrationContext } from "./WalletRegistrationProvider";
 
 export default function Auth() {
-  const { isLoading, privateKey } = useOpenLogin();
-  const { rootPath } = useContext(WalletRegistrationContext);
+  const { rootPath, isLoading, openLoginPrivateKey } = useContext(
+    WalletRegistrationContext
+  );
   const entropyToTerraWallet = useEntropyToTerraWallet();
 
   // We've been redirected here from a third-party login provider, we should assume
@@ -20,13 +20,13 @@ export default function Auth() {
   // this flow (using entropyToTerraWallet) will need to be updated once Torus is enabled
   // as a connection method for the whole app to set Torus as connected wallet
   useEffect(() => {
-    if (!isLoading && privateKey) {
-      const address = entropyToTerraWallet(privateKey).key.accAddress;
+    if (!isLoading && openLoginPrivateKey) {
+      const address = entropyToTerraWallet(openLoginPrivateKey).key.accAddress;
 
       // TODO: set Torus as connected wallet
       console.log(address);
     }
-  }, [privateKey, isLoading, entropyToTerraWallet]);
+  }, [openLoginPrivateKey, isLoading, entropyToTerraWallet]);
 
   return isLoading ? (
     <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />

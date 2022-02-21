@@ -2,7 +2,7 @@ import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
 import { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-import { WalletRegistrationContext } from "..";
+import { WalletRegistrationContext } from "../WalletRegistrationProvider";
 import RegistrationSuccessful from "./RegistrationSuccessful";
 import useRegisterWallet from "./useRegisterWallet";
 import WalletSubmission from "./WalletSubmission";
@@ -14,11 +14,9 @@ export default function RegisterWallet() {
   const { rootPath } = useContext(WalletRegistrationContext);
 
   useEffect(() => {
-    if (status === WalletStatus.INITIALIZING || !wallets.length) {
-      return;
+    if (status === WalletStatus.WALLET_CONNECTED) {
+      setWalletAddress(wallets[0].terraAddress);
     }
-
-    setWalletAddress(wallets[0].terraAddress);
   }, [status, wallets]);
 
   if (status === WalletStatus.INITIALIZING) {

@@ -3,19 +3,19 @@ import Loader from "components/Loader/Loader";
 import { WalletSuiteContext } from "providers/WalletSuiteProvider";
 import { useContext } from "react";
 import { Redirect } from "react-router-dom";
-import { WalletRegistrationContext } from "..";
 import routes from "../routes";
-import useOpenLogin from "../useOpenLogin";
+import { WalletRegistrationContext } from "../WalletRegistrationProvider";
 import Title from "./Title";
 import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const { setShowConnectors } = useContext(WalletSuiteContext);
-  const { rootPath } = useContext(WalletRegistrationContext);
-  const { isLoading, login } = useOpenLogin();
+  const { rootPath, isLoading, loginWithOpenLogin } = useContext(
+    WalletRegistrationContext
+  );
   const { status, wallets } = useWallet();
 
-  if (status !== WalletStatus.INITIALIZING && !!wallets.length) {
+  if (!isLoading && status !== WalletStatus.INITIALIZING && !!wallets.length) {
     return <Redirect to={`${rootPath}/${routes.submit}`} />;
   }
 
@@ -26,7 +26,7 @@ export default function ChooseWallet() {
   return (
     <div className="flex flex-col gap-5 items-center">
       <Title />
-      <Web3Auth onLogin={login} />
+      <Web3Auth onLogin={loginWithOpenLogin} />
       <button
         onClick={() => setShowConnectors(true)}
         className="uppercase text-bright-blue text-sm hover:underline mb-5 lg:mb-0"

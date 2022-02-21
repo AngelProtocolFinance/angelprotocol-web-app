@@ -1,21 +1,18 @@
-import { createContext, lazy } from "react";
+import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
+import WalletRegistrationProvider from "./WalletRegistrationProvider";
 
 const Auth = lazy(() => import("./Auth"));
 const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const RegisterWallet = lazy(() => import("./RegisterWallet"));
 
-const Context = createContext<{ rootPath: string }>({
-  rootPath: "",
-});
-
-function WalletRegistration() {
+export default function WalletRegistration() {
   // this component will only render under '/app/register/wallet'
   const { path } = useRouteMatch();
 
   return (
-    <Context.Provider value={{ rootPath: path }}>
+    <WalletRegistrationProvider>
       <Switch>
         <Route exact path={path} component={ChooseWallet} />
         <Route exact path={`${path}/${routes.auth}`} component={Auth} />
@@ -25,8 +22,6 @@ function WalletRegistration() {
           component={RegisterWallet}
         />
       </Switch>
-    </Context.Provider>
+    </WalletRegistrationProvider>
   );
 }
-
-export { WalletRegistration as default, Context as WalletRegistrationContext };
