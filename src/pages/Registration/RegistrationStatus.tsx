@@ -96,12 +96,11 @@ const RegistrationStatus = () => {
               <Action
                 classes={
                   status.wallet_address
-                    ? "bg-dark-grey w-40 h-10"
+                    ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
                 onClick={navigate(routes.wallet)}
-                title={status.wallet_address ? "Completed" : "Continue"}
-                disabled={user.PK === ""}
+                title={status.wallet_address ? "Change" : "Continue"}
               />
             </div>
           </div>
