@@ -39,7 +39,7 @@ export default function useOpenLogin() {
       try {
         await openLogin.login({
           loginProvider: loginProvider,
-          redirectUrl: `${window.location.origin}${path}/${routes.submit}`,
+          redirectUrl: `${window.location.origin}${path}/${routes.auth}`,
           relogin: true,
           extraLoginOptions: {
             login_hint: user.Email,
