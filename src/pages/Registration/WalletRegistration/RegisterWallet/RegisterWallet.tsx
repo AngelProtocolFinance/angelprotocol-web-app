@@ -52,16 +52,15 @@ export default function RegisterWallet() {
     <div className="flex flex-col h-full items-center justify-center">
       <Title isSuccess={isSuccess} />
       <RegistrationExplanation />
-      <SubmitSection
-        walletAddress={walletAddress}
-        isSubmitting={isSubmitting}
-        isSuccess={isSuccess}
-        onClick={() => registerWallet(walletAddress)}
-      />
-      <NavigationToDashboard
-        isSuccess={isSuccess}
-        walletAddress={walletAddress}
-      />
+      {isSuccess ? (
+        <NavigationToDashboard walletAddress={walletAddress} />
+      ) : (
+        <SubmitSection
+          walletAddress={walletAddress}
+          isSubmitting={isSubmitting}
+          onClick={() => registerWallet(walletAddress)}
+        />
+      )}
     </div>
   );
 }
