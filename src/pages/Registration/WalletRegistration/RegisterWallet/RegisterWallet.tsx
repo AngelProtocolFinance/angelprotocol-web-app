@@ -19,7 +19,11 @@ export default function RegisterWallet() {
   const entropyToTerraWallet = useEntropyToTerraWallet();
 
   useEffect(() => {
-    if (status === WalletStatus.INITIALIZING || isLoading || !privateKey) {
+    if (
+      status === WalletStatus.INITIALIZING ||
+      isLoading ||
+      (!privateKey && !wallets.length)
+    ) {
       return;
     }
 
@@ -30,6 +34,14 @@ export default function RegisterWallet() {
 
     setWalletAddress(address);
   }, [status, isLoading, privateKey, wallets, entropyToTerraWallet]);
+
+  if (!wallets.length) {
+    return (
+      <div className="flex flex-col h-full items-center justify-center">
+        <h3 className="font-bold uppercase">Please connect your wallet</h3>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
