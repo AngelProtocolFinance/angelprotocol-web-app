@@ -6,7 +6,7 @@ import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
-import { site } from "types/routes";
+import { site } from "constants/routes";
 import MobileDappNav from "./MobileDappNav";
 import DappMenu from "./DappMenu";
 

@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { TxProps } from "components/TransactionSuite/types";
 import TransactionSuite from "components/TransactionSuite/TransactionSuite";
-import { useSetModal } from "components/Nodal/Nodal";
+import { useSetModal } from "components/Modal/Modal";
 import Poller from "./Poller";
 import PollerForm from "./PollerForm";
 import { Props } from "./types";

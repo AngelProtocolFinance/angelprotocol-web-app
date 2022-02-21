@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Endowment } from "services/aws/leaderboard/types";
 import { charity_details } from "services/aws/endowments/placeholders";
-import { app } from "types/routes";
+import { app } from "constants/routes";
 import LazyImage from "components/LazyImage/LazyImage";
 import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 

@@ -4,6 +4,7 @@ export type TxDetails = {
   chainId: string;
   amount: number;
   splitLiq: string;
+  walletAddress: string;
   denomination: string;
 };
 

@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { unsdgs } from "pages/Fund/unsdgs";
+import { unsdgs } from "constants/unsdgs";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -14,7 +14,7 @@ import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
-import { app, site } from "types/routes";
+import { app, site } from "constants/routes";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { useProfileState } from "services/aws/endowments/states";
 
@@ -165,21 +165,6 @@ export function DonationInfo() {
           </>
         )}
       </div>
-
-      {/* charity stats */}
-      {/* <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeInfoModal}
-        contentLabel="Example Modal"
-        className="absolute inset-1/2 bottom-auto right-auto max-w-4/5 min-h-modal rounded-3xl bg-white transform -translate-x-1/2 -translate-y-1/2"
-      >
-        <div className="flex justify-center">
-          <div className="p-4 mx-auto text-thin-blue">
-            <h2 className="text-2xl uppercase font-bold mb-2">charity info</h2>
-            <CharityInfo />
-          </div>
-        </div>
-      </Modal> */}
     </div>
   );
 }

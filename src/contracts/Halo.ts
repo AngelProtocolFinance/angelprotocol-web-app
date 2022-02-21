@@ -7,8 +7,9 @@ import {
   // StdFee,
 } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { PollExecuteMsg, sc, Vote } from "./types";
+import { PollExecuteMsg, Vote } from "./types";
 import { GovState } from "services/terra/gov/types";
 import { ContractQueryArgs } from "services/terra/types";
 import { Airdrops } from "services/aws/airdrop/types";

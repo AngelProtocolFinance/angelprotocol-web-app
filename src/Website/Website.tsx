@@ -9,9 +9,9 @@ import {
 import WebHead from "Website/Header/WebHead";
 import WebFoot from "Website/WebFoot";
 import Loader from "components/Loader/Loader";
-import { site, web } from "types/routes";
+import { site, web } from "constants/routes";
 import Home from "./Home/Home";
-import Nodal from "components/Nodal/Nodal";
+import Modal from "components/Modal/Modal";
 import useScrollTop from "hooks/useScrollTop";
 const Donors = lazy(() => import("./Donors/Donors"));
 const PrivacyPolicy = lazy(() => import("./PrivacyPolicy"));
@@ -29,7 +29,7 @@ const Website = () => {
 
   return (
     <div className="grid grid-rows-1a bg-white">
-      <Nodal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
+      <Modal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
           <Switch>
@@ -43,7 +43,7 @@ const Website = () => {
           </Switch>
         </Suspense>
         <WebFoot />
-      </Nodal>
+      </Modal>
     </div>
   );
 };
