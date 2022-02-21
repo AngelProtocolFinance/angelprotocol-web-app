@@ -1,4 +1,5 @@
 import { chainIDs } from "constants/chainIDs";
+import idParamToNumber from "helpers/idParamToNum";
 import { useAdminContract } from "../contracts";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
@@ -47,10 +48,7 @@ export function useProposal(pollId: string) {
   const { wallet, contract } = useAdminContract();
 
   //process pollId path var which is not guaranteed to be a number castable string
-  const numberPollId = isNaN(pollId as unknown as number)
-    ? 0
-    : Math.floor(+pollId);
-
+  const numberPollId = idParamToNumber(pollId);
   const {
     data = proposal,
     isFetching,
@@ -72,17 +70,4 @@ export function useVoteList(pollId: number) {
     skip: wallet?.network.chainID === chainIDs.localterra,
   });
   return { votes: data, isVoteListLoading: isFetching || isLoading };
-}
-
-export function useVoter() {
-  const { useVoterQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
-  const {
-    data = member,
-    isFetching,
-    isLoading,
-  } = useVoterQuery(contract.voter, {
-    skip: !wallet || wallet?.network.chainID === chainIDs.localterra,
-  });
-  return { voter: data, isVoterLoading: isFetching || isLoading };
 }

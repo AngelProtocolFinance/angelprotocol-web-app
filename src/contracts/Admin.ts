@@ -4,7 +4,7 @@ import { contracts } from "constants/contracts";
 import { ContractQueryArgs } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
-import { sc, EmbeddedWasmMsg } from "./types";
+import { sc, EmbeddedWasmMsg, Vote } from "./types";
 
 export default class Admin extends Contract {
   apCW4_addr: string;
@@ -102,5 +102,32 @@ export default class Admin extends Contract {
     );
     const fee = await this.estimateFee([proposal_msg]);
     return { msgs: [proposal_msg], fee };
+  }
+
+  async createVoteTx(proposal_id: number, vote: Vote) {
+    this.checkWallet();
+    const voteMsg = new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+      vote: {
+        proposal_id,
+        vote,
+      },
+    });
+    const fee = await this.estimateFee([voteMsg]);
+    return { msgs: [voteMsg], fee };
+  }
+
+  async createExecProposalTx(proposal_id: number) {
+    this.checkWallet();
+    const proposalExecMsg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.apCW3_addr,
+      {
+        execute: {
+          proposal_id,
+        },
+      }
+    );
+    const fee = await this.estimateFee([proposalExecMsg]);
+    return { msgs: [proposalExecMsg], fee };
   }
 }

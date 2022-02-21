@@ -2,20 +2,18 @@ import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import Fee from "../Fee";
 import Status from "../Status";
-import Amount from "./Amount";
 import { Values } from "./types";
 import VoteOption from "../VoteOption";
 import useVote from "./useVote";
 
-export default function VoterForm() {
+export default function VoteForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid, isDirty },
+    formState: { isSubmitting },
   } = useFormContext<Values>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const vote = useVote();
-  const isDisabled =
-    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
+  const isDisabled = isSubmitting || form_loading || !!form_error;
   return (
     <form
       onSubmit={handleSubmit(vote)}
@@ -23,16 +21,10 @@ export default function VoterForm() {
       autoComplete="off"
     >
       <Status />
-      <h4 className="text-xl text-angel-grey text-center uppercase">Vote</h4>
-      <p className="text-center text-angel-grey p-2 border-2 border-angel-blue rounded-md border-opacity-20 my-4">
-        Votes cannot be changed after submission. Staked HALO used to vote is
-        locked and cannot be withdrawn until the poll has finished.
-      </p>
-      <div className="grid grid-cols-2 gap-4 mb-6">
+      <div className="grid grid-cols-2 gap-4 mb-6 mt-2">
         <VoteOption label="yes" vote="yes" />
         <VoteOption label="no" vote="no" />
       </div>
-      <Amount />
       <Fee />
       <button
         disabled={isDisabled}

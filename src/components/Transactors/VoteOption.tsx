@@ -1,11 +1,15 @@
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
-import { Values } from "./types";
 
-export default function Option(props: { label: string; vote: Vote }) {
-  const { register, watch } = useFormContext<Values>();
+export default function VoteOption(props: { label: string; vote: Vote }) {
+  const { register, watch } = useFormContext<typeof props>();
   const vote = watch("vote");
+  if (vote === undefined) {
+    throw Error(
+      "VoteOption must be rendered inside context with shape {vote:Vote} and must be set to YES by default"
+    );
+  }
   const is_active = vote === props.vote;
 
   const iconClasses = `opacity-90 ${

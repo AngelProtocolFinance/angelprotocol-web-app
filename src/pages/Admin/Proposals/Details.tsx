@@ -42,7 +42,8 @@ export default function Details(props: RouteComponentProps<ProposalIdParam>) {
           <span>Votes</span>
           <span className="normal-case font-normal font-body text-green-100 tracking-wide text-xs">
             {" "}
-            (needs 50% YES to pass)
+            (needs {+proposal.threshold.absolute_percentage.percentage * 100}%
+            YES to pass)
           </span>
         </h4>
         <Votes {...proposalDetails} />

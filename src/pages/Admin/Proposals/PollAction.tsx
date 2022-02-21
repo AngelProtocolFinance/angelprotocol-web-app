@@ -1,14 +1,16 @@
 import { ReactNode } from "react";
-import { useVoter } from "services/terra/admin/queriers";
+import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
+import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
 import { ProposalDetails } from "./useDetails";
 
 export default function PollAction(props: ProposalDetails) {
-  const { voter } = useVoter();
+  const showAdminVoter = useAdminVoter(props.numId);
+  const showAdminExecuter = useProposalExecutor(props.numId);
 
   const EXED = props.isExecuted;
   const EX = props.isExecutable;
   const VE = props.isVoteEnded;
-  const V = voter.weight !== null;
+  const V = props.userVote !== undefined;
 
   let node: ReactNode = null;
   //poll is executed
@@ -16,7 +18,7 @@ export default function PollAction(props: ProposalDetails) {
     node = <Text>poll has ended</Text>;
     //voting period ended and poll is passed waiting to be executed
   } else if (EX) {
-    node = <button>execute poll</button>;
+    node = node = <Action action={showAdminExecuter} title="execute poll" />;
     //voting period ended, but poll is not passed
   } else if (VE) {
     node = <Text>voting period has ended</Text>;
@@ -25,7 +27,7 @@ export default function PollAction(props: ProposalDetails) {
     if (V) {
       node = <Text>you already voted</Text>;
     } else {
-      node = <button>vote poll</button>;
+      node = <Action action={showAdminVoter} title="vote" />;
     }
   }
   return <>{node}</>;
@@ -33,4 +35,19 @@ export default function PollAction(props: ProposalDetails) {
 
 function Text(props: { children: ReactNode }) {
   return <p className="uppercase text-sm">{props.children}</p>;
+}
+
+type ActionProps =
+  | { disabled?: false; action: () => void; title: string }
+  | { disabled: true; action?: never; title: string };
+function Action(props: ActionProps) {
+  return (
+    <button
+      disabled={props.disabled}
+      onClick={props.action}
+      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30"
+    >
+      {props.title}
+    </button>
+  );
 }

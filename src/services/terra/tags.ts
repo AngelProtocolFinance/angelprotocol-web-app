@@ -4,7 +4,17 @@ export enum tags {
   halo = "halo",
   lbp = "lbp",
   endowment = "endowment",
+  admin = "admin",
 }
+
+export enum admin {
+  proposals = "proposals",
+  proposal = "proposal",
+  members = "members",
+  member = "member",
+  votes = "votes",
+}
+
 export enum gov {
   polls = "polls",
   state = "state",
