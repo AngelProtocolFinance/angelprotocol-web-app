@@ -27,7 +27,11 @@ export default function RegisterWallet() {
       return;
     }
 
+    // (2022-02-21)
     // this flow (using entropyToTerraWallet) will need to be updated once Torus is enabled as a connection method for the whole app
+    // this logic should never be reachable, but is left here to show how it should be done.
+    // Once Torus is enabled as connection method, this logic should be moved to a component like 'RedirectAuth',
+    // which would handle Torus redirects and automatically connect to Torus prior to navigating to this page.
     const address = !!wallets.length
       ? wallets[0].terraAddress
       : entropyToTerraWallet(privateKey).key.accAddress;
