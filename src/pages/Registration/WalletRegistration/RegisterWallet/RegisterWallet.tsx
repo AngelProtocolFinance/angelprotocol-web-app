@@ -1,15 +1,15 @@
-import { app, site } from "constants/routes";
-import routes from "../../routes";
-import { Link } from "react-router-dom";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import FormInput from "components/FormInput";
+import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Action from "../../Action";
+import routes from "../../routes";
 import useEntropyToTerraWallet from "../useEntropyToTerraWallet";
 import useOpenLogin from "../useOpenLogin";
-import NavigationToDashboard from "./NavigationToDashboard";
+import RegistrationSuccessful from "./RegistrationSuccessful";
 import useRegisterWallet from "./useRegisterWallet";
-import FormInput from "components/FormInput";
-import Action from "../../Action";
 
 export default function RegisterWallet() {
   useRehydrateUserState();
@@ -50,7 +50,7 @@ export default function RegisterWallet() {
   }
 
   if (isSuccess) {
-    return <NavigationToDashboard walletAddress={walletAddress} />;
+    return <RegistrationSuccessful walletAddress={walletAddress} />;
   }
 
   return (

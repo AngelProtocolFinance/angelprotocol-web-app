@@ -6,9 +6,7 @@ import { BsCheck2 } from "react-icons/bs";
 
 type Props = { walletAddress: string };
 
-export default function NavigationToDashboard(props: Props) {
-  const { walletAddress } = props;
-
+export default function RegistrationSuccessful({ walletAddress }: Props) {
   return (
     <div className="flex flex-col h-full items-center">
       <div className="flex flex-col items-center gap-4 mb-10">
