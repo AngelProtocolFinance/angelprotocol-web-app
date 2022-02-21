@@ -7,7 +7,7 @@ import {
 } from "services/aws/registration";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import routes from "../routes";
+import routes from "../../routes";
 import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {

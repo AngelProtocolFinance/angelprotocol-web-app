@@ -1,4 +1,4 @@
-import { UserRoles } from "../constants";
+import { UserRoles } from "../../constants";
 import * as Yup from "yup";
 
 export type ContactDetails = {

@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Action from "../Action";
-import { userRoleOptions, UserRoles } from "../constants";
+import Action from "../../Action";
+import { userRoleOptions, UserRoles } from "../../constants";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import routes from "../routes";
+import routes from "../../routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import FormInput from "components/FormInput";
 import RoleSelector from "./RoleSelector";

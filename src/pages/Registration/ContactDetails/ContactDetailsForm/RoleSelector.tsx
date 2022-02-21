@@ -1,7 +1,7 @@
 import FormInput from "components/FormInput";
 import { Selector } from "components/Selector";
 import { Control, UseFormRegister } from "react-hook-form";
-import { OptionType, UserRoles } from "../constants";
+import { OptionType, UserRoles } from "../../constants";
 import { ContactDetails } from "./types";
 
 type Props = {
