@@ -1,4 +1,5 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import Loader from "components/Loader/Loader";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useEffect, useState } from "react";
 import useEntropyToTerraWallet from "../useEntropyToTerraWallet";
@@ -36,6 +37,12 @@ export default function RegisterWallet() {
 
     setWalletAddress(address);
   }, [status, isLoading, privateKey, wallets, entropyToTerraWallet]);
+
+  if (status === WalletStatus.INITIALIZING) {
+    return (
+      <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
+    );
+  }
 
   if (!wallets.length) {
     return (
