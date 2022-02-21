@@ -30,8 +30,7 @@ export default function ChooseWallet() {
         onClick={() => setShowConnectors(true)}
         className="uppercase text-bright-blue text-sm hover:underline mb-5 lg:mb-0"
       >
-        Or click here if you already have a Terra wallet that you would like to
-        use
+        Click here if you have a Terra wallet
       </button>
     </div>
   );
