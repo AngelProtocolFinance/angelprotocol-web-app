@@ -1,80 +1,48 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import useRehydrateUserState from "hooks/useRehydrateUserState";
+import { useEffect, useState } from "react";
 import Action from "../../Action";
-import FormInput from "components/FormInput";
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useGetCharityDataQuery } from "services/aws/charity";
-import { useGetter } from "store/accessors";
 import useEntropyToTerraWallet from "../useEntropyToTerraWallet";
 import useOpenLogin from "../useOpenLogin";
 import NavigationToDashboard from "./NavigationToDashboard";
-import { Values, WalletSchema } from "./types";
-import useRegisterWallet from "./useRegisterWallet";
 import Title from "./Title";
-import useRehydrateUserState from "hooks/useRehydrateUserState";
+import useRegisterWallet from "./useRegisterWallet";
+import FormInput from "components/FormInput";
 
 export default function RegisterWallet() {
   useRehydrateUserState();
 
-  const user = useGetter((state) => state.user);
+  const [walletAddress, setWalletAddress] = useState("");
   const { isLoading, privateKey } = useOpenLogin();
-  const { data } = useGetCharityDataQuery(user.PK);
-  const { isSuccess, registerWallet } = useRegisterWallet();
+  const { isSuccess, isSubmitting, registerWallet } = useRegisterWallet();
   const { status, wallets } = useWallet();
   const entropyToTerraWallet = useEntropyToTerraWallet();
-
-  const {
-    control,
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    resetField,
-  } = useForm<Values>({
-    resolver: yupResolver(WalletSchema),
-    defaultValues: {
-      walletAddress: user.TerraWallet || data?.Metadata?.TerraWallet,
-    },
-  });
 
   useEffect(() => {
     if (status === WalletStatus.INITIALIZING || isLoading || !privateKey) {
       return;
     }
 
-    if (!!wallets.length) {
-      return resetField("walletAddress", {
-        defaultValue: wallets[0].terraAddress,
-      });
-    }
+    // this flow (using entropyToTerraWallet) will need to be updated once Torus is enabled as a connection method for the whole app
+    const address = !!wallets.length
+      ? wallets[0].terraAddress
+      : entropyToTerraWallet(privateKey).key.accAddress;
 
-    const wallet = entropyToTerraWallet(privateKey);
-    resetField("walletAddress", { defaultValue: wallet.key.accAddress });
-  }, [
-    status,
-    isLoading,
-    privateKey,
-    wallets,
-    resetField,
-    entropyToTerraWallet,
-  ]);
+    setWalletAddress(address);
+  }, [status, isLoading, privateKey, wallets, entropyToTerraWallet]);
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
       <Title isSuccess={isSuccess} />
       <RegistrationExplanation />
-      <form
-        className="flex flex-col gap-10 items-center w-3/4"
-        onSubmit={handleSubmit(registerWallet)}
-      >
+      <div className="flex flex-col gap-10 items-center w-3/4">
         <FormInput
+          id="walletAddress"
           label="Terra Wallet"
           placeholder="terra1..."
-          registerReturn={register("walletAddress")}
-          errorMessage={errors.walletAddress?.message}
-          disabled={isSubmitting || isSuccess}
+          value={walletAddress}
+          disabled
           required
-          errorClassName="mx-auto"
         />
         <Action
           submit
@@ -82,11 +50,12 @@ export default function RegisterWallet() {
           classes="bg-thin-blue w-48 h-10 mb-10"
           disabled={isSubmitting || isSuccess}
           isLoading={isSubmitting}
+          onClick={() => registerWallet(walletAddress)}
         />
-      </form>
+      </div>
       <NavigationToDashboard
         isSuccess={isSuccess}
-        walletAddress={control._formValues.walletAddress}
+        walletAddress={walletAddress}
       />
     </div>
   );
