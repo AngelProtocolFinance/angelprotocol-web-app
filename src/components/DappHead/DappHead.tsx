@@ -9,6 +9,7 @@ import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import { site } from "constants/routes";
 import MobileDappNav from "./MobileDappNav";
 import DappMenu from "./DappMenu";
+import TransactionStatus from "components/TransactionStatus/TransactionStatus";
 
 export default function DappHead() {
   useProviderSwitcher();
@@ -24,6 +25,7 @@ export default function DappHead() {
       </Link>
       <DappMenu />
       <div className="ml-auto grid grid-cols-1a gap-1">
+        <TransactionStatus />
         <WalletSuite />
         <Airdrop />
       </div>
