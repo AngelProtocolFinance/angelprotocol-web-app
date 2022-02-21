@@ -1,7 +1,8 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
-import { useEffect, useState } from "react";
-import { Redirect, useRouteMatch } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Redirect } from "react-router-dom";
+import { WalletRegistrationContext } from "..";
 import RegistrationSuccessful from "./RegistrationSuccessful";
 import useRegisterWallet from "./useRegisterWallet";
 import WalletSubmission from "./WalletSubmission";
@@ -10,7 +11,7 @@ export default function RegisterWallet() {
   const [walletAddress, setWalletAddress] = useState("");
   const { isSuccess, isSubmitting, registerWallet } = useRegisterWallet();
   const { status, wallets } = useWallet();
-  const { path } = useRouteMatch();
+  const { rootPath } = useContext(WalletRegistrationContext);
 
   useEffect(() => {
     if (status === WalletStatus.INITIALIZING || !wallets.length) {
@@ -27,8 +28,8 @@ export default function RegisterWallet() {
   }
 
   if (!wallets.length) {
-    // redirect to component at /app/register/wallet to force user to connect wallet
-    return <Redirect to={path.substring(0, path.lastIndexOf("/"))} />;
+    // force user to connect wallet
+    return <Redirect to={rootPath} />;
   }
 
   return isSuccess ? (

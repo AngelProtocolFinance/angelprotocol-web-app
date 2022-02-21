@@ -1,16 +1,16 @@
 import { useWallet } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { chainIDs } from "constants/chainIDs";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { useRouteMatch } from "react-router";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useGetter } from "store/accessors";
+import { WalletRegistrationContext } from ".";
 import routes from "./routes";
 
 export default function useOpenLogin() {
   const user = useGetter((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [privateKey, setPrivateKey] = useState("");
-  const { path } = useRouteMatch();
+  const { rootPath } = useContext(WalletRegistrationContext);
   const { network } = useWallet();
   const openLogin = useMemo(
     () =>
@@ -39,7 +39,7 @@ export default function useOpenLogin() {
       try {
         await openLogin.login({
           loginProvider: loginProvider,
-          redirectUrl: `${window.location.origin}${path}/${routes.auth}`,
+          redirectUrl: `${window.location.origin}${rootPath}/${routes.auth}`,
           relogin: true,
           extraLoginOptions: {
             login_hint: user.Email,
@@ -49,7 +49,7 @@ export default function useOpenLogin() {
         console.error("error", error);
       }
     },
-    [openLogin, path, user.Email]
+    [openLogin, rootPath, user.Email]
   );
 
   return {
