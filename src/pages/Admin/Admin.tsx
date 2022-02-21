@@ -6,6 +6,7 @@ import Loader from "components/Loader/Loader";
 import { admin } from "constants/routes";
 import Dashboard from "./Dashboard";
 import Proposer from "./Proposer";
+import Details from "./Proposals/Details";
 
 const Admin = () => {
   const wallet = useConnectedWallet();
@@ -22,6 +23,7 @@ const Admin = () => {
   }
   return (
     <Switch>
+      <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
       <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
       <Route exact path={`${path}/${admin.index}`} component={Dashboard} />
     </Switch>

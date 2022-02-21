@@ -27,7 +27,7 @@ export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
   description: string; //"this is a description"
-  msg: EmbeddedWasmMsg[];
+  msgs: EmbeddedWasmMsg[];
   status: ProposalStatus;
   expires: { at_height: number };
   threshold: {

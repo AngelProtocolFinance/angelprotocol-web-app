@@ -20,6 +20,7 @@ export default function useDetails(proposalInfo: Proposal) {
   );
 
   const totalWeight = +proposalInfo.threshold.absolute_percentage.total_weight;
+  const expiry = proposalInfo.expires.at_height;
   const numNotYet = totalWeight - numYes - numNo;
 
   return {
@@ -30,6 +31,7 @@ export default function useDetails(proposalInfo: Proposal) {
     pctNo: numNo / totalWeight,
     pctNonYet: numNotYet / totalWeight,
     blockHeight,
+    remainingBlocks: expiry - +blockHeight,
     isVoteEnded: proposalInfo.expires.at_height < +blockHeight,
   };
 }

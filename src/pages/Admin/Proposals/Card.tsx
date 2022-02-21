@@ -1,11 +1,15 @@
-import toCurrency from "helpers/toCurrency";
+import { Link, useRouteMatch } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { Proposal, ProposalStatus } from "services/terra/admin/types";
+import toCurrency from "helpers/toCurrency";
 import useDetails from "./useDetails";
+import { admin } from "constants/routes";
 
-export default function ProposalCard(props: Proposal) {
+export default function Card(props: Proposal) {
+  const { url } = useRouteMatch();
   const {
     isVoteEnded,
+    remainingBlocks,
     blockHeight,
     numYes,
     numNo,
@@ -15,7 +19,10 @@ export default function ProposalCard(props: Proposal) {
     pctNonYet,
   } = useDetails(props);
   return (
-    <div className="bg-white bg-opacity-10 p-4 rounded-md shadow-md">
+    <Link
+      to={`${url}/${admin.proposal}/${props.id}`}
+      className="bg-white bg-opacity-10 hover:bg-opacity-20 p-4 rounded-md shadow-md"
+    >
       <div className="font-mono font-bold flex justify-between items-center text-white-grey text-opacity-80">
         <p className="text-sm">ID: {props.id}</p>
         <p
@@ -55,7 +62,7 @@ export default function ProposalCard(props: Proposal) {
             </span>
             <SiHiveBlockchain className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+props.expires.at_height, 0)}
+              {toCurrency(+blockHeight, 0)}
             </span>
           </p>
         </div>
@@ -67,13 +74,13 @@ export default function ProposalCard(props: Proposal) {
           <p className="flex items-center justify-end">
             <SiHiveBlockchain className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+blockHeight, 0)}
+              {toCurrency(remainingBlocks, 0)}
             </span>
             <span className="font-heading uppercase text-2xs ml-1">blocks</span>
           </p>
         </div>
       )}
-    </div>
+    </Link>
   );
 }
 
@@ -95,7 +102,7 @@ function Stat(props: {
 
 const statusClasses: { [key in ProposalStatus]: string } = {
   executed: "bg-angel-blue bg-opacity-50",
-  open: "bg-white",
+  open: "bg-white text-angel-grey",
   passed: "bg-green-300",
   pending: "bg-angel-orange",
   rejected: "bg-red-400 bg-opacity-50",

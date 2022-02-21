@@ -15,6 +15,7 @@ export default class Admin extends Contract {
   members: ContractQueryArgs;
   member: ContractQueryArgs;
   proposals: ContractQueryArgs;
+  proposal: (arg: number) => ContractQueryArgs;
   voteList: (arg: number) => ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet) {
@@ -24,6 +25,7 @@ export default class Admin extends Contract {
     this.coCW4_addr = contracts[this.chainID][sc.coCW4];
     this.gaCW3_addr = contracts[this.chainID][sc.gaCW3];
 
+    //query args
     this.members = {
       address: this.apCW4_addr,
       msg: { list_members: {} },
@@ -37,9 +39,18 @@ export default class Admin extends Contract {
     this.proposals = {
       address: this.apCW3_addr,
       msg: {
-        list_proposals: {},
+        reverse_proposals: {},
       },
     };
+
+    this.proposal = (pollId: number) => ({
+      address: this.apCW3_addr,
+      msg: {
+        proposal: {
+          proposal_id: pollId,
+        },
+      },
+    });
 
     this.voteList = (pollId: number) => ({
       address: this.apCW3_addr,
@@ -51,6 +62,7 @@ export default class Admin extends Contract {
     });
   }
 
+  //execute message creators
   createUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
     return this.createdEmbeddedWasmMsg([], this.apCW4_addr, {
       update_members: {

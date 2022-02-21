@@ -25,6 +25,12 @@ export const admin_api = terra.injectEndpoints({
         return res.query_result;
       },
     }),
+    proposal: builder.query<Proposal, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Proposal>) => {
+        return res.query_result;
+      },
+    }),
     proposals: builder.query<Proposal[], ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<ProposalsRes>) => {

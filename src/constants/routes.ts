@@ -19,6 +19,7 @@ export enum admin {
   alliance_members = "alliance-members",
   charity_applications = "charity-applications",
   proposal_types = "proposal-types",
+  proposal = "proposal",
 }
 
 export enum proposal_types {

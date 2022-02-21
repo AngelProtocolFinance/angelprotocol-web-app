@@ -1,4 +1,4 @@
-import Proposals from "./Proposals";
+import Proposals from "./Proposals/Proposals";
 import Members from "./Members";
 
 export default function Dashboard() {

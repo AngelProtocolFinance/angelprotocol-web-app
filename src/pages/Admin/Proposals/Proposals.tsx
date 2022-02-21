@@ -4,7 +4,7 @@ import { useLatestBlock } from "services/terra/queriers";
 import { useProposals } from "services/terra/admin/queriers";
 import toCurrency from "helpers/toCurrency";
 import { admin } from "constants/routes";
-import ProposalCard from "./ProposalCard";
+import Card from "./Card";
 
 export default function Proposals() {
   const { path } = useRouteMatch();
@@ -33,7 +33,7 @@ export default function Proposals() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {proposals.map((proposal) => (
-          <ProposalCard key={proposal.id} {...proposal} />
+          <Card key={proposal.id} {...proposal} />
         ))}
       </div>
     </div>

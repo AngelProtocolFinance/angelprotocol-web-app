@@ -28,9 +28,9 @@ export default function MemberItem(props: MemberCopy) {
       } rounded-md p-2 w-full`}
     >
       <FaUserCircle />
-      <span className={`${props.is_deleted ? "line-through" : ""}`}>
-        {" "}
-        {maskAddress(props.addr)}
+      <span className={`${props.is_deleted ? "line-through" : ""} text-xs`}>
+        {/* {maskAddress(props.addr)} */}
+        {props.addr}
       </span>
       <GiPieChart className="ml-auto" />
       <span> {props.weight}</span>
