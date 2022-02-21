@@ -1,6 +1,6 @@
 import { useSetModal } from "components/Modal/Modal";
 import { BsX } from "react-icons/bs";
-import Action from "../Action";
+import Action from "./Action";
 
 export default function TerraInfoModal() {
   const { hideModal } = useSetModal();

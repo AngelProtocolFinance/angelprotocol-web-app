@@ -1,6 +1,6 @@
 import { useSetModal } from "components/Modal/Modal";
-import TerraInfoModal from "pages/registration/modals/TerraInfoModal";
 import { BsExclamationCircle } from "react-icons/bs";
+import TerraInfoModal from "../../TerraInfoModal";
 
 // Purpose of this component is to avoid rendering the InfoIcon in a non-intuitive way on smaller screens
 // (the user would expect the info icon to remain at the end of the string even on smaller screens, but
@@ -38,9 +38,7 @@ export default function Title() {
 
 function InfoIcon() {
   const { showModal } = useSetModal();
-
   const showTerraInfoModal = () => showModal(TerraInfoModal, {});
-
   return (
     <BsExclamationCircle
       className="text-thin-blue cursor-pointer"
