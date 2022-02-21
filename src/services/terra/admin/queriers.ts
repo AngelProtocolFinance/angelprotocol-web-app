@@ -73,3 +73,16 @@ export function useVoteList(pollId: number) {
   });
   return { votes: data, isVoteListLoading: isFetching || isLoading };
 }
+
+export function useVoter() {
+  const { useVoterQuery } = admin_api;
+  const { wallet, contract } = useAdminContract();
+  const {
+    data = member,
+    isFetching,
+    isLoading,
+  } = useVoterQuery(contract.voter, {
+    skip: !wallet || wallet?.network.chainID === chainIDs.localterra,
+  });
+  return { voter: data, isVoterLoading: isFetching || isLoading };
+}

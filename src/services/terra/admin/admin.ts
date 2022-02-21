@@ -43,5 +43,11 @@ export const admin_api = terra.injectEndpoints({
         return res.query_result.votes;
       },
     }),
+    voter: builder.query<InquiredMember, ContractQueryArgs>({
+      query: contract_querier,
+      transformResponse: (res: QueryRes<InquiredMember>) => {
+        return res.query_result;
+      },
+    }),
   }),
 });

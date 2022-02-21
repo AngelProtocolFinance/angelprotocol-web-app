@@ -17,6 +17,7 @@ export default class Admin extends Contract {
   proposals: ContractQueryArgs;
   proposal: (arg: number) => ContractQueryArgs;
   voteList: (arg: number) => ContractQueryArgs;
+  voter: ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
@@ -60,6 +61,15 @@ export default class Admin extends Contract {
         },
       },
     });
+
+    this.voter = {
+      address: this.apCW3_addr,
+      msg: {
+        voter: {
+          address: this.walletAddr,
+        },
+      },
+    };
   }
 
   //execute message creators

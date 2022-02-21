@@ -4,6 +4,7 @@ import { Proposal, ProposalStatus } from "services/terra/admin/types";
 import toCurrency from "helpers/toCurrency";
 import useDetails from "./useDetails";
 import { admin } from "constants/routes";
+import Status from "./Status";
 
 export default function Card(props: Proposal) {
   const { url } = useRouteMatch();
@@ -16,7 +17,7 @@ export default function Card(props: Proposal) {
     numNotYet,
     pctNo,
     pctYes,
-    pctNonYet,
+    pctNotYet,
   } = useDetails(props);
   return (
     <Link
@@ -25,13 +26,7 @@ export default function Card(props: Proposal) {
     >
       <div className="font-mono font-bold flex justify-between items-center text-white-grey text-opacity-80">
         <p className="text-sm">ID: {props.id}</p>
-        <p
-          className={`text-xs uppercase px-2 py-1 rounded-sm ${
-            statusClasses[props.status]
-          }`}
-        >
-          {props.status}
-        </p>
+        <Status status={props.status} />
       </div>
       <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-opacity-40">
         {props.title}
@@ -47,7 +42,7 @@ export default function Card(props: Proposal) {
         <Stat
           title="remaning:"
           value={numNotYet}
-          pct={pctNonYet}
+          pct={pctNotYet}
           textColor="text-white"
         />
       </div>
@@ -99,11 +94,3 @@ function Stat(props: {
     </p>
   );
 }
-
-const statusClasses: { [key in ProposalStatus]: string } = {
-  executed: "bg-angel-blue bg-opacity-50",
-  open: "bg-white text-angel-grey",
-  passed: "bg-green-300",
-  pending: "bg-angel-orange",
-  rejected: "bg-red-400 bg-opacity-50",
-};
