@@ -1,10 +1,11 @@
 import { Link, useRouteMatch } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
-import { Proposal, ProposalStatus } from "services/terra/admin/types";
+import { Proposal } from "services/terra/admin/types";
 import toCurrency from "helpers/toCurrency";
 import useDetails from "./useDetails";
 import { admin } from "constants/routes";
 import Status from "./Status";
+import VoteStat from "./VoteStat";
 
 export default function Card(props: Proposal) {
   const { url } = useRouteMatch();
@@ -31,15 +32,20 @@ export default function Card(props: Proposal) {
       <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-opacity-40">
         {props.title}
       </p>
-      <div className="flex justify-between mt-2 mb-6">
-        <Stat
+      <div className="flex justify-between mt-2 mb-6 text-sm">
+        <VoteStat
           title="yes:"
           value={numYes}
           pct={pctYes}
           textColor="text-green-300"
         />
-        <Stat title="no:" value={numNo} pct={pctNo} textColor="text-red-200" />
-        <Stat
+        <VoteStat
+          title="no:"
+          value={numNo}
+          pct={pctNo}
+          textColor="text-red-200"
+        />
+        <VoteStat
           title="remaning:"
           value={numNotYet}
           pct={pctNotYet}
@@ -76,21 +82,5 @@ export default function Card(props: Proposal) {
         </div>
       )}
     </Link>
-  );
-}
-
-function Stat(props: {
-  title: string;
-  value: number;
-  pct: number;
-  textColor: string;
-}) {
-  return (
-    <p
-      className={`font-mono uppercase text-sm text-opacity-80 ${props.textColor}`}
-    >
-      <span>{props.title}</span>
-      <span>{` ${props.value} (${props.pct.toFixed(2)}%)`}</span>
-    </p>
   );
 }

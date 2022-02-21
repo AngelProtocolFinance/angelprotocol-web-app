@@ -2,7 +2,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { CgUndo } from "react-icons/cg";
 import { GiPieChart } from "react-icons/gi";
 import { IoClose } from "react-icons/io5";
-import maskAddress from "helpers/maskAddress";
 import { useSetter } from "store/accessors";
 import {
   undoAddMember,

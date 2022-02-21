@@ -30,7 +30,8 @@ export default function useMemberUpdate() {
         )
       );
     }
-  }, [members.length]);
+    //eslint-disable-next-line
+  }, [members]);
 
   type Diffs = [Member[], string[]];
   async function submit_proposal() {

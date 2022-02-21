@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { useVoteList, useVoter } from "services/terra/admin/queriers";
-import { Proposal, ProposalStatus } from "services/terra/admin/types";
+import { useVoteList } from "services/terra/admin/queriers";
+import { Proposal } from "services/terra/admin/types";
 import { useLatestBlock } from "services/terra/queriers";
 
 export default function useDetails(proposalInfo: Proposal): ProposalDetails {
@@ -32,9 +32,9 @@ export default function useDetails(proposalInfo: Proposal): ProposalDetails {
     numYes,
     numNo,
     numNotYet,
-    pctYes: numYes / totalWeight,
-    pctNo: numNo / totalWeight,
-    pctNotYet: numNotYet / totalWeight,
+    pctYes: (numYes / totalWeight) * 100,
+    pctNo: (numNo / totalWeight) * 100,
+    pctNotYet: (numNotYet / totalWeight) * 100,
     blockHeight,
     remainingBlocks: expiry - +blockHeight,
     isVoteEnded: proposalInfo.expires.at_height < +blockHeight,
