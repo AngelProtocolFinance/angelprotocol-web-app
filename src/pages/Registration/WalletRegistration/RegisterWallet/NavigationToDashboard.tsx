@@ -1,6 +1,8 @@
 import LinkButton from "components/LinkButton";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
+import { IconContext } from "react-icons";
+import { BsCheck2 } from "react-icons/bs";
 
 type Props = { walletAddress: string };
 
@@ -8,7 +10,13 @@ export default function NavigationToDashboard(props: Props) {
   const { walletAddress } = props;
 
   return (
-    <>
+    <div className="flex flex-col h-full items-center">
+      <div className="flex flex-col items-center gap-4 mb-10">
+        <IconContext.Provider value={{ className: "text-7xl" }}>
+          <BsCheck2 />
+        </IconContext.Provider>
+        <p className="text-3xl font-bold uppercase">success!</p>
+      </div>
       <div>
         <p>Thanks for registering your wallet:</p>
         <p>your address is</p>
@@ -21,6 +29,6 @@ export default function NavigationToDashboard(props: Props) {
       >
         Back to dashboard
       </LinkButton>
-    </>
+    </div>
   );
 }

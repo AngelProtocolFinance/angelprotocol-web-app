@@ -1,14 +1,15 @@
+import { app, site } from "constants/routes";
+import routes from "../../routes";
+import { Link } from "react-router-dom";
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useEffect, useState } from "react";
-import Action from "../../Action";
 import useEntropyToTerraWallet from "../useEntropyToTerraWallet";
 import useOpenLogin from "../useOpenLogin";
 import NavigationToDashboard from "./NavigationToDashboard";
-import Title from "./Title";
 import useRegisterWallet from "./useRegisterWallet";
 import FormInput from "components/FormInput";
-import SubmitSection from "./SubmitSection";
+import Action from "../../Action";
 
 export default function RegisterWallet() {
   useRehydrateUserState();
@@ -48,27 +49,40 @@ export default function RegisterWallet() {
     );
   }
 
+  if (isSuccess) {
+    return <NavigationToDashboard walletAddress={walletAddress} />;
+  }
+
   return (
     <div className="flex flex-col h-full items-center justify-center">
-      <Title isSuccess={isSuccess} />
-      <RegistrationExplanation />
-      {isSuccess ? (
-        <NavigationToDashboard walletAddress={walletAddress} />
-      ) : (
-        <SubmitSection
-          walletAddress={walletAddress}
-          isSubmitting={isSubmitting}
+      <p className="text-3xl font-bold">Register your wallet</p>
+      <p className="my-10">
+        ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
+      </p>
+      <div className="flex flex-col gap-10 items-center w-3/4">
+        <FormInput
+          id="walletAddress"
+          label="Terra Wallet"
+          placeholder="terra1..."
+          value={walletAddress}
+          disabled
+          required
+        />
+        <Action
+          submit
+          title="Submit"
+          classes="bg-thin-blue w-48 h-10 mb-10"
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
           onClick={() => registerWallet(walletAddress)}
         />
-      )}
+      </div>
+      <Link
+        to={`${site.app}/${app.register}/${routes.status}`}
+        className="uppercase text-bright-blue text-sm hover:underline"
+      >
+        Click here to go back to the registration dashboard
+      </Link>
     </div>
-  );
-}
-
-function RegistrationExplanation() {
-  return (
-    <p className="my-10">
-      ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
-    </p>
   );
 }
