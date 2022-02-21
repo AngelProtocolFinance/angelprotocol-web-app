@@ -8,6 +8,7 @@ import NavigationToDashboard from "./NavigationToDashboard";
 import Title from "./Title";
 import useRegisterWallet from "./useRegisterWallet";
 import FormInput from "components/FormInput";
+import SubmitSection from "./SubmitSection";
 
 export default function RegisterWallet() {
   useRehydrateUserState();
@@ -51,24 +52,12 @@ export default function RegisterWallet() {
     <div className="flex flex-col h-full items-center justify-center">
       <Title isSuccess={isSuccess} />
       <RegistrationExplanation />
-      <div className="flex flex-col gap-10 items-center w-3/4">
-        <FormInput
-          id="walletAddress"
-          label="Terra Wallet"
-          placeholder="terra1..."
-          value={walletAddress}
-          disabled
-          required
-        />
-        <Action
-          submit
-          title="Submit"
-          classes="bg-thin-blue w-48 h-10 mb-10"
-          disabled={isSubmitting || isSuccess}
-          isLoading={isSubmitting}
-          onClick={() => registerWallet(walletAddress)}
-        />
-      </div>
+      <SubmitSection
+        walletAddress={walletAddress}
+        isSubmitting={isSubmitting}
+        isSuccess={isSuccess}
+        onClick={() => registerWallet(walletAddress)}
+      />
       <NavigationToDashboard
         isSuccess={isSuccess}
         walletAddress={walletAddress}
