@@ -16,6 +16,8 @@ export default function RegisterWallet() {
   useEffect(() => {
     if (status === WalletStatus.WALLET_CONNECTED) {
       setWalletAddress(wallets[0].terraAddress);
+    } else if (status === WalletStatus.WALLET_NOT_CONNECTED) {
+      setWalletAddress("");
     }
   }, [status, wallets]);
 
