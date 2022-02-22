@@ -3,8 +3,8 @@ import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { VoteValues } from "./types";
 import Balance from "../Staker/Balance";
-import { useHaloBalance } from "services/terra/queriers";
 import { Dec } from "@terra-money/terra.js";
+import { useGovStakerState } from "services/terra/gov/states";
 
 export default function Amount() {
   const {
@@ -12,10 +12,18 @@ export default function Amount() {
     formState: { errors },
     setValue,
   } = useFormContext<VoteValues>();
-  const { haloBalance } = useHaloBalance();
+  const govStakerState = useGovStakerState();
+  const govStakedHalo = new Dec(govStakerState.balance)
+    .div(1e6)
+    .toFixed(3, Dec.ROUND_DOWN);
+
   const onMaxClick = () => {
-    setValue("amount", new Dec(haloBalance).toFixed(3, Dec.ROUND_DOWN));
+    setValue("amount", govStakedHalo, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
+
   return (
     <div className="grid mb-4">
       <label
@@ -23,7 +31,7 @@ export default function Amount() {
         className="uppercase mb-2 flex justify-between text-angel-grey font-bold items-end"
       >
         <span>Deposit amount</span>
-        <Balance amount={haloBalance} title="Balance" />
+        <Balance amount={+govStakedHalo} title="Balance" />
       </label>
       <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
         <input

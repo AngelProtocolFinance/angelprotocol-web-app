@@ -5,6 +5,7 @@ import { Props, SwapValues } from "./types";
 
 export default function Swapper(props: Props) {
   const methods = useForm<SwapValues>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

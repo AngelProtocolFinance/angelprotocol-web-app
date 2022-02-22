@@ -14,7 +14,10 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useCreatePollEstimate() {
-  const { getValues } = useFormContext<CreatePollValues>();
+  const {
+    getValues,
+    formState: { isDirty, isValid },
+  } = useFormContext<CreatePollValues>();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
@@ -23,6 +26,7 @@ export default function useCreatePollEstimate() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isDirty || !isValid) return;
         dispatch(setFormError(""));
 
         if (!wallet) {
@@ -71,7 +75,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(""));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, UST_balance]);
+  }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
 
   return { wallet };
 

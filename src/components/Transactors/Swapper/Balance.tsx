@@ -11,7 +11,10 @@ export default function Balance() {
   const balance = is_buy ? ust_balance : haloBalance;
 
   function setAmount() {
-    setValue("amount", `${balance}`);
+    setValue("amount", `${balance}`, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
   }
 
   return (

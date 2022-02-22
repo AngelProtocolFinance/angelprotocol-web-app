@@ -17,7 +17,11 @@ import {
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
-  const { watch, getValues } = useFormContext<HaloStakingValues>();
+  const {
+    watch,
+    getValues,
+    formState: { isValid, isDirty },
+  } = useFormContext<HaloStakingValues>();
   const wallet = useConnectedWallet();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -30,6 +34,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid || !isDirty) return;
         dispatch(setFormError(""));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));

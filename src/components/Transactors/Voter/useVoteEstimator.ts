@@ -17,13 +17,17 @@ import useDebouncer from "hooks/useDebouncer";
 import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
-  const { watch, getValues } = useFormContext<VoteValues>();
+  const {
+    watch,
+    getValues,
+    formState: { isValid, isDirty },
+  } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const { haloBalance } = useHaloBalance();
   const wallet = useConnectedWallet();
-  const gov_staker = useGovStaker();
+  const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
   const debounced_amount = useDebouncer(amount, 300);
@@ -33,6 +37,7 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isValid || !isDirty) return;
         dispatch(setFormError(""));
 
         if (!wallet) {
@@ -53,7 +58,7 @@ export default function useVoteEstimator() {
 
         //check if voter already voted
         const is_voted =
-          gov_staker.locked_balance.find(
+          govStaker.locked_balance.find(
             ([_poll_id]) => _poll_id === poll_id
           ) !== undefined;
 
@@ -63,15 +68,11 @@ export default function useVoteEstimator() {
         }
 
         //check if voter has enough staked and not yet used to vote for other polls
-        const staked_amount = new Dec(gov_staker.balance);
-        const locked_amount = gov_staker.locked_balance.reduce(
-          (total, [, vote]) => total.add(vote.balance),
-          new Dec(0)
-        );
+        const staked_amount = new Dec(govStaker.balance);
         const vote_amount = new Dec(debounced_amount).mul(1e6);
 
-        if (staked_amount.sub(locked_amount).sub(vote_amount).lt(0)) {
-          dispatch(setFormError(`Not enough staked or is locked`));
+        if (staked_amount.lt(vote_amount)) {
+          dispatch(setFormError(`Not enough staked`));
           return;
         }
 
@@ -108,7 +109,7 @@ export default function useVoteEstimator() {
     wallet,
     UST_balance,
     haloBalance,
-    gov_staker,
+    govStaker,
   ]);
 
   return { tx, wallet };

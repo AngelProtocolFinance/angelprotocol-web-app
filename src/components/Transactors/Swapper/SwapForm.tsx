@@ -11,7 +11,12 @@ import useSwapEstimator from "./useSwapEstimator";
 import { useCallback } from "react";
 
 export default function SwapForm() {
-  const { watch, setValue, handleSubmit } = useFormContext<SwapValues>();
+  const {
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { isValid, isDirty },
+  } = useFormContext<SwapValues>();
 
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { tx, wallet } = useSwapEstimator();
@@ -49,7 +54,7 @@ export default function SwapForm() {
       <Fee />
       <Commission />
       <button
-        disabled={form_loading || !!form_error}
+        disabled={form_loading || !!form_error || !isValid || !isDirty}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >

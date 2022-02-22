@@ -49,6 +49,7 @@ export default function useWithrawEstimator() {
   useEffect(() => {
     (async () => {
       try {
+        if (!isDirty || !isValid) return;
         dispatch(setFormError(""));
         //rates is needed to estimate transaction
         if (isRatesError) {

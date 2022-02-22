@@ -5,6 +5,7 @@ import { Props, HaloStakingValues } from "./types";
 
 export default function Staker(props: Props) {
   const methods = useForm<HaloStakingValues>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

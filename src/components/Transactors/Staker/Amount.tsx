@@ -16,7 +16,11 @@ export default function Amount() {
   const is_stake = watch("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const onMaxClick = () => {
-    setValue("amount", balance.sub(locked).div(1e6).toFixed(3, Dec.ROUND_DOWN));
+    setValue(
+      "amount",
+      balance.sub(locked).div(1e6).toFixed(3, Dec.ROUND_DOWN),
+      { shouldValidate: true, shouldDirty: true }
+    );
   };
   return (
     <div className="grid">

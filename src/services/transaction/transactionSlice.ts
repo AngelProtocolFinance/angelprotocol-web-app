@@ -24,6 +24,11 @@ const transactionSlice = createSlice({
     },
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
+      if (payload.step === Step.form) {
+        state.fee = 0;
+        state.form_error = "";
+        state.form_loading = false;
+      }
     },
   },
 });
