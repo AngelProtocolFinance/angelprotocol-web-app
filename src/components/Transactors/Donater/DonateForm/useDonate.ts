@@ -7,10 +7,12 @@ import { sendTerraDonation } from "services/transaction/transactors/sendTerraDon
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
+import { useSetModal } from "components/Modal/Modal";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const wallet = useConnectedWallet();
+  const { hideModal } = useSetModal();
   const dispatch = useSetter();
   const { watch, handleSubmit, formState, setValue } =
     useFormContext<DonateValues>();
@@ -19,7 +21,9 @@ export default function useDonate() {
   const terraSender = useCallback(
     (data: DonateValues) => {
       dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
+      hideModal();
     },
+
     //eslint-disable-next-line
     [terraTx, wallet]
   );
@@ -27,6 +31,7 @@ export default function useDonate() {
   const ethSender = useCallback(
     (data: DonateValues) => {
       dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
+      hideModal();
     },
     //eslint-disable-next-line
     [ethTx]

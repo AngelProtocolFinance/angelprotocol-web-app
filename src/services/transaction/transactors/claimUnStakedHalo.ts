@@ -59,6 +59,7 @@ export const claimUnstakedHalo = createAsyncThunk(
         }
       }
     } catch (err) {
+      console.log(err);
       handleTerraError(err, updateTx);
     }
   }

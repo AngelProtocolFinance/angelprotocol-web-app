@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
 import WalletSuite from "components/WalletSuite/WalletSuite";
+import TransactionHint from "components/TransactionStatus/TransactionHint";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import { site } from "constants/routes";
 import MobileDappNav from "./MobileDappNav";
@@ -24,6 +25,7 @@ export default function DappHead() {
       </Link>
       <DappMenu />
       <div className="ml-auto grid grid-cols-1a gap-1">
+        <TransactionHint />
         <WalletSuite />
         <Airdrop />
       </div>

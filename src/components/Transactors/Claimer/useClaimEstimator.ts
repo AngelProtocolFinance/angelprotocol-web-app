@@ -12,7 +12,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 
-export default function useEstimator() {
+export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
@@ -72,5 +72,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [wallet, UST_balance, gov_staker]);
 
-  return tx;
+  return { wallet, tx };
 }
