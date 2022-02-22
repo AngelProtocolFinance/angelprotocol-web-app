@@ -1,10 +1,10 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
 import gmailIcon from "assets/images/gmail.webp";
+import web3AuthLogo from "assets/images/web3auth-logo.webp";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
-import PartnerContent from "./PartnerContent";
 
 type Props = { onLogin: (provider: string) => void };
 
@@ -47,6 +47,21 @@ function Separator() {
       <span className="h-px w-full bg-white" />
       <span>or</span>
       <span className="h-px w-full bg-white" />
+    </div>
+  );
+}
+
+function PartnerContent() {
+  return (
+    <div className="flex flex-col gap-2 items-center text-xs">
+      <span className="flex gap-2 items-center">
+        Secured by
+        <img src={web3AuthLogo} alt="" width={120} />
+      </span>
+      <p>
+        Angel Protocol is partnered with Web3Auth to provide you with the
+        highest level of security for your Angel Protocol account.
+      </p>
     </div>
   );
 }
