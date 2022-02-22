@@ -44,7 +44,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="flex flex-col gap-4 items-center">
+    <div className="flex flex-col gap-4 items-center w-full">
       <h3 className="text-3xl font-bold">Necessary Information</h3>
       <span>
         Please complete all the following steps to be able to create your
