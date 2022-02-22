@@ -25,7 +25,7 @@ export default function WithdrawForm() {
   const { tx, wallet } = useWithrawEstimator();
   const _withraw = useCallback(
     (data: WithdrawValues) => {
-      dispatch(withdraw({ wallet, tx: tx!, withdrawValues: data }));
+      dispatch(withdraw({ wallet, tx: tx! }));
     },
     [wallet, tx]
   );

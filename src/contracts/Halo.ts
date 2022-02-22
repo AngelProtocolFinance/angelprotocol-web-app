@@ -156,14 +156,14 @@ export default class Halo extends Contract {
     return { msgs: [unstake_msg], fee };
   }
 
-  async createVoteTx(poll_id: string, vote: Vote, amount: number) {
+  async createVoteTx(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
     const vote_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.gov_address,
       {
-        cast_vote: { poll_id: +poll_id, vote, amount: uhalo.toString() },
+        cast_vote: { poll_id, vote, amount: uhalo.toString() },
       }
     );
     const fee = await this.estimateFee([vote_msg]);

@@ -1,7 +1,7 @@
 import { currency_text, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { Values } from "./types";
+import { VoteValues } from "./types";
 import Balance from "../Staker/Balance";
 import { useHaloBalance } from "services/terra/queriers";
 import { Dec } from "@terra-money/terra.js";
@@ -11,7 +11,7 @@ export default function Amount() {
     register,
     formState: { errors },
     setValue,
-  } = useFormContext<Values>();
+  } = useFormContext<VoteValues>();
   const { haloBalance } = useHaloBalance();
   const onMaxClick = () => {
     setValue("amount", new Dec(haloBalance).toFixed(3, Dec.ROUND_DOWN));

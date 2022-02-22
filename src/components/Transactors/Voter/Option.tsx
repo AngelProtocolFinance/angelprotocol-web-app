@@ -1,10 +1,10 @@
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
-import { Values } from "./types";
+import { VoteValues } from "./types";
 
 export default function Option(props: { label: string; vote: Vote }) {
-  const { register, watch } = useFormContext<Values>();
+  const { register, watch } = useFormContext<VoteValues>();
   const vote = watch("vote");
   const is_active = vote === props.vote;
 

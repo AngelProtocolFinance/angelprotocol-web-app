@@ -1,42 +1,36 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useFormContext } from "react-hook-form";
-import useEstimator from "./useEstimator";
-import Contract from "contracts/Contract";
-import { useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
-import handleTerraError from "helpers/handleTerraError";
-import { Values } from "./types";
-import { terra } from "services/terra/terra";
-import { tags, user } from "services/terra/tags";
-import useTxUpdator from "services/transaction/updators";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
+import Contract from "contracts/Contract";
+import handleTerraError from "helpers/handleTerraError";
+import { tags, user } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { TerraArgs } from "./transactorTypes";
 
-export default function useVote() {
-  const { reset } = useFormContext<Values>();
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-  const wallet = useConnectedWallet();
-  const tx = useEstimator();
-
-  async function vote() {
-    // const liquid_split = 100 - Number(data.split);
+export const vote = createAsyncThunk(
+  `${transactionSlice.name}/vote`,
+  async (args: TerraArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
     try {
-      if (!wallet) {
+      if (!args.wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
       updateTx({ step: Step.submit, message: "Submitting transaction..." });
-      const response = await wallet.post(tx!);
-
+      const response = await args.wallet.post(args.tx);
+      const chainId = args.wallet.network.chainID as chainIDs;
       updateTx({
         step: Step.broadcast,
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
-        chainId: wallet.network.chainID as chainIDs,
+        chainId,
       });
 
       if (response.success) {
-        const contract = new Contract(wallet);
+        const contract = new Contract(args.wallet);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
@@ -45,7 +39,7 @@ export default function useVote() {
             step: Step.success,
             message: "Vote is successfully casted",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
 
           dispatch(
@@ -60,16 +54,12 @@ export default function useVote() {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
         }
       }
     } catch (err) {
       handleTerraError(err, updateTx);
-    } finally {
-      reset();
     }
   }
-
-  return vote;
-}
+);

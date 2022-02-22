@@ -1,24 +1,31 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { vote } from "services/transaction/transactors/vote";
 import Fee from "../Fee";
 import Status from "../Status";
-import Amount from "./Amount";
-import { Values } from "./types";
+import { VoteValues } from "./types";
 import Option from "./Option";
-import useVote from "./useVote";
+import Amount from "./Amount";
+import useVoteEstimator from "./useVoteEstimator";
 
 export default function VoterForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<Values>();
+    formState: { isValid, isDirty },
+  } = useFormContext<VoteValues>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const vote = useVote();
-  const isDisabled =
-    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
+  const dispatch = useSetter();
+
+  const { wallet, tx } = useVoteEstimator();
+  const _vote = useCallback(() => {
+    dispatch(vote({ wallet, tx: tx! }));
+  }, []);
+
+  const isDisabled = form_loading || !!form_error || !isValid || !isDirty;
   return (
     <form
-      onSubmit={handleSubmit(vote)}
+      onSubmit={handleSubmit(_vote)}
       className="bg-white grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >

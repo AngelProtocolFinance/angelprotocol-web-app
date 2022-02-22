@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export interface Values {
+export interface VoteValues {
   vote: "yes" | "no";
   amount: string;
   poll_id: string;

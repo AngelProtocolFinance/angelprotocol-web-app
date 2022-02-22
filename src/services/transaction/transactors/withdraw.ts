@@ -6,11 +6,11 @@ import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
-import { WithdrawArgs } from "./transactorTypes";
+import { TerraArgs } from "./transactorTypes";
 
 export const withdraw = createAsyncThunk(
   `${transactionSlice.name}/withdraw`,
-  async (args: WithdrawArgs, { dispatch }) => {
+  async (args: TerraArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };

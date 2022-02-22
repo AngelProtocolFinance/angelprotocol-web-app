@@ -2,22 +2,22 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import Halo from "contracts/Halo";
-import { denoms } from "constants/currency";
-import useDebouncer from "hooks/useDebouncer";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { Values } from "./types";
-import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { Vote } from "contracts/types";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useGovStaker } from "services/terra/gov/queriers";
+import Halo from "contracts/Halo";
+import { Vote } from "contracts/types";
+import { denoms } from "constants/currency";
+import { useSetter } from "store/accessors";
+import useDebouncer from "hooks/useDebouncer";
+import { VoteValues } from "./types";
 
-export default function useEstimator() {
-  const { watch } = useFormContext<Values>();
+export default function useVoteEstimator() {
+  const { watch, getValues } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -26,10 +26,8 @@ export default function useEstimator() {
   const gov_staker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
-  const poll_id = watch("poll_id") || "0";
   const debounced_amount = useDebouncer(amount, 300);
   const debounced_vote = useDebouncer<Vote>(vote, 300);
-  const debounced_id = useDebouncer<string>(poll_id, 300);
 
   //TODO: check also if voter already voted
   useEffect(() => {
@@ -47,7 +45,8 @@ export default function useEstimator() {
           return;
         }
 
-        if (poll_id === undefined || poll_id === "0") {
+        const poll_id = +getValues("poll_id");
+        if (poll_id === 0) {
           dispatch(setFormError("Error getting poll info"));
           return;
         }
@@ -55,7 +54,7 @@ export default function useEstimator() {
         //check if voter already voted
         const is_voted =
           gov_staker.locked_balance.find(
-            ([_poll_id]) => _poll_id === +poll_id
+            ([_poll_id]) => _poll_id === poll_id
           ) !== undefined;
 
         if (is_voted) {
@@ -79,7 +78,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
         const tx = await contract.createVoteTx(
-          debounced_id,
+          poll_id,
           debounced_vote,
           debounced_amount
         );
@@ -102,19 +101,15 @@ export default function useEstimator() {
         dispatch(setFormError("Error estimating transcation"));
       }
     })();
-    return () => {
-      dispatch(setFormError(""));
-    };
     //eslint-disable-next-line
   }, [
     debounced_amount,
     debounced_vote,
-    debounced_id,
     wallet,
     UST_balance,
     haloBalance,
     gov_staker,
   ]);
 
-  return tx;
+  return { tx, wallet };
 }
