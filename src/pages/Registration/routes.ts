@@ -1,7 +1,7 @@
 enum routes {
   index = "/",
   contactDetails = "contact-details",
-  status = "status",
+  dashboard = "dashboard",
   confirm = "confirm",
   verify = "verify/:token",
   wallet = "wallet",

@@ -21,7 +21,7 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
         <p className="font-bold">{walletAddress}</p>
       </div>
       <LinkButton
-        to={`${site.app}/${app.register}/${routes.status}`}
+        to={`${site.app}/${app.register}/${routes.dashboard}`}
         className="w-60 h-10 mt-8 bg-angel-blue"
       >
         Back to dashboard

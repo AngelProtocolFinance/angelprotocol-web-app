@@ -114,7 +114,7 @@ export default function ContactDetailsForm(props: any) {
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
-            onClick={() => history.push(routes.status)}
+            onClick={() => history.push(routes.dashboard)}
           >
             Back
           </Button>

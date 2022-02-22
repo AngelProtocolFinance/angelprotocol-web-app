@@ -33,7 +33,7 @@ export default function Register() {
         />
         <Route
           exact
-          path={`${path}/${routes.status}`}
+          path={`${path}/${routes.dashboard}`}
           component={RegistrationStatus}
         />
         {/* 'exact' prop is unnecessary, since this component has sub-routes */}

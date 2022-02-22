@@ -54,7 +54,7 @@ export const useRegistration = () => {
     localStorage.setItem("userData", JSON.stringify(data));
     if (data.EmailVerified)
       history.push({
-        pathname: `${url}/${routes.status}`,
+        pathname: `${url}/${routes.dashboard}`,
       });
     else
       history.push({

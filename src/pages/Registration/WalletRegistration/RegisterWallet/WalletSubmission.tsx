@@ -42,7 +42,7 @@ export default function WalletSubmission(props: Props) {
         </Button>
       </div>
       <Link
-        to={`${site.app}/${app.register}/${routes.status}`}
+        to={`${site.app}/${app.register}/${routes.dashboard}`}
         className="uppercase text-bright-blue text-sm hover:underline"
       >
         Click here to go back to the registration dashboard
