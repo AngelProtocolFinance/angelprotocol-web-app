@@ -18,7 +18,7 @@ export default function Register() {
       <Switch>
         <Route
           exact
-          path={`${path}/${routes.detail}`}
+          path={`${path}/${routes.contactDetails}`}
           component={ContactDetails}
         />
         <Route

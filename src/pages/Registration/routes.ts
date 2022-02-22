@@ -1,14 +1,12 @@
 enum routes {
   index = "/",
-  detail = "detail",
+  contactDetails = "contact-details",
   status = "status",
   confirm = "confirm",
   verify = "verify/:token",
   wallet = "wallet",
-  register_wallet = "register-wallet",
-  charity_profile = "charity-profile",
+  charityProfile = "charity-profile",
   auth = "auth",
-  upload_docs = "upload-docs",
 }
 
 export default routes;

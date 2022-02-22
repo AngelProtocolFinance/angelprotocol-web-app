@@ -77,7 +77,7 @@ const RegistrationStatus = () => {
             <div className="">
               <Button
                 className="bg-yellow-blue w-40 h-10"
-                onClick={navigate(routes.detail)}
+                onClick={navigate(routes.contactDetails)}
                 disabled={user.PK === ""}
               >
                 Change
@@ -125,7 +125,8 @@ const RegistrationStatus = () => {
               <Button
                 onClick={() =>
                   history.push({
-                    pathname: routes.upload_docs,
+                    // should be updated to 'routes.upload_docs'
+                    pathname: routes.index,
                     state: {
                       data: data?.Registration,
                     },
@@ -261,7 +262,7 @@ const RegistrationStatus = () => {
       <div className="my-10">
         <Button
           className="bg-thin-blue w-64 h-10"
-          onClick={navigate(routes.charity_profile)}
+          onClick={navigate(routes.charityProfile)}
           disabled={!status.completed || user.PK === ""}
         >
           {"Go to " + user.CharityName + "'s profile"}

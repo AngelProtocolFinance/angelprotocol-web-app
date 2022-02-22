@@ -20,7 +20,7 @@ const Registration = () => {
   });
 
   const handleStart = useCallback(
-    () => history.push(`${url}/${routes.detail}`),
+    () => history.push(`${url}/${routes.contactDetails}`),
     [history, url]
   );
 
