@@ -147,5 +147,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [wallet, deb_anchor1_amount, deb_anchor2_amount, rates, holdings]);
 
-  return tx;
+  return { tx, wallet };
 }

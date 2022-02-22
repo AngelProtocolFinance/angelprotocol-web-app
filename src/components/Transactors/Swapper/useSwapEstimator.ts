@@ -6,7 +6,7 @@ import LP from "contracts/LP";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -17,7 +17,7 @@ import toCurrency from "helpers/toCurrency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useEstimator() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch, setValue } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -124,5 +124,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, is_buy, debounced_slippage]);
 
-  return tx;
+  return { wallet, tx };
 }

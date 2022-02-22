@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { Values } from "./types";
+import { CreatePollValues } from "./types";
 
 export default function Title(props: {
-  id: keyof Values;
+  id: keyof CreatePollValues;
   label: string;
   wide?: true;
   frozen?: true;
@@ -11,7 +11,7 @@ export default function Title(props: {
   const {
     register,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<CreatePollValues>();
 
   return (
     <div className="grid mb-4">

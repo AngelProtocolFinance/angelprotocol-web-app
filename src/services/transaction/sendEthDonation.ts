@@ -8,7 +8,7 @@ import transactionSlice, { setStage } from "./transactionSlice";
 import { EthDonateArgs, StageUpdator, Step } from "./types";
 
 export const sendEthDonation = createAsyncThunk(
-  `${transactionSlice.name}/donate`,
+  `${transactionSlice.name}/ethDonate`,
   async (args: EthDonateArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));

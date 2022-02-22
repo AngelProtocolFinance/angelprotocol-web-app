@@ -3,7 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { currency_text, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import Balance from "./Balance";
-import { Values } from "./types";
+import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
 export default function Amount() {
@@ -12,7 +12,7 @@ export default function Amount() {
     register,
     formState: { errors },
     setValue,
-  } = useFormContext<Values>();
+  } = useFormContext<HaloStakingValues>();
   const is_stake = watch("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const onMaxClick = () => {

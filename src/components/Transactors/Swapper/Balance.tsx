@@ -2,9 +2,9 @@ import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { useHaloBalance, useBalances } from "services/terra/queriers";
 import { denoms } from "constants/currency";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 export default function Balance() {
-  const { watch, setValue } = useFormContext<Values>();
+  const { watch, setValue } = useFormContext<SwapValues>();
   const { haloBalance } = useHaloBalance();
   const { main: ust_balance } = useBalances(denoms.uusd);
   const is_buy = watch("is_buy");

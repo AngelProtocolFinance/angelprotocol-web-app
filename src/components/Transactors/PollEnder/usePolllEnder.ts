@@ -4,7 +4,7 @@ import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { useSetModal } from "components/Modal/Modal";
 import EnderForm, { Props } from "./EnderForm";
 
-export default function usePollEnder(poll_id?: string) {
+export default function usePollEnder(poll_id: number) {
   const { showModal } = useSetModal();
   const showPollEnder = useCallback(() => {
     showModal<TxProps<Props>>(TransactionSuite, {

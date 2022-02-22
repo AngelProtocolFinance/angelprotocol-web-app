@@ -7,7 +7,7 @@ import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 // import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
-import { Values } from "./types";
+import { HaloStakingValues } from "./types";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -17,7 +17,7 @@ import {
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
-  const { watch, getValues } = useFormContext<Values>();
+  const { watch, getValues } = useFormContext<HaloStakingValues>();
   const wallet = useConnectedWallet();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -89,5 +89,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, balance, locked]);
 
-  return tx;
+  return { tx, wallet };
 }

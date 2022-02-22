@@ -1,37 +1,35 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import useEstimator from "./useEstimator";
-import Contract from "contracts/Contract";
-import { useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
-import handleTerraError from "helpers/handleTerraError";
-import { terra } from "services/terra/terra";
-import { gov, tags, user } from "services/terra/tags";
-import useTxUpdator from "services/transaction/updators";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
+import Contract from "contracts/Contract";
+import handleTerraError from "helpers/handleTerraError";
+import { gov, tags, user } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "./transactionSlice";
+import { StageUpdator, Step, TerraArgs } from "./types";
 
-function useClaim() {
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-  const wallet = useConnectedWallet();
-  const tx = useEstimator();
-
-  async function claim() {
+export const claimUnstakedHalo = createAsyncThunk(
+  `${transactionSlice.name}/claimUnstakedHalo`,
+  async (args: TerraArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
     try {
-      if (!wallet) {
+      if (!args.wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
-      const response = await wallet.post(tx!);
+      const response = await args.wallet.post(args.tx!);
+      const chainId = args.wallet.network.chainID as chainIDs;
       updateTx({
         step: Step.broadcast,
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
-        chainId: wallet.network.chainID as chainIDs,
+        chainId,
       });
 
       if (response.success) {
-        const contract = new Contract(wallet);
+        const contract = new Contract(args.wallet);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
@@ -40,7 +38,7 @@ function useClaim() {
             step: Step.success,
             message: "HALO successfully claimed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
           //refetch new data
           dispatch(
@@ -55,7 +53,7 @@ function useClaim() {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
         }
       }
@@ -63,9 +61,4 @@ function useClaim() {
       handleTerraError(err, updateTx);
     }
   }
-
-  //choose sender depending on active wallet
-  return claim;
-}
-
-export default useClaim;
+);

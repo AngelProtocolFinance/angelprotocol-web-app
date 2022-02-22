@@ -1,51 +1,32 @@
-import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useMemo, useState } from "react";
-import { Airdrops } from "services/aws/airdrop/types";
-import { useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { useBalances } from "services/terra/queriers";
 import Halo from "contracts/Halo";
-import { terra } from "services/terra/terra";
+import handleTerraError from "helpers/handleTerraError";
 import { aws } from "services/aws/aws";
 import { tags as aws_tags } from "services/aws/tags";
-import { tags, gov, user } from "services/terra/tags";
-import handleTerraError from "helpers/handleTerraError";
-import useTxUpdator from "services/transaction/updators";
-import { chainIDs } from "constants/chainIDs";
+import { gov, tags, user } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "./transactionSlice";
+import { ClaimAirdropArgs, StageUpdator, Step } from "./types";
 
-export default function useCatcher(airdrops: Airdrops) {
-  const [loading, setLoading] = useState(false);
-  const { main: UST_balance } = useBalances(denoms.uusd);
-  const wallet = useConnectedWallet();
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-
-  const total_claimable = useMemo(
-    () =>
-      airdrops.reduce(
-        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
-        new Dec(0)
-      ),
-    [airdrops]
-  );
-
-  async function claim(is_stake = false) {
+export const claimAirdrop = createAsyncThunk(
+  `${transactionSlice.name}/claimAirdrop`,
+  async (args: ClaimAirdropArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
     try {
-      if (!wallet) {
+      if (!args.wallet) {
         updateTx({ step: Step.error, message: "Wallet is disconnected" });
         return;
       }
-
-      setLoading(true);
-      const chainId = wallet.network.chainID as chainIDs;
+      const chainId = args.wallet.network.chainID as chainIDs;
       //create tx and estimate fee
-      const contract = new Halo(wallet);
+      const contract = new Halo(args.wallet);
       const tx = await contract.createAirdropClaimTx(
-        airdrops,
-        is_stake,
-        total_claimable.toString()
+        args.airdrops,
+        args.isStake
       );
 
       const estimatedFee = tx
@@ -54,7 +35,7 @@ export default function useCatcher(airdrops: Airdrops) {
         .amount.toNumber();
 
       //check if user has enough balance to pay for fees
-      if (estimatedFee > UST_balance) {
+      if (estimatedFee > args.ustBalance) {
         updateTx({
           step: Step.error,
           message: "Not enough UST to pay for fees",
@@ -63,7 +44,7 @@ export default function useCatcher(airdrops: Airdrops) {
         return;
       }
 
-      const response = await wallet.post(tx!);
+      const response = await args.wallet.post(tx!);
 
       updateTx({
         step: Step.broadcast,
@@ -80,7 +61,7 @@ export default function useCatcher(airdrops: Airdrops) {
           updateTx({
             step: Step.success,
             message: `HALO successfully claimed${
-              is_stake ? " and staked" : ""
+              args.isStake ? " and staked" : ""
             }`,
             txHash: txInfo.txhash,
             chainId,
@@ -104,13 +85,8 @@ export default function useCatcher(airdrops: Airdrops) {
           });
         }
       }
-
-      setLoading(false);
     } catch (err) {
       handleTerraError(err, updateTx);
-      setLoading(false);
     }
   }
-
-  return { total_claimable: total_claimable.toNumber(), claim, loading };
-}
+);

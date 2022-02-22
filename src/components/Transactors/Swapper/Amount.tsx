@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { currency_icons, denoms } from "constants/currency";
 import { ErrorMessage } from "@hookform/error-message";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 import Balance from "./Balance";
 import { IoMdSettings } from "react-icons/io";
 import Slippage from "./Slippage";
@@ -13,7 +13,7 @@ export default function Amount() {
     watch,
     register,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<SwapValues>();
 
   function toggle_settings() {
     show_settings((p) => !p);

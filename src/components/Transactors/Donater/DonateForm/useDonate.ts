@@ -3,7 +3,6 @@ import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useRef } from "react";
 import useEstimator from "../useEstimator";
-import useEthSender from "../useEthSender";
 import { useSetter } from "store/accessors";
 import { sendTerraDonation } from "services/transaction/sendTerraDonation";
 import { useConnectedWallet } from "@terra-money/use-wallet";

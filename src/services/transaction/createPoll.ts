@@ -1,26 +1,20 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useFormContext } from "react-hook-form";
-import handleTerraError from "helpers/handleTerraError";
-import useEstimator from "./useEstimator";
-import { Values } from "./types";
-import Halo from "contracts/Halo";
-import { useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
-import { terra } from "services/terra/terra";
-import { gov, tags } from "services/terra/tags";
-import useTxUpdator from "services/transaction/updators";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
+import Halo from "contracts/Halo";
+import handleTerraError from "helpers/handleTerraError";
+import { gov, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "./transactionSlice";
+import { CreatePollArgs, StageUpdator, Step } from "./types";
 
-export default function useCreatePoll() {
-  useEstimator();
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-  const { reset } = useFormContext<Values>();
-  const wallet = useConnectedWallet();
-
-  async function createPoll(data: Values) {
+export const createPoll = createAsyncThunk(
+  `${transactionSlice.name}/createPoll`,
+  async (args: CreatePollArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
     try {
-      if (!wallet) {
+      if (!args.wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
@@ -28,23 +22,25 @@ export default function useCreatePoll() {
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
 
       //recreate tx here with actual form contents
-      const contract = new Halo(wallet);
+      const contract = new Halo(args.wallet);
+      const { amount, title, description, link } = args.createPollValues;
       const tx = await contract.createPoll(
-        Number(data.amount),
-        data.title,
-        data.description,
-        data.link,
+        +amount,
+        title,
+        description,
+        link,
         undefined,
         true //on submission, snapshot the poll
       );
-      const response = await wallet.post(tx);
+      const response = await args.wallet.post(tx);
+      const chainId = args.wallet.network.chainID as chainIDs;
 
       if (response.success) {
         updateTx({
           step: Step.broadcast,
           message: "Waiting for transaction result",
           txHash: response.result.txhash,
-          chainId: wallet.network.chainID as chainIDs,
+          chainId,
         });
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
@@ -54,7 +50,7 @@ export default function useCreatePoll() {
             step: Step.success,
             message: "Poll successfully created!",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
 
           dispatch(
@@ -65,16 +61,12 @@ export default function useCreatePoll() {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
         }
       }
     } catch (err) {
       handleTerraError(err, updateTx);
-    } finally {
-      reset();
     }
   }
-
-  return createPoll;
-}
+);

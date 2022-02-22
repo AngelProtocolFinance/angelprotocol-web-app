@@ -1,22 +1,33 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { createPoll } from "services/transaction/createPoll";
 import Field from "./Field";
+import useEstimator from "./useEstimator";
 import Status from "../Status";
-import { Values } from "./types";
 import Fee from "../Fee";
-import useCreatePoll from "./useCreatePoll";
+import { CreatePollValues } from "./types";
 
 export default function PollerForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<Values>();
-  const createPoll = useCreatePoll();
+    formState: { isValid, isDirty },
+  } = useFormContext<CreatePollValues>();
+
+  const dispatch = useSetter();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+  const { wallet } = useEstimator();
+
+  const _createPoll = useCallback(
+    (data: CreatePollValues) => {
+      dispatch(createPoll({ wallet, createPollValues: data }));
+    },
+    [wallet]
+  );
 
   return (
     <form
-      onSubmit={handleSubmit(createPoll)}
+      onSubmit={handleSubmit(_createPoll)}
       className="bg-white grid p-4 rounded-md w-full"
       autoComplete="off"
     >
@@ -27,9 +38,7 @@ export default function PollerForm() {
       <Field id="amount" label="Halo deposit" frozen />
       <Fee />
       <button
-        disabled={
-          isSubmitting || form_loading || !!form_error || !isValid || !isDirty
-        }
+        disabled={form_loading || !!form_error || !isValid || !isDirty}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >

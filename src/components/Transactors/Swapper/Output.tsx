@@ -1,9 +1,9 @@
 import { currency_icons, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 
 export default function Output() {
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<SwapValues>();
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");

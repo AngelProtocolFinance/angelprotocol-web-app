@@ -6,7 +6,7 @@ import handleTerraError from "helpers/handleTerraError";
 import transactionSlice, { setStage } from "./transactionSlice";
 import { StageUpdator, Step, TerraDonateArgs } from "./types";
 export const sendTerraDonation = createAsyncThunk(
-  `${transactionSlice.name}/donate`,
+  `${transactionSlice.name}/terraDonate`,
   async (args: TerraDonateArgs, { dispatch }) => {
     const updateStage: StageUpdator = (update) => {
       dispatch(setStage(update));

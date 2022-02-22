@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-import { Values } from "./types";
+import { CreatePollValues } from "./types";
 import { useSetter } from "store/accessors";
 import {
   setFormError,
@@ -14,7 +14,7 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useEstimator() {
-  const { getValues } = useFormContext<Values>();
+  const { getValues } = useFormContext<CreatePollValues>();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
@@ -72,6 +72,8 @@ export default function useEstimator() {
     };
     //eslint-disable-next-line
   }, [wallet, haloBalance, UST_balance]);
+
+  return { wallet };
 
   //return estimated fee computed using max constraints
 }

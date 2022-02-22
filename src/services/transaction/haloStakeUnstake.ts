@@ -1,52 +1,47 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useFormContext } from "react-hook-form";
-import handleTerraError from "helpers/handleTerraError";
-import { Step } from "services/transaction/types";
-import { terra } from "services/terra/terra";
-import { gov, tags, user } from "services/terra/tags";
-import useTxUpdator from "services/transaction/updators";
-import Contract from "contracts/Contract";
-import { useSetter } from "store/accessors";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
-import { Values } from "./types";
-import useEstimator from "./useEstimator";
+import Contract from "contracts/Contract";
+import { terra } from "services/terra/terra";
+import handleTerraError from "helpers/handleTerraError";
+import { gov, tags, user } from "services/terra/tags";
+import transactionSlice, { setStage } from "./transactionSlice";
+import { HaloStakingArgs, StageUpdator, Step } from "./types";
 
-function useStake() {
-  const { watch } = useFormContext<Values>();
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-  const wallet = useConnectedWallet();
-  const tx = useEstimator();
-  const is_stake = watch("is_stake");
+export const haloStakeUnstake = createAsyncThunk(
+  `${transactionSlice.name}/haloStakeUnstake`,
+  async (args: HaloStakingArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
 
-  async function staker() {
-    if (!wallet) {
+    if (!args.wallet) {
       updateTx({ step: Step.error, message: "Wallet is not connected" });
       return;
     }
     try {
       updateTx({ step: Step.submit, message: "Submitting transaction..." });
-      const response = await wallet.post(tx!);
+      const response = await args.wallet.post(args.tx);
+      const chainId = args.wallet.network.chainID as chainIDs;
       updateTx({
         step: Step.broadcast,
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
-        chainId: wallet.network.chainID as chainIDs,
+        chainId,
       });
 
       if (response.success) {
-        const contract = new Contract(wallet);
+        const contract = new Contract(args.wallet);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
           updateTx({
             step: Step.success,
-            message: is_stake
+            message: args.stakingValues.is_stake
               ? "Staking successfull!"
               : "HALO successfully withdrawn",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
 
           //invalidate cache to fetch new data
@@ -62,7 +57,7 @@ function useStake() {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
         }
       }
@@ -70,8 +65,4 @@ function useStake() {
       handleTerraError(err, updateTx);
     }
   }
-
-  return staker;
-}
-
-export default useStake;
+);

@@ -1,8 +1,12 @@
 import { ConnectedWallet } from "@terra-dev/wallet-types";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { DonateValues } from "components/Transactors/Donater/types";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
+import { DonateValues } from "components/Transactors/Donater/types";
+import { CreatePollValues } from "components/Transactors/Poller/types";
 import { chainIDs } from "constants/chainIDs";
+import { Airdrops } from "services/aws/airdrop/types";
+import { HaloStakingValues } from "components/Transactors/Staker/types";
+import { SwapValues } from "components/Transactors/Swapper/types";
 
 export enum Step {
   form = "form",
@@ -76,13 +80,28 @@ export type Stage =
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
 
-export type TerraDonateArgs = {
+export type TerraArgs = {
   tx: CreateTxOptions;
   wallet: ConnectedWallet | undefined;
-  donateValues: DonateValues;
 };
+export type UnEstimatedTerraArg = { wallet: ConnectedWallet | undefined };
+
+export type TerraDonateArgs = TerraArgs & { donateValues: DonateValues };
+export type HaloStakingArgs = TerraArgs & { stakingValues: HaloStakingValues };
+export type SwapArgs = TerraArgs & { swapValues: SwapValues };
+
+export type CreatePollArgs = UnEstimatedTerraArg & {
+  createPollValues: CreatePollValues;
+};
+export type EndPollArgs = UnEstimatedTerraArg & { pollId: number };
 
 export type EthDonateArgs = {
   tx: TransactionRequest;
   donateValues: DonateValues;
+};
+export type ClaimAirdropArgs = {
+  wallet: ConnectedWallet | undefined;
+  isStake: boolean;
+  airdrops: Airdrops;
+  ustBalance: number;
 };
