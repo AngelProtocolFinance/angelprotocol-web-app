@@ -22,6 +22,9 @@ export default function useOpenLogin(redirectUrl: string) {
     setLoading(true);
     async function initializeOpenlogin() {
       await openLogin.init();
+      // when using 'redirect' uxMode, this field will contain the private key value after redirect
+      // NOTE: to successfully read this value, it is necessary to call this hook in the component
+      // that is Torus is set to redirect to, otherwise this value would be empty
       if (openLogin.privKey) {
         setPrivateKey(openLogin.privKey);
       }
