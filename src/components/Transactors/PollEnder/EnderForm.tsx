@@ -10,6 +10,7 @@ export default function EnderForm(props: Props) {
 
   const _endPoll = useCallback(() => {
     dispatch(endPoll({ wallet, pollId: props.poll_id }));
+    //eslint-disable-next-line
   }, [wallet, props.poll_id]);
 
   return (

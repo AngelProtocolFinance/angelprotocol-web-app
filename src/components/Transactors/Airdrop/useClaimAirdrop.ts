@@ -25,6 +25,7 @@ export default function useCatcher(airdrops: Airdrops) {
     (isStake = false) => {
       dispatch(claimAirdrop({ airdrops, isStake, wallet, ustBalance }));
     },
+    //eslint-disable-next-line
     [wallet, ustBalance, airdrops]
   );
 

@@ -20,6 +20,7 @@ export default function useDonate() {
     (data: DonateValues) => {
       dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
     },
+    //eslint-disable-next-line
     [terraTx, wallet]
   );
 
@@ -27,6 +28,7 @@ export default function useDonate() {
     (data: DonateValues) => {
       dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
     },
+    //eslint-disable-next-line
     [ethTx]
   );
 

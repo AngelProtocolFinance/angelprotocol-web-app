@@ -4,7 +4,6 @@ import { PollStatus } from "services/terra/gov/types";
 import useDetails from "./useDetails";
 import useVoter from "components/Transactors/Voter/useVoter";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
-import idParamToNumber from "helpers/idParamToNum";
 
 export default function PollAction(props: { poll_id: number }) {
   const wallet = useConnectedWallet();

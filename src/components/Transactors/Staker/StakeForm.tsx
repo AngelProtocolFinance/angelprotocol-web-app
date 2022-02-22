@@ -20,6 +20,7 @@ export default function StakeForm() {
     (data: HaloStakingValues) => {
       dispatch(haloStakeUnstake({ wallet, tx: tx!, stakingValues: data }));
     },
+    //eslint-disable-next-line
     [wallet, tx]
   );
 

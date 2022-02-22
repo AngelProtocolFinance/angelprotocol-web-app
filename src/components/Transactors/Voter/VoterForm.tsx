@@ -20,7 +20,8 @@ export default function VoterForm() {
   const { wallet, tx } = useVoteEstimator();
   const _vote = useCallback(() => {
     dispatch(vote({ wallet, tx: tx! }));
-  }, []);
+    //eslint-disable-next-line
+  }, [wallet, tx]);
 
   const isDisabled = form_loading || !!form_error || !isValid || !isDirty;
   return (

@@ -24,9 +24,10 @@ export default function WithdrawForm() {
 
   const { tx, wallet } = useWithrawEstimator();
   const _withraw = useCallback(
-    (data: WithdrawValues) => {
+    () => {
       dispatch(withdraw({ wallet, tx: tx! }));
     },
+    //eslint-disable-next-line
     [wallet, tx]
   );
 

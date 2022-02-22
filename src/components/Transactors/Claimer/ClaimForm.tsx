@@ -1,7 +1,5 @@
 import Claims from "./Claims";
 import Status from "../Status";
-import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
 import Fee from "../Fee";
 import { useGetter, useSetter } from "store/accessors";
 import { claimUnstakedHalo } from "services/transaction/transactors/claimUnStakedHalo";
@@ -14,6 +12,7 @@ export default function ClaimForm() {
   const dispatch = useSetter();
   const claim = useCallback(() => {
     dispatch(claimUnstakedHalo({ tx: tx!, wallet }));
+    //eslint-disable-next-line
   }, [wallet, tx]);
 
   return (

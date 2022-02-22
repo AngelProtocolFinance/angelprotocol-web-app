@@ -26,6 +26,7 @@ export default function SwapForm() {
     (data: SwapValues) => {
       dispatch(swap({ wallet, tx: tx!, swapValues: data }));
     },
+    //eslint-disable-next-line
     [tx, wallet]
   );
 

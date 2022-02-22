@@ -22,6 +22,7 @@ export default function PollerForm() {
     (data: CreatePollValues) => {
       dispatch(createPoll({ wallet, createPollValues: data }));
     },
+    //eslint-disable-next-line
     [wallet]
   );
 
