@@ -7,7 +7,7 @@ import { useGetter, useSetter } from "store/accessors";
 import Button from "./Button";
 import routes from "./routes";
 
-const RegistrationStatus = () => {
+export default function Dashboard() {
   //url is app/register/status
   const history = useHistory();
   const dispatch = useSetter();
@@ -271,6 +271,4 @@ const RegistrationStatus = () => {
       </div>
     </div>
   );
-};
-
-export default RegistrationStatus;
+}
