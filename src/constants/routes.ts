@@ -29,6 +29,7 @@ export enum app {
   govern = "govern",
   auction = "auction",
   endowment = "endowment",
+  donation = "donation",
 }
 
 export enum govern {
