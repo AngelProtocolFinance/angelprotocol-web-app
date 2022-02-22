@@ -1,7 +1,7 @@
 import { denoms } from "constants/currency";
 import Currency from "./Currency";
 import { useFormContext } from "react-hook-form";
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter } from "store/accessors";
 import Status from "../../Status";
 import Amount from "./Amount";
@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<DonateValues>();
   const { donate, isSubmitting } = useDonate();
   const [showSplit, setShowSplit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);

@@ -1,4 +1,4 @@
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { currency_text } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -8,7 +8,7 @@ export default function Amount() {
     register,
     watch,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<DonateValues>();
 
   const denom = watch("currency");
 

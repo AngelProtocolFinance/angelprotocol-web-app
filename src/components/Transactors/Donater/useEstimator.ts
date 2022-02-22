@@ -17,12 +17,12 @@ import Account from "contracts/Account";
 import Indexfund from "contracts/IndexFund";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import { Values } from "./types";
+import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
-  const { watch, getValues } = useFormContext<Values>();
+  const { watch, getValues } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { coins, supported_denoms } = useGetter((state) => state.wallet);
 

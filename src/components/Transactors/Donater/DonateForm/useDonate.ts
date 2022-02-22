@@ -1,4 +1,4 @@
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 // import useEthSender from "../Donater/useEthSender";
@@ -10,9 +10,10 @@ import { useEffect, useRef } from "react";
 import useEstimator from "../useEstimator";
 import useEthSender from "../useEthSender";
 
-type Senders = { [index: string]: (data: Values) => Promise<void> };
+type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
-  const { watch, handleSubmit, formState, setValue } = useFormContext<Values>();
+  const { watch, handleSubmit, formState, setValue } =
+    useFormContext<DonateValues>();
   const { terraTx, ethTx } = useEstimator();
   const terraSender = useTerraSender(terraTx!);
   const ethSender = useEthSender(ethTx!);

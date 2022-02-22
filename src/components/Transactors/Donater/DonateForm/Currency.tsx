@@ -1,17 +1,17 @@
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { currency_text, currency_icons } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { memo } from "react";
 import useTooltip from "hooks/useTooltip";
 
 type Props = {
-  currency: Values["currency"];
+  currency: DonateValues["currency"];
   withTooltip?: true;
 };
 
 function Currency(props: Props) {
   const { enter, exit, Tooltip } = useTooltip(Tooltip_);
-  const { register, watch } = useFormContext<Values>();
+  const { register, watch } = useFormContext<DonateValues>();
   const isActive = watch("currency") === props.currency;
 
   return (

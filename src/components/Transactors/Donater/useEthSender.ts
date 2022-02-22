@@ -8,16 +8,16 @@ import { XdefiWindow } from "services/provider/types";
 import handleEthError from "helpers/handleEthError";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
-import { Values } from "./types";
+import { DonateValues } from "./types";
 import useDonationLogger from "./useDonationLogger";
 
 export default function useEthSender(tx: TransactionRequest) {
   const logDonation = useDonationLogger();
   const { updateTx } = useTxUpdator();
-  const { setValue, getValues } = useFormContext<Values>();
+  const { setValue, getValues } = useFormContext<DonateValues>();
 
   const ethSender = useCallback(
-    async (data: Values) => {
+    async (data: DonateValues) => {
       try {
         const xwindow = window as XdefiWindow;
 

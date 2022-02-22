@@ -1,3 +1,7 @@
+import { ConnectedWallet } from "@terra-dev/wallet-types";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import { DonateValues } from "components/Transactors/Donater/types";
+import { DonationLogger } from "components/Transactors/Donater/useDonationLogger";
 import { chainIDs } from "constants/chainIDs";
 
 export enum Step {
@@ -71,3 +75,9 @@ export type Stage =
   | ReceiptStage
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
+
+export type DonateArgs = {
+  tx: CreateTxOptions;
+  wallet: ConnectedWallet | undefined;
+  donateValues: DonateValues;
+};
