@@ -15,7 +15,9 @@ export default function Transactor<C>(props: TxProps<C>) {
 
   return (
     <div
-      className={`relative ${props.inModal ? "bg-white rounded-md pt-4" : ""}`}
+      className={`relative w-full max-w-md ${
+        props.inModal ? "bg-white rounded-md pt-4" : ""
+      }`}
     >
       {props.inModal && (
         <button

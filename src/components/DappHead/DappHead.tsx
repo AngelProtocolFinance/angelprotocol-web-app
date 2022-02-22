@@ -24,7 +24,7 @@ export default function DappHead() {
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </Link>
       <DappMenu />
-      <div className="ml-auto grid grid-cols-1a gap-1">
+      <div className="ml-auto grid grid-cols-a1a gap-1">
         <TransactionHint />
         <WalletSuite />
         <Airdrop />

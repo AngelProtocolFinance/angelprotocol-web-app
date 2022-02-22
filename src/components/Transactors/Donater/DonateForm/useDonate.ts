@@ -2,17 +2,18 @@ import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { DonateValues } from "components/Transactors/Donater/types";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
 import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
-import { useSetModal } from "components/Modal/Modal";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const wallet = useConnectedWallet();
-  const { hideModal } = useSetModal();
+  const { showModal } = useSetModal();
   const dispatch = useSetter();
   const { watch, handleSubmit, formState, setValue } =
     useFormContext<DonateValues>();
@@ -21,7 +22,7 @@ export default function useDonate() {
   const terraSender = useCallback(
     (data: DonateValues) => {
       dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
-      hideModal();
+      showModal(TransactionPrompt, {});
     },
 
     //eslint-disable-next-line
@@ -31,7 +32,7 @@ export default function useDonate() {
   const ethSender = useCallback(
     (data: DonateValues) => {
       dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
-      hideModal();
+      showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line
     [ethTx]

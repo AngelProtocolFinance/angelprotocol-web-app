@@ -22,6 +22,7 @@ export const claimAirdrop = createAsyncThunk(
         updateTx({ step: Step.error, message: "Wallet is disconnected" });
         return;
       }
+      updateTx({ step: Step.submit, message: "Submitting transaction.." });
       const chainId = args.wallet.network.chainID as chainIDs;
       //create tx and estimate fee
       const contract = new Halo(args.wallet);
