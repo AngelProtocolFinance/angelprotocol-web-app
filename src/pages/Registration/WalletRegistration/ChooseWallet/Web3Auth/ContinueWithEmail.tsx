@@ -4,6 +4,14 @@ import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { Button } from "./ButtonSocial";
 
+type FormData = { email: string };
+
+const SCHEMA = Yup.object().shape({
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Please enter your email."),
+});
+
 type Props = { onClick: (value: string) => void };
 
 export default function ContinueWithEmail({ onClick }: Props) {
@@ -50,11 +58,3 @@ export default function ContinueWithEmail({ onClick }: Props) {
     </form>
   );
 }
-
-type FormData = { email: string };
-
-const SCHEMA = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Please enter your email."),
-});
