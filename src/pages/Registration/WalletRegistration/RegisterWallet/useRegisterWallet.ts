@@ -10,19 +10,16 @@ export default function useRegisterWallet() {
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  const handleFailure = useCallback((error) => {
-    console.error(error);
-    setSuccess(false);
-  }, []);
+  // this '_' value should be used to notify the user of a failure,
+  // or to put in our logs once (and if) they're ever implemented
+  const handleFailure = useCallback((_) => setSuccess(false), []);
 
   const handleSuccess = useCallback(
     (walletAddress: string) => {
       const userData = { ...user, TerraWallet: walletAddress };
-
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
 
-      console.log("Your wallet address was saved successfully.");
       setSuccess(true);
     },
     [dispatch, user]
