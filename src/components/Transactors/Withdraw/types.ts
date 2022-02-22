@@ -10,7 +10,7 @@ export enum VaultAddrFields {
   anchor2_addr = "anchor2_addr",
 }
 
-export type Values = { [key in VaultFields]: string } & {
+export type WithdrawValues = { [key in VaultFields]: string } & {
   total_ust: number;
   total_receive: number;
   account_addr: string;

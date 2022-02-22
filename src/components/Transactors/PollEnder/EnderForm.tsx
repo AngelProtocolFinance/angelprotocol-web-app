@@ -1,6 +1,6 @@
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useCallback } from "react";
-import { endPoll } from "services/transaction/endPoll";
+import { endPoll } from "services/transaction/transactors/endPoll";
 import { useSetter } from "store/accessors";
 
 export type Props = { poll_id: number };

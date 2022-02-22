@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGetter, useSetter } from "store/accessors";
-import { createPoll } from "services/transaction/createPoll";
+import { createPoll } from "services/transaction/transactors/createPoll";
 import Field from "./Field";
 import useEstimator from "./useEstimator";
 import Status from "../Status";

@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter, useSetter } from "store/accessors";
+import { haloStakeUnstake } from "services/transaction/transactors/haloStakeUnstake";
 import Amount from "./Amount";
 import { HaloStakingValues } from "./types";
 import Status from "../Status";
 import Fee from "../Fee";
 import useEstimator from "./useEstimator";
 import { useCallback } from "react";
-import { haloStakeUnstake } from "services/transaction/haloStakeUnstake";
 
 export default function StakeForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);

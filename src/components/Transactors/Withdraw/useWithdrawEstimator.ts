@@ -4,7 +4,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 
 import { useSetter } from "store/accessors";
-import { Values, VaultFields } from "./types";
+import { WithdrawValues, VaultFields } from "./types";
 import {
   setFee,
   setFormError,
@@ -20,7 +20,7 @@ import { AmountInfo, filter_infos } from "./helpers";
 import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
 
-export default function useEstimator() {
+export default function useWithrawEstimator() {
   const { hideModal } = useSetModal();
   const {
     watch,
@@ -29,7 +29,7 @@ export default function useEstimator() {
     setError,
     clearErrors,
     formState: { isValid, isDirty },
-  } = useFormContext<Values>();
+  } = useFormContext<WithdrawValues>();
 
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();

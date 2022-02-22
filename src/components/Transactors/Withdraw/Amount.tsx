@@ -3,14 +3,14 @@ import { VaultInfo } from "constants/contracts";
 import { ErrorMessage } from "@hookform/error-message";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
+import { WithdrawValues } from "./types";
 
 export default function Amount(props: VaultInfo & { balance: string }) {
   const {
     register,
     setValue,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<WithdrawValues>();
   const balance = new Dec(props.balance).div(1e6);
 
   function setMax() {

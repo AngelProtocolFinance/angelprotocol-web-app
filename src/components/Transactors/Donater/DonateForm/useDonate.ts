@@ -1,12 +1,12 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { denoms } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useRef } from "react";
-import useEstimator from "../useEstimator";
+import { useFormContext } from "react-hook-form";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { DonateValues } from "components/Transactors/Donater/types";
+import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
+import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
+import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
-import { sendTerraDonation } from "services/transaction/sendTerraDonation";
-import { useConnectedWallet } from "@terra-money/use-wallet";
-import { sendEthDonation } from "services/transaction/sendEthDonation";
+import useEstimator from "../useEstimator";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {

@@ -3,7 +3,7 @@ import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Airdrops } from "services/aws/airdrop/types";
 import { useBalances } from "services/terra/queriers";
-import { claimAirdrop } from "services/transaction/claimAirdrop";
+import { claimAirdrop } from "services/transaction/transactors/claimAirdrop";
 import { useSetter } from "store/accessors";
 import { denoms } from "constants/currency";
 

@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { Props, Values } from "./types";
+import { Props, WithdrawValues } from "./types";
 import { schema } from "./schema";
 
 export default function Withdrawer(props: Props) {
-  const methods = useForm<Values>({
+  const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {

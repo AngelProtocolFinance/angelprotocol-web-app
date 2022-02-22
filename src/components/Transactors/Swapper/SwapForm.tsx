@@ -1,6 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { useGetter, useSetter } from "store/accessors";
+import { swap } from "services/transaction/transactors/swap";
 import { Fee, Commission, SwapRate } from "./Misc";
 import Output from "./Output";
 import Status from "./Status";
@@ -8,7 +9,6 @@ import { SwapValues } from "./types";
 import Amount from "./Amount";
 import useSwapEstimator from "./useSwapEstimator";
 import { useCallback } from "react";
-import { swap } from "services/transaction/swap";
 
 export default function SwapForm() {
   const { watch, setValue, handleSubmit } = useFormContext<SwapValues>();

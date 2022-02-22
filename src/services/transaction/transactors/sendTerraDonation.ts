@@ -3,8 +3,10 @@ import logDonation from "components/Transactors/Donater/logDonation";
 import { chainIDs } from "constants/chainIDs";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { StageUpdator, Step, TerraDonateArgs } from "./types";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { TerraDonateArgs } from "./transactorTypes";
+
 export const sendTerraDonation = createAsyncThunk(
   `${transactionSlice.name}/terraDonate`,
   async (args: TerraDonateArgs, { dispatch }) => {

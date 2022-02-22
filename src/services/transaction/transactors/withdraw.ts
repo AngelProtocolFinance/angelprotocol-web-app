@@ -1,42 +1,39 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useFormContext } from "react-hook-form";
-import useEstimator from "./useEstimator";
-import Contract from "contracts/Contract";
-import { useSetter } from "store/accessors";
-import { Step } from "services/transaction/types";
-import useTxUpdator from "services/transaction/updators";
-import handleTerraError from "helpers/handleTerraError";
-import { Values } from "./types";
-import { terra } from "services/terra/terra";
-import { tags, user } from "services/terra/tags";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
+import Contract from "contracts/Contract";
+import handleTerraError from "helpers/handleTerraError";
+import { tags, user } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { WithdrawArgs } from "./transactorTypes";
 
-export default function useWithdrawHoldings() {
-  const { reset } = useFormContext<Values>();
-  const dispatch = useSetter();
-  const { updateTx } = useTxUpdator();
-  const wallet = useConnectedWallet();
-  const tx = useEstimator();
+export const withdraw = createAsyncThunk(
+  `${transactionSlice.name}/withdraw`,
+  async (args: WithdrawArgs, { dispatch }) => {
+    const updateTx: StageUpdator = (update) => {
+      dispatch(setStage(update));
+    };
 
-  async function withdraw() {
     try {
-      if (!wallet) {
+      if (!args.wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
 
       updateTx({ step: Step.submit, message: "Submitting transaction..." });
-      const response = await wallet.post(tx!);
+      const response = await args.wallet.post(args.tx);
+      const chainId = args.wallet.network.chainID as chainIDs;
 
       updateTx({
         step: Step.broadcast,
         message: "Waiting for transaction result",
-        chainId: wallet.network.chainID as chainIDs,
         txHash: response.result.txhash,
+        chainId,
       });
 
       if (response.success) {
-        const contract = new Contract(wallet);
+        const contract = new Contract(args.wallet);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
@@ -44,8 +41,8 @@ export default function useWithdrawHoldings() {
           updateTx({
             step: Step.success,
             message: "Withdraw successful",
-            chainId: wallet.network.chainID as chainIDs,
             txHash: response.result.txhash,
+            chainId,
           });
 
           dispatch(
@@ -59,16 +56,12 @@ export default function useWithdrawHoldings() {
             step: Step.error,
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId: wallet.network.chainID as chainIDs,
+            chainId,
           });
         }
       }
     } catch (err) {
       handleTerraError(err, updateTx);
-    } finally {
-      reset();
     }
   }
-
-  return withdraw;
-}
+);

@@ -10,7 +10,7 @@ export default function Voter(props: Props) {
     defaultValues: {
       amount: "",
       vote: "yes",
-      poll_id: props.poll_id,
+      poll_id: `${props.poll_id}`,
     },
     resolver: yupResolver(schema),
   });

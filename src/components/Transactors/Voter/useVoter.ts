@@ -6,7 +6,7 @@ import Voter from "./Voter";
 import VoterForm from "./VoterForm";
 import { Props } from "./types";
 
-export default function useVoter(poll_id?: string) {
+export default function useVoter(poll_id: number) {
   const { showModal } = useSetModal();
   const showVoter = useCallback(() => {
     showModal<TxProps<Props>>(TransactionSuite, {

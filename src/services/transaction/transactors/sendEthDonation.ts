@@ -4,8 +4,9 @@ import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
 import { XdefiWindow } from "services/provider/types";
 import { chainIDs } from "constants/chainIDs";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { EthDonateArgs, StageUpdator, Step } from "./types";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { EthDonateArgs } from "./transactorTypes";
+import { StageUpdator, Step } from "../types";
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,

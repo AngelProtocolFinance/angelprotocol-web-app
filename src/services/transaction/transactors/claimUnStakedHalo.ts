@@ -1,26 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chainIDs } from "constants/chainIDs";
 import Contract from "contracts/Contract";
-import { terra } from "services/terra/terra";
 import handleTerraError from "helpers/handleTerraError";
 import { gov, tags, user } from "services/terra/tags";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { HaloStakingArgs, StageUpdator, Step } from "./types";
+import { terra } from "services/terra/terra";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { TerraArgs } from "./transactorTypes";
 
-export const haloStakeUnstake = createAsyncThunk(
-  `${transactionSlice.name}/haloStakeUnstake`,
-  async (args: HaloStakingArgs, { dispatch }) => {
+export const claimUnstakedHalo = createAsyncThunk(
+  `${transactionSlice.name}/claimUnstakedHalo`,
+  async (args: TerraArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
-
-    if (!args.wallet) {
-      updateTx({ step: Step.error, message: "Wallet is not connected" });
-      return;
-    }
     try {
-      updateTx({ step: Step.submit, message: "Submitting transaction..." });
-      const response = await args.wallet.post(args.tx);
+      if (!args.wallet) {
+        updateTx({ step: Step.error, message: "Wallet is not connected" });
+        return;
+      }
+      updateTx({ step: Step.submit, message: "Submitting transaction.." });
+      const response = await args.wallet.post(args.tx!);
       const chainId = args.wallet.network.chainID as chainIDs;
       updateTx({
         step: Step.broadcast,
@@ -37,14 +37,11 @@ export const haloStakeUnstake = createAsyncThunk(
         if (!txInfo.code) {
           updateTx({
             step: Step.success,
-            message: args.stakingValues.is_stake
-              ? "Staking successfull!"
-              : "HALO successfully withdrawn",
+            message: "HALO successfully claimed",
             txHash: txInfo.txhash,
             chainId,
           });
-
-          //invalidate cache to fetch new data
+          //refetch new data
           dispatch(
             terra.util.invalidateTags([
               { type: tags.gov, id: gov.staker },

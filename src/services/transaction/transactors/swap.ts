@@ -4,8 +4,9 @@ import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import { lbp, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { StageUpdator, Step, SwapArgs } from "./types";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { SwapArgs } from "./transactorTypes";
 
 export const swap = createAsyncThunk(
   `${transactionSlice.name}/swap`,

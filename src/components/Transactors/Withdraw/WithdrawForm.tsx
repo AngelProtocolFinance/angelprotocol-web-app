@@ -1,31 +1,40 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
-import { useGetter } from "store/accessors";
-import useWithdraw from "./useWithdraw";
-import Status from "./Status";
-import Amount from "./Amount";
-import { vaults } from "constants/contracts";
+import { useGetter, useSetter } from "store/accessors";
 import { useEndowmentHoldingsState } from "services/terra/account/states";
+import { vaults } from "constants/contracts";
+import { withdraw } from "services/transaction/transactors/withdraw";
+import useWithrawEstimator from "./useWithdrawEstimator";
+import Status from "../Status";
+import Amount from "./Amount";
 import { Fee, ToReceive, Total } from "./Misc";
+import { WithdrawValues } from "./types";
 
 export default function WithdrawForm() {
   const {
     handleSubmit,
     getValues,
-    formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<Values>();
+    formState: { isValid, isDirty },
+  } = useFormContext<WithdrawValues>();
 
   const account_addr = getValues("account_addr");
   const { holdings } = useEndowmentHoldingsState(account_addr);
-  const handleWithdraw = useWithdraw();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+  const dispatch = useSetter();
 
-  const isFormDisabled =
-    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
+  const { tx, wallet } = useWithrawEstimator();
+  const _withraw = useCallback(
+    (data: WithdrawValues) => {
+      dispatch(withdraw({ wallet, tx: tx!, withdrawValues: data }));
+    },
+    [wallet, tx]
+  );
+
+  const isFormDisabled = form_loading || !!form_error || !isValid || !isDirty;
 
   return (
     <form
-      onSubmit={handleSubmit(handleWithdraw)}
+      onSubmit={handleSubmit(_withraw)}
       autoComplete="off"
       className="grid p-4 pt-0"
       noValidate

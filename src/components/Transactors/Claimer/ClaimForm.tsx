@@ -4,9 +4,9 @@ import { useFormContext } from "react-hook-form";
 import { Values } from "./types";
 import Fee from "../Fee";
 import { useGetter, useSetter } from "store/accessors";
-import useEstimator from "components/Withdrawer/useEstimator";
+import { claimUnstakedHalo } from "services/transaction/transactors/claimUnStakedHalo";
+import useEstimator from "components/Transactors/Withdraw/useWithdrawEstimator";
 import { useCallback } from "react";
-import { claimUnstakedHalo } from "services/transaction/claimUnStakedHalo";
 
 export default function ClaimForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
