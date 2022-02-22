@@ -18,6 +18,8 @@ export default function WalletSubmission(props: Props) {
     <div className="flex flex-col h-full items-center justify-center">
       <p className="text-3xl font-bold">Register your wallet</p>
       <p className="my-10">
+        {/* As discussed with Lambert, this placeholder value will be replaces with the real text
+        once we receive it (the real text)*/}
         ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
       </p>
       <div className="flex flex-col gap-10 items-center w-3/4">
