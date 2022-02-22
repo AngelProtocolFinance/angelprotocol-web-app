@@ -112,7 +112,7 @@ export default function ContactDetailsForm(props: any) {
       <div className="flex justify-center">
         {props.contactData?.PK && (
           <Button
-            classes="bg-green-400 w-48 h-12 mr-2"
+            className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
             onClick={() => history.push(routes.status)}
           >
@@ -121,7 +121,7 @@ export default function ContactDetailsForm(props: any) {
         )}
         <Button
           submit
-          classes="bg-thin-blue w-48 h-12"
+          className="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
         >

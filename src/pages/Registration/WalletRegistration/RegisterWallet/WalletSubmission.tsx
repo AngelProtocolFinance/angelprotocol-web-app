@@ -31,7 +31,7 @@ export default function WalletSubmission(props: Props) {
         />
         <Button
           submit
-          classes="bg-thin-blue w-48 h-10 mb-10"
+          className="bg-thin-blue w-48 h-10 mb-10"
           disabled={isSubmitting}
           isLoading={isSubmitting}
           onClick={onClick}

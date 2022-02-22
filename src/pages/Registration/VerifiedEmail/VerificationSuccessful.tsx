@@ -27,7 +27,7 @@ export default function VerificationSuccessful(props: Props) {
       </div>
       <p>We have sent it to your email address for your future reference.</p>
       <Button
-        classes="bg-thin-blue w-48 h-12"
+        className="bg-thin-blue w-48 h-12"
         onClick={onClick}
         disabled={isLoading}
         isLoading={isLoading}

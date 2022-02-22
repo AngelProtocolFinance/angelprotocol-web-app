@@ -90,18 +90,18 @@ const ConfirmEmail = () => {
       <div className="flex flex-col gap-1 items-center mt-3">
         <Button
           onClick={resendVerificationEmail}
-          classes="bg-orange w-64 h-12 text-sm"
+          className="bg-orange w-64 h-12 text-sm"
           isLoading={isLoading}
         >
           Resend verification email
         </Button>
         <Button
           onClick={sendEmailNoticeToAPTeam}
-          classes="bg-yellow-blue w-80 h-12 text-sm"
+          className="bg-yellow-blue w-80 h-12 text-sm"
         >
           I'm having trouble with my email
         </Button>
-        <Button onClick={returnMain} classes="bg-thin-blue w-48 h-12 text-sm">
+        <Button onClick={returnMain} className="bg-thin-blue w-48 h-12 text-sm">
           close
         </Button>
       </div>

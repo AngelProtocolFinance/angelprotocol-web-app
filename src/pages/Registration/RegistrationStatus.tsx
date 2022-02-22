@@ -76,7 +76,7 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <Button
-                classes="bg-yellow-blue w-40 h-10"
+                className="bg-yellow-blue w-40 h-10"
                 onClick={navigate(routes.detail)}
                 disabled={user.PK === ""}
               >
@@ -95,7 +95,7 @@ const RegistrationStatus = () => {
             </div>
             <div className="">
               <Button
-                classes={
+                className={
                   status.wallet_address
                     ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
@@ -131,7 +131,7 @@ const RegistrationStatus = () => {
                     },
                   })
                 }
-                classes={
+                className={
                   status.document === 2
                     ? "bg-dark-grey w-40 h-10"
                     : status.document === 1
@@ -173,7 +173,7 @@ const RegistrationStatus = () => {
                 </p>
               ) : (
                 <Button
-                  classes={
+                  className={
                     status.endowment === 1
                       ? "bg-green-500 w-40 h-10"
                       : "bg-thin-blue w-40 h-10"
@@ -260,7 +260,7 @@ const RegistrationStatus = () => {
       </div> */}
       <div className="my-10">
         <Button
-          classes="bg-thin-blue w-64 h-10"
+          className="bg-thin-blue w-64 h-10"
           onClick={navigate(routes.charity_profile)}
           disabled={!status.completed || user.PK === ""}
         >

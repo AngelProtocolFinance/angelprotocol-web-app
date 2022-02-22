@@ -4,13 +4,13 @@ import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 type Props = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {
     isLoading?: true | boolean;
-    classes?: string;
+    className?: string;
     submit?: boolean;
   }
 >;
 
 export default function Button(props: Props) {
-  const { isLoading, classes, children, submit, ...rest } = props;
+  const { isLoading, className, children, submit, ...rest } = props;
 
   const content = isLoading ? (
     <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
@@ -21,7 +21,7 @@ export default function Button(props: Props) {
   return (
     <button
       type={submit ? "submit" : "button"}
-      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${classes}`}
+      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${className}`}
       {...rest}
     >
       {content}

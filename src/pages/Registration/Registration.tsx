@@ -34,7 +34,7 @@ const Registration = () => {
         You're just steps away from bringing all the benefits of endowments to
         your organization.
       </span>
-      <Button onClick={handleStart} classes="bg-orange w-48 h-12">
+      <Button onClick={handleStart} className="bg-orange w-48 h-12">
         Start
       </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
@@ -51,7 +51,7 @@ const Registration = () => {
         <p className="text-failed-red">{errors.refer?.message}</p>
         <Button
           submit
-          classes="bg-thin-blue w-48 h-12"
+          className="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
         >
