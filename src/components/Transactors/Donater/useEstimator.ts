@@ -22,7 +22,11 @@ import { DonateValues } from "./types";
 export default function useEstimator() {
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
-  const { watch, getValues } = useFormContext<DonateValues>();
+  const {
+    watch,
+    getValues,
+    formState: { isValid, isDirty },
+  } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { coins, supported_denoms } = useGetter((state) => state.wallet);
 
@@ -38,6 +42,7 @@ export default function useEstimator() {
 
   useEffect(() => {
     (async () => {
+      if (!isValid || !isDirty) return;
       dispatch(setFormError(""));
       try {
         if (activeProvider === Providers.none) {

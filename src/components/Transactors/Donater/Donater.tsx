@@ -7,6 +7,7 @@ import { DonateValues } from "components/Transactors/Donater/types";
 
 export default function Donater(props: Props) {
   const methods = useForm<DonateValues>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

@@ -17,7 +17,6 @@ export type UnEstimatedTerraArg = { wallet: ConnectedWallet | undefined };
 export type TerraDonateArgs = TerraArgs & { donateValues: DonateValues };
 export type HaloStakingArgs = TerraArgs & { stakingValues: HaloStakingValues };
 export type SwapArgs = TerraArgs & { swapValues: SwapValues };
-export type WithdrawArgs = TerraArgs & { withdrawValues: WithdrawValues };
 
 export type CreatePollArgs = UnEstimatedTerraArg & {
   createPollValues: CreatePollValues;

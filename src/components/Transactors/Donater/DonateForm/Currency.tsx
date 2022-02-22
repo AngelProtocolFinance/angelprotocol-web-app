@@ -21,8 +21,8 @@ function Currency(props: Props) {
       className={`${
         props.withTooltip ? "relative cursor-pointer" : ""
       } flex items-center ${
-        isActive ? "bg-angel-blue bg-opacity-20" : ""
-      } p-0.5 pr-2 rounded-sm`}
+        isActive ? "bg-angel-blue bg-opacity-20 shadow-inner" : ""
+      } p-2 rounded-md`}
     >
       <input
         disabled={props.withTooltip}

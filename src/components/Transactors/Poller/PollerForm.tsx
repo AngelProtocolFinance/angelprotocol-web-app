@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { useGetter, useSetter } from "store/accessors";
 import { createPoll } from "services/transaction/transactors/createPoll";
 import Field from "./Field";
-import useEstimator from "./useEstimator";
+import useCreatePollEstimate from "./useCreatePollEstimate";
 import Status from "../Status";
 import Fee from "../Fee";
 import { CreatePollValues } from "./types";
@@ -16,7 +16,7 @@ export default function PollerForm() {
 
   const dispatch = useSetter();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { wallet } = useEstimator();
+  const { wallet } = useCreatePollEstimate();
 
   const _createPoll = useCallback(
     (data: CreatePollValues) => {
