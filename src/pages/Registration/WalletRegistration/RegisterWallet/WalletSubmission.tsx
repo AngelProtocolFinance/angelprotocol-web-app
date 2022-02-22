@@ -2,7 +2,7 @@ import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import Action from "../../Action";
+import Button from "../../Button";
 import routes from "../../routes";
 
 type Props = {
@@ -29,7 +29,7 @@ export default function WalletSubmission(props: Props) {
           disabled
           required
         />
-        <Action
+        <Button
           submit
           classes="bg-thin-blue w-48 h-10 mb-10"
           disabled={isSubmitting}
@@ -37,7 +37,7 @@ export default function WalletSubmission(props: Props) {
           onClick={onClick}
         >
           Submit
-        </Action>
+        </Button>
       </div>
       <Link
         to={`${site.app}/${app.register}/${routes.status}`}

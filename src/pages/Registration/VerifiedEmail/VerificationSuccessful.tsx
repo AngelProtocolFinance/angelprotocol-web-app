@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import { FaCheck } from "react-icons/fa";
 import { User } from "services/user/types";
-import Action from "../Action";
+import Button from "../Button";
 
 type Props = {
   userData: User;
@@ -26,14 +26,14 @@ export default function VerificationSuccessful(props: Props) {
         <p className="text-yellow-600">{userData.PK}</p>
       </div>
       <p>We have sent it to your email address for your future reference.</p>
-      <Action
+      <Button
         classes="bg-thin-blue w-48 h-12"
         onClick={onClick}
         disabled={isLoading}
         isLoading={isLoading}
       >
         Continue
-      </Action>
+      </Button>
     </div>
   );
 }

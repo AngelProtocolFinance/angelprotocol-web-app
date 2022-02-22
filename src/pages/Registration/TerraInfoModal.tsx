@@ -1,6 +1,6 @@
 import { useSetModal } from "components/Modal/Modal";
 import { BsX } from "react-icons/bs";
-import Action from "./Action";
+import Button from "./Button";
 
 export default function TerraInfoModal() {
   const { hideModal } = useSetModal();
@@ -19,9 +19,9 @@ export default function TerraInfoModal() {
         blockchain. It has a unique public/private addresses pair, can hold
         balances and is used to sign transactions.
       </p>
-      <Action classes="bg-thin-blue w-40 h-10" onClick={hideModal}>
+      <Button classes="bg-thin-blue w-40 h-10" onClick={hideModal}>
         Got it
-      </Action>
+      </Button>
     </div>
   );
 }

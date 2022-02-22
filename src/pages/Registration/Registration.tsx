@@ -3,7 +3,7 @@ import banner1 from "assets/images/banner-register-1.jpg";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import Action from "./Action";
+import Button from "./Button";
 import routes from "./routes";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 
@@ -34,9 +34,9 @@ const Registration = () => {
         You're just steps away from bringing all the benefits of endowments to
         your organization.
       </span>
-      <Action onClick={handleStart} classes="bg-orange w-48 h-12">
+      <Button onClick={handleStart} classes="bg-orange w-48 h-12">
         Start
-      </Action>
+      </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
         onSubmit={handleSubmit(onResume)}
@@ -49,14 +49,14 @@ const Registration = () => {
           type="text"
         />
         <p className="text-failed-red">{errors.refer?.message}</p>
-        <Action
+        <Button
           submit
           classes="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Resume
-        </Action>
+        </Button>
       </form>
       <p className="mt-5">
         Can't find a registration file with this reference?

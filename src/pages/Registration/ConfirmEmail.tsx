@@ -5,7 +5,7 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Action from "./Action";
+import Button from "./Button";
 import routes from "./routes";
 
 const ConfirmEmail = () => {
@@ -88,22 +88,22 @@ const ConfirmEmail = () => {
         with the registration of {user.CharityName} on Angel.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
-        <Action
+        <Button
           onClick={resendVerificationEmail}
           classes="bg-orange w-64 h-12 text-sm"
           isLoading={isLoading}
         >
           Resend verification email
-        </Action>
-        <Action
+        </Button>
+        <Button
           onClick={sendEmailNoticeToAPTeam}
           classes="bg-yellow-blue w-80 h-12 text-sm"
         >
           I'm having trouble with my email
-        </Action>
-        <Action onClick={returnMain} classes="bg-thin-blue w-48 h-12 text-sm">
+        </Button>
+        <Button onClick={returnMain} classes="bg-thin-blue w-48 h-12 text-sm">
           close
-        </Action>
+        </Button>
       </div>
     </div>
   );

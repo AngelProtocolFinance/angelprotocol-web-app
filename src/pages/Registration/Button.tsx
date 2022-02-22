@@ -9,7 +9,7 @@ type Props = PropsWithChildren<
   }
 >;
 
-export default function Action(props: Props) {
+export default function Button(props: Props) {
   const { isLoading, classes, children, submit, ...rest } = props;
 
   const content = isLoading ? (

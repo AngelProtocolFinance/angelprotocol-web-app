@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Action from "../../Action";
-import { userRoleOptions, UserRoles } from "../../constants";
+import FormInput from "components/FormInput";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import Button from "../../Button";
+import { userRoleOptions, UserRoles } from "../../constants";
 import routes from "../../routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
-import FormInput from "components/FormInput";
 import RoleSelector from "./RoleSelector";
-import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
+import useSaveContactDetails from "./useContactDetails";
 
 export default function ContactDetailsForm(props: any) {
   // 'orgRole' in the form changes automatically, but we need this state setter
@@ -111,22 +111,22 @@ export default function ContactDetailsForm(props: any) {
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
-          <Action
+          <Button
             classes="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
             onClick={() => history.push(routes.status)}
           >
             Back
-          </Action>
+          </Button>
         )}
-        <Action
+        <Button
           submit
           classes="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Continue
-        </Action>
+        </Button>
       </div>
     </form>
   );
