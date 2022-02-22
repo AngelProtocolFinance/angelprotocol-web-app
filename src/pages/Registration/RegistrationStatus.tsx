@@ -78,9 +78,10 @@ const RegistrationStatus = () => {
               <Action
                 classes="bg-yellow-blue w-40 h-10"
                 onClick={navigate(routes.detail)}
-                title="Change"
                 disabled={user.PK === ""}
-              />
+              >
+                Change
+              </Action>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -100,8 +101,9 @@ const RegistrationStatus = () => {
                     : "bg-thin-blue w-40 h-10"
                 }
                 onClick={navigate(routes.wallet)}
-                title={status.wallet_address ? "Change" : "Continue"}
-              />
+              >
+                {status.wallet_address ? "Change" : "Continue"}
+              </Action>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -136,18 +138,17 @@ const RegistrationStatus = () => {
                     ? "bg-orange w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                title={
-                  status.document === 2
-                    ? "Completed"
-                    : status.document === 1
-                    ? "Under Review"
-                    : "Continue"
-                }
                 disabled={
                   user.PK === "" ||
                   !(user.TerraWallet || data?.Metadata?.TerraWallet)
                 }
-              />
+              >
+                {status.document === 2
+                  ? "Completed"
+                  : status.document === 1
+                  ? "Under Review"
+                  : "Continue"}
+              </Action>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -178,9 +179,10 @@ const RegistrationStatus = () => {
                       : "bg-thin-blue w-40 h-10"
                   }
                   onClick={navigate(routes.wallet)}
-                  title="Create"
                   disabled={status.endowment === 0 || user.PK === ""}
-                />
+                >
+                  Create
+                </Action>
               )}
             </div>
           </div>
@@ -259,10 +261,11 @@ const RegistrationStatus = () => {
       <div className="my-10">
         <Action
           classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + user.CharityName + "'s profile"}
           onClick={navigate(routes.charity_profile)}
           disabled={!status.completed || user.PK === ""}
-        />
+        >
+          {"Go to " + user.CharityName + "'s profile"}
+        </Action>
         <p className="mt-3 text-sm uppercase">coming soon</p>
       </div>
     </div>

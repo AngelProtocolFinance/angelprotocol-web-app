@@ -112,19 +112,21 @@ export default function ContactDetailsForm(props: any) {
       <div className="flex justify-center">
         {props.contactData?.PK && (
           <Action
-            title="Back"
             classes="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
             onClick={() => history.push(routes.status)}
-          />
+          >
+            Back
+          </Action>
         )}
         <Action
           submit
-          title="Continue"
           classes="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-        />
+        >
+          Continue
+        </Action>
       </div>
     </form>
   );

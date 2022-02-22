@@ -29,10 +29,11 @@ export default function VerificationSuccessful(props: Props) {
       <Action
         classes="bg-thin-blue w-48 h-12"
         onClick={onClick}
-        title="Continue"
         disabled={isLoading}
         isLoading={isLoading}
-      />
+      >
+        Continue
+      </Action>
     </div>
   );
 }

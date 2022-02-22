@@ -19,11 +19,9 @@ export default function TerraInfoModal() {
         blockchain. It has a unique public/private addresses pair, can hold
         balances and is used to sign transactions.
       </p>
-      <Action
-        classes="bg-thin-blue w-40 h-10"
-        onClick={hideModal}
-        title="Got it"
-      />
+      <Action classes="bg-thin-blue w-40 h-10" onClick={hideModal}>
+        Got it
+      </Action>
     </div>
   );
 }

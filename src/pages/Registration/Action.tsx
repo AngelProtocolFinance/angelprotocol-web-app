@@ -1,28 +1,30 @@
 import Loader from "components/Loader/Loader";
-import { MouseEventHandler } from "react";
+import { ButtonHTMLAttributes, PropsWithChildren } from "react";
 
-type Props = {
-  submit?: true | never;
-  disabled?: boolean;
-  title: string;
-  classes?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-  isLoading?: boolean;
-};
+type Props = PropsWithChildren<
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    isLoading?: true | boolean;
+    classes?: string;
+    submit?: boolean;
+  }
+>;
 
 export default function Action(props: Props) {
+  const { isLoading, classes, children, submit, ...rest } = props;
+
+  const content = isLoading ? (
+    <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+  ) : (
+    children
+  );
+
   return (
     <button
-      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${props.classes}`}
-      type={props.submit ? "submit" : "button"}
-      disabled={props.disabled}
-      onClick={props.onClick}
+      type={submit ? "submit" : "button"}
+      className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${classes}`}
+      {...rest}
     >
-      {props.isLoading ? (
-        <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
-      ) : (
-        props.title
-      )}
+      {content}
     </button>
   );
 }

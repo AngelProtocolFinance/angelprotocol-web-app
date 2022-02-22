@@ -91,19 +91,19 @@ const ConfirmEmail = () => {
         <Action
           onClick={resendVerificationEmail}
           classes="bg-orange w-64 h-12 text-sm"
-          title="Resend verification email"
           isLoading={isLoading}
-        />
+        >
+          Resend verification email
+        </Action>
         <Action
           onClick={sendEmailNoticeToAPTeam}
-          title="I'm having trouble with my email"
           classes="bg-yellow-blue w-80 h-12 text-sm"
-        />
-        <Action
-          onClick={returnMain}
-          title="close"
-          classes="bg-thin-blue w-48 h-12 text-sm"
-        />
+        >
+          I'm having trouble with my email
+        </Action>
+        <Action onClick={returnMain} classes="bg-thin-blue w-48 h-12 text-sm">
+          close
+        </Action>
       </div>
     </div>
   );

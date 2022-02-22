@@ -31,12 +31,13 @@ export default function WalletSubmission(props: Props) {
         />
         <Action
           submit
-          title="Submit"
           classes="bg-thin-blue w-48 h-10 mb-10"
           disabled={isSubmitting}
           isLoading={isSubmitting}
           onClick={onClick}
-        />
+        >
+          Submit
+        </Action>
       </div>
       <Link
         to={`${site.app}/${app.register}/${routes.status}`}

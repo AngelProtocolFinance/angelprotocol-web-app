@@ -18,10 +18,11 @@ export default function LinkExpired({ onClick, isLoading }: Props) {
       <Action
         classes="bg-thin-blue w-64 h-12 text-sm"
         onClick={onClick}
-        title="Resend verification email"
         disabled={isLoading}
         isLoading={isLoading}
-      />
+      >
+        Resend verification email
+      </Action>
     </div>
   );
 }
