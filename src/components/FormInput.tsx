@@ -8,7 +8,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   errorClassName?: string;
 };
 
-export default function Input(props: Props) {
+export default function FormInput(props: Props) {
   const {
     label,
     errorMessage,
@@ -16,21 +16,19 @@ export default function Input(props: Props) {
     required,
     className,
     errorClassName,
+    type = "text",
     ...rest
   } = props;
-  const { type = "text" } = rest;
+  const id = registerReturn?.name || rest.id;
 
   return (
     <div className={`flex flex-col gap-1 w-full items-start ${className}`}>
-      <label
-        htmlFor={registerReturn?.name || rest.id}
-        className="text-dark-grey"
-      >
+      <label htmlFor={id} className="text-dark-grey">
         {label}
         {required && <span className="ml-0.5 text-failed-red">*</span>}
       </label>
       <input
-        id={registerReturn?.name || rest.id}
+        id={id}
         type={type}
         className="rounded-md outline-none border-none w-full px-3 py-2 text-black"
         {...registerReturn}
