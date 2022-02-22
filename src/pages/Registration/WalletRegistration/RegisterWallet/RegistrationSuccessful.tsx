@@ -1,8 +1,8 @@
-import LinkButton from "components/LinkButton";
 import { app, site } from "constants/routes";
-import routes from "../../routes";
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
+import routes from "../../routes";
+import LinkButton from "./LinkButton";
 
 type Props = { walletAddress: string };
 
