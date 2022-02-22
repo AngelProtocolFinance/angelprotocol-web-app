@@ -19,7 +19,7 @@ const Governance = lazy(() => import("pages/Governance/Governance"));
 const Auction = lazy(() => import("pages/LBP/Auction"));
 const Endowment = lazy(() => import("pages/Endowment/Endowment"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
-const Register = lazy(() => import("pages/registration/index"));
+const Register = lazy(() => import("pages/Registration"));
 
 export default function Views() {
   const { path } = useRouteMatch();

@@ -4,17 +4,17 @@ import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Action from "./Action";
+import Button from "./Button";
 import routes from "./routes";
 
 const RegistrationStatus = () => {
   //url is app/register/status
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
+  const user = useGetter((state) => state.user);
   if (!user.PK) {
-    user = JSON.parse(localStorage.getItem("userData") || "{}");
-    dispatch(updateUserData(user));
+    const storedUser = JSON.parse(localStorage.getItem("userData") || "{}");
+    dispatch(updateUserData(storedUser));
   }
 
   if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
@@ -59,7 +59,7 @@ const RegistrationStatus = () => {
   };
 
   return (
-    <div className="">
+    <div className="w-full">
       <div className="necessary-information">
         <div className="">
           <h3 className="text-3xl font-bold">Necessary Information</h3>
@@ -75,12 +75,13 @@ const RegistrationStatus = () => {
               <p className="status-text uppercase text-green-500">Complete</p>
             </div>
             <div className="">
-              <Action
-                classes="bg-yellow-blue w-40 h-10"
-                onClick={navigate(routes.detail)}
-                title="Change"
+              <Button
+                className="bg-yellow-blue w-40 h-10"
+                onClick={navigate(routes.contactDetails)}
                 disabled={user.PK === ""}
-              />
+              >
+                Change
+              </Button>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -93,16 +94,16 @@ const RegistrationStatus = () => {
               )}
             </div>
             <div className="">
-              <Action
-                classes={
+              <Button
+                className={
                   status.wallet_address
-                    ? "bg-dark-grey w-40 h-10"
+                    ? "bg-yellow-blue w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                onClick={navigate(routes.wallet_check)}
-                title={status.wallet_address ? "Completed" : "Continue"}
-                disabled={user.PK === ""}
-              />
+                onClick={navigate(routes.wallet)}
+              >
+                {status.wallet_address ? "Change" : "Continue"}
+              </Button>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -121,34 +122,34 @@ const RegistrationStatus = () => {
               )}
             </div>
             <div className="">
-              <Action
+              <Button
                 onClick={() =>
                   history.push({
-                    pathname: routes.upload_docs,
+                    // should be updated to 'routes.upload_docs'
+                    pathname: routes.index,
                     state: {
                       data: data?.Registration,
                     },
                   })
                 }
-                classes={
+                className={
                   status.document === 2
                     ? "bg-dark-grey w-40 h-10"
                     : status.document === 1
                     ? "bg-orange w-40 h-10"
                     : "bg-thin-blue w-40 h-10"
                 }
-                title={
-                  status.document === 2
-                    ? "Completed"
-                    : status.document === 1
-                    ? "Under Review"
-                    : "Continue"
-                }
                 disabled={
                   user.PK === "" ||
                   !(user.TerraWallet || data?.Metadata?.TerraWallet)
                 }
-              />
+              >
+                {status.document === 2
+                  ? "Completed"
+                  : status.document === 1
+                  ? "Under Review"
+                  : "Continue"}
+              </Button>
             </div>
           </div>
           <div className="py-2 mx-auto flex justify-between md:w-3/5 xl:w-1/2">
@@ -172,16 +173,17 @@ const RegistrationStatus = () => {
                   <span>{maskAddress(data?.Metadata?.TerraWallet)}</span>
                 </p>
               ) : (
-                <Action
-                  classes={
+                <Button
+                  className={
                     status.endowment === 1
                       ? "bg-green-500 w-40 h-10"
                       : "bg-thin-blue w-40 h-10"
                   }
-                  onClick={navigate(routes.wallet_check)}
-                  title="Create"
+                  onClick={navigate(routes.wallet)}
                   disabled={status.endowment === 0 || user.PK === ""}
-                />
+                >
+                  Create
+                </Button>
               )}
             </div>
           </div>
@@ -258,12 +260,13 @@ const RegistrationStatus = () => {
         </div>
       </div> */}
       <div className="my-10">
-        <Action
-          classes="bg-thin-blue w-64 h-10"
-          title={"Go to " + user.CharityName + "'s profile"}
-          onClick={navigate(routes.charity_profile)}
+        <Button
+          className="bg-thin-blue w-64 h-10"
+          onClick={navigate(routes.charityProfile)}
           disabled={!status.completed || user.PK === ""}
-        />
+        >
+          {"Go to " + user.CharityName + "'s profile"}
+        </Button>
         <p className="mt-3 text-sm uppercase">coming soon</p>
       </div>
     </div>

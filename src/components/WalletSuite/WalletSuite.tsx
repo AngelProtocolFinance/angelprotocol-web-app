@@ -1,23 +1,24 @@
+import { WalletSuiteContext } from "providers/WalletSuiteProvider";
+import { useContext, useEffect } from "react";
 import { IoWalletSharp } from "react-icons/io5";
-import Display from "./Display";
-import { useEffect, useState } from "react";
-import Connectors from "./Connectors";
-import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
+import { useGetter } from "store/accessors";
+import Connectors from "./Connectors";
+import Display from "./Display";
 import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);
   useWalletUpdator(provider.active);
 
-  const [connectorsShown, showConnectors] = useState(false);
+  const { connectorsShown, setShowConnectors } = useContext(WalletSuiteContext);
 
-  const toggleConnector = () => showConnectors((p) => !p);
-  const hideConnectors = () => showConnectors(false);
+  const toggleConnector = () => setShowConnectors((p) => !p);
+  const hideConnectors = () => setShowConnectors(false);
   const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isProviderActive && showConnectors(false);
+    isProviderActive && setShowConnectors(false);
     //eslint-disable-next-line
   }, [isProviderActive]);
 

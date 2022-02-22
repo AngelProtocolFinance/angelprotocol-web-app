@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Action from "../Action";
-import { userRoleOptions, UserRoles } from "../constants";
+import FormInput from "components/FormInput";
 import { PropsWithChildren, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import routes from "../routes";
+import Button from "../../Button";
+import { userRoleOptions, UserRoles } from "../../constants";
+import routes from "../../routes";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
-import Input from "./Input";
 import RoleSelector from "./RoleSelector";
-import useSaveContactDetails from "./useContactDetails";
 import { ContactDetails, ContactInfoSchema } from "./types";
+import useSaveContactDetails from "./useContactDetails";
 
 export default function ContactDetailsForm(props: any) {
   // 'orgRole' in the form changes automatically, but we need this state setter
@@ -46,12 +46,12 @@ export default function ContactDetailsForm(props: any) {
 
   return (
     <form
-      className="mx-auto md:w-4/5 flex flex-col gap-6"
+      className="mx-auto md:w-full flex flex-col gap-6"
       onSubmit={handleSubmit(saveContactDetails)}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <ColumnContainer>
-          <Input
+          <FormInput
             label="Name of your organization"
             placeholder="Organization"
             registerReturn={register("charityName")}
@@ -59,7 +59,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             label="First name"
             placeholder="First name"
             registerReturn={register("firstName")}
@@ -67,7 +67,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             label="Last name"
             placeholder="Last name"
             registerReturn={register("lastName")}
@@ -75,7 +75,7 @@ export default function ContactDetailsForm(props: any) {
             required
             disabled={isSubmitting}
           />
-          <Input
+          <FormInput
             type="email"
             label="E-mail address"
             placeholder="E-mail address"
@@ -86,7 +86,7 @@ export default function ContactDetailsForm(props: any) {
           />
         </ColumnContainer>
         <ColumnContainer>
-          <Input
+          <FormInput
             label="Phone number"
             placeholder="Phone number"
             registerReturn={register("phone")}
@@ -111,20 +111,22 @@ export default function ContactDetailsForm(props: any) {
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
-          <Action
-            title="Back"
-            classes="bg-green-400 w-48 h-12 mr-2"
+          <Button
+            className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
             onClick={() => history.push(routes.status)}
-          />
+          >
+            Back
+          </Button>
         )}
-        <Action
+        <Button
           submit
-          title="Continue"
-          classes="bg-thin-blue w-48 h-12"
+          className="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-        />
+        >
+          Continue
+        </Button>
       </div>
     </form>
   );

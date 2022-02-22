@@ -3,7 +3,7 @@ import banner1 from "assets/images/banner-register-1.jpg";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import Action from "./Action";
+import Button from "./Button";
 import routes from "./routes";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 
@@ -20,25 +20,23 @@ const Registration = () => {
   });
 
   const handleStart = useCallback(
-    () => history.push(`${url}/${routes.detail}`),
+    () => history.push(`${url}/${routes.contactDetails}`),
     [history, url]
   );
 
   return (
     <div className="flex flex-col gap-3 items-center">
       <img src={banner1} width="100%" className="rounded-xl" alt="banner" />
-      <span className="text-4xl font-bold">
+      <span className="text-3xl font-bold">
         Thank you for registering, we'd love to have you on board!
       </span>
       <span className="text-xl mb-5">
         You're just steps away from bringing all the benefits of endowments to
         your organization.
       </span>
-      <Action
-        onClick={handleStart}
-        title="Start"
-        classes="bg-orange w-48 h-12"
-      />
+      <Button onClick={handleStart} className="bg-orange w-48 h-12">
+        Start
+      </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
         onSubmit={handleSubmit(onResume)}
@@ -51,13 +49,14 @@ const Registration = () => {
           type="text"
         />
         <p className="text-failed-red">{errors.refer?.message}</p>
-        <Action
+        <Button
           submit
-          title="Resume"
-          classes="bg-thin-blue w-48 h-12"
+          className="bg-thin-blue w-48 h-12"
           disabled={isSubmitting}
           isLoading={isSubmitting}
-        />
+        >
+          Resume
+        </Button>
       </form>
       <p className="mt-5">
         Can't find a registration file with this reference?

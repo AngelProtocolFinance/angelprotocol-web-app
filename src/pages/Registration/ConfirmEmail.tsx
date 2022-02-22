@@ -5,13 +5,13 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Action from "./Action";
+import Button from "./Button";
 import routes from "./routes";
 
 const ConfirmEmail = () => {
   const history = useHistory();
   const dispatch = useSetter();
-  let user = useGetter((state) => state.user);
+  const user = useGetter((state) => state.user);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
@@ -55,7 +55,7 @@ const ConfirmEmail = () => {
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
-  }, [user, dispatch]);
+  }, [user.PK, dispatch]);
 
   if (user.EmailVerified) {
     return <Redirect to={`${site.app}/${app.register}/${routes.status}`} />;
@@ -63,16 +63,16 @@ const ConfirmEmail = () => {
 
   return (
     <div className="flex flex-col gap-4 font-bold">
-      {is_sent && (
-        <img src={banner2} width="100%" className="rounded-xl" alt="" />
-      )}
       {is_sent ? (
-        <div className="text-4xl">
-          <p>Hi {user.FirstName}!</p>
-          <span>
-            We're still waiting for you to confirm your email address.
-          </span>
-        </div>
+        <>
+          <img src={banner2} width="100%" className="rounded-xl" alt="" />
+          <div className="text-4xl">
+            <p>Hi {user.FirstName}!</p>
+            <span>
+              We're still waiting for you to confirm your email address.
+            </span>
+          </div>
+        </>
       ) : (
         <div className="text-2xl">
           <p>Thank you for registering</p>
@@ -88,22 +88,22 @@ const ConfirmEmail = () => {
         with the registration of {user.CharityName} on Angel.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
-        <Action
+        <Button
           onClick={resendVerificationEmail}
-          classes="bg-orange w-64 h-12 text-sm"
-          title="Resend verification email"
+          className="bg-orange w-64 h-12 text-sm"
           isLoading={isLoading}
-        />
-        <Action
+        >
+          Resend verification email
+        </Button>
+        <Button
           onClick={sendEmailNoticeToAPTeam}
-          title="I'm having trouble with my email"
-          classes="bg-yellow-blue w-80 h-12 text-sm"
-        />
-        <Action
-          onClick={returnMain}
-          title="close"
-          classes="bg-thin-blue w-48 h-12 text-sm"
-        />
+          className="bg-yellow-blue w-80 h-12 text-sm"
+        >
+          I'm having trouble with my email
+        </Button>
+        <Button onClick={returnMain} className="bg-thin-blue w-48 h-12 text-sm">
+          close
+        </Button>
       </div>
     </div>
   );
