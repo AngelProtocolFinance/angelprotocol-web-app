@@ -31,11 +31,15 @@ const logDonation: DonationLogger = async (
   };
 
   const generatedToken = createAuthToken(UserTypes.WEB_APP);
-  await fetch(apes_endpoint + "/donation", {
+  const response = await fetch(apes_endpoint + "/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
     body: JSON.stringify(txLogPayload),
   });
+
+  if (response.status !== 201) {
+    throw new LogDonationFail(chainId, txhash);
+  }
 };
 
 export default logDonation;
@@ -49,3 +53,14 @@ export type DonationLogger = (
   walletAddress: string,
   receipient: string | number
 ) => Promise<void>;
+
+export class LogDonationFail extends Error {
+  chainId: string;
+  txHash: string;
+  constructor(chainId: string, txHash: string) {
+    super();
+    this.chainId = chainId;
+    this.txHash = txHash;
+    this.name = "LogDonationFail";
+  }
+}

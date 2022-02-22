@@ -1,22 +1,36 @@
 import { DonateValues } from "components/Transactors/Donater/types";
 import { denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
-// import useEthSender from "../Donater/useEthSender";
-import useTerraSender from "../useTerraSender";
-// import useBTCSender from "../Donater/useBTCSender";
-// import useSolSender from "components/Donater/useSolSender";
-// import useAtomSender from "components/Donater/useAtomSender";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import useEstimator from "../useEstimator";
 import useEthSender from "../useEthSender";
+import { useSetter } from "store/accessors";
+import { sendTerraDonation } from "services/transaction/sendTerraDonation";
+import { useConnectedWallet } from "@terra-money/use-wallet";
+import { sendEthDonation } from "services/transaction/sendEthDonation";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
+  const wallet = useConnectedWallet();
+  const dispatch = useSetter();
   const { watch, handleSubmit, formState, setValue } =
     useFormContext<DonateValues>();
   const { terraTx, ethTx } = useEstimator();
-  const terraSender = useTerraSender(terraTx!);
-  const ethSender = useEthSender(ethTx!);
+
+  const terraSender = useCallback(
+    (data: DonateValues) => {
+      dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
+    },
+    [terraTx, wallet]
+  );
+
+  const ethSender = useCallback(
+    (data: DonateValues) => {
+      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
+    },
+    [ethTx]
+  );
+
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
