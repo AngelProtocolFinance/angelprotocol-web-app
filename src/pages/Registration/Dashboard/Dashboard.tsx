@@ -88,7 +88,7 @@ export default function Dashboard() {
       )}
       {status.reviewStatus === ReviewStatus.Complete && (
         <Button
-          className="bg-thin-blue min-w-fit h-10 mt-10 px-5"
+          className="bg-thin-blue min-w-fit h-10 mt-5 px-5"
           onClick={() => history.push(routes.charityProfile)}
           title="Available soon"
         >
