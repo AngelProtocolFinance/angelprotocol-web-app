@@ -59,21 +59,21 @@ export default function Dashboard() {
           title="Step #2: Wallet Address"
           onClick={() => history.push(routes.wallet)}
           disabled={dataSubmitted}
-          completed={status.stepTwoComplete}
+          completed={status.stepTwoCompleted}
         />
         <Step
           title="Step #3: Documentation"
           onClick={() => history.push(routes.uploadDocs)}
           disabled={dataSubmitted}
-          completed={status.stepThreeComplete}
+          completed={status.stepThreeCompleted}
           // TODO: implement level logic
-          statusComplete={status.stepThreeComplete && `Level 1`}
+          statusComplete={status.stepThreeCompleted && `Level 1`}
         />
         <Step
           title="Step #4: Additional Information"
           onClick={() => history.push(routes.additionalInformation)}
           disabled={dataSubmitted}
-          completed={status.stepFourComplete}
+          completed={status.stepFourCompleted}
         />
         {status.reviewStatus === ReviewStatus.None && (
           <Button
@@ -101,13 +101,13 @@ export default function Dashboard() {
 
 function getRegistrationStatus(user: User, data: any): RegistrationStatus {
   return {
-    stepOneComplete: !!user.PK,
-    stepTwoComplete: !!data?.Metadata?.TerraWallet || user.TerraWallet,
-    stepThreeComplete:
+    stepOneCompleted: !!user.PK,
+    stepTwoCompleted: !!data?.Metadata?.TerraWallet || user.TerraWallet,
+    stepThreeCompleted:
       (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
       (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
       (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement),
-    stepFourComplete: false,
+    stepFourCompleted: false,
     reviewStatus:
       user?.RegistrationStatus === "Complete"
         ? ReviewStatus.Complete
@@ -118,10 +118,10 @@ function getRegistrationStatus(user: User, data: any): RegistrationStatus {
         : ReviewStatus.None,
     getReadyForSubmit: function () {
       return (
-        this.stepOneComplete &&
-        this.stepTwoComplete &&
-        this.stepThreeComplete &&
-        this.stepFourComplete
+        this.stepOneCompleted &&
+        this.stepTwoCompleted &&
+        this.stepThreeCompleted &&
+        this.stepFourCompleted
       );
     },
   };
