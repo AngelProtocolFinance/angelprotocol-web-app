@@ -1,50 +1,35 @@
-import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useMembers } from "services/terra/admin/queriers";
 import { Step } from "services/transaction/types";
-import { setInitialMembers } from "services/admin/memberSlice";
 import { Member } from "services/terra/admin/types";
 import useTxUpdator from "services/transaction/updators";
 import handleTerraError from "helpers/handleTerraError";
 import { chainIDs } from "constants/chainIDs";
 import Admin from "contracts/Admin";
-import { useSetter, useGetter } from "store/accessors";
-import { ProposalDetailsType } from "./proposalDetailsSchema";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useGetter } from "store/accessors";
+import { useFormContext } from "react-hook-form";
+import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
-export default function useMemberUpdate() {
+export default function useUpdateMembers() {
+  const { trigger } = useFormContext<MemberUpdatorValues>();
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
-  const dispatch = useSetter();
-  const { members, isMembersLoading } = useMembers();
   const membersCopy = useGetter((state) => state.admin.members);
 
-  useEffect(() => {
-    if (members.length > 0) {
-      dispatch(
-        setInitialMembers(
-          members.map((member) => ({
-            ...member,
-            is_deleted: false,
-            is_added: false,
-          }))
-        )
-      );
-    }
-    //eslint-disable-next-line
-  }, [members]);
-
-  type Diffs = [Member[], string[]];
-  async function submit_proposal() {
+  async function updateMembers() {
     try {
       if (!wallet) {
         updateTx({ step: Step.error, message: "Wallet is not connected" });
         return;
       }
-      const chainId = wallet.network.chainID as chainIDs;
 
+      const isValid = await trigger(["description", "title"], {
+        shouldFocus: true,
+      });
+      if (!isValid) return;
+
+      const chainId = wallet.network.chainID as chainIDs;
       //check if there are changes
+      type Diffs = [Member[], string[]];
       const [to_add, to_remove]: Diffs = membersCopy.reduce(
         ([to_add, to_remove]: Diffs, memberCopy) => {
           const member: Member = {
@@ -111,5 +96,5 @@ export default function useMemberUpdate() {
     }
   }
 
-  return { membersCopy, submit_proposal, isMembersLoading };
+  return { updateMembers };
 }

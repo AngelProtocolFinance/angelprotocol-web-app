@@ -6,8 +6,8 @@ import { useSetter } from "store/accessors";
 import {
   undoAddMember,
   toggleDeleteExistingMember,
+  MemberCopy,
 } from "services/admin/memberSlice";
-import { MemberCopy } from "./MemberUpdator";
 
 export default function MemberItem(props: MemberCopy) {
   const dispatch = useSetter();
@@ -20,15 +20,18 @@ export default function MemberItem(props: MemberCopy) {
   }
   return (
     <li
-      className={`flex gap-1 text-white text-opacity-80 items-center bg-opacity-10 shadow-inner ${
-        props.is_deleted ? "bg-red-400 bg-opacity-30" : "bg-white"
+      className={`flex gap-1 text-white text-opacity-80 items-center shadow-inner ${
+        props.is_deleted ? "bg-red-400 bg-opacity-30" : ""
       } ${
         props.is_added ? "bg-green-400 bg-opacity-30" : ""
-      } rounded-md p-2 w-full`}
+      } rounded-md p-2 w-full bg-opacity-10 bg-white`}
     >
       <FaUserCircle />
-      <span className={`${props.is_deleted ? "line-through" : ""} text-xs`}>
-        {/* {maskAddress(props.addr)} */}
+      <span
+        className={`${
+          props.is_deleted ? "line-through" : ""
+        } text-sm font-mono`}
+      >
         {props.addr}
       </span>
       <GiPieChart className="ml-auto" />
