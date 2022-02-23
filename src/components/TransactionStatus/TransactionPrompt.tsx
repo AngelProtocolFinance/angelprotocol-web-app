@@ -38,7 +38,11 @@ export default function TransactionPrompt() {
   );
 
   function closePrompt() {
-    if (stage.step === Step.success || stage.step === Step.receipt) {
+    if (
+      stage.step === Step.success ||
+      stage.step === Step.receipt ||
+      stage.step === Step.error
+    ) {
       dispatch(setStage({ step: Step.form }));
       hideModal();
     } else {
