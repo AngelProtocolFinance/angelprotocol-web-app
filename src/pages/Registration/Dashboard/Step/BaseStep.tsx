@@ -7,7 +7,7 @@ export default function BaseStep(props: Props) {
   const { title, isComplete, onClick, statusComponent } = props;
 
   return (
-    <div className="flex justify-between md:w-3/5 xl:w-1/2">
+    <div className="flex justify-between w-full">
       <div className="text-left font-bold">
         <p>{title}</p>
         {statusComponent ||

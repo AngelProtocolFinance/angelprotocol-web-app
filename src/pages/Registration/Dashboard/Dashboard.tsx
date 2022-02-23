@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { MouseEventHandler, useCallback, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { User } from "services/user/types";
@@ -38,10 +38,7 @@ export default function Dashboard() {
 
   const status = useMemo(() => getStatus(user, data), [user, data]);
 
-  const navigate = useCallback(
-    (dest: string, state?: unknown) => () => history.push(dest, state),
-    [history]
-  );
+  const navigate = (dest: string) => () => history.push(dest);
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -50,36 +47,37 @@ export default function Dashboard() {
         Please complete all the following steps to be able to create your
         endowment
       </span>
-      <Step
-        title="Step #1: Contact Details"
-        onClick={navigate(routes.contactDetails)}
-        isComplete
-      />
-      <Step
-        title="Step #2: Wallet Address"
-        onClick={navigate(routes.wallet)}
-        isComplete={!!status.wallet_address}
-      />
-      <DocumentationStep
-        title="Step #3: Documentation"
-        onClick={navigate(routes.uploadDocs, {
-          data: data?.Registration,
-        })}
-        isComplete={status.documentationStep === 2}
-        // TODO: implement level logic
-        level={1}
-      />
-      <Step
-        title="Step #4: Additional Information"
-        onClick={navigate(routes.additionalInformation)}
-        isComplete={status.isAdditionalInformationProvided}
-      />
-      <Status
-        endowmentStep={status.endowmentStep}
-        walletAddress={data?.Metadata?.TerraWallet}
-        onClick={navigate(routes.wallet)}
-        disabled={status.endowmentStep === 0 || user.PK === ""}
-      />
+      <div className="w-full md:w-3/5 xl:w-1/2 flex flex-col items-center gap-4">
+        <Step
+          title="Step #1: Contact Details"
+          onClick={navigate(routes.contactDetails)}
+          isComplete
+        />
+        <Step
+          title="Step #2: Wallet Address"
+          onClick={navigate(routes.wallet)}
+          isComplete={!!status.wallet_address}
+        />
+        <DocumentationStep
+          title="Step #3: Documentation"
+          onClick={navigate(routes.uploadDocs)}
+          isComplete={status.documentationStep === 2}
+          // TODO: implement level logic
+          level={1}
+        />
+        <Step
+          title="Step #4: Additional Information"
+          onClick={navigate(routes.additionalInformation)}
+          isComplete={status.isAdditionalInformationProvided}
+        />
+        <Button
+          className={`w-full h-10 bg-yellow-blue`}
+          onClick={() => console.log("submit")}
+          disabled={status.endowmentStep === 0 || user.PK === ""}
+        >
+          Submit for review
+        </Button>
+      </div>
       {status.completed && !!user.PK && (
         <Button
           className="bg-thin-blue min-w-fit h-10 mt-10 px-5"
@@ -93,7 +91,15 @@ export default function Dashboard() {
   );
 }
 
-function getStatus(user: User, data: any) {
+type RegistrationStatus = {
+  wallet_address: string;
+  documentationStep: number;
+  endowmentStep: number;
+  completed: boolean;
+  isAdditionalInformationProvided: boolean;
+};
+
+function getStatus(user: User, data: any): RegistrationStatus {
   return {
     wallet_address: !!data?.Metadata?.TerraWallet || user.TerraWallet,
     // TODO: turn this into an enum (e.g. [Missing, Pending, Verified])
