@@ -33,7 +33,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
   );
 }
 
-function generatePossessive(noun: string = "") {
+function generatePossessive(noun: string) {
   if (!noun) return "";
   const doesEndWithS = noun[noun.length - 1].toLowerCase() === "s";
   const suffix = doesEndWithS ? "'" : "'s";
