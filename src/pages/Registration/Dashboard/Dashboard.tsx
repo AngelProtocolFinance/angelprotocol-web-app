@@ -36,7 +36,7 @@ export default function Dashboard() {
     }
   }, [error]);
 
-  const status = useMemo(() => getStatus(user, data), [user, data]);
+  const status = useMemo(() => getRegistrationStatus(user, data), [user, data]);
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -98,21 +98,7 @@ export default function Dashboard() {
   );
 }
 
-function getStatus(user: User, data: any): RegistrationStatus {
-  // const documentationStatus =
-  //   (user.ProofOfIdentityVerified ||
-  //     data?.Registration?.ProofOfIdentityVerified) &&
-  //   (user.ProofOfEmploymentVerified ||
-  //     data?.Registration?.ProofOfEmploymentVerified) &&
-  //   (user.EndowmentAgreementVerified ||
-  //     data?.Registration?.EndowmentAgreementVerified)
-  //     ? DocumentationStatus.Verified
-  //     : (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
-  //       (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
-  //       (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement)
-  //     ? DocumentationStatus.Submitted
-  //     : DocumentationStatus.Missing;
-
+function getRegistrationStatus(user: User, data: any): RegistrationStatus {
   return {
     stepOneComplete: !!user.PK,
     stepTwoComplete: !!data?.Metadata?.TerraWallet || user.TerraWallet,
@@ -129,7 +115,6 @@ function getStatus(user: User, data: any): RegistrationStatus {
         : user.IsMetaDataCompleted
         ? ReviewStatus.UnderReview
         : ReviewStatus.None,
-    // documentationStatus,
     getReadyForSubmit: function () {
       return (
         this.stepOneComplete &&
