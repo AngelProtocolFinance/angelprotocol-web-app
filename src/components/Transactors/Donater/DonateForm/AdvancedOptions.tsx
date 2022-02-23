@@ -5,7 +5,7 @@ export default function AdvancedOptions(props: {
   isOptionsShown: boolean;
 }) {
   return (
-    <div className="grid p-3 pl-2 rounded-md bg-white-grey shadow-inner-white-grey mt-2">
+    <div className="grid p-3 pl-2 rounded-md bg-light-grey shadow-inner-white-grey mt-2">
       <button
         type="button"
         onClick={props.toggleAdvancedOptions}

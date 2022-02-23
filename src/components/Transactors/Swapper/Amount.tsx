@@ -35,7 +35,7 @@ export default function Amount() {
           <IoMdSettings />
         </button>
       </div>
-      <div className="grid grid-cols-a1 text-angel-grey p-3 bg-white-grey shadow-inner-white-grey rounded-md">
+      <div className="grid grid-cols-a1 text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
@@ -62,7 +62,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-angel-grey bg-white-grey text-2xl w-full focus:outline-none"
+          className="text-right p-2 text-angel-grey bg-light-grey text-2xl w-full focus:outline-none"
         />
       </div>
       <ErrorMessage

@@ -21,7 +21,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
   }
 
   return (
-    <div className="grid my-2 p-3 pb-1 rounded-md shadow-inner-white-grey">
+    <div className="grid my-2 p-3 pb-1 rounded-md bg-light-grey shadow-inner-white-grey">
       <div className="flex flex-row justify-between">
         <label
           htmlFor={props.field_id}
@@ -47,7 +47,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
         type="number"
         autoComplete="off"
         placeholder="0.000"
-        className="p-1 pl-0 focus:outline-none text-angel-grey text-xl bg-white-grey"
+        className="p-1 pl-0 focus:outline-none text-angel-grey text-xl bg-light-grey"
       />
       <ErrorMessage
         errors={errors}

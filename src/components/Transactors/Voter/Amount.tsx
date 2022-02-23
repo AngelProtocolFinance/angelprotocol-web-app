@@ -33,14 +33,14 @@ export default function Amount() {
         <span>Deposit amount</span>
         <Balance amount={+govStakedHalo} title="Balance" />
       </label>
-      <div className="flex flex-wrap items-stretch p-3 shadow-inner-white-grey rounded-md">
+      <div className="flex flex-wrap items-stretch p-3 bg-light-grey shadow-inner-white-grey rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={currency_text[denoms.uhalo]}
-          className="flex-auto p-1 pl-0 focus:outline-none bg-white-grey text-angel-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"

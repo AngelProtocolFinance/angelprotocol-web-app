@@ -27,7 +27,7 @@ export default function Option(props: { label: string; vote: Vote }) {
             ? `${
                 vote_colors[props.vote].bg
               } shadow-inner-white-grey pointer-events-none`
-            : "bg-white-grey"
+            : "bg-light-grey"
         }`}
         htmlFor={props.label}
       >

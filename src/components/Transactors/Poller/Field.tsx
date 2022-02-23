@@ -25,7 +25,7 @@ export default function Title(props: {
         <textarea
           {...register(props.id)}
           id={props.id}
-          className="shadow-inner-white-grey bg-white-grey 
+          className="shadow-inner-white-grey bg-light-grey 
           rounded-md p-3 text-angel-grey focus:outline-none"
         />
       )) || (
@@ -35,7 +35,7 @@ export default function Title(props: {
           autoComplete="off"
           id={props.id}
           type="text"
-          className="shadow-inner-white-grey bg-white-grey 
+          className="shadow-inner-white-grey bg-light-grey 
           rounded-md p-3 text-angel-grey focus:outline-none"
         />
       )}
