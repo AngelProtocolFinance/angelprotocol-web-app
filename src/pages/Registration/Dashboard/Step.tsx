@@ -16,7 +16,7 @@ export default function Step(props: Props) {
       <p className="mr-auto">{title}</p>
       {completed ? (
         <p className="uppercase text-green-500 w-40">
-          {statusComplete || "Complete"}
+          {statusComplete || "Completed"}
         </p>
       ) : (
         <p className="uppercase text-yellow-500 w-40">Missing</p>
