@@ -24,7 +24,7 @@ export default function ReceiptForm() {
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
-      className="bg-white grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
+      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
       autoComplete="off"
       autoSave="off"
     >
@@ -56,7 +56,7 @@ export default function ReceiptForm() {
         >
           Country
         </label>
-        <div className="form-control rounded-md grid">
+        <div className="form-control rounded-md grid bg-white-grey">
           <Selector
             name="country"
             options={countries.map((item) => ({
@@ -77,7 +77,7 @@ export default function ReceiptForm() {
       </div>
       <button
         disabled={processing}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {processing ? "Processing..." : "Submit"}

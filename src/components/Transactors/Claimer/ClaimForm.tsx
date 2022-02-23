@@ -20,14 +20,14 @@ export default function ClaimForm() {
   }, [wallet, tx]);
 
   return (
-    <div className="bg-white grid p-4 rounded-md w-full">
+    <div className="bg-white-grey grid p-4 rounded-md w-full">
       <Status />
       <Claims />
       <Fee />
       <button
         onClick={claim}
         disabled={form_loading || !!form_error}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {form_loading ? "estimating fee.." : "claim"}

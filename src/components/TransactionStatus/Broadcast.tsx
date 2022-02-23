@@ -9,7 +9,7 @@ export default function Broadcast(props: BroadcastStage) {
   const { message, chainId, txHash } = props;
 
   return (
-    <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center">
+    <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center">
       <p className="text-center text-angel-grey mb-2">{message}</p>
       <a
         href={getTxUrl(chainId, txHash)}

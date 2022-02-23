@@ -21,7 +21,7 @@ export default function Success(props: SuccessStage) {
   }
 
   return (
-    <div className="bg-white grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
+    <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
       <AiOutlineCheckCircle className="text-blue-accent text-3xl mb-1" />
       <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
 

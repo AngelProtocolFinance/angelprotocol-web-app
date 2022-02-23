@@ -43,31 +43,26 @@ export default function useWithrawEstimator() {
   const { rates, isRatesError } = useExchangeRate();
   const { holdings } = useEndowmentHoldingsState(account_addr);
 
-  const deb_anchor1_amount = useDebouncer<string>(anchor1_amount, 300);
-  const deb_anchor2_amount = useDebouncer<string>(anchor2_amount, 300);
+  const debAnchor1Amount = useDebouncer<string>(anchor1_amount, 300);
+  const debAnchor2Amount = useDebouncer<string>(anchor2_amount, 300);
 
   useEffect(() => {
     (async () => {
       try {
-        if (!isDirty || !isValid) return;
         dispatch(setFormError(""));
+        if (!isDirty || !isValid) return;
         //rates is needed to estimate transaction
-        if (isRatesError) {
-          return;
-        }
-
-        if (!isValid || !isDirty) {
-          return;
-        }
+        if (isRatesError) return;
 
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           hideModal();
           return;
         }
+
         const amountInfos: AmountInfo[] = [
-          { field_id: VaultFields.anchor1_amount, amount: deb_anchor1_amount },
-          { field_id: VaultFields.anchor2_amount, amount: deb_anchor2_amount },
+          { field_id: VaultFields.anchor1_amount, amount: debAnchor1Amount },
+          { field_id: VaultFields.anchor2_amount, amount: debAnchor2Amount },
         ];
         const filtered_infos = filter_infos(amountInfos);
 
@@ -146,7 +141,7 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(""));
     };
     //eslint-disable-next-line
-  }, [wallet, deb_anchor1_amount, deb_anchor2_amount, rates, holdings]);
+  }, [wallet, debAnchor1Amount, debAnchor2Amount, rates, holdings]);
 
   return { tx, wallet };
 }

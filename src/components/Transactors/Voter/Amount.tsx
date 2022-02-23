@@ -25,7 +25,7 @@ export default function Amount() {
   };
 
   return (
-    <div className="grid mb-4">
+    <div className="grid mb-1">
       <label
         htmlFor="amount"
         className="uppercase mb-2 flex justify-between text-angel-grey font-bold items-end"
@@ -33,14 +33,14 @@ export default function Amount() {
         <span>Deposit amount</span>
         <Balance amount={+govStakedHalo} title="Balance" />
       </label>
-      <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
+      <div className="flex flex-wrap items-stretch p-3 shadow-inner-white-grey rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={currency_text[denoms.uhalo]}
-          className="flex-auto p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none bg-white-grey text-angel-grey text-lg"
         />
         <div
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"
@@ -52,8 +52,8 @@ export default function Amount() {
       <ErrorMessage
         errors={errors}
         name="amount"
-        as="span"
-        className="text-red-400 text-xs mb-1 mt-0.5"
+        as="p"
+        className="text-right text-red-400 text-xs mb-1 mt-1"
       />
     </div>
   );

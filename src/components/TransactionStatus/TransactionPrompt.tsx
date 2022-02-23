@@ -47,7 +47,7 @@ export default function TransactionPrompt() {
   }
 
   return (
-    <div className="relative bg-white rounded-md pt-4 w-full max-w-md">
+    <div className="relative bg-white-grey rounded-md pt-4 w-full max-w-md">
       <button
         onClick={closePrompt}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"

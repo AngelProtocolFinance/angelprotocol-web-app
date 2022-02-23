@@ -41,14 +41,14 @@ export default function Amount() {
         There is a 7 day wait period to unstake HALO. You will not be able to
         claim your HALO until this period has passed.
       </span>
-      <div className="flex flex-wrap items-stretch border-b border-angel-blue border-opacity-20">
+      <div className="flex flex-wrap items-stretch shadow-inner-white-grey p-2 rounded-md">
         <input
           {...register("amount")}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder={currency_text[denoms.uhalo]}
-          className="flex-auto p-1 pl-0 outline-none text-angel-grey text-lg"
+          className="flex-auto p-1 pl-0 focus:outline-none text-angel-grey bg-white-grey text-lg"
         />
         <div
           className="p-2 outline-none text-gray-400 text-sm hover:text-gray-800 cursor-pointer"
@@ -60,8 +60,8 @@ export default function Amount() {
       <ErrorMessage
         errors={errors}
         name="amount"
-        as="span"
-        className="text-red-400 text-xs mb-1 mt-0.5"
+        as="p"
+        className="text-right text-red-400 text-xs mb-1 mt-1"
       />
     </div>
   );

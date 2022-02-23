@@ -21,7 +21,7 @@ export default function Amount() {
 
   const is_buy = watch("is_buy");
   return (
-    <div className="grid m-2">
+    <div className="grid mt-2">
       <div className="grid grid-cols-1a mb-1">
         {settings_shown && <Slippage />}
         <button
@@ -35,7 +35,7 @@ export default function Amount() {
           <IoMdSettings />
         </button>
       </div>
-      <div className="grid grid-cols-a1 py-3 border-b-2 border-t-2 border-angel-blue border-opacity-20 text-angel-grey">
+      <div className="grid grid-cols-a1 text-angel-grey p-3 bg-white-grey shadow-inner-white-grey rounded-md">
         <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
           From:
         </p>
@@ -62,14 +62,14 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="text-right p-2 text-angel-grey text-2xl w-full focus:outline-none"
+          className="text-right p-2 text-angel-grey bg-white-grey text-2xl w-full focus:outline-none"
         />
       </div>
       <ErrorMessage
         errors={errors}
         name="amount"
         as="span"
-        className="text-right text-red-400 text-sm mb-1 mt-0.5 mr-1"
+        className="text-right text-red-400 text-sm mb-1 mt-1 mr-1"
       />
     </div>
   );

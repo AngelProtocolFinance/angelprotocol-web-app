@@ -31,7 +31,7 @@ export default function StakeForm() {
   return (
     <form
       onSubmit={handleSubmit(stake)}
-      className="bg-white grid p-4 rounded-md w-full"
+      className="bg-white-grey grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -39,7 +39,7 @@ export default function StakeForm() {
       <Fee />
       <button
         disabled={form_loading || !!form_error || !isValid || !isDirty}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {form_loading ? "estimating fee.." : "proceed"}

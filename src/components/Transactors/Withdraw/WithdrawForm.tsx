@@ -1,13 +1,15 @@
 import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGetter, useSetter } from "store/accessors";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
 import { useEndowmentHoldingsState } from "services/terra/account/states";
-import { vaults } from "constants/contracts";
 import { withdraw } from "services/transaction/transactors/withdraw";
+import { vaults } from "constants/contracts";
 import useWithrawEstimator from "./useWithdrawEstimator";
 import Status from "../Status";
-import Amount from "./Amount";
 import { Fee, ToReceive, Total } from "./Misc";
+import Amount from "./Amount";
 import { WithdrawValues } from "./types";
 
 export default function WithdrawForm() {
@@ -21,11 +23,13 @@ export default function WithdrawForm() {
   const { holdings } = useEndowmentHoldingsState(account_addr);
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
+  const { showModal } = useSetModal();
 
   const { tx, wallet } = useWithrawEstimator();
   const _withraw = useCallback(
     () => {
       dispatch(withdraw({ wallet, tx: tx! }));
+      showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line
     [wallet, tx]
@@ -37,7 +41,7 @@ export default function WithdrawForm() {
     <form
       onSubmit={handleSubmit(_withraw)}
       autoComplete="off"
-      className="grid p-4 pt-0"
+      className="bg-white-grey grid p-4 pt-0 mt-4"
       noValidate
     >
       <Status />

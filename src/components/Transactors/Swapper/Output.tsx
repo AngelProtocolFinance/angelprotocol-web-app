@@ -10,7 +10,7 @@ export default function Output() {
   const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
 
   return (
-    <div className="grid grid-cols-a1 py-3 border-b-2 border-t-2 border-angel-blue border-opacity-20 text-angel-grey">
+    <div className="grid grid-cols-a1 text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">
       <p className="text-angel-grey uppercase text-md font-semibold font-heading ml-1">
         To:
       </p>

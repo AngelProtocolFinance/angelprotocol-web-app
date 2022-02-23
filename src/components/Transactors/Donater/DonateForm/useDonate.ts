@@ -9,6 +9,7 @@ import { sendTerraDonation } from "services/transaction/transactors/sendTerraDon
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
+import { resetTxFormState } from "services/transaction/transactionSlice";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
@@ -48,6 +49,7 @@ export default function useDonate() {
   useEffect(() => {
     if (denomRef.current !== currency) {
       setValue("amount", "", { shouldValidate: false });
+      dispatch(resetTxFormState());
     }
     denomRef.current = currency;
     //eslint-disable-next-line

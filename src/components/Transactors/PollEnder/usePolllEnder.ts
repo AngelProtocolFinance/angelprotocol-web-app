@@ -1,16 +1,15 @@
 import { useCallback } from "react";
-import { TxProps } from "components/TransactionSuite/types";
-import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { useSetModal } from "components/Modal/Modal";
 import EnderForm, { Props } from "./EnderForm";
+import Transactor, { TxProps } from "../Transactor";
 
 export default function usePollEnder(poll_id: number) {
   const { showModal } = useSetModal();
   const showPollEnder = useCallback(() => {
-    showModal<TxProps<Props>>(TransactionSuite, {
+    showModal<TxProps<Props>>(Transactor, {
       inModal: true,
-      Context: EnderForm,
-      contextProps: { poll_id },
+      Content: EnderForm,
+      contentProps: { poll_id },
     });
     //eslint-disable-next-line
   }, [poll_id]);

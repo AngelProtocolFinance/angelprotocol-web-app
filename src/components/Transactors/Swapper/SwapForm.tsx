@@ -1,14 +1,16 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { useGetter, useSetter } from "store/accessors";
 import { swap } from "services/transaction/transactors/swap";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
 import { Fee, Commission, SwapRate } from "./Misc";
+import useSwapEstimator from "./useSwapEstimator";
+import { SwapValues } from "./types";
 import Output from "./Output";
 import Status from "./Status";
-import { SwapValues } from "./types";
 import Amount from "./Amount";
-import useSwapEstimator from "./useSwapEstimator";
-import { useCallback } from "react";
 
 export default function SwapForm() {
   const {
@@ -20,11 +22,13 @@ export default function SwapForm() {
 
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { tx, wallet } = useSwapEstimator();
+  const { showModal } = useSetModal();
 
   const dispatch = useSetter();
   const _swap = useCallback(
     (data: SwapValues) => {
       dispatch(swap({ wallet, tx: tx!, swapValues: data }));
+      showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line
     [tx, wallet]
@@ -38,7 +42,7 @@ export default function SwapForm() {
   return (
     <form
       onSubmit={handleSubmit(_swap)}
-      className="bg-white grid p-4 rounded-md w-full"
+      className="bg-white-grey grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -56,7 +60,7 @@ export default function SwapForm() {
       <Commission />
       <button
         disabled={form_loading || !!form_error || !isValid || !isDirty}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {form_loading ? "simulating.." : "swap"}

@@ -1,4 +1,3 @@
-import { IoMdSettings } from "react-icons/io";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter } from "store/accessors";
@@ -6,18 +5,18 @@ import Status from "../../Status";
 import Amount from "./Amount";
 import useDonate from "./useDonate";
 import Breakdown from "./Breakdown";
-import Split from "./Split";
 import React, { useState } from "react";
+import AdvancedOptions from "./AdvancedOptions";
 
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { getValues } = useFormContext<DonateValues>();
   const { donate } = useDonate();
-  const [showSplit, setShowSplit] = useState(false);
+  const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
   const to = getValues("to");
-  const toggleAdvancedOptions = () => setShowSplit(!showSplit);
+  const toggleAdvancedOptions = () => setIsAdvancedOptionShown((prev) => !prev);
   const confirmRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTermsAccepted(event.target.checked);
   };
@@ -25,29 +24,19 @@ export default function DonateForm() {
   return (
     <form
       onSubmit={donate}
-      className="bg-white grid p-4 rounded-md w-full"
+      className="bg-white-grey grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
       <Amount />
       <Breakdown />
+
       {to !== "tca" && (
-        <button
-          type="button"
-          onClick={toggleAdvancedOptions}
-          className="justify-self-start flex items-center text-md text-grey-accent font-semibold hover:text-angel-grey cursor-pointer my-1"
-        >
-          <IoMdSettings
-            size={20}
-            style={{ animationDuration: "4s" }}
-            className={`${showSplit ? "animate-spin" : ""}`}
-          />
-          <span className="uppercase text-sm pb-0.5 ml-0.5">
-            {showSplit ? "Hide options" : "Advanced Options"}
-          </span>
-        </button>
+        <AdvancedOptions
+          toggleAdvancedOptions={toggleAdvancedOptions}
+          isOptionsShown={isAdvancedOptionShown}
+        />
       )}
-      {to !== "tca" && showSplit && <Split />}
 
       <div className="my-3 flex items-start">
         <input
@@ -73,7 +62,7 @@ export default function DonateForm() {
       </div>
       <button
         disabled={form_loading || !!form_error || !isTermsAccepted}
-        className="w-full bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {form_loading ? "estimating fee.." : "proceed"}
