@@ -9,7 +9,7 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
 
   return (
     <div className="padded-container grid content-start gap-4">
-      <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
+      <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-inner text-white text-opacity-60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
           <p>TEXT PROPOSAL</p>
@@ -54,7 +54,8 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
           <p className="">{details.description}</p>
         </div>
       </div>
-      <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-70">
+
+      <div className="bg-white bg-opacity-10 p-6 shadow-inner rounded-md text-white text-opacity-70">
         <h3 className="uppercase text-sm text-opacity-100 font-semibold mb-6">
           Vote details
         </h3>
