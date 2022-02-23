@@ -1,9 +1,14 @@
-import Button from "../../Button";
-import { BaseProps } from "./types";
+import Button from "../Button";
 
-type Props = BaseProps & { statusComplete?: string | false };
+type Props = {
+  title: string;
+  isComplete?: boolean;
+  disabled: boolean;
+  statusComplete?: string | false;
+  onClick: React.MouseEventHandler<HTMLButtonElement>;
+};
 
-export default function BaseStep(props: Props) {
+export default function Step(props: Props) {
   const { title, isComplete, disabled, onClick, statusComplete } = props;
 
   return (

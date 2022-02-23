@@ -7,7 +7,7 @@ import { useGetter, useSetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
 import EndowmentStatus from "./EndowmentStatus";
-import Step, { DocumentationStep } from "./Step";
+import Step from "./Step";
 import { RegistrationStatus, ReviewStatus } from "./types";
 
 export default function Dashboard() {
@@ -60,13 +60,13 @@ export default function Dashboard() {
           disabled={stepsDisabled}
           isComplete={status.stepTwoComplete}
         />
-        <DocumentationStep
+        <Step
           title="Step #3: Documentation"
           onClick={() => history.push(routes.uploadDocs)}
           disabled={stepsDisabled}
           isComplete={status.stepThreeComplete}
           // TODO: implement level logic
-          level={1}
+          statusComplete={status.stepThreeComplete && `Level 1`}
         />
         <Step
           title="Step #4: Additional Information"
