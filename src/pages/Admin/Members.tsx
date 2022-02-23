@@ -12,7 +12,7 @@ export default function Members() {
     [members]
   );
   return (
-    <div className="border border-opacity-10 p-3 bg-white bg-opacity-10 shadow-md rounded-md mt-2">
+    <div className="p-3 bg-white bg-opacity-10 shadow-inner rounded-md mt-2">
       <div className="flex justify-between">
         <p className="uppercase text-2xl font-bold text-white-grey mr-4">
           Members

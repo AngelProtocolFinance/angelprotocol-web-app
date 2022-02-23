@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useMembers } from "services/terra/admin/queriers";
 import { Step } from "services/transaction/types";
@@ -9,17 +10,18 @@ import handleTerraError from "helpers/handleTerraError";
 import { chainIDs } from "constants/chainIDs";
 import Admin from "contracts/Admin";
 import { useSetter, useGetter } from "store/accessors";
+import { ProposalDetailsType } from "./proposalDetailsSchema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function useMemberUpdate() {
   const wallet = useConnectedWallet();
   const { updateTx } = useTxUpdator();
-  const membersCopy = useGetter((state) => state.admin.members);
-  const { members, isMembersLoading } = useMembers();
   const dispatch = useSetter();
+  const { members, isMembersLoading } = useMembers();
+  const membersCopy = useGetter((state) => state.admin.members);
 
   useEffect(() => {
     if (members.length > 0) {
-      console.log("runs", members);
       dispatch(
         setInitialMembers(
           members.map((member) => ({

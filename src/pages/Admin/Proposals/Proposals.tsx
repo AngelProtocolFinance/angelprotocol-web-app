@@ -12,8 +12,8 @@ export default function Proposals() {
   const { proposals } = useProposals();
 
   return (
-    <div className="mt-4">
-      <div className="border border-opacity-10 p-3 bg-white bg-opacity-10 shadow-md rounded-md flex items-center mb-3">
+    <div className="mt-4 p-3 bg-white bg-opacity-10 shadow-inner rounded-md">
+      <div className="flex items-center mb-3">
         <p className="uppercase text-2xl font-bold text-white-grey mr-4">
           Proposals
         </p>
@@ -26,7 +26,7 @@ export default function Proposals() {
         </p>
         <Link
           to={`${path}${admin.proposal_types}`}
-          className="px-3 pt-1.5 pb-1 text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm font-heading text-sm uppercase text-center rounded-md"
+          className="px-3 pt-1.5 pb-1 text-white-grey bg-bright-blue hover:bg-angel-blue font-heading text-sm uppercase text-center rounded-md"
         >
           + Create a proposal
         </Link>

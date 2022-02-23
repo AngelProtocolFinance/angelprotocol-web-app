@@ -1,7 +1,6 @@
 import { EditableProfileAttr } from "services/aws/endowments/types";
+import { PartialRecord } from "types/types";
 import * as Yup from "yup";
-
-type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 
 //construct strict shape to avoid hardcoding shape keys
 const strictShape: PartialRecord<

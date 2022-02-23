@@ -23,7 +23,7 @@ export default function Card(props: Proposal) {
   return (
     <Link
       to={`${url}/${admin.proposal}/${props.id}`}
-      className="bg-white bg-opacity-10 hover:bg-opacity-20 p-4 rounded-md shadow-md"
+      className="bg-white bg-opacity-10 hover:bg-opacity-20 p-4 rounded-md shadow-inner"
     >
       <div className="font-mono font-bold flex justify-between items-center text-white-grey text-opacity-80">
         <p className="text-sm">ID: {props.id}</p>

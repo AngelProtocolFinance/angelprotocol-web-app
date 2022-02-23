@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./schema";
+import { addMemberSchema } from "./addMemberSchema";
 
 export type Values = {
   weight: string;
@@ -15,7 +15,7 @@ export default function MemberAdder(props: { children: ReactNode }) {
       addr: "",
       weight: "1",
     },
-    resolver: yupResolver(schema),
+    resolver: yupResolver(addMemberSchema),
   });
 
   return <FormProvider {...methods}>{props.children}</FormProvider>;

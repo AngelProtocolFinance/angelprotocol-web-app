@@ -12,7 +12,7 @@ export default function Polls() {
   const showPoller = usePoller();
 
   return (
-    <div className="mt-4 bg-white bg-opacity-10 rounded-md p-4">
+    <div className="mt-4 bg-white bg-opacity-10 rounded-md p-4 shadow-inner">
       <div className="flex items-center mb-4">
         <p className="uppercase text-2xl font-bold text-white-grey mr-4">
           Polls

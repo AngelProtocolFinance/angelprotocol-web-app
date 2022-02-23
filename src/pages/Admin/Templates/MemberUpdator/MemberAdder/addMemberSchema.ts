@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-export const schema = Yup.object().shape({
+export const addMemberSchema = Yup.object().shape({
   addr: Yup.string()
     .required("wallet address is required")
     .test("is valid", "wallet address format is not valid", (address) =>
