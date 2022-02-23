@@ -5,7 +5,7 @@ import routes from "../routes";
 
 export default function EndowmentCreated(props: { charityName: string }) {
   const history = useHistory();
-  const possessiveFormOfName = generatePossessive(props.charityName);
+  const possessiveFormOfName = getPossessiveForm(props.charityName);
 
   // TODO: update this link when the tutorial page gets created
   const tutorialLink = (
@@ -33,7 +33,7 @@ export default function EndowmentCreated(props: { charityName: string }) {
   );
 }
 
-function generatePossessive(noun: string) {
+function getPossessiveForm(noun: string) {
   if (!noun) return "";
   const doesEndWithS = noun[noun.length - 1].toLowerCase() === "s";
   const suffix = doesEndWithS ? "'" : "'s";
