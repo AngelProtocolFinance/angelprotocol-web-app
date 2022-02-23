@@ -71,7 +71,7 @@ export default function Dashboard() {
         />
         {status.reviewStatus === ReviewStatus.None && (
           <Button
-            className={`w-full h-10 bg-yellow-blue`}
+            className={`w-full h-10 mt-5 bg-yellow-blue`}
             onClick={() => console.log("submit")}
             disabled={!status.getReadyForSubmit()}
           >
