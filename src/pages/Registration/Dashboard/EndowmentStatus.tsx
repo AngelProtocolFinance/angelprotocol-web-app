@@ -12,23 +12,24 @@ type Props = {
 export default function EndowmentStatus(props: Props) {
   const { registrationStatus, walletAddress, onClick } = props;
 
+  const buttonClassName = `w-40 h-10 ${
+    registrationStatus.reviewStatus === ReviewStatus.UnderReview
+      ? "bg-green-500"
+      : "bg-thin-blue"
+  }`;
+
   return (
-    <div className="flex w-9/12 items-center justify-between rounded-md border-2 border-white border-solid p-2 px-9 font-bold">
+    <div className="flex w-9/12 items-center justify-end rounded-md border-2 border-white border-solid p-2 px-9 font-bold">
+      <p className="mr-auto">Status of Your Endowment</p>
       {registrationStatus.reviewStatus !== ReviewStatus.Complete ? (
         <>
-          <p>Status of Your Endowment</p>
-          {registrationStatus.reviewStatus === ReviewStatus.UnderReview && (
-            <p className="uppercase text-yellow-500">Under Review</p>
-          )}
-          {registrationStatus.reviewStatus === ReviewStatus.Available && (
-            <p className="uppercase text-green-500">Available</p>
+          {registrationStatus.reviewStatus === ReviewStatus.UnderReview ? (
+            <p className="uppercase text-yellow-500 w-40">Under Review</p>
+          ) : (
+            <p className="uppercase text-green-500 w-40">Available</p>
           )}
           <Button
-            className={`w-40 h-10 ${
-              registrationStatus.reviewStatus === ReviewStatus.UnderReview
-                ? "bg-green-500"
-                : "bg-thin-blue"
-            }`}
+            className={buttonClassName}
             onClick={onClick}
             disabled={
               registrationStatus.reviewStatus !== ReviewStatus.Available
@@ -38,12 +39,9 @@ export default function EndowmentStatus(props: Props) {
           </Button>
         </>
       ) : (
-        <>
-          <p>Status of Your Endowment</p>
-          <p className="flex items-center h-10 text-green-500 uppercase ml-14 mr-auto">
-            Created: <span>{maskAddress(walletAddress)}</span>
-          </p>
-        </>
+        <p className="flex items-center h-10 text-green-500 uppercase ml-14 mr-auto">
+          Created: <span>{maskAddress(walletAddress)}</span>
+        </p>
       )}
     </div>
   );
