@@ -60,7 +60,7 @@ export default function Dashboard() {
         <DocumentationStep
           title="Step #3: Documentation"
           onClick={() => history.push(routes.uploadDocs)}
-          isComplete={status.stepThreeComplete}
+          isComplete={!status.stepThreeComplete}
           // TODO: implement level logic
           level={1}
         />
