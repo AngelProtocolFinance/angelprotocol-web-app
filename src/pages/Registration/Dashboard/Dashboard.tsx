@@ -38,6 +38,8 @@ export default function Dashboard() {
 
   const status = useMemo(() => getRegistrationStatus(user, data), [user, data]);
 
+  const stepsDisabled = status.reviewStatus !== ReviewStatus.None;
+
   return (
     <div className="flex flex-col gap-4 items-center w-full">
       <h3 className="text-3xl font-bold">Necessary Information</h3>
@@ -49,16 +51,19 @@ export default function Dashboard() {
         <Step
           title="Step #1: Contact Details"
           onClick={() => history.push(routes.contactDetails)}
+          disabled={stepsDisabled}
           isComplete
         />
         <Step
           title="Step #2: Wallet Address"
           onClick={() => history.push(routes.wallet)}
+          disabled={stepsDisabled}
           isComplete={status.stepTwoComplete}
         />
         <DocumentationStep
           title="Step #3: Documentation"
           onClick={() => history.push(routes.uploadDocs)}
+          disabled={stepsDisabled}
           isComplete={status.stepThreeComplete}
           // TODO: implement level logic
           level={1}
@@ -66,6 +71,7 @@ export default function Dashboard() {
         <Step
           title="Step #4: Additional Information"
           onClick={() => history.push(routes.additionalInformation)}
+          disabled={stepsDisabled}
           isComplete={status.stepFourComplete}
         />
         {status.reviewStatus === ReviewStatus.None && (

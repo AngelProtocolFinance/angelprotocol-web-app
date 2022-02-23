@@ -4,7 +4,7 @@ import { BaseProps } from "./types";
 type Props = BaseProps & { statusComplete?: string | false };
 
 export default function BaseStep(props: Props) {
-  const { title, isComplete, onClick, statusComplete } = props;
+  const { title, isComplete, disabled, onClick, statusComplete } = props;
 
   return (
     <div className="flex justify-end items-center w-full font-bold">
@@ -17,7 +17,11 @@ export default function BaseStep(props: Props) {
         <p className="uppercase text-yellow-500 w-40">Missing</p>
       )}
       {isComplete ? (
-        <Button className="bg-yellow-blue w-40 h-10" onClick={onClick}>
+        <Button
+          className="bg-yellow-blue w-40 h-10"
+          onClick={onClick}
+          disabled={disabled}
+        >
           Change
         </Button>
       ) : (
