@@ -9,7 +9,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export default function Status(props: Props) {
+export default function EndowmentStatus(props: Props) {
   const { endowmentStep, walletAddress, onClick, disabled } = props;
 
   return (
@@ -17,7 +17,7 @@ export default function Status(props: Props) {
       <div className="text-left font-bold">
         <p>Status of Your Endowment</p>
         {endowmentStep === 0 && (
-          <p className="uppercase text-yellow-500">Available soon</p>
+          <p className="uppercase text-yellow-500">Under Review</p>
         )}
         {endowmentStep === 1 && (
           <p className="uppercase text-green-500">Available</p>
