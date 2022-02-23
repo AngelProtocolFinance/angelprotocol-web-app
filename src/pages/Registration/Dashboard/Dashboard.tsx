@@ -53,19 +53,19 @@ export default function Dashboard() {
           title="Step #1: Contact Details"
           onClick={() => history.push(routes.contactDetails)}
           disabled={dataSubmitted}
-          isComplete
+          completed
         />
         <Step
           title="Step #2: Wallet Address"
           onClick={() => history.push(routes.wallet)}
           disabled={dataSubmitted}
-          isComplete={status.stepTwoComplete}
+          completed={status.stepTwoComplete}
         />
         <Step
           title="Step #3: Documentation"
           onClick={() => history.push(routes.uploadDocs)}
           disabled={dataSubmitted}
-          isComplete={status.stepThreeComplete}
+          completed={status.stepThreeComplete}
           // TODO: implement level logic
           statusComplete={status.stepThreeComplete && `Level 1`}
         />
@@ -73,7 +73,7 @@ export default function Dashboard() {
           title="Step #4: Additional Information"
           onClick={() => history.push(routes.additionalInformation)}
           disabled={dataSubmitted}
-          isComplete={status.stepFourComplete}
+          completed={status.stepFourComplete}
         />
         {status.reviewStatus === ReviewStatus.None && (
           <Button
