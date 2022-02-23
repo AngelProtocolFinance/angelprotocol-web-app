@@ -6,6 +6,7 @@ import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
+import EndowmentStatus from "./EndowmentStatus";
 import Step, { DocumentationStep } from "./Step";
 import { RegistrationStatus, ReviewStatus } from "./types";
 
@@ -45,7 +46,7 @@ export default function Dashboard() {
         Please complete all the following steps to be able to create your
         endowment
       </span>
-      <div className="w-full md:w-3/5 xl:w-1/2 flex flex-col items-center gap-4">
+      <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
         <Step
           title="Step #1: Contact Details"
           onClick={() => history.push(routes.contactDetails)}
@@ -68,14 +69,23 @@ export default function Dashboard() {
           onClick={() => history.push(routes.additionalInformation)}
           isComplete={status.stepFourComplete}
         />
-        <Button
-          className={`w-full h-10 bg-yellow-blue`}
-          onClick={() => console.log("submit")}
-          disabled={!status.getReadyForSubmit()}
-        >
-          Submit for review
-        </Button>
+        {status.reviewStatus === ReviewStatus.None && (
+          <Button
+            className={`w-full h-10 bg-yellow-blue`}
+            onClick={() => console.log("submit")}
+            disabled={!status.getReadyForSubmit()}
+          >
+            Submit for review
+          </Button>
+        )}
       </div>
+      {status.reviewStatus !== ReviewStatus.None && (
+        <EndowmentStatus
+          registrationStatus={status}
+          walletAddress={!!data?.Metadata?.TerraWallet || user.TerraWallet}
+          onClick={() => console.log("Create endowment clicked")}
+        />
+      )}
       {status.reviewStatus === ReviewStatus.Complete && (
         <Button
           className="bg-thin-blue min-w-fit h-10 mt-10 px-5"
