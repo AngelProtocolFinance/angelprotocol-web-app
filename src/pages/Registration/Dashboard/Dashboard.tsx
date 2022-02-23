@@ -6,6 +6,7 @@ import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
+import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 import { RegistrationStatus, ReviewStatus } from "./types";
@@ -92,13 +93,7 @@ export default function Dashboard() {
         />
       )}
       {status.reviewStatus === ReviewStatus.Complete && (
-        <Button
-          className="bg-thin-blue min-w-fit h-10 mt-5 px-5"
-          onClick={() => history.push(routes.charityProfile)}
-          title="Available soon"
-        >
-          {"Go to " + user.CharityName + "'s profile"}
-        </Button>
+        <EndowmentCreated charityName={user?.CharityName} />
       )}
     </div>
   );
