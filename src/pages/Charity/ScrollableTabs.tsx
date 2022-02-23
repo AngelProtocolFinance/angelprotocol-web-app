@@ -13,7 +13,7 @@ const ScrollableTabs = (props: { children: ReactNode }) => {
   return (
     <ul
       ref={ref}
-      className="flex font-body text-sm lg:text-base ml-1 block w-full overflow-hidden overflow-x-auto scroll-hidden"
+      className="flex font-body text-sm lg:text-base ml-1 block w-full overflow-hidden overflow-x-auto scroll-hidden divide-x"
     >
       <>
         {props.children}
