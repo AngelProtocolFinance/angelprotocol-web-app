@@ -11,7 +11,6 @@ import Step, { DocumentationStep } from "./Step";
 import { RegistrationStatus, ReviewStatus } from "./types";
 
 export default function Dashboard() {
-  //url is app/register/status
   const history = useHistory();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
