@@ -38,10 +38,6 @@ export default function Dashboard() {
 
   const status = useMemo(() => getStatus(user, data), [user, data]);
 
-  const navigate = (dest: string) => () => history.push(dest);
-
-  const canSubmit = !!user.PK && user.TerraWallet;
-
   return (
     <div className="flex flex-col gap-4 items-center w-full">
       <h3 className="text-3xl font-bold">Necessary Information</h3>
@@ -52,30 +48,30 @@ export default function Dashboard() {
       <div className="w-full md:w-3/5 xl:w-1/2 flex flex-col items-center gap-4">
         <Step
           title="Step #1: Contact Details"
-          onClick={navigate(routes.contactDetails)}
+          onClick={() => history.push(routes.contactDetails)}
           isComplete
         />
         <Step
           title="Step #2: Wallet Address"
-          onClick={navigate(routes.wallet)}
+          onClick={() => history.push(routes.wallet)}
           isComplete={status.stepTwoComplete}
         />
         <DocumentationStep
           title="Step #3: Documentation"
-          onClick={navigate(routes.uploadDocs)}
+          onClick={() => history.push(routes.uploadDocs)}
           isComplete={status.stepThreeComplete}
           // TODO: implement level logic
           level={1}
         />
         <Step
           title="Step #4: Additional Information"
-          onClick={navigate(routes.additionalInformation)}
+          onClick={() => history.push(routes.additionalInformation)}
           isComplete={status.stepFourComplete}
         />
         <Button
           className={`w-full h-10 bg-yellow-blue`}
           onClick={() => console.log("submit")}
-          disabled={canSubmit}
+          disabled={!status.getReadyForSubmit()}
         >
           Submit for review
         </Button>
@@ -83,7 +79,7 @@ export default function Dashboard() {
       {status.reviewStatus === ReviewStatus.Complete && (
         <Button
           className="bg-thin-blue min-w-fit h-10 mt-10 px-5"
-          onClick={navigate(routes.charityProfile)}
+          onClick={() => history.push(routes.charityProfile)}
           title="Available soon"
         >
           {"Go to " + user.CharityName + "'s profile"}
@@ -125,5 +121,13 @@ function getStatus(user: User, data: any): RegistrationStatus {
         ? ReviewStatus.UnderReview
         : ReviewStatus.None,
     // documentationStatus,
+    getReadyForSubmit: function () {
+      return (
+        this.stepOneComplete &&
+        this.stepTwoComplete &&
+        this.stepThreeComplete &&
+        this.stepFourComplete
+      );
+    },
   };
 }

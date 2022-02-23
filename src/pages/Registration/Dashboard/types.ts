@@ -10,5 +10,6 @@ export type RegistrationStatus = {
   stepTwoComplete: boolean;
   stepThreeComplete: boolean;
   stepFourComplete: boolean;
+  getReadyForSubmit: () => boolean;
   reviewStatus: ReviewStatus;
 };
