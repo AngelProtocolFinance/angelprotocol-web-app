@@ -62,6 +62,7 @@ export default function EditForm() {
         placeholder="50 - 100"
       />
       <SectionHeader title="social media" />
+      <TextInput id="url" label="Website" placeholder="https://website.org" />
       <TextInput
         id="facebook_page"
         label="Facebook"

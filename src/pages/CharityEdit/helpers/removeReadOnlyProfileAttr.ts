@@ -6,7 +6,6 @@ import {
 
 export default function removeReadOnlyProfileAttr(profile: Profile) {
   const objectWithReadOnlyKeys: { [key in ReadOnlyAttr]: "" } = {
-    url: "",
     charity_owner: "",
     endowment_address: "",
     total_liq: "",
