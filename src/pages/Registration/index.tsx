@@ -1,3 +1,4 @@
+import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
@@ -13,6 +14,8 @@ const Documentation = lazy(() => import("./Documentation"));
 export default function Register() {
   //this component will only render under '/app/register/'
   const { path } = useRouteMatch();
+
+  useRehydrateUserState();
 
   return (
     <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">

@@ -1,5 +1,4 @@
 import Loader from "components/Loader/Loader";
-import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { useContext, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import routes from "./routes";
@@ -11,10 +10,6 @@ export default function Auth() {
     WalletRegistrationContext
   );
   const entropyToTerraWallet = useEntropyToTerraWallet();
-
-  // We've been redirected here from a third-party login provider, we should assume
-  // user state needs to be rehydrated
-  useRehydrateUserState();
 
   // (2022-02-21)
   // this flow (using entropyToTerraWallet) will need to be updated once Torus is enabled
