@@ -13,6 +13,7 @@ import { RegistrationStatus, ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const history = useHistory();
+  // TODO: check where to move this logic, since it is similar to useRehydrateUserData
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
   const { data, error } = useGetCharityDataQuery(user.PK);
