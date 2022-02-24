@@ -107,6 +107,36 @@ export default function ReceiptForm() {
           className="text-right text-red-400 my-1 text-xs mr-1"
         />
       </div>
+      <div className="my-3 flex items-start">
+        <input
+          type="checkbox"
+          className="mr-2 mt-0.5"
+          id="consent_marketing"
+          {...register("consent_marketing")}
+        />
+        <label
+          htmlFor="consent_marketing"
+          className="text-angel-grey font-light text-xs"
+        >
+          I consent to my details being used only by Angel Protocol and the
+          Charity to keep me informed of their progress and news.
+        </label>
+      </div>
+      <div className="my-3 flex items-start">
+        <input
+          type="checkbox"
+          className="mr-2 mt-0.5"
+          id="consent_tax"
+          {...register("consent_tax")}
+        />
+        <label
+          htmlFor="consent_tax"
+          className="text-angel-grey font-light text-xs"
+        >
+          I consent to allow my information to be shared with the charity for
+          tax receipt processing purposes.
+        </label>
+      </div>
       <button
         disabled={processing}
         className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-md text-white font-bold"

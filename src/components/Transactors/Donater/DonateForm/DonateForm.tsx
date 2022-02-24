@@ -12,7 +12,7 @@ import { useState } from "react";
 
 export default function DonateForm() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { watch, register } = useFormContext<Values>();
+  const { watch } = useFormContext<Values>();
   const { donate, isSubmitting } = useDonate();
   const [showSplit, setShowSplit] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
@@ -66,36 +66,6 @@ export default function DonateForm() {
         >
           {form_loading ? "estimating fee.." : "proceed"}
         </button>
-      </div>
-      <div className="my-3 flex items-start">
-        <input
-          type="checkbox"
-          className="mr-2 mt-0.5"
-          id="consent_marketing"
-          {...register("consent_marketing")}
-        />
-        <label
-          htmlFor="consent_marketing"
-          className="text-angel-grey font-light text-xs"
-        >
-          I consent to my details being used only by Angel Protocol and the
-          Charity to keep me informed of their progress and news.
-        </label>
-      </div>
-      <div className="my-3 flex items-start">
-        <input
-          type="checkbox"
-          className="mr-2 mt-0.5"
-          id="consent_tax"
-          {...register("consent_tax")}
-        />
-        <label
-          htmlFor="consent_tax"
-          className="text-angel-grey font-light text-xs"
-        >
-          I consent to allow my information to be shared with the charity for
-          tax receipt processing purposes.
-        </label>
       </div>
       <div className="my-3 flex items-start">
         <input
