@@ -6,12 +6,7 @@ type Props = {
 
 export default function LevelDescription({ currentLevel = 0 }: Props) {
   return (
-    <div className="flex flex-col gap-2 text-left">
-      <Header className="pl-2">
-        {`Currently, your organization is ${
-          !!currentLevel ? `Level ${currentLevel}` : "not classified"
-        }`}
-      </Header>
+    <div className="flex flex-col gap-1 text-left">
       <LevelSection colored={currentLevel >= 1}>
         <Header>Level 1</Header>
         <p>
@@ -47,7 +42,7 @@ const LevelSection = ({
     ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
     : "";
   return (
-    <div className={`flex flex-col text-left p-2 ${styles}`}>{children}</div>
+    <div className={`flex flex-col text-left p-1 ${styles}`}>{children}</div>
   );
 };
 
