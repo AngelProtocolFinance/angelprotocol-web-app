@@ -51,8 +51,8 @@ export default function VerifiedEmail() {
       : console.error(response.error?.data.message);
   }, [userData, resendEmail]);
 
-  const navigateToRegistrationStatusPage = useCallback(
-    () => history.push(`${site.app}/${app.register}/${routes.status}`),
+  const navigateToDashboard = useCallback(
+    () => history.push(`${site.app}/${app.register}/${routes.dashboard}`),
     [history]
   );
 
@@ -65,7 +65,7 @@ export default function VerifiedEmail() {
   return (
     <VerificationSuccessful
       userData={userData}
-      onClick={navigateToRegistrationStatusPage}
+      onClick={navigateToDashboard}
       isLoading={isLoading}
     />
   );

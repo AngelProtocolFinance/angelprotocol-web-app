@@ -8,7 +8,7 @@ import { useGetter, useSetter } from "store/accessors";
 import Button from "./Button";
 import routes from "./routes";
 
-const ConfirmEmail = () => {
+export default function ConfirmEmail() {
   const history = useHistory();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
@@ -45,7 +45,7 @@ const ConfirmEmail = () => {
     [sendEmail]
   );
 
-  const returnMain = useCallback(() => {
+  const navigateToIndex = useCallback(() => {
     dispatch(removeUserData());
     history.push("/");
   }, [dispatch, history]);
@@ -58,7 +58,7 @@ const ConfirmEmail = () => {
   }, [user.PK, dispatch]);
 
   if (user.EmailVerified) {
-    return <Redirect to={`${site.app}/${app.register}/${routes.status}`} />;
+    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
   }
 
   return (
@@ -101,12 +101,13 @@ const ConfirmEmail = () => {
         >
           I'm having trouble with my email
         </Button>
-        <Button onClick={returnMain} className="bg-thin-blue w-48 h-12 text-sm">
+        <Button
+          onClick={navigateToIndex}
+          className="bg-thin-blue w-48 h-12 text-sm"
+        >
           close
         </Button>
       </div>
     </div>
   );
-};
-
-export default ConfirmEmail;
+}

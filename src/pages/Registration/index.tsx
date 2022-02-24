@@ -2,11 +2,11 @@ import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
 
-const Registration = lazy(() => import("./Registration"));
 const ContactDetails = lazy(() => import("./ContactDetails"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
+const Dashboard = lazy(() => import("./Dashboard"));
+const Registration = lazy(() => import("./Registration"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
-const RegistrationStatus = lazy(() => import("./RegistrationStatus"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
 
 export default function Register() {
@@ -33,8 +33,8 @@ export default function Register() {
         />
         <Route
           exact
-          path={`${path}/${routes.status}`}
-          component={RegistrationStatus}
+          path={`${path}/${routes.dashboard}`}
+          component={Dashboard}
         />
         {/* 'exact' prop is unnecessary, since this component has sub-routes */}
         <Route

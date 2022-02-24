@@ -1,7 +1,7 @@
 import { app, site } from "constants/routes";
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
-import { Link, LinkProps } from "react-router-dom";
+import { Link } from "react-router-dom";
 import routes from "../../routes";
 
 type Props = { walletAddress: string };
@@ -20,22 +20,12 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
         <p>your address is</p>
         <p className="font-bold">{walletAddress}</p>
       </div>
-      <LinkButton
-        to={`${site.app}/${app.register}/${routes.status}`}
-        className="w-60 h-10 mt-8 bg-angel-blue"
+      <Link
+        to={`${site.app}/${app.register}/${routes.dashboard}`}
+        className="flex justify-center items-center w-60 h-10 mt-8 bg-angel-blue rounded-xl uppercase font-bold text-white"
       >
         Back to dashboard
-      </LinkButton>
+      </Link>
     </div>
-  );
-}
-
-function LinkButton(props: LinkProps) {
-  const { className, ...rest } = props;
-  return (
-    <Link
-      className={`rounded-xl uppercase font-bold text-white flex justify-center items-center ${className}`}
-      {...rest}
-    />
   );
 }
