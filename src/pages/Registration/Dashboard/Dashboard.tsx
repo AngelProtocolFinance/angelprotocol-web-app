@@ -63,7 +63,7 @@ export default function Dashboard() {
         />
         <Step
           title="Step #3: Documentation"
-          onClick={() => history.push(routes.uploadDocs)}
+          onClick={() => history.push(routes.documentation)}
           disabled={dataSubmitted}
           completed={status.stepThreeCompleted}
           // TODO: implement level logic

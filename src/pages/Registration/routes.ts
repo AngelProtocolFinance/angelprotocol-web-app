@@ -6,7 +6,7 @@ enum routes {
   verify = "verify/:token",
   wallet = "wallet",
   charityProfile = "charity-profile",
-  uploadDocs = "upload-docs",
+  documentation = "documentation",
   additionalInformation = "additional-information",
 }
 

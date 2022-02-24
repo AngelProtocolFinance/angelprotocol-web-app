@@ -8,6 +8,7 @@ const Dashboard = lazy(() => import("./Dashboard"));
 const Registration = lazy(() => import("./Registration"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
+const Documentation = lazy(() => import("./Documentation"));
 
 export default function Register() {
   //this component will only render under '/app/register/'
@@ -35,6 +36,11 @@ export default function Register() {
           exact
           path={`${path}/${routes.dashboard}`}
           component={Dashboard}
+        />
+        <Route
+          exact
+          path={`${path}/${routes.documentation}`}
+          component={Documentation}
         />
         {/* 'exact' prop is unnecessary, since this component has sub-routes */}
         <Route
