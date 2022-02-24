@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DepositTransactions } from "services/aws/endowment_admin/types";
+import { DonationTransactions } from "services/aws/endowment_admin/types";
 import { Holding } from "services/terra/account/types";
 
 export type RouteParam = { address: string };
@@ -36,8 +36,8 @@ export interface EndowmentAddrProps {
   address: string;
 }
 
-export interface TransactionItemProps {
-  item: DepositTransactions;
+export interface DonationItemProps {
+  item: DonationTransactions;
 }
 
 export enum Steps {

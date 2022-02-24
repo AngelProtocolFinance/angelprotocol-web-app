@@ -2,57 +2,94 @@ import { useEffect, useState } from "react";
 import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { EndowmentAddrProps, TransactionItemProps } from "./types";
+import { EndowmentAddrProps, DonationItemProps } from "./types";
 import Action from "pages/Governance/Action";
+import useDonor from "./useDonor";
+import Loader from "components/Loader/Loader";
+import { DonationTransactions } from "services/aws/endowment_admin/types";
+import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
+import useSortList, { Direction } from "./useSortList";
+
+const keys: string[] = ["amount", "date", "endowment"];
 
 const DonationList = (props: EndowmentAddrProps) => {
   const [isError, setIsError] = useState(false);
-  const { data } = useDonationTransactionsQuery(props.address);
+  const { data, isLoading } = useDonationTransactionsQuery(props.address);
+  const {
+    key: SortKey,
+    direction,
+    toggleDirection,
+    sortList,
+    setKey,
+  } = useSortList<DonationTransactions>(["amount"]);
+
   useEffect(() => {
-    if (data === undefined) {
+    if (data === undefined && !isLoading) {
       setIsError(true);
     }
-  }, [data, isError]);
+  }, [data, isError, isLoading]);
 
+  const renderedList = sortList(data || []);
   return (
     <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto max-h-75vh">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Donation History</span>
       </h3>
       {isError && <DonationItemError />}
-      {!isError && (
+      {isLoading && (
+        <div className="my-20">
+          <Loader
+            bgColorClass="bg-light-grey bg-opacity-80"
+            widthClass="w-4"
+            gapClass="gap-4"
+          />
+        </div>
+      )}
+      {!isError && !isLoading && (
         <table className="mt-4 w-full">
           <thead>
             <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue border-opacity-20">
-              <th className="text-white text-sm text-left pl-4">Amount/Type</th>
-              <th className="text-white text-sm text-left">Date</th>
-              <th className="text-white text-sm text-left">Endowment</th>
+              {keys.map((key, i) => (
+                <th
+                  className="text-white text-sm text-left uppercase cursor-pointer pb-2"
+                  key={i}
+                  onClick={() =>
+                    SortKey === key ? toggleDirection() : setKey(key)
+                  }
+                >
+                  <span className="flex items-center justify-start gap-4">
+                    {key}
+                    {SortKey === key &&
+                      (direction === Direction.Asc ? (
+                        <VscTriangleUp />
+                      ) : (
+                        <VscTriangleDown />
+                      ))}
+                  </span>
+                </th>
+              ))}
               <th className="text-white text-sm text-left"></th>
               <th className="text-white text-sm text-left"></th>
             </tr>
           </thead>
           <tbody>
-            {data?.map((item, i) => (
+            {renderedList?.map((item: DonationTransactions, i: number) => (
               <DonationItemInfo item={item} key={i} />
             ))}
           </tbody>
         </table>
       )}
-      {/*<div className="w-full flex justify-end">
-        <button className="action-button">Export as CSV</button>
-      </div>*/}
     </div>
   );
 };
 
-const DonationItemInfo = (props: TransactionItemProps) => {
+const DonationItemInfo = (props: DonationItemProps) => {
   const data = props.item;
-
+  const showDonor = useDonor(data.sort_key);
   return (
     <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
-      <td className="py-2 pl-4">
+      <td className="py-5 pl-4">
         <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
-        <p className="text-base capitalize">{data.transaction_type}</p>
       </td>
       <td>
         <span className="text-base">
@@ -63,10 +100,10 @@ const DonationItemInfo = (props: TransactionItemProps) => {
         <span className="text-base">{maskAddress(data.endowment_address)}</span>
       </td>
       <td>
-        <Action title="Update" action={() => console.log("Update")} />
+        <Action title="Update" action={showDonor} />
       </td>
       <td>
-        <Action title="resend" action={() => console.log("resend")} />
+        <Action title="resend" action={() => {}} />
       </td>
     </tr>
   );

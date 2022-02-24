@@ -11,29 +11,28 @@ export default function Portal() {
   const { data, isLoading, isFetching } = useLookupQuery(isTestNet);
 
   const endowmentAddr = data?.[wallet?.terraAddress || ""];
-  if (isLoading || isFetching) {
-    //subtle skeleton
-    return (
-      <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
-    );
-  } else {
-    return (
-      <>
-        {endowmentAddr && (
-          <Link
-            to={`${site.app}/${app.endowment}/${endowmentAddr}`}
-            className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
-          >
-            MY ENDOWMENT
-          </Link>
-        )}
+  // if (isLoading || isFetching) {
+  //   //subtle skeleton
+  //   return (
+  //     <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
+  //   );
+  // } else {
+  return (
+    <>
+      {!isLoading && endowmentAddr && (
         <Link
-          to={`${site.app}/${app.donation}/${wallet?.walletAddress}`}
+          to={`${site.app}/${app.endowment}/${endowmentAddr}`}
           className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
         >
-          MY DONATIONS
+          MY ENDOWMENT
         </Link>
-      </>
-    );
-  }
+      )}
+      <Link
+        to={`${site.app}/${app.donation}/${wallet?.walletAddress}`}
+        className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
+      >
+        MY DONATIONS
+      </Link>
+    </>
+  );
 }

@@ -16,8 +16,8 @@ import {
 import { Display, TxProps } from "./types";
 import useTxUpdator from "services/transaction/updators";
 import { useMemo } from "react";
-import Receipter from "components/Receipter/Receipter";
 import ReceiptForm from "components/Receipter/ReceiptForm";
+import TransactionReceipter from "components/Receipter/TransactionReceiter";
 
 export default function TransactionSuite<C>(props: TxProps<C>) {
   const { hideModal } = useSetModal();
@@ -32,9 +32,9 @@ export default function TransactionSuite<C>(props: TxProps<C>) {
       [Step.success]: <Success {...(stage as SuccessStage)} />,
       [Step.error]: <ErrPop {...(stage as ErrorStage)} />,
       [Step.receipt]: (
-        <Receipter {...(stage as ReceiptStage)}>
+        <TransactionReceipter {...(stage as ReceiptStage)}>
           <ReceiptForm />
-        </Receipter>
+        </TransactionReceipter>
       ),
     }),
     [props, stage]

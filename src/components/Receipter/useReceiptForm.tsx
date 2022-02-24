@@ -1,3 +1,4 @@
+import { useSetModal } from "components/Modal/Modal";
 import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import { Step, ReceiptStage } from "services/transaction/types";
@@ -10,14 +11,21 @@ export default function useReceiptForm() {
   const [processing, setProcessing] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
+  const { hideModal } = useSetModal();
 
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
+  const fromDonor = stage.step === Step.form || !chainId || !txHash;
 
   const submitHandler = async (data: Values) => {
     setProcessing(true);
     const response: any = await requestReceipt(data);
     setProcessing(false);
+
     if (response.data) {
+      if (fromDonor) {
+        hideModal();
+        return;
+      }
       updateTx({
         step: Step.success,
         message:
