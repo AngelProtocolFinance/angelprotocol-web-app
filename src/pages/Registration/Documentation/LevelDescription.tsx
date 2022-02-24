@@ -1,0 +1,62 @@
+import { HTMLAttributes, PropsWithChildren } from "react";
+
+type Props = {
+  currentLevel?: number;
+};
+
+export default function LevelDescription({ currentLevel = 0 }: Props) {
+  return (
+    <div className="flex flex-col gap-2 text-left">
+      <Header className="pl-2">
+        {`Currently, your organization is ${
+          !!currentLevel ? `Level ${currentLevel}` : "not classified"
+        }`}
+      </Header>
+      <LevelSection colored={currentLevel >= 1}>
+        <Header>Level 1</Header>
+        <p>
+          Your organization is eligible to create its endowment. Donors can
+          donate funds through your organization’s landing page on Angel
+          Protocol’s interface. Your organization is not displayed on the
+          marketplace and cannot be found through the search bar.
+        </p>
+      </LevelSection>
+      <LevelSection colored={currentLevel >= 2}>
+        <Header>Level 2</Header>
+        <p>
+          All benefits from Level 1 + your organization will be visible in the
+          marketplace.
+        </p>
+      </LevelSection>
+      <LevelSection colored={currentLevel === 3}>
+        <Header>Level 3</Header>
+        <p>
+          All benefits from Level 2 + your organization will be able to receive
+          automatic donations from members of the Angel Charity Alliance.
+        </p>
+      </LevelSection>
+    </div>
+  );
+}
+
+const LevelSection = ({
+  colored,
+  children,
+}: PropsWithChildren<{ colored: boolean }>) => {
+  const styles = colored
+    ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
+    : "";
+  return (
+    <div className={`flex flex-col text-left p-2 ${styles}`}>{children}</div>
+  );
+};
+
+const Header = ({
+  children,
+  className,
+  ...rest
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) => (
+  <h3 className={`text-lg font-bold ${className}`} {...rest}>
+    {children}
+  </h3>
+);
