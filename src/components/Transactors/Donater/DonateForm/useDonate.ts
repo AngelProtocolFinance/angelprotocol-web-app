@@ -6,18 +6,17 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
+import { resetTxFormState } from "services/transaction/transactionSlice";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
-import { resetTxFormState } from "services/transaction/transactionSlice";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-  const { watch, handleSubmit, formState, setValue } =
-    useFormContext<DonateValues>();
+  const { watch, handleSubmit, setValue } = useFormContext<DonateValues>();
   const { terraTx, ethTx } = useEstimator();
 
   const terraSender = useCallback(
@@ -66,6 +65,5 @@ export default function useDonate() {
 
   return {
     donate: handleSubmit(senders[currency]),
-    isSubmitting: formState.isSubmitting,
   };
 }
