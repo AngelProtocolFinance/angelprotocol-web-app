@@ -106,8 +106,8 @@ export default function ContactDetailsForm(props: any) {
       </div>
       <PrivacyPolicyCheckbox
         error={errors.checkedPolicy?.message}
-        registerReturn={register("checkedPolicy")}
         disabled={isSubmitting}
+        {...register("checkedPolicy")}
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
