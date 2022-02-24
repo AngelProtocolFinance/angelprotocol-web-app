@@ -1,22 +1,29 @@
-import { addMember as _addMember } from "services/admin/memberSlice";
-import GroupTitle from "../GroupTitle";
-import TextInput from "../TextInput";
+import { MemberUpdatorValues as T } from "../memberUpdatorSchema";
+import TextInput from "../../../TextInput";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
   const { addMember } = useAddMember();
   return (
-    <div className="mb-2 grid p-3 rounded-md shadow-inner bg-white bg-opacity-5">
-      <GroupTitle
-        title="Add new member"
-        colorClass="text-green-300 font-bold"
+    <div className="mb-2 grid p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+      <TextInput<T>
+        title="wallet address"
+        name="addr"
+        placeholder="terra123abc..."
+        mono
+        plain
       />
-      <TextInput title="wallet address" name="addr" mono />
-      <TextInput title="weight" name="weight" mono />
+      <TextInput<T>
+        title="weight"
+        placeholder="terra123abc..."
+        name="weight"
+        mono
+        plain
+      />
       <button
         onClick={addMember}
         type="button"
-        className="font-heading font-bold justify-self-end bg-green-300 hover:bg-green-400 p-3 rounded-md text-xs uppercase text-white"
+        className="font-heading font-bold justify-self-end text-xs uppercase text-green-400 hover:text-green-300"
       >
         + add member
       </button>

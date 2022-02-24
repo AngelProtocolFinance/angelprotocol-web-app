@@ -30,7 +30,7 @@ export default function useDetails(proposalInfo: Proposal): ProposalDetails {
 
   const userVote: Vote | undefined = useMemo(
     () => votes.find((vote) => vote.voter === wallet?.walletAddress)?.vote,
-    [wallet]
+    [wallet, votes]
   );
 
   const totalWeight = +proposalInfo.threshold.absolute_percentage.total_weight;
@@ -50,6 +50,7 @@ export default function useDetails(proposalInfo: Proposal): ProposalDetails {
     isExecutable: proposalInfo.status === "passed",
     isExecuted: proposalInfo.status === "executed",
     numId: idParamToNumber(proposalInfo.id),
+    userVote,
   };
 }
 

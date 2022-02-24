@@ -20,11 +20,11 @@ export default function MemberItem(props: MemberCopy) {
   }
   return (
     <li
-      className={`flex gap-1 text-white text-opacity-80 items-center shadow-inner ${
+      className={`flex gap-1 text-angel-grey items-center ${
         props.is_deleted ? "bg-red-400 bg-opacity-30" : ""
       } ${
         props.is_added ? "bg-green-400 bg-opacity-30" : ""
-      } rounded-md p-2 w-full bg-opacity-10 bg-white`}
+      } rounded-md p-2 w-full`}
     >
       <FaUserCircle />
       <span

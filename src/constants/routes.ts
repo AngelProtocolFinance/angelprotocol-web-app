@@ -23,8 +23,8 @@ export enum admin {
 }
 
 export enum proposal_types {
-  admin_add_member = "admin-add-member",
-  admin_remove_member = "admin-remove-member",
+  admin_update_members = "admin-update-members",
+  change_endowment_status = "change-endowment-status",
 }
 
 export enum app {

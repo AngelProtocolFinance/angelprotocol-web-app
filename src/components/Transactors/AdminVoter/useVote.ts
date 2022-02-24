@@ -7,7 +7,7 @@ import { Step } from "services/transaction/types";
 import handleTerraError from "helpers/handleTerraError";
 import { Values } from "./types";
 import { terra } from "services/terra/terra";
-import { admin, tags, user } from "services/terra/tags";
+import { admin, tags } from "services/terra/tags";
 import useTxUpdator from "services/transaction/updators";
 import { chainIDs } from "constants/chainIDs";
 

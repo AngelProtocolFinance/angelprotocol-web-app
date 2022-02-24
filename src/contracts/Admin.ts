@@ -4,7 +4,8 @@ import { contracts } from "constants/contracts";
 import { ContractQueryArgs } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
-import { sc, EmbeddedWasmMsg, Vote } from "./types";
+import { EmbeddedWasmMsg, Vote } from "./types";
+import { sc } from "constants/sc";
 
 export default class Admin extends Contract {
   apCW4_addr: string;

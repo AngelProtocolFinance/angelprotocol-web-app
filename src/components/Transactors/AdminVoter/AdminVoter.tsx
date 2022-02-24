@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { FC } from "react";
 import { Values, Props } from "./types";
 
 export default function Voter(props: Props) {
