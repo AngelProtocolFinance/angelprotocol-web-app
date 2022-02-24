@@ -37,15 +37,24 @@ export default function WebFoot() {
             );
           })}
         </ul>
-
-        <Link
-          to="/ap-litepaper.pdf"
-          className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
-          target="_blank"
-          download
-        >
-          Download Litepaper
-        </Link>
+        <div className="flex flex-wrap gap-4">
+          <Link
+            to="/ap-litepaper.pdf"
+            className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
+            target="_blank"
+            download
+          >
+            Download Litepaper
+          </Link>
+          <a
+            href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
+            target="_blank"
+            rel="noreferrer"
+            className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
+          >
+            PRIVACY POLICY
+          </a>
+        </div>
         <p className="font-body text-xs uppercase text-white text-center">
           Copyright 2021 Angel Protocol. All rights reserved.
         </p>
