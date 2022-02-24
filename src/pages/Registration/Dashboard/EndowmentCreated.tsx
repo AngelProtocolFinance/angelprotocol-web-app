@@ -18,9 +18,8 @@ export default function EndowmentCreated(props: { charityName: string }) {
     <div className="my-5">
       <p>
         Congratulations, you can now start to accept donations to your endowment
-        ({tutorialLink}). However, {" " + possessiveFormOfName + " "} profile
-        won’t be made public on our platform until you fill in all the required
-        information. Click on the button below to start creating your profile.
+        ({tutorialLink}). Click on the button below to view and modify your
+        profile. Welcome to the Angel Protocol family!
       </p>
       <Button
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
