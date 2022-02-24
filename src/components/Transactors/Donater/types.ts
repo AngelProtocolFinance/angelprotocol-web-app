@@ -10,6 +10,8 @@ export interface Values {
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
+  consent_tax: boolean;
+  consent_marketing: boolean;
 }
 
 interface FromTCA {

@@ -33,6 +33,8 @@ export default function useEthSender(tx: TransactionRequest) {
 
         updateTx({ step: Step.submit, message: "Saving donation info.." });
         const receiver = getValues("receiver");
+        const consent_tax = getValues("consent_tax");
+        const consent_marketing = getValues("consent_marketing");
         if (typeof receiver !== "undefined") {
           const logResponse = await logDonation(
             response.hash,
@@ -41,7 +43,9 @@ export default function useEthSender(tx: TransactionRequest) {
             denoms.ether,
             data.split_liq,
             walletAddress,
-            receiver
+            receiver,
+            consent_tax,
+            consent_marketing
           );
 
           if ("error" in logResponse) {

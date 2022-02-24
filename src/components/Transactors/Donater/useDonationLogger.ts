@@ -12,7 +12,9 @@ export default function useDonationLogger() {
     denom: denoms,
     splitLiq: string,
     walletAddress: string,
-    receipient: string | number
+    receipient: string | number,
+    consent_tax: boolean,
+    consent_marketing: boolean
   ) {
     let receiver: Receiver =
       typeof receipient === "string"
@@ -28,6 +30,8 @@ export default function useDonationLogger() {
       splitLiq,
       walletAddress,
       chainId,
+      consent_marketing,
+      consent_tax,
     };
     return await logTx(txLogPayload);
   }

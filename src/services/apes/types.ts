@@ -8,6 +8,11 @@ export type TxDetails = {
   denomination: string;
 };
 
+export type TxDataPermissions = {
+  consent_tax?: boolean;
+  consent_marketing?: boolean;
+};
+
 export type Receiver =
   | {
       charityId: string;
@@ -26,4 +31,4 @@ export type ReceiptPayload = {
   country: string;
 };
 
-export type TxLogPayload = Receiver & TxDetails;
+export type TxLogPayload = Receiver & TxDetails & TxDataPermissions;

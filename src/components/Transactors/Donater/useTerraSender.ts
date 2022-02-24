@@ -32,6 +32,8 @@ export default function useTerraSender(tx: CreateTxOptions) {
           const walletAddress = wallet.walletAddress;
           const receiver = getValues("receiver");
           const currency = getValues("currency");
+          const consent_tax = getValues("consent_tax");
+          const consent_marketing = getValues("consent_marketing");
           if (typeof receiver !== "undefined") {
             const logResponse = await logDonation(
               response.result.txhash,
@@ -40,7 +42,9 @@ export default function useTerraSender(tx: CreateTxOptions) {
               currency,
               data.split_liq,
               walletAddress,
-              receiver
+              receiver,
+              consent_tax,
+              consent_marketing
             );
 
             if ("error" in logResponse) {
