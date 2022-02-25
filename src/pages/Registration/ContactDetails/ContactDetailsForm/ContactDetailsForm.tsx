@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import FormInput from "components/FormInput";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
+import FormInput from "components/FormInput";
 import { site, web } from "constants/routes";
 import {
   ForwardedRef,
@@ -50,8 +50,6 @@ export default function ContactDetailsForm(props: any) {
     (value: string) => setOrgRole(value),
     []
   );
-
-  console.log(control._formValues.checkedPolicy);
 
   return (
     <form
