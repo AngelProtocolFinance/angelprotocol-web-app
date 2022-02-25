@@ -3,9 +3,8 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { useAirdropQuery } from "services/aws/airdrop/airdrop";
 import { useCallback } from "react";
-import { TxProps } from "components/TransactionSuite/types";
-import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import Catcher, { Props } from "./Catcher";
+import Transactor, { TxProps } from "../Transactor";
 
 export default function useAirdrop() {
   const wallet = useConnectedWallet();
@@ -21,10 +20,10 @@ export default function useAirdrop() {
   );
 
   const showDetails = useCallback(() => {
-    showModal<TxProps<Props>>(TransactionSuite, {
+    showModal<TxProps<Props>>(Transactor, {
       inModal: true,
-      Context: Catcher,
-      contextProps: { airdrops: data },
+      Content: Catcher,
+      contentProps: { airdrops: data },
     });
     //eslint-disable-next-line
   }, [data]);

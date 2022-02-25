@@ -1,23 +1,39 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { createPoll } from "services/transaction/transactors/createPoll";
 import Field from "./Field";
+import useCreatePollEstimate from "./useCreatePollEstimate";
 import Status from "../Status";
-import { Values } from "./types";
 import Fee from "../Fee";
-import useCreatePoll from "./useCreatePoll";
+import { CreatePollValues } from "./types";
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 
 export default function PollerForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<Values>();
-  const createPoll = useCreatePoll();
+    formState: { isValid, isDirty },
+  } = useFormContext<CreatePollValues>();
+
+  const dispatch = useSetter();
+  const { showModal } = useSetModal();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+  const { wallet } = useCreatePollEstimate();
+
+  const _createPoll = useCallback(
+    (data: CreatePollValues) => {
+      dispatch(createPoll({ wallet, createPollValues: data }));
+      showModal(TransactionPrompt, {});
+    },
+    //eslint-disable-next-line
+    [wallet]
+  );
 
   return (
     <form
-      onSubmit={handleSubmit(createPoll)}
-      className="bg-white grid p-4 rounded-md w-full"
+      onSubmit={handleSubmit(_createPoll)}
+      className="bg-white-grey grid p-4 rounded-md w-full"
       autoComplete="off"
     >
       <Status />
@@ -27,10 +43,8 @@ export default function PollerForm() {
       <Field id="amount" label="Halo deposit" frozen />
       <Fee />
       <button
-        disabled={
-          isSubmitting || form_loading || !!form_error || !isValid || !isDirty
-        }
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        disabled={form_loading || !!form_error || !isValid || !isDirty}
+        className="bg-angel-orange disabled:bg-grey-accent p-3 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {form_loading ? "estimating fee.." : "proceed"}

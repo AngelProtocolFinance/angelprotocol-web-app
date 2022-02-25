@@ -3,10 +3,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Props } from "./types";
 import { schema } from "./schema";
 import { denoms } from "constants/currency";
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 
 export default function Donater(props: Props) {
-  const methods = useForm<Values>({
+  const methods = useForm<DonateValues>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

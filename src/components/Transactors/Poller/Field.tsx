@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { Values } from "./types";
+import { CreatePollValues } from "./types";
 
 export default function Title(props: {
-  id: keyof Values;
+  id: keyof CreatePollValues;
   label: string;
   wide?: true;
   frozen?: true;
@@ -11,7 +11,7 @@ export default function Title(props: {
   const {
     register,
     formState: { errors },
-  } = useFormContext<Values>();
+  } = useFormContext<CreatePollValues>();
 
   return (
     <div className="grid mb-4">
@@ -25,7 +25,8 @@ export default function Title(props: {
         <textarea
           {...register(props.id)}
           id={props.id}
-          className="border-2 rounded-md p-2 text-angel-grey focus:outline-none"
+          className="shadow-inner-white-grey bg-light-grey 
+          rounded-md p-3 text-angel-grey focus:outline-none"
         />
       )) || (
         <input
@@ -34,14 +35,15 @@ export default function Title(props: {
           autoComplete="off"
           id={props.id}
           type="text"
-          className="border-2 rounded-md p-2 text-angel-grey focus:outline-none"
+          className="shadow-inner-white-grey bg-light-grey 
+          rounded-md p-3 text-angel-grey focus:outline-none"
         />
       )}
       <ErrorMessage
         errors={errors}
         name={props.id}
-        as="span"
-        className="text-red-400 text-xs mb-1 mt-0.5"
+        as="p"
+        className="text-right mr-0.5 text-red-400 text-xs mb-1 mt-1"
       />
     </div>
   );
