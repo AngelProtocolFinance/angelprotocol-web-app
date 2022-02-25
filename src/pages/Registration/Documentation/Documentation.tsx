@@ -40,6 +40,7 @@ export default function Documentation() {
             <RowContainer>
               <LevelSection>
                 <Header>Level 1</Header>
+                <ProofOfIdentityDropzone />
                 <WebsiteInput />
               </LevelSection>
               <LevelSection colored={currentLevel >= 1}>
@@ -124,6 +125,14 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
     </div>
   );
 };
+
+function ProofOfIdentityDropzone() {
+  return (
+    <InputRow id="proofOfIdentity" label="Your proof of identity" required>
+      <FileDropzone name="proofOfIdentity" />
+    </InputRow>
+  );
+}
 
 function WebsiteInput() {
   const {
