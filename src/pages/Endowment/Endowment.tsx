@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
 import { useProfile } from "services/aws/endowments/queriers";
-import useWithdrawer from "components/Withdrawer/useWithdrawer";
+import useWithdraw from "components/Transactors/Withdraw/useWithdraw";
 import PageMeta from "./PageMeta";
 import Liquid from "./Summary";
 import { RouteParam } from "./types";
@@ -14,7 +14,7 @@ export default function Endowment(props: RouteComponentProps<RouteParam>) {
   const wallet = useConnectedWallet();
   //fetch exchange rate here
   useExchangeRate();
-  const showWithdrawer = useWithdrawer(address);
+  const showWithdraw = useWithdraw(address);
   const { profile } = useProfile(address);
   const { holdings } = useEndowmentHoldings(address, profile.is_placeholder);
   const is_owner = profile.charity_owner === wallet?.walletAddress;
@@ -25,7 +25,7 @@ export default function Endowment(props: RouteComponentProps<RouteParam>) {
       <Liquid
         type="liquid"
         holdings={holdings.liquid_cw20}
-        opener={showWithdrawer}
+        opener={showWithdraw}
         isOwner={is_owner}
       />
       <Liquid type="locked" holdings={holdings.locked_cw20} />

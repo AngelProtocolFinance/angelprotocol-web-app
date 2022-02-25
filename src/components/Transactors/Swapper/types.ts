@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export interface Values {
+export interface SwapValues {
   is_buy: boolean;
   amount: string;
   slippage: "0.5" | "1.0" | "1.5" | "2.0";
