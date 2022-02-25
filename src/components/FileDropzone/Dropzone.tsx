@@ -1,28 +1,8 @@
-import { MdOutlineFileUpload } from "react-icons/md";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
-import { Controller, useFormContext } from "react-hook-form";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { BaseProps } from "./types";
 
-type Props = {
-  name: string;
-  multiple?: true | boolean;
-  className?: string;
-};
-
-export default function FileDropzone(props: Props) {
-  const { control } = useFormContext();
-
-  return (
-    <Controller
-      name={props.name}
-      control={control}
-      render={({ field: { onChange, value } }) => (
-        <Dropzone {...props} onDrop={onChange} value={value} />
-      )}
-    />
-  );
-}
-
-type DropzoneProps = Props & {
+type Props = BaseProps & {
   onDrop: <T extends File>(
     acceptedFiles: T[],
     fileRejections: FileRejection[],
@@ -31,11 +11,10 @@ type DropzoneProps = Props & {
   value: FileList;
 };
 
-function Dropzone(props: DropzoneProps) {
-  const { name, multiple, onDrop, value, className } = props;
+export default function Dropzone(props: Props) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    multiple,
+    onDrop: props.onDrop,
+    multiple: props.multiple,
   });
 
   return (
@@ -45,10 +24,10 @@ function Dropzone(props: DropzoneProps) {
         isDragActive
           ? "bg-angel-blue bg-opacity-50 ring ring-angel-blue"
           : "bg-white outline-none"
-      } ${className}`}
+      } ${props.className}`}
     >
-      <input id={name} {...getInputProps()} />
-      <DropzoneText files={value} />
+      <input id={props.name} {...getInputProps()} />
+      <DropzoneText files={props.value} />
     </div>
   );
 }

@@ -3,22 +3,20 @@ import { PropsWithChildren } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useGetter } from "store/accessors";
+import FileDropzone from "../../../components/FileDropzone/FileDropzone";
 import Button from "../Button";
 import routes from "../routes";
 import AuthorityToCreateCheckbox from "./AuthorityToCreateCheckbox";
 import InputRow from "./InputRow";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import { FormValues, Schema } from "./types";
-import FileDropzone from "./FileDropzone";
 
 let currentLevel = 0;
 
 export default function Documentation() {
   const history = useHistory();
   const user = useGetter((state) => state.user);
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(Schema),
-  });
+  const methods = useForm<FormValues>({ resolver: yupResolver(Schema) });
 
   return (
     <FormProvider {...methods}>
