@@ -12,7 +12,8 @@ export default function Copier(props: { text: string; colorClass: string }) {
         />
       )) || (
         <BiCopy
-          className={`${props.colorClass} hover:text-orange" title="Copy Address`}
+          className={`${props.colorClass} hover:text-orange`}
+          title="Copy Address"
         />
       )}
     </button>

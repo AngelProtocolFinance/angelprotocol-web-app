@@ -131,7 +131,7 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
 function ProofOfIdentityDropzone() {
   return (
     <InputRow id="proofOfIdentity" label="Your proof of identity" required>
-      <FileDropzone name="proofOfIdentity" />
+      <FileDropzone name="proofOfIdentity" className="h-8" />
     </InputRow>
   );
 }

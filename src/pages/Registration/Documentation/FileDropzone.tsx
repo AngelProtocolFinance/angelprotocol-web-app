@@ -1,9 +1,11 @@
+import { MdOutlineFileUpload } from "react-icons/md";
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import { Controller, useFormContext } from "react-hook-form";
 
 type Props = {
   name: string;
   multiple?: true | boolean;
+  className?: string;
 };
 
 export default function FileDropzone(props: Props) {
@@ -29,7 +31,8 @@ type DropzoneProps = Props & {
   value: FileList;
 };
 
-function Dropzone({ name, multiple, onDrop, value }: DropzoneProps) {
+function Dropzone(props: DropzoneProps) {
+  const { name, multiple, onDrop, value, className } = props;
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     multiple,
@@ -38,11 +41,11 @@ function Dropzone({ name, multiple, onDrop, value }: DropzoneProps) {
   return (
     <div
       {...getRootProps()}
-      className={`rounded-md border-none w-full px-2 py-1 text-black ${
+      className={`flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
         isDragActive
           ? "bg-angel-blue bg-opacity-50 ring ring-angel-blue"
           : "bg-white outline-none"
-      }`}
+      } ${className}`}
     >
       <input id={name} {...getInputProps()} />
       <DropzoneText files={value} />
@@ -52,12 +55,15 @@ function Dropzone({ name, multiple, onDrop, value }: DropzoneProps) {
 
 function DropzoneText({ files }: { files: FileList }) {
   return !files?.length ? (
-    <p className="text-dark-grey">Select file or Drag &amp; Drop</p>
+    <span className="flex items-center gap-1 text-dark-grey text-sm">
+      <MdOutlineFileUpload className="text-lg" />
+      Select file or Drag &amp; Drop
+    </span>
   ) : (
-    <p className="text-black">
+    <span className="text-black text-sm">
       {Array.from(files)
         .map((file) => file.name)
         .join(", ")}
-    </p>
+    </span>
   );
 }
