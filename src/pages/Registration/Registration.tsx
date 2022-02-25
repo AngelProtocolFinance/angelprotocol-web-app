@@ -59,7 +59,6 @@ const Registration = () => {
         <Button
           submit
           className="bg-thin-blue w-48 h-12"
-          disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Resume

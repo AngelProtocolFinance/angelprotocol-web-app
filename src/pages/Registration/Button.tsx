@@ -10,7 +10,7 @@ type Props = PropsWithChildren<
 >;
 
 export default function Button(props: Props) {
-  const { isLoading, className, children, submit, ...rest } = props;
+  const { isLoading, className, children, submit, disabled, ...rest } = props;
 
   const content = isLoading ? (
     <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
@@ -23,6 +23,7 @@ export default function Button(props: Props) {
       type={submit ? "submit" : "button"}
       className={`disabled:bg-gray-300 disabled:cursor-auto rounded-xl uppercase font-bold text-white ${className}`}
       {...rest}
+      disabled={disabled || isLoading}
     >
       {content}
     </button>

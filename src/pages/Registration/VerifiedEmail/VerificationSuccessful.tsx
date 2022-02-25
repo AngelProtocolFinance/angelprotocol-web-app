@@ -29,7 +29,6 @@ export default function VerificationSuccessful(props: Props) {
       <Button
         className="bg-thin-blue w-48 h-12"
         onClick={onClick}
-        disabled={isLoading}
         isLoading={isLoading}
       >
         Continue

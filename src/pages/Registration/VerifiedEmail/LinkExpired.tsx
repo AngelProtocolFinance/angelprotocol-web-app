@@ -18,7 +18,6 @@ export default function LinkExpired({ onClick, isLoading }: Props) {
       <Button
         className="bg-thin-blue w-64 h-12 text-sm"
         onClick={onClick}
-        disabled={isLoading}
         isLoading={isLoading}
       >
         Resend verification email
