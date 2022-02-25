@@ -97,18 +97,16 @@ export function DonationInfo() {
           )}
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
-              <a
-                href={`${site.app}/${app.charity_edit}/${charity_addr}`}
+              <Link
+                to={`${site.app}/${app.charity_edit}/${charity_addr}`}
                 className={`${
                   !profileState.is_placeholder
                     ? "bg-orange"
                     : "pointer-events-none bg-grey-accent"
                 } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center`}
               >
-                <button disabled={profileState.is_placeholder}>
-                  EDIT PROFILE
-                </button>
-              </a>
+                EDIT PROFILE
+              </Link>
             )}
             <button
               disabled={profileState.is_placeholder}

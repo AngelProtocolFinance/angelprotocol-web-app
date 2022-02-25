@@ -1,18 +1,11 @@
-import { Dec } from "@terra-money/terra.js";
-import { BsHourglassSplit } from "react-icons/bs";
-import { FaCheck } from "react-icons/fa";
-import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
-import { useGovStaker } from "services/terra/gov/queriers";
-import { Values } from "./types";
-import toCurrency from "helpers/toCurrency";
 import { useMemo } from "react";
+import { Dec } from "@terra-money/terra.js";
+import { FaCheck } from "react-icons/fa";
+import { BsHourglassSplit } from "react-icons/bs";
+import { useGovStaker } from "services/terra/gov/queriers";
+import toCurrency from "helpers/toCurrency";
 
 export default function Claims() {
-  const {
-    formState: { errors },
-  } = useFormContext<Values>();
-
   const staker = useGovStaker();
 
   const total_claims = useMemo(
@@ -28,7 +21,7 @@ export default function Claims() {
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
-    <div className="grid">
+    <div className="grid p-2 shadow-inner-white-grey bg-light-grey rounded-md">
       {(hasClaim && (
         <ul className="flex flex-col mt-3 mb-2 mx-1">
           {(staker?.claims || []).map((claim, i) => (
@@ -50,12 +43,6 @@ export default function Claims() {
           <span className="font-heading">{amount} HALO</span>
         </p>
       )}
-      <ErrorMessage
-        errors={errors}
-        name="amount"
-        as="span"
-        className="text-red-400 text-xs mb-1 mt-0.5"
-      />
     </div>
   );
 }

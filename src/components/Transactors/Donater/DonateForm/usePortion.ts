@@ -1,11 +1,11 @@
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { currency_text, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<DonateValues>();
   const split_liq = Number(watch("split_liq"));
   const split_locked: number = 100 - split_liq;
   const amount = Number(watch("amount")) || 0;

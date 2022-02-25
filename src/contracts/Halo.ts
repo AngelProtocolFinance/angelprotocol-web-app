@@ -133,12 +133,12 @@ export default class Halo extends Contract {
   }
 
   //halo_gov
-  async createEndPollTx(poll_id: string) {
+  async createEndPollTx(poll_id: number) {
     this.checkWallet();
     const poll_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.gov_address,
-      { end_poll: { poll_id: +poll_id } }
+      { end_poll: { poll_id: poll_id } }
     );
     const fee = await this.estimateFee([poll_msg]);
     return { msgs: [poll_msg], fee };
@@ -156,14 +156,14 @@ export default class Halo extends Contract {
     return { msgs: [unstake_msg], fee };
   }
 
-  async createVoteTx(poll_id: string, vote: Vote, amount: number) {
+  async createVoteTx(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
     const vote_msg = new MsgExecuteContract(
       this.walletAddr!,
       this.gov_address,
       {
-        cast_vote: { poll_id: +poll_id, vote, amount: uhalo.toString() },
+        cast_vote: { poll_id, vote, amount: uhalo.toString() },
       }
     );
     const fee = await this.estimateFee([vote_msg]);
@@ -172,8 +172,7 @@ export default class Halo extends Contract {
 
   async createAirdropClaimTx(
     airdrops: Airdrops,
-    is_stake = false,
-    stake_amount = "0"
+    is_stake = false
   ): Promise<CreateTxOptions> {
     this.checkWallet();
     const claim_msgs = airdrops.map(
@@ -184,7 +183,11 @@ export default class Halo extends Contract {
     );
 
     if (is_stake) {
-      const stake_msg = this.createGovStakeMsg(stake_amount);
+      const totalClaimable = airdrops.reduce(
+        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
+        new Dec(0)
+      );
+      const stake_msg = this.createGovStakeMsg(totalClaimable.toString());
       claim_msgs.push(stake_msg);
     }
 

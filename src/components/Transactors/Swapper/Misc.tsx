@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 import toCurrency from "helpers/toCurrency";
 
 function Misc(props: { title: string; value: string; class?: string }) {
   const classes = `text-xs font-light ${props.class}`;
   return (
-    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey mt-1 mb-1">
+    <div className="flex justify-between font-heading text-opacity-80 items-center text-xs text-angel-grey m-1">
       <p className="text-xs font-semibold uppercase">{props.title}</p>
       <p className={classes}>{props.value}</p>
     </div>
@@ -19,13 +19,13 @@ export function Fee() {
 }
 
 export function Commission() {
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<SwapValues>();
   const pct_commission = watch("pct_commission");
   return <Misc title="commission" value={`${pct_commission || 0.0} %`} />;
 }
 
 export function SwapRate() {
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<SwapValues>();
   const ratio = watch("ratio");
   const is_buy = watch("is_buy");
   return (
