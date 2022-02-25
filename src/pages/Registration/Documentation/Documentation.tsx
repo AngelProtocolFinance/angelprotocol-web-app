@@ -20,8 +20,8 @@ export default function Documentation() {
         className="flex flex-col w-full h-full gap-8 items-center"
         onSubmit={methods.handleSubmit((values) => console.log(values))}
       >
-        <div className="flex flex-col w-full gap-2">
-          <div className="grid grid-cols-32 gap-3 text-left">
+        <div className="flex flex-col w-full gap-2 text-left">
+          <RowContainer>
             <Header>
               Please upload the following documentation. The documentation you
               provide will inform which Level your organization will be
@@ -31,9 +31,9 @@ export default function Documentation() {
                 !!currentLevel ? `Level ${currentLevel}` : "not classified"
               }`}
             </Header>
-          </div>
-          <div className="flex flex-col gap-0.5 text-left">
-            <div className="grid grid-cols-32 gap-4">
+          </RowContainer>
+          <div className="flex flex-col gap-0.5">
+            <RowContainer>
               <LevelSection>
                 <Header>Level 1</Header>
                 <WebsiteInput />
@@ -47,8 +47,8 @@ export default function Documentation() {
                   on the marketplace and cannot be found through the search bar.
                 </p>
               </LevelSection>
-            </div>
-            <div className="grid grid-cols-32 gap-4">
+            </RowContainer>
+            <RowContainer>
               <LevelSection>
                 <Header>Level 2</Header>
               </LevelSection>
@@ -59,8 +59,8 @@ export default function Documentation() {
                   in the marketplace.
                 </p>
               </LevelSection>
-            </div>
-            <div className="grid grid-cols-32 gap-4">
+            </RowContainer>
+            <RowContainer>
               <LevelSection>
                 <Header>Level 3</Header>
               </LevelSection>
@@ -72,7 +72,7 @@ export default function Documentation() {
                   Alliance.
                 </p>
               </LevelSection>
-            </div>
+            </RowContainer>
           </div>
         </div>
         <div className="flex flex-col w-full text-left text-sm">
@@ -93,6 +93,10 @@ export default function Documentation() {
 
 const Header = ({ children }: PropsWithChildren<{}>) => (
   <h3 className="text-lg font-bold">{children}</h3>
+);
+
+const RowContainer = ({ children }: PropsWithChildren<{}>) => (
+  <div className="grid grid-cols-32 gap-3">{children}</div>
 );
 
 type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
