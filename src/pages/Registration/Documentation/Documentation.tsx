@@ -16,7 +16,9 @@ let currentLevel = 0;
 export default function Documentation() {
   const history = useHistory();
   const user = useGetter((state) => state.user);
-  const methods = useForm<FormValues>({ resolver: yupResolver(Schema) });
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(Schema),
+  });
 
   return (
     <FormProvider {...methods}>

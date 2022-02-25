@@ -1,17 +1,39 @@
-import { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
+import { Controller, useFormContext } from "react-hook-form";
 
-type FilesObject = {
-  [x: string]: File;
+type Props = {
+  name: string;
+  multiple?: true | boolean;
 };
 
-type Props = { name: string };
+export default function FileDropzone(props: Props) {
+  const { control } = useFormContext();
 
-export default function FileDropzone({ name }: Props) {
-  const [files, setFiles] = useState<FilesObject>({});
+  return (
+    <Controller
+      name={props.name}
+      control={control}
+      render={({ field: { onChange, value } }) => (
+        <Dropzone {...props} onDrop={onChange} value={value} />
+      )}
+    />
+  );
+}
 
-  const onDrop = useCallback((uploadedFiles) => setFiles(uploadedFiles), []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+type DropzoneProps = Props & {
+  onDrop: <T extends File>(
+    acceptedFiles: T[],
+    fileRejections: FileRejection[],
+    event: DropEvent
+  ) => void;
+  value: FileList;
+};
+
+function Dropzone({ name, multiple, onDrop, value }: DropzoneProps) {
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    multiple,
+  });
 
   return (
     <div
@@ -23,19 +45,19 @@ export default function FileDropzone({ name }: Props) {
       }`}
     >
       <input id={name} {...getInputProps()} />
-      {!files.length ? <Placeholder /> : <FileNames filesObject={files} />}
+      <DropzoneText files={value} />
     </div>
   );
 }
 
-const Placeholder = () => (
-  <p className="text-dark-grey">Select file or Drag &amp; Drop</p>
-);
-
-const FileNames = ({ filesObject }: { filesObject: FilesObject }) => (
-  <p className="text-black">
-    {Object.values(filesObject)
-      .map((file) => `${file.name}.${file.type}`)
-      .join(", ")}
-  </p>
-);
+function DropzoneText({ files }: { files: FileList }) {
+  return !files?.length ? (
+    <p className="text-dark-grey">Select file or Drag &amp; Drop</p>
+  ) : (
+    <p className="text-black">
+      {Array.from(files)
+        .map((file) => file.name)
+        .join(", ")}
+    </p>
+  );
+}
