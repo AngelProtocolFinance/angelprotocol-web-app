@@ -78,7 +78,7 @@ export default function Documentation() {
             </RowContainer>
           </div>
         </div>
-        <div className="flex flex-col w-full text-left text-sm">
+        <div className="flex flex-col w-full text-left text-sm gap-3">
           <AuthorityToCreateCheckbox charityName={user.CharityName} />
           <PrivacyPolicyCheckbox />
         </div>
@@ -135,6 +135,7 @@ function WebsiteInput() {
       id="charityWebsite"
       label="Website of your organization"
       error={errors?.charityWebsite?.message}
+      centerError
       required
     >
       <input

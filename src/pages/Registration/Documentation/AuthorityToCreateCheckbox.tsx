@@ -1,20 +1,25 @@
-import Checkbox, { CheckboxProps } from "components/Checkbox";
-import { ForwardedRef, forwardRef } from "react";
+import Checkbox from "components/Checkbox";
+import { useFormContext } from "react-hook-form";
+import { FormValues } from "./types";
 
-type Props = CheckboxProps & { charityName: string };
+type Props = { charityName: string };
 
-const AuthorityToCreateCheckbox = forwardRef(
-  (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
-    const { charityName, ...rest } = props;
+const AuthorityToCreateCheckbox = ({ charityName }: Props) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormValues>();
 
-    return (
-      <Checkbox {...rest} ref={ref}>
-        {`By checking this box, you declare that you have the authority to create an
+  return (
+    <Checkbox
+      error={errors?.checkedAuthority?.message}
+      {...register("checkedAuthority")}
+    >
+      {`By checking this box, you declare that you have the authority to create an
         endowment in the name of ${charityName} through Angel Protocol`}
-        <span className="text-failed-red ml-0.5">*</span>
-      </Checkbox>
-    );
-  }
-);
+      <span className="text-failed-red ml-0.5">*</span>
+    </Checkbox>
+  );
+};
 
 export default AuthorityToCreateCheckbox;
