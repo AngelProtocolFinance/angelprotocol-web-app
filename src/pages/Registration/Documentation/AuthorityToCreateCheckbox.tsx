@@ -4,7 +4,7 @@ import { FormValues } from "./types";
 
 type Props = { charityName: string };
 
-const AuthorityToCreateCheckbox = ({ charityName }: Props) => {
+export default function AuthorityToCreateCheckbox({ charityName }: Props) {
   const {
     register,
     formState: { errors },
@@ -20,6 +20,4 @@ const AuthorityToCreateCheckbox = ({ charityName }: Props) => {
       <span className="text-failed-red ml-0.5">*</span>
     </Checkbox>
   );
-};
-
-export default AuthorityToCreateCheckbox;
+}
