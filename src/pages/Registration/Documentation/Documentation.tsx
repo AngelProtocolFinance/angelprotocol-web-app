@@ -9,6 +9,7 @@ import AuthorityToCreateCheckbox from "./AuthorityToCreateCheckbox";
 import InputRow from "./InputRow";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import { FormValues, Schema } from "./types";
+import FileDropzone from "./FileDropzone";
 
 let currentLevel = 0;
 
@@ -131,19 +132,18 @@ function WebsiteInput() {
   } = useFormContext<FormValues>();
 
   return (
-    <InputRow
-      id="charityWebsite"
-      label="Website of your organization"
-      error={errors.charityWebsite?.message}
-      centerError
-      required
-    >
+    <InputRow id="charityWebsite" label="Website of your organization" required>
       <input
         id="charityWebsite"
         type="text"
         className="rounded-md outline-none border-none w-full px-2 py-1 text-black"
         {...register("charityWebsite")}
       />
+      {errors.charityWebsite?.message && (
+        <p className="absolute left-0 -bottom-4 w-full text-xs text-failed-red text-center">
+          {errors.charityWebsite.message}
+        </p>
+      )}
     </InputRow>
   );
 }
