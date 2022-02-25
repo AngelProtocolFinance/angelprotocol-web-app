@@ -1,11 +1,14 @@
 import { forwardRef, InputHTMLAttributes, PropsWithChildren } from "react";
 
 export type CheckboxProps = PropsWithChildren<
-  InputHTMLAttributes<HTMLInputElement> & { error?: string }
+  InputHTMLAttributes<HTMLInputElement> & {
+    error?: string;
+    centerError?: true | boolean;
+  }
 >;
 
 const Checkbox = forwardRef((props: CheckboxProps, ref: any) => {
-  const { error, children, ...rest } = props;
+  const { error, centerError, children, ...rest } = props;
   const id = rest.id || rest.name;
 
   return (
@@ -21,7 +24,11 @@ const Checkbox = forwardRef((props: CheckboxProps, ref: any) => {
         {children}
       </label>
       {error && (
-        <p className="text-sm text-failed-red absolute left-1/2 -bottom-4 transform -translate-x-1/2">
+        <p
+          className={`text-sm text-failed-red absolute -bottom-4 ${
+            centerError ? "left-1/2 transform -translate-x-1/2" : "left-5"
+          }`}
+        >
           {error}
         </p>
       )}

@@ -112,9 +112,10 @@ export default function ContactDetailsForm(props: any) {
         </ColumnContainer>
       </div>
       <PrivacyPolicyCheckbox
-        error={errors.checkedPolicy?.message}
         disabled={isSubmitting}
         {...register("checkedPolicy")}
+        error={errors.checkedPolicy?.message}
+        centerError
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
