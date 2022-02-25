@@ -1,8 +1,6 @@
-import { HTMLAttributes, PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 
-type Props = {
-  currentLevel?: number;
-};
+type Props = { currentLevel?: number };
 
 export default function LevelDescription({ currentLevel = 0 }: Props) {
   return (
@@ -34,10 +32,9 @@ export default function LevelDescription({ currentLevel = 0 }: Props) {
   );
 }
 
-const LevelSection = ({
-  colored,
-  children,
-}: PropsWithChildren<{ colored: boolean }>) => {
+type LevelProps = PropsWithChildren<{ colored: boolean }>;
+
+const LevelSection = ({ colored, children }: LevelProps) => {
   const styles = colored
     ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
     : "";
@@ -46,12 +43,6 @@ const LevelSection = ({
   );
 };
 
-const Header = ({
-  children,
-  className,
-  ...rest
-}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) => (
-  <h3 className={`text-lg font-bold ${className}`} {...rest}>
-    {children}
-  </h3>
+const Header = ({ children }: PropsWithChildren<{}>) => (
+  <h3 className="text-lg font-bold">{children}</h3>
 );
