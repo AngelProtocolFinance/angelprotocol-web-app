@@ -33,7 +33,7 @@ export default function Documentation() {
               }`}
             </Header>
           </div>
-          <div className="grid grid-cols-32 gap-4">
+          <div className="grid grid-cols-32 gap-4 text-sm">
             <div className="flex flex-col gap-1 text-left">
               <Level>
                 <Header>Level 1</Header>
@@ -70,7 +70,7 @@ const Header = ({ children }: PropsWithChildren<{}>) => (
 );
 
 const Level = ({ children }: PropsWithChildren<{}>) => (
-  <div className="flex flex-col text-left p-1">{children}</div>
+  <div className="flex flex-col text-left p-1 gap-2">{children}</div>
 );
 
 function WebsiteInput() {
