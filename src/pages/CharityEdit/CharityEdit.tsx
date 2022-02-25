@@ -12,7 +12,6 @@ export default function CharityEdit(props: RouteComponentProps<CharityParam>) {
   const {
     //TODO: make EditableAttr warn if omitted types are not removed
     //EditableAttr only warns if required attr is omitted
-    url,
     charity_owner, //terra
     endowment_address, //terra
     total_liq,
