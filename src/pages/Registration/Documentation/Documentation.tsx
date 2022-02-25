@@ -5,11 +5,10 @@ import { useGetter } from "store/accessors";
 import Button from "../Button";
 import AuthorityToCreateCheckbox from "./AuthorityToCreateCheckbox";
 import InputRow from "./InputRow";
-import LevelDescription from "./LevelDescription";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import { FormValues, Schema } from "./types";
 
-const currentLevel = 0;
+let currentLevel = 0;
 
 export default function Documentation() {
   const user = useGetter((state) => state.user);
@@ -33,20 +32,47 @@ export default function Documentation() {
               }`}
             </Header>
           </div>
-          <div className="grid grid-cols-32 gap-4 text-sm">
-            <div className="flex flex-col gap-1 text-left">
-              <Level>
+          <div className="flex flex-col gap-0.5 text-left">
+            <div className="grid grid-cols-32 gap-4">
+              <LevelSection>
                 <Header>Level 1</Header>
                 <WebsiteInput />
-              </Level>
-              <Level>
-                <Header>Level 2</Header>
-              </Level>
-              <Level>
-                <Header>Level 3</Header>
-              </Level>
+              </LevelSection>
+              <LevelSection colored={currentLevel >= 1}>
+                <Header>Level 1</Header>
+                <p>
+                  Your organization is eligible to create its endowment. Donors
+                  can donate funds through your organization’s landing page on
+                  Angel Protocol’s interface. Your organization is not displayed
+                  on the marketplace and cannot be found through the search bar.
+                </p>
+              </LevelSection>
             </div>
-            <LevelDescription />
+            <div className="grid grid-cols-32 gap-4">
+              <LevelSection>
+                <Header>Level 2</Header>
+              </LevelSection>
+              <LevelSection colored={currentLevel >= 2}>
+                <Header>Level 2</Header>
+                <p>
+                  All benefits from Level 1 + your organization will be visible
+                  in the marketplace.
+                </p>
+              </LevelSection>
+            </div>
+            <div className="grid grid-cols-32 gap-4">
+              <LevelSection>
+                <Header>Level 3</Header>
+              </LevelSection>
+              <LevelSection colored={currentLevel === 3}>
+                <Header>Level 3</Header>
+                <p>
+                  All benefits from Level 2 + your organization will be able to
+                  receive automatic donations from members of the Angel Charity
+                  Alliance.
+                </p>
+              </LevelSection>
+            </div>
           </div>
         </div>
         <div className="flex flex-col w-full text-left text-sm">
@@ -69,9 +95,18 @@ const Header = ({ children }: PropsWithChildren<{}>) => (
   <h3 className="text-lg font-bold">{children}</h3>
 );
 
-const Level = ({ children }: PropsWithChildren<{}>) => (
-  <div className="flex flex-col text-left p-1 gap-2">{children}</div>
-);
+type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
+
+const LevelSection = ({ colored, children }: LevelSectionProps) => {
+  const styles = colored
+    ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
+    : "";
+  return (
+    <div className={`flex flex-col text-left p-1 gap-2 ${styles}`}>
+      {children}
+    </div>
+  );
+};
 
 function WebsiteInput() {
   const {
