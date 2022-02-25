@@ -147,7 +147,7 @@ function WebsiteInput() {
       <input
         id="charityWebsite"
         type="text"
-        className="rounded-md outline-none border-none w-full px-2 py-1 text-black"
+        className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
         {...register("charityWebsite")}
       />
       {errors.charityWebsite?.message && (
