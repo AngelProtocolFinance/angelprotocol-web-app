@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import Button from "../Button";
+import routes from "../routes";
 import AuthorityToCreateCheckbox from "./AuthorityToCreateCheckbox";
 import InputRow from "./InputRow";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
@@ -11,6 +13,7 @@ import { FormValues, Schema } from "./types";
 let currentLevel = 0;
 
 export default function Documentation() {
+  const history = useHistory();
   const user = useGetter((state) => state.user);
   const methods = useForm<FormValues>({ resolver: yupResolver(Schema) });
 
@@ -79,13 +82,22 @@ export default function Documentation() {
           <AuthorityToCreateCheckbox charityName={user.CharityName} />
           <PrivacyPolicyCheckbox />
         </div>
-        <Button
-          submit
-          className="w-40 h-10 bg-yellow-blue"
-          isLoading={methods.formState.isSubmitting}
-        >
-          Upload
-        </Button>
+        <div className="flex justify-center">
+          <Button
+            className="bg-green-400 w-40 h-10 mr-2"
+            disabled={methods.formState.isSubmitting}
+            onClick={() => history.push(routes.dashboard)}
+          >
+            Back
+          </Button>
+          <Button
+            submit
+            className="w-40 h-10 bg-thin-blue"
+            isLoading={methods.formState.isSubmitting}
+          >
+            Upload
+          </Button>
+        </div>
       </form>
     </FormProvider>
   );
