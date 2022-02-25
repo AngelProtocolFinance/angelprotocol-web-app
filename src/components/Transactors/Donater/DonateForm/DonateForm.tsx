@@ -76,7 +76,7 @@ export default function DonateForm() {
         />
         <label
           htmlFor="confirmRole"
-          className="text-angel-grey font-light text-xs "
+          className="text-angel-grey font-light text-xs"
         >
           By clicking this button and donating with Angel Protocol, you
           acknowledge that you have read and accept the{" "}
