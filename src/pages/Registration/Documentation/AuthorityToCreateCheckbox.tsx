@@ -12,7 +12,7 @@ export default function AuthorityToCreateCheckbox({ charityName }: Props) {
 
   return (
     <Checkbox
-      error={errors?.checkedAuthority?.message}
+      error={errors.checkedAuthority?.message}
       {...register("checkedAuthority")}
     >
       {`By checking this box, you declare that you have the authority to create an

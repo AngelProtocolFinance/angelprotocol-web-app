@@ -1,11 +1,20 @@
-import Checkbox, { CheckboxProps } from "components/Checkbox";
+import Checkbox from "components/Checkbox";
 import { site, web } from "constants/routes";
-import { ForwardedRef, forwardRef } from "react";
+import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { FormValues } from "./types";
 
-const PrivacyPolicyCheckbox = forwardRef(
-  (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
-    <Checkbox {...props} ref={ref}>
+export default function PrivacyPolicyCheckbox() {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<FormValues>();
+
+  return (
+    <Checkbox
+      error={errors.checkedPolicy?.message}
+      {...register("checkedPolicy")}
+    >
       By checking this box, you declare that you have read and agreed to our{" "}
       <Link
         to={`${site.home}${web.privacy}`}
@@ -17,7 +26,5 @@ const PrivacyPolicyCheckbox = forwardRef(
       </Link>
       <span className="text-failed-red ml-0.5">*</span>
     </Checkbox>
-  )
-);
-
-export default PrivacyPolicyCheckbox;
+  );
+}

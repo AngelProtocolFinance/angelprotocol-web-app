@@ -134,7 +134,7 @@ function WebsiteInput() {
     <InputRow
       id="charityWebsite"
       label="Website of your organization"
-      error={errors?.charityWebsite?.message}
+      error={errors.charityWebsite?.message}
       centerError
       required
     >
