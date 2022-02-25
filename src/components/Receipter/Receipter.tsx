@@ -24,6 +24,8 @@ export default function Receipter(
       state: "",
       zipCode: "",
       country: "",
+      consent_marketing: false,
+      consent_tax: false,
     },
     resolver: yupResolver(schema),
   });
