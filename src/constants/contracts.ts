@@ -107,7 +107,7 @@ export type VaultInfo = {
 export const vaults: VaultInfo[] = [
   {
     address: contracts[chainIDs.testnet][sc.anchor_vault1],
-    name: "Anchor Vault 1",
+    name: "Anchor Vault",
     symbol: "aUST",
     field_id: VaultFields.anchor1_amount,
   },
@@ -119,7 +119,7 @@ export const vaults: VaultInfo[] = [
   },
   {
     address: contracts[chainIDs.mainnet][sc.anchor_vault1],
-    name: "Anchor Vault 1",
+    name: "Anchor Vault",
     symbol: "aUST",
     field_id: VaultFields.anchor1_amount,
   },

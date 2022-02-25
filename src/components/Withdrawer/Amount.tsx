@@ -29,7 +29,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
         >
           {props.name}
         </label>
-        <p className="text-xs text-angel-grey font-heading flex gap-1 items-baseline">
+        <p className="text-xs text-angel-grey font-heading flex gap-1 items-baseline flex flex-col">
           <span>balance</span>
           <button
             tabIndex={-1}
@@ -46,7 +46,7 @@ export default function Amount(props: VaultInfo & { balance: string }) {
         id={props.field_id}
         type="number"
         autoComplete="off"
-        className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl"
+        className="p-1 pl-0 outline-none border-b border-angel-blue border-opacity-20 text-angel-grey text-xl currency-input"
       />
       <ErrorMessage
         errors={errors}
