@@ -8,7 +8,7 @@ export default function Portal() {
   const wallet = useConnectedWallet();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
-  const { data, isLoading, isFetching } = useLookupQuery(isTestNet);
+  const { data, isLoading } = useLookupQuery(isTestNet);
 
   const endowmentAddr = data?.[wallet?.terraAddress || ""];
   // if (isLoading || isFetching) {
@@ -16,7 +16,7 @@ export default function Portal() {
   //   return (
   //     <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
   //   );
-  // } else {
+  // };
   return (
     <>
       {!isLoading && endowmentAddr && (
