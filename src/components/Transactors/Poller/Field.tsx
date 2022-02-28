@@ -1,3 +1,4 @@
+import React from "react";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { CreatePollValues } from "./types";
@@ -21,24 +22,13 @@ export default function Title(props: {
       >
         {props.label}
       </label>
-      {(props.wide && (
-        <textarea
-          {...register(props.id)}
-          id={props.id}
-          className="shadow-inner-white-grey bg-light-grey 
-          rounded-md p-3 text-angel-grey focus:outline-none"
-        />
-      )) || (
-        <input
-          disabled={props.frozen}
-          {...register(props.id)}
-          autoComplete="off"
-          id={props.id}
-          type="text"
-          className="shadow-inner-white-grey bg-light-grey 
-          rounded-md p-3 text-angel-grey focus:outline-none"
-        />
-      )}
+      {React.createElement(props.wide ? "textarea" : "input", {
+        ...register(props.id),
+        id: props.id,
+        className:
+          "shadow-inner-white-grey bg-light-grey rounded-md p-3 text-angel-grey focus:outline-none",
+        disabled: props.frozen,
+      })}
       <ErrorMessage
         errors={errors}
         name={props.id}

@@ -34,12 +34,14 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid || !isDirty) return;
         dispatch(setFormError(""));
+
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
+
+        if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
           dispatch(setFee(0));

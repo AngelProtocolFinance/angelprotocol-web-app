@@ -5,11 +5,17 @@ export default function AdvancedOptions(props: {
   isOptionsShown: boolean;
 }) {
   return (
-    <div className="grid p-3 pl-2 rounded-md bg-light-grey shadow-inner-white-grey mt-2">
+    <div
+      className={`grid -ml-0.5 mt-6 ${
+        props.isOptionsShown
+          ? "p-3 rounded-md bg-light-grey shadow-inner-white-grey"
+          : ""
+      }`}
+    >
       <button
         type="button"
         onClick={props.toggleAdvancedOptions}
-        className="justify-self-start flex items-center text-md text-grey-accent font-semibold hover:text-angel-grey cursor-pointer"
+        className="justify-self-start flex items-center text-angel-grey hover:text-angel-blue font-semibold  cursor-pointer"
       >
         <IoMdSettings
           size={20}

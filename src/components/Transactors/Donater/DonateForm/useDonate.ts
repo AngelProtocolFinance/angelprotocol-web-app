@@ -6,7 +6,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
-import { resetTxFormState } from "services/transaction/transactionSlice";
+import { resetFee } from "services/transaction/transactionSlice";
 import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
@@ -48,7 +48,7 @@ export default function useDonate() {
   useEffect(() => {
     if (denomRef.current !== currency) {
       setValue("amount", "", { shouldValidate: false });
-      dispatch(resetTxFormState());
+      dispatch(resetFee());
     }
     denomRef.current = currency;
     //eslint-disable-next-line

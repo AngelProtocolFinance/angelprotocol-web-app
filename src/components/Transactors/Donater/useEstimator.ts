@@ -42,13 +42,15 @@ export default function useEstimator() {
 
   useEffect(() => {
     (async () => {
-      if (!isValid || !isDirty) return;
-      dispatch(setFormError(""));
       try {
+        dispatch(setFormError(""));
+
         if (activeProvider === Providers.none) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
+
+        if (!isValid || !isDirty) return;
 
         if (!supported_denoms.includes(currency)) {
           dispatch(

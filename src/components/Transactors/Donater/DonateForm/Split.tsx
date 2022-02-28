@@ -24,7 +24,7 @@ export default function Split() {
           <Slider />
         </Portion>
       </div>
-      <p className="text-grey-accent text-sm">
+      <p className="text-xs text-angel-grey text-center">
         Note: Donations into the endowment provide sustainable financial runaway
         and allow your gift to give forever
       </p>
