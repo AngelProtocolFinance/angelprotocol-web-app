@@ -135,6 +135,10 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
 };
 
 function ProofOfIdentity() {
+  const {
+    formState: { errors },
+  } = useFormContext<FormValues>();
+
   return (
     <InputRow
       id="proofOfIdentity"
@@ -143,6 +147,11 @@ function ProofOfIdentity() {
       required
     >
       <FileDropzone name="proofOfIdentity" className="h-8" />
+      {errors.proofOfIdentity?.message && (
+        <p className="w-full text-xs text-failed-red text-center">
+          {errors.proofOfIdentity.message}
+        </p>
+      )}
     </InputRow>
   );
 }
@@ -172,6 +181,10 @@ function WebsiteInput() {
 }
 
 function ProofOfRegistration() {
+  const {
+    formState: { errors },
+  } = useFormContext<FormValues>();
+
   return (
     <InputRow
       id="proofOfRegistration"
@@ -179,7 +192,11 @@ function ProofOfRegistration() {
       required
     >
       <FileDropzone name="proofOfRegistration" className="h-8" />
-      {/* TODO: ADD ERRORS */}
+      {errors.proofOfRegistration?.message && (
+        <p className="w-full text-xs text-failed-red text-center">
+          {errors.proofOfRegistration.message}
+        </p>
+      )}
     </InputRow>
   );
 }
