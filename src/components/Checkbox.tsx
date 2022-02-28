@@ -17,33 +17,33 @@ const Checkbox = forwardRef(
     const { error, centerError, children, ...rest } = props;
     const id = rest.id || rest.name;
 
-    const errorPositionClasses = centerError
-      ? "left-1/2 transform -translate-x-1/2"
-      : "left-5";
-
     return (
-      <div className="flex gap-2 items-center relative">
-        <input
-          id={id}
-          ref={ref}
-          type="checkbox"
-          className="cursor-pointer"
-          {...rest}
-        />
-        <label htmlFor={id} className="cursor-pointer">
-          {children}
-        </label>
-        <Error message={error} positionClasses={errorPositionClasses} />
+      <div className="flex flex-col text-sm">
+        <div className="flex gap-2 items-center ">
+          <input
+            id={id}
+            ref={ref}
+            type="checkbox"
+            className="cursor-pointer"
+            {...rest}
+          />
+          <label htmlFor={id} className="cursor-pointer">
+            {children}
+          </label>
+        </div>
+        <Error message={error} center={centerError} />
       </div>
     );
   }
 );
 
-type ErrorProps = { message?: string; positionClasses: string };
+type ErrorProps = { message?: string; center?: true | boolean };
 
-function Error({ message, positionClasses }: ErrorProps) {
+function Error({ message, center }: ErrorProps) {
   if (!message) return null;
-  const className = `text-sm text-failed-red absolute -bottom-4 ${positionClasses}`;
+  const className = `w-full text-failed-red ${
+    center ? "text-center" : "text-left ml-5"
+  }`;
   return <p className={className}>{message}</p>;
 }
 

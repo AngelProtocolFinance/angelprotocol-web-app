@@ -20,23 +20,24 @@ export default function Documentation() {
   const methods = useForm<FormValues>({ resolver: yupResolver(Schema) });
 
   return (
-    <FormProvider {...methods}>
-      <form
-        className="flex flex-col w-full h-full gap-8 items-center"
-        onSubmit={methods.handleSubmit((values) => console.log(values))}
-      >
-        <div className="flex flex-col w-full gap-2 text-left">
-          <RowContainer>
-            <Header>
-              Please upload the following documentation. The documentation you
-              provide will inform which Level your organization will be
-            </Header>
-            <Header>
-              {`Currently, your organization is ${
-                !!currentLevel ? `Level ${currentLevel}` : "not classified"
-              }`}
-            </Header>
-          </RowContainer>
+    <div className="flex flex-col gap-2 w-full h-full items-center text-left">
+      <RowContainer>
+        <Header>
+          Please upload the following documentation. The documentation you
+          provide will inform which Level your organization will be
+        </Header>
+        <Header>
+          {`Currently, your organization is ${
+            !!currentLevel ? `Level ${currentLevel}` : "not classified"
+          }`}
+        </Header>
+      </RowContainer>
+
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col w-full h-full gap-4 items-center"
+          onSubmit={methods.handleSubmit((values) => console.log(values))}
+        >
           <div className="flex flex-col gap-0.5">
             <RowContainer>
               <LevelSection>
@@ -44,6 +45,7 @@ export default function Documentation() {
                 <ProofOfIdentityDropzone />
                 <WebsiteInput />
               </LevelSection>
+
               <LevelSection colored={currentLevel >= 1}>
                 <Header>Level 1</Header>
                 <p>
@@ -54,6 +56,7 @@ export default function Documentation() {
                 </p>
               </LevelSection>
             </RowContainer>
+
             <RowContainer>
               <LevelSection>
                 <Header>Level 2</Header>
@@ -66,6 +69,7 @@ export default function Documentation() {
                 </p>
               </LevelSection>
             </RowContainer>
+
             <RowContainer>
               <LevelSection>
                 <Header>Level 3</Header>
@@ -80,29 +84,31 @@ export default function Documentation() {
               </LevelSection>
             </RowContainer>
           </div>
-        </div>
-        <div className="flex flex-col w-full text-left text-sm gap-3">
-          <AuthorityToCreateCheckbox charityName={user.CharityName} />
-          <PrivacyPolicyCheckbox />
-        </div>
-        <div className="flex justify-center">
-          <Button
-            className="bg-green-400 w-40 h-10 mr-2"
-            disabled={methods.formState.isSubmitting}
-            onClick={() => history.push(routes.dashboard)}
-          >
-            Back
-          </Button>
-          <Button
-            submit
-            className="w-40 h-10 bg-thin-blue"
-            isLoading={methods.formState.isSubmitting}
-          >
-            Upload
-          </Button>
-        </div>
-      </form>
-    </FormProvider>
+
+          <div className="flex flex-col gap-1 w-full">
+            <AuthorityToCreateCheckbox charityName={user.CharityName} />
+            <PrivacyPolicyCheckbox />
+          </div>
+
+          <div className="flex justify-center">
+            <Button
+              className="bg-green-400 w-40 h-10 mr-2"
+              disabled={methods.formState.isSubmitting}
+              onClick={() => history.push(routes.dashboard)}
+            >
+              Back
+            </Button>
+            <Button
+              submit
+              className="w-40 h-10 bg-thin-blue"
+              isLoading={methods.formState.isSubmitting}
+            >
+              Upload
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
+    </div>
   );
 }
 
@@ -155,7 +161,7 @@ function WebsiteInput() {
         {...register("charityWebsite")}
       />
       {errors.charityWebsite?.message && (
-        <p className="absolute left-0 -bottom-4 w-full text-xs text-failed-red text-center">
+        <p className="w-full text-xs text-failed-red text-center">
           {errors.charityWebsite.message}
         </p>
       )}

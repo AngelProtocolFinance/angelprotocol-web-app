@@ -21,9 +21,7 @@ export default function InputRow(props: InputRowProps) {
         </label>
         {!!modal && <InfoIcon modal={modal} />}
       </div>
-      <div className="flex flex-col gap-1 w-full items-center relative">
-        {children}
-      </div>
+      <div className="flex flex-col gap-1 w-full items-center">{children}</div>
     </div>
   );
 }
