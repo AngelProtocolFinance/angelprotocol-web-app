@@ -43,7 +43,7 @@ export default function Documentation() {
               <Header>Level 1</Header>
               <ProofOfIdentity />
               <WebsiteInput />
-              <ProofOfRegistration />
+              {/* <ProofOfRegistration /> */}
             </LevelSection>
 
             <LevelSection colored={currentLevel >= 1}>
@@ -60,7 +60,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 2</Header>
-              <FinancialStatements />
+              {/* <FinancialStatements /> */}
             </LevelSection>
             <LevelSection colored={currentLevel >= 2}>
               <Header>Level 2</Header>
@@ -74,7 +74,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 3</Header>
-              <AuditedFinancialReport />
+              {/* <AuditedFinancialReport /> */}
             </LevelSection>
             <LevelSection colored={currentLevel === 3}>
               <Header>Level 3</Header>
@@ -178,6 +178,7 @@ function ProofOfRegistration() {
       required
     >
       <FileDropzone name="proofOfRegistration" className="h-8" />
+      {/* TODO: ADD ERRORS */}
     </InputRow>
   );
 }
