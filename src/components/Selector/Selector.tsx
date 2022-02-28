@@ -47,6 +47,7 @@ const selectStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
   control: (provided, state) => ({
     ...provided,
     border: "none",
+    borderRadius: "0.375rem",
     outline: "none",
     backgroundColor: state.isDisabled ? "#efefef4d" : provided.backgroundColor,
     padding: "3px 2px",
