@@ -9,6 +9,7 @@ import routes from "../routes";
 import AuthorityToCreateCheckbox from "./AuthorityToCreateCheckbox";
 import InputRow from "./InputRow";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
+import ProofOfIdentityModal from "./ProofOfIdentityModal";
 import { FormValues, Schema } from "./types";
 
 let currentLevel = 0;
@@ -128,7 +129,12 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
 
 function ProofOfIdentityDropzone() {
   return (
-    <InputRow id="proofOfIdentity" label="Your proof of identity" required>
+    <InputRow
+      id="proofOfIdentity"
+      label="Your proof of identity"
+      modal={ProofOfIdentityModal}
+      required
+    >
       <FileDropzone name="proofOfIdentity" className="h-8" />
     </InputRow>
   );

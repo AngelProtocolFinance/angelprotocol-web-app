@@ -1,23 +1,26 @@
 import { useSetModal } from "components/Modal/Modal";
-import { PropsWithChildren } from "react";
-import { BsExclamationCircle } from "react-icons/bs";
-import ProofOfIdentityModal from "./ProofOfIdentityModal";
+import { FC, PropsWithChildren } from "react";
+import { BsQuestionCircle } from "react-icons/bs";
 
 export type InputRowProps = PropsWithChildren<{
   id?: string;
   label: string;
   required?: true | boolean;
+  modal?: FC<{}>;
 }>;
 
 export default function InputRow(props: InputRowProps) {
-  const { id, label, required, children } = props;
+  const { id, label, required, modal, children } = props;
 
   return (
     <div className="grid grid-cols-2 items-center">
-      <label htmlFor={id} className="hover:cursor-pointer">
-        {label}
-        {required && <span className="text-failed-red ml-0.5">*</span>}
-      </label>
+      <div className="flex items-center gap-2">
+        <label htmlFor={id} className="hover:cursor-pointer">
+          {label}
+          {required && <span className="text-failed-red ml-0.5">*</span>}
+        </label>
+        {!!modal && <InfoIcon modal={modal} />}
+      </div>
       <div className="flex flex-col gap-1 w-full items-center relative">
         {children}
       </div>
@@ -25,13 +28,12 @@ export default function InputRow(props: InputRowProps) {
   );
 }
 
-function InfoIcon() {
+function InfoIcon({ modal }: { modal: FC<{}> }) {
   const { showModal } = useSetModal();
-  const showProofOfIdentityModal = () => showModal(ProofOfIdentityModal, {});
   return (
-    <BsExclamationCircle
+    <BsQuestionCircle
       className="text-thin-blue cursor-pointer"
-      onClick={showProofOfIdentityModal}
+      onClick={() => showModal(modal, {})}
     />
   );
 }
