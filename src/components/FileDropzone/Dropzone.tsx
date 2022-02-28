@@ -8,12 +8,10 @@ type Props = BaseProps & {
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void;
-  value: FileList;
+  value: File | File[];
 };
 
 export default function Dropzone(props: Props) {
-  console.log(props.value as FileList);
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: props.onDrop,
     multiple: props.multiple,
@@ -34,12 +32,10 @@ export default function Dropzone(props: Props) {
   );
 }
 
-function DropzoneText({ files }: { files: FileList }) {
-  const fileNames = Array.from(files)
-    .map((file) => file.name)
-    .join(", ");
+function DropzoneText({ files }: { files: File | File[] }) {
+  const fileNames = getFileNames(files);
 
-  return !files?.length ? (
+  return !fileNames.length ? (
     <span className="flex items-center gap-1 text-dark-grey text-sm">
       <MdOutlineFileUpload className="text-lg" />
       Select file or Drag &amp; Drop
@@ -52,4 +48,13 @@ function DropzoneText({ files }: { files: FileList }) {
       {fileNames}
     </label>
   );
+}
+
+function getFileNames(files: File | File[]) {
+  let fileArray: File[] = [];
+  if (!!files) {
+    fileArray = fileArray.concat(files);
+  }
+  const fileNames = fileArray.map((file) => file.name).join(", ");
+  return fileNames;
 }
