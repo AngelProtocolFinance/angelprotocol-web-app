@@ -38,53 +38,51 @@ export default function Documentation() {
           className="flex flex-col w-full h-full gap-4 items-center"
           onSubmit={methods.handleSubmit((values) => console.log(values))}
         >
-          <div className="flex flex-col gap-0.5">
-            <RowContainer>
-              <LevelSection>
-                <Header>Level 1</Header>
-                <ProofOfIdentityDropzone />
-                <WebsiteInput />
-                <ProofOfRegistration />
-              </LevelSection>
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 1</Header>
+              <ProofOfIdentityDropzone />
+              <WebsiteInput />
+              <ProofOfRegistration />
+            </LevelSection>
 
-              <LevelSection colored={currentLevel >= 1}>
-                <Header>Level 1</Header>
-                <p>
-                  Your organization is eligible to create its endowment. Donors
-                  can donate funds through your organization’s landing page on
-                  Angel Protocol’s interface. Your organization is not displayed
-                  on the marketplace and cannot be found through the search bar.
-                </p>
-              </LevelSection>
-            </RowContainer>
+            <LevelSection colored={currentLevel >= 1}>
+              <Header>Level 1</Header>
+              <p>
+                Your organization is eligible to create its endowment. Donors
+                can donate funds through your organization’s landing page on
+                Angel Protocol’s interface. Your organization is not displayed
+                on the marketplace and cannot be found through the search bar.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
-            <RowContainer>
-              <LevelSection>
-                <Header>Level 2</Header>
-              </LevelSection>
-              <LevelSection colored={currentLevel >= 2}>
-                <Header>Level 2</Header>
-                <p>
-                  All benefits from Level 1 + your organization will be visible
-                  in the marketplace.
-                </p>
-              </LevelSection>
-            </RowContainer>
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 2</Header>
+            </LevelSection>
+            <LevelSection colored={currentLevel >= 2}>
+              <Header>Level 2</Header>
+              <p>
+                All benefits from Level 1 + your organization will be visible in
+                the marketplace.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
-            <RowContainer>
-              <LevelSection>
-                <Header>Level 3</Header>
-              </LevelSection>
-              <LevelSection colored={currentLevel === 3}>
-                <Header>Level 3</Header>
-                <p>
-                  All benefits from Level 2 + your organization will be able to
-                  receive automatic donations from members of the Angel Charity
-                  Alliance.
-                </p>
-              </LevelSection>
-            </RowContainer>
-          </div>
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 3</Header>
+            </LevelSection>
+            <LevelSection colored={currentLevel === 3}>
+              <Header>Level 3</Header>
+              <p>
+                All benefits from Level 2 + your organization will be able to
+                receive automatic donations from members of the Angel Charity
+                Alliance.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
           <div className="flex flex-col gap-1 w-full">
             <AuthorityToCreateCheckbox charityName={user.CharityName} />
@@ -118,7 +116,7 @@ const Header = ({ children }: PropsWithChildren<{}>) => (
 );
 
 const RowContainer = ({ children }: PropsWithChildren<{}>) => (
-  <div className="grid grid-cols-32 gap-3">{children}</div>
+  <div className="grid grid-cols-32 gap-3 text-sm">{children}</div>
 );
 
 type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
@@ -128,7 +126,7 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
     ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
     : "";
   return (
-    <div className={`flex flex-col text-left p-1 gap-2 ${styles}`}>
+    <div className={`flex flex-col text-left p-1 gap-3 ${styles}`}>
       {children}
     </div>
   );
@@ -142,7 +140,7 @@ function ProofOfIdentityDropzone() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone name="proofOfIdentity" className="h-10" />
+      <FileDropzone name="proofOfIdentity" className="h-8" />
     </InputRow>
   );
 }
@@ -158,7 +156,7 @@ function WebsiteInput() {
       <input
         id="charityWebsite"
         type="text"
-        className="h-10 rounded-md outline-none border-none w-full px-2 py-1 text-black"
+        className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
         {...register("charityWebsite")}
       />
       {errors.charityWebsite?.message && (
@@ -178,7 +176,7 @@ function ProofOfRegistration() {
       charity or equivalent"
       required
     >
-      <FileDropzone name="proofOfRegistration" className="h-10" />
+      <FileDropzone name="proofOfRegistration" className="h-8" />
     </InputRow>
   );
 }
