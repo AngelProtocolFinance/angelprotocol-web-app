@@ -1,3 +1,4 @@
+import React from "react";
 import Select, { MenuPlacement, GroupBase, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
 
@@ -14,7 +15,7 @@ interface SelectorProps {
   menuPlacement?: MenuPlacement;
 }
 
-export const Selector = (props: SelectorProps) => {
+export const Selector = React.memo((props: SelectorProps) => {
   return (
     <Controller
       // this 'register' might be redundant due to already passing 'control' and 'name'
@@ -40,7 +41,7 @@ export const Selector = (props: SelectorProps) => {
       }}
     />
   );
-};
+});
 
 const selectStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
   control: (provided, state) => ({

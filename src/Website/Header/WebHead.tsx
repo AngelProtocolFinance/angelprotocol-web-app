@@ -29,7 +29,7 @@ export default function WebHead() {
         <WebMenu />
         <Link
           to={`${site.app}/${app.marketplace}`}
-          className={`justify-self-end border border-opacity-40 border-angel-orange rounded-md bg-angel-orange text-white uppercase transform hover:scale-105 hover:shadow-lg active:translate-x-1 active:shadow-md ml-0 md:ml-2 py-2 px-4 `}
+          className={`justify-self-end border border-opacity-40 border-angel-orange rounded-md bg-angel-orange text-white uppercase transform hover:scale-105 hover:shadow-lg transition active:translate-x-1 active:shadow-md ml-0 md:ml-2 py-2 px-4 `}
         >
           Donate
         </Link>

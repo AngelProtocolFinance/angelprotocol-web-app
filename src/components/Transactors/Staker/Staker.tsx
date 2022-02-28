@@ -1,10 +1,11 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { schema } from "./schema";
-import { Props, Values } from "./types";
+import { Props, HaloStakingValues } from "./types";
 
 export default function Staker(props: Props) {
-  const methods = useForm<Values>({
+  const methods = useForm<HaloStakingValues>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       amount: "",

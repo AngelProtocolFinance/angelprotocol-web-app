@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export interface Values {
+export interface CreatePollValues {
   amount: string;
   title: string;
   description: string;

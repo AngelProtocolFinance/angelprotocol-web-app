@@ -1,6 +1,6 @@
 import { sc } from "constants/sc";
 import { chainIDs } from "constants/chainIDs";
-import { VaultFields } from "components/Withdrawer/types";
+import { VaultFields } from "components/Transactors/Withdraw/types";
 
 type Contracts = {
   [index: string]: {
@@ -107,19 +107,19 @@ export type VaultInfo = {
 export const vaults: VaultInfo[] = [
   {
     address: contracts[chainIDs.testnet][sc.anchor_vault1],
-    name: "Anchor Vault 1",
+    name: "Anchor Vault",
     symbol: "aUST",
     field_id: VaultFields.anchor1_amount,
   },
   {
     address: contracts[chainIDs.testnet][sc.anchor_vault2],
-    name: "Anchor Vault 2",
+    name: "Anchor Vault",
     symbol: "aUST",
     field_id: VaultFields.anchor2_amount,
   },
   {
     address: contracts[chainIDs.mainnet][sc.anchor_vault1],
-    name: "Anchor Vault 1",
+    name: "Anchor Vault",
     symbol: "aUST",
     field_id: VaultFields.anchor1_amount,
   },

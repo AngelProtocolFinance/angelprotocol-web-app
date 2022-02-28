@@ -1,4 +1,4 @@
-import { Values } from "components/Transactors/Donater/types";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { currency_text, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
@@ -6,12 +6,12 @@ import { useGetter } from "store/accessors";
 
 export default function Breakdown() {
   const { fee } = useGetter((state) => state.transaction);
-  const { watch } = useFormContext<Values>();
+  const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
 
   return (
-    <div className="pb-1">
+    <div className="">
       <Entry title="tx fee" amount={fee} currency={currency} />
       <Entry title="total amount" amount={amount + fee} currency={currency} />
     </div>

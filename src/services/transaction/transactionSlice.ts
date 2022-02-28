@@ -7,6 +7,7 @@ const initialState: State = {
   fee: 0,
   stage: { step: Step.form },
 };
+
 const transactionSlice = createSlice({
   name: "transaction",
   initialState,
@@ -21,12 +22,26 @@ const transactionSlice = createSlice({
     setFee: (state, { payload }: PayloadAction<number>) => {
       state.fee = payload;
     },
+    resetFee: (state) => {
+      state.fee = 0;
+    },
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
+    },
+    resetTxFormState: (state) => {
+      state.fee = 0;
+      state.form_error = "";
+      state.form_loading = false;
     },
   },
 });
 
 export default transactionSlice.reducer;
-export const { setFormError, setFormLoading, setFee, setStage } =
-  transactionSlice.actions;
+export const {
+  setFormError,
+  setFormLoading,
+  resetFee,
+  setFee,
+  setStage,
+  resetTxFormState,
+} = transactionSlice.actions;

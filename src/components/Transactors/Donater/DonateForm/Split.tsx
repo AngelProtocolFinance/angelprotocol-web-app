@@ -2,8 +2,10 @@ import Portion from "./Portion";
 import Slider from "./Slider";
 export default function Split() {
   return (
-    <>
-      <p className="text-angel-grey uppercase font-bold mb-2 mt-4">Split</p>
+    <div className="grid ml-1">
+      <p className="text-angel-grey uppercase text-sm font-bold mt-2 mb-1">
+        Split
+      </p>
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="locked"
@@ -22,6 +24,10 @@ export default function Split() {
           <Slider />
         </Portion>
       </div>
-    </>
+      <p className="text-xs text-angel-grey text-center">
+        Note: Donations into the endowment provide sustainable financial runaway
+        and allow your gift to give forever
+      </p>
+    </div>
   );
 }
