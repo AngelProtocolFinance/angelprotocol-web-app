@@ -1,12 +1,16 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { fundCreatorSchema, FundCreatorValues } from "./fundCreatorSchema";
 
 export default function FundCreator(props: { children: ReactNode }) {
-  const methods = useForm({
+  const methods = useForm<FundCreatorValues>({
+    resolver: yupResolver(fundCreatorSchema),
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
-      addr: "",
-      weight: "1",
       title: "Create fund",
+      expiryTime: new Date().toISOString().substr(0, 16),
     },
   });
 

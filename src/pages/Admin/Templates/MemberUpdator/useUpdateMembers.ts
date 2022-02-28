@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Member } from "services/terra/admin/types";
-import { setFormError } from "services/transaction/transactionSlice";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import Admin from "contracts/Admin";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
+import Admin from "contracts/Admin";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
@@ -42,7 +42,7 @@ export default function useUpdateMembers() {
     );
 
     if (to_remove.length <= 0 && to_add.length <= 0) {
-      dispatch(setFormError("no changes we're made"));
+      showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
     const contract = new Admin(wallet);

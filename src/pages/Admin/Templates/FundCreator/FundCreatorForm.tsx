@@ -1,7 +1,11 @@
 import TextInput from "../../TextInput";
 import Label from "../../Label";
+import { FundCreatorValues as V } from "./fundCreatorSchema";
+import { useFormContext } from "react-hook-form";
+import useCreateFund from "./useCreateFund";
 
 export default function FundCreatorForm() {
+  const { createFund } = useCreateFund();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
       <TextInput title="Proposal Title" name="title" placeholder="title" />
@@ -14,28 +18,28 @@ export default function FundCreatorForm() {
 
       <Label text="fund details" textColor="text-angel-orange" />
       <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3  mb-6">
-        <TextInput
+        <TextInput<V>
           title="name"
-          name="name"
+          name="fundName"
           placeholder="A wonderful fund name"
           plain
         />
-        <TextInput
+        <TextInput<V>
           title="description"
-          name="name"
+          name="fundDescription"
           placeholder="A little something about the fund.."
           wide
           plain
         />
-        <TextInput
+        <TextInput<V>
           title="expiry height"
-          name="name"
+          name="expiryHeight"
           placeholder="700992312"
           plain
           mono
         />
         <DateInput />
-        <p>split to liquid</p>
+        <Slider />
 
         <CheckInput />
       </div>
@@ -57,7 +61,7 @@ export default function FundCreatorForm() {
 
       <button
         type="button"
-        onClick={() => {}}
+        onClick={createFund}
         className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
       >
         Propose changes
@@ -66,24 +70,48 @@ export default function FundCreatorForm() {
   );
 }
 
-function CheckInput() {
+function Slider() {
+  const { register } = useFormContext<V>();
   return (
-    <div className="text-angel-grey flex items-center">
-      <input type="checkbox" />
-      <label className="pb-1 ml-2">this fund rotates</label>
+    <div className="text-angel-grey grid mt-6">
+      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey">
+        MAX % TO LIQUID ACCOUNT
+      </label>
+      <input
+        {...register("splitToLiquid")}
+        type="range"
+        min="0"
+        max="100"
+        step="1"
+      />
+    </div>
+  );
+}
+
+function CheckInput() {
+  const { register } = useFormContext<V>();
+  return (
+    <div className="text-angel-grey flex items-center mt-6">
+      <input {...register("isFundRotating")} type="checkbox" className="mr-2" />
+      <label className="text-xs font-heading uppercase font-bold text-angel-grey">
+        this fund rotates
+      </label>
     </div>
   );
 }
 
 function DateInput() {
+  const { register } = useFormContext<V>();
   return (
     <div className="text-angel-grey grid">
       <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey">
-        Expirty time
+        Expiry time
       </label>
       <input
+        {...register("expiryTime")}
         type="datetime-local"
-        className="bg-light-grey border-b-2 border-opacity-30 border-angel-grey rounded-none pb-1"
+        className="bg-light-grey border-b-2 border-opacity-30 border-angel-grey 
+        rounded-none pb-1 focus:outline-none"
       />
     </div>
   );

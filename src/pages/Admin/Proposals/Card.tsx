@@ -12,7 +12,7 @@ export default function Card(props: Proposal) {
   const {
     isVoteEnded,
     remainingBlocks,
-    blockHeight,
+    expiry,
     numYes,
     numNo,
     numNotYet,
@@ -63,7 +63,7 @@ export default function Card(props: Proposal) {
             </span>
             <SiHiveBlockchain className="mr-2" />
             <span className="font-heading text-sm">
-              {toCurrency(+blockHeight, 0)}
+              {toCurrency(expiry, 0)}
             </span>
           </p>
         </div>

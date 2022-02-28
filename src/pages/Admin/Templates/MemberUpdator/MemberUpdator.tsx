@@ -8,6 +8,8 @@ import {
 
 export default function MemberUpdator(props: { children: ReactNode }) {
   const methods = useForm<MemberUpdatorValues>({
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: {
       addr: "",
       weight: "1",

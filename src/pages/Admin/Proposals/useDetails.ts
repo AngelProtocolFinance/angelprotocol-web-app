@@ -45,8 +45,11 @@ export default function useDetails(proposalInfo: Proposal): ProposalDetails {
     pctNo: (numNo / totalWeight) * 100,
     pctNotYet: (numNotYet / totalWeight) * 100,
     blockHeight,
+    expiry,
     remainingBlocks: expiry - +blockHeight,
-    isVoteEnded: proposalInfo.expires.at_height < +blockHeight,
+    isVoteEnded:
+      proposalInfo.expires.at_height < +blockHeight ||
+      proposalInfo.status !== "open",
     isExecutable: proposalInfo.status === "passed",
     isExecuted: proposalInfo.status === "executed",
     numId: idParamToNumber(proposalInfo.id),
@@ -62,6 +65,7 @@ export type ProposalDetails = {
   pctNo: number;
   pctNotYet: number;
   blockHeight: string;
+  expiry: number;
   remainingBlocks: number;
   isVoteEnded: boolean;
   isExecutable: boolean;
