@@ -69,7 +69,7 @@ const DonationList = (props: EndowmentAddrProps) => {
                 </th>
               ))}
               <th className="text-white text-sm text-left"></th>
-              <th className="text-white text-sm text-left"></th>
+              {/* <th className="text-white text-sm text-left"></th> */}
             </tr>
           </thead>
           <tbody>
@@ -102,9 +102,9 @@ const DonationItemInfo = (props: DonationItemProps) => {
       <td>
         <Action title="Update" action={showDonor} />
       </td>
-      <td>
+      {/* <td>
         <Action title="resend" action={() => {}} />
-      </td>
+      </td> */}
     </tr>
   );
 };
