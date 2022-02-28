@@ -12,6 +12,8 @@ type Props = BaseProps & {
 };
 
 export default function Dropzone(props: Props) {
+  console.log(props.value as FileList);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: props.onDrop,
     multiple: props.multiple,
@@ -33,16 +35,21 @@ export default function Dropzone(props: Props) {
 }
 
 function DropzoneText({ files }: { files: FileList }) {
+  const fileNames = Array.from(files)
+    .map((file) => file.name)
+    .join(", ");
+
   return !files?.length ? (
     <span className="flex items-center gap-1 text-dark-grey text-sm">
       <MdOutlineFileUpload className="text-lg" />
       Select file or Drag &amp; Drop
     </span>
   ) : (
-    <span className="text-black text-sm">
-      {Array.from(files)
-        .map((file) => file.name)
-        .join(", ")}
-    </span>
+    <label
+      className="flex text-black text-sm truncate cursor-pointer"
+      title={fileNames}
+    >
+      {fileNames}
+    </label>
   );
 }
