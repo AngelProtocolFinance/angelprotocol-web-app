@@ -1,3 +1,4 @@
+import React from "react";
 import Select, { MenuPlacement } from "react-select";
 import { Controller } from "react-hook-form";
 
@@ -12,7 +13,7 @@ interface SelectorProps {
   menuPlacement?: MenuPlacement;
 }
 
-export const Selector = (props: SelectorProps) => {
+export const Selector = React.memo((props: SelectorProps) => {
   return (
     <Controller
       {...props.register(props.name)}
@@ -39,4 +40,4 @@ export const Selector = (props: SelectorProps) => {
       }}
     />
   );
-};
+});

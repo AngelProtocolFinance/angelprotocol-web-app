@@ -1,7 +1,7 @@
 import { denoms } from "constants/currency";
 import { FC } from "react";
 
-export interface Values {
+export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;

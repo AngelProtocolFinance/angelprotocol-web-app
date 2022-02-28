@@ -9,4 +9,5 @@ export type Handlers = {
 export interface Props {
   classes: string;
   children: ReactNode;
+  backdropDismiss?: boolean;
 }

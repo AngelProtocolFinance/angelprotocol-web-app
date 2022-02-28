@@ -32,7 +32,7 @@ type ProcessedPollData = {
   vote_ended: boolean;
 };
 
-export default function useDetails(poll_id?: string): ProcessedPollData {
+export default function useDetails(poll_id: number): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
   const wallet = useConnectedWallet();
   const gov_config = useGovConfig();
@@ -50,7 +50,7 @@ export default function useDetails(poll_id?: string): ProcessedPollData {
     //get user vote
     let vote: Vote | undefined = undefined;
     const locked_holding = gov_staker.locked_balance.find(
-      ([id]) => id === +(poll_id || "0")
+      ([id]) => id === poll_id
     );
 
     if (locked_holding) {

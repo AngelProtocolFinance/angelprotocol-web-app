@@ -23,6 +23,8 @@ export default function Receipter(props: {
       state: "",
       zipCode: "",
       country: "",
+      consent_marketing: false,
+      consent_tax: false,
     },
     resolver: yupResolver(schema),
   });

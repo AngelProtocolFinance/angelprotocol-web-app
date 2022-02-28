@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export interface Values {
+export interface HaloStakingValues {
   // Values type
   amount: string;
   is_stake: boolean;

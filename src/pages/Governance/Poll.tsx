@@ -8,7 +8,7 @@ import { PollStatus } from "services/terra/gov/types";
 export default function Poll(props: { poll_id: number }) {
   const history = useHistory();
   const { path } = useRouteMatch();
-  const details = useDetails(String(props.poll_id));
+  const details = useDetails(props.poll_id);
 
   function goToPollDetail() {
     history.push(`${path}${govern.poll}/${props.poll_id}`);
