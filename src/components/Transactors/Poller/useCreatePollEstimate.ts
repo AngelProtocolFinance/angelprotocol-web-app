@@ -26,13 +26,14 @@ export default function useCreatePollEstimate() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isDirty || !isValid) return;
         dispatch(setFormError(""));
 
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
+
+        if (!isDirty || !isValid) return;
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate

@@ -21,7 +21,11 @@ export default function Claims() {
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
-    <div className="grid p-2 shadow-inner-white-grey bg-light-grey rounded-md">
+    <div
+      className={`grid ${
+        hasClaim ? "p-2 shadow-inner-white-grey bg-light-grey rounded-md" : ""
+      }`}
+    >
       {(hasClaim && (
         <ul className="flex flex-col mt-3 mb-2 mx-1">
           {(staker?.claims || []).map((claim, i) => (

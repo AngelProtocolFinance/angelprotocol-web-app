@@ -18,6 +18,7 @@ export default function Slider() {
         {...register("split_liq")}
         min={min_liq}
         max={max_liq}
+        className="w-full"
       />
     </div>
   );

@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-
 import { useSetter } from "store/accessors";
-import { WithdrawValues, VaultFields } from "./types";
+
 import {
   setFee,
   setFormError,
@@ -16,9 +15,10 @@ import Account from "contracts/Account";
 import { denoms } from "constants/currency";
 import { useSetModal } from "components/Modal/Modal";
 import useDebouncer from "hooks/useDebouncer";
-import { AmountInfo, filter_infos } from "./helpers";
 import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
+import { AmountInfo, filter_infos } from "./helpers";
+import { WithdrawValues, VaultFields } from "./types";
 
 export default function useWithrawEstimator() {
   const { hideModal } = useSetModal();
@@ -50,9 +50,6 @@ export default function useWithrawEstimator() {
     (async () => {
       try {
         dispatch(setFormError(""));
-        if (!isDirty || !isValid) return;
-        //rates is needed to estimate transaction
-        if (isRatesError) return;
 
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
@@ -60,12 +57,16 @@ export default function useWithrawEstimator() {
           return;
         }
 
+        if (!isDirty || !isValid) return;
+        //rates is needed to estimate transaction
+        if (isRatesError) return;
+
         const amountInfos: AmountInfo[] = [
           { field_id: VaultFields.anchor1_amount, amount: debAnchor1Amount },
           { field_id: VaultFields.anchor2_amount, amount: debAnchor2Amount },
         ];
-        const filtered_infos = filter_infos(amountInfos);
 
+        const filtered_infos = filter_infos(amountInfos);
         //if all fields are zero or undefined
         if (filtered_infos.length <= 0) {
           dispatch(setFee(0));

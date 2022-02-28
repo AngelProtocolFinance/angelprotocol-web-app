@@ -22,6 +22,9 @@ const transactionSlice = createSlice({
     setFee: (state, { payload }: PayloadAction<number>) => {
       state.fee = payload;
     },
+    resetFee: (state) => {
+      state.fee = 0;
+    },
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
     },
@@ -37,6 +40,7 @@ export default transactionSlice.reducer;
 export const {
   setFormError,
   setFormLoading,
+  resetFee,
   setFee,
   setStage,
   resetTxFormState,
