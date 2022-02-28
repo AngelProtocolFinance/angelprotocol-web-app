@@ -4,6 +4,8 @@ import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import MemberUpdateForm from "./Templates/MemberUpdator/MemberUpdaterForm";
 import EndowmentUpdateForm from "./Templates/EndowmentUpdator/EndowmentUpdateForm";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
+import FundCreatorForm from "./Templates/FundCreator/FundCreatorForm";
+import FundCreator from "./Templates/FundCreator/FundCreator";
 
 export default function Proposer() {
   const { path } = useRouteMatch();
@@ -20,6 +22,11 @@ export default function Proposer() {
           <EndowmentUpdator>
             <EndowmentUpdateForm />
           </EndowmentUpdator>
+        </Route>
+        <Route path={`${path}/${proposal_types.create_fund}`}>
+          <FundCreator>
+            <FundCreatorForm />
+          </FundCreator>
         </Route>
       </Switch>
     </div>
@@ -47,6 +54,11 @@ function ProposalTypes() {
         {...linkStyles}
       >
         Change Endowment Status
+      </NavLink>
+      <div className="mt-4"></div>
+      <ProposalCategory title="Index fund" />
+      <NavLink to={`${url}/${proposal_types.create_fund}`} {...linkStyles}>
+        Create Fund
       </NavLink>
     </div>
   );

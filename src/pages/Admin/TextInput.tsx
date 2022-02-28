@@ -30,7 +30,7 @@ export default function TextInput<T extends object>(props: {
           props.mono ? "font-mono" : ""
         } text-angel-grey focus:outline-none placeholder:text-grey-accent ${
           props.plain
-            ? "bg-light-grey border-b-2 border-opacity-30 border-angel-grey rounded-none p-2"
+            ? "bg-light-grey border-b-2 border-opacity-30 border-angel-grey rounded-none pb-1"
             : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
         }`,
         placeholder: props.placeholder,

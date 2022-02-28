@@ -11,9 +11,9 @@ export default function MemberUpdateForm() {
   const { updateMembers } = useUpdateMembers();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
-      <TextInput<T> title="title" name="title" placeholder="title" />
+      <TextInput<T> title="proposal title" name="title" placeholder="title" />
       <TextInput<T>
-        title="description"
+        title="proposal description"
         name="description"
         placeholder="tell something about your proposal"
         wide

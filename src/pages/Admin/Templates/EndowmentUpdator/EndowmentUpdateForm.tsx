@@ -3,9 +3,9 @@ import TextInput from "../../TextInput";
 export default function EndowmentUpdateForm() {
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
-      <TextInput title="title" name="title" placeholder="title" />
+      <TextInput title="proposal title" name="title" placeholder="title" />
       <TextInput
-        title="description"
+        title="proposal description"
         name="description"
         placeholder="tell something about your proposal"
         wide

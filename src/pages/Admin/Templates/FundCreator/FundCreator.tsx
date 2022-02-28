@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-export default function EndowmentUpdator(props: { children: ReactNode }) {
+export default function FundCreator(props: { children: ReactNode }) {
   const methods = useForm({
     defaultValues: {
       addr: "",
       weight: "1",
-      title: "Update endowment status",
+      title: "Create fund",
     },
   });
 
