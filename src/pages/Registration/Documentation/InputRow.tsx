@@ -15,7 +15,7 @@ export default function InputRow(props: InputRowProps) {
   return (
     <div className="grid grid-cols-2 gap-2 items-center">
       <div className="flex items-center gap-2">
-        <label htmlFor={id} className="hover:cursor-pointer">
+        <label htmlFor={id} className="cursor-pointer">
           {label}
           {required && <span className="text-failed-red ml-0.5">*</span>}
         </label>
