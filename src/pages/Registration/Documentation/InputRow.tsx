@@ -1,4 +1,7 @@
+import { useSetModal } from "components/Modal/Modal";
 import { PropsWithChildren } from "react";
+import { BsExclamationCircle } from "react-icons/bs";
+import ProofOfIdentityModal from "./ProofOfIdentityModal";
 
 export type InputRowProps = PropsWithChildren<{
   id?: string;
@@ -19,5 +22,16 @@ export default function InputRow(props: InputRowProps) {
         {children}
       </div>
     </div>
+  );
+}
+
+function InfoIcon() {
+  const { showModal } = useSetModal();
+  const showProofOfIdentityModal = () => showModal(ProofOfIdentityModal, {});
+  return (
+    <BsExclamationCircle
+      className="text-thin-blue cursor-pointer"
+      onClick={showProofOfIdentityModal}
+    />
   );
 }
