@@ -1,7 +1,7 @@
 import { Vote } from "contracts/types";
 import { FC } from "react";
 
-export type Values = {
+export type AdminVoteValues = {
   vote: Vote;
   proposal_id: number;
 };

@@ -25,7 +25,7 @@ export default function PollAction(props: ProposalDetails) {
   } else {
     //voting ongoing
     if (V) {
-      node = <Text>you already voted</Text>;
+      node = <Text>you voted {props.userVote}</Text>;
     } else {
       node = <Action action={showAdminVoter} title="vote" />;
     }

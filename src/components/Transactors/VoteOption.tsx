@@ -1,16 +1,13 @@
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
-import { VoteValues } from "./Voter/types";
 
-export default function VoteOption(props: { label: string; vote: Vote }) {
-  const { register, watch } = useFormContext<VoteValues>();
+type VoteOptionContextType = { vote: Vote };
+export default function VoteOption<T extends VoteOptionContextType>(
+  props: Pick<T, "vote"> & { label: string }
+) {
+  const { register, watch } = useFormContext<VoteOptionContextType>();
   const vote = watch("vote");
-  if (vote === undefined) {
-    throw Error(
-      "VoteOption must be rendered inside context with shape {vote:Vote} and must be set to YES by default"
-    );
-  }
   const is_active = vote === props.vote;
 
   const iconClasses = `opacity-90 ${
@@ -34,7 +31,7 @@ export default function VoteOption(props: { label: string; vote: Vote }) {
               } shadow-inner-white-grey pointer-events-none`
             : "bg-light-grey"
         }`}
-        htmlFor={props.label}
+        htmlFor={`__${props.vote}`}
       >
         <span
           className={`text-xl font-heading uppercase text-center ${
@@ -49,7 +46,7 @@ export default function VoteOption(props: { label: string; vote: Vote }) {
         className="absolute h-0 w-0"
         type="radio"
         {...register("vote")}
-        id={props.label}
+        id={`__${props.vote}`}
         value={props.vote}
       />
     </div>

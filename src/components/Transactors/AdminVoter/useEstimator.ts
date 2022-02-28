@@ -4,7 +4,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import { useBalances } from "services/terra/queriers";
-import { Values } from "./types";
+import { AdminVoteValues } from "./types";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -15,7 +15,7 @@ import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 
 export default function useEstimator() {
-  const { getValues, watch } = useFormContext<Values>();
+  const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
@@ -35,6 +35,7 @@ export default function useEstimator() {
         }
 
         const proposal_id = getValues("proposal_id");
+
         if (proposal_id === 0) {
           dispatch(setFormError("Error getting poll info"));
           return;

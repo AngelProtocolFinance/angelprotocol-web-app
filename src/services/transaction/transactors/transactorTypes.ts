@@ -5,7 +5,6 @@ import { DonateValues } from "components/Transactors/Donater/types";
 import { CreatePollValues } from "components/Transactors/Poller/types";
 import { SwapValues } from "components/Transactors/Swapper/types";
 import { HaloStakingValues } from "components/Transactors/Staker/types";
-import { WithdrawValues } from "components/Transactors/Withdraw/types";
 import { Airdrops } from "services/aws/airdrop/types";
 
 export type TerraArgs = {
@@ -22,6 +21,7 @@ export type CreatePollArgs = UnEstimatedTerraArg & {
   createPollValues: CreatePollValues;
 };
 export type EndPollArgs = UnEstimatedTerraArg & { pollId: number };
+export type ExecuteAdminProposalArgs = UnEstimatedTerraArg & { pollId: number };
 
 export type EthDonateArgs = {
   tx: TransactionRequest;

@@ -26,7 +26,7 @@ export default function TextInput<T extends object>(props: {
       {React.createElement(props.wide ? "textarea" : "input", {
         ...register(props.name as string),
         id: `__${props.name}`,
-        class: `${
+        className: `${
           props.mono ? "font-mono" : ""
         } text-angel-grey focus:outline-none placeholder:text-grey-accent ${
           props.plain

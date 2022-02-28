@@ -7,7 +7,7 @@ import { useSetModal } from "components/Modal/Modal";
 import Fee from "../Fee";
 import Status from "../Status";
 import useVoteEstimator from "./useVoteEstimator";
-import { VoteValues } from "./types";
+import { VoteValues as V } from "./types";
 import VoteOption from "../VoteOption";
 import Amount from "./Amount";
 
@@ -15,7 +15,8 @@ export default function VoterForm() {
   const {
     handleSubmit,
     formState: { isValid, isDirty },
-  } = useFormContext<VoteValues>();
+  } = useFormContext<V>();
+
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { showModal } = useSetModal();
@@ -41,8 +42,8 @@ export default function VoterForm() {
         locked and cannot be withdrawn until the poll has finished.
       </p>
       <div className="grid grid-cols-2 gap-4 mb-6">
-        <VoteOption label="yes" vote="yes" />
-        <VoteOption label="no" vote="no" />
+        <VoteOption<V> label="yes" vote="yes" />
+        <VoteOption<V> label="no" vote="no" />
       </div>
       <Amount />
       <Fee />

@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useSetModal } from "components/Modal/Modal";
-import EnderForm, { Props } from "./ExecuteForm";
+import ExecuteForm, { Props } from "./ExecuteForm";
 import Transactor, { TxProps } from "../Transactor";
 
 export default function useProposalExecutor(proposal_id: number) {
@@ -8,7 +8,7 @@ export default function useProposalExecutor(proposal_id: number) {
   const showPollEnder = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {
       inModal: true,
-      Content: EnderForm,
+      Content: ExecuteForm,
       contentProps: { proposal_id },
     });
     //eslint-disable-next-line

@@ -7,7 +7,7 @@ const memberSlice = createSlice({
   name: "admin/members",
   initialState,
   reducers: {
-    setInitialMembers: (state, { payload }: PayloadAction<MemberCopy[]>) => {
+    setMembers: (state, { payload }: PayloadAction<MemberCopy[]>) => {
       return payload;
     },
     toggleDeleteExistingMember: (state, { payload }: PayloadAction<string>) => {
@@ -30,7 +30,7 @@ export const {
   toggleDeleteExistingMember,
   addMember,
   undoAddMember,
-  setInitialMembers,
+  setMembers,
 } = memberSlice.actions;
 
 export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };

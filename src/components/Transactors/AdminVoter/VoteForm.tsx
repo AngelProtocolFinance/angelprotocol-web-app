@@ -2,18 +2,15 @@ import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import Fee from "../Fee";
 import Status from "../Status";
-import { Values } from "./types";
+import { AdminVoteValues as V } from "./types";
 import VoteOption from "../VoteOption";
 import useVote from "./useVote";
 
 export default function VoteForm() {
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useFormContext<Values>();
+  const { handleSubmit } = useFormContext<V>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const vote = useVote();
-  const isDisabled = isSubmitting || form_loading || !!form_error;
+  const isDisabled = form_loading || !!form_error;
   return (
     <form
       onSubmit={handleSubmit(vote)}
@@ -22,8 +19,8 @@ export default function VoteForm() {
     >
       <Status />
       <div className="grid grid-cols-2 gap-4 mb-6 mt-2">
-        <VoteOption label="yes" vote="yes" />
-        <VoteOption label="no" vote="no" />
+        <VoteOption<V> label="yes" vote="yes" />
+        <VoteOption<V> label="no" vote="no" />
       </div>
       <Fee />
       <button

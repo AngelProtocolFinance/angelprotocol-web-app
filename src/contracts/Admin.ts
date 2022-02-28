@@ -83,26 +83,29 @@ export default class Admin extends Contract {
     });
   }
 
-  async createProposalTx(
+  createExecProposalMsg(proposal_id: number) {
+    this.checkWallet();
+    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+      execute: {
+        proposal_id,
+      },
+    });
+  }
+
+  createProposalMsg(
     title: string,
     description: string,
     msgs: EmbeddedWasmMsg[],
     latest?: any
   ) {
     this.checkWallet();
-    const proposal_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.apCW3_addr,
-      {
-        propose: {
-          title,
-          description,
-          msgs,
-        },
-      }
-    );
-    const fee = await this.estimateFee([proposal_msg]);
-    return { msgs: [proposal_msg], fee };
+    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+      propose: {
+        title,
+        description,
+        msgs,
+      },
+    });
   }
 
   async createVoteTx(proposal_id: number, vote: Vote) {
@@ -115,20 +118,5 @@ export default class Admin extends Contract {
     });
     const fee = await this.estimateFee([voteMsg]);
     return { msgs: [voteMsg], fee };
-  }
-
-  async createExecProposalTx(proposal_id: number) {
-    this.checkWallet();
-    const proposalExecMsg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.apCW3_addr,
-      {
-        execute: {
-          proposal_id,
-        },
-      }
-    );
-    const fee = await this.estimateFee([proposalExecMsg]);
-    return { msgs: [proposalExecMsg], fee };
   }
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { setInitialMembers } from "services/admin/memberSlice";
+import { setMembers } from "services/admin/memberSlice";
 import { useMembers } from "services/terra/admin/queriers";
 import { useGetter, useSetter } from "store/accessors";
 
@@ -11,7 +11,7 @@ export default function useInitMemberUpdator() {
   useEffect(() => {
     if (members.length > 0) {
       dispatch(
-        setInitialMembers(
+        setMembers(
           members.map((member) => ({
             ...member,
             is_deleted: false,
