@@ -41,7 +41,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 1</Header>
-              <ProofOfIdentityDropzone />
+              <ProofOfIdentity />
               <WebsiteInput />
               <ProofOfRegistration />
             </LevelSection>
@@ -132,7 +132,7 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
   );
 };
 
-function ProofOfIdentityDropzone() {
+function ProofOfIdentity() {
   return (
     <InputRow
       id="proofOfIdentity"
