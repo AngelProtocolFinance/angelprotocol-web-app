@@ -43,7 +43,7 @@ export default function Documentation() {
               <Header>Level 1</Header>
               <ProofOfIdentity />
               <WebsiteInput />
-              {/* <ProofOfRegistration /> */}
+              <ProofOfRegistration />
             </LevelSection>
 
             <LevelSection colored={currentLevel >= 1}>
@@ -60,7 +60,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 2</Header>
-              {/* <FinancialStatements /> */}
+              <FinancialStatements />
             </LevelSection>
             <LevelSection colored={currentLevel >= 2}>
               <Header>Level 2</Header>
@@ -74,7 +74,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 3</Header>
-              {/* <AuditedFinancialReport /> */}
+              <AuditedFinancialReport />
             </LevelSection>
             <LevelSection colored={currentLevel === 3}>
               <Header>Level 3</Header>
@@ -158,6 +158,7 @@ function WebsiteInput() {
       <input
         id="charityWebsite"
         type="text"
+        placeholder="Website URL"
         className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
         {...register("charityWebsite")}
       />
@@ -189,7 +190,7 @@ function FinancialStatements() {
       id="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
-      <FileDropzone name="financialStatements" className="h-8" />
+      <FileDropzone name="financialStatements" className="h-8" multiple />
     </InputRow>
   );
 }
@@ -200,7 +201,7 @@ function AuditedFinancialReport() {
       id="auditedFinancialReport"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone name="auditedFinancialReport" className="h-8" />
+      <FileDropzone name="auditedFinancialReport" className="h-8" multiple />
     </InputRow>
   );
 }
