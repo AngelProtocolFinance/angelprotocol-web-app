@@ -44,6 +44,7 @@ export default function Documentation() {
                 <Header>Level 1</Header>
                 <ProofOfIdentityDropzone />
                 <WebsiteInput />
+                <ProofOfRegistration />
               </LevelSection>
 
               <LevelSection colored={currentLevel >= 1}>
@@ -138,10 +139,10 @@ function ProofOfIdentityDropzone() {
     <InputRow
       id="proofOfIdentity"
       label="Your proof of identity"
-      modal={ProofOfIdentityModal}
+      infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone name="proofOfIdentity" className="h-8" />
+      <FileDropzone name="proofOfIdentity" className="h-10" />
     </InputRow>
   );
 }
@@ -157,7 +158,7 @@ function WebsiteInput() {
       <input
         id="charityWebsite"
         type="text"
-        className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
+        className="h-10 rounded-md outline-none border-none w-full px-2 py-1 text-black"
         {...register("charityWebsite")}
       />
       {errors.charityWebsite?.message && (
@@ -165,6 +166,19 @@ function WebsiteInput() {
           {errors.charityWebsite.message}
         </p>
       )}
+    </InputRow>
+  );
+}
+
+function ProofOfRegistration() {
+  return (
+    <InputRow
+      id="proofOfRegistration"
+      label="Proof of registration as a 501(c)(3)
+      charity or equivalent"
+      required
+    >
+      <FileDropzone name="proofOfRegistration" className="h-10" />
     </InputRow>
   );
 }

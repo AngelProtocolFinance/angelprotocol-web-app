@@ -13,7 +13,7 @@ export default function InputRow(props: InputRowProps) {
   const { id, label, required, infoModal, children } = props;
 
   return (
-    <div className="grid grid-cols-2 gap-2 h-10 items-center">
+    <div className="grid grid-cols-2 gap-2 items-center">
       <div className="flex items-center gap-2">
         <label htmlFor={id} className="hover:cursor-pointer">
           {label}
