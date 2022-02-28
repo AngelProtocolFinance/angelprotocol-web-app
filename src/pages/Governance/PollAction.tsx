@@ -5,7 +5,7 @@ import useDetails from "./useDetails";
 import useVoter from "components/Transactors/Voter/useVoter";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 
-export default function PollAction(props: { poll_id?: string }) {
+export default function PollAction(props: { poll_id: number }) {
   const wallet = useConnectedWallet();
   const details = useDetails(props.poll_id);
   const showPollEnder = usePollEnder(props.poll_id);

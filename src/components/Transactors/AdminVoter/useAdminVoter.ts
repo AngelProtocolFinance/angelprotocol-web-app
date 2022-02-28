@@ -1,18 +1,17 @@
 import { useCallback } from "react";
-import { TxProps } from "components/TransactionSuite/types";
-import TransactionSuite from "components/TransactionSuite/TransactionSuite";
 import { useSetModal } from "components/Modal/Modal";
 import AdminVoter from "./AdminVoter";
 import VoteForm from "./VoteForm";
 import { Props } from "./types";
+import Transactor, { TxProps } from "../Transactor";
 
 export default function useAdminVoter(proposal_id: number) {
   const { showModal } = useSetModal();
   const showVoter = useCallback(() => {
-    showModal<TxProps<Props>>(TransactionSuite, {
+    showModal<TxProps<Props>>(Transactor, {
       inModal: true,
-      Context: AdminVoter,
-      contextProps: { Form: VoteForm, proposal_id },
+      Content: AdminVoter,
+      contentProps: { Form: VoteForm, proposal_id },
     });
     //eslint-disable-next-line
   }, [proposal_id]);

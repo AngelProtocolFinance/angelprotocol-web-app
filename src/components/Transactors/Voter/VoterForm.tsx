@@ -1,25 +1,37 @@
+import { useCallback } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { vote } from "services/transaction/transactors/vote";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
 import Fee from "../Fee";
 import Status from "../Status";
-import Amount from "./Amount";
-import { Values } from "./types";
+import useVoteEstimator from "./useVoteEstimator";
+import { VoteValues } from "./types";
 import VoteOption from "../VoteOption";
-import useVote from "./useVote";
+import Amount from "./Amount";
 
 export default function VoterForm() {
   const {
     handleSubmit,
-    formState: { isSubmitting, isValid, isDirty },
-  } = useFormContext<Values>();
+    formState: { isValid, isDirty },
+  } = useFormContext<VoteValues>();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const vote = useVote();
-  const isDisabled =
-    isSubmitting || form_loading || !!form_error || !isValid || !isDirty;
+  const dispatch = useSetter();
+  const { showModal } = useSetModal();
+
+  const { wallet, tx } = useVoteEstimator();
+  const _vote = useCallback(() => {
+    dispatch(vote({ wallet, tx: tx! }));
+    showModal(TransactionPrompt, {});
+    //eslint-disable-next-line
+  }, [wallet, tx]);
+
+  const isDisabled = form_loading || !!form_error || !isValid || !isDirty;
   return (
     <form
-      onSubmit={handleSubmit(vote)}
-      className="bg-white grid p-4 rounded-md w-full max-w-lg"
+      onSubmit={handleSubmit(_vote)}
+      className="bg-white-grey grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >
       <Status />
@@ -36,7 +48,7 @@ export default function VoterForm() {
       <Fee />
       <button
         disabled={isDisabled}
-        className="bg-angel-orange disabled:bg-grey-accent p-1 rounded-md mt-2 uppercase text-sm text-white font-bold"
+        className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-sm text-white font-bold"
         type="submit"
       >
         {form_loading ? "estimating fee.." : "proceed"}

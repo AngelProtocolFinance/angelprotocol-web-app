@@ -36,6 +36,16 @@ export default function AppMenu() {
           REGISTER
         </a>
       </li>
+      <li>
+        <a
+          rel="noreferrer"
+          target="_blank"
+          href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
+          className={linkStyles.className}
+        >
+          PRIVACY POLICY
+        </a>
+      </li>
     </ul>
   );
 }

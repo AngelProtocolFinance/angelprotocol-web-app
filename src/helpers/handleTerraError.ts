@@ -6,6 +6,7 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
+import { LogDonationFail } from "components/Transactors/Donater/logDonation";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 import { StageUpdator, Step } from "services/transaction/types";
 
@@ -22,6 +23,14 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
     handler({
       step: Step.error,
       message: "Timeout: failed to wait for transaction result.",
+      txHash: error.txHash,
+      chainId: error.chainId as chainIDs,
+    });
+  } else if (error instanceof LogDonationFail) {
+    handler({
+      step: Step.error,
+      message:
+        "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io",
       txHash: error.txHash,
       chainId: error.chainId as chainIDs,
     });

@@ -1,9 +1,10 @@
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
 import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import { VoteValues } from "./Voter/types";
 
 export default function VoteOption(props: { label: string; vote: Vote }) {
-  const { register, watch } = useFormContext<typeof props>();
+  const { register, watch } = useFormContext<VoteValues>();
   const vote = watch("vote");
   if (vote === undefined) {
     throw Error(
@@ -26,8 +27,12 @@ export default function VoteOption(props: { label: string; vote: Vote }) {
   return (
     <div className="grid place-items-center">
       <label
-        className={`grid place-items-center rounded-md p-4 w-full border-2 border-opacity-40 ${
-          is_active ? vote_colors[props.vote].border : "border-angel-grey"
+        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-opacity-10 ${
+          is_active
+            ? `${
+                vote_colors[props.vote].bg
+              } shadow-inner-white-grey pointer-events-none`
+            : "bg-light-grey"
         }`}
         htmlFor={props.label}
       >
@@ -53,12 +58,12 @@ export default function VoteOption(props: { label: string; vote: Vote }) {
 
 const vote_colors: { [key in Vote]: { [index: string]: string } } = {
   yes: {
-    border: "border-green-400",
+    bg: "bg-green-400",
     icon: "text-green-400",
     text: "text-green-400",
   },
   no: {
-    border: "border-red-400",
+    bg: "bg-red-400",
     icon: "text-red-400",
     text: "text-red-400",
   },

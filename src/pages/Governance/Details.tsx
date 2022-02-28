@@ -3,10 +3,11 @@ import { SiHiveBlockchain } from "react-icons/si";
 import useDetails from "./useDetails";
 import PollAction from "./PollAction";
 import { PollStatus } from "services/terra/gov/types";
+import idParamToNumber from "helpers/idParamToNum";
 
 export default function Details(props: RouteComponentProps<{ id?: string }>) {
-  const details = useDetails(props.match.params.id);
-
+  const numPollId = idParamToNumber(props.match.params.id);
+  const details = useDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
       <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-inner text-white text-opacity-60 overflow-hidden">
@@ -28,7 +29,7 @@ export default function Details(props: RouteComponentProps<{ id?: string }>) {
         </div>
         <div className="border-b border-b-2 border-opacity-40 pb-2 flex justify-between mb-6">
           <h3 className="text-xl font-bold text-white">{details.title}</h3>
-          <PollAction poll_id={props.match.params.id} />
+          <PollAction poll_id={numPollId} />
         </div>
         <div className="grid grid-cols-2 gap-6 mb-10">
           <Item title="Creator" value={details.creator} />

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { Values } from "./types";
+import { SwapValues } from "./types";
 
 export default function Slippage() {
   return (
@@ -20,7 +20,7 @@ type OptionProps = {
   id: string;
 };
 function Option(props: OptionProps) {
-  const { register, watch } = useFormContext<Values>();
+  const { register, watch } = useFormContext<SwapValues>();
   const slippage = watch("slippage");
   console.log(slippage);
   const is_active = slippage === props.value;

@@ -42,14 +42,16 @@ export function useGovPolls() {
   return data;
 }
 
-export function useGovPoll(poll_id?: string) {
+export function useGovPoll(poll_id: number) {
   const { useGovPollsQuery } = gov_api;
   const { contract, wallet } = useHaloContract();
   const { data = poll } = useGovPollsQuery(contract.polls, {
     selectFromResult: ({ data }) => ({
-      data: data?.find((poll) => poll.id === +(poll_id || "0")),
+      data: data?.find((poll) => poll.id === poll_id),
     }),
-    skip: wallet && wallet.network.chainID === chainIDs.localterra,
+    skip:
+      poll_id === 0 ||
+      (wallet && wallet.network.chainID === chainIDs.localterra),
   });
   return data;
 }

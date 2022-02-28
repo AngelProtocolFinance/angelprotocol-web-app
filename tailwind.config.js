@@ -47,7 +47,7 @@ module.exports = {
         "angel-grey": "#4F5F6F",
         "grey-accent": "#ADB7BE",
         "white-grey": "#FAFAFA",
-        "light-grey": "#efefef",
+        "light-grey": "#EFEFEF",
         "thin-grey": "#ECEDEE",
         "black-blue": "#252626",
         "leaf-green": "#88B752",

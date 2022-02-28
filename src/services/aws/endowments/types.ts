@@ -51,7 +51,6 @@ export interface Profile {
 }
 
 export type ReadOnlyAttr =
-  | "url"
   | "charity_owner" //terra
   | "endowment_address" //terra
   | "total_liq"
