@@ -60,6 +60,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 2</Header>
+              <FinancialStatements />
             </LevelSection>
             <LevelSection colored={currentLevel >= 2}>
               <Header>Level 2</Header>
@@ -73,6 +74,7 @@ export default function Documentation() {
           <RowContainer>
             <LevelSection>
               <Header>Level 3</Header>
+              <AuditedFinancialReport />
             </LevelSection>
             <LevelSection colored={currentLevel === 3}>
               <Header>Level 3</Header>
@@ -172,11 +174,32 @@ function ProofOfRegistration() {
   return (
     <InputRow
       id="proofOfRegistration"
-      label="Proof of registration as a 501(c)(3)
-      charity or equivalent"
+      label="Proof of registration as a 501(c)(3) charity or equivalent"
       required
     >
       <FileDropzone name="proofOfRegistration" className="h-8" />
+    </InputRow>
+  );
+}
+
+function FinancialStatements() {
+  return (
+    <InputRow
+      id="financialStatements"
+      label="At least one of the last 2 year’s financial statements"
+    >
+      <FileDropzone name="financialStatements" className="h-8" />
+    </InputRow>
+  );
+}
+
+function AuditedFinancialReport() {
+  return (
+    <InputRow
+      id="auditedFinancialReport"
+      label="3rd party audited financial report or published Annual Report"
+    >
+      <FileDropzone name="auditedFinancialReport" className="h-8" />
     </InputRow>
   );
 }
