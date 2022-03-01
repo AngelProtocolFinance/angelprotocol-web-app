@@ -17,7 +17,7 @@ const COMMON_FILE_SCHEMA = Yup.mixed<File>()
   .test({
     name: "fileSize",
     message: "File size must be smaller than 25Mb",
-    test: (file) => (file?.size || 0) <= 25000000,
+    test: (file) => (file?.size || 0) <= 250,
   })
   .test({
     name: "fileType",
@@ -26,10 +26,13 @@ const COMMON_FILE_SCHEMA = Yup.mixed<File>()
   });
 
 export const Schema = Yup.object({
-  proofOfIdentity: COMMON_FILE_SCHEMA.required("Proof of identity required"),
-  proofOfRegistration: COMMON_FILE_SCHEMA.required(
-    "Proof of registration required"
-  ),
+  // Concatenate schemas to first perform the 'required' check
+  proofOfIdentity: Yup.mixed()
+    .required("Proof of identity required")
+    .concat(COMMON_FILE_SCHEMA),
+  proofOfRegistration: Yup.mixed()
+    .required("Proof of registration required")
+    .concat(COMMON_FILE_SCHEMA),
   financialStatements: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   auditedFinancialReport: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   charityWebsite: Yup.string().required("Organization website required"),
