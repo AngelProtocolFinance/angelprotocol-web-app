@@ -45,22 +45,44 @@ describe("<App/> renders correctly", () => {
     const giveForever = "GIVE FOREVER.";
     expect(screen.queryByText(giveOnce)).toBeInTheDocument();
     expect(screen.queryByText(giveForever)).toBeInTheDocument();
+    const navItem = await screen.findByText(/Marketplace/i);
+    expect(navItem).toBeInTheDocument();
+    expect(navItem.getAttribute("aria-current")).toBe("page");
   });
+});
 
-  test("Routes to governance page", async () => {
+describe("<App /> routing works correctly", () => {
+  beforeEach(() => {
     render(
       <Wrapper>
         <Route path={site.app} component={App} />
       </Wrapper>
     );
+  });
+
+  test("Routes to governance page", async () => {
     const navigator = screen.getByText("Governance");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
     userEvent.click(navigator);
 
     // governance page is rendered
-    expect(await screen.findByText("Governance")).toBeInTheDocument();
+    const navItem = await screen.findByText(/Governance/i);
+    expect(navItem).toBeInTheDocument();
+    expect(navItem.getAttribute("aria-current")).toBe("page");
     expect(await screen.findByText("total staked")).toBeInTheDocument();
     expect(await screen.findByText("Trade Halo")).toBeInTheDocument();
+  });
+
+  test("Routes to Leaderboard page", async () => {
+    const navigator = screen.getByText("Leaderboard");
+    expect(navigator).toBeInTheDocument();
+    // click the NavLink item
+    userEvent.click(navigator);
+
+    // Leaderboard page is rendered
+    const navItem = await screen.findByText(/Leaderboard/i);
+    expect(navItem).toBeInTheDocument();
+    expect(navItem.getAttribute("aria-current")).toBe("page");
   });
 });
