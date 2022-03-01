@@ -17,7 +17,7 @@ const COMMON_FILE_SCHEMA = Yup.mixed<File>()
   .test({
     name: "fileSize",
     message: "File size must be smaller than 25Mb",
-    test: (file) => (file?.size || 0) <= 250,
+    test: (file) => (file?.size || 0) <= 25000000,
   })
   .test({
     name: "fileType",
