@@ -1,8 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
-import { FormProvider, useForm, UseFormReturn } from "react-hook-form";
+import { FormProvider, FormProviderProps, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { useGetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
 import {
@@ -19,21 +18,18 @@ import { FormValues, Schema } from "./types";
 import useCurrentLevel from "./useCurrentLevel";
 
 export default function Documentation() {
-  const history = useHistory();
-  const user = useGetter((state) => state.user);
-
   const methods = useForm<FormValues>({
     resolver: yupResolver(Schema),
     mode: "onChange",
   });
-
   const currentLevel = useCurrentLevel(methods);
+  const history = useHistory();
 
   return (
-    <div className="flex flex-col gap-2 w-full h-full items-center text-left">
+    <Container>
       <Title level={currentLevel} />
 
-      <Form methods={methods}>
+      <DocumentationFormProvider {...methods}>
         <RowContainer>
           <LevelSection>
             <Header>Level 1</Header>
@@ -84,7 +80,7 @@ export default function Documentation() {
         </RowContainer>
 
         <div className="flex flex-col gap-1 w-full">
-          <AuthorityToCreateCheckbox charityName={user.CharityName} />
+          <AuthorityToCreateCheckbox />
           <PrivacyPolicyCheckbox />
         </div>
 
@@ -104,10 +100,16 @@ export default function Documentation() {
             Upload
           </Button>
         </div>
-      </Form>
-    </div>
+      </DocumentationFormProvider>
+    </Container>
   );
 }
+
+const Container = ({ children }: PropsWithChildren<{}>) => (
+  <div className="flex flex-col gap-2 w-full h-full items-center text-left">
+    {children}
+  </div>
+);
 
 const Header = ({ children }: PropsWithChildren<{}>) => (
   <h3 className="text-lg font-bold">{children}</h3>
@@ -131,6 +133,23 @@ const Title = ({ level }: { level: number }) => (
   </RowContainer>
 );
 
+type ProviderProps = PropsWithChildren<FormProviderProps<FormValues>>;
+
+function DocumentationFormProvider(props: ProviderProps) {
+  const { children, ...methods } = props;
+
+  return (
+    <FormProvider {...methods}>
+      <form
+        className="flex flex-col w-full h-full gap-4 items-center"
+        onSubmit={methods.handleSubmit((values) => console.log(values))}
+      >
+        {children}
+      </form>
+    </FormProvider>
+  );
+}
+
 type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
 
 const LevelSection = ({ colored, children }: LevelSectionProps) => {
@@ -141,21 +160,5 @@ const LevelSection = ({ colored, children }: LevelSectionProps) => {
     <div className={`flex flex-col text-left p-1 gap-3 ${styles}`}>
       {children}
     </div>
-  );
-};
-
-const Form = ({
-  methods,
-  children,
-}: PropsWithChildren<{ methods: UseFormReturn<FormValues, any> }>) => {
-  return (
-    <FormProvider {...methods}>
-      <form
-        className="flex flex-col w-full h-full gap-4 items-center"
-        onSubmit={methods.handleSubmit((values) => console.log(values))}
-      >
-        {children}
-      </form>
-    </FormProvider>
   );
 };

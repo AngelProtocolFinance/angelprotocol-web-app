@@ -1,14 +1,15 @@
 import Checkbox from "components/Checkbox";
 import { useFormContext } from "react-hook-form";
+import { useGetter } from "store/accessors";
 import { FormValues } from "../types";
 
-type Props = { charityName: string };
-
-export default function AuthorityToCreateCheckbox({ charityName }: Props) {
+export default function AuthorityToCreateCheckbox() {
   const {
     register,
     formState: { errors },
   } = useFormContext<FormValues>();
+
+  const user = useGetter((state) => state.user);
 
   return (
     <Checkbox
@@ -16,7 +17,7 @@ export default function AuthorityToCreateCheckbox({ charityName }: Props) {
       {...register("checkedAuthority")}
     >
       {`By checking this box, you declare that you have the authority to create an
-        endowment in the name of ${charityName} through Angel Protocol`}
+        endowment in the name of ${user.CharityName} through Angel Protocol`}
       <span className="text-failed-red ml-0.5">*</span>
     </Checkbox>
   );
