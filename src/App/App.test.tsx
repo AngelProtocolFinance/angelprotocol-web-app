@@ -69,7 +69,7 @@ describe("<App /> routing works correctly", () => {
     // governance page is rendered
     const navItem = await screen.findByText(/Governance/i);
     expect(navItem).toBeInTheDocument();
-    expect(navItem.getAttribute("aria-current")).toBe("page");
+    expect(navItem).toHaveAttribute("aria-current");
     expect(await screen.findByText("total staked")).toBeInTheDocument();
     expect(await screen.findByText("Trade Halo")).toBeInTheDocument();
   });
@@ -83,6 +83,6 @@ describe("<App /> routing works correctly", () => {
     // Leaderboard page is rendered
     const navItem = await screen.findByText(/Leaderboard/i);
     expect(navItem).toBeInTheDocument();
-    expect(navItem.getAttribute("aria-current")).toBe("page");
+    expect(navItem).toHaveAttribute("aria-current");
   });
 });
