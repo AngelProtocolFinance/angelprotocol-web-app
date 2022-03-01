@@ -1,6 +1,6 @@
 import Checkbox from "components/Checkbox";
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "./types";
+import { FormValues } from "../types";
 
 type Props = { charityName: string };
 

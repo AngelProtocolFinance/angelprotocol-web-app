@@ -2,11 +2,9 @@ import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
 import { FormValues } from "./types";
 
-export default function useCurrentLevel(
-  methods: UseFormReturn<FormValues, any>
-) {
-  const { getFieldState } = methods;
-
+export default function useCurrentLevel({
+  getFieldState,
+}: UseFormReturn<FormValues, any>) {
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const proofOfIdentityState = getFieldState("proofOfIdentity");

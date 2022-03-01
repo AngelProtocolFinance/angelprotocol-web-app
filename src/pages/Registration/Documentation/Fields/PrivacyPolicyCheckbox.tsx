@@ -2,7 +2,7 @@ import Checkbox from "components/Checkbox";
 import { site, web } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { FormValues } from "./types";
+import { FormValues } from "../types";
 
 export default function PrivacyPolicyCheckbox() {
   const {
