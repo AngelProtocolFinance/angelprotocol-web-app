@@ -10,12 +10,12 @@ export default function AuditedFinancialReport() {
 
   return (
     <InputRow
-      id="auditedFinancialReport"
+      id="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone name="auditedFinancialReport" className="h-8" multiple />
-      {!!errors.auditedFinancialReport?.length &&
-        errors.auditedFinancialReport
+      <FileDropzone name="auditedFinancialReports" className="h-8" multiple />
+      {!!errors.auditedFinancialReports?.length &&
+        errors.auditedFinancialReports
           .map((fieldError) => fieldError.message)
           .filter(checkUnique)
           .map((message) => (

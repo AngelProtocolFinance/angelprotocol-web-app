@@ -12,7 +12,7 @@ export default function useCurrentLevel({
   const proofOfRegistrationState = getFieldState("proofOfRegistration");
   const unSdgState = getFieldState("un_sdg");
   const financialStatementsState = getFieldState("financialStatements");
-  const auditedFinancialReportState = getFieldState("auditedFinancialReport");
+  const auditedFinancialReportState = getFieldState("auditedFinancialReports");
 
   useEffect(() => {
     let newLevel = 0;

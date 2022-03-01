@@ -6,7 +6,7 @@ import { useGetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
 import {
-  AuditedFinancialReport,
+  AuditedFinancialReports,
   AuthorityToCreateCheckbox,
   FinancialStatements,
   PrivacyPolicyCheckbox,
@@ -71,7 +71,7 @@ export default function Documentation() {
         <RowContainer>
           <LevelSection>
             <Header>Level 3</Header>
-            <AuditedFinancialReport />
+            <AuditedFinancialReports />
           </LevelSection>
           <LevelSection colored={currentLevel === 3}>
             <Header>Level 3</Header>
