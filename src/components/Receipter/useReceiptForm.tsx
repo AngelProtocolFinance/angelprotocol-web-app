@@ -23,31 +23,23 @@ export default function useReceiptForm() {
     setProcessing(false);
 
     if (response.data) {
-      if (fromDonor) {
-        updateTx({
-          step: Step.success,
-          message:
-            "Receipt successfully updated, Your receipt will be sent to your email address",
-          txHash,
-          chainId,
-        });
-        showModal(TransactionPrompt, {});
-      } else {
-        updateTx({
-          step: Step.success,
-          message:
-            "Receipt request successfully sent, Your receipt will be sent to your email address",
-          txHash,
-          chainId,
-        });
-      }
-    } else {
       updateTx({
-        step: Step.error,
-        message: "Error processing your receipt",
+        step: Step.success,
+        message: `Receipt request successfully ${
+          fromDonor ? "updated" : "sent"
+        }, Your receipt will be sent to your email address`,
         txHash,
         chainId,
       });
+      fromDonor && showModal(TransactionPrompt, {});
+    } else {
+      updateTx({
+        step: Step.error,
+        message: `Error processing your receipt ${fromDonor && "update"}`,
+        txHash,
+        chainId,
+      });
+      fromDonor && showModal(TransactionPrompt, {});
     }
   };
 
