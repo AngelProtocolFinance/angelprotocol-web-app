@@ -25,8 +25,8 @@ export default function useReceiptForm() {
     if (response.data) {
       updateTx({
         step: Step.success,
-        message: `Receipt request successfully ${
-          fromDonor ? "updated" : "sent"
+        message: `Receipt request ${
+          fromDonor ? "changes were applied" : "successfully sent"
         }, Your receipt will be sent to your email address`,
         txHash,
         chainId,
