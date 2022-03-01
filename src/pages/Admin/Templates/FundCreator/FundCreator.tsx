@@ -3,6 +3,8 @@ import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { fundCreatorSchema, FundCreatorValues } from "./fundCreatorSchema";
 
+export const INIT_SPLIT = "-1";
+
 export default function FundCreator(props: { children: ReactNode }) {
   const methods = useForm<FundCreatorValues>({
     resolver: yupResolver(fundCreatorSchema),
@@ -10,7 +12,8 @@ export default function FundCreator(props: { children: ReactNode }) {
     reValidateMode: "onChange",
     defaultValues: {
       title: "Create fund",
-      expiryTime: new Date().toISOString().substr(0, 16),
+      isFundRotating: true,
+      splitToLiquid: INIT_SPLIT,
     },
   });
 

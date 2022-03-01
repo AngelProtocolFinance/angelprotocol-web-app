@@ -74,7 +74,7 @@ export default class Admin extends Contract {
   }
 
   //execute message creators
-  createUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
+  createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
     return this.createdEmbeddedWasmMsg([], this.apCW4_addr, {
       update_members: {
         add: to_add,
@@ -95,7 +95,7 @@ export default class Admin extends Contract {
   createProposalMsg(
     title: string,
     description: string,
-    msgs: EmbeddedWasmMsg[],
+    embeddedMsgs: EmbeddedWasmMsg[],
     latest?: any
   ) {
     this.checkWallet();
@@ -103,7 +103,7 @@ export default class Admin extends Contract {
       propose: {
         title,
         description,
-        msgs,
+        msgs: embeddedMsgs,
       },
     });
   }

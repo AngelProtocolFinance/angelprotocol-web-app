@@ -11,6 +11,7 @@ import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
+import { FundDetails, FundsListRes } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -21,6 +22,18 @@ export default class Indexfund extends Contract {
     super(wallet);
     this.fund_id = fund_id;
     this.address = contracts[this.chainID][sc.index_fund];
+  }
+
+  //on demand queries
+
+  getFundList() {
+    return this.query<FundsListRes>(this.address, { funds_list: {} });
+  }
+
+  createEmbeddedCreateFundMsg(fundDetails: FundDetails) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      create_fund: { fund: fundDetails },
+    });
   }
 
   async createDepositTx(

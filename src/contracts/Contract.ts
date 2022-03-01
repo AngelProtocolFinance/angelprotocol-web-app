@@ -1,5 +1,4 @@
 import {
-  AccAddress,
   Coin,
   LCDClient,
   Msg,
@@ -19,7 +18,7 @@ export default class Contract {
   client: LCDClient;
   chainID: string;
   url: string;
-  walletAddr?: AccAddress;
+  walletAddr?: string;
 
   constructor(wallet?: ConnectedWallet) {
     this.wallet = wallet;
@@ -44,7 +43,8 @@ export default class Contract {
     new Coin(denoms.uluna, 0.01133),
   ];
 
-  async query<T>(source: AccAddress, message: object) {
+  //for on-demand query, use RTK where possible
+  async query<T>(source: string, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 

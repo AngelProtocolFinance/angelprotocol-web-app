@@ -10,7 +10,7 @@ import Admin from "contracts/Admin";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
-  const { trigger, reset } = useFormContext<MemberUpdatorValues>();
+  const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
   const wallet = useConnectedWallet();
   const membersCopy = useGetter((state) => state.admin.members);
   const { showModal } = useSetModal();
@@ -46,11 +46,18 @@ export default function useUpdateMembers() {
       return;
     }
     const contract = new Admin(wallet);
-    const execute_msg = contract.createUpdateMembersMsg(to_add, to_remove);
+    const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
+      to_add,
+      to_remove
+    );
+
+    const proposalTitle = getValues("title");
+    const proposalDescription = getValues("description");
+
     const proposalMsg = contract.createProposalMsg(
-      "update member",
-      "to update member",
-      [execute_msg]
+      proposalTitle,
+      proposalDescription,
+      [embeddedExecuteMsg]
     );
 
     dispatch(

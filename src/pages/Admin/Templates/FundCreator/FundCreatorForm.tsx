@@ -3,6 +3,7 @@ import Label from "../../Label";
 import { FundCreatorValues as V } from "./fundCreatorSchema";
 import { useFormContext } from "react-hook-form";
 import useCreateFund from "./useCreateFund";
+import { INIT_SPLIT } from "./FundCreator";
 
 export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
@@ -45,7 +46,7 @@ export default function FundCreatorForm() {
       </div>
 
       <Label text="add members" textColor="text-green-400" />
-      <p>show members here with x</p>
+
       <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
         <TextInput
           title="endowment address"
@@ -54,6 +55,7 @@ export default function FundCreatorForm() {
           plain
           mono
         />
+        <p>show members here with x</p>
         <button className="justify-self-end text-green-400 font-bold text-sm">
           + add member
         </button>
@@ -71,11 +73,24 @@ export default function FundCreatorForm() {
 }
 
 function Slider() {
-  const { register } = useFormContext<V>();
+  const { register, watch, setValue } = useFormContext<V>();
+  const splitToLiq = watch("splitToLiquid");
+
+  function unspecifySplit() {
+    setValue("splitToLiquid", INIT_SPLIT);
+  }
+
   return (
     <div className="text-angel-grey grid mt-6">
-      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey">
-        MAX % TO LIQUID ACCOUNT
+      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none">
+        <span className="text-base font-bold mr-1">%</span>
+        <span>SPLIT TO LIQUID ACCOUNT</span>
+        <span className="font-mono font-bold text-green-500 ml-2 text-base ">
+          [{splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}]
+        </span>
+        <button onClick={unspecifySplit} className="font-mono">
+          reset
+        </button>
       </label>
       <input
         {...register("splitToLiquid")}
@@ -92,9 +107,18 @@ function CheckInput() {
   const { register } = useFormContext<V>();
   return (
     <div className="text-angel-grey flex items-center mt-6">
-      <input {...register("isFundRotating")} type="checkbox" className="mr-2" />
-      <label className="text-xs font-heading uppercase font-bold text-angel-grey">
-        this fund rotates
+      <input
+        {...register("isFundRotating")}
+        type="checkbox"
+        className="mr-2"
+        id="__checkInput"
+      />
+      <label
+        htmlFor="__checkInput"
+        className="text-xs font-heading uppercase font-bold text-angel-grey
+        select-none cursor-pointer"
+      >
+        included on fund rotation
       </label>
     </div>
   );
@@ -104,11 +128,15 @@ function DateInput() {
   const { register } = useFormContext<V>();
   return (
     <div className="text-angel-grey grid">
-      <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey">
+      <label
+        htmlFor="__dateInput"
+        className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none"
+      >
         Expiry time
       </label>
       <input
         {...register("expiryTime")}
+        id="__dateInput"
         type="datetime-local"
         className="bg-light-grey border-b-2 border-opacity-30 border-angel-grey 
         rounded-none pb-1 focus:outline-none"

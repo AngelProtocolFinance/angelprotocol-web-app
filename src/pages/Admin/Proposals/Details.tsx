@@ -38,12 +38,12 @@ export default function Details(props: RouteComponentProps<ProposalIdParam>) {
         {proposal.msgs.map((msg, i) => (
           <RawBlock key={i} {...msg} />
         ))}
-        <h4 className="font-bold text-lg text-white py-2 border-b-2 border-opacity-10 uppercase">
-          <span>Votes</span>
-          <span className="normal-case font-normal font-body text-green-100 tracking-wide text-xs">
+        <h4 className="font-bold text-lg text-white py-2 border-b-2 border-opacity-10">
+          <span className="uppercase">Votes</span>
+          <span className="font-mono font-normal text-green-100 tracking-wide text-xs">
             {" "}
-            (needs {+proposal.threshold.absolute_percentage.percentage * 100}%
-            YES to pass)
+            {+proposal.threshold.absolute_percentage.percentage * 100}% YES to
+            pass
           </span>
         </h4>
         <Votes {...proposalDetails} />

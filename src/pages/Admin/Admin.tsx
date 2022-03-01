@@ -8,7 +8,7 @@ import Dashboard from "./Dashboard";
 import Proposer from "./Proposer";
 import Details from "./Proposals/Details";
 
-const Admin = () => {
+export default function Admin() {
   const wallet = useConnectedWallet();
   //{match.path} is '/admin'
   const { member, isMemberLoading } = useMember();
@@ -28,9 +28,7 @@ const Admin = () => {
       <Route exact path={`${path}/${admin.index}`} component={Dashboard} />
     </Switch>
   );
-};
-
-export default Admin;
+}
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {
   return (

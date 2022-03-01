@@ -30,3 +30,19 @@ export type PollExecuteMsg = {
   contract: string;
   msg: string;
 };
+
+//IndexFund
+export type FundDetails = {
+  id: number;
+  name: string;
+  description: string;
+  members: string[];
+  rotating_fund?: boolean;
+  split_to_liquid?: number; //0.63
+  expiry_time?: number; //epoch time
+  expiry_height?: number; //block height
+};
+
+export type FundsListRes = {
+  funds: FundDetails[];
+};
