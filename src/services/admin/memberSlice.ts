@@ -7,9 +7,8 @@ const memberSlice = createSlice({
   name: "admin/members",
   initialState,
   reducers: {
-    setMembers: (state, { payload }: PayloadAction<MemberCopy[]>) => {
-      return payload;
-    },
+    setMembers: (_, { payload }: PayloadAction<MemberCopy[]>) => payload,
+
     toggleDeleteExistingMember: (state, { payload }: PayloadAction<string>) => {
       const memberToMark = state.find((member) => member.addr === payload);
       //markDelete is triggered from list rendered by this state

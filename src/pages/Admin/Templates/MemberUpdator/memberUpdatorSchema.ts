@@ -19,7 +19,8 @@ const memberUpdateShape: PartialRecord<
     ),
   weight: Yup.number()
     .required("weight is required")
-    .typeError("weight must be a number"),
+    .typeError("weight must be a number")
+    .positive("invalid weight"),
 };
 
 export const memberUpdatorSchema = Yup.object(memberUpdateShape);

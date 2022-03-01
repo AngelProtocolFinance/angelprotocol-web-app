@@ -1,7 +1,8 @@
+import { useFormContext } from "react-hook-form";
 import TextInput from "../../TextInput";
 import Label from "../../Label";
 import { FundCreatorValues as V } from "./fundCreatorSchema";
-import { useFormContext } from "react-hook-form";
+import MemberAdder from "./MemberAdder/MemberAdder";
 import useCreateFund from "./useCreateFund";
 import { INIT_SPLIT } from "./FundCreator";
 
@@ -47,19 +48,7 @@ export default function FundCreatorForm() {
 
       <Label text="add members" textColor="text-green-400" />
 
-      <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
-        <TextInput
-          title="endowment address"
-          name="name"
-          placeholder="terra123abc..."
-          plain
-          mono
-        />
-        <p>show members here with x</p>
-        <button className="justify-self-end text-green-400 font-bold text-sm">
-          + add member
-        </button>
-      </div>
+      <MemberAdder />
 
       <button
         type="button"

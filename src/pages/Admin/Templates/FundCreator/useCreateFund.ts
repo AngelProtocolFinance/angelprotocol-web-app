@@ -7,13 +7,14 @@ import { sendTerraTx } from "services/transaction/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const dispatch = useSetter();
+  const newFundMembers = useGetter((state) => state.admin.fundMembers);
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
 
@@ -53,8 +54,8 @@ export default function useCreateFund() {
       id: maxFundId + 1,
       name: fundName,
       description: fundDescription,
-      members: [],
-      rotating_fund: isFundRotating,
+      members: newFundMembers,
+      rotating_fund: isFundRotating || undefined,
       split_to_liquid:
         splitToLiquid === INIT_SPLIT
           ? undefined
