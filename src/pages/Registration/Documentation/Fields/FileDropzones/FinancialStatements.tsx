@@ -15,14 +15,26 @@ export default function FinancialStatements() {
     >
       <FileDropzone name="financialStatements" className="h-8" multiple />
       {!!errors.financialStatements?.length &&
-        errors.financialStatements.map((fieldError) => (
-          <p
-            key={fieldError.message}
-            className="w-full text-xs text-failed-red text-center"
-          >
-            {fieldError.message}
-          </p>
-        ))}
+        errors.financialStatements
+          .map((fieldError) => fieldError.message)
+          .filter(checkUnique)
+          .map((message) => (
+            <p
+              key={message}
+              className="w-full text-xs text-failed-red text-center"
+            >
+              {message}
+            </p>
+          ))}
     </InputRow>
   );
+}
+
+// Checks, if the given value is the first occurring. If not, it must be a duplicate.
+function checkUnique(
+  value: string | undefined,
+  index: number,
+  self: (string | undefined)[]
+) {
+  return self.indexOf(value) === index;
 }
