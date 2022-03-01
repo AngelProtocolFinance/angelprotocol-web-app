@@ -2,6 +2,10 @@ name: JavaScript
 
 on:
   push:
+  pull_request:
+    branches:
+    - main
+    - staging
 
 jobs:
   lint:
