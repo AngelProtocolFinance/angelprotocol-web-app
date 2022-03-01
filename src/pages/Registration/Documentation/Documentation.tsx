@@ -13,13 +13,18 @@ import InputRow from "./InputRow";
 import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import ProofOfIdentityModal from "./ProofOfIdentityModal";
 import { FormValues, Schema } from "./types";
-
-let currentLevel = 0;
+import useCurrentLevel from "./useCurrentLevel";
 
 export default function Documentation() {
   const history = useHistory();
   const user = useGetter((state) => state.user);
-  const methods = useForm<FormValues>({ resolver: yupResolver(Schema) });
+
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(Schema),
+    mode: "onChange",
+  });
+
+  const currentLevel = useCurrentLevel(methods);
 
   return (
     <div className="flex flex-col gap-2 w-full h-full items-center text-left">
