@@ -35,7 +35,9 @@ export const Schema = Yup.object({
     .concat(COMMON_FILE_SCHEMA),
   financialStatements: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   auditedFinancialReports: Yup.array<File>().of(COMMON_FILE_SCHEMA),
-  charityWebsite: Yup.string().required("Organization website required"),
+  charityWebsite: Yup.string()
+    .required("Organization website required")
+    .url("Must be a valid URL"),
   un_sdg: Yup.number().min(0),
   checkedAuthority: Yup.bool().isTrue("Authority checkbox must be checked"),
   checkedPolicy: Yup.bool().isTrue("Policy checkbox must be checked"),
