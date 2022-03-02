@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.17.2",
-    "@craco/craco": "^6.2.0",
+    "@craco/craco": "^6.4.3",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",
     "@reduxjs/toolkit": "^1.7.1",
@@ -94,7 +94,8 @@
     "postcss": "^8",
     "prettier": "^2.3.2",
     "prop-types": "^15.8.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@2.2.17"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@2.2.17",
+    "ts-node": "^10.6.0"
   },
   "packageManager": "yarn@3.1.1",
   "engines": {
