@@ -1,13 +1,14 @@
 import TextInput from "../../TextInput";
-import useInitForm from "./useInitForm";
+import useInitMembers from "./useInitMembers";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
 import Label from "../../Label";
 import MemberAdder from "./MemberAdder/MemberAdder";
+import Loader from "components/Loader/Loader";
 
 export default function MemberUpdateForm() {
-  const { membersCopy } = useInitForm();
+  const { membersCopy, isMembersLoading } = useInitMembers();
   const { updateMembers } = useUpdateMembers();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
@@ -21,11 +22,19 @@ export default function MemberUpdateForm() {
 
       <Label text="remove member" textColor="text-red-400" />
       <div className="mb-7 p-3 rounded-md bg-light-grey shadow-inner-white-grey">
-        <div className="flex flex-col gap-2 mb-2">
-          {membersCopy.map((member) => (
-            <MemberItem key={member.addr} {...member} />
-          ))}
-        </div>
+        {(isMembersLoading && (
+          <Loader
+            gapClass="gap-1"
+            widthClass="w-2"
+            bgColorClass="bg-angel-grey"
+          />
+        )) || (
+          <div className="flex flex-col gap-2 mb-2">
+            {membersCopy.map((member) => (
+              <MemberItem key={member.addr} {...member} />
+            ))}
+          </div>
+        )}
       </div>
 
       <Label text="add member" textColor="text-green-400" />
