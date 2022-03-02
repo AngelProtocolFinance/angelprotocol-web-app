@@ -10,44 +10,20 @@ export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
-      <TextInput title="Proposal Title" name="title" placeholder="title" />
-      <TextInput
-        title="proposal description"
-        name="description"
-        placeholder="tell something about your proposal"
-        wide
+      <TextInput title="Proposal Title" name="title" />
+      <TextInput title="proposal description" name="description" wide />
+      <TextInput<V> title="fund name" name="fundName" />
+      <TextInput<V> title="fund description" name="fundDescription" wide />
+      <TextInput<V>
+        title="expiry height"
+        name="expiryHeight"
+        placeholder="700992312"
+        mono
       />
-
-      <Label text="fund details" textColor="text-angel-orange" />
-      <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3  mb-6">
-        <TextInput<V>
-          title="name"
-          name="fundName"
-          placeholder="A wonderful fund name"
-          plain
-        />
-        <TextInput<V>
-          title="description"
-          name="fundDescription"
-          placeholder="A little something about the fund.."
-          wide
-          plain
-        />
-        <TextInput<V>
-          title="expiry height"
-          name="expiryHeight"
-          placeholder="700992312"
-          plain
-          mono
-        />
-        <DateInput />
-        <Slider />
-
-        <CheckInput />
-      </div>
-
+      <DateInput />
+      <Slider />
+      <CheckInput />
       <Label text="add members" textColor="text-green-400" />
-
       <MemberAdder />
 
       <button
@@ -72,22 +48,24 @@ function Slider() {
   return (
     <div className="text-angel-grey grid mt-6">
       <label className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey select-none">
-        <span className="text-base font-bold mr-1">%</span>
         <span>SPLIT TO LIQUID ACCOUNT</span>
-        <span className="font-mono font-bold text-green-500 ml-2 text-base ">
-          [{splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}]
+        <span className="font-mono font-bold text-green-500 ml-2 text-base">
+          {splitToLiq === INIT_SPLIT ? "--" : splitToLiq + "%"}
         </span>
-        <button onClick={unspecifySplit} className="font-mono">
+        <button onClick={unspecifySplit} className="font-mono ml-1">
           reset
         </button>
       </label>
-      <input
-        {...register("splitToLiquid")}
-        type="range"
-        min="0"
-        max="100"
-        step="1"
-      />
+      <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+        <input
+          {...register("splitToLiquid")}
+          className="w-full"
+          type="range"
+          min="0"
+          max="100"
+          step="1"
+        />
+      </div>
     </div>
   );
 }
@@ -95,7 +73,10 @@ function Slider() {
 function CheckInput() {
   const { register } = useFormContext<V>();
   return (
-    <div className="text-angel-grey flex items-center mt-6">
+    <div
+      className="text-angel-grey flex items-center p-3 rounded-md 
+    shadow-inner-white-grey bg-light-grey my-6"
+    >
       <input
         {...register("isFundRotating")}
         type="checkbox"
@@ -127,8 +108,8 @@ function DateInput() {
         {...register("expiryTime")}
         id="__dateInput"
         type="datetime-local"
-        className="bg-light-grey border-b-2 border-opacity-30 border-angel-grey 
-        rounded-none pb-1 focus:outline-none"
+        className="font-mono uppercase bg-light-grey shadow-inner-white-grey 
+        rounded-md p-3 focus:outline-none"
       />
     </div>
   );

@@ -1,31 +1,10 @@
 import TextInput from "pages/Admin/TextInput";
-import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { addFundMember } from "services/admin/fundMemberSlice";
-import { useGetter } from "store/accessors";
 import { FundCreatorValues as V } from "../fundCreatorSchema";
 import MemberItem from "./MemberItem";
+import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
-  const { getValues, setError, resetField } = useFormContext<V>();
-  const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const dispatch = useDispatch();
-
-  function addMember() {
-    const newFundMemberAddr = getValues("newFundAddr");
-    const isMemberExisting = fundMembers.indexOf(newFundMemberAddr) !== -1;
-
-    if (isMemberExisting) {
-      setError(
-        "newFundAddr",
-        { message: "address already added" },
-        { shouldFocus: true }
-      );
-      return;
-    }
-    dispatch(addFundMember(newFundMemberAddr));
-    resetField("newFundAddr");
-  }
+  const { addMember, fundMembers } = useAddMember();
 
   return (
     <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
@@ -36,7 +15,6 @@ export default function MemberAdder() {
           ))}
         </div>
       )}
-
       <TextInput<V>
         title="endowment address"
         name="newFundAddr"

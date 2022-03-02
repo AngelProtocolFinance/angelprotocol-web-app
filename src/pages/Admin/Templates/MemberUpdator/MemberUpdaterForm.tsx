@@ -11,13 +11,8 @@ export default function MemberUpdateForm() {
   const { updateMembers } = useUpdateMembers();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
-      <TextInput<T> title="proposal title" name="title" placeholder="title" />
-      <TextInput<T>
-        title="proposal description"
-        name="description"
-        placeholder="tell something about your proposal"
-        wide
-      />
+      <TextInput<T> title="proposal title" name="title" />
+      <TextInput<T> title="proposal description" name="description" wide />
 
       <Label text="remove member" textColor="text-red-400" />
       <div className="mb-7 p-3 rounded-md bg-light-grey shadow-inner-white-grey">

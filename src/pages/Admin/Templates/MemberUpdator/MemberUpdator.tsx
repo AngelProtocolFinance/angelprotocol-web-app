@@ -13,7 +13,6 @@ export default function MemberUpdator(props: { children: ReactNode }) {
     defaultValues: {
       addr: "",
       weight: "1",
-      title: "Update members",
     },
     resolver: yupResolver(memberUpdatorSchema),
   });

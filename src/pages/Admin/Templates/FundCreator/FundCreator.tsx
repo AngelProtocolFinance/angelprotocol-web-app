@@ -11,7 +11,6 @@ export default function FundCreator(props: { children: ReactNode }) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      title: "Create fund",
       splitToLiquid: INIT_SPLIT,
     },
   });

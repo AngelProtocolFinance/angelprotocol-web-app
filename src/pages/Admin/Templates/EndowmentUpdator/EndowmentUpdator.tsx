@@ -6,7 +6,6 @@ export default function EndowmentUpdator(props: { children: ReactNode }) {
     defaultValues: {
       addr: "",
       weight: "1",
-      title: "Update endowment status",
     },
   });
 

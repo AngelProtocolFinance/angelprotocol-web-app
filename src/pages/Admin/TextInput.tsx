@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 
 export default function TextInput<T extends object>(props: {
   title: string;
-  placeholder: string;
+  placeholder?: string;
   name: keyof T;
   mono?: true;
   wide?: true;
@@ -28,7 +28,7 @@ export default function TextInput<T extends object>(props: {
         id: `__${props.name}`,
         className: `${
           props.mono ? "font-mono" : ""
-        } text-angel-grey focus:outline-none placeholder:text-grey-accent ${
+        } text-black focus:outline-none ${
           props.plain
             ? "bg-light-grey border-b-2 border-opacity-30 border-angel-grey rounded-none pb-1"
             : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
