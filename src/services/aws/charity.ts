@@ -1,6 +1,6 @@
 import { aws } from "./aws";
 
-const charity_api = aws.injectEndpoints({
+export const charity_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     addCharityMetadata: builder.mutation<any, any>({
       query: (data) => {
@@ -45,10 +45,3 @@ const charity_api = aws.injectEndpoints({
     }),
   }),
 });
-
-export const {
-  useAddCharityMetadataMutation,
-  useGetCharityDataQuery,
-  useGetCharityListEndowmentQuery,
-  useUpdateCharityMetadataMutation,
-} = charity_api;

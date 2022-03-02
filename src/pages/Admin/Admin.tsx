@@ -4,13 +4,14 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
 import { admin } from "constants/routes";
-import Dashboard from "./Dashboard";
 import Proposer from "./Proposer";
 import Details from "./Proposals/Details";
+import CharityApplications from "./CharityApplications/CharityApplications";
+import Proposals from "./Proposals/Proposals";
+import AdminNav from "./AdminNav";
 
 export default function Admin() {
   const wallet = useConnectedWallet();
-  //{match.path} is '/admin'
   const { member, isMemberLoading } = useMember();
   const { path } = useRouteMatch();
 
@@ -22,11 +23,18 @@ export default function Admin() {
     return <GuardPrompt message="You are not authorized to view this page" />;
   }
   return (
-    <Switch>
-      <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
-      <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
-      <Route exact path={`${path}/${admin.index}`} component={Dashboard} />
-    </Switch>
+    <div className="padded-container grid grid-rows-a1 pb-4 gap-2">
+      <AdminNav />
+      <Switch>
+        <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
+        <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
+        <Route
+          path={`${path}/${admin.charity_applications}`}
+          component={CharityApplications}
+        />
+        <Route exact path={`${path}/${admin.index}`} component={Proposals} />
+      </Switch>
+    </div>
   );
 }
 

@@ -1,4 +1,10 @@
-import { NavLink, useRouteMatch, Switch, Route } from "react-router-dom";
+import {
+  NavLink,
+  useRouteMatch,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import { proposal_types } from "constants/routes";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import MemberUpdateForm from "./Templates/MemberUpdator/MemberUpdaterForm";
@@ -10,7 +16,7 @@ import FundCreator from "./Templates/FundCreator/FundCreator";
 export default function Proposer() {
   const { path } = useRouteMatch();
   return (
-    <div className="padded-container grid gap-2 grid-cols-a1 min-h-screen pb-4">
+    <div className="grid gap-2 grid-cols-a1">
       <ProposalTypes />
       <Switch>
         <Route path={`${path}/${proposal_types.admin_update_members}`}>
@@ -27,6 +33,10 @@ export default function Proposer() {
           <FundCreator>
             <FundCreatorForm />
           </FundCreator>
+        </Route>
+
+        <Route exact path={`${path}/${proposal_types.index}`}>
+          <Redirect to={`${path}/${proposal_types.admin_update_members}`} />
         </Route>
       </Switch>
     </div>

@@ -6,6 +6,7 @@ export default function TextInput<T extends object>(props: {
   title: string;
   placeholder?: string;
   name: keyof T;
+  required?: true;
   mono?: true;
   wide?: true;
   plain?: true;
@@ -21,6 +22,7 @@ export default function TextInput<T extends object>(props: {
         htmlFor={`__${props.name}`}
       >
         {props.title}
+        {props.required && <span className="text-red-400 ml-1">*</span>}
       </label>
 
       {React.createElement(props.wide ? "textarea" : "input", {

@@ -14,15 +14,13 @@ export enum site {
 
 export enum admin {
   index = "",
-  index_fund_management = "index-fund",
-  endowments = "endowments",
-  alliance_members = "alliance-members",
   charity_applications = "charity-applications",
   proposal_types = "proposal-types",
   proposal = "proposal",
 }
 
 export enum proposal_types {
+  index = "",
   admin_update_members = "admin-update-members",
   change_endowment_status = "change-endowment-status",
   create_fund = "create-fund",

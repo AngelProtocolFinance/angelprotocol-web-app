@@ -10,10 +10,20 @@ export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
-      <TextInput title="Proposal Title" name="title" />
-      <TextInput title="proposal description" name="description" wide />
-      <TextInput<V> title="fund name" name="fundName" />
-      <TextInput<V> title="fund description" name="fundDescription" wide />
+      <TextInput title="Proposal Title" name="title" required />
+      <TextInput
+        title="proposal description"
+        name="description"
+        wide
+        required
+      />
+      <TextInput<V> title="fund name" name="fundName" required />
+      <TextInput<V>
+        title="fund description"
+        name="fundDescription"
+        wide
+        required
+      />
       <TextInput<V>
         title="expiry height"
         name="expiryHeight"
