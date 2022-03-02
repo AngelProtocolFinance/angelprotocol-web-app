@@ -8,7 +8,7 @@ export default function useCurrentLevel({
   const [currentLevel, setCurrentLevel] = useState(0);
 
   const proofOfIdentityState = getFieldState("proofOfIdentity");
-  const charityWebsiteState = getFieldState("charityWebsite");
+  const websiteState = getFieldState("website");
   const proofOfRegistrationState = getFieldState("proofOfRegistration");
   const unSdgState = getFieldState("un_sdg");
   const financialStatementsState = getFieldState("financialStatements");
@@ -20,8 +20,8 @@ export default function useCurrentLevel({
     if (
       !proofOfIdentityState.error &&
       proofOfIdentityState.isDirty &&
-      !charityWebsiteState.error &&
-      charityWebsiteState.isDirty &&
+      !websiteState.error &&
+      websiteState.isDirty &&
       !proofOfRegistrationState.error &&
       proofOfRegistrationState.isDirty
     ) {
@@ -53,7 +53,7 @@ export default function useCurrentLevel({
   }, [
     getFieldState,
     proofOfIdentityState,
-    charityWebsiteState,
+    websiteState,
     proofOfRegistrationState,
     unSdgState,
     financialStatementsState,
