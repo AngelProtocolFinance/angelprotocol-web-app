@@ -7,7 +7,7 @@ export type FormValues = {
   proofOfRegistration: File;
   financialStatements: File[];
   auditedFinancialReports: File[];
-  charityWebsite: string;
+  website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
   un_sdg: number;
@@ -35,7 +35,7 @@ export const Schema = Yup.object({
     .concat(COMMON_FILE_SCHEMA),
   financialStatements: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   auditedFinancialReports: Yup.array<File>().of(COMMON_FILE_SCHEMA),
-  charityWebsite: Yup.string()
+  website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),
   un_sdg: Yup.number().min(0),
