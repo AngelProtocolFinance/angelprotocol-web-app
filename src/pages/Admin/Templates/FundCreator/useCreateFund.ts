@@ -59,7 +59,7 @@ export default function useCreateFund() {
       split_to_liquid:
         splitToLiquid === INIT_SPLIT
           ? undefined
-          : new Dec(splitToLiquid).div(100).toNumber(),
+          : new Dec(splitToLiquid).div(100).toFixed(2, Dec.ROUND_DOWN),
       expiry_time:
         expiryTime === "" ? undefined : new Date(expiryTime).getTime() / 1000,
       expiry_height: expiryHeight === "" ? undefined : +expiryHeight,
