@@ -1,3 +1,5 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { UpdateDocumentationResult } from "services/aws/types";
@@ -6,8 +8,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
 
 export default function useUpload() {
-  const [uploadDocumentation, result] = useUpdateDocumentationMutation();
-  const { isSuccess, isError, isLoading, data, error } = result;
+  const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
   const user = useGetter((state) => state.user);
   const dispatch = useSetter();
 
@@ -20,27 +21,36 @@ export default function useUpload() {
       const userData = { ...user, ...data };
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
+      console.log(userData);
     },
     [dispatch, user]
   );
 
-  const uploadDocuments = useCallback(
+  const upload = useCallback(
     async (values: FormValues) => {
+      console.log(values, user.PK);
       const uploadBody = await getUploadBody(values);
       const postData = { PK: user.PK, body: uploadBody };
 
-      await uploadDocumentation(postData);
+      const result = await uploadDocumentation(postData);
 
-      if (isError) {
-        handleError(JSON.stringify(error));
+      const dataResult = result as {
+        data: UpdateDocumentationResult;
+        error: FetchBaseQueryError | SerializedError;
+      };
+      console.log("result", result);
+      console.log("dataResult", dataResult);
+
+      if (dataResult.error) {
+        handleError(JSON.stringify(dataResult.error));
       } else {
-        handleSuccess(data);
+        handleSuccess(dataResult.data);
       }
     },
-    [handleSuccess, handleError]
+    [user.PK, handleSuccess, handleError, uploadDocumentation]
   );
 
-  return { uploadDocuments, isSuccess, isLoading };
+  return { upload, isSuccess };
 }
 
 async function getUploadBody(values: FormValues) {

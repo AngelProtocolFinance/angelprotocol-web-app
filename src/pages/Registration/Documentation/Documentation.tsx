@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren } from "react";
-import { FormProvider, FormProviderProps, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import Button from "../Button";
 import routes from "../routes";
@@ -16,6 +16,7 @@ import {
 } from "./Fields";
 import { FormValues, Schema } from "./types";
 import useCurrentLevel from "./useCurrentLevel";
+import useUpload from "./useUpload";
 
 export default function Documentation() {
   const methods = useForm<FormValues>({
@@ -24,83 +25,89 @@ export default function Documentation() {
   });
   const currentLevel = useCurrentLevel(methods);
   const history = useHistory();
+  const { upload, isSuccess } = useUpload();
 
   return (
     <Container>
       <Title level={currentLevel} />
 
-      <DocumentationFormProvider {...methods}>
-        <RowContainer>
-          <LevelSection>
-            <Header>Level 1</Header>
-            <ProofOfIdentity />
-            <WebsiteInput />
-            <ProofOfRegistration />
-          </LevelSection>
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col w-full h-full gap-4 items-center"
+          onSubmit={methods.handleSubmit(upload)}
+        >
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 1</Header>
+              <ProofOfIdentity />
+              <WebsiteInput />
+              <ProofOfRegistration />
+            </LevelSection>
 
-          <LevelSection colored={currentLevel >= 1}>
-            <Header>Level 1</Header>
-            <p>
-              Your organization is eligible to create its endowment. Donors can
-              donate funds through your organization’s landing page on Angel
-              Protocol’s interface. Your organization is not displayed on the
-              marketplace and cannot be found through the search bar.
-            </p>
-          </LevelSection>
-        </RowContainer>
+            <LevelSection colored={currentLevel >= 1}>
+              <Header>Level 1</Header>
+              <p>
+                Your organization is eligible to create its endowment. Donors
+                can donate funds through your organization’s landing page on
+                Angel Protocol’s interface. Your organization is not displayed
+                on the marketplace and cannot be found through the search bar.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
-        <RowContainer>
-          <LevelSection>
-            <Header>Level 2</Header>
-            <UnSdgSelector />
-            <FinancialStatements />
-          </LevelSection>
-          <LevelSection colored={currentLevel >= 2}>
-            <Header>Level 2</Header>
-            <p>
-              All benefits from Level 1 + your organization will be visible in
-              the marketplace.
-            </p>
-          </LevelSection>
-        </RowContainer>
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 2</Header>
+              <UnSdgSelector />
+              <FinancialStatements />
+            </LevelSection>
+            <LevelSection colored={currentLevel >= 2}>
+              <Header>Level 2</Header>
+              <p>
+                All benefits from Level 1 + your organization will be visible in
+                the marketplace.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
-        <RowContainer>
-          <LevelSection>
-            <Header>Level 3</Header>
-            <AuditedFinancialReports />
-          </LevelSection>
-          <LevelSection colored={currentLevel === 3}>
-            <Header>Level 3</Header>
-            <p>
-              All benefits from Level 2 + your organization will be able to
-              receive automatic donations from members of the Angel Charity
-              Alliance.
-            </p>
-          </LevelSection>
-        </RowContainer>
+          <RowContainer>
+            <LevelSection>
+              <Header>Level 3</Header>
+              <AuditedFinancialReports />
+            </LevelSection>
+            <LevelSection colored={currentLevel === 3}>
+              <Header>Level 3</Header>
+              <p>
+                All benefits from Level 2 + your organization will be able to
+                receive automatic donations from members of the Angel Charity
+                Alliance.
+              </p>
+            </LevelSection>
+          </RowContainer>
 
-        <div className="flex flex-col gap-1 w-full">
-          <AuthorityToCreateCheckbox />
-          <PrivacyPolicyCheckbox />
-        </div>
+          <div className="flex flex-col gap-1 w-full">
+            <AuthorityToCreateCheckbox />
+            <PrivacyPolicyCheckbox />
+          </div>
 
-        <div className="flex justify-center">
-          <Button
-            className="bg-green-400 w-40 h-10 mr-2"
-            disabled={methods.formState.isSubmitting}
-            onClick={() => history.push(routes.dashboard)}
-          >
-            Back
-          </Button>
-          <Button
-            submit
-            className="w-40 h-10 bg-thin-blue"
-            isLoading={methods.formState.isSubmitting}
-          >
-            Upload
-          </Button>
-        </div>
-      </DocumentationFormProvider>
+          <div className="flex justify-center">
+            <Button
+              className="bg-green-400 w-40 h-10 mr-2"
+              disabled={methods.formState.isSubmitting}
+              onClick={() => history.push(routes.dashboard)}
+            >
+              Back
+            </Button>
+            <Button
+              submit
+              className="w-40 h-10 bg-thin-blue"
+              isLoading={methods.formState.isSubmitting}
+            >
+              Upload
+            </Button>
+          </div>
+        </form>
+      </FormProvider>
     </Container>
   );
 }
@@ -132,23 +139,6 @@ const Title = ({ level }: { level: number }) => (
     </Header>
   </RowContainer>
 );
-
-type ProviderProps = PropsWithChildren<FormProviderProps<FormValues>>;
-
-function DocumentationFormProvider(props: ProviderProps) {
-  const { children, ...methods } = props;
-
-  return (
-    <FormProvider {...methods}>
-      <form
-        className="flex flex-col w-full h-full gap-4 items-center"
-        onSubmit={methods.handleSubmit((values) => console.log(values))}
-      >
-        {children}
-      </form>
-    </FormProvider>
-  );
-}
 
 type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
 
