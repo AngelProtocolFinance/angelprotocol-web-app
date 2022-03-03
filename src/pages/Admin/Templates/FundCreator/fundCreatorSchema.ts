@@ -2,6 +2,7 @@ import { PartialRecord } from "types/types";
 import * as Yup from "yup";
 import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
+import { addressSchema, stringByteSchema } from "schemas/schemas";
 
 export type FundCreatorValues = {
   //new fund member
@@ -21,14 +22,16 @@ const fundCreatorShape: PartialRecord<
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,
-  newFundAddr: Yup.string()
-    .required("fund address is required")
-    .test("is valid", "fund address format is not valid", (address) =>
-      /^terra[a-z0-9]{39}$/i.test(address as string)
-    ),
-
-  fundName: Yup.string().required("fund name is required"),
-  fundDescription: Yup.string().required("fund description is required"),
+  newFundAddr: addressSchema("fund"),
+  fundName: stringByteSchema("fund name", 4, 64),
+  fundDescription: stringByteSchema("fund description", 4, 1064),
+  expiryTime: Yup.lazy((value) =>
+    value === ""
+      ? Yup.string()
+      : Yup.date()
+          .typeError("invalid date")
+          .min(new Date(), "expiry time should be in the future")
+  ),
   expiryHeight: Yup.lazy((value) =>
     value === ""
       ? Yup.string()

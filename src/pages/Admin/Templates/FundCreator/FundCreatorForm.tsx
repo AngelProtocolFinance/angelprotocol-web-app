@@ -5,6 +5,7 @@ import { FundCreatorValues as V } from "./fundCreatorSchema";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import useCreateFund from "./useCreateFund";
 import { INIT_SPLIT } from "./FundCreator";
+import { ErrorMessage } from "@hookform/error-message";
 
 export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
@@ -105,7 +106,10 @@ function CheckInput() {
 }
 
 function DateInput() {
-  const { register } = useFormContext<V>();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<V>();
   return (
     <div className="text-angel-grey grid">
       <label
@@ -120,6 +124,12 @@ function DateInput() {
         type="datetime-local"
         className="font-mono uppercase bg-light-grey shadow-inner-white-grey 
         rounded-md p-3 focus:outline-none"
+      />
+      <ErrorMessage
+        errors={errors}
+        name={"expiryTime"}
+        as="span"
+        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
       />
     </div>
   );

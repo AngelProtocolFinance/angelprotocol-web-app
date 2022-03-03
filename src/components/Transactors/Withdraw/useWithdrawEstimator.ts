@@ -43,8 +43,8 @@ export default function useWithrawEstimator() {
   const { rates, isRatesError } = useExchangeRate();
   const { holdings } = useEndowmentHoldingsState(account_addr);
 
-  const debAnchor1Amount = useDebouncer<string>(anchor1_amount, 300);
-  const debAnchor2Amount = useDebouncer<string>(anchor2_amount, 300);
+  const [debAnchor1Amount] = useDebouncer<string>(anchor1_amount, 300);
+  const [debAnchor2Amount] = useDebouncer<string>(anchor2_amount, 300);
 
   useEffect(() => {
     (async () => {

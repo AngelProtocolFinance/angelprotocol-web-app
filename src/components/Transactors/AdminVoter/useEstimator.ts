@@ -21,7 +21,7 @@ export default function useEstimator() {
   const { main: UST_balance } = useBalances(denoms.uusd);
   const wallet = useConnectedWallet();
   const vote = watch("vote");
-  const debounced_vote = useDebouncer(vote, 300);
+  const [debounced_vote] = useDebouncer(vote, 300);
 
   //TODO: check also if voter already voted
   useEffect(() => {

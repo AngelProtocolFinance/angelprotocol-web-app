@@ -1,0 +1,67 @@
+import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useFormContext } from "react-hook-form";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import {
+  EndowmentStatus,
+  EndowmentStatusNum,
+} from "services/terra/registrar/types";
+import Admin from "contracts/Admin";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
+import { StatusChangePayload } from "contracts/types";
+import { useSetter } from "store/accessors";
+import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
+import Registrar from "contracts/Registrar";
+import cleanObject from "helpers/cleanObject";
+
+export default function useUpdateStatus() {
+  const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
+  const dispatch = useSetter();
+  const wallet = useConnectedWallet();
+  const { showModal } = useSetModal();
+
+  function updateStatus(data: EndowmentUpdateValues) {
+    console.log(data);
+    if (!data.prevStatus) {
+      showModal(Popup, { message: "Endowment not found" });
+      return;
+    } else if (data.prevStatus === "Closed") {
+      showModal(Popup, { message: "Endowment is closed and can't be changed" });
+    } else {
+      const prevStatusNum = endowmentStatus[data.prevStatus];
+      if (+data.status === prevStatusNum) {
+        showModal(Popup, { message: "New status same as previous status" });
+        return;
+      }
+    }
+
+    const statusChangePayload: StatusChangePayload = {
+      beneficiary: data.beneficiary,
+      status: +data.status as EndowmentStatusNum,
+      endowment_addr: data.endowmentAddr,
+    };
+
+    const registrar = new Registrar(wallet);
+    const embeddedMsg = registrar.createEmbeddedChangeEndowmentStatusMsg(
+      cleanObject(statusChangePayload, [undefined])
+    );
+
+    const admin = new Admin(wallet);
+    const proposalMsg = admin.createProposalMsg(data.title, data.description, [
+      embeddedMsg,
+    ]);
+
+    dispatch(sendTerraTx({ msgs: [proposalMsg], wallet }));
+    showModal(TransactionPrompt, {});
+  }
+
+  return { updateStatus: handleSubmit(updateStatus) };
+}
+
+const endowmentStatus: EndowmentStatus = {
+  Inactive: 0,
+  Approved: 1,
+  Frozen: 2,
+  Closed: 3,
+};

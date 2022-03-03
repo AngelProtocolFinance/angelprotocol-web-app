@@ -18,3 +18,22 @@ export function useEndowmentList() {
     isEndowmentsLoading: isLoading || isFetching,
   };
 }
+
+export function useEndowmentStatus(address: string, skip = false) {
+  const { useEndowmentsQuery } = registrar_api;
+  const { wallet, contract } = useRegistrar();
+  const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
+    contract.endowmentList,
+    {
+      skip: skip || wallet?.network.chainID === chainIDs.localterra,
+      selectFromResult: ({ data, isLoading, isFetching }) => ({
+        endowmentStatus: data?.find(
+          (endowment) => endowment.address === address
+        )?.status,
+        isEndowmentStatusLoading: isLoading || isFetching,
+      }),
+    }
+  );
+
+  return { endowmentStatus, isEndowmentStatusLoading };
+}

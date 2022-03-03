@@ -1,4 +1,5 @@
 import { Coins } from "@terra-money/terra.js";
+import { EndowmentStatus } from "services/terra/registrar/types";
 
 //Contract types
 export type ContractAddrs = {
@@ -45,4 +46,11 @@ export type FundDetails = {
 
 export type FundsListRes = {
   funds: FundDetails[];
+};
+
+//Registrar
+export type StatusChangePayload = {
+  endowment_addr: string;
+  status: EndowmentStatus[keyof EndowmentStatus];
+  beneficiary?: string;
 };

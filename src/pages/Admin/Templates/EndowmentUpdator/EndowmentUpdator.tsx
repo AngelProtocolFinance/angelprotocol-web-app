@@ -8,9 +8,11 @@ import {
 
 export default function EndowmentUpdator(props: { children: ReactNode }) {
   const methods = useForm<EndowmentUpdateValues>({
+    mode: "onChange",
+    reValidateMode: "onChange",
     resolver: yupResolver(endowmentUpdateSchema),
     defaultValues: {
-      addr: "",
+      endowmentAddr: "",
     },
   });
 

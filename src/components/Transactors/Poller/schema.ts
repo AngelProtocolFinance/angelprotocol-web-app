@@ -1,46 +1,8 @@
-import getBytesComparer from "helpers/getBytesComparer";
+import { stringByteSchema } from "schemas/schemas";
 import * as Yup from "yup";
 
-export const max_title_bytes = 64;
-export const max_link_bytes = 128;
-export const max_desc_bytes = 1024;
 export const schema = Yup.object().shape({
-  title: Yup.string()
-    .required("title is required")
-    .test(
-      "min_length",
-      "title must be atleast 4 bytes",
-      getBytesComparer("gt", 4)
-    )
-    .test(
-      "max_length",
-      `title must be less than ${max_title_bytes} bytes `,
-      getBytesComparer("lt", max_title_bytes)
-    ),
-  description: Yup.string()
-    .required("description is required")
-    .test(
-      "min_length",
-      "description must be atleast 4 bytes",
-      getBytesComparer("gt", 4)
-    )
-    .test(
-      "max_length",
-      `description must be less than ${max_desc_bytes} bytes `,
-      getBytesComparer("lt", max_desc_bytes)
-    ),
-  link: Yup.string()
-    .required("link required")
-    .test(
-      "min_length",
-      "url must be atleast 4 bytes",
-      getBytesComparer("gt", 4)
-    )
-    .url("url is invalid")
-    .test(
-      "max_length",
-      `url must be less than ${max_link_bytes} bytes `,
-      getBytesComparer("lt", max_link_bytes)
-    ),
-  //amount: pre-set and disabled
+  title: stringByteSchema("title", 4, 64),
+  description: stringByteSchema("description", 4, 128),
+  link: stringByteSchema("link", 4, 1024),
 });

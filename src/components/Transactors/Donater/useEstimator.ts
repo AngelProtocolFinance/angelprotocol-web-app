@@ -37,8 +37,8 @@ export default function useEstimator() {
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
 
-  const debounced_amount = useDebouncer(amount, 500);
-  const debounced_split = useDebouncer(split_liq, 500);
+  const [debounced_amount] = useDebouncer(amount, 500);
+  const [debounced_split] = useDebouncer(split_liq, 500);
 
   useEffect(() => {
     (async () => {

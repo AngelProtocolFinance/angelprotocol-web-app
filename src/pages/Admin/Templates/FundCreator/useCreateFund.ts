@@ -10,6 +10,7 @@ import { FundDetails } from "contracts/types";
 import { useGetter, useSetter } from "store/accessors";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
+import cleanObject from "helpers/cleanObject";
 
 export default function useCreateFund() {
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -66,7 +67,10 @@ export default function useCreateFund() {
     };
 
     //remove undefined fields
-    const cleanedNewFundDetails = removeUndefined(newFundDetails);
+    const cleanedNewFundDetails = cleanObject(newFundDetails, [undefined]);
+
+    console.log(cleanedNewFundDetails);
+    return;
 
     const embeddedExecuteMsg = indexFundContract.createEmbeddedCreateFundMsg(
       cleanedNewFundDetails
@@ -83,14 +87,4 @@ export default function useCreateFund() {
   }
 
   return { createFund };
-}
-
-function removeUndefined<T extends object>(obj: T) {
-  const cleanedObj: Partial<T> = {};
-  for (const key in obj) {
-    if (obj[key] !== undefined) {
-      cleanedObj[key] = obj[key];
-    }
-  }
-  return cleanedObj as T;
 }

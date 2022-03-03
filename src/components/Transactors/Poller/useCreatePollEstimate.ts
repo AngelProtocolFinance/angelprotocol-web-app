@@ -11,7 +11,6 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 
 export default function useCreatePollEstimate() {
   const {
@@ -48,9 +47,9 @@ export default function useCreatePollEstimate() {
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
-          create_placeholder(max_title_bytes),
-          create_placeholder(max_desc_bytes),
-          create_placeholder(max_link_bytes)
+          create_placeholder(64),
+          create_placeholder(1024),
+          create_placeholder(128)
         );
 
         //fee estimate with max contraints
