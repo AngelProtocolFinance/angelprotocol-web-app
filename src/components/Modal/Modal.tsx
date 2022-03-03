@@ -10,17 +10,20 @@ import {
 } from "react";
 import { Handlers, Opener, Props } from "./types";
 
-export default function Modal({ backdropDismiss = true, ...props }: Props) {
+export default function Modal(props: Props) {
   const [Content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>();
+  const [backdropDismiss, setBackdropDismiss] = useState(true);
   const escKeyPressed = useKeyPress("Escape");
 
   const showModal: Opener = (Content, props) => {
+    setBackdropDismiss(props.isDismissDisabled ?? true);
     setContent(<Content {...props} />);
   };
 
   function closeModal() {
     setContent(undefined);
+    setBackdropDismiss(true);
   }
 
   const dismissModal = (event: any) => {
@@ -42,13 +45,17 @@ export default function Modal({ backdropDismiss = true, ...props }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleRef = useCallback((node) => {
-    if (node !== null && backdropDismiss) {
-      ref.current = node;
-      ref.current?.addEventListener("click", dismissModal);
-    }
+  const handleRef = useCallback(
+    (node) => {
+      if (node !== null && backdropDismiss) {
+        ref.current = node;
+        ref.current?.addEventListener("click", dismissModal);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [backdropDismiss]
+  );
 
   return (
     <setContext.Provider
