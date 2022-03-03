@@ -15,7 +15,7 @@ export default function Modal(props: Props) {
   const [backdropDismiss, setBackdropDismiss] = useState(true);
 
   const showModal: Opener = (Content, props) => {
-    setBackdropDismiss(props.backdropDismiss ?? true);
+    setBackdropDismiss(props.isDismissDisabled ?? true);
     setContent(<Content {...props} />);
   };
 

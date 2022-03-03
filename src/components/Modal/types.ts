@@ -3,7 +3,7 @@ import { ReactNode, FC } from "react";
 export type Handler = () => void;
 export type Opener = <T = {}>(
   Content: FC<T>,
-  props: T & { backdropDismiss?: boolean }
+  props: T & { isDismissDisabled?: true }
 ) => void;
 export type Handlers = {
   showModal: Opener;
@@ -12,5 +12,4 @@ export type Handlers = {
 export interface Props {
   classes: string;
   children: ReactNode;
-  backdropDismiss?: boolean;
 }
