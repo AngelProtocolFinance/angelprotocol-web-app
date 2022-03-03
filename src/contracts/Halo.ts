@@ -9,7 +9,7 @@ import {
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { PollExecuteMsg, Vote } from "./types";
+import { Vote } from "./types";
 import { GovState } from "services/terra/gov/types";
 import { ContractQueryArgs } from "services/terra/types";
 import { Airdrops } from "services/aws/airdrop/types";
@@ -92,8 +92,8 @@ export default class Halo extends Contract {
     amount: number,
     title: string,
     description: string,
-    link?: string,
-    msgs?: PollExecuteMsg[]
+    link?: string
+    // msgs?: PollExecuteMsg[]
   ) {
     this.checkWallet();
     const u_amount = new Dec(amount).mul(1e6).toInt();
@@ -127,66 +127,12 @@ export default class Halo extends Contract {
     return pollMsgs;
   }
 
-  async createPoll(
-    amount: number,
-    title: string,
-    description: string,
-    link?: string,
-    msgs?: PollExecuteMsg[],
-    snapshot = false
-  ) {
-    this.checkWallet();
-    const u_amount = new Dec(amount).mul(1e6).toInt();
-    const poll_msgs: MsgExecuteContract[] = [];
-    const poll_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.token_address,
-      {
-        send: {
-          amount: u_amount.toString(),
-          contract: this.gov_address,
-          msg: btoa(
-            JSON.stringify({ create_poll: { title, description, link } })
-          ),
-        },
-      }
-    );
-
-    poll_msgs.push(poll_msg);
-
-    if (snapshot) {
-      const gov_state = await this.getGovState();
-      const snapshot_msg = new MsgExecuteContract(
-        this.walletAddr!,
-        this.gov_address,
-        {
-          snapshot_poll: { poll_id: gov_state.poll_count + 1 },
-        }
-      );
-      poll_msgs.push(snapshot_msg);
-    }
-
-    const fee = await this.estimateFee(poll_msgs);
-    // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
-    return { msgs: poll_msgs, fee };
-  }
-
   //halo_gov
   createEndPollMsg(poll_id: number) {
     this.checkWallet();
     return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
       end_poll: { poll_id: poll_id },
     });
-  }
-  async createEndPollTx(poll_id: number) {
-    this.checkWallet();
-    const poll_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.gov_address,
-      { end_poll: { poll_id: poll_id } }
-    );
-    const fee = await this.estimateFee([poll_msg]);
-    return { msgs: [poll_msg], fee };
   }
 
   async createGovUnstakeTx(amount: number): Promise<CreateTxOptions> {

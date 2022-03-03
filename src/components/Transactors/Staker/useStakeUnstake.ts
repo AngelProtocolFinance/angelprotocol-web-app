@@ -1,18 +1,25 @@
-import { useSetModal } from "components/Modal/Modal";
+import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetModal } from "components/Modal/Modal";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { gov, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
-import useClaimEstimator from "./useClaimEstimator";
+import useStakingEstimator from "./useStakingEstimator";
+import { HaloStakingValues } from "./types";
 
-export default function useClaimUnstakedHalo() {
+export default function useStakeUnstake() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+  const {
+    handleSubmit,
+    formState: { isValid, isDirty, isSubmitting },
+  } = useFormContext<HaloStakingValues>();
+
+  const { wallet, tx } = useStakingEstimator();
   const { showModal } = useSetModal();
-  const { tx, wallet } = useClaimEstimator();
   const dispatch = useSetter();
 
-  function claimUnstakedHalo() {
+  function stakeOrUnstake() {
     dispatch(
       sendTerraTx({
         wallet,
@@ -30,8 +37,9 @@ export default function useClaimUnstakedHalo() {
   }
 
   return {
-    claimUnstakedHalo,
+    stakeOrUnstake: handleSubmit(stakeOrUnstake),
+    isSubmitDisabled:
+      !isValid || !isDirty || form_loading || !!form_error || isSubmitting,
     isFormLoading: form_loading,
-    isSubmitDisabled: form_loading || !!form_error,
   };
 }
