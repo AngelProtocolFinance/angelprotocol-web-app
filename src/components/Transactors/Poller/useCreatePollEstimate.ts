@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Halo from "contracts/Halo";
@@ -12,6 +12,7 @@ import {
 } from "services/transaction/transactionSlice";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
+import { Fee } from "@terra-money/terra.js";
 
 export default function useCreatePollEstimate() {
   const {
@@ -22,6 +23,8 @@ export default function useCreatePollEstimate() {
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
   const wallet = useConnectedWallet();
+
+  const [maxFee, setMaxFee] = useState<Fee>();
 
   useEffect(() => {
     (async () => {
@@ -44,7 +47,7 @@ export default function useCreatePollEstimate() {
 
         dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        const tx = await contract.createPoll(
+        const pollMsgs = await contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
@@ -53,19 +56,18 @@ export default function useCreatePollEstimate() {
           create_placeholder(max_link_bytes)
         );
 
-        //fee estimate with max contraints
-        const estimatedFee = tx
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+        //max fee estimate with extreme payload
+        const fee = await contract.estimateFee(pollMsgs);
+        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (feeNum >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(estimatedFee));
+        dispatch(setFee(feeNum));
+        setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError("Error estimating transaction"));
@@ -78,7 +80,7 @@ export default function useCreatePollEstimate() {
     //eslint-disable-next-line
   }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
 
-  return { wallet };
+  return { wallet, maxFee };
 
   //return estimated fee computed using max constraints
 }

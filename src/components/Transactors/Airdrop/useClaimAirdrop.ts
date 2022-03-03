@@ -1,16 +1,18 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Airdrops } from "services/aws/airdrop/types";
-import { useBalances } from "services/terra/queriers";
-import { claimAirdrop } from "services/transaction/transactors/claimAirdrop";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
+import { Airdrops } from "services/aws/airdrop/types";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { terra } from "services/terra/terra";
+import { gov, tags, user } from "services/terra/tags";
+import { tags as awsTags } from "services/aws/tags";
+import { aws } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import { denoms } from "constants/currency";
+import Halo from "contracts/Halo";
 
-export default function useCatcher(airdrops: Airdrops) {
-  const { main: ustBalance } = useBalances(denoms.uusd);
+export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useSetModal();
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
@@ -24,14 +26,29 @@ export default function useCatcher(airdrops: Airdrops) {
     [airdrops]
   );
 
-  const claim = useCallback(
-    (isStake = false) => {
-      dispatch(claimAirdrop({ airdrops, isStake, wallet, ustBalance }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [wallet, ustBalance, airdrops]
-  );
+  const claimAirdrop = (isStake: boolean) => () => {
+    const haloContract = new Halo(wallet);
+    const claimAirdropMsgs = haloContract.createAirdropClaimMsg(
+      airdrops,
+      isStake
+    );
 
-  return { totalClaimable: totalClaimable.toNumber(), claim };
+    dispatch(
+      sendTerraTx({
+        wallet,
+        msgs: claimAirdropMsgs,
+        tagPayloads: [
+          terra.util.invalidateTags([
+            { type: tags.gov, id: gov.staker },
+            { type: tags.gov, id: gov.halo_balance },
+            { type: tags.user, id: user.halo_balance },
+          ]),
+          aws.util.invalidateTags([{ type: awsTags.airdrop }]),
+        ],
+      })
+    );
+    showModal(TransactionPrompt, {});
+  };
+
+  return { totalClaimable: totalClaimable.toNumber(), claimAirdrop };
 }

@@ -88,6 +88,45 @@ export default class Halo extends Contract {
     return { msgs: [claim_msg], fee };
   }
 
+  async createPollMsgs(
+    amount: number,
+    title: string,
+    description: string,
+    link?: string,
+    msgs?: PollExecuteMsg[]
+  ) {
+    this.checkWallet();
+    const u_amount = new Dec(amount).mul(1e6).toInt();
+    const pollMsgs: MsgExecuteContract[] = [];
+    const createPollMsg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.token_address,
+      {
+        send: {
+          amount: u_amount.toString(),
+          contract: this.gov_address,
+          msg: btoa(
+            JSON.stringify({ create_poll: { title, description, link } })
+          ),
+        },
+      }
+    );
+
+    const govState = await this.getGovState();
+    const snapShotMsg = new MsgExecuteContract(
+      this.walletAddr!,
+      this.gov_address,
+      {
+        snapshot_poll: { poll_id: govState.poll_count + 1 },
+      }
+    );
+
+    pollMsgs.push(createPollMsg);
+    pollMsgs.push(snapShotMsg);
+
+    return pollMsgs;
+  }
+
   async createPoll(
     amount: number,
     title: string,
@@ -133,6 +172,12 @@ export default class Halo extends Contract {
   }
 
   //halo_gov
+  createEndPollMsg(poll_id: number) {
+    this.checkWallet();
+    return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
+      end_poll: { poll_id: poll_id },
+    });
+  }
   async createEndPollTx(poll_id: number) {
     this.checkWallet();
     const poll_msg = new MsgExecuteContract(
@@ -170,12 +215,9 @@ export default class Halo extends Contract {
     return { msgs: [vote_msg], fee };
   }
 
-  async createAirdropClaimTx(
-    airdrops: Airdrops,
-    is_stake = false
-  ): Promise<CreateTxOptions> {
+  createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
     this.checkWallet();
-    const claim_msgs = airdrops.map(
+    const claimMsgs = airdrops.map(
       ({ stage, haloTokens, proof }) =>
         new MsgExecuteContract(this.walletAddr!, this.airdrop_addr, {
           claim: { stage, amount: haloTokens, proof },
@@ -188,10 +230,9 @@ export default class Halo extends Contract {
         new Dec(0)
       );
       const stake_msg = this.createGovStakeMsg(totalClaimable.toString());
-      claim_msgs.push(stake_msg);
+      claimMsgs.push(stake_msg);
     }
 
-    const fee = await this.estimateFee(claim_msgs);
-    return { msgs: claim_msgs, fee };
+    return claimMsgs;
   }
 }

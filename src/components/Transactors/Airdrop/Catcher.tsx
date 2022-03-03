@@ -5,7 +5,7 @@ import useClaimAirdrop from "./useClaimAirdrop";
 
 export type Props = { airdrops: Airdrops };
 export default function Catcher(props: Props) {
-  const { claim, totalClaimable } = useClaimAirdrop(props.airdrops);
+  const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
     <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
       <FaParachuteBox className="text-angel-blue text-4xl" />
@@ -16,10 +16,10 @@ export default function Catcher(props: Props) {
         {toCurrency(totalClaimable)} HALO
       </p>
 
-      <Action title="claim & stake" onClick={() => claim(true)} />
+      <Action title="claim & stake" onClick={claimAirdrop(true)} />
       <button
         title="claim"
-        onClick={() => claim(false)}
+        onClick={claimAirdrop(false)}
         className="underline text-angel-grey cursor-pointer"
       >
         claim

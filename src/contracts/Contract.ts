@@ -5,6 +5,7 @@ import {
   Msg,
   Fee,
   TxInfo,
+  CreateTxOptions,
 } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { terra_lcds } from "constants/urls";
@@ -44,6 +45,11 @@ export default class Contract {
 
   async query<T>(source: AccAddress, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
+  }
+
+  async createTx(msgs: Msg[]): Promise<CreateTxOptions> {
+    const fee = await this.estimateFee(msgs);
+    return { msgs, fee };
   }
 
   async estimateFee(msgs: Msg[], denom = denoms.uusd): Promise<Fee> {
