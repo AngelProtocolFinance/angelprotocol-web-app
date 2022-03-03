@@ -12,7 +12,7 @@ import { Handlers, Opener, Props } from "./types";
 export default function Modal(props: Props) {
   const [Content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>();
-  const [backdropDismiss, setBackdropDismiss] = useState(false);
+  const [backdropDismiss, setBackdropDismiss] = useState(true);
 
   const showModal: Opener = (Content, props) => {
     setBackdropDismiss(props.backdropDismiss ?? true);
@@ -21,7 +21,7 @@ export default function Modal(props: Props) {
 
   function closeModal() {
     setContent(undefined);
-    setBackdropDismiss(false);
+    setBackdropDismiss(true);
   }
 
   const dismissModal = (event: any) => {
