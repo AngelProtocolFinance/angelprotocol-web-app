@@ -4,8 +4,6 @@ import Modal, { useSetModal } from "./Modal";
 import { MdOutlineClose } from "react-icons/md";
 
 describe("<Modal/> renders correctly", () => {
-  window.scrollTo = jest.fn();
-
   test("<Modal /> is triggered and opened", async () => {
     render(
       <Modal classes="ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
