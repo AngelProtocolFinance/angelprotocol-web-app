@@ -1,3 +1,4 @@
+import useKeyPress from "hooks/useKeyPress";
 import {
   createContext,
   ReactNode,
@@ -12,6 +13,7 @@ import { Handlers, Opener, Props } from "./types";
 export default function Modal({ backdropDismiss = true, ...props }: Props) {
   const [Content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>();
+  const escKeyPressed = useKeyPress("Escape");
 
   const showModal: Opener = (Content, props) => {
     setContent(<Content {...props} />);
@@ -28,6 +30,12 @@ export default function Modal({ backdropDismiss = true, ...props }: Props) {
       closeModal();
     }
   };
+
+  useEffect(() => {
+    if (escKeyPressed) {
+      closeModal();
+    }
+  }, [escKeyPressed]);
 
   useEffect(() => {
     return () => ref.current?.removeEventListener("click", dismissModal);
