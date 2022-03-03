@@ -51,7 +51,7 @@ export default function Modal({ backdropDismiss = true, ...props }: Props) {
     >
       {!!Content && (
         <>
-          <div ref={handleRef} className={props.classes}>
+          <div role="alertdialog" ref={handleRef} className={props.classes}>
             {Content}
           </div>
         </>
