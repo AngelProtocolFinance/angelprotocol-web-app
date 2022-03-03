@@ -21,6 +21,11 @@ describe("<Modal/> renders correctly", () => {
     userEvent.click(button);
     const modalContent = await screen.findByText(/Modal content is here/);
     expect(modalContent).toBeInTheDocument();
+
+    // find modal close button and click to close the modal
+    const closeIconButton = (await screen.findAllByRole("button"))[0];
+    userEvent.click(closeIconButton);
+    expect(modalContent).not.toBeInTheDocument();
   });
 });
 
