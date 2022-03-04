@@ -16,7 +16,7 @@ import {
 import toCurrency from "helpers/toCurrency";
 import { getSpotPrice } from "./getSpotPrice";
 
-export default function useEstimator() {
+export default function useSwapEstimator() {
   const {
     watch,
     setValue,

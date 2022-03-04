@@ -13,7 +13,6 @@ import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import Account from "contracts/Account";
 import { denoms } from "constants/currency";
-import { useSetModal } from "components/Modal/Modal";
 import useDebouncer from "hooks/useDebouncer";
 import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
@@ -21,7 +20,6 @@ import { AmountInfo, filter_infos } from "./helpers";
 import { WithdrawValues, VaultFields } from "./types";
 
 export default function useWithrawEstimator() {
-  const { hideModal } = useSetModal();
   const {
     watch,
     setValue,
@@ -53,7 +51,6 @@ export default function useWithrawEstimator() {
 
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
-          hideModal();
           return;
         }
 

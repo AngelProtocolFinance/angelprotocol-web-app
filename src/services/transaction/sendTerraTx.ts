@@ -2,18 +2,19 @@ import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import { chainIDs } from "constants/chainIDs";
-import Contract from "contracts/Contract";
 import { tags as terraTags } from "services/terra/tags";
 import { tags as awsTags } from "services/aws/tags";
 import handleTerraError from "helpers/handleTerraError";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { StageUpdator, Step } from "./types";
+import Contract from "contracts/Contract";
+import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
 import { RootState } from "store/store";
+import transactionSlice, { setStage } from "./transactionSlice";
+import { StageUpdator, Step } from "./types";
 
-type WithMsg = { msgs: Msg[]; tx?: never };
-type WithTx = { msgs?: never; tx: CreateTxOptions };
+type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
+type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
+
 type SenderArgs = {
   wallet: ConnectedWallet | undefined;
   tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
@@ -103,6 +104,13 @@ export const sendTerraTx = createAsyncThunk(
             chainId,
           });
         }
+      } else {
+        updateTx({
+          step: Step.error,
+          message: "Transaction failed",
+          txHash: response.result.txhash,
+          chainId,
+        });
       }
     } catch (err) {
       handleTerraError(err, updateTx);
