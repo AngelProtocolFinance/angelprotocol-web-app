@@ -103,7 +103,11 @@ const DonationItemInfo = (props: DonationItemProps) => {
         <span className="text-base">{maskAddress(data.endowment_address)}</span>
       </td>
       <td>
-        <Action title="Update" action={showDonor} disabled={isDisabled} />
+        <Action
+          title="Update"
+          action={() => !isDisabled && showDonor()}
+          disabled={isDisabled}
+        />
       </td>
       {/* <td>
         <Action title="resend" action={() => {}} />
