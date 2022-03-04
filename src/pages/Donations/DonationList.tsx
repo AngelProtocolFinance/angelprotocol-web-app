@@ -9,6 +9,7 @@ import Loader from "components/Loader/Loader";
 import { DonationTransactions } from "services/aws/endowment_admin/types";
 import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import useSortList, { Direction } from "./useSortList";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 
 const keys: string[] = ["amount", "date", "endowment"];
 
@@ -84,8 +85,10 @@ const DonationList = (props: EndowmentAddrProps) => {
 };
 
 const DonationItemInfo = (props: DonationItemProps) => {
+  const wallet = useConnectedWallet();
   const data = props.item;
   const showDonor = useDonor(data.sort_key);
+  const isDisabled = data.wallet_address !== wallet?.walletAddress;
   return (
     <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
       <td className="py-5 pl-4">
@@ -100,7 +103,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
         <span className="text-base">{maskAddress(data.endowment_address)}</span>
       </td>
       <td>
-        <Action title="Update" action={showDonor} />
+        <Action title="Update" action={showDonor} disabled={isDisabled} />
       </td>
       {/* <td>
         <Action title="resend" action={() => {}} />
