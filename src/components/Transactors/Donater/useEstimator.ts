@@ -105,8 +105,6 @@ export default function useEstimator() {
             const fee = await contract.estimateFee([depositMsg]);
             const feeNum = extractFeeNum(fee);
 
-            console.log(feeNum);
-
             //2nd balance check including fees
             if (debounced_amount + feeNum >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
