@@ -108,15 +108,13 @@ export default class Admin extends Contract {
     });
   }
 
-  async createVoteTx(proposal_id: number, vote: Vote) {
+  createVoteMsg(proposal_id: number, vote: Vote) {
     this.checkWallet();
-    const voteMsg = new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
       vote: {
         proposal_id,
         vote,
       },
     });
-    const fee = await this.estimateFee([voteMsg]);
-    return { msgs: [voteMsg], fee };
   }
 }

@@ -13,6 +13,7 @@ import {
 } from "services/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
   const { getValues, watch } = useFormContext<AdminVoteValues>();
@@ -43,21 +44,18 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
         const contract = new Admin(wallet);
-        const tx = await contract.createVoteTx(proposal_id, vote);
-
-        const estimatedFee = tx
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+        const voteMsg = contract.createVoteMsg(proposal_id, vote);
+        const fee = await contract.estimateFee([voteMsg]);
+        const feeNum = extractFeeNum(fee);
 
         //check if user has enough balance to pay for fees
-        if (estimatedFee >= UST_balance) {
+        if (feeNum >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(estimatedFee));
-        setTx(tx);
+        dispatch(setFee(feeNum));
+        setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError("Error estimating transcation"));

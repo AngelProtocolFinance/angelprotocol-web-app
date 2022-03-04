@@ -8,11 +8,13 @@ import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
 import { useGetter, useSetter } from "store/accessors";
+import { useState } from "react";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
 import cleanObject from "helpers/cleanObject";
 
 export default function useCreateFund() {
+  const [isSubmitting, setSubmitting] = useState(false);
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const dispatch = useSetter();
   const newFundMembers = useGetter((state) => state.admin.fundMembers);
@@ -20,6 +22,7 @@ export default function useCreateFund() {
   const { showModal } = useSetModal();
 
   async function createFund() {
+    setSubmitting(true);
     //validate select fields
     const isValid = await trigger([
       "title",
@@ -69,9 +72,6 @@ export default function useCreateFund() {
     //remove undefined fields
     const cleanedNewFundDetails = cleanObject(newFundDetails, [undefined]);
 
-    console.log(cleanedNewFundDetails);
-    return;
-
     const embeddedExecuteMsg = indexFundContract.createEmbeddedCreateFundMsg(
       cleanedNewFundDetails
     );
@@ -84,7 +84,9 @@ export default function useCreateFund() {
 
     dispatch(sendTerraTx({ msgs: [proposalMsg], wallet }));
     showModal(TransactionPrompt, {});
+
+    setSubmitting(false);
   }
 
-  return { createFund };
+  return { createFund, isSubmitting };
 }

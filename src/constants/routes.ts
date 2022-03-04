@@ -24,6 +24,7 @@ export enum proposal_types {
   admin_update_members = "admin-update-members",
   change_endowment_status = "change-endowment-status",
   create_fund = "create-fund",
+  destroy_fund = "destroy-fund",
 }
 
 export enum app {
