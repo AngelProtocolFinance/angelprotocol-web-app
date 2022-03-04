@@ -1,18 +1,15 @@
 import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
-import { useSetter } from "store/accessors";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
 export default function VerifiedEmail() {
   const history = useHistory();
-  const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const pathNames = history.location.pathname.split("/");
   const jwtData: any = useMemo(
@@ -27,13 +24,6 @@ export default function VerifiedEmail() {
     () => createUserData(jwtData, pathNames),
     [jwtData, pathNames]
   );
-
-  useEffect(() => {
-    if (!is_expired) {
-      dispatch(updateUserData(userData));
-      localStorage.setItem("userData", JSON.stringify(userData));
-    }
-  }, [is_expired, dispatch, userData]);
 
   const resendVerificationEmail = useCallback(async () => {
     if (!userData.PK) {
