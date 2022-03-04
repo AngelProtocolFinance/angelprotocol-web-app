@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
@@ -15,6 +15,8 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import useStakerBalance from "./useStakerBalance";
+import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
   const {
@@ -34,8 +36,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
-
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -63,35 +63,34 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        let tx: CreateTxOptions;
+        let govMsg: MsgExecuteContract;
         const contract = new Halo(wallet);
 
         if (is_stake) {
-          tx = await contract.createGovStakeTx(debounced_amount);
+          govMsg = contract.createGovStakeMsg(debounced_amount);
         } else {
-          tx = await contract.createGovUnstakeTx(debounced_amount);
+          govMsg = contract.createGovUnstakeMsg(debounced_amount);
         }
-        const estimatedFee = tx
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+
+        const fee = await contract.estimateFee([govMsg]);
+        const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (feeNum >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(estimatedFee));
-        setTx(tx);
+        dispatch(setFee(feeNum));
+        setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transcation"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
 
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, balance, locked]);

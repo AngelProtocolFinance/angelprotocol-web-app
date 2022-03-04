@@ -8,15 +8,17 @@ import { sendEthDonation } from "services/transaction/transactors/sendEthDonatio
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
 import { resetFee } from "services/transaction/transactionSlice";
 import { denoms } from "constants/currency";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
 
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
+  const { form_loading, form_error } = useGetter((state) => state.transaction);
+  const { watch, handleSubmit, setValue, getValues } =
+    useFormContext<DonateValues>();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-  const { watch, handleSubmit, setValue } = useFormContext<DonateValues>();
   const { terraTx, ethTx } = useEstimator();
 
   const terraSender = useCallback(
@@ -47,7 +49,7 @@ export default function useDonate() {
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== currency) {
-      setValue("amount", "", { shouldValidate: false });
+      setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
     denomRef.current = currency;
@@ -65,5 +67,8 @@ export default function useDonate() {
 
   return {
     donate: handleSubmit(senders[currency]),
+    isSubmitDisabled: form_error !== null || form_loading,
+    isFormLoading: form_loading,
+    to: getValues("to"),
   };
 }
