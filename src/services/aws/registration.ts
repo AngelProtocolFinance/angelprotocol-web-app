@@ -86,8 +86,10 @@ const registration_api = aws.injectEndpoints({
           body: data.body,
         };
       },
-      transformResponse: (response: { data: UpdateDocumentationResult }) =>
-        response.data,
+      transformResponse: (response: { data: UpdateDocumentationResult }) => {
+        console.log(response);
+        return response.data;
+      },
     }),
   }),
 });
