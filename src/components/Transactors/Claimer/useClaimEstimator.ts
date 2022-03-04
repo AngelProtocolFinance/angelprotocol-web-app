@@ -11,6 +11,7 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
@@ -22,7 +23,7 @@ export default function useClaimEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -61,12 +62,12 @@ export default function useClaimEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transcation"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
 
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
 
     //eslint-disable-next-line

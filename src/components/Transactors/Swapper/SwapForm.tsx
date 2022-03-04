@@ -1,7 +1,7 @@
 import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { Fee, Commission, SwapRate } from "./Misc";
+import Status from "../Status";
 import Output from "./Output";
-import Status from "./Status";
 import Amount from "./Amount";
 import useSwap from "./useSwap";
 

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
@@ -38,7 +38,7 @@ export default function useVote() {
   return {
     vote: handleSubmit(vote),
     isSubmitDisabled:
-      !isValid || !isDirty || form_loading || !!form_error || isSubmitting,
+      !isValid || !isDirty || form_loading || !form_error || isSubmitting,
     isFormLoading: form_loading,
   };
 }

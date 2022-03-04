@@ -15,6 +15,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import useStakerBalance from "./useStakerBalance";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useEstimator() {
   const {
@@ -34,7 +35,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
 
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
@@ -86,12 +87,12 @@ export default function useEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transcation"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
 
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
     //eslint-disable-next-line
   }, [debounced_amount, wallet, UST_balance, balance, locked]);

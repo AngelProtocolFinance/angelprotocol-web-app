@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { lbp, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
@@ -23,7 +23,7 @@ export default function useSwap() {
 
   const isBuy = watch("is_buy");
   function switchCurrency() {
-    setValue("is_buy", isBuy);
+    setValue("is_buy", !isBuy);
   }
 
   function swap() {
@@ -47,7 +47,7 @@ export default function useSwap() {
     swap: handleSubmit(swap),
     switchCurrency,
     isSubmitDisabled:
-      !isValid || !isDirty || form_loading || !!form_error || isSubmitting,
+      !isValid || !isDirty || form_loading || !form_error || isSubmitting,
     isFormLoading: form_loading,
   };
 }

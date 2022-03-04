@@ -15,6 +15,7 @@ import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { VoteValues } from "./types";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useVoteEstimator() {
   const {
@@ -37,7 +38,7 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
 
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
@@ -100,7 +101,7 @@ export default function useVoteEstimator() {
         setTx(tx);
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transcation"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
     //eslint-disable-next-line

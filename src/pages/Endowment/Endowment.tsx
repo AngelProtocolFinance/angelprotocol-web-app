@@ -3,7 +3,7 @@ import { RouteComponentProps } from "react-router-dom";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
 import { useProfile } from "services/aws/endowments/queriers";
-import useWithdrawer from "components/Transactors/Withdraw/useWithdrawer";
+import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
 import PageMeta from "./PageMeta";
 import Liquid from "./Summary";
 import { RouteParam } from "./types";

@@ -4,7 +4,7 @@ import Popup from "components/Popup/Popup";
 import { useSetModal } from "components/Modal/Modal";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 

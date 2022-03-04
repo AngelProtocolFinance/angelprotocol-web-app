@@ -4,7 +4,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import { Airdrops } from "services/aws/airdrop/types";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { gov, tags, user } from "services/terra/tags";
 import { tags as awsTags } from "services/aws/tags";

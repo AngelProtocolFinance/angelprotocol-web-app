@@ -61,7 +61,7 @@ export default function DonateForm() {
         </label>
       </div>
       <button
-        disabled={form_loading || !!form_error || !isTermsAccepted}
+        disabled={form_loading || !form_error || !isTermsAccepted}
         className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >

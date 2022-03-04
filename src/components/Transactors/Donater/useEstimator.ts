@@ -18,6 +18,7 @@ import Indexfund from "contracts/IndexFund";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -43,7 +44,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
 
         if (activeProvider === Providers.none) {
           dispatch(setFormError("Wallet is not connected"));
@@ -169,7 +170,8 @@ export default function useEstimator() {
         }
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transaction"));
+        const formError = processEstimateError(err);
+        dispatch(setFormError(formError));
       }
     })();
     //eslint-disable-next-line

@@ -1,34 +1,38 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
+import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
-import { gov, tags, user } from "services/terra/tags";
+import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
-import useStakingEstimator from "./useStakingEstimator";
-import { HaloStakingValues } from "./types";
+import useWithrawEstimator from "./useWithdrawEstimator";
+import { WithdrawValues } from "./types";
 
-export default function useStakeUnstake() {
+export default function useWithdraw() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
+    getValues,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
-  } = useFormContext<HaloStakingValues>();
+  } = useFormContext<WithdrawValues>();
 
-  const { wallet, tx } = useStakingEstimator();
+  const accountAddr = getValues("account_addr");
+  const { holdings } = useEndowmentHoldingsState(accountAddr);
+
+  const { wallet, tx } = useWithrawEstimator();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
-  function stakeOrUnstake() {
+  function withdraw() {
     dispatch(
       sendTerraTx({
         wallet,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov, id: gov.staker },
-            { type: tags.gov, id: gov.halo_balance },
-            { type: tags.user, id: user.halo_balance },
+            { type: tags.endowment },
+            { type: tags.user, id: user.terra_balance },
           ]),
         ],
       })
@@ -37,7 +41,8 @@ export default function useStakeUnstake() {
   }
 
   return {
-    stakeOrUnstake: handleSubmit(stakeOrUnstake),
+    withdraw: handleSubmit(withdraw),
+    holdings,
     isSubmitDisabled:
       !isValid || !isDirty || form_loading || !form_error || isSubmitting,
     isFormLoading: form_loading,

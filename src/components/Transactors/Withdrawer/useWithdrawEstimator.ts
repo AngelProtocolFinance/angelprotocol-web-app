@@ -18,6 +18,7 @@ import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
 import { AmountInfo, filter_infos } from "./helpers";
 import { WithdrawValues, VaultFields } from "./types";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useWithrawEstimator() {
   const {
@@ -47,7 +48,7 @@ export default function useWithrawEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
 
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
@@ -132,11 +133,11 @@ export default function useWithrawEstimator() {
         setTx(transaction);
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("transaction simulation failed"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
     //eslint-disable-next-line
   }, [wallet, debAnchor1Amount, debAnchor2Amount, rates, holdings]);

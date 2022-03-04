@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useSetModal } from "components/Modal/Modal";
-import Withdrawer from "./Withdraw";
+import Withdrawer from "./Withdrawer";
 import WithdrawForm from "./WithdrawForm";
 import { Props } from "./types";
 import Transactor, { TxProps } from "../Transactor";

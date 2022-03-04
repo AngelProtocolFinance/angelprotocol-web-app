@@ -142,4 +142,53 @@ export default class LP extends Contract {
     const fee = await this.estimateFee([buy_msg]);
     return { msgs: [buy_msg], fee };
   }
+
+  createBuyMsg(
+    ust_amount: number,
+    belief_price: string, //"e.g '0.05413'"
+    max_spread: string //"e.g 0.02 for 0.02%"
+  ) {
+    this.checkWallet();
+    const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
+    return new MsgExecuteContract(
+      this.walletAddr!,
+      this.pair_address,
+      {
+        swap: {
+          offer_asset: {
+            info: {
+              native_token: {
+                denom: denoms.uusd,
+              },
+            },
+            amount: uust_amount,
+          },
+          belief_price,
+          max_spread,
+          // to: Option<HumanAddr>
+        },
+      },
+      [new Coin(denoms.uusd, uust_amount)]
+    );
+  }
+
+  createSellMsg(
+    halo_amount: number,
+    belief_price: string, //"e.g '0.05413'"
+    max_spread: string //"e.g 0.02 for 0.02%"
+  ) {
+    this.checkWallet();
+    const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
+    return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
+      send: {
+        contract: this.pair_address,
+        amount: uhalo_amount,
+        msg: btoa(
+          JSON.stringify({
+            swap: { belief_price, max_spread },
+          })
+        ),
+      },
+    });
+  }
 }

@@ -9,8 +9,8 @@ import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
 import { RootState } from "store/store";
-import transactionSlice, { setStage } from "./transactionSlice";
-import { StageUpdator, Step } from "./types";
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
 
 type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
 type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx

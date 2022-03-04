@@ -13,6 +13,7 @@ import {
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 import { Fee } from "@terra-money/terra.js";
+import processEstimateError from "helpers/processEstimateError";
 
 export default function useCreatePollEstimate() {
   const {
@@ -29,7 +30,7 @@ export default function useCreatePollEstimate() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
+        dispatch(setFormError(null));
 
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
@@ -70,12 +71,12 @@ export default function useCreatePollEstimate() {
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transaction"));
+        dispatch(setFormError(processEstimateError(err)));
       }
     })();
 
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
     //eslint-disable-next-line
   }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
