@@ -1,12 +1,13 @@
 import { chainIDs } from "constants/chainIDs";
+import Admin, { A, T } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
-import { useAdminContract } from "../contracts";
+import { useContract } from "../useContract";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 
 export function useMembers() {
   const { useMembersQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
+  const { wallet, contract } = useContract<A, T>(Admin);
   const {
     data = [],
     isFetching,
@@ -19,7 +20,7 @@ export function useMembers() {
 
 export function useMember() {
   const { useMemberQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
+  const { wallet, contract } = useContract<A, T>(Admin);
   const {
     data = member,
     isFetching,
@@ -32,7 +33,7 @@ export function useMember() {
 
 export function useProposals() {
   const { useProposalsQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
+  const { wallet, contract } = useContract<A, T>(Admin);
   const {
     data = [],
     isFetching,
@@ -45,7 +46,7 @@ export function useProposals() {
 
 export function useProposal(pollId: string) {
   const { useProposalQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
+  const { wallet, contract } = useContract<A, T>(Admin);
 
   //process pollId path var which is not guaranteed to be a number castable string
   const numberPollId = idParamToNumber(pollId);
@@ -61,7 +62,7 @@ export function useProposal(pollId: string) {
 
 export function useVoteList(pollId: number) {
   const { useVotesQuery } = admin_api;
-  const { wallet, contract } = useAdminContract();
+  const { wallet, contract } = useContract<A, T>(Admin);
   const {
     data = [],
     isFetching,

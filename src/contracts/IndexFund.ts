@@ -10,24 +10,29 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
+import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { FundDetails, FundsListRes } from "./types";
+import { FundDetails, FundListRes } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
   address: string;
-  //contract address
-  //may need to re-implement to handle multiple currencies in the future
+  fundList: ContractQueryArgs;
+
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
     this.address = contracts[this.chainID][sc.index_fund];
+
+    this.fundList = {
+      address: this.address,
+      msg: { funds_list: {} },
+    };
   }
 
   //on demand queries
-
   getFundList() {
-    return this.query<FundsListRes>(this.address, { funds_list: {} });
+    return this.query<FundListRes>(this.address, this.fundList.msg);
   }
 
   createEmbeddedCreateFundMsg(fundDetails: FundDetails) {
@@ -60,3 +65,6 @@ export default class Indexfund extends Contract {
 
   //will add more transactions in the future
 }
+
+export interface IF extends Indexfund {}
+export type T = typeof Indexfund;

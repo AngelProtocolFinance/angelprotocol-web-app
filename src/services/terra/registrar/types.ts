@@ -1,3 +1,5 @@
+import { FundDetails } from "contracts/types";
+
 export type Any = any;
 
 export type EndowmentStatus = {
@@ -16,4 +18,8 @@ export type EndowmentListRes = {
 export type EndowmentEntry = {
   address: string;
   status: keyof EndowmentStatus;
+};
+
+export type FundListRes = {
+  funds: FundDetails[];
 };

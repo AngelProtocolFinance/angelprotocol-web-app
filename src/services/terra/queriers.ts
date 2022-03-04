@@ -3,18 +3,11 @@
  */
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
+import Halo, { H, T } from "contracts/Halo";
 import { denoms } from "constants/currency";
 import { terra } from "services/terra/terra";
 import { halo_info } from "./placeholders";
-import { useHaloContract } from "./contracts";
-import Registrar from "contracts/Registrar";
-import { useMemo } from "react";
-
-export function useRegistrarContract() {
-  const wallet = useConnectedWallet();
-  const contract = useMemo(() => new Registrar(wallet), [wallet]);
-  return { wallet, contract };
-}
+import { useContract } from "./useContract";
 
 export function useLatestBlock(pollInterval = 0) {
   const { useLatestBlockQuery } = terra;
@@ -56,7 +49,7 @@ export function useBalances(main: denoms, others?: denoms[]) {
 
 export function useHaloInfo() {
   const { useHaloInfoQuery } = terra;
-  const { contract } = useHaloContract();
+  const { contract } = useContract<H, T>(Halo);
   const { data = halo_info } = useHaloInfoQuery({
     address: contract.token_address,
     msg: { token_info: {} },
@@ -67,7 +60,7 @@ export function useHaloInfo() {
 
 export function useHaloBalance() {
   const { useHaloBalanceQuery } = terra;
-  const { wallet, contract } = useHaloContract();
+  const { contract, wallet } = useContract<H, T>(Halo);
   const {
     data = 0,
     isLoading,

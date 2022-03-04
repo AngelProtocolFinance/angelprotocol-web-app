@@ -1,27 +1,11 @@
 import { chainIDs } from "constants/chainIDs";
-import { useRegistrar } from "../contracts";
+import Registrar, { R, T } from "contracts/Registrar";
+import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
-
-export function useEndowmentList() {
-  const { useEndowmentsQuery } = registrar_api;
-  const { wallet, contract } = useRegistrar();
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-  } = useEndowmentsQuery(contract.endowmentList, {
-    skip: wallet?.network.chainID === chainIDs.localterra,
-  });
-
-  return {
-    endowments: data,
-    isEndowmentsLoading: isLoading || isFetching,
-  };
-}
 
 export function useEndowmentStatus(address: string, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
-  const { wallet, contract } = useRegistrar();
+  const { wallet, contract } = useContract<R, T>(Registrar);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
     contract.endowmentList,
     {

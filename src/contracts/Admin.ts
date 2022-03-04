@@ -118,3 +118,6 @@ export default class Admin extends Contract {
     });
   }
 }
+
+export interface A extends Admin {}
+export type T = typeof Admin;

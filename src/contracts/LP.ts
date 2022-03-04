@@ -143,3 +143,6 @@ export default class LP extends Contract {
     return { msgs: [buy_msg], fee };
   }
 }
+
+export interface L extends LP {}
+export type T = typeof LP;

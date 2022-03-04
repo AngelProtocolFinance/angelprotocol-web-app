@@ -2,12 +2,13 @@
  * states are hooks that only uses existing cache entry and doesn't call the API when
  * there's no cache entry
  */
-import { useLPContract } from "../contracts";
+import { useContract } from "../useContract";
 import { pairInfo, pool_balance, simulation } from "./placeholders";
 import { lp_api } from "./lp";
+import LP, { L, T } from "contracts/LP";
 
 export function usePairInfoState() {
-  const { contract } = useLPContract();
+  const { contract } = useContract<L, T>(LP);
   const { data = pairInfo } = lp_api.endpoints.pairInfo.useQueryState(
     contract.pairInfo
   );
@@ -15,7 +16,7 @@ export function usePairInfoState() {
 }
 
 export function usePairSimulState() {
-  const { contract } = useLPContract();
+  const { contract } = useContract<L, T>(LP);
   const { data = simulation } = lp_api.endpoints.pairSimul.useQueryState(
     contract.simul
   );
@@ -23,7 +24,7 @@ export function usePairSimulState() {
 }
 
 export function usePoolState() {
-  const { contract } = useLPContract();
+  const { contract } = useContract<L, T>(LP);
   const { data = pool_balance } = lp_api.endpoints.pool.useQueryState(
     contract.pool
   );

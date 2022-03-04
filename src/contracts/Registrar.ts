@@ -27,3 +27,5 @@ export default class Registrar extends Contract {
     });
   }
 }
+export interface R extends Registrar {}
+export type T = typeof Registrar;

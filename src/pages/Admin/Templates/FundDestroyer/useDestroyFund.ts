@@ -11,12 +11,11 @@ import { useGetter, useSetter } from "store/accessors";
 import { useState } from "react";
 import { FundCreatorValues } from "./fundDestroyerSchema";
 import cleanObject from "helpers/cleanObject";
+import { useFundList } from "services/terra/indexFund/queriers";
 
 export default function useDestroyFund() {
   const [isSubmitting, setSubmitting] = useState(false);
-  const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const dispatch = useSetter();
-  const newFundMembers = useGetter((state) => state.admin.fundMembers);
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
 

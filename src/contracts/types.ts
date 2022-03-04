@@ -39,12 +39,12 @@ export type FundDetails = {
   description: string;
   members: string[];
   rotating_fund?: boolean;
-  split_to_liquid?: string; //0.63
+  split_to_liquid?: string; //"0.63"
   expiry_time?: number; //epoch time
   expiry_height?: number; //block height
 };
 
-export type FundsListRes = {
+export type FundListRes = {
   funds: FundDetails[];
 };
 
