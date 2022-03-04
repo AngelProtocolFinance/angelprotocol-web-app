@@ -11,6 +11,7 @@ import { currency_text, denoms } from "constants/currency";
 import { RootState } from "store/store";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
+import extractFeeNum from "helpers/extractFeeNum";
 
 type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
 type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
@@ -46,27 +47,23 @@ export const sendTerraTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        tx = await contract.createTx(args.msgs);
-        const state = getState() as RootState;
+        const fee = await contract.estimateFee(args.msgs);
+        const feeNum = extractFeeNum(fee);
 
+        const state = getState() as RootState;
         const feeDenom = args.feedDenom || denoms.uusd;
         const walletBalanceForFee =
           state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
           0;
 
-        const estimatedFee = tx
-          //for terra tx, pay fees with UST otherwise specified
-          .fee!.amount.get(args.feedDenom || denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
-
-        if (estimatedFee > walletBalanceForFee) {
+        if (feeNum > walletBalanceForFee) {
           updateTx({
             step: Step.error,
             message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
           });
           return;
         }
+        tx = { msgs: args.msgs, fee };
       }
 
       const response = await args.wallet.post(tx);
