@@ -4,12 +4,14 @@ import { setStage } from "services/transaction/transactionSlice";
 import { useSetModal } from "components/Modal/Modal";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetter } from "store/accessors";
+import useShare from "components/Share/useShare";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
   const { hideModal } = useSetModal();
   const dispatch = useSetter();
   const { chainId, txHash, message, isReceiptEnabled } = props;
+  const share = useShare();
 
   function acknowledge() {
     if (isReceiptEnabled) {
@@ -18,6 +20,11 @@ export default function Success(props: SuccessStage) {
       dispatch(setStage({ step: Step.form }));
       hideModal();
     }
+  }
+
+  function shareDonation() {
+    dispatch(setStage({ step: Step.form }));
+    share();
   }
 
   return (
@@ -34,12 +41,22 @@ export default function Success(props: SuccessStage) {
         view transaction details
       </a>
 
-      <button
-        onClick={acknowledge}
-        className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
-      >
-        {isReceiptEnabled ? "get receipt" : "ok"}
-      </button>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={acknowledge}
+          className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
+        >
+          {isReceiptEnabled ? "get receipt" : "ok"}
+        </button>
+        {isReceiptEnabled && (
+          <button
+            onClick={shareDonation}
+            className="bg-angel-blue text-white rounded-md uppercase py-1 px-4 font-bold"
+          >
+            Share
+          </button>
+        )}
+      </div>
     </div>
   );
 }
