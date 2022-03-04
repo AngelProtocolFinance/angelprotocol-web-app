@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec, MsgSend, Coin } from "@terra-money/terra.js";
+import {
+  CreateTxOptions,
+  Dec,
+  MsgSend,
+  Coin,
+  MsgExecuteContract,
+} from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import {
   setFormError,
@@ -19,6 +25,7 @@ import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
 import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -44,8 +51,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(null));
-
         if (activeProvider === Providers.none) {
           dispatch(setFormError("Wallet is not connected"));
           return;
@@ -79,36 +84,36 @@ export default function useEstimator() {
         if (currency === denoms.uusd) {
           if (activeProvider === Providers.terra) {
             const receiver = getValues("receiver");
-            let tx: CreateTxOptions;
+            let depositMsg: MsgExecuteContract;
             if (
               typeof receiver === "undefined" ||
               typeof receiver === "number"
             ) {
               const index_fund = new Indexfund(wallet, receiver);
-              tx = await index_fund.createDepositTx(
+              depositMsg = await index_fund.createDepositMsg(
                 debounced_amount,
                 debounced_split
               );
             } else {
               const account = new Account(receiver, wallet);
-              tx = await account.createDepositTx(
+              depositMsg = await account.createDepositMsg(
                 debounced_amount,
                 debounced_split
               );
             }
+            const contract = new Contract(wallet);
+            const fee = await contract.estimateFee([depositMsg]);
+            const feeNum = extractFeeNum(fee);
 
-            const estimatedFee = tx
-              .fee!.amount.get(denoms.uusd)!
-              .mul(1e-6)
-              .amount.toNumber();
+            console.log(feeNum);
 
             //2nd balance check including fees
-            if (debounced_amount + estimatedFee >= balance) {
+            if (debounced_amount + feeNum >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
               return;
             }
-            dispatch(setFee(estimatedFee));
-            setTerraTx(tx);
+            dispatch(setFee(feeNum));
+            setTerraTx({ msgs: [depositMsg], fee });
           }
         }
 
@@ -126,10 +131,7 @@ export default function useEstimator() {
               new Coin(denoms.uluna, amount.toNumber()),
             ]);
             const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-            const numFee = aminoFee.amount
-              .mul(1e-6)
-              .get(denoms.uluna)
-              ?.amount.toNumber()!;
+            const numFee = extractFeeNum(aminoFee, denoms.uluna);
 
             if (debounced_amount + numFee >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
@@ -174,6 +176,10 @@ export default function useEstimator() {
         dispatch(setFormError(formError));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(null));
+    };
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
 

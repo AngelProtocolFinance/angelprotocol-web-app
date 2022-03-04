@@ -1,11 +1,5 @@
 import { ConnectedWallet } from "@terra-money/wallet-provider";
-import {
-  MsgExecuteContract,
-  // Coin,
-  Dec,
-  CreateTxOptions,
-  // StdFee,
-} from "@terra-money/terra.js";
+import { MsgExecuteContract, Dec } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
@@ -52,6 +46,11 @@ export default class Halo extends Contract {
     };
   }
 
+  async getGovState() {
+    return this.query<GovState>(this.gov_address, this.gov_state.msg);
+  }
+
+  //halo_token
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
@@ -62,30 +61,6 @@ export default class Halo extends Contract {
         msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
       },
     });
-  }
-
-  async getGovState() {
-    return this.query<GovState>(this.gov_address, this.gov_state.msg);
-  }
-
-  //halo_token
-  async createGovStakeTx(amount: number): Promise<CreateTxOptions> {
-    this.checkWallet();
-    const stake_msg = this.createGovStakeMsg(amount);
-    const fee = await this.estimateFee([stake_msg]);
-    // const fee = new StdFee(2500000, [new Coin(denoms.uusd, 1.5e6)]);
-    return { msgs: [stake_msg], fee };
-  }
-
-  async createGovClaimTx(): Promise<CreateTxOptions> {
-    this.checkWallet();
-    const claim_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.gov_address,
-      { claim_voting_tokens: {} }
-    );
-    const fee = await this.estimateFee([claim_msg]);
-    return { msgs: [claim_msg], fee };
   }
 
   async createPollMsgs(
@@ -128,6 +103,21 @@ export default class Halo extends Contract {
   }
 
   //halo_gov
+  createGovUnstakeMsg(amount: number) {
+    this.checkWallet();
+    const uhalo = new Dec(amount).mul(1e6).toInt();
+    return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
+      withdraw_voting_tokens: { amount: uhalo.toString() },
+    });
+  }
+
+  createGovClaimMsg() {
+    this.checkWallet();
+    return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
+      claim_voting_tokens: {},
+    });
+  }
+
   createEndPollMsg(poll_id: number) {
     this.checkWallet();
     return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
@@ -135,32 +125,15 @@ export default class Halo extends Contract {
     });
   }
 
-  async createGovUnstakeTx(amount: number): Promise<CreateTxOptions> {
+  createVoteMsg(poll_id: number, vote: Vote, amount: number) {
     this.checkWallet();
     const uhalo = new Dec(amount).mul(1e6).toInt();
-    const unstake_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.gov_address,
-      { withdraw_voting_tokens: { amount: uhalo.toString() } }
-    );
-    const fee = await this.estimateFee([unstake_msg]);
-    return { msgs: [unstake_msg], fee };
+    return new MsgExecuteContract(this.walletAddr!, this.gov_address, {
+      cast_vote: { poll_id, vote, amount: uhalo.toString() },
+    });
   }
 
-  async createVoteTx(poll_id: number, vote: Vote, amount: number) {
-    this.checkWallet();
-    const uhalo = new Dec(amount).mul(1e6).toInt();
-    const vote_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.gov_address,
-      {
-        cast_vote: { poll_id, vote, amount: uhalo.toString() },
-      }
-    );
-    const fee = await this.estimateFee([vote_msg]);
-    return { msgs: [vote_msg], fee };
-  }
-
+  //airdrop
   createAirdropClaimMsg(airdrops: Airdrops, is_stake = false) {
     this.checkWallet();
     const claimMsgs = airdrops.map(

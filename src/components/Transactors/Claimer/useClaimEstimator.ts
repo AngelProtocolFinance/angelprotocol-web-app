@@ -12,6 +12,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
@@ -23,7 +24,6 @@ export default function useClaimEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(null));
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -45,21 +45,18 @@ export default function useClaimEstimator() {
 
         dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        const tx = await contract.createGovClaimTx();
-
-        const estimatedFee = tx
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+        const claimMsg = contract.createGovClaimMsg();
+        const fee = await contract.estimateFee([claimMsg]);
+        const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (feeNum >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(estimatedFee));
-        setTx(tx);
+        dispatch(setFee(feeNum));
+        setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));

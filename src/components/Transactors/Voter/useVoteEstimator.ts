@@ -16,6 +16,7 @@ import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { VoteValues } from "./types";
 import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useVoteEstimator() {
   const {
@@ -38,8 +39,6 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(null));
-
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -80,30 +79,32 @@ export default function useVoteEstimator() {
 
         dispatch(setFormLoading(true));
         const contract = new Halo(wallet);
-        const tx = await contract.createVoteTx(
+        const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
           debounced_amount
         );
 
-        const estimatedFee = tx
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+        const fee = await contract.estimateFee([voteMsg]);
+        const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (estimatedFee >= UST_balance) {
+        if (feeNum >= UST_balance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(estimatedFee));
-        setTx(tx);
+        dispatch(setFee(feeNum));
+        setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(null));
+    };
     //eslint-disable-next-line
   }, [
     debounced_amount,

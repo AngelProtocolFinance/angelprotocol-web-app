@@ -14,6 +14,7 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
 import { Fee } from "@terra-money/terra.js";
 import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useCreatePollEstimate() {
   const {
@@ -30,8 +31,6 @@ export default function useCreatePollEstimate() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(null));
-
         if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
@@ -59,7 +58,7 @@ export default function useCreatePollEstimate() {
 
         //max fee estimate with extreme payload
         const fee = await contract.estimateFee(pollMsgs);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
         if (feeNum >= UST_balance) {

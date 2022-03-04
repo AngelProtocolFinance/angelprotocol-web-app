@@ -1,6 +1,3 @@
-import { useFormContext } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
-import { useGetter } from "store/accessors";
 import Status from "../../Status";
 import Amount from "./Amount";
 import useDonate from "./useDonate";
@@ -9,13 +6,11 @@ import React, { useState } from "react";
 import AdvancedOptions from "./AdvancedOptions";
 
 export default function DonateForm() {
-  const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { getValues } = useFormContext<DonateValues>();
-  const { donate } = useDonate();
+  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
+
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
-  const to = getValues("to");
   const toggleAdvancedOptions = () => setIsAdvancedOptionShown((prev) => !prev);
   const confirmRole = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsTermsAccepted(event.target.checked);
@@ -61,11 +56,11 @@ export default function DonateForm() {
         </label>
       </div>
       <button
-        disabled={form_loading || !form_error || !isTermsAccepted}
+        disabled={isSubmitDisabled || !isTermsAccepted}
         className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {form_loading ? "estimating fee.." : "proceed"}
+        {isFormLoading ? "estimating fee.." : "proceed"}
       </button>
     </form>
   );

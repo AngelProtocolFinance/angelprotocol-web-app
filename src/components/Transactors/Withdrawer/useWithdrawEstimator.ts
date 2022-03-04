@@ -12,13 +12,13 @@ import {
 import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useExchangeRate } from "services/terra/vaults/queriers";
 import Account from "contracts/Account";
-import { denoms } from "constants/currency";
 import useDebouncer from "hooks/useDebouncer";
 import { vault_field_map } from "constants/contracts";
 import { Source } from "contracts/types";
 import { AmountInfo, filter_infos } from "./helpers";
 import { WithdrawValues, VaultFields } from "./types";
 import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useWithrawEstimator() {
   const {
@@ -103,12 +103,9 @@ export default function useWithrawEstimator() {
         dispatch(setFormLoading(true));
 
         const account = new Account(account_addr, wallet);
-        const transaction = await account.createWithdrawTx(sources);
-
-        const estimatedFee = transaction
-          .fee!.amount.get(denoms.uusd)!
-          .mul(1e-6)
-          .amount.toNumber();
+        const withdrawMsg = account.createWithdrawMsg(sources);
+        const fee = await account.estimateFee([withdrawMsg]);
+        const feeNum = extractFeeNum(fee);
 
         //get usd total of of sources
         const usd_total = sources
@@ -120,17 +117,17 @@ export default function useWithrawEstimator() {
           .div(1e6)
           .toNumber();
 
-        if (estimatedFee > usd_total) {
+        if (feeNum > usd_total) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receive_amount = usd_total - estimatedFee;
+        const receive_amount = usd_total - feeNum;
 
         setValue("total_ust", usd_total);
         setValue("total_receive", receive_amount);
-        dispatch(setFee(estimatedFee));
-        setTx(transaction);
+        dispatch(setFee(feeNum));
+        setTx({ msgs: [withdrawMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));

@@ -39,7 +39,11 @@ export default function useStakeUnstake() {
   return {
     stakeOrUnstake: handleSubmit(stakeOrUnstake),
     isSubmitDisabled:
-      !isValid || !isDirty || form_loading || !form_error || isSubmitting,
+      !isValid ||
+      !isDirty ||
+      form_loading ||
+      form_error !== null ||
+      isSubmitting,
     isFormLoading: form_loading,
   };
 }

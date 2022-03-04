@@ -48,7 +48,11 @@ export default function useCreatePoll() {
   return {
     createPoll: handleSubmit(createPoll),
     isSubmitDisabled:
-      !isValid || !isDirty || !form_error || form_loading || isSubmitting,
+      !isValid ||
+      !isDirty ||
+      form_error !== null ||
+      form_loading ||
+      isSubmitting,
     isFormLoading: form_loading,
   };
 }

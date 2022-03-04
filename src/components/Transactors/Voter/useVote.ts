@@ -38,7 +38,11 @@ export default function useVote() {
   return {
     vote: handleSubmit(vote),
     isSubmitDisabled:
-      !isValid || !isDirty || form_loading || !form_error || isSubmitting,
+      !isValid ||
+      !isDirty ||
+      form_loading ||
+      form_error !== null ||
+      isSubmitting,
     isFormLoading: form_loading,
   };
 }

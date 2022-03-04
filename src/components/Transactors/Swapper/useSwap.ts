@@ -47,7 +47,11 @@ export default function useSwap() {
     swap: handleSubmit(swap),
     switchCurrency,
     isSubmitDisabled:
-      !isValid || !isDirty || form_loading || !form_error || isSubmitting,
+      !isValid ||
+      !isDirty ||
+      form_loading ||
+      form_error !== null ||
+      isSubmitting,
     isFormLoading: form_loading,
   };
 }

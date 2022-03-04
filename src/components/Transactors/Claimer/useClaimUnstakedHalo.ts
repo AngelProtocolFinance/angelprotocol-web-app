@@ -32,6 +32,6 @@ export default function useClaimUnstakedHalo() {
   return {
     claimUnstakedHalo,
     isFormLoading: form_loading,
-    isSubmitDisabled: form_loading || !form_error,
+    isSubmitDisabled: form_loading || form_error !== null,
   };
 }
