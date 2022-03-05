@@ -47,8 +47,6 @@ export const useRegistration = () => {
       FinancialStatements: response.data.Registration.FinancialStatements,
       AuditedFinancialReports:
         response.data.Registration.AuditedFinancialReports,
-      ProofOfEmployment: response.data.Registration.ProofOfEmployment,
-      EndowmentAgreement: response.data.Registration.EndowmentAgreement,
       ProofOfIdentityVerified:
         response.data.Registration.ProofOfIdentityVerified,
       ProofOfRegistrationVerified:
@@ -57,10 +55,6 @@ export const useRegistration = () => {
         response.data.Registration.FinancialStatementsVerified,
       AuditedFinancialReportsVerified:
         response.data.Registration.AuditedFinancialReportsVerified,
-      ProofOfEmploymentVerified:
-        response.data.Registration.ProofOfEmploymentVerified,
-      EndowmentAgreementVerified:
-        response.data.Registration.EndowmentAgreementVerified,
     };
     dispatch(updateUserData(data));
     localStorage.setItem("userData", JSON.stringify(data));

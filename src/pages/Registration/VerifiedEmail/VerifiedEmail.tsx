@@ -63,19 +63,17 @@ function createUserData(jwtData: any, token: string): User {
     userType: jwtData.user,
     authorization: jwtData.authorization,
     token: token,
+    Website: jwtData.Registration.Website,
+    UN_SDG: jwtData.Registration.UN_SDG,
     ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
     ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
     ProofOfRegistration: jwtData.Registration.ProofOfRegistration,
-    FinancialStatements: jwtData.Registration.FinancialStatements,
-    AuditedFinancialReports: jwtData.Registration.AuditedFinancialReports,
     ProofOfRegistrationVerified:
       jwtData.Registration.ProofOfRegistrationVerified,
+    FinancialStatements: jwtData.Registration.FinancialStatements,
     FinancialStatementsVerified:
       jwtData.Registration.FinancialStatementsVerified,
+    AuditedFinancialReports: jwtData.Registration.AuditedFinancialReports,
     AuditedFinancialReportsVerified:
       jwtData.Registration.AuditedFinancialReportsVerified,
   };

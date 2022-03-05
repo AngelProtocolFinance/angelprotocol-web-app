@@ -11,10 +11,6 @@ export interface User {
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
-  ProofOfEmployment?: any;
-  EndowmentAgreement?: any;
-  ProofOfEmploymentVerified?: any;
-  EndowmentAgreementVerified?: any;
   TerraWallet?: any;
   IsKeyPersonCompleted?: boolean;
   IsMetaDataCompleted?: boolean;
