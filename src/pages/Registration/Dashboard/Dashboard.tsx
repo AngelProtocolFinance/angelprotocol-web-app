@@ -13,13 +13,13 @@ import { RegistrationStatus, ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const history = useHistory();
-  // TODO: check where to move this logic, since it is similar to useRehydrateUserData
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
   const { data, error } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {
     if (!user.PK) {
+      // TODO: check where to move this logic, since it is similar to useRehydrateUserData
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
@@ -105,9 +105,9 @@ function getRegistrationStatus(user: User, data: any): RegistrationStatus {
     stepOneCompleted: !!user.PK,
     stepTwoCompleted: !!data?.Metadata?.TerraWallet || user.TerraWallet,
     stepThreeCompleted:
-      (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
       (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
-      (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement),
+      (user.ProofOfRegistration || data?.Registration?.ProofOfRegistration) &&
+      (user.Website || data?.Registration?.Website),
     stepFourCompleted: false,
     reviewStatus:
       user?.RegistrationStatus === "Complete"
