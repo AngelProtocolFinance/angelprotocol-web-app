@@ -9,20 +9,20 @@ type DocumentObject = { name: string; dataUrl: string };
 export type UpdateDocumentationData = {
   PK?: string;
   body: {
-    Website: string;
-    UN_SDG: number;
-    ProofOfIdentity: DocumentObject;
-    ProofOfRegistration: DocumentObject;
-    FinancialStatements: DocumentObject[];
-    AuditedFinancialReports: DocumentObject[];
+    website: string;
+    un_sdg: number;
+    proofOfIdentity: DocumentObject;
+    proofOfRegistration: DocumentObject;
+    financialStatements: DocumentObject[];
+    auditedFinancialReports: DocumentObject[];
   };
 };
 
 export type UpdateDocumentationResult = {
-  Website: string;
-  UN_SDG: number;
-  ProofOfIdentity: string;
-  ProofOfRegistration: string;
-  FinancialStatements: string[];
-  AuditedFinancialReports: string[];
+  website: string;
+  un_sdg: number;
+  proofOfIdentity: string;
+  proofOfRegistration: string;
+  financialStatements: string[];
+  auditedFinancialReports: string[];
 };

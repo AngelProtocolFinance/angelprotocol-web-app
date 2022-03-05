@@ -20,15 +20,13 @@ export default function useUpload() {
     (data?: UpdateDocumentationResult) => {
       const userData = { ...user, ...data };
       dispatch(updateUserData(userData));
-      localStorage.setItem("userData", JSON.stringify(userData));
-      console.log(userData);
+      // localStorage.setItem("userData", JSON.stringify(userData));
     },
     [dispatch, user]
   );
 
   const upload = useCallback(
     async (values: FormValues) => {
-      console.log(values, user.PK);
       const uploadBody = await getUploadBody(values);
       const postData = { PK: user.PK, body: uploadBody };
 
@@ -38,8 +36,6 @@ export default function useUpload() {
         data: UpdateDocumentationResult;
         error: FetchBaseQueryError | SerializedError;
       };
-      console.log("result", result);
-      console.log("dataResult", dataResult);
 
       if (dataResult.error) {
         handleError(JSON.stringify(dataResult.error));
@@ -54,24 +50,24 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const ProofOfIdentity = await readFileToDataUrl(values.proofOfIdentity);
-  const ProofOfRegistration = await readFileToDataUrl(
+  const proofOfIdentity = await readFileToDataUrl(values.proofOfIdentity);
+  const proofOfRegistration = await readFileToDataUrl(
     values.proofOfRegistration
   );
-  const FinancialStatements = await Promise.all(
+  const financialStatements = await Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))
   );
-  const AuditedFinancialReports = await Promise.all(
+  const auditedFinancialReports = await Promise.all(
     values.auditedFinancialReports.map((x) => readFileToDataUrl(x))
   );
 
   return {
-    Website: values.website,
-    UN_SDG: values.un_sdg,
-    ProofOfIdentity,
-    ProofOfRegistration,
-    FinancialStatements,
-    AuditedFinancialReports,
+    website: values.website,
+    un_sdg: values.un_sdg,
+    proofOfIdentity,
+    proofOfRegistration,
+    financialStatements,
+    auditedFinancialReports,
   };
 }
 

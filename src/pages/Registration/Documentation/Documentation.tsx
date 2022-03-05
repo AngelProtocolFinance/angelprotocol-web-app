@@ -22,6 +22,10 @@ export default function Documentation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(Schema),
     mode: "onChange",
+    defaultValues: {
+      financialStatements: [],
+      auditedFinancialReports: [],
+    },
   });
   const currentLevel = useCurrentLevel(methods);
   const history = useHistory();
