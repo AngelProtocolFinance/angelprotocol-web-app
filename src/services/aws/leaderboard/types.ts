@@ -7,7 +7,7 @@ export interface Endowment {
   total_liq: number;
   total_lock: number;
   overall: number;
-  charity_logo: string;
+  charity_logo?: string;
   charity_overview: string;
   url: string;
   tier: number;

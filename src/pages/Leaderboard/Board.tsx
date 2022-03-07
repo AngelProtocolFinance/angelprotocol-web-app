@@ -1,9 +1,9 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import TableView from "./TableView";
-import Loader from "components/Loader/Loader";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
-import { chainIDs } from "constants/chainIDs";
 import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
+import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+import Loader from "components/Loader/Loader";
+import { chainIDs } from "constants/chainIDs";
+import TableView from "./TableView";
 
 export default function Board() {
   const wallet = useConnectedWallet();
