@@ -1,16 +1,18 @@
 import * as Yup from "yup";
-import { VaultFields } from "./types";
+import { VaultFieldIds } from "./types";
+
+const amountSchema = Yup.lazy((value) =>
+  value === ""
+    ? Yup.string()
+    : Yup.number()
+        .typeError("invalid: must be a number")
+        .positive("invalid: must be greater than zero ")
+        .test("decimals", "invalid: up to 6 decimals only", test_digits)
+);
+
 export const schema = Yup.object().shape({
-  [VaultFields.anchor1_amount]: Yup.number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .typeError("invalid: must be a number")
-    .positive("invalid: must be greater than zero ")
-    .test("decimals", "invalid: up to 6 decimals only", test_digits),
-  [VaultFields.anchor2_amount]: Yup.number()
-    .transform((value) => (isNaN(value) ? undefined : value))
-    .typeError("invalid: must be a number")
-    .positive("invalid: must be greater than zero ")
-    .test("decimals", "invalid: up to 6 decimals only", test_digits),
+  [VaultFieldIds.anchor1_amount]: amountSchema,
+  [VaultFieldIds.anchor2_amount]: amountSchema,
   //add other vault fields here
 });
 

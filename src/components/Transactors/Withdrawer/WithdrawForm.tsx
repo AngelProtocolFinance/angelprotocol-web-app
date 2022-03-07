@@ -1,11 +1,12 @@
-import { vaults } from "constants/contracts";
 import Status from "../Status";
 import { Fee, ToReceive, Total } from "./Misc";
 import Amount from "./Amount";
 import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm() {
-  const { holdings, withdraw, isFormLoading, isSubmitDisabled } = useWithdraw();
+  const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
+    useWithdraw();
+
   return (
     <form
       onSubmit={withdraw}
@@ -22,21 +23,12 @@ export default function WithdrawForm() {
         Account's current strategies.
       </p>
 
-      {vaults.map((vault) => {
-        const holding = holdings.liquid_cw20.find(
-          (holding) => holding.address === vault.address
-        );
-        if (holding) {
-          return (
-            <Amount
-              key={holding.address}
-              {...{ ...vault, balance: holding.amount }}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
+      {vaultFields.map(
+        (vaultField) =>
+          vaultField.ustBalance.gt(0) && (
+            <Amount key={vaultField.fieldId} {...vaultField} />
+          )
+      )}
 
       <Total />
       <Fee />

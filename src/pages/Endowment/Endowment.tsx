@@ -1,7 +1,7 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { RouteComponentProps } from "react-router-dom";
-import { useExchangeRate } from "services/terra/vaults/queriers";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
+import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
 import { useProfile } from "services/aws/endowments/queriers";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
 import PageMeta from "./PageMeta";
@@ -12,8 +12,9 @@ import TransactionList from "./TransactionList";
 export default function Endowment(props: RouteComponentProps<RouteParam>) {
   const address = props.match.params.address;
   const wallet = useConnectedWallet();
+  useApprovedVaultsRate();
+
   //fetch exchange rate here
-  useExchangeRate();
   const showWithdraw = useWithdrawer(address);
   const { profile } = useProfile(address);
   const { holdings } = useEndowmentHoldings(address, profile.is_placeholder);

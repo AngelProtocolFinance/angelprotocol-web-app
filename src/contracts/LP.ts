@@ -135,3 +135,6 @@ export default class LP extends Contract {
     });
   }
 }
+
+export interface L extends LP {}
+export type T = typeof LP;
