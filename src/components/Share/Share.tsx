@@ -1,6 +1,7 @@
 import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   encodedText,
+  FACEBOOK_DIALOG_URL,
   FACEBOOK_SHARE_URL,
   LINKEDIN_SHARE_URL,
   TWITTER_SHARE_URL,
@@ -39,7 +40,7 @@ export default function Share() {
       <div className="flex justify-center my-5 ">
         <IconLink link={TWITTER_SHARE_URL} icon={FaTwitter} />
         <IconLink link={LINKEDIN_SHARE_URL} icon={FaLinkedin} />
-        <IconLink link={FACEBOOK_SHARE_URL} icon={FaFacebookSquare} />
+        <IconLink link={FACEBOOK_DIALOG_URL} icon={FaFacebookSquare} />
       </div>
     </div>
   );
