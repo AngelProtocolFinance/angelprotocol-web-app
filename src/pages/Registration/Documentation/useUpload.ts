@@ -36,6 +36,7 @@ export default function useUpload() {
         data: UpdateDocumentationResult;
         error: FetchBaseQueryError | SerializedError;
       };
+      console.log(dataResult);
 
       if (dataResult.error) {
         handleError(JSON.stringify(dataResult.error));
@@ -50,24 +51,24 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const proofOfIdentity = await readFileToDataUrl(values.proofOfIdentity);
-  const proofOfRegistration = await readFileToDataUrl(
+  const ProofOfIdentity = await readFileToDataUrl(values.proofOfIdentity);
+  const ProofOfRegistration = await readFileToDataUrl(
     values.proofOfRegistration
   );
-  const financialStatements = await Promise.all(
+  const FinancialStatements = await Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))
   );
-  const auditedFinancialReports = await Promise.all(
+  const AuditedFinancialReports = await Promise.all(
     values.auditedFinancialReports.map((x) => readFileToDataUrl(x))
   );
 
   return {
-    website: values.website,
-    un_sdg: values.un_sdg,
-    proofOfIdentity,
-    proofOfRegistration,
-    financialStatements,
-    auditedFinancialReports,
+    Website: values.website,
+    UN_SDG: values.un_sdg,
+    ProofOfIdentity,
+    ProofOfRegistration,
+    FinancialStatements,
+    AuditedFinancialReports,
   };
 }
 
