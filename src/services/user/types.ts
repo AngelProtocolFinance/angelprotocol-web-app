@@ -18,7 +18,7 @@ export interface User {
   Website: string;
   UN_SDG: number;
   ProofOfIdentity: string[];
-  ProofOfRegistration: string;
+  ProofOfRegistration: string[];
   FinancialStatements: string[];
   AuditedFinancialReports: string[];
   ProofOfIdentityVerified?: boolean;

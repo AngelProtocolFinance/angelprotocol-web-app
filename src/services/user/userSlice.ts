@@ -21,7 +21,7 @@ const initialState: User = {
   Website: "",
   UN_SDG: -1,
   ProofOfIdentity: [],
-  ProofOfRegistration: "",
+  ProofOfRegistration: [],
   FinancialStatements: [],
   AuditedFinancialReports: [],
   ProofOfIdentityVerified: false,

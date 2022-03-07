@@ -25,7 +25,7 @@ export default function ProofOfIdentity() {
       required
     >
       <FileDropzone name="proofOfIdentity" className="h-8" />
-      {!!errorMessage && (
+      {errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
           {errorMessage}
         </p>

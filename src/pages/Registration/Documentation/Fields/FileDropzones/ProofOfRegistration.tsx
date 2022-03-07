@@ -8,6 +8,12 @@ export default function ProofOfRegistration() {
     formState: { errors },
   } = useFormContext<FormValues>();
 
+  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
+  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
+  const errorMessage = !!errors?.proofOfRegistration?.length
+    ? errors.proofOfRegistration[0].message
+    : (errors?.proofOfRegistration as any)?.message;
+
   return (
     <InputRow
       id="proofOfRegistration"
@@ -15,9 +21,9 @@ export default function ProofOfRegistration() {
       required
     >
       <FileDropzone name="proofOfRegistration" className="h-8" />
-      {errors.proofOfRegistration?.message && (
+      {errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
-          {errors.proofOfRegistration.message}
+          {errorMessage}
         </p>
       )}
     </InputRow>

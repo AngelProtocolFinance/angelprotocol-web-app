@@ -12,7 +12,7 @@ export type UpdateDocumentationData = {
     Website: string;
     UN_SDG: number;
     ProofOfIdentity: DocumentObject[];
-    ProofOfRegistration: DocumentObject;
+    ProofOfRegistration: DocumentObject[];
     FinancialStatements: DocumentObject[];
     AuditedFinancialReports: DocumentObject[];
   };
@@ -22,7 +22,7 @@ export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
   ProofOfIdentity: string[];
-  ProofOfRegistration: string;
+  ProofOfRegistration: string[];
   FinancialStatements: string[];
   AuditedFinancialReports: string[];
 };

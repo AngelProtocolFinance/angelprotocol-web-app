@@ -54,8 +54,8 @@ async function getUploadBody(values: FormValues) {
   const ProofOfIdentity = await Promise.all(
     values.proofOfIdentity.map((x) => readFileToDataUrl(x))
   );
-  const ProofOfRegistration = await readFileToDataUrl(
-    values.proofOfRegistration
+  const ProofOfRegistration = await Promise.all(
+    values.proofOfRegistration.map((x) => readFileToDataUrl(x))
   );
   const FinancialStatements = await Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))

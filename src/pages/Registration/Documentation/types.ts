@@ -4,7 +4,7 @@ const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
 
 export type FormValues = {
   proofOfIdentity: File[];
-  proofOfRegistration: File;
+  proofOfRegistration: File[];
   financialStatements: File[];
   auditedFinancialReports: File[];
   website: string;
@@ -34,9 +34,13 @@ export const Schema = Yup.object({
       message: "Proof of identity required",
       test: (arr) => arr?.length === 1,
     }),
-  proofOfRegistration: Yup.mixed()
-    .required("Proof of registration required")
-    .concat(COMMON_FILE_SCHEMA),
+  proofOfRegistration: Yup.array<File>()
+    .of(COMMON_FILE_SCHEMA)
+    .test({
+      name: "exactlyOne",
+      message: "Proof of registration required",
+      test: (arr) => arr?.length === 1,
+    }),
   financialStatements: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   auditedFinancialReports: Yup.array<File>().of(COMMON_FILE_SCHEMA),
   website: Yup.string()
