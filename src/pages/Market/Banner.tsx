@@ -12,27 +12,20 @@ export default function Banner() {
           target="_blank"
           rel="noreferrer"
         >
-          <p className="font-heading text-white-grey font-extrabold text-3xl md:text-4xl lg:text-5xl">
+          <p className="font-heading text-white-grey font-extrabold text-5xl md:text-6xl lg:text-7xl">
             ANGEL PROTOCOL SUPPORTS
           </p>
-          <p className="font-heading text-angel-orange font-extrabold text-3xl md:text-4xl lg:text-5xl mb-4">
+          <p className="font-heading text-angel-orange font-extrabold text-5xl md:text-6xl lg:text-7xl mb-4">
             DISPLACED UKRAINIANS.
           </p>
         </a>
         <p className="font-heading text-white-grey text-xl xl:text-2xl mb-0">
-          <span className="md:leading-normal xl:leading-relaxed">
+          <span className="md:leading-normal xl:leading-relaxed font-bold">
             Ongoing conflict has led to a humanitarian crisis in Ukraine that
             could displace over 7 million people.
           </span>{" "}
-          <span className="md:leading-normal xl:leading-relaxed font-bold">
-            <a
-              href="https://ukraine.angelprotocol.io/"
-              target="_blank"
-              rel="noreferrer"
-              className="underline"
-            >
-              Fund relief & refugee efforts by donating crypto assets today!
-            </a>
+          <span className="md:leading-normal xl:leading-relaxed">
+            Fund relief & refugee efforts by donating crypto assets today!
           </span>
         </p>
       </div>
