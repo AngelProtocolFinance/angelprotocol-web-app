@@ -51,7 +51,9 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const ProofOfIdentity = await readFileToDataUrl(values.proofOfIdentity);
+  const ProofOfIdentity = await Promise.all(
+    values.proofOfIdentity.map((x) => readFileToDataUrl(x))
+  );
   const ProofOfRegistration = await readFileToDataUrl(
     values.proofOfRegistration
   );

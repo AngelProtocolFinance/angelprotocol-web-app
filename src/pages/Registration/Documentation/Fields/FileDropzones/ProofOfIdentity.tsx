@@ -11,6 +11,12 @@ export default function ProofOfIdentity() {
     formState: { errors },
   } = useFormContext<FormValues>();
 
+  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
+  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
+  const errorMessage = !!errors?.proofOfIdentity?.length
+    ? errors.proofOfIdentity[0].message
+    : (errors?.proofOfIdentity as any)?.message;
+
   return (
     <InputRow
       id="proofOfIdentity"
@@ -19,9 +25,9 @@ export default function ProofOfIdentity() {
       required
     >
       <FileDropzone name="proofOfIdentity" className="h-8" />
-      {errors.proofOfIdentity?.message && (
+      {!!errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
-          {errors.proofOfIdentity.message}
+          {errorMessage}
         </p>
       )}
     </InputRow>

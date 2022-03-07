@@ -11,7 +11,7 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: DocumentObject;
+    ProofOfIdentity: DocumentObject[];
     ProofOfRegistration: DocumentObject;
     FinancialStatements: DocumentObject[];
     AuditedFinancialReports: DocumentObject[];
@@ -21,7 +21,7 @@ export type UpdateDocumentationData = {
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string;
+  ProofOfIdentity: string[];
   ProofOfRegistration: string;
   FinancialStatements: string[];
   AuditedFinancialReports: string[];

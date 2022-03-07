@@ -17,7 +17,7 @@ export interface User {
   token?: string;
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string;
+  ProofOfIdentity: string[];
   ProofOfRegistration: string;
   FinancialStatements: string[];
   AuditedFinancialReports: string[];

@@ -20,7 +20,7 @@ const initialState: User = {
   IsMetaDataCompleted: false,
   Website: "",
   UN_SDG: -1,
-  ProofOfIdentity: "",
+  ProofOfIdentity: [],
   ProofOfRegistration: "",
   FinancialStatements: [],
   AuditedFinancialReports: [],

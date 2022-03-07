@@ -3,7 +3,7 @@ import * as Yup from "yup";
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
 
 export type FormValues = {
-  proofOfIdentity: File;
+  proofOfIdentity: File[];
   proofOfRegistration: File;
   financialStatements: File[];
   auditedFinancialReports: File[];
@@ -27,9 +27,13 @@ const COMMON_FILE_SCHEMA = Yup.mixed<File>()
 
 export const Schema = Yup.object({
   // Concatenate schemas to first perform the 'required' check
-  proofOfIdentity: Yup.mixed()
-    .required("Proof of identity required")
-    .concat(COMMON_FILE_SCHEMA),
+  proofOfIdentity: Yup.array<File>()
+    .of(COMMON_FILE_SCHEMA)
+    .test({
+      name: "exactlyOne",
+      message: "Proof of identity required",
+      test: (arr) => arr?.length === 1,
+    }),
   proofOfRegistration: Yup.mixed()
     .required("Proof of registration required")
     .concat(COMMON_FILE_SCHEMA),
