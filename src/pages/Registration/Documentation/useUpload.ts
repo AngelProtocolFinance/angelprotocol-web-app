@@ -20,7 +20,7 @@ export default function useUpload() {
     (data?: UpdateDocumentationResult) => {
       const userData = { ...user, ...data };
       dispatch(updateUserData(userData));
-      // localStorage.setItem("userData", JSON.stringify(userData));
+      localStorage.setItem("userData", JSON.stringify(userData));
     },
     [dispatch, user]
   );
