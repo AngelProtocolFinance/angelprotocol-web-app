@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { app, site } from "constants/routes";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import Button from "../Button";
 import routes from "../routes";
 import {
@@ -30,6 +31,10 @@ export default function Documentation() {
   const currentLevel = useCurrentLevel(methods);
   const history = useHistory();
   const { upload, isSuccess } = useUpload();
+
+  if (isSuccess) {
+    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
+  }
 
   return (
     <Container>
