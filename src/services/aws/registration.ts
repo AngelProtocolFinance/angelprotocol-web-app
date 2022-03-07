@@ -80,7 +80,7 @@ const registration_api = aws.injectEndpoints({
     >({
       query: (data) => {
         return {
-          url: `documentation-update`,
+          url: `registration/documentation`,
           params: { uuid: data.PK },
           method: "PUT",
           body: data.body,
