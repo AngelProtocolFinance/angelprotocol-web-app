@@ -10,15 +10,7 @@ export default function FileDropzone(props: BaseProps) {
       name={props.name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <Dropzone
-          {...props}
-          onDrop={(acceptedFiles) =>
-            props.multiple
-              ? onChange(acceptedFiles)
-              : onChange(acceptedFiles[0])
-          }
-          value={value}
-        />
+        <Dropzone {...props} onDrop={onChange} value={value} />
       )}
     />
   );
