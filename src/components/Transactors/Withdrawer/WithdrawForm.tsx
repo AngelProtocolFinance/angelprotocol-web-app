@@ -15,13 +15,6 @@ export default function WithdrawForm() {
       noValidate
     >
       <Status />
-      <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
-        Withdraw from Accounts
-      </h3>
-      <p className="mb-3 md:mb-6 text-angel-grey text-center text-xs">
-        Enter the quantity of tokens to withdraw from each of the active Liquid
-        Account's current strategies.
-      </p>
 
       {vaultFields.map(
         (vaultField) =>
