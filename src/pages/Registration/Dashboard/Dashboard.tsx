@@ -1,15 +1,15 @@
 import { useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
+import getRegistrationStatus from "./getRegistrationStatus";
 import Step from "./Step";
-import { RegistrationStatus, ReviewStatus } from "./types";
+import { ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const history = useHistory();
@@ -60,21 +60,23 @@ export default function Dashboard() {
           title="Step #2: Wallet Address"
           onClick={() => history.push(routes.wallet)}
           disabled={dataSubmitted}
-          completed={status.stepTwoCompleted}
+          completed={status.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
           onClick={() => history.push(routes.documentation)}
           disabled={dataSubmitted}
-          completed={status.stepThreeCompleted}
+          completed={status.stepThree.completed}
           // TODO: implement level logic
-          statusComplete={status.stepThreeCompleted && `Level 1`}
+          statusComplete={
+            status.stepThree.completed && `Level ${status.stepThree.level}`
+          }
         />
         <Step
           title="Step #4: Additional Information"
           onClick={() => history.push(routes.additionalInformation)}
           disabled={dataSubmitted}
-          completed={status.stepFourCompleted}
+          completed={status.stepFour.completed}
         />
         {status.reviewStatus === ReviewStatus.None && (
           <Button
@@ -98,32 +100,4 @@ export default function Dashboard() {
       )}
     </div>
   );
-}
-
-function getRegistrationStatus(user: User, data: any): RegistrationStatus {
-  return {
-    stepOneCompleted: !!user.PK,
-    stepTwoCompleted: !!data?.Metadata?.TerraWallet || user.TerraWallet,
-    stepThreeCompleted:
-      (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
-      (user.ProofOfRegistration || data?.Registration?.ProofOfRegistration) &&
-      (user.Website || data?.Registration?.Website),
-    stepFourCompleted: false,
-    reviewStatus:
-      user?.RegistrationStatus === "Complete"
-        ? ReviewStatus.Complete
-        : data?.Metadata?.EndowmentStatus === "Active"
-        ? ReviewStatus.Available
-        : user.IsMetaDataCompleted
-        ? ReviewStatus.UnderReview
-        : ReviewStatus.None,
-    getReadyForSubmit: function () {
-      return (
-        this.stepOneCompleted &&
-        this.stepTwoCompleted &&
-        this.stepThreeCompleted &&
-        this.stepFourCompleted
-      );
-    },
-  };
 }
