@@ -2,6 +2,7 @@ import Status from "../Status";
 import { Fee, ToReceive, Total } from "./Misc";
 import Amount from "./Amount";
 import useWithdraw from "./useWithdraw";
+import InputField from "./InputField";
 
 export default function WithdrawForm() {
   const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
@@ -22,11 +23,15 @@ export default function WithdrawForm() {
             <Amount key={vaultField.fieldId} {...vaultField} />
           )
       )}
-
+      <InputField
+        label="Beneficiary"
+        field="beneficiary"
+        placeholder="terra1..."
+      />
+      <InputField label="Memo" field="memo" placeholder="" />
       <Total />
       <Fee />
       <ToReceive />
-
       <button
         type="submit"
         className="w-full m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"

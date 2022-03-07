@@ -1,10 +1,12 @@
-import { Dec } from "@terra-money/terra.js";
+import { AccAddress, Dec } from "@terra-money/terra.js";
 import { FC } from "react";
 
 export type WithdrawValues = { [key in VaultFieldIds]?: string } & {
   total_ust: number;
   total_receive: number;
   account_addr: string;
+  beneficiary?: AccAddress;
+  memo?: string;
 };
 
 export interface Props {
