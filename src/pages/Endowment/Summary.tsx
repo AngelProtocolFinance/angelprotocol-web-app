@@ -1,23 +1,21 @@
+import { useMemo } from "react";
+import { Dec } from "@terra-money/terra.js";
 import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
-import { Dec } from "@terra-money/terra.js";
-import { useExchangeRateState } from "services/terra/vaults/states";
-import { useMemo } from "react";
+import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
-  const { rates } = useExchangeRateState();
+  const { vaultsRate } = useApprovedVaultsRateState();
   const total_holding = useMemo(() => {
-    const total_dec = props.holdings.reduce(
-      (total, holding) =>
-        //NOTE: having fallback "0" is for instances where account page is a testnet endowment, then suddenly user disconnected
-        //making the chainID to be `mainnet` vice versa, thus having mismatch in holdings and exchange rates
-        //the querier won't know the difference since same endowment address applies regardless of chainID
-        total.add(new Dec(holding.amount).mul(rates[holding.address] || "0")),
-      new Dec(0)
-    );
+    const total_dec = props.holdings.reduce((total, holding) => {
+      const vaultInfo = vaultsRate.find(
+        (vault) => vault.vault_addr === holding.address
+      );
+      return total.add(new Dec(holding.amount).mul(vaultInfo?.fx_rate || "0"));
+    }, new Dec(0));
     return total_dec.div(1e6).toNumber();
-  }, [rates, props.holdings]);
+  }, [vaultsRate, props.holdings]);
 
   const title =
     props.type === "liquid" ? "Liquid Account" : "Principal Account";

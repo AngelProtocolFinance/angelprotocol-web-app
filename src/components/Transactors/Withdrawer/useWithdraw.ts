@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
 import useWithrawEstimator from "./useWithdrawEstimator";
 import { WithdrawValues } from "./types";
+import useFieldsAndLimits from "./useFieldsAndLimits";
 
 export default function useWithdraw() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
@@ -17,12 +17,12 @@ export default function useWithdraw() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const accountAddr = getValues("account_addr");
-  const { holdings } = useEndowmentHoldingsState(accountAddr);
-
   const { wallet, tx } = useWithrawEstimator();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
+
+  const accountAddr = getValues("account_addr");
+  const { vaultFields } = useFieldsAndLimits(accountAddr);
 
   function withdraw() {
     dispatch(
@@ -42,7 +42,7 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    holdings,
+    vaultFields,
     isSubmitDisabled:
       !isValid ||
       !isDirty ||
