@@ -1,45 +1,14 @@
-import { useCallback } from "react";
-import { useFormContext } from "react-hook-form";
-import { useGetter, useSetter } from "store/accessors";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { useEndowmentHoldingsState } from "services/terra/account/states";
-import { withdraw } from "services/transaction/transactors/withdraw";
 import { vaults } from "constants/contracts";
-import useWithrawEstimator from "./useWithdrawEstimator";
 import Status from "../Status";
 import { Fee, ToReceive, Total } from "./Misc";
 import Amount from "./Amount";
-import { WithdrawValues } from "./types";
+import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm() {
-  const {
-    handleSubmit,
-    getValues,
-    formState: { isValid, isDirty },
-  } = useFormContext<WithdrawValues>();
-
-  const account_addr = getValues("account_addr");
-  const { holdings } = useEndowmentHoldingsState(account_addr);
-  const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const dispatch = useSetter();
-  const { showModal } = useSetModal();
-
-  const { tx, wallet } = useWithrawEstimator();
-  const _withraw = useCallback(
-    () => {
-      dispatch(withdraw({ wallet, tx: tx! }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [wallet, tx]
-  );
-
-  const isFormDisabled = form_loading || !!form_error || !isValid || !isDirty;
-
+  const { holdings, withdraw, isFormLoading, isSubmitDisabled } = useWithdraw();
   return (
     <form
-      onSubmit={handleSubmit(_withraw)}
+      onSubmit={withdraw}
       autoComplete="off"
       className="bg-white-grey grid p-4 pt-0 mt-4"
       noValidate
@@ -76,9 +45,9 @@ export default function WithdrawForm() {
       <button
         type="submit"
         className="w-full m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
-        disabled={isFormDisabled}
+        disabled={isSubmitDisabled}
       >
-        {form_loading ? "Estimating..." : "Withdraw"}
+        {isFormLoading ? "Estimating..." : "Withdraw"}
       </button>
     </form>
   );

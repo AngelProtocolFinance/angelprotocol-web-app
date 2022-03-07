@@ -86,40 +86,14 @@ export default class LP extends Contract {
     return result;
   }
 
-  async createSellTx(
-    halo_amount: number,
-    belief_price: string, //"e.g '0.05413'"
-    max_spread: string //"e.g 0.02 for 0.02%"
-  ) {
-    this.checkWallet();
-    const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
-    const sell_msg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.halo_address,
-      {
-        send: {
-          contract: this.pair_address,
-          amount: uhalo_amount,
-          msg: btoa(
-            JSON.stringify({
-              swap: { belief_price, max_spread },
-            })
-          ),
-        },
-      }
-    );
-    const fee = await this.estimateFee([sell_msg]);
-    return { msgs: [sell_msg], fee };
-  }
-
-  async createBuyTx(
+  createBuyMsg(
     ust_amount: number,
     belief_price: string, //"e.g '0.05413'"
     max_spread: string //"e.g 0.02 for 0.02%"
   ) {
     this.checkWallet();
     const uust_amount = new Dec(ust_amount).mul(1e6).toInt().toString();
-    const buy_msg = new MsgExecuteContract(
+    return new MsgExecuteContract(
       this.walletAddr!,
       this.pair_address,
       {
@@ -139,8 +113,26 @@ export default class LP extends Contract {
       },
       [new Coin(denoms.uusd, uust_amount)]
     );
-    const fee = await this.estimateFee([buy_msg]);
-    return { msgs: [buy_msg], fee };
+  }
+
+  createSellMsg(
+    halo_amount: number,
+    belief_price: string, //"e.g '0.05413'"
+    max_spread: string //"e.g 0.02 for 0.02%"
+  ) {
+    this.checkWallet();
+    const uhalo_amount = new Dec(halo_amount).mul(1e6).toInt().toString();
+    return new MsgExecuteContract(this.walletAddr!, this.halo_address, {
+      send: {
+        contract: this.pair_address,
+        amount: uhalo_amount,
+        msg: btoa(
+          JSON.stringify({
+            swap: { belief_price, max_spread },
+          })
+        ),
+      },
+    });
   }
 }
 

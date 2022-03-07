@@ -1,4 +1,4 @@
-import { VaultFields } from "components/Transactors/Withdraw/types";
+import { VaultFields } from "components/Transactors/Withdrawer/types";
 export type Type = {};
 
 export type AmountInfo = { field_id: VaultFields; amount?: string };
