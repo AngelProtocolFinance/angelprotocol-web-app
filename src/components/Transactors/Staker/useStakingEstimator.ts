@@ -31,7 +31,7 @@ export default function useEstimator() {
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
-  const debounced_amount = useDebouncer(amount, 500);
+  const [debounced_amount] = useDebouncer(amount, 500);
 
   useEffect(() => {
     (async () => {

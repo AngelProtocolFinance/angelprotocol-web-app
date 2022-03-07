@@ -16,6 +16,7 @@ import processEstimateError from "helpers/processEstimateError";
 import extractFeeNum from "helpers/extractFeeNum";
 import useFieldsAndLimits from "./useFieldsAndLimits";
 import { VaultFieldIds, WithdrawValues, AmountInfo } from "./types";
+import { SEPARATOR } from "./constants";
 
 export default function useWithrawEstimator() {
   const {
@@ -27,19 +28,23 @@ export default function useWithrawEstimator() {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
+  const account_addr = getValues("account_addr");
+  const { vaultLimits } = useFieldsAndLimits(account_addr);
+
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
 
   const anchor1_amount = watch(VaultFieldIds.anchor1_amount) || "0";
   const anchor2_amount = watch(VaultFieldIds.anchor2_amount) || "0";
-  const account_addr = getValues("account_addr");
 
-  //query fresh exchange rate upon opening form
-  const { vaultLimits } = useFieldsAndLimits(account_addr);
+  const concatenatedAmounts = [anchor1_amount, anchor2_amount].join(SEPARATOR);
 
-  const debAnchor1Amount = useDebouncer<string>(anchor1_amount, 300);
-  const debAnchor2Amount = useDebouncer<string>(anchor2_amount, 300);
+  //use single debouncer so amounts are processed as batch
+  const [debAmounts, isDebouncing] = useDebouncer<string>(
+    concatenatedAmounts,
+    500
+  );
 
   useEffect(() => {
     (async () => {
@@ -49,9 +54,17 @@ export default function useWithrawEstimator() {
           return;
         }
 
-        if (!isDirty || !isValid) return;
         //any field input after this validation, can either be valid input or "0",
         //for n fields, only 1 is required to be valid, so others may be "0"
+        if (!isDirty || !isValid) return;
+
+        if (isDebouncing) {
+          dispatch(setFormLoading(true));
+          return;
+        }
+
+        const [debAnchor1Amount, debAnchor2Amount] =
+          debAmounts.split(SEPARATOR);
 
         //NOTE: change this pre-construction on addition on future vaults
         const fieldInputs: AmountInfo[] = [
@@ -71,6 +84,7 @@ export default function useWithrawEstimator() {
         );
         //if all fields are blank, return
         if (filteredInputs.length <= 0) {
+          dispatch(setFormError("No withdraw amount provided"));
           dispatch(setFee(0));
           setValue("total_ust", 0);
           setValue("total_receive", 0);
@@ -82,7 +96,7 @@ export default function useWithrawEstimator() {
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
           const { limit, addr, rate } = vaultLimits[fieldId];
-          if (fieldInput.amount.gt(limit)) {
+          if (fieldInput.amount.mul(1e6).gt(limit)) {
             setError(fieldId, { message: "not enough balance" });
           } else {
             clearErrors(fieldId);
@@ -95,11 +109,8 @@ export default function useWithrawEstimator() {
           }
         }
 
-        //don't continue if no withdraw args
-        if (sources.length <= 0) {
-          dispatch(setFormError("No valid withdraw amount is set"));
-          return;
-        }
+        //no valid input was found
+        if (sources.length <= 0) return;
 
         dispatch(setFormLoading(true));
 
@@ -133,7 +144,7 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, debAnchor1Amount, debAnchor2Amount, vaultLimits]);
+  }, [wallet, vaultLimits, debAmounts, isDebouncing]);
 
   return { tx, wallet };
 }

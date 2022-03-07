@@ -37,8 +37,8 @@ export default function useSwapEstimator() {
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
-  const debounced_amount = useDebouncer(amount, 300);
-  const debounced_slippage = useDebouncer<string>(slippage, 150);
+  const [debounced_amount] = useDebouncer(amount, 300);
+  const [debounced_slippage] = useDebouncer<string>(slippage, 150);
 
   //TODO: check also if voter already voted
   useEffect(() => {
