@@ -9,6 +9,7 @@ export default function TableView(props: { endowments: Endowment[] }) {
         <thead className="">
           <tr>
             <Heading text="" />
+            <Heading text="" />
             <Heading text="Total" />
             <Heading text="10YR Projection" />
           </tr>
