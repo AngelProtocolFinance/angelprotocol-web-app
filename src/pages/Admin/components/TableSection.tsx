@@ -5,6 +5,7 @@ export default function TableSection(props: HeadProps | BodyProps) {
     children: React.Children.map(props.children, (child, index) => {
       return (
         <tr
+          key={index}
           onClick={props.selectRow && props.selectRow(index)}
           className={
             props.rowClass +
@@ -23,21 +24,30 @@ export default function TableSection(props: HeadProps | BodyProps) {
 }
 
 export function Cells<T extends object>(props: {
+  children?: JSX.Element[] | JSX.Element;
   cellClass: string;
   attributes: T;
   toInclude: (keyof T)[];
 }) {
   let cells: JSX.Element[] = [];
+  //prepend with custom children
+  const custom = React.Children.map(props.children || [], (child, i) => (
+    <td className={props.cellClass} key={i}>
+      {child}
+    </td>
+  ));
+
   for (const attr in props.attributes) {
     if (props.toInclude.includes(attr)) {
       cells.push(
         <td key={attr} className={props.cellClass}>
-          {props.attributes[attr] || "n/a"}
+          {props.attributes[attr]}
         </td>
       );
     }
   }
-  return <>{cells}</>;
+
+  return <>{custom.concat(cells)}</>;
 }
 
 type HeadProps = {
