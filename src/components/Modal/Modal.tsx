@@ -17,6 +17,8 @@ const focusableElementsString =
 export default function Modal(props: Props) {
   const [Content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>();
+  // pointer to last active dom element
+  const lastActive = useRef<HTMLElement>();
   const [backdropDismiss, setBackdropDismiss] = useState(true);
   const escKeyPressed = useKeyPress("Escape");
 
@@ -60,6 +62,8 @@ export default function Modal(props: Props) {
   );
 
   const showModal: Opener = (Content, props) => {
+    // track last active element
+    lastActive.current = document.activeElement as HTMLElement;
     setBackdropDismiss(props.isDismissDisabled ?? true);
     setContent(<Content {...props} />);
     focusHandler();
@@ -69,6 +73,9 @@ export default function Modal(props: Props) {
     setContent(undefined);
     setBackdropDismiss(true);
     ref.current = undefined;
+
+    // return focus to last active dom element
+    lastActive.current?.focus();
   }
 
   const dismissModal = (event: any) => {
