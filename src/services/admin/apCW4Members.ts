@@ -3,8 +3,8 @@ import { Member } from "services/terra/admin/types";
 
 const initialState: MemberCopy[] = [];
 
-const memberSlice = createSlice({
-  name: "admin/members",
+const apCW4MembersSlice = createSlice({
+  name: "admin/apCW4Members",
   initialState,
   reducers: {
     setMembers: (_, { payload }: PayloadAction<MemberCopy[]>) => payload,
@@ -24,12 +24,12 @@ const memberSlice = createSlice({
   },
 });
 
-export default memberSlice.reducer;
+export default apCW4MembersSlice.reducer;
 export const {
   toggleDeleteExistingMember,
   addMember,
   undoAddMember,
   setMembers,
-} = memberSlice.actions;
+} = apCW4MembersSlice.actions;
 
 export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };

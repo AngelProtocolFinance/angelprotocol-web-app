@@ -14,7 +14,7 @@ import { MemberUpdatorValues } from "./memberUpdatorSchema";
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
   const wallet = useConnectedWallet();
-  const membersCopy = useGetter((state) => state.admin.members);
+  const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -26,7 +26,7 @@ export default function useUpdateMembers() {
 
     //check if there are changes
     type Diffs = [Member[], string[]];
-    const [to_add, to_remove]: Diffs = membersCopy.reduce(
+    const [to_add, to_remove]: Diffs = apCW4Members.reduce(
       ([to_add, to_remove]: Diffs, memberCopy) => {
         const member: Member = {
           addr: memberCopy.addr,

@@ -19,7 +19,7 @@ export default function useCreateFund() {
   const [isSubmitting, setSubmitting] = useState(false);
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const dispatch = useSetter();
-  const newFundMembers = useGetter((state) => state.admin.fundMembers);
+  const newFundMembers = useGetter((state) => state.admin.newFundMembers);
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
 

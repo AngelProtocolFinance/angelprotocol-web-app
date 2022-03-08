@@ -1,5 +1,5 @@
 import { IoClose } from "react-icons/io5";
-import { removeFundMember } from "services/admin/fundMemberSlice";
+import { removeFundMember } from "services/admin/newFundMembers";
 import { useSetter } from "store/accessors";
 export default function MemberItem(props: { address: string }) {
   const dispatch = useSetter();

@@ -2,8 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: string[] = [];
 
-const fundMemberSlice = createSlice({
-  name: "admin/members",
+const newFundMembersSlice = createSlice({
+  name: "admin/newFundMembers",
   initialState,
   reducers: {
     addFundMember: (state, { payload }: PayloadAction<string>) => {
@@ -19,6 +19,6 @@ const fundMemberSlice = createSlice({
   },
 });
 
-export default fundMemberSlice.reducer;
+export default newFundMembersSlice.reducer;
 export const { addFundMember, resetFundMembers, removeFundMember } =
-  fundMemberSlice.actions;
+  newFundMembersSlice.actions;

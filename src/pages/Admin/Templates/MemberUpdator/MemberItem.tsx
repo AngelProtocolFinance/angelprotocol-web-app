@@ -7,7 +7,7 @@ import {
   undoAddMember,
   toggleDeleteExistingMember,
   MemberCopy,
-} from "services/admin/memberSlice";
+} from "services/admin/apCW4Members";
 
 export default function MemberItem(props: MemberCopy) {
   const dispatch = useSetter();

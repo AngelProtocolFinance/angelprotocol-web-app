@@ -14,6 +14,8 @@ import FundCreatorForm from "./Templates/FundCreator/FundCreatorForm";
 import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundDestroyerForm from "./Templates/FundDestroyer/FundDestroyerForm";
+import FundUpdator from "./Templates/FundUpdator/FundUpdator";
+import FundUpdatorForm from "./Templates/FundUpdator/FundUpdatorForm";
 
 export default function Proposer() {
   const { path } = useRouteMatch();
@@ -40,6 +42,11 @@ export default function Proposer() {
           <FundDestroyer>
             <FundDestroyerForm />
           </FundDestroyer>
+        </Route>
+        <Route path={`${path}/${proposal_types.update_fund}`}>
+          <FundUpdator>
+            <FundUpdatorForm />
+          </FundUpdator>
         </Route>
 
         <Route exact path={`${path}/${proposal_types.index}`}>
@@ -72,6 +79,9 @@ function ProposalTypes() {
       </NavLink>
       <NavLink to={`${url}/${proposal_types.destroy_fund}`} {...linkStyles}>
         Remove Fund
+      </NavLink>
+      <NavLink to={`${url}/${proposal_types.update_fund}`} {...linkStyles}>
+        Update Fund
       </NavLink>
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink

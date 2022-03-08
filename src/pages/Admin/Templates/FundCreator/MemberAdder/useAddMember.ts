@@ -1,19 +1,19 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { addFundMember } from "services/admin/fundMemberSlice";
+import { addFundMember } from "services/admin/newFundMembers";
 import { useGetter } from "store/accessors";
 import { FundCreatorValues as V } from "../fundCreatorSchema";
 
 export default function useAddMember() {
   const { getValues, setError, resetField, trigger } = useFormContext<V>();
-  const fundMembers = useGetter((state) => state.admin.fundMembers);
+  const newFundMembers = useGetter((state) => state.admin.newFundMembers);
   const dispatch = useDispatch();
   async function addMember() {
     const isValid = await trigger("newFundAddr");
     if (!isValid) return;
 
     const newFundMemberAddr = getValues("newFundAddr");
-    const isMemberExisting = fundMembers.indexOf(newFundMemberAddr) !== -1;
+    const isMemberExisting = newFundMembers.indexOf(newFundMemberAddr) !== -1;
 
     if (isMemberExisting) {
       setError(
@@ -27,5 +27,5 @@ export default function useAddMember() {
     resetField("newFundAddr");
   }
 
-  return { addMember, fundMembers };
+  return { addMember, newFundMembers };
 }

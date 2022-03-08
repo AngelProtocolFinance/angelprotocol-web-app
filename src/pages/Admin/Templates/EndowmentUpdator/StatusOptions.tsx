@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import TextInput from "pages/Admin/TextInput";
+import TextInput from "pages/Admin/Templates/components/TextInput";
 import { useFormContext } from "react-hook-form";
 import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 

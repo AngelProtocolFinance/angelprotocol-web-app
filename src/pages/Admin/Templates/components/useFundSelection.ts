@@ -2,9 +2,10 @@ import { useState, useEffect, useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { useFundList } from "services/terra/indexFund/queriers";
 import { useLatestBlock } from "services/terra/queriers";
-import { FundDestroyValues } from "./fundDestroyerSchema";
-export default function useFundSelection() {
-  const { setValue } = useFormContext<FundDestroyValues>();
+import { FundIdContext } from "./FundSelection";
+
+export default function useFundSelection<_ extends FundIdContext>() {
+  const { setValue } = useFormContext<FundIdContext>();
 
   const blockHeight = useLatestBlock();
   const { fundList } = useFundList();

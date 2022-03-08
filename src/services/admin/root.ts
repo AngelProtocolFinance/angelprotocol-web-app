@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import membersReducer from "./memberSlice";
-import fundMemberReducer from "./fundMemberSlice";
+import apCW4MembersReducer from "./apCW4Members";
+import newFundMembersReducer from "./newFundMembers";
 
 export const adminReducer = combineReducers({
-  members: membersReducer,
-  fundMembers: fundMemberReducer,
+  apCW4Members: apCW4MembersReducer,
+  newFundMembers: newFundMembersReducer,
 });

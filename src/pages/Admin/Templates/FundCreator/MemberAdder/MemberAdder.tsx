@@ -1,16 +1,16 @@
-import TextInput from "pages/Admin/TextInput";
+import TextInput from "pages/Admin/Templates/components/TextInput";
 import { FundCreatorValues as V } from "../fundCreatorSchema";
 import MemberItem from "./MemberItem";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
-  const { addMember, fundMembers } = useAddMember();
+  const { addMember, newFundMembers } = useAddMember();
 
   return (
     <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
-      {fundMembers.length > 0 && (
+      {newFundMembers.length > 0 && (
         <div className="flex flex-wrap mb-4 gap-2">
-          {fundMembers.map((addr) => (
+          {newFundMembers.map((addr) => (
             <MemberItem key={addr} address={addr} />
           ))}
         </div>

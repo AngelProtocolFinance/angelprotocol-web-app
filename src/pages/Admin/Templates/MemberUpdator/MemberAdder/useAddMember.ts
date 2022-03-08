@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter, useSetter } from "store/accessors";
-import { addMember as _addMember } from "services/admin/memberSlice";
+import { addMember as _addMember } from "services/admin/apCW4Members";
 import { MemberUpdatorValues } from "../memberUpdatorSchema";
 
 export default function useAddMember() {
   const dispatch = useSetter();
-  const membersCopy = useGetter((state) => state.admin.members);
+  const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { trigger, getValues, setError, resetField } =
     useFormContext<MemberUpdatorValues>();
 
@@ -15,7 +15,7 @@ export default function useAddMember() {
 
     const newMemberAddr = getValues("addr");
     const newMemberWeight = getValues("weight");
-    const existingMember = membersCopy.find(
+    const existingMember = apCW4Members.find(
       (member) => member.addr === newMemberAddr
     );
 

@@ -1,27 +1,28 @@
 import Label from "pages/Admin/Templates/components/Label";
 import TextInput from "../components/TextInput";
 import FundSelection from "../components/FundSelection";
-import { FundDestroyValues as FD } from "./fundDestroyerSchema";
 import useDestroyFund from "./useDestroyFund";
+import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 
-export default function FundDestroyerForm() {
-  const { destroyFund } = useDestroyFund();
+export default function FundUpdatorForm() {
+  const { updateFund } = useDestroyFund();
   return (
     <form
-      onSubmit={destroyFund}
+      onSubmit={updateFund}
       className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
     >
-      <TextInput<FD> title="Proposal Title" name="title" required />
-      <TextInput<FD>
+      <TextInput<FV> title="Proposal Title" name="title" required />
+      <TextInput<FV>
         title="proposal description"
         name="description"
         wide
         required
       />
-      <Label text="Fund to remove" required />
-      <FundSelection<FD> />
+      <Label text="Select fund to update" required />
+      <FundSelection<FV> />
+
       <button
-        type="submit"
+        type="button"
         className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
       >
         Propose changes

@@ -1,14 +1,14 @@
-import TextInput from "../../TextInput";
+import TextInput from "../components/TextInput";
 import useInitMembers from "./useInitMembers";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
-import Label from "../../Label";
+import Label from "../components/Label";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import Loader from "components/Loader/Loader";
 
 export default function MemberUpdateForm() {
-  const { membersCopy, isMembersLoading } = useInitMembers();
+  const { apCW4Members, isMembersLoading } = useInitMembers();
   const { updateMembers } = useUpdateMembers();
   return (
     <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
@@ -30,7 +30,7 @@ export default function MemberUpdateForm() {
           />
         )) || (
           <div className="flex flex-col gap-2 mb-2">
-            {membersCopy.map((member) => (
+            {apCW4Members.map((member) => (
               <MemberItem key={member.addr} {...member} />
             ))}
           </div>

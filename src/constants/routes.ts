@@ -21,10 +21,14 @@ export enum admin {
 
 export enum proposal_types {
   index = "",
+  //apCW4
   admin_update_members = "admin-update-members",
+  //endowments
   change_endowment_status = "change-endowment-status",
+  //index_fund
   create_fund = "create-fund",
   destroy_fund = "destroy-fund",
+  update_fund = "update-fund",
 }
 
 export enum app {

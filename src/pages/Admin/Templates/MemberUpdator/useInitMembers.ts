@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { setMembers } from "services/admin/memberSlice";
+import { setMembers } from "services/admin/apCW4Members";
 import { useMembers } from "services/terra/admin/queriers";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function useInitMemberUpdator() {
   const dispatch = useSetter();
   const { members, isMembersLoading } = useMembers();
-  const membersCopy = useGetter((state) => state.admin.members);
+  const apCW4Members = useGetter((state) => state.admin.apCW4Members);
 
   useEffect(() => {
     if (members.length > 0) {
@@ -23,5 +23,5 @@ export default function useInitMemberUpdator() {
     //eslint-disable-next-line
   }, [members]);
 
-  return { membersCopy, isMembersLoading };
+  return { apCW4Members, isMembersLoading };
 }
