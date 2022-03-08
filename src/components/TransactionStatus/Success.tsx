@@ -24,18 +24,20 @@ export default function Success(props: SuccessStage) {
   const shareDonation = () => showModal(SharePrompt, {});
 
   return (
-    <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
+    <div className="bg-white-grey grid gap-y-4 p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
       <AiOutlineCheckCircle className="text-blue-accent text-3xl mb-1" />
       <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
 
-      <a
-        href={getTxUrl(chainId, txHash)}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
-      >
-        view transaction details
-      </a>
+      {chainId && txHash && (
+        <a
+          href={getTxUrl(chainId, txHash)}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+        >
+          view transaction details
+        </a>
+      )}
 
       <div className="flex justify-center gap-4">
         <button
