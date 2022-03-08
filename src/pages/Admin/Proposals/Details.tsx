@@ -15,7 +15,7 @@ export default function Details(props: RouteComponentProps<ProposalIdParam>) {
   const proposalDetails = useDetails(proposal);
 
   return (
-    <div className="grid content-start w-full min-h-screen padded-container">
+    <div className="grid content-start w-full min-h-screen">
       <div className="bg-white bg-opacity-10 text-white-grey text-opacity-80 rounded-md shadow-inner p-4">
         <div className="flex justify-between font-bold flex-wrap">
           <p className="font-mono">ID: {proposal.id}</p>

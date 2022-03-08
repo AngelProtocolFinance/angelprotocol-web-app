@@ -6,7 +6,6 @@ import Loader from "components/Loader/Loader";
 import { admin } from "constants/routes";
 import Proposer from "./Proposer";
 import Details from "./Proposals/Details";
-import CharityApplications from "./CharityApplications/CharityApplications";
 import Proposals from "./Proposals/Proposals";
 import AdminNav from "./AdminNav";
 
@@ -28,10 +27,6 @@ export default function Admin() {
       <Switch>
         <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
         <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
-        <Route
-          path={`${path}/${admin.charity_applications}`}
-          component={CharityApplications}
-        />
         <Route exact path={`${path}/${admin.index}`} component={Proposals} />
       </Switch>
     </div>
