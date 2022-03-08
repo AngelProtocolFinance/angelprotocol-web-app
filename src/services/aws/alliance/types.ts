@@ -1,4 +1,4 @@
-export interface Details {
+export interface MemberDetails {
   name: string;
   address: string;
   url?: string;
@@ -6,8 +6,5 @@ export interface Details {
   iconLight?: boolean;
   otherWallets?: string[];
 }
-export interface Result {
-  Count: number;
-  ScannedCount: number;
-  Items: Details[];
-}
+
+export type ToRemoveMember = Pick<MemberDetails, "name" | "address">;

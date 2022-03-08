@@ -50,8 +50,8 @@ type HeadProps = {
 
 type BodyProps = {
   type: "tbody";
-  children: JSX.Element | JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
   rowClass: string;
-  selectRow: (rowIndex: number) => () => void;
-  selectedRow: number | undefined;
+  selectRow?: (rowIndex: number) => () => void;
+  selectedRow?: number;
 };

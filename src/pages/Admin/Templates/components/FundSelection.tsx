@@ -1,4 +1,4 @@
-import TableSection, { Cells } from "../components/TableSection";
+import TableSection, { Cells } from "../../components/TableSection";
 import useFundSelection from "./useFundSelection";
 
 export type FundIdContext = { fundId: string };
@@ -33,3 +33,7 @@ export default function FundSelection<T extends FundIdContext>() {
     </table>
   );
 }
+
+/**
+ *
+ */

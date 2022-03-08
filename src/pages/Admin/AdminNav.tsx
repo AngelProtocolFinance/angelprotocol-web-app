@@ -14,6 +14,9 @@ export default function AdminNav() {
       <NavLink exact to={`${url}/${admin.index}`} {...linkStyles}>
         proposals
       </NavLink>
+      <NavLink to={`${url}/${admin.alliance}`} {...linkStyles}>
+        alliance members
+      </NavLink>
       <NavLink
         to={`${url}/${admin.charity_applications}`}
         className={
@@ -22,15 +25,6 @@ export default function AdminNav() {
         }
       >
         charity applications
-      </NavLink>
-      <NavLink
-        to={`${url}/${admin.charity_applications}`}
-        className={
-          linkStyles.className +
-          " pointer-events-none cursor-none bg-grey-accent bg-opacity-60 text-grey-accent"
-        }
-      >
-        alliance members
       </NavLink>
     </div>
   );

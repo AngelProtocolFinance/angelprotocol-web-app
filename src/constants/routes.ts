@@ -12,25 +12,6 @@ export enum site {
   app = "/app",
 }
 
-export enum admin {
-  index = "",
-  charity_applications = "charity-applications",
-  proposal_types = "proposal-types",
-  proposal = "proposal",
-}
-
-export enum proposal_types {
-  index = "",
-  //apCW4
-  admin_update_members = "admin-update-members",
-  //endowments
-  change_endowment_status = "change-endowment-status",
-  //index_fund
-  create_fund = "create-fund",
-  destroy_fund = "destroy-fund",
-  update_fund = "update-fund",
-}
-
 export enum app {
   index = "/",
   dashboard = "dashboard",
@@ -62,4 +43,22 @@ export enum charity {
   governance = "/governance",
 }
 
-export type Handler = () => void;
+export enum admin {
+  index = "",
+  charity_applications = "charity-applications",
+  proposal_types = "proposal-types",
+  proposal = "proposal",
+  alliance = "alliance",
+}
+
+export enum proposal_types {
+  index = "",
+  //apCW4
+  admin_update_members = "admin-update-members",
+  //endowments
+  change_endowment_status = "change-endowment-status",
+  //index_fund
+  create_fund = "create-fund",
+  destroy_fund = "destroy-fund",
+  update_fund = "update-fund",
+}

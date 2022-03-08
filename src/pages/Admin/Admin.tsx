@@ -8,6 +8,7 @@ import Proposer from "./Proposer";
 import Details from "./Proposals/Details";
 import Proposals from "./Proposals/Proposals";
 import AdminNav from "./AdminNav";
+import AllianceMembers from "./AllianceMembers/AllianceMembers";
 
 export default function Admin() {
   const wallet = useConnectedWallet();
@@ -27,6 +28,7 @@ export default function Admin() {
       <Switch>
         <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
         <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
+        <Route path={`${path}/${admin.alliance}`} component={AllianceMembers} />
         <Route exact path={`${path}/${admin.index}`} component={Proposals} />
       </Switch>
     </div>

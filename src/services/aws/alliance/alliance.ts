@@ -1,63 +1,52 @@
 import { aws } from "../aws";
-import { Result, Details } from "./types";
+import { alliance, tags } from "../tags";
+import { AWSQueryRes } from "../types";
+import { MemberDetails, ToRemoveMember } from "./types";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
-function sortData(data: Details[]) {
-  const _result = data.map((donor) => {
-    return {
-      name: donor.name,
-      icon: donor.icon,
-      iconLight: donor.iconLight || false,
-      address: donor.address,
-    };
-  });
-
-  _result.sort((a, b) => {
-    const nameA = a.name.toUpperCase();
-    const nameB = b.name.toUpperCase();
-    if (nameA < nameB) {
-      return -1;
-    }
-    if (nameA > nameB) {
-      return 1;
-    }
-    return 0;
-  });
-  return _result;
-}
-
-const alliance_api = aws.injectEndpoints({
+export const alliance_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    donors: builder.query<Details[], unknown>({
+    allianceMembers: builder.query<MemberDetails[], unknown>({
+      providesTags: [{ type: tags.alliance, id: alliance.members }],
       query: () => "alliance",
-      transformResponse: (res: Result) => {
-        return sortData(res.Items);
+      transformResponse: (res: AWSQueryRes<MemberDetails[]>) => {
+        return sortMembers(res.Items);
       },
     }),
-    createNewMember: builder.mutation<any, any>({
+    createNewMember: builder.mutation<any, MemberDetails>({
       query: (body) => ({
         url: "alliance",
         method: "POST",
         body,
       }),
-      transformResponse: (res: Result) => {
-        return res.Items ? sortData(res.Items) : res;
-      },
     }),
-    removeMember: builder.mutation<any, any>({
-      query: (data) => ({
-        url: `alliance/${data.wallet}`,
-        params: { name: data.name },
+    removeMember: builder.mutation<any, ToRemoveMember>({
+      query: (toRemoveMember) => ({
+        url: `alliance/${toRemoveMember.address}`,
+        params: { name: toRemoveMember.name },
         method: "DELETE",
       }),
-      transformResponse: (res: Result) => {
-        return res.Items ? sortData(res.Items) : res;
-      },
     }),
   }),
 });
 
-export const {
-  useDonorsQuery,
-  useCreateNewMemberMutation,
-  useRemoveMemberMutation,
-} = alliance_api;
+function sortMembers(members: MemberDetails[]) {
+  return members
+    .map((member) => ({
+      name: member.name,
+      icon: member.icon || defaultIcon,
+      iconLight: member.iconLight || false,
+      address: member.address,
+    }))
+    .sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+}
