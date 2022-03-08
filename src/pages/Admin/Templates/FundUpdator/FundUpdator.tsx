@@ -8,6 +8,9 @@ export default function FundUpdator(props: { children: ReactNode }) {
     resolver: yupResolver(fundDestroyerSchema),
     mode: "onChange",
     reValidateMode: "onChange",
+    defaultValues: {
+      fundId: "",
+    },
   });
 
   return <FormProvider {...methods}>{props.children}</FormProvider>;

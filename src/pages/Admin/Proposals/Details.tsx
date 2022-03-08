@@ -88,7 +88,7 @@ function Votes(props: ProposalDetails) {
         textColor="text-red-200"
       />
       <VoteStat
-        title="remaning:"
+        title="remaining:"
         value={props.numNotYet}
         pct={props.pctNotYet}
         textColor="text-white"

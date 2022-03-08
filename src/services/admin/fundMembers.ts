@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type AddressWithFlags = {
+export type AddressWithFlags = {
   addr: string;
   isDeleted: boolean;
   isAdded: boolean;

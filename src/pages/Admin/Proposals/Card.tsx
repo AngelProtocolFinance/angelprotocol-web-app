@@ -46,7 +46,7 @@ export default function Card(props: Proposal) {
           textColor="text-red-200"
         />
         <VoteStat
-          title="remaning:"
+          title="remaining:"
           value={numNotYet}
           pct={pctNotYet}
           textColor="text-white"

@@ -4,8 +4,8 @@ import { useFundList } from "services/terra/indexFund/queriers";
 import { useLatestBlock } from "services/terra/queriers";
 import { FundIdContext } from "./FundSelection";
 
-export default function useFundSelection<_ extends FundIdContext>() {
-  const { setValue } = useFormContext<FundIdContext>();
+export default function useFundSelection<T extends FundIdContext>() {
+  const { setValue } = useFormContext<{ fundId: T["fundId"] }>();
 
   const blockHeight = useLatestBlock();
   const { fundList } = useFundList();
@@ -34,7 +34,7 @@ export default function useFundSelection<_ extends FundIdContext>() {
   useEffect(() => {
     if (activeRow !== undefined) {
       const fundId = unexpiredFundList[activeRow].id;
-      setValue("fundId", `${fundId}`);
+      setValue("fundId", `${fundId}` as any);
     }
     //eslint-disable-next-line
   }, [activeRow]);

@@ -24,7 +24,6 @@ export default function useUpdateStatus() {
   const { showModal } = useSetModal();
 
   function updateStatus(data: EndowmentUpdateValues) {
-    console.log(data);
     if (!data.prevStatus) {
       showModal(Popup, { message: "Endowment not found" });
       return;
