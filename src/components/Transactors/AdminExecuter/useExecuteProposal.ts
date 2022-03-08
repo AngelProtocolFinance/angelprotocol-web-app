@@ -26,7 +26,7 @@ export default function useExecuteProposal(proposal_id: number) {
         msgs: [execMsg],
         tagPayloads: [
           terra.util.invalidateTags([
-            //invalidate whole gov cache
+            //TODO: invalidate corresponding cache based on proposal executed
             { type: tags.admin, id: admin.members },
             { type: tags.admin, id: admin.member },
             { type: tags.admin, id: admin.proposal },

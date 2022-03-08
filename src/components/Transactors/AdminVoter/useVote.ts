@@ -20,6 +20,7 @@ export default function useVote() {
         tagPayloads: [
           terra.util.invalidateTags([
             { type: tags.admin, id: admin.proposal },
+            { type: tags.admin, id: admin.proposals },
             { type: tags.admin, id: admin.votes },
           ]),
         ],

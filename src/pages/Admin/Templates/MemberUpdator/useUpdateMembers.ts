@@ -2,6 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Member } from "services/terra/admin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { terra } from "services/terra/terra";
+import { admin, tags } from "services/terra/tags";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
@@ -64,6 +66,11 @@ export default function useUpdateMembers() {
       sendTerraTx({
         wallet,
         msgs: [proposalMsg],
+        tagPayloads: [
+          terra.util.invalidateTags([
+            { type: tags.admin, id: admin.proposals },
+          ]),
+        ],
       })
     );
     showModal(TransactionPromp, {});

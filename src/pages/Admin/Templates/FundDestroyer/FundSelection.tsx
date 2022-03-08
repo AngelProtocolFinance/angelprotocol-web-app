@@ -1,26 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useFormContext } from "react-hook-form";
-import { useFundList } from "services/terra/indexFund/queriers";
-import { FundDestroyValues } from "./fundDestroyerSchema";
+import React from "react";
+import useFundSelection from "./useFundSelection";
 
 export default function FundSelection() {
-  const { setValue } = useFormContext<FundDestroyValues>();
-
-  const { fundList } = useFundList();
-  const [activeRow, setActiveRow] = useState<number | undefined>();
-
-  const selectRow = (rowIndex: number) => () => {
-    setActiveRow(rowIndex);
-  };
-
-  useEffect(() => {
-    if (activeRow !== undefined) {
-      const fundId = fundList[activeRow].id;
-      setValue("fundId", `${fundId}`);
-    }
-    //eslint-disable-next-line
-  }, [activeRow]);
-
+  const { selectRow, activeRow, unexpiredFundList } = useFundSelection();
   return (
     <table
       className="table-auto bg-light-grey shadow-inner-white-grey 
@@ -33,8 +15,6 @@ export default function FundSelection() {
         <>
           <th className="px-4 pt-2">fund id</th>
           <th className="px-4 pt-2">fund name</th>
-          <th className="px-4 pt-2">expiry height</th>
-          <th className="px-4 pt-2">expiry time</th>
         </>
       </TableSection>
       <TableSection
@@ -43,11 +23,11 @@ export default function FundSelection() {
         selectRow={selectRow}
         selectedRow={activeRow}
       >
-        {fundList.map((fund) => (
+        {unexpiredFundList.map((fund) => (
           <Cells
             key={fund.id}
             attributes={fund}
-            toInclude={["id", "name", "expiry_height", "expiry_time"]}
+            toInclude={["id", "name"]}
             cellClass="font-mono px-4 py-2 text-center"
           />
         ))}

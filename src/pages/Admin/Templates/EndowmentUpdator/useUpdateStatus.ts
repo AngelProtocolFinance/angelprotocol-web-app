@@ -5,6 +5,8 @@ import {
   EndowmentStatus,
   EndowmentStatusNum,
 } from "services/terra/registrar/types";
+import { terra } from "services/terra/terra";
+import { tags, admin } from "services/terra/tags";
 import Admin from "contracts/Admin";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
@@ -42,17 +44,30 @@ export default function useUpdateStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrar = new Registrar(wallet);
-    const embeddedMsg = registrar.createEmbeddedChangeEndowmentStatusMsg(
-      cleanObject(statusChangePayload, [undefined])
+    const registrarContract = new Registrar(wallet);
+    const embeddedMsg =
+      registrarContract.createEmbeddedChangeEndowmentStatusMsg(
+        cleanObject(statusChangePayload, [undefined])
+      );
+
+    const adminContract = new Admin(wallet);
+    const proposalMsg = adminContract.createProposalMsg(
+      data.title,
+      data.description,
+      [embeddedMsg]
     );
 
-    const admin = new Admin(wallet);
-    const proposalMsg = admin.createProposalMsg(data.title, data.description, [
-      embeddedMsg,
-    ]);
-
-    dispatch(sendTerraTx({ msgs: [proposalMsg], wallet }));
+    dispatch(
+      sendTerraTx({
+        msgs: [proposalMsg],
+        wallet,
+        tagPayloads: [
+          terra.util.invalidateTags([
+            { type: tags.admin, id: admin.proposals },
+          ]),
+        ],
+      })
+    );
     showModal(TransactionPrompt, {});
   }
 

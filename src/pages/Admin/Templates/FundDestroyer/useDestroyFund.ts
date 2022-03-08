@@ -4,6 +4,8 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { terra } from "services/terra/terra";
+import { admin, tags } from "services/terra/tags";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { useSetter } from "store/accessors";
@@ -20,17 +22,29 @@ export default function useDestroyFund() {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFund = new Indexfund(wallet);
-    const embeddedRemoveFundMsg = indexFund.createEmbeddedRemoveFundMsg(
+    const indexFundContract = new Indexfund(wallet);
+    const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
 
-    const admin = new Admin(wallet);
-    const proposalMsg = admin.createProposalMsg(data.title, data.description, [
-      embeddedRemoveFundMsg,
-    ]);
+    const adminContract = new Admin(wallet);
+    const proposalMsg = adminContract.createProposalMsg(
+      data.title,
+      data.description,
+      [embeddedRemoveFundMsg]
+    );
 
-    dispatch(sendTerraTx({ msgs: [proposalMsg], wallet }));
+    dispatch(
+      sendTerraTx({
+        msgs: [proposalMsg],
+        wallet,
+        tagPayloads: [
+          terra.util.invalidateTags([
+            { type: tags.admin, id: admin.proposals },
+          ]),
+        ],
+      })
+    );
     showModal(TransactionPrompt, {});
   }
 
