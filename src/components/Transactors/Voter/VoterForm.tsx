@@ -1,6 +1,5 @@
 import Fee from "../Fee";
 import Status from "../Status";
-import useVoteEstimator from "./useVoteEstimator";
 import { VoteValues as V } from "./types";
 import VoteOption from "../VoteOption";
 import Amount from "./Amount";

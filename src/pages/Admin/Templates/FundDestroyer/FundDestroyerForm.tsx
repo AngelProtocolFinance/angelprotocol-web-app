@@ -1,12 +1,15 @@
 import Label from "pages/Admin/Label";
 import TextInput from "../../TextInput";
 import FundSelection from "./FundSelection";
-import useCreateFund from "./useDestroyFund";
+import useDestroyFund from "./useDestroyFund";
 
 export default function FundDestroyerForm() {
-  const { createFund } = useCreateFund();
+  const { destroyFund } = useDestroyFund();
   return (
-    <form className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
+    <form
+      onSubmit={destroyFund}
+      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
+    >
       <TextInput title="Proposal Title" name="title" required />
       <TextInput
         title="proposal description"
@@ -18,7 +21,7 @@ export default function FundDestroyerForm() {
       <FundSelection />
 
       <button
-        type="button"
+        type="submit"
         className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
       >
         Propose changes

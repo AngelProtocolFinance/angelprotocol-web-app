@@ -3,10 +3,10 @@ import * as Yup from "yup";
 import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
-export type FundCreatorValues = ProposalBase;
+export type FundDestroyValues = ProposalBase & { fundId: string };
 
 const fundDestroyerShape: PartialRecord<
-  keyof FundCreatorValues,
+  keyof FundDestroyValues,
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,

@@ -19,6 +19,7 @@ export default function useStatusPreview() {
   useEffect(() => {
     //set prevStatus value to use in send validation
     setValue("prevStatus", endowmentStatus);
+    //eslint-disable-next-line
   }, [endowmentStatus]);
 
   return {

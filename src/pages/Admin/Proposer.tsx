@@ -66,24 +66,28 @@ function ProposalTypes() {
       >
         Update AP Members
       </NavLink>
-      <NavLink
-        to={`${url}/${proposal_types.change_endowment_status}`}
-        {...linkStyles}
-      >
-        Change Endowment Status
-      </NavLink>
-      <div className="mt-4"></div>
-      <ProposalCategory title="Index fund" />
+      <ProposalCategory title="Index fund" classes="mt-4" />
       <NavLink to={`${url}/${proposal_types.create_fund}`} {...linkStyles}>
         Create Fund
       </NavLink>
       <NavLink to={`${url}/${proposal_types.destroy_fund}`} {...linkStyles}>
         Remove Fund
       </NavLink>
+      <ProposalCategory title="Endowment" classes="mt-4" />
+      <NavLink
+        to={`${url}/${proposal_types.change_endowment_status}`}
+        {...linkStyles}
+      >
+        Change Endowment Status
+      </NavLink>
     </div>
   );
 }
 
-function ProposalCategory(props: { title: string }) {
-  return <h3 className="px-4 font-bold text-angel-grey">{props.title}</h3>;
+function ProposalCategory(props: { title: string; classes?: string }) {
+  return (
+    <h3 className={`px-4 font-bold text-angel-grey ${props.classes || ""}`}>
+      {props.title}
+    </h3>
+  );
 }
