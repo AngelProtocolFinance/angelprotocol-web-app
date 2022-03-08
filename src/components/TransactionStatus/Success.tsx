@@ -4,10 +4,11 @@ import { setStage } from "services/transaction/transactionSlice";
 import { useSetModal } from "components/Modal/Modal";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetter } from "store/accessors";
+import SharePrompt from "components/Share/SharePrompt";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
-  const { hideModal } = useSetModal();
+  const { hideModal, showModal } = useSetModal();
   const dispatch = useSetter();
   const { chainId, txHash, message, isReceiptEnabled } = props;
 
@@ -19,6 +20,8 @@ export default function Success(props: SuccessStage) {
       hideModal();
     }
   }
+
+  const shareDonation = () => showModal(SharePrompt, {});
 
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
@@ -34,12 +37,20 @@ export default function Success(props: SuccessStage) {
         view transaction details
       </a>
 
-      <button
-        onClick={acknowledge}
-        className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
-      >
-        {isReceiptEnabled ? "get receipt" : "ok"}
-      </button>
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={acknowledge}
+          className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
+        >
+          {isReceiptEnabled ? "get receipt" : "ok"}
+        </button>
+        <button
+          onClick={shareDonation}
+          className="bg-angel-blue text-white rounded-md uppercase py-1 px-4 font-bold"
+        >
+          Share
+        </button>
+      </div>
     </div>
   );
 }
