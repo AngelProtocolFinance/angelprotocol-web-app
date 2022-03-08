@@ -1,17 +1,18 @@
 import { useEndowmentHoldingsState } from "services/terra/account/states";
-import { useExchangeRateState } from "services/terra/vaults/states";
 import { IconType } from "react-icons/lib";
 import { BsExclamationCircle } from "react-icons/bs";
 import { VscLoading } from "react-icons/vsc";
+import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 
 export default function PageMeta(props: { address: string }) {
-  const { isRatesError, isRatesLoading } = useExchangeRateState();
+  const { isVaultsRateError, isVaultsRateLoading } =
+    useApprovedVaultsRateState();
   const { isHoldingsError, isHoldingsLoading } = useEndowmentHoldingsState(
     props.address
   );
 
-  const isLoading = isRatesLoading || isHoldingsLoading;
-  const isError = isRatesError || isHoldingsError;
+  const isLoading = isVaultsRateLoading || isHoldingsLoading;
+  const isError = isVaultsRateError || isHoldingsError;
 
   const info = isLoading ? (
     <Info

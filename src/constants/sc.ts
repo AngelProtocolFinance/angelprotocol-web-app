@@ -1,7 +1,6 @@
 export enum sc {
   index_fund = "index_fund",
   registrar = "registrar",
-  anchor = "anchor",
   anchor_vault1 = "anchor_vault1",
   anchor_vault2 = "anchor_vault2", //mainnet doesn't have anchor vault2
   apCW4 = "apCW4",

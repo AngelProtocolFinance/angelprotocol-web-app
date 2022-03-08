@@ -1,11 +1,12 @@
-import { vaults } from "constants/contracts";
 import Status from "../Status";
 import { Fee, ToReceive, Total } from "./Misc";
 import Amount from "./Amount";
 import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm() {
-  const { holdings, withdraw, isFormLoading, isSubmitDisabled } = useWithdraw();
+  const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
+    useWithdraw();
+
   return (
     <form
       onSubmit={withdraw}
@@ -14,29 +15,13 @@ export default function WithdrawForm() {
       noValidate
     >
       <Status />
-      <h3 className="mb-1 text-lg text-angel-grey text-center font-semibold font-heading">
-        Withdraw from Accounts
-      </h3>
-      <p className="mb-3 md:mb-6 text-angel-grey text-center text-xs">
-        Enter the quantity of tokens to withdraw from each of the active Liquid
-        Account's current strategies.
-      </p>
 
-      {vaults.map((vault) => {
-        const holding = holdings.liquid_cw20.find(
-          (holding) => holding.address === vault.address
-        );
-        if (holding) {
-          return (
-            <Amount
-              key={holding.address}
-              {...{ ...vault, balance: holding.amount }}
-            />
-          );
-        } else {
-          return null;
-        }
-      })}
+      {vaultFields.map(
+        (vaultField) =>
+          vaultField.ustBalance.gt(0) && (
+            <Amount key={vaultField.fieldId} {...vaultField} />
+          )
+      )}
 
       <Total />
       <Fee />

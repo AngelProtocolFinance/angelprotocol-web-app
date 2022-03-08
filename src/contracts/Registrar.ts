@@ -9,6 +9,7 @@ export default class Registrar extends Contract {
   address: string;
   endowmentList: ContractQueryArgs;
 
+  vaultsRate: ContractQueryArgs;
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
     this.address = contracts[this.chainID][sc.registrar];
@@ -17,6 +18,12 @@ export default class Registrar extends Contract {
       address: this.address,
       msg: {
         endowment_list: {},
+      },
+    };
+    this.vaultsRate = {
+      address: this.address,
+      msg: {
+        approved_vault_rate_list: {},
       },
     };
   }

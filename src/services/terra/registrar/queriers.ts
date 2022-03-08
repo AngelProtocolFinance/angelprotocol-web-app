@@ -18,6 +18,24 @@ export function useEndowmentStatus(address: string, skip = false) {
       }),
     }
   );
-
   return { endowmentStatus, isEndowmentStatusLoading };
+}
+
+export function useApprovedVaultsRate() {
+  const { useApprovedVaultsRateQuery } = registrar_api;
+  const { contract, wallet } = useContract<R, T>(Registrar);
+  const {
+    data = [],
+    isError,
+    isLoading,
+    isFetching,
+  } = useApprovedVaultsRateQuery(contract.vaultsRate, {
+    skip: wallet?.network.chainID === chainIDs.localterra,
+  });
+
+  return {
+    vaultsRate: data,
+    isVaultsRateError: isError,
+    isVaultsRateLoading: isLoading || isFetching,
+  };
 }
