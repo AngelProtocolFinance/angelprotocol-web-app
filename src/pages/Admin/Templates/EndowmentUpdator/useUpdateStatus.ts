@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useFormContext } from "react-hook-form";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -16,9 +17,11 @@ import { useSetter } from "store/accessors";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
+import { app, site } from "constants/routes";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
+  const history = useHistory();
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -65,6 +68,9 @@ export default function useUpdateStatus() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        redirect: () => {
+          history.push(`${site.app}/${app.admin}`);
+        },
       })
     );
     showModal(TransactionPrompt, {});

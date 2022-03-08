@@ -9,19 +9,23 @@ import { admin, tags } from "services/terra/tags";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
-import { useGetter, useSetter } from "store/accessors";
+import cleanObject from "helpers/cleanObject";
+import { app, site } from "constants/routes";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useGetter, useSetter } from "store/accessors";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
-import cleanObject from "helpers/cleanObject";
 
 export default function useCreateFund() {
-  const [isSubmitting, setSubmitting] = useState(false);
-  const { trigger, getValues } = useFormContext<FundCreatorValues>();
-  const dispatch = useSetter();
-  const newFundMembers = useGetter((state) => state.admin.newFundMembers);
+  const history = useHistory();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
+  const dispatch = useSetter();
+  const { trigger, getValues } = useFormContext<FundCreatorValues>();
+  const newFundMembers = useGetter((state) => state.admin.newFundMembers);
+
+  const [isSubmitting, setSubmitting] = useState(false);
 
   async function createFund() {
     setSubmitting(true);
@@ -93,6 +97,7 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        redirect: () => history.push(`${site.app}/${app.admin}`),
       })
     );
     showModal(TransactionPrompt, {});

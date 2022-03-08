@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { setMembers } from "services/admin/fundMembers";
 import { useFundMembers } from "services/terra/indexFund/queriers";
@@ -8,11 +8,15 @@ import { FundUpdateValues } from "./fundUpdatorSchema";
 export default function useInitFundMembers() {
   const { watch } = useFormContext<FundUpdateValues>();
   const fundId = watch("fundId");
+  const fundIdRef = useRef<string | undefined>();
   const dispatch = useSetter();
   const { fundMembers, isFundMembersLoading } = useFundMembers(fundId);
   const fundMembersCopy = useGetter((state) => state.admin.fundMembers);
 
   useEffect(() => {
+    if (fundIdRef.current === fundId) {
+      return;
+    }
     if (fundMembers.length > 0) {
       dispatch(
         setMembers(
@@ -23,8 +27,10 @@ export default function useInitFundMembers() {
           }))
         )
       );
+      fundIdRef.current = fundId;
     } else {
       dispatch(setMembers([]));
+      fundIdRef.current = fundId;
     }
     //eslint-disable-next-line
   }, [fundMembers, fundId]);
