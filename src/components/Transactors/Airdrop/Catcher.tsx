@@ -16,23 +16,29 @@ export default function Catcher(props: Props) {
         {toCurrency(totalClaimable)} HALO
       </p>
 
-      <Action title="claim & stake" onClick={claimAirdrop(true)} />
-      <button
+      <Action
+        title="claim & stake"
+        onClick={claimAirdrop(true)}
+        classes="text-sm"
+      />
+      <Action
         title="claim"
         onClick={claimAirdrop(false)}
-        className="underline text-angel-grey cursor-pointer"
-      >
-        claim
-      </button>
+        classes="bg-angel-grey font-semibold tracking-wide text-xs"
+      />
     </div>
   );
 }
 
-function Action(props: { title: string; onClick: () => void }) {
+function Action(props: {
+  title: string;
+  classes?: string;
+  onClick: () => void;
+}) {
   return (
     <button
       onClick={props.onClick}
-      className="bg-angel-orange text-white-grey hover:opacity-80 disabled:bg-grey-accent w-32 py-2 rounded-md uppercase font-heading text-sm font-bold mb-2"
+      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${props.classes}`}
     >
       {props.title}
     </button>
