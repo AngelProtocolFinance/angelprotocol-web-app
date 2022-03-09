@@ -1,4 +1,2 @@
-import { Selector } from "./Selector";
-import { MultiSelector } from "./MultiSelector";
-
-export { Selector, MultiSelector };
+export * from "./Selector";
+export * from "./MultiSelector";
