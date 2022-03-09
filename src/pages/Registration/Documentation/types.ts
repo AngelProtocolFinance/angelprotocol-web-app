@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
-
 export type FormValues = {
+  // Expects an array because FileDropzone component always returns an array of Files,
+  // so this way it's easier to handle (Yup validation ensures single file uploaded)
   proofOfIdentity: File[];
   proofOfRegistration: File[];
   financialStatements: File[];
@@ -13,7 +13,9 @@ export type FormValues = {
   un_sdg: number;
 };
 
-const COMMON_FILE_ARRAY_SCHEMA = Yup.array<File>().of(
+const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
+
+const FILE_ARRAY_SCHEMA = Yup.array<File>().of(
   Yup.mixed<File>()
     .test({
       name: "fileSize",
@@ -27,19 +29,19 @@ const COMMON_FILE_ARRAY_SCHEMA = Yup.array<File>().of(
     })
 );
 
-export const Schema = Yup.object({
-  proofOfIdentity: COMMON_FILE_ARRAY_SCHEMA.test({
+export const SCHEMA = Yup.object({
+  proofOfIdentity: FILE_ARRAY_SCHEMA.test({
     name: "exactlyOne",
     message: "Proof of identity required",
     test: (arr) => arr?.length === 1,
   }),
-  proofOfRegistration: COMMON_FILE_ARRAY_SCHEMA.test({
+  proofOfRegistration: FILE_ARRAY_SCHEMA.test({
     name: "exactlyOne",
     message: "Proof of registration required",
     test: (arr) => arr?.length === 1,
   }),
-  financialStatements: COMMON_FILE_ARRAY_SCHEMA,
-  auditedFinancialReports: COMMON_FILE_ARRAY_SCHEMA,
+  financialStatements: FILE_ARRAY_SCHEMA,
+  auditedFinancialReports: FILE_ARRAY_SCHEMA,
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),

@@ -15,13 +15,13 @@ import {
   UnSdgSelector,
   WebsiteInput,
 } from "./Fields";
-import { FormValues, Schema } from "./types";
+import { FormValues, SCHEMA } from "./types";
 import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
   const methods = useForm<FormValues>({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
       financialStatements: [],
