@@ -46,14 +46,14 @@ export default function Documentation() {
           onSubmit={methods.handleSubmit(upload)}
         >
           <RowContainer>
-            <LevelSection>
+            <Column>
               <Header>Level 1</Header>
               <ProofOfIdentity />
               <WebsiteInput />
               <ProofOfRegistration />
-            </LevelSection>
+            </Column>
 
-            <LevelSection colored={currentLevel >= 1}>
+            <Column colored={currentLevel >= 1}>
               <Header>Level 1</Header>
               <p>
                 Your organization is eligible to create its endowment. Donors
@@ -61,37 +61,37 @@ export default function Documentation() {
                 Angel Protocol’s interface. Your organization is not displayed
                 on the marketplace and cannot be found through the search bar.
               </p>
-            </LevelSection>
+            </Column>
           </RowContainer>
 
           <RowContainer>
-            <LevelSection>
+            <Column>
               <Header>Level 2</Header>
               <UnSdgSelector />
               <FinancialStatements />
-            </LevelSection>
-            <LevelSection colored={currentLevel >= 2}>
+            </Column>
+            <Column colored={currentLevel >= 2}>
               <Header>Level 2</Header>
               <p>
                 All benefits from Level 1 + your organization will be visible in
                 the marketplace.
               </p>
-            </LevelSection>
+            </Column>
           </RowContainer>
 
           <RowContainer>
-            <LevelSection>
+            <Column>
               <Header>Level 3</Header>
               <AuditedFinancialReports />
-            </LevelSection>
-            <LevelSection colored={currentLevel === 3}>
+            </Column>
+            <Column colored={currentLevel === 3}>
               <Header>Level 3</Header>
               <p>
                 All benefits from Level 2 + your organization will be able to
                 receive automatic donations from members of the Angel Charity
                 Alliance.
               </p>
-            </LevelSection>
+            </Column>
           </RowContainer>
 
           <div className="flex flex-col gap-1 w-full">
@@ -149,9 +149,9 @@ const Title = ({ level }: { level: number }) => (
   </RowContainer>
 );
 
-type LevelSectionProps = PropsWithChildren<{ colored?: boolean }>;
+type ColumnProps = PropsWithChildren<{ colored?: boolean }>;
 
-const LevelSection = ({ colored, children }: LevelSectionProps) => {
+const Column = ({ colored, children }: ColumnProps) => {
   const styles = colored
     ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
     : "";
