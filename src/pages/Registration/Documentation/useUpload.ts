@@ -28,15 +28,14 @@ export default function useUpload() {
   const upload = useCallback(
     async (values: FormValues) => {
       const uploadBody = await getUploadBody(values);
-      const postData = { PK: user.PK, body: uploadBody };
 
+      const postData = { PK: user.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
 
       const dataResult = result as {
         data: UpdateDocumentationResult;
         error: FetchBaseQueryError | SerializedError;
       };
-      console.log(dataResult);
 
       if (dataResult.error) {
         handleError(JSON.stringify(dataResult.error));
@@ -51,18 +50,25 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const ProofOfIdentity = await Promise.all(
+  const poiPromise = Promise.all(
     values.proofOfIdentity.map((x) => readFileToDataUrl(x))
   );
-  const ProofOfRegistration = await Promise.all(
+  const porPromise = Promise.all(
     values.proofOfRegistration.map((x) => readFileToDataUrl(x))
   );
-  const FinancialStatements = await Promise.all(
+  const fsPromise = Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))
   );
-  const AuditedFinancialReports = await Promise.all(
+  const afrPromise = Promise.all(
     values.auditedFinancialReports.map((x) => readFileToDataUrl(x))
   );
+
+  const [
+    ProofOfIdentity,
+    ProofOfRegistration,
+    FinancialStatements,
+    AuditedFinancialReports,
+  ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
 
   return {
     Website: values.website,

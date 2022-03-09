@@ -18,6 +18,8 @@ export type UpdateDocumentationData = {
   };
 };
 
+// this is Partial data from User type
+// src/services/user/types.ts -> User
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
