@@ -127,14 +127,6 @@ const Container = ({ children }: PropsWithChildren<{}>) => (
   </div>
 );
 
-const Header = ({ children }: PropsWithChildren<{}>) => (
-  <h3 className="text-lg font-bold">{children}</h3>
-);
-
-const RowContainer = ({ children }: PropsWithChildren<{}>) => (
-  <div className="grid grid-cols-32 gap-3 text-sm">{children}</div>
-);
-
 const Title = ({ level }: { level: number }) => (
   <RowContainer>
     <Header>
@@ -147,6 +139,14 @@ const Title = ({ level }: { level: number }) => (
       }`}
     </Header>
   </RowContainer>
+);
+
+const Header = ({ children }: PropsWithChildren<{}>) => (
+  <h3 className="text-lg font-bold">{children}</h3>
+);
+
+const RowContainer = ({ children }: PropsWithChildren<{}>) => (
+  <div className="grid grid-cols-32 gap-3 text-sm">{children}</div>
 );
 
 type ColumnProps = PropsWithChildren<{ colored?: boolean }>;
