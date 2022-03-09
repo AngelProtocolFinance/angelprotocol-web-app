@@ -101,7 +101,7 @@ export default function Documentation() {
 
           <div className="flex justify-center">
             <Button
-              className="bg-green-400 w-40 h-10 mr-2"
+              className="w-40 h-10 bg-green-400 mr-2"
               disabled={methods.formState.isSubmitting}
               onClick={() => history.push(routes.dashboard)}
             >
