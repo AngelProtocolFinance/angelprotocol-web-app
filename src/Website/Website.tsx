@@ -1,11 +1,5 @@
 import { lazy, Suspense } from "react";
-import {
-  Switch,
-  Route,
-  useRouteMatch,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import WebHead from "Website/Header/WebHead";
 import WebFoot from "Website/WebFoot";
 import Loader from "components/Loader/Loader";
@@ -19,7 +13,6 @@ const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));
 
 const Website = () => {
-  const { path } = useRouteMatch();
   const location = useLocation();
   useScrollTop(location.pathname);
 
@@ -32,21 +25,23 @@ const Website = () => {
       <Modal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
-          <Switch>
+          <Routes>
             <Route
               path="/:url*(/+)"
-              render={() => <Redirect to={location.pathname.slice(0, -1)} />}
+              element={() => (
+                <Navigate replace to={location.pathname.slice(0, -1)} />
+              )}
             />
-            <Route path={`${path}${web.contact}`} children={<Contact />} />
+            <Route path={web.contact} element={<Contact />} />
+            <Route path={web.privacy} element={<PrivacyPolicy />} />
+            <Route path={web.donors} element={<Donors />} />
+            <Route path={web.charities} element={<Charities />} />
+            <Route path={web.index} element={<Home />} />
             <Route
-              path={`${path}${web.privacy}`}
-              children={<PrivacyPolicy />}
+              path="*"
+              element={() => <Navigate replace to={site.home} />}
             />
-            <Route path={`${path}${web.donors}`} children={<Donors />} />
-            <Route path={`${path}${web.charities}`} children={<Charities />} />
-            <Route path={`${path}${web.index}`} children={<Home />} />
-            <Route path="*" render={() => <Redirect to={site.home} />} />
-          </Switch>
+          </Routes>
         </Suspense>
         <WebFoot />
       </Modal>

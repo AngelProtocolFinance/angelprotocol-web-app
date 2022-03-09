@@ -9,7 +9,7 @@ import { CharityParam } from "./types";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile, isProfileLoading } = useProfile(endowment_addr);
+  const { profile, isProfileLoading } = useProfile(endowment_addr!);
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

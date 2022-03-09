@@ -1,10 +1,4 @@
-import {
-  Switch,
-  Route,
-  Redirect,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { app, site } from "../constants/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
@@ -22,7 +16,6 @@ const Endowment = lazy(() => import("pages/Endowment/Endowment"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 
 export default function Views() {
-  const { path } = useRouteMatch();
   const location = useLocation();
   useScrollTop(location.pathname);
   const LoaderComponent = () => (
@@ -31,39 +24,32 @@ export default function Views() {
 
   return (
     <Suspense fallback={<LoaderComponent />}>
-      <Switch>
+      <Routes>
         <Route
           path="/:url*(/+)"
-          render={() => <Redirect to={location.pathname.slice(0, -1)} />}
+          children={() => (
+            <Navigate replace to={location.pathname.slice(0, -1)} />
+          )}
         />
-        <Route path={`${path}/${app.marketplace}`} children={<Market />} />
-        <Route path={`${path}/${app.leaderboard}`} children={<Leaderboard />} />
+        <Route path={`${app.marketplace}`} element={<Market />} />
+        <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
+        <Route path={`${app.charity}/:address/*`} element={<Charity />} />
         <Route
-          path={`${path}/${app.charity}/:address`}
-          children={<Charity />}
+          path={`${app.charity_edit}/:address`}
+          element={<CharityEdit />}
         />
+        <Route path={`${app.login}`} element={<Login />} />
+        <Route path={`${app.tca}`} element={<TCA />} />
+        <Route path={`${app.govern}`} element={<Governance />} />
+        <Route path={`${app.auction}`} element={<Auction />} />
+        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
+        <Route path={`${app.donation}/:address`} element={<Donation />} />
         <Route
-          path={`${path}/${app.charity_edit}/:address`}
-          children={<CharityEdit />}
+          path={`${app.index}`}
+          children={() => <Navigate replace to={`${app.marketplace}`} />}
         />
-        <Route path={`${path}/${app.login}`} children={<Login />} />
-        <Route path={`${path}/${app.tca}`} children={<TCA />} />
-        <Route path={`${path}/${app.govern}`} children={<Governance />} />
-        <Route path={`${path}/${app.auction}`} children={<Auction />} />
-        <Route
-          path={`${path}/${app.endowment}/:address`}
-          children={<Endowment />}
-        />
-        <Route
-          path={`${path}/${app.donation}/:address`}
-          children={<Donation />}
-        />
-        <Route
-          path={`${path}${app.index}`}
-          render={() => <Redirect to={`${path}/${app.marketplace}`} />}
-        />
-        <Route path="*" render={() => <Redirect to={site.home} />} />
-      </Switch>
+        <Route path="*" children={() => <Navigate replace to={site.home} />} />
+      </Routes>
     </Suspense>
   );
 }

@@ -10,7 +10,7 @@ export default function Donation() {
       <h1 className="text-2xl font-bold uppercase flex items-center justify-start text-white">
         My Donations
       </h1>
-      <DonationList address={address} />
+      <DonationList address={address!} />
     </div>
   );
 }

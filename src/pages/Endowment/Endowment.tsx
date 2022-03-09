@@ -15,14 +15,14 @@ export default function Endowment() {
   useApprovedVaultsRate();
 
   //fetch exchange rate here
-  const showWithdraw = useWithdrawer(address);
-  const { profile } = useProfile(address);
-  const { holdings } = useEndowmentHoldings(address, profile.is_placeholder);
+  const showWithdraw = useWithdrawer(address!);
+  const { profile } = useProfile(address!);
+  const { holdings } = useEndowmentHoldings(address!, profile.is_placeholder);
   const is_owner = profile.charity_owner === wallet?.walletAddress;
 
   return (
     <div className="grid grid-cols-2 gap-4 content-start padded-container justify-center">
-      <PageMeta address={address} />
+      <PageMeta address={address!} />
       <Liquid
         type="liquid"
         holdings={holdings.liquid_cw20}
@@ -30,7 +30,7 @@ export default function Endowment() {
         isOwner={is_owner}
       />
       <Liquid type="locked" holdings={holdings.locked_cw20} />
-      <TransactionList address={address} />
+      <TransactionList address={address!} />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { useProfileState } from "services/aws/endowments/states";
 import { EditableProfileAttr } from "services/aws/endowments/types";
@@ -11,10 +11,9 @@ import { CharityParam } from "./types";
 
 export default function useEditForm() {
   const { handleSubmit } = useFormContext<EditableProfileAttr>();
-  const { params } = useRouteMatch<CharityParam>();
-  const endowment_addr = params.address;
+  const { address: endowment_addr } = useParams<CharityParam>();
 
-  const { profileState } = useProfileState(endowment_addr);
+  const { profileState } = useProfileState(endowment_addr!);
   const [update] = useUpdateProfileMutation();
 
   const { showModal } = useSetModal();

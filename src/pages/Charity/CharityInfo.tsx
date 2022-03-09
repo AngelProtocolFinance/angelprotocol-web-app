@@ -1,11 +1,11 @@
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
 import { CharityParam } from "./types";
 
 export function CharityInfo() {
-  const match = useRouteMatch<CharityParam>();
-  const charity_addr = match.params.address;
-  const { profileState } = useProfileState(charity_addr);
+  const { address: charity_addr } = useParams<CharityParam>();
+
+  const { profileState } = useProfileState(charity_addr!);
   return (
     <div className="leftbar overflow-y-auto">
       <div className="total-info-item mb-4">

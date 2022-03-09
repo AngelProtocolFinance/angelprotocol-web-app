@@ -7,8 +7,9 @@ import { CharityParam } from "./types";
 
 export default function CharityEdit() {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile, isProfileLoading, isProfileError } =
-    useProfile(endowment_addr);
+  const { profile, isProfileLoading, isProfileError } = useProfile(
+    endowment_addr!
+  );
   const {
     //TODO: make EditableAttr warn if omitted types are not removed
     //EditableAttr only warns if required attr is omitted
