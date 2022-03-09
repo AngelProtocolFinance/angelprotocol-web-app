@@ -13,7 +13,7 @@ export default function Step(props: Props) {
 
   return (
     <div className="flex justify-end items-center w-full font-bold">
-      <p className="mr-auto">{title}</p>
+      <p className="mr-auto text-left">{title}</p>
       {completed ? (
         <p className="uppercase text-green-500 w-40">
           {statusComplete || "Completed"}
