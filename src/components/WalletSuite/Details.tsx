@@ -29,7 +29,6 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleDisconnect = () => {
     dispatch(resetWallet());
     disconnect();
-    dispatch(resetWallet());
   };
 
   return (

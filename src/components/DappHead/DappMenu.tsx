@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { app, site } from "constants/routes";
+import { useMember } from "services/terra/admin/queriers";
 
 export default function DappMenu() {
+  const { member } = useMember();
+
   const linkStyles = {
     className: `py-3 px-4 text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold`,
     activeClassName:
@@ -19,9 +22,11 @@ export default function DappMenu() {
       <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
       </NavLink>
-      <NavLink to={`${site.app}/${app.admin}`} {...linkStyles}>
-        Admin
-      </NavLink>
+      {member.weight && (
+        <NavLink to={`${site.app}/${app.admin}`} {...linkStyles}>
+          Admin
+        </NavLink>
+      )}
     </nav>
   );
 }
