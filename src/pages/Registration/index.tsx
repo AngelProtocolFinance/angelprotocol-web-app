@@ -3,8 +3,9 @@ import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
 
-const ContactDetails = lazy(() => import("./ContactDetails"));
+const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
 const ConfirmEmail = lazy(() => import("./ConfirmEmail"));
+const ContactDetails = lazy(() => import("./ContactDetails"));
 const Dashboard = lazy(() => import("./Dashboard"));
 const Registration = lazy(() => import("./Registration"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
@@ -22,13 +23,18 @@ export default function Register() {
       <Switch>
         <Route
           exact
-          path={`${path}/${routes.contactDetails}`}
-          component={ContactDetails}
+          path={`${path}/${routes.additionalInformation}`}
+          component={AdditionalInformation}
         />
         <Route
           exact
           path={`${path}/${routes.confirm}`}
           component={ConfirmEmail}
+        />
+        <Route
+          exact
+          path={`${path}/${routes.contactDetails}`}
+          component={ContactDetails}
         />
         <Route
           exact
