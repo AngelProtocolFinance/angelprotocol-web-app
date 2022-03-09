@@ -14,11 +14,11 @@ import { AWSQueryRes } from "services/aws/types";
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     lookup: builder.query<Lookup, boolean>({
-      query: (isTest) => `endowments${isTest ? "/testnet" : ""}`,
-      transformResponse: (res: AWSQueryRes<Endowment[]>) => {
+      query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
+      transformResponse: (res: AWSQueryRes<Profile[]>) => {
         const _lookup: Lookup = {};
         res.Items.forEach((endowment) => {
-          _lookup[endowment.owner] = endowment.address;
+          _lookup[endowment.charity_owner] = endowment.endowment_address;
         });
         return _lookup;
       },

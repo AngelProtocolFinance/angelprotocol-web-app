@@ -12,8 +12,6 @@ export default function Withdrawer(props: Props) {
       total_ust: 0,
       total_receive: 0,
       beneficiary: "",
-      memo: "",
-
       //metadata
     },
     resolver: yupResolver(schema),

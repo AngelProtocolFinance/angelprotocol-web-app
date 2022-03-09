@@ -5,7 +5,7 @@ export type WithdrawValues = { [key in VaultFieldIds]?: string } & {
   total_ust: number;
   total_receive: number;
   account_addr: string;
-  beneficiary?: AccAddress;
+  beneficiary: AccAddress;
   memo?: string;
 };
 

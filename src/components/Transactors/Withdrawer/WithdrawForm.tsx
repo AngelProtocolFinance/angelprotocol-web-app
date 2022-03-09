@@ -28,7 +28,6 @@ export default function WithdrawForm() {
         field="beneficiary"
         placeholder="terra1..."
       />
-      <InputField label="Memo" field="memo" placeholder="" />
       <Total />
       <Fee />
       <ToReceive />

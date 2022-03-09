@@ -115,7 +115,8 @@ export default function useWithrawEstimator() {
         dispatch(setFormLoading(true));
 
         const account = new Account(account_addr, wallet);
-        const withdrawMsg = account.createWithdrawMsg(sources);
+        const beneficiary = getValues("beneficiary");
+        const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
         const fee = await account.estimateFee([withdrawMsg]);
         const feeNum = extractFeeNum(fee);
 
