@@ -1,20 +1,15 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import ButtonSection from "./ButtonSection";
+import { FormValues, SCHEMA } from "./types";
 
 export default function AdditionalInformation() {
-  const methods = useForm({
-    // resolver: yupResolver(ContactInfoSchema),
-    // defaultValues: {
-    //   charityName: props.contactData?.CharityName || "",
-    //   firstName: props.contactData?.FirstName || "",
-    //   lastName: props.contactData?.LastName || "",
-    //   email: props.contactData?.Email || "",
-    //   phone: props.contactData?.PhoneNumber || "",
-    //   orgRole: props.contactData?.Role || UserRoles.ceo,
-    //   otherRole: props.contactData?.otherRole || "",
-    //   checkedPolicy: false,
-    //   uniqueID: props.contactData?.PK || "",
-    // },
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(SCHEMA),
+    defaultValues: {
+      website: "",
+      logo: [],
+    },
   });
 
   return (

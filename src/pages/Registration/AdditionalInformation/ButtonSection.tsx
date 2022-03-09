@@ -3,12 +3,13 @@ import { useFormContext } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import Button from "../Button";
 import routes from "../routes";
+import { FormValues } from "./types";
 
 export default function ButtonSection() {
   const history = useHistory();
   const {
     formState: { isSubmitting },
-  } = useFormContext();
+  } = useFormContext<FormValues>();
 
   if (isSubmitting) {
     return <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />;
