@@ -8,12 +8,15 @@ export default function InfoTabs() {
 
   return (
     <Switch>
-      <Route path={`${path}${charity.overview}`} component={Overview} />
-      <Route path={`${path}${charity.endowment}`} component={EndowmentInfo} />
-      <Route path={`${path}${charity.programs}`} component={Overview} />
-      <Route path={`${path}${charity.media}`} component={Overview} />
-      <Route path={`${path}${charity.governance}`} component={Overview} />
-      <Route path={`${path}`} component={Overview} />
+      <Route path={`${path}${charity.overview}`} children={<Overview />} />
+      <Route
+        path={`${path}${charity.endowment}`}
+        children={<EndowmentInfo />}
+      />
+      <Route path={`${path}${charity.programs}`} children={<Overview />} />
+      <Route path={`${path}${charity.media}`} children={<Overview />} />
+      <Route path={`${path}${charity.governance}`} children={<Overview />} />
+      <Route path={`${path}`} children={<Overview />} />
     </Switch>
   );
 }

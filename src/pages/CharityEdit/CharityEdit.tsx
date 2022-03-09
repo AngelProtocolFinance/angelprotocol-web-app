@@ -1,12 +1,12 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfile } from "services/aws/endowments/queriers";
 import Loader from "components/Loader/Loader";
 import CharityEditor from "./CharityEditor";
 import EditForm from "./EditForm";
 import { CharityParam } from "./types";
 
-export default function CharityEdit(props: RouteComponentProps<CharityParam>) {
-  const endowment_addr = props.match.params.address;
+export default function CharityEdit() {
+  const { address: endowment_addr } = useParams<CharityParam>();
   const { profile, isProfileLoading, isProfileError } =
     useProfile(endowment_addr);
   const {

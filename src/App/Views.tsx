@@ -32,27 +32,37 @@ export default function Views() {
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Switch>
-        <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-        <Route path={`${path}/${app.marketplace}`} component={Market} />
-        <Route path={`${path}/${app.leaderboard}`} component={Leaderboard} />
-        <Route path={`${path}/${app.charity}/:address`} component={Charity} />
+        <Route
+          path="/:url*(/+)"
+          render={() => <Redirect to={location.pathname.slice(0, -1)} />}
+        />
+        <Route path={`${path}/${app.marketplace}`} children={<Market />} />
+        <Route path={`${path}/${app.leaderboard}`} children={<Leaderboard />} />
+        <Route
+          path={`${path}/${app.charity}/:address`}
+          children={<Charity />}
+        />
         <Route
           path={`${path}/${app.charity_edit}/:address`}
-          component={CharityEdit}
+          children={<CharityEdit />}
         />
-        <Route path={`${path}/${app.login}`} component={Login} />
-        <Route path={`${path}/${app.tca}`} component={TCA} />
-        <Route path={`${path}/${app.govern}`} component={Governance} />
-        <Route path={`${path}/${app.auction}`} component={Auction} />
+        <Route path={`${path}/${app.login}`} children={<Login />} />
+        <Route path={`${path}/${app.tca}`} children={<TCA />} />
+        <Route path={`${path}/${app.govern}`} children={<Governance />} />
+        <Route path={`${path}/${app.auction}`} children={<Auction />} />
         <Route
           path={`${path}/${app.endowment}/:address`}
-          component={Endowment}
+          children={<Endowment />}
         />
-        <Route path={`${path}/${app.donation}/:address`} component={Donation} />
-        <Route path={`${path}${app.index}`}>
-          <Redirect to={`${path}/${app.marketplace}`} />
-        </Route>
-        <Redirect from="*" to={site.home} />
+        <Route
+          path={`${path}/${app.donation}/:address`}
+          children={<Donation />}
+        />
+        <Route
+          path={`${path}${app.index}`}
+          render={() => <Redirect to={`${path}/${app.marketplace}`} />}
+        />
+        <Route path="*" render={() => <Redirect to={site.home} />} />
       </Switch>
     </Suspense>
   );

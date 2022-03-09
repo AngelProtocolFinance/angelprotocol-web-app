@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
 import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
 import { useProfile } from "services/aws/endowments/queriers";
@@ -9,8 +9,8 @@ import Liquid from "./Summary";
 import { RouteParam } from "./types";
 import TransactionList from "./TransactionList";
 
-export default function Endowment(props: RouteComponentProps<RouteParam>) {
-  const address = props.match.params.address;
+export default function Endowment() {
+  const { address } = useParams<RouteParam>();
   const wallet = useConnectedWallet();
   useApprovedVaultsRate();
 

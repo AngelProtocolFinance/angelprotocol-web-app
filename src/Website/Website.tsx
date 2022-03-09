@@ -33,13 +33,19 @@ const Website = () => {
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
           <Switch>
-            <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-            <Route path={`${path}${web.contact}`} component={Contact} />
-            <Route path={`${path}${web.privacy}`} component={PrivacyPolicy} />
-            <Route path={`${path}${web.donors}`} component={Donors} />
-            <Route path={`${path}${web.charities}`} component={Charities} />
-            <Route path={`${path}${web.index}`} component={Home} />
-            <Redirect from="*" to={site.home} />
+            <Route
+              path="/:url*(/+)"
+              render={() => <Redirect to={location.pathname.slice(0, -1)} />}
+            />
+            <Route path={`${path}${web.contact}`} children={<Contact />} />
+            <Route
+              path={`${path}${web.privacy}`}
+              children={<PrivacyPolicy />}
+            />
+            <Route path={`${path}${web.donors}`} children={<Donors />} />
+            <Route path={`${path}${web.charities}`} children={<Charities />} />
+            <Route path={`${path}${web.index}`} children={<Home />} />
+            <Route path="*" render={() => <Redirect to={site.home} />} />
           </Switch>
         </Suspense>
         <WebFoot />

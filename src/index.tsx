@@ -21,8 +21,8 @@ ReactDOM.render(
       <BrowserRouter>
         <Suspense fallback={<LoaderComponent />}>
           <Switch>
-            <Route path={site.app} component={App} />
-            <Route path={site.home} component={Website} />
+            <Route path={site.app} children={<App />} />
+            <Route path={site.home} children={<Website />} />
           </Switch>
         </Suspense>
       </BrowserRouter>

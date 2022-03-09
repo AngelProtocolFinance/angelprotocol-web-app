@@ -1,9 +1,9 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { RouteParam } from "./types";
 import DonationList from "./DonationList";
 
-export default function Donation(props: RouteComponentProps<RouteParam>) {
-  const address = props.match.params.address;
+export default function Donation() {
+  const { address } = useParams<RouteParam>();
 
   return (
     <div className="grid grid-cols-2 gap-4 content-start padded-container justify-center">
