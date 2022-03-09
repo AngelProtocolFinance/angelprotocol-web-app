@@ -13,36 +13,33 @@ export type FormValues = {
   un_sdg: number;
 };
 
-const COMMON_FILE_SCHEMA = Yup.mixed<File>()
-  .test({
-    name: "fileSize",
-    message: "File size must be smaller than 25Mb",
-    test: (file) => (file?.size || 0) <= 25000000,
-  })
-  .test({
-    name: "fileType",
-    message: "Valid file types are PDF, JPG and PNG",
-    test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
-  });
+const COMMON_FILE_ARRAY_SCHEMA = Yup.array<File>().of(
+  Yup.mixed<File>()
+    .test({
+      name: "fileSize",
+      message: "File size must be smaller than 25Mb",
+      test: (file) => (file?.size || 0) <= 25000000,
+    })
+    .test({
+      name: "fileType",
+      message: "Valid file types are PDF, JPG and PNG",
+      test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
+    })
+);
 
 export const Schema = Yup.object({
-  // Concatenate schemas to first perform the 'required' check
-  proofOfIdentity: Yup.array<File>()
-    .of(COMMON_FILE_SCHEMA)
-    .test({
-      name: "exactlyOne",
-      message: "Proof of identity required",
-      test: (arr) => arr?.length === 1,
-    }),
-  proofOfRegistration: Yup.array<File>()
-    .of(COMMON_FILE_SCHEMA)
-    .test({
-      name: "exactlyOne",
-      message: "Proof of registration required",
-      test: (arr) => arr?.length === 1,
-    }),
-  financialStatements: Yup.array<File>().of(COMMON_FILE_SCHEMA),
-  auditedFinancialReports: Yup.array<File>().of(COMMON_FILE_SCHEMA),
+  proofOfIdentity: COMMON_FILE_ARRAY_SCHEMA.test({
+    name: "exactlyOne",
+    message: "Proof of identity required",
+    test: (arr) => arr?.length === 1,
+  }),
+  proofOfRegistration: COMMON_FILE_ARRAY_SCHEMA.test({
+    name: "exactlyOne",
+    message: "Proof of registration required",
+    test: (arr) => arr?.length === 1,
+  }),
+  financialStatements: COMMON_FILE_ARRAY_SCHEMA,
+  auditedFinancialReports: COMMON_FILE_ARRAY_SCHEMA,
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),
