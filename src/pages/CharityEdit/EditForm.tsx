@@ -11,7 +11,7 @@ import useEditForm from "./useEditForm";
 
 export default function EditForm() {
   const {
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = useFormContext<EditableProfileAttr>();
   const { endowment_addr, updateProfile } = useEditForm();
 
@@ -85,7 +85,7 @@ export default function EditForm() {
         placeholder="hello@angelprotocol.io"
       />
       <button
-        disabled={isSubmitting}
+        disabled={isSubmitting || !isDirty}
         type="submit"
         className="bg-angel-blue hover:bg-angel-orange disabled:bg-grey-accent rounded-md uppercase text-white-grey text-sm font-bold w-full p-4 mb-6"
       >

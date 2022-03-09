@@ -1,15 +1,15 @@
+import useImageEditor from "hooks/useImageEditor";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import { AiOutlineUpload } from "react-icons/ai";
 import { CgUndo } from "react-icons/cg";
-import { EditableProfileAttr } from "services/aws/endowments/types";
-import useChangeImage from "./useChangeImage";
+import { EditableProfileAttr as E } from "services/aws/endowments/types";
 
 export default function ImageEditor() {
-  const { watch } = useFormContext<EditableProfileAttr>();
+  const { watch } = useFormContext<E>();
   const { handleFileChange, handleImageReset, loading, isInitial, inputRef } =
-    useChangeImage();
+    useImageEditor<E>("charity_image");
   const charity_image = watch("charity_image");
   return (
     <div

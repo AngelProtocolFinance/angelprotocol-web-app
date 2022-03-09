@@ -1,5 +1,5 @@
-import Label from "pages/Admin/Templates/components/Label";
-import TextInput from "../components/TextInput";
+import Label from "pages/Admin/components/Label";
+import TextInput from "../../components/TextInput";
 import EndowmentPreview from "./EndowmentPreview";
 import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 import StatusOptions from "./StatusOptions";

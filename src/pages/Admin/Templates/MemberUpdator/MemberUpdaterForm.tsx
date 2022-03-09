@@ -1,11 +1,11 @@
-import TextInput from "../components/TextInput";
+import Loader from "components/Loader/Loader";
+import TextInput from "../../components/TextInput";
 import useInitMembers from "./useInitMembers";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
-import Label from "../components/Label";
+import Label from "../../components/Label";
 import MemberAdder from "./MemberAdder/MemberAdder";
-import Loader from "components/Loader/Loader";
 
 export default function MemberUpdateForm() {
   const { apCW4Members, isMembersLoading } = useInitMembers();

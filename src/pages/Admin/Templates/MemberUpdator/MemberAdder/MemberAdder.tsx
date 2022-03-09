@@ -1,5 +1,5 @@
 import { MemberUpdatorValues as T } from "../memberUpdatorSchema";
-import TextInput from "../../components/TextInput";
+import TextInput from "../../../components/TextInput";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {

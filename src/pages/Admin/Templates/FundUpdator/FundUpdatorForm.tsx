@@ -1,7 +1,7 @@
-import Label from "pages/Admin/Templates/components/Label";
+import Label from "pages/Admin/components/Label";
 import Loader from "components/Loader/Loader";
-import TextInput from "../components/TextInput";
-import FundSelection from "../components/FundSelection";
+import TextInput from "../../components/TextInput";
+import FundSelection from "../FundSelection";
 import useUpdateFund from "./useUpdateFund";
 import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 import useInitFundMembers from "./useInitFundMembers";

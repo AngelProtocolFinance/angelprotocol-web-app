@@ -27,7 +27,7 @@ export default function useFundSelection<T extends FundIdContext>() {
     [fundList, blockHeight]
   );
 
-  const selectRow = (rowIndex: number) => () => {
+  const handleSelectRow = (rowIndex: number) => () => {
     setActiveRow(rowIndex);
   };
 
@@ -39,5 +39,5 @@ export default function useFundSelection<T extends FundIdContext>() {
     //eslint-disable-next-line
   }, [activeRow]);
 
-  return { unexpiredFundList, activeRow, selectRow };
+  return { unexpiredFundList, activeRow, handleSelectRow };
 }

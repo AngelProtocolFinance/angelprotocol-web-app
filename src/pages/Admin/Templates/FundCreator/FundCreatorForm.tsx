@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import TextInput from "../components/TextInput";
-import Label from "../components/Label";
+import TextInput from "../../components/TextInput";
+import Label from "../../components/Label";
 import { FundCreatorValues as V } from "./fundCreatorSchema";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import useCreateFund from "./useCreateFund";

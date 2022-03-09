@@ -1,4 +1,4 @@
-import TextInput from "pages/Admin/Templates/components/TextInput";
+import TextInput from "pages/Admin/components/TextInput";
 import { FundCreatorValues as V } from "../fundCreatorSchema";
 import MemberItem from "./MemberItem";
 import useAddMember from "./useAddMember";

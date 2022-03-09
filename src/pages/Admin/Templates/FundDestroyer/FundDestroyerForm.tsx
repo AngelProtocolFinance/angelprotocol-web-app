@@ -1,6 +1,6 @@
-import Label from "pages/Admin/Templates/components/Label";
-import TextInput from "../components/TextInput";
-import FundSelection from "../components/FundSelection";
+import Label from "pages/Admin/components/Label";
+import TextInput from "../../components/TextInput";
+import FundSelection from "../FundSelection";
 import { FundDestroyValues as FD } from "./fundDestroyerSchema";
 import useDestroyFund from "./useDestroyFund";
 

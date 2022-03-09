@@ -1,5 +1,5 @@
 import { FundUpdateValues as T } from "../fundUpdatorSchema";
-import TextInput from "../../components/TextInput";
+import TextInput from "../../../components/TextInput";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {

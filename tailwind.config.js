@@ -176,11 +176,12 @@ module.exports = {
   plugins: [require("@tailwindcss/line-clamp")],
   variants: {
     extend: {
-      backgroundColor: ["disabled"],
+      backgroundColor: ["disabled", "active"],
       textColor: ["disabled"],
       translate: ["active"],
       display: ["hover", "group-hover"],
       opacity: ["hover", "group-hover"],
+      visibility: ["hover", "group-hover"],
       brightness: ["hover", "group-hover"],
       transform: ["hover", "active"],
     },
