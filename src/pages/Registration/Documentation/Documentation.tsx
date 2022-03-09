@@ -2,9 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { app, site } from "constants/routes";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Redirect, useHistory } from "react-router-dom";
-import Button from "../Button";
+import { Redirect } from "react-router-dom";
 import routes from "../routes";
+import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
   AuthorityToCreateCheckbox,
@@ -29,7 +29,6 @@ export default function Documentation() {
     },
   });
   const currentLevel = useCurrentLevel(methods);
-  const history = useHistory();
   const { upload, isSuccess } = useUpload();
 
   if (isSuccess) {
@@ -99,22 +98,7 @@ export default function Documentation() {
             <PrivacyPolicyCheckbox />
           </div>
 
-          <div className="flex justify-center">
-            <Button
-              className="w-40 h-10 bg-green-400 mr-2"
-              disabled={methods.formState.isSubmitting}
-              onClick={() => history.push(routes.dashboard)}
-            >
-              Back
-            </Button>
-            <Button
-              submit
-              className="w-40 h-10 bg-thin-blue"
-              isLoading={methods.formState.isSubmitting}
-            >
-              Upload
-            </Button>
-          </div>
+          <ButtonSection />
         </form>
       </FormProvider>
     </Container>
