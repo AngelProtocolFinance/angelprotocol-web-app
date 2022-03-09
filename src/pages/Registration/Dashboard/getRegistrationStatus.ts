@@ -7,7 +7,7 @@ export default function getRegistrationStatus(
 ): RegistrationStatus {
   return {
     stepOne: { completed: !!user.PK },
-    stepTwo: { completed: !!data?.Metadata?.TerraWallet || user.TerraWallet },
+    stepTwo: { completed: !!user.TerraWallet || !!data?.Metadata?.TerraWallet },
     stepThree: getStepThree(user, data),
     stepFour: { completed: false },
     reviewStatus:

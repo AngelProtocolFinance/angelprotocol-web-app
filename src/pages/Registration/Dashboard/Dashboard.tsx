@@ -1,3 +1,4 @@
+import Loader from "components/Loader/Loader";
 import { useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
@@ -15,7 +16,7 @@ export default function Dashboard() {
   const history = useHistory();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const { data, error } = useGetCharityDataQuery(user.PK);
+  const { data, error, isLoading } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {
     if (!user.PK) {
@@ -41,6 +42,10 @@ export default function Dashboard() {
   const status = useMemo(() => getRegistrationStatus(user, data), [user, data]);
 
   const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
+
+  if (isLoading) {
+    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
+  }
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
