@@ -6,7 +6,7 @@ import { FormValues } from "../types";
 export default function AuthorityToCreateCheckbox() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   const user = useGetter((state) => state.user);
@@ -15,6 +15,7 @@ export default function AuthorityToCreateCheckbox() {
     <Checkbox
       error={errors.checkedAuthority?.message}
       {...register("checkedAuthority")}
+      disabled={isSubmitting}
     >
       {`By checking this box, you declare that you have the authority to create an
         endowment in the name of ${user.CharityName} through Angel Protocol`}

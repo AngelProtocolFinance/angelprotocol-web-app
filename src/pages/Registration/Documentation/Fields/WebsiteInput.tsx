@@ -5,7 +5,7 @@ import InputRow from "./InputRow";
 export default function WebsiteInput() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   return (
@@ -15,6 +15,7 @@ export default function WebsiteInput() {
         type="text"
         placeholder="Website URL"
         className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
+        disabled={isSubmitting}
         {...register("website")}
       />
       {errors.website?.message && (

@@ -10,7 +10,11 @@ const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
 }));
 
 export default function UnSdgSelector() {
-  const { register, control } = useFormContext<FormValues>();
+  const {
+    register,
+    control,
+    formState: { isSubmitting },
+  } = useFormContext<FormValues>();
 
   return (
     <InputRow
@@ -23,6 +27,7 @@ export default function UnSdgSelector() {
         options={OPTIONS}
         control={control}
         register={register}
+        disabled={isSubmitting}
       />
     </InputRow>
   );

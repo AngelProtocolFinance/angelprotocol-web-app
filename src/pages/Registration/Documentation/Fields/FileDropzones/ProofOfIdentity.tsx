@@ -8,7 +8,7 @@ import InputRow from "../InputRow";
 
 export default function ProofOfIdentity() {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
@@ -24,7 +24,11 @@ export default function ProofOfIdentity() {
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone name="proofOfIdentity" className="h-8" />
+      <FileDropzone
+        name="proofOfIdentity"
+        className="h-8"
+        disabled={isSubmitting}
+      />
       {errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
           {errorMessage}

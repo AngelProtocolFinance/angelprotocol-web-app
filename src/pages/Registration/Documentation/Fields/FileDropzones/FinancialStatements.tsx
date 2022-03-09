@@ -5,7 +5,7 @@ import InputRow from "../InputRow";
 
 export default function FinancialStatements() {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   return (
@@ -13,7 +13,12 @@ export default function FinancialStatements() {
       id="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
-      <FileDropzone name="financialStatements" className="h-8" multiple />
+      <FileDropzone
+        name="financialStatements"
+        className="h-8"
+        multiple
+        disabled={isSubmitting}
+      />
       {!!errors.financialStatements?.length &&
         errors.financialStatements
           .map((fieldError) => fieldError.message)

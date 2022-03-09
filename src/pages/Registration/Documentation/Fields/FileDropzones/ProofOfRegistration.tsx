@@ -5,7 +5,7 @@ import InputRow from "../InputRow";
 
 export default function ProofOfRegistration() {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
@@ -20,7 +20,11 @@ export default function ProofOfRegistration() {
       label="Proof of registration as a 501(c)(3) charity or equivalent"
       required
     >
-      <FileDropzone name="proofOfRegistration" className="h-8" />
+      <FileDropzone
+        name="proofOfRegistration"
+        className="h-8"
+        disabled={isSubmitting}
+      />
       {errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
           {errorMessage}

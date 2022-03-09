@@ -5,7 +5,7 @@ import InputRow from "../InputRow";
 
 export default function AuditedFinancialReport() {
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   return (
@@ -13,7 +13,12 @@ export default function AuditedFinancialReport() {
       id="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone name="auditedFinancialReports" className="h-8" multiple />
+      <FileDropzone
+        name="auditedFinancialReports"
+        className="h-8"
+        multiple
+        disabled={isSubmitting}
+      />
       {!!errors.auditedFinancialReports?.length &&
         errors.auditedFinancialReports
           .map((fieldError) => fieldError.message)
