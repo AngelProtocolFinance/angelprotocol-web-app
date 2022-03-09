@@ -155,3 +155,6 @@ export default class Halo extends Contract {
     return claimMsgs;
   }
 }
+
+export interface H extends Halo {}
+export type T = typeof Halo;

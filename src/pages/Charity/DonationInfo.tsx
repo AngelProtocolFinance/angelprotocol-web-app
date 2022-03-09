@@ -80,21 +80,19 @@ export function DonationInfo() {
               SDG #{profileState.un_sdg}: {sdg?.title}
             </span>
           )}
-          {profileState.url ? (
-            <a
-              href={profileState.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
-            >
-              <span>{profileState.charity_name}</span>
+          <a
+            href={profileState.url || ""}
+            target="_blank"
+            rel="noreferrer"
+            className={`text-5xl font-bold text-white uppercase tracking-wide break-all ${
+              profileState.url && "hover:text-angel-blue"
+            }`}
+          >
+            <span>{profileState.charity_name}</span>
+            {profileState.url && (
               <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
-            </a>
-          ) : (
-            <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
-              {profileState.charity_name}
-            </h2>
-          )}
+            )}
+          </a>
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
               <Link
