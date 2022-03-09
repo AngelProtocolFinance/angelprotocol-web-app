@@ -14,13 +14,17 @@ export const alliance_api = aws.injectEndpoints({
       },
     }),
     createNewMember: builder.mutation<any, MemberDetails>({
+      invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
       query: (body) => ({
         url: "alliance",
         method: "POST",
         body,
       }),
     }),
+    //NOTE: edit member isn't practical since both name and wallet address can't be edited
+    //as they are part of the partition key
     removeMember: builder.mutation<any, ToRemoveMember>({
+      invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
       query: (toRemoveMember) => ({
         url: `alliance/${toRemoveMember.address}`,
         params: { name: toRemoveMember.name },
@@ -50,3 +54,6 @@ function sortMembers(members: MemberDetails[]) {
       return 0;
     });
 }
+
+export const { useCreateNewMemberMutation, useRemoveMemberMutation } =
+  alliance_api;

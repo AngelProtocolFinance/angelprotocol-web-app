@@ -1,7 +1,7 @@
 import { useSetModal } from "components/Modal/Modal";
 import { BiSearchAlt2 } from "react-icons/bi";
-import AddMemberForm from "./MemberAdder/AddMemberForm";
-import MemberAdder, { Props } from "./MemberAdder/MemberAdder";
+import MemberForm from "./MemberEditor/MemberForm";
+import MemberEditor, { Props } from "./MemberEditor/MemberEditor";
 export default function ToolBar(props: {
   searchText: string;
   handleSearchTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -9,8 +9,8 @@ export default function ToolBar(props: {
   const { showModal } = useSetModal();
 
   function showAddForm() {
-    showModal<Props>(MemberAdder, {
-      Form: AddMemberForm,
+    showModal<Props>(MemberEditor, {
+      Form: MemberForm,
     });
   }
 
@@ -19,7 +19,7 @@ export default function ToolBar(props: {
       <div className="flex bg-light-grey text-angel-grey shadow-inner-white-grey p-2 rounded-md">
         <input
           id="__allianceSearch"
-          placeholder="search member"
+          placeholder="name or address"
           className="font-mono focus:outline-none bg-light-grey"
           type="text"
           value={props.searchText}
@@ -33,7 +33,7 @@ export default function ToolBar(props: {
         type="button"
         onClick={showAddForm}
         className="text-xs font-heading uppercase font-bold flex items-center gap-1 
-        bg-angel-blue text-white px-2 rounded-sm active:bg-blue-accent hover:bg-dark-blue"
+        bg-angel-blue text-white px-2 rounded-sm hover:bg-blue-accent active:bg-angel-orange"
       >
         <span className="text-lg">+</span>
         <span>new member</span>

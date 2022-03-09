@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MemberAdderValues, schema } from "./schema";
+import { MemberEditValues as MV, schema } from "./schema";
 
 export type Props = { Form: FC };
-export default function MemberAdder(props: Props) {
-  const methods = useForm<MemberAdderValues>({
+export default function MemberEditor(props: Props) {
+  const methods = useForm<MV>({
     resolver: yupResolver(schema),
     mode: "onChange",
     reValidateMode: "onChange",

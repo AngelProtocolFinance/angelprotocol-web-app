@@ -15,9 +15,8 @@ export function useAllianceMembers() {
 
 export function useFilteredAllianceMembers(searchText: string, skip = false) {
   const { useAllianceMembersQuery } = alliance_api;
-  const { filteredMembers = [], isSearching } = useAllianceMembersQuery(
-    undefined,
-    {
+  const { filteredMembers = [], isFilteredMembersLoading } =
+    useAllianceMembersQuery(undefined, {
       skip,
       selectFromResult: ({ data = [], isLoading, isFetching }) => ({
         filteredMembers: data.filter((member) =>
@@ -25,14 +24,16 @@ export function useFilteredAllianceMembers(searchText: string, skip = false) {
             ? true
             : member.name
                 .toLocaleLowerCase()
-                .search(new RegExp(searchText.toLocaleLowerCase())) !== -1
+                .search(new RegExp(searchText.toLocaleLowerCase())) !== -1 ||
+              member.address.search(
+                new RegExp(searchText.toLocaleLowerCase().trim())
+              ) !== -1
         ),
-        isSearching: isLoading || isFetching,
+        isFilteredMembersLoading: isLoading || isFetching,
       }),
-    }
-  );
+    });
   return {
     filteredMembers,
-    isSearching,
+    isFilteredMembersLoading,
   };
 }

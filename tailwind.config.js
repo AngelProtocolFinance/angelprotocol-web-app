@@ -177,7 +177,7 @@ module.exports = {
   variants: {
     extend: {
       backgroundColor: ["disabled", "active"],
-      textColor: ["disabled"],
+      textColor: ["disabled", "active"],
       translate: ["active"],
       display: ["hover", "group-hover"],
       opacity: ["hover", "group-hover"],

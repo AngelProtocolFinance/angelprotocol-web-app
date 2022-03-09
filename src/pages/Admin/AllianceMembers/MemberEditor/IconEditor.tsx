@@ -5,7 +5,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { useFormContext } from "react-hook-form";
 import useImageEditor from "hooks/useImageEditor";
 import { ErrorMessage } from "@hookform/error-message";
-import { MemberAdderValues as V } from "./schema";
+import { MemberEditValues as V } from "./schema";
 
 export default function IconEditor() {
   const {
