@@ -16,6 +16,7 @@ const Checkbox = forwardRef(
   (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => {
     const { error, centerError, children, ...rest } = props;
     const id = rest.id || rest.name;
+    const pointerClass = props.disabled ? "cursor-default" : "cursor-pointer";
 
     return (
       <div className="flex flex-col text-sm">
@@ -24,10 +25,10 @@ const Checkbox = forwardRef(
             id={id}
             ref={ref}
             type="checkbox"
-            className="cursor-pointer"
+            className={pointerClass}
             {...rest}
           />
-          <label htmlFor={id} className="cursor-pointer">
+          <label htmlFor={id} className={pointerClass}>
             {children}
           </label>
         </div>
