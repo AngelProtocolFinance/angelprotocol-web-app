@@ -22,8 +22,12 @@ export default function useProviderSwitcher() {
   const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
+  // const ethConnected = true;
 
-  const providerStates: ProviderStates = [[Providers.terra, terraConnected]];
+  const providerStates: ProviderStates = [
+    [Providers.terra, terraConnected],
+    // [Providers.ethereum, ethConnected],
+  ];
 
   //find first connected provider
   //undefined if not wallet is connected
