@@ -16,6 +16,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
+  const { connected: metaConnected } = useGetter((state) => state.metamask);
 
   const filtered_coins = coins.filter(
     (coin) =>
@@ -29,7 +30,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const isEmpty = filtered_coins.length <= 0;
   const handleDisconnect = () => {
     dispatch(resetWallet());
-    disconnect();
+    metaConnected ? window.location.reload() : disconnect();
   };
 
   return (
