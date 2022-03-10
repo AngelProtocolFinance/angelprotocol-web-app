@@ -1,15 +1,15 @@
 import { Dec } from "@terra-money/terra.js";
-import { setIcon } from "components/WalletSuite/manageIcon";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { ethers } from "ethers";
 import { setMetamaskStatus } from "services/wallet/metamaskSlice";
+import { EthConnectInfo } from "services/wallet/types";
 import { setIsUpdating } from "services/wallet/walletSlice";
 import { useGetter, useSetter } from "store/accessors";
 
 declare var window: any;
 
-export default function useMetaAction(options: any) {
+export default function useMetaAction(options: EthConnectInfo) {
   const { isUpdating } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
   const isMetaMask = options.name === "MetaMask";
