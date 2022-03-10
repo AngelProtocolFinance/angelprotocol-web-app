@@ -16,6 +16,8 @@ import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundDestroyerForm from "./Templates/FundDestroyer/FundDestroyerForm";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
 import FundUpdatorForm from "./Templates/FundUpdator/FundUpdatorForm";
+import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
+import AllianceEditForm from "./Templates/AllianceEditor/AllianceEditForm";
 
 export default function Proposer() {
   const { path } = useRouteMatch();
@@ -23,16 +25,21 @@ export default function Proposer() {
     <div className="grid gap-2 grid-cols-a1">
       <ProposalTypes />
       <Switch>
+        {/**apCW4 */}
         <Route path={`${path}/${proposal_types.admin_update_members}`}>
           <MemberUpdator>
             <MemberUpdateForm />
           </MemberUpdator>
         </Route>
+
+        {/**endowments */}
         <Route path={`${path}/${proposal_types.change_endowment_status}`}>
           <EndowmentUpdator>
             <EndowmentUpdateForm />
           </EndowmentUpdator>
         </Route>
+
+        {/**index fund */}
         <Route path={`${path}/${proposal_types.create_fund}`}>
           <FundCreator>
             <FundCreatorForm />
@@ -47,6 +54,11 @@ export default function Proposer() {
           <FundUpdator>
             <FundUpdatorForm />
           </FundUpdator>
+        </Route>
+        <Route path={`${path}/${proposal_types.add_alliance_member}`}>
+          <AllianceEditor>
+            <AllianceEditForm />
+          </AllianceEditor>
         </Route>
 
         <Route exact path={`${path}/${proposal_types.index}`}>
@@ -73,6 +85,7 @@ function ProposalTypes() {
       >
         Update AP Members
       </NavLink>
+
       <ProposalCategory title="Index fund" classes="mt-4" />
       <NavLink to={`${url}/${proposal_types.create_fund}`} {...linkStyles}>
         Create Fund
@@ -83,6 +96,13 @@ function ProposalTypes() {
       <NavLink to={`${url}/${proposal_types.update_fund}`} {...linkStyles}>
         Update Fund
       </NavLink>
+      <NavLink
+        to={`${url}/${proposal_types.add_alliance_member}`}
+        {...linkStyles}
+      >
+        Add alliance member
+      </NavLink>
+
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink
         to={`${url}/${proposal_types.change_endowment_status}`}

@@ -7,6 +7,7 @@ import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 import useInitFundMembers from "./useInitFundMembers";
 import MemberItem from "./MemberItem";
 import MemberAdder from "./MemberAdder/MemberAdder";
+import Submitter from "../Submitter";
 
 export default function FundUpdatorForm() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =
@@ -58,14 +59,12 @@ export default function FundUpdatorForm() {
           <MemberAdder />
         </>
       )}
-
-      <button
+      <Submitter
+        _text="Propose Changes"
         type="button"
         onClick={updateFund}
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
-        Propose changes
-      </button>
+        _classes="mt-4"
+      />
     </form>
   );
 }
