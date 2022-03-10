@@ -58,7 +58,7 @@ export default function Modal(props: Props) {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ref?.current]
+    []
   );
 
   const showModal: Opener = (Content, props) => {
