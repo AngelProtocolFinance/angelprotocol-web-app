@@ -20,7 +20,7 @@ export default function Connectors(props: Props) {
   let [multiChainInstallations, setMultiChainInstallations] = useState<any>([]);
 
   useEffect(() => {
-    if (!availableConnections || !availableInstallations) return;
+    if (!availableConnections && !availableInstallations) return;
 
     if (window.ethereum) {
       setMultiChainConnections([
