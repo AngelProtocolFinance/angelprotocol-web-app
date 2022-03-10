@@ -31,9 +31,9 @@ export default function Connectors(props: Props) {
           icon: "/images/icons/metamask.png",
         },
       ]);
-      setMultiChainInstallations([...availableInstallations]);
+      setMultiChainInstallations(availableInstallations);
     } else {
-      setMultiChainConnections([...availableConnections]);
+      setMultiChainConnections(availableConnections);
       setMultiChainInstallations([
         ...availableInstallations,
         {
