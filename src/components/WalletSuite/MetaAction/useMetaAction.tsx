@@ -9,7 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 
 declare var window: any;
 
-export default function useTerraAction(options: any) {
+export default function useMetaAction(options: any) {
   const { isUpdating } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
   const isMetaMask = options.name === "MetaMask";
@@ -27,6 +27,8 @@ export default function useTerraAction(options: any) {
       );
 
       await provider.send("eth_requestAccounts", []);
+
+      dispatch(setIsUpdating(true));
 
       const network = await provider.getNetwork();
       const signer = provider.getSigner();
@@ -48,7 +50,7 @@ export default function useTerraAction(options: any) {
         })
       );
 
-      setIcon(options.icon);
+      dispatch(setIsUpdating(false));
     }
   }
   return {
