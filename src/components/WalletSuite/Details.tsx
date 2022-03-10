@@ -16,6 +16,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
+
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||

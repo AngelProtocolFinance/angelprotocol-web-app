@@ -30,6 +30,7 @@ const metamaskSlice = createSlice({
       state.address = payload.address;
       state.chainId = payload.chainId;
       state.balance = payload.balance;
+      state.coins = payload.coins;
     },
   },
 });

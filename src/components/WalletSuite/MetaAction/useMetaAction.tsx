@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { setIcon } from "components/WalletSuite/manageIcon";
 import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
 import { ethers } from "ethers";
 import { setMetamaskStatus } from "services/wallet/metamaskSlice";
 import { setIsUpdating } from "services/wallet/walletSlice";
@@ -45,6 +46,7 @@ export default function useTerraAction(options: any) {
             network.chainId === 1 ? chainIDs.eth_main : chainIDs.eth_ropsten,
           address,
           balance: eth_balance,
+          coins: [{ amount: eth_balance / 1e6, denom: denoms.ether }],
         })
       );
 
