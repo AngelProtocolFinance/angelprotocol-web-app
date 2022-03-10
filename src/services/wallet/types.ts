@@ -37,4 +37,16 @@ export type WalletInfo = {
   id: TerraIdentifiers | EthIdentifiers | undefined;
 };
 
+export type EthConnectInfo = {
+  name: string;
+  icon: string;
+  type: string;
+};
+
+export type EthInstallInfo = {
+  name: string;
+  icon: string;
+  url: string;
+};
+
 export type State = { isUpdating: boolean } & WalletInfo;
