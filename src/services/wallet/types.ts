@@ -9,9 +9,13 @@ export enum TerraIdentifiers {
   leap = "leap-wallet",
 }
 
+export enum EthIdentifiers {
+  metamask = "metamask",
+}
+
 export enum Providers {
   none = "none",
-  // ethereum = "ethereum",
+  ethereum = "ethereum",
   terra = "terra",
 
   // phantom = "phantom",
@@ -30,7 +34,7 @@ export type WalletInfo = {
   address: string;
   chainId: chainIDs;
   supported_denoms: denoms[];
-  id: TerraIdentifiers | undefined;
+  id: TerraIdentifiers | EthIdentifiers | undefined;
 };
 
 export type State = { isUpdating: boolean } & WalletInfo;

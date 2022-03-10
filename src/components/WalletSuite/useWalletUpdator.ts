@@ -8,13 +8,16 @@ import { Providers, XdefiWindow } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
+
+  //Ethereum MetaMask updator
+  const metamaskState = useGetter((state) => state.metamask);
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -117,4 +120,25 @@ export default function useWalletUpdator(activeProvider: Providers) {
     })();
     //eslint-disable-next-line
   }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);
+
+  useEffect(() => {
+    if (activeProvider !== Providers.ethereum) return;
+    if (!metamaskState) return;
+
+    const uiAmount = metamaskState.balance / 1e6;
+
+    dispatch(
+      setWalletDetails({
+        id: metamaskState.id,
+        icon: metamaskState.icon,
+        displayCoin: { amount: uiAmount, denom: denoms.ether },
+        coins: metamaskState.coins,
+        address: metamaskState.address,
+        //for multi-chain wallets, should just be testnet or mainnet
+        chainId: metamaskState.chainId,
+        supported_denoms: [denoms.ether],
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [metamaskState, activeProvider]);
 }

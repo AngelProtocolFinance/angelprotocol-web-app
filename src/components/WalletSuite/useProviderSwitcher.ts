@@ -10,6 +10,7 @@ import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
+import useMetaMask from "hooks/useMetaMask";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -22,11 +23,11 @@ export default function useProviderSwitcher() {
   const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
-  // const ethConnected = true;
+  const { connected: ethConnected, network: ethNetwork } = useMetaMask();
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],
-    // [Providers.ethereum, ethConnected],
+    [Providers.ethereum, ethConnected],
   ];
 
   //find first connected provider
