@@ -33,7 +33,7 @@ export default function ToolBar(props: {
         type="button"
         onClick={showAddForm}
         className="text-xs font-heading uppercase font-bold flex items-center gap-1 
-        bg-angel-blue text-white px-2 rounded-sm hover:bg-blue-accent active:bg-angel-orange"
+        bg-angel-blue text-white px-2 rounded-sm hover:bg-bright-blue active:bg-angel-orange"
       >
         <span className="text-lg">+</span>
         <span>new member</span>
