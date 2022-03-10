@@ -9,10 +9,7 @@ import {
   useState,
 } from "react";
 import { Handlers, Opener, Props } from "./types";
-
-const TAB_KEY = "Tab";
-const focusableElementsString =
-  'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex="0"], [contenteditable]';
+import useFocusHandler from "./useFocusHandler";
 
 export default function Modal(props: Props) {
   const [Content, setContent] = useState<ReactNode>();
@@ -21,51 +18,14 @@ export default function Modal(props: Props) {
   const lastActive = useRef<HTMLElement>();
   const [backdropDismiss, setBackdropDismiss] = useState(true);
   const escKeyPressed = useKeyPress("Escape");
-
-  // hook to trap focus within modal
-  const focusHandler = useCallback(
-    (evt?: KeyboardEvent) => {
-      const focusableElements = Array.from(
-        ref?.current?.querySelectorAll(focusableElementsString) || []
-      );
-
-      const firstTabStop = focusableElements[0] as HTMLElement;
-      const lastTabStop = focusableElements[
-        focusableElements.length - 1
-      ] as HTMLElement;
-
-      if (focusableElements.length === 0) return;
-
-      if (!evt) {
-        firstTabStop.focus();
-        return;
-      }
-
-      // TAB
-      if (evt.key === TAB_KEY) {
-        // SHIFT + TAB
-        if (evt.shiftKey) {
-          if (document.activeElement === firstTabStop) {
-            evt.preventDefault();
-            lastTabStop.focus();
-          }
-        } else {
-          if (document.activeElement === lastTabStop) {
-            evt.preventDefault();
-            firstTabStop.focus();
-          }
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const focusHandler = useFocusHandler();
 
   const showModal: Opener = (Content, props) => {
-    // track last active element
-    lastActive.current = document.activeElement as HTMLElement;
     setBackdropDismiss(props.isDismissDisabled ?? true);
     setContent(<Content {...props} />);
+
+    // track last active element
+    lastActive.current = document.activeElement as HTMLElement;
     focusHandler();
   };
 
@@ -102,8 +62,7 @@ export default function Modal(props: Props) {
       if (node !== null && backdropDismiss) {
         ref.current = node;
         ref.current?.addEventListener("click", dismissModal);
-        window.addEventListener("keydown", focusHandler);
-        focusHandler();
+        focusHandler(ref);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     },
