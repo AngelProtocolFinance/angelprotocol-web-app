@@ -25,7 +25,7 @@ export default function WithdrawForm() {
           )
       )}
       <InputField
-        label="Recipient Wallet"
+        label="Destination wallet"
         field="beneficiary"
         placeholder="terra1..."
       />
