@@ -127,6 +127,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
     const uiAmount = metamaskState.balance / 1e6;
 
+    dispatch(setIsUpdating(true));
+
     dispatch(
       setWalletDetails({
         id: metamaskState.id,
@@ -134,11 +136,12 @@ export default function useWalletUpdator(activeProvider: Providers) {
         displayCoin: { amount: uiAmount, denom: denoms.ether },
         coins: metamaskState.coins,
         address: metamaskState.address,
-        //for multi-chain wallets, should just be testnet or mainnet
         chainId: metamaskState.chainId,
         supported_denoms: [denoms.ether],
       })
     );
+
+    dispatch(setIsUpdating(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metamaskState, activeProvider]);
 }

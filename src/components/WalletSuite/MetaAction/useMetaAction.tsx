@@ -28,8 +28,6 @@ export default function useTerraAction(options: any) {
 
       await provider.send("eth_requestAccounts", []);
 
-      dispatch(setIsUpdating(true));
-
       const network = await provider.getNetwork();
       const signer = provider.getSigner();
       const address = await signer.getAddress();
@@ -51,7 +49,6 @@ export default function useTerraAction(options: any) {
       );
 
       setIcon(options.icon);
-      dispatch(setIsUpdating(false));
     }
   }
   return {
