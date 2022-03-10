@@ -1,4 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
+import { useSetModal } from "components/Modal/Modal";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { ethers } from "ethers";
@@ -6,17 +7,19 @@ import { setMetamaskStatus } from "services/wallet/metamaskSlice";
 import { EthConnectInfo } from "services/wallet/types";
 import { setIsUpdating } from "services/wallet/walletSlice";
 import { useGetter, useSetter } from "store/accessors";
+import XDefiError from "./xDefiError";
 
 declare var window: any;
 
 export default function useEthAction(options: EthConnectInfo) {
+  const { showModal } = useSetModal();
   const { isUpdating } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
   const isMetaMask = options.name === "MetaMask";
 
   async function handleClick() {
     if (window.xfi?.ethereum!.isMetaMask) {
-      alert("Please de-prioritize XDEFI Wallet and reload the page");
+      showModal(XDefiError, {});
       return;
     }
 
