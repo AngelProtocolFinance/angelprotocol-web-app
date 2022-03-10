@@ -50,6 +50,7 @@ export default function useTerraAction(options: any) {
         })
       );
 
+      setIcon(options.icon);
       dispatch(setIsUpdating(false));
     }
   }

@@ -7,7 +7,7 @@ const initialState = {
   connected: false,
   network: "homestead",
   id: EthIdentifiers.metamask,
-  icon: "",
+  icon: "/images/icons/metamask.png",
   displayCoin: { amount: 0, denom: denoms.ether },
   balance: 0,
   coins: [],
@@ -26,7 +26,6 @@ const metamaskSlice = createSlice({
     setMetamaskStatus: (state, { payload }: any) => {
       state.connected = payload.connected;
       state.network = payload.network;
-      state.icon = payload.icon;
       state.address = payload.address;
       state.chainId = payload.chainId;
       state.balance = payload.balance;

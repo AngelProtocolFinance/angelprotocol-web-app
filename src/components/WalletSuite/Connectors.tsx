@@ -28,7 +28,7 @@ export default function Connectors(props: Props) {
         {
           name: "MetaMask",
           type: "ETHEREUM",
-          icon: "",
+          icon: "/images/icons/metamask.png",
         },
       ]);
       setMultiChainInstallations([...availableInstallations]);
@@ -38,8 +38,8 @@ export default function Connectors(props: Props) {
         ...availableInstallations,
         {
           name: "MetaMask",
-          url: "https://google.com",
-          icon: "",
+          url: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en",
+          icon: "/images/icons/metamask.png",
         },
       ]);
     }
