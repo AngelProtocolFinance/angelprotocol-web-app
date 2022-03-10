@@ -22,7 +22,7 @@ ReactDOM.render(
         <Suspense fallback={<LoaderComponent />}>
           <Routes>
             <Route path={`${site.app}/*`} element={<App />} />
-            <Route path={site.app} element={<Website />} />
+            <Route path={`${site.home}*`} element={<Website />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

@@ -7,13 +7,16 @@ export default function WebMenu() {
     activeClassName:
       "shadow-inner bg-angel-blue bg-opacity-10 pointer-events-none",
   };
+  const getClassNames = ({ isActive }: { isActive: boolean }) =>
+    `${linkStyles.className} ${isActive ? linkStyles.activeClassName : ""}`;
+
   return (
     <nav className="hidden sm:flex justify-self-end items-center font-body text-sm lg:text-base">
-      <NavLink to={`${web.charities}`} {...linkStyles}>
+      <NavLink to={`${web.charities}`} className={getClassNames}>
         For Charities
       </NavLink>
 
-      <NavLink to={`${web.donors}`} {...linkStyles}>
+      <NavLink to={`${web.donors}`} className={getClassNames}>
         For Donors
       </NavLink>
     </nav>
