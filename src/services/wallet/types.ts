@@ -11,6 +11,7 @@ export enum TerraIdentifiers {
 
 export enum EthIdentifiers {
   metamask = "metamask",
+  binance = "binance-wallet",
 }
 
 export enum Providers {

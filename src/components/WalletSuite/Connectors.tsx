@@ -5,7 +5,7 @@ import Modal from "components/Modal/Modal";
 import TerraAction from "./Terra/TerraAction";
 import Installer from "./Installer";
 import { useEffect, useState } from "react";
-import MetaAction from "./MetaAction/MetaAction";
+import EthAction from "./EthAction/EthAction";
 import { EthConnectInfo, EthInstallInfo } from "services/wallet/types";
 
 type Props = {
@@ -58,7 +58,7 @@ export default function Connectors(props: Props) {
               return <TerraAction key={connection.name} {...connection} />;
             })}
           {ethConnections.map((connection) => {
-            return <MetaAction key={connection.name} {...connection} />;
+            return <EthAction key={connection.name} {...connection} />;
           })}
         </Modal>
         <p className="uppercase font-heading text-angel-grey text-sm">

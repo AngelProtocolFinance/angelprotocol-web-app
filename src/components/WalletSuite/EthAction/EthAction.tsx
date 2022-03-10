@@ -1,7 +1,7 @@
-import useMetaAction from "./useMetaAction";
+import useEthAction from "./useEthAction";
 
-export default function MetaAction(props: any) {
-  const { handleClick, isUpdating } = useMetaAction(props);
+export default function EthAction(props: any) {
+  const { handleClick, isUpdating } = useEthAction(props);
 
   return (
     <button

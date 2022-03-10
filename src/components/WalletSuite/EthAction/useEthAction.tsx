@@ -9,7 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 
 declare var window: any;
 
-export default function useMetaAction(options: EthConnectInfo) {
+export default function useEthAction(options: EthConnectInfo) {
   const { isUpdating } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
   const isMetaMask = options.name === "MetaMask";
@@ -42,8 +42,8 @@ export default function useMetaAction(options: EthConnectInfo) {
         setMetamaskStatus({
           connected: true,
           network: network.name,
-          chainId:
-            network.chainId === 1 ? chainIDs.eth_main : chainIDs.eth_ropsten,
+          icon: options.icon,
+          chainId: String(network.chainId) as chainIDs,
           address,
           balance: eth_balance,
           coins: [{ amount: eth_balance / 1e6, denom: denoms.ether }],
