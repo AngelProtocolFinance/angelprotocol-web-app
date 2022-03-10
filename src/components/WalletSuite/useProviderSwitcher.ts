@@ -23,7 +23,7 @@ export default function useProviderSwitcher() {
   const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
-  const { connected: ethConnected, network: ethNetwork } = useMetaMask();
+  const { connected: ethConnected } = useMetaMask();
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],

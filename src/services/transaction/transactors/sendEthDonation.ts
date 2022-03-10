@@ -8,19 +8,27 @@ import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 import { StageUpdator, Step } from "../types";
 
+declare var window: any;
+
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
   async (args: EthDonateArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
+
     try {
       const xwindow = window as XdefiWindow;
 
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
-      const provider = new ethers.providers.Web3Provider(
-        xwindow.xfi?.ethereum!
-      );
+      let provider: any;
+
+      if (args.connectType === "META") {
+        provider = new ethers.providers.Web3Provider(window.ethereum!, "any");
+      } else {
+        provider = new ethers.providers.Web3Provider(xwindow.xfi?.ethereum!);
+      }
+
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();

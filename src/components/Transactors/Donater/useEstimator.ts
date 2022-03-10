@@ -27,6 +27,8 @@ import { DonateValues } from "./types";
 import processEstimateError from "helpers/processEstimateError";
 import extractFeeNum from "helpers/extractFeeNum";
 
+declare var window: any;
+
 export default function useEstimator() {
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
@@ -37,6 +39,7 @@ export default function useEstimator() {
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { coins, supported_denoms } = useGetter((state) => state.wallet);
+  const { connected: metaConnected } = useGetter((state) => state.metamask);
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
@@ -144,9 +147,18 @@ export default function useEstimator() {
         if (currency === denoms.ether) {
           const xwindow = window as XdefiWindow;
           //provider is present at this point
-          const provider = new ethers.providers.Web3Provider(
-            xwindow.xfi?.ethereum!
-          );
+          let provider;
+
+          if (metaConnected) {
+            provider = new ethers.providers.Web3Provider(
+              window.ethereum!,
+              "any"
+            );
+          } else {
+            provider = new ethers.providers.Web3Provider(
+              xwindow.xfi?.ethereum!
+            );
+          }
           //no network request
           const signer = provider.getSigner();
           const sender = await signer.getAddress();
