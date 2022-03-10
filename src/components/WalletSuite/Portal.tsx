@@ -7,7 +7,7 @@ import { useLookupQuery } from "services/aws/endowments/endowments";
 export default function Portal() {
   const wallet = useConnectedWallet();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
-  //on testnet --> url resolves to endpoint/endowments/testnet
+  //on testnet --> url resolves to endpoint/endowments/info/testnet
   const { data, isLoading, isFetching } = useLookupQuery(isTestNet);
 
   const endowmentAddr = data?.[wallet?.terraAddress || ""];

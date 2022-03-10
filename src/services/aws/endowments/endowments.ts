@@ -4,7 +4,6 @@ import { aws } from "../aws";
 import { cha, tags } from "../tags";
 import {
   Lookup,
-  Endowment,
   Profile,
   CategorizedProfiles,
   EditableProfileAttr,
