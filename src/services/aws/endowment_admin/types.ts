@@ -7,3 +7,8 @@ export interface DepositTransactions {
   app_used: string; // "restore-earth"
   transaction_type: string; // "deposit"
 }
+
+export interface DonationTransactions extends DepositTransactions {}
+export interface DonationQueryRes<T> {
+  transactions: T;
+}

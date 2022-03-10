@@ -1,5 +1,9 @@
 import { aws } from "../aws";
-import { DepositTransactions } from "./types";
+import {
+  DepositTransactions,
+  DonationQueryRes,
+  DonationTransactions,
+} from "./types";
 import { AWSQueryRes } from "services/aws/types";
 
 const endowment_admin_api = aws.injectEndpoints({
@@ -10,7 +14,14 @@ const endowment_admin_api = aws.injectEndpoints({
         return res.Items;
       },
     }),
+    donationTransactions: builder.query<DonationTransactions[], string>({
+      query: (walletAddr) => `transactions/user/${walletAddr}`,
+      transformResponse: (res: DonationQueryRes<DonationTransactions[]>) => {
+        return res.transactions;
+      },
+    }),
   }),
 });
 
-export const { useDepositTransactionsQuery } = endowment_admin_api;
+export const { useDepositTransactionsQuery, useDonationTransactionsQuery } =
+  endowment_admin_api;
