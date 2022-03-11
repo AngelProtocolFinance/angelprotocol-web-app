@@ -20,8 +20,7 @@ export default function useInitMemberUpdator() {
         )
       );
     }
-    //eslint-disable-next-line
-  }, [members]);
+  }, [members, dispatch]);
 
   return { apCW4Members, isMembersLoading };
 }

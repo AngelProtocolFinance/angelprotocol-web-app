@@ -1,8 +1,8 @@
 import React from "react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, FieldValues } from "react-hook-form";
 
-export default function TextInput<T extends object>(props: {
+export default function TextInput<T extends FieldValues>(props: {
   title: string;
   placeholder?: string;
   name: keyof T;
