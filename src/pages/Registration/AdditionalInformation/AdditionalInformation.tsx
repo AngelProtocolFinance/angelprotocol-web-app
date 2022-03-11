@@ -1,20 +1,29 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { app, site } from "constants/routes";
 import { FormProvider, useForm } from "react-hook-form";
+import { Redirect } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
+import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import DescriptionInput from "./DescriptionInput";
 import LogoInput from "./LogoInput";
 import { FormValues, SCHEMA } from "./types";
+import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charity_overview: "",
-      logo: [],
+      charityOverview: "",
+      charityLogo: [],
     },
   });
+  const { submit, isSuccess } = useSubmit();
+
+  if (isSuccess) {
+    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
+  }
 
   return (
     <div className="flex flex-col gap-5 items-center">
@@ -23,7 +32,7 @@ export default function AdditionalInformation() {
       <FormProvider {...methods}>
         <form
           className="flex flex-col justify-center w-5/6 h-full gap-4"
-          onSubmit={methods.handleSubmit((values) => console.log(values))}
+          onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName />
           <LogoInput />

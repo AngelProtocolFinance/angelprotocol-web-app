@@ -28,3 +28,16 @@ export type UpdateDocumentationResult = {
   FinancialStatements: string[];
   AuditedFinancialReports: string[];
 };
+
+export type UpdateAdditionalInformationData = {
+  PK?: string;
+  body: {
+    CharityLogo: DocumentObject;
+    CharityOverview: string;
+  };
+};
+
+export type UpdateAdditionalInformationResult = {
+  CharityLogo: string;
+  CharityOverview: string;
+};

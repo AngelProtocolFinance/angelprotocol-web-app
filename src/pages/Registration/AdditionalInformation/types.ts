@@ -1,10 +1,10 @@
 import * as Yup from "yup";
 
 export type FormValues = {
-  charity_overview: string;
+  charityOverview: string;
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
-  logo: File[];
+  charityLogo: File[];
 };
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
@@ -22,12 +22,12 @@ const FILE_SCHEMA = Yup.mixed<File>()
   });
 
 export const SCHEMA = Yup.object().shape({
-  charity_overview: Yup.string().required("Organization description required"),
-  logo: Yup.array<File>()
+  charityOverview: Yup.string().required("Organization description required"),
+  charityLogo: Yup.array<File>()
     .of(FILE_SCHEMA)
     .test({
       name: "exactlyOne",
-      message: "Proof of identity required",
+      message: "Charity logo required",
       test: (arr) => arr?.length === 1,
     }),
 });

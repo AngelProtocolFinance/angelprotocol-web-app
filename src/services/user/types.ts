@@ -6,8 +6,10 @@ export interface User {
   Role: string;
   SK?: string;
   PK?: string;
+  CharityLogo: string;
   CharityName: string;
   CharityName_ContactEmail?: string;
+  CharityOverview: string;
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;

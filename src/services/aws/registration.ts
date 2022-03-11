@@ -1,5 +1,10 @@
 import { aws } from "./aws";
-import { UpdateDocumentationData, UpdateDocumentationResult } from "./types";
+import {
+  UpdateAdditionalInformationData,
+  UpdateAdditionalInformationResult,
+  UpdateDocumentationData,
+  UpdateDocumentationResult,
+} from "./types";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -90,6 +95,24 @@ const registration_api = aws.injectEndpoints({
         return response.data;
       },
     }),
+    updateAdditionalInformation: builder.mutation<
+      UpdateAdditionalInformationResult,
+      UpdateAdditionalInformationData
+    >({
+      query: (data) => {
+        return {
+          url: `registration`,
+          params: { uuid: data.PK },
+          method: "PUT",
+          body: data.body,
+        };
+      },
+      transformResponse: (response: {
+        data: UpdateAdditionalInformationResult;
+      }) => {
+        return response.data;
+      },
+    }),
   }),
 });
 export const {
@@ -99,4 +122,5 @@ export const {
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
   useUpdateDocumentationMutation,
+  useUpdateAdditionalInformationMutation,
 } = registration_api;

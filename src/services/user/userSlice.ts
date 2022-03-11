@@ -10,6 +10,8 @@ const initialState: User = {
   PK: "",
   SK: "",
   CharityName: "",
+  CharityLogo: "",
+  CharityOverview: "",
   CharityName_ContactEmail: "",
   RegistrationDate: "",
   RegistrationStatus: "",

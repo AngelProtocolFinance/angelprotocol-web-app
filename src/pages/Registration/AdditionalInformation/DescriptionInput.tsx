@@ -9,18 +9,18 @@ export default function DescriptionInput() {
 
   return (
     <div className="flex flex-col w-full text-left">
-      <label htmlFor="charity_overview" className="cursor-pointer">
+      <label htmlFor="charityOverview" className="cursor-pointer">
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
       <RichEditor
-        name="charity_overview"
+        name="charityOverview"
         placeholder="Long text"
         disabled={isSubmitting}
       />
-      {errors.charity_overview?.message && (
+      {errors.charityOverview?.message && (
         <p className="text-sm text-failed-red">
-          {errors.charity_overview?.message}
+          {errors.charityOverview?.message}
         </p>
       )}
     </div>

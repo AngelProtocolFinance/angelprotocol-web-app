@@ -10,13 +10,17 @@ export default function LogoInput() {
 
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
   // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
-  const errorMessage = !!errors?.logo?.length
-    ? errors.logo[0].message
-    : (errors?.logo as any)?.message;
+  const errorMessage = !!errors?.charityLogo?.length
+    ? errors.charityLogo[0].message
+    : (errors?.charityLogo as any)?.message;
 
   return (
-    <InputRow id="logo" label="Logo of your organization" required>
-      <FileDropzone name="logo" className="h-8" disabled={isSubmitting} />
+    <InputRow id="charityLogo" label="Logo of your organization" required>
+      <FileDropzone
+        name="charityLogo"
+        className="h-8"
+        disabled={isSubmitting}
+      />
       {errorMessage && (
         <p className="w-full text-xs text-failed-red text-center">
           {errorMessage}
