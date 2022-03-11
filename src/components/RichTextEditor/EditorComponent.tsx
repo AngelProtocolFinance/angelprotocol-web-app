@@ -1,61 +1,36 @@
-import {
-  convertFromRaw,
-  convertToRaw,
-  DraftBlockType,
-  DraftInlineStyleType,
-  Editor,
-  EditorCommand,
-  EditorState,
-  getDefaultKeyBinding,
-  RichUtils,
-} from "draft-js";
-import { PropsWithChildren, useState } from "react";
+import { Editor } from "draft-js";
+import { PropsWithChildren, useMemo } from "react";
 import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListOl, FaListUl } from "react-icons/fa";
+import useEditor from "./useEditor";
 
 type Props = {
   value: string;
+  placeholder?: string;
   onChange: (...event: any[]) => void;
   disabled?: true | boolean;
 };
 
 export default function EditorComponent(props: Props) {
-  const [editorState, setEditorState] = useState(() =>
-    getInitialEditorState(props.value)
-  );
+  const {
+    editorState,
+    onChange,
+    handleKeyCommand,
+    keyBinder,
+    applyBlockStyle,
+    applyInlineStyle,
+  } = useEditor(props.value, props.onChange);
 
-  //map common key commands
-  function handleKeyCommand(command: EditorCommand, editorState: EditorState) {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      setEditorState(newState);
-      return "handled";
-    }
-    return "not-handled";
-  }
-
-  function keyBinder(e: React.KeyboardEvent) {
-    //bind tab to enable nesting of list
-    if (e.code === "Tab" /* TAB */) {
-      const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
-      if (newEditorState !== editorState) {
-        setEditorState(newEditorState);
-        return "handled";
+  const placeholderProp = useMemo(() => {
+    const contentState = editorState.getCurrentContent();
+    if (!contentState.hasText()) {
+      if (contentState.getBlockMap().first().getType() !== "unstyled") {
+        return {};
       }
     }
-    return getDefaultKeyBinding(e);
-  }
-
-  const applyInlineStyle = (inlineStyle: DraftInlineStyleType) => () => {
-    const newState = RichUtils.toggleInlineStyle(editorState, inlineStyle);
-    setEditorState(newState);
-  };
-
-  const applyBlockStyle = (blockStyle: DraftBlockType) => () => {
-    const newState = RichUtils.toggleBlockType(editorState, blockStyle);
-    setEditorState(newState);
-  };
+    return { placeholder: props.placeholder };
+  }, [editorState, props.placeholder]);
 
   return (
     <Container>
@@ -73,14 +48,10 @@ export default function EditorComponent(props: Props) {
       </IconContainer>
       <Editor
         editorState={editorState}
-        onChange={(newEditorState) => {
-          const rawState = getRawState(newEditorState);
-          props.onChange(rawState);
-          setEditorState(newEditorState);
-        }}
+        onChange={onChange}
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={keyBinder}
-        placeholder="Long text"
+        {...placeholderProp}
       />
     </Container>
   );
@@ -106,17 +77,4 @@ function IconButton(props: { onClick: () => void; Icon: IconType }) {
       <props.Icon />
     </button>
   );
-}
-
-function getInitialEditorState(stringValue: string) {
-  return !!stringValue
-    ? EditorState.createWithContent(convertFromRaw(JSON.parse(stringValue)))
-    : EditorState.createEmpty();
-}
-
-function getRawState(editorState: EditorState) {
-  const rawState = convertToRaw(editorState.getCurrentContent());
-  return rawState.blocks.some((block) => !!block.text)
-    ? JSON.stringify(rawState)
-    : "";
 }

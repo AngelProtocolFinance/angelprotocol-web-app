@@ -1,9 +1,14 @@
 import { Controller, useFormContext } from "react-hook-form";
 import EditorComponent from "./EditorComponent";
 
-type Props = { name: string; disabled?: true | boolean };
+type Props = {
+  name: string;
+  disabled?: true | boolean;
+  placeholder?: string;
+};
 
-export default function RichTextEditor({ name, disabled }: Props) {
+export default function RichTextEditor(props: Props) {
+  const { name, disabled, placeholder } = props;
   const { control } = useFormContext();
 
   return (
@@ -13,6 +18,7 @@ export default function RichTextEditor({ name, disabled }: Props) {
       render={({ field: { onChange, value } }) => (
         <EditorComponent
           value={value}
+          placeholder={placeholder}
           onChange={onChange}
           disabled={disabled}
         />

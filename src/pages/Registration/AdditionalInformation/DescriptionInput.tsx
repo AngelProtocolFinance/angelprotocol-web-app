@@ -13,7 +13,11 @@ export default function DescriptionInput() {
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
-      <RichEditor name="charity_overview" disabled={isSubmitting} />
+      <RichEditor
+        name="charity_overview"
+        placeholder="Long text"
+        disabled={isSubmitting}
+      />
       {errors.charity_overview?.message && (
         <p className="text-sm text-failed-red">
           {errors.charity_overview?.message}
