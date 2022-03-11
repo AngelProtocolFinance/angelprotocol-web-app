@@ -1,32 +1,24 @@
+import RichEditor from "components/RichTextEditor";
 import { useFormContext } from "react-hook-form";
-import { InputRow } from "../common";
 import { FormValues } from "./types";
 
 export default function DescriptionInput() {
   const {
-    register,
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   return (
-    <InputRow
-      id="description"
-      label="Description of your organization"
-      required
-    >
-      <textarea
-        id="description"
-        rows={4}
-        placeholder="Long text"
-        className="min-h-10 rounded-md outline-none border-none w-full px-2 py-1 text-black"
-        disabled={isSubmitting}
-        {...register("description")}
-      />
-      {errors.description?.message && (
-        <p className="w-full text-xs text-failed-red text-center">
-          {errors.description.message}
+    <div className="flex flex-col w-full text-left">
+      <label htmlFor="charity_overview" className="cursor-pointer">
+        Description of your organization
+        <span className="ml-0.5 text-failed-red">*</span>
+      </label>
+      <RichEditor name="charity_overview" disabled={isSubmitting} />
+      {errors.charity_overview?.message && (
+        <p className="text-sm text-failed-red">
+          {errors.charity_overview?.message}
         </p>
       )}
-    </InputRow>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      description: "",
+      charity_overview: "",
       logo: [],
     },
   });
@@ -22,7 +22,7 @@ export default function AdditionalInformation() {
 
       <FormProvider {...methods}>
         <form
-          className="flex flex-col w-5/6 h-full gap-4"
+          className="flex flex-col justify-center w-5/6 h-full gap-4"
           onSubmit={methods.handleSubmit((values) => console.log(values))}
         >
           <OrganizationName />
