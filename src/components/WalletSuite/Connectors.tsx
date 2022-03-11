@@ -35,7 +35,7 @@ export default function Connectors(props: Props) {
         {
           name: "MetaMask",
           url: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en",
-          icon: "/images/icons/metamask.png",
+          icon: metamaskIcon,
         },
       ]);
     }

@@ -9,8 +9,7 @@ import { updateChainID } from "services/chain/chainSlice";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
-import { useSetter } from "store/accessors";
-import useMetaMask from "hooks/useMetaMask";
+import { useSetter, useGetter } from "store/accessors";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -23,7 +22,7 @@ export default function useProviderSwitcher() {
   const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
-  const { connected: ethConnected } = useMetaMask();
+  const { connected: ethConnected } = useGetter((state) => state.metamask);
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],
