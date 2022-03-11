@@ -7,6 +7,7 @@ import Installer from "./Installer";
 import { useEffect, useState } from "react";
 import EthAction from "./EthAction/EthAction";
 import { EthConnectInfo, EthInstallInfo } from "services/wallet/types";
+import metamaskIcon from "images/icons/metamask.png";
 
 type Props = {
   closeHandler: () => void;
@@ -26,7 +27,7 @@ export default function Connectors(props: Props) {
         {
           name: "MetaMask",
           type: "ETHEREUM",
-          icon: "/images/icons/metamask.png",
+          icon: metamaskIcon,
         },
       ]);
     } else {
