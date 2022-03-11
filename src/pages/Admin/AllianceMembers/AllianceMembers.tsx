@@ -14,6 +14,7 @@ export default function AllianceMembers() {
     searchText,
     300
   );
+
   const { filteredMembers, isFilteredMembersLoading } =
     useFilteredAllianceMembers(debouncedSearchText);
 
