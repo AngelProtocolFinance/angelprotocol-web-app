@@ -11,9 +11,7 @@ const amountSchema = Yup.lazy((value) =>
 );
 
 const addressSchema = Yup.lazy((value) =>
-  Yup.string()
-    .required()
-    .test("terra1", "Invalid: Not a valid terra address", test_terra)
+  Yup.string().required().test("terra1", "Invalid wallet address", test_terra)
 );
 
 export const schema = Yup.object().shape({

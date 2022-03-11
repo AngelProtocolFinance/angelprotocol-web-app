@@ -32,8 +32,8 @@ export default function WithdrawForm() {
       <div className="grid grid-cols-a1 items-center gap-1 bg-yellow-400 bg-opacity-20 p-2 rounded-md text-angel-grey mb-2">
         <IoWarning />
         <span className="font-mono text-xs ml-1">
-          We recommend not using crypto exchange addresses for withdraws. We are
-          not responsible for the loss of funds.
+          We recommend not using crypto exchange addresses for withdrawals. We
+          are not responsible for the loss of funds.
         </span>
       </div>
       <Total />
