@@ -13,7 +13,7 @@ export default function ButtonSection() {
   return (
     <div className="flex justify-center">
       {isSubmitting ? (
-        <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+        <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (
         <>
           <Button
