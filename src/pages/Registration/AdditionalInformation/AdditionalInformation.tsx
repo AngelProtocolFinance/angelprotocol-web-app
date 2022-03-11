@@ -2,13 +2,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import ButtonSection from "./ButtonSection";
 import { FormValues, SCHEMA } from "./types";
-import WebsiteInput from "./WebsiteInput";
+import DescriptionInput from "./DescriptionInput";
 
 export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      website: "",
+      description: "",
       logo: [],
     },
   });
@@ -22,7 +22,7 @@ export default function AdditionalInformation() {
           className="flex flex-col w-full h-full gap-4 items-center"
           onSubmit={methods.handleSubmit(() => console.log("Upload"))}
         >
-          <WebsiteInput />
+          <DescriptionInput />
 
           <ButtonSection />
         </form>
