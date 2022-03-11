@@ -4,6 +4,7 @@ import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
 import ButtonSection from "./ButtonSection";
 import DescriptionInput from "./DescriptionInput";
+import LogoInput from "./LogoInput";
 import { FormValues, SCHEMA } from "./types";
 
 export default function AdditionalInformation() {
@@ -22,11 +23,12 @@ export default function AdditionalInformation() {
       <FormProvider {...methods}>
         <form
           className="flex flex-col w-5/6 h-full gap-4"
-          onSubmit={methods.handleSubmit(() => console.log("Upload"))}
+          onSubmit={methods.handleSubmit((values) => console.log(values))}
         >
           <OrganizationName />
           <DescriptionInput />
-
+          <LogoInput />
+          <Separator />
           <ButtonSection />
         </form>
       </FormProvider>
@@ -51,3 +53,5 @@ function OrganizationName() {
     </InputRow>
   );
 }
+
+const Separator = () => <div className="h-4" />;
