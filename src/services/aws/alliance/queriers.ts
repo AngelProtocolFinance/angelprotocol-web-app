@@ -13,6 +13,19 @@ export function useAllianceMembers() {
   };
 }
 
+export function useAllianceLookup() {
+  const { useAllianceLookupQuery } = alliance_api;
+  const {
+    data = {},
+    isLoading,
+    isFetching,
+  } = useAllianceLookupQuery(undefined);
+  return {
+    allianceLookup: data,
+    isAllianceLookupLoading: isLoading || isFetching,
+  };
+}
+
 export function useFilteredAllianceMembers(searchText: string, skip = false) {
   const { useAllianceMembersQuery } = alliance_api;
   const { filteredMembers = [], isFilteredMembersLoading } =

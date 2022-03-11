@@ -11,6 +11,7 @@ export default class Indexfund extends Contract {
   fund_id?: number;
   address: string;
   fundList: ContractQueryArgs;
+  tcaMembers: ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);
@@ -20,6 +21,11 @@ export default class Indexfund extends Contract {
     this.fundList = {
       address: this.address,
       msg: { funds_list: {} },
+    };
+
+    this.tcaMembers = {
+      address: this.address,
+      msg: { tca_list: {} },
     };
   }
 
@@ -47,6 +53,12 @@ export default class Indexfund extends Contract {
   ) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_members: { fund_id: fundId, add: toAdd, remove: toRemove },
+    });
+  }
+
+  createEmbeddedUpdateTCAMsg(toAdd: string[], toRemove: string[]) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_members: { add: toAdd, remove: toRemove },
     });
   }
 

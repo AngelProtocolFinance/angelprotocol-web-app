@@ -1,7 +1,7 @@
 import { aws } from "../aws";
 import { alliance, tags } from "../tags";
 import { AWSQueryRes } from "../types";
-import { MemberDetails, ToRemoveMember } from "./types";
+import { MemberDetails, MemberLookUp, ToRemoveMember } from "./types";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 export const alliance_api = aws.injectEndpoints({
@@ -13,6 +13,18 @@ export const alliance_api = aws.injectEndpoints({
         return sortMembers(res.Items);
       },
     }),
+    allianceLookup: builder.query<MemberLookUp, unknown>({
+      providesTags: [{ type: tags.alliance, id: alliance.members }],
+      query: () => "alliance",
+      transformResponse: (res: AWSQueryRes<MemberDetails[]>) => {
+        return res.Items.reduce((result, member) => {
+          const { address, ...rest } = member;
+          result[address] = rest;
+          return result;
+        }, {} as MemberLookUp);
+      },
+    }),
+
     createNewMember: builder.mutation<any, MemberDetails>({
       invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
       query: (body) => ({

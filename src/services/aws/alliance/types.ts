@@ -7,4 +7,8 @@ export interface MemberDetails {
   otherWallets?: string[];
 }
 
+export type MemberLookUp = {
+  [index: MemberDetails["address"]]: Omit<MemberDetails, "address"> | undefined;
+};
+
 export type ToRemoveMember = Pick<MemberDetails, "name" | "address">;

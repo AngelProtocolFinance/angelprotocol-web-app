@@ -1,5 +1,6 @@
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
+import AllianceSelection from "./AllianceSelection/AllianceSelection";
 import { AllianceEditValues as AV } from "./alllianceEditSchema";
 
 export default function AllianceEditForm() {
@@ -15,13 +16,7 @@ export default function AllianceEditForm() {
         wide
         required
       />
-      <TextInput<AV>
-        title="wallet address"
-        name="walletAddr"
-        placeholder="terra123abc..."
-        required
-        mono
-      />
+      <AllianceSelection />
       <Submitter _text="Propose Changes" type="submit" _classes="mt-4" />
     </form>
   );
