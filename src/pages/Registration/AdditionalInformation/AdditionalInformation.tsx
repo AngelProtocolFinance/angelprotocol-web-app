@@ -26,8 +26,8 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit((values) => console.log(values))}
         >
           <OrganizationName />
-          <DescriptionInput />
           <LogoInput />
+          <DescriptionInput />
           <Separator />
           <ButtonSection />
         </form>
