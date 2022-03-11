@@ -9,6 +9,9 @@ import { TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
+import { setMetamaskStatus } from "services/wallet/metamaskSlice";
+
+declare var window: any;
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -125,23 +128,49 @@ export default function useWalletUpdator(activeProvider: Providers) {
     if (activeProvider !== Providers.ethereum) return;
     if (!metamaskState) return;
 
-    const uiAmount = metamaskState.balance / 1e6;
+    (async () => {
+      dispatch(setIsUpdating(true));
 
-    dispatch(setIsUpdating(true));
+      const provider = new ethers.providers.Web3Provider(
+        window.ethereum!,
+        "any"
+      );
 
-    dispatch(
-      setWalletDetails({
-        id: metamaskState.id,
-        icon: metamaskState.icon,
-        displayCoin: { amount: uiAmount, denom: denoms.ether },
-        coins: metamaskState.coins,
-        address: metamaskState.address,
-        chainId: metamaskState.chainId,
-        supported_denoms: [denoms.ether],
-      })
-    );
+      const network = await provider.getNetwork();
+      const signer = provider.getSigner();
+      const address = await signer.getAddress();
+      const wei_balance = await signer.getBalance();
+      const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
+        .div(1e18)
+        .toNumber();
 
-    dispatch(setIsUpdating(false));
+      const eth_coin = { amount: eth_balance, denom: denoms.ether };
+      const eth_chain_id = String(network.chainId) as chainIDs;
+
+      dispatch(
+        setMetamaskStatus({
+          network: network.name,
+          chainId: eth_chain_id,
+          address,
+          balance: eth_balance,
+          coins: [eth_coin],
+        })
+      );
+
+      dispatch(
+        setWalletDetails({
+          id: metamaskState.id,
+          icon: metamaskState.icon,
+          displayCoin: eth_coin,
+          coins: [eth_coin],
+          address,
+          chainId: eth_chain_id,
+          supported_denoms: [denoms.ether],
+        })
+      );
+
+      dispatch(setIsUpdating(false));
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metamaskState, activeProvider]);
 }

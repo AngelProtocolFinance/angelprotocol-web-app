@@ -24,8 +24,8 @@ const metamaskSlice = createSlice({
       state = initialState;
     },
     setMetamaskStatus: (state, { payload }: any) => {
-      state.connected = payload.connected;
-      state.icon = payload.icon;
+      state.connected = payload.connected ?? state.connected;
+      state.icon = payload.icon ?? state.icon;
       state.network = payload.network;
       state.address = payload.address;
       state.chainId = payload.chainId;

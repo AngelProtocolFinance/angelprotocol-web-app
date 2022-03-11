@@ -21,8 +21,6 @@ export default function Connectors(props: Props) {
   let [ethInstallations, setEthInstallations] = useState<EthInstallInfo[]>([]);
 
   useEffect(() => {
-    if (!availableConnections && !availableInstallations) return;
-
     if (window.ethereum) {
       setEthConnections([
         {
@@ -40,7 +38,7 @@ export default function Connectors(props: Props) {
         },
       ]);
     }
-  }, [availableConnections, availableInstallations]);
+  }, []);
 
   return (
     <>
