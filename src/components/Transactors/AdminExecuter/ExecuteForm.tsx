@@ -6,7 +6,7 @@ export default function ExecuteForm(props: Props) {
   return (
     <div className="bg-white grid justify-items-center p-4 rounded-md w-full">
       <p className="text-angel-grey">
-        are you sure you want to execute this poll?
+        Are you sure you want to execute this poll?
       </p>
       <button
         type="button"

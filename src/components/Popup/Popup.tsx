@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
+import { PropsWithChildren } from "react";
 import { useSetModal } from "components/Modal/Modal";
 import { IoClose } from "react-icons/io5";
 
-export type PopupProps = { message: string; children?: ReactNode };
+export type PopupProps = PropsWithChildren<{ message: string }>;
 export default function Popup(props: PopupProps) {
   const { hideModal } = useSetModal();
   return (

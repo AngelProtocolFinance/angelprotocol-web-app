@@ -28,8 +28,6 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
-
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
@@ -44,7 +42,7 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
         const contract = new Admin(wallet);
-        const voteMsg = contract.createVoteMsg(proposal_id, vote);
+        const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
@@ -62,7 +60,7 @@ export default function useEstimator() {
       }
     })();
     return () => {
-      dispatch(setFormError(""));
+      dispatch(setFormError(null));
     };
     //eslint-disable-next-line
   }, [debounced_vote, wallet, UST_balance]);

@@ -4,7 +4,7 @@ import Poll from "./Poll";
 import { SiHiveBlockchain } from "react-icons/si";
 import toCurrency from "helpers/toCurrency";
 import usePoller from "components/Transactors/Poller/usePoller";
-import Action from "./Action";
+import Button from "./Button";
 
 export default function Polls() {
   const block_height = useLatestBlock(10_000);
@@ -25,8 +25,7 @@ export default function Polls() {
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
         <div className="flex flex-wrap gap-2 justify-end self-end">
-          <Action
-            _title="Join Forum"
+          <Button
             onClick={() => {
               window.open(
                 "https://forum.angelprotocol.io",
@@ -34,8 +33,10 @@ export default function Polls() {
                 "noopener noreferrer"
               );
             }}
-          />
-          <Action _title="Create Poll" onClick={showPoller} />
+          >
+            Join Forum
+          </Button>
+          <Button onClick={showPoller}>Create Poll</Button>
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

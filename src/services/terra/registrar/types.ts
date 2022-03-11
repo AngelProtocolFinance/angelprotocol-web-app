@@ -1,7 +1,5 @@
 import { FundDetails } from "contracts/types";
 
-export type Any = any;
-
 export type EndowmentStatus = {
   Inactive: 0;
   Approved: 1;

@@ -7,18 +7,22 @@ export const addressSchema = (title: string) =>
       /^terra[a-z0-9]{39}$/i.test(address as string)
     );
 
-export const stringByteSchema = (title: string, min: number, max: number) =>
+export const stringByteSchema = (
+  title: string,
+  minBytes: number,
+  maxBytes: number
+) =>
   Yup.string()
     .required(`${title} is required`)
     .test(
       "min_length",
-      `${title} must be atleast ${min} bytes`,
-      getBytesComparer("gt", min)
+      `${title} must be atleast ${minBytes} bytes`,
+      getBytesComparer("gt", minBytes)
     )
     .test(
       "max_length",
-      `title must be less than ${max} bytes `,
-      getBytesComparer("lt", max)
+      `title must be less than ${maxBytes} bytes `,
+      getBytesComparer("lt", maxBytes)
     );
 
 function getBytesComparer(comparison: "gt" | "lt", num_bytes: number) {
