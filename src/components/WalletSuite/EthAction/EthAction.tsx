@@ -1,6 +1,7 @@
+import { EthConnectInfo } from "services/wallet/types";
 import useEthAction from "./useEthAction";
 
-export default function EthAction(props: any) {
+export default function EthAction(props: EthConnectInfo) {
   const { handleClick, isUpdating } = useEthAction(props);
 
   return (
