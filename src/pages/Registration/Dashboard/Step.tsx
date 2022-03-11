@@ -12,8 +12,8 @@ export default function Step(props: Props) {
   const { title, completed, disabled, onClick, statusComplete } = props;
 
   return (
-    <div className="flex justify-end items-center w-full font-bold">
-      <p className="mr-auto">{title}</p>
+    <div className="grid grid-cols-21a items-center w-full font-bold">
+      <p className="mr-auto text-left">{title}</p>
       {completed ? (
         <p className="uppercase text-green-500 w-40">
           {statusComplete || "Completed"}

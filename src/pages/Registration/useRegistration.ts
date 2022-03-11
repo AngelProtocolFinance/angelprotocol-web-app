@@ -1,7 +1,7 @@
 import createAuthToken from "helpers/createAuthToken";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { UserTypes } from "services/user/types";
+import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
@@ -29,7 +29,7 @@ export const useRegistration = () => {
 
     // const token: any = await getTokenData(values.refer);
     const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
-    const data = {
+    const data: User = {
       ...response.data.ContactPerson,
       CharityName: response.data.Registration.CharityName,
       CharityName_ContactEmail:
@@ -41,14 +41,20 @@ export const useRegistration = () => {
       IsKeyPersonCompleted: !!response.data.KeyPerson,
       IsMetaDataCompleted: !!response.data.Metadata,
       ProofOfIdentity: response.data.Registration.ProofOfIdentity,
-      ProofOfEmployment: response.data.Registration.ProofOfEmployment,
-      EndowmentAgreement: response.data.Registration.EndowmentAgreement,
+      Website: response.data.Registration.Website,
+      UN_SDG: response.data.Registration.UN_SDG,
+      ProofOfRegistration: response.data.Registration.ProofOfRegistration,
+      FinancialStatements: response.data.Registration.FinancialStatements,
+      AuditedFinancialReports:
+        response.data.Registration.AuditedFinancialReports,
       ProofOfIdentityVerified:
         response.data.Registration.ProofOfIdentityVerified,
-      ProofOfEmploymentVerified:
-        response.data.Registration.ProofOfEmploymentVerified,
-      EndowmentAgreementVerified:
-        response.data.Registration.EndowmentAgreementVerified,
+      ProofOfRegistrationVerified:
+        response.data.Registration.ProofOfRegistrationVerified,
+      FinancialStatementsVerified:
+        response.data.Registration.FinancialStatementsVerified,
+      AuditedFinancialReportsVerified:
+        response.data.Registration.AuditedFinancialReportsVerified,
     };
     dispatch(updateUserData(data));
     localStorage.setItem("userData", JSON.stringify(data));

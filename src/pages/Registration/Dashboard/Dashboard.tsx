@@ -1,24 +1,26 @@
+import Loader from "components/Loader/Loader";
 import { useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
-import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Button from "../Button";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
+import getRegistrationStatus from "./getRegistrationStatus";
 import Step from "./Step";
-import { RegistrationStatus, ReviewStatus } from "./types";
+import { ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const history = useHistory();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const { data, error } = useGetCharityDataQuery(user.PK);
+  const { data, error, isLoading } = useGetCharityDataQuery(user.PK);
 
   useEffect(() => {
     if (!user.PK) {
+      // TODO: check where to move this logic, since it is similar to useRehydrateUserData
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
@@ -41,6 +43,10 @@ export default function Dashboard() {
 
   const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
 
+  if (isLoading) {
+    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
+  }
+
   return (
     <div className="flex flex-col gap-4 items-center w-full">
       <h3 className="text-3xl font-bold">Necessary Information</h3>
@@ -59,25 +65,27 @@ export default function Dashboard() {
           title="Step #2: Wallet Address"
           onClick={() => history.push(routes.wallet)}
           disabled={dataSubmitted}
-          completed={status.stepTwoCompleted}
+          completed={status.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
-          onClick={() => history.push(routes.uploadDocs)}
+          onClick={() => history.push(routes.documentation)}
           disabled={dataSubmitted}
-          completed={status.stepThreeCompleted}
+          completed={status.stepThree.completed}
           // TODO: implement level logic
-          statusComplete={status.stepThreeCompleted && `Level 1`}
+          statusComplete={
+            status.stepThree.completed && `Level ${status.stepThree.level}`
+          }
         />
         <Step
           title="Step #4: Additional Information"
           onClick={() => history.push(routes.additionalInformation)}
           disabled={dataSubmitted}
-          completed={status.stepFourCompleted}
+          completed={status.stepFour.completed}
         />
         {status.reviewStatus === ReviewStatus.None && (
           <Button
-            className={`w-full h-10 mt-5 bg-yellow-blue`}
+            className="w-full h-10 mt-5 bg-yellow-blue"
             onClick={() => console.log("submit")}
             disabled={!status.getReadyForSubmit()}
           >
@@ -97,32 +105,4 @@ export default function Dashboard() {
       )}
     </div>
   );
-}
-
-function getRegistrationStatus(user: User, data: any): RegistrationStatus {
-  return {
-    stepOneCompleted: !!user.PK,
-    stepTwoCompleted: !!data?.Metadata?.TerraWallet || user.TerraWallet,
-    stepThreeCompleted:
-      (user.ProofOfEmployment || data?.Registration?.ProofOfEmployment) &&
-      (user.ProofOfIdentity || data?.Registration?.ProofOfIdentity) &&
-      (user.EndowmentAgreement || data?.Registration?.EndowmentAgreement),
-    stepFourCompleted: false,
-    reviewStatus:
-      user?.RegistrationStatus === "Complete"
-        ? ReviewStatus.Complete
-        : data?.Metadata?.EndowmentStatus === "Active"
-        ? ReviewStatus.Available
-        : user.IsMetaDataCompleted
-        ? ReviewStatus.UnderReview
-        : ReviewStatus.None,
-    getReadyForSubmit: function () {
-      return (
-        this.stepOneCompleted &&
-        this.stepTwoCompleted &&
-        this.stepThreeCompleted &&
-        this.stepFourCompleted
-      );
-    },
-  };
 }

@@ -24,7 +24,6 @@ export default function EndowmentCreated(props: { charityName: string }) {
       <Button
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
         onClick={() => history.push(routes.charityProfile)}
-        title="Available soon"
       >
         {`Go to ${possessiveFormOfName} profile`}
       </Button>

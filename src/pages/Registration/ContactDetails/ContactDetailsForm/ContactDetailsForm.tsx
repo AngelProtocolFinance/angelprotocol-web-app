@@ -1,12 +1,19 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { PropsWithChildren, useCallback, useState } from "react";
+import { site, web } from "constants/routes";
+import {
+  ForwardedRef,
+  forwardRef,
+  PropsWithChildren,
+  useCallback,
+  useState,
+} from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Button from "../../Button";
 import { userRoleOptions, UserRoles } from "../../constants";
 import routes from "../../routes";
-import PrivacyPolicyCheckbox from "./PrivacyPolicyCheckbox";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
@@ -105,9 +112,10 @@ export default function ContactDetailsForm(props: any) {
         </ColumnContainer>
       </div>
       <PrivacyPolicyCheckbox
-        error={errors.checkedPolicy?.message}
-        registerReturn={register("checkedPolicy")}
         disabled={isSubmitting}
+        {...register("checkedPolicy")}
+        error={errors.checkedPolicy?.message}
+        centerError
       />
       <div className="flex justify-center">
         {props.contactData?.PK && (
@@ -122,7 +130,6 @@ export default function ContactDetailsForm(props: any) {
         <Button
           submit
           className="bg-thin-blue w-48 h-12"
-          disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Continue
@@ -132,6 +139,23 @@ export default function ContactDetailsForm(props: any) {
   );
 }
 
-function ColumnContainer({ children }: PropsWithChildren<{}>) {
-  return <div className="flex flex-col gap-4">{children}</div>;
-}
+const ColumnContainer = ({ children }: PropsWithChildren<{}>) => (
+  <div className="flex flex-col gap-4">{children}</div>
+);
+
+const PrivacyPolicyCheckbox = forwardRef(
+  (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
+    <Checkbox {...props} ref={ref}>
+      By checking this box, you declare that you have read and agreed to our{" "}
+      <Link
+        to={`${site.home}${web.privacy}`}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="underline text-angel-blue"
+      >
+        Privacy Policy
+      </Link>
+      <span className="text-failed-red ml-0.5">*</span>
+    </Checkbox>
+  )
+);

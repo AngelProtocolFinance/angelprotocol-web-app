@@ -5,11 +5,14 @@ export enum ReviewStatus {
   Complete,
 }
 
+type Step = { completed: boolean };
+type DocumentationStep = Step & { level: number };
+
 export type RegistrationStatus = {
-  stepOneCompleted: boolean;
-  stepTwoCompleted: boolean;
-  stepThreeCompleted: boolean;
-  stepFourCompleted: boolean;
+  stepOne: Step;
+  stepTwo: Step;
+  stepThree: DocumentationStep;
+  stepFour: Step;
   getReadyForSubmit: () => boolean;
   reviewStatus: ReviewStatus;
 };

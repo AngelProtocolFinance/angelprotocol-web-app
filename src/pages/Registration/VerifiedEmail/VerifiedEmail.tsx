@@ -1,39 +1,21 @@
 import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
-import { useSetter } from "store/accessors";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
 export default function VerifiedEmail() {
   const history = useHistory();
-  const dispatch = useSetter();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const pathNames = history.location.pathname.split("/");
-  const jwtData: any = useMemo(
-    () => jwtDecode(pathNames[pathNames.length - 1]),
-    [pathNames]
-  );
-  const is_expired = useMemo(
-    () => Math.floor(Date.now() / 1000) >= jwtData.exp,
-    [jwtData]
-  );
-  const userData = useMemo(
-    () => createUserData(jwtData, pathNames),
-    [jwtData, pathNames]
-  );
-
-  useEffect(() => {
-    if (!is_expired) {
-      dispatch(updateUserData(userData));
-      localStorage.setItem("userData", JSON.stringify(userData));
-    }
-  }, [is_expired, dispatch, userData]);
+  const jwtToken = pathNames[pathNames.length - 1];
+  const jwtData: any = jwtDecode(jwtToken);
+  const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
+  const userData = createUserData(jwtData, jwtToken);
 
   const resendVerificationEmail = useCallback(async () => {
     if (!userData.PK) {
@@ -71,7 +53,7 @@ export default function VerifiedEmail() {
   );
 }
 
-function createUserData(jwtData: any, pathNames: string[]): User {
+function createUserData(jwtData: any, token: string): User {
   return {
     ...jwtData.ContactPerson,
     CharityName: jwtData.Registration.CharityName,
@@ -80,12 +62,19 @@ function createUserData(jwtData: any, pathNames: string[]): User {
     RegistrationStatus: jwtData.Registration.RegistrationStatus,
     userType: jwtData.user,
     authorization: jwtData.authorization,
-    token: pathNames[pathNames.length - 1],
+    token: token,
+    Website: jwtData.Registration.Website,
+    UN_SDG: jwtData.Registration.UN_SDG,
     ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-    ProofOfEmployment: jwtData.Registration.ProofOfEmployment,
-    EndowmentAgreement: jwtData.Registration.EndowmentAgreement,
     ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-    ProofOfEmploymentVerified: jwtData.Registration.ProofOfEmploymentVerified,
-    EndowmentAgreementVerified: jwtData.Registration.EndowmentAgreementVerified,
+    ProofOfRegistration: jwtData.Registration.ProofOfRegistration,
+    ProofOfRegistrationVerified:
+      jwtData.Registration.ProofOfRegistrationVerified,
+    FinancialStatements: jwtData.Registration.FinancialStatements,
+    FinancialStatementsVerified:
+      jwtData.Registration.FinancialStatementsVerified,
+    AuditedFinancialReports: jwtData.Registration.AuditedFinancialReports,
+    AuditedFinancialReportsVerified:
+      jwtData.Registration.AuditedFinancialReportsVerified,
   };
 }

@@ -1,3 +1,4 @@
+import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import routes from "./routes";
@@ -8,10 +9,13 @@ const Dashboard = lazy(() => import("./Dashboard"));
 const Registration = lazy(() => import("./Registration"));
 const VerifiedEmail = lazy(() => import("./VerifiedEmail"));
 const WalletRegistration = lazy(() => import("./WalletRegistration"));
+const Documentation = lazy(() => import("./Documentation"));
 
 export default function Register() {
   //this component will only render under '/app/register/'
   const { path } = useRouteMatch();
+
+  useRehydrateUserState();
 
   return (
     <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">
@@ -35,6 +39,11 @@ export default function Register() {
           exact
           path={`${path}/${routes.dashboard}`}
           component={Dashboard}
+        />
+        <Route
+          exact
+          path={`${path}/${routes.documentation}`}
+          component={Documentation}
         />
         {/* 'exact' prop is unnecessary, since this component has sub-routes */}
         <Route

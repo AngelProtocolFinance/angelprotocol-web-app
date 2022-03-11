@@ -1,8 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import { removeUserData } from "services/user/userSlice";
+import { useSetter } from "store/accessors";
 import Button from "./Button";
 import routes from "./routes";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
@@ -11,6 +13,7 @@ const Registration = () => {
   const { onResume } = useRegistration();
   const { url } = useRouteMatch();
   const history = useHistory();
+  const dispatch = useSetter();
   const {
     register,
     handleSubmit,
@@ -23,6 +26,10 @@ const Registration = () => {
     () => history.push(`${url}/${routes.contactDetails}`),
     [history, url]
   );
+
+  useEffect(() => {
+    dispatch(removeUserData());
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col gap-3 items-center">
@@ -52,7 +59,6 @@ const Registration = () => {
         <Button
           submit
           className="bg-thin-blue w-48 h-12"
-          disabled={isSubmitting}
           isLoading={isSubmitting}
         >
           Resume
