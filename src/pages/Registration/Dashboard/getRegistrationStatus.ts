@@ -9,7 +9,7 @@ export default function getRegistrationStatus(
     stepOne: { completed: !!user.PK },
     stepTwo: { completed: !!user.TerraWallet || !!data?.Metadata?.TerraWallet },
     stepThree: getStepThree(user, data),
-    stepFour: { completed: false },
+    stepFour: { completed: !!user.CharityLogo },
     reviewStatus:
       user?.RegistrationStatus === "Complete"
         ? ReviewStatus.Complete
