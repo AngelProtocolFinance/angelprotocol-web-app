@@ -12,14 +12,16 @@ import { FormValues, SCHEMA } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
+  const user = useGetter((state) => state.user);
+  const { submit, isSuccess } = useSubmit();
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charityOverview: "",
+      charityOverview: user.CharityOverview,
       charityLogo: [],
     },
   });
-  const { submit, isSuccess } = useSubmit();
 
   if (isSuccess) {
     return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
