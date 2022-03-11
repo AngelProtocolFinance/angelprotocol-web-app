@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
+import { InputRow } from "../../common";
 import { FormValues } from "../types";
-import InputRow from "./InputRow";
 
 export default function WebsiteInput() {
   const {

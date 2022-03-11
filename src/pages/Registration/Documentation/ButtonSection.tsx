@@ -1,7 +1,7 @@
 import Loader from "components/Loader/Loader";
 import { useFormContext } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import Button from "../Button";
+import { Button } from "../common";
 import routes from "../routes";
 import { FormValues } from "./types";
 

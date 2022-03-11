@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Button from "../Button";
+import { Button } from "../common";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";

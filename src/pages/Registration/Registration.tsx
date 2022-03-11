@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { removeUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
-import Button from "./Button";
+import { Button } from "./common";
 import routes from "./routes";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 

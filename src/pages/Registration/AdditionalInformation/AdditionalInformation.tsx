@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import ButtonSection from "./ButtonSection";
-import { FormValues, SCHEMA } from "./types";
-import DescriptionInput from "./DescriptionInput";
 import { useGetter } from "store/accessors";
-import InputRow from "./InputRow";
+import { InputRow } from "../common";
+import ButtonSection from "./ButtonSection";
+import DescriptionInput from "./DescriptionInput";
+import { FormValues, SCHEMA } from "./types";
 
 export default function AdditionalInformation() {
   const methods = useForm<FormValues>({

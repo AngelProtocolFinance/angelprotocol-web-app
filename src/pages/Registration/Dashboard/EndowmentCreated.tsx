@@ -1,6 +1,6 @@
 import { site } from "constants/routes";
 import { Link, useHistory } from "react-router-dom";
-import Button from "../Button";
+import { Button } from "../common";
 import routes from "../routes";
 
 export default function EndowmentCreated(props: { charityName: string }) {

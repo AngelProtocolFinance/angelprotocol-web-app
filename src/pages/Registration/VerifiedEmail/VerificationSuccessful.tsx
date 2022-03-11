@@ -3,7 +3,7 @@ import { FaCheck } from "react-icons/fa";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
-import Button from "../Button";
+import { Button } from "../common";
 
 type Props = {
   userData: User;

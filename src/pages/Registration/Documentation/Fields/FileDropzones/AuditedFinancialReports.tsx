@@ -1,7 +1,7 @@
 import FileDropzone from "components/FileDropzone";
 import { useFormContext } from "react-hook-form";
+import { InputRow } from "../../../common";
 import { FormValues } from "../../types";
-import InputRow from "../InputRow";
 
 export default function AuditedFinancialReport() {
   const {

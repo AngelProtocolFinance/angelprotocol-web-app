@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import InputRow from "./InputRow";
+import { InputRow } from "../common";
 import { FormValues } from "./types";
 
 export default function DescriptionInput() {
