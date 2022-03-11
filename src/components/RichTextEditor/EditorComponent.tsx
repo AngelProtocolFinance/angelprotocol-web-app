@@ -9,7 +9,7 @@ import {
   getDefaultKeyBinding,
   RichUtils,
 } from "draft-js";
-import { useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListOl, FaListUl } from "react-icons/fa";
@@ -58,8 +58,8 @@ export default function EditorComponent(props: Props) {
   };
 
   return (
-    <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
-      <div className="flex gap-2 mt-2 mb-4">
+    <Container>
+      <IconContainer>
         <IconButton Icon={BiBold} onClick={applyInlineStyle("BOLD")} />
         <IconButton Icon={BiItalic} onClick={applyInlineStyle("ITALIC")} />
         <IconButton
@@ -70,7 +70,7 @@ export default function EditorComponent(props: Props) {
           Icon={FaListOl}
           onClick={applyBlockStyle("ordered-list-item")}
         />
-      </div>
+      </IconContainer>
       <Editor
         editorState={editorState}
         onChange={(newEditorState) => {
@@ -82,9 +82,19 @@ export default function EditorComponent(props: Props) {
         keyBindingFn={keyBinder}
         placeholder="Long text"
       />
-    </div>
+    </Container>
   );
 }
+
+const Container = ({ children }: PropsWithChildren<{}>) => (
+  <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
+    {children}
+  </div>
+);
+
+const IconContainer = ({ children }: PropsWithChildren<{}>) => (
+  <div className="flex gap-2 mt-2 mb-4">{children}</div>
+);
 
 function IconButton(props: { onClick: () => void; Icon: IconType }) {
   return (
