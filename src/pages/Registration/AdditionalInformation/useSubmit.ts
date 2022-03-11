@@ -13,8 +13,6 @@ export default function useSubmit() {
   const user = useGetter((state) => state.user);
   const dispatch = useSetter();
 
-  // this '_' value should be used to notify the user of a failure,
-  // or to put in our logs once (and if) they're ever implemented
   const handleError = useCallback((err) => console.log(err), []);
 
   const handleSuccess = useCallback(
