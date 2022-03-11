@@ -10,17 +10,19 @@ import {
   RichUtils,
 } from "draft-js";
 import { useState } from "react";
-import { Controller, useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListOl, FaListUl } from "react-icons/fa";
 
-type Props = { name: string; disabled?: true | boolean };
+type Props = {
+  value: string;
+  onChange: (...event: any[]) => void;
+  disabled?: true | boolean;
+};
 
-export default function RichEditor({ name, disabled }: Props) {
-  const { control } = useFormContext();
+export default function EditorComponent(props: Props) {
   const [editorState, setEditorState] = useState(() =>
-    getInitialEditorState(control._formValues[name])
+    getInitialEditorState(props.value)
   );
 
   //map common key commands
@@ -33,8 +35,8 @@ export default function RichEditor({ name, disabled }: Props) {
     return "not-handled";
   }
 
-  //bind tab to enable nesting of list
   function keyBinder(e: React.KeyboardEvent) {
+    //bind tab to enable nesting of list
     if (e.code === "Tab" /* TAB */) {
       const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
       if (newEditorState !== editorState) {
@@ -56,44 +58,31 @@ export default function RichEditor({ name, disabled }: Props) {
   };
 
   return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field: { onChange } }) => {
-        return (
-          <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
-            <div className="flex gap-2 mt-2 mb-4">
-              <IconButton Icon={BiBold} onClick={applyInlineStyle("BOLD")} />
-              <IconButton
-                Icon={BiItalic}
-                onClick={applyInlineStyle("ITALIC")}
-              />
-              <IconButton
-                Icon={FaListUl}
-                onClick={applyBlockStyle("unordered-list-item")}
-              />
-              <IconButton
-                Icon={FaListOl}
-                onClick={applyBlockStyle("ordered-list-item")}
-              />
-            </div>
-            <Editor
-              editorState={editorState}
-              onChange={(newEditorState) => {
-                const rawState = getRawState(newEditorState);
-                console.log(rawState);
-
-                onChange(rawState);
-                setEditorState(newEditorState);
-              }}
-              handleKeyCommand={handleKeyCommand}
-              keyBindingFn={keyBinder}
-              placeholder="An overview of your charity"
-            />
-          </div>
-        );
-      }}
-    />
+    <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
+      <div className="flex gap-2 mt-2 mb-4">
+        <IconButton Icon={BiBold} onClick={applyInlineStyle("BOLD")} />
+        <IconButton Icon={BiItalic} onClick={applyInlineStyle("ITALIC")} />
+        <IconButton
+          Icon={FaListUl}
+          onClick={applyBlockStyle("unordered-list-item")}
+        />
+        <IconButton
+          Icon={FaListOl}
+          onClick={applyBlockStyle("ordered-list-item")}
+        />
+      </div>
+      <Editor
+        editorState={editorState}
+        onChange={(newEditorState) => {
+          const rawState = getRawState(newEditorState);
+          props.onChange(rawState);
+          setEditorState(newEditorState);
+        }}
+        handleKeyCommand={handleKeyCommand}
+        keyBindingFn={keyBinder}
+        placeholder="Long text"
+      />
+    </div>
   );
 }
 
