@@ -34,7 +34,7 @@
   @apply bg-white;
   @apply bg-opacity-10;
   @apply border;
-  @apply border-opacity-10;
+  @apply border-white/10;
   @apply shadow-xl;
 }
 

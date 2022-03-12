@@ -32,7 +32,7 @@ const DonationList = (props: EndowmentAddrProps) => {
 
   const renderedList = sortList(data || []);
   return (
-    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto max-h-75vh">
+    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-white/10 overflow-auto max-h-75vh">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Donation History</span>
       </h3>
@@ -49,7 +49,7 @@ const DonationList = (props: EndowmentAddrProps) => {
       {!isError && !isLoading && (
         <table className="mt-4 w-full">
           <thead>
-            <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue border-opacity-20">
+            <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue/20">
               {keys.map((key, i) => (
                 <th
                   className="text-white text-sm text-left uppercase cursor-pointer pb-2"
@@ -90,7 +90,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
   const showDonor = useDonor(data.sort_key);
   const isDisabled = data.wallet_address !== wallet?.walletAddress;
   return (
-    <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
+    <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue/20">
       <td className="py-5 pl-4">
         <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
       </td>

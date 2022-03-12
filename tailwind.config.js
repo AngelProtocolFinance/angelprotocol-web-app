@@ -1,18 +1,11 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false,
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       animation: {
         iconPing: "ping 100ms",
       },
       backgroundImage: {
-        "gov-card":
-          "linear-gradient(45deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
-        "gov-card-2":
-          "linear-gradient(315deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
-        "gov-card-3":
-          "linear-gradient(180deg,rgba(254,254,254, 0.7),rgba(254,254,254, 0.5))",
         banner:
           "linear-gradient(rgba(63, 169, 245, 0.7),rgba(63, 169, 245, 0.7)), url('./assets/images/home-banner.jpg')",
         process:
@@ -58,6 +51,8 @@ module.exports = {
         "failed-red": "#FE4454",
         "light-blue": "#1b9cef",
         "bright-blue": "#64c1fc",
+
+        //standard sdg colors
         sdg1: "#e5233d",
         sdg2: "#dda73a",
         sdg3: "#4ca146",
@@ -175,15 +170,4 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/line-clamp")],
-  variants: {
-    extend: {
-      backgroundColor: ["disabled"],
-      textColor: ["disabled"],
-      translate: ["active"],
-      display: ["hover", "group-hover"],
-      opacity: ["hover", "group-hover"],
-      brightness: ["hover", "group-hover"],
-      transform: ["hover", "active"],
-    },
-  },
 };

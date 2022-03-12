@@ -17,7 +17,7 @@ export default function Poll(props: { poll_id: number }) {
   return (
     <div
       onClick={goToPollDetail}
-      className="cursor-pointer border border-opacity-10 bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md p-6 text-white-grey text-opacity-80 shadow-lg"
+      className="cursor-pointer border border-white/10 bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md p-6 text-white-grey text-opacity-80 shadow-lg"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
@@ -27,7 +27,7 @@ export default function Poll(props: { poll_id: number }) {
             : details.status.replace("_", " ")}
         </p>
       </div>
-      <h4 className="text-white font-bold text-lg mt-1 border-b-2 border-white-grey border-opacity-20 mb-1 pb-1 overflow-hidden">
+      <h4 className="text-white font-bold text-lg mt-1 border-b-2 border-white-grey/20 mb-1 pb-1 overflow-hidden">
         {details.title}
       </h4>
       <div className="flex gap-4 mb-10">

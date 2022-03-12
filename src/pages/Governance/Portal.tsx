@@ -12,10 +12,10 @@ export default function Portal() {
   const showClaimer = useClaimer();
 
   return (
-    <div className="bg-white bg-opacity-10 border border-opacity-10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
+    <div className="bg-white bg-opacity-10 border border-white/10 shadow-xl w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
         <div className="relative">
-          <div className="absolute w-full h-full border-4 border-white border-opacity-80 rounded-full animate-pulse shadow-md"></div>
+          <div className="absolute w-full h-full border-4 border-white/80 rounded-full animate-pulse shadow-md"></div>
           <img
             src={currency_icons[denoms.uhalo]}
             alt=""

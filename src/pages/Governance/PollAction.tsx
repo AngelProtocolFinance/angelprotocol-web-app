@@ -66,7 +66,7 @@ function Action(props: ActionProps) {
     <button
       disabled={props.disabled}
       onClick={props.action}
-      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30"
+      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-white/30"
     >
       {props.title}
     </button>
