@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import EthAction from "./EthAction/EthAction";
 import { EthConnectInfo, EthInstallInfo } from "services/wallet/types";
 import metamaskIcon from "images/icons/metamask.png";
+import { DeviceType, deviceType } from "helpers/deviceType";
 
 type Props = {
   closeHandler: () => void;
@@ -30,7 +31,7 @@ export default function Connectors(props: Props) {
           icon: metamaskIcon,
         },
       ]);
-    } else {
+    } else if (deviceType() !== DeviceType.MOBILE) {
       setEthInstallations([
         {
           name: "MetaMask",
