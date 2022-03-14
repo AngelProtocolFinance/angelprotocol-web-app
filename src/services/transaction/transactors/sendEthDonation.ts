@@ -2,13 +2,11 @@ import { ethers } from "ethers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
-import { XdefiWindow } from "services/provider/types";
+import { ProviderWindow } from "services/provider/types";
 import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 import { StageUpdator, Step } from "../types";
-
-declare var window: any;
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
@@ -18,15 +16,15 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
-      const xwindow = window as XdefiWindow;
+      const pwindow = window as ProviderWindow;
 
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
       let provider: any;
 
       if (args.connectType === "metamask") {
-        provider = new ethers.providers.Web3Provider(window.ethereum!, "any");
+        provider = new ethers.providers.Web3Provider(pwindow.ethereum!, "any");
       } else {
-        provider = new ethers.providers.Web3Provider(xwindow.xfi?.ethereum!);
+        provider = new ethers.providers.Web3Provider(pwindow.xfi?.ethereum!);
       }
 
       const signer = provider.getSigner();

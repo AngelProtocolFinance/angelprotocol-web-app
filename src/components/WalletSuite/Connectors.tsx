@@ -9,12 +9,11 @@ import EthAction from "./EthAction/EthAction";
 import { EthConnectInfo, EthInstallInfo } from "services/wallet/types";
 import metamaskIcon from "images/icons/metamask.png";
 import { DeviceType, deviceType } from "helpers/deviceType";
+import { ProviderWindow } from "services/provider/types";
 
 type Props = {
   closeHandler: () => void;
 };
-
-declare var window: any;
 
 export default function Connectors(props: Props) {
   let { availableConnections, availableInstallations } = useWallet();
@@ -23,7 +22,9 @@ export default function Connectors(props: Props) {
   let [ethInstallations, setEthInstallations] = useState<EthInstallInfo[]>([]);
 
   useEffect(() => {
-    if (window.ethereum) {
+    const pwindow = window as ProviderWindow;
+
+    if (pwindow.ethereum) {
       setEthConnections([
         {
           name: "MetaMask",

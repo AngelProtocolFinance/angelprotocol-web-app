@@ -16,7 +16,7 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { Providers, XdefiWindow } from "services/provider/types";
+import { Providers, ProviderWindow } from "services/provider/types";
 import useDebouncer from "hooks/useDebouncer";
 import Contract from "contracts/Contract";
 import Account from "contracts/Account";
@@ -26,8 +26,6 @@ import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
 import processEstimateError from "helpers/processEstimateError";
 import extractFeeNum from "helpers/extractFeeNum";
-
-declare var window: any;
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -144,18 +142,18 @@ export default function useEstimator() {
 
         //estimates for eth
         if (currency === denoms.ether) {
-          const xwindow = window as XdefiWindow;
+          const pwindow = window as ProviderWindow;
           //provider is present at this point
           let provider;
 
           if (activeProvider === Providers.ethereum) {
             provider = new ethers.providers.Web3Provider(
-              window.ethereum!,
+              pwindow.ethereum!,
               "any"
             );
           } else {
             provider = new ethers.providers.Web3Provider(
-              xwindow.xfi?.ethereum!
+              pwindow.xfi?.ethereum!
             );
           }
           //no network request

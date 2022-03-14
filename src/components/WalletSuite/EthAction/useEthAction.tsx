@@ -1,12 +1,10 @@
-import { int } from "@terra-money/terra.js";
 import { useSetModal } from "components/Modal/Modal";
 import { ethers } from "ethers";
+import { ProviderWindow } from "services/provider/types";
 import { setMetamaskStatus } from "services/wallet/metamaskSlice";
-import { EthConnectInfo, EthState } from "services/wallet/types";
+import { EthConnectInfo } from "services/wallet/types";
 import { useGetter, useSetter } from "store/accessors";
 import XDefiError from "./xDefiError";
-
-declare var window: any;
 
 export default function useEthAction(options: EthConnectInfo) {
   const { showModal } = useSetModal();
@@ -16,14 +14,16 @@ export default function useEthAction(options: EthConnectInfo) {
   const isMetaMask = options.name === "MetaMask";
 
   async function handleClick() {
-    if (window.xfi?.ethereum!.isMetaMask) {
+    const pwindow = window as ProviderWindow;
+
+    if (pwindow.xfi?.ethereum!.isMetaMask) {
       showModal(XDefiError, {});
       return;
     }
 
     if (isMetaMask) {
       const provider = new ethers.providers.Web3Provider(
-        window.ethereum!,
+        pwindow.ethereum!,
         "any"
       );
 

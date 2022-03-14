@@ -4,14 +4,12 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { Providers, XdefiWindow } from "services/provider/types";
+import { Providers, ProviderWindow } from "services/provider/types";
 import { EthNetworks, TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
 import { setMetamaskStatus } from "services/wallet/metamaskSlice";
-
-declare var window: any;
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -87,12 +85,12 @@ export default function useWalletUpdator(activeProvider: Providers) {
           dispatch(setIsUpdating(true));
           return;
         }
-        const xwindow: XdefiWindow = window;
+        const pwindow = window as ProviderWindow;
         //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
 
         const provider = new ethers.providers.Web3Provider(
-          xwindow.xfi?.ethereum!
+          pwindow.xfi?.ethereum!
         );
         const signer = provider.getSigner();
         const wei_balance = await signer.getBalance();
@@ -131,8 +129,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
     (async () => {
       dispatch(setIsUpdating(true));
 
+      const pwindow = window as ProviderWindow;
+
       const provider = new ethers.providers.Web3Provider(
-        window.ethereum!,
+        pwindow.ethereum!,
         "any"
       );
 
