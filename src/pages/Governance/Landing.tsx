@@ -1,5 +1,4 @@
 import { currency_text, denoms } from "constants/currency";
-import Action from "./Action";
 import Figure from "./Figure";
 import Polls from "./Polls";
 import Portal from "./Portal";
@@ -10,16 +9,18 @@ import { app, site } from "constants/routes";
 function DonationAdvert() {
   const history = useHistory();
   return (
-    <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-5 text-white-grey shadow-xl cursor-pointer">
-      <h4 className="text-white font-normal text-lg mt-1 mb-10 overflow-hidden">
+    <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
+      <h4 className="text-white text-center font-normal text-lg mb-10 overflow-hidden">
         The charity Marketplace is now open! Give directly to the endowment of
         your choice and get 10% back in HALO airdrops.
       </h4>
-      <div className="w-full flex justify-end">
-        <Action
-          title="Donate now"
-          action={() => history.push(`${site.app}/${app.marketplace}`)}
-        />
+      <div className="w-full flex justify-center">
+        <button
+          onClick={() => history.push(`${site.app}/${app.marketplace}`)}
+          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+        >
+          Donate now
+        </button>
       </div>
     </div>
   );
