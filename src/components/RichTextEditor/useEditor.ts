@@ -31,40 +31,27 @@ export default function useEditor(
     []
   );
 
-  const keyBinder = useCallback(
-    (e: React.KeyboardEvent) => {
-      //bind tab to enable nesting of list
-      if (e.code === "Tab") {
-        const newEditorState = RichUtils.onTab(
-          e,
-          editorState,
-          4 /* maxDepth */
-        );
-        if (newEditorState !== editorState) {
-          setEditorState(newEditorState);
-          return "handled";
-        }
+  const keyBinder = (e: React.KeyboardEvent) => {
+    //bind tab to enable nesting of list
+    if (e.code === "Tab") {
+      const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
+      if (newEditorState !== editorState) {
+        setEditorState(newEditorState);
+        return "handled";
       }
-      return getDefaultKeyBinding(e);
-    },
-    [editorState]
-  );
+    }
+    return getDefaultKeyBinding(e);
+  };
 
-  const applyInlineStyle = useCallback(
-    (inlineStyle: DraftInlineStyleType) => () => {
-      const newState = RichUtils.toggleInlineStyle(editorState, inlineStyle);
-      setEditorState(newState);
-    },
-    [editorState]
-  );
+  const applyInlineStyle = (inlineStyle: DraftInlineStyleType) => () => {
+    const newState = RichUtils.toggleInlineStyle(editorState, inlineStyle);
+    setEditorState(newState);
+  };
 
-  const applyBlockStyle = useCallback(
-    (blockStyle: DraftBlockType) => () => {
-      const newState = RichUtils.toggleBlockType(editorState, blockStyle);
-      setEditorState(newState);
-    },
-    [editorState]
-  );
+  const applyBlockStyle = (blockStyle: DraftBlockType) => () => {
+    const newState = RichUtils.toggleBlockType(editorState, blockStyle);
+    setEditorState(newState);
+  };
 
   const onEditorStateChange = useCallback(
     (newEditorState: EditorState) => {
