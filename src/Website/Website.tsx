@@ -19,7 +19,6 @@ const Website = () => {
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
   );
-
   return (
     <div className="grid grid-rows-1a bg-white">
       <Modal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
@@ -28,19 +27,14 @@ const Website = () => {
           <Routes>
             <Route
               path="/:url*(/+)"
-              element={() => (
-                <Navigate replace to={location.pathname.slice(0, -1)} />
-              )}
+              element={<Navigate replace to={location.pathname.slice(0, -1)} />}
             />
             <Route path={web.contact} element={<Contact />} />
             <Route path={web.privacy} element={<PrivacyPolicy />} />
             <Route path={web.donors} element={<Donors />} />
             <Route path={web.charities} element={<Charities />} />
             <Route path={web.index} element={<Home />} />
-            <Route
-              path="*"
-              element={() => <Navigate replace to={site.home} />}
-            />
+            <Route path="*" element={<Navigate replace to={site.home} />} />
           </Routes>
         </Suspense>
         <WebFoot />

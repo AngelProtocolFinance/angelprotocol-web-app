@@ -27,9 +27,7 @@ export default function Views() {
       <Routes>
         <Route
           path="/:url*(/+)"
-          children={() => (
-            <Navigate replace to={location.pathname.slice(0, -1)} />
-          )}
+          element={<Navigate replace to={location.pathname.slice(0, -1)} />}
         />
         <Route path={`${app.marketplace}`} element={<Market />} />
         <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
@@ -46,9 +44,9 @@ export default function Views() {
         <Route path={`${app.donation}/:address`} element={<Donation />} />
         <Route
           path={`${app.index}`}
-          children={() => <Navigate replace to={`${app.marketplace}`} />}
+          element={<Navigate replace to={`${app.marketplace}`} />}
         />
-        <Route path="*" children={() => <Navigate replace to={site.home} />} />
+        <Route path="*" element={<Navigate replace to={site.app} />} />
       </Routes>
     </Suspense>
   );
