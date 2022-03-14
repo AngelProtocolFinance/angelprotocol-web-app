@@ -1,12 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import EndowmentUpdateForm from "./EndowmentUpdateForm";
 import {
   endowmentUpdateSchema,
   EndowmentUpdateValues,
 } from "./endowmentUpdateSchema";
 
-export default function EndowmentUpdator(props: { children: ReactNode }) {
+export default function EndowmentUpdator() {
   const methods = useForm<EndowmentUpdateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -16,5 +17,9 @@ export default function EndowmentUpdator(props: { children: ReactNode }) {
     },
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <EndowmentUpdateForm />
+    </FormProvider>
+  );
 }

@@ -8,16 +8,11 @@ import {
 import { proposal_types } from "constants/routes";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import MemberUpdateForm from "./Templates/MemberUpdator/MemberUpdaterForm";
-import EndowmentUpdateForm from "./Templates/EndowmentUpdator/EndowmentUpdateForm";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
-import FundCreatorForm from "./Templates/FundCreator/FundCreatorForm";
 import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
-import FundDestroyerForm from "./Templates/FundDestroyer/FundDestroyerForm";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
-import FundUpdatorForm from "./Templates/FundUpdator/FundUpdatorForm";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
-import AllianceEditForm from "./Templates/AllianceEditor/AllianceEditForm";
 
 export default function Proposer() {
   const { path } = useRouteMatch();
@@ -26,41 +21,33 @@ export default function Proposer() {
       <ProposalTypes />
       <Switch>
         {/**apCW4 */}
-        <Route path={`${path}/${proposal_types.admin_update_members}`}>
-          <MemberUpdator>
-            <MemberUpdateForm />
-          </MemberUpdator>
-        </Route>
-
+        <Route
+          path={`${path}/${proposal_types.admin_update_members}`}
+          component={MemberUpdator}
+        />
         {/**endowments */}
-        <Route path={`${path}/${proposal_types.change_endowment_status}`}>
-          <EndowmentUpdator>
-            <EndowmentUpdateForm />
-          </EndowmentUpdator>
-        </Route>
+        <Route
+          path={`${path}/${proposal_types.change_endowment_status}`}
+          component={EndowmentUpdator}
+        />
 
         {/**index fund */}
-        <Route path={`${path}/${proposal_types.create_fund}`}>
-          <FundCreator>
-            <FundCreatorForm />
-          </FundCreator>
-        </Route>
-        <Route path={`${path}/${proposal_types.destroy_fund}`}>
-          <FundDestroyer>
-            <FundDestroyerForm />
-          </FundDestroyer>
-        </Route>
-        <Route path={`${path}/${proposal_types.update_fund}`}>
-          <FundUpdator>
-            <FundUpdatorForm />
-          </FundUpdator>
-        </Route>
-        <Route path={`${path}/${proposal_types.alliance_members}`}>
-          <AllianceEditor>
-            <AllianceEditForm />
-          </AllianceEditor>
-        </Route>
-
+        <Route
+          path={`${path}/${proposal_types.create_fund}`}
+          component={FundCreator}
+        />
+        <Route
+          path={`${path}/${proposal_types.destroy_fund}`}
+          component={FundDestroyer}
+        />
+        <Route
+          path={`${path}/${proposal_types.update_fund}`}
+          component={FundUpdator}
+        />
+        <Route
+          path={`${path}/${proposal_types.alliance_members}`}
+          component={AllianceEditor}
+        />
         <Route exact path={`${path}/${proposal_types.index}`}>
           <Redirect to={`${path}/${proposal_types.admin_update_members}`} />
         </Route>

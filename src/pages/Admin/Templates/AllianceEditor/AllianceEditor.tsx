@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import AllianceEditForm from "./AllianceEditForm";
 import { allianceEditSchema, AllianceEditValues } from "./alllianceEditSchema";
 
-export default function AllianceEditor(props: { children: ReactNode }) {
+export default function AllianceEditor() {
   const methods = useForm<AllianceEditValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -13,5 +13,9 @@ export default function AllianceEditor(props: { children: ReactNode }) {
     },
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <AllianceEditForm />
+    </FormProvider>
+  );
 }
