@@ -2,12 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
 import { EthIdentifiers } from "./types";
 import { chainIDs } from "constants/chainIDs";
+import metamaskIcon from "images/icons/metamask.png";
 
 const initialState = {
   connected: false,
   network: "homestead",
   id: EthIdentifiers.metamask,
-  icon: "/images/icons/metamask.png",
+  icon: metamaskIcon,
   displayCoin: { amount: 0, denom: denoms.ether },
   balance: 0,
   coins: [],
