@@ -13,7 +13,7 @@ export default function DescriptionInput() {
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
-      <RichTextEditor
+      <RichTextEditor<FormValues>
         name="charityOverview"
         placeholder="Long text"
         disabled={isSubmitting}
