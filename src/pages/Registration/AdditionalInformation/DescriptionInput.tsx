@@ -1,4 +1,4 @@
-import RichEditor from "components/RichTextEditor";
+import RichTextEditor from "components/RichTextEditor";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 
@@ -13,7 +13,7 @@ export default function DescriptionInput() {
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
-      <RichEditor
+      <RichTextEditor
         name="charityOverview"
         placeholder="Long text"
         disabled={isSubmitting}
