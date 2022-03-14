@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-import { chainIDs } from "constants/chainIDs";
-import { Dwindow } from "services/provider/types";
 import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import { Dwindow } from "services/provider/types";
 import {
   AccountChangeHandler,
-  ConnectHandler,
-  DisconnectHandler,
   EIP1193Events,
   EIP1193Methods,
   Ethereum,
@@ -16,105 +13,81 @@ const dwindow: Dwindow = window;
 export default function useEthereum() {
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction();
+
   const shouldReconnect = lastAction === "connect";
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [connected, setConnected] = useState(false);
   const [address, setAddress] = useState("");
-  const [ethereum, setEthereum] = useState(getEthereum());
 
   useEffect(() => {
-    //for client-side page transition
-    if (ethereum) {
-      attachAccountChangeHandler(ethereum);
-      attachDisconnectHandler(ethereum);
-      attachConnectHandler(ethereum);
-      if (shouldReconnect) {
-        //TODO: make an enum for eth methods
-        ethereum.send("eth_requestAccounts", []).then((x) => {
-          console.log(x);
-        });
-      }
-    }
-
-    //for page reload
-    window.addEventListener("load", attachControls);
-
+    requestAccess();
     return () => {
-      window.removeEventListener("load", attachControls);
-      resetControls();
+      detachAccountChangeHandler();
     };
     //eslint-disable-next-line
   }, []);
 
-  const attachControls = async () => {
-    setEthereum(getEthereum());
-    if (!ethereum) return;
-    attachAccountChangeHandler(ethereum);
-    attachDisconnectHandler(ethereum);
-    attachConnectHandler(ethereum);
-    if (shouldReconnect) {
-      await ethereum.send("eth_requestAccounts", []);
+  async function requestAccess(isNewConnection = false) {
+    const ethereum = getEthereum();
+    if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
+      attachAccountChangeHandler(ethereum);
+      const { result: accounts = [] } = await ethereum.send(
+        EIP1193Methods.eth_requestAccounts,
+        []
+      );
+      setConnected(true);
+      setAddress(accounts[0]);
+      setLoading(false);
+    } else {
+      setLoading(false);
     }
-  };
+  }
 
-  const resetControls = () => {
-    if (!ethereum) return;
-    detachAccountChangeHandler(ethereum);
-    detachDisconnectHandler(ethereum);
-    detachConnectHandler(ethereum);
-  };
-
-  //handler attacher/detachers
-  //granularity for finer control
+  //attachers/detachers
   const attachAccountChangeHandler = (ethereum: Ethereum) => {
     ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
   };
-  const detachAccountChangeHandler = (ethereum: Ethereum) => {
-    ethereum.removeListener(
+  const detachAccountChangeHandler = () => {
+    getEthereum()?.removeListener(
       EIP1193Events.accountsChanged,
       handleAccountsChange
     );
   };
-  const attachDisconnectHandler = (ethereum: Ethereum) => {
-    ethereum.on(EIP1193Events.disconnect, handleDisconnect);
-  };
-  const detachDisconnectHandler = (ethereum: Ethereum) => {
-    ethereum.removeListener(EIP1193Events.disconnect, handleDisconnect);
-  };
 
-  const attachConnectHandler = (ethereum: Ethereum) => {
-    ethereum.on(EIP1193Events.disconnect, handleConnect);
-  };
-  const detachConnectHandler = (ethereum: Ethereum) => {
-    ethereum.removeListener(EIP1193Events.disconnect, handleConnect);
-  };
+  //event listeners
 
-  //event handlers
-  const handleConnect: ConnectHandler = (connectInfo) => {
-    console.log(connectInfo);
-  };
-
-  const handleDisconnect: DisconnectHandler = (error) => {
-    console.log(error);
-  };
-
-  const handleAccountsChange: AccountChangeHandler = async (accounts) => {
-    console.log(accounts);
+  //useful when user changes account internally via metamask
+  const handleAccountsChange: AccountChangeHandler = (accounts) => {
+    //requestAccounts(new connection) will set the address so no need to set again
+    if (accounts.length > 0 && !address) {
+      setAddress(accounts[0]);
+      //if no account is found, means user disconnected
+    } else {
+      detachAccountChangeHandler();
+      setConnected(false);
+      saveUserAction("disconnect");
+    }
   };
 
   async function disconnect() {
+    if (!connected) return;
+    const ethereum = getEthereum();
+    if (!ethereum) return;
+    detachAccountChangeHandler();
+    setConnected(false);
     saveUserAction("disconnect");
   }
 
   async function connect() {
     try {
-      if (connected) return;
-      setLoading(true);
+      const ethereum = getEthereum();
       if (!ethereum) {
         window.open("https://ethereum.app/", "_blank", "noopener noreferrer");
         return;
       }
-      await ethereum.send(EIP1193Methods.eth_requestAccounts, []);
+      setLoading(true);
+      await requestAccess(true);
+      saveUserAction("connect");
     } catch (err) {
       setLoading(false);
       console.error(err);
@@ -144,10 +117,7 @@ function retrieveUserAction(): Action {
 }
 
 export function getEthereum() {
-  console.log("get ethereum");
-  return (
-    dwindow.ethereum && new ethers.providers.Web3Provider(dwindow.ethereum)
-  );
+  return (window as any).ethereum as Ethereum;
 }
 
 export class RejectMetamaskLogin extends Error {
@@ -157,3 +127,6 @@ export class RejectMetamaskLogin extends Error {
     this.name = "RejectMetamaskLogin";
   }
 }
+
+//notes: 1 accountChange handler run only on first connect [] --> [something]
+//and revocation of permission [something] --> []

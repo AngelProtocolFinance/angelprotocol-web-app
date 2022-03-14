@@ -146,13 +146,10 @@ export default function useEstimator() {
         if (currency === denoms.ether) {
           const dwindow = window as Dwindow;
           //provider is present at this point
-          let provider;
+          let provider: ethers.providers.Web3Provider;
 
           if (activeProvider === Providers.ethereum) {
-            provider = new ethers.providers.Web3Provider(
-              window.ethereum!,
-              "any"
-            );
+            provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
           } else {
             provider = new ethers.providers.Web3Provider(
               dwindow.xfi?.ethereum!

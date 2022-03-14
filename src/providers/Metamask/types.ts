@@ -16,11 +16,7 @@ export type Setters = {
 //ethereum object definitions
 //from https://eips.ethereum.org/EIPS/eip-1193
 export enum EIP1193Events {
-  connect = "connect",
-  disconnect = "disconnect",
-  chainChanged = "chainChanged",
   accountsChanged = "accountsChanged",
-  message = "message",
 }
 
 export enum EIP1193Methods {
@@ -28,27 +24,5 @@ export enum EIP1193Methods {
   //others
 }
 
-interface ProviderConnectInfo {
-  readonly chainId: string;
-}
-
-interface ProviderMessage {
-  readonly type: string;
-  readonly data: unknown;
-}
-
-interface ProviderConnectInfo {
-  readonly chainId: string;
-}
-
-interface ProviderRpcError extends Error {
-  code: number;
-  data?: unknown;
-}
-
 //event handler types
 export type AccountChangeHandler = (accounts: string[]) => void;
-export type ChainChangeHandler = (chainId: string) => void;
-export type ConnectHandler = (connectInfo: ProviderConnectInfo) => void;
-export type DisconnectHandler = (error: ProviderRpcError) => void;
-export type MessageHandler = (message: ProviderMessage) => void;

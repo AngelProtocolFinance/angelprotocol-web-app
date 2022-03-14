@@ -14,7 +14,6 @@ import useEstimator from "../useEstimator";
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { connected: metaConnected } = useGetter((state) => state.metamask);
 
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
@@ -33,13 +32,9 @@ export default function useDonate() {
     [terraTx, wallet]
   );
 
-  const connectType = metaConnected ? "metamask" : "xdefi";
-
   const ethSender = useCallback(
     (data: DonateValues) => {
-      dispatch(
-        sendEthDonation({ tx: ethTx!, donateValues: data, connectType })
-      );
+      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
       showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line

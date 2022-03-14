@@ -9,6 +9,7 @@ import { TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
+import metamaskIcon from "images/icons/metamask.png";
 import { setMetamaskStatus } from "services/wallet/metamaskSlice";
 
 declare var window: any;
@@ -124,18 +125,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
     //eslint-disable-next-line
   }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);
 
+  //updator for metamask
   useEffect(() => {
     if (activeProvider !== Providers.ethereum) return;
-    if (!metamaskState) return;
 
     (async () => {
       dispatch(setIsUpdating(true));
-
-      const provider = new ethers.providers.Web3Provider(
-        window.ethereum!,
-        "any"
-      );
-
+      const provider = new ethers.providers.Web3Provider(window.ethereum!);
       const network = await provider.getNetwork();
       const signer = provider.getSigner();
       const address = await signer.getAddress();
@@ -143,28 +139,16 @@ export default function useWalletUpdator(activeProvider: Providers) {
       const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
         .div(1e18)
         .toNumber();
-
       const eth_coin = { amount: eth_balance, denom: denoms.ether };
-      const eth_chain_id = String(network.chainId) as chainIDs;
-
-      dispatch(
-        setMetamaskStatus({
-          network: network.name,
-          chainId: eth_chain_id,
-          address,
-          balance: eth_balance,
-          coins: [eth_coin],
-        })
-      );
 
       dispatch(
         setWalletDetails({
-          id: metamaskState.id,
-          icon: metamaskState.icon,
+          id: undefined,
+          icon: metamaskIcon,
           displayCoin: eth_coin,
           coins: [eth_coin],
           address,
-          chainId: eth_chain_id,
+          chainId: `${network.chainId}` as chainIDs,
           supported_denoms: [denoms.ether],
         })
       );
@@ -172,5 +156,5 @@ export default function useWalletUpdator(activeProvider: Providers) {
       dispatch(setIsUpdating(false));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metamaskState, activeProvider]);
+  }, [activeProvider]);
 }
