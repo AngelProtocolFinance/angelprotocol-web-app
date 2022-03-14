@@ -21,7 +21,7 @@ export default function MemberUpdateForm() {
         required
       />
 
-      <Label text="remove member" textColor="text-red-400" />
+      <Label _classes="text-red-400">remove member</Label>
       <div className="mb-7 p-3 rounded-md bg-light-grey shadow-inner-white-grey">
         {(isMembersLoading && (
           <Loader
@@ -38,15 +38,12 @@ export default function MemberUpdateForm() {
         )}
       </div>
 
-      <Label text="add member" textColor="text-green-400" />
+      <Label _classes="text-green-400">add member</Label>
       <MemberAdder />
 
-      <Submitter
-        type="button"
-        onClick={updateMembers}
-        _text="Propose Changes"
-        _classes="mt-4"
-      />
+      <Submitter type="button" onClick={updateMembers} _classes="mt-4">
+        Propose changes
+      </Submitter>
     </div>
   );
 }

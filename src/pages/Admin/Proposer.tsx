@@ -55,7 +55,7 @@ export default function Proposer() {
             <FundUpdatorForm />
           </FundUpdator>
         </Route>
-        <Route path={`${path}/${proposal_types.add_alliance_member}`}>
+        <Route path={`${path}/${proposal_types.alliance_members}`}>
           <AllianceEditor>
             <AllianceEditForm />
           </AllianceEditor>
@@ -96,11 +96,8 @@ function ProposalTypes() {
       <NavLink to={`${url}/${proposal_types.update_fund}`} {...linkStyles}>
         Update Fund
       </NavLink>
-      <NavLink
-        to={`${url}/${proposal_types.add_alliance_member}`}
-        {...linkStyles}
-      >
-        Add alliance member
+      <NavLink to={`${url}/${proposal_types.alliance_members}`} {...linkStyles}>
+        Edit Alliance members
       </NavLink>
 
       <ProposalCategory title="Endowment" classes="mt-4" />

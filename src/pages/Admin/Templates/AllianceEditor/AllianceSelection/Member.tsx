@@ -21,7 +21,7 @@ export default function Member(props: AllianceMemberWithFlags) {
   return (
     <Cells
       type="td"
-      cellClass={`py-2 ${
+      cellClass={`p-2 ${
         props.isAdded
           ? "bg-green-400 bg-opacity-20"
           : props.isDeleted

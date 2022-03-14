@@ -28,9 +28,11 @@ export default function EndowmentUpdateForm() {
         mono
       />
       <EndowmentPreview />
-      <Label text="New endowment Status" required />
+      <Label _required>New endowment status</Label>
       <StatusOptions />
-      <Submitter _text="Propose Changes" type="submit" _classes="mt-4" />
+      <Submitter type="submit" _classes="mt-4">
+        Propose changes
+      </Submitter>
     </form>
   );
 }

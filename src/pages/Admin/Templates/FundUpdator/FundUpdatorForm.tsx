@@ -25,12 +25,12 @@ export default function FundUpdatorForm() {
         wide
         required
       />
-      <Label text="Select fund to update" required />
+      <Label _required>Select fund to update</Label>
       <FundSelection<FV> />
 
       {isFundSelected && (
         <>
-          <Label text="remove member" textColor="text-red-400 mt-6" />
+          <Label _classes="text-red-400 mt-6">Remove member</Label>
           <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
             {(isFundMembersLoading && (
               <Loader
@@ -55,16 +55,13 @@ export default function FundUpdatorForm() {
       )}
       {isFundSelected && (
         <>
-          <Label text="add member" textColor="text-green-400 mt-6" />
+          <Label _classes="text-green-400 mt-6">add member</Label>
           <MemberAdder />
         </>
       )}
-      <Submitter
-        _text="Propose Changes"
-        type="button"
-        onClick={updateFund}
-        _classes="mt-4"
-      />
+      <Submitter type="button" onClick={updateFund} _classes="mt-4">
+        Propose Changes
+      </Submitter>
     </form>
   );
 }

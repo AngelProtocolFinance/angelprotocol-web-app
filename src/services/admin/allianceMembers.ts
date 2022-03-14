@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { allianceMemberDetails } from "services/aws/alliance/placeholders";
 import { MemberDetails } from "services/aws/alliance/types";
 
 const initialState: AllianceMemberWithFlags[] = [];
@@ -15,8 +16,14 @@ const allianceMembersSlice = createSlice({
       //markDelete is triggered from list rendered by this state
       memberToMark!.isDeleted = !memberToMark!.isDeleted;
     },
-    addMember: (state, { payload }: PayloadAction<MemberDetails>) => {
-      state.push({ ...payload, isDeleted: false, isAdded: true });
+    addMember: (state, { payload }: PayloadAction<string>) => {
+      state.unshift({
+        //add a defaulted alliance member
+        ...allianceMemberDetails,
+        address: payload,
+        isAdded: true,
+        isDeleted: false,
+      });
     },
     undoAddMember: (state, { payload }: PayloadAction<string>) => {
       const memberIdx = state.findIndex((member) => member.address === payload);

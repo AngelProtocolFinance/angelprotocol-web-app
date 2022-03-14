@@ -1,7 +1,9 @@
+import Label from "pages/Admin/components/Label";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import AllianceSelection from "./AllianceSelection/AllianceSelection";
 import { AllianceEditValues as AV } from "./alllianceEditSchema";
+import MemberAdder from "./MemberAdder/MemberAdder";
 
 export default function AllianceEditForm() {
   return (
@@ -16,8 +18,13 @@ export default function AllianceEditForm() {
         wide
         required
       />
+      <Label _classes="text-red-400">Remove existing member</Label>
       <AllianceSelection />
-      <Submitter _text="Propose Changes" type="submit" _classes="mt-4" />
+      <Label _classes="mt-4 text-green-400">Add member</Label>
+      <MemberAdder />
+      <Submitter type="submit" _classes="mt-4">
+        Propose Changes
+      </Submitter>
     </form>
   );
 }

@@ -35,15 +35,12 @@ export default function FundCreatorForm() {
       <DateInput />
       <Slider />
       <CheckInput />
-      <Label text="add members" textColor="text-green-400" />
+      <Label _classes="text-green-400">Add members</Label>
       <MemberAdder />
 
-      <Submitter
-        _text="Propose Changes"
-        type="button"
-        onClick={createFund}
-        _classes="mt-4"
-      />
+      <Submitter type="button" onClick={createFund} _classes="mt-4">
+        Propose changes
+      </Submitter>
     </div>
   );
 }
