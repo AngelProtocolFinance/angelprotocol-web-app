@@ -38,11 +38,18 @@ export default class Account extends Contract {
     );
   }
 
-  createWithdrawMsg(sources: Source[]) {
+  createWithdrawMsg({
+    sources,
+    beneficiary,
+  }: {
+    sources: Source[];
+    beneficiary: string;
+  }) {
     this.checkWallet();
     return new MsgExecuteContract(this.walletAddr!, this.address, {
       withdraw: {
         sources: sources,
+        beneficiary,
       },
     });
   }
