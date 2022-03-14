@@ -39,7 +39,6 @@ export default function useEstimator() {
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { coins, supported_denoms } = useGetter((state) => state.wallet);
-  const { connected: metaConnected } = useGetter((state) => state.metamask);
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
@@ -149,7 +148,7 @@ export default function useEstimator() {
           //provider is present at this point
           let provider;
 
-          if (metaConnected) {
+          if (activeProvider === Providers.ethereum) {
             provider = new ethers.providers.Web3Provider(
               window.ethereum!,
               "any"
