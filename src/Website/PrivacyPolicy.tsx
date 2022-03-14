@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
           Introduction
         </h2>
         <p className="text-black md:ml-5 p-1">
-          Angel Ventures, LLC d/b/a Angel Protocol ("
+          Angel Protocol I Inc. ("
           <Bold>Company</Bold>"", "<Bold>We</Bold>" or “<Bold>Our</Bold>”)
           respects your privacy and is committed to protecting it through our
           compliance with this policy.
