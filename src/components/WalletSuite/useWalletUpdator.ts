@@ -124,7 +124,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
   useEffect(() => {
     if (activeProvider !== Providers.ethereum) return;
-    if (!metamaskState) return;
 
     (async () => {
       dispatch(setIsUpdating(true));
