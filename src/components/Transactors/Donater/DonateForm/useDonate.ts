@@ -15,6 +15,7 @@ type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { connected: metaConnected } = useGetter((state) => state.metamask);
+
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
   const wallet = useConnectedWallet();
@@ -53,6 +54,7 @@ export default function useDonate() {
 
   //reset amount when changing currency
   useEffect(() => {
+    console.log(currency);
     if (denomRef.current !== currency) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());

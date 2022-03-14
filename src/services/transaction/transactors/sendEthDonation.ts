@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
-import { XdefiWindow } from "services/provider/types";
+import { Dwindow } from "services/provider/types";
 import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
@@ -18,15 +18,14 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
-      const xwindow = window as XdefiWindow;
+      const dwindow = window as Dwindow;
 
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
-      let provider: any;
-
+      let provider: ethers.providers.Web3Provider;
       if (args.connectType === "metamask") {
         provider = new ethers.providers.Web3Provider(window.ethereum!, "any");
       } else {
-        provider = new ethers.providers.Web3Provider(xwindow.xfi?.ethereum!);
+        provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
       }
 
       const signer = provider.getSigner();
