@@ -12,5 +12,5 @@ export type TerraDonateArgs = {
 export type EthDonateArgs = {
   tx: TransactionRequest;
   donateValues: DonateValues;
-  connectType: string;
+  connectType: "metamask" | "xdefi";
 };
