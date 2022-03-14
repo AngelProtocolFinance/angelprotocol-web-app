@@ -16,7 +16,7 @@ export default function LogoInput() {
 
   return (
     <InputRow id="charityLogo" label="Logo of your organization" required>
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="charityLogo"
         className="h-8"
         disabled={isSubmitting}

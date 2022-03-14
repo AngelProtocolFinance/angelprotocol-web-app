@@ -13,7 +13,7 @@ export default function AuditedFinancialReport() {
       id="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="auditedFinancialReports"
         className="h-8"
         multiple

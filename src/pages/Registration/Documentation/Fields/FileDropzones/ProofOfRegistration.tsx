@@ -20,7 +20,7 @@ export default function ProofOfRegistration() {
       label="Proof of registration as a 501(c)(3) charity or equivalent"
       required
     >
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="proofOfRegistration"
         className="h-8"
         disabled={isSubmitting}

@@ -13,7 +13,7 @@ export default function FinancialStatements() {
       id="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="financialStatements"
         className="h-8"
         multiple
