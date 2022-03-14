@@ -144,7 +144,7 @@ export default function useEstimator() {
         if (currency === denoms.ether) {
           const pwindow = window as ProviderWindow;
           //provider is present at this point
-          let provider;
+          let provider: ethers.providers.Web3Provider;
 
           if (activeProvider === Providers.ethereum) {
             provider = new ethers.providers.Web3Provider(

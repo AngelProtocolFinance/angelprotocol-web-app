@@ -173,5 +173,5 @@ export default function useWalletUpdator(activeProvider: Providers) {
       dispatch(setIsUpdating(false));
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [metamaskState, activeProvider]);
+  }, [activeProvider]);
 }
