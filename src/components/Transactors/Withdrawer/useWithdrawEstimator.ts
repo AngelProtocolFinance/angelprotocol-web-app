@@ -46,6 +46,8 @@ export default function useWithrawEstimator() {
     500
   );
 
+  const beneficiary = watch("beneficiary");
+
   useEffect(() => {
     (async () => {
       try {
@@ -115,7 +117,7 @@ export default function useWithrawEstimator() {
         dispatch(setFormLoading(true));
 
         const account = new Account(account_addr, wallet);
-        const withdrawMsg = account.createWithdrawMsg(sources);
+        const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
         const fee = await account.estimateFee([withdrawMsg]);
         const feeNum = extractFeeNum(fee);
 
@@ -144,7 +146,7 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, vaultLimits, debAmounts, isDebouncing]);
+  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary]);
 
   return { tx, wallet };
 }
