@@ -53,6 +53,7 @@ export type SuccessStage = {
   txHash: string;
   chainId: chainIDs;
   isReceiptEnabled?: boolean;
+  isShareEnabled?: boolean;
 };
 
 export type ReceiptStage = {
