@@ -23,7 +23,7 @@ export const sendEthDonation = createAsyncThunk(
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
       let provider: any;
 
-      if (args.connectType === "META") {
+      if (args.connectType === "metamask") {
         provider = new ethers.providers.Web3Provider(window.ethereum!, "any");
       } else {
         provider = new ethers.providers.Web3Provider(xwindow.xfi?.ethereum!);

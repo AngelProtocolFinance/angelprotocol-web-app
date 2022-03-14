@@ -32,7 +32,7 @@ export default function useDonate() {
     [terraTx, wallet]
   );
 
-  const connectType = metaConnected ? "META" : "xDEFI";
+  const connectType = metaConnected ? "metamask" : "xdefi";
 
   const ethSender = useCallback(
     (data: DonateValues) => {
