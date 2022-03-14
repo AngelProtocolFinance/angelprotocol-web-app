@@ -49,9 +49,11 @@ export default function useSubmit() {
 
 async function getUploadBody(values: FormValues) {
   const CharityLogo = await readFileToDataUrl(values.charityLogo[0]);
+  const CharityBanner = await readFileToDataUrl(values.charityBanner[0]);
 
   return {
     CharityLogo,
+    CharityBanner,
     CharityOverview: values.charityOverview,
   };
 }

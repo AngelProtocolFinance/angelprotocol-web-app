@@ -33,11 +33,13 @@ export type UpdateAdditionalInformationData = {
   PK?: string;
   body: {
     CharityLogo: DocumentObject;
+    CharityBanner: DocumentObject;
     CharityOverview: string;
   };
 };
 
 export type UpdateAdditionalInformationResult = {
   CharityLogo: string;
+  CharityBanner: string;
   CharityOverview: string;
 };

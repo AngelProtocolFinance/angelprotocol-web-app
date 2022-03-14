@@ -7,7 +7,7 @@ import { InputRow } from "../common";
 import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import DescriptionInput from "./DescriptionInput";
-import LogoInput from "./LogoInput";
+import ImageInput from "./ImageInput";
 import { FormValues, SCHEMA } from "./types";
 import useSubmit from "./useSubmit";
 
@@ -20,6 +20,7 @@ export default function AdditionalInformation() {
     defaultValues: {
       charityOverview: user.CharityOverview,
       charityLogo: [],
+      charityBanner: [],
     },
   });
 
@@ -37,7 +38,11 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName />
-          <LogoInput />
+          <ImageInput
+            name="charityBanner"
+            label="Banner image of your organization"
+          />
+          <ImageInput name="charityLogo" label="Logo of your organization" />
           <DescriptionInput />
           <Separator />
           <ButtonSection />

@@ -1,23 +1,30 @@
 import FileDropzone from "components/FileDropzone";
-import { useFormContext } from "react-hook-form";
+import { FieldError, useFormContext } from "react-hook-form";
 import { InputRow } from "../common";
 import { FormValues } from "./types";
 
-export default function LogoInput() {
+type Props = {
+  name: keyof FormValues;
+  label: string;
+};
+
+export default function ImageInput({ name, label }: Props) {
   const {
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
+  const inputErrors = errors[name] as FieldError[];
+
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
   // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
-  const errorMessage = !!errors?.charityLogo?.length
-    ? errors.charityLogo[0].message
-    : (errors?.charityLogo as any)?.message;
+  const errorMessage = !!inputErrors?.length
+    ? inputErrors[0]?.message
+    : (errors[name] as FieldError)?.message;
 
   return (
-    <InputRow id="charityLogo" label="Logo of your organization" required>
+    <InputRow id={name} label={label} required>
       <FileDropzone<FormValues>
-        name="charityLogo"
+        name={name}
         className="h-8"
         disabled={isSubmitting}
       />

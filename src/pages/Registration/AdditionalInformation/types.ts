@@ -5,6 +5,7 @@ export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
   charityLogo: File[];
+  charityBanner: File[];
 };
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
@@ -28,6 +29,13 @@ export const SCHEMA = Yup.object().shape({
     .test({
       name: "exactlyOne",
       message: "Charity logo required",
+      test: (arr) => arr?.length === 1,
+    }),
+  charityBanner: Yup.array<File>()
+    .of(FILE_SCHEMA)
+    .test({
+      name: "exactlyOne",
+      message: "Charity banner required",
       test: (arr) => arr?.length === 1,
     }),
 });
