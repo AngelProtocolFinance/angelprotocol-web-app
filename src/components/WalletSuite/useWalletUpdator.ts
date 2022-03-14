@@ -5,7 +5,7 @@ import { Dec } from "@terra-money/terra.js";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { Providers, XdefiWindow } from "services/provider/types";
-import { TerraIdentifiers } from "services/wallet/types";
+import { EthNetworks, TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
@@ -149,7 +149,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
       dispatch(
         setMetamaskStatus({
-          network: network.name,
+          ...metamaskState,
+          network: network.name as EthNetworks,
           chainId: eth_chain_id,
           address,
           balance: eth_balance,

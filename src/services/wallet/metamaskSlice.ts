@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
-import { EthIdentifiers } from "./types";
+import { EthIdentifiers, EthState } from "./types";
 import { chainIDs } from "constants/chainIDs";
 import metamaskIcon from "images/icons/metamask.png";
 
-const initialState = {
+const initialState: EthState = {
   connected: false,
   network: "homestead",
   id: EthIdentifiers.metamask,
@@ -24,7 +24,7 @@ const metamaskSlice = createSlice({
     resetState: (state) => {
       state = initialState;
     },
-    setMetamaskStatus: (state, { payload }: any) => {
+    setMetamaskStatus: (state, { payload }: PayloadAction<EthState>) => {
       state.connected = payload.connected ?? state.connected;
       state.icon = payload.icon ?? state.icon;
       state.network = payload.network;
