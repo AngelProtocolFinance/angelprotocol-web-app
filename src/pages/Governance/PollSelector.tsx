@@ -22,7 +22,7 @@ export default function PollSelector({
           </option>
           {Object.entries(PollStatus).map(([_key, val]) => (
             <option key={val} value={val} className={`text-sm text-angel-grey`}>
-              {`${val.split("-").join(" ").toUpperCase()}`}
+              {`${val.split("_").join(" ").toUpperCase()}`}
             </option>
           ))}
         </>
