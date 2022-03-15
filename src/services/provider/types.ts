@@ -1,5 +1,4 @@
 import { ExternalProvider } from "@ethersproject/providers/src.ts/web3-provider";
-import { ethers } from "ethers";
 export enum Providers {
   none = "none",
   ethereum = "ethereum",

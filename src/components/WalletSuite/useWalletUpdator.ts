@@ -8,9 +8,8 @@ import { Providers, Dwindow } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import metamaskIcon from "images/icons/metamask.png";
-import { setMetamaskStatus } from "services/wallet/metamaskSlice";
 
 declare var window: any;
 
@@ -19,9 +18,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
   const wallet = useConnectedWallet();
   const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
-
-  //Ethereum MetaMask updator
-  const metamaskState = useGetter((state) => state.metamask);
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -122,7 +118,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         );
         dispatch(setIsUpdating(false));
       } catch (err) {
-        console.log(err);
+        //TODO: tooltip on wallet update errors
         dispatch(setIsUpdating(false));
       }
     })();
@@ -131,34 +127,39 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
   //updator for metamask
   useEffect(() => {
-    if (activeProvider !== Providers.ethereum) return;
-
     (async () => {
-      dispatch(setIsUpdating(true));
-      const provider = new ethers.providers.Web3Provider(window.ethereum!);
-      const network = await provider.getNetwork();
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      const wei_balance = await signer.getBalance();
-      const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
-        .div(1e18)
-        .toNumber();
-      const eth_coin = { amount: eth_balance, denom: denoms.ether };
+      try {
+        if (activeProvider !== Providers.ethereum) return;
+        dispatch(setIsUpdating(true));
+        const provider = new ethers.providers.Web3Provider(window.ethereum!);
+        const network = await provider.getNetwork();
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        const wei_balance = await signer.getBalance();
+        const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
+          .div(1e18)
+          .toNumber();
+        const eth_coin = { amount: eth_balance, denom: denoms.ether };
 
-      dispatch(
-        setWalletDetails({
-          id: undefined,
-          icon: metamaskIcon,
-          displayCoin: eth_coin,
-          coins: [eth_coin],
-          address,
-          chainId: `${network.chainId}` as chainIDs,
-          supported_denoms: [denoms.ether],
-        })
-      );
+        dispatch(
+          setWalletDetails({
+            id: undefined,
+            icon: metamaskIcon,
+            displayCoin: eth_coin,
+            coins: [eth_coin],
+            address,
+            chainId: `${network.chainId}` as chainIDs,
+            supported_denoms: [denoms.ether],
+          })
+        );
 
-      dispatch(setIsUpdating(false));
+        dispatch(setIsUpdating(false));
+      } catch (err) {
+        //TODO: tooltip on wallet update errors
+        dispatch(setIsUpdating(false));
+      }
     })();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProvider]);
 }
