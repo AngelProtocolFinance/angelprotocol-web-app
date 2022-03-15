@@ -16,7 +16,7 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { Providers, ProviderWindow } from "services/provider/types";
+import { Providers, Dwindow } from "services/provider/types";
 import useDebouncer from "hooks/useDebouncer";
 import Contract from "contracts/Contract";
 import Account from "contracts/Account";
@@ -142,18 +142,15 @@ export default function useEstimator() {
 
         //estimates for eth
         if (currency === denoms.ether) {
-          const pwindow = window as ProviderWindow;
+          const dwindow = window as Dwindow;
           //provider is present at this point
           let provider: ethers.providers.Web3Provider;
 
           if (activeProvider === Providers.ethereum) {
-            provider = new ethers.providers.Web3Provider(
-              pwindow.ethereum!,
-              "any"
-            );
+            provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
           } else {
             provider = new ethers.providers.Web3Provider(
-              pwindow.xfi?.ethereum!
+              dwindow.xfi?.ethereum!
             );
           }
           //no network request
@@ -177,6 +174,7 @@ export default function useEstimator() {
           setEthTx(tx);
           dispatch(setFee(parseFloat(fee_eth)));
         }
+
         dispatch(setFormLoading(false));
       } catch (err) {
         const formError = processEstimateError(err);

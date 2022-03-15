@@ -2,29 +2,31 @@ import { ethers } from "ethers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
-import { ProviderWindow } from "services/provider/types";
+import { Dwindow, Providers } from "services/provider/types";
 import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 import { StageUpdator, Step } from "../types";
+import { RootState } from "store/store";
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
-  async (args: EthDonateArgs, { dispatch }) => {
+  async (args: EthDonateArgs, { dispatch, getState }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
     try {
-      const pwindow = window as ProviderWindow;
-
+      const dwindow = window as Dwindow;
+      const state = getState() as RootState;
+      const activeProvider = state.provider.active;
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
-      let provider: any;
+      let provider: ethers.providers.Web3Provider;
 
-      if (args.connectType === "metamask") {
-        provider = new ethers.providers.Web3Provider(pwindow.ethereum!, "any");
+      if (activeProvider === Providers.ethereum) {
+        provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
       } else {
-        provider = new ethers.providers.Web3Provider(pwindow.xfi?.ethereum!);
+        provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
       }
 
       const signer = provider.getSigner();
@@ -54,6 +56,7 @@ export const sendEthDonation = createAsyncThunk(
         isReceiptEnabled: typeof receiver !== "undefined",
       });
     } catch (error) {
+      console.error(error);
       handleEthError(error, updateTx);
     }
   }

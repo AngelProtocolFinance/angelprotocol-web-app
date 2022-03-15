@@ -9,7 +9,8 @@ import { updateChainID } from "services/chain/chainSlice";
 import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
-import { useSetter, useGetter } from "store/accessors";
+import { useSetter } from "store/accessors";
+import { useGetMetamask } from "providers/Metamask/Metamask";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -19,14 +20,15 @@ export default function useProviderSwitcher() {
   const { status: terraStatus, network } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
-  const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
-  const { connected: ethConnected } = useGetter((state) => state.metamask);
+  const { connected: isMetamaskConnected, loading: isMetamaskLoading } =
+    useGetMetamask();
+  // const { connected: ethConnected } = useGetter((state) => state.metamask);
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],
-    [Providers.ethereum, ethConnected],
+    [Providers.ethereum, isMetamaskConnected],
   ];
 
   //find first connected provider
@@ -35,6 +37,8 @@ export default function useProviderSwitcher() {
     ([, isProviderConnected]) => isProviderConnected
   );
 
+  const isLoading = isTerraLoading || isMetamaskLoading;
+
   useEffect(() => {
     dispatch(setIsSwitching(isLoading));
     //eslint-disable-next-line
@@ -42,8 +46,8 @@ export default function useProviderSwitcher() {
 
   useEffect(() => {
     if (activeProvider) {
-      const [wallet] = activeProvider;
-      dispatch(setActiveProvider(wallet));
+      const [provider] = activeProvider;
+      dispatch(setActiveProvider(provider));
     } else {
       dispatch(setActiveProvider(Providers.none));
     }
