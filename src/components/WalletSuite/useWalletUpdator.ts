@@ -95,6 +95,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const provider = new ethers.providers.Web3Provider(
           dwindow.xfi?.ethereum!
         );
+
         const signer = provider.getSigner();
         const wei_balance = await signer.getBalance();
         const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
@@ -120,7 +121,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
           })
         );
         dispatch(setIsUpdating(false));
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+        dispatch(setIsUpdating(false));
+      }
     })();
     //eslint-disable-next-line
   }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);

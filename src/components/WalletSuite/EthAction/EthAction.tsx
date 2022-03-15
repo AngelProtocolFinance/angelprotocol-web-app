@@ -1,21 +1,50 @@
-import { EthConnectInfo } from "services/wallet/types";
-import useEthAction from "./useEthAction";
+import { useSetModal } from "components/Modal/Modal";
+import ConnectButton from "../ConnectButton";
+import { useGetMetamask, useSetMetamask } from "providers/Metamask/Metamask";
+import metamaskIcon from "images/icons/metamask.png";
+import { Dwindow } from "services/provider/types";
+import XDefiError from "./xDefiError";
 
-export default function EthAction(props: EthConnectInfo) {
-  const { handleClick, isUpdating } = useEthAction(props);
+const dwindow = window as Dwindow;
+export default function EthAction() {
+  const { loading: isConnecting } = useGetMetamask();
+  const { connect } = useSetMetamask();
+  const { showModal } = useSetModal();
+
+  async function handleClick() {
+    //if metamask is not installed
+    if (!dwindow.ethereum?.isMetaMask) {
+      alert("install");
+      return;
+    } else if (isXdefiPrioritized()) {
+      alert("remove priority please");
+      return;
+    } else {
+      await connect();
+    }
+  }
 
   return (
-    <button
-      disabled={isUpdating}
+    <ConnectButton
       onClick={handleClick}
-      className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
+      _icon={metamaskIcon}
+      disabled={isConnecting}
     >
-      <img
-        src={props.icon}
-        className="w-8 h-8 p-1.5 bg-white-grey rounded-full shadow-md"
-        alt=""
-      />
-      <p className="uppercase text-sm text-white">{props.name}</p>
-    </button>
+      Metamask
+    </ConnectButton>
+  );
+}
+
+const metamaskInstallLink =
+  "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en";
+
+function isXdefiPrioritized() {
+  return (
+    dwindow.xfi?.binance !== undefined &&
+    dwindow.xfi?.bitcoin !== undefined &&
+    dwindow.xfi?.bitcoincash !== undefined &&
+    dwindow.xfi?.litecoin !== undefined &&
+    dwindow.xfi?.terra !== undefined &&
+    dwindow.xfi?.thorchain !== undefined
   );
 }

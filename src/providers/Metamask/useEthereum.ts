@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Dwindow } from "services/provider/types";
 import {
@@ -7,8 +6,6 @@ import {
   EIP1193Methods,
   Ethereum,
 } from "./types";
-
-const dwindow: Dwindow = window;
 
 export default function useEthereum() {
   //connect only if there's no active wallet
@@ -80,19 +77,13 @@ export default function useEthereum() {
 
   async function connect() {
     try {
-      const ethereum = getEthereum();
-      if (!ethereum) {
-        window.open("https://ethereum.app/", "_blank", "noopener noreferrer");
-        return;
-      }
       setLoading(true);
       await requestAccess(true);
       saveUserAction("connect");
-    } catch (err) {
+    } catch (err: any) {
       setLoading(false);
-      console.error(err);
       //let caller handle error with UI
-      if ((err as any).code === 4001) {
+      if ("code" in err && err.code === 4001) {
         throw new RejectMetamaskLogin();
       } else {
         throw new Error("Uknown error occured");

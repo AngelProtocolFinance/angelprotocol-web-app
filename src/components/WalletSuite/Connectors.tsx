@@ -14,33 +14,8 @@ type Props = {
   closeHandler: () => void;
 };
 
-declare var window: any;
-
 export default function Connectors(props: Props) {
   let { availableConnections, availableInstallations } = useWallet();
-
-  let [ethConnections, setEthConnections] = useState<EthConnectInfo[]>([]);
-  let [ethInstallations, setEthInstallations] = useState<EthInstallInfo[]>([]);
-
-  useEffect(() => {
-    if (window.ethereum) {
-      setEthConnections([
-        {
-          name: "MetaMask",
-          type: "ETHEREUM",
-          icon: metamaskIcon,
-        },
-      ]);
-    } else if (deviceType() !== DeviceType.MOBILE) {
-      setEthInstallations([
-        {
-          name: "MetaMask",
-          url: "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en",
-          icon: metamaskIcon,
-        },
-      ]);
-    }
-  }, []);
 
   return (
     <>
@@ -57,29 +32,24 @@ export default function Connectors(props: Props) {
             .map((connection) => {
               return <TerraAction key={connection.name} {...connection} />;
             })}
-          {ethConnections.map((connection) => {
-            return <EthAction key={connection.name} {...connection} />;
-          })}
+          <EthAction />
         </Modal>
-        <p className="uppercase font-heading text-angel-grey text-sm">
-          supported wallets
-        </p>
-        <div className="flex gap-2">
-          {availableInstallations.map((installer) => (
-            <Installer
-              key={installer.name}
-              icon={installer.icon}
-              link={installer.url}
-            />
-          ))}
-          {ethInstallations.map((installer) => (
-            <Installer
-              key={installer.name}
-              icon={installer.icon}
-              link={installer.url}
-            />
-          ))}
-        </div>
+        {availableInstallations.length > 0 && (
+          <>
+            <p className="uppercase font-heading text-angel-grey text-sm">
+              supported wallets
+            </p>
+            <div className="flex gap-2">
+              {availableInstallations.map((installer) => (
+                <Installer
+                  key={installer.name}
+                  icon={installer.icon}
+                  link={installer.url}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <Backdrop closeHandler={props.closeHandler} />
     </>
