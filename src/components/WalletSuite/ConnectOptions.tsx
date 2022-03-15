@@ -2,19 +2,11 @@ import { IoClose } from "react-icons/io5";
 import { useWallet, ConnectType } from "@terra-money/wallet-provider";
 import Backdrop from "./Backdrop";
 import Modal from "components/Modal/Modal";
-import TerraAction from "./Terra/TerraAction";
 import Installer from "./Installer";
-import { useEffect, useState } from "react";
-import EthAction from "./EthAction/EthAction";
-import { EthConnectInfo, EthInstallInfo } from "services/wallet/types";
-import metamaskIcon from "images/icons/metamask.png";
-import { DeviceType, deviceType } from "helpers/deviceType";
+import EthConnector from "./Connectors/EthConnector";
+import TerraConnector from "./Connectors/TerraConnector";
 
-type Props = {
-  closeHandler: () => void;
-};
-
-export default function Connectors(props: Props) {
+export default function ConnectOptions(props: { closeHandler: () => void }) {
   let { availableConnections, availableInstallations } = useWallet();
 
   return (
@@ -30,9 +22,9 @@ export default function Connectors(props: Props) {
           {availableConnections
             .filter((connection) => connection.type !== ConnectType.READONLY)
             .map((connection) => {
-              return <TerraAction key={connection.name} {...connection} />;
+              return <TerraConnector key={connection.name} {...connection} />;
             })}
-          <EthAction />
+          <EthConnector />
         </Modal>
         {availableInstallations.length > 0 && (
           <>

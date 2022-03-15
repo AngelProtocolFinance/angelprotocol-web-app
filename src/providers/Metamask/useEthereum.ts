@@ -96,14 +96,14 @@ export default function useEthereum() {
   };
 }
 
-const key = "ethereum_pref";
+const ActionKey = "ethereum_pref";
 type Action = "connect" | "disconnect";
 function saveUserAction(action: Action) {
-  localStorage.setItem(key, action);
+  localStorage.setItem(ActionKey, action);
 }
 
 function retrieveUserAction(): Action {
-  return (localStorage.getItem(key) as Action) || "disconnect";
+  return (localStorage.getItem(ActionKey) as Action) || "disconnect";
 }
 
 export function getEthereum() {
