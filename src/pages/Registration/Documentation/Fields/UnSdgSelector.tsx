@@ -6,7 +6,7 @@ import { FormValues } from "../types";
 
 const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
   label: `${+_key < 10 ? "0" : ""}${_key} - ${val.title.toUpperCase()}`,
-  value: _key,
+  value: +_key,
 }));
 
 export default function UnSdgSelector() {
