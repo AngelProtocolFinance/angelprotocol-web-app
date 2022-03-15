@@ -1,5 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { unsdgs } from "pages/Fund/unsdgs";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -9,14 +7,16 @@ import {
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouteMatch, Link } from "react-router-dom";
-import { CharityParam } from "./types";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { useProfileState } from "services/aws/endowments/states";
+import useDonater from "components/Transactors/Donater/useDonater";
 import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
+import { unsdgs } from "pages/Fund/unsdgs";
 import { app, site } from "types/routes";
-import useDonater from "components/Transactors/Donater/useDonater";
-import { useProfileState } from "services/aws/endowments/states";
+import { CharityParam } from "./types";
 
 export function DonationInfo() {
   const match = useRouteMatch<CharityParam>();
@@ -97,8 +97,8 @@ export function DonationInfo() {
           )}
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
-              <a
-                href={`${site.app}/${app.charity_edit}/${charity_addr}`}
+              <Link
+                to={`${site.app}/${app.charity_edit}/${charity_addr}`}
                 className={`${
                   !profileState.is_placeholder
                     ? "bg-orange"
@@ -108,7 +108,7 @@ export function DonationInfo() {
                 <button disabled={profileState.is_placeholder}>
                   EDIT PROFILE
                 </button>
-              </a>
+              </Link>
             )}
             <button
               disabled={profileState.is_placeholder}
