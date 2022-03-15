@@ -6,15 +6,16 @@ import { EndowmentAddrProps, TransactionItemProps } from "./types";
 
 const TransactionList = (props: EndowmentAddrProps) => {
   const [isError, setIsError] = useState(false);
-  const { data } = useDepositTransactionsQuery(props.address);
+  const { data, isLoading } = useDepositTransactionsQuery(props.address);
+
   useEffect(() => {
-    if (data === undefined) {
+    if (data === undefined && !isLoading) {
       setIsError(true);
     }
-  }, [data, isError]);
+  }, [data, isError, isLoading]);
 
   return (
-    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-white/10 overflow-auto h-96">
+    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto h-process">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Transaction History</span>
       </h3>

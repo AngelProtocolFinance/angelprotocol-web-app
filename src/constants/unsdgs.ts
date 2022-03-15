@@ -118,7 +118,7 @@ export const unsdgs: { [index: number]: UNSDG } = {
     website: "https://sdgs.un.org/goals/goal6",
   },
   7: {
-    title: "afforable and clean energy",
+    title: "affordable and clean energy",
     desc: "Ensure access to affordable, reliable, sustainable and modern energy for all.",
     text_light: "text-white-grey",
     text_dark: "text-sdg7",

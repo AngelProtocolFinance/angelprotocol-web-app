@@ -2,28 +2,9 @@ import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   encodedText,
   FACEBOOK_DIALOG_URL,
-  FACEBOOK_SHARE_URL,
   LINKEDIN_SHARE_URL,
   TWITTER_SHARE_URL,
 } from "./constants";
-
-type IconLinkProps = {
-  link: string;
-  icon: React.ComponentType<any>;
-};
-
-const IconLink = ({ link, icon: Icon }: IconLinkProps) => {
-  return (
-    <a
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1 text-3xl text-thin-blue"
-    >
-      <Icon />
-    </a>
-  );
-};
 
 export default function Share() {
   return (
@@ -45,3 +26,21 @@ export default function Share() {
     </div>
   );
 }
+
+type IconLinkProps = {
+  link: string;
+  icon: React.ComponentType<any>;
+};
+
+const IconLink = ({ link, icon: Icon }: IconLinkProps) => {
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noreferrer"
+      className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1 text-3xl text-thin-blue"
+    >
+      <Icon />
+    </a>
+  );
+};

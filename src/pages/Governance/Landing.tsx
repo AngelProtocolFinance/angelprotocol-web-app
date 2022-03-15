@@ -3,9 +3,32 @@ import Figure from "./Figure";
 import Polls from "./Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
+import { useHistory } from "react-router-dom";
+import { app, site } from "constants/routes";
+
+function DonationAdvert() {
+  const history = useHistory();
+  return (
+    <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
+      <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden">
+        The charity Marketplace is now open! Give directly to the endowment of
+        your choice and get 10% back in HALO airdrops.
+      </h4>
+      <div className="w-full flex justify-center">
+        <button
+          onClick={() => history.push(`${site.app}/${app.marketplace}`)}
+          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+        >
+          Donate now
+        </button>
+      </div>
+    </div>
+  );
+}
 
 export default function Landing() {
   const { staked, percentStaked, spot_price } = useGov();
+
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
@@ -26,6 +49,7 @@ export default function Landing() {
           percent={percentStaked}
         />
         <Portal />
+        <DonationAdvert />
       </div>
       <Polls />
     </div>
