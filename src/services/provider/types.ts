@@ -14,11 +14,15 @@ export type State = {
   isSwitching: boolean;
 };
 
-export interface ProviderWindow extends Window {
+export interface Dwindow extends Window {
   xfi?: {
     ethereum?: ExternalProvider;
+    binance?: any;
+    bitcoin?: any;
+    bitcoincash?: any;
     terra?: any;
+    litecoin?: any;
+    thorchain: any;
   };
-
-  ethereum?: any;
+  ethereum?: ExternalProvider;
 }

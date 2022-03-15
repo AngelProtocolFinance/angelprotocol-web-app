@@ -4,21 +4,18 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { Providers, ProviderWindow } from "services/provider/types";
-import { EthNetworks, TerraIdentifiers } from "services/wallet/types";
+import { Providers, Dwindow } from "services/provider/types";
+import { TerraIdentifiers } from "services/wallet/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { useGetter, useSetter } from "store/accessors";
-import { setMetamaskStatus } from "services/wallet/metamaskSlice";
+import { useSetter } from "store/accessors";
+import metamaskIcon from "images/icons/metamask.png";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
-
-  //Ethereum MetaMask updator
-  const metamaskState = useGetter((state) => state.metamask);
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -85,13 +82,14 @@ export default function useWalletUpdator(activeProvider: Providers) {
           dispatch(setIsUpdating(true));
           return;
         }
-        const pwindow = window as ProviderWindow;
-        //xwindow.xfi.ethereum is guaranteed to be defined here since it's available on
+        const dwindow: Dwindow = window;
+        //dwindow.xfi.ethereum is guaranteed to be defined here since it's available on
         //wallet connection selection
 
         const provider = new ethers.providers.Web3Provider(
-          pwindow.xfi?.ethereum!
+          dwindow.xfi?.ethereum!
         );
+
         const signer = provider.getSigner();
         const wei_balance = await signer.getBalance();
         const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
@@ -117,60 +115,50 @@ export default function useWalletUpdator(activeProvider: Providers) {
           })
         );
         dispatch(setIsUpdating(false));
-      } catch (err) {}
+      } catch (err) {
+        //TODO: tooltip on wallet update errors
+        dispatch(setIsUpdating(false));
+      }
     })();
     //eslint-disable-next-line
   }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);
 
+  //updator for metamask
   useEffect(() => {
-    if (activeProvider !== Providers.ethereum) return;
-
     (async () => {
-      dispatch(setIsUpdating(true));
+      try {
+        const dwindow = window as Dwindow;
+        if (activeProvider !== Providers.ethereum) return;
+        dispatch(setIsUpdating(true));
+        const provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
+        const network = await provider.getNetwork();
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        const wei_balance = await signer.getBalance();
+        const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
+          .div(1e18)
+          .toNumber();
+        const eth_coin = { amount: eth_balance, denom: denoms.ether };
 
-      const pwindow = window as ProviderWindow;
+        dispatch(
+          setWalletDetails({
+            id: undefined,
+            icon: metamaskIcon,
+            displayCoin: eth_coin,
+            coins: [eth_coin],
+            address,
+            chainId: `${network.chainId}` as chainIDs,
+            supported_denoms: [denoms.ether],
+          })
+        );
 
-      const provider = new ethers.providers.Web3Provider(
-        pwindow.ethereum!,
-        "any"
-      );
-
-      const network = await provider.getNetwork();
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      const wei_balance = await signer.getBalance();
-      const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
-        .div(1e18)
-        .toNumber();
-
-      const eth_coin = { amount: eth_balance, denom: denoms.ether };
-      const eth_chain_id = String(network.chainId) as chainIDs;
-
-      dispatch(
-        setMetamaskStatus({
-          ...metamaskState,
-          network: network.name as EthNetworks,
-          chainId: eth_chain_id,
-          address,
-          balance: eth_balance,
-          coins: [eth_coin],
-        })
-      );
-
-      dispatch(
-        setWalletDetails({
-          id: metamaskState.id,
-          icon: metamaskState.icon,
-          displayCoin: eth_coin,
-          coins: [eth_coin],
-          address,
-          chainId: eth_chain_id,
-          supported_denoms: [denoms.ether],
-        })
-      );
-
-      dispatch(setIsUpdating(false));
+        dispatch(setIsUpdating(false));
+      } catch (err) {
+        //TODO: tooltip on wallet update errors
+        dispatch(setIsUpdating(false));
+      }
     })();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProvider]);
 }

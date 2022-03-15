@@ -2,7 +2,6 @@ import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   encodedText,
   FACEBOOK_DIALOG_URL,
-  FACEBOOK_SHARE_URL,
   LINKEDIN_SHARE_URL,
   TWITTER_SHARE_URL,
 } from "./constants";
