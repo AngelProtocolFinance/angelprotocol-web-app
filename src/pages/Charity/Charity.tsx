@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfile } from "services/aws/endowments/queriers";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import { CharityProfileTabLoader } from "components/Loader/Charity";
@@ -7,9 +7,9 @@ import CharityInfoNav from "./CharityInfoNav";
 import { DonationInfo } from "./DonationInfo";
 import { CharityParam } from "./types";
 
-const Charity = (props: RouteComponentProps<CharityParam>) => {
-  const endowment_addr = props.match.params.address;
-  const { profile, isProfileLoading } = useProfile(endowment_addr);
+const Charity = () => {
+  const { address: endowment_addr } = useParams<CharityParam>();
+  const { profile, isProfileLoading } = useProfile(endowment_addr!);
 
   return (
     <section className="container mx-auto grid pb-16 content-start gap-0">

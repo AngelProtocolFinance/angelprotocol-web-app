@@ -1,11 +1,5 @@
 import { lazy, Suspense } from "react";
-import {
-  Switch,
-  Route,
-  useRouteMatch,
-  Redirect,
-  useLocation,
-} from "react-router-dom";
+import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import WebHead from "Website/Header/WebHead";
 import WebFoot from "Website/WebFoot";
 import Loader from "components/Loader/Loader";
@@ -19,28 +13,29 @@ const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));
 
 const Website = () => {
-  const { path } = useRouteMatch();
   const location = useLocation();
   useScrollTop(location.pathname);
 
   const LoaderComponent = () => (
     <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
   );
-
   return (
     <div className="grid grid-rows-1a bg-white">
       <Modal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
-          <Switch>
-            <Redirect from="/:url*(/+)" to={location.pathname.slice(0, -1)} />
-            <Route path={`${path}${web.contact}`} component={Contact} />
-            <Route path={`${path}${web.privacy}`} component={PrivacyPolicy} />
-            <Route path={`${path}${web.donors}`} component={Donors} />
-            <Route path={`${path}${web.charities}`} component={Charities} />
-            <Route path={`${path}${web.index}`} component={Home} />
-            <Redirect from="*" to={site.home} />
-          </Switch>
+          <Routes>
+            <Route
+              path="/:url*(/+)"
+              element={<Navigate replace to={location.pathname.slice(0, -1)} />}
+            />
+            <Route path={web.contact} element={<Contact />} />
+            <Route path={web.privacy} element={<PrivacyPolicy />} />
+            <Route path={web.donors} element={<Donors />} />
+            <Route path={web.charities} element={<Charities />} />
+            <Route path={web.index} element={<Home />} />
+            <Route path="*" element={<Navigate replace to={site.home} />} />
+          </Routes>
         </Suspense>
         <WebFoot />
       </Modal>

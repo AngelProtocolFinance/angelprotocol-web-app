@@ -1,12 +1,12 @@
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   memberUpdatorSchema,
   MemberUpdatorValues,
 } from "./memberUpdatorSchema";
+import MemberUpdateForm from "./MemberUpdaterForm";
 
-export default function MemberUpdator(props: { children: ReactNode }) {
+export default function MemberUpdator() {
   const methods = useForm<MemberUpdatorValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -17,5 +17,9 @@ export default function MemberUpdator(props: { children: ReactNode }) {
     resolver: yupResolver(memberUpdatorSchema),
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <MemberUpdateForm />
+    </FormProvider>
+  );
 }

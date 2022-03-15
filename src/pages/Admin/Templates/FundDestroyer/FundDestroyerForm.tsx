@@ -19,7 +19,7 @@ export default function FundDestroyerForm() {
         required
       />
       <Label text="Fund to remove" required />
-      <FundSelection<FD> />
+      <FundSelection<FD> fieldName="fundId" />
       <button
         type="submit"
         className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"

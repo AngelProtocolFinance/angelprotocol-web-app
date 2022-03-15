@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import FundDestroyerForm from "./FundDestroyerForm";
 import { fundDestroyerSchema, FundDestroyValues } from "./fundDestroyerSchema";
 
-export default function FundDestroyer(props: { children: ReactNode }) {
+export default function FundDestroyer() {
   const methods = useForm<FundDestroyValues>({
     resolver: yupResolver(fundDestroyerSchema),
     mode: "onChange",
@@ -13,5 +13,9 @@ export default function FundDestroyer(props: { children: ReactNode }) {
     },
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <FundDestroyerForm />
+    </FormProvider>
+  );
 }

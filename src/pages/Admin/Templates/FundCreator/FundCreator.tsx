@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import FundCreatorForm from "./FundCreatorForm";
 import { fundCreatorSchema, FundCreatorValues } from "./fundCreatorSchema";
 
 export const INIT_SPLIT = "-1";
 
-export default function FundCreator(props: { children: ReactNode }) {
+export default function FundCreator() {
   const methods = useForm<FundCreatorValues>({
     resolver: yupResolver(fundCreatorSchema),
     mode: "onChange",
@@ -15,5 +15,9 @@ export default function FundCreator(props: { children: ReactNode }) {
     },
   });
 
-  return <FormProvider {...methods}>{props.children}</FormProvider>;
+  return (
+    <FormProvider {...methods}>
+      <FundCreatorForm />
+    </FormProvider>
+  );
 }

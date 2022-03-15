@@ -1,4 +1,4 @@
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { Proposal } from "services/terra/admin/types";
 import toCurrency from "helpers/toCurrency";
@@ -8,7 +8,6 @@ import Status from "./Status";
 import VoteStat from "./VoteStat";
 
 export default function Card(props: Proposal) {
-  const { url } = useRouteMatch();
   const {
     isVoteEnded,
     remainingBlocks,
@@ -22,7 +21,7 @@ export default function Card(props: Proposal) {
   } = useDetails(props);
   return (
     <Link
-      to={`${url}/${admin.proposal}/${props.id}`}
+      to={`${admin.proposal}/${props.id}`}
       className="bg-white bg-opacity-10 hover:bg-opacity-20 p-4 rounded-md shadow-inner"
     >
       <div className="font-mono font-bold flex justify-between items-center text-white-grey text-opacity-80">

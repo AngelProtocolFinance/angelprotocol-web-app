@@ -1,4 +1,4 @@
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { useLatestBlock } from "services/terra/queriers";
 import { useProposals } from "services/terra/admin/queriers";
@@ -7,7 +7,6 @@ import { admin } from "constants/routes";
 import Card from "./Card";
 
 export default function Proposals() {
-  const { path } = useRouteMatch();
   const block_height = useLatestBlock(10_000);
   const { proposals } = useProposals();
 
@@ -22,7 +21,7 @@ export default function Proposals() {
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
         <Link
-          to={`${path}${admin.proposal_types}`}
+          to={admin.proposal_types}
           className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
         >
           + Create a proposal

@@ -1,10 +1,14 @@
+import { Path } from "react-hook-form";
 import TableSection, { Cells } from "../components/TableSection";
 import useFundSelection from "./useFundSelection";
 
 export type FundIdContext = { fundId: string };
-export default function FundSelection<T extends FundIdContext>() {
-  const { handleSelectRow, activeRow, unexpiredFundList } =
-    useFundSelection<T>();
+export default function FundSelection<T extends FundIdContext>(props: {
+  fieldName: Path<T>;
+}) {
+  const { handleSelectRow, activeRow, unexpiredFundList } = useFundSelection<T>(
+    props.fieldName
+  );
   return (
     <table
       className="table-auto bg-light-grey shadow-inner-white-grey 

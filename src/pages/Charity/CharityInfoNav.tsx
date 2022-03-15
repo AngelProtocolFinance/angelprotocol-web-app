@@ -1,54 +1,36 @@
-import { NavLink, useHistory, useParams } from "react-router-dom";
-import { charityNav } from "./constants";
+import { NavLink } from "react-router-dom";
+import { charity } from "constants/routes";
+import createNavLinkStyler from "helpers/createNavLinkStyler";
 import ScrollableTabs from "./ScrollableTabs";
 
-type CharityParams = {
-  address: string;
-};
-
 export default function CharityInfoNav() {
-  const { address } = useParams<CharityParams>();
-  const {
-    location: { pathname },
-  } = useHistory();
-
-  const getClassNames = (isActive: boolean, isDisabled: boolean = false) => {
-    const classes = `block w-full ${
-      isDisabled
-        ? "text-white-grey bg-grey-accent"
-        : isActive
-        ? "bg-angel-blue text-white"
-        : "text-dark-grey text-white text-opacity-80 hover:bg-angel-blue hover:text-white"
-    }  font-semibold bg-white uppercase border-0 py-3 px-6`;
-    return classes;
-  };
-
   return (
     <nav className="relative max-w-full overflow-hidden scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
       <ScrollableTabs>
-        {charityNav.map((navItem, i) => (
-          <li className="flex block w-full min-w-200" key={i}>
-            {/**just use buttons since page switching is programmatic and no involved page semantics*/}
-            {navItem.disabled ? (
-              <button className={getClassNames(false, true)}>
-                {navItem.title}
-              </button>
-            ) : (
-              <NavLink
-                className={(isActive) => {
-                  const active = navItem?.isDefault
-                    ? navItem?.defaultPath(address) === pathname || isActive
-                    : isActive;
-                  return getClassNames(active, navItem.disabled);
-                }}
-                to={navItem.getLink(address)}
-              >
-                {navItem.title}
-              </NavLink>
-            )}
-          </li>
-        ))}
+        <NavLink to={charity.overview} className={styler}>
+          overviews
+        </NavLink>
+        <NavLink to={charity.endowment} className={styler}>
+          endowments
+        </NavLink>
+        <NavLink to={charity.programs} className={disabledClass}>
+          programs
+        </NavLink>
+        <NavLink to={charity.media} className={disabledClass}>
+          media
+        </NavLink>
+        <NavLink to={charity.governance} className={disabledClass}>
+          governance
+        </NavLink>
       </ScrollableTabs>
     </nav>
   );
 }
+
+const styler = createNavLinkStyler(
+  "block w-full text-dark-grey text-angel-grey hover:bg-angel-blue hover:text-white font-semibold bg-white uppercase py-3 px-6",
+  "bg-angel-blue text-white"
+);
+
+const disabledClass =
+  "block w-full text-white-grey font-semibold bg-grey-accent uppercase py-3 px-6 pointer-events-none";

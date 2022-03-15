@@ -28,7 +28,7 @@ export default class Contract {
     this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
-  static gasAdjustment = 1.25; //use gas units 25% greater than estimate
+  static gasAdjustment = 1.6; //use gas units 60% greater than estimate
 
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
   static gasPrices = [

@@ -1,4 +1,4 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useMember } from "services/terra/admin/queriers";
@@ -13,7 +13,7 @@ import AllianceMembers from "./AllianceMembers/AllianceMembers";
 export default function Admin() {
   const wallet = useConnectedWallet();
   const { member, isMemberLoading } = useMember();
-  const { path } = useRouteMatch();
+  console.log(member);
 
   if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
@@ -25,12 +25,12 @@ export default function Admin() {
   return (
     <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
       <AdminNav />
-      <Switch>
-        <Route path={`${path}/${admin.proposal}/:id`} component={Details} />
-        <Route path={`${path}/${admin.proposal_types}`} component={Proposer} />
-        <Route path={`${path}/${admin.alliance}`} component={AllianceMembers} />
-        <Route exact path={`${path}/${admin.index}`} component={Proposals} />
-      </Switch>
+      <Routes>
+        <Route path={`${admin.proposal}/:id`} element={Details} />
+        <Route path={admin.proposal_types} element={Proposer} />
+        <Route path={admin.alliance} element={AllianceMembers} />
+        <Route index element={Proposals} />
+      </Routes>
     </div>
   );
 }
