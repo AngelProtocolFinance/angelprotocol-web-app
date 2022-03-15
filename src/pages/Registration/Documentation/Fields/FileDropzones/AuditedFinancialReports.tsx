@@ -10,7 +10,7 @@ export default function AuditedFinancialReport() {
 
   return (
     <InputRow
-      id="auditedFinancialReports"
+      htmlFor="auditedFinancialReports"
       label="3rd party audited financial report or published Annual Report"
     >
       <FileDropzone<FormValues>

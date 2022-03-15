@@ -64,7 +64,7 @@ function OrganizationName() {
   const user = useGetter((state) => state.user);
 
   return (
-    <InputRow id="charityName" label="Name of your organization">
+    <InputRow htmlFor="charityName" label="Name of your organization">
       <span className="flex w-full font-bold">{user.CharityName}</span>
     </InputRow>
   );

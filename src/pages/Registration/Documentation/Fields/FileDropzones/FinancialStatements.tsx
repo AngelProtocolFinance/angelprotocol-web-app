@@ -10,7 +10,7 @@ export default function FinancialStatements() {
 
   return (
     <InputRow
-      id="financialStatements"
+      htmlFor="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
       <FileDropzone<FormValues>

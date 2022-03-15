@@ -9,14 +9,13 @@ export default function WebsiteInput() {
   } = useFormContext<FormValues>();
 
   return (
-    <InputRow id="website" label="Website of your organization" required>
+    <InputRow htmlFor="website" label="Website of your organization" required>
       <input
+        {...register("website")}
         id="website"
-        type="text"
         placeholder="Website URL"
         className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
         disabled={isSubmitting}
-        {...register("website")}
       />
       {errors.website?.message && (
         <p className="w-full text-xs text-failed-red text-center">

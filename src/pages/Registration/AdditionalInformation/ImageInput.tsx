@@ -22,7 +22,7 @@ export default function ImageInput({ name, label }: Props) {
     : (errors[name] as FieldError)?.message;
 
   return (
-    <InputRow id={name} label={label} required>
+    <InputRow htmlFor={name} label={label} required>
       <FileDropzone<FormValues>
         name={name}
         className="h-8"

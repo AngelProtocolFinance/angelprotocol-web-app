@@ -18,7 +18,7 @@ export default function ProofOfIdentity() {
 
   return (
     <InputRow
-      id="proofOfIdentity"
+      htmlFor="proofOfIdentity"
       label="Your proof of identity"
       infoModal={ProofOfIdentityModal}
       required

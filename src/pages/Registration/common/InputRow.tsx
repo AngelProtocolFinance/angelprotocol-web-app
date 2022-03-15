@@ -3,14 +3,14 @@ import { FC, PropsWithChildren } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
 
 export type InputRowProps = PropsWithChildren<{
-  id?: string;
+  htmlFor?: string;
   label: string;
   required?: true | boolean;
   infoModal?: FC<{}>;
 }>;
 
 export default function InputRow(props: InputRowProps) {
-  const { id, label, required, infoModal, children } = props;
+  const { htmlFor: id, label, required, infoModal, children } = props;
 
   return (
     <div className="grid grid-cols-2 gap-2">

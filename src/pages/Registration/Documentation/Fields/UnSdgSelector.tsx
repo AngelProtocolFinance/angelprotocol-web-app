@@ -18,7 +18,7 @@ export default function UnSdgSelector() {
 
   return (
     <InputRow
-      id="un_sdg"
+      htmlFor="un_sdg"
       label="Which UN SDG is your org’s mission aligned with?"
     >
       <Selector
