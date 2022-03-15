@@ -11,6 +11,7 @@ const initialState: User = {
   SK: "",
   CharityName: "",
   CharityLogo: "",
+  CharityBanner: "",
   CharityOverview: "",
   CharityName_ContactEmail: "",
   RegistrationDate: "",

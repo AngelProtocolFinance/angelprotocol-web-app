@@ -7,6 +7,7 @@ export interface User {
   SK?: string;
   PK?: string;
   CharityLogo: string;
+  CharityBanner: string;
   CharityName: string;
   CharityName_ContactEmail?: string;
   CharityOverview: string;
