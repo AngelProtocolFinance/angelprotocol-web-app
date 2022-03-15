@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Dwindow } from "services/provider/types";
 import {
   AccountChangeHandler,
   EIP1193Events,
