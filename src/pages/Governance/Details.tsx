@@ -1,12 +1,13 @@
-import { RouteComponentProps } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import useDetails from "./useDetails";
 import PollAction from "./PollAction";
 import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
 
-export default function Details(props: RouteComponentProps<{ id?: string }>) {
-  const numPollId = idParamToNumber(props.match.params.id);
+export default function Details() {
+  const { id: pollId } = useParams<{ id?: string }>();
+  const numPollId = idParamToNumber(pollId);
   const details = useDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
