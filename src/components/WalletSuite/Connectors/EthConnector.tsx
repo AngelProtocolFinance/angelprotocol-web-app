@@ -67,12 +67,5 @@ const metamaskInstallLink =
   "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en";
 
 function isXdefiPrioritized() {
-  return (
-    dwindow.xfi?.binance !== undefined &&
-    dwindow.xfi?.bitcoin !== undefined &&
-    dwindow.xfi?.bitcoincash !== undefined &&
-    dwindow.xfi?.litecoin !== undefined &&
-    dwindow.xfi?.terra !== undefined &&
-    dwindow.xfi?.thorchain !== undefined
-  );
+  return dwindow.xfi?.ethereum!.isMetaMask;
 }
