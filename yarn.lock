@@ -2844,15 +2844,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-dev/wallet-types@npm:^3.7.0":
-  version: 3.7.0
-  resolution: "@terra-dev/wallet-types@npm:3.7.0"
-  peerDependencies:
-    "@terra-money/terra.js": ^3.0.0
-  checksum: 2547100b4d0ef6da3e812159fb469bf553bdf87ae1e1cf568ed2a91c8708f1a5f49492b5e5e94cad15be9b694c60ec523ee691c95d990bb956cbe5198f2a927a
-  languageName: node
-  linkType: hard
-
 "@terra-money/terra.js@npm:^3.0.7":
   version: 3.0.8
   resolution: "@terra-money/terra.js@npm:3.0.8"
@@ -2921,7 +2912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@terra-money/wallet-provider@npm:^3.7.1":
+"@terra-money/wallet-provider@npm:^3.8.0":
   version: 3.8.0
   resolution: "@terra-money/wallet-provider@npm:3.8.0"
   dependencies:
@@ -4269,9 +4260,8 @@ __metadata:
     "@peculiar/webcrypto": ^1.1.7
     "@reduxjs/toolkit": ^1.7.1
     "@tailwindcss/line-clamp": ^0.3.0
-    "@terra-dev/wallet-types": ^3.7.0
     "@terra-money/terra.js": ^3.0.7
-    "@terra-money/wallet-provider": ^3.7.1
+    "@terra-money/wallet-provider": ^3.8.0
     "@testing-library/dom": ^8.11.1
     "@testing-library/jest-dom": ^5.16.2
     "@testing-library/react": ^12.1.3
