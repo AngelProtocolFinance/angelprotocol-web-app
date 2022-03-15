@@ -8,7 +8,15 @@ export type FormValues = {
   charityBanner: File[];
 };
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png"];
+const VALID_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/avif",
+  "image/bmp",
+  "image/svg+xml",
+  "image/tiff",
+  "image/webp",
+];
 
 export const SCHEMA = Yup.object().shape({
   charityOverview: Yup.string().required("Organization description required"),
