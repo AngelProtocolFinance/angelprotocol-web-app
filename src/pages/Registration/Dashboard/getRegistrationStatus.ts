@@ -9,7 +9,7 @@ export default function getRegistrationStatus(
     stepOne: { completed: !!user.PK },
     stepTwo: { completed: !!user.TerraWallet || !!data?.Metadata?.TerraWallet },
     stepThree: getStepThree(user, data),
-    stepFour: { completed: !!user.CharityLogo },
+    stepFour: getStepFour(user, data),
     reviewStatus:
       user?.RegistrationStatus === "Complete"
         ? ReviewStatus.Complete
@@ -60,3 +60,11 @@ const getLevelTwoDataExists = (user: User, data: any) =>
 const getLevelThreeDataExists = (user: User, data: any) =>
   user.AuditedFinancialReports?.length ||
   data?.Registration?.FinancialStatements?.length;
+
+const getStepFour = (user: User, data: any) => ({
+  completed:
+    (!!user.CharityLogo && !!user.CharityBanner && !!user.CharityOverview) ||
+    (!!data?.Registration?.CharityLogo &&
+      !!data?.Registration?.CharityBanner &&
+      !!data?.Registration?.CharityOverview),
+});
