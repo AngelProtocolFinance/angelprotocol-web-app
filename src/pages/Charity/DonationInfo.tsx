@@ -39,11 +39,11 @@ export function DonationInfo() {
         value: profileState.country_city_origin || "N/A",
         rating: false,
       },
-      // {
-      //   title: " annual avg overhead",
-      //   value: profileState.average_annual_budget,
-      //   rating: false,
-      // },
+      {
+        title: " avg annual Budget",
+        value: profileState.average_annual_budget || "N/A",
+        rating: false,
+      },
       {
         title: " annual avg donations",
         value: profileState.annual_revenue || "N/A",
