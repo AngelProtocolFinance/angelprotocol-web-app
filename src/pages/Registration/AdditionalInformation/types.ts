@@ -8,31 +8,43 @@ export type FormValues = {
   charityBanner: File[];
 };
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
-
-const FILE_SCHEMA = Yup.mixed<File>()
-  .test({
-    name: "fileSize",
-    message: "File size must be smaller than 25Mb",
-    test: (file) => (file?.size || 0) <= 25000000,
-  })
-  .test({
-    name: "fileType",
-    message: "Valid file types are PDF, JPG and PNG",
-    test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
-  });
+const VALID_MIME_TYPES = ["image/jpeg", "image/png"];
 
 export const SCHEMA = Yup.object().shape({
   charityOverview: Yup.string().required("Organization description required"),
   charityLogo: Yup.array<File>()
-    .of(FILE_SCHEMA)
+    .of(
+      Yup.mixed<File>()
+        .test({
+          name: "fileSize",
+          message: "Image size must be smaller than 300KB",
+          test: (file) => (file?.size || 0) <= 3e5,
+        })
+        .test({
+          name: "fileType",
+          message: "Valid file types are JPG, PNG and other image types",
+          test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
+        })
+    )
     .test({
       name: "exactlyOne",
       message: "Charity logo required",
       test: (arr) => arr?.length === 1,
     }),
   charityBanner: Yup.array<File>()
-    .of(FILE_SCHEMA)
+    .of(
+      Yup.mixed<File>()
+        .test({
+          name: "fileSize",
+          message: "Image size must be smaller than 1MB",
+          test: (file) => (file?.size || 0) <= 1e6,
+        })
+        .test({
+          name: "fileType",
+          message: "Valid file types are JPG, PNG and other image types",
+          test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
+        })
+    )
     .test({
       name: "exactlyOne",
       message: "Charity banner required",
