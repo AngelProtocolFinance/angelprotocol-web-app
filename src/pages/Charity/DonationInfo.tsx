@@ -1,5 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { unsdgs } from "constants/unsdgs";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -9,14 +7,16 @@ import {
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouteMatch, Link } from "react-router-dom";
-import { CharityParam } from "./types";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { useProfileState } from "services/aws/endowments/states";
+import useDonater from "components/Transactors/Donater/useDonater";
 import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
+import { unsdgs } from "constants/unsdgs";
 import { app, site } from "constants/routes";
-import useDonater from "components/Transactors/Donater/useDonater";
-import { useProfileState } from "services/aws/endowments/states";
+import { CharityParam } from "./types";
 
 export function DonationInfo() {
   const match = useRouteMatch<CharityParam>();
@@ -103,7 +103,9 @@ export function DonationInfo() {
                     : "pointer-events-none bg-grey-accent"
                 } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center`}
               >
-                EDIT PROFILE
+                <button disabled={profileState.is_placeholder}>
+                  EDIT PROFILE
+                </button>
               </Link>
             )}
             <button

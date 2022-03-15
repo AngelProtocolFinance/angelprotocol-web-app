@@ -19,7 +19,10 @@ export default function useChangeImage() {
   useEffect(() => {
     setLoading(true);
     if (fileList === null) {
-      setValue("charity_image", currImageRef.current);
+      setValue("charity_image", currImageRef.current, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
       return;
     }
     if (fileList.length > 0) {

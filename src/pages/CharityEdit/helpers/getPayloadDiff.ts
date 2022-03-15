@@ -1,15 +1,15 @@
-import { EditableProfileAttr } from "services/aws/endowments/types";
-
-export default function getPayloadDiff(
-  prev: EditableProfileAttr,
-  next: EditableProfileAttr
-) {
+export default function getPayloadDiff<T>(prev: T, next: T): Partial<T> {
   const diff: any = {};
   for (const key in prev) {
-    const _key = key as keyof EditableProfileAttr;
-    if (prev[_key] !== next[_key]) {
-      diff[_key] = next[_key];
+    if (prev[key] !== next[key]) {
+      diff[key] = next[key];
     }
   }
-  return diff as Partial<EditableProfileAttr>;
+  for (const key in next) {
+    if (next[key] && !prev[key]) {
+      diff[key] = next[key];
+    }
+  }
+
+  return diff;
 }
