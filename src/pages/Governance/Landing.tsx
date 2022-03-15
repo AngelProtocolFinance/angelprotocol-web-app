@@ -10,7 +10,7 @@ function DonationAdvert() {
   const history = useHistory();
   return (
     <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
-      <h4 className="text-white text-center font-normal text-lg mb-10 overflow-hidden">
+      <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden">
         The charity Marketplace is now open! Give directly to the endowment of
         your choice and get 10% back in HALO airdrops.
       </h4>
