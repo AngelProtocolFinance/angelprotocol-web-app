@@ -49,7 +49,6 @@ export default function useDonate() {
 
   //reset amount when changing currency
   useEffect(() => {
-    console.log(currency);
     if (denomRef.current !== currency) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
