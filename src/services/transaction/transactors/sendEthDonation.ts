@@ -46,6 +46,7 @@ export const sendEthDonation = createAsyncThunk(
         txHash: response.hash,
         chainId,
         isReceiptEnabled: typeof receiver !== "undefined",
+        isShareEnabled: true,
       });
     } catch (error) {
       handleEthError(error, updateTx);
