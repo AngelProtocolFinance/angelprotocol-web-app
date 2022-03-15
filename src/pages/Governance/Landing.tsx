@@ -3,11 +3,11 @@ import Figure from "./Figure";
 import Polls from "./Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { app, site } from "constants/routes";
 
 function DonationAdvert() {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
       <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden">
@@ -16,7 +16,7 @@ function DonationAdvert() {
       </h4>
       <div className="w-full flex justify-center">
         <button
-          onClick={() => history.push(`${site.app}/${app.marketplace}`)}
+          onClick={() => navigate(`${site.app}/${app.marketplace}`)}
           className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
         >
           Donate now
