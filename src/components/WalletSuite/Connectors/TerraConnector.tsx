@@ -15,7 +15,6 @@ export default function TerraConnector(props: Connection) {
   const { availableConnections, connect } = useWallet();
 
   function handleClick() {
-    alert(props.identifier);
     connect(props.type, props.identifier);
     setIcon(props.icon);
   }
