@@ -1,19 +1,19 @@
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import Select, { GroupBase, MenuPlacement, StylesConfig } from "react-select";
 
 type OptionType = { label: string; value: any };
 
-interface SelectorProps {
-  name: string;
+interface Props<T extends FieldValues> {
+  name: Path<T> & keyof T;
   placeholder?: string;
   options: OptionType[];
-  control: any;
+  control: Control<T, any>;
   onChange?: Function;
   disabled?: boolean;
   menuPlacement?: MenuPlacement;
 }
 
-export default function Selector(props: SelectorProps) {
+export default function Selector<T extends FieldValues>(props: Props<T>) {
   return (
     <Controller
       name={props.name}

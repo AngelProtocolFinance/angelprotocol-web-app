@@ -6,7 +6,7 @@ import { ContactDetails } from "./types";
 
 type Props = {
   label: string;
-  name: string;
+  name: keyof ContactDetails;
   options: OptionType[];
   control: Control<ContactDetails, object>;
   otherRoleErrorMessage: string | undefined;
@@ -22,7 +22,7 @@ export default function RoleSelector(props: Props) {
         {props.label}
         <span className="text-failed-red ml-0.5">*</span>
       </label>
-      <Selector
+      <Selector<ContactDetails>
         name={props.name}
         options={props.options}
         control={props.control}
