@@ -25,7 +25,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
             .map((connection) => {
               return <TerraConnector key={connection.name} {...connection} />;
             })}
-          {deviceType() !== DeviceType.MOBILE && <EthConnector />}
+          {deviceType() === DeviceType.DESKTOP && <EthConnector />}
         </Modal>
         {availableInstallations.length > 0 && (
           <>
