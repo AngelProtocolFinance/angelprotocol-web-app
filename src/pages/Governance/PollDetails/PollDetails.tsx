@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
-import useDetails from "./useDetails";
-import PollAction from "./PollAction";
 import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
+import usePollDetails from "../usePollDetails";
+import PollAction from "./PollAction";
 
-export default function Details() {
+export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
   const numPollId = idParamToNumber(pollId);
-  const details = useDetails(numPollId);
+  const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
       <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
