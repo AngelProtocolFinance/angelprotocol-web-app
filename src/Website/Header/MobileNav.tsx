@@ -5,9 +5,7 @@ import { web } from "constants/routes";
 export default function MobileNav() {
   const getClassNames = ({ isActive }: { isActive: boolean }) =>
     `uppercase text-angel-grey hover:text-angel-blue font-semibold font-heading px-2 py-1 rounded-md ${
-      isActive
-        ? "bg-angel-blue bg-opacity-10 shadow-inner pointer-events-none"
-        : ""
+      isActive ? "bg-angel-blue/10 shadow-inner pointer-events-none" : ""
     }`;
 
   return (

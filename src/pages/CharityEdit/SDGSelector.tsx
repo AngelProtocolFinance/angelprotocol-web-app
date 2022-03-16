@@ -11,7 +11,7 @@ export default function SDGSelector() {
       <select
         {...register("un_sdg")}
         id="sdg__number"
-        className="w-full focus:outline-none rounded-md bg-white bg-opacity-10 text-white text-opacity-80 border-none p-3 text-sm uppercase mt-1.5 shadow-inner"
+        className="w-full focus:outline-none rounded-md bg-white/10 text-white text-opacity-80 border-none p-3 text-sm uppercase mt-1.5 shadow-inner"
       >
         {Object.entries(unsdgs).map(([_key, val]) => (
           <option key={_key} value={_key} className={`text-sm text-angel-grey`}>

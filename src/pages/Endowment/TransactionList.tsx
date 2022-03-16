@@ -15,7 +15,7 @@ const TransactionList = (props: EndowmentAddrProps) => {
   }, [data, isError, isLoading]);
 
   return (
-    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto h-process">
+    <div className="col-span-2 flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 overflow-auto h-process">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Transaction History</span>
       </h3>
@@ -47,7 +47,7 @@ const TransactionItemInfo = (props: TransactionItemProps) => {
   const data = props.item;
 
   return (
-    <tr className="hover:bg-angel-blue text-white bg-opacity-20 border-b-2 border-angel-blue/20">
+    <tr className="hover:bg-angel-blue/20 text-white border-b-2 border-angel-blue/20">
       <td className="py-2 pl-4">
         <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
         <p className="text-base capitalize">{data.transaction_type}</p>

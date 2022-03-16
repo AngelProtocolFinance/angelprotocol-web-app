@@ -6,8 +6,8 @@ export default function Filter(props: {
     <div
       className={`flex items-center justify-self-start mt-2 ml-2 rounded-sm ${
         props.filtered
-          ? "border border-angel-blue/80 bg-angel-blue bg-opacity-30"
-          : "border border-grey-accent/80 bg-thin-grey bg-opacity-30"
+          ? "border border-angel-blue/80 bg-angel-blue/30"
+          : "border border-grey-accent/80 bg-thin-grey/30"
       }`}
     >
       <input

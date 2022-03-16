@@ -4,8 +4,7 @@ import { web } from "constants/routes";
 export default function WebMenu() {
   const linkStyles = {
     className: `hover:text-angel-orange uppercase inline-flex items-center text-angel-blue p-2 rounded-md`,
-    activeClassName:
-      "shadow-inner bg-angel-blue bg-opacity-10 pointer-events-none",
+    activeClassName: "shadow-inner bg-angel-blue/10 pointer-events-none",
   };
   const getClassNames = ({ isActive }: { isActive: boolean }) =>
     `${linkStyles.className} ${isActive ? linkStyles.activeClassName : ""}`;

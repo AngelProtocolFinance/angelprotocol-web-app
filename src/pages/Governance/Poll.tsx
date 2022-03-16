@@ -16,11 +16,11 @@ export default function Poll(props: { poll_id: number }) {
   return (
     <div
       onClick={goToPollDetail}
-      className="cursor-pointer border border-white/10 bg-white bg-opacity-10 hover:bg-opacity-20 rounded-md p-6 text-white-grey text-opacity-80 shadow-lg"
+      className="cursor-pointer border border-white/10 bg-white/10 hover:bg-white/20 rounded-md p-6 text-white-grey text-opacity-80 shadow-lg"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
-        <p className="text-white bg-white bg-opacity-10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
+        <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
           {details.vote_ended && details.status === PollStatus.in_progress
             ? "vote period ended"
             : details.status.replace("_", " ")}

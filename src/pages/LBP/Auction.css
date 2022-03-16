@@ -31,8 +31,7 @@
   @apply p-5;
   @apply gap-3;
   @apply rounded-md;
-  @apply bg-white;
-  @apply bg-opacity-10;
+  @apply bg-white/10;
   @apply border;
   @apply border-white/10;
   @apply shadow-xl;

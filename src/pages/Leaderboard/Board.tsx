@@ -21,9 +21,9 @@ export default function Board() {
         })}
       </p>
       {isLoading && (
-        <div className="h-40 bg-white bg-opacity-5 rounded-lg grid place-items-center">
+        <div className="h-40 bg-white/5 rounded-lg grid place-items-center">
           <Loader
-            bgColorClass="bg-white-grey bg-opacity-80"
+            bgColorClass="bg-white-grey/80"
             gapClass="gap-2"
             widthClass="w-4"
           />

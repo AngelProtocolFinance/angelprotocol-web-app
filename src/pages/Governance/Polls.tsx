@@ -30,7 +30,7 @@ export default function Polls() {
 
   return (
     <div className="mt-4">
-      <div className="border border-white/10 px-6 py-2 bg-white bg-opacity-10 shadow-md rounded-md flex items-center mb-3">
+      <div className="border border-white/10 px-6 py-2 bg-white/10 shadow-md rounded-md flex items-center mb-3">
         <div className="flex gap-4 items-center">
           <p className="uppercase text-2xl font-bold text-white-grey mr-4">
             Polls
