@@ -14,12 +14,12 @@ export default function Proposer() {
       <Routes>
         <Route
           path={proposal_types.change_endowment_status}
-          element={EndowmentUpdator}
+          element={<EndowmentUpdator />}
         />
-        <Route path={proposal_types.create_fund} element={FundCreator} />
-        <Route path={proposal_types.destroy_fund} element={FundDestroyer} />
-        <Route path={proposal_types.update_fund} element={FundUpdator} />
-        <Route index element={MemberUpdator} />
+        <Route path={proposal_types.create_fund} element={<FundCreator />} />
+        <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
+        <Route path={proposal_types.update_fund} element={<FundUpdator />} />
+        <Route index element={<MemberUpdator />} />
       </Routes>
     </div>
   );
@@ -33,7 +33,7 @@ function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
       <ProposalCategory title="AP CW4" />
-      <NavLink to={proposal_types.admin_update_members} className={styler}>
+      <NavLink end to={proposal_types.index} className={styler}>
         Update AP Members
       </NavLink>
       <ProposalCategory title="Index fund" classes="mt-4" />

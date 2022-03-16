@@ -7,7 +7,7 @@ export default function PollSelector({
 }) {
   return (
     <label
-      className="w-full rounded-md bg-white bg-opacity-10 border-none p-3 px-5 text-sm uppercase shadow-inner"
+      className="rounded-md bg-white bg-opacity-10 border-none p-3 px-5 text-sm uppercase shadow-inne mr-auto"
       htmlFor="poll_filter"
     >
       <select

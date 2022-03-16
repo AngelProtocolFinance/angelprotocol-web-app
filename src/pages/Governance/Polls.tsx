@@ -29,14 +29,12 @@ export default function Polls() {
   );
 
   return (
-    <div className="mt-4">
-      <div className="border border-opacity-10 px-6 py-2 bg-white bg-opacity-10 shadow-md rounded-md flex items-center mb-3">
-        <div className="flex gap-4 items-center">
-          <p className="uppercase text-2xl font-bold text-white-grey mr-4">
-            Polls
-          </p>
-          <PollSelector onChange={(value) => setPollStatus(value)} />
-        </div>
+    <div className="mt-4 bg-white bg-opacity-10 shadow-md rounded-md p-3">
+      <div className="w-full flex gap-2 items-center mb-2">
+        <p className="uppercase text-2xl font-bold text-white-grey mr-4">
+          Polls
+        </p>
+        <PollSelector onChange={(value) => setPollStatus(value)} />
         <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center mr-2 px-3">
           <span className="font-heading uppercase text-2xs mr-2">
             current block{" "}
@@ -44,20 +42,19 @@ export default function Polls() {
           <SiHiveBlockchain className="mr-1" />
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
-        <div className="flex flex-wrap gap-2 justify-end self-end">
-          <Button
-            onClick={() => {
-              window.open(
-                "https://forum.angelprotocol.io",
-                "_blank",
-                "noopener noreferrer"
-              );
-            }}
-          >
-            Join Forum
-          </Button>
-          <Button onClick={showPoller}>Create Poll</Button>
-        </div>
+
+        <Button
+          onClick={() => {
+            window.open(
+              "https://forum.angelprotocol.io",
+              "_blank",
+              "noopener noreferrer"
+            );
+          }}
+        >
+          Join Forum
+        </Button>
+        <Button onClick={showPoller}>Create Poll</Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {renderPolls(gov_polls)}

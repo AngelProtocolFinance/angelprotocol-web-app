@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export default function AdminNav() {
   return (
     <div className="bg-white bg-opacity-10 shadow-inner flex divide-x">
-      <NavLink to={admin.index} className={styler}>
+      <NavLink end to={admin.index} className={styler}>
         proposals
       </NavLink>
       <NavLink to={admin.alliance} className={styler}>

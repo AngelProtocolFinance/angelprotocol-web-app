@@ -40,6 +40,7 @@ export default function Views() {
         <Route path={`${app.login}`} element={<Login />} />
         <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />
+        <Route path={`${app.admin}/*`} element={<Admin />} />
         <Route path={`${app.auction}`} element={<Auction />} />
         <Route path={`${app.endowment}/:address`} element={<Endowment />} />
         <Route path={`${app.donation}/:address`} element={<Donation />} />

@@ -13,7 +13,6 @@ import AllianceMembers from "./AllianceMembers/AllianceMembers";
 export default function Admin() {
   const wallet = useConnectedWallet();
   const { member, isMemberLoading } = useMember();
-  console.log(member);
 
   if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
@@ -21,18 +20,18 @@ export default function Admin() {
     return <GuardPrompt message="Checking wallet credential" showLoader />;
   } else if (!member.weight) {
     return <GuardPrompt message="You are not authorized to view this page" />;
-  }
-  return (
-    <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
-      <AdminNav />
-      <Routes>
-        <Route path={`${admin.proposal}/:id`} element={Details} />
-        <Route path={admin.proposal_types} element={Proposer} />
-        <Route path={admin.alliance} element={AllianceMembers} />
-        <Route index element={Proposals} />
-      </Routes>
-    </div>
-  );
+  } else
+    return (
+      <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
+        <AdminNav />
+        <Routes>
+          <Route path={`${admin.proposal}/:id`} element={<Details />} />
+          <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
+          <Route path={admin.alliance} element={<AllianceMembers />} />
+          <Route index element={<Proposals />} />
+        </Routes>
+      </div>
+    );
 }
 
 function GuardPrompt(props: { message: string; showLoader?: true }) {
