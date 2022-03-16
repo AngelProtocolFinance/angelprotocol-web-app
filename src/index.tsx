@@ -2,7 +2,7 @@ import "./index.css";
 import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { site } from "./constants/routes";
 import { Provider } from "react-redux";
 import { store } from "store/store";
@@ -20,10 +20,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <Suspense fallback={<LoaderComponent />}>
-          <Switch>
-            <Route path={site.app} component={App} />
-            <Route path={site.home} component={Website} />
-          </Switch>
+          <Routes>
+            <Route path={`${site.app}/*`} element={<App />} />
+            <Route path={`${site.home}*`} element={<Website />} />
+          </Routes>
         </Suspense>
       </BrowserRouter>
     </Provider>

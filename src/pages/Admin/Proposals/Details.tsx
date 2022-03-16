@@ -1,16 +1,17 @@
-import { RouteComponentProps } from "react-router";
-import { useProposal } from "services/terra/admin/queriers";
+import { useParams } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
+import { useProposal } from "services/terra/admin/queriers";
+import { EmbeddedWasmMsg } from "contracts/types";
+import useDetails, { ProposalDetails } from "./useDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
-import useDetails, { ProposalDetails } from "./useDetails";
-import { EmbeddedWasmMsg } from "contracts/types";
 import VoteStat from "./VoteStat";
 
 export type ProposalIdParam = { id: string };
 
-export default function Details(props: RouteComponentProps<ProposalIdParam>) {
-  const proposalId = props.match.params.id;
+export default function Details() {
+  const params = useParams<ProposalIdParam>();
+  const proposalId = params.id;
   const { proposal } = useProposal(proposalId);
   const proposalDetails = useDetails(proposal);
 

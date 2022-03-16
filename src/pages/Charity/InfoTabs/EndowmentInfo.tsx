@@ -1,12 +1,12 @@
 import toCurrency from "helpers/toCurrency";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { CharityParam } from "../types";
 
 export function EndowmentInfo() {
-  const { params } = useRouteMatch<CharityParam>();
-  const { profileState } = useProfileState(params.address);
+  const { address } = useParams<CharityParam>();
+  const { profileState } = useProfileState(address!);
   const accountDetails = [
     {
       type: "Current Account",

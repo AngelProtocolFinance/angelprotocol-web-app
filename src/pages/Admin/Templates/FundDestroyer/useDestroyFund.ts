@@ -1,5 +1,5 @@
 import { useConnectedWallet } from "@terra-money/use-wallet";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
@@ -15,7 +15,7 @@ import { FundDestroyValues } from "./fundDestroyerSchema";
 
 export default function useDestroyFund() {
   const { handleSubmit } = useFormContext<FundDestroyValues>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -46,7 +46,7 @@ export default function useDestroyFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => history.push(`${site.app}/${app.admin}`),
+        redirect: () => navigate(`${site.app}/${app.admin}`),
       })
     );
     showModal(TransactionPrompt, {});

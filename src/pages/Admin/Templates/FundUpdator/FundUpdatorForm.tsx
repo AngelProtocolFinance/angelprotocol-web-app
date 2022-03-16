@@ -26,7 +26,7 @@ export default function FundUpdatorForm() {
         required
       />
       <Label _required>Select fund to update</Label>
-      <FundSelection<FV> />
+      <FundSelection<FV> fieldName="fundId" />
 
       {isFundSelected && (
         <>

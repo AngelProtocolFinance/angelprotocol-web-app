@@ -1,5 +1,4 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import EndowmentUpdateForm from "./EndowmentUpdateForm";
 import {

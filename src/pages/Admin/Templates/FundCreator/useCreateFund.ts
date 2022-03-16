@@ -12,13 +12,13 @@ import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
 import { app, site } from "constants/routes";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGetter, useSetter } from "store/accessors";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
@@ -97,7 +97,7 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => history.push(`${site.app}/${app.admin}`),
+        redirect: () => navigate(`${site.app}/${app.admin}`),
       })
     );
     showModal(TransactionPrompt, {});

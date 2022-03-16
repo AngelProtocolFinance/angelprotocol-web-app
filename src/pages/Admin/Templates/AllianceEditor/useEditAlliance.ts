@@ -1,4 +1,4 @@
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -15,7 +15,7 @@ import { AllianceEditValues } from "./alllianceEditSchema";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const history = useHistory();
+  const navigate = useNavigate();
   const wallet = useConnectedWallet();
   const allianceMembers = useGetter((state) => state.admin.allianceMembers);
   const { showModal } = useSetModal();
@@ -73,7 +73,7 @@ export default function useEditAlliance() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => history.push(`${site.app}/${app.admin}`),
+        redirect: () => navigate(`${site.app}/${app.admin}`),
       })
     );
     showModal(TransactionPromp, {});

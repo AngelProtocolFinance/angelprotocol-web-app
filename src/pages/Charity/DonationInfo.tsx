@@ -8,7 +8,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
-import { useRouteMatch, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CharityParam } from "./types";
 import {
   DonationInfoLoader,
@@ -19,10 +19,9 @@ import useDonater from "components/Transactors/Donater/useDonater";
 import { useProfileState } from "services/aws/endowments/states";
 
 export function DonationInfo() {
-  const match = useRouteMatch<CharityParam>();
-  const charity_addr = match.params.address;
-  const showDonater = useDonater({ to: "charity", receiver: charity_addr });
-  const { profileState, isProfileLoading } = useProfileState(charity_addr);
+  const { address: charity_addr } = useParams<CharityParam>();
+  const showDonater = useDonater({ to: "charity", receiver: charity_addr! });
+  const { profileState, isProfileLoading } = useProfileState(charity_addr!);
   const sdg = unsdgs[+profileState.un_sdg];
 
   const wallet = useConnectedWallet();
@@ -80,21 +79,19 @@ export function DonationInfo() {
               SDG #{profileState.un_sdg}: {sdg?.title}
             </span>
           )}
-          {profileState.url ? (
-            <a
-              href={profileState.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-5xl font-bold text-white uppercase tracking-wide hover:text-angel-blue"
-            >
-              <span>{profileState.charity_name}</span>
+          <a
+            href={profileState.url || ""}
+            target="_blank"
+            rel="noreferrer"
+            className={`text-5xl font-bold text-white uppercase tracking-wide break-all ${
+              profileState.url && "hover:text-angel-blue"
+            }`}
+          >
+            <span>{profileState.charity_name}</span>
+            {profileState.url && (
               <FaExternalLinkAlt className="inline ml-2 mt-1" size={15} />
-            </a>
-          ) : (
-            <h2 className="text-5xl font-bold text-white uppercase tracking-wide">
-              {profileState.charity_name}
-            </h2>
-          )}
+            )}
+          </a>
           <div className="flex flex-row gap-2 mt-4">
             {isCharityOwner && (
               <Link

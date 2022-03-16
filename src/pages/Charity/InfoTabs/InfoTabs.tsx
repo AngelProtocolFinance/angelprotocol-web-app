@@ -1,20 +1,18 @@
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { charity } from "constants/routes";
 import { EndowmentInfo } from "./EndowmentInfo";
 import Overview from "./Overview";
 
 export default function InfoTabs() {
-  const { path } = useRouteMatch();
-
   return (
-    <Switch>
-      <Route path={`${path}${charity.overview}`} component={Overview} />
-      <Route path={`${path}${charity.endowment}`} component={EndowmentInfo} />
-      <Route path={`${path}${charity.programs}`} component={Overview} />
-      <Route path={`${path}${charity.media}`} component={Overview} />
-      <Route path={`${path}${charity.governance}`} component={Overview} />
-      <Route path={`${path}`} component={Overview} />
-    </Switch>
+    <Routes>
+      <Route path={`${charity.overview}`} element={<Overview />} />
+      <Route path={`${charity.endowment}`} element={<EndowmentInfo />} />
+      <Route path={`${charity.programs}`} element={<Overview />} />
+      <Route path={`${charity.media}`} element={<Overview />} />
+      <Route path={`${charity.governance}`} element={<Overview />} />
+      <Route path="*" element={<Overview />} />
+    </Routes>
   );
 }
 

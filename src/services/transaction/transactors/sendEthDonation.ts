@@ -2,25 +2,33 @@ import { ethers } from "ethers";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
-import { XdefiWindow } from "services/provider/types";
+import { Dwindow, Providers } from "services/provider/types";
 import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 import { StageUpdator, Step } from "../types";
+import { RootState } from "store/store";
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
-  async (args: EthDonateArgs, { dispatch }) => {
+  async (args: EthDonateArgs, { dispatch, getState }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
-    try {
-      const xwindow = window as XdefiWindow;
 
+    try {
+      const dwindow = window as Dwindow;
+      const state = getState() as RootState;
+      const activeProvider = state.provider.active;
       updateTx({ step: Step.submit, message: "Submitting transaction.." });
-      const provider = new ethers.providers.Web3Provider(
-        xwindow.xfi?.ethereum!
-      );
+      let provider: ethers.providers.Web3Provider;
+
+      if (activeProvider === Providers.ethereum) {
+        provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
+      } else {
+        provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
+      }
+
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
@@ -46,8 +54,10 @@ export const sendEthDonation = createAsyncThunk(
         txHash: response.hash,
         chainId,
         isReceiptEnabled: typeof receiver !== "undefined",
+        isShareEnabled: true,
       });
     } catch (error) {
+      console.error(error);
       handleEthError(error, updateTx);
     }
   }

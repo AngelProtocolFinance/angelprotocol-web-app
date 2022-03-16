@@ -44,7 +44,7 @@ export function useProposals() {
   return { proposals: data, isProposalsLoading: isFetching || isLoading };
 }
 
-export function useProposal(pollId: string) {
+export function useProposal(pollId?: string) {
   const { useProposalQuery } = admin_api;
   const { wallet, contract } = useContract<A, T>(Admin);
 

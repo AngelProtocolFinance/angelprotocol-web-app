@@ -28,6 +28,7 @@ export enum app {
   govern = "govern",
   auction = "auction",
   endowment = "endowment",
+  donation = "donation",
 }
 
 export enum govern {
@@ -36,11 +37,11 @@ export enum govern {
 }
 
 export enum charity {
-  overview = "/overview",
-  endowment = "/endowment",
-  programs = "/programs",
-  media = "/media",
-  governance = "/governance",
+  overview = "overview",
+  endowment = "endowment",
+  programs = "programs",
+  media = "media",
+  governance = "governance",
 }
 
 export enum admin {
