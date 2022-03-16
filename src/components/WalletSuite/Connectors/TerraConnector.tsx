@@ -3,7 +3,6 @@ import {
   ConnectType,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { DeviceType, deviceType } from "helpers/deviceType";
 import { useEffect } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
