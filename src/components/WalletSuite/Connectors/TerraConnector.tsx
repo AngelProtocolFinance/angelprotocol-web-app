@@ -5,27 +5,29 @@ import {
 } from "@terra-money/wallet-provider";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import { useEffect } from "react";
+import { TerraIdentifiers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
 import { setIcon } from "../manageIcon";
 import ConnectButton from "./ConnectButton";
 
 export default function TerraConnector(props: Connection) {
   const { isUpdating } = useGetter((state) => state.wallet);
-  const { availableConnectTypes, connect } = useWallet();
+  const { availableConnections, connect } = useWallet();
 
   function handleClick() {
+    alert(props.identifier);
     connect(props.type, props.identifier);
     setIcon(props.icon);
   }
 
   useEffect(() => {
-    const isSafePal =
-      deviceType() === DeviceType.MOBILE &&
-      availableConnectTypes.includes(ConnectType.EXTENSION);
+    const isSafePal = availableConnections.some(
+      (connection) => connection.identifier === TerraIdentifiers.safepal
+    );
 
-    isSafePal && connect(ConnectType.EXTENSION);
+    isSafePal && connect(ConnectType.EXTENSION, TerraIdentifiers.safepal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [availableConnectTypes]);
+  }, [availableConnections]);
 
   return (
     <ConnectButton
