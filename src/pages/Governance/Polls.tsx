@@ -47,7 +47,7 @@ export default function Polls() {
         <div className="flex flex-wrap gap-2 justify-end self-end">
           <Action
             title="Join Forum"
-            action={() => {
+            onClick={() => {
               window.open(
                 "https://forum.angelprotocol.io",
                 "_blank",
@@ -55,7 +55,7 @@ export default function Polls() {
               );
             }}
           />
-          <Action title="Create Poll" action={showPoller} />
+          <Action title="Create Poll" onClick={showPoller} />
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

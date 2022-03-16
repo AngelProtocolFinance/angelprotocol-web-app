@@ -28,10 +28,10 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 self-end justify-end">
-        <Action title="Trade Halo" action={showSwapper} />
-        <Action title="Stake" action={showStaker(true)} />
-        <Action title="Unstake" action={showStaker(false)} />
-        <Action title="Claim" action={showClaimer} />
+        <Action title="Trade Halo" onClick={showSwapper} />
+        <Action title="Stake" onClick={showStaker(true)} />
+        <Action title="Unstake" onClick={showStaker(false)} />
+        <Action title="Claim" onClick={showClaimer} />
       </div>
     </div>
   );
