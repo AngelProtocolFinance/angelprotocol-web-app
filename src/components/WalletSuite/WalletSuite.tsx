@@ -1,7 +1,7 @@
 import { IoWalletSharp } from "react-icons/io5";
 import Display from "./Display";
 import { useEffect, useState } from "react";
-import Connectors from "./Connectors";
+import ConnectOptions from "./ConnectOptions";
 import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
 import useWalletUpdator from "./useWalletUpdator";
@@ -10,14 +10,14 @@ export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);
   useWalletUpdator(provider.active);
 
-  const [connectorsShown, showConnectors] = useState(false);
+  const [connectOptionsShown, showConnectOptions] = useState(false);
+  const toggleConnectOptions = () => showConnectOptions((p) => !p);
+  const hideConnectOptions = () => showConnectOptions(false);
 
-  const toggleConnector = () => showConnectors((p) => !p);
-  const hideConnectors = () => showConnectors(false);
   const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isProviderActive && showConnectors(false);
+    isProviderActive && showConnectOptions(false);
     //eslint-disable-next-line
   }, [isProviderActive]);
 
@@ -27,14 +27,16 @@ export default function WalletSuite() {
         <button
           className="flex py-2 px-3 items-center text-white  "
           disabled={provider.isSwitching}
-          onClick={toggleConnector}
+          onClick={toggleConnectOptions}
         >
           <IoWalletSharp className="text-white text-xl mr-2" />
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
       {isProviderActive && <Display />}
-      {connectorsShown && <Connectors closeHandler={hideConnectors} />}
+      {connectOptionsShown && (
+        <ConnectOptions closeHandler={hideConnectOptions} />
+      )}
     </div>
   );
 }

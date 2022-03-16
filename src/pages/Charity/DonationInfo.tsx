@@ -8,7 +8,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
-import { useRouteMatch, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CharityParam } from "./types";
 import {
   DonationInfoLoader,
@@ -19,10 +19,9 @@ import useDonater from "components/Transactors/Donater/useDonater";
 import { useProfileState } from "services/aws/endowments/states";
 
 export function DonationInfo() {
-  const match = useRouteMatch<CharityParam>();
-  const charity_addr = match.params.address;
-  const showDonater = useDonater({ to: "charity", receiver: charity_addr });
-  const { profileState, isProfileLoading } = useProfileState(charity_addr);
+  const { address: charity_addr } = useParams<CharityParam>();
+  const showDonater = useDonater({ to: "charity", receiver: charity_addr! });
+  const { profileState, isProfileLoading } = useProfileState(charity_addr!);
   const sdg = unsdgs[+profileState.un_sdg];
 
   const wallet = useConnectedWallet();
@@ -40,11 +39,11 @@ export function DonationInfo() {
         value: profileState.country_city_origin || "N/A",
         rating: false,
       },
-      // {
-      //   title: " annual avg overhead",
-      //   value: profileState.average_annual_budget,
-      //   rating: false,
-      // },
+      {
+        title: " avg annual Budget",
+        value: profileState.average_annual_budget || "N/A",
+        rating: false,
+      },
       {
         title: " annual avg donations",
         value: profileState.annual_revenue || "N/A",

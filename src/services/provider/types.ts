@@ -1,7 +1,7 @@
 import { ExternalProvider } from "@ethersproject/providers/src.ts/web3-provider";
 export enum Providers {
   none = "none",
-  // ethereum = "ethereum",
+  ethereum = "ethereum",
   terra = "terra",
 
   // phantom = "phantom",
@@ -14,9 +14,9 @@ export type State = {
   isSwitching: boolean;
 };
 
-export interface XdefiWindow extends Window {
+export interface Dwindow extends Window {
   xfi?: {
     ethereum?: ExternalProvider;
-    terra?: any;
   };
+  ethereum?: ExternalProvider;
 }

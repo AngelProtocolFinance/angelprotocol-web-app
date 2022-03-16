@@ -1,4 +1,4 @@
-import { ConnectedWallet } from "@terra-dev/wallet-types";
+import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { DonateValues } from "components/Transactors/Donater/types";

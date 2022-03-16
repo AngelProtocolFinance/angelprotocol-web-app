@@ -37,7 +37,8 @@ const logDonation: DonationLogger = async (
     body: JSON.stringify(txLogPayload),
   });
 
-  if (response.status !== 201) {
+  //success = 2xx
+  if (response.status < 200 || response.status > 299) {
     throw new LogDonationFail(chainId, txhash);
   }
 };

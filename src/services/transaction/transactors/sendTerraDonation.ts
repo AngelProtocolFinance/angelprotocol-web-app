@@ -59,6 +59,8 @@ export const sendTerraDonation = createAsyncThunk(
             txHash: txInfo.txhash,
             chainId,
             isReceiptEnabled: typeof receiver !== "undefined",
+            //share is enabled for both individual and tca donations
+            isShareEnabled: true,
           });
         } else {
           updateStage({

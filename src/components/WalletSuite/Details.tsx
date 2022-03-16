@@ -9,13 +9,19 @@ import Holdings from "./Holdings";
 import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
+import { useSetMetamask } from "providers/Metamask/Metamask";
+import { Providers } from "services/provider/types";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
-  const { disconnect } = useWallet();
   const dispatch = useSetter();
+  const { active: activeProvider } = useGetter((state) => state.provider);
+  const { disconnect: disconnectTerra } = useWallet();
+  const { disconnect: disconnectMetamask } = useSetMetamask();
+
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
+
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
@@ -26,9 +32,15 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleFilter = () => setFilter((p) => !p);
 
   const isEmpty = filtered_coins.length <= 0;
+
   const handleDisconnect = () => {
     dispatch(resetWallet());
-    disconnect();
+    if (activeProvider === Providers.terra) {
+      disconnectTerra();
+    }
+    if (activeProvider === Providers.ethereum) {
+      disconnectMetamask();
+    }
   };
 
   return (

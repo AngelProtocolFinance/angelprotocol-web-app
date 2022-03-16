@@ -1,13 +1,11 @@
-Closes #<issue_number>
+ClickUp ticket: <ticket_link>
+Closes #<GH_issue_number>
 
 ## Description of the Problem / Feature
 
-
 ## Explanation of the solution
 
-
 ## Instructions on making this work
-
 
 ## UI changes for review
 
