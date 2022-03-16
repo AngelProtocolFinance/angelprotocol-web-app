@@ -3,7 +3,7 @@ import { useStakingAPRQuery } from "services/aws/governance";
 import useSwapper from "components/Transactors/Swapper/useSwapper";
 import useStaker from "components/Transactors/Staker/useStaker";
 import useClaimer from "components/Transactors/Claimer/useClaimer";
-import Action from "./Action";
+import Button from "./Button";
 
 export default function Portal() {
   const { data } = useStakingAPRQuery(null);
@@ -28,10 +28,10 @@ export default function Portal() {
         </span>
       </div>
       <div className="flex flex-wrap gap-2 self-end justify-end">
-        <Action title="Trade Halo" onClick={showSwapper} />
-        <Action title="Stake" onClick={showStaker(true)} />
-        <Action title="Unstake" onClick={showStaker(false)} />
-        <Action title="Claim" onClick={showClaimer} />
+        <Button onClick={showSwapper}>Trade Halo</Button>
+        <Button onClick={showStaker(true)}>Stake</Button>
+        <Button onClick={showStaker(false)}>Unstake</Button>
+        <Button onClick={showClaimer}>Claim</Button>
       </div>
     </div>
   );
