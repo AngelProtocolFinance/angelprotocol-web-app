@@ -11,10 +11,8 @@ export type FormValues = {
 const VALID_MIME_TYPES = [
   "image/jpeg",
   "image/png",
-  "image/avif",
   "image/bmp",
   "image/svg+xml",
-  "image/tiff",
   "image/webp",
 ];
 
