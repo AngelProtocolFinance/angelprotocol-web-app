@@ -34,7 +34,7 @@ export enum app {
 
 export enum govern {
   index = "",
-  poll = "poll",
+  pollDetails = "pollDetails",
 }
 
 export enum charity {
