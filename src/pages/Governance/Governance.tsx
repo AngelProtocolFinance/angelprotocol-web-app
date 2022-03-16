@@ -1,15 +1,13 @@
-import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import { govern } from "constants/routes";
 import Landing from "./Landing";
-
-const Details = lazy(() => import("./Details"));
+import PollDetails from "./PollDetails/PollDetails";
 
 export default function Governance() {
   return (
     <Routes>
       <Route path={`${govern.index}`} element={<Landing />} />
-      <Route path={`${govern.poll}/:id`} element={<Details />} />
+      <Route path={`${govern.pollDetails}/:id`} element={<PollDetails />} />
     </Routes>
   );
 }
