@@ -9,7 +9,6 @@ interface SelectorProps {
   placeholder?: string;
   options: OptionType[];
   control: any;
-  register: Function;
   onChange?: Function;
   disabled?: boolean;
   menuPlacement?: MenuPlacement;
@@ -18,10 +17,8 @@ interface SelectorProps {
 export const Selector = React.memo((props: SelectorProps) => {
   return (
     <Controller
-      {...props.register(props.name)}
       name={props.name}
       control={props.control}
-      ref={null}
       render={({ field: { value, onChange } }) => {
         return (
           <Select

@@ -64,7 +64,6 @@ export default function ReceiptForm() {
               label: item.label,
             }))}
             control={control}
-            register={register}
             menuPlacement="top"
           />
           <ErrorMessage

@@ -26,7 +26,6 @@ export default function RoleSelector(props: Props) {
         name={props.name}
         options={props.options}
         control={props.control}
-        register={props.register}
         onChange={props.onChange}
         disabled={props.disabled}
       />
