@@ -6,6 +6,7 @@ import { Dwindow } from "services/provider/types";
 import WalletPrompt from "../WalletPrompt";
 import ConnectButton from "./ConnectButton";
 import { RejectMetamaskLogin } from "providers/Metamask/useEthereum";
+import { deviceType, DeviceType } from "helpers/deviceType";
 
 const dwindow = window as Dwindow;
 export default function EthConnector() {
@@ -34,6 +35,15 @@ export default function EthConnector() {
          * only when xdefi is not prioritized will show
          * if there's an existing window.ethereum object
          */
+      } else if (
+        deviceType() === DeviceType.MOBILE &&
+        !(window as Dwindow).ethereum
+      ) {
+        showModal(WalletPrompt, {
+          message:
+            "Please use the browser inside MetaMask Mobile App to connect",
+        });
+        return;
       } else if (!dwindow.ethereum?.isMetaMask) {
         dwindow.open(metamaskInstallLink, "_blank", "noopener noreferrer");
       } else {
