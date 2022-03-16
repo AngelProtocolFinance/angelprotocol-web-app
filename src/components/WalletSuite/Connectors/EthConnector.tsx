@@ -36,7 +36,7 @@ export default function EthConnector() {
          * if there's an existing window.ethereum object
          */
       } else if (
-        deviceType() === DeviceType.MOBILE &&
+        deviceType() !== DeviceType.DESKTOP &&
         !(window as Dwindow).ethereum
       ) {
         showModal(WalletPrompt, {
