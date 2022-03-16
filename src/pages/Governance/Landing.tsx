@@ -1,6 +1,6 @@
 import { currency_text, denoms } from "constants/currency";
 import Figure from "./Figure";
-import Polls from "./Polls";
+import Polls from "./Polls/Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
 import { useNavigate } from "react-router-dom";

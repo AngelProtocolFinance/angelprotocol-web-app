@@ -1,7 +1,5 @@
-import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
@@ -10,10 +8,7 @@ import { site, app } from "constants/routes";
 import useEditForm from "./useEditForm";
 
 export default function EditForm() {
-  const {
-    formState: { isSubmitting, isDirty },
-  } = useFormContext<EditableProfileAttr>();
-  const { endowment_addr, updateProfile } = useEditForm();
+  const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();
 
   return (
     <form className="max-w-3xl w-full" onSubmit={updateProfile}>
@@ -85,7 +80,7 @@ export default function EditForm() {
         placeholder="hello@angelprotocol.io"
       />
       <button
-        disabled={isSubmitting || !isDirty}
+        disabled={isSubmitDisabled}
         type="submit"
         className="bg-angel-blue hover:bg-angel-orange disabled:bg-grey-accent rounded-md uppercase text-white-grey text-sm font-bold w-full p-4 mb-6"
       >
