@@ -102,9 +102,7 @@ export function DonationInfo() {
                     : "pointer-events-none bg-grey-accent"
                 } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center`}
               >
-                <button disabled={profileState.is_placeholder}>
-                  EDIT PROFILE
-                </button>
+                EDIT PROFILE
               </Link>
             )}
             <button
