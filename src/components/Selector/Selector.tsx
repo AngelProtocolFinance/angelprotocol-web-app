@@ -18,7 +18,6 @@ interface SelectorProps {
 export const Selector = React.memo((props: SelectorProps) => {
   return (
     <Controller
-      // this 'register' might be redundant due to already passing 'control' and 'name'
       {...props.register(props.name)}
       name={props.name}
       control={props.control}
