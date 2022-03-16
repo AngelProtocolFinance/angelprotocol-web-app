@@ -1,4 +1,4 @@
-import { Selector } from "components/Selector";
+import Selector from "components/Selector";
 import { unsdgs } from "constants/unsdgs";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";

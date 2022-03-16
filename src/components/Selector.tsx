@@ -1,6 +1,5 @@
-import React from "react";
-import Select, { MenuPlacement, GroupBase, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
+import Select, { GroupBase, MenuPlacement, StylesConfig } from "react-select";
 
 type OptionType = { label: string; value: any };
 
@@ -14,7 +13,7 @@ interface SelectorProps {
   menuPlacement?: MenuPlacement;
 }
 
-export const Selector = React.memo((props: SelectorProps) => {
+export default function Selector(props: SelectorProps) {
   return (
     <Controller
       name={props.name}
@@ -37,7 +36,7 @@ export const Selector = React.memo((props: SelectorProps) => {
       }}
     />
   );
-});
+}
 
 const selectStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
   control: (provided, state) => ({
