@@ -10,8 +10,9 @@ import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
 import { useSetMetamask } from "providers/Metamask/Metamask";
-import { Providers } from "services/provider/types";
+import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
+import { DeviceType, deviceType } from "helpers/deviceType";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
@@ -44,9 +45,11 @@ export default function Details(props: { closeHandler: () => void }) {
     }
   };
 
-  const isSafePal = availableConnections.some(
-    (connection) => connection.identifier === TerraIdentifiers.safepal
-  );
+  const isSafePal =
+    availableConnections.some(
+      (connection) => connection.identifier === TerraIdentifiers.safepal
+    ) ||
+    (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
     <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">
