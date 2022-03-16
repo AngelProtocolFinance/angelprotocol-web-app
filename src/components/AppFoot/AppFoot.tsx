@@ -1,12 +1,6 @@
 import AppMenu from "components/AppFoot/AppMenu";
 import { Link } from "react-router-dom";
-import {
-  AiOutlineTwitter,
-  AiFillYoutube,
-  AiOutlineMedium,
-} from "react-icons/ai";
-import { FaTelegramPlane } from "react-icons/fa";
-import { RiDiscordLine } from "react-icons/ri";
+import { getIcon, IconTypes } from "components/Icons/Icons";
 
 export default function AppFoot() {
   return (
@@ -53,35 +47,35 @@ export default function AppFoot() {
 const links = [
   {
     id: 1,
-    Icon: AiOutlineTwitter,
+    Icon: getIcon(IconTypes.DiscordLine),
     link: "https://twitter.com/angelprotocol",
     textColor: "text-gray-50",
     title: "Twitter",
   },
   {
     id: 2,
-    Icon: FaTelegramPlane,
+    Icon: getIcon(IconTypes.TelegramPlane),
     link: "https://t.me/angelprotocoI",
     textColor: "text-blue-50",
     title: "Telegram",
   },
   {
     id: 3,
-    Icon: AiFillYoutube,
+    Icon: getIcon(IconTypes.FillYoutube),
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
     textColor: "text-white",
     title: "YouTube",
   },
   {
     id: 4,
-    Icon: AiOutlineMedium,
+    Icon: getIcon(IconTypes.OutlineMedium),
     link: "https://angelprotocol.medium.com/",
     textColor: "text-white",
     title: "Medium",
   },
   {
     id: 5,
-    Icon: RiDiscordLine,
+    Icon: getIcon(IconTypes.DiscordLine),
     link: "https://discord.gg/RhqA652ySA",
     textColor: "text-white",
     title: "Discord",
