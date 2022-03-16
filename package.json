@@ -28,7 +28,8 @@
     "start": "react-app-rewired start",
     "test": "craco test",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "serve-build": "yarn dlx serve -s build -p 4200"
   },
   "eslintConfig": {
     "extends": [
