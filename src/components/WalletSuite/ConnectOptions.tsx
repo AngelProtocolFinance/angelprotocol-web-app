@@ -5,7 +5,6 @@ import Modal from "components/Modal/Modal";
 import Installer from "./Installer";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
-import { DeviceType, deviceType } from "helpers/deviceType";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
   let { availableConnections, availableInstallations } = useWallet();
