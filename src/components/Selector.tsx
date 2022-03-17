@@ -1,28 +1,23 @@
-import React from "react";
-import Select, { MenuPlacement, GroupBase, StylesConfig } from "react-select";
-import { Controller } from "react-hook-form";
+import { Control, Controller, FieldValues, Path } from "react-hook-form";
+import Select, { GroupBase, MenuPlacement, StylesConfig } from "react-select";
 
 type OptionType = { label: string; value: any };
 
-interface SelectorProps {
-  name: string;
+interface Props<T extends FieldValues> {
+  name: Path<T> & keyof T;
   placeholder?: string;
   options: OptionType[];
-  control: any;
-  register: Function;
+  control: Control<T, any>;
   onChange?: Function;
   disabled?: boolean;
   menuPlacement?: MenuPlacement;
 }
 
-export const Selector = React.memo((props: SelectorProps) => {
+export default function Selector<T extends FieldValues>(props: Props<T>) {
   return (
     <Controller
-      // this 'register' might be redundant due to already passing 'control' and 'name'
-      {...props.register(props.name)}
       name={props.name}
       control={props.control}
-      ref={null}
       render={({ field: { value, onChange } }) => {
         return (
           <Select
@@ -41,7 +36,7 @@ export const Selector = React.memo((props: SelectorProps) => {
       }}
     />
   );
-});
+}
 
 const selectStyles: StylesConfig<OptionType, false, GroupBase<OptionType>> = {
   control: (provided, state) => ({

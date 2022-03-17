@@ -1,4 +1,4 @@
-import { Selector } from "components/Selector";
+import Selector from "components/Selector";
 import { unsdgs } from "constants/unsdgs";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
@@ -11,7 +11,6 @@ const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
 
 export default function UnSdgSelector() {
   const {
-    register,
     control,
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
@@ -26,7 +25,6 @@ export default function UnSdgSelector() {
         placeholder="[UN SDG]"
         options={OPTIONS}
         control={control}
-        register={register}
         disabled={isSubmitting}
       />
     </InputRow>
