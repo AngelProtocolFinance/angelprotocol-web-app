@@ -5,6 +5,7 @@ export interface MemberDetails {
   icon?: string;
   iconLight?: boolean;
   otherWallets?: string[];
+  isPlaceholder?: true;
 }
 
 export type MemberLookUp = {

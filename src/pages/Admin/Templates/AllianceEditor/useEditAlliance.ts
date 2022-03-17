@@ -21,7 +21,7 @@ export default function useEditAlliance() {
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
-  async function updateMembers() {
+  async function editAlliance() {
     const isValid = await trigger(["description", "title"], {
       shouldFocus: true,
     });
@@ -80,5 +80,5 @@ export default function useEditAlliance() {
     reset();
   }
 
-  return { updateMembers };
+  return { editAlliance };
 }

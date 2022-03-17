@@ -31,7 +31,7 @@ export default function AllianceSelection() {
             {`${
               isDebouncing
                 ? `searching ${searchText}...`
-                : `${searchText} not found`
+                : `${searchText} no alliance member found`
             }`}
           </p>
         )}
