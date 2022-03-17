@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import routes from "./routes";
 import WalletRegistrationProvider from "./WalletRegistrationProvider";
 
@@ -8,20 +8,13 @@ const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const RegisterWallet = lazy(() => import("./RegisterWallet"));
 
 export default function WalletRegistration() {
-  // this component will only render under '/app/register/wallet'
-  const { path } = useRouteMatch();
-
   return (
     <WalletRegistrationProvider>
-      <Switch>
-        <Route exact path={path} component={ChooseWallet} />
-        <Route exact path={`${path}/${routes.auth}`} component={Auth} />
-        <Route
-          exact
-          path={`${path}/${routes.submit}`}
-          component={RegisterWallet}
-        />
-      </Switch>
+      <Routes>
+        <Route path={routes.auth} element={<Auth />} />
+        <Route path={routes.index} element={<ChooseWallet />} />
+        <Route path={routes.submit} element={<RegisterWallet />} />
+      </Routes>
     </WalletRegistrationProvider>
   );
 }

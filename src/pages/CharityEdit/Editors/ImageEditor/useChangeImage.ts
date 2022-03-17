@@ -34,7 +34,10 @@ export default function useChangeImage() {
 
   function handleFileLoad(e: ProgressEvent<FileReader>) {
     // fileReader.readAsDataURL is only ran if there's file
-    setValue("charity_image", e.target!.result as string);
+    setValue("charity_image", e.target!.result as string, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
     setLoading(false);
   }
 

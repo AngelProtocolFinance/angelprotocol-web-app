@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
@@ -7,14 +7,14 @@ import {
 } from "services/aws/registration";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import routes from "../../routes";
+import routes, { registerRootPath } from "../../routes";
 import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
@@ -69,13 +69,20 @@ export default function useSaveContactDetails() {
               PK: result.UUID || contactData.uniqueID,
             })
           );
-          history.push(routes.confirm);
+          navigate(`${registerRootPath}/${routes.confirm}`);
         }
       } else {
         console.error(result.message);
       }
     },
-    [dispatch, history, registerCharity, resendEmail, updateContactPerson, user]
+    [
+      dispatch,
+      navigate,
+      registerCharity,
+      resendEmail,
+      updateContactPerson,
+      user,
+    ]
   );
 
   return saveContactDetails;

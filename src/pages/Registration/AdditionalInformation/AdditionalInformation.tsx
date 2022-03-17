@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { app, site } from "constants/routes";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
-import routes from "../routes";
+import routes, { registerRootPath } from "../routes";
 import ButtonSection from "./ButtonSection";
 import DescriptionInput from "./DescriptionInput";
 import ImageInput from "./ImageInput";
@@ -12,6 +12,7 @@ import { FormValues, SCHEMA } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
+  const navigate = useNavigate();
   const user = useGetter((state) => state.user);
   const { submit, isSuccess } = useSubmit();
 
@@ -24,9 +25,13 @@ export default function AdditionalInformation() {
     },
   });
 
-  if (isSuccess) {
-    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
-  }
+  console.log(methods.control._formValues.charityOverview);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`${registerRootPath}/${routes.dashboard}`);
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <div className="flex flex-col gap-5 items-center">

@@ -1,12 +1,15 @@
 import Loader from "components/Loader/Loader";
 import { useContext, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { registerRootPath } from "../routes";
 import routes from "./routes";
+import { default as registerRoutes } from "../routes";
 import useEntropyToTerraWallet from "./useEntropyToTerraWallet";
 import { WalletRegistrationContext } from "./WalletRegistrationProvider";
 
 export default function Auth() {
-  const { rootPath, isLoading, openLoginPrivateKey } = useContext(
+  const navigate = useNavigate();
+  const { isLoading, openLoginPrivateKey } = useContext(
     WalletRegistrationContext
   );
   const entropyToTerraWallet = useEntropyToTerraWallet();
@@ -23,9 +26,13 @@ export default function Auth() {
     }
   }, [openLoginPrivateKey, isLoading, entropyToTerraWallet]);
 
-  return isLoading ? (
+  useEffect(() => {
+    if (!isLoading) {
+      navigate(`${registerRootPath}/${registerRoutes.wallet}/${routes.submit}`);
+    }
+  }, [isLoading, navigate]);
+
+  return (
     <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
-  ) : (
-    <Redirect to={`${rootPath}/${routes.submit}`} />
   );
 }

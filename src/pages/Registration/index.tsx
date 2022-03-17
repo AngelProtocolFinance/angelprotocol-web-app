@@ -1,6 +1,6 @@
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -13,51 +13,29 @@ const WalletRegistration = lazy(() => import("./WalletRegistration"));
 const Documentation = lazy(() => import("./Documentation"));
 
 export default function Register() {
-  //this component will only render under '/app/register/'
-  const { path } = useRouteMatch();
-
   useRehydrateUserState();
 
   return (
-    <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">
-      <Switch>
+    <Container>
+      <Routes>
         <Route
-          exact
-          path={`${path}/${routes.additionalInformation}`}
-          component={AdditionalInformation}
+          path={routes.additionalInformation}
+          element={<AdditionalInformation />}
         />
-        <Route
-          exact
-          path={`${path}/${routes.confirm}`}
-          component={ConfirmEmail}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.contactDetails}`}
-          component={ContactDetails}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.verify}`}
-          component={VerifiedEmail}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.dashboard}`}
-          component={Dashboard}
-        />
-        <Route
-          exact
-          path={`${path}/${routes.documentation}`}
-          component={Documentation}
-        />
-        {/* 'exact' prop is unnecessary, since this component has sub-routes */}
-        <Route
-          path={`${path}/${routes.wallet}`}
-          component={WalletRegistration}
-        />
-        <Route exact path={`${path}${routes.index}`} component={Registration} />
-      </Switch>
-    </section>
+        <Route path={routes.confirm} element={<ConfirmEmail />} />
+        <Route path={routes.contactDetails} element={<ContactDetails />} />
+        <Route path={routes.verify} element={<VerifiedEmail />} />
+        <Route path={routes.dashboard} element={<Dashboard />} />
+        <Route path={routes.documentation} element={<Documentation />} />
+        <Route path={`${routes.wallet}/*`} element={<WalletRegistration />} />
+        <Route path={routes.index} element={<Registration />} />
+      </Routes>
+    </Container>
   );
 }
+
+const Container = (props: any) => (
+  <section className="flex items-center justify-center relative sm:w-4/5 max-w-5xl text-center text-white mx-auto h-full p-5">
+    {props.children}
+  </section>
+);

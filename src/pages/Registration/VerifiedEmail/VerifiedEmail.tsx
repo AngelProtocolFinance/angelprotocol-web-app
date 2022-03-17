@@ -1,17 +1,17 @@
-import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
-import routes from "../routes";
+import routes, { registerRootPath } from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
 export default function VerifiedEmail() {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-  const pathNames = history.location.pathname.split("/");
+  const pathNames = location.pathname.split("/");
   const jwtToken = pathNames[pathNames.length - 1];
   const jwtData: any = jwtDecode(jwtToken);
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
@@ -33,11 +33,6 @@ export default function VerifiedEmail() {
       : console.error(response.error?.data.message);
   }, [userData, resendEmail]);
 
-  const navigateToDashboard = useCallback(
-    () => history.push(`${site.app}/${app.register}/${routes.dashboard}`),
-    [history]
-  );
-
   if (is_expired) {
     return (
       <LinkExpired onClick={resendVerificationEmail} isLoading={isLoading} />
@@ -46,9 +41,9 @@ export default function VerifiedEmail() {
 
   return (
     <VerificationSuccessful
-      userData={userData}
-      onClick={navigateToDashboard}
       isLoading={isLoading}
+      userData={userData}
+      onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
     />
   );
 }

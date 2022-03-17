@@ -1,15 +1,15 @@
 import banner2 from "assets/images/banner-register-2.jpg";
-import { app, site } from "constants/routes";
+import { app } from "constants/routes";
 import { useCallback, useEffect } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "./common";
-import routes from "./routes";
+import routes, { registerRootPath } from "./routes";
 
 export default function ConfirmEmail() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
   const location: any = useLocation();
@@ -47,8 +47,8 @@ export default function ConfirmEmail() {
 
   const navigateToIndex = useCallback(() => {
     dispatch(removeUserData());
-    history.push("/");
-  }, [dispatch, history]);
+    navigate(app.index);
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     if (!user.PK) {
@@ -57,9 +57,11 @@ export default function ConfirmEmail() {
     }
   }, [user.PK, dispatch]);
 
-  if (user.EmailVerified) {
-    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
-  }
+  useEffect(() => {
+    if (user.EmailVerified) {
+      navigate(`${registerRootPath}/${routes.dashboard}`);
+    }
+  }, [user?.EmailVerified, navigate]);
 
   return (
     <div className="flex flex-col gap-4 font-bold">

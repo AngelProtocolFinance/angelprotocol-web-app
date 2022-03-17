@@ -14,6 +14,7 @@ import useEstimator from "../useEstimator";
 type Senders = { [index: string]: (data: DonateValues) => any };
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
+
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
   const wallet = useConnectedWallet();

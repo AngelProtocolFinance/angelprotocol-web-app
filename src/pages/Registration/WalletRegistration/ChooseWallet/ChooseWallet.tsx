@@ -1,23 +1,30 @@
 import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
+import { registerRootPath } from "pages/Registration/routes";
 import { WalletSuiteContext } from "providers/WalletSuiteProvider";
-import { useContext } from "react";
-import { Redirect } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import routes from "../routes";
+import { default as registerRoutes } from "../../routes";
 import { WalletRegistrationContext } from "../WalletRegistrationProvider";
 import Title from "./Title";
 import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
-  const { setShowConnectors } = useContext(WalletSuiteContext);
-  const { rootPath, isLoading, loginWithOpenLogin } = useContext(
+  const navigate = useNavigate();
+  const { setConnectOptionsShown } = useContext(WalletSuiteContext);
+  const { isLoading, loginWithOpenLogin } = useContext(
     WalletRegistrationContext
   );
   const { status, wallets } = useWallet();
 
-  if (!isLoading && status !== WalletStatus.INITIALIZING && !!wallets.length) {
-    return <Redirect to={`${rootPath}/${routes.submit}`} />;
-  }
+  useEffect(() => {
+    const isWalletConnected =
+      !isLoading && status !== WalletStatus.INITIALIZING && !!wallets.length;
+    if (isWalletConnected) {
+      navigate(`${registerRootPath}/${registerRoutes.wallet}/${routes.submit}`);
+    }
+  }, [isLoading, status, wallets?.length, navigate]);
 
   if (isLoading) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
@@ -28,7 +35,7 @@ export default function ChooseWallet() {
       <Title />
       <Web3Auth onLogin={loginWithOpenLogin} />
       <button
-        onClick={() => setShowConnectors(true)}
+        onClick={() => setConnectOptionsShown(true)}
         className="uppercase text-bright-blue text-sm hover:underline mb-5 lg:mb-0"
       >
         Click here if you have a Terra wallet

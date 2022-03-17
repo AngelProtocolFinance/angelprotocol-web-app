@@ -1,17 +1,16 @@
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { govern } from "constants/routes";
 import toCurrency from "helpers/toCurrency";
-import useDetails from "./useDetails";
+import usePollDetails from "../usePollDetails";
 import { PollStatus } from "services/terra/gov/types";
 
-export default function Poll(props: { poll_id: number }) {
-  const history = useHistory();
-  const { path } = useRouteMatch();
-  const details = useDetails(props.poll_id);
+export default function PollCard(props: { poll_id: number }) {
+  const navigate = useNavigate();
+  const details = usePollDetails(props.poll_id);
 
   function goToPollDetail() {
-    history.push(`${path}${govern.poll}/${props.poll_id}`);
+    navigate(`${govern.pollDetails}/${props.poll_id}`);
   }
 
   return (

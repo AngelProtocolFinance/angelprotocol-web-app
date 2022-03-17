@@ -1,15 +1,13 @@
 import createAuthToken from "helpers/createAuthToken";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
-import routes from "./routes";
+import routes, { registerRootPath } from "./routes";
 
-export type ReferInfo = {
-  refer: string;
-};
+export type ReferInfo = { refer: string };
 
 export const FormInfoSchema = Yup.object().shape({
   refer: Yup.string().required("Please enter your registration reference."),
@@ -18,8 +16,7 @@ export const FormInfoSchema = Yup.object().shape({
 export const useRegistration = () => {
   const [checkData] = useCheckPreviousRegistrationMutation();
   const dispatch = useSetter();
-  const history = useHistory();
-  const { url } = useRouteMatch();
+  const navigate = useNavigate();
 
   const onResume = async (values: ReferInfo) => {
     let response: any = await checkData(values.refer);
@@ -58,15 +55,13 @@ export const useRegistration = () => {
     };
     dispatch(updateUserData(data));
     localStorage.setItem("userData", JSON.stringify(data));
-    if (data.EmailVerified)
-      history.push({
-        pathname: `${url}/${routes.dashboard}`,
-      });
-    else
-      history.push({
-        pathname: `${url}/${routes.confirm}`,
+    if (data.EmailVerified) {
+      navigate(`${registerRootPath}/${routes.dashboard}`);
+    } else {
+      navigate(`${registerRootPath}/${routes.confirm}`, {
         state: { is_sent: true },
       });
+    }
   };
 
   return { onResume };

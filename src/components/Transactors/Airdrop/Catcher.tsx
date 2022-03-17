@@ -19,26 +19,22 @@ export default function Catcher(props: Props) {
       <Action
         title="claim & stake"
         onClick={claimAirdrop(true)}
-        classes="text-sm"
+        className="text-sm"
       />
       <Action
         title="claim"
         onClick={claimAirdrop(false)}
-        classes="bg-angel-grey font-semibold tracking-wide text-xs"
+        className="bg-angel-grey font-semibold tracking-wide text-xs"
       />
     </div>
   );
 }
 
-function Action(props: {
-  title: string;
-  classes?: string;
-  onClick: () => void;
-}) {
+function Action(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
       onClick={props.onClick}
-      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${props.classes}`}
+      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${props.className}`}
     >
       {props.title}
     </button>

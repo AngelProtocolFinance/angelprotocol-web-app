@@ -36,11 +36,15 @@ export function useGovState() {
 export function useGovPolls() {
   const { useGovPollsQuery } = gov_api;
   const { wallet, contract } = useContract<H, T>(Halo);
-  const { data = [] } = useGovPollsQuery(contract.polls, {
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useGovPollsQuery(contract.polls, {
     skip: wallet && wallet.network.chainID === chainIDs.localterra,
   });
 
-  return data;
+  return { govPolls: data, isGovPollsLoading: isFetching || isLoading };
 }
 
 export function useGovPoll(poll_id: number) {

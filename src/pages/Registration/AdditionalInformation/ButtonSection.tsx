@@ -1,11 +1,11 @@
 import Loader from "components/Loader/Loader";
 import { useFormContext } from "react-hook-form";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../common";
-import routes from "../routes";
+import routes, { registerRootPath } from "../routes";
 
 export default function ButtonSection() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const {
     formState: { isSubmitting },
   } = useFormContext();
@@ -18,7 +18,7 @@ export default function ButtonSection() {
         <>
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
-            onClick={() => history.push(routes.dashboard)}
+            onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
           >
             Back
           </Button>

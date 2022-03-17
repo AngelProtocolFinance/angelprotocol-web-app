@@ -7,11 +7,12 @@ export enum TerraIdentifiers {
   station = "station",
   xdefi = "xdefi-wallet",
   leap = "leap-wallet",
+  safepal = "SafePal",
 }
 
 export enum Providers {
   none = "none",
-  // ethereum = "ethereum",
+  ethereum = "ethereum",
   terra = "terra",
 
   // phantom = "phantom",
@@ -34,3 +35,11 @@ export type WalletInfo = {
 };
 
 export type State = { isUpdating: boolean } & WalletInfo;
+
+export type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
+
+export type EthState = {
+  connected: boolean;
+  network: EthNetworks;
+  balance: number;
+} & WalletInfo;

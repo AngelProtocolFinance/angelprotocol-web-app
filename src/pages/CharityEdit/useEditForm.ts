@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { useProfileState } from "services/aws/endowments/states";
 import { EditableProfileAttr } from "services/aws/endowments/types";
@@ -10,11 +10,14 @@ import getPayloadDiff from "./helpers/getPayloadDiff";
 import { CharityParam } from "./types";
 
 export default function useEditForm() {
-  const { handleSubmit } = useFormContext<EditableProfileAttr>();
-  const { params } = useRouteMatch<CharityParam>();
+  const params = useParams<CharityParam>();
+  const {
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = useFormContext<EditableProfileAttr>();
   const endowment_addr = params.address;
 
-  const { profileState } = useProfileState(endowment_addr);
+  const { profileState } = useProfileState(endowment_addr!);
   const [update] = useUpdateProfileMutation();
 
   const { showModal } = useSetModal();
@@ -22,12 +25,12 @@ export default function useEditForm() {
   const updateProfile = async (data: EditableProfileAttr) => {
     const prevProfile = removeReadOnlyProfileAttr(profileState);
     const diff = getPayloadDiff(prevProfile, data);
+
     try {
       if (Object.keys(diff).length === 0) {
         showModal<PopupProps>(Popup, { message: "No changes detected" });
         return;
       }
-
       showModal<PopupProps>(Popup, { message: "Saving changes.." });
       const response = await update({
         owner: profileState.charity_owner,
@@ -47,5 +50,9 @@ export default function useEditForm() {
       });
     }
   };
-  return { updateProfile: handleSubmit(updateProfile), endowment_addr };
+  return {
+    updateProfile: handleSubmit(updateProfile),
+    endowment_addr,
+    isSubmitDisabled: isSubmitting || !isDirty,
+  };
 }

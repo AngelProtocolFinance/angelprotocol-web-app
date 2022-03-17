@@ -7,23 +7,23 @@ import {
 } from "react";
 
 interface IWalletSuiteContext {
-  connectorsShown: boolean;
-  setShowConnectors: Dispatch<SetStateAction<boolean>>;
+  connectOptionsShown: boolean;
+  setConnectOptionsShown: Dispatch<SetStateAction<boolean>>;
 }
 
 const WalletSuiteContext = createContext<IWalletSuiteContext>({
-  connectorsShown: false,
-  setShowConnectors: () => {},
+  connectOptionsShown: false,
+  setConnectOptionsShown: () => {},
 });
 
 function WalletSuiteProvider({ children }: PropsWithChildren<{}>) {
-  const [connectorsShown, setShowConnectors] = useState(false);
+  const [connectOptionsShown, setConnectOptionsShown] = useState(false);
 
   return (
     <WalletSuiteContext.Provider
       value={{
-        connectorsShown,
-        setShowConnectors,
+        connectOptionsShown,
+        setConnectOptionsShown,
       }}
     >
       {children}

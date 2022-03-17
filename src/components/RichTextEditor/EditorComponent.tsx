@@ -4,6 +4,7 @@ import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListOl, FaListUl } from "react-icons/fa";
 import useEditor from "./useEditor";
+import "draft-js/dist/Draft.css";
 
 type Props = {
   value: string;
@@ -58,7 +59,7 @@ export default function EditorComponent(props: Props) {
 }
 
 const Container = ({ children }: PropsWithChildren<{}>) => (
-  <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
+  <div className="text-white text-opacity-80 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
     {children}
   </div>
 );

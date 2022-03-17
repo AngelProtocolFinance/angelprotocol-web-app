@@ -2,18 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
 import { site, web } from "constants/routes";
-import {
-  ForwardedRef,
-  forwardRef,
-  PropsWithChildren,
-  useCallback,
-  useState,
-} from "react";
+import { ForwardedRef, forwardRef, PropsWithChildren, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../common";
 import { userRoleOptions, UserRoles } from "../../constants";
-import routes from "../../routes";
+import routes, { registerRootPath } from "../../routes";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
@@ -24,7 +18,7 @@ export default function ContactDetailsForm(props: any) {
   // we need the "Other role" field rendering when role "other" is selected
   const [, setOrgRole] = useState("");
   const saveContactDetails = useSaveContactDetails();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -45,11 +39,6 @@ export default function ContactDetailsForm(props: any) {
       uniqueID: props.contactData?.PK || "",
     },
   });
-
-  const handleRoleChange = useCallback(
-    (value: string) => setOrgRole(value),
-    []
-  );
 
   return (
     <form
@@ -104,7 +93,7 @@ export default function ContactDetailsForm(props: any) {
             name="orgRole"
             options={userRoleOptions}
             control={control}
-            onChange={handleRoleChange}
+            onChange={(value: string) => setOrgRole(value)}
             otherRoleErrorMessage={errors.otherRole?.message}
             register={register}
             disabled={isSubmitting}
@@ -118,11 +107,11 @@ export default function ContactDetailsForm(props: any) {
         centerError
       />
       <div className="flex justify-center">
-        {props.contactData?.PK && (
+        {props.contactData?.EmailVerified && (
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
-            onClick={() => history.push(routes.dashboard)}
+            onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
           >
             Back
           </Button>

@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { removeUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { Button } from "./common";
@@ -11,8 +11,7 @@ import { FormInfoSchema, useRegistration } from "./useRegistration";
 
 const Registration = () => {
   const { onResume } = useRegistration();
-  const { url } = useRouteMatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useSetter();
   const {
     register,
@@ -22,10 +21,7 @@ const Registration = () => {
     resolver: yupResolver(FormInfoSchema),
   });
 
-  const handleStart = useCallback(
-    () => history.push(`${url}/${routes.contactDetails}`),
-    [history, url]
-  );
+  const handleStart = () => navigate(routes.contactDetails);
 
   useEffect(() => {
     dispatch(removeUserData());

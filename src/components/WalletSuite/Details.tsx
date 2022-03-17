@@ -9,13 +9,21 @@ import Holdings from "./Holdings";
 import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
+import { useSetMetamask } from "providers/Metamask/Metamask";
+import { Dwindow, Providers } from "services/provider/types";
+import { TerraIdentifiers } from "services/wallet/types";
+import { DeviceType, deviceType } from "helpers/deviceType";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
-  const { disconnect } = useWallet();
   const dispatch = useSetter();
+  const { active: activeProvider } = useGetter((state) => state.provider);
+  const { disconnect: disconnectTerra, availableConnections } = useWallet();
+  const { disconnect: disconnectMetamask } = useSetMetamask();
+
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
+
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
@@ -26,10 +34,22 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleFilter = () => setFilter((p) => !p);
 
   const isEmpty = filtered_coins.length <= 0;
+
   const handleDisconnect = () => {
     dispatch(resetWallet());
-    disconnect();
+    if (activeProvider === Providers.terra) {
+      disconnectTerra();
+    }
+    if (activeProvider === Providers.ethereum) {
+      disconnectMetamask();
+    }
   };
+
+  const isSafePal =
+    availableConnections.some(
+      (connection) => connection.identifier === TerraIdentifiers.safepal
+    ) ||
+    (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
     <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">
@@ -53,12 +73,14 @@ export default function Details(props: { closeHandler: () => void }) {
           Wallet is empty
         </span>
       )}
-      <button
-        onClick={handleDisconnect}
-        className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
-      >
-        disconnect
-      </button>
+      {!isSafePal && (
+        <button
+          onClick={handleDisconnect}
+          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+        >
+          disconnect
+        </button>
+      )}
     </div>
   );
 }

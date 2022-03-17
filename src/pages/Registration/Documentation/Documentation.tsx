@@ -1,10 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { app, site } from "constants/routes";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import routes from "../routes";
+import routes, { registerRootPath } from "../routes";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -21,6 +20,7 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
+  const navigate = useNavigate();
   const user = useGetter((state) => state.user);
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
@@ -37,9 +37,11 @@ export default function Documentation() {
   const currentLevel = useCurrentLevel(methods);
   const { upload, isSuccess } = useUpload();
 
-  if (isSuccess) {
-    return <Redirect to={`${site.app}/${app.register}/${routes.dashboard}`} />;
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      navigate(`${registerRootPath}/${routes.dashboard}`);
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <Container>

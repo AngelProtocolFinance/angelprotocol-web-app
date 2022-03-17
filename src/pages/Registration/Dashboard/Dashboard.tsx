@@ -1,11 +1,11 @@
 import Loader from "components/Loader/Loader";
 import { useEffect, useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
-import routes from "../routes";
+import routes, { registerRootPath } from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import getRegistrationStatus from "./getRegistrationStatus";
@@ -13,7 +13,7 @@ import Step from "./Step";
 import { ReviewStatus } from "./types";
 
 export default function Dashboard() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
   const { data, error, isLoading } = useGetCharityDataQuery(user.PK);
@@ -28,9 +28,9 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
-      history.go(0);
+      navigate(0);
     }
-  }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, history]);
+  }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, navigate]);
 
   useEffect(() => {
     if (error) {
@@ -57,19 +57,23 @@ export default function Dashboard() {
       <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
         <Step
           title="Step #1: Contact Details"
-          onClick={() => history.push(routes.contactDetails)}
+          onClick={() =>
+            navigate(`${registerRootPath}/${routes.contactDetails}`)
+          }
           disabled={dataSubmitted}
           completed
         />
         <Step
           title="Step #2: Wallet Address"
-          onClick={() => history.push(routes.wallet)}
+          onClick={() => navigate(`${registerRootPath}/${routes.wallet}`)}
           disabled={dataSubmitted}
           completed={status.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
-          onClick={() => history.push(routes.documentation)}
+          onClick={() =>
+            navigate(`${registerRootPath}/${routes.documentation}`)
+          }
           disabled={dataSubmitted}
           completed={status.stepThree.completed}
           // TODO: implement level logic
@@ -79,7 +83,9 @@ export default function Dashboard() {
         />
         <Step
           title="Step #4: Additional Information"
-          onClick={() => history.push(routes.additionalInformation)}
+          onClick={() =>
+            navigate(`${registerRootPath}/${routes.additionalInformation}`)
+          }
           disabled={dataSubmitted}
           completed={status.stepFour.completed}
         />
