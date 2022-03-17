@@ -9,7 +9,6 @@ import { MemberEditValues as MV } from "./schema";
 
 export default function useModifyMember() {
   const {
-    getValues,
     handleSubmit,
     formState: { isDirty, isValid, isSubmitting },
   } = useFormContext<MV>();
@@ -38,6 +37,5 @@ export default function useModifyMember() {
     error,
     modifyMember: handleSubmit(modifyMember),
     isSubmitDisabled: !isDirty || !isValid || isSubmitting,
-    isEdit: getValues("type") === "edit",
   };
 }

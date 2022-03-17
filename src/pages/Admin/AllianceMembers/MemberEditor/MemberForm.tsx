@@ -5,7 +5,7 @@ import { MemberEditValues as V } from "./schema";
 import useModifyMember from "./useModifyMember";
 
 export default function MemberForm() {
-  const { modifyMember, isSubmitDisabled, error, isEdit } = useModifyMember();
+  const { modifyMember, isSubmitDisabled, error } = useModifyMember();
   return (
     <form
       onSubmit={modifyMember}
@@ -19,7 +19,7 @@ export default function MemberForm() {
         name="address"
         required
         mono
-        disabled={isEdit}
+        disabled
       />
       <TextInput<V> title="website" name="url" />
 
