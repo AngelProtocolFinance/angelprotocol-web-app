@@ -28,7 +28,7 @@ export default function useModifyMember() {
       response = await createMember(data);
     }
     if ("error" in response) {
-      setError("failed to add member");
+      setError("failed to save changes");
     } else {
       hideModal();
     }
