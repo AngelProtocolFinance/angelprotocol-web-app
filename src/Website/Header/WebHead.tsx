@@ -5,9 +5,8 @@ import { IoClose } from "react-icons/io5";
 import { GoLinkExternal } from "react-icons/go";
 import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
 import useScrollShadow from "hooks/useScrollShadow";
-import earth_icon from "assets/icons/earth.svg";
-import heart_icon from "assets/icons/heart.svg";
-import star_icon from "assets/icons/star.svg";
+import heart_icon from "assets/icons/broken_heart.svg";
+import ua_icon from "assets/icons/ukraine.svg";
 import { site, app } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
@@ -48,17 +47,16 @@ export default function WebHead() {
 
       <a
         ref={shadowRef}
-        href={`${site.app}/markeplace`}
+        href={`https://ukraine.angelprotocol.io/`}
         target="_blank"
         rel="noopener noreferrer"
         className="transition-shadow absolute bottom-0 transform translate-y-full font-heading cursor-pointer hover:bg-black bg-angel-grey w-full p-2 flex items-center justify-center text-white text-xs"
       >
-        <span className="hidden md:block flex w-fit items-center mr-2 md:uppercase">
-          Charity Marketplace is now live!
+        <Word icon={heart_icon} title="" />
+        <span className="flex w-fit items-center mr-2 md:uppercase">
+          Donate now to humanitarian relief in Ukraine
         </span>
-        <Word icon={star_icon} title="Select" />
-        <Word icon={heart_icon} title="Connect" />
-        <Word icon={earth_icon} title="Donate" />
+        <Word icon={ua_icon} title="" />
         <GoLinkExternal className="text-lg" />
       </a>
     </header>

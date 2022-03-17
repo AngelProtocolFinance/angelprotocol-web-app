@@ -1,4 +1,6 @@
+import { DeviceType, deviceType } from "helpers/deviceType";
 import { useEffect, useState } from "react";
+import { Dwindow } from "services/provider/types";
 import {
   AccountChangeHandler,
   EIP1193Events,
@@ -16,6 +18,12 @@ export default function useEthereum() {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
+    if (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum) {
+      setConnected(true);
+      setLoading(false);
+      return;
+    }
+
     requestAccess();
     return () => {
       detachAccountChangeHandler();
@@ -31,6 +39,7 @@ export default function useEthereum() {
         EIP1193Methods.eth_requestAccounts,
         []
       );
+
       setConnected(true);
       setAddress(accounts[0]);
       setLoading(false);

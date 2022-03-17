@@ -16,31 +16,27 @@ export default function Catcher(props: Props) {
         {toCurrency(totalClaimable)} HALO
       </p>
 
+      <Action onClick={claimAirdrop(true)} className="text-sm">
+        Claim & Stake
+      </Action>
       <Action
-        title="claim & stake"
-        onClick={claimAirdrop(true)}
-        classes="text-sm"
-      />
-      <Action
-        title="claim"
         onClick={claimAirdrop(false)}
-        classes="bg-angel-grey font-semibold tracking-wide text-xs"
-      />
+        className="bg-angel-grey font-semibold tracking-wide text-xs"
+      >
+        Claim
+      </Action>
     </div>
   );
 }
 
-function Action(props: {
-  title: string;
-  classes?: string;
-  onClick: () => void;
-}) {
+function Action({
+  className,
+  ...restProps
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      onClick={props.onClick}
-      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${props.classes}`}
-    >
-      {props.title}
-    </button>
+      {...restProps}
+      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${className}`}
+    />
   );
 }

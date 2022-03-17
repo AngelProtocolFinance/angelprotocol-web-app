@@ -1,5 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { unsdgs } from "constants/unsdgs";
 import { useMemo } from "react";
 import {
   FaExternalLinkAlt,
@@ -8,15 +6,17 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
-import { Link, useParams } from "react-router-dom";
-import { CharityParam } from "./types";
+import { useParams, Link } from "react-router-dom";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { useProfileState } from "services/aws/endowments/states";
+import useDonater from "components/Transactors/Donater/useDonater";
 import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
+import { unsdgs } from "constants/unsdgs";
 import { app, site } from "constants/routes";
-import useDonater from "components/Transactors/Donater/useDonater";
-import { useProfileState } from "services/aws/endowments/states";
+import { CharityParam } from "./types";
 
 export function DonationInfo() {
   const { address: charity_addr } = useParams<CharityParam>();

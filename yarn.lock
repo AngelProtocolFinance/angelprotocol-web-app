@@ -4715,7 +4715,7 @@ __metadata:
     jsonwebtoken: ^8.5.1
     jwt-decode: ^3.1.2
     postcss: ^8.4.8
-    prettier: ^2.3.2
+    prettier: ^2.6.0
     process: ^0.11.10
     prop-types: ^15.8.1
     react: ^17.0.2
@@ -12499,12 +12499,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.3.2":
-  version: 2.4.1
-  resolution: "prettier@npm:2.4.1"
+"prettier@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "prettier@npm:2.6.0"
   bin:
     prettier: bin-prettier.js
-  checksum: cc6830588b401b0d742862fe9c46bc9118204fb307c3abe0e49e95b35ed23629573807ffdf9cdd65289c252a0bb51fc0171437f6626ee36378dea80f0ee80b91
+  checksum: 3e527ad62279676778a8404d18174d7ca2365ada4caba6eebbcdd9907d1187afd3bc6ade5b4e5f5d4549bb9fb71e45ca8930d71500017635524f8fc05bc52e93
   languageName: node
   linkType: hard
 
