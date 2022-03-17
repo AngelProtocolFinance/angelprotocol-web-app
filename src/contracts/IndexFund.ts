@@ -5,7 +5,7 @@ import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { FundDetails, FundListRes } from "./types";
+import { FundDetails } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -29,14 +29,9 @@ export default class Indexfund extends Contract {
     };
   }
 
-  //on demand queries
-  getFundList() {
-    return this.query<FundListRes>(this.address, this.fundList.msg);
-  }
-
-  createEmbeddedCreateFundMsg(fundDetails: FundDetails) {
+  createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
     return this.createdEmbeddedWasmMsg([], this.address, {
-      create_fund: { fund: fundDetails },
+      create_fund: { ...fundDetails },
     });
   }
 
@@ -58,7 +53,7 @@ export default class Indexfund extends Contract {
 
   createEmbeddedUpdateTCAMsg(toAdd: string[], toRemove: string[]) {
     return this.createdEmbeddedWasmMsg([], this.address, {
-      update_members: { add: toAdd, remove: toRemove },
+      update_tca_list: { add: toAdd, remove: toRemove },
     });
   }
 

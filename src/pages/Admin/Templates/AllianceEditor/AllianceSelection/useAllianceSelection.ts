@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import useDebouncer from "hooks/useDebouncer";
 import useInitMembers from "./useInitMembers";
+import sanitizeRegexSearchText from "helpers/sanitizeRegexSearchText";
 
 export default function useAllianceSelection() {
   const { isInitializing, allianceCopy } = useInitMembers();
@@ -10,20 +11,18 @@ export default function useAllianceSelection() {
     300
   );
 
-  const searchRegex = new RegExp(
-    sanitizeRegexTextInput(debouncedSearchText).toLocaleLowerCase()
-  );
-  const filteredMembers = useMemo(
-    () =>
-      allianceCopy.filter((member) =>
-        //show toggled members on top of search result
-        member.isAdded || member.isDeleted || debouncedSearchText === ""
-          ? true
-          : member.name.toLocaleLowerCase().search(searchRegex) !== -1 ||
-            member.address.search(new RegExp(searchRegex)) !== -1
-      ),
-    [debouncedSearchText, allianceCopy]
-  );
+  const filteredMembers = useMemo(() => {
+    const searchRegex = new RegExp(
+      sanitizeRegexSearchText(debouncedSearchText).toLocaleLowerCase()
+    );
+    return allianceCopy.filter((member) =>
+      //show toggled members on top of search result
+      member.isAdded || member.isDeleted || debouncedSearchText === ""
+        ? true
+        : member.name.toLocaleLowerCase().search(searchRegex) !== -1 ||
+          member.address.search(new RegExp(searchRegex)) !== -1
+    );
+  }, [debouncedSearchText, allianceCopy]);
 
   const handleSearchTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -36,9 +35,4 @@ export default function useAllianceSelection() {
     isInitializing,
     isDebouncing,
   };
-}
-
-//on cases where user deliberately types regex characters
-function sanitizeRegexTextInput(text: string) {
-  return text.replace(/[#-.]|[[-^]|[?|{}]/g, "\\$&");
 }

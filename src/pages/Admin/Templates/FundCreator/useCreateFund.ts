@@ -53,15 +53,7 @@ export default function useCreateFund() {
     //create embedded execute msg
     const indexFundContract = new Indexfund(wallet);
 
-    //get next fundId
-    const fundsListRes = await indexFundContract.getFundList();
-    const maxFundId = fundsListRes.funds.reduce(
-      (result, fund) => (fund.id > result ? fund.id : result),
-      0
-    );
-
-    const newFundDetails: FundDetails = {
-      id: maxFundId + 1,
+    const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
       description: fundDescription,
       members: newFundMembers,

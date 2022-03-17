@@ -15,6 +15,7 @@ export default function IconEditor() {
   const { handleFileChange, handleImageReset, loading, isInitial, inputRef } =
     useImageEditor<V>("icon");
   const allianceIcon = watch("icon");
+
   return (
     <>
       <ErrorMessage

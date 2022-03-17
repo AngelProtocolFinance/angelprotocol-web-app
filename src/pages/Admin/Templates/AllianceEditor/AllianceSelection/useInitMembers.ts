@@ -32,7 +32,13 @@ export default function useInitMembers() {
     } else {
       return;
     }
-  }, [isAllianceLookupLoading, isTCAMembersLoading, dispatch]);
+  }, [
+    allianceLookup,
+    tcaMembers,
+    isAllianceLookupLoading,
+    isTCAMembersLoading,
+    dispatch,
+  ]);
 
   return {
     allianceCopy,

@@ -1,7 +1,13 @@
 import { aws } from "../aws";
 import { alliance, tags } from "../tags";
 import { AWSQueryRes } from "../types";
-import { MemberDetails, MemberLookUp, ToRemoveMember } from "./types";
+import {
+  EditMemberPayload,
+  MemberDetails,
+  MemberLookUp,
+  NewMemberPayload,
+  ToRemoveMember,
+} from "./types";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 export const alliance_api = aws.injectEndpoints({
@@ -25,13 +31,30 @@ export const alliance_api = aws.injectEndpoints({
       },
     }),
 
-    createNewMember: builder.mutation<any, MemberDetails>({
+    createNewMember: builder.mutation<any, NewMemberPayload>({
       invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
-      query: (body) => ({
-        url: "alliance",
-        method: "POST",
-        body,
-      }),
+      query: (body) => {
+        const isBase64url = /data:image/.test(body.icon || "");
+        if (!isBase64url) delete body.icon;
+        return {
+          url: "alliance",
+          method: "POST",
+          body,
+        };
+      },
+    }),
+    editMember: builder.mutation<any, EditMemberPayload>({
+      invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
+      query: ({ address, name, ...restBody }) => {
+        const isBase64url = /data:image/.test(restBody.icon || "");
+        if (!isBase64url) delete restBody.icon;
+        return {
+          url: `alliance/${address}`,
+          params: { name },
+          method: "PUT",
+          body: restBody,
+        };
+      },
     }),
     //NOTE: edit member isn't practical since both name and wallet address can't be edited
     //as they are part of the partition key
@@ -67,5 +90,8 @@ function sortMembers(members: MemberDetails[]) {
     });
 }
 
-export const { useCreateNewMemberMutation, useRemoveMemberMutation } =
-  alliance_api;
+export const {
+  useCreateNewMemberMutation,
+  useRemoveMemberMutation,
+  useEditMemberMutation,
+} = alliance_api;

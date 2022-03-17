@@ -14,7 +14,13 @@ export default function MemberForm() {
       <Label _required>icon</Label>
       <IconEditor />
       <TextInput<V> title="name" name="name" required />
-      <TextInput<V> title="wallet address" name="address" required mono />
+      <TextInput<V>
+        title="wallet address"
+        name="address"
+        required
+        mono
+        disabled
+      />
       <TextInput<V> title="website" name="url" />
 
       {error && (
