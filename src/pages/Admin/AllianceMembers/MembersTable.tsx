@@ -9,9 +9,13 @@ export default function MembersTable(props: { members: MemberDetails[] }) {
   const { showModal } = useSetModal();
 
   const showMemberEditor = (member: MemberDetails) => () => {
+    const { isPlaceholder, ...restMemberDetails } = member;
     showModal(MemberEditor, {
       Form: MemberForm,
-      initialValues: { ...member, type: member.isPlaceholder ? "new" : "edit" },
+      initialValues: {
+        ...restMemberDetails,
+        type: isPlaceholder ? "new" : "edit",
+      },
     });
   };
 

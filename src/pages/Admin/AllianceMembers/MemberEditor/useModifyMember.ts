@@ -20,12 +20,12 @@ export default function useModifyMember() {
   const [editMember] = useEditMemberMutation();
 
   async function modifyMember(data: MV) {
-    const type = getValues("type");
+    const { type, ...restData } = data;
     let response;
     if (type === "edit") {
-      response = await editMember(data);
+      response = await editMember(restData);
     } else {
-      response = await createMember(data);
+      response = await createMember(restData);
     }
     if ("error" in response) {
       setError("failed to save changes");
@@ -38,5 +38,6 @@ export default function useModifyMember() {
     error,
     modifyMember: handleSubmit(modifyMember),
     isSubmitDisabled: !isDirty || !isValid || isSubmitting,
+    isEdit: getValues("type") === "edit",
   };
 }

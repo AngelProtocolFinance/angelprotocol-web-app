@@ -5,7 +5,7 @@ import { MemberEditValues as V } from "./schema";
 import useModifyMember from "./useModifyMember";
 
 export default function MemberForm() {
-  const { modifyMember, isSubmitDisabled, error } = useModifyMember();
+  const { modifyMember, isSubmitDisabled, error, isEdit } = useModifyMember();
   return (
     <form
       onSubmit={modifyMember}
@@ -14,7 +14,13 @@ export default function MemberForm() {
       <Label _required>icon</Label>
       <IconEditor />
       <TextInput<V> title="name" name="name" required />
-      <TextInput<V> title="wallet address" name="address" required mono />
+      <TextInput<V>
+        title="wallet address"
+        name="address"
+        required
+        mono
+        disabled={isEdit}
+      />
       <TextInput<V> title="website" name="url" />
 
       {error && (
