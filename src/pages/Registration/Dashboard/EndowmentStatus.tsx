@@ -1,6 +1,6 @@
 import maskAddress from "helpers/maskAddress";
 import { MouseEventHandler } from "react";
-import Button from "../Button";
+import { Button } from "../common";
 import { RegistrationStatus, ReviewStatus } from "./types";
 
 type Props = {

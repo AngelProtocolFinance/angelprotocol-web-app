@@ -2,7 +2,7 @@ import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../Button";
+import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {

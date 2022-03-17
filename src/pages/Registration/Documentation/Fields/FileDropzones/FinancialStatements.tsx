@@ -1,7 +1,7 @@
 import FileDropzone from "components/FileDropzone";
 import { useFormContext } from "react-hook-form";
+import { InputRow } from "../../../common";
 import { FormValues } from "../../types";
-import InputRow from "../InputRow";
 
 export default function FinancialStatements() {
   const {
@@ -10,10 +10,10 @@ export default function FinancialStatements() {
 
   return (
     <InputRow
-      id="financialStatements"
+      htmlFor="financialStatements"
       label="At least one of the last 2 year’s financial statements"
     >
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="financialStatements"
         className="h-8"
         multiple

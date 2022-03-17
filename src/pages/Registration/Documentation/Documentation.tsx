@@ -3,6 +3,7 @@ import { app, site } from "constants/routes";
 import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Redirect } from "react-router-dom";
+import { useGetter } from "store/accessors";
 import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import {
@@ -20,10 +21,15 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
+  const user = useGetter((state) => state.user);
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
+      un_sdg: user.UN_SDG,
+      website: user.Website,
+      proofOfIdentity: [],
+      proofOfRegistration: [],
       financialStatements: [],
       auditedFinancialReports: [],
     },

@@ -23,7 +23,7 @@ export default function ButtonSection() {
             Back
           </Button>
           <Button submit className="bg-thin-blue w-48 h-12">
-            Upload
+            Submit
           </Button>
         </>
       )}

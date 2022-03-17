@@ -1,10 +1,11 @@
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
+import { FieldValues } from "react-hook-form";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { BaseProps } from "./types";
 
-type Props = BaseProps & {
-  onDrop: <T extends File>(
-    acceptedFiles: T[],
+type Props<T extends FieldValues> = BaseProps<T> & {
+  onDrop: <K extends File>(
+    acceptedFiles: K[],
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void;
@@ -13,7 +14,7 @@ type Props = BaseProps & {
 
 const DISABLED_CLASSES = "cursor-default bg-light-grey opacity-30";
 
-export default function Dropzone(props: Props) {
+export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: props.onDrop,
     multiple: props.multiple,

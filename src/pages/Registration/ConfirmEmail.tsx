@@ -5,7 +5,7 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Button from "./Button";
+import { Button } from "./common";
 import routes from "./routes";
 
 export default function ConfirmEmail() {

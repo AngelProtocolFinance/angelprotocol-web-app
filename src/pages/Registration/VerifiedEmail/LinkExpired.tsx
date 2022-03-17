@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 import { FaExclamation } from "react-icons/fa";
-import Button from "../Button";
+import { Button } from "../common";
 
 type Props = {
   onClick: MouseEventHandler<HTMLButtonElement>;

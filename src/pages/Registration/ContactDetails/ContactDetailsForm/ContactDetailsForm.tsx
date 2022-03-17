@@ -11,7 +11,7 @@ import {
 } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
-import Button from "../../Button";
+import { Button } from "../../common";
 import { userRoleOptions, UserRoles } from "../../constants";
 import routes from "../../routes";
 import RoleSelector from "./RoleSelector";

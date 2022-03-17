@@ -1,12 +1,12 @@
 import Selector from "components/Selector";
 import { unsdgs } from "constants/unsdgs";
 import { useFormContext } from "react-hook-form";
+import { InputRow } from "../../common";
 import { FormValues } from "../types";
-import InputRow from "./InputRow";
 
 const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
   label: `${+_key < 10 ? "0" : ""}${_key} - ${val.title.toUpperCase()}`,
-  value: _key,
+  value: +_key,
 }));
 
 export default function UnSdgSelector() {
@@ -17,7 +17,7 @@ export default function UnSdgSelector() {
 
   return (
     <InputRow
-      id="un_sdg"
+      htmlFor="un_sdg"
       label="Which UN SDG is your org’s mission aligned with?"
     >
       <Selector

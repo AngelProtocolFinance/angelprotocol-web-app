@@ -2,9 +2,8 @@ import FileDropzone from "components/FileDropzone";
 import { useSetModal } from "components/Modal/Modal";
 import { useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
-import Button from "../../../Button";
+import { Button, InputRow } from "../../../common";
 import { FormValues } from "../../types";
-import InputRow from "../InputRow";
 
 export default function ProofOfIdentity() {
   const {
@@ -19,12 +18,12 @@ export default function ProofOfIdentity() {
 
   return (
     <InputRow
-      id="proofOfIdentity"
+      htmlFor="proofOfIdentity"
       label="Your proof of identity"
       infoModal={ProofOfIdentityModal}
       required
     >
-      <FileDropzone
+      <FileDropzone<FormValues>
         name="proofOfIdentity"
         className="h-8"
         disabled={isSubmitting}
