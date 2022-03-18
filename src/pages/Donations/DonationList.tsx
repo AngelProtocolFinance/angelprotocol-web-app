@@ -16,10 +16,10 @@ const DonationList = (props: { userAddress?: string }) => {
     skip: !props.userAddress,
   });
 
+  const showDonor = useDonor();
+
   const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
     useSortTransactions(data);
-
-  const showDonor = useDonor();
 
   return (
     <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto max-h-75vh">
@@ -30,30 +30,17 @@ const DonationList = (props: { userAddress?: string }) => {
       <table className="mt-4 w-full">
         <TableSection type="thead" rowClass="">
           <Cells type="th" cellClass="">
-            <HeaderButton
-              onClick={handleHeaderClick("amount")}
-              _activeSortKey={sortKey}
-              _sortKey="amount"
-              _sortDirection={sortDirection}
-            >
-              Amount
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("transaction_date")}
-              _activeSortKey={sortKey}
-              _sortKey="transaction_date"
-              _sortDirection={sortDirection}
-            >
-              Date
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("endowment_address")}
-              _activeSortKey={sortKey}
-              _sortKey="endowment_address"
-              _sortDirection={sortDirection}
-            >
-              Endowment
-            </HeaderButton>
+            {headers.map((header) => (
+              <HeaderButton
+                key={header.key}
+                onClick={handleHeaderClick(header.key)}
+                _activeSortKey={sortKey}
+                _sortKey={header.key}
+                _sortDirection={sortDirection}
+              >
+                {header.name}
+              </HeaderButton>
+            ))}
           </Cells>
         </TableSection>
         <TableSection type="tbody" rowClass="">
@@ -79,6 +66,12 @@ const DonationList = (props: { userAddress?: string }) => {
     </div>
   );
 };
+
+const headers: { key: SortKey; name: string }[] = [
+  { key: "amount", name: "amount" },
+  { key: "transaction_date", name: "date" },
+  { key: "endowment_address", name: "endowment" },
+];
 
 function HeaderButton(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
