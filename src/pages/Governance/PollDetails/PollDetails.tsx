@@ -47,7 +47,7 @@ export default function PollDetails() {
               <span className="font-heading text-sm">{details.end_height}</span>
             </p>
           </div>
-          <Item title="Link" value={details.link} />
+          <DetailsLink href={details.link} />
         </div>
         <div className="break-words">
           <p className="text-white font-heading uppercase text-xs font-bold mb-2">
@@ -117,6 +117,24 @@ function Item(props: { title: string; value: string }) {
         {props.title}
       </h4>
       <p className="">{props.value}</p>
+    </div>
+  );
+}
+
+function DetailsLink(props: { href: string }) {
+  return (
+    <div className="break-words">
+      <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
+        Link
+      </h4>
+      <a
+        href={props.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-white"
+      >
+        {props.href}
+      </a>
     </div>
   );
 }
