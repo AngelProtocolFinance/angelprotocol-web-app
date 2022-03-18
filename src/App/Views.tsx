@@ -5,7 +5,7 @@ import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 import CharityEdit from "pages/CharityEdit/CharityEdit";
 import useScrollTop from "hooks/useScrollTop";
-import Donation from "pages/Donations/Donation";
+import Donations from "pages/Donations/Donations";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
@@ -48,7 +48,7 @@ export default function Views() {
           path={`${app.endowment_admin}/:address/*`}
           element={<EndowmentAdmin />}
         />
-        <Route path={`${app.donation}/:address`} element={<Donation />} />
+        <Route path={`${app.donations}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}
           element={<Navigate replace to={`${app.marketplace}`} />}

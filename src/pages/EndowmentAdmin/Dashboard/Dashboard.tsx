@@ -20,7 +20,7 @@ export default function Dashboard(props: { endowmentAddr: string }) {
         opener={showWithdraw}
       />
       <Liquid type="locked" holdings={holdings.locked_cw20} />
-      <TransactionList address={props.endowmentAddr} />
+      <TransactionList endowmentAddress={props.endowmentAddr} />
     </div>
   );
 }

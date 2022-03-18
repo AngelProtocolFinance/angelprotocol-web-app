@@ -28,7 +28,7 @@ export default function Portal() {
         </Link>
       )}
       <Link
-        to={`${site.app}/${app.donation}/${wallet?.walletAddress}`}
+        to={`${site.app}/${app.donations}/${wallet?.walletAddress}`}
         className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY DONATIONS

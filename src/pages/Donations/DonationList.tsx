@@ -1,123 +1,101 @@
-import { useEffect, useState, useMemo } from "react";
 import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { EndowmentAddrProps, DonationItemProps } from "./types";
 import useDonor from "./useDonor";
-import Loader from "components/Loader/Loader";
-import { DonationTransactions } from "services/aws/endowment_admin/types";
 import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import useSortList, { Direction } from "./useSortList";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
+import useSortTransactions, {
+  SortDirection,
+  SortKey,
+} from "./useSortTransactions";
+import TableSection from "pages/Admin/components/TableSection";
+import { Cells } from "components/TableSection/TableSection";
+import React from "react";
 
-const keys: string[] = ["amount", "date", "endowment"];
+const DonationList = (props: { userAddress?: string }) => {
+  const { data = [] } = useDonationTransactionsQuery(props.userAddress!, {
+    skip: !props.userAddress,
+  });
 
-const DonationList = (props: EndowmentAddrProps) => {
-  const [isError, setIsError] = useState(false);
-  const { data, isLoading } = useDonationTransactionsQuery(props.address);
-  const {
-    key: SortKey,
-    direction,
-    toggleDirection,
-    sortList,
-    setKey,
-  } = useSortList<DonationTransactions>(["amount"]);
+  const { handleHeaderClick, sortedTransactions, sortDirection, sortKey } =
+    useSortTransactions(data);
 
-  useEffect(() => {
-    if (data === undefined && !isLoading) {
-      setIsError(true);
-    }
-  }, [data, isError, isLoading]);
+  const showDonor = useDonor();
 
-  //TODO: sorting should be done on query transformReponse, or better on query
-  //memoized this operation so not sorting on every render
-  const renderedList = useMemo(() => sortList(data || []), [data, sortList]);
   return (
     <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto max-h-75vh">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
-        <span>Donation History</span>
+        Donation History
       </h3>
-      {isError && <DonationItemError />}
-      {isLoading && (
-        <div className="my-20">
-          <Loader
-            bgColorClass="bg-light-grey bg-opacity-80"
-            widthClass="w-4"
-            gapClass="gap-4"
-          />
-        </div>
-      )}
-      {!isError && !isLoading && (
-        <table className="mt-4 w-full">
-          <thead>
-            <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue border-opacity-20">
-              {keys.map((key, i) => (
-                <th
-                  className="text-white text-sm text-left uppercase cursor-pointer pb-2"
-                  key={i}
-                  onClick={() =>
-                    SortKey === key ? toggleDirection() : setKey(key)
-                  }
-                >
-                  <span className="flex items-center justify-start gap-4">
-                    {key}
-                    {SortKey === key &&
-                      (direction === Direction.Asc ? (
-                        <VscTriangleUp />
-                      ) : (
-                        <VscTriangleDown />
-                      ))}
-                  </span>
-                </th>
-              ))}
-              <th className="text-white text-sm text-left"></th>
-              {/* <th className="text-white text-sm text-left"></th> */}
-            </tr>
-          </thead>
-          <tbody>
-            {renderedList?.map((item: DonationTransactions, i: number) => (
-              <DonationItemInfo item={item} key={i} />
-            ))}
-          </tbody>
-        </table>
-      )}
+
+      <table className="mt-4 w-full">
+        <TableSection type="thead" rowClass="">
+          <Cells type="th" cellClass="">
+            <HeaderButton
+              onClick={handleHeaderClick("amount")}
+              _activeSortKey={sortKey}
+              _sortKey="amount"
+              _sortDirection={sortDirection}
+            >
+              Amount
+            </HeaderButton>
+            <HeaderButton
+              onClick={handleHeaderClick("transaction_date")}
+              _activeSortKey={sortKey}
+              _sortKey="transaction_date"
+              _sortDirection={sortDirection}
+            >
+              Date
+            </HeaderButton>
+            <HeaderButton
+              onClick={handleHeaderClick("endowment_address")}
+              _activeSortKey={sortKey}
+              _sortKey="endowment_address"
+              _sortDirection={sortDirection}
+            >
+              Endowment
+            </HeaderButton>
+          </Cells>
+        </TableSection>
+        <TableSection type="tbody" rowClass="">
+          {sortedTransactions.map((tx) => (
+            <Cells key={tx.sort_key} type="td" cellClass="">
+              <p className="text-base font-bold">$ {toCurrency(tx.amount)}</p>
+              <span className="text-base">
+                {tx.transaction_date.substring(0, 10)}
+              </span>
+              <span className="text-base">
+                {maskAddress(tx.endowment_address)}
+              </span>
+              <button
+                className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
+                onClick={() => showDonor(tx.sort_key)}
+              >
+                Update
+              </button>
+            </Cells>
+          ))}
+        </TableSection>
+      </table>
     </div>
   );
 };
 
-const DonationItemInfo = (props: DonationItemProps) => {
-  const wallet = useConnectedWallet();
-  const data = props.item;
-  const showDonor = useDonor(data.sort_key);
-  const isDisabled = data.wallet_address !== wallet?.walletAddress;
+function HeaderButton(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    _sortDirection: SortDirection;
+    _sortKey: SortKey;
+    _activeSortKey: SortKey;
+  }
+) {
+  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
+    props;
   return (
-    <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
-      <td className="py-5 pl-4">
-        <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
-      </td>
-      <td>
-        <span className="text-base">
-          {data.transaction_date.substring(0, 10)}
-        </span>
-      </td>
-      <td>
-        <span className="text-base">{maskAddress(data.endowment_address)}</span>
-      </td>
-      <td>
-        <button
-          className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
-          onClick={() => !isDisabled && showDonor()}
-          disabled={isDisabled}
-        >
-          Update
-        </button>
-      </td>
-    </tr>
+    <button {...restProps} className="flex items-center justify-start gap-4">
+      <span>{children}</span>
+      {_activeSortKey === _sortKey &&
+        (_sortDirection === "asc" ? <VscTriangleUp /> : <VscTriangleDown />)}
+    </button>
   );
-};
-
-const DonationItemError = () => {
-  return <p className="text-white">No donation records found.</p>;
-};
+}
 
 export default DonationList;
