@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDepositTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { EndowmentAddrProps, TransactionItemProps } from "./types";
+import { EndowmentAddrProps, TransactionItemProps } from "../types";
 
 const TransactionList = (props: EndowmentAddrProps) => {
   const [isError, setIsError] = useState(false);
@@ -15,7 +15,7 @@ const TransactionList = (props: EndowmentAddrProps) => {
   }, [data, isError, isLoading]);
 
   return (
-    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto h-process">
+    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md shadow-inner overflow-auto h-process">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Transaction History</span>
       </h3>

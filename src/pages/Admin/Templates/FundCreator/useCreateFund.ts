@@ -6,7 +6,7 @@ import { useSetModal } from "components/Modal/Modal";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
-import APAdmin from "contracts/APAdmin";
+import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
@@ -83,7 +83,7 @@ export default function useCreateFund() {
     );
 
     //create proposal msg
-    const adminContract = new APAdmin(wallet);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(title, description, [
       embeddedExecuteMsg,
     ]);

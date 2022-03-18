@@ -1,24 +1,14 @@
 import { NavLink, Routes, Route } from "react-router-dom";
 import { proposal_types } from "constants/routes";
-import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
-import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
-import FundCreator from "./Templates/FundCreator/FundCreator";
-import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
-import FundUpdator from "./Templates/FundUpdator/FundUpdator";
+// import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 
 export default function Proposer() {
   return (
     <div className="grid gap-2 grid-cols-a1">
       <ProposalTypes />
       <Routes>
-        <Route
-          path={proposal_types.change_endowment_status}
-          element={<EndowmentUpdator />}
-        />
-        <Route path={proposal_types.create_fund} element={<FundCreator />} />
-        <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
-        <Route path={proposal_types.update_fund} element={<FundUpdator />} />
         <Route index element={<MemberUpdator />} />
       </Routes>
     </div>
@@ -32,9 +22,9 @@ const styler = createNavLinkStyler(
 function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
-      <ProposalCategory title="Admin group" />
+      <ProposalCategory title="admin group" />
       <NavLink end to={proposal_types.index} className={styler}>
-        Update group members
+        Update group Members
       </NavLink>
       <ProposalCategory title="Index fund" classes="mt-4" />
       <NavLink to={proposal_types.create_fund} className={styler}>

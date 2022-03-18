@@ -28,13 +28,18 @@ export default function Admin() {
           <Route path={`${admin.proposal}/:id`} element={<Details />} />
           <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
           <Route path={admin.alliance} element={<AllianceMembers />} />
-          <Route index element={<Proposals />} />
+          <Route
+            index
+            element={
+              <Proposals cws="apTeam" templatesLink={admin.proposal_types} />
+            }
+          />
         </Routes>
       </div>
     );
 }
 
-function GuardPrompt(props: { message: string; showLoader?: true }) {
+export function GuardPrompt(props: { message: string; showLoader?: true }) {
   return (
     <div className="place-self-center grid content-center justify-items-center bg-white-grey text-angel-grey min-h-115 w-full max-w-sm p-4 rounded-md shadow-lg">
       {props.showLoader ? (

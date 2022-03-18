@@ -21,7 +21,7 @@ export default function Portal() {
     <>
       {!isLoading && endowmentAddr && (
         <Link
-          to={`${site.app}/${app.endowment}/${endowmentAddr}`}
+          to={`${site.app}/${app.endowment_admin}/${endowmentAddr}`}
           className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
         >
           MY ENDOWMENT

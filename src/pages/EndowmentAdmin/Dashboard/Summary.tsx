@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
 import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
+import { HoldingSummary } from "../types";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
-import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
@@ -22,7 +22,7 @@ export default function Summary(props: HoldingSummary) {
     props.type === "liquid" ? "Liquid Account" : "Principal Account";
 
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 text-white text-opacity-80">
+    <div className="flex flex-col rounded-md text-white text-opacity-80 shadow-inner bg-white bg-opacity-10 p-4">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
         <FaCog

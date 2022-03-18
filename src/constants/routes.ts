@@ -27,7 +27,7 @@ export enum app {
   fund = "fund",
   govern = "govern",
   auction = "auction",
-  endowment = "endowment",
+  endowment_admin = "endowment-admin",
   donation = "donation",
 }
 
@@ -50,6 +50,13 @@ export enum admin {
   proposal_types = "proposal-types",
   proposal = "proposal",
   alliance = "alliance",
+}
+
+export enum endowmentAdmin {
+  index = "",
+  proposal = "proposal",
+  proposals = "proposals",
+  proposal_types = "proposal-types",
 }
 
 export enum proposal_types {
