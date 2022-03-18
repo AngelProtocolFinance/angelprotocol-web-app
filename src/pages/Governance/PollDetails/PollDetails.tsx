@@ -4,6 +4,9 @@ import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
+import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { app, site } from "constants/routes";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
@@ -11,6 +14,12 @@ export default function PollDetails() {
   const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
+      <Link
+        to={`${site.app}/${app.govern}`}
+        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
+      >
+        <BiArrowBack size={15} /> back to proposals
+      </Link>
       <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
