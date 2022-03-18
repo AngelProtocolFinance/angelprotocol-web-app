@@ -4,7 +4,7 @@ import { useMember } from "services/terra/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 
 export default function DappMenu() {
-  const { member } = useMember();
+  const { member } = useMember("apTeam");
 
   console.log(member);
 

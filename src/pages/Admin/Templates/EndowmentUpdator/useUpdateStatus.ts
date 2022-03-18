@@ -8,7 +8,7 @@ import {
 } from "services/terra/registrar/types";
 import { terra } from "services/terra/terra";
 import { tags, admin } from "services/terra/tags";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
@@ -52,7 +52,7 @@ export default function useUpdateStatus() {
         cleanObject(statusChangePayload, [undefined])
       );
 
-    const adminContract = new Admin(wallet);
+    const adminContract = new APAdmin(wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

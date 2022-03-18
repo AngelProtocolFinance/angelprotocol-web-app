@@ -12,7 +12,7 @@ import AllianceMembers from "./AllianceMembers/AllianceMembers";
 
 export default function Admin() {
   const wallet = useConnectedWallet();
-  const { member, isMemberLoading } = useMember();
+  const { member, isMemberLoading } = useMember("apTeam");
 
   if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;

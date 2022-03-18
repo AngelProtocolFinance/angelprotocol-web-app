@@ -7,7 +7,7 @@ import Popup from "components/Popup/Popup";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import Indexfund from "contracts/IndexFund";
 import { app, site } from "constants/routes";
 import { useSetter } from "store/accessors";
@@ -30,7 +30,7 @@ export default function useDestroyFund() {
       +data.fundId
     );
 
-    const adminContract = new Admin(wallet);
+    const adminContract = new APAdmin(wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,

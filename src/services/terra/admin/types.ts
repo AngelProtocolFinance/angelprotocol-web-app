@@ -1,4 +1,9 @@
+import { CAaddresses } from "contracts/APAdmin";
 import { EmbeddedWasmMsg } from "contracts/types";
+
+//admin queriers
+//explicit intention: useSomeAdminQuerier("apTeam") || ({cw3,cw4}) for dynamic address
+export type AdminQueryAddresses = "apTeam" | CAaddresses;
 
 export type Member = {
   addr: string;
@@ -37,6 +42,18 @@ export type Proposal = {
       total_weight: number; //2
     };
   };
+};
+
+export type CW3Config = {
+  threshold: {
+    absolute_percentage: {
+      percentage: string; //"0.5"
+    };
+  };
+  max_voting_period: {
+    height: number; //100000
+  };
+  group_addr: string; //"terra123abc.."
 };
 
 export type VoteInfo = {
