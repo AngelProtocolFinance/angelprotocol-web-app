@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { CgRemoveR } from "react-icons/cg";
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import { useFilteredAllianceMembers } from "services/aws/alliance/queriers";
 import { MemberDetails } from "services/aws/alliance/types";
 import { useSetModal } from "components/Modal/Modal";
 import useDebouncer from "hooks/useDebouncer";
-import TableSection, { Cells } from "../components/TableSection";
 import DeleteMemberPrompt from "./DeleteMemberPrompt";
 import ToolBar from "./Toolbar";
 

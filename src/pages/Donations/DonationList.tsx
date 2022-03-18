@@ -1,15 +1,14 @@
+import React from "react";
+import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import useDonor from "./useDonor";
-import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import useSortTransactions, {
   SortDirection,
   SortKey,
 } from "./useSortTransactions";
-import TableSection from "pages/Admin/components/TableSection";
-import { Cells } from "components/TableSection/TableSection";
-import React from "react";
+import useDonor from "./useDonor";
 
 const DonationList = (props: { userAddress?: string }) => {
   const { data = [] } = useDonationTransactionsQuery(props.userAddress!, {

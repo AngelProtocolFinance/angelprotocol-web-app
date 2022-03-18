@@ -1,16 +1,11 @@
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import { useDepositTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
+import { Transaction } from "services/aws/endowment_admin/types";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import TableSection, { Cells } from "components/TableSection/TableSection";
-import { Transaction } from "services/aws/endowment_admin/types";
 
 const TransactionList = (props: { endowmentAddress: string }) => {
-  const {
-    data = [],
-    isLoading,
-    isFetching,
-    isError,
-  } = useDepositTransactionsQuery(props.endowmentAddress);
+  const { data = [] } = useDepositTransactionsQuery(props.endowmentAddress);
 
   return (
     <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md shadow-inner overflow-auto h-process">
