@@ -26,8 +26,6 @@ export default function useTorus(defaultRedirectUrl: string) {
       // NOTE: to successfully read this value, it is necessary to call this hook in the component
       // that is Torus is set to redirect to, otherwise this value would be empty
       if (openLogin.privKey) {
-        console.log("init", openLogin.privKey);
-
         setPrivateKey(openLogin.privKey);
       }
       setLoading(false);
