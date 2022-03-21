@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { useLatestBlock } from "services/terra/queriers";
-import { CWContracts } from "contracts/admin";
 import { useProposals } from "services/terra/admin/queriers";
+import { admin } from "constants/routes";
 import toCurrency from "helpers/toCurrency";
 import ProposalCard from "./ProposalCard";
-import { admin } from "constants/routes";
 
-export default function Proposals(props: { cws: CWContracts }) {
+export default function Proposals() {
   const block_height = useLatestBlock(10_000);
-  const { proposals, isProposalsLoading } = useProposals(props.cws);
+  const { proposals, isProposalsLoading } = useProposals();
 
   return (
     <div className="p-3 grid grid-rows-a1 bg-white bg-opacity-10 shadow-inner rounded-md">
@@ -29,7 +28,7 @@ export default function Proposals(props: { cws: CWContracts }) {
         </Link>
       </div>
       {(proposals.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
           {proposals.map((proposal) => (
             <ProposalCard key={proposal.id} {...proposal} />
           ))}

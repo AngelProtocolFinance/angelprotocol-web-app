@@ -1,13 +1,13 @@
 import { chainIDs } from "constants/chainIDs";
+import { CWContracts } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
-import { CWContracts } from "contracts/Admin";
 import useAdminContract from "./useAdminContract";
 
-export function useMembers(cws: CWContracts) {
+export function useMembers() {
   const { useMembersQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(cws);
+  const { wallet, contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,
@@ -18,9 +18,9 @@ export function useMembers(cws: CWContracts) {
   return { members: data, isMembersLoading: isFetching || isLoading };
 }
 
-export function useMember(cws: CWContracts, skip = false) {
+export function useMember(customCW?: CWContracts, skip = false) {
   const { useMemberQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(cws);
+  const { wallet, contract, isAdminSkip } = useAdminContract();
   const {
     data = member,
     isFetching,
@@ -35,9 +35,9 @@ export function useMember(cws: CWContracts, skip = false) {
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
 
-export function useProposals(cws: CWContracts) {
+export function useProposals() {
   const { useProposalsQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(cws);
+  const { wallet, contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,
@@ -46,14 +46,12 @@ export function useProposals(cws: CWContracts) {
     skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
   });
 
-  console.log(contract);
-
   return { proposals: data, isProposalsLoading: isFetching || isLoading };
 }
 
-export function useProposal(cws: CWContracts, pollId?: string) {
+export function useProposal(pollId?: string) {
   const { useProposalQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(cws);
+  const { wallet, contract, isAdminSkip } = useAdminContract();
 
   //process pollId path var which is not guaranteed to be a number castable string
   const numberPollId = idParamToNumber(pollId);
@@ -70,9 +68,9 @@ export function useProposal(cws: CWContracts, pollId?: string) {
   return { proposal: data, isProposalLoading: isFetching || isLoading };
 }
 
-export function useVoteList(cws: CWContracts, pollId: number) {
+export function useVoteList(pollId: number) {
   const { useVotesQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(cws);
+  const { wallet, contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,

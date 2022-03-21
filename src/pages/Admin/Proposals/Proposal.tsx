@@ -7,13 +7,12 @@ import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
-import { CWContracts } from "contracts/Admin";
 
 export type ProposalIdParam = { id: string };
-export default function Proposal(props: { cws: CWContracts }) {
+export default function Proposal() {
   const params = useParams<ProposalIdParam>();
   const proposalId = params.id;
-  const { proposal } = useProposal(props.cws, proposalId);
+  const { proposal } = useProposal(proposalId);
   const proposalDetails = useProposalDetails(proposal);
 
   return (

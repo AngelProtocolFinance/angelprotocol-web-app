@@ -19,7 +19,7 @@ export default function Proposer() {
         <Route path={proposal_types.create_fund} element={<FundCreator />} />
         <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
         <Route path={proposal_types.update_fund} element={<FundUpdator />} />
-        <Route index element={<MemberUpdator cwContracts="apTeam" />} />
+        <Route index element={<MemberUpdator />} />
       </Routes>
     </div>
   );

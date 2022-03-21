@@ -5,7 +5,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import { useBalances } from "services/terra/queriers";
 import { AdminVoteValues } from "./types";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -16,6 +16,7 @@ import useDebouncer from "hooks/useDebouncer";
 import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -41,7 +42,7 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin("apTeam", wallet);
+        const contract = new Admin(cwContracts, wallet);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);

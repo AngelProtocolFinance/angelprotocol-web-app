@@ -19,6 +19,7 @@ export default function ProposalCard(props: Proposal) {
     pctYes,
     pctNotYet,
   } = useProposalDetails(props);
+
   return (
     <Link
       to={`../${admin.proposal}/${props.id}`}

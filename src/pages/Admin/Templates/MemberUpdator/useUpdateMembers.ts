@@ -15,9 +15,10 @@ import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
+  const apCW4Members = useGetter((state) => state.admin.apCW4Members);
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const navigate = useNavigate();
   const wallet = useConnectedWallet();
-  const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -50,8 +51,7 @@ export default function useUpdateMembers() {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
-    const cws = getValues("cws");
-    const contract = new Admin(cws, wallet);
+    const contract = new Admin(cwContracts, wallet);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove
