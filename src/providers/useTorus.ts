@@ -37,7 +37,7 @@ export default function useTorus(defaultRedirectUrl: string) {
   const login = useCallback(
     async (loginProvider: string, redirectUrl: string = "") => {
       try {
-        const privKey = await openLogin.login({
+        const result = await openLogin.login({
           loginProvider: loginProvider,
           redirectUrl: redirectUrl || defaultRedirectUrl,
           relogin: true,
@@ -46,9 +46,9 @@ export default function useTorus(defaultRedirectUrl: string) {
           },
         });
 
-        if (!!privKey && typeof privKey === "string") {
-          const userInfo = await openLogin.getUserInfo();
-          console.log(userInfo);
+        if (!!result?.privKey && typeof result.privKey === "string") {
+          console.log("login privKey", result.privKey);
+          setPrivateKey(result.privKey);
         }
       } catch (error) {
         console.error("error", error);
