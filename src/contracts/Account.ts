@@ -44,7 +44,7 @@ export default class Account extends Contract {
     );
   }
 
-  createWithdrawMsg({
+  createEmbeddedWithdrawMsg({
     sources,
     beneficiary,
   }: {
@@ -52,7 +52,8 @@ export default class Account extends Contract {
     beneficiary: string;
   }) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.address, {
+
+    return this.createdEmbeddedWasmMsg([], this.address, {
       withdraw: {
         sources: sources,
         beneficiary,

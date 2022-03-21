@@ -26,20 +26,6 @@ function ProposalTypes() {
       <NavLink end to={proposal_types.index} className={styler}>
         Update group Members
       </NavLink>
-      <ProposalCategory title="Index fund" classes="mt-4" />
-      <NavLink to={proposal_types.create_fund} className={styler}>
-        Create Fund
-      </NavLink>
-      <NavLink to={proposal_types.destroy_fund} className={styler}>
-        Remove Fund
-      </NavLink>
-      <NavLink to={proposal_types.update_fund} className={styler}>
-        Update Fund
-      </NavLink>
-      <ProposalCategory title="Endowment" classes="mt-4" />
-      <NavLink to={proposal_types.change_endowment_status} className={styler}>
-        Change Endowment Status
-      </NavLink>
     </div>
   );
 }

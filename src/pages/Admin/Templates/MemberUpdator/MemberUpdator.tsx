@@ -5,7 +5,6 @@ import {
   MemberUpdatorValues,
 } from "./memberUpdatorSchema";
 import MemberUpdateForm from "./MemberUpdaterForm";
-import { CWContracts } from "contracts/Admin";
 
 export default function MemberUpdator() {
   const methods = useForm<MemberUpdatorValues>({

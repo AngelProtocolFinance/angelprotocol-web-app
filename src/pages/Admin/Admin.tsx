@@ -19,7 +19,7 @@ export default function Admin() {
 
   useEffect(() => {
     dispatch(setCWContracts("apTeam"));
-  }, []);
+  }, [dispatch]);
 
   const { member, isMemberLoading } = useMember("apTeam");
 

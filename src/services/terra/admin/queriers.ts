@@ -18,9 +18,9 @@ export function useMembers() {
   return { members: data, isMembersLoading: isFetching || isLoading };
 }
 
-export function useMember(customCW?: CWContracts, skip = false) {
+export function useMember(customCWs?: CWContracts, skip = false) {
   const { useMemberQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { wallet, contract, isAdminSkip } = useAdminContract(customCWs);
   const {
     data = member,
     isFetching,

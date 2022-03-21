@@ -12,8 +12,8 @@ type LockedSummary = {
 type LiquidSummary = {
   type: "liquid";
   holdings: Holding[];
-  isOwner?: boolean;
-  opener?: () => void;
+  isOwner: boolean;
+  opener: () => void;
 };
 
 export type HoldingSummary = LockedSummary | LiquidSummary;

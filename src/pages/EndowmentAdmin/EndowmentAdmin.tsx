@@ -22,8 +22,9 @@ export default function EndowmentAdmin() {
     useEndowmentCWs(endowmentAddress);
 
   useEffect(() => {
+    if (isCWContractsLoading) return;
     dispatch(setCWContracts(cwContracts));
-  }, [cwContracts, isCWContractsLoading]);
+  }, [cwContracts, isCWContractsLoading, dispatch]);
 
   const { member, isMemberLoading } = useMember(
     undefined,

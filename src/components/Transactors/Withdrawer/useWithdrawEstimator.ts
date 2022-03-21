@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 
 import {
   setFee,
@@ -17,6 +17,7 @@ import extractFeeNum from "helpers/extractFeeNum";
 import useFieldsAndLimits from "./useFieldsAndLimits";
 import { VaultFieldIds, WithdrawValues, AmountInfo } from "./types";
 import { SEPARATOR } from "./constants";
+import Admin from "contracts/Admin";
 
 export default function useWithrawEstimator() {
   const {
@@ -28,6 +29,7 @@ export default function useWithrawEstimator() {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const account_addr = getValues("account_addr");
   const { vaultLimits } = useFieldsAndLimits(account_addr);
 
@@ -116,9 +118,21 @@ export default function useWithrawEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const account = new Account(account_addr, wallet);
-        const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
-        const fee = await account.estimateFee([withdrawMsg]);
+        const accountContract = new Account(account_addr, wallet);
+        const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
+          sources,
+          beneficiary,
+        });
+
+        const adminContract = new Admin(cwContracts, wallet);
+
+        const proposalMsg = adminContract.createProposalMsg(
+          "withdraw funds proposal",
+          "",
+          [embeddedWithdrawMsg]
+        );
+
+        const fee = await adminContract.estimateFee([proposalMsg]);
         const feeNum = extractFeeNum(fee);
 
         //get usd total of of sources
@@ -136,7 +150,7 @@ export default function useWithrawEstimator() {
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
         dispatch(setFee(feeNum));
-        setTx({ msgs: [withdrawMsg], fee });
+        setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));
@@ -146,7 +160,7 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary]);
+  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary, cwContracts]);
 
   return { tx, wallet };
 }
