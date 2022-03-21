@@ -35,7 +35,7 @@ export default function useTorus(defaultRedirectUrl: string) {
   }, [openLogin]);
 
   const login = useCallback(
-    async (loginProvider: string, redirectUrl: string = "") => {
+    async (loginProvider: string = "", redirectUrl: string = "") => {
       try {
         const result = await openLogin.login({
           loginProvider: loginProvider,

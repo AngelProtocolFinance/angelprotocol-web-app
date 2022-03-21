@@ -11,7 +11,7 @@ import useTorus from "./useTorus";
 type Torus = {
   isLoading: boolean;
   privateKey?: string;
-  login: (loginProvider: string) => Promise<void>;
+  login: (loginProvider?: string) => Promise<void>;
 };
 
 interface IWalletSuiteContext {
@@ -23,7 +23,7 @@ interface IWalletSuiteContext {
 const WalletSuiteContext = createContext<IWalletSuiteContext>({
   connectOptionsShown: false,
   setConnectOptionsShown: () => {},
-  torus: { isLoading: true, login: (_: string) => new Promise((r) => r) },
+  torus: { isLoading: true, login: (_: string = "") => new Promise((r) => r) },
 });
 
 function WalletSuiteProvider({ children }: PropsWithChildren<{}>) {
