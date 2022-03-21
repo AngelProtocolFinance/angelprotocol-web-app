@@ -20,6 +20,7 @@ export default function useBackdropDismiss(callback: () => void) {
       (event.composedPath && event.composedPath())) as any[];
     if (path.includes(ref.current)) return;
     callback();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return dismissHandler;

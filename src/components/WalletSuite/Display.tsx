@@ -23,7 +23,6 @@ export default function Display() {
   const dismissHandler = useBackdropDismiss(hideDetails);
 
   useEffect(() => {
-    // console.log(detailsShown);
     if (escKeyPressed && detailsShown) {
       hideDetails();
     }
