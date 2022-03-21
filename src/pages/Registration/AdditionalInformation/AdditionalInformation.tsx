@@ -25,8 +25,6 @@ export default function AdditionalInformation() {
     },
   });
 
-  console.log(methods.control._formValues.charityOverview);
-
   useEffect(() => {
     if (isSuccess) {
       navigate(`${registerRootPath}/${routes.dashboard}`);
