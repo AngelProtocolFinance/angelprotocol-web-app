@@ -21,9 +21,13 @@ export function useEndowmentHoldings(address: string, skip = false) {
   };
 }
 
-export function useEndowmentCWs(address: string) {
+export function useEndowmentCWs(address?: string) {
   const { useEndowmentCWsQuery } = account_api;
-  const { data = {}, isLoading, isFetching } = useEndowmentCWsQuery(address);
+  const {
+    data = {},
+    isLoading,
+    isFetching,
+  } = useEndowmentCWsQuery(address!, { skip: !address });
 
   return {
     cwContracts: data,

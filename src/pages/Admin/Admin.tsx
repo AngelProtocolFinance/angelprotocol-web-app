@@ -1,11 +1,11 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
 import { admin } from "constants/routes";
 import Proposer from "./Proposer";
-import Details from "./Proposals/Details";
+import Proposal from "./Proposals/Proposal";
 import Proposals from "./Proposals/Proposals";
 import AdminNav from "./AdminNav";
 import AllianceMembers from "./AllianceMembers/AllianceMembers";
@@ -25,15 +25,14 @@ export default function Admin() {
       <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
         <AdminNav />
         <Routes>
-          <Route path={`${admin.proposal}/:id`} element={<Details />} />
+          <Route
+            path={`${admin.proposal}/:id`}
+            element={<Proposal cws="apTeam" />}
+          />
           <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
           <Route path={admin.alliance} element={<AllianceMembers />} />
-          <Route
-            index
-            element={
-              <Proposals cws="apTeam" templatesLink={admin.proposal_types} />
-            }
-          />
+          <Route path={admin.proposals} element={<Proposals cws="apTeam" />} />
+          <Route index element={<Navigate to={admin.proposals} />} />
         </Routes>
       </div>
     );

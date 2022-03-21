@@ -20,12 +20,14 @@ export function useEndowmentHoldingsState(address: string, skip = false) {
   };
 }
 
-export function useEndowmentCWsState(address: string) {
+export function useEndowmentCWsState(address?: string) {
   const {
     data = {},
     isLoading,
     isFetching,
-  } = account_api.endpoints.endowmentCWs.useQueryState(address);
+  } = account_api.endpoints.endowmentCWs.useQueryState(address!, {
+    skip: !address,
+  });
 
   return {
     cwContracts: data,

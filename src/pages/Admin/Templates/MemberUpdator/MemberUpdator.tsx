@@ -5,14 +5,16 @@ import {
   MemberUpdatorValues,
 } from "./memberUpdatorSchema";
 import MemberUpdateForm from "./MemberUpdaterForm";
+import { CWContracts } from "contracts/Admin";
 
-export default function MemberUpdator() {
+export default function MemberUpdator(props: { cwContracts: CWContracts }) {
   const methods = useForm<MemberUpdatorValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       addr: "",
       weight: "1",
+      cws: props.cwContracts,
     },
     resolver: yupResolver(memberUpdatorSchema),
   });

@@ -1,14 +1,14 @@
-import { endowmentAdmin } from "constants/routes";
+import { admin } from "constants/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { NavLink } from "react-router-dom";
 
 export default function AdminNav() {
   return (
     <div className="flex justify-end divide-x border-opacity-80">
-      <NavLink end to={endowmentAdmin.index} className={styler}>
+      <NavLink end to={admin.index} className={styler}>
         dashboard
       </NavLink>
-      <NavLink to={endowmentAdmin.proposals} className={styler}>
+      <NavLink to={admin.proposals} className={styler}>
         proposals
       </NavLink>
     </div>

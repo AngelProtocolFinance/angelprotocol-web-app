@@ -50,7 +50,8 @@ export default function useUpdateMembers() {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new Admin("apTeam", wallet);
+    const cws = getValues("cws");
+    const contract = new Admin(cws, wallet);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove

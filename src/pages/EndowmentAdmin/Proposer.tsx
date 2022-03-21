@@ -1,15 +1,19 @@
-import { NavLink, Routes, Route } from "react-router-dom";
+import { NavLink, Routes, Route, useParams } from "react-router-dom";
 import { proposal_types } from "constants/routes";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
+import { EndowmentAddrParams } from "./types";
+import { useEndowmentCWsState } from "services/terra/account/states";
 
 export default function Proposer() {
+  const { address: endowmentAddress } = useParams<EndowmentAddrParams>();
+  const { cwContracts } = useEndowmentCWsState(endowmentAddress);
   return (
     <div className="grid gap-2 grid-cols-a1">
       <ProposalTypes />
       <Routes>
-        <Route index element={<MemberUpdator />} />
+        <Route index element={<MemberUpdator cwContracts={cwContracts} />} />
       </Routes>
     </div>
   );

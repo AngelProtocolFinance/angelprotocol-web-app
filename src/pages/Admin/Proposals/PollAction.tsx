@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
 import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
-import { ProposalDetails } from "./useDetails";
+import { ProposalDetails } from "./useProposalDetails";
 
 export default function PollAction(props: ProposalDetails) {
   const showAdminVoter = useAdminVoter(props.numId);
