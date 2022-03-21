@@ -127,8 +127,8 @@ export default function useWithrawEstimator() {
         const adminContract = new Admin(cwContracts, wallet);
 
         const proposalMsg = adminContract.createProposalMsg(
+          "withdraw funds",
           "withdraw funds proposal",
-          "",
           [embeddedWithdrawMsg]
         );
 
@@ -160,7 +160,16 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary, cwContracts]);
+  }, [
+    wallet,
+    vaultLimits,
+    debAmounts,
+    isDebouncing,
+    isDirty,
+    isValid,
+    beneficiary,
+    cwContracts,
+  ]);
 
   return { tx, wallet };
 }

@@ -44,7 +44,7 @@ export default function WithdrawForm() {
         className="w-full m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
         disabled={isSubmitDisabled}
       >
-        {isFormLoading ? "Estimating..." : "Withdraw"}
+        {isFormLoading ? "Estimating..." : "Create withdraw proposal"}
       </button>
     </form>
   );

@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useFormContext } from "react-hook-form";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -17,11 +16,9 @@ import { useSetter } from "store/accessors";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
-import { app, site } from "constants/routes";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const navigate = useNavigate();
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -68,9 +65,6 @@ export default function useUpdateStatus() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => {
-          navigate(`${site.app}/${app.admin}`);
-        },
       })
     );
     showModal(TransactionPrompt, {});

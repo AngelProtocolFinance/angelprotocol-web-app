@@ -20,7 +20,6 @@ type SenderArgs = {
   wallet: ConnectedWallet | undefined;
   tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
   feedDenom?: denoms;
-  redirect?: () => void;
 };
 
 export const sendTerraTx = createAsyncThunk(
@@ -94,8 +93,6 @@ export const sendTerraTx = createAsyncThunk(
           for (const tagPayload of args.tagPayloads || []) {
             dispatch(tagPayload);
           }
-          //run redirect callBack
-          args.redirect && args.redirect();
         } else {
           updateTx({
             step: Step.error,
