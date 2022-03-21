@@ -7,6 +7,7 @@ import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
+
   const total_holding = useMemo(() => {
     const total_dec = props.holdings.reduce((total, holding) => {
       const vaultInfo = vaultsRate.find(

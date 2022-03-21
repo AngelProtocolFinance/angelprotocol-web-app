@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Indexfund from "contracts/IndexFund";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import { app, site } from "constants/routes";
 import { FundUpdateValues } from "./fundUpdatorSchema";
 
@@ -58,7 +58,7 @@ export default function useUpdateFund() {
       toRemove
     );
 
-    const adminContract = new Admin(wallet);
+    const adminContract = new APAdmin(wallet);
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 

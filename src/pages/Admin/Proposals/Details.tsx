@@ -12,7 +12,7 @@ export type ProposalIdParam = { id: string };
 export default function Details() {
   const params = useParams<ProposalIdParam>();
   const proposalId = params.id;
-  const { proposal } = useProposal(proposalId);
+  const { proposal } = useProposal("apTeam", proposalId);
   const proposalDetails = useDetails(proposal);
 
   return (

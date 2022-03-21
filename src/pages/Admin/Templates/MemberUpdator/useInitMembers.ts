@@ -5,7 +5,7 @@ import { useGetter, useSetter } from "store/accessors";
 
 export default function useInitMemberUpdator() {
   const dispatch = useSetter();
-  const { members, isMembersLoading } = useMembers();
+  const { members, isMembersLoading } = useMembers("apTeam");
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
 
   useEffect(() => {

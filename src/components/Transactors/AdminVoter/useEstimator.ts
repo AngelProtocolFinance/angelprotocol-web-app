@@ -11,7 +11,7 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeNum from "helpers/extractFeeNum";
 
@@ -41,7 +41,7 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(wallet);
+        const contract = new APAdmin(wallet);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);

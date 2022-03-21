@@ -4,7 +4,7 @@ import { useMember } from "services/terra/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 
 export default function DappMenu() {
-  const { member } = useMember();
+  const { member } = useMember("apTeam");
 
   const styler = createNavLinkStyler(
     "py-3 px-4 text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold",

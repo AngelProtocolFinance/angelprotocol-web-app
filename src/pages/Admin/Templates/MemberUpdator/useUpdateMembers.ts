@@ -10,7 +10,7 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { app, site } from "constants/routes";
 import { useGetter, useSetter } from "store/accessors";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
@@ -50,7 +50,7 @@ export default function useUpdateMembers() {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new Admin(wallet);
+    const contract = new APAdmin(wallet);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove

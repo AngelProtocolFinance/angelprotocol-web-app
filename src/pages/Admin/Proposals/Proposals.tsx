@@ -8,7 +8,7 @@ import Card from "./Card";
 
 export default function Proposals() {
   const block_height = useLatestBlock(10_000);
-  const { proposals } = useProposals();
+  const { proposals } = useProposals("apTeam");
 
   return (
     <div className="p-3 bg-white bg-opacity-10 shadow-inner rounded-md">

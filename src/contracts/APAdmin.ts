@@ -1,52 +1,58 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
-import { ContractQueryArgs } from "services/terra/types";
+import { ContractQueryArgs as CQA } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
 import { EmbeddedWasmMsg, Vote } from "./types";
 import { sc } from "constants/sc";
 
-export default class Admin extends Contract {
-  apCW4_addr: string;
-  apCW3_addr: string;
-  coCW4_addr: string;
-  gaCW3_addr: string;
+export default class APAdmin extends Contract {
+  cw4: string;
+  cw3: string;
 
-  members: ContractQueryArgs;
-  member: ContractQueryArgs;
-  proposals: ContractQueryArgs;
-  proposal: (arg: number) => ContractQueryArgs;
-  voteList: (arg: number) => ContractQueryArgs;
-  voter: ContractQueryArgs;
+  //CW4
+  members: CQA;
+  member: CQA;
+
+  //CW3
+  proposals: CQA;
+  proposal: (arg: number) => CQA;
+  voteList: (arg: number) => CQA;
+  voter: CQA;
+  config: CQA;
 
   constructor(wallet?: ConnectedWallet) {
     super(wallet);
-    this.apCW4_addr = contracts[this.chainID][sc.apCW4];
-    this.apCW3_addr = contracts[this.chainID][sc.apCW3];
-    this.coCW4_addr = contracts[this.chainID][sc.coCW4];
-    this.gaCW3_addr = contracts[this.chainID][sc.gaCW3];
+    this.cw4 = contracts[this.chainID][sc.apCW4];
+    this.cw3 = contracts[this.chainID][sc.apCW3];
 
-    //query args
+    //query args CW4
     this.members = {
-      address: this.apCW4_addr,
+      address: this.cw4,
       msg: { list_members: {} },
     };
 
     this.member = {
-      address: this.apCW4_addr,
+      address: this.cw4,
       msg: { member: { addr: this.walletAddr } },
     };
 
+    //query args CW3
+    this.config = {
+      address: this.cw3,
+      msg: { config: {} },
+    };
+
     this.proposals = {
-      address: this.apCW3_addr,
+      address: this.cw3,
       msg: {
         reverse_proposals: {},
       },
     };
 
     this.proposal = (pollId: number) => ({
-      address: this.apCW3_addr,
+      address: this.cw3,
       msg: {
         proposal: {
           proposal_id: pollId,
@@ -55,7 +61,7 @@ export default class Admin extends Contract {
     });
 
     this.voteList = (pollId: number) => ({
-      address: this.apCW3_addr,
+      address: this.cw3,
       msg: {
         list_votes: {
           proposal_id: pollId,
@@ -64,7 +70,7 @@ export default class Admin extends Contract {
     });
 
     this.voter = {
-      address: this.apCW3_addr,
+      address: this.cw3,
       msg: {
         voter: {
           address: this.walletAddr,
@@ -75,7 +81,7 @@ export default class Admin extends Contract {
 
   //execute message creators
   createEmbeddedUpdateMembersMsg(to_add: Member[], to_remove: string[]) {
-    return this.createdEmbeddedWasmMsg([], this.apCW4_addr, {
+    return this.createdEmbeddedWasmMsg([], this.cw4, {
       update_members: {
         add: to_add,
         remove: to_remove,
@@ -85,7 +91,7 @@ export default class Admin extends Contract {
 
   createExecProposalMsg(proposal_id: number) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
       execute: {
         proposal_id,
       },
@@ -99,7 +105,7 @@ export default class Admin extends Contract {
     latest?: any
   ) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
       propose: {
         title,
         description,
@@ -110,7 +116,7 @@ export default class Admin extends Contract {
 
   createVoteMsg(proposal_id: number, vote: Vote) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.apCW3_addr, {
+    return new MsgExecuteContract(this.walletAddr!, this.cw3, {
       vote: {
         proposal_id,
         vote,
@@ -119,5 +125,13 @@ export default class Admin extends Contract {
   }
 }
 
-export interface A extends Admin {}
-export type T = typeof Admin;
+export type CAaddresses = { cw3?: string; cw4?: string };
+export class CharityAdmin extends APAdmin {
+  constructor(addresses: CAaddresses, wallet?: ConnectedWallet) {
+    //caution to use this contract to the extent of address provided
+    //e.g don't query cw4 if you only provide cw3 address and vice versa
+    super(wallet);
+    this.cw3 = addresses.cw3 || "";
+    this.cw4 = addresses.cw4 || "";
+  }
+}
