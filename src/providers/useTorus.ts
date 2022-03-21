@@ -4,7 +4,7 @@ import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useGetter } from "store/accessors";
 
-export default function useOpenLogin(redirectUrl: string) {
+export default function useTorus(defaultRedirectUrl: string) {
   const user = useGetter((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [privateKey, setPrivateKey] = useState("");
@@ -26,6 +26,8 @@ export default function useOpenLogin(redirectUrl: string) {
       // NOTE: to successfully read this value, it is necessary to call this hook in the component
       // that is Torus is set to redirect to, otherwise this value would be empty
       if (openLogin.privKey) {
+        console.log("init", openLogin.privKey);
+
         setPrivateKey(openLogin.privKey);
       }
       setLoading(false);
@@ -35,21 +37,26 @@ export default function useOpenLogin(redirectUrl: string) {
   }, [openLogin]);
 
   const login = useCallback(
-    async (loginProvider: string) => {
+    async (loginProvider: string, redirectUrl: string = "") => {
       try {
-        await openLogin.login({
+        const privKey = await openLogin.login({
           loginProvider: loginProvider,
-          redirectUrl,
+          redirectUrl: redirectUrl || defaultRedirectUrl,
           relogin: true,
           extraLoginOptions: {
             login_hint: user.Email,
           },
         });
+
+        if (!!privKey && typeof privKey === "string") {
+          const userInfo = await openLogin.getUserInfo();
+          console.log(userInfo);
+        }
       } catch (error) {
         console.error("error", error);
       }
     },
-    [openLogin, redirectUrl, user.Email]
+    [openLogin, defaultRedirectUrl, user.Email]
   );
 
   return {

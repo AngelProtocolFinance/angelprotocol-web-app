@@ -6,16 +6,15 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import routes from "../routes";
 import { default as registerRoutes } from "../../routes";
-import { WalletRegistrationContext } from "../WalletRegistrationProvider";
 import Title from "./Title";
 import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
   const { setConnectOptionsShown } = useContext(WalletSuiteContext);
-  const { isLoading, loginWithOpenLogin } = useContext(
-    WalletRegistrationContext
-  );
+  const {
+    torus: { isLoading, login },
+  } = useContext(WalletSuiteContext);
   const { status, wallets } = useWallet();
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export default function ChooseWallet() {
   return (
     <div className="flex flex-col gap-5 items-center">
       <Title />
-      <Web3Auth onLogin={loginWithOpenLogin} />
+      <Web3Auth onLogin={login} />
       <button
         onClick={() => setConnectOptionsShown(true)}
         className="uppercase text-bright-blue text-sm hover:underline mb-5 lg:mb-0"
