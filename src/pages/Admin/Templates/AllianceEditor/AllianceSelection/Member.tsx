@@ -1,6 +1,8 @@
 import { CgUndo } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
 import { Cells } from "pages/Admin/components/TableSection";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
+
 import {
   AllianceMemberWithFlags,
   toggleDeleteExistingMember,
@@ -29,7 +31,11 @@ export default function Member(props: AllianceMemberWithFlags) {
           : ""
       }`}
     >
-      <img src={props.icon} alt="" className="w-8 h-8 object-contain" />
+      <img
+        src={props.icon || defaultIcon}
+        alt=""
+        className="w-8 h-8 object-contain"
+      />
       <>{props.name}</>
       <span className="font-mono text-sm">{props.address}</span>
       <button

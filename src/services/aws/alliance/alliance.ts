@@ -8,17 +8,9 @@ import {
   NewMemberPayload,
   ToRemoveMember,
 } from "./types";
-import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 export const alliance_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    allianceMembers: builder.query<MemberDetails[], unknown>({
-      providesTags: [{ type: tags.alliance, id: alliance.members }],
-      query: () => "alliance",
-      transformResponse: (res: AWSQueryRes<MemberDetails[]>) => {
-        return sortMembers(res.Items);
-      },
-    }),
     allianceLookup: builder.query<MemberLookUp, unknown>({
       providesTags: [{ type: tags.alliance, id: alliance.members }],
       query: () => "alliance",
@@ -35,7 +27,8 @@ export const alliance_api = aws.injectEndpoints({
       invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
       query: (body) => {
         const isBase64url = /data:image/.test(body.icon || "");
-        if (!isBase64url) delete body.icon;
+        const isDefaultIcon = /static/.test(body.icon || "");
+        if (!isBase64url || isDefaultIcon) delete body.icon;
         return {
           url: "alliance",
           method: "POST",
@@ -45,9 +38,11 @@ export const alliance_api = aws.injectEndpoints({
     }),
     editMember: builder.mutation<any, EditMemberPayload>({
       invalidatesTags: [{ type: tags.alliance, id: alliance.members }],
-      query: ({ address, name, ...restBody }) => {
+      query: (body) => {
+        const { address, name, ...restBody } = body;
         const isBase64url = /data:image/.test(restBody.icon || "");
-        if (!isBase64url) delete restBody.icon;
+        const isDefaultIcon = /static/.test(restBody.icon || "");
+        if (!isBase64url || isDefaultIcon) delete restBody.icon;
         return {
           url: `alliance/${address}`,
           params: { name },
@@ -68,27 +63,6 @@ export const alliance_api = aws.injectEndpoints({
     }),
   }),
 });
-
-function sortMembers(members: MemberDetails[]) {
-  return members
-    .map((member) => ({
-      name: member.name,
-      icon: member.icon || defaultIcon,
-      iconLight: member.iconLight || false,
-      address: member.address,
-    }))
-    .sort((a, b) => {
-      const nameA = a.name.toUpperCase();
-      const nameB = b.name.toUpperCase();
-      if (nameA < nameB) {
-        return -1;
-      }
-      if (nameA > nameB) {
-        return 1;
-      }
-      return 0;
-    });
-}
 
 export const {
   useCreateNewMemberMutation,

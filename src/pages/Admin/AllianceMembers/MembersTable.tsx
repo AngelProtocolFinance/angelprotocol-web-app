@@ -1,5 +1,6 @@
 import { AiOutlineEdit } from "react-icons/ai";
 import { MemberDetails } from "services/aws/alliance/types";
+import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { useSetModal } from "components/Modal/Modal";
 import TableSection, { Cells } from "../components/TableSection";
 import MemberEditor from "./MemberEditor/MemberEditor";
@@ -15,6 +16,8 @@ export default function MembersTable(props: { members: MemberDetails[] }) {
       initialValues: {
         ...restMemberDetails,
         type: isPlaceholder ? "new" : "edit",
+        //used in PUT endpoint, where old name is used to query
+        //entry to be updated
       },
     });
   };
@@ -40,7 +43,7 @@ export default function MembersTable(props: { members: MemberDetails[] }) {
           <Cells key={member.address} type="td" cellClass="p-2">
             <img
               alt=""
-              src={member.icon}
+              src={member.icon || defaultIcon}
               className="w-12 h-12 object-contain rounded-sm rounded-md ml-4"
             />
             <>{member.name}</>

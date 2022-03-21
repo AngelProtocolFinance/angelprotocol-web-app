@@ -9,7 +9,7 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { app, site } from "constants/routes";
 import { useGetter, useSetter } from "store/accessors";
-import Admin from "contracts/Admin";
+import APAdmin from "contracts/APAdmin";
 import Indexfund from "contracts/IndexFund";
 import { AllianceEditValues } from "./alllianceEditSchema";
 
@@ -53,7 +53,7 @@ export default function useEditAlliance() {
       toRemove
     );
 
-    const adminContract = new Admin(wallet);
+    const adminContract = new APAdmin(wallet);
 
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
