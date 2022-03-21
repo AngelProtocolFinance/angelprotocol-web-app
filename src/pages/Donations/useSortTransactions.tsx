@@ -17,31 +17,19 @@ export default function useSortedTransactions(transactions: Transaction[]) {
   };
 
   const sortedTransactions = useMemo(() => {
-    if (transactions.length <= 1) return transactions;
-
-    const txsCopy = [...transactions];
-    const keyValue = txsCopy[0][sortKey];
-
-    if (typeof keyValue === "string") {
-      if (sortDirection === "asc") txsCopy.sort();
-      if (sortDirection === "desc") txsCopy.reverse();
-    }
-
-    if (typeof keyValue === "number") {
-      txsCopy.sort((prevTx, nextTx) => {
-        const prevValue = prevTx[sortKey];
-        const nextValue = nextTx[sortKey];
-        if (typeof prevValue === "number" && typeof nextValue === "number") {
-          return sortDirection === "asc"
-            ? prevValue - nextValue
-            : nextValue - prevValue;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    return txsCopy;
+    const txs = [...transactions];
+    const gtSortVal = sortDirection === "asc" ? 1 : -1;
+    const ltSortVal = sortDirection === "asc" ? -1 : 1;
+    txs.sort((prev, next) => {
+      if (prev[sortKey] > next[sortKey]) {
+        return gtSortVal;
+      } else if (prev[sortKey] < next[sortKey]) {
+        return ltSortVal;
+      } else {
+        return 0;
+      }
+    });
+    return txs;
   }, [transactions, sortKey, sortDirection]);
 
   return { sortedTransactions, handleHeaderClick, sortDirection, sortKey };

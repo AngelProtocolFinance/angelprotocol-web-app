@@ -3,7 +3,7 @@ import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
 import PageMeta from "./PageMeta";
 import Liquid from "./Summary";
-import TransactionList from "./TransactionList";
+import Transactions from "./Transactions";
 
 export default function Dashboard(props: { endowmentAddr: string }) {
   //fetch exchange rate here
@@ -20,7 +20,7 @@ export default function Dashboard(props: { endowmentAddr: string }) {
         opener={showWithdraw}
       />
       <Liquid type="locked" holdings={holdings.locked_cw20} />
-      <TransactionList endowmentAddress={props.endowmentAddr} />
+      <Transactions endowmentAddress={props.endowmentAddr} />
     </div>
   );
 }

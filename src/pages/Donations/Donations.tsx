@@ -1,16 +1,27 @@
 import { useParams } from "react-router-dom";
-import DonationList from "./DonationList";
+import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
+import DonationsTable from "./DonationsTable";
 
-export type UserAddrParam = { address: string };
 export default function Donations() {
-  const { address } = useParams<UserAddrParam>();
-
+  const { address } = useParams<{ address: string }>();
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useDonationTransactionsQuery(address!, {
+    skip: !address,
+  });
   return (
-    <div className="grid grid-cols-2 gap-4 content-start padded-container justify-center">
-      <h1 className="text-2xl font-bold uppercase flex items-center justify-start text-white">
+    <div className="grid content-start padded-container pb-2">
+      <h1 className="text-2xl font-bold uppercase text-white mt-2 mb-4">
         My Donations
       </h1>
-      <DonationList userAddress={address} />
+      <DonationsTable
+        transactions={data}
+        isLoading={isLoading || isFetching}
+        isError={isError}
+      />
     </div>
   );
 }
