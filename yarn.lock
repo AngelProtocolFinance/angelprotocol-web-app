@@ -1926,9 +1926,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.6.0":
-  version: 5.6.0
-  resolution: "@ethersproject/providers@npm:5.6.0"
+"@ethersproject/providers@npm:5.6.1":
+  version: 5.6.1
+  resolution: "@ethersproject/providers@npm:5.6.1"
   dependencies:
     "@ethersproject/abstract-provider": ^5.6.0
     "@ethersproject/abstract-signer": ^5.6.0
@@ -1949,7 +1949,7 @@ __metadata:
     "@ethersproject/web": ^5.6.0
     bech32: 1.1.4
     ws: 7.4.6
-  checksum: 2f3020edd130da84c4544ba8d14a804ec18fe75b4abb452e307bbb9bb0fa93c16394e3c42b0072ca1e49a8d27ec83538844c734cd3318d4511eedfd938bba328
+  checksum: c6d6ab73064ee4a7793d4cb599e2b0ff7d61b510c2ffece249a95c60043e07ef40c7c55f097569141a7f50fd82f7bb3956d44e1715997ec91da25216a5ce51b6
   languageName: node
   linkType: hard
 
@@ -2463,7 +2463,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@npmcli/move-file@npm:^1.0.1":
+"@npmcli/move-file@npm:^1.0.1, @npmcli/move-file@npm:^1.1.2":
   version: 1.1.2
   resolution: "@npmcli/move-file@npm:1.1.2"
   dependencies:
@@ -3271,9 +3271,9 @@ __metadata:
   linkType: hard
 
 "@types/json-schema@npm:*, @types/json-schema@npm:^7.0.3, @types/json-schema@npm:^7.0.5, @types/json-schema@npm:^7.0.7, @types/json-schema@npm:^7.0.8":
-  version: 7.0.9
-  resolution: "@types/json-schema@npm:7.0.9"
-  checksum: 259d0e25f11a21ba5c708f7ea47196bd396e379fddb79c76f9f4f62c945879dc21657904914313ec2754e443c5018ea8372362f323f30e0792897fdb2098a705
+  version: 7.0.10
+  resolution: "@types/json-schema@npm:7.0.10"
+  checksum: 369f12207298e3c8931100ab86c9c60d9217ab930a8ae0b851495f4f30695d3f0eb431eedc8e8d9c69357869899ea0fe6f9d65ddde5ea70415d67ef340dfdd1f
   languageName: node
   linkType: hard
 
@@ -3294,9 +3294,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.175":
-  version: 4.14.179
-  resolution: "@types/lodash@npm:4.14.179"
-  checksum: 71faa0c8071732c2b7f0bd092850d3cea96fc7912055d57d819cf2ab399a64150e4190d8a4ea35a0905662ddc118be9d2abd55891d8047c085acf98608156149
+  version: 4.14.180
+  resolution: "@types/lodash@npm:4.14.180"
+  checksum: fc42ae3473695cac6e91553f832fef8eb51a31c1c0381cafa81b00dc3efe18e279786bdda77caf0b90a8340ba2ba7aa46ae6541d69870565f775d04c89128bc1
   languageName: node
   linkType: hard
 
@@ -4283,7 +4283,7 @@ __metadata:
     jsonwebtoken: ^8.5.1
     jwt-decode: ^3.1.2
     postcss: ^8
-    prettier: ^2.3.2
+    prettier: ^2.6.0
     prop-types: ^15.8.1
     react: ^17.0.2
     react-dom: ^17.0.2
@@ -5326,17 +5326,17 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.0.0, browserslist@npm:^4.12.0, browserslist@npm:^4.17.5, browserslist@npm:^4.19.1, browserslist@npm:^4.6.2, browserslist@npm:^4.6.4":
-  version: 4.20.0
-  resolution: "browserslist@npm:4.20.0"
+  version: 4.20.2
+  resolution: "browserslist@npm:4.20.2"
   dependencies:
-    caniuse-lite: ^1.0.30001313
-    electron-to-chromium: ^1.4.76
+    caniuse-lite: ^1.0.30001317
+    electron-to-chromium: ^1.4.84
     escalade: ^3.1.1
     node-releases: ^2.0.2
     picocolors: ^1.0.0
   bin:
     browserslist: cli.js
-  checksum: 6d77f54bd43e7e1b86c3f10a3aa84b6c198f2ecc8b345ebd42cb9feb1c143554ad62a0eaf1365f28d14589a4d1fb12b367ade3798fa493dab5cff4ca525384aa
+  checksum: 18e09beeae32e69fea45fc3642240fb63027b1460d90e24da86377177dca3d82c80f8fa44469d95109e3962f08eb2a23e03037bd5e1f1ec38e4866e2a8572435
   languageName: node
   linkType: hard
 
@@ -5469,7 +5469,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cacache@npm:^15.0.5, cacache@npm:^15.3.0":
+"cacache@npm:^15.0.5":
   version: 15.3.0
   resolution: "cacache@npm:15.3.0"
   dependencies:
@@ -5492,6 +5492,32 @@ __metadata:
     tar: ^6.0.2
     unique-filename: ^1.1.1
   checksum: a07327c27a4152c04eb0a831c63c00390d90f94d51bb80624a66f4e14a6b6360bbf02a84421267bd4d00ca73ac9773287d8d7169e8d2eafe378d2ce140579db8
+  languageName: node
+  linkType: hard
+
+"cacache@npm:^16.0.0":
+  version: 16.0.1
+  resolution: "cacache@npm:16.0.1"
+  dependencies:
+    "@npmcli/fs": ^1.0.0
+    "@npmcli/move-file": ^1.1.2
+    chownr: ^2.0.0
+    fs-minipass: ^2.1.0
+    glob: ^7.2.0
+    infer-owner: ^1.0.4
+    lru-cache: ^7.5.1
+    minipass: ^3.1.6
+    minipass-collect: ^1.0.2
+    minipass-flush: ^1.0.5
+    minipass-pipeline: ^1.2.4
+    mkdirp: ^1.0.4
+    p-map: ^4.0.0
+    promise-inflight: ^1.0.1
+    rimraf: ^3.0.2
+    ssri: ^8.0.1
+    tar: ^6.1.11
+    unique-filename: ^1.1.1
+  checksum: 7f461244a6ed30b8e34a1c8d598712035135b5489152cc6458642858ebd8075f39bf0998b768cc29e41263524632af93b41987f8debb703d9a2f29f37cc0552b
   languageName: node
   linkType: hard
 
@@ -5597,10 +5623,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30000981, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001313":
-  version: 1.0.30001316
-  resolution: "caniuse-lite@npm:1.0.30001316"
-  checksum: 8a96ee89f5e64f42f684475905c73c67f995abd6d9b111ab8a9d2e0a5d3b871f1a600ff42e4ffe7f7f3498d0243beeafc11cf7b4dbe3e022a2e5cdf639564152
+"caniuse-lite@npm:^1.0.0, caniuse-lite@npm:^1.0.30000981, caniuse-lite@npm:^1.0.30001109, caniuse-lite@npm:^1.0.30001125, caniuse-lite@npm:^1.0.30001317":
+  version: 1.0.30001317
+  resolution: "caniuse-lite@npm:1.0.30001317"
+  checksum: 0a5fc7fb8c54dde515c2d468e5fc9e0cf2e82dd40d596cdffed90f64c50b5dadd0ab0c25e04769d86488b3115f949abd31d54d1f74d0029b45fa8206a031f47a
   languageName: node
   linkType: hard
 
@@ -7321,10 +7347,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.4.76":
-  version: 1.4.82
-  resolution: "electron-to-chromium@npm:1.4.82"
-  checksum: b53c77bdd7208d4651a0f55dd000088c790fd8818dbcd3f30e4d2594a1cbb986d37502f0d8dd166f9bc1dbf6cbb6627ccdb5cc09b1334e591936b11036664d0d
+"electron-to-chromium@npm:^1.3.564, electron-to-chromium@npm:^1.4.84":
+  version: 1.4.86
+  resolution: "electron-to-chromium@npm:1.4.86"
+  checksum: 41d9f8ef28bba0cbc79a7662fb067dc47f418ca6a7a0df5f251a231e05cc2c7dfe40b6328e3da68661218ca1e682476caf8147b4fe35508b96d2e264a14a1992
   languageName: node
   linkType: hard
 
@@ -8003,8 +8029,8 @@ __metadata:
   linkType: hard
 
 "ethers@npm:^5.5.4":
-  version: 5.6.0
-  resolution: "ethers@npm:5.6.0"
+  version: 5.6.1
+  resolution: "ethers@npm:5.6.1"
   dependencies:
     "@ethersproject/abi": 5.6.0
     "@ethersproject/abstract-provider": 5.6.0
@@ -8024,7 +8050,7 @@ __metadata:
     "@ethersproject/networks": 5.6.0
     "@ethersproject/pbkdf2": 5.6.0
     "@ethersproject/properties": 5.6.0
-    "@ethersproject/providers": 5.6.0
+    "@ethersproject/providers": 5.6.1
     "@ethersproject/random": 5.6.0
     "@ethersproject/rlp": 5.6.0
     "@ethersproject/sha2": 5.6.0
@@ -8036,7 +8062,7 @@ __metadata:
     "@ethersproject/wallet": 5.6.0
     "@ethersproject/web": 5.6.0
     "@ethersproject/wordlists": 5.6.0
-  checksum: 8a3f46bca7a383c43b20941515b970a6a7c03b96128e2073c2c9e0e0881d7e92cc823a816cd66aba7173b9bd26428389e2c9ec39cd508214c4a1dff560688eff
+  checksum: f04079034d4c7f51e5c69a3ee55c38ca70bd5bd9b2680a5e6b594c92a09c8a88882e7d57991eb0ff9d0a95f900511cdccbccedbfc829f3995d01ad5d6f85156d
   languageName: node
   linkType: hard
 
@@ -8619,7 +8645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fs-minipass@npm:^2.0.0":
+"fs-minipass@npm:^2.0.0, fs-minipass@npm:^2.1.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
   dependencies:
@@ -8819,7 +8845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7":
+"glob@npm:^7.0.3, glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.1.7, glob@npm:^7.2.0":
   version: 7.2.0
   resolution: "glob@npm:7.2.0"
   dependencies:
@@ -8861,11 +8887,11 @@ __metadata:
   linkType: hard
 
 "globals@npm:^13.6.0, globals@npm:^13.9.0":
-  version: 13.12.1
-  resolution: "globals@npm:13.12.1"
+  version: 13.13.0
+  resolution: "globals@npm:13.13.0"
   dependencies:
     type-fest: ^0.20.2
-  checksum: cf7877629c8f2a293b0a7d09d1dcce7f2d426ec2528600c481c5b3f3d070b0a120eb2499439ac0404990fb8a5742c0165b1bf1f52603364001ddc89bea3dda24
+  checksum: c55ea8fd3afecb72567bac41605577e19e68476993dfb0ca4c49b86075af5f0ae3f0f5502525f69010f7c5ea5db6a1c540a80a4f80ebdfb2f686d87b0f05d7e9
   languageName: node
   linkType: hard
 
@@ -11378,10 +11404,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:^7.4.1":
-  version: 7.5.0
-  resolution: "lru-cache@npm:7.5.0"
-  checksum: 6d12de6cfc39b06e58e755c936af819b6e4aea0b5ca98dcf2a99a708874e03dbde4690096189f2df455f67c0b95ea5eac30181ff32dc5444cdb39acbd3d195c7
+"lru-cache@npm:^7.5.1":
+  version: 7.5.1
+  resolution: "lru-cache@npm:7.5.1"
+  checksum: f6980281c6ae4e58254d68b2d7878d7abb21c366a7ee527687f4a27bcbf7576f923517285d2fbd4b6a45b5eebdc66b4c565b55a8b49d5dc1babd65a912c26367
   languageName: node
   linkType: hard
 
@@ -11430,26 +11456,26 @@ __metadata:
   linkType: hard
 
 "make-fetch-happen@npm:^10.0.3":
-  version: 10.0.5
-  resolution: "make-fetch-happen@npm:10.0.5"
+  version: 10.0.6
+  resolution: "make-fetch-happen@npm:10.0.6"
   dependencies:
     agentkeepalive: ^4.2.1
-    cacache: ^15.3.0
+    cacache: ^16.0.0
     http-cache-semantics: ^4.1.0
     http-proxy-agent: ^5.0.0
     https-proxy-agent: ^5.0.0
     is-lambda: ^1.0.1
-    lru-cache: ^7.4.1
+    lru-cache: ^7.5.1
     minipass: ^3.1.6
     minipass-collect: ^1.0.2
-    minipass-fetch: ^2.0.2
+    minipass-fetch: ^2.0.3
     minipass-flush: ^1.0.5
     minipass-pipeline: ^1.2.4
     negotiator: ^0.6.3
     promise-retry: ^2.0.1
     socks-proxy-agent: ^6.1.1
     ssri: ^8.0.1
-  checksum: 150071e41262bffafccafa764bab0e6a929a46be5abc1dfee414ffb821d052942596f3660ff84b17e4d6c44f51b2d2741f6d02a49e2dad44e06c94c3baf624fa
+  checksum: cf3e745567f114bf161e13dbde402cff916482930936c102543b5c6e5e6409921b05d38d6400c92ed0b43011b185c8f39a9f504c9a1bdb956eeeed39929451a6
   languageName: node
   linkType: hard
 
@@ -11725,7 +11751,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minipass-fetch@npm:^2.0.2":
+"minipass-fetch@npm:^2.0.3":
   version: 2.0.3
   resolution: "minipass-fetch@npm:2.0.3"
   dependencies:
@@ -13806,13 +13832,13 @@ __metadata:
   linkType: hard
 
 "postcss@npm:^8, postcss@npm:^8.1.0, postcss@npm:^8.3.5":
-  version: 8.4.8
-  resolution: "postcss@npm:8.4.8"
+  version: 8.4.12
+  resolution: "postcss@npm:8.4.12"
   dependencies:
     nanoid: ^3.3.1
     picocolors: ^1.0.0
     source-map-js: ^1.0.2
-  checksum: 8e42def1ea98a4ac800d2b8937b19c83c6722da6c39ded72b1877eb743922f51b6e93be3667284b685ac18e8b583f21d97f24e0a73161c70fe8dc6901e614b87
+  checksum: 248e3d0f9bbb8efaafcfda7f91627a29bdc9a19f456896886330beb28c5abea0e14c7901b35191928602e2eccbed496b1e94097d27a0b2a980854cd00c7a835f
   languageName: node
   linkType: hard
 
@@ -13846,12 +13872,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.3.2":
-  version: 2.5.1
-  resolution: "prettier@npm:2.5.1"
+"prettier@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "prettier@npm:2.6.0"
   bin:
     prettier: bin-prettier.js
-  checksum: 21b9408476ea1c544b0e45d51ceb94a84789ff92095abb710942d780c862d0daebdb29972d47f6b4d0f7ebbfb0ffbf56cc2cfa3e3e9d1cca54864af185b15b66
+  checksum: 3e527ad62279676778a8404d18174d7ca2365ada4caba6eebbcdd9907d1187afd3bc6ade5b4e5f5d4549bb9fb71e45ca8930d71500017635524f8fc05bc52e93
   languageName: node
   linkType: hard
 
@@ -16436,7 +16462,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tar@npm:^6.0.2, tar@npm:^6.1.2":
+"tar@npm:^6.0.2, tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.11
   resolution: "tar@npm:6.1.11"
   dependencies:
