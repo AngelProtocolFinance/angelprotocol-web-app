@@ -9,9 +9,16 @@ export enum Step {
   receipt = "receipt",
 }
 
+export type FormError =
+  | {
+      title: string;
+      details?: string;
+    }
+  | string;
+
 export type State = {
   form_loading: boolean;
-  form_error: string;
+  form_error: FormError | null;
   fee: number;
   stage: Stage;
 };
@@ -46,6 +53,7 @@ export type SuccessStage = {
   txHash: string;
   chainId: chainIDs;
   isReceiptEnabled?: boolean;
+  isShareEnabled?: boolean;
 };
 
 export type ReceiptStage = {

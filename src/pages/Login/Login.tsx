@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import eyeIcon from "assets/images/eye.png";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import useLogin from "./useLogin";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { site, app } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -15,7 +15,7 @@ const Login = () => {
   const { tcaToken, isSubmitting, errors, register, login } = useLogin();
 
   if (tcaToken) {
-    return <Redirect to={`${site.app}/${app.tca}`} />;
+    return <Navigate to={`${app.tca}`} />;
   }
 
   return (

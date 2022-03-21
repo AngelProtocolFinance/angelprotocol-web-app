@@ -2,7 +2,13 @@ import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec, MsgSend, Coin } from "@terra-money/terra.js";
+import {
+  CreateTxOptions,
+  Dec,
+  MsgSend,
+  Coin,
+  MsgExecuteContract,
+} from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import {
   setFormError,
@@ -10,7 +16,7 @@ import {
   setFee,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { Providers, XdefiWindow } from "services/provider/types";
+import { Providers, Dwindow } from "services/provider/types";
 import useDebouncer from "hooks/useDebouncer";
 import Contract from "contracts/Contract";
 import Account from "contracts/Account";
@@ -18,6 +24,8 @@ import Indexfund from "contracts/IndexFund";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
+import processEstimateError from "helpers/processEstimateError";
+import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
   const wallet = useConnectedWallet();
@@ -37,14 +45,12 @@ export default function useEstimator() {
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
 
-  const debounced_amount = useDebouncer(amount, 500);
-  const debounced_split = useDebouncer(split_liq, 500);
+  const [debounced_amount] = useDebouncer(amount, 500);
+  const [debounced_split] = useDebouncer(split_liq, 500);
 
   useEffect(() => {
     (async () => {
       try {
-        dispatch(setFormError(""));
-
         if (activeProvider === Providers.none) {
           dispatch(setFormError("Wallet is not connected"));
           return;
@@ -78,36 +84,34 @@ export default function useEstimator() {
         if (currency === denoms.uusd) {
           if (activeProvider === Providers.terra) {
             const receiver = getValues("receiver");
-            let tx: CreateTxOptions;
+            let depositMsg: MsgExecuteContract;
             if (
               typeof receiver === "undefined" ||
               typeof receiver === "number"
             ) {
               const index_fund = new Indexfund(wallet, receiver);
-              tx = await index_fund.createDepositTx(
+              depositMsg = await index_fund.createDepositMsg(
                 debounced_amount,
                 debounced_split
               );
             } else {
               const account = new Account(receiver, wallet);
-              tx = await account.createDepositTx(
+              depositMsg = await account.createDepositMsg(
                 debounced_amount,
                 debounced_split
               );
             }
-
-            const estimatedFee = tx
-              .fee!.amount.get(denoms.uusd)!
-              .mul(1e-6)
-              .amount.toNumber();
+            const contract = new Contract(wallet);
+            const fee = await contract.estimateFee([depositMsg]);
+            const feeNum = extractFeeNum(fee);
 
             //2nd balance check including fees
-            if (debounced_amount + estimatedFee >= balance) {
+            if (debounced_amount + feeNum >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
               return;
             }
-            dispatch(setFee(estimatedFee));
-            setTerraTx(tx);
+            dispatch(setFee(feeNum));
+            setTerraTx({ msgs: [depositMsg], fee });
           }
         }
 
@@ -125,10 +129,7 @@ export default function useEstimator() {
               new Coin(denoms.uluna, amount.toNumber()),
             ]);
             const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-            const numFee = aminoFee.amount
-              .mul(1e-6)
-              .get(denoms.uluna)
-              ?.amount.toNumber()!;
+            const numFee = extractFeeNum(aminoFee, denoms.uluna);
 
             if (debounced_amount + numFee >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
@@ -141,11 +142,17 @@ export default function useEstimator() {
 
         //estimates for eth
         if (currency === denoms.ether) {
-          const xwindow = window as XdefiWindow;
+          const dwindow = window as Dwindow;
           //provider is present at this point
-          const provider = new ethers.providers.Web3Provider(
-            xwindow.xfi?.ethereum!
-          );
+          let provider: ethers.providers.Web3Provider;
+
+          if (activeProvider === Providers.ethereum) {
+            provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
+          } else {
+            provider = new ethers.providers.Web3Provider(
+              dwindow.xfi?.ethereum!
+            );
+          }
           //no network request
           const signer = provider.getSigner();
           const sender = await signer.getAddress();
@@ -167,11 +174,17 @@ export default function useEstimator() {
           setEthTx(tx);
           dispatch(setFee(parseFloat(fee_eth)));
         }
+
         dispatch(setFormLoading(false));
       } catch (err) {
-        dispatch(setFormError("Error estimating transaction"));
+        const formError = processEstimateError(err);
+        dispatch(setFormError(formError));
       }
     })();
+
+    return () => {
+      dispatch(setFormError(null));
+    };
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
 

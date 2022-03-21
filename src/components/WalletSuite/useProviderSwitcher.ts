@@ -10,6 +10,7 @@ import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
+import { useGetMetamask } from "providers/Metamask/Metamask";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -19,17 +20,24 @@ export default function useProviderSwitcher() {
   const { status: terraStatus, network } = useWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
-  const isLoading = isTerraLoading; // || other provider loading state;
 
   //other states
+  const { connected: isMetamaskConnected, loading: isMetamaskLoading } =
+    useGetMetamask();
+  // const { connected: ethConnected } = useGetter((state) => state.metamask);
 
-  const providerStates: ProviderStates = [[Providers.terra, terraConnected]];
+  const providerStates: ProviderStates = [
+    [Providers.terra, terraConnected],
+    [Providers.ethereum, isMetamaskConnected],
+  ];
 
   //find first connected provider
   //undefined if not wallet is connected
   const activeProvider = providerStates.find(
     ([, isProviderConnected]) => isProviderConnected
   );
+
+  const isLoading = isTerraLoading || isMetamaskLoading;
 
   useEffect(() => {
     dispatch(setIsSwitching(isLoading));
@@ -38,8 +46,8 @@ export default function useProviderSwitcher() {
 
   useEffect(() => {
     if (activeProvider) {
-      const [wallet] = activeProvider;
-      dispatch(setActiveProvider(wallet));
+      const [provider] = activeProvider;
+      dispatch(setActiveProvider(provider));
     } else {
       dispatch(setActiveProvider(Providers.none));
     }

@@ -3,10 +3,8 @@ import { SwapValues } from "./types";
 
 export default function Slippage() {
   return (
-    <div className="bg-angel-blue bg-opacity-10 rounded-md p-1.5 flex items-center text-angel-grey gap-1">
-      <p className="text-2xs uppercase font-bold font-heading mr-auto">
-        Slippage
-      </p>
+    <div className="flex items-baseline justify-end text-angel-grey divide-x">
+      <p className="text-2xs uppercase font-bold font-heading mr-2">Slippage</p>
       <Option value="0.5" id={"slip_1"} />
       <Option value="1.0" id={"slip_2"} />
       <Option value="1.5" id={"slip_3"} />
@@ -28,13 +26,14 @@ function Option(props: OptionProps) {
     <div className="flex items-center">
       <label
         htmlFor={props.id}
-        className={`cursor-pointer p-0.5 pl-2 pr-1 rounded-md text-2xs font-bold font-heading ${
+        className={`px-2 py-1 font-mono font-semibold cursor-pointer text-xs 
+        hover:bg-angel-blue hover:bg-opacity-10 ${
           is_active
-            ? "border-2 border-angel-blue border-opacity-50 bg-angel-blue text-white"
-            : "border-2 border-angel-grey border-opacity-30"
+            ? "bg-angel-blue bg-opacity-10 shadow-inner-white-grey rounded-sm"
+            : ""
         }`}
       >
-        {props.value} %
+        {props.value}%
       </label>
       <input
         className="w-0 h-0"

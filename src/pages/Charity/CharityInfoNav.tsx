@@ -1,4 +1,4 @@
-import { NavLink, useHistory, useParams } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 import { charityNav } from "./constants";
 import ScrollableTabs from "./ScrollableTabs";
 
@@ -8,9 +8,7 @@ type CharityParams = {
 
 export default function CharityInfoNav() {
   const { address } = useParams<CharityParams>();
-  const {
-    location: { pathname },
-  } = useHistory();
+  const { pathname } = useLocation();
 
   const getClassNames = (isActive: boolean, isDisabled: boolean = false) => {
     const classes = `block w-full ${
@@ -35,13 +33,13 @@ export default function CharityInfoNav() {
               </button>
             ) : (
               <NavLink
-                className={(isActive) => {
+                className={({ isActive }) => {
                   const active = navItem?.isDefault
-                    ? navItem?.defaultPath(address) === pathname || isActive
+                    ? navItem?.defaultPath(address!) === pathname || isActive
                     : isActive;
                   return getClassNames(active, navItem.disabled);
                 }}
-                to={navItem.getLink(address)}
+                to={navItem.getLink(address!)}
               >
                 {navItem.title}
               </NavLink>

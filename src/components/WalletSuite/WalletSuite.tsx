@@ -1,40 +1,68 @@
 import { IoWalletSharp } from "react-icons/io5";
 import Display from "./Display";
-import { useEffect, useState } from "react";
-import Connectors from "./Connectors";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ConnectOptions from "./ConnectOptions";
 import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
 import useWalletUpdator from "./useWalletUpdator";
+import useKeyPress from "hooks/useKeyPress";
+import useBackdropDismiss from "./useBackdropDismiss";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);
+  const escKeyPressed = useKeyPress("Escape");
+  const ref = useRef<HTMLDivElement>();
+
   useWalletUpdator(provider.active);
 
-  const [connectorsShown, showConnectors] = useState(false);
+  const [connectOptionsShown, showConnectOptions] = useState(false);
+  const toggleConnectOptions = () => showConnectOptions((p) => !p);
+  const hideConnectOptions = () => showConnectOptions(false);
+  const dismissHandler = useBackdropDismiss(hideConnectOptions);
 
-  const toggleConnector = () => showConnectors((p) => !p);
-  const hideConnectors = () => showConnectors(false);
   const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isProviderActive && showConnectors(false);
+    isProviderActive && showConnectOptions(false);
     //eslint-disable-next-line
   }, [isProviderActive]);
 
+  useEffect(() => {
+    if (escKeyPressed && connectOptionsShown) {
+      hideConnectOptions();
+    }
+  }, [escKeyPressed, connectOptionsShown]);
+
+  const handleRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        ref.current = node;
+        dismissHandler(ref);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
   return (
-    <div className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md">
+    <div
+      ref={handleRef}
+      className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md"
+    >
       {!isProviderActive && (
         <button
           className="flex py-2 px-3 items-center text-white  "
           disabled={provider.isSwitching}
-          onClick={toggleConnector}
+          onClick={toggleConnectOptions}
         >
           <IoWalletSharp className="text-white text-xl mr-2" />
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}
       {isProviderActive && <Display />}
-      {connectorsShown && <Connectors closeHandler={hideConnectors} />}
+      {connectOptionsShown && (
+        <ConnectOptions closeHandler={hideConnectOptions} />
+      )}
     </div>
   );
 }

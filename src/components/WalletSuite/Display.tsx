@@ -1,23 +1,47 @@
 import { VscLoading } from "react-icons/vsc";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Details from "./Details";
 import { useGetter } from "store/accessors";
+import { currency_text } from "constants/currency";
+import useKeyPress from "hooks/useKeyPress";
+import useBackdropDismiss from "./useBackdropDismiss";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
   const { address, displayCoin, icon, isUpdating } = useGetter(
     (state) => state.wallet
   );
+  const escKeyPressed = useKeyPress("Escape");
+  const ref = useRef<HTMLDivElement>();
 
   const [detailsShown, showDetails] = useState(false);
   const maskedAddr = maskAddress(address);
   const toggleDetails = () => showDetails((p) => !p);
   const hideDetails = () => showDetails(false);
+  const dismissHandler = useBackdropDismiss(hideDetails);
+
+  useEffect(() => {
+    if (escKeyPressed && detailsShown) {
+      hideDetails();
+    }
+  }, [escKeyPressed, detailsShown]);
+
+  const handleRef = useCallback(
+    (node) => {
+      if (node !== null) {
+        ref.current = node;
+        // document.addEventListener("click", dismissModal);
+        dismissHandler(ref);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   return (
-    <div className="flex">
+    <div className="flex" ref={handleRef}>
       <button
         disabled={isUpdating}
         onClick={toggleDetails}
@@ -35,7 +59,8 @@ export default function Display() {
           {isUpdating ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
-          UST {toCurrency(displayCoin.amount, 3, true)}
+          {currency_text[displayCoin.denom]}{" "}
+          {toCurrency(displayCoin.amount, 3, true)}
         </span>
       </button>
       {detailsShown && <Details closeHandler={hideDetails} />}

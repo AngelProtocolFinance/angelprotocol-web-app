@@ -1,11 +1,12 @@
+import Halo, { H, T } from "contracts/Halo";
+import { chainIDs } from "constants/chainIDs";
 import { gov_api } from "./gov";
 import { gov_config, gov_state, staker, poll } from "./placeholders";
-import { chainIDs } from "constants/chainIDs";
-import { useHaloContract } from "../contracts";
+import { useContract } from "../useContract";
 
 export function useGovStaker() {
   const { useGovStakerQuery } = gov_api;
-  const { wallet, contract } = useHaloContract();
+  const { wallet, contract } = useContract<H, T>(Halo);
   const { data = staker } = useGovStakerQuery(contract.staker, {
     skip:
       wallet === undefined || wallet.network.chainID === chainIDs.localterra,
@@ -15,7 +16,7 @@ export function useGovStaker() {
 
 export function useGovBalance() {
   const { useGovBalanceQuery } = gov_api;
-  const { contract, wallet } = useHaloContract();
+  const { wallet, contract } = useContract<H, T>(Halo);
   const { data = 0 } = useGovBalanceQuery(contract.gov_balance, {
     skip: wallet && wallet.network.chainID === chainIDs.localterra,
   });
@@ -24,7 +25,7 @@ export function useGovBalance() {
 
 export function useGovState() {
   const { useGovStateQuery } = gov_api;
-  const { contract, wallet } = useHaloContract();
+  const { wallet, contract } = useContract<H, T>(Halo);
   const { data = gov_state } = useGovStateQuery(contract.gov_state, {
     skip: wallet && wallet.network.chainID === chainIDs.localterra,
   });
@@ -34,17 +35,21 @@ export function useGovState() {
 
 export function useGovPolls() {
   const { useGovPollsQuery } = gov_api;
-  const { contract, wallet } = useHaloContract();
-  const { data = [] } = useGovPollsQuery(contract.polls, {
+  const { wallet, contract } = useContract<H, T>(Halo);
+  const {
+    data = [],
+    isFetching,
+    isLoading,
+  } = useGovPollsQuery(contract.polls, {
     skip: wallet && wallet.network.chainID === chainIDs.localterra,
   });
 
-  return data;
+  return { govPolls: data, isGovPollsLoading: isFetching || isLoading };
 }
 
 export function useGovPoll(poll_id: number) {
   const { useGovPollsQuery } = gov_api;
-  const { contract, wallet } = useHaloContract();
+  const { wallet, contract } = useContract<H, T>(Halo);
   const { data = poll } = useGovPollsQuery(contract.polls, {
     selectFromResult: ({ data }) => ({
       data: data?.find((poll) => poll.id === poll_id),
@@ -58,7 +63,7 @@ export function useGovPoll(poll_id: number) {
 
 export function useGovConfig() {
   const { useGovConfigQuery } = gov_api;
-  const { contract, wallet } = useHaloContract();
+  const { wallet, contract } = useContract<H, T>(Halo);
   const { data = gov_config } = useGovConfigQuery(
     {
       address: contract.gov_address,
