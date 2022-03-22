@@ -37,7 +37,7 @@ export default function useWithdraw() {
           ]),
         ],
         successLink: {
-          url: `${site.app}/${app.endowment_admin}/${admin.proposals}`,
+          url: `${site.app}/${app.endowment_admin}/${accountAddr}/${admin.proposals}`,
           description: "Go to proposals",
         },
         successMessage: "Withdraw proposal successfully created!",

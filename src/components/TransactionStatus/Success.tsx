@@ -35,7 +35,11 @@ export default function Success(props: SuccessStage) {
   }
 
   function redirectToSuccessUrl(url: string) {
-    return () => navigate(url);
+    return function () {
+      navigate(url);
+      dispatch(setStage({ step: Step.form }));
+      hideModal();
+    };
   }
 
   const shareDonation = () => showModal(SharePrompt, {});
