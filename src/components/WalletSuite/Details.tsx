@@ -1,18 +1,18 @@
 import { useWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { denoms } from "constants/currency";
-import { useGetter, useSetter } from "store/accessors";
-import { resetWallet } from "services/wallet/walletSlice";
+import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
-import { IoClose } from "react-icons/io5";
-import Holdings from "./Holdings";
-import Portal from "./Portal";
+import { useSetMetamask } from "providers/MetamaskProvider/MetamaskProvider";
 import { useState } from "react";
-import Filter from "./Filter";
-import { useSetMetamask } from "providers/Metamask/Metamask";
+import { IoClose } from "react-icons/io5";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
-import { DeviceType, deviceType } from "helpers/deviceType";
+import { resetWallet } from "services/wallet/walletSlice";
+import { useGetter, useSetter } from "store/accessors";
+import Filter from "./Filter";
+import Holdings from "./Holdings";
+import Portal from "./Portal";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {

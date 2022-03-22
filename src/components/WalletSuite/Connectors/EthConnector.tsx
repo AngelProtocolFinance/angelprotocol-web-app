@@ -1,7 +1,10 @@
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetModal } from "components/Modal/Modal";
 import { deviceType, DeviceType } from "helpers/deviceType";
-import { RejectMetamaskLogin, useSetMetamask } from "providers/Metamask";
+import {
+  RejectMetamaskLogin,
+  useSetMetamask,
+} from "providers/MetamaskProvider";
 import { Dwindow } from "services/provider/types";
 import { useGetter } from "store/accessors";
 import WalletPrompt from "../WalletPrompt";

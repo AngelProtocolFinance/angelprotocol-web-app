@@ -10,7 +10,7 @@ import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
-import { useGetMetamask } from "providers/Metamask/Metamask";
+import { useGetMetamask } from "providers/MetamaskProvider/MetamaskProvider";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();

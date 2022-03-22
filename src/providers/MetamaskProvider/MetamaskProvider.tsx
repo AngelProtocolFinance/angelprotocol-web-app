@@ -2,7 +2,7 @@ import useEthereum from "./useEthereum";
 import { createContext, useContext, PropsWithChildren } from "react";
 import { Setters, IMetamaskState } from "./types";
 
-export default function Metamask(props: PropsWithChildren<{}>) {
+export function MetamaskProvider(props: PropsWithChildren<{}>) {
   const { setters, state } = useEthereum();
 
   return (
