@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { FaClock, FaStopwatch } from "react-icons/fa";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
 import { useSetModal } from "components/Modal/Modal";
@@ -8,6 +7,7 @@ import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
+import { getIcon, IconTypes } from "components/Icons/Icons";
 
 export default function Auction() {
   const { showModal } = useSetModal();
@@ -58,13 +58,13 @@ function AuctionStats() {
       <StatsDetails
         title="Duration"
         value="3 days"
-        Icon={FaClock}
+        Icon={getIcon(IconTypes.Clock)}
         exClass="duration"
       />
       <StatsDetails
         title="Ends in"
         value={<CountdownTimer deadline={0} start={0} />}
-        Icon={FaStopwatch}
+        Icon={getIcon(IconTypes.StopWatch)}
         exClass="ends-in"
       />
       <StatsDetails title="Price" value="UST 0.074994" />

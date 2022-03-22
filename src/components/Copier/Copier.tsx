@@ -7,13 +7,13 @@ export default function Copier(props: { text: string; colorClass: string }) {
     <button onClick={handleCopy}>
       {(copied && (
         <Icon
-          iconType={IconTypes.OutlineCheck}
+          iconType={IconTypes.Check}
           className={`${props.colorClass} hover:text-orange cursor-default`}
           title="Copied!"
         />
       )) || (
         <Icon
-          iconType={IconTypes.OutlineCopy}
+          iconType={IconTypes.Copy}
           className={`${props.colorClass} hover:text-orange" title="Copy Address`}
         />
       )}

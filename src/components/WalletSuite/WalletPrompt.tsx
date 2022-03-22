@@ -1,5 +1,5 @@
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useSetModal } from "components/Modal/Modal";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function WalletPrompt(props: { message: string }) {
   const { hideModal } = useSetModal();
@@ -9,7 +9,10 @@ export default function WalletPrompt(props: { message: string }) {
   }
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg h-full content-center place-items-center">
-      <AiOutlineInfoCircle className="text-angel-grey text-2xl mb-2 " />
+      <Icon
+        iconType={IconTypes.Info}
+        className="text-angel-grey text-2xl mb-2 "
+      />
       <p className="text-center text-angel-grey mb-2 ">{props.message}</p>
       <button
         onClick={acknowledge}

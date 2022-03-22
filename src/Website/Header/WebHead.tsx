@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiMenu } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
-import { GoLinkExternal } from "react-icons/go";
 import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
 import useScrollShadow from "hooks/useScrollShadow";
 import heart_icon from "assets/icons/broken_heart.svg";
@@ -10,6 +7,7 @@ import ua_icon from "assets/icons/ukraine.svg";
 import { site, app } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();
@@ -37,9 +35,9 @@ export default function WebHead() {
           onClick={toggleNav}
         >
           {navShown ? (
-            <IoClose className="text-2xl" />
+            <Icon iconType={IconTypes.Close} className="text-2xl" />
           ) : (
-            <FiMenu className="text-2xl" />
+            <Icon iconType={IconTypes.Menu} className="text-2xl" />
           )}
         </button>
         {navShown && <MobileNav />}
@@ -57,7 +55,7 @@ export default function WebHead() {
           Donate now to humanitarian relief in Ukraine
         </span>
         <Word icon={ua_icon} title="" />
-        <GoLinkExternal className="text-lg" />
+        <Icon iconType={IconTypes.ExternalLink} className="text-lg" />
       </a>
     </header>
   );

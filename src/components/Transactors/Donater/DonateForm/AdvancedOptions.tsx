@@ -1,5 +1,6 @@
-import { IoMdSettings } from "react-icons/io";
 import Split from "./Split";
+import Icon, { IconTypes } from "components/Icons/Icons";
+
 export default function AdvancedOptions(props: {
   toggleAdvancedOptions: () => void;
   isOptionsShown: boolean;
@@ -17,7 +18,8 @@ export default function AdvancedOptions(props: {
         onClick={props.toggleAdvancedOptions}
         className="justify-self-start flex items-center text-angel-grey hover:text-angel-blue font-semibold  cursor-pointer"
       >
-        <IoMdSettings
+        <Icon
+          iconType={IconTypes.Settings}
           size={20}
           style={{ animationDuration: "4s" }}
           className={`${props.isOptionsShown ? "animate-spin" : ""}`}

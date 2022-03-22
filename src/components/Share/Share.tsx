@@ -1,4 +1,4 @@
-import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { getIcon, IconTypes } from "components/Icons/Icons";
 import {
   encodedText,
   FACEBOOK_DIALOG_URL,
@@ -19,9 +19,15 @@ export default function Share() {
         </span>
       </div>
       <div className="flex justify-center my-5 ">
-        <IconLink link={TWITTER_SHARE_URL} icon={FaTwitter} />
-        <IconLink link={LINKEDIN_SHARE_URL} icon={FaLinkedin} />
-        <IconLink link={FACEBOOK_DIALOG_URL} icon={FaFacebookSquare} />
+        <IconLink link={TWITTER_SHARE_URL} icon={getIcon(IconTypes.Twitter)} />
+        <IconLink
+          link={LINKEDIN_SHARE_URL}
+          icon={getIcon(IconTypes.Linkedin)}
+        />
+        <IconLink
+          link={FACEBOOK_DIALOG_URL}
+          icon={getIcon(IconTypes.Facebook)}
+        />
       </div>
     </div>
   );

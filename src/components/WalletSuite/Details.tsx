@@ -4,13 +4,13 @@ import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
 import { resetWallet } from "services/wallet/walletSlice";
 import maskAddress from "helpers/maskAddress";
-import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import { Providers } from "services/provider/types";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
@@ -49,7 +49,7 @@ export default function Details(props: { closeHandler: () => void }) {
         className="text-white absolute top-2 right-2"
         onClick={props.closeHandler}
       >
-        <IoClose />
+        <Icon iconType={IconTypes.Close} />
       </button>
       <div className="bg-angel-grey text-white-grey text-sm p-2">
         <p className="uppercase">network : {chainId}</p>

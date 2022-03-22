@@ -1,10 +1,10 @@
-import { IoWalletSharp } from "react-icons/io5";
 import Display from "./Display";
 import { useEffect, useState } from "react";
 import ConnectOptions from "./ConnectOptions";
 import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
 import useWalletUpdator from "./useWalletUpdator";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);
@@ -29,7 +29,10 @@ export default function WalletSuite() {
           disabled={provider.isSwitching}
           onClick={toggleConnectOptions}
         >
-          <IoWalletSharp className="text-white text-xl mr-2" />
+          <Icon
+            iconType={IconTypes.Wallet}
+            className="text-white text-xl mr-2"
+          />
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}

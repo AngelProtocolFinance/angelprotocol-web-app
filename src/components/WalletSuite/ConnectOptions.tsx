@@ -1,10 +1,10 @@
-import { IoClose } from "react-icons/io5";
 import { useWallet, ConnectType } from "@terra-money/wallet-provider";
 import Backdrop from "./Backdrop";
 import Modal from "components/Modal/Modal";
 import Installer from "./Installer";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
   let { availableConnections, availableInstallations } = useWallet();
@@ -16,7 +16,10 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           Choose wallet
         </p>
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
-          <IoClose className="text-white-grey text-lg" />
+          <Icon
+            iconType={IconTypes.Close}
+            className="text-white-grey text-lg"
+          />
         </button>
         <Modal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableConnections

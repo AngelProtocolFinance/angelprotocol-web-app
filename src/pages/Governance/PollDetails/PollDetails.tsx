@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
 import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
@@ -43,7 +43,7 @@ export default function PollDetails() {
               <span className="text-xs font-heading uppercase">
                 block height
               </span>
-              <SiHiveBlockchain className="mx-2" />
+              <Icon iconType={IconTypes.Blockchain} className="mx-2" />
               <span className="font-heading text-sm">{details.end_height}</span>
             </p>
           </div>

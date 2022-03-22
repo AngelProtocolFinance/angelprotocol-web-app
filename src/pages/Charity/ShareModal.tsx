@@ -1,4 +1,4 @@
-import { FaFacebookSquare, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 //unused share ui
 export function ShareModal() {
@@ -26,13 +26,13 @@ export function ShareModal() {
         </div>
         <div className="flex justify-center my-5 text-3xl text-thin-blue">
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaTwitter />
+            <Icon iconType={IconTypes.Twitter} />
           </div>
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaLinkedin />
+            <Icon iconType={IconTypes.Linkedin} />
           </div>
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <FaFacebookSquare />
+            <Icon iconType={IconTypes.Facebook} />
           </div>
         </div>
         <div className="flex justify-center mx-auto mt-2">

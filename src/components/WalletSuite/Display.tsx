@@ -1,10 +1,10 @@
-import { VscLoading } from "react-icons/vsc";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import { useState } from "react";
 import Details from "./Details";
 import { useGetter } from "store/accessors";
 import { currency_text } from "constants/currency";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
@@ -31,7 +31,9 @@ export default function Display() {
             alt=""
             className="w-6 h-6 object-contain rounded-full mr-0 sm:mr-2 bg-white p-0.5"
           />
-        )) || <VscLoading className="animate-spin mr-1" />}
+        )) || (
+          <Icon iconType={IconTypes.Loading} className="animate-spin mr-1" />
+        )}
         <span className="pr-2 text-sm hidden sm:block">
           {isUpdating ? "loading..." : maskedAddr}
         </span>

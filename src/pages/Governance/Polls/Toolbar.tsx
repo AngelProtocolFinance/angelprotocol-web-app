@@ -1,10 +1,10 @@
-import { SiHiveBlockchain } from "react-icons/si";
 import usePoller from "components/Transactors/Poller/usePoller";
 import { useLatestBlock } from "services/terra/queriers";
 import toCurrency from "helpers/toCurrency";
 import Button from "../Button";
 import { PollFilterOptions } from "./Polls";
 import PollSelector from "./PollSelector";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function Toolbar(props: {
   pollFilter: PollFilterOptions;
@@ -24,7 +24,7 @@ export default function Toolbar(props: {
 
       <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center px-3">
         <span className="font-heading uppercase text-2xs">current block </span>
-        <SiHiveBlockchain className="mr-1" />
+        <Icon iconType={IconTypes.Blockchain} className="mr-1" />
         <span>{toCurrency(+block_height, 0)}</span>
       </p>
 

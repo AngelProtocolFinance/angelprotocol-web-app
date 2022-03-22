@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
 import { govern } from "constants/routes";
 import toCurrency from "helpers/toCurrency";
 import usePollDetails from "../usePollDetails";
 import { PollStatus } from "services/terra/gov/types";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function PollCard(props: { poll_id: number }) {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function PollCard(props: { poll_id: number }) {
             <span className="font-heading uppercase text-2xs mr-0.5">
               at block
             </span>
-            <SiHiveBlockchain className="mr-2" />
+            <Icon iconType={IconTypes.Blockchain} className="mr-2" />
             <span className="font-heading text-sm">
               {toCurrency(+details.end_height, 0)}
             </span>
@@ -63,7 +63,7 @@ export default function PollCard(props: { poll_id: number }) {
             voting ends after
           </p>
           <p className="flex items-center justify-end">
-            <SiHiveBlockchain className="mr-2" />
+            <Icon iconType={IconTypes.Blockchain} className="mr-2" />
             <span className="font-heading text-sm">
               {toCurrency(+details.blocks_remaining, 0)}
             </span>

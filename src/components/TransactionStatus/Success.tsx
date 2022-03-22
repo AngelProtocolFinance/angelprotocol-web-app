@@ -1,10 +1,10 @@
-import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Step, SuccessStage } from "services/transaction/types";
 import { setStage } from "services/transaction/transactionSlice";
 import { useSetModal } from "components/Modal/Modal";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetter } from "store/accessors";
 import SharePrompt from "components/Share/SharePrompt";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
@@ -25,7 +25,10 @@ export default function Success(props: SuccessStage) {
 
   return (
     <div className="bg-white-grey grid gap-y-4 p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
-      <AiOutlineCheckCircle className="text-blue-accent text-3xl mb-1" />
+      <Icon
+        iconType={IconTypes.CheckCircle}
+        className="text-blue-accent text-3xl mb-1"
+      />
       <p className="text-center text-blue-accent mb-2 font-bold">{message}</p>
 
       {chainId && txHash && (

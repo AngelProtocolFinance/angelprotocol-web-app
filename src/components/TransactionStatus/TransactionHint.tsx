@@ -1,24 +1,35 @@
-import { VscLoading } from "react-icons/vsc";
-import { BiCheck } from "react-icons/bi";
-import { AiOutlineExclamation } from "react-icons/ai";
 import { useGetter } from "store/accessors";
 import { IconType } from "react-icons";
 import { Step } from "services/transaction/types";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "./TransactionPrompt";
+import { getIcon, IconTypes } from "components/Icons/Icons";
 export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
 
   switch (step) {
     case Step.error:
       return (
-        <StatusButton Icon={AiOutlineExclamation} iconClass="text-red-300" />
+        <StatusButton
+          Icon={getIcon(IconTypes.Exclamation)}
+          iconClass="text-red-300"
+        />
       );
     case Step.broadcast:
     case Step.submit:
-      return <StatusButton Icon={VscLoading} iconClass="animate-spin" />;
+      return (
+        <StatusButton
+          Icon={getIcon(IconTypes.Loading)}
+          iconClass="animate-spin"
+        />
+      );
     case Step.success:
-      return <StatusButton Icon={BiCheck} iconClass="text-green-300" />;
+      return (
+        <StatusButton
+          Icon={getIcon(IconTypes.Check)}
+          iconClass="text-green-300"
+        />
+      );
     default:
       return null;
   }

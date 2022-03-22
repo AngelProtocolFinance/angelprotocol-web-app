@@ -1,11 +1,10 @@
 import React from "react";
 import { IconType } from "react-icons";
-import { BiBold, BiItalic } from "react-icons/bi";
-import { FaListUl, FaListOl } from "react-icons/fa";
 import { Editor } from "draft-js";
 import Label from "../../Label";
 import useEditor from "./useEditor";
 import "draft-js/dist/Draft.css";
+import { getIcon, IconTypes } from "components/Icons/Icons";
 
 function OverviewEditor() {
   const {
@@ -20,14 +19,20 @@ function OverviewEditor() {
     <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
       <Label id="editor__" text="Overview" />
       <div className="flex gap-2 mt-2 mb-4">
-        <Control Icon={BiBold} onClick={applyInlineStyle("BOLD")} />
-        <Control Icon={BiItalic} onClick={applyInlineStyle("ITALIC")} />
         <Control
-          Icon={FaListUl}
+          Icon={getIcon(IconTypes.Bold)}
+          onClick={applyInlineStyle("BOLD")}
+        />
+        <Control
+          Icon={getIcon(IconTypes.Italic)}
+          onClick={applyInlineStyle("ITALIC")}
+        />
+        <Control
+          Icon={getIcon(IconTypes.ListUl)}
           onClick={applyBlockStyle("unordered-list-item")}
         />
         <Control
-          Icon={FaListOl}
+          Icon={getIcon(IconTypes.ListOl)}
           onClick={applyBlockStyle("ordered-list-item")}
         />
       </div>

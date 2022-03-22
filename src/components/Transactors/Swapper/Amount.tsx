@@ -4,8 +4,8 @@ import { currency_icons, denoms } from "constants/currency";
 import { ErrorMessage } from "@hookform/error-message";
 import { SwapValues } from "./types";
 import Balance from "./Balance";
-import { IoMdSettings } from "react-icons/io";
 import Slippage from "./Slippage";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function Amount() {
   const [settings_shown, show_settings] = useState(false);
@@ -32,7 +32,7 @@ export default function Amount() {
             settings_shown ? "text-angel-blue animate-spin" : "text-angel-grey"
           }  ml-0.5 text-xl hover:text-angel-orange justify-self-end`}
         >
-          <IoMdSettings />
+          <Icon iconType={IconTypes.Settings} />
         </button>
       </div>
       <div className="grid grid-cols-a1 text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">
