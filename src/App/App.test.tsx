@@ -6,7 +6,6 @@ import {
   StaticWalletProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
-import { testnet } from "./chains";
 import { app, site } from "constants/routes";
 import { Provider } from "react-redux";
 import { store } from "store/store";
