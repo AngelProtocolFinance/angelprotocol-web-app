@@ -1,10 +1,10 @@
 import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
-import { mainnet, walletConnectChainIds } from "./chains";
 import AppFoot from "components/AppFoot/AppFoot";
-import Modal from "components/Modal/Modal";
-import Views from "./Views";
 import DappHead from "components/DappHead/DappHead";
-import Metamask from "providers/Metamask/Metamask";
+import Modal from "components/Modal/Modal";
+import { WalletProvider } from "providers";
+import { mainnet, walletConnectChainIds } from "./chains";
+import Views from "./Views";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
@@ -14,13 +14,13 @@ export default function App() {
         defaultNetwork={mainnet}
         walletConnectChainIds={walletConnectChainIds}
       >
-        <Metamask>
+        <WalletProvider>
           <Modal classes="bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
             <DappHead />
             <Views />
           </Modal>
           <AppFoot />
-        </Metamask>
+        </WalletProvider>
       </TerraProvider>
     </div>
   );
