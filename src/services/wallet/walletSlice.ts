@@ -5,7 +5,7 @@ import { chainIDs } from "constants/chainIDs";
 import { WalletInfo, State } from "./types";
 
 const initialState: State = {
-  isUpdating: false,
+  id: undefined,
   displayCoin: {
     amount: 0,
     denom: denoms.uusd,
@@ -14,8 +14,9 @@ const initialState: State = {
   icon: icon,
   address: "walletaddrs",
   supported_denoms: [],
-  id: undefined,
   chainId: chainIDs.mainnet,
+  isUpdating: false,
+  isSelectingConnectionOption: false,
 };
 
 const walletSlice = createSlice({

@@ -25,21 +25,16 @@ export type Coin = {
 };
 
 export type WalletInfo = {
+  id?: string;
   icon: string;
   displayCoin: Coin;
   coins: Coin[];
   address: string;
   chainId: chainIDs;
   supported_denoms: denoms[];
-  id: TerraIdentifiers | undefined;
 };
 
-export type State = { isUpdating: boolean } & WalletInfo;
-
-export type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
-
-export type EthState = {
-  connected: boolean;
-  network: EthNetworks;
-  balance: number;
-} & WalletInfo;
+export type State = WalletInfo & {
+  isUpdating: boolean;
+  isSelectingConnectionOption: boolean;
+};
