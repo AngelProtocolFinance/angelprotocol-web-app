@@ -2,7 +2,7 @@ import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
-import { WalletInfo, State } from "./types";
+import { WalletDetails, State } from "./types";
 
 const initialState: State = {
   id: undefined,
@@ -26,7 +26,7 @@ const walletSlice = createSlice({
     resetWallet: (state) => {
       state = initialState;
     },
-    setWalletDetails: (state, { payload }: PayloadAction<WalletInfo>) => {
+    setWalletDetails: (state, { payload }: PayloadAction<WalletDetails>) => {
       state.icon = payload.icon;
       state.displayCoin = payload.displayCoin;
       state.coins = payload.coins;

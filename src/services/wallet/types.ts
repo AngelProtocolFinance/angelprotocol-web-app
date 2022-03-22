@@ -24,7 +24,7 @@ export type Coin = {
   denom: denoms; //"denoms.uusd, denoms.uluna"
 };
 
-export type WalletInfo = {
+export type WalletDetails = {
   id?: string;
   icon: string;
   displayCoin: Coin;
@@ -34,7 +34,7 @@ export type WalletInfo = {
   supported_denoms: denoms[];
 };
 
-export type State = WalletInfo & {
+export type State = WalletDetails & {
   isUpdating: boolean;
   isSelectingConnectionOption: boolean;
 };
