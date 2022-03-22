@@ -4,6 +4,9 @@ import idParamToNumber from "helpers/idParamToNum";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 import Icon, { IconTypes } from "components/Icons/Icons";
+import { Link } from "react-router-dom";
+import { BiArrowBack } from "react-icons/bi";
+import { app, site } from "constants/routes";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
@@ -11,6 +14,12 @@ export default function PollDetails() {
   const details = usePollDetails(numPollId);
   return (
     <div className="padded-container grid content-start gap-4">
+      <Link
+        to={`${site.app}/${app.govern}`}
+        className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
+      >
+        <BiArrowBack size={15} /> back to proposals
+      </Link>
       <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
@@ -47,7 +56,7 @@ export default function PollDetails() {
               <span className="font-heading text-sm">{details.end_height}</span>
             </p>
           </div>
-          <Item title="Link" value={details.link} />
+          <DetailsLink href={details.link} />
         </div>
         <div className="break-words">
           <p className="text-white font-heading uppercase text-xs font-bold mb-2">
@@ -117,6 +126,24 @@ function Item(props: { title: string; value: string }) {
         {props.title}
       </h4>
       <p className="">{props.value}</p>
+    </div>
+  );
+}
+
+function DetailsLink(props: { href: string }) {
+  return (
+    <div className="break-words">
+      <h4 className="text-white font-heading uppercase text-xs font-bold mb-1">
+        Link
+      </h4>
+      <a
+        href={props.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="hover:text-white"
+      >
+        {props.href}
+      </a>
     </div>
   );
 }

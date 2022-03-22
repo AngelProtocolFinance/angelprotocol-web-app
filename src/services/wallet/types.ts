@@ -7,6 +7,7 @@ export enum TerraIdentifiers {
   station = "station",
   xdefi = "xdefi-wallet",
   leap = "leap-wallet",
+  safepal = "SafePal",
 }
 
 export enum Providers {

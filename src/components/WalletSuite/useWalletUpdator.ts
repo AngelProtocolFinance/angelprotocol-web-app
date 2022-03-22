@@ -31,6 +31,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
       !(
         wallet.connection.identifier === TerraIdentifiers.station ||
         wallet.connection.identifier === TerraIdentifiers.leap ||
+        wallet.connection.identifier === TerraIdentifiers.safepal ||
         wallet.connection.identifier === undefined
       )
     ) {
@@ -45,6 +46,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
       ...others,
       { amount: haloBalance, denom: denoms.uhalo },
     ];
+
     dispatch(
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
