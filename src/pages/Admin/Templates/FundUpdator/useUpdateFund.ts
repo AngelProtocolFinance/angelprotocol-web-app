@@ -9,6 +9,7 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Indexfund from "contracts/IndexFund";
 import Admin from "contracts/Admin";
+import { proposalSuccessLink } from "../constants";
 import { FundUpdateValues } from "./fundUpdatorSchema";
 
 export default function useUpdateFund() {
@@ -74,6 +75,8 @@ export default function useUpdateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        successLink: proposalSuccessLink,
+        successMessage: "Fund member proposal submitted",
       })
     );
     showModal(TransactionPromp, {});

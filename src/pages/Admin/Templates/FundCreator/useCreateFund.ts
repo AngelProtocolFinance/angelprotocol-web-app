@@ -12,6 +12,7 @@ import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
 import { useState } from "react";
 import { useGetter, useSetter } from "store/accessors";
+import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
 
@@ -94,6 +95,8 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        successLink: proposalSuccessLink,
+        successMessage: "Create fund proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});

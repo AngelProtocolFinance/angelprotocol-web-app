@@ -13,9 +13,10 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import { StatusChangePayload } from "contracts/types";
 import { useSetter } from "store/accessors";
-import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
+import { proposalSuccessLink } from "../constants";
+import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
@@ -65,6 +66,8 @@ export default function useUpdateStatus() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        successLink: proposalSuccessLink,
+        successMessage: "Endowment status update proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});

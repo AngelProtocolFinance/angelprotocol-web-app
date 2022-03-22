@@ -9,6 +9,7 @@ import { admin, tags } from "services/terra/tags";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { useSetter } from "store/accessors";
+import { proposalSuccessLink } from "../constants";
 import { FundDestroyValues } from "./fundDestroyerSchema";
 
 export default function useDestroyFund() {
@@ -43,6 +44,8 @@ export default function useDestroyFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        successLink: proposalSuccessLink,
+        successMessage: "Fund deletion proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});

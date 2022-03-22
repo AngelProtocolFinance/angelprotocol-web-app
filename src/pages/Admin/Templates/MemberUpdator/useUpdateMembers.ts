@@ -9,6 +9,7 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
+import { proposalSuccessLink } from "../constants";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
@@ -72,6 +73,8 @@ export default function useUpdateMembers() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
+        successLink: proposalSuccessLink,
+        successMessage: "Group member update proposal submitted",
       })
     );
     showModal(TransactionPromp, {});
