@@ -4,7 +4,7 @@ import { app, site } from "constants/routes";
 //Will be for WebNav
 export default function MobileDappNav() {
   const linkStyles = {
-    className: `text-white hover:text-opacity-75 uppercase inline-flex items-center font-heading`,
+    className: `text-white hover:text-white/75 uppercase inline-flex items-center font-heading`,
     activeClassName: "text-angel-orange",
   };
   return (

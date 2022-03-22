@@ -21,7 +21,7 @@ export default function Summary(props: HoldingSummary) {
     props.type === "liquid" ? "Liquid Account" : "Principal Account";
 
   return (
-    <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 text-white text-opacity-80">
+    <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 text-white/80">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
         <FaCog

@@ -19,6 +19,6 @@ export default function DappMenu() {
 }
 
 const styler = createNavLinkStyler(
-  "py-3 px-4 text-white-grey hover:text-opacity-75 uppercase inline-flex items-center font-heading font-semibold",
+  "py-3 px-4 text-white-grey hover:text-white-grey/75 uppercase inline-flex items-center font-heading font-semibold",
   "rounded-md bg-white/10 shadow-inner pointer-events-none"
 );

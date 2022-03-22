@@ -29,7 +29,7 @@ export default function WebFoot() {
                   href={link}
                   target="_blank"
                   rel="noreferrer"
-                  className={`${textColor} hover:text-opacity-75 block m-2`}
+                  className={`${textColor} block m-2`}
                 >
                   <Icon className="w-8 h-8" title={title} />
                 </a>
@@ -68,35 +68,35 @@ const links = [
     id: 1,
     Icon: AiOutlineTwitter,
     link: "https://twitter.com/angelprotocol",
-    textColor: "text-gray-50",
+    textColor: "text-gray-50 hover:text-grey-50/75",
     title: "Twitter",
   },
   {
     id: 2,
     Icon: FaTelegramPlane,
     link: "https://t.me/angelprotocoI",
-    textColor: "text-blue-50",
+    textColor: "text-blue-50 hover:text-blue-50/75",
     title: "Telegram",
   },
   {
     id: 3,
     Icon: AiFillYoutube,
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
-    textColor: "text-white",
+    textColor: "text-white hover:text-white/75",
     title: "YouTube",
   },
   {
     id: 4,
     Icon: AiOutlineMedium,
     link: "https://angelprotocol.medium.com/",
-    textColor: "text-white",
+    textColor: "text-white hover:text-white/75",
     title: "Medium",
   },
   {
     id: 5,
     Icon: RiDiscordLine,
     link: "https://discord.gg/RhqA652ySA",
-    textColor: "text-white",
+    textColor: "text-white hover:text-white/75",
     title: "Discord",
   },
 ];

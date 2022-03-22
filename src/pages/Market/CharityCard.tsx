@@ -21,7 +21,7 @@ export default function CharityCard(props: Profile) {
       <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
         {props.charity_name}
       </p>
-      <div className="text-opacity-80 line-clamp-2 text-sm text-white-grey">
+      <div className="line-clamp-2 text-sm text-white-grey/80">
         <RichTextRenderer text={props.charity_overview} />
       </div>
     </Link>

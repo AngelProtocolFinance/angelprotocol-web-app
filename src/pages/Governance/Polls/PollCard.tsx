@@ -16,7 +16,7 @@ export default function PollCard(props: { poll_id: number }) {
   return (
     <div
       onClick={goToPollDetail}
-      className="cursor-pointer border border-white/10 bg-white/10 hover:bg-white/20 rounded-md p-6 text-white-grey text-opacity-80 shadow-lg"
+      className="cursor-pointer border border-white/10 bg-white/10 hover:bg-white/20 rounded-md p-6 text-white-grey/80 shadow-lg"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>

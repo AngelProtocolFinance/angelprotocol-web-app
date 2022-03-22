@@ -22,7 +22,7 @@ export default function Toolbar(props: {
         setPollFilter={props.setPollFilter}
       />
 
-      <p className="ml-auto text-white-grey text-opacity-80 font-heading text-sm flex items-center px-3">
+      <p className="ml-auto text-white-grey/80 font-heading text-sm flex items-center px-3">
         <span className="font-heading uppercase text-2xs">current block </span>
         <SiHiveBlockchain className="mr-1" />
         <span>{toCurrency(+block_height, 0)}</span>

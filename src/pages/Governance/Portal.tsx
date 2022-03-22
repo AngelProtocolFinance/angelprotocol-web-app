@@ -23,7 +23,7 @@ export default function Portal() {
           />
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
-        <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
+        <span className="sm:ml-auto text-3xl text-white-grey/90">
           {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>
       </div>
