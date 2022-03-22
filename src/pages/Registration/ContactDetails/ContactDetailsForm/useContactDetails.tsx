@@ -5,6 +5,7 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
+import { ContactDetailsData } from "services/aws/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import routes, { registerRootPath } from "../../routes";
@@ -22,12 +23,11 @@ export default function useSaveContactDetails() {
     async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
       const is_create = !contactData?.uniqueID;
-      const postData = {
+      const postData: ContactDetailsData = {
         Registration: {
           CharityName: contactData.charityName,
         },
         ContactPerson: {
-          UUID: contactData.uniqueID,
           FirstName: contactData.firstName,
           LastName: contactData.lastName,
           Email: contactData.email,
@@ -39,6 +39,7 @@ export default function useSaveContactDetails() {
 
       let result: any = {};
       if (is_create) {
+        postData.ContactPerson.UUID = contactData.uniqueID;
         const response: any = await registerCharity(postData);
         result = response.data ? response.data : response.error.data;
       } else {

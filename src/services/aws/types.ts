@@ -4,6 +4,21 @@ export interface AWSQueryRes<T> {
   Items: T;
 }
 
+export type ContactDetailsData = {
+  Registration: {
+    CharityName: string;
+  };
+  ContactPerson: {
+    UUID?: string;
+    FirstName: string;
+    LastName: string;
+    Email: string;
+    PhoneNumber: string;
+    Role: string;
+    OtherRole: string;
+  };
+};
+
 type DocumentObject = { name: string; dataUrl: string };
 
 export type UpdateDocumentationData = {
