@@ -101,7 +101,7 @@ instead of creating custom class with
 ```
 it's better to just factor out this redundancy to a separate component
 ```jsx
-<Text className="text-2xl font-bold">{props.content}</Text>
+const Text = (props) => <p className=`text-2xl font-bold ${props.className}`>{props.content}</p>;
 ```
 
 and use as
@@ -109,8 +109,11 @@ and use as
 ```jsx
 <div>
   <Text>Thank you for registering.</Text>
+  <Text className="mb-10">
+    {responseData.CharityName}, {responseData.FirstName}!
+  </Text>
   <Text>Your registration reference is </Text>
-  //..others
+  <Text className="text-yellow-600">{responseData.PK}</Text>
 </div>
 
 ```
