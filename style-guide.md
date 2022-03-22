@@ -54,13 +54,15 @@ import { Values } from "./types";
 
 
 ### Typescript
-avoid explicit `any` 
+- avoid explicit `any` 
 ```typescript
  const response: any = await requestReceipt({
       receipt,
  });
 
 ```
+
+- always create explicit object types wherever possible
 
 ### Component
 In a component file, always put `default` export at the top 
@@ -101,7 +103,9 @@ instead of creating custom class with
 ```
 it's better to just factor out this redundancy to a separate component
 ```jsx
-const Text = (props) => <p className=`text-2xl font-bold ${props.className}`>{props.content}</p>;
+const Text = (props) => (
+  <p className=`text-2xl font-bold ${props.className}`>{props.content}</p>
+);
 ```
 
 and use as
@@ -118,7 +122,6 @@ and use as
 
 ```
 
-always type your code where possible
 
 
 
