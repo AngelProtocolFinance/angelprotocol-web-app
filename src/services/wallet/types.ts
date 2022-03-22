@@ -36,5 +36,4 @@ export type WalletDetails = {
 
 export type State = WalletDetails & {
   isUpdating: boolean;
-  isSelectingConnectionOption: boolean;
 };

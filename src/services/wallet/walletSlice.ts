@@ -16,7 +16,6 @@ const initialState: State = {
   supported_denoms: [],
   chainId: chainIDs.mainnet,
   isUpdating: false,
-  isSelectingConnectionOption: false,
 };
 
 const walletSlice = createSlice({
