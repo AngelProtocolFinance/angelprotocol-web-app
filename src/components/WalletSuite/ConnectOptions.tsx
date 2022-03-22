@@ -11,7 +11,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
 
   return (
     <>
-      <div className="w-72 absolute top-full right-0 flex flex-col gap-3 bg-white p-4 pt-4 mt-2 rounded-md shadow-2xl z-50">
+      <div className="w-max absolute top-full right-0 flex flex-col gap-3 bg-white p-4 pt-4 mt-2 rounded-md shadow-2xl z-50">
         <p className="uppercase font-heading text-angel-grey font-bold">
           Choose wallet
         </p>
