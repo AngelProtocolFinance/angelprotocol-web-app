@@ -10,7 +10,7 @@ import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
 import { RootState } from "store/store";
 import transactionSlice, { setStage } from "./transactionSlice";
-import { StageUpdator, Step } from "./types";
+import { StageUpdator, Step, SuccessLink } from "./types";
 import extractFeeNum from "helpers/extractFeeNum";
 
 type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
@@ -19,6 +19,8 @@ type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
 type SenderArgs = {
   wallet: ConnectedWallet | undefined;
   tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
+  successMessage?: string;
+  successLink?: SuccessLink;
   feedDenom?: denoms;
 };
 
@@ -84,9 +86,10 @@ export const sendTerraTx = createAsyncThunk(
         if (!txInfo.code) {
           updateTx({
             step: Step.success,
-            message: "Transaction successful!",
+            message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
             chainId,
+            successLink: args.successLink,
           });
 
           //invalidate cache entries

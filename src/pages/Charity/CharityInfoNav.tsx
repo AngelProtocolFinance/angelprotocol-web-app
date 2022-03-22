@@ -7,7 +7,7 @@ export default function CharityInfoNav() {
   return (
     <nav className="relative max-w-full overflow-hidden scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
       <ScrollableTabs>
-        <NavLink to={charity.overview} className={styler}>
+        <NavLink end to={charity.index} className={styler}>
           overview
         </NavLink>
         <NavLink to={charity.endowment} className={styler}>

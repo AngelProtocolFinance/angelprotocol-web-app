@@ -37,7 +37,7 @@ export enum govern {
 }
 
 export enum charity {
-  overview = "overview",
+  index = "",
   endowment = "endowment",
   programs = "programs",
   media = "media",

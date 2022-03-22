@@ -5,6 +5,7 @@ import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useGetter, useSetter } from "store/accessors";
+import { admin, app, site } from "constants/routes";
 import useWithrawEstimator from "./useWithdrawEstimator";
 import { WithdrawValues } from "./types";
 import useFieldsAndLimits from "./useFieldsAndLimits";
@@ -35,6 +36,11 @@ export default function useWithdraw() {
             { type: tags.user, id: user.terra_balance },
           ]),
         ],
+        successLink: {
+          url: `${site.app}/${app.endowment_admin}/${admin.proposals}`,
+          description: "Go to proposals",
+        },
+        successMessage: "Withdraw proposal successfully created!",
       })
     );
     showModal(TransactionPrompt, {});

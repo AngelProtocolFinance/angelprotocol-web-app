@@ -5,12 +5,25 @@ import { useSetModal } from "components/Modal/Modal";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetter } from "store/accessors";
 import SharePrompt from "components/Share/SharePrompt";
+import { useNavigate } from "react-router-dom";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
   const { hideModal, showModal } = useSetModal();
+  const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chainId, txHash, message, isReceiptEnabled, isShareEnabled } = props;
+  const {
+    chainId,
+    txHash,
+    message,
+    isReceiptEnabled,
+    isShareEnabled,
+    successLink,
+  } = props;
+
+  //if no special action is needed, just shown normal acknowledge button
+  const isAcknowledgeButtonShown =
+    !isReceiptEnabled && !isShareEnabled && !successLink;
 
   function acknowledge() {
     dispatch(setStage({ step: Step.form }));
@@ -19,6 +32,10 @@ export default function Success(props: SuccessStage) {
 
   function showReceiptForm() {
     dispatch(setStage({ step: Step.receipt, chainId, txHash }));
+  }
+
+  function redirectToSuccessUrl(url: string) {
+    return () => navigate(url);
   }
 
   const shareDonation = () => showModal(SharePrompt, {});
@@ -40,7 +57,7 @@ export default function Success(props: SuccessStage) {
       )}
 
       <div className="flex justify-center gap-4">
-        {!isReceiptEnabled && <Button onClick={acknowledge}>ok</Button>}
+        {isAcknowledgeButtonShown && <Button onClick={acknowledge}>ok</Button>}
         {isReceiptEnabled && (
           <Button onClick={showReceiptForm}>get receipt</Button>
         )}
@@ -48,6 +65,15 @@ export default function Success(props: SuccessStage) {
         {isShareEnabled && (
           <Button onClick={shareDonation} _bg="bg-angel-orange">
             share
+          </Button>
+        )}
+
+        {successLink && (
+          <Button
+            onClick={redirectToSuccessUrl(successLink.url)}
+            _bg="bg-angel-orange"
+          >
+            {successLink.description}
           </Button>
         )}
       </div>

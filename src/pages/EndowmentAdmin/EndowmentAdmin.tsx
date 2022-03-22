@@ -2,17 +2,17 @@ import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useMember } from "services/terra/admin/queriers";
-import { admin } from "constants/routes";
-import AdminNav from "./AdminNav";
+import { setCWContracts } from "services/admin/cwContracts";
+import { useEndowmentCWs } from "services/terra/account/queriers";
 import Proposals from "pages/Admin/Proposals/Proposals";
 import Proposal from "pages/Admin/Proposals/Proposal";
 import { GuardPrompt } from "pages/Admin/Admin";
-import { EndowmentAddrParams } from "./types";
-import { useEndowmentCWs } from "services/terra/account/queriers";
+import { admin } from "constants/routes";
 import { useSetter } from "store/accessors";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
-import { setCWContracts } from "services/admin/cwContracts";
+import AdminNav from "./AdminNav";
+import { EndowmentAddrParams } from "./types";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();
@@ -21,15 +21,16 @@ export default function EndowmentAdmin() {
   const { cwContracts, isCWContractsLoading } =
     useEndowmentCWs(endowmentAddress);
 
+  const { member, isMemberLoading } = useMember(
+    cwContracts,
+    isCWContractsLoading
+  );
+
+  //set admin context
   useEffect(() => {
     if (isCWContractsLoading) return;
     dispatch(setCWContracts(cwContracts));
   }, [cwContracts, isCWContractsLoading, dispatch]);
-
-  const { member, isMemberLoading } = useMember(
-    undefined,
-    isCWContractsLoading
-  );
 
   if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
