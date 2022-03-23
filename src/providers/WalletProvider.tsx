@@ -6,7 +6,13 @@ import {
 import Loader from "components/Loader/Loader";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
-import { createContext, PropsWithChildren, useEffect, useState } from "react";
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { MetamaskProvider } from "./MetamaskProvider";
 
 const localterra = {
@@ -36,6 +42,8 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     fetchChainIds();
   }, []);
 
+  const connect = useCallback();
+
   if (isLoading) {
     return (
       <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
@@ -56,8 +64,10 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
 
 interface IWalletSuiteContext {
   isLoading: boolean;
+  connect: () => Promise<void>;
 }
 
 export const WalletSuiteContext = createContext<IWalletSuiteContext>({
   isLoading: false,
+  connect: () => new Promise((r) => r),
 });
