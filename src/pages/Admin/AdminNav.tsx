@@ -8,9 +8,6 @@ export default function AdminNav() {
       <NavLink end to={admin.index} className={styler}>
         proposals
       </NavLink>
-      <NavLink to={admin.alliance} className={styler}>
-        alliance members
-      </NavLink>
       <NavLink to={admin.charity_applications} className={disabledStyle}>
         charity applications
       </NavLink>

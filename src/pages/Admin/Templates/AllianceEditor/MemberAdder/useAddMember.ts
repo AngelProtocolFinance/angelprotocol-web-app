@@ -9,23 +9,38 @@ export default function useAddMember() {
   const allianceMembers = useGetter((state) => state.admin.allianceMembers);
   const dispatch = useDispatch();
   async function addMember() {
-    const isValid = await trigger("walletAddr");
+    const isValid = await trigger(["wallet", "name", "logo", "website"]);
     if (!isValid) return;
 
-    const newAllianceMemberAddr = getValues("walletAddr");
+    const newAllianceMemberAddr = getValues("wallet");
     const existingMember = allianceMembers.find(
-      (member) => member.address === newAllianceMemberAddr
+      (member) => member.wallet === newAllianceMemberAddr
     );
     if (existingMember) {
       setError(
-        "walletAddr",
+        "wallet",
         { message: "address already added" },
         { shouldFocus: true }
       );
       return;
     }
-    dispatch(_addMember(newAllianceMemberAddr));
-    resetField("walletAddr");
+
+    const name = getValues("name");
+    const logo = getValues("logo");
+    const website = getValues("website");
+
+    dispatch(
+      _addMember({
+        wallet: newAllianceMemberAddr,
+        name,
+        logo,
+        website,
+      })
+    );
+    resetField("wallet");
+    resetField("name");
+    resetField("logo");
+    resetField("website");
   }
 
   return { addMember };

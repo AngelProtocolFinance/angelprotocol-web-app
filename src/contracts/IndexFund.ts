@@ -3,6 +3,7 @@ import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
+import { AllianceMember } from "services/terra/indexFund/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 import { FundDetails } from "./types";
@@ -11,7 +12,7 @@ export default class Indexfund extends Contract {
   fund_id?: number;
   address: string;
   fundList: ContractQueryArgs;
-  tcaMembers: ContractQueryArgs;
+  allianceMembers: ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);
@@ -23,9 +24,9 @@ export default class Indexfund extends Contract {
       msg: { funds_list: {} },
     };
 
-    this.tcaMembers = {
+    this.allianceMembers = {
       address: this.address,
-      msg: { tca_list: {} },
+      msg: { alliance_members: {} },
     };
   }
 
@@ -51,9 +52,12 @@ export default class Indexfund extends Contract {
     });
   }
 
-  createEmbeddedUpdateTCAMsg(toAdd: string[], toRemove: string[]) {
+  createEmbeddedAAListUpdateMsg(
+    member: AllianceMember,
+    action: "add" | "remove"
+  ) {
     return this.createdEmbeddedWasmMsg([], this.address, {
-      update_tca_list: { add: toAdd, remove: toRemove },
+      update_alliance_member_list: { address: member.wallet, member, action },
     });
   }
 

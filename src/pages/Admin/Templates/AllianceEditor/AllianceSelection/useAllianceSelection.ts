@@ -20,7 +20,7 @@ export default function useAllianceSelection() {
       member.isAdded || member.isDeleted || debouncedSearchText === ""
         ? true
         : member.name.toLocaleLowerCase().search(searchRegex) !== -1 ||
-          member.address.search(new RegExp(searchRegex)) !== -1
+          member.wallet.search(new RegExp(searchRegex)) !== -1
     );
   }, [debouncedSearchText, allianceCopy]);
 

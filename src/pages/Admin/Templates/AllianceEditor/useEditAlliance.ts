@@ -11,6 +11,7 @@ import { app, site } from "constants/routes";
 import { useGetter, useSetter } from "store/accessors";
 import APAdmin from "contracts/APAdmin";
 import Indexfund from "contracts/IndexFund";
+import { EmbeddedWasmMsg } from "contracts/types";
 import { AllianceEditValues } from "./alllianceEditSchema";
 
 export default function useEditAlliance() {
@@ -28,29 +29,22 @@ export default function useEditAlliance() {
     if (!isValid) return;
 
     //check if there are changes
-    type Diffs = [string[], string[]];
-    const [toAdd, toRemove]: Diffs = allianceMembers.reduce(
-      ([toAdd, toRemove]: Diffs, member) => {
-        if (member.isAdded) {
-          toAdd.push(member.address);
-        }
-        if (member.isDeleted) {
-          toRemove.push(member.address);
-        }
-        return [toAdd, toRemove];
-      },
-      [[], []]
+    const markedMembers = allianceMembers.filter(
+      (member) => member.isAdded || member.isDeleted
     );
 
-    if (toRemove.length <= 0 && toAdd.length <= 0) {
+    if (markedMembers.length <= 0) {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
 
     const indexFundContract = new Indexfund(wallet);
-    const embeddedExecMsg = indexFundContract.createEmbeddedUpdateTCAMsg(
-      toAdd,
-      toRemove
+    const updateMsgs: EmbeddedWasmMsg[] = markedMembers.map(
+      ({ isAdded, isDeleted, ...restMemberData }) =>
+        indexFundContract.createEmbeddedAAListUpdateMsg(
+          restMemberData,
+          isAdded ? "add" : "remove"
+        )
     );
 
     const adminContract = new APAdmin(wallet);
@@ -61,7 +55,7 @@ export default function useEditAlliance() {
     const proposalMsg = adminContract.createProposalMsg(
       proposalTitle,
       proposalDescription,
-      [embeddedExecMsg]
+      updateMsgs
     );
 
     dispatch(

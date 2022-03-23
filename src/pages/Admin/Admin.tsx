@@ -8,7 +8,6 @@ import Proposer from "./Proposer";
 import Details from "./Proposals/Details";
 import Proposals from "./Proposals/Proposals";
 import AdminNav from "./AdminNav";
-import AllianceMembers from "./AllianceMembers/AllianceMembers";
 
 export default function Admin() {
   const wallet = useConnectedWallet();
@@ -27,7 +26,6 @@ export default function Admin() {
         <Routes>
           <Route path={`${admin.proposal}/:id`} element={<Details />} />
           <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
-          <Route path={admin.alliance} element={<AllianceMembers />} />
           <Route index element={<Proposals />} />
         </Routes>
       </div>

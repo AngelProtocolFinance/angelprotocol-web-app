@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { allianceMemberDetails } from "services/aws/alliance/placeholders";
-import { MemberDetails } from "services/aws/alliance/types";
+import { AllianceMember } from "services/terra/indexFund/types";
 
 const initialState: AllianceMemberWithFlags[] = [];
 
@@ -12,21 +11,20 @@ const allianceMembersSlice = createSlice({
       payload,
 
     toggleDeleteExistingMember: (state, { payload }: PayloadAction<string>) => {
-      const memberToMark = state.find((member) => member.address === payload);
+      const memberToMark = state.find((member) => member.wallet === payload);
       //markDelete is triggered from list rendered by this state
       memberToMark!.isDeleted = !memberToMark!.isDeleted;
     },
-    addMember: (state, { payload }: PayloadAction<string>) => {
+    addMember: (state, { payload }: PayloadAction<AllianceMember>) => {
       state.unshift({
         //add a defaulted alliance member
-        ...allianceMemberDetails,
-        address: payload,
+        ...payload,
         isAdded: true,
         isDeleted: false,
       });
     },
     undoAddMember: (state, { payload }: PayloadAction<string>) => {
-      const memberIdx = state.findIndex((member) => member.address === payload);
+      const memberIdx = state.findIndex((member) => member.wallet === payload);
       state.splice(memberIdx, 1);
     },
   },
@@ -40,7 +38,7 @@ export const {
   setMembers,
 } = allianceMembersSlice.actions;
 
-export type AllianceMemberWithFlags = MemberDetails & {
+export type AllianceMemberWithFlags = AllianceMember & {
   isDeleted: boolean;
   isAdded: boolean;
 };

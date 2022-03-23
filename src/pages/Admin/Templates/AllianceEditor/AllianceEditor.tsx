@@ -8,9 +8,6 @@ export default function AllianceEditor() {
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: yupResolver(allianceEditSchema),
-    defaultValues: {
-      walletAddr: "",
-    },
   });
 
   return (

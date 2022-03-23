@@ -49,7 +49,6 @@ export enum admin {
   charity_applications = "charity-applications",
   proposal_types = "proposal-types",
   proposal = "proposal",
-  alliance = "alliance",
 }
 
 export enum proposal_types {

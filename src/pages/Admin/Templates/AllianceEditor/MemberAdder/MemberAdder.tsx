@@ -7,11 +7,29 @@ export default function MemberAdder() {
 
   return (
     <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
+      <TextInput<AV> title="Member name" name="name" plain mono required />
       <TextInput<AV>
         title="Wallet address"
-        name="walletAddr"
+        name="wallet"
         placeholder="terra123abc..."
         plain
+        required
+        mono
+      />
+      <TextInput<AV>
+        title="Logo url"
+        name="logo"
+        placeholder="https://mysite/logo.jpg"
+        plain
+        required
+        mono
+      />
+      <TextInput<AV>
+        title="Website"
+        name="website"
+        placeholder="https://mysite.com"
+        plain
+        required
         mono
       />
       <button

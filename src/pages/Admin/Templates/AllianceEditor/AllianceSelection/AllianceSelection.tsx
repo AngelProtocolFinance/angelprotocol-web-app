@@ -57,7 +57,7 @@ function MemberTable(props: { members: AllianceMemberWithFlags[] }) {
         rowClass="border-b text-angel-grey hover:text-angel-blue"
       >
         {props.members.map((member) => (
-          <Member key={member.address} {...member} />
+          <Member key={member.wallet} {...member} />
         ))}
       </TableSection>
     </table>

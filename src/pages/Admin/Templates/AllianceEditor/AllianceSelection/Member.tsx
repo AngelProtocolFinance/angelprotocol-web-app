@@ -15,9 +15,9 @@ export default function Member(props: AllianceMemberWithFlags) {
 
   function memberItemAction() {
     if (props.isAdded) {
-      dispatch(undoAddMember(props.address));
+      dispatch(undoAddMember(props.wallet));
     } else {
-      dispatch(toggleDeleteExistingMember(props.address));
+      dispatch(toggleDeleteExistingMember(props.wallet));
     }
   }
   return (
@@ -32,12 +32,12 @@ export default function Member(props: AllianceMemberWithFlags) {
       }`}
     >
       <img
-        src={props.icon || defaultIcon}
+        src={props.logo || defaultIcon}
         alt=""
         className="w-8 h-8 object-contain"
       />
       <>{props.name}</>
-      <span className="font-mono text-sm">{props.address}</span>
+      <span className="font-mono text-sm">{props.wallet}</span>
       <button
         onClick={memberItemAction}
         type="button"
