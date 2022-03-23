@@ -1,7 +1,11 @@
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
 import ustIcon from "assets/images/terra_usd.png";
+import bnbIcon from "assets/images/bnb-logo.png";
+import ethIcon from "assets/images/ethereum-eth-logo.png";
+import lunaIcon from "assets/images/terra-luna-logo.png";
 
+const supportedCurrencies = [ustIcon, lunaIcon, ethIcon, bnbIcon];
 export default function Accepted() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
   return (
@@ -9,14 +13,19 @@ export default function Accepted() {
       ref={ref}
       className="bg-gradient-to-tr from-blue-accent to-angel-blue  grid lg:items-center grid-rows-a1 grid-cols-1 lg:grid-cols-2 lg:grid-rows-1 lg:h-info p-8  justify-items-center"
     >
-      <img
-        src={ustIcon}
-        alt=""
-        className={`${transitionIn(
-          isVisible,
-          Direction.fromLeft
-        )} p-4 w-28 lg:w-60 lg:p-10 rounded-sm mb-4 lg:mb-0 bg-white  rounded-full bg-opacity-80 shadow-xl`}
-      />
+      <div className="grid grid-cols-4 lg:grid-cols-2 gap-5 lg:gap-10 items-center justify-between">
+        {supportedCurrencies.map((icon, i) => (
+          <img
+            key={i}
+            src={icon}
+            alt=""
+            className={`${transitionIn(
+              isVisible,
+              Direction.fromLeft
+            )} p-4 w-20 lg:w-40 lg:p-10 rounded-sm mb-4 lg:mb-0 bg-white  rounded-full bg-opacity-80 shadow-xl`}
+          />
+        ))}
+      </div>
       <div className="justify-self-center">
         <article
           className={`${transitionIn(
