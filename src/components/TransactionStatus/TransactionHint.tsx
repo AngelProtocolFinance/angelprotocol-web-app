@@ -3,32 +3,23 @@ import { IconType } from "react-icons";
 import { Step } from "services/transaction/types";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "./TransactionPrompt";
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
 
   switch (step) {
     case Step.error:
       return (
-        <StatusButton
-          Icon={getIcon(IconTypes.Exclamation)}
-          iconClass="text-red-300"
-        />
+        <StatusButton Icon={getIcon("Exclamation")} iconClass="text-red-300" />
       );
     case Step.broadcast:
     case Step.submit:
       return (
-        <StatusButton
-          Icon={getIcon(IconTypes.Loading)}
-          iconClass="animate-spin"
-        />
+        <StatusButton Icon={getIcon("Loading")} iconClass="animate-spin" />
       );
     case Step.success:
       return (
-        <StatusButton
-          Icon={getIcon(IconTypes.Check)}
-          iconClass="text-green-300"
-        />
+        <StatusButton Icon={getIcon("Check")} iconClass="text-green-300" />
       );
     default:
       return null;

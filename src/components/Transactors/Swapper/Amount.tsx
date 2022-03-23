@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { SwapValues } from "./types";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function Amount() {
   const [settings_shown, show_settings] = useState(false);
@@ -32,7 +32,7 @@ export default function Amount() {
             settings_shown ? "text-angel-blue animate-spin" : "text-angel-grey"
           }  ml-0.5 text-xl hover:text-angel-orange justify-self-end`}
         >
-          <Icon iconType={IconTypes.Settings} />
+          <Icon type="Settings" />
         </button>
       </div>
       <div className="grid grid-cols-a1 text-angel-grey p-3 bg-light-grey shadow-inner-white-grey rounded-md">

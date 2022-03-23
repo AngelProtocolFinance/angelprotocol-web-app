@@ -3,7 +3,7 @@ import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import { Link } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import { app, site } from "constants/routes";
@@ -52,7 +52,7 @@ export default function PollDetails() {
               <span className="text-xs font-heading uppercase">
                 block height
               </span>
-              <Icon iconType={IconTypes.Blockchain} className="mx-2" />
+              <Icon type="Blockchain" className="mx-2" />
               <span className="font-heading text-sm">{details.end_height}</span>
             </p>
           </div>

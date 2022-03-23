@@ -1,4 +1,4 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import Share from "./Share";
 
@@ -11,7 +11,7 @@ export default function SharePrompt() {
         onClick={hideModal}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
       >
-        <Icon iconType={IconTypes.Clock} size={25} />
+        <Icon type="Clock" size={25} />
       </button>
       <Share />
     </div>

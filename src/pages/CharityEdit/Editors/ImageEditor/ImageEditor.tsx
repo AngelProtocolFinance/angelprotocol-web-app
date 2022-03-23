@@ -1,4 +1,4 @@
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
@@ -21,13 +21,13 @@ export default function ImageEditor() {
         <ImageControl
           type="upload"
           htmlFor="file__image"
-          Icon={getIcon(IconTypes.Upload)}
+          Icon={getIcon("Upload")}
           disabled={loading}
         />
         <ImageControl
           type="reset"
           onClick={handleImageReset}
-          Icon={getIcon(IconTypes.Undo)}
+          Icon={getIcon("Undo")}
           disabled={isInitial || loading}
         />
         <input

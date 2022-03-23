@@ -1,4 +1,4 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 //unused share ui
 export function ShareModal() {
@@ -26,13 +26,13 @@ export function ShareModal() {
         </div>
         <div className="flex justify-center my-5 text-3xl text-thin-blue">
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <Icon iconType={IconTypes.Twitter} />
+            <Icon type="Twitter" />
           </div>
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <Icon iconType={IconTypes.Linkedin} />
+            <Icon type="Linkedin" />
           </div>
           <div className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1">
-            <Icon iconType={IconTypes.Facebook} />
+            <Icon type="Facebook" />
           </div>
         </div>
         <div className="flex justify-center mx-auto mt-2">

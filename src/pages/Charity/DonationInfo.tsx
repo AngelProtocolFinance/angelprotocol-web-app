@@ -10,7 +10,7 @@ import {
 import { unsdgs } from "constants/unsdgs";
 import { app, site } from "constants/routes";
 import { CharityParam } from "./types";
-import Icon, { getIcon, IconTypes } from "components/Icons/Icons";
+import Icon, { getIcon } from "components/Icons/Icons";
 
 export function DonationInfo() {
   const { address: charity_addr } = useParams<CharityParam>();
@@ -66,7 +66,7 @@ export function DonationInfo() {
             to={`${site.app}/${app.marketplace}`}
             className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mb-4"
           >
-            <Icon iconType={IconTypes.Back} size={15} /> back to marketplace
+            <Icon type="Back" size={15} /> back to marketplace
           </Link>
           {profileState.un_sdg && (
             <span className="inline-block text-center text-sm py-3 px-3 max-w-250 font-bold tracking-wide uppercase text-white bg-angel-blue bg-opacity-50 hover:bg-opacity-30 rounded-2xl mb-4">
@@ -84,7 +84,7 @@ export function DonationInfo() {
             <span>{profileState.charity_name}</span>
             {profileState.url && (
               <Icon
-                iconType={IconTypes.ExternalLink}
+                type="ExternalLink"
                 className="inline ml-2 mt-1"
                 size={15}
               />
@@ -117,7 +117,7 @@ export function DonationInfo() {
                   url={formatUrl(profileState.twitter_handle, "twitter")}
                   size={25}
                   color="#3FA8F5"
-                  Icon={getIcon(IconTypes.Twitter)}
+                  Icon={getIcon("Twitter")}
                 />
               )}
               {profileState.linkedin_page && (
@@ -125,7 +125,7 @@ export function DonationInfo() {
                   url={formatUrl(profileState.linkedin_page, "linkedin")}
                   size={25}
                   color="#3FA8F5"
-                  Icon={getIcon(IconTypes.Linkedin)}
+                  Icon={getIcon("Linkedin")}
                 />
               )}
               {profileState.facebook_page && (
@@ -133,7 +133,7 @@ export function DonationInfo() {
                   url={formatUrl(profileState.facebook_page, "facebook")}
                   size={25}
                   color="#3FA8F5"
-                  Icon={getIcon(IconTypes.Facebook)}
+                  Icon={getIcon("Facebook")}
                 />
               )}
             </div>

@@ -3,7 +3,7 @@ import { Dec } from "@terra-money/terra.js";
 import toCurrency from "helpers/toCurrency";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import { HoldingSummary } from "./types";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
@@ -25,7 +25,7 @@ export default function Summary(props: HoldingSummary) {
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
         <Icon
-          iconType={IconTypes.Cog}
+          type="Cog"
           size={16}
           className="ml-1 text-grey-accent"
           title="Coming Soon!"

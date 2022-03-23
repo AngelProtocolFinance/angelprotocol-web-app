@@ -3,7 +3,7 @@ import Status from "../Status";
 import Output from "./Output";
 import Amount from "./Amount";
 import useSwap from "./useSwap";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function SwapForm() {
   const { swap, isFormLoading, isSubmitDisabled, switchCurrency } = useSwap();
@@ -20,7 +20,7 @@ export default function SwapForm() {
         className="text-blue-accent active:text-angel-blue hover:text-angel-blue justify-self-center my-3"
         onClick={switchCurrency}
       >
-        <Icon iconType={IconTypes.ExchangeAlt} className="text-3xl" />
+        <Icon type="ExchangeAlt" className="text-3xl" />
       </button>
       <Output />
       <SwapRate />

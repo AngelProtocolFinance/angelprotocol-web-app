@@ -1,7 +1,7 @@
 import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 import Summary, { SummaryProps } from "./Summary";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 type Props = {
   type: string;
@@ -21,7 +21,7 @@ export default function Amount(props: Props) {
     <div className="flex gap-0.5 items-center w-40">
       <button onClick={showSummary}>
         <Icon
-          iconType={IconTypes.Info}
+          type="Info"
           className="mt-0.5 block text-angel-blue hover:text-angel-orange"
         />
       </button>

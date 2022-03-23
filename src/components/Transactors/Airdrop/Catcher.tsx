@@ -1,17 +1,14 @@
 import toCurrency from "helpers/toCurrency";
 import { Airdrops } from "services/aws/airdrop/types";
 import useClaimAirdrop from "./useClaimAirdrop";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export type Props = { airdrops: Airdrops };
 export default function Catcher(props: Props) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
     <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
-      <Icon
-        iconType={IconTypes.Parachute}
-        className="text-angel-blue text-4xl"
-      />
+      <Icon type="Parachute" className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop
       </h2>

@@ -1,5 +1,5 @@
 import toCurrency from "helpers/toCurrency";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 type LockedBalance = {
   lockedBalance: number | undefined;
@@ -11,7 +11,7 @@ export default function Locked(props: LockedBalance) {
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>Endowment Account</span>
         <Icon
-          iconType={IconTypes.Cog}
+          type="Cog"
           size={16}
           className="ml-1 text-grey-accent"
           title="Coming Soon!"

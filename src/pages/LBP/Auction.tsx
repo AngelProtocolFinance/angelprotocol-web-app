@@ -7,7 +7,7 @@ import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 
 export default function Auction() {
   const { showModal } = useSetModal();
@@ -58,13 +58,13 @@ function AuctionStats() {
       <StatsDetails
         title="Duration"
         value="3 days"
-        Icon={getIcon(IconTypes.Clock)}
+        Icon={getIcon("Clock")}
         exClass="duration"
       />
       <StatsDetails
         title="Ends in"
         value={<CountdownTimer deadline={0} start={0} />}
-        Icon={getIcon(IconTypes.StopWatch)}
+        Icon={getIcon("StopWatch")}
         exClass="ends-in"
       />
       <StatsDetails title="Price" value="UST 0.074994" />

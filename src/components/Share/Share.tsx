@@ -1,4 +1,4 @@
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 import {
   encodedText,
   FACEBOOK_DIALOG_URL,
@@ -19,15 +19,9 @@ export default function Share() {
         </span>
       </div>
       <div className="flex justify-center my-5 ">
-        <IconLink link={TWITTER_SHARE_URL} icon={getIcon(IconTypes.Twitter)} />
-        <IconLink
-          link={LINKEDIN_SHARE_URL}
-          icon={getIcon(IconTypes.Linkedin)}
-        />
-        <IconLink
-          link={FACEBOOK_DIALOG_URL}
-          icon={getIcon(IconTypes.Facebook)}
-        />
+        <IconLink link={TWITTER_SHARE_URL} icon={getIcon("Twitter")} />
+        <IconLink link={LINKEDIN_SHARE_URL} icon={getIcon("Linkedin")} />
+        <IconLink link={FACEBOOK_DIALOG_URL} icon={getIcon("Facebook")} />
       </div>
     </div>
   );

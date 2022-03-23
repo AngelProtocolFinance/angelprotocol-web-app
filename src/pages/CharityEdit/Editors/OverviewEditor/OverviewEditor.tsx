@@ -4,7 +4,7 @@ import { Editor } from "draft-js";
 import Label from "../../Label";
 import useEditor from "./useEditor";
 import "draft-js/dist/Draft.css";
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 
 function OverviewEditor() {
   const {
@@ -19,20 +19,17 @@ function OverviewEditor() {
     <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
       <Label id="editor__" text="Overview" />
       <div className="flex gap-2 mt-2 mb-4">
+        <Control Icon={getIcon("Bold")} onClick={applyInlineStyle("BOLD")} />
         <Control
-          Icon={getIcon(IconTypes.Bold)}
-          onClick={applyInlineStyle("BOLD")}
-        />
-        <Control
-          Icon={getIcon(IconTypes.Italic)}
+          Icon={getIcon("Italic")}
           onClick={applyInlineStyle("ITALIC")}
         />
         <Control
-          Icon={getIcon(IconTypes.ListUl)}
+          Icon={getIcon("ListUl")}
           onClick={applyBlockStyle("unordered-list-item")}
         />
         <Control
-          Icon={getIcon(IconTypes.ListOl)}
+          Icon={getIcon("ListOl")}
           onClick={applyBlockStyle("ordered-list-item")}
         />
       </div>

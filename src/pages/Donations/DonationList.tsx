@@ -8,7 +8,7 @@ import Loader from "components/Loader/Loader";
 import { DonationTransactions } from "services/aws/endowment_admin/types";
 import useSortList, { Direction } from "./useSortList";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 const keys: string[] = ["amount", "date", "endowment"];
 
@@ -63,9 +63,9 @@ const DonationList = (props: EndowmentAddrProps) => {
                     {key}
                     {SortKey === key &&
                       (direction === Direction.Asc ? (
-                        <Icon iconType={IconTypes.Up} />
+                        <Icon type="Up" />
                       ) : (
-                        <Icon iconType={IconTypes.Down} />
+                        <Icon type="Down" />
                       ))}
                   </span>
                 </th>

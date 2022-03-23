@@ -8,7 +8,7 @@ import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import { site } from "constants/routes";
 import MobileDappNav from "./MobileDappNav";
 import DappMenu from "./DappMenu";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function DappHead() {
   useProviderSwitcher();
@@ -30,9 +30,9 @@ export default function DappHead() {
       </div>
       <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
         {navShown ? (
-          <Icon iconType={IconTypes.Close} className="text-2xl" />
+          <Icon type="Close" className="text-2xl" />
         ) : (
-          <Icon iconType={IconTypes.Menu} className="text-2xl" />
+          <Icon type="Menu" className="text-2xl" />
         )}
       </button>
       {navShown && <MobileDappNav />}

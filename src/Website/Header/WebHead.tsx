@@ -7,7 +7,7 @@ import ua_icon from "assets/icons/ukraine.svg";
 import { site, app } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();
@@ -35,9 +35,9 @@ export default function WebHead() {
           onClick={toggleNav}
         >
           {navShown ? (
-            <Icon iconType={IconTypes.Close} className="text-2xl" />
+            <Icon type="Close" className="text-2xl" />
           ) : (
-            <Icon iconType={IconTypes.Menu} className="text-2xl" />
+            <Icon type="Menu" className="text-2xl" />
           )}
         </button>
         {navShown && <MobileNav />}
@@ -55,7 +55,7 @@ export default function WebHead() {
           Donate now to humanitarian relief in Ukraine
         </span>
         <Word icon={ua_icon} title="" />
-        <Icon iconType={IconTypes.ExternalLink} className="text-lg" />
+        <Icon type="ExternalLink" className="text-lg" />
       </a>
     </header>
   );

@@ -1,4 +1,4 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
@@ -14,9 +14,9 @@ export default function Option(props: { label: string; vote: Vote }) {
 
   const icon =
     props.vote === "yes" ? (
-      <Icon iconType={IconTypes.Like} className={iconClasses} />
+      <Icon type="Like" className={iconClasses} />
     ) : (
-      <Icon iconType={IconTypes.Dislike} className={iconClasses} />
+      <Icon type="Dislike" className={iconClasses} />
     );
 
   return (

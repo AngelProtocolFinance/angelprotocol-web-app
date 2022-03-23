@@ -1,5 +1,5 @@
 import Split from "./Split";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function AdvancedOptions(props: {
   toggleAdvancedOptions: () => void;
@@ -19,7 +19,7 @@ export default function AdvancedOptions(props: {
         className="justify-self-start flex items-center text-angel-grey hover:text-angel-blue font-semibold  cursor-pointer"
       >
         <Icon
-          iconType={IconTypes.Settings}
+          type="Settings"
           size={20}
           style={{ animationDuration: "4s" }}
           className={`${props.isOptionsShown ? "animate-spin" : ""}`}

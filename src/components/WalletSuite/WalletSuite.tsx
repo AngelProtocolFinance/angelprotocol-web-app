@@ -4,7 +4,7 @@ import ConnectOptions from "./ConnectOptions";
 import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
 import useWalletUpdator from "./useWalletUpdator";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
 import useBackdropDismiss from "./useBackdropDismiss";
 
@@ -55,10 +55,7 @@ export default function WalletSuite() {
           disabled={provider.isSwitching}
           onClick={toggleConnectOptions}
         >
-          <Icon
-            iconType={IconTypes.Wallet}
-            className="text-white text-xl mr-2"
-          />
+          <Icon type="Wallet" className="text-white text-xl mr-2" />
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}

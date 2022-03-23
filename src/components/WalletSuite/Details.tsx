@@ -9,7 +9,7 @@ import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
 import { useSetMetamask } from "providers/Metamask/Metamask";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { DeviceType, deviceType } from "helpers/deviceType";
@@ -57,7 +57,7 @@ export default function Details(props: { closeHandler: () => void }) {
         className="text-white absolute top-2 right-2"
         onClick={props.closeHandler}
       >
-        <Icon iconType={IconTypes.Close} />
+        <Icon type="Close" />
       </button>
       <div className="bg-angel-grey text-white-grey text-sm p-2">
         <p className="uppercase">network : {chainId}</p>

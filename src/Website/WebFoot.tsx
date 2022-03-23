@@ -1,6 +1,6 @@
 import Subscriber from "Website/Subscriber/Subscriber";
 import { Link } from "react-router-dom";
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 
 export default function WebFoot() {
   return (
@@ -60,35 +60,35 @@ export default function WebFoot() {
 const links = [
   {
     id: 1,
-    Icon: getIcon(IconTypes.Telegram),
+    Icon: getIcon("Twitter"),
     link: "https://twitter.com/angelprotocol",
     textColor: "text-gray-50",
     title: "Twitter",
   },
   {
     id: 2,
-    Icon: getIcon(IconTypes.Telegram),
+    Icon: getIcon("Telegram"),
     link: "https://t.me/angelprotocoI",
     textColor: "text-blue-50",
     title: "Telegram",
   },
   {
     id: 3,
-    Icon: getIcon(IconTypes.Youtube),
+    Icon: getIcon("Youtube"),
     link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
     textColor: "text-white",
     title: "YouTube",
   },
   {
     id: 4,
-    Icon: getIcon(IconTypes.Medium),
+    Icon: getIcon("Medium"),
     link: "https://angelprotocol.medium.com/",
     textColor: "text-white",
     title: "Medium",
   },
   {
     id: 5,
-    Icon: getIcon(IconTypes.Discord),
+    Icon: getIcon("Discord"),
     link: "https://discord.gg/RhqA652ySA",
     textColor: "text-white",
     title: "Discord",

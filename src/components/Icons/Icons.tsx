@@ -1,4 +1,4 @@
-import { IconBaseProps, IconType } from "react-icons";
+import { IconType } from "react-icons";
 import {
   FaFacebookSquare,
   FaLinkedin,
@@ -36,98 +36,106 @@ import { BiArrowBack, BiBold, BiItalic } from "react-icons/bi";
 import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
 
-export enum IconTypes {
-  Discord,
-  Telegram,
-  Twitter,
-  Youtube,
-  Medium,
-  Facebook,
-  Linkedin,
-  Parachute,
-  Link,
-  ListUl,
-  ListOl,
-  Cog,
-  Clock,
-  Copy,
-  Check,
-  Menu,
-  Close,
-  StopWatch,
-  Info,
-  CheckCircle,
-  Exclamation,
-  CaretLeft,
-  Like,
-  Dislike,
-  Upload,
-  Wallet,
-  Loading,
-  Down,
-  Up,
-  HourglassSplit,
-  ExclamationCircle,
-  Settings,
-  Warning,
-  Back,
-  Bold,
-  Italic,
-  Blockchain,
-  ExternalLink,
-  ExchangeAlt,
-  Undo,
-}
+export type IconTypes =
+  | "Discord"
+  | "Telegram"
+  | "Twitter"
+  | "Youtube"
+  | "Medium"
+  | "Facebook"
+  | "Linkedin"
+  | "Parachute"
+  | "Link"
+  | "ListUl"
+  | "ListOl"
+  | "Cog"
+  | "Clock"
+  | "Copy"
+  | "Check"
+  | "Menu"
+  | "Close"
+  | "StopWatch"
+  | "Info"
+  | "CheckCircle"
+  | "Exclamation"
+  | "CaretLeft"
+  | "Like"
+  | "Dislike"
+  | "Upload"
+  | "Wallet"
+  | "Loading"
+  | "Down"
+  | "Up"
+  | "HourglassSplit"
+  | "ExclamationCircle"
+  | "Settings"
+  | "Warning"
+  | "Back"
+  | "Bold"
+  | "Italic"
+  | "Blockchain"
+  | "ExternalLink"
+  | "ExchangeAlt"
+  | "Undo";
 
-export const iconList: Record<IconTypes, IconType> = {
-  [IconTypes.ExchangeAlt]: CgArrowsExchangeAltV,
-  [IconTypes.Undo]: CgUndo,
-  [IconTypes.Loading]: VscLoading,
-  [IconTypes.Down]: VscTriangleDown,
-  [IconTypes.Facebook]: FaFacebookSquare,
-  [IconTypes.Discord]: RiDiscordLine,
-  [IconTypes.Telegram]: FaTelegramPlane,
-  [IconTypes.Twitter]: AiOutlineTwitter,
-  [IconTypes.Youtube]: AiFillYoutube,
-  [IconTypes.Medium]: AiOutlineMedium,
-  [IconTypes.Copy]: AiOutlineCopy,
-  [IconTypes.Check]: AiOutlineCheck,
-  [IconTypes.Menu]: FiMenu,
-  [IconTypes.Close]: IoClose,
-  [IconTypes.Linkedin]: FaLinkedin,
-  [IconTypes.Link]: FaExternalLinkAlt,
-  [IconTypes.Info]: AiOutlineInfoCircle,
-  [IconTypes.CheckCircle]: AiOutlineCheckCircle,
-  [IconTypes.Parachute]: FaParachuteBox,
-  [IconTypes.StopWatch]: FaStopwatch,
-  [IconTypes.Exclamation]: AiOutlineExclamation,
-  [IconTypes.ExclamationCircle]: BsExclamationCircle,
-  [IconTypes.ExternalLink]: GoLinkExternal,
-  [IconTypes.CaretLeft]: AiFillCaretLeft,
-  [IconTypes.Like]: AiOutlineLike,
-  [IconTypes.Dislike]: AiOutlineDislike,
-  [IconTypes.Up]: VscTriangleUp,
-  [IconTypes.Upload]: AiOutlineUpload,
-  [IconTypes.HourglassSplit]: BsHourglassSplit,
-  [IconTypes.Settings]: IoMdSettings,
-  [IconTypes.Wallet]: IoWalletSharp,
-  [IconTypes.Warning]: IoWarning,
-  [IconTypes.Back]: BiArrowBack,
-  [IconTypes.Blockchain]: SiHiveBlockchain,
-  [IconTypes.Italic]: BiItalic,
-  [IconTypes.Bold]: BiBold,
-  [IconTypes.Cog]: FaCog,
-  [IconTypes.Clock]: FaClock,
-  [IconTypes.ListOl]: FaListOl,
-  [IconTypes.ListUl]: FaListUl,
+export const iconList: Record<string, IconType> = {
+  ExchangeAlt: CgArrowsExchangeAltV,
+  Undo: CgUndo,
+  Loading: VscLoading,
+  Down: VscTriangleDown,
+  Facebook: FaFacebookSquare,
+  Discord: RiDiscordLine,
+  Telegram: FaTelegramPlane,
+  Twitter: AiOutlineTwitter,
+  Youtube: AiFillYoutube,
+  Medium: AiOutlineMedium,
+  Copy: AiOutlineCopy,
+  Check: AiOutlineCheck,
+  Menu: FiMenu,
+  Close: IoClose,
+  Linkedin: FaLinkedin,
+  Link: FaExternalLinkAlt,
+  Info: AiOutlineInfoCircle,
+  CheckCircle: AiOutlineCheckCircle,
+  Parachute: FaParachuteBox,
+  StopWatch: FaStopwatch,
+  Exclamation: AiOutlineExclamation,
+  ExclamationCircle: BsExclamationCircle,
+  ExternalLink: GoLinkExternal,
+  CaretLeft: AiFillCaretLeft,
+  Like: AiOutlineLike,
+  Dislike: AiOutlineDislike,
+  Up: VscTriangleUp,
+  Upload: AiOutlineUpload,
+  HourglassSplit: BsHourglassSplit,
+  Settings: IoMdSettings,
+  Wallet: IoWalletSharp,
+  Warning: IoWarning,
+  Back: BiArrowBack,
+  Blockchain: SiHiveBlockchain,
+  Italic: BiItalic,
+  Bold: BiBold,
+  Cog: FaCog,
+  Clock: FaClock,
+  ListOl: FaListOl,
+  ListUl: FaListUl,
 };
 
-export default function Icon(props: IconBaseProps & { iconType: IconTypes }) {
-  const Icon = iconList[props.iconType];
-  return <Icon {...props} />;
+interface IconProps extends React.SVGAttributes<SVGElement> {
+  children?: React.ReactNode;
+  size?: string | number;
+  color?: string;
+  title?: string;
+  type: string;
+}
+
+export default function Icon(props: IconProps) {
+  const Icon = iconList[props.type];
+  const { type, ...rest } = props;
+  return <Icon {...rest} />;
 }
 
 export const getIcon = (type: IconTypes) => iconList[type];
 
-// <Icon iconType={IconTypes.Down}
-// getIcon(icon)
+// <Icon type="Down" />
+// getIcon(Down)

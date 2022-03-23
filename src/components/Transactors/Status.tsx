@@ -1,4 +1,4 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 import { ReactNode, useState } from "react";
 import { useGetter } from "store/accessors";
 
@@ -15,14 +15,14 @@ export default function Status() {
   } else if (typeof form_error === "string") {
     return (
       <StatusDiv>
-        <Icon iconType={IconTypes.Info} />
+        <Icon type="Info" />
         <StatusTitle text={form_error} />
       </StatusDiv>
     );
   } else {
     return (
       <StatusDiv>
-        <Icon iconType={IconTypes.Info} />
+        <Icon type="Info" />
         <StatusTitle text={form_error.title} />
         {form_error.details && (
           <button
@@ -32,7 +32,7 @@ export default function Status() {
               detailsShown ? "-rotate-90" : "rotate-0"
             }`}
           >
-            <Icon iconType={IconTypes.CaretLeft} />
+            <Icon type="CaretLeft" />
           </button>
         )}
         {detailsShown && (

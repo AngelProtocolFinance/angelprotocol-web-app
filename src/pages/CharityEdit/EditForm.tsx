@@ -5,7 +5,7 @@ import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
 import { site, app } from "constants/routes";
 import useEditForm from "./useEditForm";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon from "components/Icons/Icons";
 
 export default function EditForm() {
   const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();
@@ -16,7 +16,7 @@ export default function EditForm() {
         to={`${site.app}/${app.charity}/${endowment_addr}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
       >
-        <Icon iconType={IconTypes.Back} size={15} /> back to profile
+        <Icon type="Back" size={15} /> back to profile
       </Link>
 
       <p className="text-xs font-heading font-semibold uppercase text-white text-opacity-100 mb-2">

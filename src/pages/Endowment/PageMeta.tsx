@@ -1,7 +1,7 @@
 import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { IconType } from "react-icons/lib";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
-import { getIcon, IconTypes } from "components/Icons/Icons";
+import { getIcon } from "components/Icons/Icons";
 
 export default function PageMeta(props: { address: string }) {
   const { isVaultsRateError, isVaultsRateLoading } =
@@ -15,13 +15,13 @@ export default function PageMeta(props: { address: string }) {
 
   const info = isLoading ? (
     <Info
-      Icon={getIcon(IconTypes.Loading)}
+      Icon={getIcon("Loading")}
       message="loading account data"
       iconClass="animate-spin"
     />
   ) : isError ? (
     <Info
-      Icon={getIcon(IconTypes.ExclamationCircle)}
+      Icon={getIcon("ExclamationCircle")}
       message="failed to load account data"
       iconClass="mt-0.5"
     />
