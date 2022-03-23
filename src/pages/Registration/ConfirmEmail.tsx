@@ -23,10 +23,18 @@ export default function ConfirmEmail() {
         return;
       }
 
+      const emailPayload = {
+        CharityName: user.CharityName,
+        Email: user.Email,
+        FirstName: user.FirstName,
+        LastName: user.LastName,
+        Role: user.Role,
+        PhoneNumber: user.PhoneNumber,
+      };
       const response: any = await resendEmail({
         uuid: user.PK,
         type: emailType,
-        body: user,
+        body: emailPayload,
       });
       response.data
         ? console.info(response.data?.message)
