@@ -60,7 +60,7 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: { data: any }) => response,
     }),
     createNewCharity: builder.mutation<any, ContactDetailsData>({
-      query: (body) => ({
+      query: ({ PK, ...body }) => ({
         url: "registration",
         method: "POST",
         body,
@@ -71,7 +71,7 @@ const registration_api = aws.injectEndpoints({
       query: (data) => {
         return {
           url: `registration`,
-          params: { uuid: data.ContactPerson.UUID },
+          params: { uuid: data.PK },
           method: "PUT",
           body: {
             ...data.ContactPerson,

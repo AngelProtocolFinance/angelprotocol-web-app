@@ -5,11 +5,11 @@ export interface AWSQueryRes<T> {
 }
 
 export type ContactDetailsData = {
+  PK?: string;
   Registration: {
     CharityName: string;
   };
   ContactPerson: {
-    UUID?: string;
     FirstName: string;
     LastName: string;
     Email: string;
