@@ -5,6 +5,7 @@ export interface AWSQueryRes<T> {
 }
 
 export type ContactDetailsData = {
+  PK?: string;
   Registration: {
     CharityName: string;
   };

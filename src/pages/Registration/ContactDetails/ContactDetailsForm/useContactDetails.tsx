@@ -24,6 +24,7 @@ export default function useSaveContactDetails() {
       // call API to add or update contact details information(contactData)
       const is_create = !contactData?.uniqueID;
       const postData: ContactDetailsData = {
+        PK: contactData.uniqueID,
         Registration: {
           CharityName: contactData.charityName,
         },
