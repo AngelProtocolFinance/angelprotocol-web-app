@@ -130,8 +130,8 @@ interface IconProps extends React.SVGAttributes<SVGElement> {
 }
 
 export default function Icon(props: IconProps) {
-  const Icon = iconList[props.type];
   const { type, ...rest } = props;
+  const Icon = iconList[type];
   return <Icon {...rest} />;
 }
 
