@@ -11,20 +11,29 @@ import {
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
+import { CharityParam } from "pages/CharityEdit/types";
+import { useParams } from "react-router-dom";
+import { useProfileState } from "services/aws/endowments/states";
 
 export default function useEditor() {
+  const params = useParams<CharityParam>();
   const { setValue, watch } = useFormContext<EditableProfileAttr>();
   const overview = watch("charity_overview");
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const { profileState } = useProfileState(params.address!);
 
   useRichTextInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
     const rawState = convertToRaw(editorState.getCurrentContent());
-    setValue("charity_overview", JSON.stringify(rawState));
+    const dirty =
+      JSON.stringify(rawState).length !== profileState.charity_overview.length;
+    setValue("charity_overview", JSON.stringify(rawState), {
+      shouldDirty: dirty,
+    });
     //eslint-disable-next-line
   }, [editorState]);
 
