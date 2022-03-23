@@ -1,14 +1,12 @@
-import "./index.css";
+import Loader from "components/Loader/Loader";
 import { lazy, StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { site } from "./constants/routes";
 import { Provider } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { store } from "store/store";
-import Loader from "components/Loader/Loader";
-import { getChainOptions } from "@terra-money/wallet-provider";
-import { WalletProvider } from "providers";
+import { site } from "./constants/routes";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
 const App = lazy(() => import("./App/App"));
 const Website = lazy(() => import("./Website/Website"));
@@ -17,30 +15,21 @@ const LoaderComponent = () => (
   <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
 );
 
-getChainOptions().then((chainOptions) => {
-  ReactDOM.render(
-    <StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>
-          <Suspense fallback={<LoaderComponent />}>
-            <Routes>
-              <Route
-                path={`${site.app}/*`}
-                element={
-                  <WalletProvider {...chainOptions}>
-                    <App />
-                  </WalletProvider>
-                }
-              />
-              <Route path={`${site.home}*`} element={<Website />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </Provider>
-    </StrictMode>,
-    document.getElementById("root")
-  );
-});
+ReactDOM.render(
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Suspense fallback={<LoaderComponent />}>
+          <Routes>
+            <Route path={`${site.app}/*`} element={<App />} />
+            <Route path={`${site.home}*`} element={<Website />} />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>,
+  document.getElementById("root")
+);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
