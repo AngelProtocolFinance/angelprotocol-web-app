@@ -4,10 +4,9 @@ import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
 type WalletsRecord = Record<WalletConnectionType, Wallet>;
 
-const DEFAULT: WalletsRecord = { metamask: undefined, terra: undefined };
-
-export default function useGetWallet(connType: WalletConnectionType) {
-  const [wallets, setWallets] = useState<WalletsRecord>(DEFAULT);
+export default function useWallets() {
+  const [isLoading, setLoading] = useState(true);
+  const [wallets, setWallets] = useState<WalletsRecord>();
 
   const createMetamaskWallet = useCreateMetamaskWallet();
 
@@ -17,11 +16,14 @@ export default function useGetWallet(connType: WalletConnectionType) {
 
       setWallets({
         metamask,
-        terra: undefined,
+        terra: metamask,
       });
+      setLoading(false);
     }
 
     create();
-  });
-  return wallets[connType];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { wallets, isLoading };
 }

@@ -8,17 +8,15 @@ export type Coin = {
   denom: denoms; //"denoms.uusd, denoms.uluna"
 };
 
-export type Wallet =
-  | {
-      id?: string;
-      icon: string;
-      displayCoin: Coin;
-      coins: Coin[];
-      address: string;
-      chainId: chainIDs;
-      supported_denoms: denoms[];
+export type Wallet = {
+  id?: string;
+  icon: string;
+  displayCoin: Coin;
+  coins: Coin[];
+  address: string;
+  chainId: chainIDs;
+  supported_denoms: denoms[];
 
-      sendTransaction: (...args: any[]) => Promise<void>;
-      sendDonation: (...args: any[]) => Promise<void>;
-    }
-  | undefined;
+  sendTransaction: (...args: any[]) => Promise<void>;
+  sendDonation: (...args: any[]) => Promise<void>;
+};

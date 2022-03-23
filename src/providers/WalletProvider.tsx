@@ -15,7 +15,7 @@ import {
 } from "react";
 import { MetamaskProvider } from "./MetamaskProvider";
 import { Wallet, WalletConnectionType } from "./types";
-import getWallet from "./useGetWallet/useGetWallet";
+import useWallets from "./useWallets";
 
 const localterra = {
   name: "localterra",
@@ -24,12 +24,13 @@ const localterra = {
 };
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const [isLoading, setLoading] = useState(true);
+  const [isLoadingChainOptions, setLoading] = useState(true);
   const [walletConnectChainIds, setWalletConnectChainIds] = useState<
     Record<number, NetworkInfo>
   >({});
   const [defaultNetwork, setDefaultNetwork] = useState<NetworkInfo>(localterra);
   const [wallet, setWallet] = useState<Wallet>();
+  const { wallets, isLoading: isLoadingWallets } = useWallets();
 
   useEffect(() => {
     async function fetchChainIds() {
@@ -45,18 +46,28 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     fetchChainIds();
   }, []);
 
-  const connect = useCallback((connType: WalletConnectionType) => {
-    setWallet(getWallet(connType));
-  }, []);
+  const connect = useCallback(
+    (connType: WalletConnectionType) => {
+      if (!wallets) {
+        console.log("loading wallets");
+        return;
+      }
 
-  if (isLoading) {
+      setWallet(wallets[connType]);
+    },
+    [wallets]
+  );
+
+  if (isLoadingChainOptions && isLoadingWallets) {
     return (
       <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
     );
   }
 
   return (
-    <WalletSuiteContext.Provider value={{ isLoading, connect, wallet }}>
+    <WalletSuiteContext.Provider
+      value={{ isLoading: isLoadingChainOptions, connect, wallet }}
+    >
       <TerraProvider
         defaultNetwork={defaultNetwork}
         walletConnectChainIds={walletConnectChainIds}
