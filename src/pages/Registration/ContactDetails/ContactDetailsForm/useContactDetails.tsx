@@ -42,6 +42,7 @@ export default function useSaveContactDetails() {
         const response: any = await registerCharity(postData);
         result = response.data ? response.data : response.error.data;
       } else {
+        postData.ContactPerson.UUID = contactData.uniqueID;
         const response: any = await updateContactPerson(postData);
         result = response.data ? response.data : response.error.data;
       }
