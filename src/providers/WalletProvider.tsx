@@ -14,6 +14,8 @@ import {
   useState,
 } from "react";
 import { MetamaskProvider } from "./MetamaskProvider";
+import { Wallet, WalletConnectionType } from "./types";
+import getWallet from "./useGetWallet/useGetWallet";
 
 const localterra = {
   name: "localterra",
@@ -27,6 +29,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     Record<number, NetworkInfo>
   >({});
   const [defaultNetwork, setDefaultNetwork] = useState<NetworkInfo>(localterra);
+  const [wallet, setWallet] = useState<Wallet>();
 
   useEffect(() => {
     async function fetchChainIds() {
@@ -42,7 +45,9 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     fetchChainIds();
   }, []);
 
-  const connect = useCallback();
+  const connect = useCallback((connType: WalletConnectionType) => {
+    setWallet(getWallet(connType));
+  }, []);
 
   if (isLoading) {
     return (
@@ -51,7 +56,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
-    <WalletSuiteContext.Provider value={{ isLoading }}>
+    <WalletSuiteContext.Provider value={{ isLoading, connect, wallet }}>
       <TerraProvider
         defaultNetwork={defaultNetwork}
         walletConnectChainIds={walletConnectChainIds}
@@ -64,10 +69,11 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
 
 interface IWalletSuiteContext {
   isLoading: boolean;
-  connect: () => Promise<void>;
+  wallet?: Wallet;
+  connect: (connType: WalletConnectionType) => void;
 }
 
 export const WalletSuiteContext = createContext<IWalletSuiteContext>({
   isLoading: false,
-  connect: () => new Promise((r) => r),
+  connect: (_: WalletConnectionType) => {},
 });
