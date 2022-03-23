@@ -11,7 +11,7 @@ export default function CharityInfoNav() {
           overview
         </NavLink>
         <NavLink to={charity.endowment} className={styler}>
-          endowments
+          endowment
         </NavLink>
         <NavLink to={charity.programs} className={disabledClass}>
           programs
