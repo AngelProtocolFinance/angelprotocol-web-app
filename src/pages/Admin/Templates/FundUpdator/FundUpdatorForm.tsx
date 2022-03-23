@@ -7,6 +7,7 @@ import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 import useInitFundMembers from "./useInitFundMembers";
 import MemberItem from "./MemberItem";
 import MemberAdder from "./MemberAdder/MemberAdder";
+import Submitter from "../Submitter";
 
 export default function FundUpdatorForm() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =
@@ -24,12 +25,12 @@ export default function FundUpdatorForm() {
         wide
         required
       />
-      <Label text="Select fund to update" required />
+      <Label _required>Select fund to update</Label>
       <FundSelection<FV> fieldName="fundId" />
 
       {isFundSelected && (
         <>
-          <Label text="remove member" textColor="text-red-400 mt-6" />
+          <Label _classes="text-red-400 mt-6">Remove member</Label>
           <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
             {(isFundMembersLoading && (
               <Loader
@@ -54,18 +55,13 @@ export default function FundUpdatorForm() {
       )}
       {isFundSelected && (
         <>
-          <Label text="add member" textColor="text-green-400 mt-6" />
+          <Label _classes="text-green-400 mt-6">add member</Label>
           <MemberAdder />
         </>
       )}
-
-      <button
-        type="button"
-        onClick={updateFund}
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
-        Propose changes
-      </button>
+      <Submitter type="button" onClick={updateFund} _classes="mt-4">
+        Propose Changes
+      </Submitter>
     </form>
   );
 }

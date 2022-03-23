@@ -1,11 +1,12 @@
 import Loader from "components/Loader/Loader";
 import TextInput from "../../components/TextInput";
-import useInitMembers from "./useInitMembers";
+import Label from "../../components/Label";
+import Submitter from "../Submitter";
+import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
-import Label from "../../components/Label";
-import MemberAdder from "./MemberAdder/MemberAdder";
+import useInitMembers from "./useInitMembers";
 
 export default function MemberUpdateForm() {
   const { apCW4Members, isMembersLoading } = useInitMembers();
@@ -20,7 +21,7 @@ export default function MemberUpdateForm() {
         required
       />
 
-      <Label text="remove member" textColor="text-red-400" />
+      <Label _classes="text-red-400">remove member</Label>
       <div className="mb-7 p-3 rounded-md bg-light-grey shadow-inner-white-grey">
         {(isMembersLoading && (
           <Loader
@@ -37,16 +38,12 @@ export default function MemberUpdateForm() {
         )}
       </div>
 
-      <Label text="add member" textColor="text-green-400" />
+      <Label _classes="text-green-400">add member</Label>
       <MemberAdder />
 
-      <button
-        type="button"
-        onClick={updateMembers}
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
+      <Submitter type="button" onClick={updateMembers} _classes="mt-4">
         Propose changes
-      </button>
+      </Submitter>
     </div>
   );
 }

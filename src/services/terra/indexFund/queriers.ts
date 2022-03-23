@@ -34,3 +34,17 @@ export function useFundMembers(fundId: string) {
 
   return { fundMembers, isFundMembersLoading };
 }
+
+export function useTCAMembers() {
+  const { useTcaMembersQuery } = indexFund_api;
+  const { wallet, contract } = useContract<IF, T>(Indexfund);
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+  } = useTcaMembersQuery(contract.tcaMembers, {
+    skip: wallet?.network.chainID === chainIDs.localterra,
+  });
+
+  return { tcaMembers: data, isTCAMembersLoading: isLoading || isFetching };
+}

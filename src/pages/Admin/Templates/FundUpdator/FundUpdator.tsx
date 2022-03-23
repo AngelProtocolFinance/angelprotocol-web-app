@@ -12,7 +12,6 @@ export default function FundUpdator() {
       fundId: "",
     },
   });
-
   return (
     <FormProvider {...methods}>
       <FundUpdatorForm />

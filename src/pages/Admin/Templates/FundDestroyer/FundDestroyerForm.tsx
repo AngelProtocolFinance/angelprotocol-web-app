@@ -1,6 +1,7 @@
 import Label from "pages/Admin/components/Label";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
+import Submitter from "../Submitter";
 import { FundDestroyValues as FD } from "./fundDestroyerSchema";
 import useDestroyFund from "./useDestroyFund";
 
@@ -18,14 +19,11 @@ export default function FundDestroyerForm() {
         wide
         required
       />
-      <Label text="Fund to remove" required />
+      <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
-      <button
-        type="submit"
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
+      <Submitter type="submit" _classes="mt-4">
         Propose changes
-      </button>
+      </Submitter>
     </form>
   );
 }

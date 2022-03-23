@@ -1,5 +1,6 @@
 import Label from "pages/Admin/components/Label";
 import TextInput from "../../components/TextInput";
+import Submitter from "../Submitter";
 import EndowmentPreview from "./EndowmentPreview";
 import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 import StatusOptions from "./StatusOptions";
@@ -27,14 +28,11 @@ export default function EndowmentUpdateForm() {
         mono
       />
       <EndowmentPreview />
-      <Label text="New endowment Status" required />
+      <Label _required>New endowment status</Label>
       <StatusOptions />
-      <button
-        type="submit"
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
+      <Submitter type="submit" _classes="mt-4">
         Propose changes
-      </button>
+      </Submitter>
     </form>
   );
 }

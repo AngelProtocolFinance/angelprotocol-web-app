@@ -5,6 +5,7 @@ import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
 import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
+import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 
 export default function Proposer() {
@@ -19,6 +20,10 @@ export default function Proposer() {
         <Route path={proposal_types.create_fund} element={<FundCreator />} />
         <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
         <Route path={proposal_types.update_fund} element={<FundUpdator />} />
+        <Route
+          path={proposal_types.alliance_members}
+          element={<AllianceEditor />}
+        />
         <Route index element={<MemberUpdator />} />
       </Routes>
     </div>
@@ -36,6 +41,7 @@ function ProposalTypes() {
       <NavLink end to={proposal_types.index} className={styler}>
         Update group members
       </NavLink>
+
       <ProposalCategory title="Index fund" classes="mt-4" />
       <NavLink to={proposal_types.create_fund} className={styler}>
         Create Fund
@@ -46,6 +52,10 @@ function ProposalTypes() {
       <NavLink to={proposal_types.update_fund} className={styler}>
         Update Fund
       </NavLink>
+      <NavLink to={proposal_types.alliance_members} className={styler}>
+        Edit Alliance members
+      </NavLink>
+
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink to={proposal_types.change_endowment_status} className={styler}>
         Change Endowment Status
