@@ -15,15 +15,15 @@ export default function WalletSuite() {
 
   useWalletUpdator(provider.active);
 
-  const [connectOptionsShown, showConnectOptions] = useState(false);
-  const toggleConnectOptions = () => showConnectOptions((p) => !p);
-  const hideConnectOptions = () => showConnectOptions(false);
+  const [connectOptionsShown, setConnectOptionsShown] = useState(false);
+  const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
+  const hideConnectOptions = () => setConnectOptionsShown(false);
   const dismissHandler = useBackdropDismiss(hideConnectOptions);
 
   const isProviderActive = provider.active !== Providers.none;
   //close modal after connecting
   useEffect(() => {
-    isProviderActive && showConnectOptions(false);
+    isProviderActive && setConnectOptionsShown(false);
     //eslint-disable-next-line
   }, [isProviderActive]);
 
@@ -31,6 +31,7 @@ export default function WalletSuite() {
     if (escKeyPressed && connectOptionsShown) {
       hideConnectOptions();
     }
+    //eslint-disable-next-line
   }, [escKeyPressed, connectOptionsShown]);
 
   const handleRef = useCallback(
