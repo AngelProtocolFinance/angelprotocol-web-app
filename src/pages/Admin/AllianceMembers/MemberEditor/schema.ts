@@ -4,7 +4,7 @@ import { addressSchema } from "schemas/schemas";
 import { MemberDetails } from "services/aws/alliance/types";
 
 export type MemberEditValues = Omit<MemberDetails, "otherWallets"> & {
-  action: "edit" | "new";
+  type: "edit" | "new";
 };
 
 const memberAdderShape: PartialRecord<keyof MemberEditValues, Yup.AnySchema> = {

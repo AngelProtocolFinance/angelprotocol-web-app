@@ -8,7 +8,7 @@ export default function CharityInfoNav() {
     <nav className="relative max-w-full overflow-hidden scroll-hidden grid items-start justify-stretch lg:padded-container my-5 lg:mb-0 md:pl-0">
       <ScrollableTabs>
         <NavLink to={charity.overview} className={styler}>
-          overviews
+          overview
         </NavLink>
         <NavLink to={charity.endowment} className={styler}>
           endowments

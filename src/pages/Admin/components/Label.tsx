@@ -1,12 +1,20 @@
-export default function Label(props: {
-  text: string;
-  textColor?: string;
-  required?: true;
-}) {
-  const { textColor = "text-angel-grey", text } = props;
+import React from "react";
+export default function Label(
+  props: React.HTMLProps<HTMLParagraphElement> & {
+    _textColor?: string;
+    _classes?: string;
+    _required?: true;
+  }
+) {
+  const { children, _classes, _required, ...restProps } = props;
   return (
-    <p className={`mb-2 text-xs font-heading uppercase font-bold ${textColor}`}>
-      {text} {props.required && <span className="text-red-400">*</span>}
+    <p
+      {...restProps}
+      className={`mb-2 text-xs font-heading uppercase font-bold ${
+        _classes || "text-angel-grey"
+      }`}
+    >
+      {children} {_required && <span className="text-red-400">*</span>}
     </p>
   );
 }

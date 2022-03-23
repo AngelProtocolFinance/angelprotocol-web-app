@@ -1,11 +1,12 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import TextInput from "../../components/TextInput";
 import Label from "../../components/Label";
+import Submitter from "../Submitter";
 import { FundCreatorValues as V } from "./fundCreatorSchema";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import useCreateFund from "./useCreateFund";
 import { INIT_SPLIT } from "./FundCreator";
-import { ErrorMessage } from "@hookform/error-message";
 
 export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
@@ -34,16 +35,12 @@ export default function FundCreatorForm() {
       <DateInput />
       <Slider />
       <CheckInput />
-      <Label text="add members" textColor="text-green-400" />
+      <Label _classes="text-green-400">Add members</Label>
       <MemberAdder />
 
-      <button
-        type="button"
-        onClick={createFund}
-        className="justify-self-center text-blue-accent hover:text-angel-blue uppercase text-white font-extrabold mt-4"
-      >
+      <Submitter type="button" onClick={createFund} _classes="mt-4">
         Propose changes
-      </button>
+      </Submitter>
     </div>
   );
 }
