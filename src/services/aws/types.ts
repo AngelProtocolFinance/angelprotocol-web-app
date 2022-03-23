@@ -9,7 +9,6 @@ export type ContactDetailsData = {
     CharityName: string;
   };
   ContactPerson: {
-    UUID?: string;
     FirstName: string;
     LastName: string;
     Email: string;
