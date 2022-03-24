@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_WALLET, WalletConnectionType, WalletSetters } from "../types";
 import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
@@ -14,7 +14,7 @@ export default function useWallets(): WalletSetters {
   const metamaskSetters = useCreateMetamaskWallet();
 
   useEffect(() => {
-    if (!!walletSetters || metamaskSetters.isLoading) {
+    if (metamaskSetters.isLoading) {
       return;
     }
 
@@ -33,18 +33,19 @@ export default function useWallets(): WalletSetters {
     //   setConnected(true);
     //   setWallet(terraSetters.wallet)
     // }
-  }, [walletSetters, metamaskSetters]);
+  }, [metamaskSetters]);
 
   const connect = useCallback(
     async (connType: WalletConnectionType) => {
       if (!walletSetters) {
         throw Error("Wallets not yet initialized");
       }
+      setLoading(true);
       const setters = walletSetters[connType];
       await setters.connect();
       setCurrentConnectionType(connType);
-      setLoading(setters.isLoading);
-      setConnected(setters.isConnected);
+      setLoading(false);
+      setConnected(true);
     },
     [walletSetters]
   );
@@ -58,18 +59,15 @@ export default function useWallets(): WalletSetters {
     }
     const setters = walletSetters[currentConnectionType];
     await setters.disconnect();
-    setLoading(setters.isLoading);
-    setConnected(setters.isConnected);
+    setLoading(false);
+    setConnected(false);
     setCurrentConnectionType(undefined);
   }, [walletSetters, currentConnectionType]);
 
-  const wallet = useMemo(
-    () =>
-      !!walletSetters && currentConnectionType
-        ? walletSetters[currentConnectionType].wallet
-        : DEFAULT_WALLET,
-    [walletSetters, currentConnectionType]
-  );
+  const wallet =
+    !!walletSetters && currentConnectionType
+      ? walletSetters[currentConnectionType].wallet
+      : DEFAULT_WALLET;
 
   return { wallet, connect, disconnect, isLoading, isConnected };
 }
