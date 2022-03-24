@@ -26,7 +26,7 @@
   "scripts": {
     "build": "react-app-rewired build",
     "start": "react-app-rewired start",
-    "test": "craco test",
+    "test": "react-app-rewired test --colors",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "serve-build": "yarn dlx serve -s build -p 4200"

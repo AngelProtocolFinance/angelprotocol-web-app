@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { ReactNode } from "react";
-import { MemoryRouter, Route } from "react-router-dom";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import {
   StaticWalletProvider,
@@ -32,19 +32,17 @@ function Wrapper(props: { children: ReactNode }) {
 
 describe("<App/> renders correctly", () => {
   window.scrollTo = jest.fn();
-
   test("App renders marketplace as default route", async () => {
     render(
       <Wrapper>
-        <Route path={site.app} component={App} />
+        <Routes>
+          <Route path={site.app + "/*"} element={<App />} />
+        </Routes>
       </Wrapper>
     );
 
-    // check for banner
-    const giveOnce = "GIVE ONCE,";
-    const giveForever = "GIVE FOREVER.";
-    expect(screen.queryByText(giveOnce)).toBeInTheDocument();
-    expect(screen.queryByText(giveForever)).toBeInTheDocument();
+    expect(screen.queryByText(/ANGEL PROTOCOL SUPPORTS/)).toBeInTheDocument();
+    expect(screen.queryByText(/DISPLACED UKRAINIANS/)).toBeInTheDocument();
     const navItem = await screen.findByText(/Marketplace/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem.getAttribute("aria-current")).toBe("page");
@@ -55,7 +53,9 @@ describe("<App /> routing works correctly", () => {
   beforeEach(() => {
     render(
       <Wrapper>
-        <Route path={site.app} component={App} />
+        <Routes>
+          <Route path={site.app + "/*"} element={<App />} />
+        </Routes>
       </Wrapper>
     );
   });
