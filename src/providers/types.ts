@@ -24,7 +24,18 @@ export type Wallet = {
 export type WalletSetters = {
   isLoading: boolean;
   isConnected: boolean;
-  wallet?: Wallet;
-  connect: (...args: any[]) => Promise<any>;
+  wallet: Wallet;
+  connect: (...args: any[]) => Promise<void>;
   disconnect: () => Promise<void>;
+};
+
+export const DEFAULT_WALLET: Wallet = {
+  address: "",
+  chainId: chainIDs.mainnet,
+  coins: [],
+  displayCoin: { amount: 0, denom: denoms.uluna },
+  icon: "",
+  sendDonation: () => new Promise((r) => r),
+  sendTransaction: () => new Promise((r) => r),
+  supported_denoms: [],
 };

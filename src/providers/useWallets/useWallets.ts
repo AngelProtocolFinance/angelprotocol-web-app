@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
-import { WalletConnectionType, WalletSetters } from "../types";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { DEFAULT_WALLET, WalletConnectionType, WalletSetters } from "../types";
 import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
 type WalletSettersRecord = Record<WalletConnectionType, WalletSetters>;
 
-export default function useWallets(): Omit<WalletSetters, "wallet"> {
+export default function useWallets(): WalletSetters {
   const [isLoading, setLoading] = useState(true);
   const [isConnected, setConnected] = useState(false);
   const [walletSetters, setWalletSetters] = useState<WalletSettersRecord>();
@@ -23,6 +23,16 @@ export default function useWallets(): Omit<WalletSetters, "wallet"> {
       terra: metamaskSetters,
     });
     setLoading(false);
+
+    // safe to do, since only one wallet will be connected at a time
+    if (metamaskSetters.isConnected) {
+      setConnected(true);
+      setCurrentConnectionType("metamask");
+    }
+    // else if (terraSetters.isConnected) {
+    //   setConnected(true);
+    //   setWallet(terraSetters.wallet)
+    // }
   }, [walletSetters, metamaskSetters]);
 
   const connect = useCallback(
@@ -35,7 +45,6 @@ export default function useWallets(): Omit<WalletSetters, "wallet"> {
       setCurrentConnectionType(connType);
       setLoading(setters.isLoading);
       setConnected(setters.isConnected);
-      return setters.wallet;
     },
     [walletSetters]
   );
@@ -51,7 +60,16 @@ export default function useWallets(): Omit<WalletSetters, "wallet"> {
     await setters.disconnect();
     setLoading(setters.isLoading);
     setConnected(setters.isConnected);
+    setCurrentConnectionType(undefined);
   }, [walletSetters, currentConnectionType]);
 
-  return { connect, disconnect, isLoading, isConnected };
+  const wallet = useMemo(
+    () =>
+      !!walletSetters && currentConnectionType
+        ? walletSetters[currentConnectionType].wallet
+        : DEFAULT_WALLET,
+    [walletSetters, currentConnectionType]
+  );
+
+  return { wallet, connect, disconnect, isLoading, isConnected };
 }

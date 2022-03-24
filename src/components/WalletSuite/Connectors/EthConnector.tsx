@@ -1,7 +1,7 @@
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetModal } from "components/Modal/Modal";
 import { deviceType, DeviceType } from "helpers/deviceType";
-import useWallet from "hooks/useWallet";
+import useWalletContext from "hooks/useWalletContext";
 import { RejectMetamaskLogin } from "providers/useWallets/useCreateMetamaskWallet/useEthereum";
 import { Dwindow } from "services/provider/types";
 import { useGetter } from "store/accessors";
@@ -12,7 +12,7 @@ const dwindow = window as Dwindow;
 
 export default function EthConnector() {
   const { isUpdating } = useGetter((state) => state.wallet);
-  const { connect } = useWallet();
+  const { connect } = useWalletContext();
   const { showModal } = useSetModal();
 
   async function handleClick() {

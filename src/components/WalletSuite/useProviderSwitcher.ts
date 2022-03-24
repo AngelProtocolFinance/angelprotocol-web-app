@@ -13,7 +13,7 @@ import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
-import useWallet from "hooks/useWallet";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -26,7 +26,7 @@ export default function useProviderSwitcher() {
 
   //other states
   const { isConnected: isMetamaskConnected, isLoading: isMetamaskLoading } =
-    useWallet();
+    useWalletContext();
   // const { connected: ethConnected } = useGetter((state) => state.metamask);
 
   const providerStates: ProviderStates = [

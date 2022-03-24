@@ -12,7 +12,7 @@ import { setStage } from "services/transaction/transactionSlice";
 import { StageUpdator, Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
 import { DonateValues } from "../../../components/Transactors/Donater/types";
-import { Wallet, WalletSetters } from "../../types";
+import { DEFAULT_WALLET, Wallet, WalletSetters } from "../../types";
 import useEthereum from "./useEthereum";
 
 type EthDonateArgs = {
@@ -21,10 +21,11 @@ type EthDonateArgs = {
 };
 
 export default function useCreateMetamaskWallet(): WalletSetters {
+  const [isLoading, setLoading] = useState(true);
   const dispatch = useSetter();
   const provider = useGetter((state) => state.provider);
   const { setters, state } = useEthereum();
-  const [wallet, setWallet] = useState<Wallet>();
+  const [wallet, setWallet] = useState(DEFAULT_WALLET);
 
   useEffect(() => {
     async function create() {
@@ -109,16 +110,17 @@ export default function useCreateMetamaskWallet(): WalletSetters {
       };
 
       setWallet(wallet);
+      setLoading(false);
     }
 
     create();
   }, [dispatch, provider.active]);
 
-  const ret: WalletSetters = useMemo(
+  const walletSetters: WalletSetters = useMemo(
     () => ({
       wallet,
       isConnected: state.connected,
-      isLoading: state.loading,
+      isLoading: state.loading || isLoading,
       connect: setters.connect,
       disconnect: setters.disconnect,
     }),
@@ -128,8 +130,9 @@ export default function useCreateMetamaskWallet(): WalletSetters {
       state.loading,
       setters.connect,
       setters.disconnect,
+      isLoading,
     ]
   );
 
-  return ret;
+  return walletSetters;
 }

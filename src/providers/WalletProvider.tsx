@@ -1,35 +1,12 @@
 import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
-import {
-  createContext,
-  PropsWithChildren,
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
-import { Wallet, WalletConnectionType } from "./types";
+import { createContext, PropsWithChildren, useCallback, useMemo } from "react";
+import { DEFAULT_WALLET, WalletConnectionType, WalletSetters } from "./types";
 import useChainOptions from "./useChainOptions";
 import useWallets from "./useWallets";
 
-interface IWalletContext {
-  isLoading: boolean;
-  isConnected: boolean;
-  wallet: Wallet;
+type IWalletContext = Omit<WalletSetters, "connect"> & {
   connect: (connType: WalletConnectionType) => Promise<void>;
-  disconnect: () => Promise<void>;
-}
-
-const DEFAULT_WALLET: Wallet = {
-  address: "",
-  chainId: chainIDs.mainnet,
-  coins: [],
-  displayCoin: { amount: 0, denom: denoms.uluna },
-  icon: "",
-  sendDonation: () => new Promise((r) => r),
-  sendTransaction: () => new Promise((r) => r),
-  supported_denoms: [],
 };
 
 export const WalletContext = createContext<IWalletContext>({
@@ -41,8 +18,8 @@ export const WalletContext = createContext<IWalletContext>({
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const [wallet, setWallet] = useState(DEFAULT_WALLET);
   const {
+    wallet,
     connect,
     disconnect,
     isLoading: isLoadingWallets,
@@ -53,24 +30,19 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   const connectWallet = useCallback(
     async (connType: WalletConnectionType) => {
       if (isLoadingWallets) {
-        console.log("loading wallets");
         return;
       }
 
-      const connectedWallet = await connect(connType);
-      setWallet(connectedWallet);
+      await connect(connType);
     },
     [connect, isLoadingWallets]
   );
 
   const disconnectWallet = useCallback(async () => {
     if (isLoadingWallets) {
-      console.log("loading wallets");
       return;
     }
-
     await disconnect();
-    setWallet(DEFAULT_WALLET);
   }, [disconnect, isLoadingWallets]);
 
   const isLoading = useMemo(
