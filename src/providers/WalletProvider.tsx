@@ -12,14 +12,14 @@ import { Wallet, WalletConnectionType } from "./types";
 import useChainOptions from "./useChainOptions";
 import useWallets from "./useWallets";
 
-interface IWalletSuiteContext {
+interface IWalletContext {
   isLoading: boolean;
   wallet?: Wallet;
   connect: (connType: WalletConnectionType) => Promise<void>;
   disconnect: () => Promise<void>;
 }
 
-export const WalletSuiteContext = createContext<IWalletSuiteContext>({
+export const WalletContext = createContext<IWalletContext>({
   isLoading: false,
   connect: (_: WalletConnectionType) => new Promise((r) => r),
   disconnect: () => new Promise((r) => r),
@@ -65,7 +65,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
-    <WalletSuiteContext.Provider
+    <WalletContext.Provider
       value={{
         wallet,
         isLoading,
@@ -76,6 +76,6 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
       <TerraProvider {...chainOptions}>
         <MetamaskProvider>{props.children}</MetamaskProvider>
       </TerraProvider>
-    </WalletSuiteContext.Provider>
+    </WalletContext.Provider>
   );
 }
