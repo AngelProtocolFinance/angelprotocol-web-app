@@ -11,13 +11,21 @@ import { app, site } from "constants/routes";
 import { Provider } from "react-redux";
 import { store } from "store/store";
 import userEvent from "@testing-library/user-event";
+import Market from "pages/Market/Market";
+import Governance from "pages/Governance/Governance";
+import Leaderboard from "pages/Leaderboard/Leaderboard";
+
+// define initial routes
+const routes = [
+  `${site.app}`,
+  `${site.app}/${app.marketplace}`,
+  `${site.app}/${app.govern}`,
+  `${site.app}/${app.leaderboard}`,
+];
 
 function Wrapper(props: { children: ReactNode }) {
   return (
-    <MemoryRouter
-      initialEntries={[`${site.app}/${app.index}`]}
-      initialIndex={0}
-    >
+    <MemoryRouter initialEntries={routes} initialIndex={0}>
       <Provider store={store}>
         <StaticWalletProvider
           defaultNetwork={testnet}
@@ -36,25 +44,34 @@ describe("<App/> renders correctly", () => {
     render(
       <Wrapper>
         <Routes>
-          <Route path={site.app + "/*"} element={<App />} />
+          <Route path={site.app} element={<App />}>
+            <Route path={app.marketplace} element={<Market />} />
+          </Route>
         </Routes>
       </Wrapper>
     );
 
-    expect(screen.queryByText(/ANGEL PROTOCOL SUPPORTS/)).toBeInTheDocument();
-    expect(screen.queryByText(/DISPLACED UKRAINIANS/)).toBeInTheDocument();
+    // check for ukrain banner
+    const support = "ANGEL PROTOCOL SUPPORTS";
+    const ukraine = "DISPLACED UKRAINIANS.";
+    expect(screen.queryByText(support)).toBeInTheDocument();
+    expect(screen.queryByText(ukraine)).toBeInTheDocument();
     const navItem = await screen.findByText(/Marketplace/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem.getAttribute("aria-current")).toBe("page");
   });
 });
 
-describe("<App /> routing works correctly", () => {
+describe("<App /> routes to Gov and Leaderboard pages", () => {
   beforeEach(() => {
     render(
       <Wrapper>
         <Routes>
-          <Route path={site.app + "/*"} element={<App />} />
+          <Route path={site.app} element={<App />}>
+            <Route path={app.marketplace} element={<Market />} />
+            <Route path={app.govern} element={<Governance />} />
+            <Route path={app.leaderboard} element={<Leaderboard />} />
+          </Route>
         </Routes>
       </Wrapper>
     );
