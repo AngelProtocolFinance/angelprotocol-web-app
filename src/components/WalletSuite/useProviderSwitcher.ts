@@ -54,9 +54,6 @@ export default function useProviderSwitcher() {
     } else {
       dispatch(setActiveProvider(Providers.none));
     }
-    return () => {
-      dispatch(setActiveProvider(Providers.none));
-    };
     //eslint-disable-next-line
   }, [activeProvider]);
 
