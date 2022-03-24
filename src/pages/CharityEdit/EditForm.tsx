@@ -9,7 +9,6 @@ import useEditForm from "./useEditForm";
 
 export default function EditForm() {
   const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();
-
   return (
     <form className="max-w-3xl w-full" onSubmit={updateProfile}>
       <Link
