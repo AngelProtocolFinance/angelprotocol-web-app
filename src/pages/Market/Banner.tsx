@@ -2,7 +2,7 @@ export default function Banner() {
   return (
     <div className="grid lg:grid-cols-2 mb-8 mt-4 gap-5">
       <img
-        src="https://charity-profile-images.s3.amazonaws.com/logo/Ukraine-2109x1406.png"
+        src="https://charity-profile-images.s3.amazonaws.com/logo/Ukraine-2109x1406.jpg"
         alt=""
         className="rounded-lg"
       />
