@@ -12,6 +12,19 @@ import { Wallet, WalletConnectionType } from "./types";
 import useChainOptions from "./useChainOptions";
 import useWallets from "./useWallets";
 
+interface IWalletSuiteContext {
+  isLoading: boolean;
+  wallet?: Wallet;
+  connect: (connType: WalletConnectionType) => Promise<void>;
+  disconnect: () => Promise<void>;
+}
+
+export const WalletSuiteContext = createContext<IWalletSuiteContext>({
+  isLoading: false,
+  connect: (_: WalletConnectionType) => new Promise((r) => r),
+  disconnect: () => new Promise((r) => r),
+});
+
 export function WalletProvider(props: PropsWithChildren<{}>) {
   const [wallet, setWallet] = useState<Wallet>();
   const { connect, disconnect, isLoading: isLoadingWallets } = useWallets();
@@ -66,16 +79,3 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     </WalletSuiteContext.Provider>
   );
 }
-
-interface IWalletSuiteContext {
-  isLoading: boolean;
-  wallet?: Wallet;
-  connect: (connType: WalletConnectionType) => Promise<void>;
-  disconnect: () => Promise<void>;
-}
-
-export const WalletSuiteContext = createContext<IWalletSuiteContext>({
-  isLoading: false,
-  connect: (_: WalletConnectionType) => new Promise((r) => r),
-  disconnect: () => new Promise((r) => r),
-});
