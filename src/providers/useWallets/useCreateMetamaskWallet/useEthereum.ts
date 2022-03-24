@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DeviceType, deviceType } from "../../../helpers/deviceType";
 import { Dwindow } from "../../../services/provider/types";
 import {
@@ -17,6 +17,32 @@ export default function useEthereum() {
   const [connected, setConnected] = useState(false);
   const [address, setAddress] = useState("");
 
+  //useful when user changes account internally via metamask
+  const handleAccountsChange: AccountChangeHandler = useCallback(
+    (accounts) => {
+      //requestAccounts(new connection) will set the address so no need to set again
+      if (accounts.length > 0 && !address) {
+        setAddress(accounts[0]);
+        //if no account is found, means user disconnected
+      } else {
+        getEthereum()?.removeListener(
+          EIP1193Events.accountsChanged,
+          handleAccountsChange
+        );
+        setConnected(false);
+        saveUserAction("disconnect");
+      }
+    },
+    [address]
+  );
+
+  const detachAccountChangeHandler = useCallback(() => {
+    getEthereum()?.removeListener(
+      EIP1193Events.accountsChanged,
+      handleAccountsChange
+    );
+  }, [handleAccountsChange]);
+
   useEffect(() => {
     if (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum) {
       setConnected(true);
@@ -31,59 +57,36 @@ export default function useEthereum() {
     //eslint-disable-next-line
   }, []);
 
-  async function requestAccess(isNewConnection = false) {
-    const ethereum = getEthereum();
-    if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
-      attachAccountChangeHandler(ethereum);
-      const { result: accounts = [] } = await ethereum.send(
-        EIP1193Methods.eth_requestAccounts,
-        []
-      );
+  const requestAccess = useCallback(
+    async (isNewConnection = false) => {
+      const ethereum = getEthereum();
+      if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
+        ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
+        const { result: accounts = [] } = await ethereum.send(
+          EIP1193Methods.eth_requestAccounts,
+          []
+        );
 
-      setConnected(true);
-      setAddress(accounts[0]);
-      setLoading(false);
-    } else {
-      setLoading(false);
-    }
-  }
+        setConnected(true);
+        setAddress(accounts[0]);
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    },
+    [handleAccountsChange, shouldReconnect, connected]
+  );
 
-  //attachers/detachers
-  const attachAccountChangeHandler = (ethereum: Ethereum) => {
-    ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
-  };
-  const detachAccountChangeHandler = () => {
-    getEthereum()?.removeListener(
-      EIP1193Events.accountsChanged,
-      handleAccountsChange
-    );
-  };
-
-  //event listeners
-
-  //useful when user changes account internally via metamask
-  const handleAccountsChange: AccountChangeHandler = (accounts) => {
-    //requestAccounts(new connection) will set the address so no need to set again
-    if (accounts.length > 0 && !address) {
-      setAddress(accounts[0]);
-      //if no account is found, means user disconnected
-    } else {
-      detachAccountChangeHandler();
-      setConnected(false);
-      saveUserAction("disconnect");
-    }
-  };
-
-  async function disconnect() {
+  const disconnect = useCallback(async () => {
     if (!connected) return;
     const ethereum = getEthereum();
     if (!ethereum) return;
     detachAccountChangeHandler();
     setConnected(false);
     saveUserAction("disconnect");
-  }
+  }, [detachAccountChangeHandler, connected]);
 
-  async function connect() {
+  const connect = useCallback(async () => {
     try {
       setLoading(true);
       await requestAccess(true);
@@ -97,7 +100,7 @@ export default function useEthereum() {
         throw new Error("Uknown error occured");
       }
     }
-  }
+  }, [requestAccess]);
 
   return {
     setters: { connect, disconnect },
@@ -106,7 +109,9 @@ export default function useEthereum() {
 }
 
 const ActionKey = "ethereum_pref";
+
 type Action = "connect" | "disconnect";
+
 function saveUserAction(action: Action) {
   localStorage.setItem(ActionKey, action);
 }
