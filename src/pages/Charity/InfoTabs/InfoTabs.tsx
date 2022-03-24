@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { charity } from "constants/routes";
 import { EndowmentInfo } from "./EndowmentInfo";
 import Overview from "./Overview";
