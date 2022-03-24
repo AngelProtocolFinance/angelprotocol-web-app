@@ -1,5 +1,7 @@
 import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
+import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
 import {
   createContext,
   PropsWithChildren,
@@ -14,12 +16,24 @@ import useWallets from "./useWallets";
 interface IWalletContext {
   isLoading: boolean;
   isConnected: boolean;
-  wallet?: Wallet;
+  wallet: Wallet;
   connect: (connType: WalletConnectionType) => Promise<void>;
   disconnect: () => Promise<void>;
 }
 
+const DEFAULT_WALLET: Wallet = {
+  address: "",
+  chainId: chainIDs.mainnet,
+  coins: [],
+  displayCoin: { amount: 0, denom: denoms.uluna },
+  icon: "",
+  sendDonation: () => new Promise((r) => r),
+  sendTransaction: () => new Promise((r) => r),
+  supported_denoms: [],
+};
+
 export const WalletContext = createContext<IWalletContext>({
+  wallet: DEFAULT_WALLET,
   isLoading: false,
   isConnected: false,
   connect: (_: WalletConnectionType) => new Promise((r) => r),
@@ -27,7 +41,7 @@ export const WalletContext = createContext<IWalletContext>({
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const [wallet, setWallet] = useState<Wallet>();
+  const [wallet, setWallet] = useState(DEFAULT_WALLET);
   const {
     connect,
     disconnect,
@@ -56,7 +70,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     }
 
     await disconnect();
-    setWallet(undefined);
+    setWallet(DEFAULT_WALLET);
   }, [disconnect, isLoadingWallets]);
 
   const isLoading = useMemo(
