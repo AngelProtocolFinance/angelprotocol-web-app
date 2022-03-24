@@ -1,12 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { Wallet, WalletConnectionType } from "../types";
+import { WalletConnectionType, WalletSetters } from "../types";
 import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
-type WalletSetters = {
-  wallet: Wallet;
-  connect: (...args: any[]) => Promise<void>;
-  disconnect: (...args: any[]) => Promise<void>;
-};
 type WalletSettersRecord = Record<WalletConnectionType, WalletSetters>;
 
 export default function useWallets() {

@@ -22,7 +22,7 @@ export type Wallet = {
 };
 
 export type WalletSetters = {
-  wallet: Wallet;
+  wallet?: Wallet;
   connect: (...args: any[]) => Promise<void>;
-  disconnect: (...args: any[]) => Promise<void>;
+  disconnect: () => Promise<void>;
 };
