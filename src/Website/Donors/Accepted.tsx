@@ -33,13 +33,13 @@ export default function Accepted() {
             Direction.fromRight
           )} justify-self-center lg:justify-self-start max-w-2xl mt-5 lg:mt-0 lg:pl-2`}
         >
-          <h3 className="uppercase text-2xl sm:text-3xl font-bold text-white font-body mb-3 relative transition-all">
+          <h3 className="text-center uppercase text-2xl sm:text-3xl font-bold text-white font-body mb-3 relative transition-all">
             Accepted Cryptocurrency
           </h3>
-          <p className="text-white-grey mb-3 text-xl">
+          <p className="text-center text-white-grey mb-3 text-xl">
             Angel Protocol currently accepts donations to charitable
-            organizations in TerraUSD <span className="font-bold">UST</span>.
-            Our team is working to offer donation capability for other
+            organizations in multiple cryptocurrencies. Our team is working to
+            expand our donation capabilities to include even more
             cryptocurrencies.
           </p>
         </article>
