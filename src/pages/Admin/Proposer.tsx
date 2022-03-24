@@ -37,9 +37,9 @@ const styler = createNavLinkStyler(
 function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
-      <ProposalCategory title="AP CW4" />
+      <ProposalCategory title="Admin group" />
       <NavLink end to={proposal_types.index} className={styler}>
-        Update AP Members
+        Update group members
       </NavLink>
 
       <ProposalCategory title="Index fund" classes="mt-4" />

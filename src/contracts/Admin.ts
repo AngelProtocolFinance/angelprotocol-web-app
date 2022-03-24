@@ -7,7 +7,8 @@ import Contract from "./Contract";
 import { EmbeddedWasmMsg, Vote } from "./types";
 import { sc } from "constants/sc";
 
-export default class APAdmin extends Contract {
+export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
+export default class Admin extends Contract {
   cw4: string;
   cw3: string;
 
@@ -20,12 +21,15 @@ export default class APAdmin extends Contract {
   proposal: (arg: number) => CQA;
   voteList: (arg: number) => CQA;
   voter: CQA;
-  config: CQA;
+  cw3Config: CQA;
 
-  constructor(wallet?: ConnectedWallet) {
+  constructor(cws: CWContracts, wallet?: ConnectedWallet) {
     super(wallet);
-    this.cw4 = contracts[this.chainID][sc.apCW4];
-    this.cw3 = contracts[this.chainID][sc.apCW3];
+    //make sure to use query skips on empty addresses
+    this.cw4 =
+      cws === "apTeam" ? contracts[this.chainID][sc.apCW4] : cws.cw4 || "";
+    this.cw3 =
+      cws === "apTeam" ? contracts[this.chainID][sc.apCW3] : cws.cw3 || "";
 
     //query args CW4
     this.members = {
@@ -39,7 +43,7 @@ export default class APAdmin extends Contract {
     };
 
     //query args CW3
-    this.config = {
+    this.cw3Config = {
       address: this.cw3,
       msg: { config: {} },
     };
@@ -122,16 +126,5 @@ export default class APAdmin extends Contract {
         vote,
       },
     });
-  }
-}
-
-export type CAaddresses = { cw3?: string; cw4?: string };
-export class CharityAdmin extends APAdmin {
-  constructor(addresses: CAaddresses, wallet?: ConnectedWallet) {
-    //caution to use this contract to the extent of address provided
-    //e.g don't query cw4 if you only provide cw3 address and vice versa
-    super(wallet);
-    this.cw3 = addresses.cw3 || "";
-    this.cw4 = addresses.cw4 || "";
   }
 }

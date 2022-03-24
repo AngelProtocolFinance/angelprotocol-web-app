@@ -2,8 +2,8 @@ import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
 import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
+import { HoldingSummary } from "../types";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
-import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
@@ -22,27 +22,27 @@ export default function Summary(props: HoldingSummary) {
     props.type === "liquid" ? "Liquid Account" : "Principal Account";
 
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 text-white text-opacity-80">
-      <h3 className="text-lg font-bold uppercase flex items-center justify-end">
-        <span>{title}</span>
+    <div className="grid grid-rows-a1a rounded-md text-white text-opacity-80 shadow-inner bg-white bg-opacity-10 p-4">
+      <h3 className="text-lg w-full font-bold uppercase flex items-center justify-self-start">
         <FaCog
           size={16}
-          className="ml-1 text-grey-accent"
+          className="mr-1 text-grey-accent"
           title="Coming Soon!"
         />
+        <span>{title}</span>
+        {props.opener !== undefined && (
+          <button
+            disabled={!props.isOwner}
+            onClick={props.opener}
+            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-xs font-heading"
+          >
+            withdraw
+          </button>
+        )}
       </h3>
-      <p className="text-3xl md:text-4xl font-heading mt-8 text-right">
+      <p className="font-bold text-3xl md:text-4xl font-heading mt-4 mb-2 pb-4 border-b border-opacity-10 text-center">
         $ {toCurrency(total_holding)}
       </p>
-      {props.opener !== undefined && (
-        <button
-          disabled={!props.isOwner}
-          onClick={props.opener}
-          className="mt-2 mb-4 bg-blue-accent disabled:bg-grey-accent hover:bg-angel-blue bg-opacity-60 px-2 py-1 rounded-md uppercase text-xs  border-2 border-opacity-20 font-heading self-end"
-        >
-          withdraw
-        </button>
-      )}
 
       {/**TODO: render this distribution based of props.holdings */}
       <table className="mt-auto w-full">

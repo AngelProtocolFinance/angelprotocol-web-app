@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Member } from "services/terra/admin/types";
@@ -8,16 +7,16 @@ import { admin, tags } from "services/terra/tags";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import { app, site } from "constants/routes";
 import { useGetter, useSetter } from "store/accessors";
-import APAdmin from "contracts/APAdmin";
+import Admin from "contracts/Admin";
+import { proposalSuccessLink } from "../constants";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
-  const navigate = useNavigate();
-  const wallet = useConnectedWallet();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
+  const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -50,7 +49,7 @@ export default function useUpdateMembers() {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new APAdmin(wallet);
+    const contract = new Admin(cwContracts, wallet);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove
@@ -74,7 +73,8 @@ export default function useUpdateMembers() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => navigate(`${site.app}/${app.admin}`),
+        successLink: proposalSuccessLink,
+        successMessage: "Group member update proposal submitted",
       })
     );
     showModal(TransactionPromp, {});

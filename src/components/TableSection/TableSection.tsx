@@ -9,11 +9,7 @@ export default function TableSection(props: HeadProps | BodyProps) {
           onClick={props.onRowSelect && props.onRowSelect(index)}
           className={
             props.rowClass +
-            ` ${
-              props.selectedRow === index
-                ? "font-extrabold text-angel-blue"
-                : ""
-            }`
+            ` ${props.selectedRow === index ? props.selectedClass || "" : ""}`
           }
         >
           {child}
@@ -44,6 +40,7 @@ type HeadProps = {
   rowClass: string;
   onRowSelect?: never;
   selectedRow?: never;
+  selectedClass?: never;
 };
 
 type BodyProps = {
@@ -52,4 +49,5 @@ type BodyProps = {
   rowClass: string;
   onRowSelect?: (rowIndex: number) => () => void;
   selectedRow?: number;
+  selectedClass?: string;
 };

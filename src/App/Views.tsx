@@ -5,7 +5,7 @@ import Loader from "components/Loader/Loader";
 import Market from "pages/Market/Market";
 import CharityEdit from "pages/CharityEdit/CharityEdit";
 import useScrollTop from "hooks/useScrollTop";
-import Donation from "pages/Donations/Donation";
+import Donations from "pages/Donations/Donations";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
@@ -13,7 +13,9 @@ const TCA = lazy(() => import("pages/TCA/TCA"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
 const Auction = lazy(() => import("pages/LBP/Auction"));
-const Endowment = lazy(() => import("pages/Endowment/Endowment"));
+const EndowmentAdmin = lazy(
+  () => import("pages/EndowmentAdmin/EndowmentAdmin")
+);
 const Charity = lazy(() => import("pages/Charity/Charity"));
 
 export default function Views() {
@@ -42,8 +44,11 @@ export default function Views() {
         <Route path={`${app.govern}/*`} element={<Governance />} />
         <Route path={`${app.admin}/*`} element={<Admin />} />
         <Route path={`${app.auction}`} element={<Auction />} />
-        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
-        <Route path={`${app.donation}/:address`} element={<Donation />} />
+        <Route
+          path={`${app.endowment_admin}/:address/*`}
+          element={<EndowmentAdmin />}
+        />
+        <Route path={`${app.donations}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}
           element={<Navigate replace to={`${app.marketplace}`} />}

@@ -2,27 +2,11 @@ import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
-import {
-  Lookup,
-  Profile,
-  CategorizedProfiles,
-  EditableProfileAttr,
-} from "./types";
+import { Profile, CategorizedProfiles, EditableProfileAttr } from "./types";
 import { AWSQueryRes } from "services/aws/types";
 
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    lookup: builder.query<Lookup, boolean>({
-      query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
-      transformResponse: (res: AWSQueryRes<Profile[]>) => {
-        const _lookup: Lookup = {};
-        res.Items.forEach((endowment) => {
-          _lookup[endowment.charity_owner] = endowment.endowment_address;
-        });
-        return _lookup;
-      },
-    }),
-
     profile: builder.query<Profile, string>({
       providesTags: [{ type: tags.cha, id: cha.profile }],
       query: (charity_address) => `endowments/info/${charity_address}`,
@@ -82,9 +66,5 @@ export const endowments_api = aws.injectEndpoints({
     }),
   }),
 });
-export const {
-  useLookupQuery,
-  useProfileQuery,
-  useProfilesQuery,
-  useUpdateProfileMutation,
-} = endowments_api;
+export const { useProfileQuery, useProfilesQuery, useUpdateProfileMutation } =
+  endowments_api;

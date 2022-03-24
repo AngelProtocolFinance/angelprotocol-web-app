@@ -3,6 +3,7 @@ import { tags, admin } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import {
+  CW3Config,
   InquiredMember,
   Member,
   MemberRes,
@@ -14,6 +15,7 @@ import {
 
 export const admin_api = terra.injectEndpoints({
   endpoints: (builder) => ({
+    //CW4
     members: builder.query<Member[], ContractQueryArgs>({
       providesTags: [{ type: tags.admin, id: admin.members }],
       query: contract_querier,
@@ -28,6 +30,16 @@ export const admin_api = terra.injectEndpoints({
         return res.query_result;
       },
     }),
+
+    //CW3
+    cw3Config: builder.query<CW3Config, ContractQueryArgs>({
+      providesTags: [{ type: tags.admin, id: admin.member }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<CW3Config>) => {
+        return res.query_result;
+      },
+    }),
+
     proposal: builder.query<Proposal, ContractQueryArgs>({
       providesTags: [{ type: tags.admin, id: admin.proposal }],
       query: contract_querier,

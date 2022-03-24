@@ -2,7 +2,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { MemberDetails } from "services/aws/alliance/types";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { useSetModal } from "components/Modal/Modal";
-import TableSection, { Cells } from "../components/TableSection";
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import MemberEditor from "./MemberEditor/MemberEditor";
 import MemberForm from "./MemberEditor/MemberForm";
 

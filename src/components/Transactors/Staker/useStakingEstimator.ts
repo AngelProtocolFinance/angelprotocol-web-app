@@ -92,7 +92,15 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, balance, locked]);
+  }, [
+    debounced_amount,
+    wallet,
+    UST_balance,
+    balance,
+    locked,
+    isValid,
+    isDirty,
+  ]);
 
   return { tx, wallet };
 }

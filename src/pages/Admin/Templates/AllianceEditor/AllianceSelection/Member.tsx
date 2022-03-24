@@ -1,6 +1,6 @@
 import { CgUndo } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
-import { Cells } from "pages/Admin/components/TableSection";
+import { Cells } from "components/TableSection/TableSection";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
 import {

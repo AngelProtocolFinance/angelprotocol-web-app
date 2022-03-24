@@ -7,8 +7,9 @@ import {
 } from "react-icons/fa";
 import { BiArrowBack } from "react-icons/bi";
 import { useParams, Link } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useProfileState } from "services/aws/endowments/states";
+import { useEndowmentCWs } from "services/terra/account/queriers";
+import { useMember } from "services/terra/admin/queriers";
 import useDonater from "components/Transactors/Donater/useDonater";
 import {
   DonationInfoLoader,
@@ -22,11 +23,12 @@ export function DonationInfo() {
   const { address: charity_addr } = useParams<CharityParam>();
   const showDonater = useDonater({ to: "charity", receiver: charity_addr! });
   const { profileState, isProfileLoading } = useProfileState(charity_addr!);
+  const { cwContracts, isCWContractsLoading } = useEndowmentCWs(charity_addr);
+  const { member } = useMember(cwContracts, isCWContractsLoading);
+  const isUserAdminMember = !!member.weight;
+
   const sdg = unsdgs[+profileState.un_sdg];
 
-  const wallet = useConnectedWallet();
-  const isCharityOwner =
-    wallet && wallet.walletAddress === profileState.charity_owner;
   const stats = useMemo(() => {
     return [
       {
@@ -93,16 +95,20 @@ export function DonationInfo() {
             )}
           </a>
           <div className="flex flex-row gap-2 mt-4">
-            {isCharityOwner && (
+            {isUserAdminMember && (
               <Link
                 to={`${site.app}/${app.charity_edit}/${charity_addr}`}
-                className={`${
-                  !profileState.is_placeholder
-                    ? "bg-orange"
-                    : "pointer-events-none bg-grey-accent"
-                } uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center`}
+                className="bg-orange uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center"
               >
                 EDIT PROFILE
+              </Link>
+            )}
+            {isUserAdminMember && (
+              <Link
+                to={`${site.app}/${app.endowment_admin}/${charity_addr}`}
+                className="bg-orange uppercase text-white font-semibold rounded-xl md:w-48 w-52 h-12 flex justify-center items-center"
+              >
+                ADMIN
               </Link>
             )}
             <button

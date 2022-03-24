@@ -6,10 +6,12 @@ import { useVoteList } from "services/terra/admin/queriers";
 import { Proposal } from "services/terra/admin/types";
 import { useLatestBlock } from "services/terra/queriers";
 
-export default function useDetails(proposalInfo: Proposal): ProposalDetails {
+export default function useProposalDetails(
+  proposalInfo: Proposal
+): ProposalDetails {
   const blockHeight = useLatestBlock();
   const wallet = useConnectedWallet();
-  const { votes } = useVoteList("apTeam", proposalInfo.id);
+  const { votes } = useVoteList(proposalInfo.id);
 
   const [numYes, numNo] = useMemo(
     () =>

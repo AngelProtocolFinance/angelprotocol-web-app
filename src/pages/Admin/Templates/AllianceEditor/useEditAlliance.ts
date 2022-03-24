@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -7,15 +6,14 @@ import { admin, tags } from "services/terra/tags";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import { app, site } from "constants/routes";
 import { useGetter, useSetter } from "store/accessors";
-import APAdmin from "contracts/APAdmin";
+import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { AllianceEditValues } from "./alllianceEditSchema";
+import { proposalSuccessLink } from "../constants";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const navigate = useNavigate();
   const wallet = useConnectedWallet();
   const allianceMembers = useGetter((state) => state.admin.allianceMembers);
   const { showModal } = useSetModal();
@@ -53,7 +51,7 @@ export default function useEditAlliance() {
       toRemove
     );
 
-    const adminContract = new APAdmin(wallet);
+    const adminContract = new Admin("apTeam", wallet);
 
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
@@ -73,7 +71,8 @@ export default function useEditAlliance() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => navigate(`${site.app}/${app.admin}`),
+        successLink: proposalSuccessLink,
+        successMessage: "Alliance member update proposal submitted",
       })
     );
     showModal(TransactionPromp, {});

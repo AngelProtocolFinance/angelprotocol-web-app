@@ -5,17 +5,15 @@ import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import { useNavigate } from "react-router-dom";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Indexfund from "contracts/IndexFund";
-import APAdmin from "contracts/APAdmin";
-import { app, site } from "constants/routes";
+import Admin from "contracts/Admin";
+import { proposalSuccessLink } from "../constants";
 import { FundUpdateValues } from "./fundUpdatorSchema";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const navigate = useNavigate();
   const wallet = useConnectedWallet();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useSetModal();
@@ -58,7 +56,7 @@ export default function useUpdateFund() {
       toRemove
     );
 
-    const adminContract = new APAdmin(wallet);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 
@@ -77,7 +75,8 @@ export default function useUpdateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => navigate(`${site.app}/${app.admin}`),
+        successLink: proposalSuccessLink,
+        successMessage: "Fund member proposal submitted",
       })
     );
     showModal(TransactionPromp, {});

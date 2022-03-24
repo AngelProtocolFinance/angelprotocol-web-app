@@ -186,7 +186,15 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
+  }, [
+    debounced_amount,
+    debounced_split,
+    currency,
+    coins,
+    supported_denoms,
+    isValid,
+    isDirty,
+  ]);
 
   return { terraTx, ethTx };
 }

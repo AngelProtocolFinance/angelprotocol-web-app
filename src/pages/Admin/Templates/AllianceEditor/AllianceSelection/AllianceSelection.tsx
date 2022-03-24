@@ -1,5 +1,5 @@
 import { AllianceMemberWithFlags } from "services/admin/allianceMembers";
-import TableSection, { Cells } from "pages/Admin/components/TableSection";
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import useAllianceSelection from "./useAllianceSelection";
 import Member from "./Member";
 import Toolbar from "./Toolbar";
