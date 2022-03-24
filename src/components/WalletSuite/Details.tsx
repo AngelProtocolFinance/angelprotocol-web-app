@@ -3,7 +3,7 @@ import Copier from "components/Copier/Copier";
 import { denoms } from "constants/currency";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
-import { useSetMetamask } from "providers/MetamaskProvider/MetamaskProvider";
+import useWalletContext from "hooks/useWalletContext";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { Dwindow, Providers } from "services/provider/types";
@@ -19,7 +19,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { disconnect: disconnectTerra, availableConnections } = useWallet();
-  const { disconnect: disconnectMetamask } = useSetMetamask();
+  const { disconnect: disconnectWallet } = useWalletContext();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
@@ -35,13 +35,13 @@ export default function Details(props: { closeHandler: () => void }) {
 
   const isEmpty = filtered_coins.length <= 0;
 
-  const handleDisconnect = () => {
+  const handleDisconnect = async () => {
     dispatch(resetWallet());
     if (activeProvider === Providers.terra) {
       disconnectTerra();
     }
     if (activeProvider === Providers.ethereum) {
-      disconnectMetamask();
+      await disconnectWallet();
     }
   };
 
