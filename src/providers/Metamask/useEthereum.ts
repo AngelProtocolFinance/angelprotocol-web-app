@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import { useEffect, useState } from "react";
 import { Dwindow } from "services/provider/types";

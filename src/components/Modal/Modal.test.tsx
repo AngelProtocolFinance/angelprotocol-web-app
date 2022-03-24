@@ -4,12 +4,13 @@ import Modal, { useSetModal } from "./Modal";
 import { MdOutlineClose } from "react-icons/md";
 import { act } from "react-dom/test-utils";
 
-// TODO: write tests for optional backdrop dismiss, keyboard escape key to dismiss
+const modalCssClass =
+  "ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";
 
 describe("<Modal/> renders correctly", () => {
   test("<Modal /> is triggered and opened", async () => {
     render(
-      <Modal classes="ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
+      <Modal classes={modalCssClass}>
         <TriggerModal />
       </Modal>
     );
@@ -30,10 +31,10 @@ describe("<Modal/> renders correctly", () => {
   });
 });
 
-describe("<Modal/> closes keyboard shortcut or backdrop dismiss", () => {
+describe("<Modal/> is Dismissed", () => {
   test("<Modal /> is closed on Escape key press", async () => {
     render(
-      <Modal classes="ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
+      <Modal classes={modalCssClass}>
         <TriggerModal />
       </Modal>
     );
@@ -55,7 +56,7 @@ describe("<Modal/> closes keyboard shortcut or backdrop dismiss", () => {
 
   test("<Modal /> is closed on backdrop dismiss click", async () => {
     render(
-      <Modal classes="ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
+      <Modal classes={modalCssClass}>
         <TriggerModal />
       </Modal>
     );
