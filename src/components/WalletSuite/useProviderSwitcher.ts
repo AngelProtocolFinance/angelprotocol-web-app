@@ -1,4 +1,7 @@
-import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import {
+  useWallet as useTerraWallet,
+  WalletStatus,
+} from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
 import {
   setActiveProvider,
@@ -10,20 +13,20 @@ import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
 import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
-import { useGetMetamask } from "providers/MetamaskProvider/MetamaskProvider";
+import useWallet from "hooks/useWallet";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
   const terra_chain_ref = useRef<string>(chainIDs.testnet);
 
   //terra states
-  const { status: terraStatus, network } = useWallet();
+  const { status: terraStatus, network } = useTerraWallet();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
 
   //other states
-  const { connected: isMetamaskConnected, loading: isMetamaskLoading } =
-    useGetMetamask();
+  const { isConnected: isMetamaskConnected, isLoading: isMetamaskLoading } =
+    useWallet();
   // const { connected: ethConnected } = useGetter((state) => state.metamask);
 
   const providerStates: ProviderStates = [

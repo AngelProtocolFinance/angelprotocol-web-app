@@ -7,13 +7,13 @@ import {
   useMemo,
   useState,
 } from "react";
-import { MetamaskProvider } from "./MetamaskProvider";
 import { Wallet, WalletConnectionType } from "./types";
 import useChainOptions from "./useChainOptions";
 import useWallets from "./useWallets";
 
 interface IWalletContext {
   isLoading: boolean;
+  isConnected: boolean;
   wallet?: Wallet;
   connect: (connType: WalletConnectionType) => Promise<void>;
   disconnect: () => Promise<void>;
@@ -21,13 +21,19 @@ interface IWalletContext {
 
 export const WalletContext = createContext<IWalletContext>({
   isLoading: false,
+  isConnected: false,
   connect: (_: WalletConnectionType) => new Promise((r) => r),
   disconnect: () => new Promise((r) => r),
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
   const [wallet, setWallet] = useState<Wallet>();
-  const { connect, disconnect, isLoading: isLoadingWallets } = useWallets();
+  const {
+    connect,
+    disconnect,
+    isLoading: isLoadingWallets,
+    isConnected,
+  } = useWallets();
   const { chainOptions, isLoading: isLoadingChainOptions } = useChainOptions();
 
   const connectWallet = useCallback(
@@ -69,13 +75,12 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
       value={{
         wallet,
         isLoading,
+        isConnected,
         connect: connectWallet,
         disconnect: disconnectWallet,
       }}
     >
-      <TerraProvider {...chainOptions}>
-        <MetamaskProvider>{props.children}</MetamaskProvider>
-      </TerraProvider>
+      <TerraProvider {...chainOptions}>{props.children}</TerraProvider>
     </WalletContext.Provider>
   );
 }

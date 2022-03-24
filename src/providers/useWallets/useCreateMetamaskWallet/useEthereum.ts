@@ -10,9 +10,7 @@ import {
 
 export default function useEthereum() {
   //connect only if there's no active wallet
-  const lastAction = retrieveUserAction();
 
-  const shouldReconnect = lastAction === "connect";
   const [loading, setLoading] = useState(true);
   const [connected, setConnected] = useState(false);
   const [address, setAddress] = useState("");
@@ -36,30 +34,11 @@ export default function useEthereum() {
     [address]
   );
 
-  const detachAccountChangeHandler = useCallback(() => {
-    getEthereum()?.removeListener(
-      EIP1193Events.accountsChanged,
-      handleAccountsChange
-    );
-  }, [handleAccountsChange]);
-
-  useEffect(() => {
-    if (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum) {
-      setConnected(true);
-      setLoading(false);
-      return;
-    }
-
-    requestAccess();
-    return () => {
-      detachAccountChangeHandler();
-    };
-    //eslint-disable-next-line
-  }, []);
-
   const requestAccess = useCallback(
     async (isNewConnection = false) => {
       const ethereum = getEthereum();
+      const lastAction = retrieveUserAction();
+      const shouldReconnect = lastAction === "connect";
       if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
         ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
         const { result: accounts = [] } = await ethereum.send(
@@ -74,17 +53,31 @@ export default function useEthereum() {
         setLoading(false);
       }
     },
-    [handleAccountsChange, shouldReconnect, connected]
+    [handleAccountsChange, connected]
   );
+
+  useEffect(() => {
+    if (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum) {
+      setConnected(true);
+      setLoading(false);
+      return;
+    }
+
+    requestAccess();
+    //eslint-disable-next-line
+  }, [requestAccess]);
 
   const disconnect = useCallback(async () => {
     if (!connected) return;
     const ethereum = getEthereum();
     if (!ethereum) return;
-    detachAccountChangeHandler();
+    getEthereum()?.removeListener(
+      EIP1193Events.accountsChanged,
+      handleAccountsChange
+    );
     setConnected(false);
     saveUserAction("disconnect");
-  }, [detachAccountChangeHandler, connected]);
+  }, [handleAccountsChange, connected]);
 
   const connect = useCallback(async () => {
     try {
@@ -104,7 +97,7 @@ export default function useEthereum() {
 
   return {
     setters: { connect, disconnect },
-    state: { loading, address, connected },
+    state: { loading, connected },
   };
 }
 

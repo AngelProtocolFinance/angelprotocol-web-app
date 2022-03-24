@@ -4,28 +4,26 @@ import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
 type WalletSettersRecord = Record<WalletConnectionType, WalletSetters>;
 
-export default function useWallets() {
+export default function useWallets(): Omit<WalletSetters, "wallet"> {
   const [isLoading, setLoading] = useState(true);
+  const [isConnected, setConnected] = useState(false);
   const [walletSetters, setWalletSetters] = useState<WalletSettersRecord>();
   const [currentConnectionType, setCurrentConnectionType] =
-    useState<WalletConnectionType>("terra");
+    useState<WalletConnectionType>();
 
-  const createMetamaskWallet = useCreateMetamaskWallet();
+  const metamaskSetters = useCreateMetamaskWallet();
 
   useEffect(() => {
-    async function create() {
-      const metamask = await createMetamaskWallet();
-
-      setWalletSetters({
-        metamask,
-        terra: metamask,
-      });
-      setLoading(false);
+    if (!!walletSetters || metamaskSetters.isLoading) {
+      return;
     }
 
-    create();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setWalletSetters({
+      metamask: metamaskSetters,
+      terra: metamaskSetters,
+    });
+    setLoading(false);
+  }, [walletSetters, metamaskSetters]);
 
   const connect = useCallback(
     async (connType: WalletConnectionType) => {
@@ -33,10 +31,10 @@ export default function useWallets() {
         throw Error("Wallets not yet initialized");
       }
       const setters = walletSetters[connType];
-      setLoading(true);
       await setters.connect();
       setCurrentConnectionType(connType);
-      setLoading(false);
+      setLoading(setters.isLoading);
+      setConnected(setters.isConnected);
       return setters.wallet;
     },
     [walletSetters]
@@ -46,11 +44,14 @@ export default function useWallets() {
     if (!walletSetters) {
       throw Error("Wallets not yet initialized");
     }
-    setLoading(true);
-    const wallet = walletSetters[currentConnectionType];
-    await wallet.disconnect();
-    setLoading(false);
+    if (!currentConnectionType) {
+      throw Error("Not connected");
+    }
+    const setters = walletSetters[currentConnectionType];
+    await setters.disconnect();
+    setLoading(setters.isLoading);
+    setConnected(setters.isConnected);
   }, [walletSetters, currentConnectionType]);
 
-  return { connect, disconnect, isLoading };
+  return { connect, disconnect, isLoading, isConnected };
 }

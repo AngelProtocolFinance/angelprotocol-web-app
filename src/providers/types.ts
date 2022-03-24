@@ -22,7 +22,9 @@ export type Wallet = {
 };
 
 export type WalletSetters = {
+  isLoading: boolean;
+  isConnected: boolean;
   wallet?: Wallet;
-  connect: (...args: any[]) => Promise<void>;
+  connect: (...args: any[]) => Promise<any>;
   disconnect: () => Promise<void>;
 };

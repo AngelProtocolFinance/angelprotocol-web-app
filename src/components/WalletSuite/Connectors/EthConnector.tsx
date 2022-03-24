@@ -1,10 +1,8 @@
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetModal } from "components/Modal/Modal";
 import { deviceType, DeviceType } from "helpers/deviceType";
-import {
-  RejectMetamaskLogin,
-  useSetMetamask,
-} from "providers/MetamaskProvider";
+import useWallet from "hooks/useWallet";
+import { RejectMetamaskLogin } from "providers/useWallets/useCreateMetamaskWallet/useEthereum";
 import { Dwindow } from "services/provider/types";
 import { useGetter } from "store/accessors";
 import WalletPrompt from "../WalletPrompt";
@@ -14,7 +12,7 @@ const dwindow = window as Dwindow;
 
 export default function EthConnector() {
   const { isUpdating } = useGetter((state) => state.wallet);
-  const { connect } = useSetMetamask();
+  const { connect } = useWallet();
   const { showModal } = useSetModal();
 
   async function handleClick() {
@@ -50,7 +48,7 @@ export default function EthConnector() {
       } else if (!dwindow.ethereum?.isMetaMask) {
         dwindow.open(metamaskInstallLink, "_blank", "noopener noreferrer");
       } else {
-        await connect();
+        await connect("metamask");
       }
     } catch (err: any) {
       if (err instanceof RejectMetamaskLogin) {
