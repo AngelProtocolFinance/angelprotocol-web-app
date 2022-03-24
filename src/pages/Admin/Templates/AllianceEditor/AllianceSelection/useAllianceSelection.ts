@@ -16,8 +16,11 @@ export default function useAllianceSelection() {
       sanitizeRegexSearchText(debouncedSearchText).toLocaleLowerCase()
     );
     return allianceCopy.filter((member) =>
-      //show toggled members on top of search result
-      member.isAdded || member.isDeleted || debouncedSearchText === ""
+      //show modified members on top of search result
+      member.isAdded ||
+      member.isDeleted ||
+      member.edits ||
+      debouncedSearchText === ""
         ? true
         : member.name.toLocaleLowerCase().search(searchRegex) !== -1 ||
           member.wallet.search(new RegExp(searchRegex)) !== -1
