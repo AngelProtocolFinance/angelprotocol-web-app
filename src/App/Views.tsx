@@ -2,10 +2,7 @@ import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { app, site } from "../constants/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
-import Market from "pages/Market/Market";
-import CharityEdit from "pages/CharityEdit/CharityEdit";
 import useScrollTop from "hooks/useScrollTop";
-import Donation from "pages/Donations/Donation";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -14,6 +11,9 @@ const Governance = lazy(() => import("pages/Governance/Governance"));
 const Auction = lazy(() => import("pages/LBP/Auction"));
 const Endowment = lazy(() => import("pages/Endowment/Endowment"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
+const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
+const Donations = lazy(() => import("pages/Donations/Donations"));
+const Market = lazy(() => import("pages/Market/Market"));
 
 export default function Views() {
   const location = useLocation();
@@ -41,7 +41,7 @@ export default function Views() {
         <Route path={`${app.govern}/*`} element={<Governance />} />
         <Route path={`${app.auction}`} element={<Auction />} />
         <Route path={`${app.endowment}/:address`} element={<Endowment />} />
-        <Route path={`${app.donation}/:address`} element={<Donation />} />
+        <Route path={`${app.donation}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}
           element={<Navigate replace to={`${app.marketplace}`} />}
