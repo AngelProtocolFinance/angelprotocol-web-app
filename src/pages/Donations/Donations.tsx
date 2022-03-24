@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { RouteParam } from "./types";
 import DonationList from "./DonationList";
 
-export default function Donation() {
+export default function Donations() {
   const { address } = useParams<RouteParam>();
 
   return (
