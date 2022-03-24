@@ -20,3 +20,9 @@ export type Wallet = {
   sendTransaction: (...args: any[]) => Promise<void>;
   sendDonation: (...args: any[]) => Promise<void>;
 };
+
+export type WalletSetters = {
+  wallet: Wallet;
+  connect: (...args: any[]) => Promise<void>;
+  disconnect: (...args: any[]) => Promise<void>;
+};

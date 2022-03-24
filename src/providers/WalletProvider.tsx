@@ -11,6 +11,7 @@ import {
   PropsWithChildren,
   useCallback,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { MetamaskProvider } from "./MetamaskProvider";
@@ -30,7 +31,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   >({});
   const [defaultNetwork, setDefaultNetwork] = useState<NetworkInfo>(localterra);
   const [wallet, setWallet] = useState<Wallet>();
-  const { wallets, isLoading: isLoadingWallets } = useWallets();
+  const { connect: connectWallet, isLoading: isLoadingWallets } = useWallets();
 
   useEffect(() => {
     async function fetchChainIds() {
@@ -47,27 +48,31 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }, []);
 
   const connect = useCallback(
-    (connType: WalletConnectionType) => {
-      if (!wallets) {
+    async (connType: WalletConnectionType) => {
+      if (isLoadingWallets) {
         console.log("loading wallets");
         return;
       }
 
-      setWallet(wallets[connType]);
+      const connectedWallet = await connectWallet(connType);
+      setWallet(connectedWallet);
     },
-    [wallets]
+    [connectWallet, isLoadingWallets]
   );
 
-  if (isLoadingChainOptions && isLoadingWallets) {
+  const isLoading = useMemo(
+    () => isLoadingChainOptions && isLoadingWallets,
+    [isLoadingChainOptions, isLoadingWallets]
+  );
+
+  if (isLoading) {
     return (
       <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
     );
   }
 
   return (
-    <WalletSuiteContext.Provider
-      value={{ isLoading: isLoadingChainOptions, connect, wallet }}
-    >
+    <WalletSuiteContext.Provider value={{ isLoading, connect, wallet }}>
       <TerraProvider
         defaultNetwork={defaultNetwork}
         walletConnectChainIds={walletConnectChainIds}

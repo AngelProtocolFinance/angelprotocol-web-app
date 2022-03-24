@@ -11,17 +11,21 @@ import { Dwindow, Providers } from "services/provider/types";
 import { setStage } from "services/transaction/transactionSlice";
 import { StageUpdator, Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
-import { DonateValues } from "../../components/Transactors/Donater/types";
-import { Wallet } from "../types";
+import { DonateValues } from "../../../components/Transactors/Donater/types";
+import { Wallet, WalletSetters } from "../../types";
+import useEthereum from "./useEthereum";
 
 type EthDonateArgs = {
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
 
-export default function useCreateMetamaskWallet() {
+type Creator = () => Promise<WalletSetters>;
+
+export default function useCreateMetamaskWallet(): Creator {
   const dispatch = useSetter();
   const provider = useGetter((state) => state.provider);
+  const { setters } = useEthereum();
 
   const create = useCallback(async () => {
     const dwindow = window as Dwindow;
@@ -46,7 +50,6 @@ export default function useCreateMetamaskWallet() {
       sendTransaction: async (..._: any[]) => {
         throw new Error("Action not supported");
       },
-
       sendDonation: async (args: EthDonateArgs) => {
         const updateTx: StageUpdator = (update) => {
           dispatch(setStage(update));
@@ -100,7 +103,10 @@ export default function useCreateMetamaskWallet() {
       },
     };
 
-    return wallet;
+    return {
+      wallet,
+      ...setters,
+    } as WalletSetters;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
