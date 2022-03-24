@@ -1,51 +1,21 @@
-import {
-  getChainOptions,
-  NetworkInfo,
-  WalletProvider as TerraProvider,
-} from "@terra-money/wallet-provider";
+import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
-import { chainIDs } from "constants/chainIDs";
-import { terra_lcds } from "constants/urls";
 import {
   createContext,
   PropsWithChildren,
   useCallback,
-  useEffect,
   useMemo,
   useState,
 } from "react";
 import { MetamaskProvider } from "./MetamaskProvider";
 import { Wallet, WalletConnectionType } from "./types";
+import useChainOptions from "./useChainOptions";
 import useWallets from "./useWallets";
 
-const localterra = {
-  name: "localterra",
-  chainID: chainIDs.localterra,
-  lcd: terra_lcds[chainIDs.localterra],
-};
-
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const [isLoadingChainOptions, setLoading] = useState(true);
-  const [walletConnectChainIds, setWalletConnectChainIds] = useState<
-    Record<number, NetworkInfo>
-  >({});
-  const [defaultNetwork, setDefaultNetwork] = useState<NetworkInfo>(localterra);
   const [wallet, setWallet] = useState<Wallet>();
   const { connect, disconnect, isLoading: isLoadingWallets } = useWallets();
-
-  useEffect(() => {
-    async function fetchChainIds() {
-      const chainOptions = await getChainOptions();
-      setDefaultNetwork(chainOptions.defaultNetwork);
-      setWalletConnectChainIds({
-        ...chainOptions.walletConnectChainIds,
-        2: localterra,
-      });
-      setLoading(false);
-    }
-
-    fetchChainIds();
-  }, []);
+  const { chainOptions, isLoading: isLoadingChainOptions } = useChainOptions();
 
   const connectWallet = useCallback(
     async (connType: WalletConnectionType) => {
@@ -90,10 +60,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
         disconnect: disconnectWallet,
       }}
     >
-      <TerraProvider
-        defaultNetwork={defaultNetwork}
-        walletConnectChainIds={walletConnectChainIds}
-      >
+      <TerraProvider {...chainOptions}>
         <MetamaskProvider>{props.children}</MetamaskProvider>
       </TerraProvider>
     </WalletSuiteContext.Provider>
