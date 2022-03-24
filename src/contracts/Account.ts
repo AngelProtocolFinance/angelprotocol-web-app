@@ -8,6 +8,7 @@ import { Source } from "./types";
 export default class Account extends Contract {
   address: string;
   balance: ContractQueryArgs;
+  endowmentDetails: ContractQueryArgs;
 
   constructor(accountAddr: string, wallet?: ConnectedWallet) {
     super(wallet);
@@ -16,6 +17,11 @@ export default class Account extends Contract {
     this.balance = {
       address: accountAddr,
       msg: { balance: {} },
+    };
+
+    this.endowmentDetails = {
+      address: accountAddr,
+      msg: { endowment: {} },
     };
   }
 
@@ -38,7 +44,7 @@ export default class Account extends Contract {
     );
   }
 
-  createWithdrawMsg({
+  createEmbeddedWithdrawMsg({
     sources,
     beneficiary,
   }: {
@@ -46,7 +52,8 @@ export default class Account extends Contract {
     beneficiary: string;
   }) {
     this.checkWallet();
-    return new MsgExecuteContract(this.walletAddr!, this.address, {
+
+    return this.createdEmbeddedWasmMsg([], this.address, {
       withdraw: {
         sources: sources,
         beneficiary,

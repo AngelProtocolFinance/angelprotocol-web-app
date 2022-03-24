@@ -1,14 +1,15 @@
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { terra } from "services/terra/terra";
 import { tags, admin } from "services/terra/tags";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import APAdmin from "contracts/APAdmin";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(proposal_id: number) {
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const wallet = useConnectedWallet();
   const dispatch = useSetter();
   const { showModal } = useSetModal();
@@ -18,7 +19,7 @@ export default function useExecuteProposal(proposal_id: number) {
       showModal<PopupProps>(Popup, { message: "Invalid poll id" });
       return;
     }
-    const contract = new APAdmin(wallet);
+    const contract = new Admin(cwContracts, wallet);
     const execMsg = contract.createExecProposalMsg(proposal_id);
     dispatch(
       sendTerraTx({

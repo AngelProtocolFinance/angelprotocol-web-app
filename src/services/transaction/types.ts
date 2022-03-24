@@ -47,6 +47,7 @@ export type BroadcastStage = {
   details?: never;
 };
 
+export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: Step.success;
   message: string;
@@ -54,6 +55,7 @@ export type SuccessStage = {
   chainId: chainIDs;
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
+  successLink?: SuccessLink;
 };
 
 export type ReceiptStage = {

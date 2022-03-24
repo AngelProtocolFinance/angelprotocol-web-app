@@ -6,19 +6,17 @@ import { useSetModal } from "components/Modal/Modal";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
-import APAdmin from "contracts/APAdmin";
+import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
-import { app, site } from "constants/routes";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useGetter, useSetter } from "store/accessors";
+import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
-  const navigate = useNavigate();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
@@ -75,7 +73,7 @@ export default function useCreateFund() {
     );
 
     //create proposal msg
-    const adminContract = new APAdmin(wallet);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(title, description, [
       embeddedExecuteMsg,
     ]);
@@ -89,7 +87,8 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => navigate(`${site.app}/${app.admin}`),
+        successLink: proposalSuccessLink,
+        successMessage: "Create fund proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});

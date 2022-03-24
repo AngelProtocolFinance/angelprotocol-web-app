@@ -4,9 +4,9 @@ import { useMembers } from "services/terra/admin/queriers";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function useInitMemberUpdator() {
-  const dispatch = useSetter();
-  const { members, isMembersLoading } = useMembers("apTeam");
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
+  const dispatch = useSetter();
+  const { members, isMembersLoading } = useMembers();
 
   useEffect(() => {
     if (members.length > 0) {

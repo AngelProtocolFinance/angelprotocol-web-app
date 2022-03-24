@@ -1,4 +1,4 @@
-export interface DepositTransactions {
+export interface Transaction {
   endowment_address: string; // Charity's endowment address
   wallet_address: string; // Owner's wallet address
   sort_key: string; // Transaction hash
@@ -8,7 +8,6 @@ export interface DepositTransactions {
   transaction_type: string; // "deposit"
 }
 
-export interface DonationTransactions extends DepositTransactions {}
 export interface DonationQueryRes<T> {
   transactions: T;
 }

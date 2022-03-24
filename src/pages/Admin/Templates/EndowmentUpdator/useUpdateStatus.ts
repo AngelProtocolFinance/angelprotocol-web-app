@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useFormContext } from "react-hook-form";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -8,20 +7,19 @@ import {
 } from "services/terra/registrar/types";
 import { terra } from "services/terra/terra";
 import { tags, admin } from "services/terra/tags";
-import APAdmin from "contracts/APAdmin";
+import Admin from "contracts/Admin";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import { StatusChangePayload } from "contracts/types";
 import { useSetter } from "store/accessors";
-import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
-import { app, site } from "constants/routes";
+import { proposalSuccessLink } from "../constants";
+import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
-  const navigate = useNavigate();
   const dispatch = useSetter();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
@@ -52,7 +50,7 @@ export default function useUpdateStatus() {
         cleanObject(statusChangePayload, [undefined])
       );
 
-    const adminContract = new APAdmin(wallet);
+    const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -68,9 +66,8 @@ export default function useUpdateStatus() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        redirect: () => {
-          navigate(`${site.app}/${app.admin}`);
-        },
+        successLink: proposalSuccessLink,
+        successMessage: "Endowment status update proposal submitted",
       })
     );
     showModal(TransactionPrompt, {});

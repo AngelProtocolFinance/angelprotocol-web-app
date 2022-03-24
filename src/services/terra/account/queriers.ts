@@ -1,12 +1,10 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
-import Account from "contracts/Account";
 import { account_api } from "./account";
 import { holdings } from "./placeholders";
+import useAccountContract from "./useAccountContract";
 
 export function useEndowmentHoldings(address: string, skip = false) {
-  const wallet = useConnectedWallet();
   const { useEndowmentHoldingsQuery } = account_api;
-  const contract = new Account(address);
+  const { wallet, contract } = useAccountContract(address);
   const {
     data = holdings,
     isError,
@@ -20,5 +18,19 @@ export function useEndowmentHoldings(address: string, skip = false) {
     holdings: data,
     isHoldingsError: isError,
     isHoldingsLoading: isLoading || isFetching,
+  };
+}
+
+export function useEndowmentCWs(address?: string) {
+  const { useEndowmentCWsQuery } = account_api;
+  const {
+    data = {},
+    isLoading,
+    isFetching,
+  } = useEndowmentCWsQuery(address!, { skip: !address });
+
+  return {
+    cwContracts: data,
+    isCWContractsLoading: isLoading || isFetching,
   };
 }

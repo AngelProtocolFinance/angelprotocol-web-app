@@ -6,3 +6,11 @@ export interface Holdings {
   liquid_cw20: Holding[];
   is_placeholder?: true;
 }
+
+export interface EndowmentDetails {
+  owner: string; //"cw3 owner";
+  name: string;
+  //..update attr on demand
+
+  isPlaceHolder?: true;
+}

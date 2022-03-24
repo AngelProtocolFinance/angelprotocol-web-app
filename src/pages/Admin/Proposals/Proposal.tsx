@@ -1,19 +1,19 @@
+import { PropsWithChildren } from "react";
 import { useParams } from "react-router-dom";
 import { SiHiveBlockchain } from "react-icons/si";
 import { useProposal } from "services/terra/admin/queriers";
 import { EmbeddedWasmMsg } from "contracts/types";
-import useDetails, { ProposalDetails } from "./useDetails";
+import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 
 export type ProposalIdParam = { id: string };
-
-export default function Details() {
+export default function Proposal() {
   const params = useParams<ProposalIdParam>();
   const proposalId = params.id;
-  const { proposal } = useProposal("apTeam", proposalId);
-  const proposalDetails = useDetails(proposal);
+  const { proposal } = useProposal(proposalId);
+  const proposalDetails = useProposalDetails(proposal);
 
   return (
     <div className="grid content-start w-full min-h-screen">
@@ -26,16 +26,16 @@ export default function Details() {
           <h4 className="font-bold text-lg text-white">{proposal.title}</h4>
           <PollAction {...proposalDetails} />
         </div>
-        <DetailLabel text="end time" />
+        <DetailLabel>end time</DetailLabel>
         <p className="flex items-center font-heading text-xs uppercase mt-1 mb-6">
           <span>block height </span>
           <SiHiveBlockchain className="mx-2" />
           <span>{proposalDetails.blockHeight}</span>
         </p>
-        <DetailLabel text="description" />
+        <DetailLabel>description</DetailLabel>
         <p className="mb-6">{proposal.description}</p>
 
-        <DetailLabel text="raw messages" />
+        <DetailLabel>raw messages</DetailLabel>
         {proposal.msgs.map((msg, i) => (
           <RawBlock key={i} {...msg} />
         ))}
@@ -53,10 +53,10 @@ export default function Details() {
   );
 }
 
-function DetailLabel(props: { text: string }) {
+function DetailLabel(props: PropsWithChildren<{}>) {
   return (
     <p className="text-xs font-bold text-white-grey uppercase font-heading">
-      {props.text}
+      {props.children}
     </p>
   );
 }
