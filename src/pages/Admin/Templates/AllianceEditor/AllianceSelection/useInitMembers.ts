@@ -6,7 +6,9 @@ export default function useInitMembers() {
   const dispatch = useSetter();
   const { allianceMembers, isAllianceMembersLoading } = useAllianceMembers();
 
-  const allianceCopy = useGetter((state) => state.admin.allianceMembers);
+  const allianceCopy = useGetter(
+    (state) => state.admin.allianceMembers.members
+  );
 
   useEffect(() => {
     if (isAllianceMembersLoading) return;

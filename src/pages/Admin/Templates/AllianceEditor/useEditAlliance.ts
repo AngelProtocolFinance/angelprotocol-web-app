@@ -16,7 +16,9 @@ import { proposalSuccessLink } from "../constants";
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
   const wallet = useConnectedWallet();
-  const allianceMembers = useGetter((state) => state.admin.allianceMembers);
+  const { members: allianceMembers, isEditingMember } = useGetter(
+    (state) => state.admin.allianceMembers
+  );
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -28,7 +30,7 @@ export default function useEditAlliance() {
 
     //check if there are changes
     const markedMembers = allianceMembers.filter(
-      (member) => member.isAdded || member.isDeleted
+      (member) => member.isAdded || member.isDeleted || member.edits
     );
 
     if (markedMembers.length <= 0) {
@@ -38,11 +40,15 @@ export default function useEditAlliance() {
 
     const indexFundContract = new Indexfund(wallet);
     const updateMsgs: EmbeddedWasmMsg[] = markedMembers.map(
-      ({ isAdded, isDeleted, ...restMemberData }) =>
-        indexFundContract.createEmbeddedAAListUpdateMsg(
+      ({ isAdded, isDeleted, edits, ...restMemberData }) => {
+        if (edits) {
+          return indexFundContract.createEmbeddedAAMemberEditMsg(edits);
+        }
+        return indexFundContract.createEmbeddedAAListUpdateMsg(
           restMemberData,
           isAdded ? "add" : "remove"
-        )
+        );
+      }
     );
 
     const adminContract = new Admin("apTeam", wallet);
@@ -73,5 +79,5 @@ export default function useEditAlliance() {
     reset();
   }
 
-  return { editAlliance };
+  return { editAlliance, isEditingMember };
 }

@@ -53,9 +53,8 @@ function ProposalTypes() {
         Update Fund
       </NavLink>
       <NavLink to={proposal_types.alliance_members} className={styler}>
-        Edit Alliance members
+        Edit Alliance List
       </NavLink>
-
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink to={proposal_types.change_endowment_status} className={styler}>
         Change Endowment Status

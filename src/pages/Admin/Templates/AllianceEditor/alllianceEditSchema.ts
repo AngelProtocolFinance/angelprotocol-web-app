@@ -13,8 +13,14 @@ const allianceEditShape: PartialRecord<
   ...proposalShape,
   wallet: addressSchema("wallet"),
   name: Yup.string().required("name is required"),
-  logo: Yup.string().required("logo is required").url("url is invalid"),
-  website: Yup.string().required("website is required").url("url is invalid"),
+  logo: Yup.string()
+    .nullable()
+    .required("logo is required")
+    .url("url is invalid"),
+  website: Yup.string()
+    .nullable()
+    .required("website is required")
+    .url("url is invalid"),
 };
 
 export const allianceEditSchema = Yup.object(allianceEditShape);

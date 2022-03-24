@@ -1,25 +1,16 @@
 import { CgUndo } from "react-icons/cg";
 import { IoClose } from "react-icons/io5";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Cells } from "components/TableSection/TableSection";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 
-import {
-  AllianceMemberWithFlags,
-  toggleDeleteExistingMember,
-  undoAddMember,
-} from "services/admin/allianceMembers";
-import { useSetter } from "store/accessors";
+import { AllianceMemberWithFlags } from "services/admin/allianceMembers";
+import React from "react";
+import useMember from "./useMember";
 
 export default function Member(props: AllianceMemberWithFlags) {
-  const dispatch = useSetter();
-
-  function memberItemAction() {
-    if (props.isAdded) {
-      dispatch(undoAddMember(props.wallet));
-    } else {
-      dispatch(toggleDeleteExistingMember(props.wallet));
-    }
-  }
+  const { isEditable, isNotEdited, memberToggleEdit, memberToggleAddDelete } =
+    useMember(props);
   return (
     <Cells
       type="td"
@@ -28,23 +19,52 @@ export default function Member(props: AllianceMemberWithFlags) {
           ? "bg-green-400 bg-opacity-20"
           : props.isDeleted
           ? "bg-red-400 bg-opacity-10"
+          : props.edits
+          ? "bg-angel-orange bg-opacity-20"
           : ""
       }`}
     >
       <img
-        src={props.logo || defaultIcon}
+        src={props.edits?.logo || props.logo || defaultIcon}
         alt=""
         className="w-8 h-8 object-contain"
       />
-      <>{props.name}</>
+      <>{props.edits?.name || props.name}</>
       <span className="font-mono text-sm">{props.wallet}</span>
-      <button
-        onClick={memberItemAction}
-        type="button"
-        className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5"
-      >
-        {props.isAdded || props.isDeleted ? <CgUndo /> : <IoClose />}
-      </button>
+      <div>
+        {isEditable && (
+          <Button
+            _accent="hover:text-angel-orange"
+            type="button"
+            onClick={memberToggleEdit}
+          >
+            {props.edits ? <CgUndo /> : <AiOutlineEdit />}
+          </Button>
+        )}
+        {isNotEdited && (
+          <Button
+            onClick={memberToggleAddDelete}
+            type="button"
+            _accent="hover:text-red-400"
+          >
+            {props.isAdded || props.isDeleted ? <CgUndo /> : <IoClose />}
+          </Button>
+        )}
+      </div>
     </Cells>
+  );
+}
+
+function Button(
+  props: React.ButtonHTMLAttributes<HTMLButtonElement> & { _accent?: string }
+) {
+  const { _accent, ...restProps } = props;
+  return (
+    <button
+      {...restProps}
+      className={
+        "bg-white bg-opacity-30 ml-2 rounded-md p-0.5 " + _accent || ""
+      }
+    />
   );
 }

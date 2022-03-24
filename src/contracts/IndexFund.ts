@@ -61,6 +61,12 @@ export default class Indexfund extends Contract {
     });
   }
 
+  createEmbeddedAAMemberEditMsg(member: AllianceMember) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_alliance_member: { address: member.wallet, member },
+    });
+  }
+
   async createDepositMsg(UST_amount: number | string, splitToLiquid?: number) {
     this.checkWallet(); //throws error when no wallet
     const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
