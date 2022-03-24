@@ -3,7 +3,7 @@ import Loader from "components/Loader/Loader";
 import { createContext, PropsWithChildren, useCallback, useMemo } from "react";
 import { DEFAULT_WALLET, WalletConnectionType, WalletSetters } from "./types";
 import useChainOptions from "./useChainOptions";
-import useWallets from "./useWallets";
+import useWallet from "./useWallet";
 
 type IWalletContext = Omit<WalletSetters, "connect"> & {
   connect: (connType: WalletConnectionType) => Promise<void>;
@@ -24,7 +24,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     disconnect,
     isLoading: isLoadingWallets,
     isConnected,
-  } = useWallets();
+  } = useWallet();
   const { chainOptions, isLoading: isLoadingChainOptions } = useChainOptions();
 
   const connectWallet = useCallback(

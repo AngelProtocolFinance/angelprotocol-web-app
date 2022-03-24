@@ -1,12 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DEFAULT_WALLET, WalletConnectionType, WalletSetters } from "../types";
 import useCreateMetamaskWallet from "./useCreateMetamaskWallet";
 
 type WalletSettersRecord = Record<WalletConnectionType, WalletSetters>;
 
-export default function useWallets(): WalletSetters {
+export default function useWallet(): WalletSetters {
   const [isLoading, setLoading] = useState(true);
-  const [isConnected, setConnected] = useState(false);
   const [walletSetters, setWalletSetters] = useState<WalletSettersRecord>();
   const [currentConnectionType, setCurrentConnectionType] =
     useState<WalletConnectionType>();
@@ -26,7 +25,6 @@ export default function useWallets(): WalletSetters {
 
     // safe to do, since only one wallet will be connected at a time
     if (metamaskSetters.isConnected) {
-      setConnected(true);
       setCurrentConnectionType("metamask");
     }
     // else if (terraSetters.isConnected) {
@@ -40,12 +38,9 @@ export default function useWallets(): WalletSetters {
       if (!walletSetters) {
         throw Error("Wallets not yet initialized");
       }
-      setLoading(true);
       const setters = walletSetters[connType];
       await setters.connect();
       setCurrentConnectionType(connType);
-      setLoading(false);
-      setConnected(true);
     },
     [walletSetters]
   );
@@ -55,19 +50,53 @@ export default function useWallets(): WalletSetters {
       throw Error("Wallets not yet initialized");
     }
     if (!currentConnectionType) {
-      throw Error("Not connected");
+      throw Error("Wallet not connected");
     }
     const setters = walletSetters[currentConnectionType];
     await setters.disconnect();
     setLoading(false);
-    setConnected(false);
     setCurrentConnectionType(undefined);
   }, [walletSetters, currentConnectionType]);
 
-  const wallet =
-    !!walletSetters && currentConnectionType
-      ? walletSetters[currentConnectionType].wallet
-      : DEFAULT_WALLET;
+  const returnValue = useMemo(
+    () =>
+      getReturnValue(
+        connect,
+        disconnect,
+        isLoading,
+        walletSetters,
+        currentConnectionType
+      ),
+    [walletSetters, currentConnectionType, connect, disconnect, isLoading]
+  );
 
-  return { wallet, connect, disconnect, isLoading, isConnected };
+  return returnValue;
 }
+
+const getReturnValue = (
+  connect: (_: WalletConnectionType) => Promise<void>,
+  disconnect: () => Promise<void>,
+  isLoading: boolean,
+  walletSetters?: WalletSettersRecord,
+  currentConnectionType?: WalletConnectionType
+): WalletSetters => {
+  if (!walletSetters || !currentConnectionType) {
+    return {
+      wallet: DEFAULT_WALLET,
+      connect,
+      disconnect,
+      isLoading,
+      isConnected: false,
+    };
+  }
+
+  const currWalletSetters = walletSetters[currentConnectionType];
+
+  return {
+    wallet: currWalletSetters.wallet,
+    connect,
+    disconnect,
+    isConnected: currWalletSetters.isConnected,
+    isLoading: isLoading || currWalletSetters.isLoading,
+  };
+};
