@@ -31,7 +31,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   >({});
   const [defaultNetwork, setDefaultNetwork] = useState<NetworkInfo>(localterra);
   const [wallet, setWallet] = useState<Wallet>();
-  const { connect: connectWallet, isLoading: isLoadingWallets } = useWallets();
+  const { connect, disconnect, isLoading: isLoadingWallets } = useWallets();
 
   useEffect(() => {
     async function fetchChainIds() {
@@ -47,18 +47,28 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
     fetchChainIds();
   }, []);
 
-  const connect = useCallback(
+  const connectWallet = useCallback(
     async (connType: WalletConnectionType) => {
       if (isLoadingWallets) {
         console.log("loading wallets");
         return;
       }
 
-      const connectedWallet = await connectWallet(connType);
+      const connectedWallet = await connect(connType);
       setWallet(connectedWallet);
     },
-    [connectWallet, isLoadingWallets]
+    [connect, isLoadingWallets]
   );
+
+  const disconnectWallet = useCallback(async () => {
+    if (isLoadingWallets) {
+      console.log("loading wallets");
+      return;
+    }
+
+    await disconnect();
+    setWallet(undefined);
+  }, [disconnect, isLoadingWallets]);
 
   const isLoading = useMemo(
     () => isLoadingChainOptions && isLoadingWallets,
@@ -72,7 +82,14 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
-    <WalletSuiteContext.Provider value={{ isLoading, connect, wallet }}>
+    <WalletSuiteContext.Provider
+      value={{
+        wallet,
+        isLoading,
+        connect: connectWallet,
+        disconnect: disconnectWallet,
+      }}
+    >
       <TerraProvider
         defaultNetwork={defaultNetwork}
         walletConnectChainIds={walletConnectChainIds}
@@ -86,10 +103,12 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
 interface IWalletSuiteContext {
   isLoading: boolean;
   wallet?: Wallet;
-  connect: (connType: WalletConnectionType) => void;
+  connect: (connType: WalletConnectionType) => Promise<void>;
+  disconnect: () => Promise<void>;
 }
 
 export const WalletSuiteContext = createContext<IWalletSuiteContext>({
   isLoading: false,
-  connect: (_: WalletConnectionType) => {},
+  connect: (_: WalletConnectionType) => new Promise((r) => r),
+  disconnect: () => new Promise((r) => r),
 });
