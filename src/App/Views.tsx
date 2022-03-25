@@ -2,10 +2,7 @@ import { Route, useLocation, Routes, Navigate } from "react-router-dom";
 import { app, site } from "../constants/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
-import Market from "pages/Market/Market";
-import CharityEdit from "pages/CharityEdit/CharityEdit";
 import useScrollTop from "hooks/useScrollTop";
-import Donations from "pages/Donations/Donations";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
@@ -17,6 +14,9 @@ const EndowmentAdmin = lazy(
   () => import("pages/EndowmentAdmin/EndowmentAdmin")
 );
 const Charity = lazy(() => import("pages/Charity/Charity"));
+const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
+const Donations = lazy(() => import("pages/Donations/Donations"));
+const Market = lazy(() => import("pages/Market/Market"));
 
 export default function Views() {
   const location = useLocation();

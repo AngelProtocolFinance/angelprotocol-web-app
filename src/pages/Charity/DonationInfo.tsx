@@ -85,7 +85,7 @@ export function DonationInfo() {
             href={profileState.url || ""}
             target="_blank"
             rel="noreferrer"
-            className={`text-4xl font-bold text-white uppercase tracking-wide break-all ${
+            className={`text-3xl font-bold text-white uppercase tracking-wide break-words ${
               profileState.url && "hover:text-angel-blue"
             }`}
           >
