@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
+import Icon from "components/Icons/Icons";
 import { useLatestBlock } from "services/terra/queriers";
 import { useProposals } from "services/terra/admin/queriers";
 import { admin } from "constants/routes";
@@ -17,7 +17,7 @@ export default function Proposals() {
           <span className="font-heading uppercase text-2xs mr-2">
             current block{" "}
           </span>
-          <SiHiveBlockchain className="mr-1" />
+          <Icon type="Blockchain" className="mr-1" />
           <span>{toCurrency(+block_height, 0)}</span>
         </p>
         <Link

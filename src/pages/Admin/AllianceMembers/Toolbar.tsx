@@ -1,5 +1,5 @@
+import Icon from "components/Icons/Icons";
 import { admin, proposal_types } from "constants/routes";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { Link } from "react-router-dom";
 
 export default function ToolBar(props: {
@@ -18,7 +18,7 @@ export default function ToolBar(props: {
           onChange={props.handleSearchTextChange}
         />
         <label htmlFor="__allianceSearch" className="self-center">
-          <BiSearchAlt2 size={25} />
+          <Icon type="Search" size={25} />
         </label>
       </div>
       <Link

@@ -1,11 +1,8 @@
-import {
-  MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
-} from "react-icons/md";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import IndexCard from "./IndexCard";
 import CharityCard from "./CharityCard";
 import { Profile } from "services/aws/endowments/types";
+import Icon from "components/Icons/Icons";
 
 export default function Index(props: { id: number; profiles: Profile[] }) {
   const { ref, forward, backward, showBack, showForward } =
@@ -36,7 +33,7 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
             onClick={forward}
             className="absolute top-14 right-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
           >
-            <MdOutlineArrowForwardIos className="text-white text-4xl " />
+            <Icon type="Forward" className="text-white text-4xl " />
           </button>
         )}
       </section>
@@ -47,7 +44,7 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
 function SliderArrow(props: any) {
   return (
     <button onClick={props.onClick} className={props.classes}>
-      <MdOutlineArrowBackIosNew className="text-white text-4xl" />
+      <Icon type="Back" className="text-white text-4xl" />
     </button>
   );
 }

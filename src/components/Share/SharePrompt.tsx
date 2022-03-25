@@ -1,5 +1,5 @@
+import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
-import { MdOutlineClose } from "react-icons/md";
 import Share from "./Share";
 
 export default function SharePrompt() {
@@ -11,7 +11,7 @@ export default function SharePrompt() {
         onClick={hideModal}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
       >
-        <MdOutlineClose size={25} />
+        <Icon type="Clock" size={25} />
       </button>
       <Share />
     </div>

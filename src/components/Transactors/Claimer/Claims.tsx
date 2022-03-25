@@ -1,9 +1,8 @@
 import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import { FaCheck } from "react-icons/fa";
-import { BsHourglassSplit } from "react-icons/bs";
 import { useGovStaker } from "services/terra/gov/queriers";
 import toCurrency from "helpers/toCurrency";
+import Icon from "components/Icons/Icons";
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -68,11 +67,12 @@ function Claim(props: { time: string; amount: string }) {
       <p className="text-xs font-semibold">
         {claimable ? (
           <span className="flex items-center text-angel-blue">
-            <FaCheck className="mr-0.5" /> claimable
+            <Icon type="Check" className="mr-0.5" /> claimable
           </span>
         ) : (
           <span className="flex items-center text-grey-accent">
-            <BsHourglassSplit className="mr-0.5" /> {claim_date}
+            <Icon type="HourglassSplit" className="mr-0.5" />
+            {claim_date}
           </span>
         )}
       </p>

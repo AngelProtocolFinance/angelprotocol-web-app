@@ -1,7 +1,5 @@
-import { FaUserCircle } from "react-icons/fa";
-import { CgUndo } from "react-icons/cg";
-import { IoClose } from "react-icons/io5";
 import { useSetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
 import {
   undoAddMember,
   toggleDeleteExistingMember,
@@ -25,7 +23,7 @@ export default function MemberItem(props: AddressWithFlags) {
         props.isAdded ? "bg-green-400 bg-opacity-30" : ""
       } rounded-md p-2 w-full`}
     >
-      <FaUserCircle />
+      <Icon type="User" />
       <span
         className={`${props.isDeleted ? "line-through" : ""} text-sm font-mono`}
       >
@@ -36,7 +34,11 @@ export default function MemberItem(props: AddressWithFlags) {
         type="button"
         className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5 ml-auto"
       >
-        {props.isAdded || props.isDeleted ? <CgUndo /> : <IoClose />}
+        {props.isAdded || props.isDeleted ? (
+          <Icon type="Undo" />
+        ) : (
+          <Icon type="Close" />
+        )}
       </button>
     </li>
   );

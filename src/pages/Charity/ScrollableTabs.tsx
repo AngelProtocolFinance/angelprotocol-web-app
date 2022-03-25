@@ -1,9 +1,6 @@
+import Icon from "components/Icons/Icons";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import { ReactNode } from "react";
-import {
-  MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
-} from "react-icons/md";
 
 const ScrollableTabs = (props: { children: ReactNode }) => {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(
@@ -21,7 +18,7 @@ const ScrollableTabs = (props: { children: ReactNode }) => {
           className="absolute top-1 left-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex hover:bg-opacity-100 w-10 h-10 flex rounded-full items-center justify-center group"
           onClick={backward}
         >
-          <MdOutlineArrowBackIosNew className="text-white text-2xl" />
+          <Icon type="Back" className="text-white text-2xl" />
         </button>
       )}
       {showForward && (
@@ -29,7 +26,7 @@ const ScrollableTabs = (props: { children: ReactNode }) => {
           onClick={forward}
           className="absolute top-1 right-0 p-1 bg-blue-accent bg-opacity-50 group-hover:flex hover:bg-opacity-100 w-10 h-10 flex rounded-full items-center justify-center group"
         >
-          <MdOutlineArrowForwardIos className="text-white text-2xl " />
+          <Icon type="Forward" className="text-white text-2xl " />
         </button>
       )}
     </ul>

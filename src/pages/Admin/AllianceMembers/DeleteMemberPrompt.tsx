@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useSetModal } from "components/Modal/Modal";
-import { IoClose } from "react-icons/io5";
 import { MemberDetails } from "services/aws/alliance/types";
 import { useRemoveMemberMutation } from "services/aws/alliance/alliance";
+import { useSetModal } from "components/Modal/Modal";
+import Icon from "components/Icons/Icons";
 
 export default function DeleteMemberPrompt(props: MemberDetails) {
   const { hideModal } = useSetModal();
@@ -29,7 +29,7 @@ export default function DeleteMemberPrompt(props: MemberDetails) {
   return (
     <div className="p-4 grid place-items-center content-center bg-white-grey w-full max-w-xs min-h-115 rounded-xl shadow-lg overflow-hidden relative">
       <button className="absolute top-3 right-3" onClick={hideModal}>
-        <IoClose className="text-angel-grey" />
+        <Icon type="Close" className="text-angel-grey" />
       </button>
       <p className="text-angel-grey">Are you sure you want to delete</p>
       <p>

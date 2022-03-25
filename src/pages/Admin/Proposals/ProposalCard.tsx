@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
 import { Proposal } from "services/terra/admin/types";
 import toCurrency from "helpers/toCurrency";
-import useProposalDetails from "./useProposalDetails";
+import Icon from "components/Icons/Icons";
 import { admin } from "constants/routes";
+import useProposalDetails from "./useProposalDetails";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 
@@ -61,7 +61,7 @@ export default function ProposalCard(props: Proposal) {
             <span className="font-heading uppercase text-2xs mr-0.5">
               at block
             </span>
-            <SiHiveBlockchain className="mr-2" />
+            <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
               {toCurrency(expiry, 0)}
             </span>
@@ -73,7 +73,7 @@ export default function ProposalCard(props: Proposal) {
             voting ends after
           </p>
           <p className="flex items-center justify-end">
-            <SiHiveBlockchain className="mr-2" />
+            <Icon type="Blockchain" className="mr-2" />
             <span className="font-heading text-sm">
               {toCurrency(remainingBlocks, 0)}
             </span>

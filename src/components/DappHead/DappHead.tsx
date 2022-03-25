@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { FiMenu } from "react-icons/fi";
-import { IoClose } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
@@ -10,6 +8,7 @@ import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import { site } from "constants/routes";
 import MobileDappNav from "./MobileDappNav";
 import DappMenu from "./DappMenu";
+import Icon from "components/Icons/Icons";
 
 export default function DappHead() {
   useProviderSwitcher();
@@ -31,9 +30,9 @@ export default function DappHead() {
       </div>
       <button className={`text-white-grey ml-2 lg:hidden`} onClick={toggleNav}>
         {navShown ? (
-          <IoClose className="text-2xl" />
+          <Icon type="Close" className="text-2xl" />
         ) : (
-          <FiMenu className="text-2xl" />
+          <Icon type="Menu" className="text-2xl" />
         )}
       </button>
       {navShown && <MobileDappNav />}

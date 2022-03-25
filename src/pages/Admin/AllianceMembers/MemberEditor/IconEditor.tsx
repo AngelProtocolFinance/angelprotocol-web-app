@@ -1,11 +1,10 @@
 import React from "react";
 import { IconType } from "react-icons";
-import { CgUndo } from "react-icons/cg";
-import { AiOutlineUpload } from "react-icons/ai";
 import { useFormContext } from "react-hook-form";
 import useImageEditor from "hooks/useImageEditor";
 import { ErrorMessage } from "@hookform/error-message";
 import { MemberEditValues as V } from "./schema";
+import { getIcon } from "components/Icons/Icons";
 
 export default function IconEditor() {
   const {
@@ -34,13 +33,13 @@ export default function IconEditor() {
           <ImageControl
             type="upload"
             htmlFor="file__image"
-            Icon={AiOutlineUpload}
+            Icon={getIcon("Upload")}
             disabled={loading}
           />
           <ImageControl
             type="reset"
             onClick={handleImageReset}
-            Icon={CgUndo}
+            Icon={getIcon("Undo")}
             disabled={isInitial || loading}
           />
           <input

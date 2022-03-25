@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
 import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
 import { site, app } from "constants/routes";
 import useEditForm from "./useEditForm";
+import Icon from "components/Icons/Icons";
 
 export default function EditForm() {
   const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();
@@ -15,7 +15,7 @@ export default function EditForm() {
         to={`${site.app}/${app.charity}/${endowment_addr}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
       >
-        <BiArrowBack size={15} /> back to profile
+        <Icon type="ArrowBack" size={15} /> back to profile
       </Link>
 
       <p className="text-xs font-heading font-semibold uppercase text-white text-opacity-100 mb-2">

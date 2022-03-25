@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 import { HoldingSummary } from "../types";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
+import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
@@ -24,11 +24,7 @@ export default function Summary(props: HoldingSummary) {
   return (
     <div className="grid grid-rows-a1a rounded-md text-white text-opacity-80 shadow-inner bg-white bg-opacity-10 p-4">
       <h3 className="text-lg w-full font-bold uppercase flex items-center justify-self-start">
-        <FaCog
-          size={16}
-          className="mr-1 text-grey-accent"
-          title="Coming Soon!"
-        />
+        <Icon type="Cog" size={16} className="mr-1 text-grey-accent" />
         <span>{title}</span>
         {props.opener !== undefined && (
           <button

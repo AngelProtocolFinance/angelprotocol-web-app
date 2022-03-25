@@ -1,8 +1,8 @@
-import { AiOutlineEdit } from "react-icons/ai";
 import { MemberDetails } from "services/aws/alliance/types";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { useSetModal } from "components/Modal/Modal";
 import TableSection, { Cells } from "components/TableSection/TableSection";
+import Icon from "components/Icons/Icons";
 import MemberEditor from "./MemberEditor/MemberEditor";
 import MemberForm from "./MemberEditor/MemberForm";
 
@@ -52,7 +52,7 @@ export default function MembersTable(props: { members: MemberDetails[] }) {
               className="group-hover:visible invisible active:text-red-400 mr-4"
               onClick={showMemberEditor(member)}
             >
-              <AiOutlineEdit size={20} />
+              <Icon type="Edit" size={20} />
             </button>
           </Cells>
         ))}

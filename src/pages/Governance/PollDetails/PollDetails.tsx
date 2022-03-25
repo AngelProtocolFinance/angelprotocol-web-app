@@ -1,12 +1,10 @@
-import { useParams } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
+import { useParams, Link } from "react-router-dom";
 import { PollStatus } from "services/terra/gov/types";
 import idParamToNumber from "helpers/idParamToNum";
+import Icon from "components/Icons/Icons";
+import { app, site } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
-import { Link } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
-import { app, site } from "constants/routes";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();
@@ -18,7 +16,7 @@ export default function PollDetails() {
         to={`${site.app}/${app.govern}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
-        <BiArrowBack size={15} /> back to proposals
+        <Icon type="ArrowBack" size={15} /> back to proposals
       </Link>
       <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
@@ -52,7 +50,7 @@ export default function PollDetails() {
               <span className="text-xs font-heading uppercase">
                 block height
               </span>
-              <SiHiveBlockchain className="mx-2" />
+              <Icon type="Blockchain" className="mx-2" />
               <span className="font-heading text-sm">{details.end_height}</span>
             </p>
           </div>
