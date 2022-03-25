@@ -1,54 +1,33 @@
-import { WalletProvider as TerraProvider } from "@terra-money/wallet-provider";
+import {
+  Connection,
+  ConnectType,
+  WalletProvider as TerraProvider,
+} from "@terra-money/wallet-provider";
+import { createContext, PropsWithChildren } from "react";
 import Loader from "../../components/Loader/Loader";
-import { createContext, PropsWithChildren, useCallback, useMemo } from "react";
-import { DEFAULT_WALLET, WalletConnectionType, WalletProxy } from "./types";
 import useChainOptions from "./useChainOptions";
-import useWalletProxy from "./useWalletProxy";
+import useWalletProxy, { DEFAULT_WALLET, WalletProxy } from "./useWalletProxy";
 
-type IWalletContext = Omit<WalletProxy, "connect"> & {
-  connect: (connType: WalletConnectionType) => Promise<void>;
+type ConnectionType =
+  | ConnectType.EXTENSION
+  | ConnectType.WALLETCONNECT
+  | "METAMASK";
+
+type IWalletContext = {
+  wallet: WalletProxy;
+  availableConnections: Connection[];
 };
+
+const DEFAULT_AVAIL_CONNECTIONS: Connection[] = [];
 
 export const WalletContext = createContext<IWalletContext>({
   wallet: DEFAULT_WALLET,
-  isLoading: false,
-  isConnected: false,
-  connect: (_: WalletConnectionType) => new Promise((r) => r),
-  disconnect: () => new Promise((r) => r),
+  availableConnections: DEFAULT_AVAIL_CONNECTIONS,
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const { chainOptions, isLoading: isLoadingChainOptions } = useChainOptions();
-  const {
-    wallet,
-    connect,
-    disconnect,
-    isLoading: isLoadingWallet,
-    isConnected,
-  } = useWalletProxy();
-
-  const connectWallet = useCallback(
-    async (connType: WalletConnectionType) => {
-      if (isLoadingWallet) {
-        return;
-      }
-
-      await connect(connType);
-    },
-    [connect, isLoadingWallet]
-  );
-
-  const disconnectWallet = useCallback(async () => {
-    if (isLoadingWallet) {
-      return;
-    }
-    await disconnect();
-  }, [disconnect, isLoadingWallet]);
-
-  const isLoading = useMemo(
-    () => isLoadingChainOptions && isLoadingWallet,
-    [isLoadingChainOptions, isLoadingWallet]
-  );
+  const { chainOptions, isLoading } = useChainOptions();
+  const wallet = useWalletProxy();
 
   if (isLoading) {
     return (
@@ -57,15 +36,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
-    <WalletContext.Provider
-      value={{
-        wallet,
-        isLoading,
-        isConnected,
-        connect: connectWallet,
-        disconnect: disconnectWallet,
-      }}
-    >
+    <WalletContext.Provider value={wallet}>
       <TerraProvider {...chainOptions}>{props.children}</TerraProvider>
     </WalletContext.Provider>
   );

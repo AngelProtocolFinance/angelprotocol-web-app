@@ -24,7 +24,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
             .map((connection) => {
               return <TerraConnector key={connection.name} {...connection} />;
             })}
-          <EthConnector />
+          {/* <EthConnector /> */}
         </Modal>
         {availableInstallations.length > 0 && (
           <>

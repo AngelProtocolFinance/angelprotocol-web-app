@@ -1,28 +1,21 @@
-import { useWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
 import { denoms } from "constants/currency";
-import { useGetter, useSetter } from "store/accessors";
-import { resetWallet } from "services/wallet/walletSlice";
+import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
+import useWalletContext from "hooks/useWalletContext";
+import { Dwindow, TerraIdentifiers } from "providers/WalletProvider";
+import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
-import { useState } from "react";
-import Filter from "./Filter";
-import { useSetMetamask } from "providers/Metamask/Metamask";
-import { Dwindow, Providers } from "services/provider/types";
-import { TerraIdentifiers } from "services/wallet/types";
-import { DeviceType, deviceType } from "helpers/deviceType";
 
 const criterionAmount = 0.1;
-export default function Details(props: { closeHandler: () => void }) {
-  const dispatch = useSetter();
-  const { active: activeProvider } = useGetter((state) => state.provider);
-  const { disconnect: disconnectTerra, availableConnections } = useWallet();
-  const { disconnect: disconnectMetamask } = useSetMetamask();
 
+export default function Details(props: { closeHandler: () => void }) {
   const [filtered, setFilter] = useState(false);
-  const { coins, chainId, address } = useGetter((state) => state.wallet);
+  const { coins, chainId, address, disconnect, availableConnections } =
+    useWalletContext();
 
   const filtered_coins = coins.filter(
     (coin) =>
@@ -34,16 +27,6 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleFilter = () => setFilter((p) => !p);
 
   const isEmpty = filtered_coins.length <= 0;
-
-  const handleDisconnect = () => {
-    dispatch(resetWallet());
-    if (activeProvider === Providers.terra) {
-      disconnectTerra();
-    }
-    if (activeProvider === Providers.ethereum) {
-      disconnectMetamask();
-    }
-  };
 
   const isSafePal =
     availableConnections.some(
@@ -75,7 +58,7 @@ export default function Details(props: { closeHandler: () => void }) {
       )}
       {!isSafePal && (
         <button
-          onClick={handleDisconnect}
+          onClick={disconnect}
           className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
         >
           disconnect
