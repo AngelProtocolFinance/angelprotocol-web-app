@@ -35,6 +35,7 @@ import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import { BiArrowBack, BiBold, BiItalic } from "react-icons/bi";
 import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
+import { IconBaseProps } from "react-icons/lib";
 
 export type IconTypes =
   | "Discord"
@@ -78,7 +79,7 @@ export type IconTypes =
   | "ExchangeAlt"
   | "Undo";
 
-export const iconList: Record<string, IconType> = {
+export const iconList: {[key in IconTypes]: IconType} = {
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,
@@ -121,12 +122,12 @@ export const iconList: Record<string, IconType> = {
   ListUl: FaListUl,
 };
 
-interface IconProps extends React.SVGAttributes<SVGElement> {
+interface IconProps extends IconBaseProps {
   children?: React.ReactNode;
   size?: string | number;
   color?: string;
   title?: string;
-  type: string;
+  type: IconTypes;
 }
 
 export default function Icon(props: IconProps) {
@@ -136,6 +137,3 @@ export default function Icon(props: IconProps) {
 }
 
 export const getIcon = (type: IconTypes) => iconList[type];
-
-// <Icon type="Down" />
-// getIcon(Down)
