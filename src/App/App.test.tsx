@@ -6,7 +6,6 @@ import {
   StaticWalletProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
-import { testnet } from "./chains";
 import { app, site } from "constants/routes";
 import { Provider } from "react-redux";
 import { store } from "store/store";
@@ -14,6 +13,8 @@ import userEvent from "@testing-library/user-event";
 import Market from "pages/Market/Market";
 import Governance from "pages/Governance/Governance";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
+import { chainIDs } from "constants/chainIDs";
+import { terra_lcds } from "constants/urls";
 
 // define initial routes
 const routes = [
@@ -22,6 +23,12 @@ const routes = [
   `${site.app}/${app.govern}`,
   `${site.app}/${app.leaderboard}`,
 ];
+
+const testnet = {
+  name: "bombay",
+  chainID: chainIDs.testnet,
+  lcd: terra_lcds[chainIDs.testnet],
+};
 
 function Wrapper(props: { children: ReactNode }) {
   return (
