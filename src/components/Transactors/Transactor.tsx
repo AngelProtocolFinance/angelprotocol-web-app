@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { MdOutlineClose } from "react-icons/md";
 import { useSetModal } from "components/Modal/Modal";
 import { useSetter } from "store/accessors";
 import { resetTxFormState } from "services/transaction/transactionSlice";
+import Icon from "components/Icons/Icons";
 
 export default function Transactor<C>(props: TxProps<C>) {
   const dispatch = useSetter();
@@ -24,7 +24,7 @@ export default function Transactor<C>(props: TxProps<C>) {
           onClick={close}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
-          <MdOutlineClose size={25} />
+          <Icon type="Clock" size={25} />
         </button>
       )}
       <props.Content {...props.contentProps} />

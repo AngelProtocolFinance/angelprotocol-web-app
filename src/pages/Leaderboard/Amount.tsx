@@ -1,7 +1,7 @@
-import { BiInfoCircle } from "react-icons/bi";
 import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 import Summary, { SummaryProps } from "./Summary";
+import Icon from "components/Icons/Icons";
 
 type Props = {
   type: string;
@@ -20,7 +20,10 @@ export default function Amount(props: Props) {
   return (
     <div className="flex gap-0.5 items-center w-40">
       <button onClick={showSummary}>
-        <BiInfoCircle className="mt-0.5 block text-angel-blue hover:text-angel-orange" />
+        <Icon
+          type="Info"
+          className="mt-0.5 block text-angel-blue hover:text-angel-orange"
+        />
       </button>
       <p className="text-angel-grey">
         ${toCurrency(props.locked + props.liquid, 0)}

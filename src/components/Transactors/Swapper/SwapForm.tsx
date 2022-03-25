@@ -1,9 +1,9 @@
-import { CgArrowsExchangeAltV } from "react-icons/cg";
 import { Fee, Commission, SwapRate } from "./Misc";
 import Status from "../Status";
 import Output from "./Output";
 import Amount from "./Amount";
 import useSwap from "./useSwap";
+import Icon from "components/Icons/Icons";
 
 export default function SwapForm() {
   const { swap, isFormLoading, isSubmitDisabled, switchCurrency } = useSwap();
@@ -20,7 +20,7 @@ export default function SwapForm() {
         className="text-blue-accent active:text-angel-blue hover:text-angel-blue justify-self-center my-3"
         onClick={switchCurrency}
       >
-        <CgArrowsExchangeAltV className="text-3xl" />
+        <Icon type="ExchangeAlt" className="text-3xl" />
       </button>
       <Output />
       <SwapRate />

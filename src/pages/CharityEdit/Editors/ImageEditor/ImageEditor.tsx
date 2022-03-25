@@ -1,8 +1,7 @@
+import { getIcon } from "components/Icons/Icons";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
-import { AiOutlineUpload } from "react-icons/ai";
-import { CgUndo } from "react-icons/cg";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import useChangeImage from "./useChangeImage";
 
@@ -22,13 +21,13 @@ export default function ImageEditor() {
         <ImageControl
           type="upload"
           htmlFor="file__image"
-          Icon={AiOutlineUpload}
+          Icon={getIcon("Upload")}
           disabled={loading}
         />
         <ImageControl
           type="reset"
           onClick={handleImageReset}
-          Icon={CgUndo}
+          Icon={getIcon("Undo")}
           disabled={isInitial || loading}
         />
         <input
