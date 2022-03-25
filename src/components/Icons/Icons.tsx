@@ -123,10 +123,6 @@ export const iconList: {[key in IconTypes]: IconType} = {
 };
 
 interface IconProps extends IconBaseProps {
-  children?: React.ReactNode;
-  size?: string | number;
-  color?: string;
-  title?: string;
   type: IconTypes;
 }
 
