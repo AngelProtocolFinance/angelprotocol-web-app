@@ -42,6 +42,7 @@ import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import { IconBaseProps } from "react-icons/lib";
 
 export type IconTypes =
   | "Discord"
@@ -140,11 +141,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   PieChart: GiPieChart,
 };
 
-interface IconProps extends React.SVGAttributes<SVGElement> {
-  children?: React.ReactNode;
-  size?: string | number;
-  color?: string;
-  title?: string;
+interface IconProps extends IconBaseProps {
   type: IconTypes;
 }
 
@@ -155,6 +152,3 @@ export default function Icon(props: IconProps) {
 }
 
 export const getIcon = (type: IconTypes) => iconList[type];
-
-// <Icon type="Down" />
-// getIcon(Down)
