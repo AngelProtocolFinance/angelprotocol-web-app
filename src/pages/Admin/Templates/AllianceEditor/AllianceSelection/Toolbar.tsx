@@ -1,4 +1,4 @@
-import { BiSearchAlt2 } from "react-icons/bi";
+import Icon from "components/Icons/Icons";
 export default function Toolbar(props: {
   searchText: string;
   handleSearchTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,7 +15,7 @@ export default function Toolbar(props: {
           onChange={props.handleSearchTextChange}
         />
         <label htmlFor="__allianceSearch" className="self-center">
-          <BiSearchAlt2 size={20} />
+          <Icon type="Search" size={20} />
         </label>
       </div>
     </div>

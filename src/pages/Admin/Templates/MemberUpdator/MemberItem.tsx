@@ -1,13 +1,10 @@
-import { FaUserCircle } from "react-icons/fa";
-import { CgUndo } from "react-icons/cg";
-import { GiPieChart } from "react-icons/gi";
-import { IoClose } from "react-icons/io5";
 import { useSetter } from "store/accessors";
 import {
   undoAddMember,
   toggleDeleteExistingMember,
   MemberCopy,
 } from "services/admin/apCW4Members";
+import Icon from "components/Icons/Icons";
 
 export default function MemberItem(props: MemberCopy) {
   const dispatch = useSetter();
@@ -26,7 +23,7 @@ export default function MemberItem(props: MemberCopy) {
         props.is_added ? "bg-green-400 bg-opacity-30" : ""
       } rounded-md p-2 w-full`}
     >
-      <FaUserCircle />
+      <Icon type="User" />
       <span
         className={`${
           props.is_deleted ? "line-through" : ""
@@ -34,14 +31,18 @@ export default function MemberItem(props: MemberCopy) {
       >
         {props.addr}
       </span>
-      <GiPieChart className="ml-auto" />
+      <Icon type="PieChart" className="ml-auto" />
       <span> {props.weight}</span>
       <button
         onClick={memberItemAction}
         type="button"
         className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5"
       >
-        {props.is_added || props.is_deleted ? <CgUndo /> : <IoClose />}
+        {props.is_added || props.is_deleted ? (
+          <Icon type="Undo" />
+        ) : (
+          <Icon type="Close" />
+        )}
       </button>
     </li>
   );

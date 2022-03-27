@@ -1,5 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
@@ -9,6 +8,7 @@ import useSortTransactions, {
 } from "./useSortTransactions";
 import useDonor from "./useDonor";
 import { Transaction } from "services/aws/endowment_admin/types";
+import Icon from "components/Icons/Icons";
 
 export default function DonationsTable(props: {
   transactions: Transaction[];
@@ -98,7 +98,7 @@ function HeaderButton(
     >
       <span>{children}</span>
       {_activeSortKey === _sortKey &&
-        (_sortDirection === "asc" ? <VscTriangleUp /> : <VscTriangleDown />)}
+        (_sortDirection === "asc" ? <Icon type="Up" /> : <Icon type="Down" />)}
     </button>
   );
 }

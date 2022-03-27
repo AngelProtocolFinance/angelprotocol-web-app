@@ -1,12 +1,12 @@
 import { PropsWithChildren } from "react";
 import { useParams } from "react-router-dom";
-import { SiHiveBlockchain } from "react-icons/si";
 import { useProposal } from "services/terra/admin/queriers";
 import { EmbeddedWasmMsg } from "contracts/types";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
+import Icon from "components/Icons/Icons";
 
 export type ProposalIdParam = { id: string };
 export default function Proposal() {
@@ -29,7 +29,7 @@ export default function Proposal() {
         <DetailLabel>end time</DetailLabel>
         <p className="flex items-center font-heading text-xs uppercase mt-1 mb-6">
           <span>block height </span>
-          <SiHiveBlockchain className="mx-2" />
+          <Icon type="Blockchain" className="mx-2" />
           <span>{proposalDetails.blockHeight}</span>
         </p>
         <DetailLabel>description</DetailLabel>

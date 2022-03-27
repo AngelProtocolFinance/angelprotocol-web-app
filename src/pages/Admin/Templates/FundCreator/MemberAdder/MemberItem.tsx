@@ -1,4 +1,4 @@
-import { IoClose } from "react-icons/io5";
+import Icon from "components/Icons/Icons";
 import { removeFundMember } from "services/admin/newFundMembers";
 import { useSetter } from "store/accessors";
 export default function MemberItem(props: { address: string }) {
@@ -14,7 +14,7 @@ export default function MemberItem(props: { address: string }) {
     >
       <span>{props.address}</span>
       <button type="button" onClick={deleteSelf} className="ml-1 text-red-400">
-        <IoClose />
+        <Icon type="Close" />
       </button>
     </div>
   );

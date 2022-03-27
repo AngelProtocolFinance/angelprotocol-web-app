@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useConnectedWallet } from "@terra-money/use-wallet";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
+import Icon from "components/Icons/Icons";
 import { admin } from "constants/routes";
 import Proposer from "./Proposer";
 import Proposal from "./Proposals/Proposal";
@@ -52,7 +52,7 @@ export function GuardPrompt(props: { message: string; showLoader?: true }) {
           widthClass="w-4"
         />
       ) : (
-        <AiOutlineInfoCircle size={30} />
+        <Icon type="Info" size={30} />
       )}
       <p className="mt-2">{props.message}</p>
     </div>

@@ -1,6 +1,6 @@
+import Icon from "components/Icons/Icons";
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 
 type VoteOptionContextType = { vote: Vote };
 export default function VoteOption<T extends VoteOptionContextType>(
@@ -16,9 +16,9 @@ export default function VoteOption<T extends VoteOptionContextType>(
 
   const icon =
     props.vote === "yes" ? (
-      <AiOutlineLike className={iconClasses} />
+      <Icon type="Like" className={iconClasses} />
     ) : (
-      <AiOutlineDislike className={iconClasses} />
+      <Icon type="Dislike" className={iconClasses} />
     );
 
   return (

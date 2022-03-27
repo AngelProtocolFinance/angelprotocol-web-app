@@ -1,11 +1,8 @@
-import { CgUndo } from "react-icons/cg";
-import { IoClose } from "react-icons/io5";
-import { AiOutlineEdit } from "react-icons/ai";
+import React from "react";
 import { Cells } from "components/TableSection/TableSection";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
-
 import { AllianceMemberWithFlags } from "services/admin/allianceMembers";
-import React from "react";
+import Icon from "components/Icons/Icons";
 import useMember from "./useMember";
 
 export default function Member(props: AllianceMemberWithFlags) {
@@ -38,7 +35,7 @@ export default function Member(props: AllianceMemberWithFlags) {
             type="button"
             onClick={memberToggleEdit}
           >
-            {props.edits ? <CgUndo /> : <AiOutlineEdit />}
+            {props.edits ? <Icon type="Undo" /> : <Icon type="Edit" />}
           </Button>
         )}
         {isNotEdited && (
@@ -47,7 +44,11 @@ export default function Member(props: AllianceMemberWithFlags) {
             type="button"
             _accent="hover:text-red-400"
           >
-            {props.isAdded || props.isDeleted ? <CgUndo /> : <IoClose />}
+            {props.isAdded || props.isDeleted ? (
+              <Icon type="Undo" />
+            ) : (
+              <Icon type="Edit" />
+            )}
           </Button>
         )}
       </div>

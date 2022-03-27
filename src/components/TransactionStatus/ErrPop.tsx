@@ -1,9 +1,9 @@
-import { AiOutlineInfoCircle } from "react-icons/ai";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step, ErrorStage } from "services/transaction/types";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetModal } from "components/Modal/Modal";
 import { useSetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
 
 export default function ErrPop(props: ErrorStage) {
   if (props.step !== Step.error) throw new Error("wrong component rendered");
@@ -18,7 +18,7 @@ export default function ErrPop(props: ErrorStage) {
 
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
-      <AiOutlineInfoCircle className="text-angel-grey text-2xl mb-2 " />
+      <Icon type="Info" className="text-angel-grey text-2xl mb-2 " />
       <p className="text-center text-angel-grey mb-2 ">{message}</p>
       {chainId && txHash && (
         <a
