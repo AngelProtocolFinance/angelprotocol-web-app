@@ -47,7 +47,7 @@ export default function Member(props: AllianceMemberWithFlags) {
             {props.isAdded || props.isDeleted ? (
               <Icon type="Undo" />
             ) : (
-              <Icon type="Edit" />
+              <Icon type="Close" />
             )}
           </Button>
         )}
