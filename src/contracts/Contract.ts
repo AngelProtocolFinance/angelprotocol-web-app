@@ -13,17 +13,15 @@ import { Disconnected, TxResultFail } from "./Errors";
 import { chainIDs } from "constants/chainIDs";
 
 export default class Contract {
-  wallet?: ConnectedWallet;
   client: LCDClient;
   chainID: string;
   url: string;
   walletAddr?: AccAddress;
 
   constructor(wallet?: ConnectedWallet) {
-    this.wallet = wallet;
-    this.chainID = this.wallet?.network.chainID || chainIDs.mainnet;
+    this.chainID = wallet?.network.chainID || chainIDs.mainnet;
     this.url = terra_lcds[this.chainID];
-    this.walletAddr = this.wallet?.walletAddress;
+    this.walletAddr = wallet?.walletAddress;
     this.client = new LCDClient({
       chainID: this.chainID,
       URL: this.url,
