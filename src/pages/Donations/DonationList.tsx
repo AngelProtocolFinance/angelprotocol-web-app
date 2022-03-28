@@ -1,14 +1,14 @@
-import { useEffect, useState, useMemo } from "react";
-import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
+import Icon from "components/Icons/Icons";
+import Loader from "components/Loader/Loader";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { EndowmentAddrProps, DonationItemProps } from "./types";
-import useDonor from "./useDonor";
-import Loader from "components/Loader/Loader";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useMemo, useState } from "react";
+import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
 import { DonationTransactions } from "services/aws/endowment_admin/types";
+import { DonationItemProps, EndowmentAddrProps } from "./types";
+import useDonor from "./useDonor";
 import useSortList, { Direction } from "./useSortList";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Icon from "components/Icons/Icons";
 
 const keys: string[] = ["amount", "date", "endowment"];
 
@@ -86,7 +86,7 @@ const DonationList = (props: EndowmentAddrProps) => {
 };
 
 const DonationItemInfo = (props: DonationItemProps) => {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const data = props.item;
   const showDonor = useDonor(data.sort_key);
   const isDisabled = data.wallet_address !== wallet?.walletAddress;

@@ -1,13 +1,13 @@
 import { useSetModal } from "components/Modal/Modal";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
-import { useAirdropQuery } from "services/aws/airdrop/airdrop";
+import useWalletContext from "hooks/useWalletContext";
 import { useCallback } from "react";
-import Catcher, { Props } from "./Catcher";
+import { useAirdropQuery } from "services/aws/airdrop/airdrop";
 import Transactor, { TxProps } from "../Transactor";
+import Catcher, { Props } from "./Catcher";
 
 export default function useAirdrop() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
 
   const is_test = wallet?.network.chainID === chainIDs.testnet;

@@ -1,10 +1,10 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
 import Account from "contracts/Account";
+import useWalletContext from "hooks/useWalletContext";
 import { account_api } from "./account";
 import { holdings } from "./placeholders";
 
 export function useEndowmentHoldings(address: string, skip = false) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { useEndowmentHoldingsQuery } = account_api;
   const contract = new Account(address);
   const {

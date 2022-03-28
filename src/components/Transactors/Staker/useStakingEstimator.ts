@@ -1,22 +1,22 @@
+import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
+import { denoms } from "constants/currency";
+import Halo from "contracts/Halo";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import Halo from "contracts/Halo";
-import { denoms } from "constants/currency";
-import useDebouncer from "hooks/useDebouncer";
 // import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
-import { HaloStakingValues } from "./types";
-import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+import { useSetter } from "store/accessors";
+import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
-import processEstimateError from "helpers/processEstimateError";
-import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useEstimator() {
   const {
@@ -24,7 +24,7 @@ export default function useEstimator() {
     getValues,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);

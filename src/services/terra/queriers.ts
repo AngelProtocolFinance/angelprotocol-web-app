@@ -1,13 +1,13 @@
 /**
  * queriers are hooks that calls the API when there's no entry on cache
  */
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
+import Halo, { H, T } from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
 import { terra } from "services/terra/terra";
 import { halo_info } from "./placeholders";
 import { useContract } from "./useContract";
-import Halo, { H, T } from "contracts/Halo";
 
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;
@@ -16,7 +16,7 @@ export function useLatestBlock() {
 }
 
 export function useBalances(main: denoms, others?: denoms[]) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { useBalancesQuery } = terra;
   const {
     data = [],

@@ -1,16 +1,16 @@
-import { useMemo } from "react";
-import { useParams, Link } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { useProfileState } from "services/aws/endowments/states";
-import useDonater from "components/Transactors/Donater/useDonater";
+import Icon, { getIcon } from "components/Icons/Icons";
 import {
   DonationInfoLoader,
   DonationStatsLoader,
 } from "components/Loader/Charity";
-import { unsdgs } from "constants/unsdgs";
+import useDonater from "components/Transactors/Donater/useDonater";
 import { app, site } from "constants/routes";
+import { unsdgs } from "constants/unsdgs";
+import useWalletContext from "hooks/useWalletContext";
+import { useMemo } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useProfileState } from "services/aws/endowments/states";
 import { CharityParam } from "./types";
-import Icon, { getIcon } from "components/Icons/Icons";
 
 export function DonationInfo() {
   const { address: charity_addr } = useParams<CharityParam>();
@@ -18,7 +18,7 @@ export function DonationInfo() {
   const { profileState, isProfileLoading } = useProfileState(charity_addr!);
   const sdg = unsdgs[+profileState.un_sdg];
 
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const isCharityOwner =
     wallet && wallet.walletAddress === profileState.charity_owner;
   const stats = useMemo(() => {

@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { ethers } from "ethers";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect } from "react";
 import { Dwindow, Providers } from "services/provider/types";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -13,7 +13,7 @@ import { useSetter } from "store/accessors";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
 

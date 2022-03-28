@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { app, site } from "constants/routes";
+import useWalletContext from "hooks/useWalletContext";
+import { Link } from "react-router-dom";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 
 export default function Portal() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
   const { data, isLoading } = useLookupQuery(isTestNet);

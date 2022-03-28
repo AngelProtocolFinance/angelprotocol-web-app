@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import {
+  Coin,
   CreateTxOptions,
   Dec,
-  MsgSend,
-  Coin,
   MsgExecuteContract,
+  MsgSend,
 } from "@terra-money/terra.js";
-import { useFormContext } from "react-hook-form";
-import {
-  setFormError,
-  setFormLoading,
-  setFee,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import { Providers, Dwindow } from "services/provider/types";
-import useDebouncer from "hooks/useDebouncer";
-import Contract from "contracts/Contract";
-import Account from "contracts/Account";
-import Indexfund from "contracts/IndexFund";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import { DonateValues } from "./types";
-import processEstimateError from "helpers/processEstimateError";
+import Account from "contracts/Account";
+import Contract from "contracts/Contract";
+import Indexfund from "contracts/IndexFund";
+import { ethers } from "ethers";
 import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { Dwindow, Providers } from "services/provider/types";
+import {
+  setFee,
+  setFormError,
+  setFormLoading,
+} from "services/transaction/transactionSlice";
+import { useGetter, useSetter } from "store/accessors";
+import { DonateValues } from "./types";
 
 export default function useEstimator() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const dispatch = useSetter();
   const {
     watch,

@@ -1,12 +1,12 @@
+import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
+import useVoter from "components/Transactors/Voter/useVoter";
+import useWalletContext from "hooks/useWalletContext";
 import { ReactNode } from "react";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { PollStatus } from "services/terra/gov/types";
 import useDetails from "../usePollDetails";
-import useVoter from "components/Transactors/Voter/useVoter";
-import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 
 export default function PollAction(props: { poll_id: number }) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const details = useDetails(props.poll_id);
   const showPollEnder = usePollEnder(props.poll_id);
   const showVoter = useVoter(props.poll_id);

@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import useWalletContext from "hooks/useWalletContext";
 import { FormProvider, useForm } from "react-hook-form";
-import { Props, WithdrawValues } from "./types";
 import { schema } from "./schema";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { Props, WithdrawValues } from "./types";
 
 export default function Withdrawer(props: Props) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
