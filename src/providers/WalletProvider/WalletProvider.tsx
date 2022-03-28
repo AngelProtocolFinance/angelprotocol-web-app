@@ -20,7 +20,6 @@ export const WalletContext = createContext<IWalletContext>({
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
   const { chainOptions, isLoading } = useChainOptions();
-  const walletProxy = useWalletProxy();
 
   if (isLoading) {
     return (
@@ -29,8 +28,18 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
+    <TerraProvider {...chainOptions}>
+      <WalletProxyProvider>{props.children}</WalletProxyProvider>
+    </TerraProvider>
+  );
+}
+
+function WalletProxyProvider(props: PropsWithChildren<{}>) {
+  const walletProxy = useWalletProxy();
+
+  return (
     <WalletContext.Provider value={walletProxy}>
-      <TerraProvider {...chainOptions}>{props.children}</TerraProvider>
+      {props.children}
     </WalletContext.Provider>
   );
 }
