@@ -48,7 +48,7 @@ export const contracts: Contracts = {
     [sc.anchor_vault1]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
     [sc.anchor_vault2]: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
 
-    [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+    [sc.index_fund]: "terra1nguvmjkjxfmqggvp3datged2cx6gjf4jl9apps",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
 
     // Multisig

@@ -9,13 +9,16 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
+import { EmbeddedWasmMsg } from "contracts/types";
 import { AllianceEditValues } from "./alllianceEditSchema";
 import { proposalSuccessLink } from "../constants";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
   const wallet = useConnectedWallet();
-  const allianceMembers = useGetter((state) => state.admin.allianceMembers);
+  const { members: allianceMembers, isEditingMember } = useGetter(
+    (state) => state.admin.allianceMembers
+  );
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
@@ -26,29 +29,26 @@ export default function useEditAlliance() {
     if (!isValid) return;
 
     //check if there are changes
-    type Diffs = [string[], string[]];
-    const [toAdd, toRemove]: Diffs = allianceMembers.reduce(
-      ([toAdd, toRemove]: Diffs, member) => {
-        if (member.isAdded) {
-          toAdd.push(member.address);
-        }
-        if (member.isDeleted) {
-          toRemove.push(member.address);
-        }
-        return [toAdd, toRemove];
-      },
-      [[], []]
+    const markedMembers = allianceMembers.filter(
+      (member) => member.isAdded || member.isDeleted || member.edits
     );
 
-    if (toRemove.length <= 0 && toAdd.length <= 0) {
+    if (markedMembers.length <= 0) {
       showModal<PopupProps>(Popup, { message: "No member changes" });
       return;
     }
 
     const indexFundContract = new Indexfund(wallet);
-    const embeddedExecMsg = indexFundContract.createEmbeddedUpdateTCAMsg(
-      toAdd,
-      toRemove
+    const updateMsgs: EmbeddedWasmMsg[] = markedMembers.map(
+      ({ isAdded, isDeleted, edits, ...restMemberData }) => {
+        if (edits) {
+          return indexFundContract.createEmbeddedAAMemberEditMsg(edits);
+        }
+        return indexFundContract.createEmbeddedAAListUpdateMsg(
+          restMemberData,
+          isAdded ? "add" : "remove"
+        );
+      }
     );
 
     const adminContract = new Admin("apTeam", wallet);
@@ -59,7 +59,7 @@ export default function useEditAlliance() {
     const proposalMsg = adminContract.createProposalMsg(
       proposalTitle,
       proposalDescription,
-      [embeddedExecMsg]
+      updateMsgs
     );
 
     dispatch(
@@ -79,5 +79,5 @@ export default function useEditAlliance() {
     reset();
   }
 
-  return { editAlliance };
+  return { editAlliance, isEditingMember };
 }

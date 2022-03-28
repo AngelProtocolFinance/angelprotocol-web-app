@@ -47,7 +47,6 @@ export enum charity {
 export enum admin {
   index = "",
   charity_applications = "charity-applications",
-  alliance = "alliance",
   proposal = "proposal",
   proposals = "proposals",
   proposal_types = "proposal-types",

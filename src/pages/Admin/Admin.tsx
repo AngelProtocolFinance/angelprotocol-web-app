@@ -8,7 +8,6 @@ import Proposer from "./Proposer";
 import Proposal from "./Proposals/Proposal";
 import Proposals from "./Proposals/Proposals";
 import AdminNav from "./AdminNav";
-import AllianceMembers from "./AllianceMembers/AllianceMembers";
 import { useEffect } from "react";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useSetter } from "store/accessors";
@@ -36,7 +35,6 @@ export default function Admin() {
         <Routes>
           <Route path={`${admin.proposal}/:id`} element={<Proposal />} />
           <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
-          <Route path={admin.alliance} element={<AllianceMembers />} />
           <Route path={admin.proposals} element={<Proposals />} />
           <Route index element={<Navigate to={admin.proposals} />} />
         </Routes>
