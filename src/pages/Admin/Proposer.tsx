@@ -6,6 +6,7 @@ import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
+import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 
 export default function Proposer() {
@@ -20,6 +21,7 @@ export default function Proposer() {
         <Route path={proposal_types.create_fund} element={<FundCreator />} />
         <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
         <Route path={proposal_types.update_fund} element={<FundUpdator />} />
+        <Route path={proposal_types.config_fund} element={<FundConfigurer />} />
         <Route
           path={proposal_types.alliance_members}
           element={<AllianceEditor />}
@@ -50,7 +52,10 @@ function ProposalTypes() {
         Remove Fund
       </NavLink>
       <NavLink to={proposal_types.update_fund} className={styler}>
-        Update Fund
+        Update Fund Members
+      </NavLink>
+      <NavLink to={proposal_types.config_fund} className={styler}>
+        Update Config
       </NavLink>
       <NavLink to={proposal_types.alliance_members} className={styler}>
         Edit Alliance List

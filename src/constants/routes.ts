@@ -62,5 +62,6 @@ export enum proposal_types {
   create_fund = "create-fund",
   destroy_fund = "destroy-fund",
   update_fund = "update-fund",
+  config_fund = "config-fund",
   alliance_members = "alliance-members",
 }
