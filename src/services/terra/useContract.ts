@@ -1,10 +1,8 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { WalletProxy } from "providers/WalletProvider";
 import { useMemo } from "react";
-import {
-  useConnectedWallet,
-  ConnectedWallet,
-} from "@terra-money/wallet-provider";
 
-export function useContract<U, T extends { new (wallet?: ConnectedWallet): U }>(
+export function useContract<U, T extends { new (wallet?: WalletProxy): U }>(
   Contract: T
 ) {
   const wallet = useConnectedWallet();

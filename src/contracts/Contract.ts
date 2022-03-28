@@ -1,16 +1,16 @@
 import {
   AccAddress,
   Coin,
+  Fee,
   LCDClient,
   Msg,
-  Fee,
   TxInfo,
 } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { terra_lcds } from "constants/urls";
-import { denoms } from "constants/currency";
-import { Disconnected, TxResultFail } from "./Errors";
 import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
+import { terra_lcds } from "constants/urls";
+import { WalletProxy } from "providers/WalletProvider";
+import { Disconnected, TxResultFail } from "./Errors";
 
 export default class Contract {
   client: LCDClient;
@@ -18,7 +18,7 @@ export default class Contract {
   url: string;
   walletAddr?: AccAddress;
 
-  constructor(wallet?: ConnectedWallet) {
+  constructor(wallet?: WalletProxy) {
     this.chainID = wallet?.network.chainID || chainIDs.mainnet;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.walletAddress;

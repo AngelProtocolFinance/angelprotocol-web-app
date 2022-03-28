@@ -1,12 +1,12 @@
-import { ConnectedWallet } from "@terra-money/wallet-provider";
-import { MsgExecuteContract, Dec } from "@terra-money/terra.js";
+import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
-import Contract from "./Contract";
-import { Vote } from "./types";
+import { WalletProxy } from "providers/WalletProvider";
+import { Airdrops } from "services/aws/airdrop/types";
 import { GovState } from "services/terra/gov/types";
 import { ContractQueryArgs } from "services/terra/types";
-import { Airdrops } from "services/aws/airdrop/types";
+import Contract from "./Contract";
+import { Vote } from "./types";
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
@@ -18,7 +18,7 @@ export default class Halo extends Contract {
   gov_state: ContractQueryArgs;
   polls: ContractQueryArgs;
 
-  constructor(wallet?: ConnectedWallet) {
+  constructor(wallet?: WalletProxy) {
     super(wallet);
     this.token_address = contracts[this.chainID][sc.halo_token];
     this.gov_address = contracts[this.chainID][sc.halo_gov];

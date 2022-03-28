@@ -1,1 +1,1 @@
-export * from "./WalletProvider";
+export { WalletContext, WalletProvider } from "./WalletProvider";
