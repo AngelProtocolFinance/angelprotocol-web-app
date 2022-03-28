@@ -9,7 +9,7 @@
     "@reduxjs/toolkit": "^1.7.1",
     "@terra-money/terra.js": "^3.0.7",
     "@terra-money/wallet-provider": "^3.8.0",
-    "@testing-library/dom": "^8.11.1",
+    "@testing-library/dom": "^8.12.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
