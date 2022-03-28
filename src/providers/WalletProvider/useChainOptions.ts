@@ -3,14 +3,7 @@ import {
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
-import { chainIDs } from "../../constants/chainIDs";
-import { terra_lcds } from "../../constants/urls";
-
-const localterra = {
-  name: "localterra",
-  chainID: chainIDs.localterra,
-  lcd: terra_lcds[chainIDs.localterra],
-};
+import { localterra } from "./types";
 
 const DEFAULT_CHAIN_OPTIONS: WalletControllerChainOptions = {
   defaultNetwork: localterra,

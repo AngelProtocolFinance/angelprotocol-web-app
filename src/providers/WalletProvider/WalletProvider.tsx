@@ -1,37 +1,26 @@
 import {
-  Connection,
-  Installation,
   WalletProvider as TerraProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { createContext, PropsWithChildren } from "react";
 import Loader from "../../components/Loader/Loader";
+import { IWalletContext, localterra } from "./types";
 import useChainOptions from "./useChainOptions";
-import useWalletProxy, { DEFAULT_WALLET, WalletProxy } from "./useWalletProxy";
-
-type IWalletContext = {
-  wallet: WalletProxy;
-  status: WalletStatus;
-  availableConnections: Connection[];
-  availableInstallations: Installation[];
-  connect: (...args: any[]) => Promise<void>;
-  disconnect: () => Promise<void>;
-};
-
-const DEFAULT_AVAIL_CONNECTIONS: Connection[] = [];
+import useWalletProxy from "./useWalletProxy";
 
 export const WalletContext = createContext<IWalletContext>({
-  wallet: DEFAULT_WALLET,
+  wallet: undefined,
+  network: localterra,
   status: WalletStatus.WALLET_NOT_CONNECTED,
-  availableConnections: DEFAULT_AVAIL_CONNECTIONS,
+  availableConnections: [],
   availableInstallations: [],
-  connect: (..._: any[]) => new Promise((r) => r),
-  disconnect: () => new Promise((r) => r),
+  connect: () => {},
+  disconnect: () => {},
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
   const { chainOptions, isLoading } = useChainOptions();
-  const wallet = useWalletProxy();
+  const walletProxy = useWalletProxy();
 
   if (isLoading) {
     return (
@@ -40,7 +29,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   }
 
   return (
-    <WalletContext.Provider value={wallet}>
+    <WalletContext.Provider value={walletProxy}>
       <TerraProvider {...chainOptions}>{props.children}</TerraProvider>
     </WalletContext.Provider>
   );
