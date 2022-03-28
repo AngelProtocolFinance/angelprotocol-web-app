@@ -1,13 +1,14 @@
-import { useWallet, ConnectType } from "@terra-money/wallet-provider";
-import Backdrop from "./Backdrop";
+import { ConnectType } from "@terra-money/wallet-provider";
+import Icon from "components/Icons/Icons";
 import Modal from "components/Modal/Modal";
-import Installer from "./Installer";
+import useWalletContext from "hooks/useWalletContext";
+import Backdrop from "./Backdrop";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
-import Icon from "components/Icons/Icons";
+import Installer from "./Installer";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  let { availableConnections, availableInstallations } = useWallet();
+  let { availableConnections, availableInstallations } = useWalletContext();
 
   return (
     <>

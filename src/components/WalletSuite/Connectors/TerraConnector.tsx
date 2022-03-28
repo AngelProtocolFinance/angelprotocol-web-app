@@ -1,8 +1,5 @@
-import {
-  Connection,
-  ConnectType,
-  useWallet,
-} from "@terra-money/wallet-provider";
+import { Connection, ConnectType } from "@terra-money/wallet-provider";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
@@ -11,7 +8,7 @@ import ConnectButton from "./ConnectButton";
 
 export default function TerraConnector(props: Connection) {
   const { isUpdating } = useGetter((state) => state.wallet);
-  const { availableConnections, connect } = useWallet();
+  const { availableConnections, connect } = useWalletContext();
 
   function handleClick() {
     connect(props.type, props.identifier);
