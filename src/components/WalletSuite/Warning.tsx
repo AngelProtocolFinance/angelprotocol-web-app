@@ -1,12 +1,12 @@
 import { useSetModal } from "components/Modal/Modal";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import Icon from "components/Icons/Icons";
 
 export type Props = { text: string };
 export default function Warning(props: Props) {
   const { hideModal } = useSetModal();
   return (
     <div className="grid justify-items-center p-5 text-angel-grey">
-      <AiOutlineInfoCircle className="text-3xl  mb-2" />
+      <Icon type="Info" className="text-3xl  mb-2" />
       <p className="text-center">{props.text}</p>
       <button
         onClick={hideModal}

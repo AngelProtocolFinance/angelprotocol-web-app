@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import { HoldingSummary } from "./types";
+import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate } = useApprovedVaultsRateState();
@@ -24,7 +24,8 @@ export default function Summary(props: HoldingSummary) {
     <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 text-white/80">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
-        <FaCog
+        <Icon
+          type="Cog"
           size={16}
           className="ml-1 text-grey-accent"
           title="Coming Soon!"

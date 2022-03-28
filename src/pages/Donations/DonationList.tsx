@@ -6,9 +6,9 @@ import { EndowmentAddrProps, DonationItemProps } from "./types";
 import useDonor from "./useDonor";
 import Loader from "components/Loader/Loader";
 import { DonationTransactions } from "services/aws/endowment_admin/types";
-import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import useSortList, { Direction } from "./useSortList";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Icon from "components/Icons/Icons";
 
 const keys: string[] = ["amount", "date", "endowment"];
 
@@ -63,9 +63,9 @@ const DonationList = (props: EndowmentAddrProps) => {
                     {key}
                     {SortKey === key &&
                       (direction === Direction.Asc ? (
-                        <VscTriangleUp />
+                        <Icon type="Up" />
                       ) : (
-                        <VscTriangleDown />
+                        <Icon type="Down" />
                       ))}
                   </span>
                 </th>
