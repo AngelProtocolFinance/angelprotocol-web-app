@@ -11,7 +11,6 @@ export default function useImageCompressor() {
 
   async function resize(file: File) {
     if (!ref.current) return;
-    console.log("before: ", file);
     const resizedImage = await ref.current?.compress([file], {
       size: 2, // the max size in MB, defaults to 2MB
       quality: 1, // the quality of the image, max is 1,
@@ -20,7 +19,6 @@ export default function useImageCompressor() {
     const base64str = img.data;
     const imgExt = img.ext;
     const resizedFiile = Compress.convertBase64ToFile(base64str, imgExt);
-    console.log("after: ", resizedFiile);
     return resizedFiile;
   }
 
