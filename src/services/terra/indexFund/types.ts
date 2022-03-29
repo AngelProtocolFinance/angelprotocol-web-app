@@ -12,9 +12,9 @@ export type AllianceMembersRes = {
 export type IndexFundConfig = {
   owner: string; //"terra123abc.."
   registrar_contract: string; //"terra123abc";
-  fund_rotation: number; //10
+  fund_rotation?: number; //10
   fund_member_limit: number; //10
-  funding_goal: string; //"50000000"
+  funding_goal?: string; //"50000000"
   accepted_tokens: {
     native: string[]; //["uusd"]
     cw20: string[]; //

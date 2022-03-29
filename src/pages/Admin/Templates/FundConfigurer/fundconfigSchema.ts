@@ -1,15 +1,27 @@
+import { FundConfig } from "contracts/types";
 import { PartialRecord } from "types/types";
 import * as Yup from "yup";
 import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
-export type FundConfigValues = ProposalBase;
+export type FundConfigValues = ProposalBase & FundConfig;
 
-const fundCreatorShape: PartialRecord<
+const numberSchema = Yup.lazy((value) =>
+  value === ""
+    ? Yup.string()
+    : Yup.number()
+        .typeError("invalid: must be a number")
+        .positive("invalid: must be greater than zero ")
+);
+
+const fundConfigShape: PartialRecord<
   keyof FundConfigValues,
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,
+  funding_goal: numberSchema,
+  fund_member_limit: numberSchema,
+  fund_rotation: numberSchema,
 };
 
-export const fundCreatorSchema = Yup.object(fundCreatorShape);
+export const fundConfigSchema = Yup.object(fundConfigShape);
