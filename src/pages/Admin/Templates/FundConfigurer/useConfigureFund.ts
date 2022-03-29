@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { Dec } from "@terra-money/terra.js";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Popup from "components/Popup/Popup";
 import { useSetModal } from "components/Modal/Modal";
@@ -34,7 +35,11 @@ export default function useConfigureFund() {
     if (!indexFundConfig) return;
     setValue("fund_member_limit", indexFundConfig.fund_member_limit);
     setValue("fund_rotation", indexFundConfig.fund_rotation);
-    setValue("funding_goal", indexFundConfig.funding_goal);
+    setValue(
+      "funding_goal",
+      indexFundConfig.funding_goal &&
+        new Dec(indexFundConfig.funding_goal).div(1e6).toInt().toString()
+    );
   }, [indexFundConfig, isIndexFundConfigLoading, setValue]);
 
   async function configureFund({
@@ -51,8 +56,8 @@ export default function useConfigureFund() {
 
     const nextConfig = {
       ...fundConfig,
-      //yup schema coerces string to number, therefore, convert back to string
-      funding_goal: funding_goal && `${funding_goal}`,
+      funding_goal:
+        funding_goal && new Dec(funding_goal).mul(1e6).toInt().toString(),
     };
 
     //check for changes

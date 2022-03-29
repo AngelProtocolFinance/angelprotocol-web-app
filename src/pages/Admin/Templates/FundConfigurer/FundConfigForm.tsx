@@ -14,7 +14,12 @@ export default function FundConfigForm() {
         wide
         required
       />
-      <TextInput<FV> title="funding goal" name="funding_goal" mono />
+      <TextInput<FV>
+        title="funding goal {$}"
+        name="funding_goal"
+        mono
+        placeholder="$10,000"
+      />
       <TextInput<FV> title="fund member limit" name="fund_member_limit" mono />
       <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
 

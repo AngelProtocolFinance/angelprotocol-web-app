@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
 import Icon from "components/Icons/Icons";

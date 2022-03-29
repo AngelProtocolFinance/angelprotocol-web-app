@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {

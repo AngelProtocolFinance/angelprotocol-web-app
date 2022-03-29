@@ -12,7 +12,11 @@ const numberSchema = Yup.lazy((value) =>
     : Yup.number()
         .typeError("invalid: must be a number")
         .positive("invalid: must be greater than zero ")
+        .test("decimals", "invalid: up to 6 decimals only", test_digits)
 );
+function test_digits(number: number | undefined) {
+  return /^\d+(\.\d{1,6})?$/.test((number || "0") as string);
+}
 
 const fundConfigShape: PartialRecord<
   keyof FundConfigValues,
