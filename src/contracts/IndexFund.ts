@@ -13,6 +13,7 @@ export default class Indexfund extends Contract {
   address: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
+  config: ContractQueryArgs;
 
   constructor(wallet?: ConnectedWallet, fund_id?: number) {
     super(wallet);
@@ -27,6 +28,11 @@ export default class Indexfund extends Contract {
     this.allianceMembers = {
       address: this.address,
       msg: { alliance_members: {} },
+    };
+
+    this.config = {
+      address: this.address,
+      msg: { config: {} },
     };
   }
 

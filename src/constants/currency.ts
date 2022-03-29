@@ -102,3 +102,11 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uatom]: atom,
   [denoms.uhalo]: halo,
 };
+
+// export type CurrenytOptions = { [key in denoms]: denoms };
+// export const currencyOptions = (
+//   Object.entries(currency_text) as [denoms, denoms][]
+// ).reduce((result, [denomKey, denomVal]) => {
+//   result[denomKey] = denomVal;
+//   return result;
+// }, {} as CurrenytOptions);
