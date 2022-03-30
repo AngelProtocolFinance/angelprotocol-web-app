@@ -1,18 +1,12 @@
 import Compress from "compress.js";
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 
+const compress = new Compress();
 export default function useImageCompressor() {
-  const ref = useRef<Compress>();
-
-  useEffect(() => {
-    const compress = new Compress();
-    ref.current = compress;
-  }, []);
-
   async function resize(file: File) {
-    if (!ref.current) return;
-    const resizedImage = await ref.current?.compress([file], {
-      size: 2, // the max size in MB, defaults to 2MB
+    if (!compress) return;
+    const resizedImage = await compress?.compress([file], {
+      size: 1, // the max size in MB, defaults to 2MB
       quality: 1, // the quality of the image, max is 1,
     });
     const img = resizedImage[0];
