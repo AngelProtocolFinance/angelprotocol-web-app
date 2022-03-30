@@ -35,7 +35,7 @@ export default function Proposal() {
         <DetailLabel>description</DetailLabel>
         <p className="mb-6">{proposal.description}</p>
         <ProposalContent {...proposal} />
-        <h4 className="font-bold text-lg text-white py-2 border-b-2 border-opacity-10">
+        <h4 className="font-bold text-lg text-white py-2 border-b-2 border-white/10">
           <span className="uppercase">Votes</span>
           <span className="font-mono font-normal text-green-100 tracking-wide text-xs">
             {" "}

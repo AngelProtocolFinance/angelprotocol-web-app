@@ -44,7 +44,7 @@ export default function ProposalContent(props: Proposal) {
 
 function RawBlock(props: EmbeddedWasmMsg) {
   return (
-    <div className="bg-white bg-opacity-10 shadow-inner rounded-md p-2 my-2 text-sm">
+    <div className="bg-white/10 shadow-inner rounded-md p-2 my-2 text-sm">
       <code className="font-mono whitespace-pre">
         <span>to contract: {props.wasm.execute.contract_addr}</span>
         <br />

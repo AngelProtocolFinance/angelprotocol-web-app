@@ -5,7 +5,7 @@ import { Member } from "services/terra/admin/types";
 
 export default function MemberUpdatePreview(props: CWMemberUpdateMeta) {
   return (
-    <div className="bg-white bg-opacity-10 shadow-inner p-2 rounded-md mb-2 mt-1">
+    <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
       {props.toAdd.length > 0 && (
         <>
           <Header>members to add</Header>
@@ -29,7 +29,7 @@ export default function MemberUpdatePreview(props: CWMemberUpdateMeta) {
 
 function Header(props: PropsWithChildren<{}>) {
   return (
-    <p className="text-xs font-heading uppercase border-b border-opacity-20 mt-4 first:mt-0 mb-1 p-0.5">
+    <p className="text-xs font-heading uppercase border-b border-white/20 mt-4 first:mt-0 mb-1 p-0.5">
       {props.children}
     </p>
   );
