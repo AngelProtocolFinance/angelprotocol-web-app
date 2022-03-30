@@ -1,5 +1,5 @@
 import { useConnectedWallet, useWallet } from "@terra-money/wallet-provider";
-import { IWalletContext } from "./types";
+import { IWalletContext } from "../types";
 
 export default function useWalletProxy(): IWalletContext {
   const {
