@@ -22,9 +22,7 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   const { chainOptions, isLoading } = useChainOptions();
 
   if (isLoading) {
-    return (
-      <Loader bgColorClass="bg-angel-blue" gapClass="gap-2" widthClass="w-4" />
-    );
+    return <LoaderSection />;
   }
 
   return (
@@ -41,5 +39,13 @@ function WalletProxyProvider(props: PropsWithChildren<{}>) {
     <WalletContext.Provider value={walletProxy}>
       {props.children}
     </WalletContext.Provider>
+  );
+}
+
+function LoaderSection() {
+  return (
+    <div className="flex h-screen items-center justify-center">
+      <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
+    </div>
   );
 }
