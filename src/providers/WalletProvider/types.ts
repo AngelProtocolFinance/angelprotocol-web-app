@@ -47,8 +47,8 @@ export type WalletProxy = {
 export const DEFAULT_WALLET: WalletProxy = {
   address: "",
   network: {
-    name: chainIDs.gen_testnet,
-    chainID: chainIDs.gen_testnet,
+    name: "testnet",
+    chainID: chainIDs.testnet,
     lcd: terra_lcds[chainIDs.testnet],
   },
   connection: { type: "READONLY", name: "default", icon: "" },
