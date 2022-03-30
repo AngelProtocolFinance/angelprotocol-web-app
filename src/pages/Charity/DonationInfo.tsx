@@ -20,7 +20,7 @@ export function DonationInfo() {
 
   const { wallet } = useWalletContext();
   const isCharityOwner =
-    wallet && wallet.walletAddress === profileState.charity_owner;
+    wallet && wallet.address === profileState.charity_owner;
   const stats = useMemo(() => {
     return [
       {

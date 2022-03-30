@@ -1,23 +1,22 @@
+import { CreateTxOptions } from "@terra-money/terra.js";
 import {
-  ConnectedWallet,
   Installation,
   NetworkInfo,
   WalletStatus,
+  ConnectType as ConnectTypeTerraJs,
+  TxResult,
 } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 
 // Enum extending @terra-money/wallet-types/types > ConnectType with Torus type
-export enum ConnectType {
-  /** Terra Station Extension or compatible browser extensions */
-  EXTENSION = "EXTENSION",
-  /** Terra Station Mobile or compatible mobile wallets */
-  WALLETCONNECT = "WALLETCONNECT",
-  /** Read only mode - View an address */
-  READONLY = "READONLY",
+const ProxyConnectTypes = {
+  ...ConnectTypeTerraJs,
   /** Torus wallet */
-  TORUS = "TORUS",
-}
+  TORUS: "TORUS",
+};
+
+export type ConnectType = keyof typeof ProxyConnectTypes;
 
 // Local type version of @terra-money/wallet-types/types > Connection
 export type Connection = {
@@ -37,13 +36,25 @@ export type IWalletContext = {
   disconnect: () => void;
 };
 
-export type WalletProxy = ConnectedWallet;
-// export type WalletProxy = {
-//   connections: Connection;
-//   address: string;
-//   network: NetworkInfo;
-//   post: (tx: CreateTxOptions) => Promise<TxResult>;
-// };
+export type WalletProxy = {
+  connectType: ConnectType;
+  connection: Connection;
+  address: string;
+  network: NetworkInfo;
+  post: (txOptions: CreateTxOptions) => Promise<TxResult>;
+};
+
+export const DEFAULT_WALLET: WalletProxy = {
+  address: "",
+  network: {
+    name: chainIDs.gen_testnet,
+    chainID: chainIDs.gen_testnet,
+    lcd: terra_lcds[chainIDs.testnet],
+  },
+  connection: { type: "READONLY", name: "default", icon: "" },
+  connectType: "READONLY",
+  post: (_: CreateTxOptions) => new Promise((r) => r),
+};
 
 export const localterra: NetworkInfo = {
   name: "localterra",

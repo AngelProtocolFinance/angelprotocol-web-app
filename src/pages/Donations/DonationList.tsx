@@ -89,7 +89,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
   const { wallet } = useWalletContext();
   const data = props.item;
   const showDonor = useDonor(data.sort_key);
-  const isDisabled = data.wallet_address !== wallet?.walletAddress;
+  const isDisabled = data.wallet_address !== wallet?.address;
   return (
     <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
       <td className="py-5 pl-4">

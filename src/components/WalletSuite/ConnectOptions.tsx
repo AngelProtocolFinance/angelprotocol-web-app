@@ -1,4 +1,3 @@
-import { ConnectType } from "@terra-money/wallet-provider";
 import Icon from "components/Icons/Icons";
 import Modal from "components/Modal/Modal";
 import useWalletContext from "hooks/useWalletContext";
@@ -21,7 +20,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         </button>
         <Modal classes="absolute bg-white bg-opacity-95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableConnections
-            .filter((connection) => connection.type !== ConnectType.READONLY)
+            .filter((connection) => connection.type !== "READONLY")
             .map((connection) => {
               return <TerraConnector key={connection.name} {...connection} />;
             })}

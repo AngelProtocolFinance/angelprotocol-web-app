@@ -13,10 +13,10 @@ export default function useAirdrop() {
   const is_test = wallet?.network.chainID === chainIDs.testnet;
   const { data = [] } = useAirdropQuery(
     {
-      wallet_addr: wallet?.walletAddress!,
+      wallet_addr: wallet?.address!,
       is_test,
     },
-    { skip: wallet?.walletAddress === undefined }
+    { skip: wallet?.address === undefined }
   );
 
   const showDetails = useCallback(() => {

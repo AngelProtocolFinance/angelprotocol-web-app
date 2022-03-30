@@ -121,7 +121,7 @@ export default function useEstimator() {
             //this block won't run if wallet is not connected
             //activeProvider === Providers.none
             const contract = new Contract(wallet);
-            const sender = wallet!.walletAddress;
+            const sender = wallet!.address;
             const receiver = ap_wallets[denoms.uluna];
             const amount = new Dec(debounced_amount).mul(1e6);
 

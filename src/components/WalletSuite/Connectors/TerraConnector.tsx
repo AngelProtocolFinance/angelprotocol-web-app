@@ -1,5 +1,6 @@
-import { Connection, ConnectType } from "@terra-money/wallet-provider";
+import { ConnectType } from "@terra-money/wallet-provider";
 import useWalletContext from "hooks/useWalletContext";
+import { Connection } from "providers/WalletProvider";
 import { useEffect } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { useGetter } from "store/accessors";

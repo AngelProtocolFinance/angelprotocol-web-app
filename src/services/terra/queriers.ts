@@ -22,7 +22,7 @@ export function useBalances(main: denoms, others?: denoms[]) {
     data = [],
     isLoading,
     isFetching,
-  } = useBalancesQuery(wallet?.walletAddress, {
+  } = useBalancesQuery(wallet?.address, {
     skip: wallet === undefined,
   });
 
@@ -67,7 +67,7 @@ export function useHaloBalance() {
     {
       address: contract.token_address,
       //this query will only run if wallet is not undefined
-      msg: { balance: { address: wallet?.walletAddress } },
+      msg: { balance: { address: wallet?.address } },
     },
     { skip: wallet === undefined }
   );

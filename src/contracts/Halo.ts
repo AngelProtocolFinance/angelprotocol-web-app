@@ -27,7 +27,7 @@ export default class Halo extends Contract {
     //query args
     this.staker = {
       address: this.gov_address,
-      msg: { staker: { address: wallet?.walletAddress } },
+      msg: { staker: { address: wallet?.address } },
     };
 
     this.gov_balance = {

@@ -18,7 +18,7 @@ export default function Endowment() {
   const showWithdraw = useWithdrawer(address!);
   const { profile } = useProfile(address!);
   const { holdings } = useEndowmentHoldings(address!, profile.is_placeholder);
-  const is_owner = profile.charity_owner === wallet?.walletAddress;
+  const is_owner = profile.charity_owner === wallet?.address;
 
   return (
     <div className="grid grid-cols-2 gap-4 content-start padded-container justify-center">

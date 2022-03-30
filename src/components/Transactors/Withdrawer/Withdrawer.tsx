@@ -13,7 +13,7 @@ export default function Withdrawer(props: Props) {
       account_addr: props.account_addr,
       total_ust: 0,
       total_receive: 0,
-      beneficiary: wallet?.walletAddress ?? "",
+      beneficiary: wallet?.address ?? "",
       //metadata
     },
     resolver: yupResolver(schema),

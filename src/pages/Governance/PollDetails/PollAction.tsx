@@ -15,7 +15,7 @@ export default function PollAction(props: { poll_id: number }) {
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== PollStatus.in_progress;
-  const C = details.creator === wallet?.walletAddress;
+  const C = details.creator === wallet?.address;
   let node: ReactNode = null;
 
   //poll has ended

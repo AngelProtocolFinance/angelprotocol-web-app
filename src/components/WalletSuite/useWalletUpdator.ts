@@ -53,7 +53,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         icon: wallet.connection.icon,
         displayCoin: { amount: main, denom: denoms.uusd },
         coins: haloBalance !== 0 ? coinsWithHalo : others,
-        address: wallet.walletAddress,
+        address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
         supported_denoms: [denoms.uusd, denoms.uluna],
       })
@@ -107,7 +107,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
             icon: wallet.connection.icon,
             displayCoin: { amount: main, denom: denoms.uusd },
             coins: coins_copy,
-            address: wallet.terraAddress,
+            address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
             chainId:
               wallet.network.chainID === chainIDs.mainnet

@@ -10,7 +10,7 @@ export default function Portal() {
   //on testnet --> url resolves to endpoint/endowments/testnet
   const { data, isLoading } = useLookupQuery(isTestNet);
 
-  const endowmentAddr = data?.[wallet?.terraAddress || ""];
+  const endowmentAddr = data?.[wallet?.address || ""];
   // if (isLoading || isFetching) {
   //   //subtle skeleton
   //   return (
@@ -28,7 +28,7 @@ export default function Portal() {
         </Link>
       )}
       <Link
-        to={`${site.app}/${app.donation}/${wallet?.walletAddress}`}
+        to={`${site.app}/${app.donation}/${wallet?.address}`}
         className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY DONATIONS
