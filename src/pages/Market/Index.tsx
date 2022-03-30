@@ -27,14 +27,14 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
         </div>
         {showBack && (
           <SliderArrow
-            classes="absolute top-14 left-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
+            classes="absolute top-14 left-0 p-2 bg-blue-accent/50 group-hover:flex group-hover:bg-blue-accent/60 hover:bg-blue-accent/80 w-22 h-22 flex rounded-full items-center justify-center group"
             onClick={backward}
           />
         )}
         {showForward && (
           <button
             onClick={forward}
-            className="absolute top-14 right-0 p-2 bg-blue-accent bg-opacity-50 group-hover:flex group-hover:bg-opacity-60 hover:bg-opacity-80 w-22 h-22 flex rounded-full items-center justify-center group"
+            className="absolute top-14 right-0 p-2 bg-blue-accent/50 group-hover:flex group-hover:bg-blue-accent/60 hover:bg-blue-accent/80 w-22 h-22 flex rounded-full items-center justify-center group"
           >
             <MdOutlineArrowForwardIos className="text-white text-4xl " />
           </button>

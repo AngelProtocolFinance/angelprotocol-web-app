@@ -14,7 +14,7 @@ export default function Portal() {
   // if (isLoading || isFetching) {
   //   //subtle skeleton
   //   return (
-  //     <div className="ml-2 animate-pulse bg-angel-blue bg-opacity-20 w-28 h-6 rounded-md"></div>
+  //     <div className="ml-2 animate-pulse bg-angel-blue/20 w-28 h-6 rounded-md"></div>
   //   );
   // };
   return (

@@ -40,7 +40,6 @@ function Wrapper(props: { children: ReactNode }) {
 
 describe("<App/> renders correctly", () => {
   window.scrollTo = jest.fn();
-
   test("App renders marketplace as default route", async () => {
     render(
       <Wrapper>
@@ -55,8 +54,8 @@ describe("<App/> renders correctly", () => {
     // check for ukrain banner
     const support = "ANGEL PROTOCOL SUPPORTS";
     const ukraine = "DISPLACED UKRAINIANS.";
-    expect(screen.queryByText(support)).toBeInTheDocument();
-    expect(screen.queryByText(ukraine)).toBeInTheDocument();
+    expect(await screen.findByText(support)).toBeInTheDocument();
+    expect(await screen.findByText(ukraine)).toBeInTheDocument();
     const navItem = await screen.findByText(/Marketplace/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem.getAttribute("aria-current")).toBe("page");

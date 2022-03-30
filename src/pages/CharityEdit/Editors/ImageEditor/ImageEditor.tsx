@@ -56,7 +56,7 @@ function ImageControl(props: ControlProps & Common) {
   return React.createElement(props.type === "reset" ? "button" : "label", {
     ...valitAttrs,
     className:
-      "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent bg-opacity-90 p-2 m-1 rounded-md shadow-lg",
+      "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",
     children: <Icon />,
   });
 }
