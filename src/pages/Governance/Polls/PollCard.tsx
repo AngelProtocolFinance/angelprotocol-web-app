@@ -16,17 +16,17 @@ export default function PollCard(props: { poll_id: number }) {
   return (
     <div
       onClick={goToPollDetail}
-      className="bg-white bg-opacity-10 hover:bg-opacity-20 cursor-pointer rounded-md p-6 text-white-grey text-opacity-80 shadow-inner"
+      className="bg-white/10 hover:bg-white/20 cursor-pointer rounded-md p-6 text-white-grey text-opacity-80 shadow-inner"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
-        <p className="text-white bg-white bg-opacity-10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
+        <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
           {details.vote_ended && details.status === PollStatus.in_progress
             ? "vote period ended"
             : details.status.replace("_", " ")}
         </p>
       </div>
-      <h4 className="text-white font-bold text-lg mt-1 border-b-2 border-white-grey border-opacity-20 mb-1 pb-1 overflow-hidden">
+      <h4 className="text-white font-bold text-lg mt-1 border-b-2 border-white-grey/20 mb-1 pb-1 overflow-hidden">
         {details.title}
       </h4>
       <div className="flex gap-4 mb-10">

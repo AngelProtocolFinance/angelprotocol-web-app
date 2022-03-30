@@ -26,7 +26,7 @@ export default function PollAction(props: { poll_id: number }) {
     if (E) {
       //voting period ended
       if (V || C) {
-        node = <Action title="End poll" onClick={showPollEnder} />;
+        node = <Action onClick={showPollEnder}>End Poll</Action>;
       } else {
         node = <Text>vote period has ended</Text>;
       }
@@ -34,7 +34,7 @@ export default function PollAction(props: { poll_id: number }) {
       if (V && W) {
         node = <Text>you voted {details.vote}</Text>;
       } else {
-        node = <Action title="Vote" onClick={showVoter} />;
+        node = <Action onClick={showVoter}>Vote</Action>;
       }
       //voting period hasn't ended
     }
@@ -61,12 +61,9 @@ export default function PollAction(props: { poll_id: number }) {
 function Action(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      disabled={props.disabled}
-      onClick={(e) => !props.disabled && props.onClick && props.onClick(e)}
-      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30"
-    >
-      {props.title}
-    </button>
+      {...props}
+      className="text-xs font-bold uppercase font-heading px-6 pt-1.5 pb-1 rounded-md bg-blue-accent hover:bg-angel-blue border-2 border-white/30"
+    />
   );
 }
 

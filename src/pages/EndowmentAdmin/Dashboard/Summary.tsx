@@ -19,10 +19,10 @@ export default function Summary(props: HoldingSummary) {
   }, [vaultsRate, props.holdings]);
 
   const title =
-    props.type === "liquid" ? "Liquid Account" : "Principal Account";
+    props.type === "liquid" ? "Liquid Account" : "Endowment Account";
 
   return (
-    <div className="grid grid-rows-a1a rounded-md text-white text-opacity-80 shadow-inner bg-white bg-opacity-10 p-4">
+    <div className="grid grid-rows-a1a rounded-md text-white/80 shadow-inner bg-white/10 p-4">
       <h3 className="text-lg w-full font-bold uppercase flex items-center justify-self-start">
         <Icon type="Cog" size={16} className="mr-1 text-grey-accent" />
         <span>{title}</span>

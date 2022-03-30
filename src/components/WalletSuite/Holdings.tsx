@@ -9,7 +9,7 @@ export default function Holdings(props: { coins: Coin[] }) {
         return (
           <li
             key={denom}
-            className="p-3 grid grid-cols-aa1 border-b border-angel-grey border-opacity-10 items-center"
+            className="p-3 grid grid-cols-aa1 border-b border-angel-grey/10 items-center"
           >
             <img
               src={currency_icons[denom] || currency_icons.coin}

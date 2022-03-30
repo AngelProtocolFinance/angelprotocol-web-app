@@ -18,5 +18,5 @@ export default function MobileNav() {
 
 const styler = createNavLinkStyler(
   "uppercase text-angel-grey hover:text-angel-blue font-semibold font-heading px-2 py-1 rounded-md",
-  "bg-angel-blue bg-opacity-10 shadow-inner pointer-events-none"
+  "bg-angel-blue/10 shadow-inner pointer-events-none"
 );

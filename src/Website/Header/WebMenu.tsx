@@ -18,5 +18,5 @@ export default function WebMenu() {
 
 const styler = createNavLinkStyler(
   "hover:text-angel-orange uppercase inline-flex items-center text-angel-blue p-2 rounded-md",
-  "shadow-inner bg-angel-blue bg-opacity-10 pointer-events-none"
+  "shadow-inner bg-angel-blue/10 pointer-events-none"
 );

@@ -22,7 +22,7 @@ export default function Accepted() {
             className={`${transitionIn(
               isVisible,
               Direction.fromLeft
-            )} p-4 w-20 lg:w-40 lg:p-10 rounded-sm mb-4 lg:mb-0 bg-white  rounded-full bg-opacity-80 shadow-xl`}
+            )} p-4 w-20 lg:w-40 lg:p-10 rounded-sm mb-4 lg:mb-0 bg-white/80 rounded-full shadow-xl`}
           />
         ))}
       </div>

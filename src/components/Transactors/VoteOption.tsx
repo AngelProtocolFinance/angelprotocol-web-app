@@ -24,7 +24,7 @@ export default function VoteOption<T extends VoteOptionContextType>(
   return (
     <div className="grid place-items-center">
       <label
-        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-opacity-10 ${
+        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-light-grey/10 ${
           is_active
             ? `${
                 vote_colors[props.vote].bg

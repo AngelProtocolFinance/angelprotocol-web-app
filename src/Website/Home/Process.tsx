@@ -34,7 +34,7 @@ export default function Process() {
               key={id}
               className="grid content-start justify-items-center max-w-md lg:max-w-xs mb-16"
             >
-              <div className="bg-gray-50 bg-opacity-30 relative rounded-full shadow-lg backdrop-blur-xl">
+              <div className="bg-gray-50/30 relative rounded-full shadow-lg backdrop-blur-xl">
                 {link ? (
                   <a href={link} target="_blank" rel="noreferrer">
                     <img src={icon} alt="" className="w-14 m-8" />
