@@ -16,7 +16,7 @@ import processEstimateError from "helpers/processEstimateError";
 import extractFeeNum from "helpers/extractFeeNum";
 import useFieldsAndLimits from "./useFieldsAndLimits";
 import { VaultFieldIds, WithdrawValues, AmountInfo } from "./types";
-import { SEPARATOR } from "./constants";
+import { SEPARATOR, vaultMap } from "./constants";
 import Admin from "contracts/Admin";
 
 export default function useWithrawEstimator() {
@@ -95,7 +95,10 @@ export default function useWithrawEstimator() {
           return;
         }
 
+        //construct exec payload along with proposal preview
         const sources: Source[] = [];
+        //array format to show to voters
+        const sourcesPreview: any = [];
         const usdValues: Dec[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
@@ -109,6 +112,11 @@ export default function useWithrawEstimator() {
               vault: addr,
               locked: "0",
               liquid: fieldInput.amount.mul(1e6).div(rate).toInt().toString(),
+            });
+
+            sourcesPreview.push({
+              name: vaultMap[addr].name,
+              amount: fieldInput.amount.toInt().toString(),
             });
           }
         }
