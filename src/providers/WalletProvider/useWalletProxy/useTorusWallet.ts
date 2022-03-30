@@ -10,7 +10,7 @@ const openLogin = new OpenLogin({
   network: "testnet",
 });
 
-export default function useOpenLogin() {
+export default function useTorusWallet() {
   const user = useGetter((state) => state.user);
   const [isLoading, setLoading] = useState(true);
   const [wallet, setWallet] = useState<Wallet>();
@@ -30,7 +30,9 @@ export default function useOpenLogin() {
   useEffect(() => {
     async function initializeOpenlogin() {
       setLoading(true);
+
       await openLogin.init();
+
       // when using 'redirect' uxMode, this field will contain the private key value after redirect
       // NOTE: to successfully read this value, it is necessary to call this hook in the component
       // that is Torus is set to redirect to, otherwise this value would be empty
