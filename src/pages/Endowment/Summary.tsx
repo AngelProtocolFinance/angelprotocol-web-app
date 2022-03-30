@@ -18,7 +18,7 @@ export default function Summary(props: HoldingSummary) {
   }, [vaultsRate, props.holdings]);
 
   const title =
-    props.type === "liquid" ? "Liquid Account" : "Principal Account";
+    props.type === "liquid" ? "Liquid Account" : "Endowment Account";
 
   return (
     <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 text-white/80">

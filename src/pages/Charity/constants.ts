@@ -1,4 +1,4 @@
-import { app, site } from "constants/routes";
+import { app, charity, site } from "constants/routes";
 import { CharityNavProps } from "./types";
 
 export const charityNav: CharityNavProps[] = [
@@ -6,7 +6,7 @@ export const charityNav: CharityNavProps[] = [
     title: "overview",
     disabled: false,
     getLink: (address: string) =>
-      `${site.app}/${app.charity}/${address}/overview`,
+      `${site.app}/${app.charity}/${address}/${charity.overview}`,
     isDefault: true,
     defaultPath: (address: string) => `${site.app}/${app.charity}/${address}`,
   },
@@ -14,27 +14,28 @@ export const charityNav: CharityNavProps[] = [
     title: "endowment",
     disabled: false,
     getLink: (address: string) =>
-      `${site.app}/${app.charity}/${address}/endowment`,
+      `${site.app}/${app.charity}/${address}/${charity.endowment}`,
     defaultPath: (address: string) => `${site.app}/${app.charity}/${address}`,
   },
   {
     title: "programs",
     disabled: true,
     getLink: (address: string) =>
-      `${site.app}/${app.charity}/${address}/programs`,
+      `${site.app}/${app.charity}/${address}/${charity.programs}`,
     defaultPath: (address: string) => `${site.app}/${app.charity}/${address}`,
   },
   {
     title: "media",
     disabled: true,
-    getLink: (address: string) => `${site.app}/${app.charity}/${address}/media`,
+    getLink: (address: string) =>
+      `${site.app}/${app.charity}/${address}/${charity.media}`,
     defaultPath: (address: string) => `${site.app}/${app.charity}/${address}`,
   },
   {
     title: "governance",
     disabled: true,
     getLink: (address: string) =>
-      `${site.app}/${app.charity}/${address}/governance`,
+      `${site.app}/${app.charity}/${address}/${charity.governance}`,
     defaultPath: (address: string) => `${site.app}/${app.charity}/${address}`,
   },
 ];
