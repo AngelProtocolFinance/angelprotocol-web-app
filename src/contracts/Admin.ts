@@ -114,6 +114,7 @@ export default class Admin extends Contract {
       propose: {
         title,
         description,
+        meta,
         msgs: embeddedMsgs,
       },
     });

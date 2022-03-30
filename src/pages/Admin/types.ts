@@ -11,11 +11,19 @@ export enum proposalTypes {
   endowment_withdraw = "endowment_withdraw",
 }
 
-export type ProposalPreviews = { [key in proposalTypes]: any };
+export type ProposalMeta =
+  | {
+      type: proposalTypes.endowment_withdraw;
+      data: WithdrawMeta;
+    }
+  | {
+      type: proposalTypes.endowment_updateStatus;
+      data: any;
+    };
 
-export type SourcePreview = { vaultName: string; usdAmount: string };
-export interface WithdrawPreview {
-  totalAmount: string;
+export type SourcePreview = { vaultName: string; usdAmount: number };
+export interface WithdrawMeta {
+  totalAmount: number;
   sourcesPreview: SourcePreview[];
   beneficiary: string;
 }
