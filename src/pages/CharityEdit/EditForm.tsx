@@ -18,7 +18,7 @@ export default function EditForm() {
         <Icon type="ArrowBack" size={15} /> back to profile
       </Link>
 
-      <p className="text-xs font-heading font-semibold uppercase text-white text-opacity-100 mb-2">
+      <p className="text-xs font-heading font-semibold uppercase text-white/100 mb-2">
         Banner
       </p>
       <ImageEditor />

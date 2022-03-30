@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export default function AdminNav() {
   return (
-    <div className="flex justify-end divide-x border-opacity-80">
+    <div className="flex justify-end divide-x border-white/80">
       <NavLink end to={admin.proposals} className={styler}>
         proposals
       </NavLink>

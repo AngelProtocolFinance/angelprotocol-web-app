@@ -12,10 +12,10 @@ export default function Portal() {
   const showClaimer = useClaimer();
 
   return (
-    <div className="bg-white bg-opacity-10 shadow-inner w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
+    <div className="bg-white/10 shadow-inner w-full col-start-2 row-span-2 rounded-md p-6 pb-6 grid grid-rows-a1">
       <div className="flex flex-wrap gap-2 items-center mb-10 lg:mb-0">
         <div className="relative">
-          <div className="absolute w-full h-full border-4 border-white border-opacity-80 rounded-full animate-pulse shadow-md"></div>
+          <div className="absolute w-full h-full border-4 border-white/80 rounded-full animate-pulse shadow-md"></div>
           <img
             src={currency_icons[denoms.uhalo]}
             alt=""
@@ -23,7 +23,7 @@ export default function Portal() {
           />
         </div>
         <span className="text-6xl text-white-grey font-bold -mr-1">HALO</span>
-        <span className="sm:ml-auto text-3xl text-white-grey text-opacity-90">
+        <span className="sm:ml-auto text-3xl text-white-grey/90">
           {data && `${Number(data.stakingAPY).toFixed(2)}% APY`}
         </span>
       </div>

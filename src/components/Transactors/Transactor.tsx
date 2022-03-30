@@ -24,7 +24,7 @@ export default function Transactor<C>(props: TxProps<C>) {
           onClick={close}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
-          <Icon type="Clock" size={25} />
+          <Icon type="Close" size={25} />
         </button>
       )}
       <props.Content {...props.contentProps} />

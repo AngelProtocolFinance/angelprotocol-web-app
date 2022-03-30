@@ -4,7 +4,7 @@ export default function Toolbar(props: {
   handleSearchTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <div className="flex justify-end bg-angel-grey bg-opacity-10 p-3 sticky top-0 backdrop-filter backdrop-blur-sm">
+    <div className="flex justify-end bg-angel-grey/10 p-3 sticky top-0 backdrop-filter backdrop-blur-sm">
       <div className="flex bg-light-grey text-angel-grey shadow-inner-white-grey p-1.5 rounded-md">
         <input
           id="__allianceSearch"

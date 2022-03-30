@@ -5,7 +5,7 @@ import createNavLinkStyler from "helpers/createNavLinkStyler";
 //Will be for WebNav
 export default function MobileDappNav() {
   const styler = createNavLinkStyler(
-    "text-white hover:text-opacity-75 uppercase inline-flex items-center font-heading",
+    "text-white/75 uppercase inline-flex items-center font-heading",
     "text-angel-orange"
   );
 
