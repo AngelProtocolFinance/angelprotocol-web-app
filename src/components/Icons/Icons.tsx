@@ -79,7 +79,7 @@ export type IconTypes =
   | "ExchangeAlt"
   | "Undo";
 
-export const iconList: {[key in IconTypes]: IconType} = {
+export const iconList: { [key in IconTypes]: IconType } = {
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,
