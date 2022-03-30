@@ -179,6 +179,7 @@ module.exports = {
       brightness: ["hover", "group-hover"],
       transform: ["hover", "active"],
       padding: ["first", "last"],
+      margin: ["first"],
     },
   },
 };

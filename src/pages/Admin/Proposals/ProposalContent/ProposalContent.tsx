@@ -18,7 +18,7 @@ export default function ProposalContent(props: Proposal) {
       {props.meta && (
         <>
           <DetailLabel>content</DetailLabel>
-          <TxPreview {...JSON.parse(props.meta)} />
+          <TxPreview {...JSON.parse(props.meta || "{}")} />
         </>
       )}
 
