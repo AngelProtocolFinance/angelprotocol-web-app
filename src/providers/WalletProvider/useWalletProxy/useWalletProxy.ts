@@ -7,11 +7,11 @@ import {
 } from "@terra-money/wallet-provider";
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import { chainIDs } from "constants/chainIDs";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Connection,
   ConnectType,
-  DEFAULT_WALLET,
+  localterra,
   IWalletContext,
   WalletProxy,
 } from "../types";
@@ -34,7 +34,7 @@ export default function useWalletProxy(): IWalletContext {
     disconnect: disconnectTorus,
   } = useTorusWallet();
 
-  const [wallet, setWallet] = useState<WalletProxy>(DEFAULT_WALLET);
+  const [wallet, setWallet] = useState<WalletProxy>();
 
   const connect = useCallback(
     async (type: ConnectType, identifier: string) => {
@@ -50,6 +50,9 @@ export default function useWalletProxy(): IWalletContext {
   );
 
   const disconnect = useCallback(async () => {
+    if (!wallet) {
+      return;
+    }
     if (wallet.connectType === "TORUS") {
       await disconnectTorus();
     } else {
@@ -70,19 +73,34 @@ export default function useWalletProxy(): IWalletContext {
       const newWallet = createWalletFromTorus(walletTorus);
       setWallet(newWallet);
     } else {
-      setWallet(DEFAULT_WALLET);
+      setWallet(undefined);
     }
   }, [walletTerraJs, walletTorus]);
 
-  return {
-    connect,
-    disconnect,
-    availableConnections: getWrappedAvailableConnections(availableConnections),
-    availableInstallations,
-    status: statusTerraJs,
-    network: networkTerraJs,
-    wallet,
-  };
+  const walletProxy = useMemo(
+    () => ({
+      connect,
+      disconnect,
+      wallet,
+      availableInstallations,
+      status: wallet?.connectType !== "TORUS" ? statusTerraJs : statusTorus,
+      availableConnections:
+        getWrappedAvailableConnections(availableConnections),
+      network: wallet?.connectType !== "TORUS" ? networkTerraJs : localterra,
+    }),
+    [
+      connect,
+      disconnect,
+      availableConnections,
+      availableInstallations,
+      statusTerraJs,
+      statusTorus,
+      networkTerraJs,
+      wallet,
+    ]
+  );
+
+  return walletProxy;
 }
 
 const TORUS_CONNECTION: Connection = {
@@ -126,8 +144,6 @@ function createWalletFromTorus(torusWallet: Wallet): WalletProxy {
     post: async (txOptions: CreateTxOptions) => {
       const tx = await torusWallet.createAndSignTx(txOptions);
       const res = await torusWallet.lcd.tx.broadcast(tx);
-      console.log(res);
-
       return {
         ...txOptions,
         result: {

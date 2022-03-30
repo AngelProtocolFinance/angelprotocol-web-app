@@ -44,18 +44,6 @@ export type WalletProxy = {
   post: (txOptions: CreateTxOptions) => Promise<TxResult>;
 };
 
-export const DEFAULT_WALLET: WalletProxy = {
-  address: "",
-  network: {
-    name: "testnet",
-    chainID: chainIDs.testnet,
-    lcd: terra_lcds[chainIDs.testnet],
-  },
-  connection: { type: "READONLY", name: "default", icon: "" },
-  connectType: "READONLY",
-  post: (_: CreateTxOptions) => new Promise((r) => r),
-};
-
 export const localterra: NetworkInfo = {
   name: "localterra",
   chainID: chainIDs.localterra,
