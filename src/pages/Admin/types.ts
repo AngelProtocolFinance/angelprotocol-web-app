@@ -1,4 +1,8 @@
 import { Member } from "services/terra/admin/types";
+import {
+  EndowmentStatus,
+  EndowmentStatusStrNum,
+} from "services/terra/registrar/types";
 
 export enum proposalTypes {
   //index fund
@@ -20,7 +24,7 @@ export type ProposalMeta =
     }
   | {
       type: proposalTypes.endowment_updateStatus;
-      data: any;
+      data: EndowmentStatusMeta;
     }
   | { type: proposalTypes.adminGroup_updateMembers; data: CWMemberUpdateMeta };
 
@@ -34,4 +38,10 @@ export interface WithdrawMeta {
 export interface CWMemberUpdateMeta {
   toAdd: Member[];
   toRemove: string[];
+}
+
+export interface EndowmentStatusMeta {
+  fromStatus: keyof EndowmentStatus;
+  toStatus: EndowmentStatusStrNum;
+  beneficiary?: string;
 }

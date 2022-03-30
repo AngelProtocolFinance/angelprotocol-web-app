@@ -3,7 +3,7 @@ import { CWMemberUpdateMeta } from "pages/Admin/types";
 import { PropsWithChildren } from "react";
 import { Member } from "services/terra/admin/types";
 
-export default function MemberUpdatePreview(props: CWMemberUpdateMeta) {
+export default function MemberUpdate(props: CWMemberUpdateMeta) {
   return (
     <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
       {props.toAdd.length > 0 && (

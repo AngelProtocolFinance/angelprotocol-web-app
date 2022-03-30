@@ -17,6 +17,7 @@ import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
 import { proposalSuccessLink } from "../constants";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
@@ -50,11 +51,22 @@ export default function useUpdateStatus() {
         cleanObject(statusChangePayload, [undefined])
       );
 
+    //construct endowment payload preview
+    const statusUpdateMeta: ProposalMeta = {
+      type: proposalTypes.endowment_updateStatus,
+      data: {
+        fromStatus: data.prevStatus,
+        toStatus: data.status,
+        beneficiary: data.beneficiary,
+      },
+    };
+
     const adminContract = new Admin("apTeam", wallet);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
-      [embeddedMsg]
+      [embeddedMsg],
+      JSON.stringify(statusUpdateMeta)
     );
 
     dispatch(

@@ -1,6 +1,6 @@
 import toCurrency from "helpers/toCurrency";
 import { WithdrawMeta } from "pages/Admin/types";
-import { PropsWithChildren } from "react";
+import KeyValue from "./KeyValue";
 
 export default function WithdrawPreview(props: WithdrawMeta) {
   return (
@@ -19,18 +19,5 @@ export default function WithdrawPreview(props: WithdrawMeta) {
         <span className="font-mono text-sm">{props.beneficiary}</span>
       </KeyValue>
     </div>
-  );
-}
-
-function KeyValue({
-  _key,
-  _classes = "",
-  children,
-}: PropsWithChildren<{}> & { _key: string; _classes?: string }) {
-  return (
-    <p className={`flex items-baseline gap-2 ${_classes}`}>
-      <span className="text-xs font-heading uppercase w-48">{_key}</span>
-      {children}
-    </p>
   );
 }

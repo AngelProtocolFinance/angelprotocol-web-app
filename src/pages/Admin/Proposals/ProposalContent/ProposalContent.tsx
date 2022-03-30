@@ -3,7 +3,7 @@ import { EmbeddedWasmMsg } from "contracts/types";
 import { useState } from "react";
 import { Proposal } from "services/terra/admin/types";
 import DetailLabel from "../DetailLabel";
-import TxPreview from "./TxPreview";
+import Preview from "./Preview/Preview";
 
 export default function ProposalContent(props: Proposal) {
   const [isRawBlocksShown, setIsRawBlockShown] = useState(false);
@@ -18,7 +18,7 @@ export default function ProposalContent(props: Proposal) {
       {props.meta && (
         <>
           <DetailLabel>content</DetailLabel>
-          <TxPreview {...JSON.parse(props.meta || "{}")} />
+          <Preview {...JSON.parse(props.meta || "{}")} />
         </>
       )}
 
