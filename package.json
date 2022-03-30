@@ -30,7 +30,7 @@
     "test": "react-app-rewired test --colors",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "serve-build": "yarn dlx serve -s build -p 4200"
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200"
   },
   "eslintConfig": {
     "extends": [
@@ -91,7 +91,6 @@
     "crypto-browserify": "^3.12.0",
     "eslint": "^8.12.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-prettier": "^3.4.0",
     "postcss": "^8.4.8",
     "prettier": "^2.6.0",
