@@ -64,8 +64,8 @@ export default function PollDetails() {
         </div>
       </div>
 
-      <div className="bg-white/10 p-6 shadow-inner rounded-md text-white text-opacity-70">
-        <h3 className="uppercase text-sm text-opacity-100 font-semibold mb-6">
+      <div className="bg-white/10 p-6 shadow-inner rounded-md text-white/70">
+        <h3 className="uppercase text-sm text-white/100 font-semibold mb-6">
           Vote details
         </h3>
         <div className="grid grid-cols-3 justify-items-center mb-4">

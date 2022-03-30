@@ -22,7 +22,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b hover:bg-angel-blue hover:bg-opacity-10 cursor-pointer select-none"
+        rowClass="border-b hover:bg-angel-blue hover:bg-angel-blue/10 cursor-pointer select-none"
         onRowSelect={handleSelectRow}
         selectedRow={activeRow}
       >

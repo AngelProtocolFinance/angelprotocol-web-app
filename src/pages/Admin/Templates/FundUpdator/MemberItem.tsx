@@ -18,10 +18,8 @@ export default function MemberItem(props: AddressWithFlags) {
   return (
     <li
       className={`flex gap-1 text-angel-grey items-center ${
-        props.isDeleted ? "bg-red-400 bg-opacity-30" : ""
-      } ${
-        props.isAdded ? "bg-green-400 bg-opacity-30" : ""
-      } rounded-md p-2 w-full`}
+        props.isDeleted ? "bg-red-400/30" : ""
+      } ${props.isAdded ? "bg-green-400/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
       <span
@@ -32,7 +30,7 @@ export default function MemberItem(props: AddressWithFlags) {
       <button
         onClick={memberItemAction}
         type="button"
-        className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5 ml-auto"
+        className="bg-white/30 ml-2 rounded-md p-0.5 ml-auto"
       >
         {props.isAdded || props.isDeleted ? (
           <Icon type="Undo" />

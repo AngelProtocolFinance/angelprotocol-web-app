@@ -36,7 +36,7 @@ export default function Summary(props: HoldingSummary) {
           </button>
         )}
       </h3>
-      <p className="font-bold text-3xl md:text-4xl font-heading mt-4 mb-2 pb-4 border-b border-opacity-10 text-center">
+      <p className="font-bold text-3xl md:text-4xl font-heading mt-4 mb-2 pb-4 border-b border-white/10 text-center">
         $ {toCurrency(total_holding)}
       </p>
 

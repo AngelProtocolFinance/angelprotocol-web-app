@@ -18,7 +18,7 @@ export default function TransactionsTable(props: {
   }
 
   return (
-    <table className="mt-4 w-full text-white text-opacity-80">
+    <table className="mt-4 w-full text-white/80">
       <TableSection type="thead" rowClass="">
         <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0 text-left">
           <>Type</>
@@ -29,7 +29,7 @@ export default function TransactionsTable(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-opacity-10 hover:bg-angel-blue hover:bg-opacity-10"
+        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
         {props.transactions.map((tx) => (
           <Cells

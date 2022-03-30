@@ -24,7 +24,7 @@ const ScrollableTabs = (props: { children: ReactNode }) => {
       {showForward && (
         <button
           onClick={forward}
-          className="absolute top-1 right-0 p-1 bg-blue-accent/50 bg-opacity-50 group-hover:flex hover:bg-blue-accent/100 w-10 h-10 flex rounded-full items-center justify-center group"
+          className="absolute top-1 right-0 p-1 bg-blue-accent/50 group-hover:flex hover:bg-blue-accent/100 w-10 h-10 flex rounded-full items-center justify-center group"
         >
           <Icon type="Forward" className="text-white text-2xl " />
         </button>

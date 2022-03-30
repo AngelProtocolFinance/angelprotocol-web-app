@@ -23,13 +23,13 @@ export default function ProposalCard(props: Proposal) {
   return (
     <Link
       to={`../${admin.proposal}/${props.id}`}
-      className="bg-white bg-opacity-10 hover:bg-opacity-20 p-4 rounded-md shadow-inner"
+      className="bg-white/10 hover:bg-white/20 p-4 rounded-md shadow-inner"
     >
-      <div className="font-mono font-bold flex justify-between items-center text-white-grey text-opacity-80">
+      <div className="font-mono font-bold flex justify-between items-center text-white-grey/80">
         <p className="text-sm">ID: {props.id}</p>
         <Status status={props.status} />
       </div>
-      <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-opacity-40">
+      <p className="text-white pb-1 font-heading font-bold mt-2 border-b-2 border-white/40">
         {props.title}
       </p>
       <div className="flex justify-between mt-2 mb-6 text-sm">
@@ -53,7 +53,7 @@ export default function ProposalCard(props: Proposal) {
         />
       </div>
       {isVoteEnded ? (
-        <div className="text-white text-opacity-80">
+        <div className="text-white/80">
           <p className="font-heading uppercase text-xs text-right mb-1">
             voting period ended
           </p>
@@ -68,7 +68,7 @@ export default function ProposalCard(props: Proposal) {
           </p>
         </div>
       ) : (
-        <div className="text-white text-opacity-80">
+        <div className="text-white/80">
           <p className="font-heading uppercase text-xs text-right mb-1">
             voting ends after
           </p>
