@@ -1,5 +1,4 @@
 import Compress from "compress.js";
-// import { useEffect, useRef } from "react";
 
 const compress = new Compress();
 export default async function optimizeImage(file: File) {
