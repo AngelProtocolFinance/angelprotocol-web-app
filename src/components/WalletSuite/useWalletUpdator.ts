@@ -20,15 +20,19 @@ export default function useWalletUpdator(activeProvider: Providers) {
   //updator for terra-station and wallet connect
   useEffect(() => {
     if (activeProvider !== Providers.terra) {
+      dispatch(setIsUpdating(false));
       return;
     }
+
     if (!wallet) {
+      dispatch(setIsUpdating(false));
       return;
     }
 
     if (
       //only run this updator when wallet is terra extension or leap-wallet or wallet-connect
       !(
+        wallet.connection.identifier === TerraIdentifiers.torus ||
         wallet.connection.identifier === TerraIdentifiers.station ||
         wallet.connection.identifier === TerraIdentifiers.leap ||
         wallet.connection.identifier === TerraIdentifiers.safepal ||
@@ -37,6 +41,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     ) {
       return;
     }
+
     if (terraBalancesLoading || haloBalanceLoading) {
       dispatch(setIsUpdating(true));
       return;
