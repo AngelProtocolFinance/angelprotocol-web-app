@@ -1,5 +1,5 @@
 import { MnemonicKey, Wallet } from "@terra-money/terra.js";
-import { useLCDClient } from "@terra-money/wallet-provider";
+import { useLCDClient, WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useState } from "react";
@@ -12,7 +12,9 @@ const openLogin = new OpenLogin({
 
 export default function useTorusWallet() {
   const user = useGetter((state) => state.user);
-  const [isLoading, setLoading] = useState(true);
+  const [status, setStatus] = useState<WalletStatus>(
+    WalletStatus.WALLET_NOT_CONNECTED
+  );
   const [wallet, setWallet] = useState<Wallet>();
   const lcd = useLCDClient();
 
@@ -29,7 +31,7 @@ export default function useTorusWallet() {
 
   useEffect(() => {
     async function initializeOpenlogin() {
-      setLoading(true);
+      setStatus(WalletStatus.INITIALIZING);
 
       await openLogin.init();
 
@@ -38,8 +40,10 @@ export default function useTorusWallet() {
       // that is Torus is set to redirect to, otherwise this value would be empty
       if (openLogin.privKey) {
         handleCreateWallet(openLogin.privKey);
+        setStatus(WalletStatus.WALLET_CONNECTED);
+      } else {
+        setStatus(WalletStatus.WALLET_NOT_CONNECTED);
       }
-      setLoading(false);
     }
 
     initializeOpenlogin();
@@ -47,6 +51,8 @@ export default function useTorusWallet() {
   }, []);
 
   const connect = useCallback(async () => {
+    setStatus(WalletStatus.INITIALIZING);
+
     const loginParams = {
       relogin: true,
       extraLoginOptions: {
@@ -54,24 +60,24 @@ export default function useTorusWallet() {
       },
     };
 
-    setLoading(true);
     const loginResult = await openLogin.login(loginParams);
     if (loginResult?.privKey) {
       handleCreateWallet(loginResult.privKey);
+      setStatus(WalletStatus.WALLET_CONNECTED);
+    } else {
+      setStatus(WalletStatus.WALLET_NOT_CONNECTED);
     }
-    setLoading(false);
   }, [user.Email, handleCreateWallet]);
 
   const disconnect = useCallback(async () => {
-    setLoading(true);
     await openLogin.logout();
     setWallet(undefined);
-    setLoading(false);
+    setStatus(WalletStatus.WALLET_NOT_CONNECTED);
   }, []);
 
   return {
     wallet,
-    isLoading,
+    status,
     connect,
     disconnect,
   };
