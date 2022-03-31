@@ -1,3 +1,4 @@
+import { FundDetails } from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import {
   EndowmentStatus,
@@ -26,7 +27,8 @@ export type ProposalMeta =
       type: proposalTypes.endowment_updateStatus;
       data: EndowmentStatusMeta;
     }
-  | { type: proposalTypes.adminGroup_updateMembers; data: CWMemberUpdateMeta };
+  | { type: proposalTypes.adminGroup_updateMembers; data: CWMemberUpdateMeta }
+  | { type: proposalTypes.indexFund_createFund; data: Omit<FundDetails, "id"> };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
 export interface WithdrawMeta {

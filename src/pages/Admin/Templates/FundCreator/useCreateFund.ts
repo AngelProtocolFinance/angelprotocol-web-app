@@ -15,6 +15,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useCreateFund() {
   const wallet = useConnectedWallet();
@@ -72,11 +73,19 @@ export default function useCreateFund() {
       cleanedNewFundDetails
     );
 
+    //create proposal meta
+    const createFundMeta: ProposalMeta = {
+      type: proposalTypes.indexFund_createFund,
+      data: newFundDetails,
+    };
     //create proposal msg
     const adminContract = new Admin("apTeam", wallet);
-    const proposalMsg = adminContract.createProposalMsg(title, description, [
-      embeddedExecuteMsg,
-    ]);
+    const proposalMsg = adminContract.createProposalMsg(
+      title,
+      description,
+      [embeddedExecuteMsg],
+      JSON.stringify(createFundMeta)
+    );
 
     dispatch(
       sendTerraTx({
