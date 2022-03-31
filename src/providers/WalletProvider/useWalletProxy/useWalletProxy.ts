@@ -3,7 +3,6 @@ import {
   ConnectType as ConnectTypeTerraJs,
 } from "@terra-money/wallet-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { TerraIdentifiers } from "services/wallet/types";
 import { Connection, IWalletContext, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 import useTerraJsWallet from "./useTerraJsWallet";
@@ -60,22 +59,6 @@ export default function useWalletProxy(): IWalletContext {
       setWallet(undefined);
     }
   }, [walletTerraJs, walletTorus]);
-
-  // Automatically connect with SafePal if and when available
-  useEffect(() => {
-    async function checkSafePal() {
-      const safePal = availableConnections.find(
-        (x) => x.identifier === TerraIdentifiers.safepal
-      );
-
-      if (safePal) {
-        await disconnect();
-        await connect(safePal);
-      }
-    }
-
-    checkSafePal();
-  }, [availableConnections, connect, disconnect]);
 
   const availableWallets = useMemo(
     () => getAvailableWallets(availableConnections).concat(walletTorus),
