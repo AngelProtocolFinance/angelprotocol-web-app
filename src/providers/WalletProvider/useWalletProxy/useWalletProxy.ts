@@ -47,7 +47,7 @@ export default function useWalletProxy(): IWalletContext {
     if (!wallet) {
       return;
     }
-    if (wallet.connectType === "TORUS") {
+    if (wallet.connection.type === "TORUS") {
       await disconnectTorus();
     } else {
       disconnectTerraJs();
@@ -57,7 +57,6 @@ export default function useWalletProxy(): IWalletContext {
   useEffect(() => {
     if (walletTerraJs) {
       setWallet({
-        connectType: walletTerraJs.connectType,
         address: walletTerraJs.walletAddress,
         connection: walletTerraJs.connection,
         network: walletTerraJs.network,
@@ -93,7 +92,7 @@ export default function useWalletProxy(): IWalletContext {
       disconnect,
       wallet,
       availableInstallations,
-      status: wallet?.connectType === "TORUS" ? statusTorus : statusTerraJs,
+      status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
       availableConnections:
         getWrappedAvailableConnections(availableConnections),
       network: wallet ? wallet.network : localterra,
@@ -144,7 +143,6 @@ function createWalletFromTorus(torusWallet: Wallet): WalletProxy {
   return {
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
-    connectType: "TORUS",
     network: {
       chainID: torusWallet.lcd.config.chainID,
       lcd: torusWallet.lcd.config.URL,

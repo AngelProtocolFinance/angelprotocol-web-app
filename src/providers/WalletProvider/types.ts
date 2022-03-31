@@ -39,7 +39,6 @@ export type IWalletContext = {
 };
 
 export type WalletProxy = {
-  connectType: ConnectType;
   connection: Connection;
   address: string;
   network: NetworkInfo;
