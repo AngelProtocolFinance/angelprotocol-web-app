@@ -28,7 +28,12 @@ export type ProposalMeta =
       data: EndowmentStatusMeta;
     }
   | { type: proposalTypes.adminGroup_updateMembers; data: CWMemberUpdateMeta }
-  | { type: proposalTypes.indexFund_createFund; data: Omit<FundDetails, "id"> };
+  | {
+      type:
+        | proposalTypes.indexFund_createFund
+        | proposalTypes.indexFund_removeFund;
+      data: Omit<FundDetails, "id">;
+    };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
 export interface WithdrawMeta {

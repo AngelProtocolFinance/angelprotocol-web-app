@@ -2,7 +2,7 @@ import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import { ProposalMeta, proposalTypes } from "../../../types";
 import MemberUpdate from "./MemberUpdate";
 import Withdraw from "./Withdraw";
-import CreateFund from "./CreateFund";
+import Fund from "./Fund";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -13,7 +13,9 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.adminGroup_updateMembers:
       return <MemberUpdate {...props.data} />;
     case proposalTypes.indexFund_createFund:
-      return <CreateFund {...props.data} />;
+      return <Fund {...props.data} />;
+    case proposalTypes.indexFund_removeFund:
+      return <Fund {...props.data} />;
     default:
       return <div>no preview</div>;
   }

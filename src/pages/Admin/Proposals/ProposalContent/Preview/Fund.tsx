@@ -5,7 +5,7 @@ import KeyValue from "./preview-components/KeyValue";
 import MemberItem from "./preview-components/MemberItem";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function CreateFund(props: Omit<FundDetails, "id">) {
+export default function Fund(props: Omit<FundDetails, "id">) {
   return (
     <PreviewContainer>
       <KeyValue _key="fund name">
