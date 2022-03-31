@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { endowments_api } from "./endowments";
 import { profile } from "./placeholders";

@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Vote } from "contracts/types";
 import idParamToNumber from "helpers/idParamToNum";
 import { useMemo } from "react";

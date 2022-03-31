@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useMember } from "services/terra/admin/queriers";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useEndowmentCWs } from "services/terra/account/queriers";

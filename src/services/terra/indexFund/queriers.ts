@@ -51,3 +51,16 @@ export function useAllianceMembers() {
     isAllianceMembersLoading: isLoading || isFetching,
   };
 }
+
+export function useIndexFundConfig() {
+  const { useConfigQuery } = indexFund_api;
+  const { wallet, contract } = useContract<IF, T>(Indexfund);
+  const { data, isLoading, isFetching } = useConfigQuery(contract.config, {
+    skip: wallet?.network.chainID === chainIDs.localterra,
+  });
+
+  return {
+    indexFundConfig: data,
+    isIndexFundConfigLoading: isLoading || isFetching,
+  };
+}

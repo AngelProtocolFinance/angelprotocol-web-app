@@ -14,7 +14,7 @@ export default function VoteForm() {
   return (
     <form
       onSubmit={handleSubmit(vote)}
-      className="bg-white grid p-4 rounded-md w-full max-w-lg"
+      className="bg-white-grey grid p-4 rounded-md w-full max-w-lg"
       autoComplete="off"
     >
       <Status />
