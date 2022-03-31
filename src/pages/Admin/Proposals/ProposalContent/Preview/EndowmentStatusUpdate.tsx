@@ -3,7 +3,7 @@ import {
   EndowmentStatus,
   EndowmentStatusNum,
 } from "services/terra/registrar/types";
-import KeyValue from "./KeyValue";
+import KeyValue from "./preview-components/KeyValue";
 
 export default function EndowmentStatusUpdate(props: EndowmentStatusMeta) {
   return (

@@ -32,7 +32,11 @@ import { FiMenu } from "react-icons/fi";
 import { GiPieChart } from "react-icons/gi";
 import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
+import {
+  BsHourglassSplit,
+  BsExclamationCircle,
+  BsSafeFill,
+} from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import { BiArrowBack, BiBold, BiItalic, BiSearchAlt2 } from "react-icons/bi";
@@ -90,7 +94,8 @@ export type IconTypes =
   | "Search"
   | "Edit"
   | "User"
-  | "PieChart";
+  | "PieChart"
+  | "Safe";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   ExchangeAlt: CgArrowsExchangeAltV,
@@ -139,6 +144,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Edit: AiOutlineEdit,
   User: FaUserCircle,
   PieChart: GiPieChart,
+  Safe: BsSafeFill,
 };
 
 interface IconProps extends IconBaseProps {

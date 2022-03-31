@@ -1,7 +1,6 @@
-import Icon from "components/Icons/Icons";
 import { CWMemberUpdateMeta } from "pages/Admin/types";
-import { PropsWithChildren } from "react";
-import { Member } from "services/terra/admin/types";
+import Header from "./preview-components/Header";
+import MemberItem from "./preview-components/MemberItem";
 
 export default function MemberUpdate(props: CWMemberUpdateMeta) {
   return (
@@ -25,32 +24,4 @@ export default function MemberUpdate(props: CWMemberUpdateMeta) {
       )}
     </div>
   );
-}
-
-function Header(props: PropsWithChildren<{}>) {
-  return (
-    <p className="text-xs font-heading uppercase border-b border-white/20 mt-4 first:mt-0 mb-1 p-0.5">
-      {props.children}
-    </p>
-  );
-}
-
-function MemberItem(props: { member: Member | string }) {
-  if (typeof props.member === "string") {
-    return (
-      <div className="flex items-center gap-1 p-0.5">
-        <Icon type="User" />
-        <span className="font-mono text-sm">{props.member}</span>
-      </div>
-    );
-  } else {
-    return (
-      <div className="flex items-center gap-1 p-0.5">
-        <Icon type="User" />
-        <span className="font-mono text-sm">{props.member.addr}</span>
-        <Icon type="PieChart" className="ml-2" />
-        <span>{props.member.weight}</span>
-      </div>
-    );
-  }
 }

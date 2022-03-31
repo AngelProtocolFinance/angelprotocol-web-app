@@ -1,6 +1,6 @@
 import toCurrency from "helpers/toCurrency";
 import { WithdrawMeta } from "pages/Admin/types";
-import KeyValue from "./KeyValue";
+import KeyValue from "./preview-components/KeyValue";
 
 export default function WithdrawPreview(props: WithdrawMeta) {
   return (

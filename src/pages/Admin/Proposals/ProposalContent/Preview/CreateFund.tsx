@@ -1,6 +1,8 @@
 import { FundDetails } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
-import KeyValue from "./KeyValue";
+import Header from "./preview-components/Header";
+import KeyValue from "./preview-components/KeyValue";
+import MemberItem from "./preview-components/MemberItem";
 
 export default function CreateFund(props: Omit<FundDetails, "id">) {
   return (
@@ -30,6 +32,14 @@ export default function CreateFund(props: Omit<FundDetails, "id">) {
           {getExpiry(props.expiry_time, props.expiry_height)}
         </span>
       </KeyValue>
+      {props.members.length > 0 && (
+        <>
+          <Header>fund members</Header>
+          {props.members.map((member) => (
+            <MemberItem iconType="Safe" member={member} />
+          ))}
+        </>
+      )}
     </div>
   );
 }
