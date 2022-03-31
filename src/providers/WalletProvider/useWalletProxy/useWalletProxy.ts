@@ -1,16 +1,12 @@
-import {
-  Connection as ConnectionTerraJs,
-  ConnectType as ConnectTypeTerraJs,
-} from "@terra-money/wallet-provider";
+import { ConnectType } from "@terra-money/wallet-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Connection, IWalletContext, WalletProxy } from "../types";
-import createDefaultWallet from "./createDefaultWallet";
 import useTerraJsWallet from "./useTerraJsWallet";
 import useTorusWallet from "./useTorusWallet";
 
 export default function useWalletProxy(): IWalletContext {
   const {
-    availableConnections,
+    availableWallets,
     availableInstallations,
     status: statusTerraJs,
     wallet: walletTerraJs,
@@ -32,8 +28,8 @@ export default function useWalletProxy(): IWalletContext {
         await connectTorus();
       } else {
         // if not Torus, then must be one of inherent Terra.js connect types
-        const terraJsType = connection.type as keyof typeof ConnectTypeTerraJs;
-        connectTerraJs(ConnectTypeTerraJs[terraJsType], connection.identifier);
+        const terraJsType = connection.type as keyof typeof ConnectType;
+        connectTerraJs(ConnectType[terraJsType], connection.identifier);
       }
     },
     [connectTerraJs, connectTorus]
@@ -60,18 +56,13 @@ export default function useWalletProxy(): IWalletContext {
     }
   }, [walletTerraJs, walletTorus]);
 
-  const availableWallets = useMemo(
-    () => getAvailableWallets(availableConnections).concat(walletTorus),
-    [availableConnections, walletTorus]
-  );
-
   const walletContext: IWalletContext = useMemo(
     () => ({
       connect,
       disconnect,
       wallet,
       availableInstallations,
-      availableWallets,
+      availableWallets: availableWallets.concat(walletTorus),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [
@@ -82,21 +73,9 @@ export default function useWalletProxy(): IWalletContext {
       statusTerraJs,
       statusTorus,
       wallet,
+      walletTorus,
     ]
   );
 
   return walletContext;
-}
-
-function getAvailableWallets(
-  availableConnections: ConnectionTerraJs[]
-): WalletProxy[] {
-  return availableConnections
-    .map<Connection>((conn) => ({
-      identifier: conn.identifier,
-      name: conn.name,
-      icon: conn.icon,
-      type: conn.type,
-    }))
-    .map<WalletProxy>((conn) => createDefaultWallet(conn));
 }

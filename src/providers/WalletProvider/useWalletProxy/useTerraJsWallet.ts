@@ -1,5 +1,4 @@
 import {
-  Connection,
   ConnectType,
   Installation,
   useConnectedWallet,
@@ -9,11 +8,12 @@ import {
 import { useEffect, useMemo } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { WalletProxy } from "../types";
+import createDefaultWallet from "./createDefaultWallet";
 
 type Result = {
   wallet?: WalletProxy;
   status: WalletStatus;
-  availableConnections: Connection[];
+  availableWallets: WalletProxy[];
   availableInstallations: Installation[];
   connect: (type?: ConnectType, identifier?: string) => void;
   disconnect: () => void;
@@ -37,8 +37,10 @@ export default function useTerraJsWallet() {
         network: wallet.network,
         post: wallet.post,
       },
+      availableWallets: availableConnections.map<WalletProxy>((conn) =>
+        createDefaultWallet(conn)
+      ),
       status,
-      availableConnections,
       availableInstallations,
       connect,
       disconnect,
