@@ -1,14 +1,17 @@
-import { Connection } from "providers/WalletProvider";
+import { Connection, WalletProxy } from "providers/WalletProvider";
 import { useGetter } from "store/accessors";
 import { setIcon } from "../manageIcon";
 import ConnectButton from "./ConnectButton";
 
 type Props = {
-  connection: Connection;
+  wallet: WalletProxy;
   connect: (connection: Connection) => Promise<void>;
 };
 
-export default function TerraConnector({ connection, connect }: Props) {
+export default function TerraConnector({
+  wallet: { connection },
+  connect,
+}: Props) {
   const { isUpdating } = useGetter((state) => state.wallet);
 
   async function handleClick() {

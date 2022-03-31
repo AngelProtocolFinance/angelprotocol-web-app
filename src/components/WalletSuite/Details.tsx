@@ -18,8 +18,7 @@ const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const { active: activeProvider } = useGetter((state) => state.provider);
-  const { disconnect: disconnectTerra, availableConnections } =
-    useWalletContext();
+  const { disconnect: disconnectTerra, availableWallets } = useWalletContext();
   const { disconnect: disconnectMetamask } = useSetMetamask();
 
   const [filtered, setFilter] = useState(false);
@@ -47,8 +46,8 @@ export default function Details(props: { closeHandler: () => void }) {
   };
 
   const isSafePal =
-    availableConnections.some(
-      (connection) => connection.identifier === TerraIdentifiers.safepal
+    availableWallets.some(
+      (wallet) => wallet.connection.identifier === TerraIdentifiers.safepal
     ) ||
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 

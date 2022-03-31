@@ -12,7 +12,7 @@ export const WalletContext = createContext<IWalletContext>({
   wallet: undefined,
   network: localterra,
   status: WalletStatus.WALLET_NOT_CONNECTED,
-  availableConnections: [],
+  availableWallets: [],
   availableInstallations: [],
   connect: () => new Promise((r) => r),
   disconnect: () => new Promise((r) => r),

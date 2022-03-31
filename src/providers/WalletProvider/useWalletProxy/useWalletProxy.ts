@@ -86,15 +86,14 @@ export default function useWalletProxy(): IWalletContext {
     checkSafePal();
   }, [availableConnections, connect, disconnect]);
 
-  const walletProxy = useMemo(
+  const walletContext: IWalletContext = useMemo(
     () => ({
       connect,
       disconnect,
       wallet,
       availableInstallations,
+      availableWallets: getAvailableWallets(availableConnections),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
-      availableConnections:
-        getWrappedAvailableConnections(availableConnections),
       network: wallet ? wallet.network : localterra,
     }),
     [
@@ -108,7 +107,7 @@ export default function useWalletProxy(): IWalletContext {
     ]
   );
 
-  return walletProxy;
+  return walletContext;
 }
 
 const TORUS_CONNECTION: Connection = {
@@ -118,20 +117,25 @@ const TORUS_CONNECTION: Connection = {
   icon: torusIcon,
 };
 
-function getWrappedAvailableConnections(
+function getAvailableWallets(
   availableConnections: ConnectionTerraJs[]
-): Connection[] {
+): WalletProxy[] {
   return availableConnections
-    .map(
-      (x) =>
-        ({
-          identifier: x.identifier,
-          name: x.name,
-          icon: x.icon,
-          type: x.type,
-        } as Connection)
-    )
-    .concat(TORUS_CONNECTION);
+    .map<Connection>((conn) => ({
+      identifier: conn.identifier,
+      name: conn.name,
+      icon: conn.icon,
+      type: conn.type,
+    }))
+    .concat(TORUS_CONNECTION)
+    .map<WalletProxy>((conn) => ({
+      address: "",
+      connection: conn,
+      network: localterra,
+      post: (_: CreateTxOptions) => {
+        throw Error("Not connected");
+      },
+    }));
 }
 
 function createWalletFromTorus(torusWallet: Wallet): WalletProxy {
