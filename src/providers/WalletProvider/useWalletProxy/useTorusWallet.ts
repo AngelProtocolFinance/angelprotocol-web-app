@@ -11,7 +11,6 @@ import { entropyToMnemonic } from "bip39";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useState } from "react";
-import { useGetter } from "store/accessors";
 import { Connection, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 
@@ -39,7 +38,6 @@ const TORUS_CONNECTION: Connection = {
 const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
 
 export default function useTorusWallet() {
-  const user = useGetter((state) => state.user);
   const [status, setStatus] = useState<WalletStatus>(
     WalletStatus.WALLET_NOT_CONNECTED
   );
@@ -69,11 +67,7 @@ export default function useTorusWallet() {
   const connect = useCallback(async () => {
     setStatus(WalletStatus.INITIALIZING);
 
-    const loginResult = await openLogin.login({
-      extraLoginOptions: {
-        login_hint: user.Email,
-      },
-    });
+    const loginResult = await openLogin.login();
     if (loginResult?.privKey) {
       const newWalletProxy = createWalletProxy(loginResult.privKey);
       setWalletProxy(newWalletProxy);
@@ -81,7 +75,7 @@ export default function useTorusWallet() {
     } else {
       setStatus(WalletStatus.WALLET_NOT_CONNECTED);
     }
-  }, [user.Email]);
+  }, []);
 
   const disconnect = useCallback(async () => {
     await openLogin.logout();
