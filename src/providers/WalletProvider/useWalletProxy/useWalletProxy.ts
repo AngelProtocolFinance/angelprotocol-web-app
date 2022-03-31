@@ -37,7 +37,7 @@ export default function useWalletProxy(): IWalletContext {
   const [wallet, setWallet] = useState<WalletProxy>();
 
   const connect = useCallback(
-    async (type: ConnectType, identifier: string) => {
+    async (type?: ConnectType, identifier?: string) => {
       if (type === "TORUS") {
         await connectTorus();
       } else {

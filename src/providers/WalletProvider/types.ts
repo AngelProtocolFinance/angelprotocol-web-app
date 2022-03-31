@@ -32,7 +32,7 @@ export type IWalletContext = {
   network: NetworkInfo;
   availableConnections: Connection[];
   availableInstallations: Installation[];
-  connect: (...args: any[]) => Promise<void>;
+  connect: (type?: ConnectType, identifier?: string) => Promise<void>;
   disconnect: () => Promise<void>;
 };
 
