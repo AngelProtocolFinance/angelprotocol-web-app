@@ -26,13 +26,15 @@ export type Connection = {
   icon: string;
 };
 
+export type ConnectFunction = (connection: Connection) => Promise<void>;
+
 export type IWalletContext = {
   wallet?: WalletProxy;
   status: WalletStatus;
   network: NetworkInfo;
   availableConnections: Connection[];
   availableInstallations: Installation[];
-  connect: (type?: ConnectType, identifier?: string) => Promise<void>;
+  connect: ConnectFunction;
   disconnect: () => Promise<void>;
 };
 

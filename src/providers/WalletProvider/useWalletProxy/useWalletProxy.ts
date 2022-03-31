@@ -8,13 +8,7 @@ import {
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {
-  Connection,
-  ConnectType,
-  localterra,
-  IWalletContext,
-  WalletProxy,
-} from "../types";
+import { Connection, IWalletContext, localterra, WalletProxy } from "../types";
 import useTorusWallet from "./useTorusWallet";
 
 export default function useWalletProxy(): IWalletContext {
@@ -36,13 +30,13 @@ export default function useWalletProxy(): IWalletContext {
   const [wallet, setWallet] = useState<WalletProxy>();
 
   const connect = useCallback(
-    async (type?: ConnectType, identifier?: string) => {
-      if (type === "TORUS") {
+    async (connection: Connection) => {
+      if (connection.type === "TORUS") {
         await connectTorus();
       } else {
         // if not Torus, then must be one of inherent Terra.js connect types
-        const terraJsType = type as keyof typeof ConnectTypeTerraJs;
-        connectTerraJs(ConnectTypeTerraJs[terraJsType], identifier);
+        const terraJsType = connection.type as keyof typeof ConnectTypeTerraJs;
+        connectTerraJs(ConnectTypeTerraJs[terraJsType], connection.identifier);
       }
     },
     [connectTerraJs, connectTorus]

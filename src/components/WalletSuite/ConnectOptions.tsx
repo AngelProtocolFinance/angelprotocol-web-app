@@ -7,7 +7,8 @@ import TerraConnector from "./Connectors/TerraConnector";
 import Installer from "./Installer";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  let { availableConnections, availableInstallations } = useWalletContext();
+  const { availableConnections, availableInstallations, connect } =
+    useWalletContext();
 
   return (
     <>
@@ -22,7 +23,13 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           {availableConnections
             .filter((connection) => connection.type !== "READONLY")
             .map((connection) => {
-              return <TerraConnector key={connection.name} {...connection} />;
+              return (
+                <TerraConnector
+                  key={connection.name}
+                  connection={connection}
+                  connect={connect}
+                />
+              );
             })}
           <EthConnector />
         </Modal>

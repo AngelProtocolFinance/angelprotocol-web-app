@@ -1,37 +1,38 @@
-import { ConnectType } from "@terra-money/wallet-provider";
 import useWalletContext from "hooks/useWalletContext";
-import { Connection } from "providers/WalletProvider";
+import { ConnectFunction, Connection } from "providers/WalletProvider";
 import { useEffect } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
 import { setIcon } from "../manageIcon";
 import ConnectButton from "./ConnectButton";
 
-export default function TerraConnector(props: Connection) {
+type Props = { connection: Connection; connect: ConnectFunction };
+
+export default function TerraConnector({ connection, connect }: Props) {
   const { isUpdating } = useGetter((state) => state.wallet);
-  const { availableConnections, connect } = useWalletContext();
+  const { availableConnections } = useWalletContext();
 
   function handleClick() {
-    connect(props.type, props.identifier);
-    setIcon(props.icon);
+    connect(connection);
+    setIcon(connection.icon);
   }
 
   useEffect(() => {
-    const isSafePal = availableConnections.some(
+    const safePal = availableConnections.find(
       (connection) => connection.identifier === TerraIdentifiers.safepal
     );
 
-    isSafePal && connect(ConnectType.EXTENSION, TerraIdentifiers.safepal);
+    !!safePal && connect(safePal);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [availableConnections]);
 
   return (
     <ConnectButton
       onClick={handleClick}
-      _icon={props.icon}
+      _icon={connection.icon}
       disabled={isUpdating}
     >
-      {props.name}
+      {connection.name}
     </ConnectButton>
   );
 }
