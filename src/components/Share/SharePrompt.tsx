@@ -11,7 +11,7 @@ export default function SharePrompt() {
         onClick={hideModal}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
       >
-        <Icon type="Clock" size={25} />
+        <Icon type="Close" size={25} />
       </button>
       <Share />
     </div>
