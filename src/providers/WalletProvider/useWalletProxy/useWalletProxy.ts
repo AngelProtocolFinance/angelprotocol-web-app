@@ -94,7 +94,6 @@ export default function useWalletProxy(): IWalletContext {
       availableInstallations,
       availableWallets: getAvailableWallets(availableConnections),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
-      network: wallet ? wallet.network : localterra,
     }),
     [
       connect,

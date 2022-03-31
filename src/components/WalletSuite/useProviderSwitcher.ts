@@ -18,7 +18,7 @@ export default function useProviderSwitcher() {
   const terra_chain_ref = useRef<string>(chainIDs.testnet);
 
   //terra states
-  const { status: terraStatus, network } = useWalletContext();
+  const { status: terraStatus, wallet } = useWalletContext();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
 
@@ -60,18 +60,20 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
+    const chainID = wallet?.network.chainID || chainIDs.localterra;
+
     dispatch(
       updateChainID({
         chain: chains.terra,
-        chainID: network.chainID as chainIDs,
+        chainID: chainID as chainIDs,
       })
     );
 
     //if network is changed invalidate terra services
-    if (terra_chain_ref.current !== network.chainID) {
+    if (terra_chain_ref.current !== chainID) {
       dispatch(terra.util.resetApiState());
-      terra_chain_ref.current = network.chainID;
+      terra_chain_ref.current = chainID;
     }
     //eslint-disable-next-line
-  }, [network]);
+  }, [wallet, dispatch]);
 }

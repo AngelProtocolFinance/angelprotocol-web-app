@@ -29,7 +29,6 @@ export type Connection = {
 export type IWalletContext = {
   wallet?: WalletProxy;
   status: WalletStatus;
-  network: NetworkInfo;
   availableWallets: WalletProxy[];
   availableInstallations: Installation[];
   connect: (connection: Connection) => Promise<void>;

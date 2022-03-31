@@ -4,13 +4,12 @@ import {
 } from "@terra-money/wallet-provider";
 import { createContext, PropsWithChildren } from "react";
 import Loader from "../../components/Loader/Loader";
-import { IWalletContext, localterra } from "./types";
+import { IWalletContext } from "./types";
 import useChainOptions from "./useChainOptions";
 import useWalletProxy from "./useWalletProxy";
 
 export const WalletContext = createContext<IWalletContext>({
   wallet: undefined,
-  network: localterra,
   status: WalletStatus.WALLET_NOT_CONNECTED,
   availableWallets: [],
   availableInstallations: [],
