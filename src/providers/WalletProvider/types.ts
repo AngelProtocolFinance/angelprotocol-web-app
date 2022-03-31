@@ -32,8 +32,8 @@ export type IWalletContext = {
   network: NetworkInfo;
   availableConnections: Connection[];
   availableInstallations: Installation[];
-  connect: (...args: any[]) => void;
-  disconnect: () => void;
+  connect: (...args: any[]) => Promise<void>;
+  disconnect: () => Promise<void>;
 };
 
 export type WalletProxy = {
