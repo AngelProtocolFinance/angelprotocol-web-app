@@ -35,7 +35,11 @@ export type ProposalMeta =
         | proposalTypes.indexFund_removeFund;
       data: Omit<FundDetails, "id">;
     }
-  | { type: proposalTypes.indexFund_allianceEdits; data: AllianceEditMeta };
+  | { type: proposalTypes.indexFund_allianceEdits; data: AllianceEditMeta }
+  | {
+      type: proposalTypes.indexFund_updateFundMembers;
+      data: FundMemberUpdateMeta;
+    };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
 export interface WithdrawMeta {
@@ -59,4 +63,11 @@ export interface AllianceEditMeta {
   toAddMembers: AM[];
   toRemoveMembers: AM[];
   editedMembers: AM[];
+}
+
+export interface FundMemberUpdateMeta {
+  fundId: string;
+  fundName: string;
+  toRemove: string[];
+  toAdd: string[];
 }

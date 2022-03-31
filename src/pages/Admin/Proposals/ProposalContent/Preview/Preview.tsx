@@ -1,9 +1,10 @@
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
 import { ProposalMeta, proposalTypes } from "../../../types";
-import MemberUpdate from "./MemberUpdate";
+import CWMemberUpdate from "./CWMemberUpdate";
 import Withdraw from "./Withdraw";
 import Fund from "./Fund";
 import AllianceUpdate from "./AllianceUpdate";
+import FundMemberUpdate from "./FundMemberUpdate";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -12,13 +13,15 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.endowment_updateStatus:
       return <EndowmentStatusUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateMembers:
-      return <MemberUpdate {...props.data} />;
+      return <CWMemberUpdate {...props.data} />;
     case proposalTypes.indexFund_createFund:
       return <Fund {...props.data} />;
     case proposalTypes.indexFund_removeFund:
       return <Fund {...props.data} />;
     case proposalTypes.indexFund_allianceEdits:
       return <AllianceUpdate {...props.data} />;
+    case proposalTypes.indexFund_updateFundMembers:
+      return <FundMemberUpdate {...props.data} />;
     default:
       return <div>no preview</div>;
   }
