@@ -16,7 +16,7 @@ function OverviewEditor() {
     keyBinder,
   } = useEditor();
   return (
-    <div className="text-white text-opacity-80 mb-4 p-3 rounded-md bg-white bg-opacity-10 shadow-inner">
+    <div className="text-white/80 mb-4 p-3 rounded-md bg-white/10 shadow-inner">
       <Label id="editor__" text="Overview" />
       <div className="flex gap-2 mt-2 mb-4">
         <Control Icon={getIcon("Bold")} onClick={applyInlineStyle("BOLD")} />

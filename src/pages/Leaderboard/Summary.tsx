@@ -10,7 +10,7 @@ export default function Summary(props: SummaryProps) {
       <Amount title="impact" value={props.impact} />
       <button
         onClick={hideModal}
-        className="my-4 bg-angel-blue hover:bg-opacity-90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
+        className="my-4 bg-angel-blue hover:bg-angel-blue/90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
       >
         ok
       </button>

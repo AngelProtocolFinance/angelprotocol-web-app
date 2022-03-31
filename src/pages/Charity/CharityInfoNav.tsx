@@ -28,7 +28,7 @@ export default function CharityInfoNav() {
 }
 
 const styler = createNavLinkStyler(
-  "block w-full text-dark-grey text-angel-grey hover:text-angel-orange font-semibold bg-white uppercase py-3 px-6",
+  "block w-full text-dark-grey text-angel-grey hover:text-angel-orange font-semibold uppercase py-3 px-6",
   "bg-angel-blue text-white pointer-events-none"
 );
 

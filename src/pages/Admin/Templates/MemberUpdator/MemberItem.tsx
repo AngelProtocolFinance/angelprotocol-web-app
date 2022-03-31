@@ -18,10 +18,8 @@ export default function MemberItem(props: MemberCopy) {
   return (
     <li
       className={`flex gap-1 text-angel-grey items-center ${
-        props.is_deleted ? "bg-red-400 bg-opacity-30" : ""
-      } ${
-        props.is_added ? "bg-green-400 bg-opacity-30" : ""
-      } rounded-md p-2 w-full`}
+        props.is_deleted ? "bg-red-400/30" : ""
+      } ${props.is_added ? "bg-green-400/30" : ""} rounded-md p-2 w-full`}
     >
       <Icon type="User" />
       <span
@@ -36,7 +34,7 @@ export default function MemberItem(props: MemberCopy) {
       <button
         onClick={memberItemAction}
         type="button"
-        className="bg-white bg-opacity-30 ml-2 rounded-md p-0.5"
+        className="bg-white/30 ml-2 rounded-md p-0.5"
       >
         {props.is_added || props.is_deleted ? (
           <Icon type="Undo" />

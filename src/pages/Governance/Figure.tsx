@@ -12,14 +12,14 @@ type Props = {
 export default function Figure(props: Props) {
   return (
     <div
-      className={`bg-white bg-opacity-10 shadow-inner text-angel-grey w-full rounded-md p-6 ${
+      className={`bg-white/10 shadow-inner text-angel-grey w-full rounded-md p-6 ${
         props.position || ""
       }`}
     >
       <p className="font-heading font-bold mb-1 uppercase text-white-grey">
         {props.title}
       </p>
-      <p className="text-4xl font-heading text-white-grey text-opacity-80">
+      <p className="text-4xl font-heading text-white-grey/80">
         <span className="">
           {toCurrency(props.value, props.precision || 2, true)}
         </span>

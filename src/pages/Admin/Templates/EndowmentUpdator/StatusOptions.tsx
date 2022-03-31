@@ -50,9 +50,9 @@ function StatusOption(props: { label: string; value: V["status"] }) {
         htmlFor={`__${props.value}`}
         className={`p-3 rounded-sm w-full text-center 
         uppercase text-angel-grey font-semibold cursor-pointer 
-        hover:bg-angel-blue  hover:bg-opacity-10 ${
+        hover:bg-angel-blue  hover:bg-angel-blue/10 ${
           isSelected
-            ? "bg-angel-blue bg-opacity-10 shadow-inner-white-grey pointer-events-none"
+            ? "bg-angel-blue/10 shadow-inner-white-grey pointer-events-none"
             : ""
         }`}
       >

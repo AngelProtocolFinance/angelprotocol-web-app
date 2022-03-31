@@ -13,11 +13,11 @@ export default function Member(props: AllianceMemberWithFlags) {
       type="td"
       cellClass={`p-2 ${
         props.isAdded
-          ? "bg-green-400 bg-opacity-20"
+          ? "bg-green-400/20"
           : props.isDeleted
-          ? "bg-red-400 bg-opacity-10"
+          ? "bg-red-400/10"
           : props.edits
-          ? "bg-angel-orange bg-opacity-20"
+          ? "bg-angel-orange/20"
           : ""
       }`}
     >
@@ -63,9 +63,7 @@ function Button(
   return (
     <button
       {...restProps}
-      className={
-        "bg-white bg-opacity-30 ml-2 rounded-md p-0.5 " + _accent || ""
-      }
+      className={"bg-white/30 ml-2 rounded-md p-0.5 " + _accent || ""}
     />
   );
 }

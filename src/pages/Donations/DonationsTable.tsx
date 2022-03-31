@@ -28,7 +28,7 @@ export default function DonationsTable(props: {
   }
 
   return (
-    <table className="w-full text-white text-opacity-80 border-collapse">
+    <table className="w-full text-white/80 border-collapse">
       <TableSection type="thead" rowClass="">
         <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0">
           {headers.map((header) => (
@@ -46,7 +46,7 @@ export default function DonationsTable(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-opacity-10 hover:bg-angel-blue hover:bg-opacity-10"
+        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
         {sortedTransactions.map((tx) => (
           <Cells
@@ -94,7 +94,7 @@ function HeaderButton(
   return (
     <button
       {...restProps}
-      className="w-full flex items-center justify-start gap-1 uppercase font-heading font-semibold text-sm text-opacity-100"
+      className="w-full flex items-center justify-start gap-1 uppercase font-heading font-semibold text-sm text-white/100"
     >
       <span>{children}</span>
       {_activeSortKey === _sortKey &&
