@@ -24,7 +24,6 @@ export default function useWalletProxy(): IWalletContext {
     availableConnections,
     availableInstallations,
     status: statusTerraJs,
-    network: networkTerraJs,
   } = useWallet();
   const walletTerraJs = useConnectedWallet();
   const {
@@ -83,10 +82,10 @@ export default function useWalletProxy(): IWalletContext {
       disconnect,
       wallet,
       availableInstallations,
-      status: wallet?.connectType !== "TORUS" ? statusTerraJs : statusTorus,
+      status: wallet?.connectType === "TORUS" ? statusTorus : statusTerraJs,
       availableConnections:
         getWrappedAvailableConnections(availableConnections),
-      network: wallet?.connectType !== "TORUS" ? networkTerraJs : localterra,
+      network: wallet ? wallet.network : localterra,
     }),
     [
       connect,
@@ -95,7 +94,6 @@ export default function useWalletProxy(): IWalletContext {
       availableInstallations,
       statusTerraJs,
       statusTorus,
-      networkTerraJs,
       wallet,
     ]
   );
