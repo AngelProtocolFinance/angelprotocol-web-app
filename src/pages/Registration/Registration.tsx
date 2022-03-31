@@ -60,8 +60,10 @@ const Registration = () => {
           Resume
         </Button>
       </form>
-      <p className="mt-5">
-        Can't find a registration file with this reference?
+      <p className="mt-5 italic underline">
+        <a href="#new-form">
+          Can't find a registration file with this reference?
+        </a>
       </p>
     </div>
   );
