@@ -1,15 +1,14 @@
-import { CreateTxOptions, Wallet } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import {
   Connection as ConnectionTerraJs,
   ConnectType as ConnectTypeTerraJs,
   useConnectedWallet,
   useWallet,
 } from "@terra-money/wallet-provider";
-import torusIcon from "assets/icons/wallets/torus.jpg";
-import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { Connection, IWalletContext, localterra, WalletProxy } from "../types";
+import createDefaultWallet from "./createDefaultWallet";
 import useTorusWallet from "./useTorusWallet";
 
 export default function useWalletProxy(): IWalletContext {
@@ -63,8 +62,7 @@ export default function useWalletProxy(): IWalletContext {
         post: walletTerraJs.post,
       });
     } else if (walletTorus) {
-      const newWallet = createWalletFromTorus(walletTorus);
-      setWallet(newWallet);
+      setWallet(walletTorus);
     } else {
       setWallet(undefined);
     }
@@ -92,7 +90,8 @@ export default function useWalletProxy(): IWalletContext {
       disconnect,
       wallet,
       availableInstallations,
-      availableWallets: getAvailableWallets(availableConnections),
+      availableWallets:
+        getAvailableWallets(availableConnections).concat(walletTorus),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [
@@ -109,13 +108,6 @@ export default function useWalletProxy(): IWalletContext {
   return walletContext;
 }
 
-const TORUS_CONNECTION: Connection = {
-  identifier: "torus",
-  name: "Torus",
-  type: "TORUS",
-  icon: torusIcon,
-};
-
 function getAvailableWallets(
   availableConnections: ConnectionTerraJs[]
 ): WalletProxy[] {
@@ -126,43 +118,5 @@ function getAvailableWallets(
       icon: conn.icon,
       type: conn.type,
     }))
-    .concat(TORUS_CONNECTION)
-    .map<WalletProxy>((conn) => ({
-      address: "",
-      connection: conn,
-      network: localterra,
-      post: (_: CreateTxOptions) => {
-        throw Error("Not connected");
-      },
-    }));
-}
-
-function createWalletFromTorus(torusWallet: Wallet): WalletProxy {
-  const networkName =
-    Object.entries(chainIDs).find(
-      ([_, value]) => value === torusWallet.lcd.config.chainID
-    )?.[0] || "";
-
-  return {
-    address: torusWallet.key.accAddress,
-    connection: TORUS_CONNECTION,
-    network: {
-      chainID: torusWallet.lcd.config.chainID,
-      lcd: torusWallet.lcd.config.URL,
-      name: networkName,
-    },
-    post: async (txOptions: CreateTxOptions) => {
-      const tx = await torusWallet.createAndSignTx(txOptions);
-      const res = await torusWallet.lcd.tx.broadcast(tx);
-      return {
-        ...txOptions,
-        result: {
-          height: res.height,
-          raw_log: res.raw_log,
-          txhash: res.txhash,
-        },
-        success: true,
-      };
-    },
-  };
+    .map<WalletProxy>((conn) => createDefaultWallet(conn));
 }

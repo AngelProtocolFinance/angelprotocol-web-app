@@ -1,11 +1,19 @@
-import { LCDClient, MnemonicKey, Wallet } from "@terra-money/terra.js";
+import {
+  CreateTxOptions,
+  LCDClient,
+  MnemonicKey,
+  Wallet,
+} from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
+import torusIcon from "assets/icons/wallets/torus.jpg";
 import { entropyToMnemonic } from "bip39";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useState } from "react";
 import { useGetter } from "store/accessors";
+import { Connection, localterra, WalletProxy } from "../types";
+import createDefaultWallet from "./createDefaultWallet";
 
 // TODO: would be good to set this value using the environment variables
 const NETWORK = "testnet";
@@ -21,18 +29,28 @@ const lcdClient = new LCDClient({
   chainID: chainIDs[NETWORK],
 });
 
+const TORUS_CONNECTION: Connection = {
+  identifier: "torus",
+  name: "Torus",
+  type: "TORUS",
+  icon: torusIcon,
+};
+
+const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
+
 export default function useTorusWallet() {
   const user = useGetter((state) => state.user);
   const [status, setStatus] = useState<WalletStatus>(
     WalletStatus.WALLET_NOT_CONNECTED
   );
-  const [wallet, setWallet] = useState<Wallet>();
+  const [walletProxy, setWalletProxy] = useState<WalletProxy>(DEFAULT_WALLET);
 
   const handleCreateWallet = useCallback((entropy: string) => {
     const mnemonic = entropyToMnemonic(entropy);
     const mnemonicKey = new MnemonicKey({ mnemonic });
     const newWallet = lcdClient.wallet(mnemonicKey);
-    setWallet(newWallet);
+    const walletProxy = createWalletFromTorus(newWallet);
+    setWalletProxy(walletProxy);
   }, []);
 
   useEffect(() => {
@@ -74,14 +92,44 @@ export default function useTorusWallet() {
 
   const disconnect = useCallback(async () => {
     await openLogin.logout();
-    setWallet(undefined);
+    setWalletProxy(DEFAULT_WALLET);
     setStatus(WalletStatus.WALLET_NOT_CONNECTED);
   }, []);
 
   return {
-    wallet,
+    wallet: walletProxy,
     status,
     connect,
     disconnect,
+  };
+}
+
+function createWalletFromTorus(torusWallet: Wallet): WalletProxy {
+  const networkName =
+    Object.entries(chainIDs).find(
+      ([_, value]) => value === torusWallet.lcd.config.chainID
+    )?.[0] || "";
+
+  return {
+    address: torusWallet.key.accAddress,
+    connection: TORUS_CONNECTION,
+    network: {
+      chainID: torusWallet.lcd.config.chainID,
+      lcd: torusWallet.lcd.config.URL,
+      name: networkName,
+    },
+    post: async (txOptions: CreateTxOptions) => {
+      const tx = await torusWallet.createAndSignTx(txOptions);
+      const res = await torusWallet.lcd.tx.broadcast(tx);
+      return {
+        ...txOptions,
+        result: {
+          height: res.height,
+          raw_log: res.raw_log,
+          txhash: res.txhash,
+        },
+        success: true,
+      };
+    },
   };
 }
