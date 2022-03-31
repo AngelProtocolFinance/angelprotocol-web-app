@@ -10,13 +10,6 @@ export default function ContactDetails() {
           ? "Update your contact details."
           : "Let's start with your contact details."}
       </h3>
-      {!user.PK && (
-        <p className="text-xl mb-6">
-          "This information will let us know more about your organization and
-          who you are. Once this form is submitted, you will be able to resume
-          your registration if it gets interrupted in the future."
-        </p>
-      )}
       <ContactDetailsForm contactData={user} />
     </div>
   );

@@ -17,7 +17,7 @@ export default function ContactDetailsForm(props: any) {
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
   const [, setOrgRole] = useState("");
-  const saveContactDetails = useSaveContactDetails();
+  const { error: isError, saveContactDetails } = useSaveContactDetails();
   const navigate = useNavigate();
 
   const {
@@ -116,13 +116,23 @@ export default function ContactDetailsForm(props: any) {
             Back
           </Button>
         )}
-        <Button
-          submit
-          className="bg-thin-blue w-48 h-12"
-          isLoading={isSubmitting}
-        >
-          Continue
-        </Button>
+        {isError ? (
+          <Button
+            className="bg-green-400 w-48 h-12 mr-2"
+            disabled={isSubmitting}
+            onClick={() => navigate(`${registerRootPath}`)}
+          >
+            Back
+          </Button>
+        ) : (
+          <Button
+            submit
+            className="bg-thin-blue w-48 h-12"
+            isLoading={isSubmitting}
+          >
+            Continue
+          </Button>
+        )}
       </div>
     </form>
   );
