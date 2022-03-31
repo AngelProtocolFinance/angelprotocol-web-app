@@ -38,10 +38,8 @@ const TORUS_CONNECTION: Connection = {
 const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
 
 export default function useTorusWallet() {
-  const [status, setStatus] = useState<WalletStatus>(
-    WalletStatus.WALLET_NOT_CONNECTED
-  );
-  const [walletProxy, setWalletProxy] = useState<WalletProxy>(DEFAULT_WALLET);
+  const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
+  const [walletProxy, setWalletProxy] = useState(DEFAULT_WALLET);
 
   useEffect(() => {
     async function initializeOpenlogin() {

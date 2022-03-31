@@ -37,7 +37,7 @@ export default function useTerraJsWallet() {
         network: wallet.network,
         post: wallet.post,
       },
-      availableWallets: availableConnections.map<WalletProxy>((conn) =>
+      availableWallets: availableConnections.map((conn) =>
         createDefaultWallet(conn)
       ),
       status,
