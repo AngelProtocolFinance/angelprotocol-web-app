@@ -33,7 +33,7 @@ const DonationList = (props: EndowmentAddrProps) => {
   //memoized this operation so not sorting on every render
   const renderedList = useMemo(() => sortList(data || []), [data, sortList]);
   return (
-    <div className="col-span-2 flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 overflow-auto max-h-75vh">
+    <div className="col-span-2 flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 overflow-auto max-h-75vh">
       <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white">
         <span>Donation History</span>
       </h3>
@@ -41,7 +41,7 @@ const DonationList = (props: EndowmentAddrProps) => {
       {isLoading && (
         <div className="my-20">
           <Loader
-            bgColorClass="bg-light-grey bg-opacity-80"
+            bgColorClass="bg-light-grey/80"
             widthClass="w-4"
             gapClass="gap-4"
           />
@@ -50,7 +50,7 @@ const DonationList = (props: EndowmentAddrProps) => {
       {!isError && !isLoading && (
         <table className="mt-4 w-full">
           <thead>
-            <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue border-opacity-20">
+            <tr className="text-md text-left font-heading uppercase text-md border-b-2 border-angel-blue/20">
               {keys.map((key, i) => (
                 <th
                   className="text-white text-sm text-left uppercase cursor-pointer pb-2"
@@ -91,7 +91,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
   const showDonor = useDonor(data.sort_key);
   const isDisabled = data.wallet_address !== wallet?.address;
   return (
-    <tr className="hover:bg-angel-blue hover:bg-opacity-20 text-white bg-opacity-20 border-b-2 border-angel-blue border-opacity-20">
+    <tr className="hover:bg-angel-blue/20 text-white border-b-2 border-angel-blue/20">
       <td className="py-5 pl-4">
         <p className="text-base font-bold">$ {toCurrency(data.amount)}</p>
       </td>
@@ -105,7 +105,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
       </td>
       <td>
         <button
-          className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
+          className="font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
           onClick={() => !isDisabled && showDonor()}
           disabled={isDisabled}
         >

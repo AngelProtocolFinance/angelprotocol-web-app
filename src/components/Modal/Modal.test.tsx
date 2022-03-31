@@ -5,7 +5,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { act } from "react-dom/test-utils";
 
 const modalCssClass =
-  "ap-modal bg-black bg-opacity-50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";
+  "ap-modal bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";
 
 describe("<Modal/> renders correctly", () => {
   test("<Modal /> is triggered and opened", async () => {

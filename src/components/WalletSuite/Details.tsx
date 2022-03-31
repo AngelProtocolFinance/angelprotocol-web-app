@@ -53,7 +53,7 @@ export default function Details(props: { closeHandler: () => void }) {
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
-    <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">
+    <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
       <button
         className="text-white absolute top-2 right-2"
         onClick={props.closeHandler}

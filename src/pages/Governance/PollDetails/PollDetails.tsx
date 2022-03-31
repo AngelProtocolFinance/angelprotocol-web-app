@@ -20,7 +20,7 @@ export default function PollDetails() {
       >
         <BiArrowBack size={15} /> back to proposals
       </Link>
-      <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-60 overflow-hidden">
+      <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
           <p className="mr-6">ID: {details.id}</p>
           <p>TEXT PROPOSAL</p>
@@ -37,7 +37,7 @@ export default function PollDetails() {
             </span>
           </p>
         </div>
-        <div className="border-b border-b-2 border-opacity-40 pb-2 flex justify-between mb-6">
+        <div className="border-b border-b-2 border-white/40 pb-2 flex justify-between mb-6">
           <h3 className="text-xl font-bold text-white">{details.title}</h3>
           <PollAction poll_id={numPollId} />
         </div>
@@ -65,8 +65,8 @@ export default function PollDetails() {
           <p className="">{details.description}</p>
         </div>
       </div>
-      <div className="bg-white bg-opacity-10 p-6 rounded-md shadow-lg text-white text-opacity-70">
-        <h3 className="uppercase text-sm text-opacity-100 font-semibold mb-6">
+      <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/70">
+        <h3 className="uppercase text-sm text-white/100 font-semibold mb-6">
           Vote details
         </h3>
         <div className="grid grid-cols-3 justify-items-center mb-4">

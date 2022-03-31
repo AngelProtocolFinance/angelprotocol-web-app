@@ -67,7 +67,7 @@ const Login = () => {
 
         <Link
           to={site.home}
-          className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-opacity-75"
+          className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-thin-blue/75"
         >
           learn more about angel protocol
         </Link>

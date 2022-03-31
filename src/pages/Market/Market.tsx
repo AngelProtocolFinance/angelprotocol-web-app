@@ -11,7 +11,7 @@ export default function Market() {
       <Banner />
       {(isProfilesLoading && (
         <Loader
-          bgColorClass="bg-white-grey bg-opacity-80"
+          bgColorClass="bg-white-grey/80"
           gapClass="gap-2"
           widthClass="w-4"
         />
