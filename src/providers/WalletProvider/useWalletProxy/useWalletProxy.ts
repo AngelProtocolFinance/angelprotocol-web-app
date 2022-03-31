@@ -1,24 +1,23 @@
 import {
   Connection as ConnectionTerraJs,
   ConnectType as ConnectTypeTerraJs,
-  useConnectedWallet,
-  useWallet,
 } from "@terra-money/wallet-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
 import { Connection, IWalletContext, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
+import useTerraJsWallet from "./useTerraJsWallet";
 import useTorusWallet from "./useTorusWallet";
 
 export default function useWalletProxy(): IWalletContext {
   const {
-    connect: connectTerraJs,
-    disconnect: disconnectTerraJs,
     availableConnections,
     availableInstallations,
     status: statusTerraJs,
-  } = useWallet();
-  const walletTerraJs = useConnectedWallet();
+    wallet: walletTerraJs,
+    connect: connectTerraJs,
+    disconnect: disconnectTerraJs,
+  } = useTerraJsWallet();
   const {
     status: statusTorus,
     wallet: walletTorus,
@@ -54,12 +53,7 @@ export default function useWalletProxy(): IWalletContext {
 
   useEffect(() => {
     if (walletTerraJs) {
-      setWallet({
-        address: walletTerraJs.walletAddress,
-        connection: walletTerraJs.connection,
-        network: walletTerraJs.network,
-        post: walletTerraJs.post,
-      });
+      setWallet(walletTerraJs);
     } else if (walletTorus) {
       setWallet(walletTorus);
     } else {
