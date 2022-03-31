@@ -1,10 +1,11 @@
 import toCurrency from "helpers/toCurrency";
 import { WithdrawMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
+import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function WithdrawPreview(props: WithdrawMeta) {
   return (
-    <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
+    <PreviewContainer>
       {props.sourcesPreview.map((source) => (
         //map sources
         <KeyValue _key={`from ${source.vaultName}`}>
@@ -18,6 +19,6 @@ export default function WithdrawPreview(props: WithdrawMeta) {
       <KeyValue _key="beneficiary">
         <span className="font-mono text-sm">{props.beneficiary}</span>
       </KeyValue>
-    </div>
+    </PreviewContainer>
   );
 }

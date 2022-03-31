@@ -4,10 +4,11 @@ import {
   EndowmentStatusNum,
 } from "services/terra/registrar/types";
 import KeyValue from "./preview-components/KeyValue";
+import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function EndowmentStatusUpdate(props: EndowmentStatusMeta) {
   return (
-    <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
+    <PreviewContainer>
       <KeyValue _key="previous status">
         <span className="uppercase font-heading font-bold">
           {props.fromStatus}
@@ -23,7 +24,7 @@ export default function EndowmentStatusUpdate(props: EndowmentStatusMeta) {
           <span className="font-mono text-sm">{props.beneficiary}</span>
         </KeyValue>
       )}
-    </div>
+    </PreviewContainer>
   );
 }
 

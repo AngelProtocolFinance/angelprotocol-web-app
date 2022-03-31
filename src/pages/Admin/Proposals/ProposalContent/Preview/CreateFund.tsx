@@ -3,10 +3,11 @@ import toCurrency from "helpers/toCurrency";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";
 import MemberItem from "./preview-components/MemberItem";
+import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function CreateFund(props: Omit<FundDetails, "id">) {
   return (
-    <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
+    <PreviewContainer>
       <KeyValue _key="fund name">
         <span>{props.name}</span>
       </KeyValue>
@@ -40,7 +41,7 @@ export default function CreateFund(props: Omit<FundDetails, "id">) {
           ))}
         </>
       )}
-    </div>
+    </PreviewContainer>
   );
 }
 

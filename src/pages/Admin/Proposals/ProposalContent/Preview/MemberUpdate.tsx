@@ -1,10 +1,11 @@
 import { CWMemberUpdateMeta } from "pages/Admin/types";
 import Header from "./preview-components/Header";
 import MemberItem from "./preview-components/MemberItem";
+import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function MemberUpdate(props: CWMemberUpdateMeta) {
   return (
-    <div className="bg-white/10 shadow-inner p-2 rounded-md mb-2 mt-1">
+    <PreviewContainer>
       {props.toAdd.length > 0 && (
         <>
           <Header>members to add</Header>
@@ -22,6 +23,6 @@ export default function MemberUpdate(props: CWMemberUpdateMeta) {
           ))}
         </>
       )}
-    </div>
+    </PreviewContainer>
   );
 }
