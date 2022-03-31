@@ -18,7 +18,7 @@ export default function FundConfigForm() {
         required
       />
       <TextInput<FV>
-        title="funding goal {$}"
+        title="funding goal ($)"
         name="funding_goal"
         mono
         placeholder="$10,000"
