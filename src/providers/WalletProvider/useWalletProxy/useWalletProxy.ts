@@ -1,4 +1,3 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import {
   Connection as ConnectionTerraJs,
   ConnectType as ConnectTypeTerraJs,
@@ -7,7 +6,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
-import { Connection, IWalletContext, localterra, WalletProxy } from "../types";
+import { Connection, IWalletContext, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 import useTorusWallet from "./useTorusWallet";
 
@@ -84,20 +83,24 @@ export default function useWalletProxy(): IWalletContext {
     checkSafePal();
   }, [availableConnections, connect, disconnect]);
 
+  const availableWallets = useMemo(
+    () => getAvailableWallets(availableConnections).concat(walletTorus),
+    [availableConnections, walletTorus]
+  );
+
   const walletContext: IWalletContext = useMemo(
     () => ({
       connect,
       disconnect,
       wallet,
       availableInstallations,
-      availableWallets:
-        getAvailableWallets(availableConnections).concat(walletTorus),
+      availableWallets,
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [
       connect,
       disconnect,
-      availableConnections,
+      availableWallets,
       availableInstallations,
       statusTerraJs,
       statusTorus,
