@@ -31,8 +31,6 @@ export type IWalletContext = {
   status: WalletStatus;
   availableWallets: WalletProxy[];
   availableInstallations: Installation[];
-  connect: (connection: Connection) => Promise<void>;
-  disconnect: () => Promise<void>;
 };
 
 export type WalletProxy = {
@@ -40,6 +38,8 @@ export type WalletProxy = {
   address: string;
   network: NetworkInfo;
   post: (txOptions: CreateTxOptions) => Promise<TxResult>;
+  connect: () => Promise<void>;
+  disconnect: () => Promise<void>;
 };
 
 export const localterra: NetworkInfo = {

@@ -18,7 +18,7 @@ const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const { active: activeProvider } = useGetter((state) => state.provider);
-  const { disconnect: disconnectTerra, availableWallets } = useWalletContext();
+  const { wallet: walletTerra, availableWallets } = useWalletContext();
   const { disconnect: disconnectMetamask } = useSetMetamask();
 
   const [filtered, setFilter] = useState(false);
@@ -38,7 +38,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleDisconnect = () => {
     dispatch(resetWallet());
     if (activeProvider === Providers.terra) {
-      disconnectTerra();
+      walletTerra!.disconnect();
     }
     if (activeProvider === Providers.ethereum) {
       disconnectMetamask();

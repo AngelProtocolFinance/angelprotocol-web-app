@@ -13,8 +13,6 @@ export const WalletContext = createContext<IWalletContext>({
   status: WalletStatus.WALLET_NOT_CONNECTED,
   availableWallets: [],
   availableInstallations: [],
-  connect: () => new Promise((r) => r),
-  disconnect: () => new Promise((r) => r),
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {

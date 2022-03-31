@@ -7,8 +7,7 @@ import TerraConnector from "./Connectors/TerraConnector";
 import Installer from "./Installer";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  const { availableWallets, availableInstallations, connect } =
-    useWalletContext();
+  const { availableWallets, availableInstallations } = useWalletContext();
 
   return (
     <>
@@ -22,12 +21,11 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         <Modal classes="absolute bg-white/95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableWallets
             .filter((wallet) => wallet.connection.type !== "READONLY")
-            .map((wallet) => {
+            .map((availableWallet) => {
               return (
                 <TerraConnector
-                  key={wallet.connection.name}
-                  wallet={wallet}
-                  connect={connect}
+                  key={availableWallet.connection.name}
+                  wallet={availableWallet}
                 />
               );
             })}

@@ -9,7 +9,13 @@ export default function createDefaultWallet(
     connection,
     network: localterra,
     post: (_: CreateTxOptions) => {
-      throw Error("Not connected");
+      throw Error("Not initialized");
+    },
+    connect: () => {
+      throw Error("Not initialized");
+    },
+    disconnect: () => {
+      throw Error("Not initialized");
     },
   };
 }
