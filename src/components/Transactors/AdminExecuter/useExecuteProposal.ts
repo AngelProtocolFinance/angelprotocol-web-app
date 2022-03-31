@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { terra } from "services/terra/terra";
 import { tags, admin } from "services/terra/tags";
 import { sendTerraTx } from "services/transaction/sendTerraTx";

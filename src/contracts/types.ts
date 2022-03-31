@@ -48,6 +48,12 @@ export type FundListRes = {
   funds: FundDetails[];
 };
 
+export interface FundConfig {
+  fund_rotation?: number;
+  fund_member_limit?: number;
+  funding_goal?: string;
+}
+
 //Registrar
 export type StatusChangePayload = {
   endowment_addr: string;

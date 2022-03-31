@@ -1,5 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/use-wallet";
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
