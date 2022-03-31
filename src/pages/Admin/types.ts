@@ -1,5 +1,6 @@
 import { FundDetails } from "contracts/types";
 import { Member } from "services/terra/admin/types";
+import { AllianceMember as AM } from "services/terra/indexFund/types";
 import {
   EndowmentStatus,
   EndowmentStatusStrNum,
@@ -33,7 +34,8 @@ export type ProposalMeta =
         | proposalTypes.indexFund_createFund
         | proposalTypes.indexFund_removeFund;
       data: Omit<FundDetails, "id">;
-    };
+    }
+  | { type: proposalTypes.indexFund_allianceEdits; data: AllianceEditMeta };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
 export interface WithdrawMeta {
@@ -51,4 +53,10 @@ export interface EndowmentStatusMeta {
   fromStatus: keyof EndowmentStatus;
   toStatus: EndowmentStatusStrNum;
   beneficiary?: string;
+}
+
+export interface AllianceEditMeta {
+  toAddMembers: AM[];
+  toRemoveMembers: AM[];
+  editedMembers: AM[];
 }

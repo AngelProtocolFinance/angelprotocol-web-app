@@ -12,6 +12,8 @@ import Indexfund from "contracts/IndexFund";
 import { EmbeddedWasmMsg } from "contracts/types";
 import { AllianceEditValues } from "./alllianceEditSchema";
 import { proposalSuccessLink } from "../constants";
+import { AllianceMember as AM } from "services/terra/indexFund/types";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
@@ -39,19 +41,41 @@ export default function useEditAlliance() {
     }
 
     const indexFundContract = new Indexfund(wallet);
-    const updateMsgs: EmbeddedWasmMsg[] = markedMembers.map(
-      ({ isAdded, isDeleted, edits, ...restMemberData }) => {
-        if (edits) {
-          return indexFundContract.createEmbeddedAAMemberEditMsg(edits);
-        }
-        return indexFundContract.createEmbeddedAAListUpdateMsg(
+
+    //actual message payload
+    const updateMsgs: EmbeddedWasmMsg[] = [];
+
+    //for payload preview
+    const toAddMembers: AM[] = [];
+    const toRemoveMembers: AM[] = [];
+    const editedMembers: AM[] = [];
+    for (const member of markedMembers) {
+      const { isAdded, isDeleted, edits, ...restMemberData } = member;
+      if (edits) {
+        updateMsgs.push(indexFundContract.createEmbeddedAAMemberEditMsg(edits));
+        editedMembers.push(restMemberData);
+      }
+      updateMsgs.push(
+        indexFundContract.createEmbeddedAAListUpdateMsg(
           restMemberData,
           isAdded ? "add" : "remove"
-        );
-      }
-    );
+        )
+      );
+      if (isAdded) toAddMembers.push(restMemberData);
+      if (isDeleted) toRemoveMembers.push(restMemberData);
+    }
 
     const adminContract = new Admin("apTeam", wallet);
+
+    //construct proposal meta for preview
+    const editAllianceMeta: ProposalMeta = {
+      type: proposalTypes.indexFund_allianceEdits,
+      data: {
+        toAddMembers,
+        toRemoveMembers,
+        editedMembers,
+      },
+    };
 
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
@@ -59,7 +83,8 @@ export default function useEditAlliance() {
     const proposalMsg = adminContract.createProposalMsg(
       proposalTitle,
       proposalDescription,
-      updateMsgs
+      updateMsgs,
+      JSON.stringify(editAllianceMeta)
     );
 
     dispatch(

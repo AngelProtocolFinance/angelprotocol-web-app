@@ -3,6 +3,7 @@ import { ProposalMeta, proposalTypes } from "../../../types";
 import MemberUpdate from "./MemberUpdate";
 import Withdraw from "./Withdraw";
 import Fund from "./Fund";
+import AllianceUpdate from "./AllianceUpdate";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -16,6 +17,8 @@ export default function Preview(props: ProposalMeta) {
       return <Fund {...props.data} />;
     case proposalTypes.indexFund_removeFund:
       return <Fund {...props.data} />;
+    case proposalTypes.indexFund_allianceEdits:
+      return <AllianceUpdate {...props.data} />;
     default:
       return <div>no preview</div>;
   }
