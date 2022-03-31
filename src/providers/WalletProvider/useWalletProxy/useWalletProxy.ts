@@ -8,6 +8,7 @@ import {
 import torusIcon from "assets/icons/wallets/torus.jpg";
 import { chainIDs } from "constants/chainIDs";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { TerraIdentifiers } from "services/wallet/types";
 import { Connection, IWalletContext, localterra, WalletProxy } from "../types";
 import useTorusWallet from "./useTorusWallet";
 
@@ -69,6 +70,22 @@ export default function useWalletProxy(): IWalletContext {
       setWallet(undefined);
     }
   }, [walletTerraJs, walletTorus]);
+
+  // Automatically connect with SafePal if and when available
+  useEffect(() => {
+    async function checkSafePal() {
+      const safePal = availableConnections.find(
+        (x) => x.identifier === TerraIdentifiers.safepal
+      );
+
+      if (safePal) {
+        await disconnect();
+        await connect(safePal);
+      }
+    }
+
+    checkSafePal();
+  }, [availableConnections, connect, disconnect]);
 
   const walletProxy = useMemo(
     () => ({
