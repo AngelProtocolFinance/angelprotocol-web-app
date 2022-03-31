@@ -65,11 +65,7 @@ export default function useTorusWallet() {
   const connect = useCallback(async () => {
     setStatus(WalletStatus.INITIALIZING);
 
-    const loginResult = await openLogin.login({
-      extraLoginOptions: {
-        login_hint: user.Email,
-      },
-    });
+    const loginResult = await openLogin.login();
     if (loginResult?.privKey) {
       const newWalletProxy = createWalletProxy(loginResult.privKey);
       setPartialWallet(newWalletProxy);
@@ -77,7 +73,7 @@ export default function useTorusWallet() {
     } else {
       setStatus(WalletStatus.WALLET_NOT_CONNECTED);
     }
-  }, [user.Email]);
+  }, []);
 
   const disconnect = useCallback(async () => {
     await openLogin.logout();

@@ -8,7 +8,7 @@ export default function useWalletProxy(): IWalletContext {
 
   const {
     availableInstallations,
-    availableWallets: availableTerraJsWallets,
+    availableWallets,
     status: statusTerraJs,
     wallet: walletTerraJs,
   } = useTerraJsWallet();
@@ -24,16 +24,11 @@ export default function useWalletProxy(): IWalletContext {
     }
   }, [walletTerraJs, walletTorus]);
 
-  const availableWallets = useMemo(
-    () => availableTerraJsWallets.concat(walletTorus),
-    [availableTerraJsWallets, walletTorus]
-  );
-
   const walletContext: IWalletContext = useMemo(
     () => ({
       wallet,
       availableInstallations,
-      availableWallets,
+      availableWallets: availableWallets.concat(walletTorus),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [
@@ -42,6 +37,7 @@ export default function useWalletProxy(): IWalletContext {
       statusTerraJs,
       statusTorus,
       wallet,
+      walletTorus,
     ]
   );
 

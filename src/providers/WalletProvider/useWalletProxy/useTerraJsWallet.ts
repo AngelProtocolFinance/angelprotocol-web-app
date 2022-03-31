@@ -26,18 +26,6 @@ export default function useTerraJsWallet() {
   } = useWallet();
   const wallet = useConnectedWallet();
 
-  // Automatically connect with SafePal if and when available
-  useEffect(() => {
-    const safePal = availableConnections.find(
-      (conn) => conn.identifier === TerraIdentifiers.safepal
-    );
-
-    if (safePal) {
-      disconnect();
-      connect(safePal.type, safePal.identifier);
-    }
-  }, [availableConnections, disconnect, connect]);
-
   const result: Result = useMemo(
     () => ({
       wallet: wallet && {
@@ -54,7 +42,7 @@ export default function useTerraJsWallet() {
         disconnect: () => new Promise((resolve) => resolve(disconnect())),
       },
       status,
-      availableWallets: availableConnections.map<WalletProxy>((conn) => ({
+      availableWallets: availableConnections.map((conn) => ({
         ...createDefaultWallet(conn),
         connect: () =>
           new Promise((resolve) =>
@@ -73,6 +61,18 @@ export default function useTerraJsWallet() {
       disconnect,
     ]
   );
+
+  // Automatically connect with SafePal if and when available
+  useEffect(() => {
+    const safePal = availableConnections.find(
+      (x) => x.identifier === TerraIdentifiers.safepal
+    );
+
+    if (safePal) {
+      disconnect();
+      connect(safePal.type, safePal.identifier);
+    }
+  }, [availableConnections, connect, disconnect]);
 
   return result;
 }
