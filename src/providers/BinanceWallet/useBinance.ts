@@ -25,9 +25,6 @@ export default function useBinance() {
     }
 
     requestAccess();
-    return () => {
-      detachAccountChangeHandler();
-    };
     //eslint-disable-next-line
   }, []);
 
@@ -49,14 +46,8 @@ export default function useBinance() {
   }
 
   //attachers/detachers
-  const attachAccountChangeHandler = (ethereum: Binance) => {
-    ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
-  };
-  const detachAccountChangeHandler = () => {
-    getBinance()?.removeListener(
-      EIP1193Events.accountsChanged,
-      handleAccountsChange
-    );
+  const attachAccountChangeHandler = (binance: Binance) => {
+    binance.on(EIP1193Events.accountsChanged, handleAccountsChange);
   };
 
   //event listeners
@@ -68,7 +59,6 @@ export default function useBinance() {
       setAddress(accounts[0]);
       //if no account is found, means user disconnected
     } else {
-      detachAccountChangeHandler();
       setConnected(false);
       saveUserAction("disconnect");
     }
@@ -77,9 +67,7 @@ export default function useBinance() {
   async function disconnect() {
     if (!connected) return;
     const binance = getBinance();
-    console.log(binance);
     if (!binance) return;
-    detachAccountChangeHandler();
     setConnected(false);
     saveUserAction("disconnect");
   }
