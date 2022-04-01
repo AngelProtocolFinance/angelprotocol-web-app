@@ -203,7 +203,6 @@ export default function useEstimator() {
           const fee_wei = gasLimit.mul(gasPrice);
 
           const fee_bnb = ethers.utils.formatEther(fee_wei);
-          console.log(fee_bnb)
 
           setBnbTx(tx);
           dispatch(setFee(parseFloat(fee_bnb)));
