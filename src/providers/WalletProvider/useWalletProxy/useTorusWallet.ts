@@ -11,12 +11,12 @@ import { entropyToMnemonic } from "bip39";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useGetter } from "store/accessors";
 import { Connection, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 
 // TODO: would be good to set this value using the environment variables
-const NETWORK = "testnet";
+const NETWORK =
+  process.env.REACT_APP_CHAIN_ID === chainIDs.testnet ? "testnet" : "mainnet";
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
@@ -33,13 +33,14 @@ const TORUS_CONNECTION: Connection = {
 
 const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
 
-export default function useTorusWallet() {
-  const user = useGetter((state) => state.user);
-  const [status, setStatus] = useState<WalletStatus>(
-    WalletStatus.WALLET_NOT_CONNECTED
-  );
-  const [partialWallet, setPartialWallet] =
-    useState<WalletProxy>(DEFAULT_WALLET);
+type Result = {
+  wallet: WalletProxy;
+  status: WalletStatus;
+};
+
+export default function useTorusWallet(): Result {
+  const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
+  const [walletProxy, setWalletProxy] = useState(DEFAULT_WALLET);
 
   useEffect(() => {
     async function initializeOpenlogin() {
@@ -52,7 +53,7 @@ export default function useTorusWallet() {
       // that is Torus is set to redirect to, otherwise this value would be empty
       if (openLogin.privKey) {
         const newWalletProxy = createWalletProxy(openLogin.privKey);
-        setPartialWallet(newWalletProxy);
+        setWalletProxy(newWalletProxy);
         setStatus(WalletStatus.WALLET_CONNECTED);
       } else {
         setStatus(WalletStatus.WALLET_NOT_CONNECTED);
@@ -68,7 +69,7 @@ export default function useTorusWallet() {
     const loginResult = await openLogin.login();
     if (loginResult?.privKey) {
       const newWalletProxy = createWalletProxy(loginResult.privKey);
-      setPartialWallet(newWalletProxy);
+      setWalletProxy(newWalletProxy);
       setStatus(WalletStatus.WALLET_CONNECTED);
     } else {
       setStatus(WalletStatus.WALLET_NOT_CONNECTED);
@@ -77,23 +78,21 @@ export default function useTorusWallet() {
 
   const disconnect = useCallback(async () => {
     await openLogin.logout();
-    setPartialWallet(DEFAULT_WALLET);
+    setWalletProxy(DEFAULT_WALLET);
     setStatus(WalletStatus.WALLET_NOT_CONNECTED);
   }, []);
 
-  const wallet: WalletProxy = useMemo(
+  return useMemo(
     () => ({
-      ...partialWallet,
-      connect,
-      disconnect,
+      status,
+      wallet: {
+        ...walletProxy,
+        connect,
+        disconnect,
+      },
     }),
-    [partialWallet, connect, disconnect]
+    [walletProxy, connect, disconnect, status]
   );
-
-  return {
-    wallet,
-    status,
-  };
 }
 
 const lcdClient = new LCDClient({
