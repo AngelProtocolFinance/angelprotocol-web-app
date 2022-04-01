@@ -15,6 +15,8 @@ export default function useWalletProxy(): IWalletContext {
   const { status: statusTorus, wallet: walletTorus } = useTorusWallet();
 
   useEffect(() => {
+    // These if-checks are safe for setting connected wallets, because
+    // at any point only one will be connected.
     if (walletTerraJs) {
       setWallet(walletTerraJs);
     } else if (walletTorus) {

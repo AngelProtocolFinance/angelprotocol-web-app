@@ -3,24 +3,18 @@ import {
   Installation,
   NetworkInfo,
   WalletStatus,
-  ConnectType as ConnectTypeTerraJs,
+  ConnectType,
   TxResult,
 } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 
 // Enum extending @terra-money/wallet-types/types > ConnectType with Torus type
-const ProxyConnectTypes = {
-  ...ConnectTypeTerraJs,
-  /** Torus wallet */
-  TORUS: "TORUS",
-};
+const ProxyConnectTypes = { ...ConnectType, TORUS: "TORUS" };
 
-export type ConnectType = keyof typeof ProxyConnectTypes;
-
-// Local type version of @terra-money/wallet-types/types > Connection
+// Proxy Connection version of @terra-money/wallet-types/types > Connection
 export type Connection = {
-  type: ConnectType;
+  type: keyof typeof ProxyConnectTypes;
   identifier?: string;
   name: string;
   icon: string;
