@@ -37,8 +37,7 @@ export default function BnbConnector() {
          */
       } else if (deviceType() !== DeviceType.DESKTOP) {
         showModal(WalletPrompt, {
-          message:
-            "Please use Binance Wallet on desktop to connect",
+          message: "Please use Binance Wallet on desktop to connect",
         });
         return;
       } else if (!dwindow.BinanceChain) {

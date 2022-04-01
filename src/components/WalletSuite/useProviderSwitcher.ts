@@ -25,9 +25,8 @@ export default function useProviderSwitcher() {
   //other states
   const { connected: isMetamaskConnected, loading: isMetamaskLoading } =
     useGetMetamask();
-  const { connected: isBinanceConnected, loading: isBinanceLoading } = 
+  const { connected: isBinanceConnected, loading: isBinanceLoading } =
     useGetBinance();
-
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],
@@ -41,7 +40,7 @@ export default function useProviderSwitcher() {
     ([, isProviderConnected]) => isProviderConnected
   );
 
-  const isLoading = isTerraLoading || isMetamaskLoading;
+  const isLoading = isTerraLoading || isMetamaskLoading || isBinanceLoading;
 
   useEffect(() => {
     dispatch(setIsSwitching(isLoading));
