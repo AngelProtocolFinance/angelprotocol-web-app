@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import {
-  FaFacebookSquare,
+  FaFacebookF,
   FaLinkedinIn,
   FaParachuteBox,
   FaExternalLinkAlt,
@@ -84,7 +84,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  Facebook: FaFacebookSquare,
+  Facebook: FaFacebookF,
   Discord: RiDiscordLine,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
