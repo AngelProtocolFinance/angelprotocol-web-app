@@ -28,7 +28,7 @@ export default function InputField(props: InputFieldProps) {
         type="text"
         placeholder={props.placeholder}
         autoComplete="off"
-        className="p-1 pl-0 w-full bg-light-grey outline-none text-angel-grey font-mono"
+        className="p-1 pl-0 w-full bg-light-grey outline-none text-angel-grey font-mono text-sm"
       />
       <ErrorMessage
         errors={errors}

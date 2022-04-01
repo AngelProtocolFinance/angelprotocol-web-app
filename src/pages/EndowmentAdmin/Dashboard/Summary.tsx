@@ -30,7 +30,7 @@ export default function Summary(props: HoldingSummary) {
           <button
             disabled={!props.isOwner}
             onClick={props.opener}
-            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-xs font-heading"
+            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-sm font-heading"
           >
             withdraw
           </button>
