@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
+import binanceIcon from "assets/icons/wallets/binance.png";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { ethers } from "ethers";
@@ -184,7 +185,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
           dispatch(
             setWalletDetails({
               id: undefined,
-              icon: metamaskIcon,
+              icon: binanceIcon,
               displayCoin: bnb_coin,
               coins: [bnb_coin],
               address,
