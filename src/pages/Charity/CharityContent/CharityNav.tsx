@@ -41,7 +41,7 @@ export default function CharityNav(props: { classes?: string }) {
 }
 
 const styler = createNavLinkStyler(
-  "hover:text-angel-orange font-semibold uppercase py-3 text-center",
+  "hover:text-white hover:bg-angel-blue font-semibold uppercase py-3 text-center",
   "bg-angel-blue text-white"
 );
 

@@ -6,7 +6,7 @@ import { HoldingSummary } from "./types";
 import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
-  const { vaultsRate } = useApprovedVaultsRateState();
+  const { vaultsRate, isVaultsRateError } = useApprovedVaultsRateState();
   const total_holding = useMemo(() => {
     const total_dec = props.holdings.reduce((total, holding) => {
       const vaultInfo = vaultsRate.find(
@@ -36,7 +36,7 @@ export default function Summary(props: HoldingSummary) {
       </p>
       {props.opener !== undefined && (
         <button
-          disabled={!props.isOwner}
+          disabled={!props.isOwner || isVaultsRateError}
           onClick={props.opener}
           className="mt-2 mb-4 bg-blue-accent disabled:bg-grey-accent hover:bg-angel-blue/60 px-2 py-1 rounded-md uppercase text-xs  border-2 border-white/20 font-heading self-end"
         >
