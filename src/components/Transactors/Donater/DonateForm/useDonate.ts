@@ -50,7 +50,6 @@ export default function useDonate() {
     [bnbTx]
   );
 
-
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();

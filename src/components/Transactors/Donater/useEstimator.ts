@@ -61,7 +61,7 @@ export default function useEstimator() {
 
         if (!supported_denoms.includes(currency)) {
           dispatch(
-            setFormError("Connected wallet doesn't support this currency" + ": " + currency)
+            setFormError("Connected wallet doesn't support this currency")
           );
           return;
         }
