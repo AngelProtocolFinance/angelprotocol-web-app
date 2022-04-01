@@ -61,9 +61,7 @@ const Registration = () => {
         </Button>
       </form>
       <p className="mt-5 italic underline">
-        <a href="#new-form">
-          Can't find a registration file with this reference?
-        </a>
+        <a href="#new-form">Having trouble resuming your registration?</a>
       </p>
     </div>
   );
