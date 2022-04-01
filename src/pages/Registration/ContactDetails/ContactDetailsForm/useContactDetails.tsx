@@ -26,6 +26,7 @@ export default function useSaveContactDetails() {
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
+      setError(false);
       const is_create = !contactData?.uniqueID;
       const postData: ContactDetailsData = {
         PK: contactData.uniqueID,

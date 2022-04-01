@@ -133,11 +133,6 @@ export default function ContactDetailsForm(props: any) {
   );
 }
 
-// Leaving it out here just in case...
-// const ColumnContainer = ({ children }: PropsWithChildren<{}>) => (
-//   <div className="flex flex-col gap-4">{children}</div>
-// );
-
 const PrivacyPolicyCheckbox = forwardRef(
   (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
     <Checkbox {...props} ref={ref}>
