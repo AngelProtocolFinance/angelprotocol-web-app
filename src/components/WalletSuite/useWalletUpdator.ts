@@ -165,42 +165,44 @@ export default function useWalletUpdator(activeProvider: Providers) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProvider]);
 
-    //updator for binance
-    useEffect(() => {
-      (async () => {
-        try {
-          const dwindow = window as Dwindow;
-          if (activeProvider !== Providers.binance) return;
-          dispatch(setIsUpdating(true));
-          const provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
-          const network = await provider.getNetwork();
-          const signer = provider.getSigner();
-          const address = await signer.getAddress();
-          const wei_balance = await signer.getBalance();
-          const bnb_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
-            .div(1e18)
-            .toNumber();
-          const bnb_coin = { amount: bnb_balance, denom: denoms.bnb };
-  
-          dispatch(
-            setWalletDetails({
-              id: undefined,
-              icon: binanceIcon,
-              displayCoin: bnb_coin,
-              coins: [bnb_coin],
-              address,
-              chainId: `${network.chainId}` as chainIDs,
-              supported_denoms: [denoms.bnb],
-            })
-          );
-  
-          dispatch(setIsUpdating(false));
-        } catch (err) {
-          //TODO: tooltip on wallet update errors
-          dispatch(setIsUpdating(false));
-        }
-      })();
-  
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeProvider]);
+  //updator for binance
+  useEffect(() => {
+    (async () => {
+      try {
+        const dwindow = window as Dwindow;
+        if (activeProvider !== Providers.binance) return;
+        dispatch(setIsUpdating(true));
+        const provider = new ethers.providers.Web3Provider(
+          dwindow.BinanceChain!
+        );
+        const network = await provider.getNetwork();
+        const signer = provider.getSigner();
+        const address = await signer.getAddress();
+        const wei_balance = await signer.getBalance();
+        const bnb_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
+          .div(1e18)
+          .toNumber();
+        const bnb_coin = { amount: bnb_balance, denom: denoms.bnb };
+
+        dispatch(
+          setWalletDetails({
+            id: undefined,
+            icon: binanceIcon,
+            displayCoin: bnb_coin,
+            coins: [bnb_coin],
+            address,
+            chainId: `${network.chainId}` as chainIDs,
+            supported_denoms: [denoms.bnb],
+          })
+        );
+
+        dispatch(setIsUpdating(false));
+      } catch (err) {
+        //TODO: tooltip on wallet update errors
+        dispatch(setIsUpdating(false));
+      }
+    })();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeProvider]);
 }

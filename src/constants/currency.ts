@@ -9,7 +9,7 @@ import btc from "assets/icons/currencies/btc.png";
 import sol from "assets/icons/currencies/sol.svg";
 import atom from "assets/icons/currencies/atom.png";
 import halo from "assets/icons/currencies/halo_outline.png";
-import bnb from "assets/icons/currencies/bnb.png"
+import bnb from "assets/icons/currencies/bnb.png";
 
 export enum denoms {
   uluna = "uluna",

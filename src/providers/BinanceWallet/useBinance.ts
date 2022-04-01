@@ -18,11 +18,12 @@ export default function useBinance() {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    if (deviceType() === DeviceType.MOBILE && (window as Dwindow).BinanceChain) {
-      setConnected(true);
-      setLoading(false);
+    if (
+      deviceType() !== DeviceType.DESKTOP &&
+      (window as Dwindow).BinanceChain
+    ) {
       return;
-    }
+    } //No binance wallet on mobile.
 
     requestAccess();
     //eslint-disable-next-line
