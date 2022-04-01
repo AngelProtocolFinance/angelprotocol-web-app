@@ -2,6 +2,8 @@ import banner2 from "assets/images/banner-register-2.jpg";
 import { app } from "constants/routes";
 import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
@@ -15,6 +17,7 @@ export default function ConfirmEmail() {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const { showModal } = useSetModal();
 
   const sendEmail = useCallback(
     async (emailType: string) => {
@@ -37,10 +40,15 @@ export default function ConfirmEmail() {
         body: emailPayload,
       });
       response.data
-        ? console.info(response.data?.message)
-        : console.error(response.error?.data.message);
+        ? showModal<PopupProps>(Popup, {
+            message:
+              "We have sent you another verification email. If you still don't receive anything, please get in touch with us.",
+          })
+        : showModal<PopupProps>(Popup, {
+            message: response.error.data.message,
+          });
     },
-    [user, resendEmail]
+    [user, resendEmail, showModal]
   );
 
   const resendVerificationEmail = useCallback(
@@ -48,10 +56,10 @@ export default function ConfirmEmail() {
     [sendEmail]
   );
 
-  const sendEmailNoticeToAPTeam = useCallback(
-    () => sendEmail("help-verify-email"),
-    [sendEmail]
-  );
+  // const sendEmailNoticeToAPTeam = useCallback(
+  //   () => sendEmail("help-verify-email"),
+  //   [sendEmail]
+  // );
 
   const navigateToIndex = useCallback(() => {
     dispatch(removeUserData());
@@ -87,7 +95,7 @@ export default function ConfirmEmail() {
         <div className="text-2xl">
           <p>Thank you for registering</p>
           <p className="mb-10">
-            {user.FirstName}, {user.CharityName}!
+            {user.CharityName}, {user.FirstName}!
           </p>
           <p>Your registration reference is</p>
           <p className="text-orange">{user.PK}</p>
@@ -95,7 +103,7 @@ export default function ConfirmEmail() {
       )}
       <span className="font-normal">
         Please click on the link in the email and you'll be able to continue
-        with the registration of {user.CharityName} on Angel.
+        with the registration of {user.CharityName} on Angel Protocol.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
         <Button
@@ -106,17 +114,14 @@ export default function ConfirmEmail() {
           Resend verification email
         </Button>
         <Button
-          onClick={sendEmailNoticeToAPTeam}
-          className="bg-yellow-blue w-80 h-12 text-sm"
-        >
-          I'm having trouble with my email
-        </Button>
-        <Button
           onClick={navigateToIndex}
           className="bg-thin-blue w-48 h-12 text-sm"
         >
           close
         </Button>
+        <p className="mt-5 font-normal italic underline">
+          <a href="#new-form">Having trouble receiving our emails?</a>
+        </p>
       </div>
     </div>
   );
