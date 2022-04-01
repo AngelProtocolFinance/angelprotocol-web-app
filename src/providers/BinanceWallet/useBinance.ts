@@ -77,6 +77,7 @@ export default function useBinance() {
   async function disconnect() {
     if (!connected) return;
     const binance = getBinance();
+    console.log(binance);
     if (!binance) return;
     detachAccountChangeHandler();
     setConnected(false);

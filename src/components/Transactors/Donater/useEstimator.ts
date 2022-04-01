@@ -195,7 +195,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.bnb],
+            to: ap_wallets[denoms.ether],
             value: wei_amount,
           };
 

@@ -47,7 +47,7 @@ export default function useDonate() {
       showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line
-    [ethTx]
+    [bnbTx]
   );
 
 
