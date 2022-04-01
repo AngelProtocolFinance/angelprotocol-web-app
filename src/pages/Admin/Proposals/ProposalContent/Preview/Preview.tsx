@@ -5,6 +5,7 @@ import Withdraw from "./Withdraw";
 import Fund from "./Fund";
 import AllianceUpdate from "./AllianceUpdate";
 import FundMemberUpdate from "./FundMemberUpdate";
+import FundConfigUpdate from "./FundConfigUpdate";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -22,6 +23,8 @@ export default function Preview(props: ProposalMeta) {
       return <AllianceUpdate {...props.data} />;
     case proposalTypes.indexFund_updateFundMembers:
       return <FundMemberUpdate {...props.data} />;
+    case proposalTypes.indexFund_configUpdate:
+      return <FundConfigUpdate {...props.data} />;
     default:
       return <div>no preview</div>;
   }

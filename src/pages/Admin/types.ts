@@ -1,4 +1,4 @@
-import { FundDetails } from "contracts/types";
+import { FundConfig, FundDetails } from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import {
@@ -12,6 +12,7 @@ export enum proposalTypes {
   indexFund_createFund = "indexFund_createFund",
   indexFund_removeFund = "indexFund_removeFund",
   indexFund_updateFundMembers = "indexFund_updateFundMembers",
+  indexFund_configUpdate = "indexFund_configUpdate",
   //admin group
   adminGroup_updateMembers = "adminGroup_updateMembers",
   //endowment
@@ -39,6 +40,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.indexFund_updateFundMembers;
       data: FundMemberUpdateMeta;
+    }
+  | {
+      type: proposalTypes.indexFund_configUpdate;
+      data: FundConfigUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -70,4 +75,9 @@ export interface FundMemberUpdateMeta {
   fundName: string;
   toRemove: string[];
   toAdd: string[];
+}
+
+export interface FundConfigUpdateMeta {
+  prevConfig: FundConfig;
+  nextConfig: FundConfig;
 }
