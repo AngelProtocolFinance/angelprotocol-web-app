@@ -18,7 +18,6 @@ export type State = {
 export interface Dwindow extends Window {
   xfi?: {
     ethereum?: ExternalProvider;
-    BinanceChain?: any;
   };
   ethereum?: ExternalProvider;
   BinanceChain?: any;
