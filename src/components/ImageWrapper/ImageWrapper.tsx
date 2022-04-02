@@ -8,5 +8,5 @@ export default function ImageWrapper(
   const handleImageLoadError = () => {
     imageRef.current?.setAttribute("src", placeHolderImage);
   };
-  return <img {...props} onError={handleImageLoadError} />;
+  return <img {...props} alt={props.alt} onError={handleImageLoadError} />;
 }
