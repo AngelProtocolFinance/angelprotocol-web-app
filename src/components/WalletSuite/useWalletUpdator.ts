@@ -94,13 +94,22 @@ export default function useWalletUpdator(activeProvider: Providers) {
         );
 
         const signer = provider.getSigner();
+        const network = await provider.getNetwork();
         const wei_balance = await signer.getBalance();
         const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
 
+        const isBinance = provider._network.name.includes("bnb");
+
         const coins_copy = [...others];
-        coins_copy.push({ amount: eth_balance, denom: denoms.ether });
+        coins_copy.push({
+          amount: eth_balance,
+          denom: isBinance ? denoms.bnb : denoms.ether,
+        });
+
+        const supported_denoms = [denoms.uusd, denoms.uluna];
+        supported_denoms.push(isBinance ? denoms.bnb : denoms.ether);
 
         dispatch(
           setWalletDetails({
@@ -113,8 +122,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
             chainId:
               wallet.network.chainID === chainIDs.mainnet
                 ? chainIDs.gen_mainnet
-                : chainIDs.gen_testnet,
-            supported_denoms: [denoms.uusd, denoms.ether, denoms.uluna],
+                : wallet.network.chainID === chainIDs.testnet
+                ? chainIDs.gen_testnet
+                : (`${network.chainId}` as chainIDs),
+            supported_denoms,
           })
         );
         dispatch(setIsUpdating(false));
@@ -151,7 +162,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
             coins: [eth_coin],
             address,
             chainId: `${network.chainId}` as chainIDs,
-            supported_denoms: [denoms.ether],
+            supported_denoms: [denoms.ether, denoms.bnb],
           })
         );
 

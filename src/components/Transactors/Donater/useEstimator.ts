@@ -184,6 +184,10 @@ export default function useEstimator() {
 
           if (activeProvider === Providers.binance) {
             provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
+          } else if (dwindow.xfi?.ethereum!) {
+            provider = new ethers.providers.Web3Provider(
+              dwindow.xfi?.ethereum!
+            );
           } else throw new Error("Estimating BNB Fee Failed. Provider Error");
 
           //no network request
