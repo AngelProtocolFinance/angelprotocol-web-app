@@ -3,35 +3,37 @@ import { unsdgs } from "constants/unsdgs";
 import { Profile } from "services/aws/endowments/types";
 import CharityLinks from "./CharityLinks";
 
-export default function CharityHeader(profile: Profile) {
+export default function CharityHeader(props: Profile) {
   const showDonater = useDonater({
     to: "charity",
-    receiver: profile.endowment_address!,
+    receiver: props.endowment_address!,
   });
-  const sdg = unsdgs[+profile.un_sdg];
+  const sdg = unsdgs[+props.un_sdg];
 
   return (
-    <div className="justify-self-center lg:justify-self-end flex flex-col items-center lg:items-end gap-1  ">
-      {profile.un_sdg && (
+    <div className="flex flex-col items-start gap-2">
+      {props.un_sdg && (
         <p
-          className={`${sdg.text_light} ${sdg.bg} text-center lg:text-right text-xs mb-1 uppercase rounded-sm px-2 py-1 inline-block`}
+          className={`p-3 max-w-250 text-center bg-angel-blue/50 text-white text-sm uppercase font-heading font-bold rounded-xl`}
         >
-          SDG #{profile.un_sdg}: {sdg?.title}
+          SDG #{props.un_sdg}: {sdg?.title}
         </p>
       )}
 
-      <h3 className="text-3xl font-bold text-white uppercase text-center lg:text-right">
-        {profile.charity_name}
+      <h3 className="text-3xl font-bold text-white uppercase">
+        {props.charity_name}
       </h3>
 
-      <CharityLinks classes="mb-2" />
-      <button
-        disabled={profile.is_placeholder}
-        onClick={showDonater}
-        className="disabled:bg-grey-accent uppercase bg-angel-orange hover:bg-orange text-white font-semibold rounded-md px-4 py-2"
-      >
-        DONATE NOW
-      </button>
+      <div className="flex items-center gap-2">
+        <button
+          disabled={props.is_placeholder}
+          onClick={showDonater}
+          className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+        >
+          DONATE NOW
+        </button>
+        <CharityLinks />
+      </div>
     </div>
   );
 }

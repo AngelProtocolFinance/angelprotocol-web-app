@@ -7,16 +7,18 @@ import Icon from "components/Icons/Icons";
 import CharityStats from "./CharityStats";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityContent from "./CharityContent/CharityContent";
+import ContentLoader from "components/ContentLoader/ContentLoader";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile } = useProfile(endowment_addr!);
+  const { profile, isProfileLoading } = useProfile(endowment_addr!);
 
+  if (isProfileLoading) return <CharitySkeleton />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <Link
         to={`${site.app}/${app.marketplace}`}
-        className="lg:col-span-2 flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue "
+        className="lg:col-span-2 flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue"
       >
         <Icon type="ArrowBack" size={15} /> back to marketplace
       </Link>
@@ -25,15 +27,29 @@ const Charity = () => {
       <CharityContent
         {...{
           ...profile,
-          classes: "row-span-2 lg:border-l-2 lg:border-white/10 lg:pl-2",
+          classes: "row-span-2",
         }}
       />
-      <CharityStats
-        {...{ ...profile, classes: "hidden lg:block justify-self-end" }}
-      />
+
+      <CharityStats {...{ ...profile, classes: "hidden lg:block mt-4" }} />
       {/* <DonationInfo /> */}
     </section>
   );
 };
+
+function CharitySkeleton() {
+  return (
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+      <ContentLoader className="w-48 h-10 lg:col-span-2" />
+      <ContentLoader className="w-full rounded-md" />
+      <div className="w-full row-span-2 grid grid grid-rows-aa1">
+        <ContentLoader className="w-full h-[300px] rounded-2xl" />
+        <ContentLoader className="w-full h-10 mt-2 rounded-md" />
+        <ContentLoader className="w-full h-full mt-2 rounded-md" />
+      </div>
+      <ContentLoader className="hidden lg:block mt-2 h-full w-full rounded-md" />
+    </section>
+  );
+}
 
 export default Charity;

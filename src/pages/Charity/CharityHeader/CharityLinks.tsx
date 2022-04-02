@@ -13,11 +13,7 @@ export default function CharityLinks(props: { classes?: string }) {
   const isCharityOwner = wallet?.walletAddress === profileState.charity_owner;
 
   return (
-    <div className={`${props.classes || ""} flex gap-1 items-center`}>
-      {profileState.url && (
-        <IconLink _iconType="Globe" href={profileState.url} />
-      )}
-
+    <div className={`${props.classes || ""} flex gap-2 items-center`}>
       {profileState.twitter_handle && (
         <IconLink
           _iconType="Twitter"
@@ -77,7 +73,8 @@ function IconRouteLink({
   );
 }
 
-const linkStyle = "text-angel-blue hover:text-white";
+const linkStyle =
+  "h-10 w-10 p-2 rounded-full text-angel-blue inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey";
 
 //<props.Icon color="#3FA9F5" size={props.size} />
 function formatUrl(

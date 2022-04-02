@@ -16,6 +16,7 @@ export default function CharityStats(props: Profile & { classes?: string }) {
       <StatsItem title="no. of employees" value={props.number_of_employees} />
       <StatsItem
         title="navigator rating"
+        classes="text-leaf-green"
         value={props.charity_navigator_rating}
       />
     </ul>
@@ -24,12 +25,12 @@ export default function CharityStats(props: Profile & { classes?: string }) {
 
 function StatsItem(props: { title: string; value?: string; classes?: string }) {
   return (
-    <li className="mb-4 border border-white/20 rounded-md p-3">
-      <p className="text-right text-white font-light text-xs tracking-wide uppercase">
+    <li className="mb-4 rounded-md">
+      <p className="text-white font-light text-xs tracking-wide uppercase">
         {props.title}
       </p>
       <p
-        className={`text-right text-white text-xl font-semibold capitalize break-words w-115 ${
+        className={`text-white text-xl font-heading font-semibold capitalize break-words w-115 ${
           props.classes || ""
         }`}
       >

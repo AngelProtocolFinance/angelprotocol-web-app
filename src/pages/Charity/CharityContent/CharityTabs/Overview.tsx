@@ -8,7 +8,7 @@ export default function Overview() {
   const { profileState } = useProfileState(charity_addr!);
 
   return (
-    <div className="text-white/90 font-normal text-md inline-block mb-4">
+    <div className="w-full  bg-white text-angey-grey p-3 rounded-md lg:text-white/90 lg:bg-transparent lg:rounded-none lg:p-0 text-md mb-4">
       <RichTextRenderer text={profileState.charity_overview} />
     </div>
   );

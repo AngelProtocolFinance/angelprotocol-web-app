@@ -28,7 +28,7 @@ export default function ContentLoader(props: React.SVGProps<SVGElement>) {
           __html: `\n svg {\n \n      }\n\n rect {\n   width: 100%;\n height: 100%;\n x: 0;\n y: 0;\n      }\n      `,
         }}
       />
-      <rect fill="url(#myGradient)" />
+      <rect fill="url(#myGradient)" width="100%" height="100%" />
     </svg>
   );
 }
