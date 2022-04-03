@@ -25,6 +25,8 @@ export const sendEthDonation = createAsyncThunk(
 
       if (activeProvider === Providers.ethereum) {
         provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
+      } else if (activeProvider === Providers.binance) {
+        provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
       } else {
         provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
       }

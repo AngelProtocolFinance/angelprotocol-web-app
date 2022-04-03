@@ -36,4 +36,5 @@ const decimals: { [index: string]: number } = {
   [denoms.ether]: 6,
   [denoms.sol]: 6,
   [denoms.uluna]: 6,
+  [denoms.bnb]: 6,
 };
