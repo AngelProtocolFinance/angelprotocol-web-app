@@ -24,7 +24,7 @@ export default function CharityHeader(props: Profile) {
         {props.charity_name}
       </h3>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         <button
           disabled={props.is_placeholder}
           onClick={showDonater}

@@ -26,14 +26,15 @@ export default function CharityLinks(props: { classes?: string }) {
           href={formatUrl(profileState.linkedin_page, "linkedin")}
         />
       )}
-
       {profileState.facebook_page && (
         <IconLink
           _iconType="Facebook"
           href={formatUrl(profileState.facebook_page, "facebook")}
         />
       )}
-
+      {profileState.url && (
+        <IconLink _iconType="Globe" href={profileState.url} />
+      )}
       {isCharityOwner && (
         <IconRouteLink
           _iconType="Edit"

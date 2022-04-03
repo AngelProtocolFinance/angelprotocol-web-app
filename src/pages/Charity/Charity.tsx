@@ -36,11 +36,11 @@ const Charity = () => {
 
 function CharitySkeleton() {
   return (
-    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start opacity-20">
       <ContentLoader className="w-48 h-10 lg:col-span-2" />
       <ContentLoader className="w-full rounded-md" />
       <div className="w-full row-span-2 grid grid grid-rows-aa1">
-        <ContentLoader className="w-full h-[300px] rounded-2xl" />
+        <ContentLoader className="w-full h-[300px] rounded-md" />
         <ContentLoader className="w-full h-10 mt-2 rounded-md" />
         <ContentLoader className="w-full h-full mt-2 rounded-md" />
       </div>
