@@ -145,7 +145,7 @@ type ColumnProps = PropsWithChildren<{ colored?: boolean }>;
 
 const Column = ({ colored, children }: ColumnProps) => {
   const styles = colored
-    ? "ring ring-angel-blue rounded-md bg-angel-blue bg-opacity-50"
+    ? "ring ring-angel-blue rounded-md bg-angel-blue/50"
     : "";
   return (
     <div className={`flex flex-col text-left p-1 gap-3 ${styles}`}>

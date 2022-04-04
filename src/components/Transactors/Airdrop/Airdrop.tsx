@@ -1,4 +1,4 @@
-import { FaParachuteBox } from "react-icons/fa";
+import Icon from "components/Icons/Icons";
 import useAirdrop from "./useAirdrop";
 export default function Airdrop() {
   const { airdrop_shown, showDetails } = useAirdrop();
@@ -10,9 +10,9 @@ export default function Airdrop() {
     <div>
       <button
         onClick={showDetails}
-        className="w-full px-3 h-full border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md"
+        className="w-full px-3 h-full border border-white/40 hover:bg-white/10 rounded-md"
       >
-        <FaParachuteBox className="text-lg text-white" />
+        <Icon type="Parachute" className="text-lg text-white" />
       </button>
     </div>
   );

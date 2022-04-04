@@ -27,13 +27,14 @@ export default function Amount() {
         id="amount"
         type="text"
         placeholder={currency_text[denom]}
-        className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey bg-opacity-80 text-angel-grey"
+        className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
           <Currency currency={denoms.uusd} />
           <Currency currency={denoms.uluna} />
           <Currency currency={denoms.ether} />
+          <Currency currency={denoms.bnb} />
           {/* <Currency currency={denoms.btc} withTooltip /> */}
           {/* <Currency currency={denoms.sol} withTooltip /> */}
           {/* <Currency currency={denoms.uatom} withTooltip /> */}

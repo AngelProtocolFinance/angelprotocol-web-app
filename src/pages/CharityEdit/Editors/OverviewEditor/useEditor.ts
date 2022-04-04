@@ -24,7 +24,9 @@ export default function useEditor() {
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
     const rawState = convertToRaw(editorState.getCurrentContent());
-    setValue("charity_overview", JSON.stringify(rawState));
+    setValue("charity_overview", JSON.stringify(rawState), {
+      shouldDirty: true,
+    });
     //eslint-disable-next-line
   }, [editorState]);
 

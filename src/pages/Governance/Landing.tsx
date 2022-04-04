@@ -39,15 +39,17 @@ export default function Landing() {
 function DonationAdvert() {
   const navigate = useNavigate();
   return (
-    <div className="mt-5 w-full col-span-2 border border-opacity-10 bg-white bg-opacity-10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
-      <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden">
-        The charity Marketplace is now open! Give directly to the endowment of
-        your choice and get 10% back in HALO airdrops.
+    <div className="mt-5 w-full col-span-2 border-white/10 bg-white/10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
+      <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden p-3 pl-10 pr-10">
+        The charity marketplace is now open!
+        <br />
+        Give directly to the endowment of your choice and 10% of your donation
+        will be matched with $HALO tokens shared between you and the charity.
       </h4>
       <div className="w-full flex justify-center">
         <button
           onClick={() => navigate(`${site.app}/${app.marketplace}`)}
-          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-opacity-30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
         >
           Donate now
         </button>

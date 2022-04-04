@@ -1,8 +1,8 @@
+import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import Receipter from "components/Receipter/Receipter";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import { ReactNode, useMemo } from "react";
-import { MdOutlineClose } from "react-icons/md";
 import { setStage } from "services/transaction/transactionSlice";
 import {
   BroadcastStage,
@@ -56,7 +56,7 @@ export default function TransactionPrompt() {
         onClick={closePrompt}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
       >
-        <MdOutlineClose size={25} />
+        <Icon type="Close" size={25} />
       </button>
 
       {prompts[stage.step]}

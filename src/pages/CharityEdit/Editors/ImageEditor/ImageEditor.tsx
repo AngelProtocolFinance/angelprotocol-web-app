@@ -1,8 +1,7 @@
+import { getIcon } from "components/Icons/Icons";
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
-import { AiOutlineUpload } from "react-icons/ai";
-import { CgUndo } from "react-icons/cg";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import useChangeImage from "./useChangeImage";
 
@@ -22,13 +21,13 @@ export default function ImageEditor() {
         <ImageControl
           type="upload"
           htmlFor="file__image"
-          Icon={AiOutlineUpload}
+          Icon={getIcon("Upload")}
           disabled={loading}
         />
         <ImageControl
           type="reset"
           onClick={handleImageReset}
-          Icon={CgUndo}
+          Icon={getIcon("Undo")}
           disabled={isInitial || loading}
         />
         <input
@@ -57,7 +56,7 @@ function ImageControl(props: ControlProps & Common) {
   return React.createElement(props.type === "reset" ? "button" : "label", {
     ...valitAttrs,
     className:
-      "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent bg-opacity-90 p-2 m-1 rounded-md shadow-lg",
+      "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",
     children: <Icon />,
   });
 }

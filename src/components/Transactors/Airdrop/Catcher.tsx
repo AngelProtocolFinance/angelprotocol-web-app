@@ -1,14 +1,14 @@
 import toCurrency from "helpers/toCurrency";
-import { FaParachuteBox } from "react-icons/fa";
 import { Airdrops } from "services/aws/airdrop/types";
 import useClaimAirdrop from "./useClaimAirdrop";
+import Icon from "components/Icons/Icons";
 
 export type Props = { airdrops: Airdrops };
 export default function Catcher(props: Props) {
   const { claimAirdrop, totalClaimable } = useClaimAirdrop(props.airdrops);
   return (
     <div className="bg-white-grey flex flex-col rounded-md items-center p-4 pt-0 shadow-lg min-h-115 w-full">
-      <FaParachuteBox className="text-angel-blue text-4xl" />
+      <Icon type="Parachute" className="text-angel-blue text-4xl" />
       <h2 className="text-angel-blue text-2xl font-bold uppercase text-center mt-2">
         Airdrop
       </h2>
@@ -16,27 +16,27 @@ export default function Catcher(props: Props) {
         {toCurrency(totalClaimable)} HALO
       </p>
 
+      <Action onClick={claimAirdrop(true)} className="text-sm">
+        Claim & Stake
+      </Action>
       <Action
-        title="claim & stake"
-        onClick={claimAirdrop(true)}
-        className="text-sm"
-      />
-      <Action
-        title="claim"
         onClick={claimAirdrop(false)}
         className="bg-angel-grey font-semibold tracking-wide text-xs"
-      />
+      >
+        Claim
+      </Action>
     </div>
   );
 }
 
-function Action(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+function Action({
+  className,
+  ...restProps
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <button
-      onClick={props.onClick}
-      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${props.className}`}
-    >
-      {props.title}
-    </button>
+      {...restProps}
+      className={`bg-angel-blue text-white-grey hover:opacity-80 disabled:bg-grey-accent w-full py-2 rounded-md uppercase font-heading font-bold mb-2 ${className}`}
+    />
   );
 }

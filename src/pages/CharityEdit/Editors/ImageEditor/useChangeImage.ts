@@ -1,3 +1,4 @@
+import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
@@ -53,8 +54,11 @@ export default function useChangeImage() {
     setFileList(null);
   }
 
-  function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-    setFileList(e.target.files);
+  async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
+    if (!e.target.files) return;
+    const file = await optimizeImage(e.target.files[0]);
+    const files = (file ? [file] : e.target.files) as FileList;
+    setFileList(files);
   }
 
   return {

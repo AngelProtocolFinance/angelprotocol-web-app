@@ -4,7 +4,7 @@ export default function IndexCard(props: { id: number }) {
   const sdg = unsdgs[props.id];
 
   return (
-    <div className="w-full sm:w-60 text-white sm:py-8 border-t border-white border-opacity-40">
+    <div className="w-full sm:w-60 text-white pt-3">
       <img
         src={sdg.icon}
         className="hidden sm:block w-36 h-16 object-contain img-no-drag object-left"

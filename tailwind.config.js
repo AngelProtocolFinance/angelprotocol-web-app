@@ -1,6 +1,5 @@
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false,
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       animation: {
@@ -52,6 +51,8 @@ module.exports = {
         "failed-red": "#FE4454",
         "light-blue": "#1b9cef",
         "bright-blue": "#64c1fc",
+
+        //standard sdg colors
         sdg1: "#e5233d",
         sdg2: "#dda73a",
         sdg3: "#4ca146",
@@ -112,7 +113,6 @@ module.exports = {
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
         aa1: "auto auto 1fr",
-        charity: "auto 1fr",
         32: "3fr 2fr",
         "21a": "2fr 1fr auto",
       },
@@ -171,17 +171,4 @@ module.exports = {
     },
   },
   plugins: [require("@tailwindcss/line-clamp")],
-  variants: {
-    extend: {
-      backgroundColor: ["disabled"],
-      textColor: ["disabled"],
-      translate: ["active"],
-      display: ["hover", "group-hover"],
-      opacity: ["hover", "group-hover"],
-      brightness: ["hover", "group-hover"],
-      cursor: ["hover", "disabled"],
-      transform: ["hover", "active"],
-      backgroundOpacity: ["disabled"],
-    },
-  },
 };

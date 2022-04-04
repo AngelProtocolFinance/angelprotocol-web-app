@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import { HoldingSummary } from "./types";
+import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
-  const { vaultsRate } = useApprovedVaultsRateState();
+  const { vaultsRate, isVaultsRateError } = useApprovedVaultsRateState();
   const total_holding = useMemo(() => {
     const total_dec = props.holdings.reduce((total, holding) => {
       const vaultInfo = vaultsRate.find(
@@ -18,13 +18,14 @@ export default function Summary(props: HoldingSummary) {
   }, [vaultsRate, props.holdings]);
 
   const title =
-    props.type === "liquid" ? "Liquid Account" : "Principal Account";
+    props.type === "liquid" ? "Liquid Account" : "Endowment Account";
 
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10 text-white text-opacity-80">
+    <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10 text-white/80">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>{title}</span>
-        <FaCog
+        <Icon
+          type="Cog"
           size={16}
           className="ml-1 text-grey-accent"
           title="Coming Soon!"
@@ -35,9 +36,9 @@ export default function Summary(props: HoldingSummary) {
       </p>
       {props.opener !== undefined && (
         <button
-          disabled={!props.isOwner}
+          disabled={!props.isOwner || isVaultsRateError}
           onClick={props.opener}
-          className="mt-2 mb-4 bg-blue-accent disabled:bg-grey-accent hover:bg-angel-blue bg-opacity-60 px-2 py-1 rounded-md uppercase text-xs  border-2 border-opacity-20 font-heading self-end"
+          className="mt-2 mb-4 bg-blue-accent disabled:bg-grey-accent hover:bg-angel-blue/60 px-2 py-1 rounded-md uppercase text-xs  border-2 border-white/20 font-heading self-end"
         >
           withdraw
         </button>

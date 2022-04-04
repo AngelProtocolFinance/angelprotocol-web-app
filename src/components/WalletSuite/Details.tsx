@@ -4,15 +4,16 @@ import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
 import { resetWallet } from "services/wallet/walletSlice";
 import maskAddress from "helpers/maskAddress";
-import { IoClose } from "react-icons/io5";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
 import { useState } from "react";
 import Filter from "./Filter";
 import { useSetMetamask } from "providers/Metamask/Metamask";
+import Icon from "components/Icons/Icons";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { DeviceType, deviceType } from "helpers/deviceType";
+import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
@@ -20,6 +21,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { disconnect: disconnectTerra, availableConnections } = useWallet();
   const { disconnect: disconnectMetamask } = useSetMetamask();
+  const { disconnect: disconnectBinance } = useSetBinance();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
@@ -43,6 +45,9 @@ export default function Details(props: { closeHandler: () => void }) {
     if (activeProvider === Providers.ethereum) {
       disconnectMetamask();
     }
+    if (activeProvider === Providers.binance) {
+      disconnectBinance();
+    }
   };
 
   const isSafePal =
@@ -52,12 +57,12 @@ export default function Details(props: { closeHandler: () => void }) {
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
-    <div className="z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full left-0 rounded-md overflow-hidden shadow-lg">
+    <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
       <button
         className="text-white absolute top-2 right-2"
         onClick={props.closeHandler}
       >
-        <IoClose />
+        <Icon type="Close" />
       </button>
       <div className="bg-angel-grey text-white-grey text-sm p-2">
         <p className="uppercase">network : {chainId}</p>

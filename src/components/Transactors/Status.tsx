@@ -1,5 +1,5 @@
+import Icon from "components/Icons/Icons";
 import { ReactNode, useState } from "react";
-import { AiOutlineInfoCircle, AiFillCaretLeft } from "react-icons/ai";
 import { useGetter } from "store/accessors";
 
 export default function Status() {
@@ -15,14 +15,14 @@ export default function Status() {
   } else if (typeof form_error === "string") {
     return (
       <StatusDiv>
-        <AiOutlineInfoCircle />
+        <Icon type="Info" />
         <StatusTitle text={form_error} />
       </StatusDiv>
     );
   } else {
     return (
       <StatusDiv>
-        <AiOutlineInfoCircle />
+        <Icon type="Info" />
         <StatusTitle text={form_error.title} />
         {form_error.details && (
           <button
@@ -32,7 +32,7 @@ export default function Status() {
               detailsShown ? "-rotate-90" : "rotate-0"
             }`}
           >
-            <AiFillCaretLeft />
+            <Icon type="CaretLeft" />
           </button>
         )}
         {detailsShown && (
@@ -47,7 +47,7 @@ export default function Status() {
 
 function StatusDiv(props: { children: ReactNode }) {
   return (
-    <div className="relative grid grid-cols-a1 items-center bg-red-400 bg-opacity-20 p-2 rounded-md text-angel-grey mb-2">
+    <div className="relative grid grid-cols-a1 items-center bg-red-400/20 p-2 rounded-md text-angel-grey mb-2">
       {props.children}
     </div>
   );

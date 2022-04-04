@@ -2,6 +2,7 @@ import { ExternalProvider } from "@ethersproject/providers/src.ts/web3-provider"
 export enum Providers {
   none = "none",
   ethereum = "ethereum",
+  binance = "binance",
   terra = "terra",
 
   // phantom = "phantom",
@@ -19,4 +20,5 @@ export interface Dwindow extends Window {
     ethereum?: ExternalProvider;
   };
   ethereum?: ExternalProvider;
+  BinanceChain?: any;
 }

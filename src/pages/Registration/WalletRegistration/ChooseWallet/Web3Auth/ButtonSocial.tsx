@@ -12,7 +12,7 @@ export function Button(props: Props) {
 
   return (
     <button
-      className={`flex gap-3 h-12 w-full justify-center items-center rounded-sm bg-white ${className}`}
+      className={`flex gap-3 h-12 w-full justify-center items-center rounded-sm ${className}`}
       {...rest}
     >
       {children}

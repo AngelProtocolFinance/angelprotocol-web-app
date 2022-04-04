@@ -1,5 +1,5 @@
-import { FaCog } from "react-icons/fa";
 import toCurrency from "helpers/toCurrency";
+import Icon from "components/Icons/Icons";
 
 type LockedBalance = {
   lockedBalance: number | undefined;
@@ -7,10 +7,11 @@ type LockedBalance = {
 
 export default function Locked(props: LockedBalance) {
   return (
-    <div className="flex flex-col bg-white bg-opacity-10 p-4 rounded-md shadow-md border border-opacity-10">
+    <div className="flex flex-col bg-white/10 p-4 rounded-md shadow-md border border-white/10">
       <h3 className="text-lg font-bold uppercase flex items-center justify-end">
         <span>Endowment Account</span>
-        <FaCog
+        <Icon
+          type="Cog"
           size={16}
           className="ml-1 text-grey-accent"
           title="Coming Soon!"

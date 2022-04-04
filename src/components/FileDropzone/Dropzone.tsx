@@ -12,7 +12,7 @@ type Props<T extends FieldValues> = BaseProps<T> & {
   value: File | File[];
 };
 
-const DISABLED_CLASSES = "cursor-default bg-light-grey opacity-30";
+const DISABLED_CLASSES = "cursor-default bg-light-grey/30";
 
 export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -23,7 +23,7 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
 
   const className = `flex items-center rounded-md border-none w-full px-2 py-1 text-black ${
     isDragActive
-      ? "bg-angel-blue bg-opacity-50 ring ring-angel-blue"
+      ? "bg-angel-blue/50 ring ring-angel-blue"
       : "bg-white outline-none"
   } ${props.className} ${props.disabled ? DISABLED_CLASSES : ""}`;
 

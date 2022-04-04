@@ -7,7 +7,7 @@ import { app, site } from "../constants/routes";
 const Auction = lazy(() => import("pages/LBP/Auction"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
-const Donation = lazy(() => import("pages/Donations/Donation"));
+const Donations = lazy(() => import("pages/Donations/Donations"));
 const Endowment = lazy(() => import("pages/Endowment/Endowment"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
 const Login = lazy(() => import("pages/Login/Login"));
@@ -30,9 +30,12 @@ export default function Views() {
           path={`${app.charity_edit}/:address`}
           element={<CharityEdit />}
         />
-        <Route path={`${app.donation}/:address`} element={<Donation />} />
-        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
+        <Route path={`${app.login}`} element={<Login />} />
+        <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />
+        <Route path={`${app.auction}`} element={<Auction />} />
+        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
+        <Route path={`${app.donation}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}
           element={<Navigate replace to={`${app.marketplace}`} />}

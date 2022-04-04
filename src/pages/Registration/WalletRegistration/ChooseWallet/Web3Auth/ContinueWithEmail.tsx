@@ -48,8 +48,8 @@ export default function ContinueWithEmail({ onClick }: Props) {
       </div>
       <Button
         type="submit"
-        className={`bg-opacity-40 disabled:bg-opacity-75 ${
-          !isSubmitting ? "hover:bg-opacity-50" : "cursor-auto"
+        className={`bg-white/40 disabled:bg-white/75 ${
+          !isSubmitting ? "hover:bg-white/50" : "cursor-auto"
         }`}
         disabled={isSubmitting}
       >

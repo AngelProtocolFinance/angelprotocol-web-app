@@ -1,7 +1,7 @@
+import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
 import { WalletSuiteContext } from "providers/WalletSuiteProvider";
 import { useCallback, useContext, useEffect, useRef } from "react";
-import { IoWalletSharp } from "react-icons/io5";
 import { Providers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
 import ConnectOptions from "./ConnectOptions";
@@ -18,12 +18,8 @@ export default function WalletSuite() {
 
   const { connectOptionsShown, setConnectOptionsShown } =
     useContext(WalletSuiteContext);
-
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
-  const hideConnectOptions = useCallback(
-    () => setConnectOptionsShown(false),
-    [setConnectOptionsShown]
-  );
+  const hideConnectOptions = () => setConnectOptionsShown(false);
   const dismissHandler = useBackdropDismiss(hideConnectOptions);
 
   const isProviderActive = provider.active !== Providers.none;
@@ -37,7 +33,8 @@ export default function WalletSuite() {
     if (escKeyPressed && connectOptionsShown) {
       hideConnectOptions();
     }
-  }, [escKeyPressed, connectOptionsShown, hideConnectOptions]);
+    //eslint-disable-next-line
+  }, [escKeyPressed, connectOptionsShown]);
 
   const handleRef = useCallback(
     (node) => {
@@ -53,7 +50,7 @@ export default function WalletSuite() {
   return (
     <div
       ref={handleRef}
-      className="relative border border-opacity-40 hover:bg-white hover:bg-opacity-10 rounded-md"
+      className="relative border border-white/40 hover:bg-white/10 rounded-md"
     >
       {!isProviderActive && (
         <button
@@ -61,7 +58,7 @@ export default function WalletSuite() {
           disabled={provider.isSwitching}
           onClick={toggleConnectOptions}
         >
-          <IoWalletSharp className="text-white text-xl mr-2" />
+          <Icon type="Wallet" className="text-white text-xl mr-2" />
           <span>{provider.isSwitching ? "Loading" : "Connect"}</span>
         </button>
       )}

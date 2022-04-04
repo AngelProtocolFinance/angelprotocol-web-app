@@ -9,6 +9,7 @@ export default function CharityEditor(
 ) {
   const { children, ...restProps } = props;
   const methods = useForm<EditableProfileAttr>({
+    mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       ...restProps,

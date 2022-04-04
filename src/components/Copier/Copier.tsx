@@ -1,4 +1,4 @@
-import { BiCopy, BiCheck } from "react-icons/bi";
+import Icon from "components/Icons/Icons";
 import useCopier from "./useCopier";
 
 export default function Copier(props: { text: string; colorClass: string }) {
@@ -6,14 +6,15 @@ export default function Copier(props: { text: string; colorClass: string }) {
   return (
     <button onClick={handleCopy}>
       {(copied && (
-        <BiCheck
+        <Icon
+          type="Check"
           className={`${props.colorClass} hover:text-orange cursor-default`}
           title="Copied!"
         />
       )) || (
-        <BiCopy
-          className={`${props.colorClass} hover:text-orange`}
-          title="Copy Address"
+        <Icon
+          type="Copy"
+          className={`${props.colorClass} hover:text-orange" title="Copy Address`}
         />
       )}
     </button>

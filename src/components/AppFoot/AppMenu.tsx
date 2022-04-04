@@ -2,7 +2,7 @@ import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
 
 const LINK_STYLE =
-  "text-white-grey text-sm hover:text-opacity-75 px-1 lg:text-base font-heading uppercase font-semibold lg:px-2";
+  "text-white-grey hover:text-white-grey/75 text-sm px-1 lg:text-base font-heading uppercase font-semibold lg:px-2";
 
 export default function AppMenu() {
   return (

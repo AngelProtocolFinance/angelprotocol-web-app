@@ -3,7 +3,7 @@ import { Fee, ToReceive, Total } from "./Misc";
 import Amount from "./Amount";
 import useWithdraw from "./useWithdraw";
 import InputField from "./InputField";
-import { IoWarning } from "react-icons/io5";
+import Icon from "components/Icons/Icons";
 
 export default function WithdrawForm() {
   const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
@@ -29,8 +29,8 @@ export default function WithdrawForm() {
         field="beneficiary"
         placeholder="terra1..."
       />
-      <div className="grid grid-cols-a1 items-center gap-1 bg-yellow-400 bg-opacity-20 p-2 rounded-md text-angel-grey mb-2">
-        <IoWarning />
+      <div className="grid grid-cols-a1 items-center gap-1 bg-yellow-400/20 p-2 rounded-md text-angel-grey mb-2">
+        <Icon type="Warning" />
         <span className="font-mono text-xs ml-1">
           We recommend not using crypto exchange addresses for withdrawals. We
           are not responsible for the loss of funds.

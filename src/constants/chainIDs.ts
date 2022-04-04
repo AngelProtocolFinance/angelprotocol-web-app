@@ -9,6 +9,8 @@ export enum chainIDs {
   eth_kovan = "42",
   eth_ropsten = "3",
   eth_main = "1",
+  bnb_main = "56",
+  bnb_test = "97",
   btc_test = "1",
   sol_dev = "devnet",
   sol_main = "mainnet-beta",

@@ -31,9 +31,10 @@ export default function useSubscribe() {
         },
       ],
       legalConsentOptions: {
+        // Include this object when GDPR options are enabled
         consent: {
-          consentToProcess: false,
-          text: "Text that gives consent to process",
+          consentToProcess: true,
+          text: "I agree to allow Angel Protocol to store and process my personal data.",
           communications: [
             {
               value: true,
@@ -43,7 +44,6 @@ export default function useSubscribe() {
           ],
         },
       },
-      pageName: "React App API TEST",
     };
 
     try {

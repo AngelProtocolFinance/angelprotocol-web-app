@@ -1,6 +1,6 @@
+import Icon from "components/Icons/Icons";
 import { Vote } from "contracts/types";
 import { useFormContext } from "react-hook-form";
-import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { VoteValues } from "./types";
 
 export default function Option(props: { label: string; vote: Vote }) {
@@ -14,15 +14,15 @@ export default function Option(props: { label: string; vote: Vote }) {
 
   const icon =
     props.vote === "yes" ? (
-      <AiOutlineLike className={iconClasses} />
+      <Icon type="Like" className={iconClasses} />
     ) : (
-      <AiOutlineDislike className={iconClasses} />
+      <Icon type="Dislike" className={iconClasses} />
     );
 
   return (
     <div className="grid place-items-center">
       <label
-        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-opacity-10 ${
+        className={`cursor-pointer grid place-items-center rounded-md p-4 w-full bg-light-grey/10 ${
           is_active
             ? `${
                 vote_colors[props.vote].bg
