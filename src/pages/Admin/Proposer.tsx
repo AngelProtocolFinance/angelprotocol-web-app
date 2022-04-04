@@ -7,8 +7,8 @@ import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
 import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
+import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import CW3Configurer from "./Templates/CW3Configurer";
 
 export default function Proposer() {
   return (

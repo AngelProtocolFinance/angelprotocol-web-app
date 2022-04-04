@@ -84,11 +84,15 @@ export function useVoteList(pollId: number) {
 export function useCW3Config() {
   const { useCw3ConfigQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
-  const { data, isFetching, isLoading } = useCw3ConfigQuery(
+  const { data, isFetching, isLoading, isError } = useCw3ConfigQuery(
     contract.cw3Config,
     {
       skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
     }
   );
-  return { cw3Config: data, isCW3ConfigLoading: isFetching || isLoading };
+  return {
+    cw3Config: data,
+    isCW3ConfigLoading: isFetching || isLoading,
+    isError,
+  };
 }

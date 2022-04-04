@@ -5,9 +5,9 @@ import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type CW3ConfigValues = ProposalBase & {
   //percent vote to pass poll
-  threshold: string;
+  threshold: number;
   //poll duration in block height
-  height: string;
+  height: number;
 };
 const numberSchema = Yup.lazy((value) =>
   value === ""
