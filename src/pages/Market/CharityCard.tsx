@@ -8,20 +8,17 @@ export default function CharityCard(props: Profile) {
   return (
     <Link
       to={`${site.app}/${app.charity}/${props.endowment_address}`}
-      className="relative w-72 flex-none break-words rounded-2xl hover:shadow-3xl cursor-pointer mb-4 mx-2 p-2"
+      className="relative rounded-md hover:shadow-lg hover:bg-bright-blue/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
     >
       <LazyImage
-        classes="bg-white rounded-lg img-no-drag w-full h-32 object-cover"
+        classes="mt-2 mx-2 w-64 h-32 bg-white rounded-lg img-no-drag object-cover object-center rounded-md"
         src={props.charity_image}
         alt="charity banner"
-        width="272"
-        height="128"
-        rounded
       />
-      <p className="block cursor-pointer font-heading text-white-grey hover:text-angel-orange font-bold text-sm uppercase mt-1.5">
+      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-sm uppercase mt-1.5">
         {props.charity_name}
-      </p>
-      <div className="line-clamp-2 text-sm text-white-grey/80">
+      </div>
+      <div className="mb-2 mx-2 w-64 line-clamp-2 text-sm text-white-grey/80">
         <RichTextRenderer text={props.charity_overview} />
       </div>
     </Link>

@@ -44,6 +44,7 @@ export default function useEstimator() {
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
+  const [bnbTx, setBnbTx] = useState<TransactionRequest>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -175,6 +176,42 @@ export default function useEstimator() {
           dispatch(setFee(parseFloat(fee_eth)));
         }
 
+        //estimates for bnb
+        if (currency === denoms.bnb) {
+          const dwindow = window as Dwindow;
+          //provider is present at this point
+          let provider: ethers.providers.Web3Provider;
+
+          if (activeProvider === Providers.binance) {
+            provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
+          } else if (dwindow.xfi?.ethereum!) {
+            provider = new ethers.providers.Web3Provider(
+              dwindow.xfi?.ethereum!
+            );
+          } else throw new Error("Estimating BNB Fee Failed. Provider Error");
+
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
+
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets[denoms.ether],
+            value: wei_amount,
+          };
+
+          const gasLimit = await signer.estimateGas(tx);
+          const fee_wei = gasLimit.mul(gasPrice);
+
+          const fee_bnb = ethers.utils.formatEther(fee_wei);
+
+          setBnbTx(tx);
+          dispatch(setFee(parseFloat(fee_bnb)));
+        }
+
         dispatch(setFormLoading(false));
       } catch (err) {
         const formError = processEstimateError(err);
@@ -196,5 +233,5 @@ export default function useEstimator() {
     isDirty,
   ]);
 
-  return { terraTx, ethTx };
+  return { terraTx, ethTx, bnbTx };
 }

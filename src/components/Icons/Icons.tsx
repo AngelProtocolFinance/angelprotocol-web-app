@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 import {
-  FaFacebookSquare,
-  FaLinkedin,
+  FaFacebookF,
+  FaLinkedinIn,
   FaParachuteBox,
   FaExternalLinkAlt,
   FaListUl,
@@ -11,6 +11,7 @@ import {
   FaStopwatch,
   FaTelegramPlane,
   FaUserCircle,
+  FaUsersCog,
 } from "react-icons/fa";
 import { RiDiscordLine } from "react-icons/ri";
 import {
@@ -35,7 +36,13 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
-import { BiArrowBack, BiBold, BiItalic, BiSearchAlt2 } from "react-icons/bi";
+import {
+  BiArrowBack,
+  BiBold,
+  BiItalic,
+  BiGlobe,
+  BiSearchAlt2,
+} from "react-icons/bi";
 import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
 import {
@@ -90,6 +97,8 @@ export type IconTypes =
   | "Search"
   | "Edit"
   | "User"
+  | "Globe"
+  | "Admin"
   | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
@@ -97,7 +106,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  Facebook: FaFacebookSquare,
+  Facebook: FaFacebookF,
   Discord: RiDiscordLine,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
@@ -107,7 +116,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Check: AiOutlineCheck,
   Menu: FiMenu,
   Close: IoClose,
-  Linkedin: FaLinkedin,
+  Linkedin: FaLinkedinIn,
   Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
@@ -117,6 +126,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ExclamationCircle: BsExclamationCircle,
   ExternalLink: GoLinkExternal,
   CaretLeft: AiFillCaretLeft,
+  Globe: BiGlobe,
   Like: AiOutlineLike,
   Dislike: AiOutlineDislike,
   Up: VscTriangleUp,
@@ -139,6 +149,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Edit: AiOutlineEdit,
   User: FaUserCircle,
   PieChart: GiPieChart,
+  Admin: FaUsersCog,
 };
 
 interface IconProps extends IconBaseProps {
