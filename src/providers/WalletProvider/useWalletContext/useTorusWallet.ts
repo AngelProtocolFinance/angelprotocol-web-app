@@ -14,7 +14,6 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { ConnectionProxy, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 
-// TODO: would be good to set this value using the environment variables
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === chainIDs.testnet ? "testnet" : "mainnet";
 
