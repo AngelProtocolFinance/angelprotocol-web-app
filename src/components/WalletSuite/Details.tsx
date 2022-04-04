@@ -13,6 +13,7 @@ import Icon from "components/Icons/Icons";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { DeviceType, deviceType } from "helpers/deviceType";
+import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
@@ -20,6 +21,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { disconnect: disconnectTerra, availableConnections } = useWallet();
   const { disconnect: disconnectMetamask } = useSetMetamask();
+  const { disconnect: disconnectBinance } = useSetBinance();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
@@ -42,6 +44,9 @@ export default function Details(props: { closeHandler: () => void }) {
     }
     if (activeProvider === Providers.ethereum) {
       disconnectMetamask();
+    }
+    if (activeProvider === Providers.binance) {
+      disconnectBinance();
     }
   };
 

@@ -5,6 +5,7 @@ import Modal from "components/Modal/Modal";
 import Views from "./Views";
 import DappHead from "components/DappHead/DappHead";
 import Metamask from "providers/Metamask/Metamask";
+import BinanceWallet from "providers/BinanceWallet/BinanceWallet";
 
 export default function App() {
   //TODO: refactor non-terra providers to redux
@@ -15,11 +16,13 @@ export default function App() {
         walletConnectChainIds={walletConnectChainIds}
       >
         <Metamask>
-          <Modal classes="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
-            <DappHead />
-            <Views />
-          </Modal>
-          <AppFoot />
+          <BinanceWallet>
+            <Modal classes="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center">
+              <DappHead />
+              <Views />
+            </Modal>
+            <AppFoot />
+          </BinanceWallet>
         </Metamask>
       </TerraProvider>
     </div>
