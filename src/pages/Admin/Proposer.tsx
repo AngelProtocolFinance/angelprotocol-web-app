@@ -8,6 +8,7 @@ import FundUpdator from "./Templates/FundUpdator/FundUpdator";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
 import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import CW3Configurer from "./Templates/CW3Configurer";
 
 export default function Proposer() {
   return (
@@ -26,6 +27,10 @@ export default function Proposer() {
           path={proposal_types.alliance_members}
           element={<AllianceEditor />}
         />
+        <Route
+          path={proposal_types.update_cw3_config}
+          element={<CW3Configurer />}
+        />
         <Route index element={<MemberUpdator />} />
       </Routes>
     </div>
@@ -42,6 +47,9 @@ function ProposalTypes() {
       <ProposalCategory title="Admin group" />
       <NavLink end to={proposal_types.index} className={styler}>
         Update group members
+      </NavLink>
+      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+        Update voting params
       </NavLink>
 
       <ProposalCategory title="Index fund" classes="mt-4" />

@@ -17,6 +17,18 @@ export default function CW3ConfigForm() {
         wide
         required
       />
+      <TextInput<CV>
+        title="pass threshold (%)"
+        name="threshold"
+        required
+        mono
+      />
+      <TextInput<CV>
+        title="voting period (blocks)"
+        name="height"
+        required
+        mono
+      />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Propose changes
       </Submitter>

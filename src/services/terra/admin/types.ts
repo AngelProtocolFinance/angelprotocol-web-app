@@ -41,6 +41,14 @@ export type Proposal = {
 
 export type CW3Config = {
   group_addr: string; //"terra123abc.."
+  threshold: {
+    absolute_percentage: {
+      percentage: string; //"0.5"
+    };
+  };
+  max_voting_period: {
+    height: number; //1000
+  };
   isPlacholder?: true;
   //...future needed attr
 };

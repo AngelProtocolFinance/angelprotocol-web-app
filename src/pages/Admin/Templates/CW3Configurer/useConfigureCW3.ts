@@ -8,28 +8,30 @@ import { admin, tags } from "services/terra/tags";
 import { useSetter } from "store/accessors";
 import { proposalSuccessLink } from "../constants";
 import { CW3ConfigValues } from "./cw3ConfigSchema";
+import { useEffect } from "react";
+import { useCW3Config } from "services/terra/admin/queriers";
 
 export default function useConfigureCW3() {
   const wallet = useConnectedWallet();
   const {
+    setValue,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues>();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
-  //pre-fill fund config form
-  // useEffect(() => {
-  //   if (isIndexFundConfigLoading) return;
-  //   if (!indexFundConfig) return;
-  //   setValue("fund_member_limit", indexFundConfig.fund_member_limit);
-  //   setValue("fund_rotation", indexFundConfig.fund_rotation);
-  //   setValue(
-  //     "funding_goal",
-  //     indexFundConfig.funding_goal &&
-  //       new Dec(indexFundConfig.funding_goal).div(1e6).toInt().toString()
-  //   );
-  // }, [indexFundConfig, isIndexFundConfigLoading, setValue]);
+  const { cw3Config, isCW3ConfigLoading } = useCW3Config();
+  useEffect(() => {
+    if (isCW3ConfigLoading) return;
+    if (!cw3Config) return;
+
+    setValue("height", `${cw3Config.max_voting_period.height}`);
+    setValue(
+      "threshold",
+      `${+cw3Config.threshold.absolute_percentage.percentage * 100}`
+    );
+  }, [cw3Config, isCW3ConfigLoading, setValue]);
 
   async function configureFund(data: CW3ConfigValues) {
     dispatch(
