@@ -1,5 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
@@ -18,10 +20,13 @@ export default function useSaveContactDetails() {
   const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
+  const [error, setError] = useState(false);
+  const { showModal } = useSetModal();
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
+      setError(false);
       const is_create = !contactData?.uniqueID;
       const postData: ContactDetailsData = {
         PK: contactData.uniqueID,
@@ -73,7 +78,10 @@ export default function useSaveContactDetails() {
           navigate(`${registerRootPath}/${routes.confirm}`);
         }
       } else {
-        console.error(result.message);
+        setError(true);
+        showModal<PopupProps>(Popup, {
+          message: `${result.message} Please check your email for the registration reference.`,
+        });
       }
     },
     [
@@ -81,10 +89,14 @@ export default function useSaveContactDetails() {
       navigate,
       registerCharity,
       resendEmail,
+      showModal,
       updateContactPerson,
       user,
     ]
   );
 
-  return saveContactDetails;
+  return {
+    error,
+    saveContactDetails,
+  };
 }

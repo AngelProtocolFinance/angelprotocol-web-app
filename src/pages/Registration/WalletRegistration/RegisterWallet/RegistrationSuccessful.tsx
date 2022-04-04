@@ -22,9 +22,9 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
       </div>
       <Link
         to={`${site.app}/${app.register}/${routes.dashboard}`}
-        className="flex justify-center items-center w-60 h-10 mt-8 bg-angel-blue rounded-xl uppercase font-bold text-white"
+        className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
       >
-        Back to dashboard
+        Back to registration dashboard
       </Link>
     </div>
   );

@@ -1,5 +1,7 @@
 import createAuthToken from "helpers/createAuthToken";
 import { useNavigate } from "react-router-dom";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
@@ -17,10 +19,12 @@ export const useRegistration = () => {
   const [checkData] = useCheckPreviousRegistrationMutation();
   const dispatch = useSetter();
   const navigate = useNavigate();
+  const { showModal } = useSetModal();
 
   const onResume = async (values: ReferInfo) => {
     let response: any = await checkData(values.refer);
     if (response.error) {
+      showModal<PopupProps>(Popup, { message: response.error.data.message });
       return console.log(response.error);
     }
 

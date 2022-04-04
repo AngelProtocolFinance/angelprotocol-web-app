@@ -1,7 +1,7 @@
 import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { MouseEventHandler } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../common";
 import routes from "../../routes";
 
@@ -13,6 +13,7 @@ type Props = {
 
 export default function WalletSubmission(props: Props) {
   const { walletAddress, isSubmitting, onClick } = props;
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
@@ -40,12 +41,15 @@ export default function WalletSubmission(props: Props) {
           Submit
         </Button>
       </div>
-      <Link
-        to={`${site.app}/${app.register}/${routes.dashboard}`}
-        className="uppercase text-bright-blue text-sm hover:underline"
+      <Button
+        className="bg-green-400 w-80 h-10"
+        disabled={isSubmitting}
+        onClick={() =>
+          navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+        }
       >
-        Click here to go back to the registration dashboard
-      </Link>
+        Back to registration dashboard
+      </Button>
     </div>
   );
 }
