@@ -34,6 +34,7 @@ export default function Amount() {
           <Currency currency={denoms.uusd} />
           <Currency currency={denoms.uluna} />
           <Currency currency={denoms.ether} />
+          <Currency currency={denoms.bnb} />
           {/* <Currency currency={denoms.btc} withTooltip /> */}
           {/* <Currency currency={denoms.sol} withTooltip /> */}
           {/* <Currency currency={denoms.uatom} withTooltip /> */}

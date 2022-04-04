@@ -13,3 +13,9 @@ export type EthDonateArgs = {
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
+
+export type BnbDonateArgs = {
+  tx: TransactionRequest;
+  donateValues: DonateValues;
+};
+

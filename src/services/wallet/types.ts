@@ -14,6 +14,7 @@ export enum TerraIdentifiers {
 export enum Providers {
   none = "none",
   ethereum = "ethereum",
+  binance = "binance",
   terra = "terra",
 
   // phantom = "phantom",

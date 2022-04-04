@@ -1,6 +1,7 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import useWalletContext from "hooks/useWalletContext";
+import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useGetMetamask } from "providers/Metamask/Metamask";
 import { useEffect, useRef } from "react";
 import { updateChainID } from "services/chain/chainSlice";
@@ -25,11 +26,13 @@ export default function useProviderSwitcher() {
   //other states
   const { connected: isMetamaskConnected, loading: isMetamaskLoading } =
     useGetMetamask();
-  // const { connected: ethConnected } = useGetter((state) => state.metamask);
+  const { connected: isBinanceConnected, loading: isBinanceLoading } =
+    useGetBinance();
 
   const providerStates: ProviderStates = [
     [Providers.terra, terraConnected],
     [Providers.ethereum, isMetamaskConnected],
+    [Providers.binance, isBinanceConnected],
   ];
 
   //find first connected provider
@@ -38,7 +41,7 @@ export default function useProviderSwitcher() {
     ([, isProviderConnected]) => isProviderConnected
   );
 
-  const isLoading = isTerraLoading || isMetamaskLoading;
+  const isLoading = isTerraLoading || isMetamaskLoading || isBinanceLoading;
 
   useEffect(() => {
     dispatch(setIsSwitching(isLoading));

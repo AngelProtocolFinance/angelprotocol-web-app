@@ -4,6 +4,7 @@ import { denoms } from "constants/currency";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
 import useWalletContext from "hooks/useWalletContext";
+import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import { useState } from "react";
 import { Dwindow, Providers } from "services/provider/types";
@@ -20,6 +21,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { wallet: walletTerra, availableWallets } = useWalletContext();
   const { disconnect: disconnectMetamask } = useSetMetamask();
+  const { disconnect: disconnectBinance } = useSetBinance();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
@@ -42,6 +44,9 @@ export default function Details(props: { closeHandler: () => void }) {
     }
     if (activeProvider === Providers.ethereum) {
       disconnectMetamask();
+    }
+    if (activeProvider === Providers.binance) {
+      disconnectBinance();
     }
   };
 

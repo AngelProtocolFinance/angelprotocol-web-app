@@ -2,7 +2,7 @@ import toCurrency from "helpers/toCurrency";
 import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { CharityParam } from "../types";
+import { CharityParam } from "../../types";
 
 export function EndowmentInfo() {
   const { address } = useParams<CharityParam>();
@@ -25,7 +25,7 @@ export function EndowmentInfo() {
   ];
 
   return (
-    <div className="w-full lg:min-h-1/2 lg:mt-5 text-left mt-10 font-heading">
+    <div className="w-full text-left font-heading">
       <div className="flex flex-col gap-5 justify-between items-center min-h-r15 w-full bg-transparent shadow-none border-0 rounded-2xl mb-5">
         <div className="endowment_stats bg-white w-full min-h-r15 shadow-xl border-0 rounded-2xl p-5">
           <p className="uppercase font-bold text-thin-blue text-xl">

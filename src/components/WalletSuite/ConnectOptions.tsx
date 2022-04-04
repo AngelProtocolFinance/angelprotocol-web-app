@@ -2,6 +2,7 @@ import Icon from "components/Icons/Icons";
 import Modal from "components/Modal/Modal";
 import useWalletContext from "hooks/useWalletContext";
 import Backdrop from "./Backdrop";
+import BnbConnector from "./Connectors/BnbConnector";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
 import Installer from "./Installer";
@@ -30,6 +31,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
               );
             })}
           <EthConnector />
+          <BnbConnector />
         </Modal>
         {availableInstallations.length > 0 && (
           <>
