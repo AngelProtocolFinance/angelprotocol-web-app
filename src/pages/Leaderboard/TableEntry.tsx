@@ -23,9 +23,6 @@ export default function TableEntry(props: Endowment) {
           classes={`self-center row-span-2 w-32 h-24 bg-white ${
             props.iconLight ? "bg-angel-blue" : ""
           } rounded-sm object-contain mr-4 m-1`}
-          width="130"
-          height="96"
-          rounded
         />
       </td>
       <td>

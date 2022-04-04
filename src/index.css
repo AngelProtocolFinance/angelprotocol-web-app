@@ -4,20 +4,11 @@
 
 @layer components {
   .padded-container {
-    @apply xl:container xl:mx-auto px-5 xl:px-0;
+    @apply xl:container xl:mx-auto px-5;
   }
 }
 
 @layer utilities {
-  .line-clamp-3 {
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .aspect-square {
-    aspect-ratio: 1/1;
-  }
 
   .box-delay-1 {
     animation-delay: 300ms;

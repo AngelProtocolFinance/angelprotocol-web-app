@@ -25,6 +25,7 @@ import {
   AiOutlineLike,
   AiOutlineDislike,
   AiOutlineUpload,
+  AiOutlineEdit,
 } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
@@ -32,10 +33,14 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
 import { IoMdSettings } from "react-icons/io";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
-import { BiArrowBack, BiBold, BiItalic } from "react-icons/bi";
+import { BiArrowBack, BiBold, BiItalic, BiGlobe } from "react-icons/bi";
 import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
 import { IconBaseProps } from "react-icons/lib";
+import {
+  MdOutlineArrowBackIosNew,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
 
 export type IconTypes =
   | "Discord"
@@ -71,12 +76,16 @@ export type IconTypes =
   | "ExclamationCircle"
   | "Settings"
   | "Warning"
+  | "ArrowBack"
   | "Back"
+  | "Forward"
   | "Bold"
   | "Italic"
   | "Blockchain"
   | "ExternalLink"
   | "ExchangeAlt"
+  | "Edit"
+  | "Globe"
   | "Undo";
 
 export const iconList: { [key in IconTypes]: IconType } = {
@@ -104,6 +113,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ExclamationCircle: BsExclamationCircle,
   ExternalLink: GoLinkExternal,
   CaretLeft: AiFillCaretLeft,
+  Globe: BiGlobe,
   Like: AiOutlineLike,
   Dislike: AiOutlineDislike,
   Up: VscTriangleUp,
@@ -112,7 +122,9 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Settings: IoMdSettings,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
-  Back: BiArrowBack,
+  ArrowBack: BiArrowBack,
+  Back: MdOutlineArrowBackIosNew,
+  Forward: MdOutlineArrowForwardIos,
   Blockchain: SiHiveBlockchain,
   Italic: BiItalic,
   Bold: BiBold,
@@ -120,6 +132,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Clock: FaClock,
   ListOl: FaListOl,
   ListUl: FaListUl,
+  Edit: AiOutlineEdit,
 };
 
 interface IconProps extends IconBaseProps {
