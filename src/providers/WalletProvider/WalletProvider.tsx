@@ -6,7 +6,7 @@ import { createContext, PropsWithChildren } from "react";
 import Loader from "../../components/Loader/Loader";
 import { IWalletContext } from "./types";
 import useChainOptions from "./useChainOptions";
-import useWalletProxy from "./useWalletProxy";
+import useWalletContext from "./useWalletContext";
 
 export const WalletContext = createContext<IWalletContext>({
   wallet: undefined,
@@ -30,10 +30,10 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
 }
 
 function WalletProxyProvider(props: PropsWithChildren<{}>) {
-  const walletProxy = useWalletProxy();
+  const walletContext = useWalletContext();
 
   return (
-    <WalletContext.Provider value={walletProxy}>
+    <WalletContext.Provider value={walletContext}>
       {props.children}
     </WalletContext.Provider>
   );

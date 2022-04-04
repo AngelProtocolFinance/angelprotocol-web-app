@@ -1,8 +1,8 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { Connection, localterra, WalletProxy } from "../types";
+import { ConnectionProxy, localterra, WalletProxy } from "../types";
 
 export default function createDefaultWallet(
-  connection: Connection
+  connection: ConnectionProxy
 ): WalletProxy {
   return {
     address: "",

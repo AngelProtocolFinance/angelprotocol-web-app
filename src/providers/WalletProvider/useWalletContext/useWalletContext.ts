@@ -3,7 +3,7 @@ import { IWalletContext, WalletProxy } from "../types";
 import useTerraJsWallet from "./useTerraJsWallet";
 import useTorusWallet from "./useTorusWallet";
 
-export default function useWalletProxy(): IWalletContext {
+export default function useWalletContext(): IWalletContext {
   const [wallet, setWallet] = useState<WalletProxy>();
 
   const {

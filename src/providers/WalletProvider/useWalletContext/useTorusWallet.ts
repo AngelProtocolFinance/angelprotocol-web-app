@@ -11,7 +11,7 @@ import { entropyToMnemonic } from "bip39";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Connection, WalletProxy } from "../types";
+import { ConnectionProxy, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 
 // TODO: would be good to set this value using the environment variables
@@ -24,7 +24,7 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
-const TORUS_CONNECTION: Connection = {
+const TORUS_CONNECTION: ConnectionProxy = {
   identifier: "torus",
   name: "Torus",
   type: "TORUS",
