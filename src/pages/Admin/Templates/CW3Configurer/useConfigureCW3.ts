@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { useCW3Config } from "services/terra/admin/queriers";
@@ -8,10 +10,10 @@ import { admin, tags } from "services/terra/tags";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import Admin from "contracts/Admin";
-import { proposalSuccessLink } from "../constants";
+import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigValues } from "./cw3ConfigSchema";
 
 export default function useConfigureCW3() {
@@ -24,6 +26,8 @@ export default function useConfigureCW3() {
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
+  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { cw3Config, isCW3ConfigLoading, isError } = useCW3Config();
 
   //init form values
@@ -41,6 +45,7 @@ export default function useConfigureCW3() {
       "threshold",
       +cw3Config.threshold.absolute_percentage.percentage * 100
     );
+    //eslint-disable-next-line
   }, [cw3Config, isCW3ConfigLoading, isError, setValue]);
 
   async function configureCW3({
@@ -50,7 +55,7 @@ export default function useConfigureCW3() {
   }: CW3ConfigValues) {
     const prevConfig: Omit<CW3ConfigValues, "title" | "description"> = {
       //submit is disabled if cw3Config is undefined
-      threshold: +cw3Config!.threshold.absolute_percentage,
+      threshold: +cw3Config!.threshold.absolute_percentage.percentage * 100,
       height: cw3Config!.max_voting_period.height,
     };
     const diff = getPayloadDiff(prevConfig, nextConfig);
@@ -60,7 +65,7 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin(cwContracts, wallet);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       nextConfig.height,
       (nextConfig.threshold / 100).toFixed(3)
@@ -78,7 +83,7 @@ export default function useConfigureCW3() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink(cwContracts, endowmentAddr),
         successMessage: "Config update proposal submitted",
       })
     );

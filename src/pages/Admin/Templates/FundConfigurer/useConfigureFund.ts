@@ -14,9 +14,9 @@ import Indexfund from "contracts/IndexFund";
 import Admin from "contracts/Admin";
 import { FundConfig } from "contracts/types";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalSuccessLink } from "../constants";
-import { FundConfigValues } from "./fundconfigSchema";
 import cleanObject from "helpers/cleanObject";
+import { FundConfigValues } from "./fundconfigSchema";
+import genProposalsLink from "../genProposalsLink";
 
 export default function useConfigureFund() {
   const wallet = useConnectedWallet();
@@ -86,7 +86,7 @@ export default function useConfigureFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Config update proposal submitted",
       })
     );

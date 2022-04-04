@@ -94,7 +94,7 @@ export default class Admin extends Contract {
   }
 
   createEmbeddedUpdateConfigMsg(height: number, threshold: string) {
-    return this.createdEmbeddedWasmMsg([], this.cw4, {
+    return this.createdEmbeddedWasmMsg([], this.cw3, {
       update_config: {
         threshold: { absolute_percentage: { percentage: threshold } },
         max_voting_period: { height },

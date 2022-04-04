@@ -3,6 +3,7 @@ import { proposal_types } from "constants/routes";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
+import CW3Configurer from "pages/Admin/Templates/CW3Configurer/CW3Configurer";
 
 export default function Proposer() {
   return (
@@ -10,6 +11,10 @@ export default function Proposer() {
       <ProposalTypes />
       <Routes>
         <Route index element={<MemberUpdator />} />
+        <Route
+          path={proposal_types.update_cw3_config}
+          element={<CW3Configurer />}
+        />
       </Routes>
     </div>
   );
@@ -25,6 +30,9 @@ function ProposalTypes() {
       <ProposalCategory title="admin group" />
       <NavLink end to={proposal_types.index} className={styler}>
         Update group Members
+      </NavLink>
+      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+        Update voting params
       </NavLink>
     </div>
   );

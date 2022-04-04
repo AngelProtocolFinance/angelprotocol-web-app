@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
+
 import { Member } from "services/terra/admin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
@@ -9,13 +10,16 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import { proposalSuccessLink } from "../constants";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
+import genProposalsLink from "../genProposalsLink";
+import { useParams } from "react-router-dom";
+import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
+  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
@@ -73,7 +77,7 @@ export default function useUpdateMembers() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink(cwContracts, endowmentAddr),
         successMessage: "Group member update proposal submitted",
       })
     );

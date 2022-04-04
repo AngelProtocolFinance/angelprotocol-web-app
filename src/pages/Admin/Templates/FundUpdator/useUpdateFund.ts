@@ -9,8 +9,8 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Indexfund from "contracts/IndexFund";
 import Admin from "contracts/Admin";
-import { proposalSuccessLink } from "../constants";
 import { FundUpdateValues } from "./fundUpdatorSchema";
+import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
@@ -75,7 +75,7 @@ export default function useUpdateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Fund member proposal submitted",
       })
     );
