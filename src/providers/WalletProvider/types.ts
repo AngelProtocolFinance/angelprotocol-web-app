@@ -13,7 +13,7 @@ import { terra_lcds } from "constants/urls";
 const ProxyConnectTypes = { ...ConnectType, TORUS: "TORUS" };
 
 // Proxy Connection version of @terra-money/wallet-types/types > Connection
-export type Connection = {
+export type ConnectionProxy = {
   type: keyof typeof ProxyConnectTypes;
   identifier?: string;
   name: string;
@@ -28,7 +28,7 @@ export type IWalletContext = {
 };
 
 export type WalletProxy = {
-  connection: Connection;
+  connection: ConnectionProxy;
   address: string;
   network: NetworkInfo;
   post: (txOptions: CreateTxOptions) => Promise<TxResult>;

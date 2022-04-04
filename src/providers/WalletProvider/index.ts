@@ -1,2 +1,2 @@
 export * from "./WalletProvider";
-export type { WalletProxy, Connection } from "./types";
+export type { WalletProxy, ConnectionProxy } from "./types";
