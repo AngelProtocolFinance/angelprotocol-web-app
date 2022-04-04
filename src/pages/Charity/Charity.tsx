@@ -1,40 +1,52 @@
 import { useParams } from "react-router-dom";
 import { useProfile } from "services/aws/endowments/queriers";
-import ImageWrapper from "components/ImageWrapper/ImageWrapper";
-import { CharityProfileTabLoader } from "components/Loader/Charity";
-import InfoTabs from "./InfoTabs/InfoTabs";
-import CharityInfoNav from "./CharityInfoNav";
-import { DonationInfo } from "./DonationInfo";
 import { CharityParam } from "./types";
+import { app, site } from "constants/routes";
+import { Link } from "react-router-dom";
+import Icon from "components/Icons/Icons";
+import CharityStats from "./CharityStats";
+import CharityHeader from "./CharityHeader/CharityHeader";
+import CharityContent from "./CharityContent/CharityContent";
+import ContentLoader from "components/ContentLoader/ContentLoader";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
   const { profile, isProfileLoading } = useProfile(endowment_addr!);
 
+  if (isProfileLoading) return <CharitySkeleton />;
   return (
-    <section className="container mx-auto grid pb-16 content-start gap-0">
-      <div className="flex flex-col grid-rows-1 lg:grid-rows-2 lg:flex-row items-start w-full md:mx-auto md:container min-h-r15 gap-2 lg:mt-3 p-5">
-        <DonationInfo />
-        <div className="flex-grow w-full items-center text-center bg-indigo 2xl:mb-0">
-          <ImageWrapper
-            height="300"
-            width="100%"
-            src={profile.charity_image}
-            alt="charity image"
-            classes="max-h-modal w-full bg-gray-100 rounded-2xl 2xl:-mt-6 shadow-md mb-1 object-cover object-center"
-          />
-          {isProfileLoading ? (
-            <CharityProfileTabLoader />
-          ) : (
-            <>
-              <CharityInfoNav />
-              <InfoTabs />
-            </>
-          )}
-        </div>
-      </div>
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+      <Link
+        to={`${site.app}/${app.marketplace}`}
+        className="lg:col-span-2 flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue"
+      >
+        <Icon type="ArrowBack" size={15} /> back to marketplace
+      </Link>
+      <CharityHeader {...{ ...profile }} />
+      <CharityContent
+        {...{
+          ...profile,
+          classes: "row-span-2",
+        }}
+      />
+      <CharityStats {...{ ...profile, classes: "hidden lg:block mt-4" }} />
     </section>
   );
 };
+
+function CharitySkeleton() {
+  return (
+    <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start opacity-20">
+      <ContentLoader className="w-48 h-10 lg:col-span-2" />
+      <ContentLoader className="w-full rounded-md" />
+      <div className="w-full row-span-2 grid grid grid-rows-aa1">
+        <ContentLoader className="w-full h-[300px] rounded-md" />
+        <ContentLoader className="w-full h-10 mt-2 rounded-md" />
+        <ContentLoader className="w-full h-full mt-2 rounded-md" />
+      </div>
+      <ContentLoader className="hidden lg:block mt-2 h-full w-full rounded-md" />
+    </section>
+  );
+}
 
 export default Charity;

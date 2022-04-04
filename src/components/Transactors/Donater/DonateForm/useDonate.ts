@@ -20,7 +20,7 @@ export default function useDonate() {
   const wallet = useConnectedWallet();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-  const { terraTx, ethTx } = useEstimator();
+  const { terraTx, ethTx, bnbTx } = useEstimator();
 
   const terraSender = useCallback(
     (data: DonateValues) => {
@@ -39,6 +39,15 @@ export default function useDonate() {
     },
     //eslint-disable-next-line
     [ethTx]
+  );
+
+  const bnbSender = useCallback(
+    (data: DonateValues) => {
+      dispatch(sendEthDonation({ tx: bnbTx!, donateValues: data }));
+      showModal(TransactionPrompt, {});
+    },
+    //eslint-disable-next-line
+    [bnbTx]
   );
 
   // const btcSender = useBTCSender();
@@ -61,6 +70,7 @@ export default function useDonate() {
     [denoms.uusd]: terraSender,
     [denoms.uluna]: terraSender,
     [denoms.ether]: ethSender,
+    [denoms.bnb]: bnbSender,
     // [denoms.btc]: btcSender,
     // [denoms.sol]: solSender,
     // [denoms.uatom]: atomSender,

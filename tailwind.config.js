@@ -112,7 +112,6 @@ module.exports = {
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
         aa1: "auto auto 1fr",
-        charity: "auto 1fr",
       },
       inset: {
         12: "12px",
