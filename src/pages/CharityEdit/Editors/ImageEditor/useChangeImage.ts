@@ -1,4 +1,4 @@
-import useImageCompressor from "pages/CharityEdit/useImageCompressor";
+import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
@@ -6,7 +6,6 @@ import { EditableProfileAttr } from "services/aws/endowments/types";
 export default function useChangeImage() {
   //TODO: make this reusable with other image changer on different context
   const { getValues, setValue } = useFormContext<EditableProfileAttr>();
-  const resize = useImageCompressor();
 
   //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
@@ -57,7 +56,7 @@ export default function useChangeImage() {
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
-    const file = await resize(e.target.files[0]);
+    const file = await optimizeImage(e.target.files[0]);
     const files = (file ? [file] : e.target.files) as FileList;
     setFileList(files);
   }
