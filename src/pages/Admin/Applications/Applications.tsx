@@ -8,7 +8,6 @@ export default function Applications() {
     isLoading,
     isError,
   } = useGetCharityApplicationsQuery(RegistrationStatus.InReview);
-  console.log(applications);
   return (
     <div className="p-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
       {(applications.length > 0 && (

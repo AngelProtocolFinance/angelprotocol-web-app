@@ -2,12 +2,15 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
+import { admin } from "services/terra/tags";
 import { aws } from "./aws";
-import { AWSQueryRes } from "./types";
+import { tags } from "./tags";
+import { AWSQueryRes, UpdateApplication } from "./types";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     getCharityApplications: builder.query<any, any>({
+      providesTags: [{ type: tags.admin, id: admin.applications }],
       query: (status?: RegistrationStatus) => {
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
@@ -88,13 +91,13 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updateCharityDocs: builder.mutation<any, any>({
+    updateCharityApplication: builder.mutation<any, UpdateApplication>({
       query: (data) => {
         return {
           url: `registration`,
           params: { uuid: data.PK },
           method: "PUT",
-          body: data.body,
+          body: data,
         };
       },
     }),
@@ -107,5 +110,5 @@ export const {
   useRequestEmailMutation,
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
-  useUpdateCharityDocsMutation,
+  useUpdateCharityApplicationMutation,
 } = registration_api;

@@ -1,11 +1,21 @@
+import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Icon from "components/Icons/Icons";
 import { CharityApplication } from "./types";
+import useUpdateApplicationStatus from "./useUpdateApplication";
 
 export default function ApplicationReview({
   application: ap,
 }: {
   application: CharityApplication;
 }) {
+  const { updateStatus } = useUpdateApplicationStatus();
+  const wallet = useConnectedWallet();
+
+  const getTitle = (status: string) =>
+    `${status} ${ap.CharityName} Application`;
+  const getDescription = (status: string) =>
+    `${status} ${ap.CharityName} by ${wallet?.walletAddress}`;
+
   return (
     <div className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto">
       <h1 className="font-heading font-bold text-angel-grey uppercase">
@@ -42,8 +52,32 @@ export default function ApplicationReview({
         link={ap.ProofOfIdentity}
       />
       <div className="flex justify-center gap-4">
-        <ActionButton title="Reject" actionColor="bg-failed-red" />
-        <ActionButton title="Accept" actionColor="bg-bright-green" />
+        <ActionButton
+          title="Reject"
+          actionColor="bg-failed-red"
+          onClick={() =>
+            updateStatus({
+              PK: ap.PK,
+              status: "3",
+              endowmentAddr: ap.TerraWallet,
+              title: getTitle("Reject"),
+              description: getDescription("Reject"),
+            })
+          }
+        />
+        <ActionButton
+          title="Accept"
+          actionColor="bg-bright-green"
+          onClick={() =>
+            updateStatus({
+              PK: ap.PK,
+              status: "1",
+              endowmentAddr: ap.TerraWallet,
+              title: getTitle("Approve"),
+              description: getDescription("Approve"),
+            })
+          }
+        />
       </div>
     </div>
   );
@@ -97,6 +131,7 @@ function ActionButton(props: ActionButtonProps) {
     <button
       className={`w-full tracking-wider ${props.actionColor} disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold`}
       type="submit"
+      onClick={props.onClick}
     >
       {props.title}
     </button>

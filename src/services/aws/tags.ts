@@ -2,6 +2,7 @@ export enum tags {
   airdrop = "airdrop",
   cha = "charity",
   alliance = "alliance",
+  admin = "admin",
 }
 
 export enum cha {
