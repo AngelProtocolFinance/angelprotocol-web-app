@@ -15,7 +15,7 @@ import { ConnectionProxy, WalletProxy } from "../types";
 import createDefaultWallet from "./createDefaultWallet";
 
 const NETWORK =
-  process.env.REACT_APP_CHAIN_ID === chainIDs.testnet ? "testnet" : "mainnet";
+  process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
