@@ -11,10 +11,7 @@ export default function WebsiteInput() {
   return (
     <InputRow htmlFor="website" label="Website of your organization" required>
       <input
-        {...register("website", {
-          setValueAs: (website: string) =>
-            website.startsWith("http") ? website : `http://${website}`,
-        })}
+        {...register("website", { setValueAs: transformUrl })}
         id="website"
         placeholder="Website URL"
         className="h-8 rounded-md outline-none border-none w-full px-2 py-1 text-black"
@@ -28,3 +25,6 @@ export default function WebsiteInput() {
     </InputRow>
   );
 }
+
+const transformUrl = (website: string) =>
+  website.startsWith("http") ? website : `http://${website}`;
