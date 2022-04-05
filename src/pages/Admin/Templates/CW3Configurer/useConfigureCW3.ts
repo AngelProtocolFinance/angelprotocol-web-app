@@ -16,9 +16,10 @@ import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useConfigureCW3() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const {
     setValue,
     handleSubmit,

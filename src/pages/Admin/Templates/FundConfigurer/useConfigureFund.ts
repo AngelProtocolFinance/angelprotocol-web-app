@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Popup from "components/Popup/Popup";
 import { useSetModal } from "components/Modal/Modal";
@@ -18,9 +17,10 @@ import cleanObject from "helpers/cleanObject";
 import { FundConfigValues } from "./fundconfigSchema";
 import genProposalsLink from "../genProposalsLink";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useConfigureFund() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const {
     setValue,
     handleSubmit,

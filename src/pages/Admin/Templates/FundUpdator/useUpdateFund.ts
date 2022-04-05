@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
@@ -13,11 +12,12 @@ import Indexfund from "contracts/IndexFund";
 import Admin from "contracts/Admin";
 import { FundUpdateValues } from "./fundUpdatorSchema";
 import genProposalsLink from "../genProposalsLink";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
   const [isLoading, setIsLoading] = useState(false);
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useSetModal();
   const dispatch = useSetter();

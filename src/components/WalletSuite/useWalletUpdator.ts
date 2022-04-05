@@ -1,10 +1,10 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { ethers } from "ethers";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect } from "react";
 import { Dwindow, Providers } from "services/provider/types";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -14,22 +14,26 @@ import { useSetter } from "store/accessors";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
 
   //updator for terra-station and wallet connect
   useEffect(() => {
     if (activeProvider !== Providers.terra) {
+      dispatch(setIsUpdating(false));
       return;
     }
+
     if (!wallet) {
+      dispatch(setIsUpdating(false));
       return;
     }
 
     if (
       //only run this updator when wallet is terra extension or leap-wallet or wallet-connect
       !(
+        wallet.connection.identifier === TerraIdentifiers.torus ||
         wallet.connection.identifier === TerraIdentifiers.station ||
         wallet.connection.identifier === TerraIdentifiers.leap ||
         wallet.connection.identifier === TerraIdentifiers.safepal ||
@@ -38,6 +42,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     ) {
       return;
     }
+
     if (terraBalancesLoading || haloBalanceLoading) {
       dispatch(setIsUpdating(true));
       return;
@@ -54,7 +59,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         icon: wallet.connection.icon,
         displayCoin: { amount: main, denom: denoms.uusd },
         coins: haloBalance !== 0 ? coinsWithHalo : others,
-        address: wallet.walletAddress,
+        address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
         supported_denoms: [denoms.uusd, denoms.uluna],
       })
@@ -117,7 +122,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
             icon: wallet.connection.icon,
             displayCoin: { amount: main, denom: denoms.uusd },
             coins: coins_copy,
-            address: wallet.terraAddress,
+            address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
             chainId:
               wallet.network.chainID === chainIDs.mainnet

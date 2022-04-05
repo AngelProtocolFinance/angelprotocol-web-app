@@ -1,5 +1,5 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
+import useWalletContext from "hooks/useWalletContext";
 import { endowments_api } from "./endowments";
 import { profile } from "./placeholders";
 
@@ -21,7 +21,7 @@ export function useProfile(charity_addr: string) {
 
 export function useCategorizedProfiles() {
   const { useUseCategorizedProfilesQuery } = endowments_api;
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const isTest = wallet?.network.chainID === chainIDs.testnet;
   const {
     data = {},
@@ -36,7 +36,7 @@ export function useCategorizedProfiles() {
 
 export function useFundProfiles(fund_id: number) {
   const { useProfilesQuery } = endowments_api;
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const isTest = wallet?.network.chainID === chainIDs.testnet;
 
   const { profiles = [] } = useProfilesQuery(isTest, {

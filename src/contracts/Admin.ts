@@ -6,6 +6,7 @@ import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
 import { EmbeddedWasmMsg, Vote } from "./types";
 import { sc } from "constants/sc";
+import { WalletProxy } from "providers/WalletProvider";
 
 export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 export default class Admin extends Contract {
@@ -23,7 +24,7 @@ export default class Admin extends Contract {
   voter: CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, wallet?: ConnectedWallet) {
+  constructor(cws: CWContracts, wallet?: WalletProxy) {
     super(wallet);
     //make sure to use query skips on empty addresses
     this.cw4 =

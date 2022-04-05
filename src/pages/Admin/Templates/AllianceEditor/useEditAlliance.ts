@@ -1,4 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
@@ -13,11 +12,12 @@ import { useGetter, useSetter } from "store/accessors";
 import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
+import useWalletContext from "hooks/useWalletContext";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
