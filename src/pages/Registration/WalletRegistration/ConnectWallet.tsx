@@ -1,9 +1,10 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
+import { app, site } from "constants/routes";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import registerRoutes from "../routes";
 import routes from "./routes";
-import registerRoutes, { registerRootPath } from "../routes";
 
 export default function ConnectWallet() {
   const navigate = useNavigate();
@@ -11,7 +12,9 @@ export default function ConnectWallet() {
 
   useEffect(() => {
     if (status === WalletStatus.WALLET_CONNECTED) {
-      navigate(`${registerRootPath}/${registerRoutes.wallet}/${routes.submit}`);
+      navigate(
+        `${site.app}/${app.register}/${registerRoutes.wallet}/${routes.submit}`
+      );
     }
   }, [status, navigate]);
 

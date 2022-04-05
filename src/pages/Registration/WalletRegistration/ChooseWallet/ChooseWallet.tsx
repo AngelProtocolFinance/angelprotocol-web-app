@@ -2,7 +2,6 @@ import { WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
 import { app, site } from "constants/routes";
 import useWalletContext from "hooks/useWalletContext";
-import { registerRootPath } from "pages/Registration/routes";
 import { useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { default as registerRoutes } from "../../routes";
