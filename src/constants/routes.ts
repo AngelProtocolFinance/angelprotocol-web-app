@@ -56,6 +56,7 @@ export enum proposal_types {
   index = "",
   //apCW4
   admin_update_members = "admin-update-members",
+  update_cw3_config = "update_cw3_config",
   //endowments
   change_endowment_status = "change-endowment-status",
   //index_fund

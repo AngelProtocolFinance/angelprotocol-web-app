@@ -8,8 +8,10 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import { proposalSuccessLink } from "../constants";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
+import genProposalsLink from "../genProposalsLink";
+import { useParams } from "react-router-dom";
+import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 
@@ -17,6 +19,7 @@ export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
+  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
@@ -84,7 +87,7 @@ export default function useUpdateMembers() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink(cwContracts, endowmentAddr),
         successMessage: "Group member update proposal submitted",
       })
     );
