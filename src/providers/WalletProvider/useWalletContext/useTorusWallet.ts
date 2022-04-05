@@ -62,10 +62,13 @@ export default function useTorusWallet(): Result {
     initializeOpenlogin();
   }, []);
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (loginProvider: string) => {
     setStatus(WalletStatus.INITIALIZING);
 
-    const loginResult = await openLogin.login();
+    const loginResult = !!loginProvider
+      ? await openLogin.login({ loginProvider })
+      : await openLogin.login();
+
     if (loginResult?.privKey) {
       const newWalletProxy = createWalletProxy(loginResult.privKey);
       setWalletProxy(newWalletProxy);

@@ -32,7 +32,7 @@ export type WalletProxy = {
   address: string;
   network: NetworkInfo;
   post: (txOptions: CreateTxOptions) => Promise<TxResult>;
-  connect: () => Promise<void>;
+  connect: (...args: any[]) => Promise<void>;
   disconnect: () => Promise<void>;
 };
 
