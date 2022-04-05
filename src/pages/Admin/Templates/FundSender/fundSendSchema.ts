@@ -5,9 +5,13 @@ import * as Yup from "yup";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundSendPayload = {
-  currency: denoms.uusd | denoms.uhalo;
   amount: number;
   receipient: string;
+
+  //metadata
+  currency: denoms.uusd | denoms.uhalo;
+  haloBalance: number;
+  ustBalance: number;
 };
 export type FundSendValues = ProposalBase & FundSendPayload;
 

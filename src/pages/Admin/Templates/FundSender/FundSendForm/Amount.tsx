@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Currency from "./Currency";
 import { FundSendValues } from "../fundSendSchema";
+import Label from "pages/Admin/components/Label";
 
 export default function Amount() {
   const {
@@ -14,13 +15,11 @@ export default function Amount() {
   const denom = watch("currency");
 
   return (
-    <div className="grid">
-      <label
-        htmlFor="amount"
-        className="text-angel-grey text-lg uppercase font-bold mb-2"
-      >
-        Transfer amount
-      </label>
+    <div className="grid mb-4">
+      <div className="flex items-baseline">
+        <Label _required> Transfer amount</Label>
+        <p className="">balance</p>
+      </div>
       <input
         {...register("amount")}
         autoComplete="off"
@@ -34,6 +33,7 @@ export default function Amount() {
           <Currency currency={denoms.uusd} />
           <Currency currency={denoms.uhalo} />
         </div>
+        ``
         <ErrorMessage
           errors={errors}
           name="amount"

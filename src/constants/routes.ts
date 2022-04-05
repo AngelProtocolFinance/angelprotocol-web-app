@@ -63,6 +63,7 @@ export enum proposalTypes {
   //admin group
   adminGroup_updateMembers = "admin-group-update-members",
   adminGroup_updateCW3Config = "admin-group-update-cw3-config",
+  adminGroup_fundTransfer = "admin-group-fund-transfer",
   //endowment
   endowment_updateStatus = "endowment-update-status",
   endowment_withdraw = "endowment-withdraw",
