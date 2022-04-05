@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { chainIDs } from "constants/chainIDs";
 import { app, site } from "constants/routes";
+import useWalletContext from "hooks/useWalletContext";
+import { Link } from "react-router-dom";
 import { useLookupQuery } from "services/aws/endowments/endowments";
 
 export default function Portal() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const isTestNet = wallet?.network.chainID === chainIDs.testnet;
   //on testnet --> url resolves to endpoint/endowments/testnet
   const { data, isLoading } = useLookupQuery(isTestNet);
 
-  const endowmentAddr = data?.[wallet?.terraAddress || ""];
+  const endowmentAddr = data?.[wallet?.address || ""];
   // if (isLoading || isFetching) {
   //   //subtle skeleton
   //   return (
@@ -28,7 +28,7 @@ export default function Portal() {
         </Link>
       )}
       <Link
-        to={`${site.app}/${app.donation}/${wallet?.walletAddress}`}
+        to={`${site.app}/${app.donation}/${wallet?.address}`}
         className="text-angel-blue hover:text-angel-orange text-xs font-bold font-heading pl-2 mt-2"
       >
         MY DONATIONS

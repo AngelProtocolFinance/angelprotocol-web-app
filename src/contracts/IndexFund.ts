@@ -1,8 +1,8 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
+import { WalletProxy } from "providers/WalletProvider";
 import Contract from "./Contract";
 
 export default class Indexfund extends Contract {
@@ -10,7 +10,7 @@ export default class Indexfund extends Contract {
   address: string;
   //contract address
   //may need to re-implement to handle multiple currencies in the future
-  constructor(wallet?: ConnectedWallet, fund_id?: number) {
+  constructor(wallet?: WalletProxy, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
     this.address = contracts[this.chainID][sc.index_fund];

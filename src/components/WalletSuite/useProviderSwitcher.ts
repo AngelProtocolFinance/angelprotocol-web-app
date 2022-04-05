@@ -1,24 +1,25 @@
-import { useWallet, WalletStatus } from "@terra-money/wallet-provider";
+import { WalletStatus } from "@terra-money/wallet-provider";
+import { chainIDs } from "constants/chainIDs";
+import useWalletContext from "hooks/useWalletContext";
+import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
+import { useGetMetamask } from "providers/Metamask/Metamask";
 import { useEffect, useRef } from "react";
+import { updateChainID } from "services/chain/chainSlice";
+import { chains } from "services/chain/types";
 import {
   setActiveProvider,
   setIsSwitching,
 } from "services/provider/providerSlice";
 import { Providers, ProviderStates } from "services/provider/types";
-import { updateChainID } from "services/chain/chainSlice";
-import { chains } from "services/chain/types";
 import { terra } from "services/terra/terra";
-import { chainIDs } from "constants/chainIDs";
 import { useSetter } from "store/accessors";
-import { useGetMetamask } from "providers/Metamask/Metamask";
-import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
   const terra_chain_ref = useRef<string>(chainIDs.testnet);
 
   //terra states
-  const { status: terraStatus, network } = useWallet();
+  const { status: terraStatus, wallet } = useWalletContext();
   const terraConnected = terraStatus === WalletStatus.WALLET_CONNECTED;
   const isTerraLoading = terraStatus === WalletStatus.INITIALIZING;
 
@@ -62,18 +63,20 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
+    const chainID = wallet?.network.chainID || chainIDs.localterra;
+
     dispatch(
       updateChainID({
         chain: chains.terra,
-        chainID: network.chainID as chainIDs,
+        chainID: chainID as chainIDs,
       })
     );
 
     //if network is changed invalidate terra services
-    if (terra_chain_ref.current !== network.chainID) {
+    if (terra_chain_ref.current !== chainID) {
       dispatch(terra.util.resetApiState());
-      terra_chain_ref.current = network.chainID;
+      terra_chain_ref.current = chainID;
     }
     //eslint-disable-next-line
-  }, [network]);
+  }, [wallet, dispatch]);
 }
