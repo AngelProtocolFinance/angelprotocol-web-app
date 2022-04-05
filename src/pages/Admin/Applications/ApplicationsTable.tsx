@@ -16,20 +16,20 @@ export default function ApplicationsTable(props: {
   }
 
   return (
-    <table className="mt-4 w-full text-white/80 mt-4">
+    <table className="mt-4 w-full min-w-160 text-white/80 mt-4 overflow-hidden">
       <TableSection type="thead" rowClass="">
         <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0 text-left">
           <>Name</>
           <>Contact Email</>
           <>Registration Date</>
           <>Wallet Address</>
-          <>Application Status</>
+          {/* <>Application Status</> */}
           <></>
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 overflow-hidden"
+        rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
         {props.applications.map((ap) => (
           <Cells
@@ -48,7 +48,7 @@ export default function ApplicationsTable(props: {
               <span className="text-base truncate w-22">{ap.TerraWallet}</span>
               <Copier text={ap.TerraWallet} colorClass="orange" />
             </p>
-            <Status label={ap.RegistrationStatus} />
+            {/* <Status label={ap.RegistrationStatus} /> */}
             <button
               onClick={() => showModal(Reviewer, { application: ap })}
               className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"

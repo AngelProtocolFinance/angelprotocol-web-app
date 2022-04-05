@@ -12,7 +12,7 @@ export default function Applications() {
   return (
     <div className="p-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
       {(data.length > 0 && (
-        <div className="overflow-auto scroll-hidden p-3 min-w-900">
+        <div className="scroll-hidden p-3 overflow-auto">
           <h1 className="text-2xl text-white font-semibold">
             Charity Applications
           </h1>

@@ -3,7 +3,6 @@ import { EndowmentStatusNum } from "services/terra/registrar/types";
 import Admin from "contracts/Admin";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-// import Popup from "components/Popup/Popup";
 import { StatusChangePayload } from "contracts/types";
 import { useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";

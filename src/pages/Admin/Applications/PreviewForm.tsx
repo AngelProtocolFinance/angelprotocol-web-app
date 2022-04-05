@@ -157,9 +157,9 @@ interface ActionButtonProps extends React.HTMLProps<HTMLButtonElement> {
 function ActionButton({ actionColor, type, ...props }: ActionButtonProps) {
   return (
     <button
+      {...props}
       className={`w-full tracking-wider ${actionColor} disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold`}
       type="submit"
-      {...props}
     >
       {props.title}
     </button>
