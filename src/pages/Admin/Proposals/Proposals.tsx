@@ -1,35 +1,38 @@
-import { Link } from "react-router-dom";
-import Icon from "components/Icons/Icons";
-import { useLatestBlock } from "services/terra/queriers";
+import { createContext, useContext, useMemo, useState } from "react";
 import { useProposals } from "services/terra/admin/queriers";
-import { admin } from "constants/routes";
-import toCurrency from "helpers/toCurrency";
+import { ProposalStatus } from "services/terra/admin/types";
 import ProposalCard from "./ProposalCard";
+import Toolbar from "./Toolbar/Toolbar";
 
 export default function Proposals() {
-  const block_height = useLatestBlock(10_000);
+  const [proposalStatus, setProposalStatus] =
+    useState<ProposalStatusOptions>("all");
+  //TODO:add proposal type
+
   const { proposals, isProposalsLoading } = useProposals();
+
+  const filteredProposals = useMemo(() => {
+    if (proposalStatus === "all") {
+      return proposals;
+    } else {
+      return proposals.filter((proposal) => proposal.status === proposalStatus);
+    }
+  }, [proposals, proposalStatus]);
+
+  function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
+    setProposalStatus(ev.target.value as ProposalStatusOptions);
+  }
 
   return (
     <div className="p-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
-      <div className="flex items-center mb-3">
-        <p className="ml-auto text-white-grey/80 font-heading text-sm flex items-center mr-2">
-          <span className="font-heading uppercase text-2xs mr-2">
-            current block{" "}
-          </span>
-          <Icon type="Blockchain" className="mr-1" />
-          <span>{toCurrency(+block_height, 0)}</span>
-        </p>
-        <Link
-          to={`../${admin.proposal_types}`}
-          className="px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue font-heading text-sm uppercase text-center rounded-md"
-        >
-          + Create a proposal
-        </Link>
-      </div>
-      {(proposals.length > 0 && (
+      <getContext.Provider value={{ activeStatus: proposalStatus }}>
+        <setContext.Provider value={{ handleStatusChange }}>
+          <Toolbar classes="mb-3" />
+        </setContext.Provider>
+      </getContext.Provider>
+      {(filteredProposals.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 content-start">
-          {proposals.map((proposal) => (
+          {filteredProposals.map((proposal) => (
             <ProposalCard key={proposal.id} {...proposal} />
           ))}
         </div>
@@ -41,3 +44,24 @@ export default function Proposals() {
     </div>
   );
 }
+
+interface State {
+  activeStatus: ProposalStatusOptions;
+}
+interface Setters {
+  handleStatusChange: (ev: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const initialState: State = {
+  activeStatus: "all",
+};
+const getContext = createContext<State>(initialState);
+const setContext = createContext<Setters>({
+  handleStatusChange: () => {},
+  // setProposalType: () => void,
+});
+//only use this hook inside PhantomProvider
+export const useGetProposalsState = () => useContext(getContext);
+export const useSetProposalsState = () => useContext(setContext);
+
+export type ProposalStatusOptions = ProposalStatus | "all";
