@@ -1,5 +1,4 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -16,9 +15,10 @@ import { useGetter, useSetter } from "store/accessors";
 import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useCreateFund() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();

@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useMember } from "services/terra/admin/queriers";
 import Loader from "components/Loader/Loader";
 import Icon from "components/Icons/Icons";
@@ -11,10 +10,11 @@ import AdminNav from "./AdminNav";
 import { useEffect } from "react";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useSetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function Admin() {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
 
   useEffect(() => {
     dispatch(setCWContracts("apTeam"));

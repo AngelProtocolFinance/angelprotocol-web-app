@@ -1,14 +1,14 @@
-import { useWallet, ConnectType } from "@terra-money/wallet-provider";
-import Backdrop from "./Backdrop";
+import Icon from "components/Icons/Icons";
 import Modal from "components/Modal/Modal";
-import Installer from "./Installer";
+import useWalletContext from "hooks/useWalletContext";
+import Backdrop from "./Backdrop";
+import BnbConnector from "./Connectors/BnbConnector";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
-import Icon from "components/Icons/Icons";
-import BnbConnector from "./Connectors/BnbConnector";
+import Installer from "./Installer";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  let { availableConnections, availableInstallations } = useWallet();
+  const { availableWallets, availableInstallations } = useWalletContext();
 
   return (
     <>
@@ -20,10 +20,15 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
         <Modal classes="absolute bg-white/95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
-          {availableConnections
-            .filter((connection) => connection.type !== ConnectType.READONLY)
-            .map((connection) => {
-              return <TerraConnector key={connection.name} {...connection} />;
+          {availableWallets
+            .filter((wallet) => wallet.connection.type !== "READONLY")
+            .map((availableWallet) => {
+              return (
+                <TerraConnector
+                  key={availableWallet.connection.name}
+                  wallet={availableWallet}
+                />
+              );
             })}
           <EthConnector />
           <BnbConnector />

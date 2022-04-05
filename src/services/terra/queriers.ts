@@ -1,10 +1,10 @@
 /**
  * queriers are hooks that calls the API when there's no entry on cache
  */
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
 import Halo, { H, T } from "contracts/Halo";
 import { denoms } from "constants/currency";
+import useWalletContext from "hooks/useWalletContext";
 import { terra } from "services/terra/terra";
 import { halo_info } from "./placeholders";
 import { useContract } from "./useContract";
@@ -18,13 +18,13 @@ export function useLatestBlock(pollInterval = 0) {
 }
 
 export function useBalances(main: denoms, others?: denoms[]) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { useBalancesQuery } = terra;
   const {
     data = [],
     isLoading,
     isFetching,
-  } = useBalancesQuery(wallet?.walletAddress, {
+  } = useBalancesQuery(wallet?.address, {
     skip: wallet === undefined,
   });
 
@@ -69,7 +69,7 @@ export function useHaloBalance() {
     {
       address: contract.token_address,
       //this query will only run if wallet is not undefined
-      msg: { balance: { address: wallet?.walletAddress } },
+      msg: { balance: { address: wallet?.address } },
     },
     { skip: wallet === undefined }
   );

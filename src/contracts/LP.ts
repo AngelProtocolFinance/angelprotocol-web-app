@@ -1,8 +1,8 @@
-import { Dec, MsgExecuteContract, Coin } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
+import { WalletProxy } from "providers/WalletProvider";
 import { Simulation } from "services/terra/lp/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
@@ -18,7 +18,7 @@ export default class LP extends Contract {
   pool: ContractQueryArgs;
   pairInfo: ContractQueryArgs;
 
-  constructor(wallet?: ConnectedWallet) {
+  constructor(wallet?: WalletProxy) {
     super(wallet);
     this.factory_address = contracts[this.chainID][sc.loop_factory];
     this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];

@@ -1,12 +1,12 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 import Loader from "components/Loader/Loader";
 import { chainIDs } from "constants/chainIDs";
+import useWalletContext from "hooks/useWalletContext";
+import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
+import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
 import TableView from "./TableView";
 
 export default function Board() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const is_test = wallet?.network.chainID === chainIDs.testnet;
   const { data: update = leaderboard_update, isLoading } =
     useLeaderboardsQuery(is_test);

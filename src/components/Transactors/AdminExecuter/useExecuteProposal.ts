@@ -1,4 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { terra } from "services/terra/terra";
 import { tags, admin } from "services/terra/tags";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -7,10 +6,11 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useExecuteProposal(proposal_id: number) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const dispatch = useSetter();
   const { showModal } = useSetModal();
 
