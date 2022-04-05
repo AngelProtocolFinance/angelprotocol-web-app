@@ -2,9 +2,9 @@ import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 import routes from "./routes";
 
+const ConnectWallet = lazy(() => import("./ConnectWallet"));
 const ChooseWallet = lazy(() => import("./ChooseWallet"));
 const RegisterWallet = lazy(() => import("./RegisterWallet"));
-const ConnectWallet = lazy(() => import("./ConnectWallet"));
 
 export default function WalletRegistration() {
   return (
