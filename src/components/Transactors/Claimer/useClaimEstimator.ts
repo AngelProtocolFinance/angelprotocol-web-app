@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import Halo from "contracts/Halo";
 import { denoms } from "constants/currency";
-import { useBalances } from "services/terra/queriers";
+import Halo from "contracts/Halo";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useSetter } from "store/accessors";
+import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import processEstimateError from "helpers/processEstimateError";
-import extractFeeNum from "helpers/extractFeeNum";
+import { useSetter } from "store/accessors";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { main: UST_balance } = useBalances(denoms.uusd);
 
   useEffect(() => {

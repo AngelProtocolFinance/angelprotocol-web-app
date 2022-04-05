@@ -26,7 +26,7 @@ export const sendTerraDonation = createAsyncThunk(
       if (response.success) {
         updateStage({ step: Step.submit, message: "Saving donation details" });
 
-        const walletAddress = args.wallet.walletAddress;
+        const walletAddress = args.wallet.address;
         const { receiver, currency, amount, split_liq } = args.donateValues;
 
         if (typeof receiver !== "undefined") {

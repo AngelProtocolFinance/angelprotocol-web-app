@@ -1,5 +1,4 @@
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
@@ -13,11 +12,12 @@ import { EmbeddedWasmMsg } from "contracts/types";
 import { AllianceEditValues } from "./alllianceEditSchema";
 import { proposalSuccessLink } from "../constants";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
+import useWalletContext from "hooks/useWalletContext";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );

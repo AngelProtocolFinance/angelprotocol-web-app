@@ -1,6 +1,6 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Vote } from "contracts/types";
 import idParamToNumber from "helpers/idParamToNum";
+import useWalletContext from "hooks/useWalletContext";
 import { useMemo } from "react";
 import { useVoteList } from "services/terra/admin/queriers";
 import { Proposal } from "services/terra/admin/types";
@@ -10,7 +10,7 @@ export default function useProposalDetails(
   proposalInfo: Proposal
 ): ProposalDetails {
   const blockHeight = useLatestBlock();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { votes } = useVoteList(proposalInfo.id);
 
   const [numYes, numNo] = useMemo(
@@ -31,7 +31,7 @@ export default function useProposalDetails(
   );
 
   const userVote: Vote | undefined = useMemo(
-    () => votes.find((vote) => vote.voter === wallet?.walletAddress)?.vote,
+    () => votes.find((vote) => vote.voter === wallet?.address)?.vote,
     [wallet, votes]
   );
 

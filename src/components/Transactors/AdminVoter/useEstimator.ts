@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { denoms } from "constants/currency";
 import { useBalances } from "services/terra/queriers";
@@ -14,6 +13,7 @@ import {
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import extractFeeNum from "helpers/extractFeeNum";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
@@ -21,7 +21,7 @@ export default function useEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
 

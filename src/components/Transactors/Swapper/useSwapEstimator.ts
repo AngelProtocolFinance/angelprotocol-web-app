@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import {
   CreateTxOptions,
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
-import LP from "contracts/LP";
 import { denoms } from "constants/currency";
+import LP from "contracts/LP";
+import processEstimateError from "helpers/processEstimateError";
+import toCurrency from "helpers/toCurrency";
 import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { SwapValues } from "./types";
-import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import toCurrency from "helpers/toCurrency";
+import { useSetter } from "store/accessors";
 import { getSpotPrice } from "./getSpotPrice";
-import processEstimateError from "helpers/processEstimateError";
+import { SwapValues } from "./types";
 
 export default function useSwapEstimator() {
   const {
@@ -32,7 +32,7 @@ export default function useSwapEstimator() {
   const { main: UST_balance } = useBalances(denoms.uusd);
   const { haloBalance } = useHaloBalance();
 
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
 
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");

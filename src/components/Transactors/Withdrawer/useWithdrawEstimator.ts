@@ -1,24 +1,23 @@
-import { useEffect, useState } from "react";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
+import Account from "contracts/Account";
+import Admin from "contracts/Admin";
+import { Source } from "contracts/types";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import { ProposalMeta, proposalTypes, SourcePreview } from "pages/Admin/types";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter, useSetter } from "store/accessors";
-
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import Account from "contracts/Account";
-import useDebouncer from "hooks/useDebouncer";
-import { Source } from "contracts/types";
-import processEstimateError from "helpers/processEstimateError";
-import extractFeeNum from "helpers/extractFeeNum";
-import useFieldsAndLimits from "./useFieldsAndLimits";
-import { VaultFieldIds, WithdrawValues, AmountInfo } from "./types";
+import { useGetter, useSetter } from "store/accessors";
 import { SEPARATOR, vaultMap } from "./constants";
-import Admin from "contracts/Admin";
-import { ProposalMeta, proposalTypes, SourcePreview } from "pages/Admin/types";
+import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
+import useFieldsAndLimits from "./useFieldsAndLimits";
 
 export default function useWithrawEstimator() {
   const {
@@ -36,7 +35,7 @@ export default function useWithrawEstimator() {
 
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
 
   const anchor1_amount = watch(VaultFieldIds.anchor1_amount) || "0";
   const anchor2_amount = watch(VaultFieldIds.anchor2_amount) || "0";

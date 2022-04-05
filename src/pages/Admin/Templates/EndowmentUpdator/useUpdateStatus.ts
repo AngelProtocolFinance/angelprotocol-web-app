@@ -1,4 +1,3 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -18,11 +17,12 @@ import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
 import { proposalSuccessLink } from "../constants";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
 
   function updateStatus(data: EndowmentUpdateValues) {
