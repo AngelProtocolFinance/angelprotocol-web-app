@@ -22,7 +22,7 @@ export default function TextInput(props: Props) {
         {...register(props.id)}
         id={props.id}
         type="text"
-        className="bg-white/10 rounded-md shadow-inner p-3 mt-1 text-white/80 focus:outline-none placeholder-white-grey placeholder-opacity-20"
+        className="bg-white/10 rounded-md shadow-inner p-3 mt-1 text-white/80 focus:outline-none placeholder-white-grey/20"
       />
       <ErrorMessage
         errors={errors}

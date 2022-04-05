@@ -17,3 +17,4 @@ type LiquidSummary = {
 };
 
 export type HoldingSummary = LockedSummary | LiquidSummary;
+
