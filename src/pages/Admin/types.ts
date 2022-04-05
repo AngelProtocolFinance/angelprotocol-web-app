@@ -5,7 +5,7 @@ import {
   EndowmentStatus,
   EndowmentStatusStrNum,
 } from "services/terra/registrar/types";
-import { CW3ConfigValues } from "./Templates/CW3Configurer/cw3ConfigSchema";
+import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 
 export enum proposalTypes {
   //index fund
@@ -89,6 +89,6 @@ export interface FundConfigUpdateMeta {
 }
 
 export interface CW3ConfigUpdateMeta {
-  prevConfig: Pick<CW3ConfigValues, "height" | "threshold">;
-  nextConfig: Pick<CW3ConfigValues, "height" | "threshold">;
+  prevConfig: CW3ConfigPayload;
+  nextConfig: CW3ConfigPayload;
 }
