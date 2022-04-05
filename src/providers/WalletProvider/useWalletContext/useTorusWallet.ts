@@ -45,17 +45,23 @@ export default function useTorusWallet(): Result {
     async function initializeOpenlogin() {
       setStatus(WalletStatus.INITIALIZING);
 
-      await openLogin.init();
+      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
 
-      // when using 'redirect' uxMode, this field will contain the private key value after redirect
-      // NOTE: to successfully read this value, it is necessary to call this hook in the component
-      // that is Torus is set to redirect to, otherwise this value would be empty
-      if (openLogin.privKey) {
-        const newWalletProxy = createWalletProxy(openLogin.privKey);
-        setWalletProxy(newWalletProxy);
-        setStatus(WalletStatus.WALLET_CONNECTED);
-      } else {
-        setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+      try {
+        await openLogin.init();
+
+        // when using 'redirect' uxMode, this field will contain the private key value after redirect
+        // NOTE: to successfully read this value, it is necessary to call this hook in the component
+        // that is Torus is set to redirect to, otherwise this value would be empty
+        if (openLogin.privKey) {
+          const newWalletProxy = createWalletProxy(openLogin.privKey);
+          setWalletProxy(newWalletProxy);
+          finalStatus = WalletStatus.WALLET_CONNECTED;
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStatus(finalStatus);
       }
     }
 
@@ -65,20 +71,34 @@ export default function useTorusWallet(): Result {
   const connect = useCallback(async () => {
     setStatus(WalletStatus.INITIALIZING);
 
-    const loginResult = await openLogin.login();
-    if (loginResult?.privKey) {
-      const newWalletProxy = createWalletProxy(loginResult.privKey);
-      setWalletProxy(newWalletProxy);
-      setStatus(WalletStatus.WALLET_CONNECTED);
-    } else {
-      setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
+
+    try {
+      const loginResult = await openLogin.login();
+
+      if (loginResult?.privKey) {
+        const newWalletProxy = createWalletProxy(loginResult.privKey);
+        setWalletProxy(newWalletProxy);
+        finalStatus = WalletStatus.WALLET_CONNECTED;
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setStatus(finalStatus);
     }
   }, []);
 
   const disconnect = useCallback(async () => {
-    await openLogin.logout();
-    setWalletProxy(DEFAULT_WALLET);
-    setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    setStatus(WalletStatus.INITIALIZING);
+
+    try {
+      await openLogin.logout();
+      setWalletProxy(DEFAULT_WALLET);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    }
   }, []);
 
   return useMemo(
