@@ -1,5 +1,8 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Icon from "components/Icons/Icons";
+import { useSetModal } from "components/Modal/Modal";
+import { admin } from "constants/routes";
+import { useNavigate } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
 import useProposalDetails from "../Proposals/useProposalDetails";
 import { CharityApplication } from "./types";
@@ -10,17 +13,24 @@ export default function PreviewForm({
 }: {
   application: CharityApplication;
 }) {
-  const { updateStatus } = useUpdateApplicationStatus();
   const wallet = useConnectedWallet();
+  const { hideModal } = useSetModal();
+  const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
   const { userVote } = useProposalDetails(proposal);
   const hasVoted = userVote === "yes";
-  const disableAction = hasVoted || isProposalLoading;
+  const disableAction = !!ap.poll_id || hasVoted || isProposalLoading;
+  const navigate = useNavigate();
 
   const getTitle = (status: string) =>
     `${status} ${ap.CharityName} Application`;
   const getDescription = (status: string) =>
     `${status} ${ap.CharityName} by ${wallet?.walletAddress}`;
+
+  const openPoll = () => {
+    navigate(`admin/${admin.proposal}/${ap.poll_id}`);
+    hideModal();
+  };
 
   return (
     <div className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto">
@@ -57,36 +67,46 @@ export default function PreviewForm({
         verified={ap.ProofOfIdentityVerified}
         link={ap.ProofOfIdentity}
       />
-      <div className="flex justify-center gap-4">
-        <ActionButton
-          title="Reject"
-          actionColor="bg-failed-red"
-          disabled={disableAction}
-          onClick={() =>
-            updateStatus({
-              PK: ap.PK,
-              status: "3",
-              endowmentAddr: ap.TerraWallet,
-              title: getTitle("Reject"),
-              description: getDescription("Reject"),
-            })
-          }
-        />
-        <ActionButton
-          title="Accept"
-          actionColor="bg-bright-green"
-          disabled={disableAction}
-          onClick={() =>
-            updateStatus({
-              PK: ap.PK,
-              status: "1",
-              endowmentAddr: ap.TerraWallet,
-              title: getTitle("Approve"),
-              description: getDescription("Approve"),
-            })
-          }
-        />
-      </div>
+      {!!ap.poll_id && (
+        <button
+          className="`w-full bg-angel-blue text-center tracking-wider p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+          onClick={openPoll}
+        >
+          Go to Poll
+        </button>
+      )}
+      {!disableAction && (
+        <div className="flex justify-center gap-4">
+          <ActionButton
+            title="Reject"
+            actionColor="bg-failed-red"
+            disabled={disableAction}
+            onClick={() =>
+              updateStatus({
+                PK: ap.PK,
+                status: "3",
+                endowmentAddr: ap.TerraWallet,
+                title: getTitle("Reject"),
+                description: getDescription("Reject"),
+              })
+            }
+          />
+          <ActionButton
+            title="Accept"
+            actionColor="bg-bright-green"
+            disabled={disableAction}
+            onClick={() =>
+              updateStatus({
+                PK: ap.PK,
+                status: "1",
+                endowmentAddr: ap.TerraWallet,
+                title: getTitle("Approve"),
+                description: getDescription("Approve"),
+              })
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }
