@@ -1,20 +1,20 @@
+import { Fee } from "@terra-money/terra.js";
+import { denoms } from "constants/currency";
+import Halo from "contracts/Halo";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import Halo from "contracts/Halo";
-import { denoms } from "constants/currency";
-import { CreatePollValues } from "./types";
-import { useSetter } from "store/accessors";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
+  setFee,
   setFormError,
   setFormLoading,
-  setFee,
 } from "services/transaction/transactionSlice";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { max_title_bytes, max_link_bytes, max_desc_bytes } from "./schema";
-import { Fee } from "@terra-money/terra.js";
-import processEstimateError from "helpers/processEstimateError";
-import extractFeeNum from "helpers/extractFeeNum";
+import { useSetter } from "store/accessors";
+import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
+import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
   const {
@@ -24,7 +24,7 @@ export default function useCreatePollEstimate() {
   const { main: UST_balance } = useBalances(denoms.uusd);
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
 
   const [maxFee, setMaxFee] = useState<Fee>();
 

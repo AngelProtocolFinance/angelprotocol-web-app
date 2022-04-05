@@ -1,19 +1,26 @@
-import { render, screen } from "@testing-library/react";
-import { ReactNode } from "react";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import App from "./App";
 import {
   StaticWalletProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
-import { testnet } from "./chains";
-import { app, site } from "constants/routes";
-import { Provider } from "react-redux";
-import { store } from "store/store";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Market from "pages/Market/Market";
+import { chainIDs } from "constants/chainIDs";
+import { app, site } from "constants/routes";
+import { terra_lcds } from "constants/urls";
 import Governance from "pages/Governance/Governance";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
+import Market from "pages/Market/Market";
+import { ReactNode } from "react";
+import { Provider } from "react-redux";
+import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { store } from "store/store";
+import App from "./App";
+
+const testnet = {
+  name: "bombay",
+  chainID: chainIDs.testnet,
+  lcd: terra_lcds[chainIDs.testnet],
+};
 
 // define initial routes
 const routes = [

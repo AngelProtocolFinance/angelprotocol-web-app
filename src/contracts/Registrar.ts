@@ -1,13 +1,13 @@
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
+import { WalletProxy } from "providers/WalletProvider";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {
   address: string;
   vaultsRate: ContractQueryArgs;
-  constructor(wallet?: ConnectedWallet) {
+  constructor(wallet?: WalletProxy) {
     super(wallet);
     this.address = contracts[this.chainID][sc.registrar];
 

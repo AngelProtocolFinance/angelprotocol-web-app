@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { Dec } from "@terra-money/terra.js";
-import {
-  useGovPoll,
-  useGovConfig,
-  useGovStaker,
-} from "services/terra/gov/queriers";
-import { useLatestBlock } from "services/terra/queriers";
-import { PollStatus } from "services/terra/gov/types";
 import { Vote } from "contracts/types";
 import toCurrency from "helpers/toCurrency";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useState } from "react";
+import {
+  useGovConfig,
+  useGovPoll,
+  useGovStaker,
+} from "services/terra/gov/queriers";
 import { useGovBalanceState } from "services/terra/gov/states";
+import { PollStatus } from "services/terra/gov/types";
+import { useLatestBlock } from "services/terra/queriers";
 
 type ProcessedPollData = {
   id: number;
@@ -34,7 +34,7 @@ type ProcessedPollData = {
 
 export default function useDetails(poll_id: number): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
   const gov_staked = useGovBalanceState();
