@@ -1,12 +1,12 @@
-import { PropsWithChildren } from "react";
 import { useParams } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
-import { EmbeddedWasmMsg } from "contracts/types";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 import Icon from "components/Icons/Icons";
+import DetailLabel from "./DetailLabel";
+import ProposalContent from "./ProposalContent/ProposalContent";
 
 export type ProposalIdParam = { id: string };
 export default function Proposal() {
@@ -34,11 +34,7 @@ export default function Proposal() {
         </p>
         <DetailLabel>description</DetailLabel>
         <p className="mb-6">{proposal.description}</p>
-
-        <DetailLabel>raw messages</DetailLabel>
-        {proposal.msgs.map((msg, i) => (
-          <RawBlock key={i} {...msg} />
-        ))}
+        <ProposalContent {...proposal} />
         <h4 className="font-bold text-lg text-white py-2 border-b-2 border-white/10">
           <span className="uppercase">Votes</span>
           <span className="font-mono font-normal text-green-100 tracking-wide text-xs">
@@ -49,26 +45,6 @@ export default function Proposal() {
         </h4>
         <Votes {...proposalDetails} />
       </div>
-    </div>
-  );
-}
-
-function DetailLabel(props: PropsWithChildren<{}>) {
-  return (
-    <p className="text-xs font-bold text-white-grey uppercase font-heading">
-      {props.children}
-    </p>
-  );
-}
-
-function RawBlock(props: EmbeddedWasmMsg) {
-  return (
-    <div className="bg-white/10 shadow-inner rounded-md p-2 my-2 text-sm">
-      <code className="font-mono whitespace-pre">
-        <span>to contract: {props.wasm.execute.contract_addr}</span>
-        <br />
-        {JSON.stringify(JSON.parse(atob(props.wasm.execute.msg)), null, 2)}
-      </code>
     </div>
   );
 }

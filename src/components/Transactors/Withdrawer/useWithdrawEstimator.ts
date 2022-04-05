@@ -16,8 +16,9 @@ import processEstimateError from "helpers/processEstimateError";
 import extractFeeNum from "helpers/extractFeeNum";
 import useFieldsAndLimits from "./useFieldsAndLimits";
 import { VaultFieldIds, WithdrawValues, AmountInfo } from "./types";
-import { SEPARATOR } from "./constants";
+import { SEPARATOR, vaultMap } from "./constants";
 import Admin from "contracts/Admin";
+import { ProposalMeta, proposalTypes, SourcePreview } from "pages/Admin/types";
 
 export default function useWithrawEstimator() {
   const {
@@ -95,7 +96,9 @@ export default function useWithrawEstimator() {
           return;
         }
 
+        //construct exec payload along with proposal sources preview
         const sources: Source[] = [];
+        const sourcesPreview: SourcePreview[] = [];
         const usdValues: Dec[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
@@ -109,6 +112,11 @@ export default function useWithrawEstimator() {
               vault: addr,
               locked: "0",
               liquid: fieldInput.amount.mul(1e6).div(rate).toInt().toString(),
+            });
+
+            sourcesPreview.push({
+              vaultName: vaultMap[addr].name,
+              usdAmount: fieldInput.amount.toInt().toNumber(),
             });
           }
         }
@@ -124,21 +132,28 @@ export default function useWithrawEstimator() {
           beneficiary,
         });
 
-        const adminContract = new Admin(cwContracts, wallet);
+        const usdTotal = usdValues
+          .reduce((result, val) => result.add(val), new Dec(0))
+          .toNumber();
 
+        //create proposal meta for tx preview
+        const proposalMeta: ProposalMeta = {
+          type: proposalTypes.endowment_withdraw,
+          data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
+        };
+
+        const adminContract = new Admin(cwContracts, wallet);
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",
-          [embeddedWithdrawMsg]
+          [embeddedWithdrawMsg],
+          JSON.stringify(proposalMeta)
         );
 
         const fee = await adminContract.estimateFee([proposalMsg]);
         const feeNum = extractFeeNum(fee);
 
         //get usd total of of sources
-        const usdTotal = usdValues
-          .reduce((result, val) => result.add(val), new Dec(0))
-          .toNumber();
 
         if (feeNum > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));

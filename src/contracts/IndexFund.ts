@@ -42,6 +42,16 @@ export default class Indexfund extends Contract {
     });
   }
 
+  async getFundDetails(fundId: number) {
+    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
+      this.address,
+      {
+        fund_details: { fund_id: fundId },
+      }
+    );
+    return fundDetailsRes.fund;
+  }
+
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       create_fund: { ...fundDetails },

@@ -11,6 +11,7 @@ import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import { proposalSuccessLink } from "../constants";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
@@ -55,13 +56,23 @@ export default function useUpdateMembers() {
       to_remove
     );
 
+    //create meta for proposal preview
+    const memberUpdateMeta: ProposalMeta = {
+      type: proposalTypes.adminGroup_updateMembers,
+      data: {
+        toAdd: to_add,
+        toRemove: to_remove,
+      },
+    };
+
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 
     const proposalMsg = contract.createProposalMsg(
       proposalTitle,
       proposalDescription,
-      [embeddedExecuteMsg]
+      [embeddedExecuteMsg],
+      JSON.stringify(memberUpdateMeta)
     );
 
     dispatch(
