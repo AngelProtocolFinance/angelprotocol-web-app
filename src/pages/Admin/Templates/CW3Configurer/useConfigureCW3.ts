@@ -14,7 +14,8 @@ import { useGetter, useSetter } from "store/accessors";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
-import { CW3ConfigValues } from "./cw3ConfigSchema";
+import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useConfigureCW3() {
   const wallet = useConnectedWallet();
@@ -53,7 +54,7 @@ export default function useConfigureCW3() {
     description,
     ...nextConfig
   }: CW3ConfigValues) {
-    const prevConfig: Omit<CW3ConfigValues, "title" | "description"> = {
+    const prevConfig: CW3ConfigPayload = {
       //submit is disabled if cw3Config is undefined
       threshold: +cw3Config!.threshold.absolute_percentage.percentage * 100,
       height: cw3Config!.max_voting_period.height,
@@ -70,9 +71,19 @@ export default function useConfigureCW3() {
       nextConfig.height,
       (nextConfig.threshold / 100).toFixed(3)
     );
-    const proposalMsg = adminContract.createProposalMsg(title, description, [
-      configUpdateMsg,
-    ]);
+
+    const configUpdateMeta: ProposalMeta = {
+      type: proposalTypes.adminGroup_updateCW3Config,
+      data: { prevConfig, nextConfig },
+    };
+
+    //proposal meta for preview
+    const proposalMsg = adminContract.createProposalMsg(
+      title,
+      description,
+      [configUpdateMsg],
+      JSON.stringify(configUpdateMeta)
+    );
 
     dispatch(
       sendTerraTx({

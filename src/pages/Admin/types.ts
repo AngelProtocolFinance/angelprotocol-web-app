@@ -5,6 +5,7 @@ import {
   EndowmentStatus,
   EndowmentStatusStrNum,
 } from "services/terra/registrar/types";
+import { CW3ConfigValues } from "./Templates/CW3Configurer/cw3ConfigSchema";
 
 export enum proposalTypes {
   //index fund
@@ -15,6 +16,7 @@ export enum proposalTypes {
   indexFund_configUpdate = "indexFund_configUpdate",
   //admin group
   adminGroup_updateMembers = "adminGroup_updateMembers",
+  adminGroup_updateCW3Config = "adminGroup_updateCW3Config",
   //endowment
   endowment_updateStatus = "endowment_updateStatus",
   endowment_withdraw = "endowment_withdraw",
@@ -44,6 +46,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.indexFund_configUpdate;
       data: FundConfigUpdateMeta;
+    }
+  | {
+      type: proposalTypes.adminGroup_updateCW3Config;
+      data: CW3ConfigUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -80,4 +86,9 @@ export interface FundMemberUpdateMeta {
 export interface FundConfigUpdateMeta {
   prevConfig: FundConfig;
   nextConfig: FundConfig;
+}
+
+export interface CW3ConfigUpdateMeta {
+  prevConfig: Pick<CW3ConfigValues, "height" | "threshold">;
+  nextConfig: Pick<CW3ConfigValues, "height" | "threshold">;
 }
