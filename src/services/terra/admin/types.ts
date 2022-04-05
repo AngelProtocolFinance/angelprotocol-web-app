@@ -27,6 +27,7 @@ export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
   description: string; //"this is a description"
+  meta?: string; //JSON string that contains preview metadata
   msgs: EmbeddedWasmMsg[];
   status: ProposalStatus;
   expires: { at_height: number };

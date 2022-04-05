@@ -1,6 +1,5 @@
 import { useFormContext } from "react-hook-form";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
-
 import { Member } from "services/terra/admin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
@@ -14,6 +13,7 @@ import { MemberUpdatorValues } from "./memberUpdatorSchema";
 import genProposalsLink from "../genProposalsLink";
 import { useParams } from "react-router-dom";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();
@@ -59,13 +59,23 @@ export default function useUpdateMembers() {
       to_remove
     );
 
+    //create meta for proposal preview
+    const memberUpdateMeta: ProposalMeta = {
+      type: proposalTypes.adminGroup_updateMembers,
+      data: {
+        toAdd: to_add,
+        toRemove: to_remove,
+      },
+    };
+
     const proposalTitle = getValues("title");
     const proposalDescription = getValues("description");
 
     const proposalMsg = contract.createProposalMsg(
       proposalTitle,
       proposalDescription,
-      [embeddedExecuteMsg]
+      [embeddedExecuteMsg],
+      JSON.stringify(memberUpdateMeta)
     );
 
     dispatch(

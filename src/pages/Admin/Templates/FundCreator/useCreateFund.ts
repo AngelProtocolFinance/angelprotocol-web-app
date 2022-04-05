@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useFormContext } from "react-hook-form";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -72,11 +73,19 @@ export default function useCreateFund() {
       cleanedNewFundDetails
     );
 
+    //create proposal meta
+    const createFundMeta: ProposalMeta = {
+      type: proposalTypes.indexFund_createFund,
+      data: newFundDetails,
+    };
     //create proposal msg
     const adminContract = new Admin("apTeam", wallet);
-    const proposalMsg = adminContract.createProposalMsg(title, description, [
-      embeddedExecuteMsg,
-    ]);
+    const proposalMsg = adminContract.createProposalMsg(
+      title,
+      description,
+      [embeddedExecuteMsg],
+      JSON.stringify(createFundMeta)
+    );
 
     dispatch(
       sendTerraTx({

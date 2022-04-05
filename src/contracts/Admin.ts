@@ -115,6 +115,7 @@ export default class Admin extends Contract {
     title: string,
     description: string,
     embeddedMsgs: EmbeddedWasmMsg[],
+    meta?: string,
     latest?: any
   ) {
     this.checkWallet();
@@ -122,6 +123,7 @@ export default class Admin extends Contract {
       propose: {
         title,
         description,
+        meta,
         msgs: embeddedMsgs,
       },
     });
