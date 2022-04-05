@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useMember } from "services/terra/admin/queriers";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useEndowmentCWs } from "services/terra/account/queriers";
@@ -13,10 +12,11 @@ import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
 import AdminNav from "./AdminNav";
 import { EndowmentAddrParams } from "./types";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { address: endowmentAddress } = useParams<EndowmentAddrParams>();
   const { cwContracts, isCWContractsLoading } =
     useEndowmentCWs(endowmentAddress);

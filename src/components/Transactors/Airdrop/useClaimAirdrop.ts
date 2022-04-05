@@ -1,8 +1,9 @@
-import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import Halo from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
+import { useMemo } from "react";
 import { Airdrops } from "services/aws/airdrop/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
@@ -10,11 +11,10 @@ import { gov, tags, user } from "services/terra/tags";
 import { tags as awsTags } from "services/aws/tags";
 import { aws } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useSetModal();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const dispatch = useSetter();
 
   const totalClaimable = useMemo(

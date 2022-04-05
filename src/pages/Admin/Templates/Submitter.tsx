@@ -7,7 +7,7 @@ export default function Submitter(
   return (
     <button
       {...props}
-      className={`justify-self-center text-blue-accent hover:text-angel-blue 
+      className={`justify-self-center text-blue-accent hover:text-angel-blue disabled:text-grey-accent
       uppercase text-white font-extrabold ${_classes || ""}`}
     />
   );

@@ -6,8 +6,7 @@ import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import Icon from "components/Icons/Icons";
 
 export default function Summary(props: HoldingSummary) {
-  const { vaultsRate } = useApprovedVaultsRateState();
-
+  const { vaultsRate, isVaultsRateError } = useApprovedVaultsRateState();
   const total_holding = useMemo(() => {
     const total_dec = props.holdings.reduce((total, holding) => {
       const vaultInfo = vaultsRate.find(
@@ -28,9 +27,9 @@ export default function Summary(props: HoldingSummary) {
         <span>{title}</span>
         {props.opener !== undefined && (
           <button
-            disabled={!props.isOwner}
+            disabled={!props.isOwner || isVaultsRateError}
             onClick={props.opener}
-            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-xs font-heading"
+            className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-sm font-heading"
           >
             withdraw
           </button>

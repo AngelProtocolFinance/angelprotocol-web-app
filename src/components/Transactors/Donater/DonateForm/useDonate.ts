@@ -1,13 +1,13 @@
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { DonateValues } from "components/Transactors/Donater/types";
+import { denoms } from "constants/currency";
+import useWalletContext from "hooks/useWalletContext";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { DonateValues } from "components/Transactors/Donater/types";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
+import { resetFee } from "services/transaction/transactionSlice";
 import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
-import { resetFee } from "services/transaction/transactionSlice";
-import { denoms } from "constants/currency";
 import { useGetter, useSetter } from "store/accessors";
 import useEstimator from "../useEstimator";
 
@@ -17,10 +17,10 @@ export default function useDonate() {
 
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-  const { terraTx, ethTx } = useEstimator();
+  const { terraTx, ethTx, bnbTx } = useEstimator();
 
   const terraSender = useCallback(
     (data: DonateValues) => {
@@ -39,6 +39,15 @@ export default function useDonate() {
     },
     //eslint-disable-next-line
     [ethTx]
+  );
+
+  const bnbSender = useCallback(
+    (data: DonateValues) => {
+      dispatch(sendEthDonation({ tx: bnbTx!, donateValues: data }));
+      showModal(TransactionPrompt, {});
+    },
+    //eslint-disable-next-line
+    [bnbTx]
   );
 
   // const btcSender = useBTCSender();
@@ -61,6 +70,7 @@ export default function useDonate() {
     [denoms.uusd]: terraSender,
     [denoms.uluna]: terraSender,
     [denoms.ether]: ethSender,
+    [denoms.bnb]: bnbSender,
     // [denoms.btc]: btcSender,
     // [denoms.sol]: solSender,
     // [denoms.uatom]: atomSender,

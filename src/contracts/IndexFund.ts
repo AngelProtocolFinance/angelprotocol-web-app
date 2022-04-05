@@ -1,20 +1,21 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
+import { WalletProxy } from "providers/WalletProvider";
 import { AllianceMember } from "services/terra/indexFund/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { FundDetails } from "./types";
+import { FundConfig, FundDetails } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
   address: string;
   fundList: ContractQueryArgs;
   allianceMembers: ContractQueryArgs;
+  config: ContractQueryArgs;
 
-  constructor(wallet?: ConnectedWallet, fund_id?: number) {
+  constructor(wallet?: WalletProxy, fund_id?: number) {
     super(wallet);
     this.fund_id = fund_id;
     this.address = contracts[this.chainID][sc.index_fund];
@@ -28,6 +29,27 @@ export default class Indexfund extends Contract {
       address: this.address,
       msg: { alliance_members: {} },
     };
+
+    this.config = {
+      address: this.address,
+      msg: { config: {} },
+    };
+  }
+
+  createEmbeddedFundConfigMsg(config: FundConfig) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_config: config,
+    });
+  }
+
+  async getFundDetails(fundId: number) {
+    const fundDetailsRes = await this.query<{ fund: FundDetails }>(
+      this.address,
+      {
+        fund_details: { fund_id: fundId },
+      }
+    );
+    return fundDetailsRes.fund;
   }
 
   createEmbeddedCreateFundMsg(fundDetails: Omit<FundDetails, "id">) {

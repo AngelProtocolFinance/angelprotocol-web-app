@@ -1,34 +1,34 @@
-import { useEffect, useState } from "react";
-import { ethers } from "ethers";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import {
+  Coin,
   CreateTxOptions,
   Dec,
-  MsgSend,
-  Coin,
   MsgExecuteContract,
+  MsgSend,
 } from "@terra-money/terra.js";
-import { useFormContext } from "react-hook-form";
-import {
-  setFormError,
-  setFormLoading,
-  setFee,
-} from "services/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
-import { Providers, Dwindow } from "services/provider/types";
-import useDebouncer from "hooks/useDebouncer";
-import Contract from "contracts/Contract";
-import Account from "contracts/Account";
-import Indexfund from "contracts/IndexFund";
 import { ap_wallets } from "constants/ap_wallets";
 import { denoms } from "constants/currency";
-import { DonateValues } from "./types";
-import processEstimateError from "helpers/processEstimateError";
+import Account from "contracts/Account";
+import Contract from "contracts/Contract";
+import Indexfund from "contracts/IndexFund";
+import { ethers } from "ethers";
 import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { Dwindow, Providers } from "services/provider/types";
+import {
+  setFee,
+  setFormError,
+  setFormLoading,
+} from "services/transaction/transactionSlice";
+import { useGetter, useSetter } from "store/accessors";
+import { DonateValues } from "./types";
 
 export default function useEstimator() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const dispatch = useSetter();
   const {
     watch,
@@ -44,6 +44,7 @@ export default function useEstimator() {
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
+  const [bnbTx, setBnbTx] = useState<TransactionRequest>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -121,7 +122,7 @@ export default function useEstimator() {
             //this block won't run if wallet is not connected
             //activeProvider === Providers.none
             const contract = new Contract(wallet);
-            const sender = wallet!.walletAddress;
+            const sender = wallet!.address;
             const receiver = ap_wallets[denoms.uluna];
             const amount = new Dec(debounced_amount).mul(1e6);
 
@@ -175,6 +176,42 @@ export default function useEstimator() {
           dispatch(setFee(parseFloat(fee_eth)));
         }
 
+        //estimates for bnb
+        if (currency === denoms.bnb) {
+          const dwindow = window as Dwindow;
+          //provider is present at this point
+          let provider: ethers.providers.Web3Provider;
+
+          if (activeProvider === Providers.binance) {
+            provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
+          } else if (dwindow.xfi?.ethereum!) {
+            provider = new ethers.providers.Web3Provider(
+              dwindow.xfi?.ethereum!
+            );
+          } else throw new Error("Estimating BNB Fee Failed. Provider Error");
+
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
+
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets[denoms.ether],
+            value: wei_amount,
+          };
+
+          const gasLimit = await signer.estimateGas(tx);
+          const fee_wei = gasLimit.mul(gasPrice);
+
+          const fee_bnb = ethers.utils.formatEther(fee_wei);
+
+          setBnbTx(tx);
+          dispatch(setFee(parseFloat(fee_bnb)));
+        }
+
         dispatch(setFormLoading(false));
       } catch (err) {
         const formError = processEstimateError(err);
@@ -196,5 +233,5 @@ export default function useEstimator() {
     isDirty,
   ]);
 
-  return { terraTx, ethTx };
+  return { terraTx, ethTx, bnbTx };
 }

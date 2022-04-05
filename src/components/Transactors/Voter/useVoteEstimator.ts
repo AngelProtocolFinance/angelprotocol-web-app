@@ -1,22 +1,22 @@
+import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { denoms } from "constants/currency";
+import Halo from "contracts/Halo";
+import { Vote } from "contracts/types";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { useGovStaker } from "services/terra/gov/queriers";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { useGovStaker } from "services/terra/gov/queriers";
-import Halo from "contracts/Halo";
-import { Vote } from "contracts/types";
-import { denoms } from "constants/currency";
 import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
 import { VoteValues } from "./types";
-import processEstimateError from "helpers/processEstimateError";
-import extractFeeNum from "helpers/extractFeeNum";
 
 export default function useVoteEstimator() {
   const {
@@ -28,7 +28,7 @@ export default function useVoteEstimator() {
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const { haloBalance } = useHaloBalance();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");

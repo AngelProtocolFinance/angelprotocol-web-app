@@ -1,12 +1,10 @@
-import useImageCompressor from "pages/CharityEdit/useImageCompressor";
+import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext, Path } from "react-hook-form";
 
 export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   //TODO: make this reusable with other image changer on different context
   const { getValues, setValue } = useFormContext<T>();
-  const resize = useImageCompressor();
-
   //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
   const currImageRef = useRef<string>(getValues(fieldName));
@@ -54,7 +52,7 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
-    const file = await resize(e.target.files[0]);
+    const file = await optimizeImage(e.target.files[0]);
     const files = (file ? [file] : e.target.files) as FileList;
     setFileList(files);
   }

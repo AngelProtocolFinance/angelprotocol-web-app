@@ -8,11 +8,13 @@ export enum TerraIdentifiers {
   xdefi = "xdefi-wallet",
   leap = "leap-wallet",
   safepal = "SafePal",
+  torus = "torus",
 }
 
 export enum Providers {
   none = "none",
   ethereum = "ethereum",
+  binance = "binance",
   terra = "terra",
 
   // phantom = "phantom",

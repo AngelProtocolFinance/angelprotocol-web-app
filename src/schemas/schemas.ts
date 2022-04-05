@@ -16,7 +16,7 @@ export const stringByteSchema = (
     .required(`${title} is required`)
     .test(
       "min_length",
-      `${title} must be atleast ${minBytes} bytes`,
+      `${title} must be at least ${minBytes} bytes`,
       getBytesComparer("gt", minBytes)
     )
     .test(

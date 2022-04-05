@@ -1,19 +1,5 @@
 import { IconType } from "react-icons";
 import {
-  FaFacebookSquare,
-  FaLinkedin,
-  FaParachuteBox,
-  FaExternalLinkAlt,
-  FaListUl,
-  FaListOl,
-  FaCog,
-  FaClock,
-  FaStopwatch,
-  FaTelegramPlane,
-  FaUserCircle,
-} from "react-icons/fa";
-import { RiDiscordLine } from "react-icons/ri";
-import {
   AiOutlineTwitter,
   AiFillYoutube,
   AiOutlineMedium,
@@ -28,21 +14,46 @@ import {
   AiOutlineDislike,
   AiOutlineUpload,
 } from "react-icons/ai";
+import {
+  BiArrowBack,
+  BiBold,
+  BiItalic,
+  BiGlobe,
+  BiSearchAlt2,
+} from "react-icons/bi";
+import {
+  BsHourglassSplit,
+  BsExclamationCircle,
+  BsSafeFill,
+} from "react-icons/bs";
+import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
+import {
+  FaFacebookF,
+  FaLinkedinIn,
+  FaParachuteBox,
+  FaExternalLinkAlt,
+  FaListUl,
+  FaListOl,
+  FaCog,
+  FaClock,
+  FaStopwatch,
+  FaTelegramPlane,
+  FaUserCircle,
+  FaUsersCog,
+} from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { GiPieChart } from "react-icons/gi";
-import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
-import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
-import { IoMdSettings } from "react-icons/io";
-import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
-import { BiArrowBack, BiBold, BiItalic, BiSearchAlt2 } from "react-icons/bi";
-import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
+import { IoMdSettings } from "react-icons/io";
+import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
+import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
-import { IconBaseProps } from "react-icons/lib";
+import { RiDiscordLine } from "react-icons/ri";
+import { SiHiveBlockchain } from "react-icons/si";
+import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"
@@ -90,6 +101,10 @@ export type IconTypes =
   | "Search"
   | "Edit"
   | "User"
+  | "PieChart"
+  | "Safe"
+  | "Globe"
+  | "Admin"
   | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
@@ -97,7 +112,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
-  Facebook: FaFacebookSquare,
+  Facebook: FaFacebookF,
   Discord: RiDiscordLine,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
@@ -107,7 +122,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Check: AiOutlineCheck,
   Menu: FiMenu,
   Close: IoClose,
-  Linkedin: FaLinkedin,
+  Linkedin: FaLinkedinIn,
   Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
@@ -117,6 +132,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ExclamationCircle: BsExclamationCircle,
   ExternalLink: GoLinkExternal,
   CaretLeft: AiFillCaretLeft,
+  Globe: BiGlobe,
   Like: AiOutlineLike,
   Dislike: AiOutlineDislike,
   Up: VscTriangleUp,
@@ -139,6 +155,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Edit: AiOutlineEdit,
   User: FaUserCircle,
   PieChart: GiPieChart,
+  Safe: BsSafeFill,
+  Admin: FaUsersCog,
 };
 
 interface IconProps extends IconBaseProps {

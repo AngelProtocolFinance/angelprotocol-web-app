@@ -6,7 +6,7 @@ import { FundDestroyValues as FD } from "./fundDestroyerSchema";
 import useDestroyFund from "./useDestroyFund";
 
 export default function FundDestroyerForm() {
-  const { destroyFund } = useDestroyFund();
+  const { destroyFund, isSubmitDisabled } = useDestroyFund();
   return (
     <form
       onSubmit={destroyFund}
@@ -21,7 +21,7 @@ export default function FundDestroyerForm() {
       />
       <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
-      <Submitter type="submit" _classes="mt-4">
+      <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
         Propose changes
       </Submitter>
     </form>

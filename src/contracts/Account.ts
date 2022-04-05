@@ -1,6 +1,6 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { denoms } from "constants/currency";
+import { WalletProxy } from "providers/WalletProvider";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 import { Source } from "./types";
@@ -10,7 +10,7 @@ export default class Account extends Contract {
   balance: ContractQueryArgs;
   endowmentDetails: ContractQueryArgs;
 
-  constructor(accountAddr: string, wallet?: ConnectedWallet) {
+  constructor(accountAddr: string, wallet?: WalletProxy) {
     super(wallet);
     this.address = accountAddr;
 

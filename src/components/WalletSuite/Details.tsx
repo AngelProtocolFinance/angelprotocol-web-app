@@ -1,25 +1,27 @@
-import { useWallet } from "@terra-money/wallet-provider";
 import Copier from "components/Copier/Copier";
-import { denoms } from "constants/currency";
-import { useGetter, useSetter } from "store/accessors";
-import { resetWallet } from "services/wallet/walletSlice";
-import maskAddress from "helpers/maskAddress";
-import Holdings from "./Holdings";
-import Portal from "./Portal";
-import { useState } from "react";
-import Filter from "./Filter";
-import { useSetMetamask } from "providers/Metamask/Metamask";
 import Icon from "components/Icons/Icons";
+import { denoms } from "constants/currency";
+import { DeviceType, deviceType } from "helpers/deviceType";
+import maskAddress from "helpers/maskAddress";
+import useWalletContext from "hooks/useWalletContext";
+import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
+import { useSetMetamask } from "providers/Metamask/Metamask";
+import { useState } from "react";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
-import { DeviceType, deviceType } from "helpers/deviceType";
+import { resetWallet } from "services/wallet/walletSlice";
+import { useGetter, useSetter } from "store/accessors";
+import Filter from "./Filter";
+import Holdings from "./Holdings";
+import Portal from "./Portal";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const dispatch = useSetter();
   const { active: activeProvider } = useGetter((state) => state.provider);
-  const { disconnect: disconnectTerra, availableConnections } = useWallet();
+  const { wallet: walletTerra, availableWallets } = useWalletContext();
   const { disconnect: disconnectMetamask } = useSetMetamask();
+  const { disconnect: disconnectBinance } = useSetBinance();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
@@ -38,16 +40,19 @@ export default function Details(props: { closeHandler: () => void }) {
   const handleDisconnect = () => {
     dispatch(resetWallet());
     if (activeProvider === Providers.terra) {
-      disconnectTerra();
+      walletTerra!.disconnect();
     }
     if (activeProvider === Providers.ethereum) {
       disconnectMetamask();
     }
+    if (activeProvider === Providers.binance) {
+      disconnectBinance();
+    }
   };
 
   const isSafePal =
-    availableConnections.some(
-      (connection) => connection.identifier === TerraIdentifiers.safepal
+    availableWallets.some(
+      (wallet) => wallet.connection.identifier === TerraIdentifiers.safepal
     ) ||
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 

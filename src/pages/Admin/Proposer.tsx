@@ -6,6 +6,8 @@ import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
 import FundUpdator from "./Templates/FundUpdator/FundUpdator";
 import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
+import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
+import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 
 export default function Proposer() {
@@ -20,9 +22,14 @@ export default function Proposer() {
         <Route path={proposal_types.create_fund} element={<FundCreator />} />
         <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
         <Route path={proposal_types.update_fund} element={<FundUpdator />} />
+        <Route path={proposal_types.config_fund} element={<FundConfigurer />} />
         <Route
           path={proposal_types.alliance_members}
           element={<AllianceEditor />}
+        />
+        <Route
+          path={proposal_types.update_cw3_config}
+          element={<CW3Configurer />}
         />
         <Route index element={<MemberUpdator />} />
       </Routes>
@@ -41,6 +48,9 @@ function ProposalTypes() {
       <NavLink end to={proposal_types.index} className={styler}>
         Update group members
       </NavLink>
+      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+        Update voting params
+      </NavLink>
 
       <ProposalCategory title="Index fund" classes="mt-4" />
       <NavLink to={proposal_types.create_fund} className={styler}>
@@ -50,7 +60,10 @@ function ProposalTypes() {
         Remove Fund
       </NavLink>
       <NavLink to={proposal_types.update_fund} className={styler}>
-        Update Fund
+        Update Fund Members
+      </NavLink>
+      <NavLink to={proposal_types.config_fund} className={styler}>
+        Update Config
       </NavLink>
       <NavLink to={proposal_types.alliance_members} className={styler}>
         Edit Alliance List

@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
-import { useConnectedWallet } from "@terra-money/use-wallet";
 import { useFormContext } from "react-hook-form";
+import { ProposalMeta, proposalTypes } from "pages/Admin/types";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -12,12 +12,13 @@ import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
 import { useState } from "react";
 import { useGetter, useSetter } from "store/accessors";
-import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
+import genProposalsLink from "../genProposalsLink";
 import { FundCreatorValues } from "./fundCreatorSchema";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useCreateFund() {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -72,11 +73,19 @@ export default function useCreateFund() {
       cleanedNewFundDetails
     );
 
+    //create proposal meta
+    const createFundMeta: ProposalMeta = {
+      type: proposalTypes.indexFund_createFund,
+      data: newFundDetails,
+    };
     //create proposal msg
     const adminContract = new Admin("apTeam", wallet);
-    const proposalMsg = adminContract.createProposalMsg(title, description, [
-      embeddedExecuteMsg,
-    ]);
+    const proposalMsg = adminContract.createProposalMsg(
+      title,
+      description,
+      [embeddedExecuteMsg],
+      JSON.stringify(createFundMeta)
+    );
 
     dispatch(
       sendTerraTx({
@@ -87,7 +96,7 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Create fund proposal submitted",
       })
     );

@@ -25,6 +25,7 @@ export default function FundSelection<T extends FundIdContext>(props: {
         rowClass="border-b hover:bg-angel-blue hover:bg-angel-blue/10 cursor-pointer select-none"
         onRowSelect={handleSelectRow}
         selectedRow={activeRow}
+        selectedClass="text-angel-blue"
       >
         {unexpiredFundList.map((fund) => (
           <Cells key={fund.id} cellClass="font-mono px-4 py-2" type="td">

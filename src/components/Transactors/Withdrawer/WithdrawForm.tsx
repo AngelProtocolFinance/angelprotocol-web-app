@@ -41,7 +41,7 @@ export default function WithdrawForm() {
       <ToReceive />
       <button
         type="submit"
-        className="w-full m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
+        className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
         disabled={isSubmitDisabled}
       >
         {isFormLoading ? "Estimating..." : "Create withdraw proposal"}

@@ -1,12 +1,12 @@
 import { useMemo } from "react";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Admin, { CWContracts } from "contracts/Admin";
 import { useGetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useAdminContract(customCWs?: CWContracts) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const cws = customCWs || cwContracts;
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
 
   const contract = useMemo(() => new Admin(cws, wallet), [wallet, cws]);
 

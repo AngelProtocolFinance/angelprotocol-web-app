@@ -1,4 +1,4 @@
-import { useConnectedWallet } from "@terra-money/use-wallet";
+// import { useConnectedWallet } from "@terra-money/use-wallet";
 import { EndowmentStatusNum } from "services/terra/registrar/types";
 import Admin from "contracts/Admin";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -11,10 +11,11 @@ import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUp
 import { sendEndowmentReviewTx } from "services/transaction/sendEndowmentReviewTx";
 import { aws } from "services/aws/aws";
 import { admin, tags } from "services/aws/tags";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {

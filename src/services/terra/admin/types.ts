@@ -27,6 +27,7 @@ export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
   description: string; //"this is a description"
+  meta?: string; //JSON string that contains preview metadata
   msgs: EmbeddedWasmMsg[];
   status: ProposalStatus;
   expires: { at_height: number };
@@ -41,6 +42,14 @@ export type Proposal = {
 
 export type CW3Config = {
   group_addr: string; //"terra123abc.."
+  threshold: {
+    absolute_percentage: {
+      percentage: string; //"0.5"
+    };
+  };
+  max_voting_period: {
+    height: number; //1000
+  };
   isPlacholder?: true;
   //...future needed attr
 };
