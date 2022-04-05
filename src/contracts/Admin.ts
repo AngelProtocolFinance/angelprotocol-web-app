@@ -1,5 +1,4 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
