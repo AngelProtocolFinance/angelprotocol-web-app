@@ -13,3 +13,7 @@ export enum cha {
 export enum alliance {
   members = "members",
 }
+
+export enum admin {
+  applications = "applications",
+}

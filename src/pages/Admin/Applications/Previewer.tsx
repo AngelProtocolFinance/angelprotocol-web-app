@@ -1,6 +1,6 @@
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
-import ApplicationReview from "./ApplicationReview";
+import PreviewForm from "./PreviewForm";
 import { CharityApplication } from "./types";
 
 export default function Reviewer(props: { application: CharityApplication }) {
@@ -16,7 +16,7 @@ export default function Reviewer(props: { application: CharityApplication }) {
       >
         <Icon type="Close" size={25} />
       </button>
-      <ApplicationReview application={props.application} />
+      <PreviewForm application={props.application} />
     </div>
   );
 }

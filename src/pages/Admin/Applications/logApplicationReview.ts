@@ -5,17 +5,17 @@ import { UpdateApplication } from "services/aws/types";
 import { UserTypes } from "services/user/types";
 
 const logApplicationReview: ReviewLogger = async (payload) => {
-  const generatedToken = createAuthToken(UserTypes.WEB_APP);
+  const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
   const is_test = payload.chain_id === chainIDs.testnet;
   const chain_id = is_test ? "testnet" : "mainnet";
   const response = await fetch(
     `${aws_endpoint}/registration?uuid=${payload.PK}`,
     {
-      method: "POST",
+      method: "PUT",
       headers: { authorization: generatedToken },
       body: JSON.stringify({
         chain_id,
-        poll_id: payload.poll_id,
+        poll_id: +payload.poll_id,
       }),
     }
   );

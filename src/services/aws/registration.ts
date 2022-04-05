@@ -2,9 +2,8 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
-import { admin } from "services/terra/tags";
 import { aws } from "./aws";
-import { tags } from "./tags";
+import { admin, tags } from "./tags";
 import { AWSQueryRes, UpdateApplication } from "./types";
 
 const registration_api = aws.injectEndpoints({

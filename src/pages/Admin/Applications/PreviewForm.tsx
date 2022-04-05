@@ -1,15 +1,21 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import Icon from "components/Icons/Icons";
+import { useProposal } from "services/terra/admin/queriers";
+import useProposalDetails from "../Proposals/useProposalDetails";
 import { CharityApplication } from "./types";
 import useUpdateApplicationStatus from "./useUpdateApplication";
 
-export default function ApplicationReview({
+export default function PreviewForm({
   application: ap,
 }: {
   application: CharityApplication;
 }) {
   const { updateStatus } = useUpdateApplicationStatus();
   const wallet = useConnectedWallet();
+  const { proposal, isProposalLoading } = useProposal(ap.poll_id);
+  const { userVote } = useProposalDetails(proposal);
+  const hasVoted = userVote === "yes";
+  const disableAction = hasVoted || isProposalLoading;
 
   const getTitle = (status: string) =>
     `${status} ${ap.CharityName} Application`;
@@ -55,6 +61,7 @@ export default function ApplicationReview({
         <ActionButton
           title="Reject"
           actionColor="bg-failed-red"
+          disabled={disableAction}
           onClick={() =>
             updateStatus({
               PK: ap.PK,
@@ -68,6 +75,7 @@ export default function ApplicationReview({
         <ActionButton
           title="Accept"
           actionColor="bg-bright-green"
+          disabled={disableAction}
           onClick={() =>
             updateStatus({
               PK: ap.PK,
@@ -126,12 +134,12 @@ interface ActionButtonProps extends React.HTMLProps<HTMLButtonElement> {
   actionColor: string;
 }
 
-function ActionButton(props: ActionButtonProps) {
+function ActionButton({ actionColor, type, ...props }: ActionButtonProps) {
   return (
     <button
-      className={`w-full tracking-wider ${props.actionColor} disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold`}
+      className={`w-full tracking-wider ${actionColor} disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold`}
       type="submit"
-      onClick={props.onClick}
+      {...props}
     >
       {props.title}
     </button>

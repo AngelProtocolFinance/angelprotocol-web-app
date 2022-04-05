@@ -4,7 +4,7 @@ import TableSection, { Cells } from "components/TableSection/TableSection";
 import { CharityApplication } from "./types";
 import Copier from "components/Copier/Copier";
 import { useSetModal } from "components/Modal/Modal";
-import Reviewer from "./Reviewer";
+import Reviewer from "./Previewer";
 
 export default function ApplicationsTable(props: {
   applications: CharityApplication[];
