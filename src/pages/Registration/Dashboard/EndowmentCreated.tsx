@@ -1,7 +1,7 @@
-import { site } from "constants/routes";
+import { app, site } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 
 export default function EndowmentCreated(props: { charityName: string }) {
   const navigate = useNavigate();
@@ -17,7 +17,9 @@ export default function EndowmentCreated(props: { charityName: string }) {
       </p>
       <Button
         className="bg-thin-blue min-w-fit h-10 px-5 mt-5"
-        onClick={() => navigate(`${registerRootPath}/${routes.charityProfile}`)}
+        onClick={() =>
+          navigate(`${site.app}/${app.register}/${routes.charityProfile}`)
+        }
       >
         {`Go to ${possessiveFormOfName} profile`}
       </Button>

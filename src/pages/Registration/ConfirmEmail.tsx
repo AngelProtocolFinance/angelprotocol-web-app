@@ -1,14 +1,14 @@
 import banner2 from "assets/images/banner-register-2.jpg";
-import { app } from "constants/routes";
-import { useCallback, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import { app, site } from "constants/routes";
+import { useCallback, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { removeUserData, updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "./common";
-import routes, { registerRootPath } from "./routes";
+import routes from "./routes";
 
 export default function ConfirmEmail() {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ export default function ConfirmEmail() {
 
   useEffect(() => {
     if (user.EmailVerified) {
-      navigate(`${registerRootPath}/${routes.dashboard}`);
+      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
   }, [user?.EmailVerified, navigate]);
 

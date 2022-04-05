@@ -1,9 +1,10 @@
+import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { User } from "services/user/types";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
@@ -43,7 +44,9 @@ export default function VerifiedEmail() {
     <VerificationSuccessful
       isLoading={isLoading}
       userData={userData}
-      onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
+      onClick={() =>
+        navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+      }
     />
   );
 }

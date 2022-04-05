@@ -1,8 +1,9 @@
 import Loader from "components/Loader/Loader";
+import { app, site } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../common";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 
 export default function ButtonSection() {
   const navigate = useNavigate();
@@ -18,7 +19,9 @@ export default function ButtonSection() {
         <>
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
-            onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
+            onClick={() =>
+              navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+            }
           >
             Back
           </Button>

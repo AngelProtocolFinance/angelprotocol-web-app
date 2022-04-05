@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { app, site } from "constants/routes";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import DescriptionInput from "./DescriptionInput";
 import ImageInput from "./ImageInput";
@@ -27,7 +28,7 @@ export default function AdditionalInformation() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`${registerRootPath}/${routes.dashboard}`);
+      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
   }, [isSuccess, navigate]);
 

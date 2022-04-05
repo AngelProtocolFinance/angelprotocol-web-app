@@ -1,7 +1,8 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
+import { app, site } from "constants/routes";
 import useWalletContext from "hooks/useWalletContext";
-import routes, { registerRootPath } from "pages/Registration/routes";
+import routes from "pages/Registration/routes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegistrationSuccessful from "./RegistrationSuccessful";
@@ -18,7 +19,7 @@ export default function RegisterWallet() {
     if (status === WalletStatus.WALLET_CONNECTED) {
       setWalletAddress(wallet!.address);
     } else if (status === WalletStatus.WALLET_NOT_CONNECTED) {
-      navigate(`${registerRootPath}/${routes.wallet}`);
+      navigate(`${site.app}/${app.register}/${routes.wallet}`);
     }
   }, [status, wallet, navigate]);
 

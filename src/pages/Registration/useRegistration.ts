@@ -1,13 +1,14 @@
-import createAuthToken from "helpers/createAuthToken";
-import { useNavigate } from "react-router-dom";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import { app, site } from "constants/routes";
+import createAuthToken from "helpers/createAuthToken";
+import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
-import routes, { registerRootPath } from "./routes";
+import routes from "./routes";
 
 export type ReferInfo = { refer: string };
 
@@ -60,9 +61,9 @@ export const useRegistration = () => {
     dispatch(updateUserData(data));
     localStorage.setItem("userData", JSON.stringify(data));
     if (data.EmailVerified) {
-      navigate(`${registerRootPath}/${routes.dashboard}`);
+      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {
-      navigate(`${registerRootPath}/${routes.confirm}`, {
+      navigate(`${site.app}/${app.register}/${routes.confirm}`, {
         state: { is_sent: true },
       });
     }

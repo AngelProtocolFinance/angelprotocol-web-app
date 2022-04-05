@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { site, web } from "constants/routes";
+import { app, site, web } from "constants/routes";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../../common";
 import { userRoleOptions, UserRoles } from "../../constants";
-import routes, { registerRootPath } from "../../routes";
+import routes from "../../routes";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
@@ -107,7 +107,9 @@ export default function ContactDetailsForm(props: any) {
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
-            onClick={() => navigate(`${registerRootPath}/${routes.dashboard}`)}
+            onClick={() =>
+              navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+            }
           >
             Back
           </Button>
@@ -116,7 +118,7 @@ export default function ContactDetailsForm(props: any) {
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
-            onClick={() => navigate(`${registerRootPath}`)}
+            onClick={() => navigate(`${site.app}/${app.register}`)}
           >
             Back
           </Button>

@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { app, site } from "constants/routes";
 import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -39,7 +40,7 @@ export default function Documentation() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`${registerRootPath}/${routes.dashboard}`);
+      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
   }, [isSuccess, navigate]);
 

@@ -1,5 +1,3 @@
-import { app, site } from "constants/routes";
-
 enum routes {
   index = "/",
   contactDetails = "contact-details",
@@ -11,7 +9,5 @@ enum routes {
   documentation = "documentation",
   additionalInformation = "additional-information",
 }
-
-export const registerRootPath = `${site.app}/${app.register}`;
 
 export default routes;

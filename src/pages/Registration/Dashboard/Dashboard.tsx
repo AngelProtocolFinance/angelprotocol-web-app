@@ -1,11 +1,12 @@
 import Loader from "components/Loader/Loader";
+import { app, site } from "constants/routes";
 import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetCharityDataQuery } from "services/aws/charity";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
-import routes, { registerRootPath } from "../routes";
+import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import getRegistrationStatus from "./getRegistrationStatus";
@@ -58,21 +59,23 @@ export default function Dashboard() {
         <Step
           title="Step #1: Contact Details"
           onClick={() =>
-            navigate(`${registerRootPath}/${routes.contactDetails}`)
+            navigate(`${site.app}/${app.register}/${routes.contactDetails}`)
           }
           disabled={dataSubmitted}
           completed
         />
         <Step
           title="Step #2: Wallet Address"
-          onClick={() => navigate(`${registerRootPath}/${routes.wallet}`)}
+          onClick={() =>
+            navigate(`${site.app}/${app.register}/${routes.wallet}`)
+          }
           disabled={dataSubmitted}
           completed={status.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
           onClick={() =>
-            navigate(`${registerRootPath}/${routes.documentation}`)
+            navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
           disabled={dataSubmitted}
           completed={status.stepThree.completed}
@@ -84,7 +87,9 @@ export default function Dashboard() {
         <Step
           title="Step #4: Additional Information"
           onClick={() =>
-            navigate(`${registerRootPath}/${routes.additionalInformation}`)
+            navigate(
+              `${site.app}/${app.register}/${routes.additionalInformation}`
+            )
           }
           disabled={dataSubmitted}
           completed={status.stepFour.completed}
