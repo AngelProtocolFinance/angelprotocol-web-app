@@ -1,16 +1,16 @@
-import { useFormContext } from "react-hook-form";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
-import { admin, tags } from "services/terra/tags";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import { useGetter, useSetter } from "store/accessors";
+import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { EmbeddedWasmMsg } from "contracts/types";
+import { useFormContext } from "react-hook-form";
+import { admin, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useGetter, useSetter } from "store/accessors";
+import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";
-import { proposalSuccessLink } from "../constants";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import useWalletContext from "hooks/useWalletContext";
 import { ProposalMeta, proposalTypes } from "pages/Admin/types";
@@ -96,7 +96,7 @@ export default function useEditAlliance() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Alliance member update proposal submitted",
       })
     );

@@ -15,7 +15,7 @@ import { StatusChangePayload } from "contracts/types";
 import { useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";
 import cleanObject from "helpers/cleanObject";
-import { proposalSuccessLink } from "../constants";
+import genProposalsLink from "../genProposalsLink";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 import useWalletContext from "hooks/useWalletContext";
 
@@ -78,7 +78,7 @@ export default function useUpdateStatus() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Endowment status update proposal submitted",
       })
     );

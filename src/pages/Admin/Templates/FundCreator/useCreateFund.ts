@@ -12,8 +12,8 @@ import { FundDetails } from "contracts/types";
 import cleanObject from "helpers/cleanObject";
 import { useState } from "react";
 import { useGetter, useSetter } from "store/accessors";
-import { proposalSuccessLink } from "../constants";
 import { INIT_SPLIT } from "./FundCreator";
+import genProposalsLink from "../genProposalsLink";
 import { FundCreatorValues } from "./fundCreatorSchema";
 import useWalletContext from "hooks/useWalletContext";
 
@@ -96,7 +96,7 @@ export default function useCreateFund() {
             { type: tags.admin, id: admin.proposals },
           ]),
         ],
-        successLink: proposalSuccessLink,
+        successLink: genProposalsLink("apTeam"),
         successMessage: "Create fund proposal submitted",
       })
     );
