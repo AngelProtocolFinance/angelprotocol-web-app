@@ -1,5 +1,5 @@
 import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
-import { ProposalMeta, proposalTypes } from "../../../types";
+import { ProposalMeta } from "../../../types";
 import CWMemberUpdate from "./CWMemberUpdate";
 import Withdraw from "./Withdraw";
 import Fund from "./Fund";
@@ -7,6 +7,7 @@ import AllianceUpdate from "./AllianceUpdate";
 import FundMemberUpdate from "./FundMemberUpdate";
 import FundConfigUpdate from "./FundConfigUpdate";
 import CW3ConfigUpdate from "./CW3ConfigUpdate";
+import { proposalTypes } from "constants/routes";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {

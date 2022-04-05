@@ -1,5 +1,5 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import { proposal_types } from "constants/routes";
+import { proposalTypes } from "constants/routes";
 import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
 import FundCreator from "./Templates/FundCreator/FundCreator";
@@ -16,19 +16,31 @@ export default function Proposer() {
       <ProposalTypes />
       <Routes>
         <Route
-          path={proposal_types.change_endowment_status}
+          path={proposalTypes.endowment_updateStatus}
           element={<EndowmentUpdator />}
         />
-        <Route path={proposal_types.create_fund} element={<FundCreator />} />
-        <Route path={proposal_types.destroy_fund} element={<FundDestroyer />} />
-        <Route path={proposal_types.update_fund} element={<FundUpdator />} />
-        <Route path={proposal_types.config_fund} element={<FundConfigurer />} />
         <Route
-          path={proposal_types.alliance_members}
+          path={proposalTypes.indexFund_createFund}
+          element={<FundCreator />}
+        />
+        <Route
+          path={proposalTypes.indexFund_removeFund}
+          element={<FundDestroyer />}
+        />
+        <Route
+          path={proposalTypes.indexFund_updateFundMembers}
+          element={<FundUpdator />}
+        />
+        <Route
+          path={proposalTypes.indexFund_configUpdate}
+          element={<FundConfigurer />}
+        />
+        <Route
+          path={proposalTypes.indexFund_allianceEdits}
           element={<AllianceEditor />}
         />
         <Route
-          path={proposal_types.update_cw3_config}
+          path={proposalTypes.adminGroup_updateCW3Config}
           element={<CW3Configurer />}
         />
         <Route index element={<MemberUpdator />} />
@@ -45,31 +57,38 @@ function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
       <ProposalCategory title="Admin group" />
-      <NavLink end to={proposal_types.index} className={styler}>
+      <NavLink end to={proposalTypes.index} className={styler}>
         Update group members
       </NavLink>
-      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+      <NavLink
+        end
+        to={proposalTypes.adminGroup_updateCW3Config}
+        className={styler}
+      >
         Update voting params
       </NavLink>
 
       <ProposalCategory title="Index fund" classes="mt-4" />
-      <NavLink to={proposal_types.create_fund} className={styler}>
+      <NavLink to={proposalTypes.indexFund_createFund} className={styler}>
         Create Fund
       </NavLink>
-      <NavLink to={proposal_types.destroy_fund} className={styler}>
+      <NavLink to={proposalTypes.indexFund_removeFund} className={styler}>
         Remove Fund
       </NavLink>
-      <NavLink to={proposal_types.update_fund} className={styler}>
+      <NavLink
+        to={proposalTypes.indexFund_updateFundMembers}
+        className={styler}
+      >
         Update Fund Members
       </NavLink>
-      <NavLink to={proposal_types.config_fund} className={styler}>
+      <NavLink to={proposalTypes.indexFund_configUpdate} className={styler}>
         Update Config
       </NavLink>
-      <NavLink to={proposal_types.alliance_members} className={styler}>
+      <NavLink to={proposalTypes.indexFund_allianceEdits} className={styler}>
         Edit Alliance List
       </NavLink>
       <ProposalCategory title="Endowment" classes="mt-4" />
-      <NavLink to={proposal_types.change_endowment_status} className={styler}>
+      <NavLink to={proposalTypes.endowment_updateStatus} className={styler}>
         Change Endowment Status
       </NavLink>
     </div>

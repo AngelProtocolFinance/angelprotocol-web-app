@@ -12,8 +12,9 @@ import { MemberUpdatorValues } from "./memberUpdatorSchema";
 import genProposalsLink from "../genProposalsLink";
 import { useParams } from "react-router-dom";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

@@ -1,6 +1,7 @@
 import TextInput from "pages/Admin/components/TextInput";
-import Submitter from "../Submitter";
-import { FundSendValues as FS } from "./fundSendSchema";
+import Submitter from "../../Submitter";
+import { FundSendValues as FS } from "../fundSendSchema";
+import Amount from "./Amount";
 
 export default function FundSendForm() {
   return (
@@ -12,6 +13,8 @@ export default function FundSendForm() {
         wide
         required
       />
+      <Amount />
+      <TextInput<FS> title="receipient" name="description" required mono />
       <Submitter type="button" onClick={() => {}} _classes="mt-4">
         Propose changes
       </Submitter>

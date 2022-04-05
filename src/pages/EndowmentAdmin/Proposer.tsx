@@ -1,5 +1,5 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import { proposal_types } from "constants/routes";
+import { proposalTypes } from "constants/routes";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
@@ -12,7 +12,7 @@ export default function Proposer() {
       <Routes>
         <Route index element={<MemberUpdator />} />
         <Route
-          path={proposal_types.update_cw3_config}
+          path={proposalTypes.adminGroup_updateCW3Config}
           element={<CW3Configurer />}
         />
       </Routes>
@@ -28,10 +28,14 @@ function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
       <ProposalCategory title="admin group" />
-      <NavLink end to={proposal_types.index} className={styler}>
+      <NavLink end to={proposalTypes.index} className={styler}>
         Update group Members
       </NavLink>
-      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+      <NavLink
+        end
+        to={proposalTypes.adminGroup_updateCW3Config}
+        className={styler}
+      >
         Update voting params
       </NavLink>
     </div>

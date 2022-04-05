@@ -15,8 +15,9 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
-import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 
 export default function useConfigureCW3() {
   const { wallet } = useWalletContext();

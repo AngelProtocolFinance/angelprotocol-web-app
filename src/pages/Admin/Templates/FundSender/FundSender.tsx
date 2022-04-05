@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import FundSendForm from "./FundSendForm";
+import FundSendForm from "./FundSendForm/FundSendForm";
 import { fundSendSchema, FundSendValues } from "./fundSendSchema";
 
 export default function FundSender() {
