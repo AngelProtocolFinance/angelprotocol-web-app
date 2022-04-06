@@ -16,8 +16,9 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import cleanObject from "helpers/cleanObject";
 import { FundConfigValues } from "./fundconfigSchema";
 import genProposalsLink from "../genProposalsLink";
-import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 
 export default function useConfigureFund() {
   const { wallet } = useWalletContext();

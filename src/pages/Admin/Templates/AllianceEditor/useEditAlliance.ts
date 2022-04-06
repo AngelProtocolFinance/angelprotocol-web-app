@@ -13,7 +13,8 @@ import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import useWalletContext from "hooks/useWalletContext";
-import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
+import { proposalTypes } from "constants/routes";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

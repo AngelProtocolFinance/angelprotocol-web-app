@@ -1,5 +1,5 @@
 import Icon from "components/Icons/Icons";
-import { EmbeddedWasmMsg } from "contracts/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import { useState } from "react";
 import { Proposal } from "services/terra/admin/types";
 import DetailLabel from "../DetailLabel";
@@ -42,13 +42,18 @@ export default function ProposalContent(props: Proposal) {
   );
 }
 
-function RawBlock(props: EmbeddedWasmMsg) {
+function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
+  const isWASM = "wasm" in props;
+  const codeString = isWASM
+    ? JSON.stringify(JSON.parse(atob(props.wasm.execute.msg)), null, 2)
+    : JSON.stringify(props, null, 2);
+
   return (
     <div className="bg-white/10 shadow-inner rounded-md p-2 my-2 text-sm">
       <code className="font-mono whitespace-pre">
-        <span>to contract: {props.wasm.execute.contract_addr}</span>
+        {isWASM && <span>to contract: {props.wasm.execute.contract_addr}</span>}
         <br />
-        {JSON.stringify(JSON.parse(atob(props.wasm.execute.msg)), null, 2)}
+        {codeString}
       </code>
     </div>
   );

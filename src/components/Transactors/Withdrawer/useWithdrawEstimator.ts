@@ -1,4 +1,5 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { proposalTypes } from "constants/routes";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import { Source } from "contracts/types";
@@ -6,7 +7,7 @@ import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
-import { ProposalMeta, proposalTypes, SourcePreview } from "pages/Admin/types";
+import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {

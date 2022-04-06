@@ -3,7 +3,7 @@ import { terra_lcds } from "constants/urls";
 import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
 import { Disconnected, TxResultFail } from "./Errors";
-import { EmbeddedWasmMsg } from "./types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
 import { WalletProxy } from "providers/WalletProvider";
 
 export default class Contract {
@@ -84,6 +84,17 @@ export default class Contract {
           contract_addr: to,
           funds,
           msg: encodedMsg,
+        },
+      },
+    };
+  }
+
+  createdEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+    return {
+      bank: {
+        send: {
+          to_address: to,
+          amount: funds,
         },
       },
     };

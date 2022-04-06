@@ -1,9 +1,10 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import { proposal_types } from "constants/routes";
+import { proposalTypes } from "constants/routes";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 import CW3Configurer from "pages/Admin/Templates/CW3Configurer/CW3Configurer";
+import FundSender from "pages/Admin/Templates/FundSender/FundSender";
 
 export default function Proposer() {
   return (
@@ -12,8 +13,12 @@ export default function Proposer() {
       <Routes>
         <Route index element={<MemberUpdator />} />
         <Route
-          path={proposal_types.update_cw3_config}
+          path={proposalTypes.adminGroup_updateCW3Config}
           element={<CW3Configurer />}
+        />
+        <Route
+          path={proposalTypes.adminGroup_fundTransfer}
+          element={<FundSender />}
         />
       </Routes>
     </div>
@@ -28,11 +33,14 @@ function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
       <ProposalCategory title="admin group" />
-      <NavLink end to={proposal_types.index} className={styler}>
+      <NavLink end to={proposalTypes.index} className={styler}>
         Update group Members
       </NavLink>
-      <NavLink end to={proposal_types.update_cw3_config} className={styler}>
+      <NavLink to={proposalTypes.adminGroup_updateCW3Config} className={styler}>
         Update voting params
+      </NavLink>
+      <NavLink to={proposalTypes.adminGroup_fundTransfer} className={styler}>
+        Fund transfer
       </NavLink>
     </div>
   );

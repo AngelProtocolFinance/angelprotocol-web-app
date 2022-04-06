@@ -7,6 +7,13 @@ export const addressSchema = (title: string) =>
       /^terra[a-z0-9]{39}$/i.test(address as string)
     );
 
+export const tokenAmountSchema = Yup.number()
+  .positive("Amount must be greater than zero ")
+  .typeError("Amount is invalid")
+  .test("max precision", "must not be greater than 6 digits", (number) =>
+    /^\d+(\.\d{1,6})?$/.test(number as any)
+  );
+
 export const stringByteSchema = (
   title: string,
   minBytes: number,
