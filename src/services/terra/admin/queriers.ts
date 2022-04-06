@@ -1,6 +1,7 @@
 import { chainIDs } from "constants/chainIDs";
 import { CWContracts } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
+import { ProposalStatusOptions } from "pages/Admin/Proposals/Proposals";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import useAdminContract from "./useAdminContract";
@@ -35,18 +36,28 @@ export function useMember(customCWs?: CWContracts, skip = false) {
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
 
-export function useProposals() {
+export function useFilteredProposals(status: ProposalStatusOptions) {
   const { useProposalsQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
-  const {
-    data = [],
-    isFetching,
-    isLoading,
-  } = useProposalsQuery(contract.proposals, {
-    skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
-  });
-
-  return { proposals: data, isProposalsLoading: isFetching || isLoading };
+  const { filteredProposals, isLoading, isError } = useProposalsQuery(
+    contract.proposals,
+    {
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
+      selectFromResult: ({ data = [], isLoading, isFetching, isError }) => ({
+        filteredProposals:
+          status === "all"
+            ? data
+            : data.filter((proposal) => proposal.status === status),
+        isLoading: isLoading || isFetching,
+        isError,
+      }),
+    }
+  );
+  return {
+    filteredProposals,
+    isFilteredProposalsLoading: isLoading,
+    isFilteredProposalsFailed: isError,
+  };
 }
 
 export function useProposal(pollId?: string) {

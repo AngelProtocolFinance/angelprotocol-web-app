@@ -1,5 +1,5 @@
-import { createContext, useContext, useMemo, useState } from "react";
-import { useProposals } from "services/terra/admin/queriers";
+import { createContext, useContext, useState } from "react";
+import { useFilteredProposals } from "services/terra/admin/queriers";
 import { ProposalStatus } from "services/terra/admin/types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";
@@ -9,15 +9,8 @@ export default function Proposals() {
     useState<ProposalStatusOptions>("all");
   //TODO:add proposal type
 
-  const { proposals, isProposalsLoading } = useProposals();
-
-  const filteredProposals = useMemo(() => {
-    if (proposalStatus === "all") {
-      return proposals;
-    } else {
-      return proposals.filter((proposal) => proposal.status === proposalStatus);
-    }
-  }, [proposals, proposalStatus]);
+  const { filteredProposals, isFilteredProposalsLoading } =
+    useFilteredProposals(proposalStatus);
 
   function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
     setProposalStatus(ev.target.value as ProposalStatusOptions);
@@ -38,13 +31,16 @@ export default function Proposals() {
         </div>
       )) || (
         <p className="font-mono text-white place-self-center">
-          {isProposalsLoading ? "loading proposals.." : "no proposals found"}
+          {isFilteredProposalsLoading
+            ? "loading proposals.."
+            : "no proposals found"}
         </p>
       )}
     </div>
   );
 }
 
+export type ProposalStatusOptions = ProposalStatus | "all";
 interface State {
   activeStatus: ProposalStatusOptions;
 }
@@ -63,5 +59,3 @@ const setContext = createContext<Setters>({
 //only use this hook inside PhantomProvider
 export const useGetProposalsState = () => useContext(getContext);
 export const useSetProposalsState = () => useContext(setContext);
-
-export type ProposalStatusOptions = ProposalStatus | "all";
