@@ -1,6 +1,8 @@
+import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -20,15 +22,60 @@ export default function Register() {
       <Routes>
         <Route
           path={routes.additionalInformation}
-          element={<AdditionalInformation />}
+          element={
+            <StepOneCompleteGuard>
+              <AdditionalInformation />
+            </StepOneCompleteGuard>
+          }
         />
-        <Route path={routes.confirm} element={<ConfirmEmail />} />
+        <Route
+          path={routes.confirm}
+          element={
+            <StepOneInitiatedGuard>
+              <ConfirmEmail />
+            </StepOneInitiatedGuard>
+          }
+        />
         <Route path={routes.contactDetails} element={<ContactDetails />} />
-        <Route path={routes.verify} element={<VerifiedEmail />} />
-        <Route path={routes.dashboard} element={<Dashboard />} />
-        <Route path={routes.documentation} element={<Documentation />} />
-        <Route path={`${routes.wallet}/*`} element={<WalletRegistration />} />
+        <Route
+          path={routes.dashboard}
+          element={
+            <StepOneCompleteGuard>
+              <Dashboard />
+            </StepOneCompleteGuard>
+          }
+        />
+        <Route
+          path={routes.documentation}
+          element={
+            <StepOneCompleteGuard>
+              <Documentation />
+            </StepOneCompleteGuard>
+          }
+        />
         <Route path={routes.index} element={<Registration />} />
+        <Route
+          path={routes.verify}
+          element={
+            <StepOneInitiatedGuard>
+              <VerifiedEmail />
+            </StepOneInitiatedGuard>
+          }
+        />
+        <Route
+          path={`${routes.wallet}/*`}
+          element={
+            <StepOneCompleteGuard>
+              <WalletRegistration />
+            </StepOneCompleteGuard>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Navigate to={`${site.app}/${app.register}/${routes.dashboard}`} />
+          }
+        />
       </Routes>
     </Container>
   );

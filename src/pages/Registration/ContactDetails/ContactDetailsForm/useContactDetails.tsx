@@ -65,17 +65,17 @@ export default function useSaveContactDetails() {
               CharityName: postData.Registration.CharityName,
             },
           });
-          dispatch(
-            updateUserData({
-              ...user,
-              ...postData.ContactPerson,
-              CharityName: postData.Registration.CharityName,
-              RegistrationDate: new Date().toISOString(),
-              RegistrationStatus: "Not Complete",
-              EmailVerified: false,
-              PK: result.UUID || contactData.uniqueID,
-            })
-          );
+          const newUserData = {
+            ...user,
+            ...postData.ContactPerson,
+            CharityName: postData.Registration.CharityName,
+            RegistrationDate: new Date().toISOString(),
+            RegistrationStatus: "Not Complete",
+            EmailVerified: false,
+            PK: result.UUID || contactData.uniqueID,
+          };
+          dispatch(updateUserData(newUserData));
+          localStorage.setItem("userData", JSON.stringify(newUserData));
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
         }
       } else {
