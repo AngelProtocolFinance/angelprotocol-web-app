@@ -6,6 +6,7 @@ import Fund from "./Fund";
 import AllianceUpdate from "./AllianceUpdate";
 import FundMemberUpdate from "./FundMemberUpdate";
 import FundConfigUpdate from "./FundConfigUpdate";
+import CW3ConfigUpdate from "./CW3ConfigUpdate";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -15,6 +16,8 @@ export default function Preview(props: ProposalMeta) {
       return <EndowmentStatusUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateMembers:
       return <CWMemberUpdate {...props.data} />;
+    case proposalTypes.adminGroup_updateCW3Config:
+      return <CW3ConfigUpdate {...props.data} />;
     case proposalTypes.indexFund_createFund:
       return <Fund {...props.data} />;
     case proposalTypes.indexFund_removeFund:
@@ -25,6 +28,7 @@ export default function Preview(props: ProposalMeta) {
       return <FundMemberUpdate {...props.data} />;
     case proposalTypes.indexFund_configUpdate:
       return <FundConfigUpdate {...props.data} />;
+
     default:
       return <div className="p-2">no preview</div>;
   }
