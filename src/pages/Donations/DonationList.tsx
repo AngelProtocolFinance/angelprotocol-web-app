@@ -1,5 +1,6 @@
 import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
+import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import useWalletContext from "hooks/useWalletContext";
@@ -10,7 +11,7 @@ import { DonationItemProps, EndowmentAddrProps } from "./types";
 import useDonor from "./useDonor";
 import useSortList, { Direction } from "./useSortList";
 
-const keys: string[] = ["amount", "date", "endowment"];
+const keys: string[] = ["amount", "date", "endowment", "transaction hash"];
 
 const DonationList = (props: EndowmentAddrProps) => {
   const [isError, setIsError] = useState(false);
@@ -102,6 +103,18 @@ const DonationItemInfo = (props: DonationItemProps) => {
       </td>
       <td>
         <span className="text-base">{maskAddress(data.endowment_address)}</span>
+      </td>
+      <td>
+        <a
+          href={getTxUrl(data.chain_id!, data.sort_key)}
+          target="_blank"
+          rel="noreferrer noopener"
+          className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+        >
+          <span className="inline-block text-base w-36 truncate">
+            {data.sort_key}
+          </span>
+        </a>
       </td>
       <td>
         <button
