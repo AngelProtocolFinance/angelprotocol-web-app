@@ -40,25 +40,26 @@ export default function Proposals() {
           ))}
         </div>
       )) || (
-        <p className="font-mono text-white place-self-center">
+        <p className="font-mono text-white place-self-start">
           {isFilteredProposalsLoading
             ? "loading proposals.."
             : "no proposals found"}
         </p>
       )}
-      {filteredProposals.length >= NUM_PROPOSALS_PER_PAGE && (
-        <button
-          disabled={isFilteredProposalsLoading}
-          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
-          onClick={loadMoreProposals}
-        >
-          {isFilteredProposalsLoading ? (
-            <Icon type="Loading" className="animate-spin" size={18} />
-          ) : (
-            "more"
-          )}
-        </button>
-      )}
+      {filteredProposals.length >= NUM_PROPOSALS_PER_PAGE &&
+        proposalStatus === "all" && (
+          <button
+            disabled={isFilteredProposalsLoading}
+            className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+            onClick={loadMoreProposals}
+          >
+            {isFilteredProposalsLoading ? (
+              <Icon type="Loading" className="animate-spin" size={18} />
+            ) : (
+              "more"
+            )}
+          </button>
+        )}
     </div>
   );
 }
