@@ -12,7 +12,6 @@ import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ConnectionProxy, WalletProxy } from "../types";
-import createDefaultWallet from "./createDefaultWallet";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
@@ -23,14 +22,17 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
+const lcdClient = new LCDClient({
+  URL: terra_lcds[chainIDs[NETWORK]],
+  chainID: chainIDs[NETWORK],
+});
+
 const TORUS_CONNECTION: ConnectionProxy = {
   identifier: "torus",
   name: "Torus",
   type: "TORUS",
   icon: torusIcon,
 };
-
-const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
 
 type Result = {
   wallet: WalletProxy | undefined;
@@ -93,7 +95,7 @@ export default function useTorusWallet(): Result {
 
     try {
       await openLogin.logout();
-      setWalletProxy(DEFAULT_WALLET);
+      setWalletProxy(undefined);
     } catch (err) {
       console.log(err);
     } finally {
@@ -110,11 +112,6 @@ export default function useTorusWallet(): Result {
   );
 }
 
-const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
-});
-
 const createWalletProxy = (privateKey: string) => {
   const mnemonic = entropyToMnemonic(privateKey);
   const mnemonicKey = new MnemonicKey({ mnemonic });
@@ -130,7 +127,6 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
     )?.[0] || "";
 
   return {
-    ...DEFAULT_WALLET,
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
     network: {
@@ -150,6 +146,12 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
         },
         success: true,
       };
+    },
+    connect: () => {
+      throw Error("Not initialized");
+    },
+    disconnect: () => {
+      throw Error("Not initialized");
     },
   };
 }
