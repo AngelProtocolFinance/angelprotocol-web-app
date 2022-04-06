@@ -14,7 +14,6 @@ export default function Proposals() {
 
   const [proposalStatus, setProposalStatus] =
     useState<ProposalStatusOptions>("all");
-  //TODO:add proposal type
 
   const [proposalGroup, setProposalGroup] =
     useState<ProposalGroupOptions>("all");
@@ -31,8 +30,17 @@ export default function Proposals() {
   }
 
   function loadMoreProposals() {
+    //no way to know when to stop
+    //based on id: existing doesn't start in 1
+    //based on max length, would need to query all to know how large the set is
     setPageNum((prev) => prev + 1);
   }
+
+  const isLoadMoreShown =
+    //don't show load more if num proposals doesn't even reach min
+    filteredProposals.length >= NUM_PROPOSALS_PER_PAGE &&
+    proposalStatus === "all" &&
+    proposalGroup === "all";
 
   return (
     <div className="p-3 grid content-start bg-white/10 shadow-inner rounded-md">
@@ -56,20 +64,19 @@ export default function Proposals() {
             : "no proposals found"}
         </p>
       )}
-      {filteredProposals.length >= NUM_PROPOSALS_PER_PAGE &&
-        proposalStatus === "all" && (
-          <button
-            disabled={isFilteredProposalsLoading}
-            className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
-            onClick={loadMoreProposals}
-          >
-            {isFilteredProposalsLoading ? (
-              <Icon type="Loading" className="animate-spin" size={18} />
-            ) : (
-              "more"
-            )}
-          </button>
-        )}
+      {isLoadMoreShown && (
+        <button
+          disabled={isFilteredProposalsLoading}
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          onClick={loadMoreProposals}
+        >
+          {isFilteredProposalsLoading ? (
+            <Icon type="Loading" className="animate-spin" size={18} />
+          ) : (
+            "more"
+          )}
+        </button>
+      )}
     </div>
   );
 }
