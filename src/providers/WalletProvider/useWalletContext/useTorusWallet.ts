@@ -23,6 +23,11 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
+const lcdClient = new LCDClient({
+  URL: terra_lcds[chainIDs[NETWORK]],
+  chainID: chainIDs[NETWORK],
+});
+
 const TORUS_CONNECTION: ConnectionProxy = {
   identifier: "torus",
   name: "Torus",
@@ -30,16 +35,15 @@ const TORUS_CONNECTION: ConnectionProxy = {
   icon: torusIcon,
 };
 
-const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
-
 type Result = {
-  wallet: WalletProxy;
+  availableWallets: WalletProxy[];
+  wallet: WalletProxy | undefined;
   status: WalletStatus;
 };
 
 export default function useTorusWallet(): Result {
   const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
-  const [walletProxy, setWalletProxy] = useState(DEFAULT_WALLET);
+  const [walletProxy, setWalletProxy] = useState<WalletProxy | undefined>();
 
   useEffect(() => {
     async function initializeOpenlogin() {
@@ -93,7 +97,7 @@ export default function useTorusWallet(): Result {
 
     try {
       await openLogin.logout();
-      setWalletProxy(DEFAULT_WALLET);
+      setWalletProxy(undefined);
     } catch (err) {
       console.log(err);
     } finally {
@@ -101,23 +105,18 @@ export default function useTorusWallet(): Result {
     }
   }, []);
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    const wallet = walletProxy && { ...walletProxy, connect, disconnect };
+    const availableWallets = wallet
+      ? [wallet]
+      : [{ ...createDefaultWallet(TORUS_CONNECTION), connect, disconnect }];
+    return {
       status,
-      wallet: {
-        ...walletProxy,
-        connect,
-        disconnect,
-      },
-    }),
-    [walletProxy, connect, disconnect, status]
-  );
+      wallet,
+      availableWallets,
+    };
+  }, [walletProxy, connect, disconnect, status]);
 }
-
-const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
-});
 
 const createWalletProxy = (privateKey: string) => {
   const mnemonic = entropyToMnemonic(privateKey);
@@ -134,7 +133,6 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
     )?.[0] || "";
 
   return {
-    ...DEFAULT_WALLET,
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
     network: {
@@ -154,6 +152,12 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
         },
         success: true,
       };
+    },
+    connect: () => {
+      throw Error("Not initialized");
+    },
+    disconnect: () => {
+      throw Error("Not initialized");
     },
   };
 }
