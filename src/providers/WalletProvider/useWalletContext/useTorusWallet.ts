@@ -23,6 +23,11 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
+const lcdClient = new LCDClient({
+  URL: terra_lcds[chainIDs[NETWORK]],
+  chainID: chainIDs[NETWORK],
+});
+
 const TORUS_CONNECTION: ConnectionProxy = {
   identifier: "torus",
   name: "Torus",
@@ -30,32 +35,37 @@ const TORUS_CONNECTION: ConnectionProxy = {
   icon: torusIcon,
 };
 
-const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
-
 type Result = {
-  wallet: WalletProxy;
+  availableWallets: WalletProxy[];
+  wallet: WalletProxy | undefined;
   status: WalletStatus;
 };
 
 export default function useTorusWallet(): Result {
   const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
-  const [walletProxy, setWalletProxy] = useState(DEFAULT_WALLET);
+  const [walletProxy, setWalletProxy] = useState<WalletProxy | undefined>();
 
   useEffect(() => {
     async function initializeOpenlogin() {
       setStatus(WalletStatus.INITIALIZING);
 
-      await openLogin.init();
+      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
 
-      // when using 'redirect' uxMode, this field will contain the private key value after redirect
-      // NOTE: to successfully read this value, it is necessary to call this hook in the component
-      // that is Torus is set to redirect to, otherwise this value would be empty
-      if (openLogin.privKey) {
-        const newWalletProxy = createWalletProxy(openLogin.privKey);
-        setWalletProxy(newWalletProxy);
-        setStatus(WalletStatus.WALLET_CONNECTED);
-      } else {
-        setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+      try {
+        await openLogin.init();
+
+        // when using 'redirect' uxMode, this field will contain the private key value after redirect
+        // NOTE: to successfully read this value, it is necessary to call this hook in the component
+        // that is Torus is set to redirect to, otherwise this value would be empty
+        if (openLogin.privKey) {
+          const newWalletProxy = createWalletProxy(openLogin.privKey);
+          setWalletProxy(newWalletProxy);
+          finalStatus = WalletStatus.WALLET_CONNECTED;
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStatus(finalStatus);
       }
     }
 
@@ -65,42 +75,50 @@ export default function useTorusWallet(): Result {
   const connect = useCallback(async (loginProvider: string) => {
     setStatus(WalletStatus.INITIALIZING);
 
-    const loginResult = !!loginProvider
-      ? await openLogin.login({ loginProvider })
-      : await openLogin.login();
+    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
 
-    if (loginResult?.privKey) {
-      const newWalletProxy = createWalletProxy(loginResult.privKey);
-      setWalletProxy(newWalletProxy);
-      setStatus(WalletStatus.WALLET_CONNECTED);
-    } else {
-      setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    try {
+      const loginResult = !!loginProvider
+        ? await openLogin.login({ loginProvider })
+        : await openLogin.login();
+
+      if (loginResult?.privKey) {
+        const newWalletProxy = createWalletProxy(loginResult.privKey);
+        setWalletProxy(newWalletProxy);
+        finalStatus = WalletStatus.WALLET_CONNECTED;
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setStatus(finalStatus);
     }
   }, []);
 
   const disconnect = useCallback(async () => {
-    await openLogin.logout();
-    setWalletProxy(DEFAULT_WALLET);
-    setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    setStatus(WalletStatus.INITIALIZING);
+
+    try {
+      await openLogin.logout();
+      setWalletProxy(undefined);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setStatus(WalletStatus.WALLET_NOT_CONNECTED);
+    }
   }, []);
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    const wallet = walletProxy && { ...walletProxy, connect, disconnect };
+    const availableWallets = wallet
+      ? [wallet]
+      : [{ ...createDefaultWallet(TORUS_CONNECTION), connect, disconnect }];
+    return {
       status,
-      wallet: {
-        ...walletProxy,
-        connect,
-        disconnect,
-      },
-    }),
-    [walletProxy, connect, disconnect, status]
-  );
+      wallet,
+      availableWallets,
+    };
+  }, [walletProxy, connect, disconnect, status]);
 }
-
-const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
-});
 
 const createWalletProxy = (privateKey: string) => {
   const mnemonic = entropyToMnemonic(privateKey);
@@ -117,7 +135,6 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
     )?.[0] || "";
 
   return {
-    ...DEFAULT_WALLET,
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
     network: {
@@ -137,6 +154,12 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
         },
         success: true,
       };
+    },
+    connect: () => {
+      throw Error("Not initialized");
+    },
+    disconnect: () => {
+      throw Error("Not initialized");
     },
   };
 }

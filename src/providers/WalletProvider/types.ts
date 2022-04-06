@@ -6,8 +6,6 @@ import {
   ConnectType,
   TxResult,
 } from "@terra-money/wallet-provider";
-import { chainIDs } from "constants/chainIDs";
-import { terra_lcds } from "constants/urls";
 
 // Enum extending @terra-money/wallet-types/types > ConnectType with Torus type
 const ProxyConnectTypes = { ...ConnectType, TORUS: "TORUS" };
@@ -34,10 +32,4 @@ export type WalletProxy = {
   post: (txOptions: CreateTxOptions) => Promise<TxResult>;
   connect: (...args: any[]) => Promise<void>;
   disconnect: () => Promise<void>;
-};
-
-export const localterra: NetworkInfo = {
-  name: "localterra",
-  chainID: chainIDs.localterra,
-  lcd: terra_lcds[chainIDs.localterra],
 };

@@ -46,7 +46,7 @@ export const eth_rpcs: URL_GROUP = {
     "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
 };
 
-export const TERRA_FINDER = "https://finder.extraterrestrial.money/";
+export const TERRA_FINDER = "https://terrascope.info/";
 
 type URL_GROUP = {
   [index: string]: string;
