@@ -5,6 +5,7 @@ import {
   useFilteredProposals,
 } from "services/terra/admin/queriers";
 import { ProposalStatus } from "services/terra/admin/types";
+import { ProposalGroup } from "../types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";
 
@@ -15,11 +16,18 @@ export default function Proposals() {
     useState<ProposalStatusOptions>("all");
   //TODO:add proposal type
 
+  const [proposalGroup, setProposalGroup] =
+    useState<ProposalGroupOptions>("all");
+
   const { filteredProposals, isFilteredProposalsLoading } =
-    useFilteredProposals(proposalStatus, pageNum);
+    useFilteredProposals(proposalGroup, proposalStatus, pageNum);
 
   function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
     setProposalStatus(ev.target.value as ProposalStatusOptions);
+  }
+
+  function handleGroupChange(ev: React.ChangeEvent<HTMLSelectElement>) {
+    setProposalGroup(ev.target.value as ProposalGroupOptions);
   }
 
   function loadMoreProposals() {
@@ -28,8 +36,10 @@ export default function Proposals() {
 
   return (
     <div className="p-3 grid content-start bg-white/10 shadow-inner rounded-md">
-      <getContext.Provider value={{ activeStatus: proposalStatus }}>
-        <setContext.Provider value={{ handleStatusChange }}>
+      <getContext.Provider
+        value={{ activeStatus: proposalStatus, activeGroup: proposalGroup }}
+      >
+        <setContext.Provider value={{ handleStatusChange, handleGroupChange }}>
           <Toolbar classes="mb-3" />
         </setContext.Provider>
       </getContext.Provider>
@@ -64,21 +74,25 @@ export default function Proposals() {
   );
 }
 
+export type ProposalGroupOptions = ProposalGroup | "all";
 export type ProposalStatusOptions = ProposalStatus | "all";
 interface State {
   activeStatus: ProposalStatusOptions;
+  activeGroup: ProposalGroupOptions;
 }
 interface Setters {
   handleStatusChange: (ev: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleGroupChange: (ev: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const initialState: State = {
   activeStatus: "all",
+  activeGroup: "all",
 };
 const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   handleStatusChange: () => {},
-  // setProposalType: () => void,
+  handleGroupChange: () => {},
 });
 //only use this hook inside PhantomProvider
 export const useGetProposalsState = () => useContext(getContext);

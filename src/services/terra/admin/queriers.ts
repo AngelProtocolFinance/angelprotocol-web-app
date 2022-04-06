@@ -1,9 +1,14 @@
 import { chainIDs } from "constants/chainIDs";
 import { CWContracts, PageOptions } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
-import { ProposalStatusOptions } from "pages/Admin/Proposals/Proposals";
+import {
+  ProposalGroupOptions,
+  ProposalStatusOptions,
+} from "pages/Admin/Proposals/Proposals";
+import { ProposalMeta } from "pages/Admin/types";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
+import { Proposal } from "./types";
 import useAdminContract from "./useAdminContract";
 
 export function useMembers() {
@@ -38,23 +43,40 @@ export function useMember(customCWs?: CWContracts, skip = false) {
 
 export const NUM_PROPOSALS_PER_PAGE = 5;
 export function useFilteredProposals(
+  group: ProposalGroupOptions,
   status: ProposalStatusOptions,
   pageNum: number
 ) {
   const { useProposalsQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
   const { filteredProposals, isLoading, isError } = useProposalsQuery(
-    contract.proposals(genPageOptions(pageNum, status)),
+    contract.proposals(genPageOptions(pageNum, status, group)),
     {
       skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
-      selectFromResult: ({ data = [], isLoading, isFetching, isError }) => ({
-        filteredProposals:
-          status === "all"
-            ? data
-            : data.filter((proposal) => proposal.status === status),
-        isLoading: isLoading || isFetching,
-        isError,
-      }),
+      selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {
+        function proposalFilter(proposal: Proposal): boolean {
+          const proposalMeta = JSON.parse(
+            proposal.meta || "{}"
+          ) as ProposalMeta;
+
+          const isBelongToGroup =
+            group === "all" || new RegExp(group).test(proposalMeta.type);
+
+          const isCorrectStatus =
+            status === "all" || proposal.status === status;
+
+          return isBelongToGroup && isCorrectStatus;
+        }
+
+        return {
+          filteredProposals:
+            status === "all" && group === "all"
+              ? data
+              : data.filter(proposalFilter),
+          isLoading: isLoading || isFetching,
+          isError,
+        };
+      },
     }
   );
   return {
@@ -66,9 +88,10 @@ export function useFilteredProposals(
 
 function genPageOptions(
   pageNum: number,
-  status: ProposalStatusOptions
+  status: ProposalStatusOptions,
+  group: ProposalGroupOptions
 ): PageOptions {
-  if (status === "all") {
+  if (status === "all" && group === "all") {
     return {
       //e.g 10 first, then 20
       limit: NUM_PROPOSALS_PER_PAGE * pageNum,
