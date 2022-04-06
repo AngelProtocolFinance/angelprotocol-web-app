@@ -114,12 +114,15 @@ export default function useTorusWallet(): Result {
   }, [connect, disconnect]);
 
   return useMemo(() => {
-    const wallet = walletProxy && { ...walletProxy, connect, disconnect };
-    const availableWallets = getAvailableWallets(wallet, connect, disconnect);
+    const availableWallets = getAvailableWallets(
+      walletProxy,
+      connect,
+      disconnect
+    );
     return {
       status,
-      wallet,
       availableWallets,
+      wallet: walletProxy,
     };
   }, [walletProxy, connect, disconnect, status]);
 }
