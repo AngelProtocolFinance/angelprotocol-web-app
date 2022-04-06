@@ -13,6 +13,9 @@ import { TerraIdentifiers } from "services/wallet/types";
 import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
 
+type Connect = (type?: ConnectType, identifier?: string) => void;
+type Disconnect = () => void;
+
 type Result = {
   wallet?: WalletProxy;
   status: WalletStatus;
@@ -68,8 +71,8 @@ export default function useTerraJsWallet(): Result {
 
 function createWallet(
   wallet: ConnectedWallet | undefined,
-  connect: (type?: ConnectType, identifier?: string) => void,
-  disconnect: () => void
+  connect: Connect,
+  disconnect: Disconnect
 ): WalletProxy | undefined {
   return wallet
     ? {
@@ -90,11 +93,8 @@ function createWallet(
 
 function getAvailableWallets(
   availableConnections: Connection[],
-  connect: (
-    type?: ConnectType | undefined,
-    identifier?: string | undefined
-  ) => void,
-  disconnect: () => void
+  connect: Connect,
+  disconnect: Disconnect
 ): WalletProxy[] {
   return availableConnections.map((connection) => ({
     address: "",
