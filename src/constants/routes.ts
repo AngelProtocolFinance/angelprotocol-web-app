@@ -52,7 +52,7 @@ export enum admin {
   proposal_types = "proposal-types",
 }
 
-export enum proposalTypes {
+export const enum proposalTypes {
   index = "",
   //index fund
   indexFund_allianceEdits = "indexfund-alliance-edit",

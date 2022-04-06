@@ -16,7 +16,6 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
   } else if (error instanceof Disconnected) {
     handler({ step: Step.error, message: "Wallet is not connected" });
   } else if (error instanceof CreateTxFailed) {
-    console.log(error);
     handler({ step: Step.error, message: "Failed to create transaction" });
   } else if (error instanceof TxFailed) {
     handler({ step: Step.error, message: "Transaction failed" });

@@ -25,6 +25,5 @@ const setContext = createContext<Setters>({
   disconnect: async () => {},
 });
 
-//only use this hook inside PhantomProvider
 export const useSetMetamask = () => useContext(setContext);
 export const useGetMetamask = () => useContext(getContext);

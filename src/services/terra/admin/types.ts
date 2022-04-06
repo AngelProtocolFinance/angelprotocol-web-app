@@ -23,6 +23,7 @@ export type ProposalStatus =
   | "rejected"
   | "passed"
   | "executed";
+
 export type Proposal = {
   id: number; //1
   title: string; //"this prpposal rocks"
