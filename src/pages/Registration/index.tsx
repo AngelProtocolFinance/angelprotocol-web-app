@@ -1,6 +1,8 @@
+import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
-import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { lazy, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { useGetter } from "store/accessors";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -20,15 +22,47 @@ export default function Register() {
       <Routes>
         <Route
           path={routes.additionalInformation}
-          element={<AdditionalInformation />}
+          element={
+            <StepOneGuard>
+              <AdditionalInformation />
+            </StepOneGuard>
+          }
         />
         <Route path={routes.confirm} element={<ConfirmEmail />} />
         <Route path={routes.contactDetails} element={<ContactDetails />} />
-        <Route path={routes.verify} element={<VerifiedEmail />} />
-        <Route path={routes.dashboard} element={<Dashboard />} />
-        <Route path={routes.documentation} element={<Documentation />} />
-        <Route path={`${routes.wallet}/*`} element={<WalletRegistration />} />
+        <Route
+          path={routes.dashboard}
+          element={
+            <StepOneGuard>
+              <Dashboard />
+            </StepOneGuard>
+          }
+        />
+        <Route
+          path={routes.documentation}
+          element={
+            <StepOneGuard>
+              <Documentation />
+            </StepOneGuard>
+          }
+        />
         <Route path={routes.index} element={<Registration />} />
+        <Route
+          path={routes.verify}
+          element={
+            <StepOneGuard>
+              <VerifiedEmail />
+            </StepOneGuard>
+          }
+        />
+        <Route
+          path={`${routes.wallet}/*`}
+          element={
+            <StepOneGuard>
+              <WalletRegistration />
+            </StepOneGuard>
+          }
+        />
       </Routes>
     </Container>
   );
@@ -39,3 +73,20 @@ const Container = (props: any) => (
     {props.children}
   </section>
 );
+
+/**
+ * Checks if the user's email is verified and only if it is allows them to access the component passed
+ * in "props.children", otherwise navigates to /app/register page.
+ */
+function StepOneGuard(props: any) {
+  const user = useGetter((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user.EmailVerified) {
+      navigate(`${site.app}/${app.register}`);
+    }
+  }, [navigate, user.EmailVerified]);
+
+  return <>{props.children}</>;
+}
