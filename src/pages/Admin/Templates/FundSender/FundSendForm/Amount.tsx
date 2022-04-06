@@ -4,6 +4,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import Currency from "./Currency";
 import { FundSendValues } from "../fundSendSchema";
 import Label from "pages/Admin/components/Label";
+import Balance from "./Balance";
 
 export default function Amount() {
   const {
@@ -16,9 +17,9 @@ export default function Amount() {
 
   return (
     <div className="grid mb-4">
-      <div className="flex items-baseline">
+      <div className="flex items-baseline justify-between">
         <Label _required> Transfer amount</Label>
-        <p className="">balance</p>
+        <Balance />
       </div>
       <input
         {...register("amount")}
@@ -33,7 +34,6 @@ export default function Amount() {
           <Currency currency={denoms.uusd} />
           <Currency currency={denoms.uhalo} />
         </div>
-        ``
         <ErrorMessage
           errors={errors}
           name="amount"

@@ -4,6 +4,7 @@ import { proposalTypes } from "constants/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 import CW3Configurer from "pages/Admin/Templates/CW3Configurer/CW3Configurer";
+import FundSender from "pages/Admin/Templates/FundSender/FundSender";
 
 export default function Proposer() {
   return (
@@ -14,6 +15,10 @@ export default function Proposer() {
         <Route
           path={proposalTypes.adminGroup_updateCW3Config}
           element={<CW3Configurer />}
+        />
+        <Route
+          path={proposalTypes.adminGroup_fundTransfer}
+          element={<FundSender />}
         />
       </Routes>
     </div>
@@ -31,12 +36,11 @@ function ProposalTypes() {
       <NavLink end to={proposalTypes.index} className={styler}>
         Update group Members
       </NavLink>
-      <NavLink
-        end
-        to={proposalTypes.adminGroup_updateCW3Config}
-        className={styler}
-      >
+      <NavLink to={proposalTypes.adminGroup_updateCW3Config} className={styler}>
         Update voting params
+      </NavLink>
+      <NavLink to={proposalTypes.adminGroup_fundTransfer} className={styler}>
+        Fund transfer
       </NavLink>
     </div>
   );

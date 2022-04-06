@@ -1,4 +1,4 @@
-import { EmbeddedWasmMsg } from "contracts/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 
 export type Member = {
   addr: string;
@@ -28,7 +28,7 @@ export type Proposal = {
   title: string; //"this prpposal rocks"
   description: string; //"this is a description"
   meta?: string; //JSON string that contains preview metadata
-  msgs: EmbeddedWasmMsg[];
+  msgs: (EmbeddedWasmMsg | EmbeddedBankMsg)[];
   status: ProposalStatus;
   expires: { at_height: number };
   threshold: {

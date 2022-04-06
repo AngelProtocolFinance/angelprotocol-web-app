@@ -7,6 +7,7 @@ import {
   EndowmentStatusStrNum,
 } from "services/terra/registrar/types";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
+import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 
 export type ProposalMeta =
   | {
@@ -39,6 +40,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.adminGroup_updateCW3Config;
       data: CW3ConfigUpdateMeta;
+    }
+  | {
+      type: proposalTypes.adminGroup_fundTransfer;
+      data: Pick<FundSendPayload, "amount" | "currency" | "recipient">;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };

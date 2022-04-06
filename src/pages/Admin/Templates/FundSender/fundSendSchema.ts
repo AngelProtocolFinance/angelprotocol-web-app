@@ -6,7 +6,7 @@ import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundSendPayload = {
   amount: number;
-  receipient: string;
+  recipient: string;
 
   //metadata
   currency: denoms.uusd | denoms.uhalo;
@@ -18,7 +18,7 @@ export type FundSendValues = ProposalBase & FundSendPayload;
 const fundSendShape: PartialRecord<keyof FundSendValues, Yup.AnySchema> = {
   ...proposalShape,
   amount: tokenAmountSchema,
-  receipient: addressSchema("receipient"),
+  recipient: addressSchema("recipient"),
 };
 
 export const fundSendSchema = Yup.object(fundSendShape);

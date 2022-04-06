@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useFormContext } from "react-hook-form";
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";

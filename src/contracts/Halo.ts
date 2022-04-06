@@ -50,6 +50,16 @@ export default class Halo extends Contract {
     return this.query<GovState>(this.gov_address, this.gov_state.msg);
   }
 
+  createEmbeddedHaloTransferMsg(amount: number, recipient: string) {
+    return this.createdEmbeddedWasmMsg([], this.token_address, {
+      transfer: {
+        //convert to uamount
+        amount: new Dec(amount).mul(1e6).toInt().toString(),
+        recipient,
+      },
+    });
+  }
+
   //halo_token
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
     this.checkWallet();
