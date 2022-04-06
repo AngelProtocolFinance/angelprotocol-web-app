@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta, proposalTypes } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
@@ -12,6 +12,7 @@ import { useSetter } from "store/accessors";
 import { FundDestroyValues } from "./fundDestroyerSchema";
 import genProposalsLink from "../genProposalsLink";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 
 export default function useDestroyFund() {
   const {

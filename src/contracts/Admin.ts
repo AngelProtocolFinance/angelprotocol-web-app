@@ -3,7 +3,7 @@ import { contracts } from "constants/contracts";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
-import { EmbeddedWasmMsg, Vote } from "./types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "./types";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 
@@ -116,7 +116,7 @@ export default class Admin extends Contract {
   createProposalMsg(
     title: string,
     description: string,
-    embeddedMsgs: EmbeddedWasmMsg[],
+    embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
     meta?: string,
     latest?: any
   ) {

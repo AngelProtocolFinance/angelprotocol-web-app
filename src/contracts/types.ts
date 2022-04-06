@@ -1,4 +1,4 @@
-import { Coins } from "@terra-money/terra.js";
+import { Coin } from "@terra-money/terra.js";
 import { EndowmentStatus } from "services/terra/registrar/types";
 
 //Contract types
@@ -10,8 +10,17 @@ export type EmbeddedWasmMsg = {
   wasm: {
     execute: {
       contract_addr: string;
-      funds: Coins.Data;
+      funds: Coin.Data[];
       msg: string; //base64 endocoded msg object
+    };
+  };
+};
+
+export type EmbeddedBankMsg = {
+  bank: {
+    send: {
+      amount: Coin.Data[];
+      to_address: string;
     };
   };
 };

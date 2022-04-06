@@ -3,6 +3,7 @@ import TableSection, { Cells } from "components/TableSection/TableSection";
 import { Transaction } from "services/aws/endowment_admin/types";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
+import getTxUrl from "helpers/getTxUrl";
 
 export default function TransactionsTable(props: {
   transactions: Transaction[];
@@ -25,6 +26,7 @@ export default function TransactionsTable(props: {
           <>Amount</>
           <>Date</>
           <>Wallet</>
+          <>Transaction Hash</>
         </Cells>
       </TableSection>
       <TableSection
@@ -43,6 +45,16 @@ export default function TransactionsTable(props: {
               {tx.transaction_date.substring(0, 10)}
             </span>
             <span className="font-mono">{maskAddress(tx.wallet_address)}</span>
+            <a
+              href={getTxUrl(tx.chain_id!, tx.sort_key)}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+            >
+              <span className="inline-block text-base w-36 truncate">
+                {tx.sort_key}
+              </span>
+            </a>
           </Cells>
         ))}
       </TableSection>

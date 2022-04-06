@@ -12,7 +12,11 @@ export default function useWalletContext(): IWalletContext {
     status: statusTerraJs,
     wallet: walletTerraJs,
   } = useTerraJsWallet();
-  const { status: statusTorus, wallet: walletTorus } = useTorusWallet();
+  const {
+    availableWallets: availableTorusWallets,
+    status: statusTorus,
+    wallet: walletTorus,
+  } = useTorusWallet();
 
   useEffect(() => {
     // These if-checks are safe for setting connected wallets, because
@@ -30,16 +34,16 @@ export default function useWalletContext(): IWalletContext {
     () => ({
       wallet,
       availableInstallations,
-      availableWallets: availableWallets.concat(walletTorus),
+      availableWallets: availableWallets.concat(availableTorusWallets),
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [
-      availableWallets,
-      availableInstallations,
-      statusTerraJs,
-      statusTorus,
       wallet,
-      walletTorus,
+      statusTorus,
+      statusTerraJs,
+      availableWallets,
+      availableTorusWallets,
+      availableInstallations,
     ]
   );
 
