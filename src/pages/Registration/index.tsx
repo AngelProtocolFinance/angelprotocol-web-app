@@ -1,8 +1,8 @@
 import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
-import { lazy, useEffect } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { useGetter } from "store/accessors";
+import { lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
 
 const AdditionalInformation = lazy(() => import("./AdditionalInformation"));
@@ -86,37 +86,3 @@ const Container = (props: any) => (
     {props.children}
   </section>
 );
-
-/**
- * Checks if the user's email is verified and only if it is allows them to access the component passed
- * in "props.children", otherwise navigates to /app/register page.
- */
-function StepOneCompleteGuard(props: any) {
-  const user = useGetter((state) => state.user);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user.EmailVerified) {
-      navigate(`${site.app}/${app.register}`);
-    }
-  }, [navigate, user]);
-
-  return <>{props.children}</>;
-}
-
-/**
- * Checks if the user has submitted their contact details and only if they have does this guard allow them
- * to access the component passed in "props.children", otherwise navigates to /app/register page.
- */
-function StepOneInitiatedGuard(props: any) {
-  const user = useGetter((state) => state.user);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (user.EmailVerified || (!user.PK && !user.Website)) {
-      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
-    }
-  }, [navigate, user]);
-
-  return <>{props.children}</>;
-}
