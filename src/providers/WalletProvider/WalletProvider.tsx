@@ -3,11 +3,10 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { createContext, PropsWithChildren } from "react";
-import Loader from "../../components/Loader/Loader";
 import BinanceWallet from "../BinanceWallet/BinanceWallet";
 import Metamask from "../Metamask/Metamask";
+import { chainOptions } from "./chainOptions";
 import { IWalletContext } from "./types";
-import useChainOptions from "./useChainOptions";
 import useWalletContext from "./useWalletContext";
 
 export const WalletContext = createContext<IWalletContext>({
@@ -18,12 +17,6 @@ export const WalletContext = createContext<IWalletContext>({
 });
 
 export function WalletProvider(props: PropsWithChildren<{}>) {
-  const { chainOptions, isLoading } = useChainOptions();
-
-  if (isLoading) {
-    return <LoaderSection />;
-  }
-
   return (
     <TerraProvider {...chainOptions}>
       <Metamask>
@@ -42,13 +35,5 @@ function WalletProxyProvider(props: PropsWithChildren<{}>) {
     <WalletContext.Provider value={walletContext}>
       {props.children}
     </WalletContext.Provider>
-  );
-}
-
-function LoaderSection() {
-  return (
-    <div className="flex h-screen items-center justify-center">
-      <Loader bgColorClass="bg-white-grey" gapClass="gap-2" widthClass="w-4" />
-    </div>
   );
 }

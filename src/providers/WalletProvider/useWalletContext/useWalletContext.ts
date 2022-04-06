@@ -30,7 +30,9 @@ export default function useWalletContext(): IWalletContext {
     () => ({
       wallet,
       availableInstallations,
-      availableWallets: availableWallets.concat(walletTorus),
+      availableWallets: walletTorus
+        ? availableWallets.concat(walletTorus)
+        : availableWallets,
       status: wallet?.connection.type === "TORUS" ? statusTorus : statusTerraJs,
     }),
     [

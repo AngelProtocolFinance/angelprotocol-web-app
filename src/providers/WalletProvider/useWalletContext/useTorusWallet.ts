@@ -33,13 +33,13 @@ const TORUS_CONNECTION: ConnectionProxy = {
 const DEFAULT_WALLET = createDefaultWallet(TORUS_CONNECTION);
 
 type Result = {
-  wallet: WalletProxy;
+  wallet: WalletProxy | undefined;
   status: WalletStatus;
 };
 
 export default function useTorusWallet(): Result {
   const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
-  const [walletProxy, setWalletProxy] = useState(DEFAULT_WALLET);
+  const [walletProxy, setWalletProxy] = useState<WalletProxy | undefined>();
 
   useEffect(() => {
     async function initializeOpenlogin() {
@@ -104,11 +104,7 @@ export default function useTorusWallet(): Result {
   return useMemo(
     () => ({
       status,
-      wallet: {
-        ...walletProxy,
-        connect,
-        disconnect,
-      },
+      wallet: walletProxy && { ...walletProxy, connect, disconnect },
     }),
     [walletProxy, connect, disconnect, status]
   );

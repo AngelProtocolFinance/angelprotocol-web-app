@@ -43,10 +43,10 @@ export default function useProviderSwitcher() {
 
   const isLoading = isTerraLoading || isMetamaskLoading || isBinanceLoading;
 
-  // useEffect(() => {
-  //   dispatch(setIsSwitching(isLoading));
-  //   //eslint-disable-next-line
-  // }, [isLoading]);
+  useEffect(() => {
+    dispatch(setIsSwitching(isLoading));
+    //eslint-disable-next-line
+  }, [isLoading]);
 
   useEffect(() => {
     if (activeProvider) {
@@ -63,8 +63,7 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
-    const chainID = wallet?.network.chainID || chainIDs.localterra;
-
+    const chainID = wallet?.network.chainID || chainIDs.mainnet;
     dispatch(
       updateChainID({
         chain: chains.terra,
