@@ -25,7 +25,10 @@ export const useRegistration = () => {
   const onResume = async (values: ReferInfo) => {
     let response: any = await checkData(values.refer);
     if (response.error) {
-      showModal<PopupProps>(Popup, { message: response.error.data.message });
+      showModal<PopupProps>(Popup, {
+        message:
+          "No active charity application found with this registration reference",
+      });
       return console.log(response.error);
     }
 
