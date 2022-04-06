@@ -1,5 +1,5 @@
 import { chainIDs } from "constants/chainIDs";
-import { CWContracts } from "contracts/Admin";
+import { CWContracts, PageOptions } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
 import { ProposalStatusOptions } from "pages/Admin/Proposals/Proposals";
 import { admin_api } from "./admin";
@@ -36,11 +36,15 @@ export function useMember(customCWs?: CWContracts, skip = false) {
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
 
-export function useFilteredProposals(status: ProposalStatusOptions) {
+export const NUM_PROPOSALS_PER_PAGE = 5;
+export function useFilteredProposals(
+  status: ProposalStatusOptions,
+  pageNum: number
+) {
   const { useProposalsQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
   const { filteredProposals, isLoading, isError } = useProposalsQuery(
-    contract.proposals,
+    contract.proposals(genPageOptions(pageNum, status)),
     {
       skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
       selectFromResult: ({ data = [], isLoading, isFetching, isError }) => ({
@@ -58,6 +62,23 @@ export function useFilteredProposals(status: ProposalStatusOptions) {
     isFilteredProposalsLoading: isLoading,
     isFilteredProposalsFailed: isError,
   };
+}
+
+function genPageOptions(
+  pageNum: number,
+  status: ProposalStatusOptions
+): PageOptions {
+  if (status === "all") {
+    return {
+      //e.g 10 first, then 20
+      limit: NUM_PROPOSALS_PER_PAGE * pageNum,
+    };
+  } else {
+    //get all proposals when there's filter applied
+    //since web-app doesn't know what page a particular
+    //proposal falls into
+    return { limit: 10_000 };
+  }
 }
 
 export function useProposal(pollId?: string) {

@@ -1,23 +1,33 @@
+import Icon from "components/Icons/Icons";
 import { createContext, useContext, useState } from "react";
-import { useFilteredProposals } from "services/terra/admin/queriers";
+import {
+  NUM_PROPOSALS_PER_PAGE,
+  useFilteredProposals,
+} from "services/terra/admin/queriers";
 import { ProposalStatus } from "services/terra/admin/types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";
 
 export default function Proposals() {
+  const [pageNum, setPageNum] = useState(1);
+
   const [proposalStatus, setProposalStatus] =
     useState<ProposalStatusOptions>("all");
   //TODO:add proposal type
 
   const { filteredProposals, isFilteredProposalsLoading } =
-    useFilteredProposals(proposalStatus);
+    useFilteredProposals(proposalStatus, pageNum);
 
   function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
     setProposalStatus(ev.target.value as ProposalStatusOptions);
   }
 
+  function loadMoreProposals() {
+    setPageNum((prev) => prev + 1);
+  }
+
   return (
-    <div className="p-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
+    <div className="p-3 grid content-start bg-white/10 shadow-inner rounded-md">
       <getContext.Provider value={{ activeStatus: proposalStatus }}>
         <setContext.Provider value={{ handleStatusChange }}>
           <Toolbar classes="mb-3" />
@@ -35,6 +45,19 @@ export default function Proposals() {
             ? "loading proposals.."
             : "no proposals found"}
         </p>
+      )}
+      {filteredProposals.length >= NUM_PROPOSALS_PER_PAGE && (
+        <button
+          disabled={isFilteredProposalsLoading}
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          onClick={loadMoreProposals}
+        >
+          {isFilteredProposalsLoading ? (
+            <Icon type="Loading" className="animate-spin" size={18} />
+          ) : (
+            "more"
+          )}
+        </button>
       )}
     </div>
   );
