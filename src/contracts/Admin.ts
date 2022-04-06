@@ -52,7 +52,6 @@ export default class Admin extends Contract {
     this.proposals = (pageOptions) => ({
       address: this.cw3,
       msg: {
-        //only show first 50 proposals
         reverse_proposals: pageOptions,
       },
     });
