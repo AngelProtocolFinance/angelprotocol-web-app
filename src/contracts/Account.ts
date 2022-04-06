@@ -9,6 +9,7 @@ export default class Account extends Contract {
   address: string;
   balance: ContractQueryArgs;
   endowmentDetails: ContractQueryArgs;
+  profile: ContractQueryArgs;
 
   constructor(accountAddr: string, wallet?: WalletProxy) {
     super(wallet);
@@ -22,6 +23,11 @@ export default class Account extends Contract {
     this.endowmentDetails = {
       address: accountAddr,
       msg: { endowment: {} },
+    };
+
+    this.profile = {
+      address: accountAddr,
+      msg: { get_profile: {} },
     };
   }
 
