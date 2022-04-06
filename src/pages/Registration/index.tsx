@@ -1,7 +1,7 @@
 import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import routes from "./routes";
 
@@ -28,7 +28,14 @@ export default function Register() {
             </StepOneGuard>
           }
         />
-        <Route path={routes.confirm} element={<ConfirmEmail />} />
+        <Route
+          path={routes.confirm}
+          element={
+            <StepOneInitiatedGuard>
+              <ConfirmEmail />
+            </StepOneInitiatedGuard>
+          }
+        />
         <Route path={routes.contactDetails} element={<ContactDetails />} />
         <Route
           path={routes.dashboard}
@@ -50,9 +57,9 @@ export default function Register() {
         <Route
           path={routes.verify}
           element={
-            <StepOneGuard>
+            <StepOneInitiatedGuard>
               <VerifiedEmail />
-            </StepOneGuard>
+            </StepOneInitiatedGuard>
           }
         />
         <Route
@@ -61,6 +68,12 @@ export default function Register() {
             <StepOneGuard>
               <WalletRegistration />
             </StepOneGuard>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <Navigate to={`${site.app}/${app.register}/${routes.dashboard}`} />
           }
         />
       </Routes>
@@ -86,7 +99,24 @@ function StepOneGuard(props: any) {
     if (!user.EmailVerified) {
       navigate(`${site.app}/${app.register}`);
     }
-  }, [navigate, user.EmailVerified]);
+  }, [navigate, user]);
+
+  return <>{props.children}</>;
+}
+
+/**
+ * Checks if the user has submitted their contact details and only if they have does this guard allow them
+ * to access the component passed in "props.children", otherwise navigates to /app/register page.
+ */
+function StepOneInitiatedGuard(props: any) {
+  const user = useGetter((state) => state.user);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user.EmailVerified || (!user.PK && !user.Website)) {
+      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+    }
+  }, [navigate, user]);
 
   return <>{props.children}</>;
 }
