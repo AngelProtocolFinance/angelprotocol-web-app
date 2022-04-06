@@ -34,7 +34,6 @@ export default function VerificationSuccessful(props: Props) {
         <p>Your registration reference is</p>
         <p className="text-yellow-600">{userData.PK}</p>
       </div>
-      <p>We have sent it to your email address for your future reference.</p>
       <Button
         className="bg-thin-blue w-48 h-12"
         onClick={onClick}
