@@ -8,6 +8,7 @@ import { Source } from "./types";
 export default class Account extends Contract {
   address: string;
   balance: ContractQueryArgs;
+  profile: ContractQueryArgs;
 
   constructor(accountAddr: string, wallet?: WalletProxy) {
     super(wallet);
@@ -16,6 +17,10 @@ export default class Account extends Contract {
     this.balance = {
       address: accountAddr,
       msg: { balance: {} },
+    };
+    this.profile = {
+      address: accountAddr,
+      msg: { get_profile: {} },
     };
   }
 

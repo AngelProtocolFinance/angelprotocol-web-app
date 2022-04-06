@@ -27,4 +27,5 @@ export enum lbp {
 export enum endowment {
   holdings = "holdings",
   rate = "rate",
+  profile = "profile",
 }

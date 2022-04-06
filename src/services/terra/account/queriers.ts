@@ -22,3 +22,21 @@ export function useEndowmentHoldings(address: string, skip = false) {
     isHoldingsLoading: isLoading || isFetching,
   };
 }
+
+export function useEndowmentProfile(address: string, skip = false) {
+  const { wallet } = useWalletContext();
+  const { useEndowmentProfileQuery } = account_api;
+  const contract = new Account(address);
+  const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
+    contract.profile,
+    {
+      skip: skip || !wallet,
+    }
+  );
+  console.log("profile: ", isLoading, data);
+  return {
+    profile: data,
+    isProfileError: isError,
+    isProfileLoading: isLoading || isFetching,
+  };
+}

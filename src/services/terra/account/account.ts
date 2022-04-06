@@ -13,5 +13,12 @@ export const account_api = terra.injectEndpoints({
         return res.query_result;
       },
     }),
+    endowmentProfile: builder.query<any, ContractQueryArgs>({
+      providesTags: [{ type: tags.endowment, id: endowment.profile }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<any>) => {
+        return res.query_result;
+      },
+    }),
   }),
 });
