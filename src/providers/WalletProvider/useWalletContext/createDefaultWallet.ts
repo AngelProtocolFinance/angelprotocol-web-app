@@ -1,5 +1,6 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { ConnectionProxy, localterra, WalletProxy } from "../types";
+import { mainnet } from "../chainOptions";
+import { ConnectionProxy, WalletProxy } from "../types";
 
 export default function createDefaultWallet(
   connection: ConnectionProxy
@@ -7,7 +8,7 @@ export default function createDefaultWallet(
   return {
     address: "",
     connection,
-    network: localterra,
+    network: mainnet,
     post: (_: CreateTxOptions) => {
       throw Error("Not initialized");
     },

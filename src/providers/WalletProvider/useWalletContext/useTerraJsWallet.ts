@@ -1,4 +1,6 @@
 import {
+  ConnectedWallet,
+  ConnectType,
   Installation,
   useConnectedWallet,
   useWallet,
@@ -40,19 +42,7 @@ export default function useTerraJsWallet(): Result {
 
   const result: Result = useMemo(
     () => ({
-      wallet: wallet && {
-        address: wallet.walletAddress,
-        connection: wallet.connection,
-        network: wallet.network,
-        post: wallet.post,
-        connect: () =>
-          new Promise((resolve) =>
-            resolve(
-              connect(wallet.connection.type, wallet.connection.identifier)
-            )
-          ),
-        disconnect: () => new Promise((resolve) => resolve(disconnect())),
-      },
+      wallet: createWallet(wallet, connect, disconnect),
       status,
       availableWallets: availableConnections.map((conn) => ({
         ...createDefaultWallet(conn),
@@ -75,4 +65,26 @@ export default function useTerraJsWallet(): Result {
   );
 
   return result;
+}
+
+function createWallet(
+  wallet: ConnectedWallet | undefined,
+  connect: (type?: ConnectType, identifier?: string) => void,
+  disconnect: () => void
+): WalletProxy | undefined {
+  return wallet
+    ? {
+        address: wallet.walletAddress,
+        connection: wallet.connection,
+        network: wallet.network,
+        post: wallet.post,
+        connect: () =>
+          new Promise((resolve) =>
+            resolve(
+              connect(wallet.connection.type, wallet.connection.identifier)
+            )
+          ),
+        disconnect: () => new Promise((resolve) => resolve(disconnect())),
+      }
+    : undefined;
 }
