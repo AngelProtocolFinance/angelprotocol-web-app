@@ -12,6 +12,7 @@ import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { ConnectionProxy, WalletProxy } from "../types";
+import createDefaultWallet from "./createDefaultWallet";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
