@@ -8,6 +8,7 @@ import FundMemberUpdate from "./FundMemberUpdate";
 import FundConfigUpdate from "./FundConfigUpdate";
 import CW3ConfigUpdate from "./CW3ConfigUpdate";
 import { proposalTypes } from "constants/routes";
+import FundTransfer from "./FundTransfer";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -19,6 +20,8 @@ export default function Preview(props: ProposalMeta) {
       return <CWMemberUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateCW3Config:
       return <CW3ConfigUpdate {...props.data} />;
+    case proposalTypes.adminGroup_fundTransfer:
+      return <FundTransfer {...props.data} />;
     case proposalTypes.indexFund_createFund:
       return <Fund {...props.data} />;
     case proposalTypes.indexFund_removeFund:

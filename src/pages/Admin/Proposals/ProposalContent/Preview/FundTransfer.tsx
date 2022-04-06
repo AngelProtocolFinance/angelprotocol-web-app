@@ -1,16 +1,24 @@
+import { currency_text } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
-import { WithdrawMeta } from "pages/Admin/types";
+import { FundSendMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function FundTransfer(props: WithdrawMeta) {
+export default function FundTransfer(props: FundSendMeta) {
   return (
     <PreviewContainer>
-      <KeyValue _key="total amount" _classes="border-t border-white/10 mt-2">
-        <span>$ {toCurrency(props.totalAmount, 2)}</span>
+      <KeyValue _key="from">
+        <span className="uppercase text-xs font-heading">
+          admin group contract
+        </span>
       </KeyValue>
-      <KeyValue _key="beneficiary">
-        <span className="font-mono text-sm">{props.beneficiary}</span>
+      <KeyValue _key="total amount" _classes="border-t border-white/10 mt-2">
+        <span>
+          {toCurrency(props.amount, 3)} {currency_text[props.currency]}
+        </span>
+      </KeyValue>
+      <KeyValue _key="recipient">
+        <span className="font-mono text-sm">{props.recipient}</span>
       </KeyValue>
     </PreviewContainer>
   );

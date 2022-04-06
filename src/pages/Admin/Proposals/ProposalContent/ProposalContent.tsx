@@ -46,7 +46,7 @@ function RawBlock(props: EmbeddedWasmMsg | EmbeddedBankMsg) {
   const isWASM = "wasm" in props;
   const codeString = isWASM
     ? JSON.stringify(JSON.parse(atob(props.wasm.execute.msg)), null, 2)
-    : JSON.stringify(props);
+    : JSON.stringify(props, null, 2);
 
   return (
     <div className="bg-white/10 shadow-inner rounded-md p-2 my-2 text-sm">

@@ -43,7 +43,7 @@ export type ProposalMeta =
     }
   | {
       type: proposalTypes.adminGroup_fundTransfer;
-      data: Pick<FundSendPayload, "amount" | "currency" | "recipient">;
+      data: FundSendMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -86,3 +86,8 @@ export interface CW3ConfigUpdateMeta {
   prevConfig: CW3ConfigPayload;
   nextConfig: CW3ConfigPayload;
 }
+
+export type FundSendMeta = Pick<
+  FundSendPayload,
+  "amount" | "currency" | "recipient"
+>;
