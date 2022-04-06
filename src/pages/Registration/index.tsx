@@ -23,9 +23,9 @@ export default function Register() {
         <Route
           path={routes.additionalInformation}
           element={
-            <StepOneGuard>
+            <StepOneCompleteGuard>
               <AdditionalInformation />
-            </StepOneGuard>
+            </StepOneCompleteGuard>
           }
         />
         <Route
@@ -40,17 +40,17 @@ export default function Register() {
         <Route
           path={routes.dashboard}
           element={
-            <StepOneGuard>
+            <StepOneCompleteGuard>
               <Dashboard />
-            </StepOneGuard>
+            </StepOneCompleteGuard>
           }
         />
         <Route
           path={routes.documentation}
           element={
-            <StepOneGuard>
+            <StepOneCompleteGuard>
               <Documentation />
-            </StepOneGuard>
+            </StepOneCompleteGuard>
           }
         />
         <Route path={routes.index} element={<Registration />} />
@@ -65,9 +65,9 @@ export default function Register() {
         <Route
           path={`${routes.wallet}/*`}
           element={
-            <StepOneGuard>
+            <StepOneCompleteGuard>
               <WalletRegistration />
-            </StepOneGuard>
+            </StepOneCompleteGuard>
           }
         />
         <Route
@@ -91,7 +91,7 @@ const Container = (props: any) => (
  * Checks if the user's email is verified and only if it is allows them to access the component passed
  * in "props.children", otherwise navigates to /app/register page.
  */
-function StepOneGuard(props: any) {
+function StepOneCompleteGuard(props: any) {
   const user = useGetter((state) => state.user);
   const navigate = useNavigate();
 
