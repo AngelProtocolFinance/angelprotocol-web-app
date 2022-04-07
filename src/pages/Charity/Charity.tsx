@@ -8,12 +8,12 @@ import CharityStats from "./CharityStats";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityContent from "./CharityContent/CharityContent";
 import ContentLoader from "components/ContentLoader/ContentLoader";
-import { useEndowmentProfile } from "services/terra/account/queriers";
+// import { useEndowmentProfile } from "services/terra/account/queriers";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
   const { profile, isProfileLoading } = useProfile(endowment_addr!);
-  useEndowmentProfile(endowment_addr!);
+  // const { isProfileLoading, profile } = useEndowmentProfile(endowment_addr!);
 
   if (isProfileLoading) return <CharitySkeleton />;
   return (
