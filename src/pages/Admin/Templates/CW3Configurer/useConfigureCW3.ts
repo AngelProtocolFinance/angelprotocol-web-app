@@ -12,11 +12,12 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
-import { ProposalMeta } from "pages/Admin/types";
+import { CW3ConfigUpdateMeta, ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
-import { useCW3ConfigState } from "services/terra/admin/states";
 
+type Key = keyof CW3ConfigPayload;
+type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
   const { wallet } = useWalletContext();
   const {
@@ -28,35 +29,37 @@ export default function useConfigureCW3() {
 
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { cw3ConfigState, isError } = useCW3ConfigState();
 
   async function configureCW3({
     title,
     description,
-    ...nextConfig
+    initialCW3Config,
+    ...data
   }: CW3ConfigValues) {
-    const prevConfig: CW3ConfigPayload = {
-      //submit is disabled if cw3Config is undefined
-      threshold:
-        +cw3ConfigState!.threshold.absolute_percentage.percentage * 100,
-      height: cw3ConfigState!.max_voting_period.height,
-    };
-    const diff = getPayloadDiff(prevConfig, nextConfig);
-
-    if (Object.entries(diff).length <= 0) {
+    const diff = getPayloadDiff(initialCW3Config, data);
+    const diffEntries = Object.entries(diff) as [Key, Value][];
+    if (diffEntries.length <= 0) {
       showModal(Popup, { message: "no changes made" });
       return;
     }
 
+    const diffMeta: CW3ConfigUpdateMeta = diffEntries.reduce(
+      (result, [key, value]) => {
+        result.push([key, initialCW3Config[key], value]);
+        return result;
+      },
+      [] as CW3ConfigUpdateMeta
+    );
+
     const adminContract = new Admin(cwContracts, wallet);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
-      nextConfig.height,
-      (nextConfig.threshold / 100).toFixed(3)
+      data.height,
+      (data.threshold / 100).toFixed(3)
     );
 
     const configUpdateMeta: ProposalMeta = {
       type: proposalTypes.adminGroup_updateCW3Config,
-      data: { prevConfig, nextConfig },
+      data: diffMeta,
     };
 
     //proposal meta for preview
@@ -85,6 +88,6 @@ export default function useConfigureCW3() {
 
   return {
     configureCW3: handleSubmit(configureCW3),
-    isSubmitDisabled: isSubmitting || !isValid || !isDirty || isError,
+    isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }

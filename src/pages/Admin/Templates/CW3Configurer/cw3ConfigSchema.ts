@@ -10,7 +10,8 @@ export type CW3ConfigPayload = {
   //poll duration in block height
   height: number;
 };
-export type CW3ConfigValues = ProposalBase & CW3ConfigPayload;
+export type CW3ConfigValues = ProposalBase &
+  CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
 
 const cw3ConfigShape: PartialRecord<
   keyof CW3ConfigValues,

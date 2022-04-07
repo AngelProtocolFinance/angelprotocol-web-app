@@ -19,7 +19,7 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.adminGroup_updateMembers:
       return <CWMemberUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateCW3Config:
-      return <CW3ConfigUpdate {...props.data} />;
+      return <CW3ConfigUpdate diffSet={props.data} />;
     case proposalTypes.adminGroup_fundTransfer:
       return <FundTransfer {...props.data} />;
     case proposalTypes.indexFund_createFund:
