@@ -27,6 +27,7 @@ export default function WalletSubmission(props: Props) {
         once we receive it (the real text)*/}
         ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
       </p>
+      {/** only Terra wallet status can be passed (using useWalletProxy), other wallets handled separately */}
       {status !== WalletStatus.WALLET_CONNECTED ? (
         <UnsupportedWalletConnected />
       ) : (
