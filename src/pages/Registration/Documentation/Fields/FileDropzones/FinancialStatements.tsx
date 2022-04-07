@@ -21,7 +21,7 @@ export default function FinancialStatements() {
       />
       {!!errors.financialStatements?.length &&
         errors.financialStatements
-          .map((fieldError) => fieldError.message)
+          .map((fileWrapper) => fileWrapper.file!.message)
           .filter(checkUnique)
           .map((message) => (
             <p

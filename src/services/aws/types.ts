@@ -21,7 +21,7 @@ export type ContactDetailsData = {
 
 export type FileObject = {
   name: string;
-  dataUrl: string;
+  dataUrl?: string;
   sourceUrl?: string;
 };
 

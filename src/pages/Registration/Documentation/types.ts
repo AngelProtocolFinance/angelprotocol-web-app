@@ -1,12 +1,13 @@
+import { FileWrapper } from "components/FileDropzone/types";
 import * as Yup from "yup";
 
 export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
-  proofOfIdentity: File[];
-  proofOfRegistration: File[];
-  financialStatements: File[];
-  auditedFinancialReports: File[];
+  proofOfIdentity: FileWrapper[];
+  proofOfRegistration: FileWrapper[];
+  financialStatements: FileWrapper[];
+  auditedFinancialReports: FileWrapper[];
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
@@ -20,17 +21,18 @@ const VALID_MIME_TYPES = [
   "image/webp",
 ];
 
-const FILE_ARRAY_SCHEMA = Yup.array<File>().of(
-  Yup.mixed<File>()
+const FILE_ARRAY_SCHEMA = Yup.array<FileWrapper>().of(
+  Yup.mixed<FileWrapper>()
     .test({
       name: "fileSize",
       message: "File size must be smaller than 25Mb",
-      test: (file) => (file?.size || 0) <= 25000000,
+      test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25000000,
     })
     .test({
       name: "fileType",
       message: "Valid file types are PDF, JPG and PNG",
-      test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
+      test: (fileWrapper) =>
+        VALID_MIME_TYPES.includes(fileWrapper?.file?.type || "none"),
     })
 );
 

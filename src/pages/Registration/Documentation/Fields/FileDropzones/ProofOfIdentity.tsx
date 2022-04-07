@@ -13,7 +13,7 @@ export default function ProofOfIdentity() {
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
   // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
   const errorMessage = !!errors?.proofOfIdentity?.length
-    ? errors.proofOfIdentity[0].message
+    ? errors.proofOfIdentity[0].file!.message
     : (errors?.proofOfIdentity as any)?.message;
 
   return (

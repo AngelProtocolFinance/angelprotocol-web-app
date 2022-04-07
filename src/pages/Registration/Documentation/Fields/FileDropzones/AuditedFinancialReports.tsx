@@ -21,7 +21,7 @@ export default function AuditedFinancialReport() {
       />
       {!!errors.auditedFinancialReports?.length &&
         errors.auditedFinancialReports
-          .map((fieldError) => fieldError.message)
+          .map((fileWrapper) => fileWrapper.file!.message)
           .filter(checkUnique)
           .map((message) => (
             <p

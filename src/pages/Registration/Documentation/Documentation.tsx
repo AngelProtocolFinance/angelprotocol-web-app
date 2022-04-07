@@ -29,10 +29,10 @@ export default function Documentation() {
     defaultValues: {
       un_sdg: user.UN_SDG,
       website: user.Website,
-      proofOfIdentity: [],
-      proofOfRegistration: [],
-      financialStatements: [],
-      auditedFinancialReports: [],
+      proofOfIdentity: [...user.ProofOfIdentity],
+      proofOfRegistration: [...user.ProofOfRegistration],
+      financialStatements: [...user.FinancialStatements],
+      auditedFinancialReports: [...user.AuditedFinancialReports],
     },
   });
   const currentLevel = useCurrentLevel(methods);

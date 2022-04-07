@@ -11,7 +11,7 @@ export default function ProofOfRegistration() {
   // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
   // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
   const errorMessage = !!errors?.proofOfRegistration?.length
-    ? errors.proofOfRegistration[0].message
+    ? errors.proofOfRegistration[0].file!.message
     : (errors?.proofOfRegistration as any)?.message;
 
   return (

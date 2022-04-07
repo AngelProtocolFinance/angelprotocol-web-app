@@ -1,7 +1,7 @@
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import { FieldValues } from "react-hook-form";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { BaseProps } from "./types";
+import { BaseProps, FileWrapper } from "./types";
 
 type Props<T extends FieldValues> = BaseProps<T> & {
   onDrop: <K extends File>(
@@ -9,7 +9,7 @@ type Props<T extends FieldValues> = BaseProps<T> & {
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void;
-  value: File | File[];
+  value: FileWrapper | FileWrapper[];
 };
 
 export default function Dropzone<T extends FieldValues>(props: Props<T>) {
@@ -35,7 +35,7 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   );
 }
 
-type DropzoneTextProps = { files: File | File[] };
+type DropzoneTextProps = { files: FileWrapper | FileWrapper[] };
 
 function DropzoneText({ files }: DropzoneTextProps) {
   const fileNames = getFileNames(files);
@@ -52,11 +52,13 @@ function DropzoneText({ files }: DropzoneTextProps) {
   );
 }
 
-function getFileNames(files: File | File[]) {
-  let fileArray: File[] = [];
+function getFileNames(files: FileWrapper | FileWrapper[]) {
+  let fileWrappers: FileWrapper[] = [];
   if (!!files) {
-    fileArray = fileArray.concat(files);
+    fileWrappers = fileWrappers.concat(files);
   }
-  const fileNames = fileArray.map((file) => file.name).join(", ");
+  const fileNames = fileWrappers
+    .map((fileWrapper) => fileWrapper.name)
+    .join(", ");
   return fileNames;
 }
