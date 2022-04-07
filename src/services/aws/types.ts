@@ -19,7 +19,7 @@ export type ContactDetailsData = {
   };
 };
 
-export type DocumentObject = {
+export type FileObject = {
   name: string;
   dataUrl: string;
   sourceUrl?: string;
@@ -30,10 +30,10 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: DocumentObject[];
-    ProofOfRegistration: DocumentObject[];
-    FinancialStatements: DocumentObject[];
-    AuditedFinancialReports: DocumentObject[];
+    ProofOfIdentity: FileObject[];
+    ProofOfRegistration: FileObject[];
+    FinancialStatements: FileObject[];
+    AuditedFinancialReports: FileObject[];
   };
 };
 
@@ -42,17 +42,17 @@ export type UpdateDocumentationData = {
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: DocumentObject[];
-  ProofOfRegistration: DocumentObject[];
-  FinancialStatements: DocumentObject[];
-  AuditedFinancialReports: DocumentObject[];
+  ProofOfIdentity: FileObject[];
+  ProofOfRegistration: FileObject[];
+  FinancialStatements: FileObject[];
+  AuditedFinancialReports: FileObject[];
 };
 
 export type UpdateAdditionalInformationData = {
   PK?: string;
   body: {
-    CharityLogo: DocumentObject;
-    CharityBanner: DocumentObject;
+    CharityLogo: FileObject;
+    CharityBanner: FileObject;
     CharityOverview: string;
   };
 };

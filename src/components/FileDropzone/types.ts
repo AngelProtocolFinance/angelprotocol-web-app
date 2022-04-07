@@ -1,4 +1,5 @@
 import { FieldValues, Path } from "react-hook-form";
+import { FileObject } from "services/aws/types";
 
 export type BaseProps<T extends FieldValues> = {
   // we get common props with this intersection,
@@ -9,3 +10,5 @@ export type BaseProps<T extends FieldValues> = {
   className?: string;
   disabled?: boolean;
 };
+
+export type FileWrapper = FileObject & { file: File };

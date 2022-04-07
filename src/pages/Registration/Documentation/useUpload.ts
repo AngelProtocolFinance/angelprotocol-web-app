@@ -2,7 +2,7 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { DocumentObject, UpdateDocumentationResult } from "services/aws/types";
+import { FileObject, UpdateDocumentationResult } from "services/aws/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
@@ -81,7 +81,7 @@ async function getUploadBody(values: FormValues) {
 }
 
 const readFileToDataUrl = (file: File) =>
-  new Promise<DocumentObject>((resolve, reject) => {
+  new Promise<FileObject>((resolve, reject) => {
     const reader = new FileReader();
 
     reader.onerror = (error) => reject(error);
