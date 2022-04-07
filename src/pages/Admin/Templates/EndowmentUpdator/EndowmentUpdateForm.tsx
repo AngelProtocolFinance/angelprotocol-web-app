@@ -1,4 +1,5 @@
 import Label from "pages/Admin/components/Label";
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import EndowmentPreview from "./EndowmentPreview";
@@ -9,10 +10,7 @@ import useUpdateStatus from "./useUpdateStatus";
 export default function EndowmentUpdateForm() {
   const { updateStatus } = useUpdateStatus();
   return (
-    <form
-      onSubmit={updateStatus}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={updateStatus}>
       <TextInput title="proposal title" name="title" required />
       <TextInput<V>
         title="proposal description"
@@ -33,6 +31,6 @@ export default function EndowmentUpdateForm() {
       <Submitter type="submit" _classes="mt-4">
         Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

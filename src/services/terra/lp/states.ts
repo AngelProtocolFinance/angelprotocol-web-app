@@ -1,7 +1,3 @@
-/**
- * states are hooks that only uses existing cache entry and doesn't call the API when
- * there's no cache entry
- */
 import { useContract } from "../useContract";
 import { pairInfo, pool_balance, simulation } from "./placeholders";
 import { lp_api } from "./lp";

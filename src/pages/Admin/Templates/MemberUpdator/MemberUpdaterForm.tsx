@@ -5,11 +5,12 @@ import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
+import { DivContainer } from "pages/Admin/components/TemplateContainer";
 
 export default function MemberUpdateForm() {
   const { updateMembers, apCW4Members } = useUpdateMembers();
   return (
-    <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
+    <DivContainer>
       <TextInput<T> title="proposal title" name="title" required />
       <TextInput<T>
         title="proposal description"
@@ -33,6 +34,6 @@ export default function MemberUpdateForm() {
       <Submitter type="button" onClick={updateMembers} _classes="mt-4">
         Submit Proposal
       </Submitter>
-    </div>
+    </DivContainer>
   );
 }

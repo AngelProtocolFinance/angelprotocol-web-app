@@ -1,4 +1,5 @@
 import Label from "pages/Admin/components/Label";
+import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import AllianceSelection from "./AllianceSelection/AllianceSelection";
@@ -9,7 +10,7 @@ import useEditAlliance from "./useEditAlliance";
 export default function AllianceEditForm() {
   const { editAlliance, isEditingMember } = useEditAlliance();
   return (
-    <form className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
+    <DivContainer>
       <TextInput title="proposal title" name="title" required />
       <TextInput<AV>
         title="proposal description"
@@ -29,6 +30,6 @@ export default function AllianceEditForm() {
       <Submitter type="button" _classes="mt-4" onClick={editAlliance}>
         Propose Changes
       </Submitter>
-    </form>
+    </DivContainer>
   );
 }

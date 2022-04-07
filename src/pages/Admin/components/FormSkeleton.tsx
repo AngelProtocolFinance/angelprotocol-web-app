@@ -1,9 +1,9 @@
 import ContentLoader from "components/ContentLoader/ContentLoader";
-import FormContainer from "./FormContainer";
+import { DivContainer } from "./TemplateContainer";
 
 export default function FormSkeleton() {
   return (
-    <FormContainer>
+    <DivContainer>
       <ContentLoader className="h-12 w-full rounded-md opacity-20" />
       <ContentLoader className="h-30 w-full rounded-md opacity-20" />
       <ContentLoader className="h-12 w-full rounded-md opacity-20" />
@@ -11,6 +11,6 @@ export default function FormSkeleton() {
       <ContentLoader className="h-12 w-full rounded-md opacity-20" />
       <ContentLoader className="h-12 w-full rounded-md opacity-20" />
       <ContentLoader className="h-12 w-24 rounded-md opacity-20 justify-self-center" />
-    </FormContainer>
+    </DivContainer>
   );
 }

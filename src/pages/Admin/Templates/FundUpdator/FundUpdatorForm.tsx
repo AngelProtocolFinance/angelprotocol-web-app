@@ -8,16 +8,14 @@ import useInitFundMembers from "./useInitFundMembers";
 import MemberItem from "./MemberItem";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import Submitter from "../Submitter";
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 
 export default function FundUpdatorForm() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =
     useInitFundMembers();
   const { updateFund } = useUpdateFund();
   return (
-    <form
-      onSubmit={updateFund}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={updateFund}>
       <TextInput<FV> title="Proposal Title" name="title" required />
       <TextInput<FV>
         title="proposal description"
@@ -62,6 +60,6 @@ export default function FundUpdatorForm() {
       <Submitter type="button" onClick={updateFund} _classes="mt-4">
         Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

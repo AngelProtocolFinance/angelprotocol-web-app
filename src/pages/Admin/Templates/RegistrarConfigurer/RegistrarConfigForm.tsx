@@ -1,13 +1,11 @@
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
 import Submitter from "../Submitter";
 import { RegistrarConfigValues as RV } from "./registrarConfigSchema";
 
 export default function RegistrarConfigForm() {
   return (
-    <form
-      onSubmit={() => {}}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={() => {}}>
       <TextInput<RV> title="Proposal Title" name="title" required />
       <TextInput<RV>
         title="proposal description"
@@ -18,6 +16,6 @@ export default function RegistrarConfigForm() {
       <Submitter type="submit" _classes="mt-4">
         Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

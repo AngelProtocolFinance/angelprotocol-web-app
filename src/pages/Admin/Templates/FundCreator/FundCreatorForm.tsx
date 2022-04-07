@@ -7,11 +7,12 @@ import { FundCreatorValues as V } from "./fundCreatorSchema";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import useCreateFund from "./useCreateFund";
 import { INIT_SPLIT } from "./FundCreator";
+import { DivContainer } from "pages/Admin/components/TemplateContainer";
 
 export default function FundCreatorForm() {
   const { createFund } = useCreateFund();
   return (
-    <div className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey">
+    <DivContainer>
       <TextInput title="Proposal Title" name="title" required />
       <TextInput
         title="proposal description"
@@ -41,7 +42,7 @@ export default function FundCreatorForm() {
       <Submitter type="button" onClick={createFund} _classes="mt-4">
         Submit Proposal
       </Submitter>
-    </div>
+    </DivContainer>
   );
 }
 
