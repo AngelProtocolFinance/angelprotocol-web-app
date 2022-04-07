@@ -1,8 +1,6 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
-import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
-import { useGetMetamask } from "providers/Metamask/Metamask";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RegistrationSuccessful from "./RegistrationSuccessful";
