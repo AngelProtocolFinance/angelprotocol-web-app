@@ -1,3 +1,5 @@
+import { DocumentObject } from "services/aws/types";
+
 export interface User {
   Email: string;
   FirstName: string;
@@ -20,10 +22,10 @@ export interface User {
   token?: string;
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string[];
-  ProofOfRegistration: string[];
-  FinancialStatements: string[];
-  AuditedFinancialReports: string[];
+  ProofOfIdentity: DocumentObject[];
+  ProofOfRegistration: DocumentObject[];
+  FinancialStatements: DocumentObject[];
+  AuditedFinancialReports: DocumentObject[];
   ProofOfIdentityVerified?: boolean;
   ProofOfRegistrationVerified: boolean;
   FinancialStatementsVerified: boolean;

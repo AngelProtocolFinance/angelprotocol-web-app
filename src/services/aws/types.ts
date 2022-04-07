@@ -38,10 +38,10 @@ export type UpdateDocumentationData = {
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string[];
-  ProofOfRegistration: string[];
-  FinancialStatements: string[];
-  AuditedFinancialReports: string[];
+  ProofOfIdentity: DocumentObject[];
+  ProofOfRegistration: DocumentObject[];
+  FinancialStatements: DocumentObject[];
+  AuditedFinancialReports: DocumentObject[];
 };
 
 export type UpdateAdditionalInformationData = {
