@@ -1,7 +1,6 @@
 import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
-import { WalletSuiteContext } from "providers/WalletSuiteProvider";
-import { useCallback, useContext, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Providers } from "services/wallet/types";
 import { useGetter } from "store/accessors";
 import ConnectOptions from "./ConnectOptions";
@@ -16,8 +15,7 @@ export default function WalletSuite() {
 
   useWalletUpdator(provider.active);
 
-  const { connectOptionsShown, setConnectOptionsShown } =
-    useContext(WalletSuiteContext);
+  const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => setConnectOptionsShown(false);
   const dismissHandler = useBackdropDismiss(hideConnectOptions);
