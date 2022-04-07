@@ -19,7 +19,7 @@ export default function MemberUpdateForm() {
         required
       />
 
-      <Label _classes="text-red-400">remove member</Label>
+      <Label className="text-red-400 -mb-2">remove member</Label>
       <div className="mb-7 p-3 rounded-md bg-light-grey shadow-inner-white-grey">
         <div className="flex flex-col gap-2 mb-2">
           {apCW4Members.map((member) => (
@@ -28,7 +28,7 @@ export default function MemberUpdateForm() {
         </div>
       </div>
 
-      <Label _classes="text-green-400">add member</Label>
+      <Label className="text-green-400 -mb-2">add member</Label>
       <MemberAdder />
 
       <Submitter type="button" onClick={updateMembers} _classes="mt-4">

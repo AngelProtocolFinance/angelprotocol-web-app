@@ -84,11 +84,6 @@ export interface FundMemberUpdateMeta {
   toAdd: string[];
 }
 
-export interface FundConfigUpdateMeta {
-  prevConfig: FundConfig;
-  nextConfig: FundConfig;
-}
-
 export interface CW3ConfigUpdateMeta {
   prevConfig: CW3ConfigPayload;
   nextConfig: CW3ConfigPayload;
@@ -98,3 +93,6 @@ export type FundSendMeta = Pick<
   FundSendPayload,
   "amount" | "currency" | "recipient"
 >;
+
+type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
+export type FundConfigUpdateMeta = DiffSet<FundConfig>;

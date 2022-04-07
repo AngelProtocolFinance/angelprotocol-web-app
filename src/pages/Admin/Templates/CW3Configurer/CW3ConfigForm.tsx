@@ -16,7 +16,7 @@ export default function CW3ConfigForm() {
         required
       />
       <TextInput<CV>
-        title="pass threshold (%)"
+        title="pass threshold ( % )"
         name="threshold"
         required
         mono

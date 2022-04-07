@@ -2,7 +2,7 @@ import { PartialRecord } from "types/types";
 import * as Yup from "yup";
 import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
-import { addressSchema, stringByteSchema } from "schemas/schemas";
+import { requiredAddress, stringByteSchema } from "schemas/string";
 
 export type FundCreatorValues = {
   //new fund member
@@ -22,7 +22,7 @@ const fundCreatorShape: PartialRecord<
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,
-  newFundAddr: addressSchema("fund"),
+  newFundAddr: requiredAddress("fund"),
   fundName: stringByteSchema("fund name", 4, 64),
   fundDescription: stringByteSchema("fund description", 4, 1064),
   expiryTime: Yup.lazy((value) =>

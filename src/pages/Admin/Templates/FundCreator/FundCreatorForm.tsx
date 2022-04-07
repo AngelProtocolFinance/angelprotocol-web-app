@@ -36,7 +36,7 @@ export default function FundCreatorForm() {
       <DateInput />
       <Slider />
       <CheckInput />
-      <Label _classes="text-green-400">Add members</Label>
+      <Label className="text-green-400">Add members</Label>
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">

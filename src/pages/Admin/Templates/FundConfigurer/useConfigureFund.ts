@@ -14,71 +14,58 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import cleanObject from "helpers/cleanObject";
 import { FundConfigValues } from "./fundconfigSchema";
 import genProposalsLink from "../genProposalsLink";
-import { ProposalMeta } from "pages/Admin/types";
+import { FundConfigUpdateMeta, ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
-import { useIndexFundConfigState } from "services/terra/indexFund/states";
 
+type Key = keyof FundConfig;
+type Value = FundConfig[Key];
 export default function useConfigureFund() {
   const { wallet } = useWalletContext();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FundConfigValues>();
-  const { indexFundConfigState } = useIndexFundConfigState();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
   async function configureFund({
     title,
     description,
-    funding_goal,
-    ...fundConfig
+    initialConfigPayload,
+    ...data
   }: FundConfigValues) {
-    const prevConfig: FundConfig = {
-      fund_member_limit: indexFundConfigState?.fund_member_limit,
-      fund_rotation: indexFundConfigState?.fund_rotation,
-      funding_goal: indexFundConfigState?.funding_goal,
-    };
-
-    const nextConfig = {
-      ...fundConfig,
-      funding_goal:
-        funding_goal && new Dec(funding_goal).mul(1e6).toInt().toString(),
-    };
-
     //check for changes
-    const diff = getPayloadDiff(prevConfig, nextConfig);
-    if (Object.entries(diff).length <= 0) {
+    const diff = getPayloadDiff(initialConfigPayload, data);
+
+    const diffEntries = Object.entries(diff) as [Key, Value][];
+    if (diffEntries.length <= 0) {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
 
-    //construct tx preview, prettified
+    const diffMeta: FundConfigUpdateMeta = diffEntries.reduce(
+      (result, [key, value]) => {
+        result.push([key, initialConfigPayload[key], value]);
+        return result;
+      },
+      [] as FundConfigUpdateMeta
+    );
+
     const configUpdateMeta: ProposalMeta = {
       type: proposalTypes.indexFund_configUpdate,
-      data: {
-        nextConfig: {
-          ...nextConfig,
-          funding_goal: funding_goal && "$ " + (+funding_goal).toLocaleString(),
-        },
-        prevConfig: {
-          ...prevConfig,
-          funding_goal:
-            prevConfig.funding_goal &&
-            "$ " +
-              new Dec(prevConfig.funding_goal)
-                .div(1e6)
-                .toInt()
-                .toNumber()
-                .toLocaleString(),
-        },
-      },
+      data: diffMeta,
     };
 
     const indexFundContract = new Indexfund(wallet);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
-      cleanObject(nextConfig, ["", undefined])
+      //don't send diff since unchanged val will be null, and null value will set an attribute to default
+      cleanObject({
+        ...data,
+        funding_goal:
+          data.funding_goal &&
+          new Dec(data.funding_goal).mul(1e6).toInt().toString(),
+      })
     );
 
     const adminContract = new Admin("apTeam", wallet);

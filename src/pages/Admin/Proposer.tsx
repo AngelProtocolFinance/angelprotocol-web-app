@@ -103,7 +103,7 @@ function ProposalTypes() {
 
       <ProposalCategory title="Registrar" classes="mt-4" />
       <NavLink to={proposalTypes.registrar_updateConfig} className={styler}>
-        Update Registrar Config
+        Update Config
       </NavLink>
     </div>
   );

@@ -2,7 +2,7 @@ import { ContractQueryArgs } from "services/terra/types";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { StatusChangePayload } from "./types";
+import { RegistrarConfigPayload, StatusChangePayload } from "./types";
 import { WalletProxy } from "providers/WalletProvider";
 
 export default class Registrar extends Contract {
@@ -36,6 +36,12 @@ export default class Registrar extends Contract {
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_endowment_status: payload,
+    });
+  }
+
+  createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_config: payload,
     });
   }
 }

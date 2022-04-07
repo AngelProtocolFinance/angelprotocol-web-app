@@ -31,10 +31,10 @@ export default function TextInput<T extends FieldValues>(props: {
         ...register(props.name as string),
         id: `__${props.name}`,
         className: `${
-          props.mono ? "font-mono" : ""
+          props.mono ? "font-mono text-sm" : ""
         } text-black disabled:text-grey-accent focus:outline-none ${
           props.plain
-            ? "bg-light-grey border-b-2 border-angel-grey/30 rounded-none pb-1"
+            ? "bg-light-grey border-b-2 border-angel-grey/25 rounded-none pb-1"
             : "bg-light-grey shadow-inner-white-grey rounded-md p-3"
         }`,
         disabled: props.disabled,

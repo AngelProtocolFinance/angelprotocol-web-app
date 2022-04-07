@@ -18,16 +18,16 @@ export default function AllianceEditForm() {
         wide
         required
       />
-      <Label>
+      <Label className="-mb-2 text-angel-grey">
         <span className="text-red-400">Remove</span> |{" "}
         <span className="text-angel-orange">Edit</span> existing member
       </Label>
       <AllianceSelection />
       {(isEditingMember && (
-        <Label _classes="mt-4 text-angel-orange">Edit Member</Label>
-      )) || <Label _classes="mt-4 text-green-400">Add member</Label>}
+        <Label className="mt-4 -mb-2 text-angel-orange">Edit Member</Label>
+      )) || <Label className="mt-4 -mb-2 text-green-400">Add member</Label>}
       <MemberEditor />
-      <Submitter type="button" _classes="mt-4" onClick={editAlliance}>
+      <Submitter type="button" className="mt-4 " onClick={editAlliance}>
         Propose Changes
       </Submitter>
     </DivContainer>

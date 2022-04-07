@@ -31,7 +31,7 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.indexFund_updateFundMembers:
       return <FundMemberUpdate {...props.data} />;
     case proposalTypes.indexFund_configUpdate:
-      return <FundConfigUpdate {...props.data} />;
+      return <FundConfigUpdate diffSet={props.data} />;
 
     default:
       return <div className="p-2">no preview</div>;

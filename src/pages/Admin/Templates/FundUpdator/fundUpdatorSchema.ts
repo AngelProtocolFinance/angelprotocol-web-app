@@ -1,4 +1,4 @@
-import { addressSchema } from "schemas/schemas";
+import { requiredAddress } from "schemas/string";
 import { PartialRecord } from "types/types";
 import * as Yup from "yup";
 import Lazy from "yup/lib/Lazy";
@@ -14,7 +14,7 @@ const fundDestroyerShape: PartialRecord<
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,
-  newMemberAddr: addressSchema("endowment"),
+  newMemberAddr: requiredAddress("endowment"),
 };
 
 export const fundDestroyerSchema = Yup.object(fundDestroyerShape);

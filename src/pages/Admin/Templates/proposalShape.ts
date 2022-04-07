@@ -1,4 +1,4 @@
-import { stringByteSchema } from "schemas/schemas";
+import { stringByteSchema } from "schemas/string";
 import { PartialRecord } from "types/types";
 import * as Yup from "yup";
 

@@ -5,7 +5,7 @@ import {
   EndowmentStatus as T,
   EndowmentStatusStrNum as ST,
 } from "services/terra/registrar/types";
-import { addressSchema } from "schemas/schemas";
+import { requiredAddress } from "schemas/string";
 
 export type EndowmentUpdateValues = {
   endowmentAddr: string;
@@ -22,14 +22,14 @@ const endowmentUpdateShape: PartialRecord<
   Yup.AnySchema
 > = {
   ...proposalShape,
-  endowmentAddr: addressSchema("endowment"),
+  endowmentAddr: requiredAddress("endowment"),
   status: Yup.mixed().oneOf<ST>(
     ["0", "1", "2", "3"],
     "please select new status"
   ),
   beneficiary: Yup.mixed().when("status", {
     is: (val: ST) => val === "3",
-    then: addressSchema("beneficiary"),
+    then: requiredAddress("beneficiary"),
   }),
 };
 

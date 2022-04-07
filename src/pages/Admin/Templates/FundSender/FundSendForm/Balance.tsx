@@ -14,12 +14,12 @@ export default function Balance() {
   function setMax() {
     setValue("amount", displayBalance, {
       shouldDirty: true,
-      shouldValidate: true,
     });
   }
 
   return (
     <button
+      type="button"
       onClick={setMax}
       className="cursor-pointer font-heading text-sm text-angel-blue hover:text-angel-orange flex gap-1 items-baseline"
     >

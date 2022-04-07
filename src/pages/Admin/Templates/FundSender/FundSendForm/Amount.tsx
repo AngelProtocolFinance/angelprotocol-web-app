@@ -18,7 +18,7 @@ export default function Amount() {
   return (
     <div className="grid mb-4">
       <div className="flex items-baseline justify-between">
-        <Label _required> Transfer amount</Label>
+        <Label _required>Transfer amount</Label>
         <Balance />
       </div>
       <input

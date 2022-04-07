@@ -12,3 +12,17 @@ export function FormContainer(
 ) {
   return <form {...props} className={containerClass} />;
 }
+
+export function GroupContainer(
+  props: PropsWithChildren<{ className?: string }>
+) {
+  return (
+    <div
+      className={`p-3 rounded-md bg-light-grey shadow-inner-white-grey ${
+        props.className || ""
+      }`}
+    >
+      {props.children}
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-import { stringByteSchema } from "schemas/schemas";
+import { stringByteSchema } from "schemas/string";
 import * as Yup from "yup";
 
 export const schema = Yup.object().shape({

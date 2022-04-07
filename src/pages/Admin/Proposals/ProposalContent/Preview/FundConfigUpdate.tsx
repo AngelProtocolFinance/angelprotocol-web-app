@@ -1,9 +1,10 @@
 import TableSection, { Cells } from "components/TableSection/TableSection";
-import { FundConfig } from "contracts/types";
 import { FundConfigUpdateMeta } from "pages/Admin/types";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function FundConfigUpdate(props: FundConfigUpdateMeta) {
+export default function FundConfigUpdate(props: {
+  diffSet: FundConfigUpdateMeta;
+}) {
   return (
     <PreviewContainer>
       <table>
@@ -19,11 +20,7 @@ export default function FundConfigUpdate(props: FundConfigUpdateMeta) {
           </Cells>
         </TableSection>
         <TableSection type="tbody" rowClass="border-b border-white/20">
-          {(
-            Object.entries(props.prevConfig) as Array<
-              [keyof FundConfig, FundConfig[keyof FundConfig]]
-            >
-          ).map(([key, prevValue]) => (
+          {props.diffSet.map(([key, prev, next]) => (
             <Cells
               type="td"
               cellClass="text-right p-2 border-r border-white/20"
@@ -32,8 +29,8 @@ export default function FundConfigUpdate(props: FundConfigUpdateMeta) {
               verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-white/20"
             >
               <>{key.replace(/_/g, " ")}</>
-              <>{prevValue || "default"}</>
-              <>{props.nextConfig[key] || "default"}</>
+              <>{prev || "not set"}</>
+              <>{next || "not set"}</>
             </Cells>
           ))}
         </TableSection>
