@@ -10,10 +10,12 @@ export default function ProofOfIdentity() {
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
-  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
-  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
+  console.log(errors);
+
+  // For some reason Yup has defined a wrong type for the subfields of 'errors',
+  // so in order to be able to read the error message, we have to convert it to 'any'
   const errorMessage = !!errors?.proofOfIdentity?.length
-    ? errors.proofOfIdentity[0].file!.message
+    ? (errors.proofOfIdentity[0] as any)?.message
     : (errors?.proofOfIdentity as any)?.message;
 
   return (
