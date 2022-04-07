@@ -43,4 +43,5 @@ const groupOptions: { [key in ProposalGroupOptions]: string } = {
   indexfund: "index fund",
   "admin-group": "admin group",
   endowment: "endowment",
+  registrar: "registrar",
 };

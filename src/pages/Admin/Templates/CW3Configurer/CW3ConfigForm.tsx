@@ -30,7 +30,7 @@ export default function CW3ConfigForm() {
         mono
       />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
     </form>
   );

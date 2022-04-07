@@ -60,7 +60,7 @@ export default function FundUpdatorForm() {
         </>
       )}
       <Submitter type="button" onClick={updateFund} _classes="mt-4">
-        Propose Changes
+        Submit Proposal
       </Submitter>
     </form>
   );

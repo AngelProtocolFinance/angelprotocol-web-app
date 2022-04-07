@@ -31,7 +31,7 @@ export default function EndowmentUpdateForm() {
       <Label _required>New endowment status</Label>
       <StatusOptions />
       <Submitter type="submit" _classes="mt-4">
-        Propose changes
+        Submit Proposal
       </Submitter>
     </form>
   );

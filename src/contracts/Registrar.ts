@@ -8,8 +8,8 @@ import { WalletProxy } from "providers/WalletProvider";
 export default class Registrar extends Contract {
   address: string;
   endowmentList: ContractQueryArgs;
-
   vaultsRate: ContractQueryArgs;
+  config: ContractQueryArgs;
   constructor(wallet?: WalletProxy) {
     super(wallet);
     this.address = contracts[this.chainID][sc.registrar];
@@ -25,6 +25,11 @@ export default class Registrar extends Contract {
       msg: {
         approved_vault_rate_list: {},
       },
+    };
+
+    this.config = {
+      address: this.address,
+      msg: { config: {} },
     };
   }
 

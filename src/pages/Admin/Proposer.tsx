@@ -10,6 +10,7 @@ import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
 import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import FundSender from "./Templates/FundSender/FundSender";
+import RegistrarConfigurer from "./Templates/RegistrarConfigurer/RegistrarConfigurer";
 
 export default function Proposer() {
   return (
@@ -47,6 +48,10 @@ export default function Proposer() {
         <Route
           path={proposalTypes.adminGroup_fundTransfer}
           element={<FundSender />}
+        />
+        <Route
+          path={proposalTypes.registrar_updateConfig}
+          element={<RegistrarConfigurer />}
         />
         <Route index element={<MemberUpdator />} />
       </Routes>
@@ -94,6 +99,11 @@ function ProposalTypes() {
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink to={proposalTypes.endowment_updateStatus} className={styler}>
         Change Endowment Status
+      </NavLink>
+
+      <ProposalCategory title="Registrar" classes="mt-4" />
+      <NavLink to={proposalTypes.registrar_updateConfig} className={styler}>
+        Update Registrar Config
       </NavLink>
     </div>
   );

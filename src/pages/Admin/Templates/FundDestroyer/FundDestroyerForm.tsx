@@ -22,7 +22,7 @@ export default function FundDestroyerForm() {
       <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
     </form>
   );

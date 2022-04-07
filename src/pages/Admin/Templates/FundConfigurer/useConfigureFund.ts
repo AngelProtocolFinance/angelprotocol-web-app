@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dec } from "@terra-money/terra.js";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Popup from "components/Popup/Popup";
 import { useSetModal } from "components/Modal/Modal";
-import { useIndexFundConfig } from "services/terra/indexFund/queriers";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
@@ -19,30 +17,17 @@ import genProposalsLink from "../genProposalsLink";
 import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import { useIndexFundConfigState } from "services/terra/indexFund/states";
 
 export default function useConfigureFund() {
   const { wallet } = useWalletContext();
   const {
-    setValue,
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FundConfigValues>();
-  const { indexFundConfig, isIndexFundConfigLoading } = useIndexFundConfig();
+  const { indexFundConfigState } = useIndexFundConfigState();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-
-  //pre-fill fund config form
-  useEffect(() => {
-    if (isIndexFundConfigLoading) return;
-    if (!indexFundConfig) return;
-    setValue("fund_member_limit", indexFundConfig.fund_member_limit);
-    setValue("fund_rotation", indexFundConfig.fund_rotation);
-    setValue(
-      "funding_goal",
-      indexFundConfig.funding_goal &&
-        new Dec(indexFundConfig.funding_goal).div(1e6).toInt().toString()
-    );
-  }, [indexFundConfig, isIndexFundConfigLoading, setValue]);
 
   async function configureFund({
     title,
@@ -51,9 +36,9 @@ export default function useConfigureFund() {
     ...fundConfig
   }: FundConfigValues) {
     const prevConfig: FundConfig = {
-      fund_member_limit: indexFundConfig?.fund_member_limit,
-      fund_rotation: indexFundConfig?.fund_rotation,
-      funding_goal: indexFundConfig?.funding_goal,
+      fund_member_limit: indexFundConfigState?.fund_member_limit,
+      fund_rotation: indexFundConfigState?.fund_rotation,
+      funding_goal: indexFundConfigState?.funding_goal,
     };
 
     const nextConfig = {

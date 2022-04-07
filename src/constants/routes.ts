@@ -67,4 +67,7 @@ export const enum proposalTypes {
   //endowment
   endowment_updateStatus = "endowment-update-status",
   endowment_withdraw = "endowment-withdraw",
+
+  //registrar
+  registrar_updateConfig = "registrar-update-config",
 }

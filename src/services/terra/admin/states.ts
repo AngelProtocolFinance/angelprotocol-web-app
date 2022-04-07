@@ -19,3 +19,16 @@ export function useMemberState(customCWs?: CWContracts, skip = false) {
   });
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
+
+export function useCW3ConfigState() {
+  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { data, isFetching, isLoading, isError } =
+    admin_api.endpoints.cw3Config.useQueryState(contract.cw3Config, {
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
+    });
+  return {
+    cw3ConfigState: data,
+    isCW3ConfigLoading: isFetching || isLoading,
+    isError,
+  };
+}

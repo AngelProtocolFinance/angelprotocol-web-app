@@ -42,6 +42,7 @@ export function useAllianceMembers() {
     data = [],
     isLoading,
     isFetching,
+    isError,
   } = useAllianceMembersQuery(contract.allianceMembers, {
     skip: wallet?.network.chainID === chainIDs.localterra,
   });
@@ -49,18 +50,23 @@ export function useAllianceMembers() {
   return {
     allianceMembers: data,
     isAllianceMembersLoading: isLoading || isFetching,
+    isError,
   };
 }
 
 export function useIndexFundConfig() {
   const { useConfigQuery } = indexFund_api;
   const { wallet, contract } = useContract<IF, T>(Indexfund);
-  const { data, isLoading, isFetching } = useConfigQuery(contract.config, {
-    skip: wallet?.network.chainID === chainIDs.localterra,
-  });
+  const { data, isLoading, isFetching, isError } = useConfigQuery(
+    contract.config,
+    {
+      skip: wallet?.network.chainID === chainIDs.localterra,
+    }
+  );
 
   return {
     indexFundConfig: data,
-    isIndexFundConfigLoading: isLoading || isFetching,
+    isLoading: isLoading || isFetching,
+    isError,
   };
 }

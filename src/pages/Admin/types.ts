@@ -10,7 +10,12 @@ import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 
 //TODO: find a way to incorporate proposal group with proposal types
-export type ProposalGroup = "indexfund" | "admin-group" | "endowment";
+export type ProposalGroup =
+  | "indexfund"
+  | "admin-group"
+  | "endowment"
+  | "registrar";
+
 export type ProposalMeta =
   | {
       type: proposalTypes.endowment_withdraw;

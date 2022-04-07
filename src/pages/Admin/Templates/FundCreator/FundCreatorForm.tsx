@@ -39,7 +39,7 @@ export default function FundCreatorForm() {
       <MemberAdder />
 
       <Submitter type="button" onClick={createFund} _classes="mt-4">
-        Propose changes
+        Submit Proposal
       </Submitter>
     </div>
   );

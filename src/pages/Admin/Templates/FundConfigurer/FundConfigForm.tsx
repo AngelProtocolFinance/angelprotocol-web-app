@@ -27,7 +27,7 @@ export default function FundConfigForm() {
       <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
     </form>
   );

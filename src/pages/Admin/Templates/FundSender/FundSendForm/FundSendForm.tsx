@@ -21,7 +21,7 @@ export default function FundSendForm() {
       <Amount />
       <TextInput<FS> title="recipient" name="recipient" required mono />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
     </form>
   );
