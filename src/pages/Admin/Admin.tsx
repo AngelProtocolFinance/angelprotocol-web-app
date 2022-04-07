@@ -10,6 +10,7 @@ import AdminNav from "./AdminNav";
 import { useEffect } from "react";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useSetter } from "store/accessors";
+import Applications from "./Applications/Applications";
 import useWalletContext from "hooks/useWalletContext";
 
 export default function Admin() {
@@ -36,6 +37,7 @@ export default function Admin() {
           <Route path={`${admin.proposal}/:id`} element={<Proposal />} />
           <Route path={`${admin.proposal_types}/*`} element={<Proposer />} />
           <Route path={admin.proposals} element={<Proposals />} />
+          <Route path={admin.charity_applications} element={<Applications />} />
           <Route index element={<Navigate to={admin.proposals} />} />
         </Routes>
       </div>

@@ -104,7 +104,7 @@ function genPageOptions(
   }
 }
 
-export function useProposal(pollId?: string) {
+export function useProposal(pollId?: string | number) {
   const { useProposalQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
 

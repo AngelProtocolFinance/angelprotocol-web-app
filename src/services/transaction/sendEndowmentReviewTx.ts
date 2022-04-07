@@ -1,18 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, Msg, TxLog } from "@terra-money/terra.js";
+import handleTerraError from "helpers/handleTerraError";
+import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
-import Contract from "contracts/Contract";
-import handleTerraError from "helpers/handleTerraError";
 import { RootState } from "store/store";
 import transactionSlice, { setStage } from "./transactionSlice";
 import { SenderArgs, StageUpdator, Step, WithMsg, WithTx } from "./types";
 import extractFeeNum from "helpers/extractFeeNum";
+import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 
-export const sendTerraTx = createAsyncThunk(
-  `${transactionSlice.name}/sendTerraTx`,
+type _SenderArgs = SenderArgs & {
+  applicationId: string;
+};
+
+export const sendEndowmentReviewTx = createAsyncThunk(
+  `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
   async (
-    args: (SenderArgs & WithMsg) | (SenderArgs & WithTx),
+    args: (_SenderArgs & WithMsg) | (_SenderArgs & WithTx),
     { dispatch, getState }
   ) => {
     const updateTx: StageUpdator = (update) => {
@@ -75,6 +80,22 @@ export const sendTerraTx = createAsyncThunk(
             txHash: txInfo.txhash,
             chainId,
             successLink: args.successLink,
+          });
+
+          const logs = txInfo.logs as unknown as TxLog[];
+
+          const proposal_id = logs[0]?.events
+            .find((event) => {
+              return event.type === "wasm";
+            })
+            ?.attributes.find((attribute) => {
+              return attribute.key === "proposal_id";
+            })?.value as string;
+
+          await logApplicationReview({
+            poll_id: proposal_id,
+            chain_id: args.wallet.network.chainID,
+            PK: args.applicationId,
           });
 
           //invalidate cache entries

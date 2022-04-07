@@ -132,6 +132,7 @@ module.exports = {
         450: "450px",
         600: "600px",
         136: "36rem",
+        160: "60rem",
       },
       minHeight: {
         115: "15rem",

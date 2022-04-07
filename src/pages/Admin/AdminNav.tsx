@@ -8,7 +8,7 @@ export default function AdminNav() {
       <NavLink end to={admin.proposals} className={styler}>
         proposals
       </NavLink>
-      <NavLink to={admin.charity_applications} className={disabledStyle}>
+      <NavLink to={admin.charity_applications} className={styler}>
         charity applications
       </NavLink>
     </div>
