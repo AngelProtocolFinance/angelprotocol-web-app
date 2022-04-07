@@ -45,13 +45,13 @@ export const useRegistration = () => {
       TerraWallet: response.data.Metadata?.TerraWallet,
       IsKeyPersonCompleted: !!response.data.KeyPerson,
       IsMetaDataCompleted: !!response.data.Metadata,
-      ProofOfIdentity: response.data.Registration.ProofOfIdentity,
+      ProofOfIdentity: response.data.Registration.ProofOfIdentity || [],
       Website: response.data.Registration.Website,
       UN_SDG: response.data.Registration.UN_SDG,
-      ProofOfRegistration: response.data.Registration.ProofOfRegistration,
-      FinancialStatements: response.data.Registration.FinancialStatements,
+      ProofOfRegistration: response.data.Registration.ProofOfRegistration || [],
+      FinancialStatements: response.data.Registration.FinancialStatements || [],
       AuditedFinancialReports:
-        response.data.Registration.AuditedFinancialReports,
+        response.data.Registration.AuditedFinancialReports || [],
       ProofOfIdentityVerified:
         response.data.Registration.ProofOfIdentityVerified,
       ProofOfRegistrationVerified:
