@@ -52,17 +52,19 @@ export enum admin {
   proposal_types = "proposal-types",
 }
 
-export enum proposal_types {
+export const enum proposalTypes {
   index = "",
-  //apCW4
-  admin_update_members = "admin-update-members",
-  update_cw3_config = "update_cw3_config",
-  //endowments
-  change_endowment_status = "change-endowment-status",
-  //index_fund
-  create_fund = "create-fund",
-  destroy_fund = "destroy-fund",
-  update_fund = "update-fund",
-  config_fund = "config-fund",
-  alliance_members = "alliance-members",
+  //index fund
+  indexFund_allianceEdits = "indexfund-alliance-edit",
+  indexFund_createFund = "indexfund-create-fund",
+  indexFund_removeFund = "indexfund-remove-fund",
+  indexFund_updateFundMembers = "indexfund-update-fund-members",
+  indexFund_configUpdate = "indexfund-config-update",
+  //admin group
+  adminGroup_updateMembers = "admin-group-update-members",
+  adminGroup_updateCW3Config = "admin-group-update-cw3-config",
+  adminGroup_fundTransfer = "admin-group-fund-transfer",
+  //endowment
+  endowment_updateStatus = "endowment-update-status",
+  endowment_withdraw = "endowment-withdraw",
 }

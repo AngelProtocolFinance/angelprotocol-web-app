@@ -1,13 +1,13 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
 import { contracts } from "constants/contracts";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 import { Member } from "services/terra/admin/types";
 import Contract from "./Contract";
-import { EmbeddedWasmMsg, Vote } from "./types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "./types";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 
+export type PageOptions = { limit?: number; start_before?: number };
 export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 export default class Admin extends Contract {
   cw4: string;
@@ -18,7 +18,7 @@ export default class Admin extends Contract {
   member: CQA;
 
   //CW3
-  proposals: CQA;
+  proposals: (arg: PageOptions) => CQA;
   proposal: (arg: number) => CQA;
   voteList: (arg: number) => CQA;
   voter: CQA;
@@ -49,12 +49,12 @@ export default class Admin extends Contract {
       msg: { config: {} },
     };
 
-    this.proposals = {
+    this.proposals = (pageOptions) => ({
       address: this.cw3,
       msg: {
-        reverse_proposals: {},
+        reverse_proposals: pageOptions,
       },
-    };
+    });
 
     this.proposal = (pollId: number) => ({
       address: this.cw3,
@@ -115,7 +115,7 @@ export default class Admin extends Contract {
   createProposalMsg(
     title: string,
     description: string,
-    embeddedMsgs: EmbeddedWasmMsg[],
+    embeddedMsgs: (EmbeddedBankMsg | EmbeddedWasmMsg)[],
     meta?: string,
     latest?: any
   ) {

@@ -9,6 +9,7 @@ import useSortTransactions, {
 import useDonor from "./useDonor";
 import { Transaction } from "services/aws/endowment_admin/types";
 import Icon from "components/Icons/Icons";
+import getTxUrl from "helpers/getTxUrl";
 
 export default function DonationsTable(props: {
   transactions: Transaction[];
@@ -59,6 +60,16 @@ export default function DonationsTable(props: {
             <span className="font-mono">
               {maskAddress(tx.endowment_address)}
             </span>
+            <a
+              href={getTxUrl(tx.chain_id!, tx.sort_key)}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
+            >
+              <span className="inline-block text-base w-36 truncate">
+                {tx.sort_key}
+              </span>
+            </a>
             <button
               className="font-heading text-sm text-white-grey bg-angel-blue hover:bg-bright-blue  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
               onClick={() => showDonor(tx.sort_key)}
@@ -76,6 +87,7 @@ const headers: { key: SortKey; name: string }[] = [
   { key: "amount", name: "amount" },
   { key: "transaction_date", name: "date" },
   { key: "endowment_address", name: "endowment" },
+  { key: "sort_key", name: "transaction hash" },
 ];
 
 function Tooltip(props: PropsWithChildren<{}>) {

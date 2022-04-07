@@ -1,3 +1,4 @@
+import { proposalTypes } from "constants/routes";
 import { FundConfig, FundDetails } from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
@@ -6,22 +7,10 @@ import {
   EndowmentStatusStrNum,
 } from "services/terra/registrar/types";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
+import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 
-export enum proposalTypes {
-  //index fund
-  indexFund_allianceEdits = "indexFund_allianceEdit",
-  indexFund_createFund = "indexFund_createFund",
-  indexFund_removeFund = "indexFund_removeFund",
-  indexFund_updateFundMembers = "indexFund_updateFundMembers",
-  indexFund_configUpdate = "indexFund_configUpdate",
-  //admin group
-  adminGroup_updateMembers = "adminGroup_updateMembers",
-  adminGroup_updateCW3Config = "adminGroup_updateCW3Config",
-  //endowment
-  endowment_updateStatus = "endowment_updateStatus",
-  endowment_withdraw = "endowment_withdraw",
-}
-
+//TODO: find a way to incorporate proposal group with proposal types
+export type ProposalGroup = "indexfund" | "admin-group" | "endowment";
 export type ProposalMeta =
   | {
       type: proposalTypes.endowment_withdraw;
@@ -31,7 +20,10 @@ export type ProposalMeta =
       type: proposalTypes.endowment_updateStatus;
       data: EndowmentStatusMeta;
     }
-  | { type: proposalTypes.adminGroup_updateMembers; data: CWMemberUpdateMeta }
+  | {
+      type: proposalTypes.adminGroup_updateMembers;
+      data: CWMemberUpdateMeta;
+    }
   | {
       type:
         | proposalTypes.indexFund_createFund
@@ -50,6 +42,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.adminGroup_updateCW3Config;
       data: CW3ConfigUpdateMeta;
+    }
+  | {
+      type: proposalTypes.adminGroup_fundTransfer;
+      data: FundSendMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -92,3 +88,8 @@ export interface CW3ConfigUpdateMeta {
   prevConfig: CW3ConfigPayload;
   nextConfig: CW3ConfigPayload;
 }
+
+export type FundSendMeta = Pick<
+  FundSendPayload,
+  "amount" | "currency" | "recipient"
+>;

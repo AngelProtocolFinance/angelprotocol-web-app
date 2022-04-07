@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Transaction } from "services/aws/endowment_admin/types";
 
 export type SortDirection = "asc" | "desc";
-export type SortKey = keyof Transaction;
+export type SortKey = keyof Omit<Transaction, "chain_id">;
 export default function useSortedTransactions(transactions: Transaction[]) {
   const [sortKey, setSortKey] = useState<SortKey>("transaction_date");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");

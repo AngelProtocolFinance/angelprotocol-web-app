@@ -1,8 +1,14 @@
 import { chainIDs } from "constants/chainIDs";
-import { CWContracts } from "contracts/Admin";
+import { CWContracts, PageOptions } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
+import {
+  ProposalGroupOptions,
+  ProposalStatusOptions,
+} from "pages/Admin/Proposals/Proposals";
+import { ProposalMeta } from "pages/Admin/types";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
+import { Proposal } from "./types";
 import useAdminContract from "./useAdminContract";
 
 export function useMembers() {
@@ -35,18 +41,67 @@ export function useMember(customCWs?: CWContracts, skip = false) {
   return { member: data, isMemberLoading: isFetching || isLoading };
 }
 
-export function useProposals() {
+export const NUM_PROPOSALS_PER_PAGE = 5;
+export function useFilteredProposals(
+  group: ProposalGroupOptions,
+  status: ProposalStatusOptions,
+  pageNum: number
+) {
   const { useProposalsQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
-  const {
-    data = [],
-    isFetching,
-    isLoading,
-  } = useProposalsQuery(contract.proposals, {
-    skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
-  });
+  const { filteredProposals, isLoading, isError } = useProposalsQuery(
+    contract.proposals(genPageOptions(pageNum, status, group)),
+    {
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
+      selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {
+        function proposalFilter(proposal: Proposal): boolean {
+          const proposalMeta = JSON.parse(
+            proposal.meta || "{}"
+          ) as ProposalMeta;
 
-  return { proposals: data, isProposalsLoading: isFetching || isLoading };
+          const isBelongToGroup =
+            group === "all" || new RegExp(group).test(proposalMeta.type);
+
+          const isCorrectStatus =
+            status === "all" || proposal.status === status;
+
+          return isBelongToGroup && isCorrectStatus;
+        }
+
+        return {
+          filteredProposals:
+            status === "all" && group === "all"
+              ? data
+              : data.filter(proposalFilter),
+          isLoading: isLoading || isFetching,
+          isError,
+        };
+      },
+    }
+  );
+  return {
+    filteredProposals,
+    isFilteredProposalsLoading: isLoading,
+    isFilteredProposalsFailed: isError,
+  };
+}
+
+function genPageOptions(
+  pageNum: number,
+  status: ProposalStatusOptions,
+  group: ProposalGroupOptions
+): PageOptions {
+  if (status === "all" && group === "all") {
+    return {
+      //e.g 10 first, then 20
+      limit: NUM_PROPOSALS_PER_PAGE * pageNum,
+    };
+  } else {
+    //get all proposals when there's filter applied
+    //since web-app doesn't know what page a particular
+    //proposal falls into
+    return { limit: 10_000 };
+  }
 }
 
 export function useProposal(pollId?: string | number) {
