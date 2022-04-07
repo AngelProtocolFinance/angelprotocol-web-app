@@ -2,7 +2,10 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateAdditionalInformationMutation } from "services/aws/registration";
-import { UpdateAdditionalInformationResult } from "services/aws/types";
+import {
+  DocumentObject,
+  UpdateAdditionalInformationResult,
+} from "services/aws/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
@@ -57,8 +60,6 @@ async function getUploadBody(values: FormValues) {
     CharityOverview: values.charityOverview,
   };
 }
-
-type DocumentObject = { name: string; dataUrl: string };
 
 const readFileToDataUrl = (file: File) =>
   new Promise<DocumentObject>((resolve, reject) => {

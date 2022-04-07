@@ -19,7 +19,7 @@ export type ContactDetailsData = {
   };
 };
 
-type DocumentObject = { name: string; dataUrl: string };
+export type DocumentObject = { name: string; dataUrl: string; src?: string };
 
 export type UpdateDocumentationData = {
   PK?: string;
