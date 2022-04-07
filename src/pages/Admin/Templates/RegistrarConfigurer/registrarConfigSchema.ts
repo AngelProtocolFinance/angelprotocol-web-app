@@ -1,4 +1,5 @@
 import { RegistrarConfigPayload } from "contracts/types";
+import { percentString, positiveNumber } from "schemas/number";
 import { address } from "schemas/string";
 import { PartialRecord } from "types/types";
 import * as Yup from "yup";
@@ -10,43 +11,21 @@ export type RegistrarConfigValues = ProposalBase &
 
 const contractAddrSchema = address("contract").nullable();
 
-const rateConstraint = Yup.number()
-  .typeError("invalid: must be a number")
-  .min(0, "invalid: less than 0")
-  .max(100, "invalid: greater than 100");
-
-//if value passed, cast back to string
-const stringRateSchema = Yup.lazy((value) =>
-  value === ""
-    ? Yup.string()
-    : rateConstraint.isValidSync(value)
-    ? Yup.string()
-    : rateConstraint
-);
-
-const numberSchema = Yup.lazy((value) =>
-  value === ""
-    ? Yup.string()
-    : Yup.number()
-        .typeError("invalid: must be a number")
-        .positive("invalid: can't be negative")
-);
-
 const registrarConfigShape: PartialRecord<
   keyof RegistrarConfigValues,
   Yup.AnySchema | Lazy<Yup.AnySchema>
 > = {
   ...proposalShape,
   //accounts code id
-  accounts_code_id: numberSchema,
+  accounts_code_id: positiveNumber,
 
   //splits
-  split_default: stringRateSchema,
-  split_max: stringRateSchema,
-  split_min: stringRateSchema,
+  split_default: percentString,
+  split_max: percentString,
+  split_min: percentString,
 
   //vault settings
-  tax_rate: stringRateSchema,
+  tax_rate: percentString,
   default_vault: contractAddrSchema,
 
   //contracts

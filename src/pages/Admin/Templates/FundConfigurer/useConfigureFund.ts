@@ -14,9 +14,10 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import cleanObject from "helpers/cleanObject";
 import { FundConfigValues } from "./fundconfigSchema";
 import genProposalsLink from "../genProposalsLink";
-import { FundConfigUpdateMeta, ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genDiffMeta from "../RegistrarConfigurer/genDiffMeta";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
@@ -44,17 +45,9 @@ export default function useConfigureFund() {
       return;
     }
 
-    const diffMeta: FundConfigUpdateMeta = diffEntries.reduce(
-      (result, [key, value]) => {
-        result.push([key, initialConfigPayload[key], value]);
-        return result;
-      },
-      [] as FundConfigUpdateMeta
-    );
-
     const configUpdateMeta: ProposalMeta = {
       type: proposalTypes.indexFund_configUpdate,
-      data: diffMeta,
+      data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
     const indexFundContract = new Indexfund(wallet);

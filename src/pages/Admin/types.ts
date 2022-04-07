@@ -1,5 +1,9 @@
 import { proposalTypes } from "constants/routes";
-import { FundConfig, FundDetails } from "contracts/types";
+import {
+  FundConfig,
+  FundDetails,
+  RegistrarConfigPayload,
+} from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import {
@@ -51,6 +55,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.adminGroup_fundTransfer;
       data: FundSendMeta;
+    }
+  | {
+      type: proposalTypes.registrar_updateConfig;
+      data: RegistrarConfigUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -89,6 +97,7 @@ export type FundSendMeta = Pick<
   "amount" | "currency" | "recipient"
 >;
 
-type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
+export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type FundConfigUpdateMeta = DiffSet<FundConfig>;
 export type CW3ConfigUpdateMeta = DiffSet<CW3ConfigPayload>;
+export type RegistrarConfigUpdateMeta = DiffSet<RegistrarConfigPayload>;

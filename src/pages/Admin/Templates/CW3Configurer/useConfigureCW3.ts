@@ -12,9 +12,10 @@ import getPayloadDiff from "helpers/getPayloadDiff";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
-import { CW3ConfigUpdateMeta, ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genDiffMeta from "../RegistrarConfigurer/genDiffMeta";
 
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
@@ -43,14 +44,6 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const diffMeta: CW3ConfigUpdateMeta = diffEntries.reduce(
-      (result, [key, value]) => {
-        result.push([key, initialCW3Config[key], value]);
-        return result;
-      },
-      [] as CW3ConfigUpdateMeta
-    );
-
     const adminContract = new Admin(cwContracts, wallet);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       data.height,
@@ -59,7 +52,7 @@ export default function useConfigureCW3() {
 
     const configUpdateMeta: ProposalMeta = {
       type: proposalTypes.adminGroup_updateCW3Config,
-      data: diffMeta,
+      data: genDiffMeta(diffEntries, initialCW3Config),
     };
 
     //proposal meta for preview

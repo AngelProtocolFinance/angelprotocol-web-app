@@ -5,10 +5,9 @@ import Withdraw from "./Withdraw";
 import Fund from "./Fund";
 import AllianceUpdate from "./AllianceUpdate";
 import FundMemberUpdate from "./FundMemberUpdate";
-import FundConfigUpdate from "./FundConfigUpdate";
-import CW3ConfigUpdate from "./CW3ConfigUpdate";
 import { proposalTypes } from "constants/routes";
 import FundTransfer from "./FundTransfer";
+import DiffTable from "./DiffTable";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -19,7 +18,7 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.adminGroup_updateMembers:
       return <CWMemberUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateCW3Config:
-      return <CW3ConfigUpdate diffSet={props.data} />;
+      return <DiffTable diffSet={props.data} />;
     case proposalTypes.adminGroup_fundTransfer:
       return <FundTransfer {...props.data} />;
     case proposalTypes.indexFund_createFund:
@@ -31,7 +30,9 @@ export default function Preview(props: ProposalMeta) {
     case proposalTypes.indexFund_updateFundMembers:
       return <FundMemberUpdate {...props.data} />;
     case proposalTypes.indexFund_configUpdate:
-      return <FundConfigUpdate diffSet={props.data} />;
+      return <DiffTable diffSet={props.data} />;
+    case proposalTypes.registrar_updateConfig:
+      return <DiffTable diffSet={props.data} />;
 
     default:
       return <div className="p-2">no preview</div>;

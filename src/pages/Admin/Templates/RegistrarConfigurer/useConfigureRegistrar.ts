@@ -14,7 +14,12 @@ import useWalletContext from "hooks/useWalletContext";
 import { RegistrarConfigValues } from "./registrarConfigSchema";
 import Registrar from "contracts/Registrar";
 import { RegistrarConfigPayload } from "contracts/types";
+import { ProposalMeta } from "pages/Admin/types";
+import { proposalTypes } from "constants/routes";
+import genDiffMeta from "./genDiffMeta";
 
+type Key = keyof RegistrarConfigPayload;
+type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
   const { wallet } = useWalletContext();
   const {
@@ -32,11 +37,11 @@ export default function useConfigureRegistrar() {
   }: RegistrarConfigValues) {
     //check for changes
     const diff = getPayloadDiff(initialConfigPayload, data);
-    if (Object.entries(diff).length <= 0) {
+    const diffEntries = Object.entries(diff) as [Key, Value][];
+    if (diffEntries.length <= 0) {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
-
     //convert presentational decimal to floating point string
     const finalPayload: RegistrarConfigPayload = {
       ...diff,
@@ -51,12 +56,18 @@ export default function useConfigureRegistrar() {
       cleanObject(finalPayload)
     );
 
-    console.log(cleanObject(finalPayload));
+    const configUpdateMeta: ProposalMeta = {
+      type: proposalTypes.registrar_updateConfig,
+      data: genDiffMeta(diffEntries, initialConfigPayload),
+    };
 
     const adminContract = new Admin("apTeam", wallet);
-    const proposalMsg = adminContract.createProposalMsg(title, description, [
-      configUpdateMsg,
-    ]);
+    const proposalMsg = adminContract.createProposalMsg(
+      title,
+      description,
+      [configUpdateMsg],
+      JSON.stringify(configUpdateMeta)
+    );
 
     dispatch(
       sendTerraTx({
