@@ -89,7 +89,7 @@ const registration_api = aws.injectEndpoints({
     >({
       query: (data) => {
         return {
-          url: `registration`,
+          url: `TEST-charity-update-documentation`,
           params: { uuid: data.PK },
           method: "PUT",
           body: data.body,
@@ -105,7 +105,7 @@ const registration_api = aws.injectEndpoints({
     >({
       query: (data) => {
         return {
-          url: `registration`,
+          url: `TEST-charity-update-documentation`,
           params: { uuid: data.PK },
           method: "PUT",
           body: data.body,

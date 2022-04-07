@@ -13,7 +13,12 @@ export type FormValues = {
   un_sdg: number;
 };
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
+const VALID_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "application/pdf",
+  "image/webp",
+];
 
 const FILE_ARRAY_SCHEMA = Yup.array<File>().of(
   Yup.mixed<File>()
