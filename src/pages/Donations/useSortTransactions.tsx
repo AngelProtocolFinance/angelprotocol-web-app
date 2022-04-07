@@ -21,9 +21,9 @@ export default function useSortedTransactions(transactions: Transaction[]) {
     const gtSortVal = sortDirection === "asc" ? 1 : -1;
     const ltSortVal = sortDirection === "asc" ? -1 : 1;
     txs.sort((prev, next) => {
-      if (prev[sortKey] > next[sortKey]) {
+      if (prev[sortKey]! > next[sortKey]!) {
         return gtSortVal;
-      } else if (prev[sortKey] < next[sortKey]) {
+      } else if (prev[sortKey]! < next[sortKey]!) {
         return ltSortVal;
       } else {
         return 0;

@@ -1,3 +1,4 @@
+import { chainIDs } from "constants/chainIDs";
 export interface Transaction {
   endowment_address: string; // Charity's endowment address
   wallet_address: string; // Owner's wallet address
@@ -6,6 +7,7 @@ export interface Transaction {
   amount: number; // 14.251521
   app_used: string; // "restore-earth"
   transaction_type: string; // "deposit"
+  chain_id?: chainIDs;
 }
 
 export interface DonationQueryRes<T> {

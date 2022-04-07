@@ -17,7 +17,7 @@ export default function ApplicationsTable(props: {
     <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
       <TableSection
         type="thead"
-        rowClass="sm:visible invisible  sm:flex sm:inline-block"
+        rowClass="sm:visible invisible  sm:flex sm:inline-block mb-2"
       >
         <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0 text-left flex-1">
           <>Name</>
