@@ -1,6 +1,7 @@
 import { aws } from "./aws";
 import {
   ContactDetailsData,
+  RegistrationData,
   UpdateAdditionalInformationData,
   UpdateAdditionalInformationResult,
   UpdateDocumentationData,
@@ -26,7 +27,10 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    checkPreviousRegistration: builder.mutation<any, string>({
+    checkPreviousRegistration: builder.mutation<
+      RegistrationData,
+      string | undefined
+    >({
       query: (uuid) => {
         return {
           url: `registration`,
@@ -34,7 +38,6 @@ const registration_api = aws.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (response: { data: any }) => response,
     }),
     createCharityMetaData: builder.mutation<any, any>({
       query: (data) => {

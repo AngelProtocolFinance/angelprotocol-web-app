@@ -1,8 +1,10 @@
 import Loader from "components/Loader/Loader";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { app, site } from "constants/routes";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetCharityDataQuery } from "services/aws/charity";
+import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
@@ -17,7 +19,30 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const { data, error, isLoading } = useGetCharityDataQuery(user.PK);
+  const [checkData] = useCheckPreviousRegistrationMutation();
+  const { showModal } = useSetModal();
+  const [isLoading, setLoading] = useState(false);
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    async function getData() {
+      setLoading(true);
+      const response = await checkData(user.PK);
+      if ((response as any).error) {
+        showModal<PopupProps>(Popup, {
+          message:
+            "No active charity application found with this registration reference",
+        });
+        return console.log((response as any).error);
+      }
+
+      setData(response);
+      setLoading(false);
+    }
+
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (!user.PK) {
@@ -32,13 +57,6 @@ export default function Dashboard() {
       navigate(0);
     }
   }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, navigate]);
-
-  useEffect(() => {
-    if (error) {
-      const messageData: any = error;
-      console.error(messageData?.data?.message || "something went wrong");
-    }
-  }, [error]);
 
   const status = useMemo(() => getRegistrationStatus(user, data), [user, data]);
 

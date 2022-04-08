@@ -58,3 +58,9 @@ export type UpdateAdditionalInformationResult = {
   CharityBanner: string;
   CharityOverview: string;
 };
+
+export type RegistrationData = {
+  ContactPerson: any;
+  Metadata: any;
+  Registration: any;
+};
