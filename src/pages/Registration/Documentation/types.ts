@@ -32,7 +32,9 @@ const FILE_ARRAY_SCHEMA = Yup.array<FileWrapper>().of(
       name: "fileType",
       message: "Valid file types are PDF, JPG and PNG",
       test: (fileWrapper) =>
-        VALID_MIME_TYPES.includes(fileWrapper?.file?.type || "none"),
+        fileWrapper?.file
+          ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
+          : true,
     })
 );
 
