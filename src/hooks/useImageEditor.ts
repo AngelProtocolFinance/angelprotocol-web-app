@@ -1,7 +1,9 @@
 import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext, Path } from "react-hook-form";
-import useFleek from "services/fleek/useFleek";
+import useFleek from "hooks/useFleek";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 
 export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   //TODO: make this reusable with other image changer on different context
@@ -14,6 +16,7 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   const [error, setError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>();
   const { upload, isUploading } = useFleek();
+  const { showModal } = useSetModal();
 
   useEffect(() => {
     if (!imageUrl) {
@@ -45,7 +48,7 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
       });
       setImageUrl(url);
     } else {
-      setError("Error processing image");
+      showModal<PopupProps>(Popup, { message: "Error processing image" });
     }
   }
 
