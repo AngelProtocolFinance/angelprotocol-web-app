@@ -9,35 +9,35 @@ import { useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import genProposalsLink from "../genProposalsLink";
 import useWalletContext from "hooks/useWalletContext";
-import Registrar from "contracts/Registrar";
 import { ProposalMeta } from "pages/Admin/types";
 import { proposalTypes } from "constants/routes";
-import { RegistrarOwnerValues } from "./updateOwnerSchema";
+import { IndexFundOwnerValues } from "./updateOwnerSchema";
+import Indexfund from "contracts/IndexFund";
 
 export default function useUpdateOwner() {
   const { wallet } = useWalletContext();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
-  } = useFormContext<RegistrarOwnerValues>();
+  } = useFormContext<IndexFundOwnerValues>();
 
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
-  async function updateOwner(data: RegistrarOwnerValues) {
+  async function updateOwner(data: IndexFundOwnerValues) {
     //check for changes
     if (data.initialOwner === data.new_owner) {
       showModal(Popup, { message: "no changes detected" });
       return;
     }
 
-    const registrarContract = new Registrar(wallet);
-    const configUpdateMsg = registrarContract.createEmbeddedOwnerUpdateMsg({
+    const indexFundContract = new Indexfund(wallet);
+    const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
 
     const ownerUpdateMeta: ProposalMeta = {
-      type: proposalTypes.registrar_updateOwner,
+      type: proposalTypes.indexFund_ownerUpdate,
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
