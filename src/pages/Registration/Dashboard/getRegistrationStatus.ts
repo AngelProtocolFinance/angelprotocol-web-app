@@ -1,19 +1,19 @@
 import { User } from "services/user/types";
 import { RegistrationStatus, ReviewStatus } from "./types";
 
-export default function getRegistrationStatus(
-  user: User,
-  data: any
-): RegistrationStatus {
+export default function getRegistrationStatus(user: User): RegistrationStatus {
   return {
     stepOne: { completed: !!user.PK },
-    stepTwo: { completed: !!user.TerraWallet || !!data?.Metadata?.TerraWallet },
-    stepThree: getStepThree(user, data),
-    stepFour: getStepFour(user, data),
+    stepTwo: { completed: !!user.TerraWallet },
+    stepThree: getStepThree(user),
+    stepFour: {
+      completed:
+        !!user.CharityLogo && !!user.CharityBanner && !!user.CharityOverview,
+    },
     reviewStatus:
       user?.RegistrationStatus === "Complete"
         ? ReviewStatus.Complete
-        : data?.Metadata?.EndowmentStatus === "Active"
+        : user?.Metadata?.EndowmentStatus === "Active"
         ? ReviewStatus.Available
         : user.IsMetaDataCompleted
         ? ReviewStatus.UnderReview
@@ -29,10 +29,14 @@ export default function getRegistrationStatus(
   };
 }
 
-function getStepThree(user: User, data: any) {
-  const levelOneDataExists = getLevelOneDataExists(user, data);
-  const levelTwoDataExists = getLevelTwoDataExists(user, data);
-  const levelThreeDataExists = getLevelThreeDataExists(user, data);
+function getStepThree(user: User) {
+  const levelOneDataExists =
+    !!user.ProofOfIdentity?.length &&
+    !!user.ProofOfRegistration?.length &&
+    !!user.Website;
+  const levelTwoDataExists =
+    !!user.FinancialStatements?.length && (user.UN_SDG || -1) >= 0;
+  const levelThreeDataExists = !!user.AuditedFinancialReports?.length;
 
   const level = levelOneDataExists
     ? levelTwoDataExists
@@ -44,27 +48,3 @@ function getStepThree(user: User, data: any) {
 
   return { completed: levelOneDataExists, level };
 }
-
-const getLevelOneDataExists = (user: User, data: any) =>
-  (user.ProofOfIdentity?.length ||
-    data?.Registration?.ProofOfIdentity?.length) &&
-  (user.ProofOfRegistration?.length ||
-    data?.Registration?.ProofOfRegistration?.length) &&
-  (user.Website || data?.Registration?.Website);
-
-const getLevelTwoDataExists = (user: User, data: any) =>
-  (user.FinancialStatements?.length ||
-    data?.Registration?.FinancialStatements?.length) &&
-  ((user.UN_SDG || -1) >= 0 || (data?.Registration?.UN_SDG || -1) >= 0);
-
-const getLevelThreeDataExists = (user: User, data: any) =>
-  user.AuditedFinancialReports?.length ||
-  data?.Registration?.FinancialStatements?.length;
-
-const getStepFour = (user: User, data: any) => ({
-  completed:
-    (!!user.CharityLogo && !!user.CharityBanner && !!user.CharityOverview) ||
-    (!!data?.Registration?.CharityLogo &&
-      !!data?.Registration?.CharityBanner &&
-      !!data?.Registration?.CharityOverview),
-});

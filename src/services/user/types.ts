@@ -28,6 +28,7 @@ export interface User {
   ProofOfRegistrationVerified: boolean;
   FinancialStatementsVerified: boolean;
   AuditedFinancialReportsVerified: boolean;
+  Metadata: any;
 }
 
 export enum UserTypes {

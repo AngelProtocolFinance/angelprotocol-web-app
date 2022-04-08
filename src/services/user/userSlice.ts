@@ -31,6 +31,7 @@ const initialState: User = {
   ProofOfRegistrationVerified: false,
   FinancialStatementsVerified: false,
   AuditedFinancialReportsVerified: false,
+  Metadata: {},
 };
 const userSlice = createSlice({
   name: "user",

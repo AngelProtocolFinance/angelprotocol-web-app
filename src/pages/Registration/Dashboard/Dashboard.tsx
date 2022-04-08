@@ -1,10 +1,7 @@
 import Loader from "components/Loader/Loader";
-import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
 import { app, site } from "constants/routes";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
@@ -19,30 +16,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const [checkData] = useCheckPreviousRegistrationMutation();
-  const { showModal } = useSetModal();
-  const [isLoading, setLoading] = useState(false);
-  const [data, setData] = useState<any>();
-
-  useEffect(() => {
-    async function getData() {
-      setLoading(true);
-      const response = await checkData(user.PK);
-      if ((response as any).error) {
-        showModal<PopupProps>(Popup, {
-          message:
-            "No active charity application found with this registration reference",
-        });
-        return console.log((response as any).error);
-      }
-
-      setData(response);
-      setLoading(false);
-    }
-
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user.PK) {
@@ -50,6 +24,7 @@ export default function Dashboard() {
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
+    setLoading(false);
   }, [user, dispatch]);
 
   useEffect(() => {
@@ -58,7 +33,7 @@ export default function Dashboard() {
     }
   }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, navigate]);
 
-  const status = useMemo(() => getRegistrationStatus(user, data), [user, data]);
+  const status = useMemo(() => getRegistrationStatus(user), [user]);
 
   const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
 
@@ -125,7 +100,7 @@ export default function Dashboard() {
       {status.reviewStatus !== ReviewStatus.None && (
         <EndowmentStatus
           registrationStatus={status}
-          walletAddress={data?.Metadata?.TerraWallet || user.TerraWallet}
+          walletAddress={user.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
