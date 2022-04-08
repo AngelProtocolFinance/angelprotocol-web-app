@@ -58,31 +58,34 @@ export default function useTorusWallet(): Result {
     }
   }, []);
 
-  const connect = useCallback(async (loginProvider: string) => {
-    setStatus(WalletStatus.INITIALIZING);
+  const connect = useCallback(
+    async (loginProvider: string) => {
+      setStatus(WalletStatus.INITIALIZING);
 
-    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
+      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
 
-    try {
-      const loginResult = !!loginProvider
-        ? await openLogin.login({ loginProvider })
-        : await openLogin.login();
+      try {
+        const loginResult = !!loginProvider
+          ? await openLogin.login({ loginProvider })
+          : await openLogin.login();
 
-      if (loginResult?.privKey) {
-        const newWalletProxy = createWalletProxy(
-          loginResult.privKey,
-          connect,
-          disconnect
-        );
-        setWalletProxy(newWalletProxy);
-        finalStatus = WalletStatus.WALLET_CONNECTED;
+        if (loginResult?.privKey) {
+          const newWalletProxy = createWalletProxy(
+            loginResult.privKey,
+            connect,
+            disconnect
+          );
+          setWalletProxy(newWalletProxy);
+          finalStatus = WalletStatus.WALLET_CONNECTED;
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStatus(finalStatus);
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setStatus(finalStatus);
-    }
-  }, [disconnect]);
+    },
+    [disconnect]
+  );
 
   useEffect(() => {
     async function initializeOpenlogin() {
@@ -131,7 +134,7 @@ export default function useTorusWallet(): Result {
 
 const createWalletProxy = (
   privateKey: string,
-  connect: () => Promise<void>,
+  connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ) => {
   const mnemonic = entropyToMnemonic(privateKey);
@@ -143,7 +146,7 @@ const createWalletProxy = (
 
 function convertToWalletProxy(
   torusWallet: Wallet,
-  connect: () => Promise<void>,
+  connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ): WalletProxy {
   const networkName =
@@ -178,7 +181,7 @@ function convertToWalletProxy(
 }
 function getAvailableWallets(
   wallet: WalletProxy | undefined,
-  connect: () => Promise<void>,
+  connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ) {
   return wallet
