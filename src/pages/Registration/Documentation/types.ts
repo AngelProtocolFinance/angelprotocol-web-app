@@ -36,6 +36,17 @@ const FILE_ARRAY_SCHEMA = Yup.array<FileWrapper>().of(
           ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
           : true,
     })
+    .test({
+      name: "invalidState",
+      message: "Invalid internal state",
+      test: (fileWrapper) =>
+        // fileWrapper must be instantiated
+        !!fileWrapper &&
+        // file name must be set
+        !!fileWrapper.name &&
+        // either new file is uploaded or source URL to file is set
+        (!!fileWrapper.file || !!fileWrapper.sourceUrl),
+    })
 );
 
 export const SCHEMA = Yup.object({
