@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import useImageEditor from "hooks/useImageEditor";
@@ -18,30 +18,15 @@ export default function ImageEditor() {
       }}
       className="grid place-items-center relative group bg-red-400 w-full h-48 p-1 rounded-md mb-4 shadow-inner"
     >
-      {loading && <LoadingOverlay />}
-      <div className="hidden absolute group-hover:flex">
-        <ImageControl
-          type="upload"
-          htmlFor="file__image"
-          Icon={getIcon("Upload")}
-          disabled={loading}
+      {(loading && <LoadingOverlay />) || (
+        <Controls
+          handleFileChange={handleFileChange}
+          handleImageReset={handleImageReset}
+          loading={loading}
+          isInitial={isInitial}
+          inputRef={inputRef}
         />
-        <ImageControl
-          type="reset"
-          onClick={handleImageReset}
-          Icon={getIcon("Undo")}
-          disabled={isInitial || loading}
-        />
-        <input
-          ref={inputRef}
-          disabled={loading}
-          id="file__image"
-          type="file"
-          onChange={handleFileChange}
-          accept="image/png, image/jpeg, image/svg"
-          className="w-0 h-0 appearance-none"
-        />
-      </div>
+      )}
     </div>
   );
 }
@@ -68,6 +53,42 @@ function LoadingOverlay() {
   return (
     <div className="bg-black bg-opacity-50 absolute top-0 left-0 w-full h-full z-99">
       <Loader gapClass="gap-4" widthClass="w-4" bgColorClass="bg-white" />
+    </div>
+  );
+}
+
+interface IControls {
+  inputRef: any;
+  loading: boolean;
+  isInitial: boolean;
+  handleImageReset: () => void;
+  handleFileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+function Controls(props: IControls) {
+  return (
+    <div className="hidden absolute group-hover:flex">
+      <ImageControl
+        type="upload"
+        htmlFor="file__image"
+        Icon={getIcon("Upload")}
+        disabled={props.loading}
+      />
+      <ImageControl
+        type="reset"
+        onClick={props.handleImageReset}
+        Icon={getIcon("Undo")}
+        disabled={props.isInitial || props.loading}
+      />
+      <input
+        ref={props.inputRef}
+        disabled={props.loading}
+        id="file__image"
+        type="file"
+        onChange={props.handleFileChange}
+        accept="image/png, image/jpeg, image/svg"
+        className="w-0 h-0 appearance-none"
+      />
     </div>
   );
 }

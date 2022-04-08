@@ -13,7 +13,6 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   const currImageRef = useRef<string>(getValues(fieldName));
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [imageUrl, setImageUrl] = useState<string>();
   const { upload, isUploading } = useFleek();
   const { showModal } = useSetModal();
@@ -55,7 +54,6 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
     handleFileChange,
     handleImageReset,
     loading: isUploading || loading,
-    error,
     isInitial: !imageUrl,
     inputRef,
   };
