@@ -11,6 +11,7 @@ import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import FundSender from "./Templates/FundSender/FundSender";
 import RegistrarConfigurer from "./Templates/RegistrarConfigurer/RegistrarConfigurer";
+import RegistrarOwner from "./Templates/RegistrarOwner/RegistrarOwner";
 
 export default function Proposer() {
   return (
@@ -52,6 +53,10 @@ export default function Proposer() {
         <Route
           path={proposalTypes.registrar_updateConfig}
           element={<RegistrarConfigurer />}
+        />
+        <Route
+          path={proposalTypes.registrar_updateOwner}
+          element={<RegistrarOwner />}
         />
         <Route index element={<MemberUpdator />} />
       </Routes>
@@ -104,6 +109,9 @@ function ProposalTypes() {
       <ProposalCategory title="Registrar" classes="mt-4" />
       <NavLink to={proposalTypes.registrar_updateConfig} className={styler}>
         Update Config
+      </NavLink>
+      <NavLink to={proposalTypes.registrar_updateOwner} className={styler}>
+        Update Owner
       </NavLink>
     </div>
   );

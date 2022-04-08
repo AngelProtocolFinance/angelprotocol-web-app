@@ -8,6 +8,7 @@ import FundMemberUpdate from "./FundMemberUpdate";
 import { proposalTypes } from "constants/routes";
 import FundTransfer from "./FundTransfer";
 import DiffTable from "./DiffTable";
+import RegistrarOwner from "./RegistrarOwner";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
@@ -33,6 +34,8 @@ export default function Preview(props: ProposalMeta) {
       return <DiffTable diffSet={props.data} />;
     case proposalTypes.registrar_updateConfig:
       return <DiffTable diffSet={props.data} />;
+    case proposalTypes.registrar_updateOwner:
+      return <RegistrarOwner {...props.data} />;
 
     default:
       return <div className="p-2">no preview</div>;

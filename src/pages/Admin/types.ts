@@ -3,6 +3,7 @@ import {
   FundConfig,
   FundDetails,
   RegistrarConfigPayload,
+  RegistrarOwnerPayload,
 } from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
@@ -59,6 +60,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.registrar_updateConfig;
       data: RegistrarConfigUpdateMeta;
+    }
+  | {
+      type: proposalTypes.registrar_updateOwner;
+      data: RegistrarOwnerUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -101,3 +106,4 @@ export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type FundConfigUpdateMeta = DiffSet<FundConfig>;
 export type CW3ConfigUpdateMeta = DiffSet<CW3ConfigPayload>;
 export type RegistrarConfigUpdateMeta = DiffSet<RegistrarConfigPayload>;
+export type RegistrarOwnerUpdateMeta = { owner: string; newOwner: string };
