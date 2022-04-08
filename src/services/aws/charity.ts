@@ -24,16 +24,6 @@ const charity_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    getCharityData: builder.query<any, any>({
-      query: (uuid) => {
-        return {
-          url: `charity`,
-          params: { uuid: uuid },
-          method: "Get",
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     getCharityListEndowment: builder.query<any, any>({
       query: (status) => {
         return {
@@ -48,7 +38,6 @@ const charity_api = aws.injectEndpoints({
 
 export const {
   useAddCharityMetadataMutation,
-  useGetCharityDataQuery,
   useGetCharityListEndowmentQuery,
   useUpdateCharityMetadataMutation,
 } = charity_api;
