@@ -1,15 +1,12 @@
 import * as Yup from "yup";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import { ProposalBase, proposalShape } from "../proposalShape";
 import { AllianceMember } from "services/terra/indexFund/types";
 import { requiredAddress } from "schemas/string";
 
 export type AllianceEditValues = Required<AllianceMember> & ProposalBase;
 
-const allianceEditShape: PartialRecord<
-  keyof AllianceEditValues,
-  Yup.AnySchema
-> = {
+const allianceEditShape: SchemaShape<AllianceEditValues> = {
   ...proposalShape,
   wallet: requiredAddress("wallet"),
   name: Yup.string().required("name is required"),

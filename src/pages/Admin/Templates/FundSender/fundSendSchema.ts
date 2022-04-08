@@ -1,7 +1,7 @@
 import { denoms } from "constants/currency";
 import { requiredTokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
@@ -16,7 +16,7 @@ export type FundSendPayload = {
 };
 export type FundSendValues = ProposalBase & FundSendPayload;
 
-const fundSendShape: PartialRecord<keyof FundSendValues, Yup.AnySchema> = {
+const fundSendShape: SchemaShape<FundSendValues> = {
   ...proposalShape,
   amount: requiredTokenAmount,
   recipient: requiredAddress("recipient"),

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import { ProposalBase, proposalShape } from "../proposalShape";
 import {
   EndowmentStatus as T,
@@ -17,10 +17,7 @@ export type EndowmentUpdateValues = {
   prevStatus?: keyof T;
 } & ProposalBase;
 
-const endowmentUpdateShape: PartialRecord<
-  keyof EndowmentUpdateValues,
-  Yup.AnySchema
-> = {
+const endowmentUpdateShape: SchemaShape<EndowmentUpdateValues> = {
   ...proposalShape,
   endowmentAddr: requiredAddress("endowment"),
   status: Yup.mixed().oneOf<ST>(
@@ -32,5 +29,4 @@ const endowmentUpdateShape: PartialRecord<
     then: requiredAddress("beneficiary"),
   }),
 };
-
 export const endowmentUpdateSchema = Yup.object(endowmentUpdateShape);

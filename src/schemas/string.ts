@@ -1,15 +1,15 @@
-import * as Yup from "yup";
+import { string } from "yup";
 import { testAddress } from "./tests";
 
 export const address = (title: string) =>
-  Yup.string().test(
+  string().test(
     "is valid",
     `${title} address format is not valid`,
     testAddress
   );
 
 export const requiredAddress = (title: string) =>
-  Yup.string()
+  string()
     .required(`${title} address is required`)
     .test("is valid", `${title} address format is not valid`, testAddress);
 
@@ -18,7 +18,7 @@ export const stringByteSchema = (
   minBytes: number,
   maxBytes: number
 ) =>
-  Yup.string()
+  string()
     .required(`${title} is required`)
     .test(
       "min_length",
