@@ -53,10 +53,8 @@ function DropzoneText({ files }: DropzoneTextProps) {
 }
 
 function getFileNames(files: FileWrapper | FileWrapper[]) {
-  let fileWrappers: FileWrapper[] = [];
-  if (!!files) {
-    fileWrappers = fileWrappers.concat(files);
-  }
+  const fileWrappers = !(files as any).length ? [] : (files as FileWrapper[]);
+
   const fileNames = fileWrappers
     .map((fileWrapper) => fileWrapper.name)
     .join(", ");

@@ -10,8 +10,6 @@ export default function ProofOfIdentity() {
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
-  console.log(errors);
-
   // For some reason Yup has defined a wrong type for the subfields of 'errors',
   // so in order to be able to read the error message, we have to convert it to 'any'
   const errorMessage = !!errors?.proofOfIdentity?.length
