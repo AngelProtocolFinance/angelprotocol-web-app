@@ -32,6 +32,7 @@ export default function ImageEditor() {
         />
         <input
           ref={inputRef}
+          disabled={loading}
           id="file__image"
           type="file"
           onChange={handleFileChange}

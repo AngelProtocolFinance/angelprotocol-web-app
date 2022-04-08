@@ -1,6 +1,7 @@
 import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext, Path } from "react-hook-form";
+import useFleek from "services/fleek/useFleek";
 
 export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   //TODO: make this reusable with other image changer on different context
@@ -11,59 +12,49 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fileList, setFileList] = useState<FileList | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>();
+  const { upload, isUploading } = useFleek();
 
   useEffect(() => {
-    setLoading(true);
-    if (fileList === null) {
+    if (!imageUrl) {
       setValue(fieldName, currImageRef.current as any);
       return;
     }
-    if (fileList.length > 0) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(fileList[0]);
-      fileReader.onload = handleFileLoad;
-      fileReader.onerror = handleFileError;
-      //no need to remove  for will be garbage collected
-    }
     //eslint-disable-next-line
-  }, [fileList]);
-
-  function handleFileLoad(e: ProgressEvent<FileReader>) {
-    // fileReader.readAsDataURL is only ran if there's file
-    setValue(fieldName, e.target!.result as any, {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
-    setLoading(false);
-  }
-
-  function handleFileError() {
-    setError("failed to load image");
-    setLoading(false);
-  }
+  }, [imageUrl]);
 
   function handleImageReset() {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    setFileList(null);
+    setImageUrl("");
   }
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
     if (!e.target.files) return;
+    setLoading(true);
+    const key = e.target.files[0].name;
     const file = await optimizeImage(e.target.files[0]);
-    const files = (file ? [file] : e.target.files) as FileList;
-    setFileList(files);
+    setLoading(false);
+
+    const url = await upload(key, file);
+    if (url) {
+      setValue(fieldName, url as any, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setImageUrl(url);
+    } else {
+      setError("Error processing image");
+    }
   }
 
   return {
-    fileList,
     handleFileChange,
     handleImageReset,
-    loading,
+    loading: isUploading || loading,
     error,
-    isInitial: fileList === null,
+    isInitial: !imageUrl,
     inputRef,
   };
 }
