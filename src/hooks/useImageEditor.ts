@@ -38,9 +38,8 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
     setLoading(true);
     const key = e.target.files[0].name;
     const file = await optimizeImage(e.target.files[0]);
-    setLoading(false);
-
     const url = await upload(key, file);
+    setLoading(false);
     if (url) {
       setValue(fieldName, url as any, {
         shouldDirty: true,

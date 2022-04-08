@@ -4,6 +4,7 @@ import { IconType } from "react-icons";
 import useImageEditor from "hooks/useImageEditor";
 import { getIcon } from "components/Icons/Icons";
 import { EditableProfileAttr as E } from "services/aws/endowments/types";
+import Loader from "components/Loader/Loader";
 
 export default function ImageEditor() {
   const { watch } = useFormContext<E>();
@@ -17,6 +18,7 @@ export default function ImageEditor() {
       }}
       className="grid place-items-center relative group bg-red-400 w-full h-48 p-1 rounded-md mb-4 shadow-inner"
     >
+      {loading && <LoadingOverlay />}
       <div className="hidden absolute group-hover:flex">
         <ImageControl
           type="upload"
@@ -60,4 +62,12 @@ function ImageControl(props: ControlProps & Common) {
       "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",
     children: <Icon />,
   });
+}
+
+function LoadingOverlay() {
+  return (
+    <div className="bg-black bg-opacity-50 absolute top-0 left-0 w-full h-full z-99">
+      <Loader gapClass="gap-4" widthClass="w-4" bgColorClass="bg-white" />
+    </div>
+  );
 }
