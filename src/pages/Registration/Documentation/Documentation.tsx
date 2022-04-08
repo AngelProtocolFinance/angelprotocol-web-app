@@ -27,7 +27,7 @@ export default function Documentation() {
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
-      un_sdg: user.UN_SDG,
+      un_sdg: user.UN_SDG >= 0 ? user.UN_SDG : undefined,
       website: user.Website,
       proofOfIdentity: user.ProofOfIdentity,
       proofOfRegistration: user.ProofOfRegistration,
