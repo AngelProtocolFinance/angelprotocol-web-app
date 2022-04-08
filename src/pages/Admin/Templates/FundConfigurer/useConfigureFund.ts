@@ -17,7 +17,7 @@ import genProposalsLink from "../genProposalsLink";
 import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
-import genDiffMeta from "../RegistrarConfigurer/genDiffMeta";
+import genDiffMeta from "../genDiffMeta";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

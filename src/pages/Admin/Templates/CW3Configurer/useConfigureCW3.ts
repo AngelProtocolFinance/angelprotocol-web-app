@@ -15,7 +15,7 @@ import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
 import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
-import genDiffMeta from "../RegistrarConfigurer/genDiffMeta";
+import genDiffMeta from "../genDiffMeta";
 
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];

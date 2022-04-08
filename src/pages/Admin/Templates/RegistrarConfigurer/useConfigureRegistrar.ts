@@ -16,7 +16,7 @@ import Registrar from "contracts/Registrar";
 import { RegistrarConfigPayload } from "contracts/types";
 import { ProposalMeta } from "pages/Admin/types";
 import { proposalTypes } from "constants/routes";
-import genDiffMeta from "./genDiffMeta";
+import genDiffMeta from "../genDiffMeta";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

@@ -1,12 +1,9 @@
 import { EditableProfileAttr } from "services/aws/endowments/types";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
 
 //construct strict shape to avoid hardcoding shape keys
-const strictShape: PartialRecord<
-  keyof EditableProfileAttr,
-  Yup.StringSchema | Yup.NumberSchema
-> = {
+const editProfileShape: SchemaShape<EditableProfileAttr> = {
   //these fields are optional, owners can opt not to give details,
   //but when they do, make sure they give correct one
   charity_email: Yup.string().email("invalid email"),
@@ -17,4 +14,4 @@ const strictShape: PartialRecord<
   //other fields are optional, due diligence of owner to update profile
 };
 
-export const schema = Yup.object().shape(strictShape);
+export const schema = Yup.object().shape(editProfileShape);

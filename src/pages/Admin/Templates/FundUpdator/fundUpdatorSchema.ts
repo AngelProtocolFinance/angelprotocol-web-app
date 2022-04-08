@@ -1,7 +1,6 @@
 import { requiredAddress } from "schemas/string";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
-import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundUpdateValues = ProposalBase & {
@@ -9,10 +8,7 @@ export type FundUpdateValues = ProposalBase & {
   newMemberAddr: string;
 };
 
-const fundDestroyerShape: PartialRecord<
-  keyof FundUpdateValues,
-  Yup.AnySchema | Lazy<Yup.AnySchema>
-> = {
+const fundDestroyerShape: SchemaShape<FundUpdateValues> = {
   ...proposalShape,
   newMemberAddr: requiredAddress("endowment"),
 };

@@ -70,4 +70,5 @@ export const enum proposalTypes {
 
   //registrar
   registrar_updateConfig = "registrar-update-config",
+  registrar_updateOwner = "registrar-update-owner",
 }

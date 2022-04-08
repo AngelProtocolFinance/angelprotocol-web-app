@@ -1,7 +1,6 @@
 import { requiredPositiveNumber } from "schemas/number";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
-import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type CW3ConfigPayload = {
@@ -13,10 +12,7 @@ export type CW3ConfigPayload = {
 export type CW3ConfigValues = ProposalBase &
   CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
 
-const cw3ConfigShape: PartialRecord<
-  keyof CW3ConfigValues,
-  Yup.AnySchema | Lazy<Yup.AnySchema>
-> = {
+const cw3ConfigShape: SchemaShape<CW3ConfigValues> = {
   ...proposalShape,
   threshold: requiredPositiveNumber,
   height: requiredPositiveNumber,

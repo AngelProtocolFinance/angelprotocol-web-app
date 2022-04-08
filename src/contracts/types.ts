@@ -86,3 +86,7 @@ export type RegistrarConfigPayload = {
   gov_contract?: string;
   charity_shares_contract?: string;
 };
+
+export type RegistrarOwnerPayload = {
+  new_owner: string;
+};

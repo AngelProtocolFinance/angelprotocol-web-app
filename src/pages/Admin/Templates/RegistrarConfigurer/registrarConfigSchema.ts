@@ -1,9 +1,8 @@
 import { RegistrarConfigPayload } from "contracts/types";
 import { percentString, positiveNumber } from "schemas/number";
 import { address } from "schemas/string";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
-import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type RegistrarConfigValues = ProposalBase &
@@ -11,10 +10,7 @@ export type RegistrarConfigValues = ProposalBase &
 
 const contractAddrSchema = address("contract").nullable();
 
-const registrarConfigShape: PartialRecord<
-  keyof RegistrarConfigValues,
-  Yup.AnySchema | Lazy<Yup.AnySchema>
-> = {
+const registrarConfigShape: SchemaShape<RegistrarConfigValues> = {
   ...proposalShape,
   //accounts code id
   accounts_code_id: positiveNumber,

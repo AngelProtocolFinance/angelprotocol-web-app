@@ -1,5 +1,6 @@
+import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
 import { ProposalBase, proposalShape } from "../proposalShape";
 export type MemberUpdatorValues = {
@@ -7,16 +8,10 @@ export type MemberUpdatorValues = {
   weight: string;
 } & ProposalBase;
 
-const memberUpdateShape: PartialRecord<
-  keyof MemberUpdatorValues,
-  Yup.AnySchema
-> = {
+const memberUpdateShape: SchemaShape<MemberUpdatorValues> = {
   ...proposalShape,
   addr: requiredAddress("wallet"),
-  weight: Yup.number()
-    .required("weight is required")
-    .typeError("weight must be a number")
-    .positive("invalid weight"),
+  weight: requiredPositiveNumber,
 };
 
 export const memberUpdatorSchema = Yup.object(memberUpdateShape);

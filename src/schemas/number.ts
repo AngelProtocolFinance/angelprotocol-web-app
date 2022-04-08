@@ -2,8 +2,8 @@ import * as Yup from "yup";
 import { testTokenDigits } from "./tests";
 
 const tokenConstraint = Yup.number()
-  .positive("Amount must be greater than zero ")
-  .typeError("Amount is invalid")
+  .positive("invalid: must be greater than zero ")
+  .typeError("invalid: must be a number")
   .test("max precision", "must not be greater than 6 digits", testTokenDigits);
 
 const positiveNumberConstraint = Yup.number()
