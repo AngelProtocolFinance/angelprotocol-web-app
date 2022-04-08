@@ -11,8 +11,8 @@ import { entropyToMnemonic } from "bip39";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { mainnet } from "../chainOptions";
 import { ConnectionProxy, WalletProxy } from "../types";
-import createDefaultWallet from "./createDefaultWallet";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
@@ -45,55 +45,6 @@ export default function useTorusWallet(): Result {
   const [status, setStatus] = useState(WalletStatus.WALLET_NOT_CONNECTED);
   const [walletProxy, setWalletProxy] = useState<WalletProxy | undefined>();
 
-  useEffect(() => {
-    async function initializeOpenlogin() {
-      setStatus(WalletStatus.INITIALIZING);
-
-      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
-
-      try {
-        await openLogin.init();
-
-        // when using 'redirect' uxMode, this field will contain the private key value after redirect
-        // NOTE: to successfully read this value, it is necessary to call this hook in the component
-        // that is Torus is set to redirect to, otherwise this value would be empty
-        if (openLogin.privKey) {
-          const newWalletProxy = createWalletProxy(openLogin.privKey);
-          setWalletProxy(newWalletProxy);
-          finalStatus = WalletStatus.WALLET_CONNECTED;
-        }
-      } catch (err) {
-        console.log(err);
-      } finally {
-        setStatus(finalStatus);
-      }
-    }
-
-    initializeOpenlogin();
-  }, []);
-
-  const connect = useCallback(async (loginProvider: string) => {
-    setStatus(WalletStatus.INITIALIZING);
-
-    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
-
-    try {
-      const loginResult = !!loginProvider
-        ? await openLogin.login({ loginProvider })
-        : await openLogin.login();
-
-      if (loginResult?.privKey) {
-        const newWalletProxy = createWalletProxy(loginResult.privKey);
-        setWalletProxy(newWalletProxy);
-        finalStatus = WalletStatus.WALLET_CONNECTED;
-      }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setStatus(finalStatus);
-    }
-  }, []);
-
   const disconnect = useCallback(async () => {
     setStatus(WalletStatus.INITIALIZING);
 
@@ -107,28 +58,94 @@ export default function useTorusWallet(): Result {
     }
   }, []);
 
+  const connect = useCallback(async (loginProvider: string) => {
+    setStatus(WalletStatus.INITIALIZING);
+
+    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
+
+    try {
+      const loginResult = !!loginProvider
+        ? await openLogin.login({ loginProvider })
+        : await openLogin.login();
+
+      if (loginResult?.privKey) {
+        const newWalletProxy = createWalletProxy(
+          loginResult.privKey,
+          connect,
+          disconnect
+        );
+        setWalletProxy(newWalletProxy);
+        finalStatus = WalletStatus.WALLET_CONNECTED;
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setStatus(finalStatus);
+    }
+  }, [disconnect]);
+
+  useEffect(() => {
+    async function initializeOpenlogin() {
+      setStatus(WalletStatus.INITIALIZING);
+
+      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
+
+      try {
+        await openLogin.init();
+
+        // when using 'redirect' uxMode, this field will contain the private key value after redirect
+        // NOTE: to successfully read this value, it is necessary to call this hook in the component
+        // that is Torus is set to redirect to, otherwise this value would be empty
+        if (openLogin.privKey) {
+          const newWalletProxy = createWalletProxy(
+            openLogin.privKey,
+            connect,
+            disconnect
+          );
+          setWalletProxy(newWalletProxy);
+          finalStatus = WalletStatus.WALLET_CONNECTED;
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStatus(finalStatus);
+      }
+    }
+
+    initializeOpenlogin();
+  }, [connect, disconnect]);
+
   return useMemo(() => {
-    const wallet = walletProxy && { ...walletProxy, connect, disconnect };
-    const availableWallets = wallet
-      ? [wallet]
-      : [{ ...createDefaultWallet(TORUS_CONNECTION), connect, disconnect }];
+    const availableWallets = getAvailableWallets(
+      walletProxy,
+      connect,
+      disconnect
+    );
     return {
       status,
-      wallet,
       availableWallets,
+      wallet: walletProxy,
     };
   }, [walletProxy, connect, disconnect, status]);
 }
 
-const createWalletProxy = (privateKey: string) => {
+const createWalletProxy = (
+  privateKey: string,
+  connect: () => Promise<void>,
+  disconnect: () => Promise<void>
+) => {
   const mnemonic = entropyToMnemonic(privateKey);
   const mnemonicKey = new MnemonicKey({ mnemonic });
   const wallet = lcdClient.wallet(mnemonicKey);
-  const walletProxy = convertToWalletProxy(wallet);
+  const walletProxy = convertToWalletProxy(wallet, connect, disconnect);
   return walletProxy;
 };
 
-function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
+function convertToWalletProxy(
+  torusWallet: Wallet,
+  connect: () => Promise<void>,
+  disconnect: () => Promise<void>
+): WalletProxy {
   const networkName =
     Object.entries(chainIDs).find(
       ([_, value]) => value === torusWallet.lcd.config.chainID
@@ -142,6 +159,8 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
       lcd: torusWallet.lcd.config.URL,
       name: networkName,
     },
+    connect,
+    disconnect,
     post: async (txOptions: CreateTxOptions) => {
       const tx = await torusWallet.createAndSignTx(txOptions);
       const res = await torusWallet.lcd.tx.broadcast(tx);
@@ -155,11 +174,25 @@ function convertToWalletProxy(torusWallet: Wallet): WalletProxy {
         success: true,
       };
     },
-    connect: () => {
-      throw Error("Not initialized");
-    },
-    disconnect: () => {
-      throw Error("Not initialized");
-    },
   };
+}
+function getAvailableWallets(
+  wallet: WalletProxy | undefined,
+  connect: () => Promise<void>,
+  disconnect: () => Promise<void>
+) {
+  return wallet
+    ? [wallet]
+    : [
+        {
+          address: "",
+          connection: TORUS_CONNECTION,
+          network: mainnet,
+          post: (_: CreateTxOptions) => {
+            throw Error("Not initialized");
+          },
+          connect,
+          disconnect,
+        },
+      ];
 }
