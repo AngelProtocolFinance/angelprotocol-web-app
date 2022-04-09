@@ -10,7 +10,6 @@ import { admin } from "constants/routes";
 import { useSetter } from "store/accessors";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
-import AdminNav from "./AdminNav";
 import { EndowmentAddrParams } from "./types";
 import useWalletContext from "hooks/useWalletContext";
 

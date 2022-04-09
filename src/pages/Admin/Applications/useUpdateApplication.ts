@@ -28,7 +28,7 @@ export default function useUpdateApplicationStatus() {
     const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload, [undefined])
+        cleanObject(statusChangePayload)
       );
 
     const adminContract = new Admin("apTeam", wallet);

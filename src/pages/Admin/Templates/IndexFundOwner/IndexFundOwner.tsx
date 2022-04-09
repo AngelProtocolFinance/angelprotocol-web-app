@@ -4,8 +4,6 @@ import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { FormProvider, useForm } from "react-hook-form";
 import { useIndexFundConfig } from "services/terra/indexFund/queriers";
 import { IndexFundConfig } from "services/terra/indexFund/types";
-import { useRegistrarConfig } from "services/terra/registrar/queriers";
-import { RegistrarConfig } from "services/terra/registrar/types";
 import OwnerUpdateForm from "./OwnerUpdateForm";
 import { IndexFundOwnerValues, updateOwnerSchema } from "./updateOwnerSchema";
 

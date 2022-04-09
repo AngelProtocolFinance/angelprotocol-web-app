@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { CreateTxOptions, Msg, TxLog } from "@terra-money/terra.js";
+import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
 import handleTerraError from "helpers/handleTerraError";
 import Contract from "contracts/Contract";
 import { chainIDs } from "constants/chainIDs";

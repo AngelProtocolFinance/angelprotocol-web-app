@@ -19,6 +19,3 @@ const styler = createNavLinkStyler(
   "px-2 uppercase text-sm text-center font-semibold font-heading text-white",
   "text-angel-orange"
 );
-
-const disabledStyle =
-  "uppercase text-sm text-center px-2 font-semibold font-heading pointer-events-none select-none text-grey-accent";
