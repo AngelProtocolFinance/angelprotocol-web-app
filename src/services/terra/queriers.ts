@@ -1,6 +1,3 @@
-/**
- * queriers are hooks that calls the API when there's no entry on cache
- */
 import { Dec } from "@terra-money/terra.js";
 import Halo, { H, T } from "contracts/Halo";
 import { denoms } from "constants/currency";

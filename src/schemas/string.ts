@@ -1,18 +1,17 @@
 import * as Yup from "yup";
+import { testAddress } from "./tests";
 
-export const addressSchema = (title: string) =>
+export const address = (title: string) =>
+  Yup.string().test(
+    "is valid",
+    `${title} address format is not valid`,
+    testAddress
+  );
+
+export const requiredAddress = (title: string) =>
   Yup.string()
     .required(`${title} address is required`)
-    .test("is valid", `${title} address format is not valid`, (address) =>
-      /^terra[a-z0-9]{39}$/i.test(address as string)
-    );
-
-export const tokenAmountSchema = Yup.number()
-  .positive("Amount must be greater than zero ")
-  .typeError("Amount is invalid")
-  .test("max precision", "must not be greater than 6 digits", (number) =>
-    /^\d+(\.\d{1,6})?$/.test(number as any)
-  );
+    .test("is valid", `${title} address format is not valid`, testAddress);
 
 export const stringByteSchema = (
   title: string,

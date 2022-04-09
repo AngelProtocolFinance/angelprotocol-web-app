@@ -1,6 +1,6 @@
-import { PartialRecord } from "types/types";
+import { requiredPositiveNumber } from "schemas/number";
+import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
-import Lazy from "yup/lib/Lazy";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type CW3ConfigPayload = {
@@ -9,23 +9,13 @@ export type CW3ConfigPayload = {
   //poll duration in block height
   height: number;
 };
-export type CW3ConfigValues = ProposalBase & CW3ConfigPayload;
+export type CW3ConfigValues = ProposalBase &
+  CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
 
-const numberSchema = Yup.lazy((value) =>
-  value === ""
-    ? Yup.string().required("required")
-    : Yup.number()
-        .typeError("invalid: must be a number")
-        .positive("invalid: must be greater than zero")
-);
-
-const cw3ConfigShape: PartialRecord<
-  keyof CW3ConfigValues,
-  Yup.AnySchema | Lazy<Yup.AnySchema>
-> = {
+const cw3ConfigShape: SchemaShape<CW3ConfigValues> = {
   ...proposalShape,
-  threshold: numberSchema,
-  height: numberSchema,
+  threshold: requiredPositiveNumber,
+  height: requiredPositiveNumber,
 };
 
 export const cw3ConfigSchema = Yup.object(cw3ConfigShape);

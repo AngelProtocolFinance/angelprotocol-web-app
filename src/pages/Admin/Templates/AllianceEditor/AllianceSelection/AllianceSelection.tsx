@@ -5,13 +5,8 @@ import Member from "./Member";
 import Toolbar from "./Toolbar";
 
 export default function AllianceSelection() {
-  const {
-    filteredMembers,
-    handleSearchTextChange,
-    searchText,
-    isInitializing,
-    isDebouncing,
-  } = useAllianceSelection();
+  const { filteredMembers, handleSearchTextChange, searchText, isDebouncing } =
+    useAllianceSelection();
 
   return (
     <div className="h-96 overflow-auto bg-light-grey shadow-inner-white-grey rounded-md relative">
@@ -19,22 +14,17 @@ export default function AllianceSelection() {
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange}
       />
-      {(isInitializing && (
-        <p className="font-mono text-sm text-angel-grey p-2">
-          loading alliance members..
+      {(filteredMembers.length > 0 && (
+        <MemberTable members={filteredMembers} />
+      )) || (
+        <p className="pl-4 pt-4 font-mono text-sm text-angel-grey">
+          {`${
+            isDebouncing
+              ? `searching ${searchText}...`
+              : `${searchText} no alliance member found`
+          }`}
         </p>
-      )) ||
-        (filteredMembers.length > 0 && (
-          <MemberTable members={filteredMembers} />
-        )) || (
-          <p className="pl-4 pt-4 font-mono text-sm text-angel-grey">
-            {`${
-              isDebouncing
-                ? `searching ${searchText}...`
-                : `${searchText} no alliance member found`
-            }`}
-          </p>
-        )}
+      )}
     </div>
   );
 }

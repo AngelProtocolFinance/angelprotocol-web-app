@@ -1,10 +1,12 @@
 import { useState, useMemo } from "react";
 import useDebouncer from "hooks/useDebouncer";
-import useInitMembers from "./useInitMembers";
 import sanitizeRegexSearchText from "helpers/sanitizeRegexSearchText";
+import { useGetter } from "store/accessors";
 
 export default function useAllianceSelection() {
-  const { isInitializing, allianceCopy } = useInitMembers();
+  const allianceCopy = useGetter(
+    (state) => state.admin.allianceMembers.members
+  );
   const [searchText, setSearchText] = useState<string>("");
   const [debouncedSearchText, isDebouncing] = useDebouncer<string>(
     searchText,
@@ -35,7 +37,6 @@ export default function useAllianceSelection() {
     filteredMembers,
     handleSearchTextChange,
     searchText,
-    isInitializing,
     isDebouncing,
   };
 }

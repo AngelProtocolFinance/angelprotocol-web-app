@@ -1,11 +1,12 @@
 import { FundUpdateValues as T } from "../fundUpdatorSchema";
 import TextInput from "../../../components/TextInput";
 import useAddMember from "./useAddMember";
+import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 
 export default function MemberAdder() {
   const { addMember } = useAddMember();
   return (
-    <div className="mb-2 grid p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+    <GroupContainer className="mb-2 grid">
       <TextInput<T>
         title="Endowment Address"
         name="newMemberAddr"
@@ -20,6 +21,6 @@ export default function MemberAdder() {
       >
         + add member
       </button>
-    </div>
+    </GroupContainer>
   );
 }

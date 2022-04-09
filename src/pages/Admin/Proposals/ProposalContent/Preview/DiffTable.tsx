@@ -1,9 +1,10 @@
 import TableSection, { Cells } from "components/TableSection/TableSection";
-import { CW3ConfigPayload as CP } from "pages/Admin/Templates/CW3Configurer/cw3ConfigSchema";
-import { CW3ConfigUpdateMeta } from "pages/Admin/types";
+import { DiffSet } from "pages/Admin/types";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function CW3ConfigUpdate(props: CW3ConfigUpdateMeta) {
+export default function DiffTable<T extends object>(props: {
+  diffSet: DiffSet<T>;
+}) {
   return (
     <PreviewContainer>
       <table>
@@ -19,19 +20,17 @@ export default function CW3ConfigUpdate(props: CW3ConfigUpdateMeta) {
           </Cells>
         </TableSection>
         <TableSection type="tbody" rowClass="border-b border-white/20">
-          {(
-            Object.entries(props.prevConfig) as Array<[keyof CP, CP[keyof CP]]>
-          ).map(([key, prevValue]) => (
+          {props.diffSet.map(([key, prev, next]) => (
             <Cells
               type="td"
               cellClass="text-right p-2 border-r border-white/20"
               dual
-              key={key}
+              key={key as string} //T is a normal object with string keys
               verticalHeaderClass="uppercase text-xs text-left p-2 pl-0 font-heading border-r border-white/20"
             >
-              <>{key.replace(/_/g, " ")}</>
-              <>{prevValue || "default"}</>
-              <>{props.nextConfig[key] || "default"}</>
+              <>{(key as string).replace(/_/g, " ")}</>
+              <>{prev || "not set"}</>
+              <>{next || "not set"}</>
             </Cells>
           ))}
         </TableSection>

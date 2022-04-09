@@ -2,8 +2,6 @@ import { Dec } from "@terra-money/terra.js";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { chainIDs } from "constants/chainIDs";
-import { contracts } from "constants/contracts";
 import { currency_text, denoms } from "constants/currency";
 import { proposalTypes } from "constants/routes";
 import Admin from "contracts/Admin";
@@ -12,10 +10,8 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -26,7 +22,6 @@ import { FundSendValues } from "../fundSendSchema";
 export default function useTransferFunds() {
   const {
     handleSubmit,
-    setValue,
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
@@ -34,34 +29,6 @@ export default function useTransferFunds() {
   const { wallet } = useWalletContext();
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const cw3address =
-    cwContracts === "apTeam"
-      ? contracts[wallet?.network.chainID || chainIDs.testnet].apCW3
-      : cwContracts.cw3;
-
-  const {
-    main: ustBalance,
-    terraBalancesLoading,
-    isTerraBalancesFailed,
-  } = useBalances(denoms.uusd, [], cw3address);
-
-  const { haloBalance, haloBalanceLoading, isHaloBalanceFailed } =
-    useHaloBalance(cw3address);
-
-  const isBalancesLoading = haloBalanceLoading || terraBalancesLoading;
-  const isBalancesError = isTerraBalancesFailed || isHaloBalanceFailed;
-
-  useEffect(() => {
-    if (isBalancesLoading) return;
-    if (isBalancesError) {
-      showModal(Popup, { message: "failed to get form resources" });
-      return;
-    }
-    //validate to trigger render, and update watchers
-    setValue("haloBalance", haloBalance, { shouldValidate: true });
-    setValue("ustBalance", ustBalance, { shouldValidate: true });
-    //eslint-disable-next-line
-  }, [isBalancesLoading, isBalancesError, haloBalance, ustBalance]);
 
   function transferFunds(data: FundSendValues) {
     const balance =
@@ -126,11 +93,6 @@ export default function useTransferFunds() {
 
   return {
     transferFunds: handleSubmit(transferFunds),
-    isSubmitDisabled:
-      isSubmitting ||
-      !isValid ||
-      !isDirty ||
-      isBalancesError ||
-      isBalancesLoading,
+    isSubmitDisabled: isSubmitting || !isValid || !isDirty,
   };
 }
