@@ -53,6 +53,10 @@ export type FundDetails = {
   expiry_height?: number; //block height
 };
 
+export type IndexFundOwnerPayload = {
+  new_owner: string;
+};
+
 export type FundListRes = {
   funds: FundDetails[];
 };

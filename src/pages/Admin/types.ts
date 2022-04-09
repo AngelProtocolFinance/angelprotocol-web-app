@@ -50,6 +50,10 @@ export type ProposalMeta =
       data: FundConfigUpdateMeta;
     }
   | {
+      type: proposalTypes.indexFund_ownerUpdate;
+      data: OwnerUpdateMeta;
+    }
+  | {
       type: proposalTypes.adminGroup_updateCW3Config;
       data: CW3ConfigUpdateMeta;
     }
@@ -63,7 +67,7 @@ export type ProposalMeta =
     }
   | {
       type: proposalTypes.registrar_updateOwner;
-      data: RegistrarOwnerUpdateMeta;
+      data: OwnerUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -106,4 +110,4 @@ export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type FundConfigUpdateMeta = DiffSet<FundConfig>;
 export type CW3ConfigUpdateMeta = DiffSet<CW3ConfigPayload>;
 export type RegistrarConfigUpdateMeta = DiffSet<RegistrarConfigPayload>;
-export type RegistrarOwnerUpdateMeta = { owner: string; newOwner: string };
+export type OwnerUpdateMeta = { owner: string; newOwner: string };

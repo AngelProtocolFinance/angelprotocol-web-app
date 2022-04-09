@@ -6,7 +6,7 @@ import { WalletProxy } from "providers/WalletProvider";
 import { AllianceMember } from "services/terra/indexFund/types";
 import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
-import { FundConfig, FundDetails } from "./types";
+import { FundConfig, FundDetails, IndexFundOwnerPayload } from "./types";
 
 export default class Indexfund extends Contract {
   fund_id?: number;
@@ -39,6 +39,12 @@ export default class Indexfund extends Contract {
   createEmbeddedFundConfigMsg(config: FundConfig) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_config: config,
+    });
+  }
+
+  createEmbeddedOwnerUpdateMsg(payload: IndexFundOwnerPayload) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_owner: payload,
     });
   }
 

@@ -1,8 +1,8 @@
-import { RegistrarOwnerUpdateMeta } from "pages/Admin/types";
+import { OwnerUpdateMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function RegistrarOwner(props: RegistrarOwnerUpdateMeta) {
+export default function OwnerUpdate(props: OwnerUpdateMeta) {
   return (
     <PreviewContainer>
       <KeyValue _key="current owner">

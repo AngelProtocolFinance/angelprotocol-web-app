@@ -48,7 +48,7 @@ export default class Registrar extends Contract {
       update_config: payload,
     });
   }
-  createEmbeddeOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
+  createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_owner: payload,
     });
