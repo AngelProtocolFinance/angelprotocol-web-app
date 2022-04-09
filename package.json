@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fleekhq/fleek-storage-js": "^1.0.21",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",
     "@reduxjs/toolkit": "^1.7.1",
