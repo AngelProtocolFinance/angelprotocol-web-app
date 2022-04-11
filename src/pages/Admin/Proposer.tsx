@@ -10,6 +10,9 @@ import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
 import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import FundSender from "./Templates/FundSender/FundSender";
+import RegistrarConfigurer from "./Templates/RegistrarConfigurer/RegistrarConfigurer";
+import RegistrarOwner from "./Templates/RegistrarOwner/RegistrarOwner";
+import IndexFundOwner from "./Templates/IndexFundOwner/IndexFundOwner";
 
 export default function Proposer() {
   return (
@@ -41,12 +44,24 @@ export default function Proposer() {
           element={<AllianceEditor />}
         />
         <Route
+          path={proposalTypes.indexFund_ownerUpdate}
+          element={<IndexFundOwner />}
+        />
+        <Route
           path={proposalTypes.adminGroup_updateCW3Config}
           element={<CW3Configurer />}
         />
         <Route
           path={proposalTypes.adminGroup_fundTransfer}
           element={<FundSender />}
+        />
+        <Route
+          path={proposalTypes.registrar_updateConfig}
+          element={<RegistrarConfigurer />}
+        />
+        <Route
+          path={proposalTypes.registrar_updateOwner}
+          element={<RegistrarOwner />}
         />
         <Route index element={<MemberUpdator />} />
       </Routes>
@@ -88,12 +103,24 @@ function ProposalTypes() {
       <NavLink to={proposalTypes.indexFund_configUpdate} className={styler}>
         Update Config
       </NavLink>
+      <NavLink to={proposalTypes.indexFund_ownerUpdate} className={styler}>
+        Update Owner
+      </NavLink>
       <NavLink to={proposalTypes.indexFund_allianceEdits} className={styler}>
         Edit Alliance List
       </NavLink>
+
       <ProposalCategory title="Endowment" classes="mt-4" />
       <NavLink to={proposalTypes.endowment_updateStatus} className={styler}>
         Change Endowment Status
+      </NavLink>
+
+      <ProposalCategory title="Registrar" classes="mt-4" />
+      <NavLink to={proposalTypes.registrar_updateConfig} className={styler}>
+        Update Config
+      </NavLink>
+      <NavLink to={proposalTypes.registrar_updateOwner} className={styler}>
+        Update Owner
       </NavLink>
     </div>
   );

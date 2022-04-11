@@ -49,7 +49,7 @@ export default function useUpdateStatus() {
     const registrarContract = new Registrar(wallet);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
-        cleanObject(statusChangePayload, [undefined])
+        cleanObject(statusChangePayload)
       );
 
     //construct endowment payload preview

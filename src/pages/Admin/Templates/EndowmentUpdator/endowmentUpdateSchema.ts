@@ -1,11 +1,11 @@
 import * as Yup from "yup";
-import { PartialRecord } from "types/types";
+import { SchemaShape } from "types/schema";
 import { ProposalBase, proposalShape } from "../proposalShape";
 import {
   EndowmentStatus as T,
   EndowmentStatusStrNum as ST,
 } from "services/terra/registrar/types";
-import { addressSchema } from "schemas/schemas";
+import { requiredAddress } from "schemas/string";
 
 export type EndowmentUpdateValues = {
   endowmentAddr: string;
@@ -17,20 +17,16 @@ export type EndowmentUpdateValues = {
   prevStatus?: keyof T;
 } & ProposalBase;
 
-const endowmentUpdateShape: PartialRecord<
-  keyof EndowmentUpdateValues,
-  Yup.AnySchema
-> = {
+const endowmentUpdateShape: SchemaShape<EndowmentUpdateValues> = {
   ...proposalShape,
-  endowmentAddr: addressSchema("endowment"),
+  endowmentAddr: requiredAddress("endowment"),
   status: Yup.mixed().oneOf<ST>(
     ["0", "1", "2", "3"],
     "please select new status"
   ),
   beneficiary: Yup.mixed().when("status", {
     is: (val: ST) => val === "3",
-    then: addressSchema("beneficiary"),
+    then: requiredAddress("beneficiary"),
   }),
 };
-
 export const endowmentUpdateSchema = Yup.object(endowmentUpdateShape);

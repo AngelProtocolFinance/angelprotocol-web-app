@@ -1,5 +1,4 @@
 import { chainIDs } from "constants/chainIDs";
-
 export interface Transaction {
   endowment_address: string; // Charity's endowment address
   wallet_address: string; // Owner's wallet address

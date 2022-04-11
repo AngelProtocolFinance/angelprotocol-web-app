@@ -1,3 +1,4 @@
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import { FundConfigValues as FV } from "./fundconfigSchema";
@@ -6,10 +7,7 @@ import useConfigureFund from "./useConfigureFund";
 export default function FundConfigForm() {
   const { configureFund, isSubmitDisabled } = useConfigureFund();
   return (
-    <form
-      onSubmit={configureFund}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={configureFund}>
       <TextInput<FV> title="Proposal Title" name="title" required />
       <TextInput<FV>
         title="proposal description"
@@ -27,8 +25,8 @@ export default function FundConfigForm() {
       <TextInput<FV> title="fund rotation" name="fund_rotation" mono />
 
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

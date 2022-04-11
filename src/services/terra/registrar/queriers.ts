@@ -39,3 +39,20 @@ export function useApprovedVaultsRate() {
     isVaultsRateLoading: isLoading || isFetching,
   };
 }
+
+export function useRegistrarConfig() {
+  const { useConfigQuery } = registrar_api;
+  const { contract, wallet } = useContract<R, T>(Registrar);
+  const { data, isError, isLoading, isFetching } = useConfigQuery(
+    contract.config,
+    {
+      skip: wallet?.network.chainID === chainIDs.localterra,
+    }
+  );
+
+  return {
+    registrarConfig: data,
+    isError: isError,
+    isLoading: isLoading || isFetching,
+  };
+}

@@ -1,4 +1,5 @@
 import Label from "pages/Admin/components/Label";
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";
@@ -8,10 +9,7 @@ import useDestroyFund from "./useDestroyFund";
 export default function FundDestroyerForm() {
   const { destroyFund, isSubmitDisabled } = useDestroyFund();
   return (
-    <form
-      onSubmit={destroyFund}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={destroyFund}>
       <TextInput<FD> title="Proposal Title" name="title" required />
       <TextInput<FD>
         title="proposal description"
@@ -22,8 +20,8 @@ export default function FundDestroyerForm() {
       <Label _required>Fund to remove</Label>
       <FundSelection<FD> fieldName="fundId" />
       <Submitter type="submit" _classes="mt-4" disabled={isSubmitDisabled}>
-        Propose changes
+        Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

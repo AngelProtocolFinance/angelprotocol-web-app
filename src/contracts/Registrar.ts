@@ -2,14 +2,18 @@ import { ContractQueryArgs } from "services/terra/types";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
-import { StatusChangePayload } from "./types";
+import {
+  RegistrarConfigPayload,
+  RegistrarOwnerPayload,
+  StatusChangePayload,
+} from "./types";
 import { WalletProxy } from "providers/WalletProvider";
 
 export default class Registrar extends Contract {
   address: string;
   endowmentList: ContractQueryArgs;
-
   vaultsRate: ContractQueryArgs;
+  config: ContractQueryArgs;
   constructor(wallet?: WalletProxy) {
     super(wallet);
     this.address = contracts[this.chainID][sc.registrar];
@@ -26,11 +30,27 @@ export default class Registrar extends Contract {
         approved_vault_rate_list: {},
       },
     };
+
+    this.config = {
+      address: this.address,
+      msg: { config: {} },
+    };
   }
 
   createEmbeddedChangeEndowmentStatusMsg(payload: StatusChangePayload) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_endowment_status: payload,
+    });
+  }
+
+  createEmbeddedConfigUpdateMsg(payload: RegistrarConfigPayload) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_config: payload,
+    });
+  }
+  createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_owner: payload,
     });
   }
 }

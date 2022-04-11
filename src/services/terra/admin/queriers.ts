@@ -18,10 +18,11 @@ export function useMembers() {
     data = [],
     isFetching,
     isLoading,
+    isError,
   } = useMembersQuery(contract.members, {
     skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
   });
-  return { members: data, isMembersLoading: isFetching || isLoading };
+  return { members: data, isMembersLoading: isFetching || isLoading, isError };
 }
 
 export function useMember(customCWs?: CWContracts, skip = false) {
@@ -104,7 +105,7 @@ function genPageOptions(
   }
 }
 
-export function useProposal(pollId?: string) {
+export function useProposal(pollId?: string | number) {
   const { useProposalQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
 

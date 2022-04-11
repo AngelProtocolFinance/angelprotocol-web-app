@@ -10,7 +10,6 @@ import { admin } from "constants/routes";
 import { useSetter } from "store/accessors";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
-import AdminNav from "./AdminNav";
 import { EndowmentAddrParams } from "./types";
 import useWalletContext from "hooks/useWalletContext";
 
@@ -41,7 +40,7 @@ export default function EndowmentAdmin() {
   } else
     return (
       <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
-        <AdminNav />
+        {/* <AdminNav /> */}
         <Routes>
           <Route path={admin.proposals} element={<Proposals />} />
           <Route path={`${admin.proposal}/:id`} element={<Proposal />} />

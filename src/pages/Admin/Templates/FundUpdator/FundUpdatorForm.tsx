@@ -8,16 +8,17 @@ import useInitFundMembers from "./useInitFundMembers";
 import MemberItem from "./MemberItem";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import Submitter from "../Submitter";
+import {
+  FormContainer,
+  GroupContainer,
+} from "pages/Admin/components/TemplateContainer";
 
 export default function FundUpdatorForm() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =
     useInitFundMembers();
   const { updateFund } = useUpdateFund();
   return (
-    <form
-      onSubmit={updateFund}
-      className="w-full p-6 rounded-md grid content-start rounded-md bg-white-grey"
-    >
+    <FormContainer onSubmit={updateFund}>
       <TextInput<FV> title="Proposal Title" name="title" required />
       <TextInput<FV>
         title="proposal description"
@@ -30,8 +31,8 @@ export default function FundUpdatorForm() {
 
       {isFundSelected && (
         <>
-          <Label _classes="text-red-400 mt-6">Remove member</Label>
-          <div className="p-3 rounded-md bg-light-grey shadow-inner-white-grey">
+          <Label className="text-red-400 mt-6 -mb-2">Remove member</Label>
+          <GroupContainer>
             {(isFundMembersLoading && (
               <Loader
                 gapClass="gap-1"
@@ -50,18 +51,18 @@ export default function FundUpdatorForm() {
                   this fund doesn't have any members yet
                 </p>
               )}
-          </div>
+          </GroupContainer>
         </>
       )}
       {isFundSelected && (
         <>
-          <Label _classes="text-green-400 mt-6">add member</Label>
+          <Label className="text-green-400 mt-6 -mb-2">add member</Label>
           <MemberAdder />
         </>
       )}
       <Submitter type="button" onClick={updateFund} _classes="mt-4">
-        Propose Changes
+        Submit Proposal
       </Submitter>
-    </form>
+    </FormContainer>
   );
 }

@@ -13,6 +13,7 @@ export enum admin {
   members = "members",
   member = "member",
   votes = "votes",
+  applications = "applications",
 }
 
 export enum gov {

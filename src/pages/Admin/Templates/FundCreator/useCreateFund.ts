@@ -68,7 +68,7 @@ export default function useCreateFund() {
     };
 
     //remove undefined fields
-    const cleanedNewFundDetails = cleanObject(newFundDetails, [undefined]);
+    const cleanedNewFundDetails = cleanObject(newFundDetails);
 
     const embeddedExecuteMsg = indexFundContract.createEmbeddedCreateFundMsg(
       cleanedNewFundDetails

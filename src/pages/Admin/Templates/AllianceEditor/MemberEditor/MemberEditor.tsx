@@ -1,3 +1,4 @@
+import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
 import React from "react";
 import { AllianceEditValues as AV } from "../alllianceEditSchema";
@@ -7,7 +8,7 @@ export default function MemberEditor() {
   const { resetEdit, editMember, isEditingMember } = useEditMember();
 
   return (
-    <div className="shadow-inner-white-grey bg-light-grey rounded-md p-3 grid">
+    <GroupContainer>
       <TextInput<AV>
         title="Wallet address"
         name="wallet"
@@ -48,7 +49,7 @@ export default function MemberEditor() {
           </Button>
         )}
       </div>
-    </div>
+    </GroupContainer>
   );
 }
 

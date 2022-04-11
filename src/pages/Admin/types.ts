@@ -1,5 +1,10 @@
 import { proposalTypes } from "constants/routes";
-import { FundConfig, FundDetails } from "contracts/types";
+import {
+  FundConfig,
+  FundDetails,
+  RegistrarConfigPayload,
+  RegistrarOwnerPayload,
+} from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import {
@@ -10,7 +15,12 @@ import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 
 //TODO: find a way to incorporate proposal group with proposal types
-export type ProposalGroup = "indexfund" | "admin-group" | "endowment";
+export type ProposalGroup =
+  | "indexfund"
+  | "admin-group"
+  | "endowment"
+  | "registrar";
+
 export type ProposalMeta =
   | {
       type: proposalTypes.endowment_withdraw;
@@ -40,12 +50,24 @@ export type ProposalMeta =
       data: FundConfigUpdateMeta;
     }
   | {
+      type: proposalTypes.indexFund_ownerUpdate;
+      data: OwnerUpdateMeta;
+    }
+  | {
       type: proposalTypes.adminGroup_updateCW3Config;
       data: CW3ConfigUpdateMeta;
     }
   | {
       type: proposalTypes.adminGroup_fundTransfer;
       data: FundSendMeta;
+    }
+  | {
+      type: proposalTypes.registrar_updateConfig;
+      data: RegistrarConfigUpdateMeta;
+    }
+  | {
+      type: proposalTypes.registrar_updateOwner;
+      data: OwnerUpdateMeta;
     };
 
 export type SourcePreview = { vaultName: string; usdAmount: number };
@@ -79,17 +101,13 @@ export interface FundMemberUpdateMeta {
   toAdd: string[];
 }
 
-export interface FundConfigUpdateMeta {
-  prevConfig: FundConfig;
-  nextConfig: FundConfig;
-}
-
-export interface CW3ConfigUpdateMeta {
-  prevConfig: CW3ConfigPayload;
-  nextConfig: CW3ConfigPayload;
-}
-
 export type FundSendMeta = Pick<
   FundSendPayload,
   "amount" | "currency" | "recipient"
 >;
+
+export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
+export type FundConfigUpdateMeta = DiffSet<FundConfig>;
+export type CW3ConfigUpdateMeta = DiffSet<CW3ConfigPayload>;
+export type RegistrarConfigUpdateMeta = DiffSet<RegistrarConfigPayload>;
+export type OwnerUpdateMeta = { owner: string; newOwner: string };

@@ -60,6 +60,7 @@ export const enum proposalTypes {
   indexFund_removeFund = "indexfund-remove-fund",
   indexFund_updateFundMembers = "indexfund-update-fund-members",
   indexFund_configUpdate = "indexfund-config-update",
+  indexFund_ownerUpdate = "indexfund-owner-update",
   //admin group
   adminGroup_updateMembers = "admin-group-update-members",
   adminGroup_updateCW3Config = "admin-group-update-cw3-config",
@@ -67,4 +68,8 @@ export const enum proposalTypes {
   //endowment
   endowment_updateStatus = "endowment-update-status",
   endowment_withdraw = "endowment-withdraw",
+
+  //registrar
+  registrar_updateConfig = "registrar-update-config",
+  registrar_updateOwner = "registrar-update-owner",
 }

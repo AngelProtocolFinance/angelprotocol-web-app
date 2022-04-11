@@ -1,5 +1,7 @@
+import { CreateTxOptions } from "@terra-money/terra.js";
 import {
   ConnectedWallet,
+  Connection,
   ConnectType,
   Installation,
   useConnectedWallet,
@@ -8,8 +10,11 @@ import {
 } from "@terra-money/wallet-provider";
 import { useEffect, useMemo } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
+import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
-import createDefaultWallet from "./createDefaultWallet";
+
+type Connect = (type?: ConnectType, identifier?: string) => void;
+type Disconnect = () => void;
 
 type Result = {
   wallet?: WalletProxy;
@@ -44,14 +49,11 @@ export default function useTerraJsWallet(): Result {
     () => ({
       wallet: createWallet(wallet, connect, disconnect),
       status,
-      availableWallets: availableConnections.map((conn) => ({
-        ...createDefaultWallet(conn),
-        connect: () =>
-          new Promise((resolve) =>
-            resolve(connect(conn.type, conn.identifier))
-          ),
-        disconnect: () => new Promise((resolve) => resolve(disconnect())),
-      })),
+      availableWallets: getAvailableWallets(
+        availableConnections,
+        connect,
+        disconnect
+      ),
       availableInstallations,
     }),
     [
@@ -69,8 +71,8 @@ export default function useTerraJsWallet(): Result {
 
 function createWallet(
   wallet: ConnectedWallet | undefined,
-  connect: (type?: ConnectType, identifier?: string) => void,
-  disconnect: () => void
+  connect: Connect,
+  disconnect: Disconnect
 ): WalletProxy | undefined {
   return wallet
     ? {
@@ -87,4 +89,24 @@ function createWallet(
         disconnect: () => new Promise((resolve) => resolve(disconnect())),
       }
     : undefined;
+}
+
+function getAvailableWallets(
+  availableConnections: Connection[],
+  connect: Connect,
+  disconnect: Disconnect
+): WalletProxy[] {
+  return availableConnections.map((connection) => ({
+    address: "",
+    connection,
+    network: mainnet,
+    post: (_: CreateTxOptions) => {
+      throw Error("Not initialized");
+    },
+    connect: () =>
+      new Promise((resolve) =>
+        resolve(connect(connection.type, connection.identifier))
+      ),
+    disconnect: () => new Promise((resolve) => resolve(disconnect())),
+  }));
 }
