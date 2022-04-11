@@ -1,5 +1,13 @@
 import { FileObject } from "services/aws/types";
 
+type Metadata = {
+  SK?: "Metadata";
+  CharityBanner: FileObject[];
+  CharityLogo: FileObject[];
+  CharityOverview: string;
+  TerraWallet: string;
+};
+
 export interface User {
   Email: string;
   FirstName: string;
@@ -8,15 +16,11 @@ export interface User {
   Role: string;
   SK?: string;
   PK?: string;
-  CharityLogo: string;
-  CharityBanner: string;
   CharityName: string;
   CharityName_ContactEmail?: string;
-  CharityOverview: string;
   RegistrationDate: string;
   RegistrationStatus: string;
   EmailVerified: boolean;
-  TerraWallet?: any;
   IsKeyPersonCompleted?: boolean;
   IsMetaDataCompleted?: boolean;
   token?: string;
@@ -30,7 +34,7 @@ export interface User {
   ProofOfRegistrationVerified: boolean;
   FinancialStatementsVerified: boolean;
   AuditedFinancialReportsVerified: boolean;
-  Metadata: any;
+  Metadata: Metadata;
 }
 
 export enum UserTypes {

@@ -1,5 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useCallback } from "react";
 import { useUpdateAdditionalInformationMutation } from "services/aws/registration";
 import {
@@ -61,16 +62,21 @@ async function getUploadBody(values: FormValues) {
   };
 }
 
-const readFileToDataUrl = (file: File) =>
+const readFileToDataUrl = (fileWrapper: FileWrapper) =>
   new Promise<FileObject>((resolve, reject) => {
-    const reader = new FileReader();
+    if (!fileWrapper.file) {
+      return resolve({
+        name: fileWrapper.name,
+        sourceUrl: fileWrapper.sourceUrl,
+      });
+    }
 
+    const reader = new FileReader();
     reader.onerror = (error) => reject(error);
     reader.onload = (e: ProgressEvent<FileReader>) =>
       resolve({
-        name: file.name,
+        name: fileWrapper.name,
         dataUrl: e.target!.result as string,
       });
-
-    reader.readAsDataURL(file as Blob);
+    reader.readAsDataURL(fileWrapper.file as Blob);
   });

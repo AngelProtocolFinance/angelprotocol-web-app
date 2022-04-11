@@ -23,7 +23,8 @@ export const useRegistration = () => {
   const { showModal } = useSetModal();
 
   const onResume = async (values: ReferInfo) => {
-    let response: any = await checkData(values.refer);
+    const response: any = await checkData(values.refer);
+
     if (response.error) {
       showModal<PopupProps>(Popup, {
         message:
@@ -42,9 +43,14 @@ export const useRegistration = () => {
       RegistrationDate: response.data.Registration.RegistrationDate,
       RegistrationStatus: response.data.Registration.RegistrationStatus,
       token: token,
-      TerraWallet: response.data.Metadata?.TerraWallet,
       IsKeyPersonCompleted: !!response.data.KeyPerson,
       IsMetaDataCompleted: !!response.data.Metadata,
+      Metadata: response.data.Metadata || {
+        CharityBanner: [],
+        CharityLogo: [],
+        CharityOverview: "",
+        TerraWallet: "",
+      },
       ProofOfIdentity: response.data.Registration.ProofOfIdentity || [],
       Website: response.data.Registration.Website,
       UN_SDG: response.data.Registration.UN_SDG,

@@ -20,9 +20,9 @@ export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charityOverview: user.CharityOverview,
-      charityLogo: [],
-      charityBanner: [],
+      charityBanner: user.Metadata.CharityBanner,
+      charityOverview: user.Metadata.CharityOverview,
+      charityLogo: user.Metadata.CharityLogo,
     },
   });
 

@@ -100,7 +100,7 @@ export default function Dashboard() {
       {status.reviewStatus !== ReviewStatus.None && (
         <EndowmentStatus
           registrationStatus={status}
-          walletAddress={user.TerraWallet}
+          walletAddress={user.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}

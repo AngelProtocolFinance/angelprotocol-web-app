@@ -4,16 +4,18 @@ import { RegistrationStatus, ReviewStatus } from "./types";
 export default function getRegistrationStatus(user: User): RegistrationStatus {
   return {
     stepOne: { completed: !!user.PK },
-    stepTwo: { completed: !!user.TerraWallet },
+    stepTwo: { completed: !!user.Metadata.TerraWallet },
     stepThree: getStepThree(user),
     stepFour: {
       completed:
-        !!user.CharityLogo && !!user.CharityBanner && !!user.CharityOverview,
+        !!user.Metadata.CharityLogo &&
+        !!user.Metadata.CharityBanner &&
+        !!user.Metadata.CharityOverview,
     },
     reviewStatus:
       user?.RegistrationStatus === "Complete"
         ? ReviewStatus.Complete
-        : user?.Metadata?.EndowmentStatus === "Active"
+        : user?.RegistrationStatus === "Active"
         ? ReviewStatus.Available
         : user.IsMetaDataCompleted
         ? ReviewStatus.UnderReview
