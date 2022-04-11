@@ -35,11 +35,9 @@ export default function useSubmit() {
 
   const submit = useCallback(
     async (values: FormValues) => {
-      const uploadBody = await getUploadBody(values);
-      console.log("uploadBody", uploadBody);
+      const body = await getUploadBody(values);
 
-      const postData = { PK: user.PK, body: uploadBody };
-      const result = await updateMetadata(postData);
+      const result = await updateMetadata({ PK: user.PK, body });
 
       const dataResult = result as {
         data: UpdateCharityMetadataResult;
