@@ -9,6 +9,7 @@ export type EndowmentStatus = {
 
 export type EndowmentStatusNum = EndowmentStatus[keyof EndowmentStatus];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
+export type EndowmentType = "charity";
 
 export type EndowmentListRes = {
   endowments: EndowmentEntry[];
@@ -16,7 +17,26 @@ export type EndowmentListRes = {
 export type EndowmentEntry = {
   address: string;
   status: keyof EndowmentStatus;
+  name?: String;
+  owner?: String;
+  tier?: string;
+  endow_type?: EndowmentType;
 };
+
+export type EndowmentQueryOptions = {
+  name?: string;
+  owner?: string;
+  status?: EndowmentStatusStrNum;
+  tier?: string;
+  endow_type?: EndowmentType;
+};
+
+export interface EndowmentQueryMsg {
+  address: string;
+  msg: {
+    endowment_list: EndowmentQueryOptions;
+  };
+}
 
 export type FundListRes = {
   funds: FundDetails[];

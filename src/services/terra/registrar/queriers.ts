@@ -1,7 +1,9 @@
 import { chainIDs } from "constants/chainIDs";
 import Registrar, { R, T } from "contracts/Registrar";
+import useWalletContext from "hooks/useWalletContext";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
+import { EndowmentStatus, EndowmentStatusStrNum } from "./types";
 
 export function useEndowmentStatus(address: string, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
@@ -54,5 +56,25 @@ export function useRegistrarConfig() {
     registrarConfig: data,
     isError: isError,
     isLoading: isLoading || isFetching,
+  };
+}
+
+export function useEndowmentLists(skip = false) {
+  const { wallet } = useWalletContext();
+  const { useEndowmentListsQuery } = registrar_api;
+  const contract = new Registrar(wallet);
+  const { data, isError, isLoading, isFetching } = useEndowmentListsQuery(
+    contract.createEndowmentListQuery({
+      endow_type: "charity",
+      status: "0",
+    }),
+    {
+      skip: skip || !wallet,
+    }
+  );
+  return {
+    endowments: data,
+    isEndowmentsError: isError,
+    isEndowmentsLoading: isLoading || isFetching,
   };
 }

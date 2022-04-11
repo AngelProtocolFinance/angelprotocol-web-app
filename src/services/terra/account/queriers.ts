@@ -47,7 +47,6 @@ export function useEndowmentProfile(address: string, skip = false) {
       skip: skip || !wallet,
     }
   );
-  console.log("profile: ", isLoading, data);
   return {
     profile: data,
     isProfileError: isError,

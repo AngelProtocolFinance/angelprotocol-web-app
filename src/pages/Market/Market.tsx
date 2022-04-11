@@ -2,9 +2,11 @@ import Index from "./Index";
 import Loader from "components/Loader/Loader";
 import { useCategorizedProfiles } from "services/aws/endowments/queriers";
 import Banner from "./Banner";
+import { useEndowmentLists } from "services/terra/registrar/queriers";
 
 export default function Market() {
   const { categorizedProfiles, isProfilesLoading } = useCategorizedProfiles();
+  const { endowments } = useEndowmentLists(); // (doesn't return un_sdg number for categorization)
 
   return (
     <div className="grid content-start padded-container pb-16">

@@ -1,4 +1,5 @@
 import contract_querier from "../contract_querier";
+import { tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import {
@@ -26,6 +27,20 @@ export const registrar_api = terra.injectEndpoints({
     config: builder.query<RegistrarConfig, ContractQueryArgs>({
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {
+        return res.query_result;
+      },
+    }),
+    endowmentLists: builder.query<any, ContractQueryArgs>({
+      providesTags: [{ type: tags.endowment }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<any>) => {
+        return res.query_result;
+      },
+    }),
+    categorizedEndowmentLists: builder.query<any, ContractQueryArgs>({
+      providesTags: [{ type: tags.endowment }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<any>) => {
         return res.query_result;
       },
     }),
