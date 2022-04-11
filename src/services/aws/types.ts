@@ -48,19 +48,21 @@ export type UpdateDocumentationResult = {
   AuditedFinancialReports: FileObject[];
 };
 
-export type UpdateAdditionalInformationData = {
+export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    CharityLogo: FileObject;
-    CharityBanner: FileObject;
-    CharityOverview: string;
+    CharityBanner?: FileObject[];
+    CharityLogo?: FileObject[];
+    CharityOverview?: string;
+    TerraWallet?: string;
   };
 };
 
-export type UpdateAdditionalInformationResult = {
-  CharityLogo: string;
-  CharityBanner: string;
+export type UpdateCharityMetadataResult = {
+  CharityLogo: FileObject[];
+  CharityBanner: FileObject[];
   CharityOverview: string;
+  TerraWallet: string;
 };
 
 export type RegistrationData = {
