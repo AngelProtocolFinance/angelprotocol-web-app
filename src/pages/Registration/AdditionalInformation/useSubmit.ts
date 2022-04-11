@@ -22,7 +22,7 @@ export default function useSubmit() {
         ...user,
         Metadata: {
           ...user.Metadata,
-          CharityBanner: data.CharityBanner,
+          Banner: data.Banner,
           CharityLogo: data.CharityLogo,
           CharityOverview: data.CharityOverview,
         },
@@ -36,6 +36,8 @@ export default function useSubmit() {
   const submit = useCallback(
     async (values: FormValues) => {
       const uploadBody = await getUploadBody(values);
+      console.log("uploadBody", uploadBody);
+
       const postData = { PK: user.PK, body: uploadBody };
       const result = await updateMetadata(postData);
 
@@ -57,17 +59,8 @@ export default function useSubmit() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const charityLogoPromise = Promise.all(
-    values.charityLogo.map((x) => readFileToDataUrl(x))
-  );
-  const charityBannerPromise = Promise.all(
-    values.charityBanner.map((x) => readFileToDataUrl(x))
-  );
-
-  const [CharityLogo, CharityBanner] = await Promise.all([
-    charityLogoPromise,
-    charityBannerPromise,
-  ]);
+  const CharityLogo = await readFileToDataUrl(values.charityLogo[0]);
+  const CharityBanner = await readFileToDataUrl(values.charityBanner[0]);
 
   return {
     CharityLogo,

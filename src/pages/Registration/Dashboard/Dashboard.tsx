@@ -1,16 +1,15 @@
 import Loader from "components/Loader/Loader";
 import { app, site } from "constants/routes";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
-import getRegistrationStatus from "./getRegistrationStatus";
 import Step from "./Step";
-import { ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -27,9 +26,7 @@ export default function Dashboard() {
     setLoading(false);
   }, [user, dispatch]);
 
-  const status = useMemo(() => getRegistrationStatus(user), [user]);
-
-  const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
+  const dataSubmitted = user.RegistrationStatus !== "Not Complete";
 
   if (isLoading) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
@@ -57,7 +54,7 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.wallet}`)
           }
           disabled={dataSubmitted}
-          completed={status.stepTwo.completed}
+          completed={user.State.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
@@ -65,10 +62,11 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
           disabled={dataSubmitted}
-          completed={status.stepThree.completed}
+          completed={user.State.stepThree.completed}
           // TODO: implement level logic
           statusComplete={
-            status.stepThree.completed && `Level ${status.stepThree.level}`
+            user.State.stepThree.completed &&
+            `Level ${user.State.stepThree.level}`
           }
         />
         <Step
@@ -79,28 +77,37 @@ export default function Dashboard() {
             )
           }
           disabled={dataSubmitted}
-          completed={status.stepFour.completed}
+          completed={user.State.stepFour.completed}
         />
-        {status.reviewStatus === ReviewStatus.None && (
+        {!dataSubmitted && (
           <Button
             className="w-full h-10 mt-5 bg-yellow-blue"
             onClick={() => console.log("submit")}
-            disabled={!status.getReadyForSubmit()}
+            disabled={!getIsReadyForSubmit(user)}
           >
             Submit for review
           </Button>
         )}
       </div>
-      {status.reviewStatus !== ReviewStatus.None && (
+      {user.RegistrationStatus === "Active" && (
         <EndowmentStatus
-          registrationStatus={status}
+          registrationStatus={user.RegistrationStatus}
           walletAddress={user.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {status.reviewStatus === ReviewStatus.Complete && (
+      {user.RegistrationStatus === "Complete" && (
         <EndowmentCreated charityName={user?.CharityName} />
       )}
     </div>
+  );
+}
+
+function getIsReadyForSubmit({ State }: User) {
+  return (
+    State.stepOne.completed &&
+    State.stepTwo.completed &&
+    State.stepThree.completed &&
+    State.stepFour.completed
   );
 }

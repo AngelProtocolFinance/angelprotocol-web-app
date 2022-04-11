@@ -12,7 +12,7 @@ const initialState: User = {
   CharityName: "",
   CharityName_ContactEmail: "",
   RegistrationDate: "",
-  RegistrationStatus: "",
+  RegistrationStatus: "Not Complete",
   EmailVerified: false,
   token: "",
   IsKeyPersonCompleted: false,
@@ -28,10 +28,16 @@ const initialState: User = {
   FinancialStatementsVerified: false,
   AuditedFinancialReportsVerified: false,
   Metadata: {
-    CharityBanner: [],
-    CharityLogo: [],
+    Banner: { name: "" },
+    CharityLogo: { name: "" },
     CharityOverview: "",
     TerraWallet: "",
+  },
+  State: {
+    stepOne: { completed: false },
+    stepTwo: { completed: false },
+    stepThree: { completed: false, level: 0 },
+    stepFour: { completed: false },
   },
 };
 const userSlice = createSlice({

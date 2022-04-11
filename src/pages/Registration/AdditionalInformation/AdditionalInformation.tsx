@@ -20,11 +20,13 @@ export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charityBanner: user.Metadata.CharityBanner,
+      charityBanner: [user.Metadata.Banner],
       charityOverview: user.Metadata.CharityOverview,
-      charityLogo: user.Metadata.CharityLogo,
+      charityLogo: [user.Metadata.CharityLogo],
     },
   });
+
+  console.log(methods.control._formValues);
 
   useEffect(() => {
     if (isSuccess) {

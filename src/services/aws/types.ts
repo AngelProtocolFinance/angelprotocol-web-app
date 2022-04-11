@@ -51,22 +51,31 @@ export type UpdateDocumentationResult = {
 export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    CharityBanner?: FileObject[];
-    CharityLogo?: FileObject[];
+    CharityBanner?: FileObject;
+    CharityLogo?: FileObject;
     CharityOverview?: string;
     TerraWallet?: string;
   };
 };
 
 export type UpdateCharityMetadataResult = {
-  CharityLogo: FileObject[];
-  CharityBanner: FileObject[];
+  Banner: FileObject;
+  CharityLogo: FileObject;
   CharityOverview: string;
   TerraWallet: string;
 };
 
-export type RegistrationData = {
-  ContactPerson: any;
-  Metadata: any;
-  Registration: any;
+export type Registration = any;
+
+export type ContactPerson = any;
+
+export type CharityData = {
+  ContactPerson: ContactPerson;
+  Metadata: {
+    Banner: FileObject;
+    CharityLogo: FileObject;
+    CharityOverview: string;
+    TerraWallet: string;
+  };
+  Registration: Registration;
 };
