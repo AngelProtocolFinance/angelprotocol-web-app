@@ -14,7 +14,7 @@ export default function CharityCard(props: Profile) {
         src={props.charity_image}
         alt="charity banner"
       />
-      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-md uppercase mt-1.5">
+      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-md uppercase mt-2">
         {props.charity_name}
       </div>
     </Link>
