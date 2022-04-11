@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
-import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
-import ImageEditor from "./Editors/ImageEditor/ImageEditor";
+import OverviewEditor from "./OverviewEditor/OverviewEditor";
+import ImageEditor from "./ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
-import TextInput from "./TextInput";
 import { site, app } from "constants/routes";
-import useEditForm from "./useEditForm";
+import useEditForm from "./useEditProfile";
 import Icon from "components/Icons/Icons";
+import TextInput from "pages/Admin/components/TextInput";
+import { UpdateProfileValues as UV } from "./profileEditSchema";
 
 export default function EditForm() {
-  const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();
+  const { endowment_addr, editProfile, isSubmitDisabled } = useEditForm();
   return (
-    <form className="max-w-3xl w-full" onSubmit={updateProfile}>
+    <form className="max-w-3xl w-full" onSubmit={editProfile}>
       <Link
         to={`${site.app}/${app.charity}/${endowment_addr}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
@@ -23,59 +24,63 @@ export default function EditForm() {
       </p>
       <ImageEditor />
       <SDGSelector />
-      <TextInput
-        id="charity_name"
-        label="Charity Name"
+      <TextInput<UV>
+        name="name"
+        title="Charity Name"
         placeholder="The charitable charity"
       />
-      <TextInput
-        id="charity_registration_number"
-        label="Registration number"
+      <TextInput<UV>
+        name="registration_number"
+        title="Registration number"
         placeholder="AP2022HLO"
       />
-      <TextInput
-        id="country_city_origin"
-        label="Location"
+      <TextInput<UV>
+        name="country_city_origin"
+        title="Location"
         placeholder="Manila, Philippines"
       />
       <OverviewEditor />
       <SectionHeader title="Organization" />
-      <TextInput
-        id="average_annual_budget"
-        label="Annual budget"
+      <TextInput<UV>
+        name="average_annual_budget"
+        title="Annual budget"
         placeholder="$100,000"
       />
-      <TextInput
-        id="annual_revenue"
-        label="Annual revenue"
+      <TextInput<UV>
+        name="annual_revenue"
+        title="Annual revenue"
         placeholder="$120,000"
       />
-      <TextInput
-        id="number_of_employees"
-        label="Number of employeees"
+      <TextInput<UV>
+        name="number_of_employees"
+        title="Number of employeees"
         placeholder="50 - 100"
       />
       <SectionHeader title="social media" />
-      <TextInput id="url" label="Website" placeholder="https://website.org" />
-      <TextInput
-        id="facebook_page"
-        label="Facebook"
+      <TextInput<UV>
+        name="url"
+        title="Website"
+        placeholder="https://website.org"
+      />
+      <TextInput<UV>
+        name="facebook"
+        title="Facebook"
         placeholder="https://facebook.com/angelprotocol"
       />
-      <TextInput
-        id="twitter_handle"
-        label="Twitter"
+      <TextInput<UV>
+        name="facebook"
+        title="Twitter"
         placeholder="https://twitter.com/angelprotocol"
       />
-      <TextInput
-        id="linkedin_page"
-        label="Linkedin"
+      <TextInput<UV>
+        name="linkedin"
+        title="Linkedin"
         placeholder="https://linkedin.com/angelprotocol"
       />
       <SectionHeader title="contact" />
-      <TextInput
-        id="charity_email"
-        label="Email"
+      <TextInput<UV>
+        name="contact_email"
+        title="Contact email"
         placeholder="hello@angelprotocol.io"
       />
       <button

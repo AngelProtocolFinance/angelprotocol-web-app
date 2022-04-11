@@ -1,4 +1,4 @@
-import optimizeImage from "pages/CharityEdit/optimizeImage";
+import optimizeImage from "helpers/optimizeImage";
 import { ChangeEvent, useState, useRef, useEffect } from "react";
 import { useFormContext, Path } from "react-hook-form";
 import useFleek from "hooks/useFleek";

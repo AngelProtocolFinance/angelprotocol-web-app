@@ -1,8 +1,6 @@
-import createAuthToken from "helpers/createAuthToken";
-import { UserTypes } from "services/user/types";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
-import { Profile, CategorizedProfiles, EditableProfileAttr } from "./types";
+import { Profile, CategorizedProfiles, AWSCharityProfile } from "./types";
 import { AWSQueryRes } from "services/aws/types";
 
 export const endowments_api = aws.injectEndpoints({
@@ -24,13 +22,9 @@ export const endowments_api = aws.injectEndpoints({
       providesTags: [{ type: tags.cha, id: cha.profiles }],
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
-      transformResponse: (res: AWSQueryRes<Profile[]>) => {
+      transformResponse: (res: AWSQueryRes<AWSCharityProfile[]>) => {
         return res.Items.reduce((result, profile) => {
-          if (
-            profile.un_sdg === undefined ||
-            profile.un_sdg === "" ||
-            profile.tier === 1
-          ) {
+          if (profile.un_sdg === undefined || profile.tier === 1) {
             return result;
           } else {
             if (!result[+profile.un_sdg]) {
@@ -42,29 +36,6 @@ export const endowments_api = aws.injectEndpoints({
         }, {} as CategorizedProfiles);
       },
     }),
-    updateProfile: builder.mutation<
-      any,
-      { owner: string; address: string; edits: Partial<EditableProfileAttr> }
-    >({
-      query: (args) => {
-        const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
-        return {
-          // URL of the request needs a query param because the endowment_data DB table has a partition key (endowment_address) and sort key (charity_owner)
-          url: `endowments/info/${args.address}`,
-          method: "PUT",
-          body: args.edits,
-          headers: {
-            authorization: generatedToken,
-          },
-          params: { charity_owner: args.owner },
-        };
-      },
-      invalidatesTags: [
-        { type: tags.cha, id: cha.profile },
-        { type: tags.cha, id: cha.profiles },
-      ],
-    }),
   }),
 });
-export const { useProfileQuery, useProfilesQuery, useUpdateProfileMutation } =
-  endowments_api;
+export const { useProfileQuery, useProfilesQuery } = endowments_api;

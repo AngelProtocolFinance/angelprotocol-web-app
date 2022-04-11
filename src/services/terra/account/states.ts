@@ -1,6 +1,7 @@
 import { holdings } from "./placeholders";
 import { account_api } from "./account";
 import useAccountContract from "./useAccountContract";
+import { chainIDs } from "constants/chainIDs";
 
 export function useEndowmentHoldingsState(address: string, skip = false) {
   const { contract } = useAccountContract(address);
@@ -32,5 +33,18 @@ export function useEndowmentCWsState(address?: string) {
   return {
     cwContracts: data,
     isCWContractsLoading: isLoading || isFetching,
+  };
+}
+
+export function useEndowmentProfileState(address: string, skip = false) {
+  const { wallet, contract } = useAccountContract(address);
+  const { data } = account_api.endpoints.endowmentProfile.useQueryState(
+    contract.profile,
+    {
+      skip: skip || wallet?.network.chainID !== chainIDs.localterra,
+    }
+  );
+  return {
+    profileState: data,
   };
 }

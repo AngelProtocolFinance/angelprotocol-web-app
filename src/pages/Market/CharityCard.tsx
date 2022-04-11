@@ -2,9 +2,9 @@ import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
 import { app, site } from "constants/routes";
 import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
-import { Profile } from "services/aws/endowments/types";
+import { AWSCharityProfile } from "services/aws/endowments/types";
 
-export default function CharityCard(props: Profile) {
+export default function CharityCard(props: AWSCharityProfile) {
   return (
     <Link
       to={`${site.app}/${app.charity}/${props.endowment_address}`}

@@ -1,14 +1,17 @@
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
+import { useParams } from "react-router-dom";
 import { Profile } from "services/aws/endowments/types";
+import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";
 
 export default function CharityHeader(props: Profile) {
+  const { address: endowment_addr } = useParams<CharityParam>();
   const showDonater = useDonater({
     to: "charity",
-    receiver: props.endowment_address!,
+    receiver: endowment_addr!,
   });
-  const sdg = unsdgs[+props.un_sdg];
+  const sdg = unsdgs[props.un_sdg || 0];
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -20,13 +23,10 @@ export default function CharityHeader(props: Profile) {
         </p>
       )}
 
-      <h3 className="text-3xl font-bold text-white uppercase">
-        {props.charity_name}
-      </h3>
+      <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
         <button
-          disabled={props.is_placeholder}
           onClick={showDonater}
           className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
         >

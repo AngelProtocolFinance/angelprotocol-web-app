@@ -9,12 +9,12 @@ import {
   getDefaultKeyBinding,
 } from "draft-js";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
+import { UpdateProfileValues } from "../profileEditSchema";
 
 export default function useEditor() {
-  const { setValue, watch } = useFormContext<EditableProfileAttr>();
-  const overview = watch("charity_overview");
+  const { setValue, watch } = useFormContext<UpdateProfileValues>();
+  const overview = watch("overview") || "";
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -24,7 +24,7 @@ export default function useEditor() {
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
     const rawState = convertToRaw(editorState.getCurrentContent());
-    setValue("charity_overview", JSON.stringify(rawState), {
+    setValue("overview", JSON.stringify(rawState), {
       shouldDirty: true,
     });
     //eslint-disable-next-line

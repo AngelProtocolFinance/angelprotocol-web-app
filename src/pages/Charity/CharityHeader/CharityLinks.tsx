@@ -2,40 +2,40 @@ import Icon, { IconTypes } from "components/Icons/Icons";
 import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
 import { LinkProps, useParams } from "react-router-dom";
-import { useProfileState } from "services/aws/endowments/states";
 import { useEndowmentCWs } from "services/terra/account/queriers";
+import { useEndowmentProfileState } from "services/terra/account/states";
 import { useMember } from "services/terra/admin/queriers";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
   const { address: charity_addr } = useParams<CharityParam>();
-  const { profileState } = useProfileState(charity_addr!);
+  const { profileState } = useEndowmentProfileState(charity_addr!);
   const { cwContracts, isCWContractsLoading } = useEndowmentCWs(charity_addr);
   const { member } = useMember(cwContracts, isCWContractsLoading);
   const isUserAdminMember = !!member.weight;
 
   return (
     <div className={`${props.classes || ""} flex gap-2 items-center`}>
-      {profileState.twitter_handle && (
+      {profileState?.social_media_urls.twitter && (
         <IconLink
           _iconType="Twitter"
-          href={formatUrl(profileState.twitter_handle, "twitter")}
+          href={formatUrl(profileState?.social_media_urls.twitter, "twitter")}
         />
       )}
-      {profileState.linkedin_page && (
+      {profileState?.social_media_urls.linkedin && (
         <IconLink
           _iconType="Linkedin"
-          href={formatUrl(profileState.linkedin_page, "linkedin")}
+          href={formatUrl(profileState?.social_media_urls.linkedin, "linkedin")}
         />
       )}
-      {profileState.facebook_page && (
+      {profileState?.social_media_urls.facebook && (
         <IconLink
           _iconType="Facebook"
-          href={formatUrl(profileState.facebook_page, "facebook")}
+          href={formatUrl(profileState?.social_media_urls.facebook, "facebook")}
         />
       )}
-      {profileState.url && (
-        <IconLink _iconType="Globe" href={profileState.url} />
+      {profileState?.url && (
+        <IconLink _iconType="Globe" href={profileState?.url} />
       )}
       {isUserAdminMember && (
         <IconRouteLink

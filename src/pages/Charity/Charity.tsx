@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useProfile } from "services/aws/endowments/queriers";
 import { CharityParam } from "./types";
 import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -8,14 +7,17 @@ import CharityStats from "./CharityStats";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityContent from "./CharityContent/CharityContent";
 import ContentLoader from "components/ContentLoader/ContentLoader";
-// import { useEndowmentProfile } from "services/terra/account/queriers";
+import { useEndowmentProfile } from "services/terra/account/queriers";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile, isProfileLoading } = useProfile(endowment_addr!);
-  // const { isProfileLoading, profile } = useEndowmentProfile(endowment_addr!);
+  const { isProfileLoading, profile, isProfileError } = useEndowmentProfile(
+    endowment_addr!,
+    !endowment_addr //skip if no endowment address
+  );
 
   if (isProfileLoading) return <CharitySkeleton />;
+  if (isProfileError || !profile) return <PageError />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <Link
@@ -24,7 +26,7 @@ const Charity = () => {
       >
         <Icon type="ArrowBack" size={15} /> back to marketplace
       </Link>
-      <CharityHeader {...{ ...profile }} />
+      <CharityHeader {...profile} />
       <CharityContent
         {...{
           ...profile,
@@ -47,6 +49,17 @@ function CharitySkeleton() {
         <ContentLoader className="w-full h-full mt-2 rounded-md" />
       </div>
       <ContentLoader className="hidden lg:block mt-2 h-full w-full rounded-md" />
+    </section>
+  );
+}
+
+function PageError() {
+  return (
+    <section
+      className="padded-container grid content-center place-items-center
+  "
+    >
+      <p>failed to load charity profile</p>
     </section>
   );
 }
