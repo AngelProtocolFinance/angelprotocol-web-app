@@ -18,8 +18,8 @@ export const contracts: Contracts = {
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
     // Multisig
-    [sc.apCW3]: "terra1m6rqwmxlpztjf3zfhza906d44c9rpf2t6vn37n",
-    [sc.apCW4]: "terra1lycc2zyhd676294c604euh8hxw7h6jrjd68x83",
+    [sc.apCW3]: "terra1zrwpm9htqdh80nhqcuvw999cexvtmu0xt4dks5",
+    [sc.apCW4]: "terra1eueh924845wwsc2mna5u3ysn79q66kwqgq26mj",
 
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
