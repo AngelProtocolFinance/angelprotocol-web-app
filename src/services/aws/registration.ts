@@ -39,17 +39,6 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    createCharityMetaData: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `registration`,
-          params: { uuid: data.uuid },
-          method: "POST",
-          body: data.body,
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
       query: (data) => {
