@@ -33,43 +33,46 @@ export const useRegistration = () => {
       return console.log(response.error);
     }
 
+    const { data } = response;
     // const token: any = await getTokenData(values.refer);
     const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
-    const data: User = {
-      ...response.data.ContactPerson,
-      CharityName: response.data.Registration.CharityName,
-      CharityName_ContactEmail:
-        response.data.Registration.CharityName_ContactEmail,
-      RegistrationDate: response.data.Registration.RegistrationDate,
-      RegistrationStatus: response.data.Registration.RegistrationStatus,
+    const userData: User = {
+      ...data.ContactPerson,
+      CharityName: data.Registration.CharityName,
+      CharityName_ContactEmail: data.Registration.CharityName_ContactEmail,
+      RegistrationDate: data.Registration.RegistrationDate,
+      RegistrationStatus: data.Registration.RegistrationStatus,
       token: token,
-      IsKeyPersonCompleted: !!response.data.KeyPerson,
-      IsMetaDataCompleted: !!response.data.Metadata,
-      Metadata: response.data.Metadata || {
+      IsKeyPersonCompleted: !!data.KeyPerson,
+      IsMetaDataCompleted:
+        !!data.Metadata &&
+        !!data.Metadata.TerraWallet &&
+        !!data.Metadata.CharityOverview &&
+        !!data.Metadata.CharityLogo &&
+        !!data.Metadata.CharityBanner,
+      Metadata: data.Metadata || {
         CharityBanner: [],
         CharityLogo: [],
         CharityOverview: "",
         TerraWallet: "",
       },
-      ProofOfIdentity: response.data.Registration.ProofOfIdentity || [],
-      Website: response.data.Registration.Website,
-      UN_SDG: response.data.Registration.UN_SDG,
-      ProofOfRegistration: response.data.Registration.ProofOfRegistration || [],
-      FinancialStatements: response.data.Registration.FinancialStatements || [],
-      AuditedFinancialReports:
-        response.data.Registration.AuditedFinancialReports || [],
-      ProofOfIdentityVerified:
-        response.data.Registration.ProofOfIdentityVerified,
+      ProofOfIdentity: data.Registration.ProofOfIdentity || [],
+      Website: data.Registration.Website,
+      UN_SDG: data.Registration.UN_SDG,
+      ProofOfRegistration: data.Registration.ProofOfRegistration || [],
+      FinancialStatements: data.Registration.FinancialStatements || [],
+      AuditedFinancialReports: data.Registration.AuditedFinancialReports || [],
+      ProofOfIdentityVerified: data.Registration.ProofOfIdentityVerified,
       ProofOfRegistrationVerified:
-        response.data.Registration.ProofOfRegistrationVerified,
+        data.Registration.ProofOfRegistrationVerified,
       FinancialStatementsVerified:
-        response.data.Registration.FinancialStatementsVerified,
+        data.Registration.FinancialStatementsVerified,
       AuditedFinancialReportsVerified:
-        response.data.Registration.AuditedFinancialReportsVerified,
+        data.Registration.AuditedFinancialReportsVerified,
     };
-    dispatch(updateUserData(data));
-    localStorage.setItem("userData", JSON.stringify(data));
-    if (data.EmailVerified) {
+    dispatch(updateUserData(userData));
+    localStorage.setItem("userData", JSON.stringify(userData));
+    if (userData.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {
       navigate(`${site.app}/${app.register}/${routes.confirm}`, {

@@ -1,30 +1,25 @@
 import { useCallback, useState } from "react";
-import { useAddCharityMetadataMutation } from "services/aws/charity";
+import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function useRegisterWallet() {
-  const [isSuccess, setSuccess] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  const [addCharityMetaProfile] = useAddCharityMetadataMutation();
+  const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  // this '_' value should be used to notify the user of a failure,
-  // or to put in our logs once (and if) they're ever implemented
-  const handleFailure = useCallback((_) => setSuccess(false), []);
+  const handleFailure = useCallback((error) => console.log(error), []);
 
   const handleSuccess = useCallback(
-    (walletAddress: string) => {
+    (TerraWallet: string) => {
       const userData: User = {
         ...user,
-        Metadata: { ...user.Metadata, TerraWallet: walletAddress },
+        Metadata: { ...user.Metadata, TerraWallet },
       };
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
-
-      setSuccess(true);
     },
     [dispatch, user]
   );
@@ -34,9 +29,9 @@ export default function useRegisterWallet() {
       setSubmitting(true);
 
       try {
-        const response: any = await addCharityMetaProfile({
+        const response: any = await updateMetadata({
           body: { TerraWallet: walletAddress },
-          uuid: user.PK,
+          PK: user.PK,
         });
 
         const result = response.data ? response : response.error;
@@ -60,7 +55,7 @@ export default function useRegisterWallet() {
         setSubmitting(false);
       }
     },
-    [addCharityMetaProfile, user, handleFailure, handleSuccess]
+    [updateMetadata, user, handleFailure, handleSuccess]
   );
 
   return { registerWallet, isSuccess, isSubmitting };
