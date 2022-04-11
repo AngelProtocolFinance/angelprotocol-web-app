@@ -27,12 +27,6 @@ export default function Dashboard() {
     setLoading(false);
   }, [user, dispatch]);
 
-  useEffect(() => {
-    if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
-      navigate(0);
-    }
-  }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, navigate]);
-
   const status = useMemo(() => getRegistrationStatus(user), [user]);
 
   const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
