@@ -37,7 +37,10 @@ export default function useImageEditor<T extends FieldValues>(
     const url = await upload(key, file);
 
     if (url) {
-      setValue(fieldName, encodeURI(url) as any);
+      setValue(fieldName, encodeURI(url) as any, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
     } else {
       showModal<PopupProps>(Popup, { message: "Error processing image" });
     }

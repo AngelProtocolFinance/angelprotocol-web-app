@@ -14,6 +14,7 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<UpdateProfileValues>();
+
   const endowment_addr = params.address;
 
   const { showModal } = useSetModal();

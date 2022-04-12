@@ -1,10 +1,7 @@
-import { Link } from "react-router-dom";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import ImageEditor from "./ImageEditor/ImageEditor";
 import SDGSelector from "./SDGSelector";
-import { site, app } from "constants/routes";
 import useEditForm from "./useEditProfile";
-import Icon from "components/Icons/Icons";
 import TextInput from "pages/Admin/components/TextInput";
 import { UpdateProfileValues as UV } from "./profileEditSchema";
 import {
