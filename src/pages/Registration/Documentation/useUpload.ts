@@ -51,12 +51,8 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const poiPromise = Promise.all(
-    values.proofOfIdentity.map((x) => readFileToDataUrl(x))
-  );
-  const porPromise = Promise.all(
-    values.proofOfRegistration.map((x) => readFileToDataUrl(x))
-  );
+  const poiPromise = readFileToDataUrl(values.proofOfIdentity);
+  const porPromise = readFileToDataUrl(values.proofOfRegistration);
   const fsPromise = Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))
   );

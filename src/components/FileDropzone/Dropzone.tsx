@@ -30,15 +30,15 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   return (
     <div {...getRootProps({ className })}>
       <input id={props.name} {...getInputProps()} />
-      <DropzoneText files={props.value} />
+      <DropzoneText value={props.value} />
     </div>
   );
 }
 
-type DropzoneTextProps = { files: FileWrapper | FileWrapper[] };
+type DropzoneTextProps = { value: FileWrapper | FileWrapper[] };
 
-function DropzoneText({ files }: DropzoneTextProps) {
-  const fileNames = getFileNames(files);
+function DropzoneText({ value }: DropzoneTextProps) {
+  const fileNames = getFileNames(value);
 
   return !fileNames.length ? (
     <span className="flex items-center gap-1 text-dark-grey text-sm">
@@ -52,11 +52,14 @@ function DropzoneText({ files }: DropzoneTextProps) {
   );
 }
 
-function getFileNames(files: FileWrapper | FileWrapper[]) {
-  const fileWrappers = !(files as any).length ? [] : (files as FileWrapper[]);
+function getFileNames(value: FileWrapper | FileWrapper[]) {
+  if (!value) {
+    return "";
+  }
 
-  const fileNames = fileWrappers
-    .map((fileWrapper) => fileWrapper.name)
-    .join(", ");
-  return fileNames;
+  const fileWrappers = !(value as FileWrapper[]).length
+    ? [value as FileWrapper]
+    : (value as FileWrapper[]);
+
+  return fileWrappers.map((fileWrapper) => fileWrapper.name).join(", ");
 }

@@ -20,7 +20,7 @@ export default function FileDropzone<T extends FieldValues>(
               file: x,
               name: x.name,
             }));
-            onChange(files);
+            onChange(props.multiple ? files : files[0]);
           }}
         />
       )}

@@ -1,6 +1,6 @@
 import FileDropzone from "components/FileDropzone";
 import { useSetModal } from "components/Modal/Modal";
-import { useFormContext } from "react-hook-form";
+import { FieldError, useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import { Button, InputRow } from "../../../common";
 import { FormValues } from "../../types";
@@ -8,13 +8,19 @@ import { FormValues } from "../../types";
 export default function ProofOfIdentity() {
   const {
     formState: { errors, isSubmitting },
+    control,
   } = useFormContext<FormValues>();
 
-  // For some reason Yup has defined a wrong type for the subfields of 'errors',
-  // so in order to be able to read the error message, we have to convert it to 'any'
-  const errorMessage = !!errors?.proofOfIdentity?.length
-    ? (errors.proofOfIdentity[0] as any)?.message
-    : (errors?.proofOfIdentity as any)?.message;
+  console.log("errors", errors);
+  console.log("value", control._formValues.proofOfIdentity);
+
+  const inputErrors = errors.proofOfIdentity as FieldError[];
+
+  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
+  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
+  const errorMessage = !!inputErrors?.length
+    ? inputErrors[0]?.message
+    : (errors.proofOfIdentity as FieldError)?.message;
 
   return (
     <InputRow

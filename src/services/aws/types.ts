@@ -32,8 +32,8 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: FileObject[];
-    ProofOfRegistration: FileObject[];
+    ProofOfIdentity: FileObject;
+    ProofOfRegistration: FileObject;
     FinancialStatements: FileObject[];
     AuditedFinancialReports: FileObject[];
   };
@@ -44,8 +44,8 @@ export type UpdateDocumentationData = {
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: FileObject[];
-  ProofOfRegistration: FileObject[];
+  ProofOfIdentity: FileObject;
+  ProofOfRegistration: FileObject;
   FinancialStatements: FileObject[];
   AuditedFinancialReports: FileObject[];
 };

@@ -44,8 +44,8 @@ export interface User {
   token?: string;
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: FileObject[];
-  ProofOfRegistration: FileObject[];
+  ProofOfIdentity: FileObject;
+  ProofOfRegistration: FileObject;
   FinancialStatements: FileObject[];
   AuditedFinancialReports: FileObject[];
   ProofOfIdentityVerified?: boolean;
