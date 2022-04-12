@@ -74,9 +74,9 @@ export type Registration = {
   CharityName_ContactEmail: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
-  ProofOfIdentity: FileObject[];
+  ProofOfIdentity: FileObject;
   ProofOfIdentityVerified: boolean;
-  ProofOfRegistration: FileObject[];
+  ProofOfRegistration: FileObject;
   ProofOfRegistrationVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;

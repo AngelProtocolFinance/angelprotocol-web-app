@@ -118,8 +118,8 @@ function getRegistrationState(data: CharityData): RegistrationState {
 
 function getStepThree(registration: Registration) {
   const levelOneDataExists =
-    !!registration.ProofOfIdentity?.length &&
-    !!registration.ProofOfRegistration?.length &&
+    !!registration.ProofOfIdentity &&
+    !!registration.ProofOfRegistration &&
     !!registration.Website;
   const levelTwoDataExists =
     !!registration.FinancialStatements?.length &&
