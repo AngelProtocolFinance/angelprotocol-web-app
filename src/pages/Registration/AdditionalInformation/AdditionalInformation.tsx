@@ -20,7 +20,7 @@ export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charityBanner: [user.Metadata.Banner],
+      banner: [user.Metadata.Banner],
       charityOverview: user.Metadata.CharityOverview,
       charityLogo: [user.Metadata.CharityLogo],
     },
@@ -42,10 +42,7 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName />
-          <ImageInput
-            name="charityBanner"
-            label="Banner image of your organization"
-          />
+          <ImageInput name="banner" label="Banner image of your organization" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <OverviewInput />
           <ButtonSection />

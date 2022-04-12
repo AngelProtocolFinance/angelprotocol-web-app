@@ -51,7 +51,7 @@ export type UpdateDocumentationResult = {
 export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    CharityBanner?: FileObject;
+    Banner?: FileObject;
     CharityLogo?: FileObject;
     CharityOverview?: string;
     TerraWallet?: string;
