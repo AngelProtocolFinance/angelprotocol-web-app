@@ -15,6 +15,13 @@ export default function EditForm() {
   const { editProfile, isSubmitDisabled } = useEditForm();
   return (
     <FormContainer onSubmit={editProfile}>
+      <TextInput<UV> title="Proposal Title" name="title" required />
+      <TextInput<UV>
+        title="proposal description"
+        name="description"
+        wide
+        required
+      />
       <Label className="text-angel-grey -mb-2">Banner</Label>
       <ImageEditor />
       <Label className="text-angel-grey -mb-2">SDG#</Label>

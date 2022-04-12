@@ -32,7 +32,10 @@ export default function ProfileEditor() {
 }
 
 function ProfileEditContext(props: Profile) {
-  const initialProfile = {};
+  const initialProfile: UpdateProfilePayload = {
+    tier: props.tier || 1,
+    endow_type: "charity",
+  };
   // const initialProfile: UpdateProfilePayload = {
   //   name: props.name,
   //   overview: props.overview,
