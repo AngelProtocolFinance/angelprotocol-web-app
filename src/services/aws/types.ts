@@ -1,3 +1,5 @@
+import { RegistrationStatus } from "services/user/types";
+
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -65,7 +67,22 @@ export type UpdateCharityMetadataResult = {
   TerraWallet: string;
 };
 
-export type Registration = any;
+export type Registration = {
+  AuditedFinancialReports: FileObject[];
+  AuditedFinancialReportsVerified: boolean;
+  CharityName: string;
+  CharityName_ContactEmail: string;
+  FinancialStatements: FileObject[];
+  FinancialStatementsVerified: boolean;
+  ProofOfIdentity: FileObject[];
+  ProofOfIdentityVerified: boolean;
+  ProofOfRegistration: FileObject[];
+  ProofOfRegistrationVerified: boolean;
+  RegistrationDate: string;
+  RegistrationStatus: RegistrationStatus;
+  UN_SDG: string;
+  Website: string;
+};
 
 export type ContactPerson = any;
 
