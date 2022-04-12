@@ -3,9 +3,9 @@
  * there's no cache entry
  */
 import LP, { L, T } from "contracts/LP";
-import { pairInfo, pool_balance, simulation } from "./placeholders";
-import { lp_api } from "./lp";
 import { useContract } from "../useContract";
+import { lp_api } from "./lp";
+import { pairInfo, pool_balance, simulation } from "./placeholders";
 
 export function usePairInfoState() {
   const { contract } = useContract<L, T>(LP);

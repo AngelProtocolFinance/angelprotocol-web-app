@@ -1,8 +1,8 @@
+import Portal from "Website/Home/Portal";
+import Access from "./Access";
 import Banner from "./Banner";
 import Info from "./Info";
 import Specs from "./Specs";
-import Access from "./Access";
-import Portal from "Website/Home/Portal";
 
 export default function Charities() {
   return (

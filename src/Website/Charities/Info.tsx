@@ -1,6 +1,6 @@
+import growthImage from "assets/images/growth.png";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
-import growthImage from "assets/images/growth.png";
 
 export default function Info() {
   const { ref, isVisible } = useObserve({ threshold: 0.2 });

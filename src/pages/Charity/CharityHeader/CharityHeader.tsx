@@ -1,6 +1,6 @@
+import { Profile } from "services/aws/endowments/types";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
-import { Profile } from "services/aws/endowments/types";
 import CharityLinks from "./CharityLinks";
 
 export default function CharityHeader(props: Profile) {

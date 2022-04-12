@@ -1,10 +1,10 @@
+import { AWSQueryRes } from "services/aws/types";
 import { aws } from "../aws";
 import {
   DepositTransactions,
   DonationQueryRes,
   DonationTransactions,
 } from "./types";
-import { AWSQueryRes } from "services/aws/types";
 
 const endowment_admin_api = aws.injectEndpoints({
   endpoints: (builder) => ({

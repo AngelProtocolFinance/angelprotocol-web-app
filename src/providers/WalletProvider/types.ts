@@ -1,10 +1,10 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import {
+  ConnectType,
   Installation,
   NetworkInfo,
-  WalletStatus,
-  ConnectType,
   TxResult,
+  WalletStatus,
 } from "@terra-money/wallet-provider";
 
 // Enum extending @terra-money/wallet-types/types > ConnectType with Torus type

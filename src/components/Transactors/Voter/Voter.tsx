@@ -1,7 +1,7 @@
-import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 import { schema } from "./schema";
-import { VoteValues, Props } from "./types";
+import { Props, VoteValues } from "./types";
 
 export default function Voter(props: Props) {
   const methods = useForm<VoteValues>({

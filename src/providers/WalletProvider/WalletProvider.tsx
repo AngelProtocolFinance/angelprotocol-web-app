@@ -2,7 +2,7 @@ import {
   WalletProvider as TerraProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
-import { createContext, PropsWithChildren } from "react";
+import { PropsWithChildren, createContext } from "react";
 import BinanceWallet from "../BinanceWallet/BinanceWallet";
 import Metamask from "../Metamask/Metamask";
 import { chainOptions } from "./chainOptions";

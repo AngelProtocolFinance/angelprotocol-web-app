@@ -1,9 +1,8 @@
 import contract_querier from "../contract_querier";
-import { terra } from "../terra";
-
-import { PairInfo, Pool, PoolBalance, Simulation } from "./types";
-import { ContractQueryArgs, QueryRes } from "../types";
 import { lbp, tags } from "../tags";
+import { terra } from "../terra";
+import { ContractQueryArgs, QueryRes } from "../types";
+import { PairInfo, Pool, PoolBalance, Simulation } from "./types";
 
 export const lp_api = terra.injectEndpoints({
   endpoints: (builder) => ({

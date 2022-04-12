@@ -1,10 +1,10 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Simulation } from "services/terra/lp/types";
+import { ContractQueryArgs } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
-import { Simulation } from "services/terra/lp/types";
-import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 
 export default class LP extends Contract {

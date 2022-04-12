@@ -1,12 +1,12 @@
+import { BiArrowBack } from "react-icons/bi";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { PollStatus } from "services/terra/gov/types";
+import Icon from "components/Icons/Icons";
 import idParamToNumber from "helpers/idParamToNum";
+import { app, site } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
-import Icon from "components/Icons/Icons";
-import { Link } from "react-router-dom";
-import { BiArrowBack } from "react-icons/bi";
-import { app, site } from "constants/routes";
 
 export default function PollDetails() {
   const { id: pollId } = useParams<{ id?: string }>();

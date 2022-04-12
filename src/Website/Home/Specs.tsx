@@ -1,7 +1,7 @@
 import donorIcon from "assets/icons/administrator.svg";
-import setupIcon from "assets/icons/rocket.svg";
-import lowCostIcon from "assets/icons/piggy_bank.svg";
 import mgmtIcon from "assets/icons/gear.svg";
+import lowCostIcon from "assets/icons/piggy_bank.svg";
+import setupIcon from "assets/icons/rocket.svg";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
 

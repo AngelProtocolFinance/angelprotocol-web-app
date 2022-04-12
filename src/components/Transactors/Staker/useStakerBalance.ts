@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
-import { useHaloBalance } from "services/terra/queriers";
 import { useGovStaker } from "services/terra/gov/queriers";
+import { useHaloBalance } from "services/terra/queriers";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();

@@ -1,6 +1,6 @@
-import useWalletContext from "hooks/useWalletContext";
-import { WalletProxy } from "providers/WalletProvider";
 import { useMemo } from "react";
+import { WalletProxy } from "providers/WalletProvider";
+import useWalletContext from "hooks/useWalletContext";
 
 export function useContract<U, T extends { new (wallet?: WalletProxy): U }>(
   Contract: T

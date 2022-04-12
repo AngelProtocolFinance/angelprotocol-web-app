@@ -1,10 +1,10 @@
-import { Step, SuccessStage } from "services/transaction/types";
 import { setStage } from "services/transaction/transactionSlice";
-import { useSetModal } from "components/Modal/Modal";
-import getTxUrl from "helpers/getTxUrl";
-import { useSetter } from "store/accessors";
-import SharePrompt from "components/Share/SharePrompt";
+import { Step, SuccessStage } from "services/transaction/types";
 import Icon from "components/Icons/Icons";
+import { useSetModal } from "components/Modal/Modal";
+import SharePrompt from "components/Share/SharePrompt";
+import { useSetter } from "store/accessors";
+import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");

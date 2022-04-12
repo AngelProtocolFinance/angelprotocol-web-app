@@ -1,6 +1,6 @@
-import setupIcon from "assets/icons/production_wheel.svg";
-import donateIcon from "assets/icons/money_savings.svg";
 import growIcon from "assets/icons/market_analytics.svg";
+import donateIcon from "assets/icons/money_savings.svg";
+import setupIcon from "assets/icons/production_wheel.svg";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "../../helpers/transitionIn";
 

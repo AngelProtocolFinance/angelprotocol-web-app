@@ -1,9 +1,9 @@
-import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
+import { useMemo } from "react";
 import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
-import { VaultFieldIds, VaultFieldLimits } from "./types";
 import { vaultMap } from "./constants";
+import { VaultFieldIds, VaultFieldLimits } from "./types";
 
 export default function useFieldsAndLimits(accountAddr: string) {
   const { holdings } = useEndowmentHoldingsState(accountAddr);
