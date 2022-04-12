@@ -8,19 +8,9 @@ import { FormValues } from "../../types";
 export default function ProofOfIdentity() {
   const {
     formState: { errors, isSubmitting },
-    control,
   } = useFormContext<FormValues>();
 
-  console.log("errors", errors);
-  console.log("value", control._formValues.proofOfIdentity);
-
-  const inputErrors = errors.proofOfIdentity as FieldError[];
-
-  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
-  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
-  const errorMessage = !!inputErrors?.length
-    ? inputErrors[0]?.message
-    : (errors.proofOfIdentity as FieldError)?.message;
+  const errorMessage = (errors.proofOfIdentity as FieldError)?.message;
 
   return (
     <InputRow
