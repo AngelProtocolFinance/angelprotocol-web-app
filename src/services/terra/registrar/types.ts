@@ -17,10 +17,15 @@ export type EndowmentListRes = {
 export type EndowmentEntry = {
   address: string;
   status: keyof EndowmentStatus;
-  name?: String;
-  owner?: String;
+  name: string;
+  owner?: string;
   tier?: string;
   endow_type?: EndowmentType;
+  un_sdg?: number;
+};
+
+export type CategorizedEndowments = {
+  [index: number]: EndowmentEntry[];
 };
 
 export type EndowmentQueryOptions = {
