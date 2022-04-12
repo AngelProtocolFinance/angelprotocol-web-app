@@ -66,7 +66,7 @@ export const useRegistration = () => {
       Metadata: getMetadata(data),
       ProofOfIdentity: data.Registration.ProofOfIdentity || [],
       Website: data.Registration.Website,
-      UN_SDG: data.Registration.UN_SDG,
+      UN_SDG: +data.Registration.UN_SDG,
       ProofOfRegistration: data.Registration.ProofOfRegistration || [],
       FinancialStatements: data.Registration.FinancialStatements || [],
       AuditedFinancialReports: data.Registration.AuditedFinancialReports || [],
