@@ -1,5 +1,8 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
+import { UpdateCharityMetadataResult } from "services/aws/types";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
@@ -29,25 +32,20 @@ export default function useRegisterWallet() {
       setSubmitting(true);
 
       try {
-        const response: any = await updateMetadata({
+        const response = await updateMetadata({
           body: { TerraWallet: walletAddress },
           PK: user.PK,
         });
 
-        const result = response.data ? response : response.error;
+        const result = response as {
+          data: UpdateCharityMetadataResult;
+          error: FetchBaseQueryError | SerializedError;
+        };
 
-        if (result.status === 500) {
-          handleFailure("Saving data has failed. Please try again.");
-        } else if (result.error) {
-          handleFailure(result.error.data?.message);
-        } else if (
-          result.status === 400 ||
-          result.status === 401 ||
-          result.status === 403
-        ) {
-          handleFailure(result.data?.message);
+        if (!!result.error) {
+          handleFailure(JSON.stringify(result.error));
         } else {
-          handleSuccess(walletAddress);
+          handleSuccess(result.data.TerraWallet);
         }
       } catch (error) {
         handleFailure(error);
