@@ -7,18 +7,12 @@ export type FormValues = {
   banner: FileWrapper;
 };
 
-const VALID_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/bmp",
-  "image/svg+xml",
-  "image/webp",
-];
+const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   .test({
     name: "fileType",
-    message: "Valid file types are PDF, JPG and PNG",
+    message: "Valid file types are JPG, PNG and WEBP",
     test: (fileWrapper) =>
       fileWrapper?.file
         ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
