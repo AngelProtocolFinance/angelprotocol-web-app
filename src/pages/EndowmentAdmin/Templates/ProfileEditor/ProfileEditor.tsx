@@ -21,37 +21,38 @@ export default function ProfileEditor() {
   if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;
   if (isProfileLoading) return <FormSkeleton />;
-  if (isProfileError || !profile)
-    return <FormError errorMessage="Failed to load profile" />;
+  // if (isProfileError || !profile)
+  //   return <FormError errorMessage="Failed to load profile" />;
 
   return (
-    <ProfileEditContext {...profile}>
+    <ProfileEditContext {...(profile || ({} as any))}>
       <EditForm />
     </ProfileEditContext>
   );
 }
 
 function ProfileEditContext(props: Profile) {
-  const initialProfile: UpdateProfilePayload = {
-    name: props.name,
-    overview: props.overview,
-    un_sdg: props.un_sdg,
-    tier: props.tier,
-    logo: props.logo,
-    image: props.image,
-    url: props.url,
-    registration_number: props.registration_number,
-    country_city_origin: props.country_city_origin,
-    contact_email: props.contact_email,
-    facebook: props.social_media_urls.facebook,
-    twitter: props.social_media_urls.twitter,
-    linkedin: props.social_media_urls.linkedin,
-    number_of_employees: props.number_of_employees,
-    average_annual_budget: props.average_annual_budget,
-    annual_revenue: props.annual_revenue,
-    charity_navigator_rating: props.charity_navigator_rating,
-    // endow_type: prof,
-  };
+  const initialProfile = {};
+  // const initialProfile: UpdateProfilePayload = {
+  //   name: props.name,
+  //   overview: props.overview,
+  //   un_sdg: props.un_sdg,
+  //   tier: props.tier,
+  //   logo: props.logo,
+  //   image: props.image,
+  //   url: props.url,
+  //   registration_number: props.registration_number,
+  //   country_city_origin: props.country_city_origin,
+  //   contact_email: props.contact_email,
+  //   facebook: props.social_media_urls.facebook,
+  //   twitter: props.social_media_urls.twitter,
+  //   linkedin: props.social_media_urls.linkedin,
+  //   number_of_employees: props.number_of_employees,
+  //   average_annual_budget: props.average_annual_budget,
+  //   annual_revenue: props.annual_revenue,
+  //   charity_navigator_rating: props.charity_navigator_rating,
+  //   // endow_type: prof,
+  // };
   const methods = useForm<UpdateProfileValues>({
     mode: "onChange",
     reValidateMode: "onChange",

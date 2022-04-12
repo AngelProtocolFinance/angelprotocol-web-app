@@ -39,7 +39,6 @@ export default function useEditProfile() {
   };
   return {
     editProfile: handleSubmit(editProfile),
-    endowment_addr,
     isSubmitDisabled: isSubmitting || !isDirty,
   };
 }

@@ -8,5 +8,13 @@ export default function ImageWrapper(
   const handleImageLoadError = () => {
     imageRef.current?.setAttribute("src", placeHolderImage);
   };
-  return <img {...props} alt={props.alt} onError={handleImageLoadError} />;
+  return (
+    <img
+      {...props}
+      //setting src to undefined doesn't trigger load error
+      src={props.src || placeHolderImage}
+      alt={props.alt}
+      onError={handleImageLoadError}
+    />
+  );
 }

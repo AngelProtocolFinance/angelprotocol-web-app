@@ -38,13 +38,14 @@ export function useEndowmentCWs(address?: string) {
 
 export function useEndowmentProfile(address: string, skip = false) {
   const { wallet, contract } = useAccountContract(address);
+  console.log(wallet);
   const { useEndowmentProfileQuery } = account_api;
   const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
     contract.profile,
-    {
-      skip: skip || wallet?.network.chainID !== chainIDs.localterra,
-    }
+    { skip: skip || wallet?.network.chainID === chainIDs.localterra }
   );
+
+  console.log({ data, isError, isLoading, isFetching });
   return {
     profile: data,
     isProfileError: isError,

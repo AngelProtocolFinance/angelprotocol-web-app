@@ -7,22 +7,20 @@ import useEditForm from "./useEditProfile";
 import Icon from "components/Icons/Icons";
 import TextInput from "pages/Admin/components/TextInput";
 import { UpdateProfileValues as UV } from "./profileEditSchema";
+import {
+  FormContainer,
+  GroupContainer,
+} from "pages/Admin/components/TemplateContainer";
+import Label from "pages/Admin/components/Label";
+import Submitter from "pages/Admin/Templates/Submitter";
 
 export default function EditForm() {
-  const { endowment_addr, editProfile, isSubmitDisabled } = useEditForm();
+  const { editProfile, isSubmitDisabled } = useEditForm();
   return (
-    <form className="max-w-3xl w-full" onSubmit={editProfile}>
-      <Link
-        to={`${site.app}/${app.charity}/${endowment_addr}`}
-        className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
-      >
-        <Icon type="ArrowBack" size={15} /> back to profile
-      </Link>
-
-      <p className="text-xs font-heading font-semibold uppercase text-white/100 mb-2">
-        Banner
-      </p>
+    <FormContainer onSubmit={editProfile}>
+      <Label className="text-angel-grey -mb-2">Banner</Label>
       <ImageEditor />
+      <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
       <TextInput<UV>
         name="name"
@@ -40,64 +38,65 @@ export default function EditForm() {
         placeholder="Manila, Philippines"
       />
       <OverviewEditor />
-      <SectionHeader title="Organization" />
-      <TextInput<UV>
-        name="average_annual_budget"
-        title="Annual budget"
-        placeholder="$100,000"
-      />
-      <TextInput<UV>
-        name="annual_revenue"
-        title="Annual revenue"
-        placeholder="$120,000"
-      />
-      <TextInput<UV>
-        name="number_of_employees"
-        title="Number of employeees"
-        placeholder="50 - 100"
-      />
-      <SectionHeader title="social media" />
-      <TextInput<UV>
-        name="url"
-        title="Website"
-        placeholder="https://website.org"
-      />
-      <TextInput<UV>
-        name="facebook"
-        title="Facebook"
-        placeholder="https://facebook.com/angelprotocol"
-      />
-      <TextInput<UV>
-        name="facebook"
-        title="Twitter"
-        placeholder="https://twitter.com/angelprotocol"
-      />
-      <TextInput<UV>
-        name="linkedin"
-        title="Linkedin"
-        placeholder="https://linkedin.com/angelprotocol"
-      />
-      <SectionHeader title="contact" />
+
+      <Label className="text-angel-grey -mb-2">Organization</Label>
+      <GroupContainer>
+        <TextInput<UV>
+          name="average_annual_budget"
+          title="Annual budget"
+          placeholder="$100,000"
+          plain
+        />
+        <TextInput<UV>
+          name="annual_revenue"
+          title="Annual revenue"
+          placeholder="$120,000"
+          plain
+        />
+        <TextInput<UV>
+          name="number_of_employees"
+          title="Number of employeees"
+          placeholder="50 - 100"
+          plain
+        />
+      </GroupContainer>
+
+      <Label className="text-angel-grey -mb-2">Social Media</Label>
+      <GroupContainer>
+        <TextInput<UV>
+          name="url"
+          title="Website"
+          placeholder="https://website.org"
+          plain
+        />
+        <TextInput<UV>
+          name="facebook"
+          title="Facebook"
+          placeholder="https://facebook.com/angelprotocol"
+          plain
+        />
+        <TextInput<UV>
+          name="facebook"
+          title="Twitter"
+          placeholder="https://twitter.com/angelprotocol"
+          plain
+        />
+        <TextInput<UV>
+          name="linkedin"
+          title="Linkedin"
+          placeholder="https://linkedin.com/angelprotocol"
+          plain
+        />
+      </GroupContainer>
+
       <TextInput<UV>
         name="contact_email"
         title="Contact email"
         placeholder="hello@angelprotocol.io"
       />
-      <button
-        disabled={isSubmitDisabled}
-        type="submit"
-        className="bg-angel-blue hover:bg-angel-orange disabled:bg-grey-accent rounded-md uppercase text-white-grey text-sm font-bold w-full p-4 mb-6"
-      >
-        save
-      </button>
-    </form>
-  );
-}
-
-function SectionHeader(props: { title: string }) {
-  return (
-    <p className="font-heading text-xl font-bold text-white-grey mb-4 mt-12 uppercase">
-      {props.title}
-    </p>
+      <Submitter disabled={isSubmitDisabled} type="submit">
+        Submit proposal
+      </Submitter>
+    </FormContainer>
   );
 }

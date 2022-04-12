@@ -1,5 +1,4 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
 import useImageEditor from "hooks/useImageEditor";
 import { getIcon } from "components/Icons/Icons";
@@ -7,16 +6,20 @@ import Loader from "components/Loader/Loader";
 import { UpdateProfilePayload as UP } from "contracts/types";
 
 export default function ImageEditor() {
-  const { watch } = useFormContext<UP>();
-  const { handleFileChange, handleImageReset, loading, isInitial, inputRef } =
-    useImageEditor<UP>("image");
-  const charity_image = watch("image");
+  const {
+    handleFileChange,
+    handleImageReset,
+    loading,
+    isInitial,
+    inputRef,
+    currentImage,
+  } = useImageEditor<UP>("image");
   return (
     <div
+      className={`grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
       style={{
-        background: `no-repeat center/cover url(${charity_image})`,
+        background: `no-repeat center/cover url(${currentImage})`,
       }}
-      className="grid place-items-center relative group bg-red-400 w-full h-48 p-1 rounded-md mb-4 shadow-inner"
     >
       {(loading && <LoadingOverlay />) || (
         <div className="hidden absolute group-hover:flex">
@@ -67,8 +70,8 @@ function ImageControl(props: ControlProps & Common) {
 
 function LoadingOverlay() {
   return (
-    <div className="bg-black/50 absolute z-10">
-      <Loader gapClass="gap-2" widthClass="w-2" bgColorClass="bg-white" />
+    <div className="absolute z-10">
+      <Loader gapClass="gap-2" widthClass="w-3" bgColorClass="bg-angel-grey" />
     </div>
   );
 }

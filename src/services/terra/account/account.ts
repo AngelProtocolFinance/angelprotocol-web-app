@@ -64,7 +64,8 @@ export const account_api = terra.injectEndpoints({
     endowmentProfile: builder.query<Profile, ContractQueryArgs>({
       providesTags: [{ type: tags.endowment, id: endowment.profile }],
       query: contract_querier,
-      transformResponse: (res: QueryRes<any>) => {
+      transformResponse: (res: QueryRes<Profile>) => {
+        console.log(res);
         return res.query_result;
       },
     }),

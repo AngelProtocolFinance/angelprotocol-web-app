@@ -15,7 +15,7 @@ function OverviewEditor() {
     keyBinder,
   } = useEditor();
   return (
-    <div className="text-white/80 mb-4 p-3 rounded-md bg-white/10 shadow-inner">
+    <div className="text-black mb-4 p-3 rounded-md bg-light-grey shadow-inner-white-grey">
       <div className="flex gap-2 mt-2 mb-4">
         <Button onClick={applyInlineStyle("BOLD")} _iconType="Bold" />
         <Button _iconType="Italic" onClick={applyInlineStyle("ITALIC")} />
@@ -49,7 +49,7 @@ function Button({
     <button
       {...restProps}
       type="button"
-      className="p-1.5 bg-angel-blue rounded-sm hover:bg-blue-accent shadow-md"
+      className="p-1.5 text-white-grey bg-angel-blue rounded-sm hover:bg-bright-blue hover:text-white shadow-md"
     >
       <Icon type={_iconType} />
     </button>

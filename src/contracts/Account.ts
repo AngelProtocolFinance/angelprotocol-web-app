@@ -16,17 +16,17 @@ export default class Account extends Contract {
     this.address = accountAddr;
 
     this.balance = {
-      address: accountAddr,
+      address: this.address,
       msg: { balance: {} },
     };
 
     this.endowmentDetails = {
-      address: accountAddr,
+      address: this.address,
       msg: { endowment: {} },
     };
 
     this.profile = {
-      address: accountAddr,
+      address: this.address,
       msg: { get_profile: {} },
     };
   }
