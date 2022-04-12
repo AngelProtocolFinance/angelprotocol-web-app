@@ -1,7 +1,6 @@
 import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
 import { app, site } from "constants/routes";
-import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 import { Profile } from "services/aws/endowments/types";
 
 export default function CharityCard(props: Profile) {
@@ -15,11 +14,8 @@ export default function CharityCard(props: Profile) {
         src={props.charity_image}
         alt="charity banner"
       />
-      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-sm uppercase mt-1.5">
+      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-md uppercase mt-2">
         {props.charity_name}
-      </div>
-      <div className="mb-2 mx-2 w-64 line-clamp-2 text-sm text-white-grey/80">
-        <RichTextRenderer text={props.charity_overview} />
       </div>
     </Link>
   );
