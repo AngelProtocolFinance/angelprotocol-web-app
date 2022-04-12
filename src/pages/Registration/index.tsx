@@ -1,3 +1,4 @@
+import Loader from "components/Loader/Loader";
 import { app, site } from "constants/routes";
 import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
@@ -15,7 +16,11 @@ const WalletRegistration = lazy(() => import("./WalletRegistration"));
 const Documentation = lazy(() => import("./Documentation"));
 
 export default function Register() {
-  useRehydrateUserState();
+  const { isLoading } = useRehydrateUserState();
+
+  if (isLoading) {
+    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
+  }
 
   return (
     <Container>
