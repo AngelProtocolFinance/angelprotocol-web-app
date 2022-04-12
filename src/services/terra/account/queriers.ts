@@ -41,13 +41,14 @@ export function useEndowmentProfile(address: string, skip = false) {
   const { wallet } = useWalletContext();
   const { useEndowmentProfileQuery } = account_api;
   const contract = new Account(address);
-  const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
-    contract.profile,
-    {
-      skip: skip || !wallet,
-    }
-  );
-  console.log("profile: ", isLoading, data);
+  const {
+    data = {},
+    isError,
+    isLoading,
+    isFetching,
+  } = useEndowmentProfileQuery(contract.profile, {
+    skip: skip || !wallet,
+  });
   return {
     profile: data,
     isProfileError: isError,

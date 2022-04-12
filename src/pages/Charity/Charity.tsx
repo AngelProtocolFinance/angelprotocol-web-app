@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { useProfile } from "services/aws/endowments/queriers";
 import { CharityParam } from "./types";
 import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -12,7 +11,6 @@ import { useEndowmentProfile } from "services/terra/account/queriers";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
-  // const { profile, isProfileLoading } = useProfile(endowment_addr!);
   const { isProfileLoading, profile } = useEndowmentProfile(endowment_addr!);
 
   if (isProfileLoading) return <CharitySkeleton />;
