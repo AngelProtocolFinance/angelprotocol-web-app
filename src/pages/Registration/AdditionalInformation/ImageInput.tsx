@@ -13,13 +13,7 @@ export default function ImageInput({ name, label }: Props) {
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
-  const inputErrors = errors[name] as FieldError[];
-
-  // For some reason Yup doesn't set any error fields related to the array itself (judged by the type assumed
-  // to be 'FieldError[] | undefined'), but only sets the fields of its items, so we have to convert it to 'any'
-  const errorMessage = !!inputErrors?.length
-    ? inputErrors[0]?.message
-    : (errors[name] as FieldError)?.message;
+  const errorMessage = (errors[name] as FieldError)?.message;
 
   return (
     <InputRow htmlFor={name} label={label} required>
