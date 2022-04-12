@@ -8,10 +8,7 @@ import { Source } from "./types";
 export default class Account extends Contract {
   address: string;
   balance: ContractQueryArgs;
-<<<<<<< HEAD
-=======
   endowmentDetails: ContractQueryArgs;
->>>>>>> RC-web-profile
   profile: ContractQueryArgs;
 
   constructor(accountAddr: string, wallet?: WalletProxy) {
@@ -22,15 +19,12 @@ export default class Account extends Contract {
       address: accountAddr,
       msg: { balance: {} },
     };
-<<<<<<< HEAD
-=======
 
     this.endowmentDetails = {
       address: accountAddr,
       msg: { endowment: {} },
     };
 
->>>>>>> RC-web-profile
     this.profile = {
       address: accountAddr,
       msg: { get_profile: {} },
