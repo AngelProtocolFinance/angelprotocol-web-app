@@ -1,19 +1,21 @@
-export interface Details {
+export interface MemberDetails {
   name: string;
-  icon: string;
-  iconLight: boolean;
-}
-
-export interface RawDetails extends Details {
   address: string;
+  url?: string;
+  icon?: string;
+  iconLight?: boolean;
+  otherWallets?: string[];
+  isPlaceholder?: true;
 }
 
-export type Donors = {
-  [index: string]: Details;
+export type NewMemberPayload = Omit<
+  MemberDetails,
+  "isPlaceholder" | "otherWallets"
+>;
+export type EditMemberPayload = Partial<NewMemberPayload>;
+
+export type MemberLookUp = {
+  [index: MemberDetails["address"]]: Omit<MemberDetails, "address"> | undefined;
 };
 
-export interface Result {
-  Count: number;
-  ScannedCount: number;
-  Items: RawDetails[];
-}
+export type ToRemoveMember = Pick<MemberDetails, "name" | "address">;

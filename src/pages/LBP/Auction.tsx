@@ -114,7 +114,7 @@ const Tabs = ({ color }: { color: string }) => {
                 }
                 onClick={(e) => {
                   e.preventDefault();
-                  setOpenTab(1);
+                  setOpenTab(2);
                 }}
                 data-toggle="tab"
                 href="#link1"

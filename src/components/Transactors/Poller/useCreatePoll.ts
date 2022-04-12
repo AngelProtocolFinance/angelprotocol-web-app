@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { terra } from "services/terra/terra";
 import { tags, user } from "services/terra/tags";
 import { useGetter, useSetter } from "store/accessors";

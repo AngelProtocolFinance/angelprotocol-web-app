@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
+import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import toCurrency from "helpers/toCurrency";
-import { useFormContext } from "react-hook-form";
 import { VaultField, WithdrawValues } from "./types";
 
 export default function Amount(props: VaultField) {
@@ -56,7 +56,7 @@ export default function Amount(props: VaultField) {
         errors={errors}
         name={props.fieldId}
         as="span"
-        className="text-right text-red-400 text-xs mb-1 mr-1"
+        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
       />
     </div>
   );

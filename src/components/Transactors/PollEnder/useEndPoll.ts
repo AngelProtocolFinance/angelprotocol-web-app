@@ -5,7 +5,7 @@ import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetter } from "store/accessors";
 
 export default function useEndPoll(pollId: number) {
