@@ -34,6 +34,7 @@ export default function EditForm() {
         title="Location"
         placeholder="Manila, Philippines"
       />
+      <Label className="text-angel-grey -mb-2">Overview</Label>
       <OverviewEditor />
 
       <Label className="text-angel-grey -mb-2">Organization</Label>
