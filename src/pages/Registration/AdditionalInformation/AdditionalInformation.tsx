@@ -7,7 +7,7 @@ import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
 import routes from "../routes";
 import ButtonSection from "./ButtonSection";
-import DescriptionInput from "./DescriptionInput";
+import OverviewInput from "./OverviewInput";
 import ImageInput from "./ImageInput";
 import { FormValues, SCHEMA } from "./types";
 import useSubmit from "./useSubmit";
@@ -47,7 +47,7 @@ export default function AdditionalInformation() {
             label="Banner image of your organization"
           />
           <ImageInput name="charityLogo" label="Logo of your organization" />
-          <DescriptionInput />
+          <OverviewInput />
           <Separator />
           <ButtonSection />
         </form>
