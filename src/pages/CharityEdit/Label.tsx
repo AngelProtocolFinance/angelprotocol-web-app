@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Label(props: { text: string; id: string }) {
   return (
     <label

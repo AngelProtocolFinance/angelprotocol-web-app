@@ -19,7 +19,7 @@ export default function Polls() {
   }, [govPolls, pollFilter]);
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 bg-white/5 p-3 rounded-md">
       <Toolbar pollFilter={pollFilter} setPollFilter={setPollFilter} />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {(filteredPolls.length > 0 &&

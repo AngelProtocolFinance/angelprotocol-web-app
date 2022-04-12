@@ -15,6 +15,7 @@ export default function useDebouncer<T = number>(
     }, delay);
     return () => {
       clearTimeout(timer);
+      setLoading(false);
     };
   }, [value, delay]);
 

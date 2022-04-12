@@ -8,6 +8,7 @@ type Contracts = {
 };
 
 export const contracts: Contracts = {
+  //latest address here - https://github.com/AngelProtocolFinance/angelprotocol-test-suite/blob/main/src/config/constants.ts
   [chainIDs.mainnet]: {
     //core
     [sc.anchor_vault1]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
@@ -16,8 +17,13 @@ export const contracts: Contracts = {
     [sc.index_fund]: "terra19cevhng6nunl7gmc90sph0syuqyvtqn7mlhwz0",
     [sc.registrar]: "terra1nwk2y5nfa5sxx6gtxr84lre3zpnn7cad2f266h",
 
+    // Multisig
+    [sc.apCW3]: "terra1zrwpm9htqdh80nhqcuvw999cexvtmu0xt4dks5",
+    [sc.apCW4]: "terra1eueh924845wwsc2mna5u3ysn79q66kwqgq26mj",
+
     //terraswap
     [sc.halo_token]: "terra1w8kvd6cqpsthupsk4l0clwnmek4l3zr7c84kwq",
+    [sc.airdrop]: "",
 
     //halo
     [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
@@ -42,8 +48,12 @@ export const contracts: Contracts = {
     [sc.anchor_vault1]: "terra1mvtfa3zkayfvczqdrwahpj8wlurucdykm8s2zg",
     [sc.anchor_vault2]: "terra16y7du2keuersslsevvqx32z04wy6juyfwjs3ru",
 
-    [sc.index_fund]: "terra1typpfzq9ynmvrt6tt459epfqn4gqejhy6lmu7d",
+    [sc.index_fund]: "terra1nguvmjkjxfmqggvp3datged2cx6gjf4jl9apps",
     [sc.registrar]: "terra15upcsqpg57earvp7mc49kl5e7cppptu2ndmpak",
+
+    // Multisig
+    [sc.apCW3]: "terra1qspgamxqn9slwe7ecca4n2fs2xsl5hxvkc9lzs",
+    [sc.apCW4]: "terra1wpnzy6w9gd3tt9wkvnqkcmzkyc8v0tgz75nuue",
 
     //terraswap
     [sc.halo_token]: "terra1ah3gd4uhxtrpc3qeqn84l6v3wcvfkh3vw25fyl",
@@ -72,6 +82,10 @@ export const contracts: Contracts = {
 
     [sc.index_fund]: "",
     [sc.registrar]: "",
+
+    // Multisig
+    [sc.apCW3]: "",
+    [sc.apCW4]: "",
 
     //terraswap
     [sc.halo_token]: "",

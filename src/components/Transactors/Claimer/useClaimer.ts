@@ -13,6 +13,5 @@ export default function useClaimer() {
     });
     //eslint-disable-next-line
   }, []);
-
   return showClaimer;
 }

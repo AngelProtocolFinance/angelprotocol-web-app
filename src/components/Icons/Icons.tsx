@@ -1,5 +1,33 @@
 import { IconType } from "react-icons";
 import {
+  AiOutlineTwitter,
+  AiFillYoutube,
+  AiOutlineMedium,
+  AiOutlineCopy,
+  AiOutlineCheck,
+  AiOutlineInfoCircle,
+  AiOutlineCheckCircle,
+  AiOutlineExclamation,
+  AiOutlineEdit,
+  AiFillCaretLeft,
+  AiOutlineLike,
+  AiOutlineDislike,
+  AiOutlineUpload,
+} from "react-icons/ai";
+import {
+  BiArrowBack,
+  BiBold,
+  BiItalic,
+  BiGlobe,
+  BiSearchAlt2,
+} from "react-icons/bi";
+import {
+  BsHourglassSplit,
+  BsExclamationCircle,
+  BsSafeFill,
+} from "react-icons/bs";
+import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
+import {
   FaFacebookF,
   FaLinkedinIn,
   FaParachuteBox,
@@ -10,37 +38,22 @@ import {
   FaClock,
   FaStopwatch,
   FaTelegramPlane,
+  FaUserCircle,
+  FaUsersCog,
 } from "react-icons/fa";
-import { RiDiscordLine } from "react-icons/ri";
-import {
-  AiOutlineTwitter,
-  AiFillYoutube,
-  AiOutlineMedium,
-  AiOutlineCopy,
-  AiOutlineCheck,
-  AiOutlineInfoCircle,
-  AiOutlineCheckCircle,
-  AiOutlineExclamation,
-  AiFillCaretLeft,
-  AiOutlineLike,
-  AiOutlineDislike,
-  AiOutlineUpload,
-  AiOutlineEdit,
-} from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
-import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
-import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
-import { IoMdSettings } from "react-icons/io";
-import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
-import { BiArrowBack, BiBold, BiItalic, BiGlobe } from "react-icons/bi";
-import { SiHiveBlockchain } from "react-icons/si";
+import { GiPieChart } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
+import { IoMdSettings } from "react-icons/io";
+import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import { RiDiscordLine } from "react-icons/ri";
+import { SiHiveBlockchain } from "react-icons/si";
+import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"
@@ -84,9 +97,15 @@ export type IconTypes =
   | "Blockchain"
   | "ExternalLink"
   | "ExchangeAlt"
+  | "Undo"
+  | "Search"
   | "Edit"
+  | "User"
+  | "PieChart"
+  | "Safe"
   | "Globe"
-  | "Undo";
+  | "Admin"
+  | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   ExchangeAlt: CgArrowsExchangeAltV,
@@ -132,7 +151,12 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Clock: FaClock,
   ListOl: FaListOl,
   ListUl: FaListUl,
+  Search: BiSearchAlt2,
   Edit: AiOutlineEdit,
+  User: FaUserCircle,
+  PieChart: GiPieChart,
+  Safe: BsSafeFill,
+  Admin: FaUsersCog,
 };
 
 interface IconProps extends IconBaseProps {

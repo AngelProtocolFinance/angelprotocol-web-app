@@ -13,7 +13,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
-import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
@@ -51,9 +50,9 @@ export default function useCreatePollEstimate() {
           amount,
           //just set max contraints for estimates to avoid
           //estimating fee on different string lengths
-          create_placeholder(max_title_bytes),
-          create_placeholder(max_desc_bytes),
-          create_placeholder(max_link_bytes)
+          create_placeholder(64),
+          create_placeholder(1024),
+          create_placeholder(128)
         );
 
         //max fee estimate with extreme payload

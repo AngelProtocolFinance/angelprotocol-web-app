@@ -1,11 +1,7 @@
-/**
- * states are hooks that only uses existing cache entry and doesn't call the API when
- * there's no cache entry
- */
-import LP, { L, T } from "contracts/LP";
+import { useContract } from "../useContract";
 import { pairInfo, pool_balance, simulation } from "./placeholders";
 import { lp_api } from "./lp";
-import { useContract } from "../useContract";
+import LP, { L, T } from "contracts/LP";
 
 export function usePairInfoState() {
   const { contract } = useContract<L, T>(LP);

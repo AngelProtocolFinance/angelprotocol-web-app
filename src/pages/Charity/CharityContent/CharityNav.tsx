@@ -8,16 +8,17 @@ export default function CharityNav(props: { classes?: string }) {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(
     { duration: 300 }
   );
+
   return (
     //bounding box to anchor buttons
     <div className={`relative ${props.classes || ""} my-3`}>
       <div ref={ref} className="overflow-hidden overflow-x-auto scroll-hidden">
         <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(5,_minmax(8rem,_1fr))] divide-x">
-          <NavLink to={charity.overview} className={styler}>
+          <NavLink end to={charity.index} className={styler}>
             overview
           </NavLink>
           <NavLink to={charity.endowment} className={styler}>
-            endowments
+            endowment
           </NavLink>
           <NavLink to={charity.programs} className={disabledClass}>
             programs

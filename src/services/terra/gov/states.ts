@@ -13,7 +13,7 @@ export function useGovBalanceState() {
 }
 
 export function useGovStakerState() {
-  const { wallet, contract } = useContract<H, T>(Halo);
+  const { contract, wallet } = useContract<H, T>(Halo);
   const { data = staker } = gov_api.endpoints.govStaker.useQueryState(
     contract.staker,
     {
