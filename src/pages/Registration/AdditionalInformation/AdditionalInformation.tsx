@@ -48,7 +48,6 @@ export default function AdditionalInformation() {
           />
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <OverviewInput />
-          <Separator />
           <ButtonSection />
         </form>
       </FormProvider>
@@ -73,5 +72,3 @@ function OrganizationName() {
     </InputRow>
   );
 }
-
-const Separator = () => <div className="h-4" />;
