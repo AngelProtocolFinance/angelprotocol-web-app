@@ -9,11 +9,10 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 export default function useImageEditor<T extends FieldValues>(
   fieldName: Path<T>
 ) {
-  //TODO: make this reusable with other image changer on different context
   const { getValues, setValue, watch } = useFormContext<T>();
   //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
-  const currentImage = watch(fieldName);
+  const currentImage = watch(fieldName) || placeHolderImage;
   const initialImageRef = useRef<string>(
     getValues(fieldName) || placeHolderImage
   );
