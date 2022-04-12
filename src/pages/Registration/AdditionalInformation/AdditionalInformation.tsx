@@ -33,7 +33,7 @@ export default function AdditionalInformation() {
   }, [isSuccess, navigate]);
 
   return (
-    <div className="flex flex-col gap-5 items-center">
+    <div className="flex flex-col gap-5 items-center w-full">
       <Title />
 
       <FormProvider {...methods}>
