@@ -12,8 +12,6 @@ type Props<T extends FieldValues> = BaseProps<T> & {
   value: File | File[];
 };
 
-const DISABLED_CLASSES = "cursor-default bg-light-grey/30";
-
 export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: props.onDrop,
@@ -25,34 +23,30 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
     isDragActive
       ? "bg-angel-blue/50 ring ring-angel-blue"
       : "bg-white outline-none"
-  } ${props.className} ${props.disabled ? DISABLED_CLASSES : ""}`;
+  } ${props.className} ${
+    props.disabled ? "cursor-default bg-grey-accent/40" : ""
+  }`;
 
   return (
     <div {...getRootProps({ className })}>
       <input id={props.name} {...getInputProps()} />
-      <DropzoneText files={props.value} disabled={props.disabled} />
+      <DropzoneText files={props.value} />
     </div>
   );
 }
 
-type DropzoneTextProps = { files: File | File[]; disabled?: boolean };
+type DropzoneTextProps = { files: File | File[] };
 
-function DropzoneText({ files, disabled }: DropzoneTextProps) {
+function DropzoneText({ files }: DropzoneTextProps) {
   const fileNames = getFileNames(files);
-  const disabledClass = disabled ? DISABLED_CLASSES : "";
 
   return !fileNames.length ? (
-    <span
-      className={`flex items-center gap-1 text-dark-grey text-sm ${disabledClass}`}
-    >
+    <span className="flex items-center gap-1 text-dark-grey text-sm">
       <MdOutlineFileUpload className="text-lg" />
       Select file or Drag &amp; Drop
     </span>
   ) : (
-    <label
-      className={`flex text-black text-sm truncate ${disabledClass}`}
-      title={fileNames}
-    >
+    <label className="flex text-black text-sm truncate" title={fileNames}>
       {fileNames}
     </label>
   );
