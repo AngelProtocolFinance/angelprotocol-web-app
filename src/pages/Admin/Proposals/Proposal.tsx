@@ -9,6 +9,7 @@ import DetailLabel from "./DetailLabel";
 import ProposalContent from "./ProposalContent/ProposalContent";
 import { VoteInfo } from "services/terra/admin/types";
 import TableSection, { Cells } from "components/TableSection/TableSection";
+import usePagination from "hooks/usePagination";
 
 export type ProposalIdParam = { id: string };
 export default function Proposal() {
@@ -80,38 +81,64 @@ function Votes(props: ProposalDetails) {
 }
 
 function VotesTable(props: { votes: VoteInfo[] }) {
+  const { data, prev, next, hasNext, hasPrev } = usePagination<VoteInfo>({
+    data: props.votes,
+    perPage: 15,
+  });
+
   return (
-    <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
-      <TableSection
-        type="thead"
-        rowClass="sm:visible invisible  sm:flex sm:inline-block mb-2"
-      >
-        <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0 text-left flex-1">
-          <>Addresses</>
-          <>Vote</>
-        </Cells>
-      </TableSection>
-      <TableSection
-        type="tbody"
-        rowClass="border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
-      >
-        {props.votes.map((vote, i) => (
+    <div>
+      <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
+        <TableSection
+          type="thead"
+          rowClass="sm:visible invisible  sm:flex sm:inline-block mb-2"
+        >
           <Cells
-            type="td"
-            cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full border-t border-l border-b border-r sm:flex-1"
-            key={i}
+            type="th"
+            cellClass="px-2 first:pl-0 last:pr-0 text-left flex-1"
           >
-            <p className="pl-2">{vote.voter}</p>
-            <p
-              className={`pl-2 ${
-                vote.vote === "yes" ? "text-bright-green" : "text-failed-red"
-              }`}
-            >
-              {vote.vote}
-            </p>
+            <>Addresses</>
+            <>Vote</>
           </Cells>
-        ))}
-      </TableSection>
-    </table>
+        </TableSection>
+        <TableSection
+          type="tbody"
+          rowClass="border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+        >
+          {data.map((vote, i) => (
+            <Cells
+              type="td"
+              cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full border-t border-l border-b border-r sm:flex-1"
+              key={i}
+            >
+              <p className="pl-2">{vote.voter}</p>
+              <p
+                className={`pl-2 ${
+                  vote.vote === "yes" ? "text-bright-green" : "text-failed-red"
+                }`}
+              >
+                {vote.vote}
+              </p>
+            </Cells>
+          ))}
+        </TableSection>
+      </table>
+      <div className="flex justify-between mt-5">
+        <button
+          onClick={prev}
+          disabled={!hasPrev()}
+          className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
+        >
+          Prev
+        </button>
+        <button
+          onClick={next}
+          disabled={!hasNext()}
+          className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
+        >
+          Next
+        </button>
+      </div>
+    </div>
   );
 }
