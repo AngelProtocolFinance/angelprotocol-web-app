@@ -1,4 +1,4 @@
-import Portal from "Website/Home/Portal";
+import Portal from "../Home/Portal";
 import Access from "./Access";
 import Banner from "./Banner";
 import Info from "./Info";
