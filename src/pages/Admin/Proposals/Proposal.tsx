@@ -81,7 +81,16 @@ function Votes(props: ProposalDetails) {
 }
 
 function VotesTable(props: { votes: VoteInfo[] }) {
-  const { data, prev, next, hasNext, hasPrev } = usePagination<VoteInfo>({
+  const {
+    data,
+    currentPage,
+    totalPages,
+    canPaginate,
+    prev,
+    next,
+    hasNext,
+    hasPrev,
+  } = usePagination<VoteInfo>({
     data: props.votes,
     perPage: 15,
   });
@@ -123,22 +132,27 @@ function VotesTable(props: { votes: VoteInfo[] }) {
           ))}
         </TableSection>
       </table>
-      <div className="flex justify-between mt-5">
-        <button
-          onClick={prev}
-          disabled={!hasPrev()}
-          className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
-        >
-          Prev
-        </button>
-        <button
-          onClick={next}
-          disabled={!hasNext()}
-          className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
-        >
-          Next
-        </button>
-      </div>
+      {canPaginate && (
+        <div className="flex justify-between mt-5">
+          <button
+            onClick={prev}
+            disabled={!hasPrev()}
+            className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
+          >
+            Prev
+          </button>
+          <p>
+            Page {currentPage + 1} of {totalPages}
+          </p>
+          <button
+            onClick={next}
+            disabled={!hasNext()}
+            className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 }

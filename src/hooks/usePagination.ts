@@ -11,7 +11,9 @@ type PaginationReturn<T> = {
   next: () => void;
   prev: () => void;
   currentPage: number;
+  totalPages: number;
   data: T[];
+  canPaginate: boolean;
 };
 
 export default function usePagination<T>(
@@ -35,7 +37,9 @@ export default function usePagination<T>(
     hasPrev,
     next,
     prev,
+    canPaginate: props.perPage <= props.data.length,
     currentPage: currentPage,
+    totalPages: Math.ceil(props.data.length / props.perPage),
     data: props.data.slice(left, right),
   };
 }
