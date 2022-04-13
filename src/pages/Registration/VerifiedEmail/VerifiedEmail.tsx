@@ -3,7 +3,7 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { User } from "services/user/types";
+import { CharityMetadata, User } from "services/user/types";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
@@ -74,5 +74,15 @@ function createUserData(jwtData: any, token: string): User {
     AuditedFinancialReports: jwtData.Registration.AuditedFinancialReports,
     AuditedFinancialReportsVerified:
       jwtData.Registration.AuditedFinancialReportsVerified,
+    Metadata: getMetadata(jwtData),
+  };
+}
+
+function getMetadata(jwtData: any): CharityMetadata {
+  return {
+    Banner: jwtData.Metadata?.Banner || { name: "" },
+    CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },
+    CharityOverview: jwtData.Metadata?.CharityOverview || "",
+    TerraWallet: jwtData.Metadata?.TerraWallet || "",
   };
 }
