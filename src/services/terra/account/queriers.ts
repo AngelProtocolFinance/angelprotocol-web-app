@@ -1,5 +1,3 @@
-import Account from "contracts/Account";
-import useWalletContext from "hooks/useWalletContext";
 import { account_api } from "./account";
 import { holdings } from "./placeholders";
 import useAccountContract from "./useAccountContract";
@@ -37,18 +35,15 @@ export function useEndowmentCWs(address?: string) {
   };
 }
 
-export function useEndowmentProfile(address: string, skip = false) {
-  const { wallet } = useWalletContext();
+export function useEndowmentProfile(address: string) {
   const { useEndowmentProfileQuery } = account_api;
-  const contract = new Account(address);
+  const { contract } = useAccountContract(address);
   const {
     data = {},
     isError,
     isLoading,
     isFetching,
-  } = useEndowmentProfileQuery(contract.profile, {
-    skip: skip || !wallet,
-  });
+  } = useEndowmentProfileQuery(contract.profile);
   return {
     profile: data,
     isProfileError: isError,
