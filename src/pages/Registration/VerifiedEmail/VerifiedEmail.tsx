@@ -3,10 +3,18 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
+import { CharityData } from "services/aws/types";
 import { CharityMetadata, User } from "services/user/types";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
+
+type JwtData = CharityData & {
+  authorization: string;
+  exp: number;
+  iat: number;
+  user: string;
+};
 
 export default function VerifiedEmail() {
   const navigate = useNavigate();
@@ -14,7 +22,8 @@ export default function VerifiedEmail() {
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const pathNames = location.pathname.split("/");
   const jwtToken = pathNames[pathNames.length - 1];
-  const jwtData: any = jwtDecode(jwtToken);
+  const jwtData = jwtDecode<JwtData>(jwtToken);
+
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
   const userData = createUserData(jwtData, jwtToken);
 
@@ -51,7 +60,7 @@ export default function VerifiedEmail() {
   );
 }
 
-function createUserData(jwtData: any, token: string): User {
+function createUserData(jwtData: JwtData, token: string): User {
   return {
     ...jwtData.ContactPerson,
     CharityName: jwtData.Registration.CharityName,
@@ -78,7 +87,7 @@ function createUserData(jwtData: any, token: string): User {
   };
 }
 
-function getMetadata(jwtData: any): CharityMetadata {
+function getMetadata(jwtData: JwtData): CharityMetadata {
   return {
     Banner: jwtData.Metadata?.Banner || { name: "" },
     CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },
