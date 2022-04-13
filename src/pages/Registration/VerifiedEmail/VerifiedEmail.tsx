@@ -3,8 +3,8 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { CharityData } from "services/aws/types";
-import { CharityMetadata, User } from "services/user/types";
+import { CharityData, Metadata } from "services/aws/types";
+import { User } from "services/user/types";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
@@ -85,7 +85,7 @@ function createUserData(jwtData: JwtData, token: string): User {
   };
 }
 
-function getMetadata(jwtData: JwtData): CharityMetadata {
+function getMetadata(jwtData: JwtData): Metadata {
   return {
     Banner: jwtData.Metadata?.Banner || { name: "" },
     CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },

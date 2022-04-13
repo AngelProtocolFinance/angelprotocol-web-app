@@ -8,13 +8,16 @@ export interface AWSQueryRes<T> {
 
 export type CharityData = {
   ContactPerson: ContactPerson;
-  Metadata: {
-    Banner: FileObject;
-    CharityLogo: FileObject;
-    CharityOverview: string;
-    TerraWallet: string;
-  };
+  Metadata: Metadata;
   Registration: Registration;
+};
+
+export type Metadata = {
+  SK?: "Metadata";
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  TerraWallet: string;
 };
 
 export type ContactDetailsData = {

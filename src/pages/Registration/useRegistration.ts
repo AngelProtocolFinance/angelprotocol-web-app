@@ -6,8 +6,8 @@ import { app, site } from "constants/routes";
 import createAuthToken from "helpers/createAuthToken";
 import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { CharityData } from "services/aws/types";
-import { CharityMetadata, User, UserTypes } from "services/user/types";
+import { CharityData, Metadata } from "services/aws/types";
+import { User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
@@ -52,11 +52,6 @@ export const useRegistration = () => {
       RegistrationDate: data.Registration.RegistrationDate,
       RegistrationStatus: data.Registration.RegistrationStatus,
       token: token,
-      IsMetaDataCompleted:
-        !!data.Metadata.TerraWallet &&
-        !!data.Metadata.CharityOverview &&
-        !!data.Metadata.CharityLogo.sourceUrl &&
-        !!data.Metadata.Banner.sourceUrl,
       Metadata: getMetadata(data),
       ProofOfIdentity: data.Registration.ProofOfIdentity || { name: "" },
       Website: data.Registration.Website,
@@ -88,7 +83,7 @@ export const useRegistration = () => {
   return { onResume };
 };
 
-function getMetadata({ Metadata }: CharityData): CharityMetadata {
+function getMetadata({ Metadata }: CharityData): Metadata {
   return {
     Banner: Metadata?.Banner || { name: "" },
     CharityLogo: Metadata?.CharityLogo || { name: "" },

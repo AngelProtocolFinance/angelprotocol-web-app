@@ -15,8 +15,6 @@ const initialState: User = {
   RegistrationStatus: "Not Complete",
   EmailVerified: false,
   token: "",
-  IsKeyPersonCompleted: false,
-  IsMetaDataCompleted: false,
   Website: "",
   UN_SDG: -1,
   ProofOfIdentity: { name: "" },

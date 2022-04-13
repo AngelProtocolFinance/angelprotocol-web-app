@@ -1,18 +1,10 @@
-import { FileObject } from "services/aws/types";
+import { Metadata, FileObject } from "services/aws/types";
 
 export type RegistrationStatus =
   | "Not Complete"
   | "UnderReview"
   | "Active"
   | "Complete";
-
-export type CharityMetadata = {
-  SK?: "Metadata";
-  Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
-  TerraWallet: string;
-};
 
 export interface User {
   Email: string;
@@ -27,8 +19,6 @@ export interface User {
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
   EmailVerified: boolean;
-  IsKeyPersonCompleted?: boolean;
-  IsMetaDataCompleted?: boolean;
   token?: string;
   Website: string;
   UN_SDG: number;
@@ -40,7 +30,7 @@ export interface User {
   ProofOfRegistrationVerified: boolean;
   FinancialStatementsVerified: boolean;
   AuditedFinancialReportsVerified: boolean;
-  Metadata: CharityMetadata;
+  Metadata: Metadata;
 }
 
 export enum UserTypes {
