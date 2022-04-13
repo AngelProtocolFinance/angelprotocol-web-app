@@ -33,12 +33,6 @@ const initialState: User = {
     CharityOverview: "",
     TerraWallet: "",
   },
-  State: {
-    stepOne: { completed: false },
-    stepTwo: { completed: false },
-    stepThree: { completed: false, level: 0 },
-    stepFour: { completed: false },
-  },
 };
 const userSlice = createSlice({
   name: "user",

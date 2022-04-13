@@ -1,22 +1,10 @@
 import { FileObject } from "services/aws/types";
 
-export type DocumentationLevel = 0 | 1 | 2 | 3;
-
 export type RegistrationStatus =
   | "Not Complete"
   | "UnderReview"
   | "Active"
   | "Complete";
-
-type Step = { completed: boolean };
-type DocumentationStep = Step & { level: DocumentationLevel };
-
-export type RegistrationState = {
-  stepOne: Step;
-  stepTwo: Step;
-  stepThree: DocumentationStep;
-  stepFour: Step;
-};
 
 export type CharityMetadata = {
   SK?: "Metadata";
@@ -53,7 +41,6 @@ export interface User {
   FinancialStatementsVerified: boolean;
   AuditedFinancialReportsVerified: boolean;
   Metadata: CharityMetadata;
-  State: RegistrationState;
 }
 
 export enum UserTypes {

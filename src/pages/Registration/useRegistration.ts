@@ -6,14 +6,8 @@ import { app, site } from "constants/routes";
 import createAuthToken from "helpers/createAuthToken";
 import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { CharityData, Registration } from "services/aws/types";
-import {
-  CharityMetadata,
-  DocumentationLevel,
-  RegistrationState,
-  User,
-  UserTypes,
-} from "services/user/types";
+import { CharityData } from "services/aws/types";
+import { CharityMetadata, User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
@@ -79,7 +73,6 @@ export const useRegistration = () => {
         data.Registration.FinancialStatementsVerified,
       AuditedFinancialReportsVerified:
         data.Registration.AuditedFinancialReportsVerified,
-      State: getRegistrationState(data),
     };
     dispatch(updateUserData(userData));
     localStorage.setItem("userData", JSON.stringify(userData));
@@ -102,41 +95,4 @@ function getMetadata({ Metadata }: CharityData): CharityMetadata {
     CharityOverview: Metadata?.CharityOverview || "",
     TerraWallet: Metadata?.TerraWallet || "",
   };
-}
-
-function getRegistrationState(data: CharityData): RegistrationState {
-  return {
-    stepOne: { completed: !!data.ContactPerson.PK },
-    stepTwo: { completed: !!data.Metadata.TerraWallet },
-    stepThree: getStepThree(data.Registration),
-    stepFour: {
-      completed:
-        !!data.Metadata.CharityLogo?.sourceUrl &&
-        !!data.Metadata.Banner?.sourceUrl &&
-        !!data.Metadata.CharityOverview,
-    },
-  };
-}
-
-function getStepThree(registration: Registration) {
-  const levelOneDataExists =
-    !!registration.ProofOfIdentity?.sourceUrl &&
-    !!registration.ProofOfRegistration?.sourceUrl &&
-    !!registration.Website;
-
-  const levelTwoDataExists =
-    !!registration.FinancialStatements?.length &&
-    (registration.UN_SDG || -1) >= 0;
-
-  const levelThreeDataExists = !!registration.AuditedFinancialReports?.length;
-
-  const level: DocumentationLevel = levelOneDataExists
-    ? levelTwoDataExists
-      ? levelThreeDataExists
-        ? 3
-        : 2
-      : 1
-    : 0;
-
-  return { completed: levelOneDataExists, level };
 }

@@ -23,17 +23,11 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
     message: "Invalid internal state",
     test: (fileWrapper) =>
       // fileWrapper must be instantiated
-      {
-        console.log(fileWrapper);
-
-        return (
-          !!fileWrapper &&
-          // file name must be set
-          !!fileWrapper.name &&
-          // either new file is uploaded or source URL to file is set
-          (!!fileWrapper.file || !!fileWrapper.sourceUrl)
-        );
-      },
+      !!fileWrapper &&
+      // file name must be set
+      !!fileWrapper.name &&
+      // either new file is uploaded or source URL to file is set
+      (!!fileWrapper.file || !!fileWrapper.sourceUrl),
   });
 
 export const SCHEMA = Yup.object().shape({

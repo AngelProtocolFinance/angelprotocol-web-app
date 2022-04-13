@@ -26,6 +26,8 @@ export default function Dashboard() {
     setLoading(false);
   }, [user, dispatch]);
 
+  const state = getRegistrationState(user);
+
   const dataSubmitted = user.RegistrationStatus !== "Not Complete";
 
   if (isLoading) {
@@ -54,7 +56,7 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.wallet}`)
           }
           disabled={dataSubmitted}
-          completed={user.State.stepTwo.completed}
+          completed={state.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
@@ -62,11 +64,10 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
           disabled={dataSubmitted}
-          completed={user.State.stepThree.completed}
+          completed={state.stepThree.completed}
           // TODO: implement level logic
           statusComplete={
-            user.State.stepThree.completed &&
-            `Level ${user.State.stepThree.level}`
+            state.stepThree.completed && `Level ${state.stepThree.level}`
           }
         />
         <Step
@@ -77,13 +78,13 @@ export default function Dashboard() {
             )
           }
           disabled={dataSubmitted}
-          completed={user.State.stepFour.completed}
+          completed={state.stepFour.completed}
         />
         {!dataSubmitted && (
           <Button
             className="w-full h-10 mt-5 bg-yellow-blue"
             onClick={() => console.log("submit")}
-            disabled={!getIsReadyForSubmit(user)}
+            disabled={!state.getIsReadyForSubmit()}
           >
             Submit for review
           </Button>
@@ -103,11 +104,60 @@ export default function Dashboard() {
   );
 }
 
-function getIsReadyForSubmit({ State }: User) {
-  return (
-    State.stepOne.completed &&
-    State.stepTwo.completed &&
-    State.stepThree.completed &&
-    State.stepFour.completed
-  );
+type DocumentationLevel = 0 | 1 | 2 | 3;
+
+type RegistrationStep = { completed: boolean };
+
+type DocumentationStep = RegistrationStep & { level: DocumentationLevel };
+
+type RegistrationState = {
+  stepOne: RegistrationStep;
+  stepTwo: RegistrationStep;
+  stepThree: DocumentationStep;
+  stepFour: RegistrationStep;
+  getIsReadyForSubmit: () => boolean;
+};
+
+function getRegistrationState(user: User): RegistrationState {
+  return {
+    stepOne: { completed: !!user.PK },
+    stepTwo: { completed: !!user.Metadata.TerraWallet },
+    stepThree: getStepThree(user),
+    stepFour: {
+      completed:
+        !!user.Metadata.CharityLogo?.sourceUrl &&
+        !!user.Metadata.Banner?.sourceUrl &&
+        !!user.Metadata.CharityOverview,
+    },
+    getIsReadyForSubmit: function () {
+      return (
+        this.stepOne.completed &&
+        this.stepTwo.completed &&
+        this.stepThree.completed &&
+        this.stepFour.completed
+      );
+    },
+  };
+}
+
+function getStepThree(user: User): DocumentationStep {
+  const levelOneDataExists =
+    !!user.ProofOfIdentity?.sourceUrl &&
+    !!user.ProofOfRegistration?.sourceUrl &&
+    !!user.Website;
+
+  const levelTwoDataExists =
+    !!user.FinancialStatements?.length && (user.UN_SDG || -1) >= 0;
+
+  const levelThreeDataExists = !!user.AuditedFinancialReports?.length;
+
+  const level: DocumentationLevel = levelOneDataExists
+    ? levelTwoDataExists
+      ? levelThreeDataExists
+        ? 3
+        : 2
+      : 1
+    : 0;
+
+  return { completed: levelOneDataExists, level };
 }
