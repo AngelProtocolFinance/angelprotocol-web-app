@@ -3,7 +3,7 @@ import idParamToNumber from "helpers/idParamToNum";
 import useWalletContext from "hooks/useWalletContext";
 import { useMemo } from "react";
 import { useVoteList } from "services/terra/admin/queriers";
-import { Proposal } from "services/terra/admin/types";
+import { Proposal, VoteInfo } from "services/terra/admin/types";
 import { useLatestBlock } from "services/terra/queriers";
 
 export default function useProposalDetails(
@@ -11,7 +11,7 @@ export default function useProposalDetails(
 ): ProposalDetails {
   const blockHeight = useLatestBlock();
   const { wallet } = useWalletContext();
-  const { votes } = useVoteList(proposalInfo.id);
+  const { votes = [] } = useVoteList(proposalInfo.id);
 
   const [numYes, numNo] = useMemo(
     () =>
@@ -55,6 +55,7 @@ export default function useProposalDetails(
     isExecutable: proposalInfo.status === "passed",
     isExecuted: proposalInfo.status === "executed",
     numId: idParamToNumber(proposalInfo.id),
+    votes,
     userVote,
   };
 }
@@ -74,4 +75,5 @@ export type ProposalDetails = {
   isExecuted: boolean;
   numId: number;
   userVote?: Vote;
+  votes: VoteInfo[];
 };
