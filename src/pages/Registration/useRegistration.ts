@@ -64,10 +64,12 @@ export const useRegistration = () => {
         !!data.Metadata.CharityLogo.sourceUrl &&
         !!data.Metadata.Banner.sourceUrl,
       Metadata: getMetadata(data),
-      ProofOfIdentity: data.Registration.ProofOfIdentity || [],
+      ProofOfIdentity: data.Registration.ProofOfIdentity || { name: "" },
       Website: data.Registration.Website,
       UN_SDG: +data.Registration.UN_SDG,
-      ProofOfRegistration: data.Registration.ProofOfRegistration || [],
+      ProofOfRegistration: data.Registration.ProofOfRegistration || {
+        name: "",
+      },
       FinancialStatements: data.Registration.FinancialStatements || [],
       AuditedFinancialReports: data.Registration.AuditedFinancialReports || [],
       ProofOfIdentityVerified: data.Registration.ProofOfIdentityVerified,
@@ -109,8 +111,8 @@ function getRegistrationState(data: CharityData): RegistrationState {
     stepThree: getStepThree(data.Registration),
     stepFour: {
       completed:
-        !!data.Metadata.CharityLogo &&
-        !!data.Metadata.Banner &&
+        !!data.Metadata.CharityLogo?.sourceUrl &&
+        !!data.Metadata.Banner?.sourceUrl &&
         !!data.Metadata.CharityOverview,
     },
   };
@@ -118,12 +120,14 @@ function getRegistrationState(data: CharityData): RegistrationState {
 
 function getStepThree(registration: Registration) {
   const levelOneDataExists =
-    !!registration.ProofOfIdentity &&
-    !!registration.ProofOfRegistration &&
+    !!registration.ProofOfIdentity?.sourceUrl &&
+    !!registration.ProofOfRegistration?.sourceUrl &&
     !!registration.Website;
+
   const levelTwoDataExists =
     !!registration.FinancialStatements?.length &&
     (registration.UN_SDG || -1) >= 0;
+
   const levelThreeDataExists = !!registration.AuditedFinancialReports?.length;
 
   const level: DocumentationLevel = levelOneDataExists
