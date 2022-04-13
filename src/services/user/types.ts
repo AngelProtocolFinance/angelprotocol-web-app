@@ -12,7 +12,6 @@ export interface User {
   LastName: string;
   PhoneNumber: string;
   Role: string;
-  SK?: string;
   PK?: string;
   CharityName: string;
   CharityName_ContactEmail?: string;

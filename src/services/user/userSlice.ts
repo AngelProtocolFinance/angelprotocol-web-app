@@ -8,7 +8,6 @@ const initialState: User = {
   PhoneNumber: "",
   Role: "",
   PK: "",
-  SK: "",
   CharityName: "",
   CharityName_ContactEmail: "",
   RegistrationDate: "",
