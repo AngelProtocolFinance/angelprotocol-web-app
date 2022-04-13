@@ -59,14 +59,7 @@ export default function Register() {
           }
         />
         <Route path={routes.index} element={<Registration />} />
-        <Route
-          path={routes.verify}
-          element={
-            <StepOneInitiatedGuard>
-              <VerifiedEmail />
-            </StepOneInitiatedGuard>
-          }
-        />
+        <Route path={routes.verify} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
           element={
