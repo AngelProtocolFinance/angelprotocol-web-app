@@ -11,6 +11,9 @@ import { VoteInfo } from "services/terra/admin/types";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import usePagination from "hooks/usePagination";
 
+const buttonStyle =
+  "cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md";
+
 export type ProposalIdParam = { id: string };
 export default function Proposal() {
   const params = useParams<ProposalIdParam>();
@@ -134,21 +137,10 @@ function VotesTable(props: { votes: VoteInfo[] }) {
       </table>
       {canPaginate && (
         <div className="flex justify-between mt-5">
-          <button
-            onClick={prev}
-            disabled={!hasPrev()}
-            className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
-          >
+          <button onClick={prev} disabled={!hasPrev()} className={buttonStyle}>
             Prev
           </button>
-          <p>
-            Page {currentPage + 1} of {totalPages}
-          </p>
-          <button
-            onClick={next}
-            disabled={!hasNext()}
-            className="cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md"
-          >
+          <button onClick={next} disabled={!hasNext()} className={buttonStyle}>
             Next
           </button>
         </div>
