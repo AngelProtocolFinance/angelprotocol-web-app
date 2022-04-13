@@ -33,7 +33,7 @@ export type EndowmentQueryOptions = {
   name?: string;
   owner?: string;
   status?: EndowmentStatusStrNum;
-  tier?: string;
+  tier?: EndowmentTier;
   endow_type?: EndowmentType;
 };
 
