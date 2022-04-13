@@ -3,7 +3,7 @@ import mgmtIcon from "assets/icons/gear.svg";
 import lowCostIcon from "assets/icons/piggy_bank.svg";
 import setupIcon from "assets/icons/rocket.svg";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Specs() {
   const { ref, isVisible } = useObserve({ threshold: 0.2 });

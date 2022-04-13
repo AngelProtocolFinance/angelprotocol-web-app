@@ -1,7 +1,7 @@
+import wingImage from "assets/images/angelprotocol-wings-wht.png";
 import useObserve from "hooks/useObserver";
-import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
-import useTypeWriter from "../../hooks/useTypeWriter";
+import useTypeWriter from "hooks/useTypeWriter";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 const TEXT_TO_TYPE = [
   "have funding, forever.",

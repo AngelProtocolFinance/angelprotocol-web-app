@@ -1,6 +1,6 @@
 import unsdgPoster from "assets/images/unsdg_poster.png";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Alignment() {
   const { ref, isVisible } = useObserve({ threshold: 0.3 });

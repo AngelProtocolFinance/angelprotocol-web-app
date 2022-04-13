@@ -1,5 +1,5 @@
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 import AngelVid from "./AngelVid";
 
 export default function Info() {

@@ -1,6 +1,6 @@
 import yellowBoatIcon from "assets/images/yellow_boat.png";
 import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Testimonials() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });
