@@ -40,15 +40,11 @@ export const registrar_api = terra.injectEndpoints({
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         let result = res.query_result.endowments.reduce(
           (result: CategorizedEndowments, profile: EndowmentEntry) => {
-            if (
-              profile.un_sdg === null ||
-              !profile.un_sdg ||
-              profile.tier === "Level1"
-            ) {
+            if (!profile.un_sdg || profile.tier === "Level1") {
               return result;
             } else {
-              if (!result[profile.un_sdg!]) {
-                result[profile.un_sdg!] = [];
+              if (!result[profile.un_sdg]) {
+                result[profile.un_sdg] = [];
               }
               result[+profile.un_sdg!].push(profile);
               return result;

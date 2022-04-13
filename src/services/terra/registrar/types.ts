@@ -14,12 +14,13 @@ export type EndowmentType = "charity";
 export type EndowmentListRes = {
   endowments: EndowmentEntry[];
 };
+export type EndowmentTier = "Level1" | "Level2" | "Level3";
 export type EndowmentEntry = {
   address: string;
   status: keyof EndowmentStatus;
   name: string;
   owner?: string;
-  tier?: string;
+  tier?: EndowmentTier;
   endow_type?: EndowmentType;
   un_sdg?: number;
 };
