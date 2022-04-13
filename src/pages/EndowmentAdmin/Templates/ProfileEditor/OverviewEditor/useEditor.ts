@@ -13,19 +13,32 @@ import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
 import { UpdateProfileValues } from "../profileEditSchema";
 
 export default function useEditor() {
-  const { setValue, watch } = useFormContext<UpdateProfileValues>();
+  const {
+    setValue,
+    watch,
+    setError,
+    formState: { errors },
+  } = useFormContext<UpdateProfileValues>();
   const overview = watch("overview") || "";
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
 
+  console.log(errors);
+
   useRichTextInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
-    const rawState = convertToRaw(editorState.getCurrentContent());
+    const currentContent = editorState.getCurrentContent();
+    if (!currentContent.hasText()) {
+      setError("overview", { message: "overview required" });
+      return;
+    }
+    const rawState = convertToRaw(currentContent);
     setValue("overview", JSON.stringify(rawState), {
       shouldDirty: true,
+      shouldValidate: true,
     });
     //eslint-disable-next-line
   }, [editorState]);
@@ -68,6 +81,7 @@ export default function useEditor() {
   };
 
   return {
+    errors,
     editorState,
     setEditorState,
     applyBlockStyle,

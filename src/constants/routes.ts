@@ -22,7 +22,6 @@ export enum app {
   login = "login",
   unsdgs = "unsdgs",
   charity = "charity",
-  charity_edit = "charity-edit",
   tca = "tca",
   fund = "fund",
   govern = "govern",

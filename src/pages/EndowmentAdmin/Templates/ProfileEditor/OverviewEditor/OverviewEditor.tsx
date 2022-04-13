@@ -3,10 +3,11 @@ import { Editor } from "draft-js";
 import useEditor from "./useEditor";
 import "draft-js/dist/Draft.css";
 import Icon, { IconTypes } from "components/Icons/Icons";
-import Label from "pages/Admin/components/Label";
+import { ErrorMessage } from "@hookform/error-message";
 
 function OverviewEditor() {
   const {
+    errors,
     editorState,
     setEditorState,
     applyBlockStyle,
@@ -34,6 +35,12 @@ function OverviewEditor() {
         handleKeyCommand={handleKeyCommand}
         keyBindingFn={keyBinder}
         placeholder="An overview of your charity"
+      />
+      <ErrorMessage
+        errors={errors}
+        name="overview"
+        as="p"
+        className="font-mono font-semibold text-right text-red-400 text-xs m-1"
       />
     </div>
   );

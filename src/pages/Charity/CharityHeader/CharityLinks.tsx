@@ -39,12 +39,6 @@ export default function CharityLinks(props: { classes?: string }) {
       )}
       {isUserAdminMember && (
         <IconRouteLink
-          _iconType="Edit"
-          to={`${site.app}/${app.charity_edit}/${charity_addr}`}
-        />
-      )}
-      {isUserAdminMember && (
-        <IconRouteLink
           _iconType="Admin"
           to={`${site.app}/${app.endowment_admin}/${charity_addr}`}
         />
@@ -64,7 +58,7 @@ function IconLink({
       {...restProps}
       target="_blank"
       rel="noopener noreferrer"
-      className={linkStyle}
+      className="h-10 w-10 p-2 rounded-full text-angel-blue inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey"
     >
       <Icon type={_iconType} size={25} />
     </a>
@@ -76,14 +70,14 @@ function IconRouteLink({
   ...restProps
 }: LinkProps & { _iconType: IconTypes }) {
   return (
-    <Link {...restProps} className={linkStyle}>
+    <Link
+      {...restProps}
+      className="h-10 w-10 p-2 rounded-full text-angel-orange inline-flex items-center border border-angel-orange hover:border-light-grey focus:border-light-grey"
+    >
       <Icon type={_iconType} size={25} />
     </Link>
   );
 }
-
-const linkStyle =
-  "h-10 w-10 p-2 rounded-full text-angel-blue inline-flex items-center border border-angel-blue hover:border-light-grey focus:border-light-grey";
 
 //<props.Icon color="#3FA9F5" size={props.size} />
 function formatUrl(

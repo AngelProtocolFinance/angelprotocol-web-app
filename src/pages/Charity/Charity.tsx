@@ -51,10 +51,17 @@ function CharitySkeleton() {
 function PageError() {
   return (
     <section
-      className="padded-container grid content-center place-items-center
+      className="padded-container grid content-center place-items-center gap-2
   "
     >
-      <p>failed to load charity profile</p>
+      <Icon type="Warning" size={30} className="text-red-400" />
+      <p className="text-red-400 text-lg">Failed to load charity profile</p>
+      <Link
+        to={`${site.app}/${app.marketplace}`}
+        className="text-white/80 hover:text-angel-blue text-sm"
+      >
+        back to Marketplace
+      </Link>
     </section>
   );
 }

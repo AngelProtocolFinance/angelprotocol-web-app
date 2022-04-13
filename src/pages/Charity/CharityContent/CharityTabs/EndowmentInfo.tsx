@@ -1,8 +1,7 @@
 import toCurrency from "helpers/toCurrency";
-import { useParams } from "react-router-dom";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { CharityParam } from "../../types";
 
+//TODO: refactor component markup
 export function EndowmentInfo() {
   const accountDetails = [
     {
@@ -15,6 +14,8 @@ export function EndowmentInfo() {
     },
     {
       type: "Endowment Account",
+      //TODO: update this once balance is included in {get_profile:{}}, or
+      //something like useEndowmentBalance multicall query is available
       balance: "0", //total_liq missing in profile
       // balance: `$${toCurrency(profileState.total_lock)}`,
       strategy: "Anchor Protocol",
