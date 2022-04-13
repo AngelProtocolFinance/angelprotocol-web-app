@@ -10,7 +10,7 @@ export default function useRehydrateUserState() {
   const dispatch = useSetter();
 
   useEffect(() => {
-    if (!user.PK) {
+    if (!user.ContactPerson.PK) {
       const localUserData: User = JSON.parse(
         localStorage.getItem("userData") || "{}"
       );

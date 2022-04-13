@@ -27,12 +27,13 @@ export default function VerificationSuccessful(props: Props) {
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
-          {userData.CharityName}, {userData.FirstName}!
+          {userData.Registration.CharityName},{" "}
+          {userData.ContactPerson.FirstName}!
         </p>
       </div>
       <div className="text-2xl font-bold">
         <p>Your registration reference is</p>
-        <p className="text-yellow-600">{userData.PK}</p>
+        <p className="text-yellow-600">{userData.ContactPerson.PK}</p>
       </div>
       <Button
         className="bg-thin-blue w-48 h-12"

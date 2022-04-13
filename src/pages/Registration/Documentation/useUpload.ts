@@ -30,7 +30,7 @@ export default function useUpload() {
     async (values: FormValues) => {
       const uploadBody = await getUploadBody(values);
 
-      const postData = { PK: user.PK, body: uploadBody };
+      const postData = { PK: user.ContactPerson.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
 
       const dataResult = result as {
@@ -44,7 +44,7 @@ export default function useUpload() {
         handleSuccess(dataResult.data);
       }
     },
-    [user.PK, handleSuccess, handleError, uploadDocumentation]
+    [user.ContactPerson.PK, handleSuccess, handleError, uploadDocumentation]
   );
 
   return { upload, isSuccess };

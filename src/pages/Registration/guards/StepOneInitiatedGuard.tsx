@@ -16,7 +16,10 @@ export function StepOneInitiatedGuard(props: any) {
     // if EmailVerified === true this means the user has finished step 1 but hasn't initiated an update of contact details
     // if (!user.PK && !user.Website), this means the user hasn't even completed step 1
     // in both cases we navigate to dashboard and let its guard decide whether they should be allowed in
-    if (user.EmailVerified || (!user.PK && !user.Website)) {
+    if (
+      user.ContactPerson.EmailVerified ||
+      (!user.ContactPerson.PK && !user.Registration.Website)
+    ) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
   }, [navigate, user]);

@@ -6,11 +6,11 @@ export default function ContactDetails() {
   return (
     <div>
       <h3 className="text-3xl font-bold mb-10">
-        {user.PK
+        {user.ContactPerson.PK
           ? "Update your contact details."
           : "Let's start with your contact details."}
       </h3>
-      {!user.PK && (
+      {!user.ContactPerson.PK && (
         <p className="text-xl mb-6">
           This information will let us know more about your organization and who
           you are. Once this form is submitted, you will be able to resume your

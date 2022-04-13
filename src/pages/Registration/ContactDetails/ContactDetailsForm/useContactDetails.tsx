@@ -69,12 +69,17 @@ export default function useSaveContactDetails() {
           });
           const newUserData: User = {
             ...user,
-            ...postData.ContactPerson,
-            CharityName: postData.Registration.CharityName,
-            RegistrationDate: new Date().toISOString(),
-            RegistrationStatus: "Not Complete",
-            EmailVerified: false,
-            PK: result.UUID || contactData.uniqueID,
+            ContactPerson: {
+              ...postData.ContactPerson,
+              EmailVerified: false,
+              PK: result.UUID || contactData.uniqueID,
+            },
+            Registration: {
+              ...user.Registration,
+              CharityName: postData.Registration.CharityName,
+              RegistrationDate: new Date().toISOString(),
+              RegistrationStatus: "Not Complete",
+            },
           };
           dispatch(updateUserData(newUserData));
           localStorage.setItem("userData", JSON.stringify(newUserData));

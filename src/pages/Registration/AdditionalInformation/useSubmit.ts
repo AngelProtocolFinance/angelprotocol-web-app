@@ -37,7 +37,7 @@ export default function useSubmit() {
     async (values: FormValues) => {
       const body = await getUploadBody(values);
 
-      const result = await updateMetadata({ PK: user.PK, body });
+      const result = await updateMetadata({ PK: user.ContactPerson.PK, body });
 
       const dataResult = result as {
         data: UpdateCharityMetadataResult;
@@ -50,7 +50,7 @@ export default function useSubmit() {
         handleSuccess(dataResult.data);
       }
     },
-    [user.PK, handleSuccess, handleError, updateMetadata]
+    [user.ContactPerson.PK, handleSuccess, handleError, updateMetadata]
   );
 
   return { submit, isSuccess };

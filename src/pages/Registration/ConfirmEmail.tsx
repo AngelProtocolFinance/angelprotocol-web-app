@@ -21,21 +21,21 @@ export default function ConfirmEmail() {
 
   const sendEmail = useCallback(
     async (emailType: string) => {
-      if (!user.PK) {
+      if (!user.ContactPerson.PK) {
         console.error("Invalid Data. Please ask the administrator about that.");
         return;
       }
 
       const emailPayload = {
-        CharityName: user.CharityName,
-        Email: user.Email,
-        FirstName: user.FirstName,
-        LastName: user.LastName,
-        Role: user.Role,
-        PhoneNumber: user.PhoneNumber,
+        CharityName: user.Registration.CharityName,
+        Email: user.ContactPerson.Email,
+        FirstName: user.ContactPerson.FirstName,
+        LastName: user.ContactPerson.LastName,
+        Role: user.ContactPerson.Role,
+        PhoneNumber: user.ContactPerson.PhoneNumber,
       };
       const response: any = await resendEmail({
-        uuid: user.PK,
+        uuid: user.ContactPerson.PK,
         type: emailType,
         body: emailPayload,
       });
@@ -67,17 +67,17 @@ export default function ConfirmEmail() {
   }, [dispatch, navigate]);
 
   useEffect(() => {
-    if (!user.PK) {
+    if (!user.ContactPerson.PK) {
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
     }
-  }, [user.PK, dispatch]);
+  }, [user.ContactPerson.PK, dispatch]);
 
   useEffect(() => {
-    if (user.EmailVerified) {
+    if (user.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
-  }, [user?.EmailVerified, navigate]);
+  }, [user.ContactPerson.EmailVerified, navigate]);
 
   return (
     <div className="flex flex-col gap-4 font-bold">
@@ -85,7 +85,7 @@ export default function ConfirmEmail() {
         <>
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
-            <p>Hi {user.FirstName}!</p>
+            <p>Hi {user.ContactPerson.FirstName}!</p>
             <span>
               We're still waiting for you to confirm your email address.
             </span>
@@ -95,15 +95,16 @@ export default function ConfirmEmail() {
         <div className="text-2xl">
           <p>Thank you for registering</p>
           <p className="mb-10">
-            {user.CharityName}, {user.FirstName}!
+            {user.Registration.CharityName}, {user.ContactPerson.FirstName}!
           </p>
           <p>Your registration reference is</p>
-          <p className="text-orange">{user.PK}</p>
+          <p className="text-orange">{user.ContactPerson.PK}</p>
         </div>
       )}
       <span className="font-normal">
         Please click on the link in the email and you'll be able to continue
-        with the registration of {user.CharityName} on Angel Protocol.
+        with the registration of {user.Registration.CharityName} on Angel
+        Protocol.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
         <Button

@@ -1,5 +1,3 @@
-import { RegistrationStatus } from "services/user/types";
-
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -60,9 +58,15 @@ export type Registration = {
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
   SK?: "Registration";
-  UN_SDG: string;
+  UN_SDG: number;
   Website: string;
 };
+
+export type RegistrationStatus =
+  | "Not Complete"
+  | "UnderReview"
+  | "Active"
+  | "Complete";
 
 export type UpdateDocumentationData = {
   PK?: string;

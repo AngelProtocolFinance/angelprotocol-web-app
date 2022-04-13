@@ -65,7 +65,9 @@ function OrganizationName() {
 
   return (
     <InputRow htmlFor="charityName" label="Name of your organization">
-      <span className="flex w-full font-bold">{user.CharityName}</span>
+      <span className="flex w-full font-bold">
+        {user.Registration.CharityName}
+      </span>
     </InputRow>
   );
 }

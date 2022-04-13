@@ -34,7 +34,7 @@ export default function useRegisterWallet() {
       try {
         const response = await updateMetadata({
           body: { TerraWallet: walletAddress },
-          PK: user.PK,
+          PK: user.ContactPerson.PK,
         });
 
         const result = response as {

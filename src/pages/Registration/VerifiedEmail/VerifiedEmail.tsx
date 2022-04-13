@@ -3,8 +3,8 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { CharityData, Metadata } from "services/aws/types";
-import { User } from "services/user/types";
+import { CharityData } from "services/aws/types";
+import createUserData from "../createUserData";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
@@ -28,13 +28,13 @@ export default function VerifiedEmail() {
   const userData = createUserData(jwtData, jwtToken);
 
   const resendVerificationEmail = useCallback(async () => {
-    if (!userData.PK) {
+    if (!userData.ContactPerson.PK) {
       console.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
     const response: any = await resendEmail({
-      uuid: userData.PK,
+      uuid: userData.ContactPerson.PK,
       type: "verify-email",
       body: userData,
     });
@@ -58,38 +58,4 @@ export default function VerifiedEmail() {
       }
     />
   );
-}
-
-function createUserData(jwtData: JwtData, token: string): User {
-  return {
-    ...jwtData.ContactPerson,
-    CharityName: jwtData.Registration.CharityName,
-    CharityName_ContactEmail: jwtData.Registration.CharityName_ContactEmail,
-    RegistrationDate: jwtData.Registration.RegistrationDate,
-    RegistrationStatus: jwtData.Registration.RegistrationStatus,
-    token: token,
-    Website: jwtData.Registration.Website,
-    UN_SDG: +jwtData.Registration.UN_SDG,
-    ProofOfIdentity: jwtData.Registration.ProofOfIdentity,
-    ProofOfIdentityVerified: jwtData.Registration.ProofOfIdentityVerified,
-    ProofOfRegistration: jwtData.Registration.ProofOfRegistration,
-    ProofOfRegistrationVerified:
-      jwtData.Registration.ProofOfRegistrationVerified,
-    FinancialStatements: jwtData.Registration.FinancialStatements,
-    FinancialStatementsVerified:
-      jwtData.Registration.FinancialStatementsVerified,
-    AuditedFinancialReports: jwtData.Registration.AuditedFinancialReports,
-    AuditedFinancialReportsVerified:
-      jwtData.Registration.AuditedFinancialReportsVerified,
-    Metadata: getMetadata(jwtData),
-  };
-}
-
-function getMetadata(jwtData: JwtData): Metadata {
-  return {
-    Banner: jwtData.Metadata?.Banner || { name: "" },
-    CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },
-    CharityOverview: jwtData.Metadata?.CharityOverview || "",
-    TerraWallet: jwtData.Metadata?.TerraWallet || "",
-  };
 }

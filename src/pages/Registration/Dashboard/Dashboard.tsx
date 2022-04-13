@@ -18,7 +18,7 @@ export default function Dashboard() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user.PK) {
+    if (!user.ContactPerson.PK) {
       // TODO: check where to move this logic, since it is similar to useRehydrateUserData
       const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
       dispatch(updateUserData(newUserData));
@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const state = getRegistrationState(user);
 
-  const dataSubmitted = user.RegistrationStatus !== "Not Complete";
+  const dataSubmitted = user.Registration.RegistrationStatus !== "Not Complete";
 
   if (isLoading) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
@@ -90,15 +90,15 @@ export default function Dashboard() {
           </Button>
         )}
       </div>
-      {user.RegistrationStatus === "Active" && (
+      {user.Registration.RegistrationStatus === "Active" && (
         <EndowmentStatus
-          registrationStatus={user.RegistrationStatus}
+          registrationStatus={user.Registration.RegistrationStatus}
           walletAddress={user.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {user.RegistrationStatus === "Complete" && (
-        <EndowmentCreated charityName={user?.CharityName} />
+      {user.Registration.RegistrationStatus === "Complete" && (
+        <EndowmentCreated charityName={user.Registration.CharityName} />
       )}
     </div>
   );
@@ -120,7 +120,7 @@ type RegistrationState = {
 
 function getRegistrationState(user: User): RegistrationState {
   return {
-    stepOne: { completed: !!user.PK },
+    stepOne: { completed: !!user.ContactPerson.PK },
     stepTwo: { completed: !!user.Metadata.TerraWallet },
     stepThree: getStepThree(user),
     stepFour: {
@@ -142,14 +142,16 @@ function getRegistrationState(user: User): RegistrationState {
 
 function getStepThree(user: User): DocumentationStep {
   const levelOneDataExists =
-    !!user.ProofOfIdentity?.sourceUrl &&
-    !!user.ProofOfRegistration?.sourceUrl &&
-    !!user.Website;
+    !!user.Registration.ProofOfIdentity?.sourceUrl &&
+    !!user.Registration.ProofOfRegistration?.sourceUrl &&
+    !!user.Registration.Website;
 
   const levelTwoDataExists =
-    !!user.FinancialStatements?.length && (user.UN_SDG || -1) >= 0;
+    !!user.Registration.FinancialStatements?.length &&
+    (user.Registration.UN_SDG || -1) >= 0;
 
-  const levelThreeDataExists = !!user.AuditedFinancialReports?.length;
+  const levelThreeDataExists =
+    !!user.Registration.AuditedFinancialReports?.length;
 
   const level: DocumentationLevel = levelOneDataExists
     ? levelTwoDataExists
