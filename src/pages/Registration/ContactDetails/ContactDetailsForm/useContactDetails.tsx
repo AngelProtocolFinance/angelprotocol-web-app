@@ -39,6 +39,7 @@ export default function useSaveContactDetails() {
           FirstName: contactData.firstName,
           LastName: contactData.lastName,
           Email: contactData.email,
+          EmailVerified: false,
           PhoneNumber: contactData.phone,
           Role: contactData.orgRole,
           OtherRole: contactData.otherRole || "",

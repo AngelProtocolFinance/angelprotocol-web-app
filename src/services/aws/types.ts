@@ -6,25 +6,59 @@ export interface AWSQueryRes<T> {
   Items: T;
 }
 
+export type CharityData = {
+  ContactPerson: ContactPerson;
+  Metadata: {
+    Banner: FileObject;
+    CharityLogo: FileObject;
+    CharityOverview: string;
+    TerraWallet: string;
+  };
+  Registration: Registration;
+};
+
 export type ContactDetailsData = {
   PK?: string;
   Registration: {
     CharityName: string;
   };
-  ContactPerson: {
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    PhoneNumber: string;
-    Role: string;
-    OtherRole: string;
-  };
+  ContactPerson: ContactPerson;
+};
+
+export type ContactPerson = {
+  Email: string;
+  EmailVerified: boolean;
+  FirstName: string;
+  LastName: string;
+  OtherRole?: string;
+  PhoneNumber: string;
+  PK?: string;
+  Role: string;
+  SK?: "ContactPerson";
 };
 
 export type FileObject = {
   name: string;
   dataUrl?: string;
   sourceUrl?: string;
+};
+
+export type Registration = {
+  AuditedFinancialReports: FileObject[];
+  AuditedFinancialReportsVerified: boolean;
+  CharityName: string;
+  CharityName_ContactEmail: string;
+  FinancialStatements: FileObject[];
+  FinancialStatementsVerified: boolean;
+  ProofOfIdentity: FileObject;
+  ProofOfIdentityVerified: boolean;
+  ProofOfRegistration: FileObject;
+  ProofOfRegistrationVerified: boolean;
+  RegistrationDate: string;
+  RegistrationStatus: RegistrationStatus;
+  SK?: "Registration";
+  UN_SDG: string;
+  Website: string;
 };
 
 export type UpdateDocumentationData = {
@@ -65,34 +99,4 @@ export type UpdateCharityMetadataResult = {
   CharityLogo: FileObject;
   CharityOverview: string;
   TerraWallet: string;
-};
-
-export type Registration = {
-  AuditedFinancialReports: FileObject[];
-  AuditedFinancialReportsVerified: boolean;
-  CharityName: string;
-  CharityName_ContactEmail: string;
-  FinancialStatements: FileObject[];
-  FinancialStatementsVerified: boolean;
-  ProofOfIdentity: FileObject;
-  ProofOfIdentityVerified: boolean;
-  ProofOfRegistration: FileObject;
-  ProofOfRegistrationVerified: boolean;
-  RegistrationDate: string;
-  RegistrationStatus: RegistrationStatus;
-  UN_SDG: string;
-  Website: string;
-};
-
-export type ContactPerson = any;
-
-export type CharityData = {
-  ContactPerson: ContactPerson;
-  Metadata: {
-    Banner: FileObject;
-    CharityLogo: FileObject;
-    CharityOverview: string;
-    TerraWallet: string;
-  };
-  Registration: Registration;
 };
