@@ -1,9 +1,9 @@
 import { aws } from "./aws";
 import {
   ContactDetailsData,
-  RegistrationData,
-  UpdateAdditionalInformationData,
-  UpdateAdditionalInformationResult,
+  CharityData,
+  UpdateCharityMetadataData,
+  UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "./types";
@@ -28,7 +28,7 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: { data: any }) => response,
     }),
     checkPreviousRegistration: builder.mutation<
-      RegistrationData,
+      CharityData,
       string | undefined
     >({
       query: (uuid) => {
@@ -38,17 +38,6 @@ const registration_api = aws.injectEndpoints({
           method: "GET",
         };
       },
-    }),
-    createCharityMetaData: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `registration`,
-          params: { uuid: data.uuid },
-          method: "POST",
-          body: data.body,
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
     }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
@@ -99,9 +88,9 @@ const registration_api = aws.injectEndpoints({
         return response.data;
       },
     }),
-    updateAdditionalInformation: builder.mutation<
-      UpdateAdditionalInformationResult,
-      UpdateAdditionalInformationData
+    updateCharityMetadata: builder.mutation<
+      UpdateCharityMetadataResult,
+      UpdateCharityMetadataData
     >({
       query: (data) => {
         return {
@@ -111,9 +100,7 @@ const registration_api = aws.injectEndpoints({
           body: data.body,
         };
       },
-      transformResponse: (response: {
-        data: UpdateAdditionalInformationResult;
-      }) => {
+      transformResponse: (response: { data: UpdateCharityMetadataResult }) => {
         return response.data;
       },
     }),
@@ -126,5 +113,5 @@ export const {
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
   useUpdateDocumentationMutation,
-  useUpdateAdditionalInformationMutation,
+  useUpdateCharityMetadataMutation,
 } = registration_api;

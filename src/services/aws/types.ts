@@ -1,3 +1,5 @@
+import { RegistrationStatus } from "services/user/types";
+
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -19,17 +21,21 @@ export type ContactDetailsData = {
   };
 };
 
-type DocumentObject = { name: string; dataUrl: string };
+export type FileObject = {
+  name: string;
+  dataUrl?: string;
+  sourceUrl?: string;
+};
 
 export type UpdateDocumentationData = {
   PK?: string;
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: DocumentObject[];
-    ProofOfRegistration: DocumentObject[];
-    FinancialStatements: DocumentObject[];
-    AuditedFinancialReports: DocumentObject[];
+    ProofOfIdentity: FileObject;
+    ProofOfRegistration: FileObject;
+    FinancialStatements: FileObject[];
+    AuditedFinancialReports: FileObject[];
   };
 };
 
@@ -38,29 +44,55 @@ export type UpdateDocumentationData = {
 export type UpdateDocumentationResult = {
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string[];
-  ProofOfRegistration: string[];
-  FinancialStatements: string[];
-  AuditedFinancialReports: string[];
+  ProofOfIdentity: FileObject;
+  ProofOfRegistration: FileObject;
+  FinancialStatements: FileObject[];
+  AuditedFinancialReports: FileObject[];
 };
 
-export type UpdateAdditionalInformationData = {
+export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    CharityLogo: DocumentObject;
-    CharityBanner: DocumentObject;
-    CharityOverview: string;
+    Banner?: FileObject;
+    CharityLogo?: FileObject;
+    CharityOverview?: string;
+    TerraWallet?: string;
   };
 };
 
-export type UpdateAdditionalInformationResult = {
-  CharityLogo: string;
-  CharityBanner: string;
+export type UpdateCharityMetadataResult = {
+  Banner: FileObject;
+  CharityLogo: FileObject;
   CharityOverview: string;
+  TerraWallet: string;
 };
 
-export type RegistrationData = {
-  ContactPerson: any;
-  Metadata: any;
-  Registration: any;
+export type Registration = {
+  AuditedFinancialReports: FileObject[];
+  AuditedFinancialReportsVerified: boolean;
+  CharityName: string;
+  CharityName_ContactEmail: string;
+  FinancialStatements: FileObject[];
+  FinancialStatementsVerified: boolean;
+  ProofOfIdentity: FileObject;
+  ProofOfIdentityVerified: boolean;
+  ProofOfRegistration: FileObject;
+  ProofOfRegistrationVerified: boolean;
+  RegistrationDate: string;
+  RegistrationStatus: RegistrationStatus;
+  UN_SDG: string;
+  Website: string;
+};
+
+export type ContactPerson = any;
+
+export type CharityData = {
+  ContactPerson: ContactPerson;
+  Metadata: {
+    Banner: FileObject;
+    CharityLogo: FileObject;
+    CharityOverview: string;
+    TerraWallet: string;
+  };
+  Registration: Registration;
 };

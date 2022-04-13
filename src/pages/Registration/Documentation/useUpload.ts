@@ -1,8 +1,9 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { UpdateDocumentationResult } from "services/aws/types";
+import { FileObject, UpdateDocumentationResult } from "services/aws/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
@@ -50,12 +51,8 @@ export default function useUpload() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const poiPromise = Promise.all(
-    values.proofOfIdentity.map((x) => readFileToDataUrl(x))
-  );
-  const porPromise = Promise.all(
-    values.proofOfRegistration.map((x) => readFileToDataUrl(x))
-  );
+  const poiPromise = readFileToDataUrl(values.proofOfIdentity);
+  const porPromise = readFileToDataUrl(values.proofOfRegistration);
   const fsPromise = Promise.all(
     values.financialStatements.map((x) => readFileToDataUrl(x))
   );
@@ -80,18 +77,21 @@ async function getUploadBody(values: FormValues) {
   };
 }
 
-type DocumentObject = { name: string; dataUrl: string };
+const readFileToDataUrl = (fileWrapper: FileWrapper) =>
+  new Promise<FileObject>((resolve, reject) => {
+    if (!fileWrapper.file) {
+      return resolve({
+        name: fileWrapper.name,
+        sourceUrl: fileWrapper.sourceUrl,
+      });
+    }
 
-const readFileToDataUrl = (file: File) =>
-  new Promise<DocumentObject>((resolve, reject) => {
     const reader = new FileReader();
-
     reader.onerror = (error) => reject(error);
     reader.onload = (e: ProgressEvent<FileReader>) =>
       resolve({
-        name: file.name,
+        name: fileWrapper.name,
         dataUrl: e.target!.result as string,
       });
-
-    reader.readAsDataURL(file as Blob);
+    reader.readAsDataURL(fileWrapper.file as Blob);
   });

@@ -7,7 +7,7 @@ import { useGetter } from "store/accessors";
 import { InputRow } from "../common";
 import routes from "../routes";
 import ButtonSection from "./ButtonSection";
-import DescriptionInput from "./DescriptionInput";
+import OverviewInput from "./OverviewInput";
 import ImageInput from "./ImageInput";
 import { FormValues, SCHEMA } from "./types";
 import useSubmit from "./useSubmit";
@@ -20,9 +20,9 @@ export default function AdditionalInformation() {
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      charityOverview: user.CharityOverview,
-      charityLogo: [],
-      charityBanner: [],
+      banner: user.Metadata.Banner,
+      charityOverview: user.Metadata.CharityOverview,
+      charityLogo: user.Metadata.CharityLogo,
     },
   });
 
@@ -42,13 +42,9 @@ export default function AdditionalInformation() {
           onSubmit={methods.handleSubmit(submit)}
         >
           <OrganizationName />
-          <ImageInput
-            name="charityBanner"
-            label="Banner image of your organization"
-          />
+          <ImageInput name="banner" label="Banner image of your organization" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
-          <DescriptionInput />
-          <Separator />
+          <OverviewInput />
           <ButtonSection />
         </form>
       </FormProvider>
@@ -73,5 +69,3 @@ function OrganizationName() {
     </InputRow>
   );
 }
-
-const Separator = () => <div className="h-4" />;

@@ -27,12 +27,12 @@ export default function Documentation() {
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
-      un_sdg: user.UN_SDG,
+      un_sdg: user.UN_SDG >= 0 ? user.UN_SDG : undefined,
       website: user.Website,
-      proofOfIdentity: [],
-      proofOfRegistration: [],
-      financialStatements: [],
-      auditedFinancialReports: [],
+      proofOfIdentity: user.ProofOfIdentity,
+      proofOfRegistration: user.ProofOfRegistration,
+      financialStatements: user.FinancialStatements,
+      auditedFinancialReports: user.AuditedFinancialReports,
     },
   });
   const currentLevel = useCurrentLevel(methods);

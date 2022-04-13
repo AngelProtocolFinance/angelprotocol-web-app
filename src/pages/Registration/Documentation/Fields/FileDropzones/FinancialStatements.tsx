@@ -1,5 +1,5 @@
 import FileDropzone from "components/FileDropzone";
-import { useFormContext } from "react-hook-form";
+import { FieldError, useFormContext } from "react-hook-form";
 import { InputRow } from "../../../common";
 import { FormValues } from "../../types";
 
@@ -21,7 +21,9 @@ export default function FinancialStatements() {
       />
       {!!errors.financialStatements?.length &&
         errors.financialStatements
-          .map((fieldError) => fieldError.message)
+          // Yup assumes wrong field names for errors, so we need to cast them first as "any",
+          // otherwise it would issue a warning
+          .map((fieldError: any) => (fieldError as FieldError).message)
           .filter(checkUnique)
           .map((message) => (
             <p

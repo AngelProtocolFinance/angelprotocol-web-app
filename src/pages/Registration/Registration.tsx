@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { removeUserData } from "services/user/userSlice";
@@ -21,11 +20,10 @@ const Registration = () => {
     resolver: yupResolver(FormInfoSchema),
   });
 
-  const handleStart = () => navigate(routes.contactDetails);
-
-  useEffect(() => {
+  const handleStart = () => {
     dispatch(removeUserData());
-  }, [dispatch]);
+    navigate(routes.contactDetails);
+  };
 
   return (
     <div className="flex flex-col gap-3 items-center">

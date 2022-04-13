@@ -1,47 +1,57 @@
+import { FileWrapper } from "components/FileDropzone/types";
 import * as Yup from "yup";
 
 export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
-  proofOfIdentity: File[];
-  proofOfRegistration: File[];
-  financialStatements: File[];
-  auditedFinancialReports: File[];
+  proofOfIdentity: FileWrapper;
+  proofOfRegistration: FileWrapper;
+  financialStatements: FileWrapper[];
+  auditedFinancialReports: FileWrapper[];
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
   un_sdg: number;
 };
 
-const VALID_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf"];
+const VALID_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "application/pdf",
+  "image/webp",
+];
 
-const FILE_ARRAY_SCHEMA = Yup.array<File>().of(
-  Yup.mixed<File>()
-    .test({
-      name: "fileSize",
-      message: "File size must be smaller than 25Mb",
-      test: (file) => (file?.size || 0) <= 25000000,
-    })
-    .test({
-      name: "fileType",
-      message: "Valid file types are PDF, JPG and PNG",
-      test: (file) => VALID_MIME_TYPES.includes(file?.type || "none"),
-    })
-);
+const FILE_SCHEMA = Yup.mixed<FileWrapper>()
+  .test({
+    name: "fileSize",
+    message: "File size must be smaller than 25Mb",
+    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 25e6,
+  })
+  .test({
+    name: "fileType",
+    message: "Valid file types are PDF, JPG, PNG and WEBP",
+    test: (fileWrapper) =>
+      fileWrapper?.file
+        ? VALID_MIME_TYPES.includes(fileWrapper.file.type)
+        : true,
+  })
+  .test({
+    name: "invalidState",
+    message: "Invalid internal state",
+    test: (fileWrapper) =>
+      // fileWrapper must be instantiated
+      !!fileWrapper &&
+      // file name must be set
+      !!fileWrapper.name &&
+      // either new file is uploaded or source URL to file is set
+      (!!fileWrapper.file || !!fileWrapper.sourceUrl),
+  });
 
 export const SCHEMA = Yup.object({
-  proofOfIdentity: FILE_ARRAY_SCHEMA.test({
-    name: "exactlyOne",
-    message: "Proof of identity required",
-    test: (arr) => arr?.length === 1,
-  }),
-  proofOfRegistration: FILE_ARRAY_SCHEMA.test({
-    name: "exactlyOne",
-    message: "Proof of registration required",
-    test: (arr) => arr?.length === 1,
-  }),
-  financialStatements: FILE_ARRAY_SCHEMA,
-  auditedFinancialReports: FILE_ARRAY_SCHEMA,
+  proofOfIdentity: FILE_SCHEMA,
+  proofOfRegistration: FILE_SCHEMA,
+  financialStatements: Yup.array<FileWrapper>().of(FILE_SCHEMA),
+  auditedFinancialReports: Yup.array<FileWrapper>().of(FILE_SCHEMA),
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),

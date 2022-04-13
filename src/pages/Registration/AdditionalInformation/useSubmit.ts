@@ -1,23 +1,32 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useCallback } from "react";
-import { useUpdateAdditionalInformationMutation } from "services/aws/registration";
-import { UpdateAdditionalInformationResult } from "services/aws/types";
+import { useUpdateCharityMetadataMutation } from "services/aws/registration";
+import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
-  const [uploadAdditionalInfo, { isSuccess }] =
-    useUpdateAdditionalInformationMutation();
+  const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const user = useGetter((state) => state.user);
   const dispatch = useSetter();
 
   const handleError = useCallback((err) => console.log(err), []);
 
   const handleSuccess = useCallback(
-    (data?: UpdateAdditionalInformationResult) => {
-      const userData = { ...user, ...data };
+    (data: UpdateCharityMetadataResult) => {
+      const userData: User = {
+        ...user,
+        Metadata: {
+          ...user.Metadata,
+          Banner: data.Banner,
+          CharityLogo: data.CharityLogo,
+          CharityOverview: data.CharityOverview,
+        },
+      };
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
     },
@@ -26,12 +35,12 @@ export default function useSubmit() {
 
   const submit = useCallback(
     async (values: FormValues) => {
-      const uploadBody = await getUploadBody(values);
-      const postData = { PK: user.PK, body: uploadBody };
-      const result = await uploadAdditionalInfo(postData);
+      const body = await getUploadBody(values);
+
+      const result = await updateMetadata({ PK: user.PK, body });
 
       const dataResult = result as {
-        data: UpdateAdditionalInformationResult;
+        data: UpdateCharityMetadataResult;
         error: FetchBaseQueryError | SerializedError;
       };
 
@@ -41,35 +50,38 @@ export default function useSubmit() {
         handleSuccess(dataResult.data);
       }
     },
-    [user.PK, handleSuccess, handleError, uploadAdditionalInfo]
+    [user.PK, handleSuccess, handleError, updateMetadata]
   );
 
   return { submit, isSuccess };
 }
 
 async function getUploadBody(values: FormValues) {
-  const CharityLogo = await readFileToDataUrl(values.charityLogo[0]);
-  const CharityBanner = await readFileToDataUrl(values.charityBanner[0]);
+  const CharityLogo = await readFileToDataUrl(values.charityLogo);
+  const Banner = await readFileToDataUrl(values.banner);
 
   return {
+    Banner,
     CharityLogo,
-    CharityBanner,
     CharityOverview: values.charityOverview,
   };
 }
 
-type DocumentObject = { name: string; dataUrl: string };
+const readFileToDataUrl = (fileWrapper: FileWrapper) =>
+  new Promise<FileObject>((resolve, reject) => {
+    if (!fileWrapper.file) {
+      return resolve({
+        name: fileWrapper.name,
+        sourceUrl: fileWrapper.sourceUrl,
+      });
+    }
 
-const readFileToDataUrl = (file: File) =>
-  new Promise<DocumentObject>((resolve, reject) => {
     const reader = new FileReader();
-
     reader.onerror = (error) => reject(error);
     reader.onload = (e: ProgressEvent<FileReader>) =>
       resolve({
-        name: file.name,
+        name: fileWrapper.name,
         dataUrl: e.target!.result as string,
       });
-
-    reader.readAsDataURL(file as Blob);
+    reader.readAsDataURL(fileWrapper.file as Blob);
   });

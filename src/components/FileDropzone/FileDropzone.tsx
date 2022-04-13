@@ -1,6 +1,6 @@
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
 import Dropzone from "./Dropzone";
-import { BaseProps } from "./types";
+import { BaseProps, FileWrapper } from "./types";
 
 export default function FileDropzone<T extends FieldValues>(
   props: BaseProps<T>
@@ -12,7 +12,17 @@ export default function FileDropzone<T extends FieldValues>(
       name={props.name}
       control={control}
       render={({ field: { onChange, value } }) => (
-        <Dropzone<T> {...props} onDrop={onChange} value={value} />
+        <Dropzone<T>
+          {...props}
+          value={value}
+          onDrop={(acceptedFiles) => {
+            const files = acceptedFiles.map<FileWrapper>((x) => ({
+              file: x,
+              name: x.name,
+            }));
+            onChange(props.multiple ? files : files[0]);
+          }}
+        />
       )}
     />
   );

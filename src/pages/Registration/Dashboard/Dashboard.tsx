@@ -1,16 +1,15 @@
 import Loader from "components/Loader/Loader";
 import { app, site } from "constants/routes";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import { Button } from "../common";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
-import getRegistrationStatus from "./getRegistrationStatus";
 import Step from "./Step";
-import { ReviewStatus } from "./types";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -27,15 +26,9 @@ export default function Dashboard() {
     setLoading(false);
   }, [user, dispatch]);
 
-  useEffect(() => {
-    if (user.IsMetaDataCompleted || user.IsKeyPersonCompleted) {
-      navigate(0);
-    }
-  }, [user.IsMetaDataCompleted, user.IsKeyPersonCompleted, navigate]);
+  const state = getRegistrationState(user);
 
-  const status = useMemo(() => getRegistrationStatus(user), [user]);
-
-  const dataSubmitted = status.reviewStatus !== ReviewStatus.None;
+  const dataSubmitted = user.RegistrationStatus !== "Not Complete";
 
   if (isLoading) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
@@ -63,7 +56,7 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.wallet}`)
           }
           disabled={dataSubmitted}
-          completed={status.stepTwo.completed}
+          completed={state.stepTwo.completed}
         />
         <Step
           title="Step #3: Documentation"
@@ -71,10 +64,10 @@ export default function Dashboard() {
             navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
           disabled={dataSubmitted}
-          completed={status.stepThree.completed}
+          completed={state.stepThree.completed}
           // TODO: implement level logic
           statusComplete={
-            status.stepThree.completed && `Level ${status.stepThree.level}`
+            state.stepThree.completed && `Level ${state.stepThree.level}`
           }
         />
         <Step
@@ -85,28 +78,86 @@ export default function Dashboard() {
             )
           }
           disabled={dataSubmitted}
-          completed={status.stepFour.completed}
+          completed={state.stepFour.completed}
         />
-        {status.reviewStatus === ReviewStatus.None && (
+        {!dataSubmitted && (
           <Button
             className="w-full h-10 mt-5 bg-yellow-blue"
             onClick={() => console.log("submit")}
-            disabled={!status.getReadyForSubmit()}
+            disabled={!state.getIsReadyForSubmit()}
           >
             Submit for review
           </Button>
         )}
       </div>
-      {status.reviewStatus !== ReviewStatus.None && (
+      {user.RegistrationStatus === "Active" && (
         <EndowmentStatus
-          registrationStatus={status}
-          walletAddress={user.TerraWallet}
+          registrationStatus={user.RegistrationStatus}
+          walletAddress={user.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {status.reviewStatus === ReviewStatus.Complete && (
+      {user.RegistrationStatus === "Complete" && (
         <EndowmentCreated charityName={user?.CharityName} />
       )}
     </div>
   );
+}
+
+type DocumentationLevel = 0 | 1 | 2 | 3;
+
+type RegistrationStep = { completed: boolean };
+
+type DocumentationStep = RegistrationStep & { level: DocumentationLevel };
+
+type RegistrationState = {
+  stepOne: RegistrationStep;
+  stepTwo: RegistrationStep;
+  stepThree: DocumentationStep;
+  stepFour: RegistrationStep;
+  getIsReadyForSubmit: () => boolean;
+};
+
+function getRegistrationState(user: User): RegistrationState {
+  return {
+    stepOne: { completed: !!user.PK },
+    stepTwo: { completed: !!user.Metadata.TerraWallet },
+    stepThree: getStepThree(user),
+    stepFour: {
+      completed:
+        !!user.Metadata.CharityLogo?.sourceUrl &&
+        !!user.Metadata.Banner?.sourceUrl &&
+        !!user.Metadata.CharityOverview,
+    },
+    getIsReadyForSubmit: function () {
+      return (
+        this.stepOne.completed &&
+        this.stepTwo.completed &&
+        this.stepThree.completed &&
+        this.stepFour.completed
+      );
+    },
+  };
+}
+
+function getStepThree(user: User): DocumentationStep {
+  const levelOneDataExists =
+    !!user.ProofOfIdentity?.sourceUrl &&
+    !!user.ProofOfRegistration?.sourceUrl &&
+    !!user.Website;
+
+  const levelTwoDataExists =
+    !!user.FinancialStatements?.length && (user.UN_SDG || -1) >= 0;
+
+  const levelThreeDataExists = !!user.AuditedFinancialReports?.length;
+
+  const level: DocumentationLevel = levelOneDataExists
+    ? levelTwoDataExists
+      ? levelThreeDataExists
+        ? 3
+        : 2
+      : 1
+    : 0;
+
+  return { completed: levelOneDataExists, level };
 }

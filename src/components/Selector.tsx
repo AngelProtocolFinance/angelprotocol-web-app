@@ -23,7 +23,7 @@ export default function Selector<T extends FieldValues>(props: Props<T>) {
           <Select
             styles={selectStyles}
             placeholder={props.placeholder}
-            value={props.options.filter((option) => value === option.value)}
+            value={props.options.find((option) => value === option.value)}
             onChange={(option) => {
               onChange(option?.value);
               props.onChange && props.onChange(option?.value);

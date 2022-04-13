@@ -9,6 +9,7 @@ import {
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { ContactDetailsData } from "services/aws/types";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 import routes from "../../routes";
@@ -65,7 +66,7 @@ export default function useSaveContactDetails() {
               CharityName: postData.Registration.CharityName,
             },
           });
-          const newUserData = {
+          const newUserData: User = {
             ...user,
             ...postData.ContactPerson,
             CharityName: postData.Registration.CharityName,

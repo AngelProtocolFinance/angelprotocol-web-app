@@ -1,10 +1,13 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { app, site } from "constants/routes";
 import createAuthToken from "helpers/createAuthToken";
 import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { User, UserTypes } from "services/user/types";
+import { CharityData } from "services/aws/types";
+import { CharityMetadata, User, UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import * as Yup from "yup";
@@ -23,47 +26,57 @@ export const useRegistration = () => {
   const { showModal } = useSetModal();
 
   const onResume = async (values: ReferInfo) => {
-    let response: any = await checkData(values.refer);
-    if (response.error) {
+    const result = await checkData(values.refer);
+
+    const dataResult = result as {
+      data: CharityData;
+      error: FetchBaseQueryError | SerializedError;
+    };
+
+    if (dataResult.error) {
       showModal<PopupProps>(Popup, {
         message:
           "No active charity application found with this registration reference",
       });
-      return console.log(response.error);
+      return console.log(dataResult.error);
     }
+
+    const { data } = dataResult;
 
     // const token: any = await getTokenData(values.refer);
     const token: any = createAuthToken(UserTypes.CHARITY_OWNER);
-    const data: User = {
-      ...response.data.ContactPerson,
-      CharityName: response.data.Registration.CharityName,
-      CharityName_ContactEmail:
-        response.data.Registration.CharityName_ContactEmail,
-      RegistrationDate: response.data.Registration.RegistrationDate,
-      RegistrationStatus: response.data.Registration.RegistrationStatus,
+    const userData: User = {
+      ...data.ContactPerson,
+      CharityName: data.Registration.CharityName,
+      CharityName_ContactEmail: data.Registration.CharityName_ContactEmail,
+      RegistrationDate: data.Registration.RegistrationDate,
+      RegistrationStatus: data.Registration.RegistrationStatus,
       token: token,
-      TerraWallet: response.data.Metadata?.TerraWallet,
-      IsKeyPersonCompleted: !!response.data.KeyPerson,
-      IsMetaDataCompleted: !!response.data.Metadata,
-      ProofOfIdentity: response.data.Registration.ProofOfIdentity,
-      Website: response.data.Registration.Website,
-      UN_SDG: response.data.Registration.UN_SDG,
-      ProofOfRegistration: response.data.Registration.ProofOfRegistration,
-      FinancialStatements: response.data.Registration.FinancialStatements,
-      AuditedFinancialReports:
-        response.data.Registration.AuditedFinancialReports,
-      ProofOfIdentityVerified:
-        response.data.Registration.ProofOfIdentityVerified,
+      IsMetaDataCompleted:
+        !!data.Metadata.TerraWallet &&
+        !!data.Metadata.CharityOverview &&
+        !!data.Metadata.CharityLogo.sourceUrl &&
+        !!data.Metadata.Banner.sourceUrl,
+      Metadata: getMetadata(data),
+      ProofOfIdentity: data.Registration.ProofOfIdentity || { name: "" },
+      Website: data.Registration.Website,
+      UN_SDG: +data.Registration.UN_SDG,
+      ProofOfRegistration: data.Registration.ProofOfRegistration || {
+        name: "",
+      },
+      FinancialStatements: data.Registration.FinancialStatements || [],
+      AuditedFinancialReports: data.Registration.AuditedFinancialReports || [],
+      ProofOfIdentityVerified: data.Registration.ProofOfIdentityVerified,
       ProofOfRegistrationVerified:
-        response.data.Registration.ProofOfRegistrationVerified,
+        data.Registration.ProofOfRegistrationVerified,
       FinancialStatementsVerified:
-        response.data.Registration.FinancialStatementsVerified,
+        data.Registration.FinancialStatementsVerified,
       AuditedFinancialReportsVerified:
-        response.data.Registration.AuditedFinancialReportsVerified,
+        data.Registration.AuditedFinancialReportsVerified,
     };
-    dispatch(updateUserData(data));
-    localStorage.setItem("userData", JSON.stringify(data));
-    if (data.EmailVerified) {
+    dispatch(updateUserData(userData));
+    localStorage.setItem("userData", JSON.stringify(userData));
+    if (userData.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {
       navigate(`${site.app}/${app.register}/${routes.confirm}`, {
@@ -74,3 +87,12 @@ export const useRegistration = () => {
 
   return { onResume };
 };
+
+function getMetadata({ Metadata }: CharityData): CharityMetadata {
+  return {
+    Banner: Metadata?.Banner || { name: "" },
+    CharityLogo: Metadata?.CharityLogo || { name: "" },
+    CharityOverview: Metadata?.CharityOverview || "",
+    TerraWallet: Metadata?.TerraWallet || "",
+  };
+}

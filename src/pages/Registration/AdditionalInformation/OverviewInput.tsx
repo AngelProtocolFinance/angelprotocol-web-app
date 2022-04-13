@@ -2,7 +2,7 @@ import RichTextEditor from "components/RichTextEditor";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "./types";
 
-export default function DescriptionInput() {
+export default function OverviewInput() {
   const {
     formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();

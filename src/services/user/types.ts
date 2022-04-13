@@ -1,3 +1,19 @@
+import { FileObject } from "services/aws/types";
+
+export type RegistrationStatus =
+  | "Not Complete"
+  | "UnderReview"
+  | "Active"
+  | "Complete";
+
+export type CharityMetadata = {
+  SK?: "Metadata";
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  TerraWallet: string;
+};
+
 export interface User {
   Email: string;
   FirstName: string;
@@ -6,29 +22,25 @@ export interface User {
   Role: string;
   SK?: string;
   PK?: string;
-  CharityLogo: string;
-  CharityBanner: string;
   CharityName: string;
   CharityName_ContactEmail?: string;
-  CharityOverview: string;
   RegistrationDate: string;
-  RegistrationStatus: string;
+  RegistrationStatus: RegistrationStatus;
   EmailVerified: boolean;
-  TerraWallet?: any;
   IsKeyPersonCompleted?: boolean;
   IsMetaDataCompleted?: boolean;
   token?: string;
   Website: string;
   UN_SDG: number;
-  ProofOfIdentity: string[];
-  ProofOfRegistration: string[];
-  FinancialStatements: string[];
-  AuditedFinancialReports: string[];
+  ProofOfIdentity: FileObject;
+  ProofOfRegistration: FileObject;
+  FinancialStatements: FileObject[];
+  AuditedFinancialReports: FileObject[];
   ProofOfIdentityVerified?: boolean;
   ProofOfRegistrationVerified: boolean;
   FinancialStatementsVerified: boolean;
   AuditedFinancialReportsVerified: boolean;
-  Metadata: any;
+  Metadata: CharityMetadata;
 }
 
 export enum UserTypes {

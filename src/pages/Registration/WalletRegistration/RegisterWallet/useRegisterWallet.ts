@@ -1,26 +1,28 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
-import { useAddCharityMetadataMutation } from "services/aws/charity";
+import { useUpdateCharityMetadataMutation } from "services/aws/registration";
+import { UpdateCharityMetadataResult } from "services/aws/types";
+import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function useRegisterWallet() {
-  const [isSuccess, setSuccess] = useState(false);
   const [isSubmitting, setSubmitting] = useState(false);
-  const [addCharityMetaProfile] = useAddCharityMetadataMutation();
+  const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
 
-  // this '_' value should be used to notify the user of a failure,
-  // or to put in our logs once (and if) they're ever implemented
-  const handleFailure = useCallback((_) => setSuccess(false), []);
+  const handleFailure = useCallback((error) => console.log(error), []);
 
   const handleSuccess = useCallback(
-    (walletAddress: string) => {
-      const userData = { ...user, TerraWallet: walletAddress };
+    (TerraWallet: string) => {
+      const userData: User = {
+        ...user,
+        Metadata: { ...user.Metadata, TerraWallet },
+      };
       dispatch(updateUserData(userData));
       localStorage.setItem("userData", JSON.stringify(userData));
-
-      setSuccess(true);
     },
     [dispatch, user]
   );
@@ -30,25 +32,20 @@ export default function useRegisterWallet() {
       setSubmitting(true);
 
       try {
-        const response: any = await addCharityMetaProfile({
+        const response = await updateMetadata({
           body: { TerraWallet: walletAddress },
-          uuid: user.PK,
+          PK: user.PK,
         });
 
-        const result = response.data ? response : response.error;
+        const result = response as {
+          data: UpdateCharityMetadataResult;
+          error: FetchBaseQueryError | SerializedError;
+        };
 
-        if (result.status === 500) {
-          handleFailure("Saving data has failed. Please try again.");
-        } else if (result.error) {
-          handleFailure(result.error.data?.message);
-        } else if (
-          result.status === 400 ||
-          result.status === 401 ||
-          result.status === 403
-        ) {
-          handleFailure(result.data?.message);
+        if (!!result.error) {
+          handleFailure(JSON.stringify(result.error));
         } else {
-          handleSuccess(walletAddress);
+          handleSuccess(result.data.TerraWallet);
         }
       } catch (error) {
         handleFailure(error);
@@ -56,7 +53,7 @@ export default function useRegisterWallet() {
         setSubmitting(false);
       }
     },
-    [addCharityMetaProfile, user, handleFailure, handleSuccess]
+    [updateMetadata, user, handleFailure, handleSuccess]
   );
 
   return { registerWallet, isSuccess, isSubmitting };
