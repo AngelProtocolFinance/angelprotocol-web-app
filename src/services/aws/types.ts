@@ -30,7 +30,7 @@ export type ContactDetailsData = {
 
 export type ContactPerson = {
   Email: string;
-  EmailVerified: boolean;
+  EmailVerified?: boolean;
   FirstName: string;
   LastName: string;
   OtherRole?: string;
