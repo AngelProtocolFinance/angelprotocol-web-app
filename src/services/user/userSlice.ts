@@ -13,7 +13,10 @@ const userSlice = createSlice({
   reducers: {
     loadLocalStorageUser: (state) => loadUser(),
     removeUserData: (state) => getDefaultUser(),
-    updateUserData: (state, { payload }: PayloadAction<User>) => payload,
+    updateUserData: (state, { payload }: PayloadAction<User>) => {
+      localStorage.setItem("userData", JSON.stringify(payload));
+      return payload;
+    },
   },
 });
 

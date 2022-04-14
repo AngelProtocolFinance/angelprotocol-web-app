@@ -17,12 +17,12 @@ export default function useRegisterWallet() {
 
   const handleSuccess = useCallback(
     (TerraWallet: string) => {
-      const userData: User = {
-        ...user,
-        Metadata: { ...user.Metadata, TerraWallet },
-      };
-      dispatch(updateUserData(userData));
-      localStorage.setItem("userData", JSON.stringify(userData));
+      dispatch(
+        updateUserData({
+          ...user,
+          Metadata: { ...user.Metadata, TerraWallet },
+        })
+      );
     },
     [dispatch, user]
   );

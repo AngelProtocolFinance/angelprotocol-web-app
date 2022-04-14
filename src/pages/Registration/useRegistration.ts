@@ -47,7 +47,6 @@ export const useRegistration = () => {
     const token = createAuthToken(UserTypes.CHARITY_OWNER);
     const userData = createUserData(data, token);
     dispatch(updateUserData(userData));
-    localStorage.setItem("userData", JSON.stringify(userData));
     if (userData.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {

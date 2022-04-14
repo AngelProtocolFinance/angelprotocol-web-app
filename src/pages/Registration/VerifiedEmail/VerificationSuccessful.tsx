@@ -16,10 +16,10 @@ export default function VerificationSuccessful(props: Props) {
   const dispatch = useSetter();
 
   useEffect(() => {
+    console.log("verified");
+
     dispatch(updateUserData(userData));
-    localStorage.setItem("userData", JSON.stringify(userData));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
+  }, [dispatch, userData]);
 
   return (
     <div className="flex flex-col gap-10 items-center">

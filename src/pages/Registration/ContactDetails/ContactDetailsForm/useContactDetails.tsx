@@ -82,7 +82,6 @@ export default function useSaveContactDetails() {
             },
           };
           dispatch(updateUserData(newUserData));
-          localStorage.setItem("userData", JSON.stringify(newUserData));
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
         }
       } else {

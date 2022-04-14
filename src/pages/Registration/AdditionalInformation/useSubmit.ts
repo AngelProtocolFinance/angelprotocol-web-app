@@ -28,7 +28,6 @@ export default function useSubmit() {
         },
       };
       dispatch(updateUserData(userData));
-      localStorage.setItem("userData", JSON.stringify(userData));
     },
     [dispatch, user]
   );
