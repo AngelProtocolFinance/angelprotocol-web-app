@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
-import { SwapValues } from "./types";
 import toCurrency from "helpers/toCurrency";
+import { SwapValues } from "./types";
 
 function Misc(props: { title: string; value: string; class?: string }) {
   const classes = `text-xs font-light ${props.class}`;

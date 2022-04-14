@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { State, Step, Stage, FormError } from "./types";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { FormError, Stage, State, Step } from "./types";
 
 const initialState: State = {
   form_loading: false,

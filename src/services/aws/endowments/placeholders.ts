@@ -1,6 +1,6 @@
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
-import { Profile } from "./types";
 import image from "assets/images/home-banner.jpg";
+import { Profile } from "./types";
 
 export const profile: Profile = {
   //terra

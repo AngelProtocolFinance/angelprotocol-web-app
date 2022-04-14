@@ -30,9 +30,8 @@ function StatsItem(props: { title: string; value?: string; classes?: string }) {
         {props.title}
       </p>
       <p
-        className={`text-white text-xl font-heading font-semibold capitalize break-words w-115 ${
-          props.classes || ""
-        }`}
+        className={`text-white text-xl font-heading font-semibold capitalize break-words w-115 
+        ${props.classes || ""}`}
       >
         {props.value || "N/A"}
       </p>

@@ -6,10 +6,10 @@ import {
   Msg,
   TxInfo,
 } from "@terra-money/terra.js";
+import { WalletProxy } from "providers/WalletProvider";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { terra_lcds } from "constants/urls";
-import { WalletProxy } from "providers/WalletProvider";
 import { Disconnected, TxResultFail } from "./Errors";
 
 export default class Contract {

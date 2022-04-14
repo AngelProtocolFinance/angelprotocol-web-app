@@ -1,6 +1,6 @@
-import { currency_text, currency_icons } from "constants/currency";
-import toCurrency from "helpers/toCurrency";
 import { Coin } from "services/wallet/types";
+import toCurrency from "helpers/toCurrency";
+import { currency_icons, currency_text } from "constants/currency";
 
 export default function Holdings(props: { coins: Coin[] }) {
   return (

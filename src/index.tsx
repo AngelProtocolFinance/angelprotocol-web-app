@@ -1,12 +1,12 @@
-import "./index.css";
-import { lazy, StrictMode, Suspense } from "react";
+import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
-import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { site } from "./constants/routes";
 import { Provider } from "react-redux";
-import { store } from "store/store";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loader from "components/Loader/Loader";
+import { store } from "store/store";
+import { site } from "./constants/routes";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
 const App = lazy(() => import("./App/App"));
 const Website = lazy(() => import("./Website/Website"));

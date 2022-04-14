@@ -1,5 +1,5 @@
 import contract_querier from "../contract_querier";
-import { tags, endowment } from "../tags";
+import { endowment, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import { VaultRateInfo, VaultsRateRes } from "./types";

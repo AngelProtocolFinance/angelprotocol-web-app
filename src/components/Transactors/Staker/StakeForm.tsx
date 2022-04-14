@@ -1,8 +1,8 @@
-import Amount from "./Amount";
-import Status from "../Status";
 import Fee from "../Fee";
-
+import Status from "../Status";
+import Amount from "./Amount";
 import useStakeUnstake from "./useStakeUnstake";
+
 export default function StakeForm() {
   const { stakeOrUnstake, isFormLoading, isSubmitDisabled } = useStakeUnstake();
   return (
