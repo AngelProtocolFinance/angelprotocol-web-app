@@ -8,10 +8,7 @@ import {
   StatusChangePayload,
 } from "./types";
 import { WalletProxy } from "providers/WalletProvider";
-import {
-  EndowmentQueryMsg,
-  EndowmentQueryOptions,
-} from "services/terra/registrar/types";
+import { EndowmentQueryOptions } from "services/terra/registrar/types";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 
 export default class Registrar extends Contract {
@@ -42,15 +39,6 @@ export default class Registrar extends Contract {
     this.config = {
       address: this.address,
       msg: { config: {} },
-    };
-  }
-
-  createEndowmentListQuery(payload?: EndowmentQueryOptions): EndowmentQueryMsg {
-    return {
-      address: this.address,
-      msg: {
-        endowment_list: { ...payload },
-      },
     };
   }
 

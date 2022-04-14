@@ -59,7 +59,7 @@ export function useRegistrarConfig() {
   };
 }
 
-export function useCategorizedEndowments(skip = false) {
+export function useCategorizedEndowments() {
   const { wallet } = useWalletContext();
   const { useCategorizedEndowmentsQuery } = registrar_api;
   const contract = new Registrar(wallet);
@@ -72,7 +72,10 @@ export function useCategorizedEndowments(skip = false) {
     contract.endowmentList({
       endow_type: "charity",
       status: "1",
-    })
+    }),
+    {
+      skip: !wallet,
+    }
   );
 
   return {
