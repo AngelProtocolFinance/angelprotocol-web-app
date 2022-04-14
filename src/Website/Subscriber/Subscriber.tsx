@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import Loader from "components/Loader/Loader";
 import useSubscribe from "./useSubscribe";
 
-export default function SubscriberForm() {
+export default function Subscriber() {
   const { register, isSubmitting, subscribe, errors } = useSubscribe();
   return (
     <form
@@ -16,7 +16,7 @@ export default function SubscriberForm() {
         disabled={isSubmitting}
         autoComplete="off"
         type="text"
-        className="block p-2 rounded-md  disabled:bg-thin-grey text-blue-accent font-semibold focus:outline-none focus:ring-2 focus:ring-white-grey focus:ring-opacity-50"
+        className="block p-2 rounded-md  disabled:bg-thin-grey text-blue-accent font-semibold focus:outline-none focus:ring-2 focus:ring-white-grey/50"
       />
       <ErrorMessage
         errors={errors}
