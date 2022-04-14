@@ -1,5 +1,5 @@
 import toCurrency from "helpers/toCurrency";
-import { Airdrops } from "services/aws/airdrop/types";
+import { Airdrops } from "services/terra/multicall/types";
 import useClaimAirdrop from "./useClaimAirdrop";
 import Icon from "components/Icons/Icons";
 

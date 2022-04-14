@@ -2,7 +2,7 @@ import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops } from "services/aws/airdrop/types";
+import { Airdrops } from "services/terra/multicall/types";
 import {
   AggregatedQuery,
   ContractQueryArgs,

@@ -2,7 +2,7 @@ import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops } from "services/aws/airdrop/types";
+import { Airdrops } from "services/terra/multicall/types";
 import { GovState } from "services/terra/gov/types";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 import Contract from "./Contract";

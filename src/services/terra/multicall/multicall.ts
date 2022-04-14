@@ -42,7 +42,6 @@ export const multicall_api = terra.injectEndpoints({
       },
     }),
     airdrop: builder.query<any, WalletProxy>({
-      //TODO: correct tag,
       providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
       async queryFn(wallet, queryApi, extraOptions, baseQuery) {
         try {
