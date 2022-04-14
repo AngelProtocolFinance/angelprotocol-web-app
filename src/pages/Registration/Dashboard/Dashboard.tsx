@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { User } from "services/user/types";
+import { User } from "pages/Registration/store";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";

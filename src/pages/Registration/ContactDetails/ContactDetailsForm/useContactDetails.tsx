@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { User } from "pages/Registration/store";
+import { updateUser } from "pages/Registration/store";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { ContactDetailsData } from "services/aws/types";
-import { User } from "services/user/types";
-import { updateUser } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";

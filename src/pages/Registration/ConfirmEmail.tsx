@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
+import { removeUser } from "pages/Registration/store";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUser } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";

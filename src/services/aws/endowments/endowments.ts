@@ -1,5 +1,5 @@
+import { UserTypes } from "pages/Registration/store";
 import { AWSQueryRes } from "services/aws/types";
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";

@@ -1,9 +1,9 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
+import { updateUser } from "pages/Registration/store";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { FileObject, UpdateDocumentationResult } from "services/aws/types";
-import { updateUser } from "services/user/userSlice";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";

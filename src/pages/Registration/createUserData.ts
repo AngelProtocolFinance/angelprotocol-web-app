@@ -1,5 +1,5 @@
+import { User } from "pages/Registration/store";
 import { CharityData, Metadata, Registration } from "services/aws/types";
-import { User } from "services/user/types";
 
 export default function createUserData(
   jwtData: CharityData,

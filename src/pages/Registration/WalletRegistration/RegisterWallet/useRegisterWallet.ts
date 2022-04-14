@@ -1,9 +1,9 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
+import { updateUser } from "pages/Registration/store";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
-import { updateUser } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function useRegisterWallet() {

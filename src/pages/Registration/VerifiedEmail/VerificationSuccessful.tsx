@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
-import { User } from "services/user/types";
-import { updateUser } from "services/user/userSlice";
+import { User } from "pages/Registration/store";
+import { updateUser } from "pages/Registration/store";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
 

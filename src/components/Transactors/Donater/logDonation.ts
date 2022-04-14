@@ -1,5 +1,5 @@
+import { UserTypes } from "pages/Registration/store";
 import { Receiver, TxLogPayload } from "services/apes/types";
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";

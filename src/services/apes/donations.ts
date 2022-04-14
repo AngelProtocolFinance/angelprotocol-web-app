@@ -1,4 +1,4 @@
-import { UserTypes } from "services/user/types";
+import { UserTypes } from "pages/Registration/store";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 import { ReceiptPayload, TxDetails } from "./types";

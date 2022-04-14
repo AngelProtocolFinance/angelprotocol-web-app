@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserTypes } from "services/user/types";
+import { UserTypes } from "pages/Registration/store";
 
 type Payload = {
   authorization: string;
