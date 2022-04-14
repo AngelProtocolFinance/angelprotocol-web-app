@@ -12,7 +12,7 @@ export function StepOneCompleteGuard(props: any) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.ContactPerson.EmailVerified) {
+    if (!user?.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}`);
     }
   }, [navigate, user]);

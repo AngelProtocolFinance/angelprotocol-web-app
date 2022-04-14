@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { loadLocalStorageUser } from "services/user/userSlice";
 import Loader from "components/Loader/Loader";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
@@ -20,8 +20,7 @@ export default function Dashboard() {
   useEffect(() => {
     if (!user.ContactPerson.PK) {
       // TODO: check where to move this logic, since it is similar to useRehydrateUserData
-      const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
-      dispatch(updateUserData(newUserData));
+      dispatch(loadLocalStorageUser());
     }
     setLoading(false);
   }, [user, dispatch]);

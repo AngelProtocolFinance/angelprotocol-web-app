@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUserData, updateUserData } from "services/user/userSlice";
+import { loadLocalStorageUser, removeUserData } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -68,8 +68,7 @@ export default function ConfirmEmail() {
 
   useEffect(() => {
     if (!user.ContactPerson.PK) {
-      const newUserData = JSON.parse(localStorage.getItem("userData") || "{}");
-      dispatch(updateUserData(newUserData));
+      dispatch(loadLocalStorageUser());
     }
   }, [user.ContactPerson.PK, dispatch]);
 

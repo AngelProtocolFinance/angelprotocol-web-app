@@ -1,7 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { User } from "./types";
 
-const initialState: User = {
+const getDefaultUser = (): User => ({
   ContactPerson: {
     Email: "",
     EmailVerified: false,
@@ -34,23 +33,6 @@ const initialState: User = {
     TerraWallet: "",
   },
   token: "",
-};
-
-const userSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-    loadLocalStorageUser: (state) => {
-      const localUserData: User = JSON.parse(
-        localStorage.getItem("userData") || "{}"
-      );
-      return localUserData;
-    },
-    removeUserData: (state) => initialState,
-    updateUserData: (state, { payload }: PayloadAction<User>) => payload,
-  },
 });
 
-export default userSlice.reducer;
-export const { loadLocalStorageUser, removeUserData, updateUserData } =
-  userSlice.actions;
+export default getDefaultUser;

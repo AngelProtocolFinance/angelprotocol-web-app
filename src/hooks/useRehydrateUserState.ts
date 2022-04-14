@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { loadLocalStorageUser } from "services/user/userSlice";
 import { useGetter, useSetter } from "store/accessors";
 
 // Redux re-hydrating should be happenning higher up in the component tree, perhaps in App.tsx
@@ -11,10 +10,7 @@ export default function useRehydrateUserState() {
 
   useEffect(() => {
     if (!user.ContactPerson.PK) {
-      const localUserData: User = JSON.parse(
-        localStorage.getItem("userData") || "{}"
-      );
-      dispatch(updateUserData(localUserData));
+      dispatch(loadLocalStorageUser());
     }
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
