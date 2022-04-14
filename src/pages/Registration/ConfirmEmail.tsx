@@ -55,7 +55,7 @@ export default function ConfirmEmail() {
     [sendEmail]
   );
 
-  const navigateToIndex = useCallback(() => {
+  const handleClose = useCallback(() => {
     dispatch(removeUserData());
     navigate(app.index);
   }, [dispatch, navigate]);
@@ -96,7 +96,7 @@ export default function ConfirmEmail() {
           Resend verification email
         </Button>
         <Button
-          onClick={navigateToIndex}
+          onClick={handleClose}
           className="bg-thin-blue w-48 h-12 text-sm"
         >
           close
