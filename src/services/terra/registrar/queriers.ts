@@ -8,7 +8,7 @@ export function useEndowmentStatus(address: string, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
   const { wallet, contract } = useContract<R, T>(Registrar);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
-    contract.endowmentList,
+    contract.endowmentList({}),
     {
       skip: skip || wallet?.network.chainID === chainIDs.localterra,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
@@ -19,6 +19,7 @@ export function useEndowmentStatus(address: string, skip = false) {
       }),
     }
   );
+
   return { endowmentStatus, isEndowmentStatusLoading };
 }
 
@@ -68,7 +69,7 @@ export function useCategorizedEndowments(skip = false) {
     isLoading,
     isFetching,
   } = useCategorizedEndowmentsQuery(
-    contract.createEndowmentListQuery({
+    contract.endowmentList({
       endow_type: "charity",
       status: "1",
     }),
@@ -76,6 +77,7 @@ export function useCategorizedEndowments(skip = false) {
       skip: skip || !wallet,
     }
   );
+
   return {
     endowments: data,
     isEndowmentsError: isError,
