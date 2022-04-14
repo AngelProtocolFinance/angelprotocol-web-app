@@ -1,4 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
+import { chainIDs } from "constants/chainIDs";
+import { aws_endpoint } from "constants/urls";
+import Multicall from "contracts/Multicall";
+import { WalletProxy } from "providers/WalletProvider";
+import { Airdrops, ClaimInquiry, QueryArg } from "services/aws/airdrop/types";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
 import { VaultsRateRes } from "../registrar/types";
@@ -35,6 +40,39 @@ export const multicall_api = terra.injectEndpoints({
           locked: locked.toNumber(),
           total: total.toNumber(),
         };
+      },
+    }),
+    airdrop: builder.query<any, WalletProxy>({
+      //todo correct tag,
+      providesTags: [{ type: tags.endowment }],
+      async queryFn(wallet, queryApi, extraOptions, baseQuery) {
+        try {
+          const airDropsRes = await fetch(
+            `${aws_endpoint}/airdrop/${wallet.address}/${wallet.network.chainID}`
+          );
+          const airDrops = (await airDropsRes.json()) as Airdrops;
+          const multiCallContract = new Multicall(wallet);
+          const claimInqRes = await baseQuery(
+            contract_querier(multiCallContract.airDropInquiries(airDrops))
+          );
+          const claimInqs = claimInqRes.data as MultiQueryRes;
+          const claimables: Airdrops = [];
+          decodeAggregatedResult<ClaimInquiry[]>(
+            claimInqs.query_result
+          ).forEach((isClaimed, i) => {
+            if (isClaimed) claimables.push(airDrops[i]);
+          });
+
+          return { data: claimables };
+        } catch (err) {
+          return {
+            error: {
+              status: 500,
+              statusText: "Query error",
+              data: "Airdrop custom query encountered an error",
+            },
+          };
+        }
       },
     }),
   }),

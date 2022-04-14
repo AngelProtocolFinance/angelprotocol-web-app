@@ -4,7 +4,7 @@ import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { Airdrops } from "services/aws/airdrop/types";
 import { GovState } from "services/terra/gov/types";
-import { ContractQueryArgs } from "services/terra/types";
+import { ContractQueryArgs as CQA } from "services/terra/types";
 import Contract from "./Contract";
 import { Vote } from "./types";
 // import { denoms } from "constants/currency";
@@ -13,10 +13,11 @@ export default class Halo extends Contract {
   airdrop_addr: string;
   token_address: string;
   gov_address: string;
-  staker: ContractQueryArgs;
-  gov_balance: ContractQueryArgs;
-  gov_state: ContractQueryArgs;
-  polls: ContractQueryArgs;
+  staker: CQA;
+  gov_balance: CQA;
+  gov_state: CQA;
+  polls: CQA;
+  isAirDropClaimed: (stage: number) => CQA;
 
   constructor(wallet?: WalletProxy) {
     super(wallet);
@@ -44,6 +45,11 @@ export default class Halo extends Contract {
       address: this.gov_address,
       msg: { polls: {} },
     };
+
+    this.isAirDropClaimed = (stage) => ({
+      address: this.airdrop_addr,
+      msg: { is_claimed: { stage, address: this.walletAddr } },
+    });
   }
 
   async getGovState() {
