@@ -1,4 +1,3 @@
-import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
@@ -18,47 +17,39 @@ export default function ConfirmEmail() {
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const { showModal } = useSetModal();
 
-  const sendEmail = useCallback(
-    async (emailType: string) => {
-      if (!user.ContactPerson.PK) {
-        console.error("Invalid Data. Please ask the administrator about that.");
-        return;
-      }
+  const sendEmail = async (emailType: string) => {
+    if (!user.ContactPerson.PK) {
+      console.error("Invalid Data. Please ask the administrator about that.");
+      return;
+    }
 
-      const emailPayload = {
-        CharityName: user.Registration.CharityName,
-        Email: user.ContactPerson.Email,
-        FirstName: user.ContactPerson.FirstName,
-        LastName: user.ContactPerson.LastName,
-        Role: user.ContactPerson.Role,
-        PhoneNumber: user.ContactPerson.PhoneNumber,
-      };
-      const response: any = await resendEmail({
-        uuid: user.ContactPerson.PK,
-        type: emailType,
-        body: emailPayload,
-      });
-      response.data
-        ? showModal<PopupProps>(Popup, {
-            message:
-              "We have sent you another verification email. If you still don't receive anything, please get in touch with us.",
-          })
-        : showModal<PopupProps>(Popup, {
-            message: response.error.data.message,
-          });
-    },
-    [user, resendEmail, showModal]
-  );
+    const emailPayload = {
+      CharityName: user.Registration.CharityName,
+      Email: user.ContactPerson.Email,
+      FirstName: user.ContactPerson.FirstName,
+      LastName: user.ContactPerson.LastName,
+      Role: user.ContactPerson.Role,
+      PhoneNumber: user.ContactPerson.PhoneNumber,
+    };
+    const response: any = await resendEmail({
+      uuid: user.ContactPerson.PK,
+      type: emailType,
+      body: emailPayload,
+    });
+    response.data
+      ? showModal<PopupProps>(Popup, {
+          message:
+            "We have sent you another verification email. If you still don't receive anything, please get in touch with us.",
+        })
+      : showModal<PopupProps>(Popup, {
+          message: response.error.data.message,
+        });
+  };
 
-  const resendVerificationEmail = useCallback(
-    () => sendEmail("verify-email"),
-    [sendEmail]
-  );
-
-  const handleClose = useCallback(() => {
+  const handleClose = () => {
     dispatch(removeUserData());
     navigate(app.index);
-  }, [dispatch, navigate]);
+  };
 
   return (
     <div className="flex flex-col gap-4 font-bold">
@@ -89,7 +80,7 @@ export default function ConfirmEmail() {
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">
         <Button
-          onClick={resendVerificationEmail}
+          onClick={() => sendEmail("verify-email")}
           className="bg-orange w-64 h-12 text-sm"
           isLoading={isLoading}
         >
