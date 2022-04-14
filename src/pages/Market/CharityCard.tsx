@@ -15,11 +15,8 @@ export default function CharityCard(props: AWSCharityProfile) {
         src={props.charity_image}
         alt="charity banner"
       />
-      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-sm uppercase mt-1.5">
+      <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-md uppercase mt-2">
         {props.charity_name}
-      </div>
-      <div className="mb-2 mx-2 w-64 line-clamp-2 text-sm text-white-grey/80">
-        <RichTextRenderer text={props.charity_overview} />
       </div>
     </Link>
   );

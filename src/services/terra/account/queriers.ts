@@ -43,6 +43,7 @@ export function useEndowmentProfile(address: string, skip = false) {
     contract.profile,
     { skip: skip || wallet?.network.chainID === chainIDs.localterra }
   );
+  
   return {
     profile: data,
     isProfileError: isError,
