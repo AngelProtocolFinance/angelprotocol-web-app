@@ -1,9 +1,8 @@
 import { Dec } from "@terra-money/terra.js";
-import { chainIDs } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 import Multicall from "contracts/Multicall";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops, ClaimInquiry, QueryArg } from "services/aws/airdrop/types";
+import { Airdrops, ClaimInquiry } from "services/aws/airdrop/types";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
 import { VaultsRateRes } from "../registrar/types";
@@ -59,8 +58,8 @@ export const multicall_api = terra.injectEndpoints({
           const claimables: Airdrops = [];
           decodeAggregatedResult<ClaimInquiry[]>(
             claimInqs.query_result
-          ).forEach((isClaimed, i) => {
-            if (isClaimed) claimables.push(airDrops[i]);
+          ).forEach((inquiry, i) => {
+            if (!inquiry.is_claimed) claimables.push(airDrops[i]);
           });
 
           return { data: claimables };

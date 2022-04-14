@@ -35,6 +35,9 @@ export const contracts: Contracts = {
     [sc.loop_haloust_pair]: "terra1yjg0tuhc6kzwz9jl8yqgxnf2ctwlfumnvscupp",
     [sc.loop_haloust_lp]: "terra17pzt8t2hmx6587zn6yh5ensylm3s9mm4m72v2n",
     // terra12aazc56hv7aj2fcvmhuxve0l4pmayhpn794m0p /// HALO-LOOP PAIR
+    [sc.multicall]: "terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5",
+
+    //multicall
   },
   [chainIDs.testnet]: {
     //core
@@ -64,6 +67,8 @@ export const contracts: Contracts = {
     [sc.loop_haloust_pair]: "",
     [sc.loop_haloust_lp]: "",
     // terra12aazc56hv7aj2fcvmhuxve0l4pmayhpn794m0p /// HALO-LOOP PAIR
+    //multicall
+    [sc.multicall]: "terra1z9p02s5fkasx5qxdaes6mfyf2gt3kxuhcsd4va",
   },
   [chainIDs.localterra]: {
     //core
@@ -91,5 +96,8 @@ export const contracts: Contracts = {
     [sc.loop_router]: "",
     [sc.loop_haloust_pair]: "",
     [sc.loop_haloust_lp]: "",
+
+    //multicall
+    [sc.multicall]: "",
   },
 };

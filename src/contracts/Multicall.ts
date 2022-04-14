@@ -1,4 +1,6 @@
 import { chainIDs } from "constants/chainIDs";
+import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { Airdrops } from "services/aws/airdrop/types";
 import {
@@ -20,10 +22,7 @@ export default class Multicall {
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
-    this.address =
-      wallet?.network.chainID === chainIDs.mainnet
-        ? "terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5"
-        : "terra1z9p02s5fkasx5qxdaes6mfyf2gt3kxuhcsd4va";
+    this.address = contracts[wallet?.network.chainID as chainIDs][sc.multicall];
     this.registrarContract = new Registrar(wallet);
     this.haloContract = new Halo(wallet);
 
