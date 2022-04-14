@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "services/user/types";
-import { loadLocalStorageUser } from "services/user/userSlice";
-import Loader from "components/Loader/Loader";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
@@ -13,25 +10,11 @@ import Step from "./Step";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (!user.ContactPerson.PK) {
-      // TODO: check where to move this logic, since it is similar to useRehydrateUserData
-      dispatch(loadLocalStorageUser());
-    }
-    setLoading(false);
-  }, [user, dispatch]);
 
   const state = getRegistrationState(user);
 
   const dataSubmitted = user.Registration.RegistrationStatus !== "Not Complete";
-
-  if (isLoading) {
-    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
-  }
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">

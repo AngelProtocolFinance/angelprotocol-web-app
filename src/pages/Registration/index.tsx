@@ -1,7 +1,5 @@
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Loader from "components/Loader/Loader";
-import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { app, site } from "constants/routes";
 import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
@@ -16,12 +14,6 @@ const WalletRegistration = lazy(() => import("./WalletRegistration"));
 const Documentation = lazy(() => import("./Documentation"));
 
 export default function Register() {
-  const { isLoading } = useRehydrateUserState();
-
-  if (isLoading) {
-    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
-  }
-
   return (
     <Container>
       <Routes>
