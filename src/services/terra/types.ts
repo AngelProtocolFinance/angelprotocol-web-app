@@ -32,24 +32,27 @@ export type TokenInfo = {
 };
 
 export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
+export type MultiQueryRes = QueryRes<AggregatedResult>;
 
 type EncodedQueryMember = {
   address: string;
   data: string; //base64 encoded msg
 };
 
-type ResultMember = {
+type EncodedResultMember = {
   success: boolean;
   data: string; //base64 encoded msg
+};
+
+export type DecodedResultMember = {
+  success: boolean;
+  data: object; //parsed
 };
 
 export type AggregatedQuery = {
   aggregate: { queries: EncodedQueryMember[] };
 };
 
-type AggregatedResult = {
-  datas: ResultMember[];
+export type AggregatedResult = {
+  return_data: EncodedResultMember[];
 };
-
-type CallPair<T, U> = [T, U];
-type CallPairs = CallPair<any, any>[];

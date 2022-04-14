@@ -12,14 +12,17 @@ export default class Multicall {
   wallet?: WalletProxy;
   address: string;
   registrarContract: Registrar;
-  vaultBalance: (endowmentAddr: string) => MultiContractQueryArgs;
+  endowmentBalance: (endowmentAddr: string) => MultiContractQueryArgs;
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
-    this.address = wallet?.network.chainID === chainIDs.mainnet ? "" : "";
+    this.address =
+      wallet?.network.chainID === chainIDs.mainnet
+        ? "terra1y60jx2jqh5qpmcnvgz3n0zg2p6ky4mr6ax2qa5"
+        : "terra1z9p02s5fkasx5qxdaes6mfyf2gt3kxuhcsd4va";
     this.registrarContract = new Registrar(wallet);
 
-    this.vaultBalance = (endowmentAddr) => ({
+    this.endowmentBalance = (endowmentAddr) => ({
       address: this.address,
       msg: this.constructAggregatedQuery([
         this.getAccountContract(endowmentAddr).balance,
@@ -43,3 +46,6 @@ export default class Multicall {
     return new Account(endowmentAddr, this.wallet);
   }
 }
+
+export interface MC extends Multicall {}
+export type M = typeof Multicall;
