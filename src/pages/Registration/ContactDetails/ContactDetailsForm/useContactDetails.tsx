@@ -7,7 +7,7 @@ import {
 } from "services/aws/registration";
 import { ContactDetailsData } from "services/aws/types";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { updateUser } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -81,7 +81,7 @@ export default function useSaveContactDetails() {
               RegistrationStatus: "Not Complete",
             },
           };
-          dispatch(updateUserData(newUserData));
+          dispatch(updateUser(newUserData));
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
         }
       } else {

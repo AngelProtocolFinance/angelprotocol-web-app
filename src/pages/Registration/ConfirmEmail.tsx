@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUserData } from "services/user/userSlice";
+import { removeUser } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -47,7 +47,7 @@ export default function ConfirmEmail() {
   };
 
   const handleClose = () => {
-    dispatch(removeUserData());
+    dispatch(removeUser());
     navigate(app.index);
   };
 

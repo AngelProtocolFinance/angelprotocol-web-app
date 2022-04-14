@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { updateUser } from "services/user/userSlice";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
@@ -27,7 +27,7 @@ export default function useSubmit() {
           CharityOverview: data.CharityOverview,
         },
       };
-      dispatch(updateUserData(userData));
+      dispatch(updateUser(userData));
     },
     [dispatch, user]
   );

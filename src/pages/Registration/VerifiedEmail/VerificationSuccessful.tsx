@@ -1,7 +1,7 @@
 import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
 import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { updateUser } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
 
@@ -18,7 +18,7 @@ export default function VerificationSuccessful(props: Props) {
   useEffect(() => {
     console.log("verified");
 
-    dispatch(updateUserData(userData));
+    dispatch(updateUser(userData));
   }, [dispatch, userData]);
 
   return (

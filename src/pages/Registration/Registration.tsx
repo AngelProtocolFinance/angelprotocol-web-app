@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { removeUserData } from "services/user/userSlice";
+import { removeUser } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { Button } from "./common";
 import routes from "./routes";
@@ -21,7 +21,7 @@ const Registration = () => {
   });
 
   const handleStart = () => {
-    dispatch(removeUserData());
+    dispatch(removeUser());
     navigate(routes.contactDetails);
   };
 

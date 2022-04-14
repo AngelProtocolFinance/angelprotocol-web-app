@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { CharityData } from "services/aws/types";
 import { UserTypes } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
+import { updateUser } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
@@ -46,7 +46,7 @@ export const useRegistration = () => {
 
     const token = createAuthToken(UserTypes.CHARITY_OWNER);
     const userData = createUserData(data, token);
-    dispatch(updateUserData(userData));
+    dispatch(updateUser(userData));
     if (userData.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {
