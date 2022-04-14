@@ -30,3 +30,26 @@ export type TokenInfo = {
   decimals: number;
   total_supply: string;
 };
+
+export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
+
+type EncodedQueryMember = {
+  address: string;
+  data: string; //base64 encoded msg
+};
+
+type ResultMember = {
+  success: boolean;
+  data: string; //base64 encoded msg
+};
+
+export type AggregatedQuery = {
+  aggregate: { queries: EncodedQueryMember[] };
+};
+
+type AggregatedResult = {
+  datas: ResultMember[];
+};
+
+type CallPair<T, U> = [T, U];
+type CallPairs = CallPair<any, any>[];
