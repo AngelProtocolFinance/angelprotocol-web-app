@@ -13,7 +13,6 @@ const userSlice = createSlice({
   name: "user",
   initialState: loadUser(),
   reducers: {
-    loadLocalStorageUser: (state) => loadUser(),
     removeUserData: (state) => {
       localStorage.removeItem(STORAGE_KEY);
       return getDefaultUser();
@@ -26,5 +25,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { loadLocalStorageUser, removeUserData, updateUserData } =
-  userSlice.actions;
+export const { removeUserData, updateUserData } = userSlice.actions;
