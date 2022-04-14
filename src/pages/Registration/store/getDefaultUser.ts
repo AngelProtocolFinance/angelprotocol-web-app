@@ -7,7 +7,7 @@ const getDefaultUser = (): User => ({
     FirstName: "",
     LastName: "",
     PhoneNumber: "",
-    Role: "",
+    Role: "ceo",
     PK: "",
   },
   Registration: {

@@ -1,3 +1,5 @@
+import { UserRoles } from "pages/Registration/constants";
+
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -34,7 +36,7 @@ export type ContactPerson = {
   OtherRole?: string;
   PhoneNumber: string;
   PK?: string;
-  Role: string;
+  Role: UserRoles;
   SK?: "ContactPerson";
 };
 

@@ -17,7 +17,7 @@ export default function ContactDetails() {
           registration if it gets interrupted in the future.
         </p>
       )}
-      <ContactDetailsForm contactData={user} />
+      <ContactDetailsForm user={user} />
     </div>
   );
 }

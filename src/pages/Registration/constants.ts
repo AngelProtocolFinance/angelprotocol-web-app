@@ -1,26 +1,25 @@
-export enum UserRoles {
-  president = "president",
-  vice_president = "vice-president",
-  secretary = "secretary",
-  treasurer = "treasurer",
-  ceo = "ceo",
-  cfo = "cfo",
-  other = "other",
-}
+export type UserRoles =
+  | "president"
+  | "vice-president"
+  | "secretary"
+  | "treasurer"
+  | "ceo"
+  | "cfo"
+  | "other";
 
 export type OptionType = { label: string; value: any };
 
 export const userRoleOptions: OptionType[] = [
-  { label: "Chairperson / President", value: UserRoles.president },
+  { label: "Chairperson / President", value: "president" },
   {
     label: "Vice-chairperson / Vice president",
-    value: UserRoles.vice_president,
+    value: "vice_president",
   },
-  { label: "Secretary", value: UserRoles.secretary },
-  { label: "Treasurer", value: UserRoles.treasurer },
-  { label: "CEO", value: UserRoles.ceo },
-  { label: "CFO", value: UserRoles.cfo },
-  { label: "Other", value: UserRoles.other },
+  { label: "Secretary", value: "secretary" },
+  { label: "Treasurer", value: "treasurer" },
+  { label: "CEO", value: "ceo" },
+  { label: "CFO", value: "cfo" },
+  { label: "Other", value: "other" },
 ];
 
 export const RevenueRanges: OptionType[] = [

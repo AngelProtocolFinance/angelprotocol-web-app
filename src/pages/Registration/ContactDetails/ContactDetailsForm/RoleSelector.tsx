@@ -1,7 +1,7 @@
 import { Control, UseFormRegister } from "react-hook-form";
 import FormInput from "components/FormInput";
 import Selector from "components/Selector";
-import { OptionType, UserRoles } from "../../constants";
+import { OptionType } from "../../constants";
 import { ContactDetails } from "./types";
 
 type Props = {
@@ -29,7 +29,7 @@ export default function RoleSelector(props: Props) {
         onChange={props.onChange}
         disabled={props.disabled}
       />
-      {props.control._formValues[props.name] === UserRoles.other && (
+      {props.control._formValues[props.name] === "other" && (
         <FormInput
           label="Specify your role"
           placeholder="Specify your role"

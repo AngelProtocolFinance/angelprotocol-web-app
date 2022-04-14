@@ -11,7 +11,7 @@ const awsBaseQuery = retry(
       const { user } = getState() as RootState;
       // const userData: any = (getState() as TStore).user.userData;
       if (user.token) {
-        headers.set("authorization", `${user.token}`);
+        headers.set("authorization", user.token);
       }
       return headers;
     },

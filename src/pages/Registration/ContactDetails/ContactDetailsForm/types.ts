@@ -7,7 +7,7 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
-  orgRole: string;
+  orgRole: UserRoles;
   otherRole: string;
   checkedPolicy: boolean;
   uniqueID: string;
@@ -27,7 +27,7 @@ export const ContactInfoSchema = Yup.object().shape({
     "Please select your role within your organization."
   ),
   otherRole: Yup.string().when("orgRole", {
-    is: UserRoles.other,
+    is: "other",
     then: Yup.string().required(
       "Please enter your role within your organization."
     ),
