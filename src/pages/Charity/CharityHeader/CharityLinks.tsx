@@ -1,16 +1,15 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
-import { Link } from "react-router-dom";
-import { LinkProps, useParams } from "react-router-dom";
-import { useProfileState } from "services/aws/endowments/states";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import { app, site } from "constants/routes";
+import useWalletContext from "hooks/useWalletContext";
+import { Link, LinkProps, useParams } from "react-router-dom";
+import { useProfileState } from "services/aws/endowments/states";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
   const { address: charity_addr } = useParams<CharityParam>();
   const { profileState } = useProfileState(charity_addr!);
-  const wallet = useConnectedWallet();
-  const isCharityOwner = wallet?.walletAddress === profileState.charity_owner;
+  const { wallet } = useWalletContext();
+  const isCharityOwner = wallet?.address === profileState.charity_owner;
 
   return (
     <div className={`${props.classes || ""} flex gap-2 items-center`}>
