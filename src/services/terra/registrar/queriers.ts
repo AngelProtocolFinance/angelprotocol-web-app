@@ -72,10 +72,7 @@ export function useCategorizedEndowments(skip = false) {
     contract.endowmentList({
       endow_type: "charity",
       status: "1",
-    }),
-    {
-      skip: skip || !wallet,
-    }
+    })
   );
 
   return {
