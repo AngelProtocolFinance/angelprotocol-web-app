@@ -1,5 +1,4 @@
 export enum tags {
-  airdrop = "airdrop",
   cha = "charity",
 }
 

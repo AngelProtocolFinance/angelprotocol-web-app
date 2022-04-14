@@ -2,11 +2,11 @@ import { Dec } from "@terra-money/terra.js";
 import { aws_endpoint } from "constants/urls";
 import Multicall from "contracts/Multicall";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops, ClaimInquiry } from "services/aws/airdrop/types";
+import { Airdrops, ClaimInquiry } from "./types";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
 import { VaultsRateRes } from "../registrar/types";
-import { tags, endowment } from "../tags";
+import { tags, multicall } from "../tags";
 import { terra } from "../terra";
 import {
   AggregatedResult,
@@ -18,7 +18,7 @@ import { EndowmentBalance, RateLookUp } from "./types";
 export const multicall_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     endowmentBalance: builder.query<EndowmentBalance, MultiContractQueryArgs>({
-      providesTags: [{ type: tags.endowment, id: endowment.holdings }],
+      providesTags: [{ type: tags.multicall, id: multicall.endowmentBalance }],
       query: contract_querier,
       transformResponse: (res: MultiQueryRes) => {
         const [holdings, ratesRes] = decodeAggregatedResult<
@@ -42,8 +42,8 @@ export const multicall_api = terra.injectEndpoints({
       },
     }),
     airdrop: builder.query<any, WalletProxy>({
-      //todo correct tag,
-      providesTags: [{ type: tags.endowment }],
+      //TODO: correct tag,
+      providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
       async queryFn(wallet, queryApi, extraOptions, baseQuery) {
         try {
           const airDropsRes = await fetch(
