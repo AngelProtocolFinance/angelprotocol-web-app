@@ -1,9 +1,9 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
-import Loader from "components/Loader/Loader";
-import { app, site } from "constants/routes";
-import useWalletContext from "hooks/useWalletContext";
 import { useCallback } from "react";
 import { Link, Navigate } from "react-router-dom";
+import Loader from "components/Loader/Loader";
+import useWalletContext from "hooks/useWalletContext";
+import { app, site } from "constants/routes";
 import { default as registerRoutes } from "../../routes";
 import routes from "../routes";
 import Title from "./Title";

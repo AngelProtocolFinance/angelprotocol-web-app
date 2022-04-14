@@ -1,11 +1,11 @@
-import { aws } from "../aws";
-import { terra_lcds } from "constants/urls";
-import { sc } from "constants/sc";
+import { QueryRes } from "services/terra/types";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
-import { Airdrops, ClaimInquiry, QueryArg } from "./types";
-import { QueryRes } from "services/terra/types";
+import { sc } from "constants/sc";
+import { terra_lcds } from "constants/urls";
+import { aws } from "../aws";
 import { tags } from "../tags";
+import { Airdrops, ClaimInquiry, QueryArg } from "./types";
 
 const airdrop_api = aws.injectEndpoints({
   endpoints: (build) => ({

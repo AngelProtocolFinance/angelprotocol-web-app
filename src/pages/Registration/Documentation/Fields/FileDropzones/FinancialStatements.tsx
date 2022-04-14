@@ -1,5 +1,5 @@
-import FileDropzone from "components/FileDropzone";
 import { FieldError, useFormContext } from "react-hook-form";
+import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../../../common";
 import { FormValues } from "../../types";
 

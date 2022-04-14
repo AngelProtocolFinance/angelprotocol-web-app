@@ -1,5 +1,5 @@
-import Checkbox from "components/Checkbox";
 import { useFormContext } from "react-hook-form";
+import Checkbox from "components/Checkbox";
 import { useGetter } from "store/accessors";
 import { FormValues } from "../types";
 

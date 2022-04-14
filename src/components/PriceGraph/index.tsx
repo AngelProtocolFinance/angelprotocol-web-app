@@ -1,5 +1,3 @@
-import Loader from "components/Loader/Loader";
-import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
 import {
   Area,
   CartesianGrid,
@@ -9,6 +7,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { LBPPairData } from "pages/LBP/useGetTokenSaleData";
+import Loader from "components/Loader/Loader";
 import { getErrorGraphData, getGraphData } from "./getGraphData";
 import "./priceGraph.css";
 

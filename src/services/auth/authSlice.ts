@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getSavedToken from "./getSavedToken";
 
 export const TCA_TOKEN_KEY = "tca";

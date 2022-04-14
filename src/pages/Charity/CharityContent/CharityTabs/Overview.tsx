@@ -1,6 +1,6 @@
-import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
+import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 import { CharityParam } from "../../types";
 
 export default function Overview() {

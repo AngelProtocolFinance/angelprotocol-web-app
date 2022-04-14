@@ -1,7 +1,7 @@
-import FileDropzone from "components/FileDropzone";
-import { useSetModal } from "components/Modal/Modal";
 import { FieldError, useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
+import FileDropzone from "components/FileDropzone";
+import { useSetModal } from "components/Modal/Modal";
 import { Button, InputRow } from "../../../common";
 import { FormValues } from "../../types";
 

@@ -1,7 +1,7 @@
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
-import { lazy, Suspense } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { app, site } from "../constants/routes";
 
 const Auction = lazy(() => import("pages/LBP/Auction"));

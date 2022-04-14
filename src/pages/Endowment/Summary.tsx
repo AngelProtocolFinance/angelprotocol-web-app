@@ -1,9 +1,9 @@
-import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
-import toCurrency from "helpers/toCurrency";
+import { useMemo } from "react";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
-import { HoldingSummary } from "./types";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
+import { HoldingSummary } from "./types";
 
 export default function Summary(props: HoldingSummary) {
   const { vaultsRate, isVaultsRateError } = useApprovedVaultsRateState();

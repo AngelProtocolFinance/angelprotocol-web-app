@@ -1,5 +1,5 @@
-import ContactDetailsForm from "./ContactDetailsForm";
 import { useGetter } from "store/accessors";
+import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
   const user = useGetter((state) => state.user);

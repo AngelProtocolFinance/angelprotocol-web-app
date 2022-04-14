@@ -1,6 +1,6 @@
+import { useFormContext } from "react-hook-form";
 import Selector from "components/Selector";
 import { unsdgs } from "constants/unsdgs";
-import { useFormContext } from "react-hook-form";
 import { InputRow } from "../../common";
 import { FormValues } from "../types";
 

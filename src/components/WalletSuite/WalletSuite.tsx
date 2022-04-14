@@ -1,8 +1,8 @@
-import Icon from "components/Icons/Icons";
-import useKeyPress from "hooks/useKeyPress";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Providers } from "services/wallet/types";
+import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
+import useKeyPress from "hooks/useKeyPress";
 import ConnectOptions from "./ConnectOptions";
 import Display from "./Display";
 import useBackdropDismiss from "./useBackdropDismiss";

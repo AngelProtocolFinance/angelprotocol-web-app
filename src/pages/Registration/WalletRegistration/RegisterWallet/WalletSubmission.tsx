@@ -1,10 +1,10 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
-import FormInput from "components/FormInput";
-import { app, site } from "constants/routes";
-import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
-import { useGetMetamask } from "providers/Metamask/Metamask";
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
+import { useGetMetamask } from "providers/Metamask/Metamask";
+import FormInput from "components/FormInput";
+import { app, site } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
 

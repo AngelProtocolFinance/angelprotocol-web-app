@@ -1,5 +1,5 @@
-import { useSetModal } from "components/Modal/Modal";
 import { BsExclamationCircle } from "react-icons/bs";
+import { useSetModal } from "components/Modal/Modal";
 import TerraInfoModal from "./TerraInfoModal";
 
 // Purpose of this component is to avoid rendering the InfoIcon in a non-intuitive way on smaller screens

@@ -1,8 +1,8 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
-import gmailIcon from "assets/images/gmail.webp";
-import web3AuthLogo from "assets/images/web3auth-logo.webp";
 import { BsDiscord } from "react-icons/bs";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
+import gmailIcon from "assets/images/gmail.webp";
+import web3AuthLogo from "assets/images/web3auth-logo.webp";
 import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
 

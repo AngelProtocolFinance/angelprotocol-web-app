@@ -1,5 +1,6 @@
 import Portion from "./Portion";
 import Slider from "./Slider";
+
 export default function Split() {
   return (
     <div className="grid ml-1">

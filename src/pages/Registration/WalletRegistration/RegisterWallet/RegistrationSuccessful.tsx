@@ -1,7 +1,7 @@
-import { app, site } from "constants/routes";
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { app, site } from "constants/routes";
 import routes from "../../routes";
 
 type Props = { walletAddress: string };

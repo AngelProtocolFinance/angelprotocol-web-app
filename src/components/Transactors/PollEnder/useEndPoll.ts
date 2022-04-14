@@ -1,12 +1,12 @@
-import { useSetModal } from "components/Modal/Modal";
-import Popup from "components/Popup/Popup";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import Halo from "contracts/Halo";
-import useWalletContext from "hooks/useWalletContext";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import Halo from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useEndPoll(pollId: number) {
   const { wallet } = useWalletContext();

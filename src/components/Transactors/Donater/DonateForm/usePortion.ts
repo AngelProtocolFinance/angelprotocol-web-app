@@ -1,7 +1,7 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, denoms } from "constants/currency";
-import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "components/Transactors/Donater/types";
+import toCurrency from "helpers/toCurrency";
+import { currency_text, denoms } from "constants/currency";
 
 export default function usePortion(type: string) {
   const isLocked = type === "locked";

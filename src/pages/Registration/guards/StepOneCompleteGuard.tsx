@@ -1,7 +1,7 @@
-import { app, site } from "constants/routes";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
+import { app, site } from "constants/routes";
 
 /**
  * Checks if the user's email is verified and only if it is allows them to access the component passed

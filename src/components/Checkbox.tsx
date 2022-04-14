@@ -1,8 +1,8 @@
 import {
   ForwardedRef,
-  forwardRef,
   InputHTMLAttributes,
   PropsWithChildren,
+  forwardRef,
 } from "react";
 
 export type CheckboxProps = PropsWithChildren<

@@ -1,8 +1,8 @@
+import { ReactNode } from "react";
+import { PollStatus } from "services/terra/gov/types";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 import useVoter from "components/Transactors/Voter/useVoter";
 import useWalletContext from "hooks/useWalletContext";
-import { ReactNode } from "react";
-import { PollStatus } from "services/terra/gov/types";
 import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {

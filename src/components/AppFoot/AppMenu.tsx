@@ -1,5 +1,5 @@
-import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
+import { app, site } from "constants/routes";
 
 const LINK_STYLE =
   "text-white-grey hover:text-white-grey/75 text-sm px-1 lg:text-base font-heading uppercase font-semibold lg:px-2";

@@ -1,7 +1,7 @@
 import { aws } from "./aws";
 import {
-  ContactDetailsData,
   CharityData,
+  ContactDetailsData,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,

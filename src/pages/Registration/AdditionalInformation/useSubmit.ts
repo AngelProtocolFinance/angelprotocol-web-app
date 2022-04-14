@@ -1,11 +1,11 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { FileWrapper } from "components/FileDropzone/types";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
 import { FormValues } from "./types";
 

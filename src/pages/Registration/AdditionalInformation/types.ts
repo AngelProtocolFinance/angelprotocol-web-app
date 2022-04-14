@@ -1,5 +1,5 @@
-import { FileWrapper } from "components/FileDropzone/types";
 import * as Yup from "yup";
+import { FileWrapper } from "components/FileDropzone/types";
 
 export type FormValues = {
   charityOverview: string;

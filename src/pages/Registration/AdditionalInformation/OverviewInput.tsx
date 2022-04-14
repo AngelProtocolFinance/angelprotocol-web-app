@@ -1,5 +1,5 @@
-import RichTextEditor from "components/RichTextEditor";
 import { useFormContext } from "react-hook-form";
+import RichTextEditor from "components/RichTextEditor";
 import { FormValues } from "./types";
 
 export default function OverviewInput() {

@@ -1,12 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
-
-const subscriberSchema = Yup.object().shape({
-  email: Yup.string().required("Email is required").email("Email is invalid"),
-});
+import { subscriberSchema } from "./subscriberSchema";
 
 export default function useSubscribe() {
   const {

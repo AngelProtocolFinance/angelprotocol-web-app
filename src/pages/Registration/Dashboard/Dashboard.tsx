@@ -1,10 +1,10 @@
-import Loader from "components/Loader/Loader";
-import { app, site } from "constants/routes";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
+import Loader from "components/Loader/Loader";
 import { useGetter, useSetter } from "store/accessors";
+import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";

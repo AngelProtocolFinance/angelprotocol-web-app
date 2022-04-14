@@ -1,6 +1,6 @@
-import { useSetModal } from "components/Modal/Modal";
 import { FC, PropsWithChildren } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
+import { useSetModal } from "components/Modal/Modal";
 
 export type InputRowProps = PropsWithChildren<{
   htmlFor?: string;

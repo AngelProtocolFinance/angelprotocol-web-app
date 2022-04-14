@@ -1,6 +1,6 @@
-import maskAddress from "helpers/maskAddress";
 import { MouseEventHandler } from "react";
 import { RegistrationStatus } from "services/aws/types";
+import maskAddress from "helpers/maskAddress";
 import { Button } from "../common";
 
 type Props = {

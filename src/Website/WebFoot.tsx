@@ -1,6 +1,6 @@
-import SubscribeForm from "./SubscribeForm";
 import { Link } from "react-router-dom";
 import { getIcon } from "components/Icons/Icons";
+import Subscriber from "./Subscriber/Subscriber";
 
 export default function WebFoot() {
   return (
@@ -12,7 +12,7 @@ export default function WebFoot() {
             Subscribe to our newsletter to get the latest updates.
           </span>
         </p>
-        <SubscribeForm />
+        <Subscriber />
       </section>
       <section className="grid justify-items-center content-center lg:order-1 mt-10 md:mt-0">
         <ul className="flex">

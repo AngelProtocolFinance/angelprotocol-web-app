@@ -1,8 +1,8 @@
-import Loader from "components/Loader/Loader";
-import { app, site } from "constants/routes";
-import useRehydrateUserState from "hooks/useRehydrateUserState";
 import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Loader from "components/Loader/Loader";
+import useRehydrateUserState from "hooks/useRehydrateUserState";
+import { app, site } from "constants/routes";
 import { StepOneCompleteGuard, StepOneInitiatedGuard } from "./guards";
 import routes from "./routes";
 

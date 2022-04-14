@@ -1,7 +1,7 @@
-import Loader from "components/Loader/Loader";
-import { app, site } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Loader from "components/Loader/Loader";
+import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
 

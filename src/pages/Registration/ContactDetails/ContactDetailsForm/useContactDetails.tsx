@@ -1,6 +1,3 @@
-import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import { app, site } from "constants/routes";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -11,7 +8,10 @@ import {
 import { ContactDetailsData } from "services/aws/types";
 import { User } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
+import { app, site } from "constants/routes";
 import routes from "../../routes";
 import { ContactDetails } from "./types";
 

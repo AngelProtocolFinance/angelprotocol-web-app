@@ -1,5 +1,5 @@
-import { FileWrapper } from "components/FileDropzone/types";
 import * as Yup from "yup";
+import { FileWrapper } from "components/FileDropzone/types";
 
 export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,

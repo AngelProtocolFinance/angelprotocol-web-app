@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import countryList from "react-select-country-list";
-import { useFormContext } from "react-hook-form";
-import Selector from "components/Selector";
 import { ErrorMessage } from "@hookform/error-message";
+import { useMemo } from "react";
+import { useFormContext } from "react-hook-form";
+import countryList from "react-select-country-list";
 import useReceiptForm from "components/Receipter/useReceiptForm";
+import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
 import { Values } from "./types";

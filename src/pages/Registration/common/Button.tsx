@@ -1,5 +1,5 @@
-import Loader from "components/Loader/Loader";
 import { ButtonHTMLAttributes, PropsWithChildren } from "react";
+import Loader from "components/Loader/Loader";
 
 type Props = PropsWithChildren<
   ButtonHTMLAttributes<HTMLButtonElement> & {

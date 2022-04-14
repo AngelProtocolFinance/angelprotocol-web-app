@@ -1,12 +1,12 @@
 import {
-  convertFromRaw,
-  convertToRaw,
   DraftBlockType,
   DraftInlineStyleType,
   EditorCommand,
   EditorState,
-  getDefaultKeyBinding,
   RichUtils,
+  convertFromRaw,
+  convertToRaw,
+  getDefaultKeyBinding,
 } from "draft-js";
 import { useCallback, useState } from "react";
 

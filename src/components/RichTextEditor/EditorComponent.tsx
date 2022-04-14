@@ -1,10 +1,10 @@
 import { Editor } from "draft-js";
+import "draft-js/dist/Draft.css";
 import { PropsWithChildren, useMemo } from "react";
 import { IconType } from "react-icons";
 import { BiBold, BiItalic } from "react-icons/bi";
 import { FaListOl, FaListUl } from "react-icons/fa";
 import useEditor from "./useEditor";
-import "draft-js/dist/Draft.css";
 
 type Props = {
   value: string;

@@ -1,16 +1,16 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import { app, site } from "constants/routes";
-import createAuthToken from "helpers/createAuthToken";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { CharityData } from "services/aws/types";
 import { UserTypes } from "services/user/types";
 import { updateUserData } from "services/user/userSlice";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
-import * as Yup from "yup";
+import createAuthToken from "helpers/createAuthToken";
+import { app, site } from "constants/routes";
 import createUserData from "./createUserData";
 import routes from "./routes";
 

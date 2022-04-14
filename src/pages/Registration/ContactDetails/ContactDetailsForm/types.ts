@@ -1,5 +1,5 @@
-import { UserRoles } from "../../constants";
 import * as Yup from "yup";
+import { UserRoles } from "../../constants";
 
 export type ContactDetails = {
   charityName: string;

@@ -1,9 +1,9 @@
-import { app, site } from "constants/routes";
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { CharityData } from "services/aws/types";
+import { app, site } from "constants/routes";
 import createUserData from "../createUserData";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";

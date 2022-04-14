@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import banner1 from "assets/images/banner-register-1.jpg";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import banner1 from "assets/images/banner-register-1.jpg";
 import { removeUserData } from "services/user/userSlice";
 import { useSetter } from "store/accessors";
 import { Button } from "./common";

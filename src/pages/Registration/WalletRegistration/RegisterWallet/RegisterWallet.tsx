@@ -1,11 +1,11 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
-import Loader from "components/Loader/Loader";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "components/Loader/Loader";
+import useWalletContext from "hooks/useWalletContext";
 import RegistrationSuccessful from "./RegistrationSuccessful";
-import useRegisterWallet from "./useRegisterWallet";
 import WalletSubmission from "./WalletSubmission";
+import useRegisterWallet from "./useRegisterWallet";
 
 export default function RegisterWallet() {
   const [walletAddress, setWalletAddress] = useState("");
