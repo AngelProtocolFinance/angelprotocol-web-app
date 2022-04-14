@@ -1,5 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useProposal } from "services/terra/admin/queriers";
+import {
+  useProposal,
+  useVoteList,
+  VOTES_PER_PAGE,
+} from "services/terra/admin/queriers";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 import PollAction from "./PollAction";
 import Status from "./Status";
@@ -7,12 +11,8 @@ import VoteStat from "./VoteStat";
 import Icon from "components/Icons/Icons";
 import DetailLabel from "./DetailLabel";
 import ProposalContent from "./ProposalContent/ProposalContent";
-import { VoteInfo } from "services/terra/admin/types";
 import TableSection, { Cells } from "components/TableSection/TableSection";
-import usePagination from "hooks/usePagination";
-
-const buttonStyle =
-  "cursor-pointer px-3 pt-1.5 pb-1 text-white-grey bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accent font-heading text-sm uppercase text-center rounded-md";
+import { useState } from "react";
 
 export type ProposalIdParam = { id: string };
 export default function Proposal() {
@@ -51,7 +51,7 @@ export default function Proposal() {
         </h4>
         <Votes {...proposalDetails} />
         {proposalDetails.votes?.length > 0 && (
-          <VotesTable votes={proposalDetails.votes} />
+          <VotesTable proposalId={proposal.id} />
         )}
       </div>
     </div>
@@ -83,21 +83,12 @@ function Votes(props: ProposalDetails) {
   );
 }
 
-function VotesTable(props: { votes: VoteInfo[] }) {
-  const {
-    data,
-    currentPage,
-    totalPages,
-    canPaginate,
-    prev,
-    next,
-    hasNext,
-    hasPrev,
-  } = usePagination<VoteInfo>({
-    data: props.votes,
-    perPage: 15,
-  });
+function VotesTable(props: { proposalId: number | number }) {
+  const [pageNum, setPageNum] = useState(0);
+  const { votes, isVoteListLoading } = useVoteList(props.proposalId, pageNum);
 
+  const loadMoreVotes = () => setPageNum(pageNum + 1);
+  const isLoadMoreShown = votes.length >= VOTES_PER_PAGE;
   return (
     <div>
       <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
@@ -117,7 +108,7 @@ function VotesTable(props: { votes: VoteInfo[] }) {
           type="tbody"
           rowClass="border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
         >
-          {data.map((vote, i) => (
+          {votes.map((vote, i) => (
             <Cells
               type="td"
               cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full border-t border-l border-b border-r sm:flex-1"
@@ -135,15 +126,18 @@ function VotesTable(props: { votes: VoteInfo[] }) {
           ))}
         </TableSection>
       </table>
-      {canPaginate && (
-        <div className="flex justify-between mt-5">
-          <button onClick={prev} disabled={!hasPrev()} className={buttonStyle}>
-            Prev
-          </button>
-          <button onClick={next} disabled={!hasNext()} className={buttonStyle}>
-            Next
-          </button>
-        </div>
+      {isLoadMoreShown && (
+        <button
+          disabled={isVoteListLoading}
+          className="mt-3 px-3 py-1 justify-self-center text-white/80 text-xs bg-angel-blue/80 disabled:bg-grey-accent uppecase font-heading uppercase rounded-sm"
+          onClick={loadMoreVotes}
+        >
+          {isVoteListLoading ? (
+            <Icon type="Loading" className="animate-spin" size={18} />
+          ) : (
+            "more"
+          )}
+        </button>
       )}
     </div>
   );
