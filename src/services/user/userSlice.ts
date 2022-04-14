@@ -2,8 +2,10 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getDefaultUser from "./getDefaultUser";
 import { User } from "./types";
 
+const STORAGE_KEY = "userData";
+
 const loadUser = (): User => {
-  const localUser = localStorage.getItem("userData");
+  const localUser = localStorage.getItem(STORAGE_KEY);
   return !!localUser ? (JSON.parse(localUser) as User) : getDefaultUser();
 };
 
@@ -13,11 +15,11 @@ const userSlice = createSlice({
   reducers: {
     loadLocalStorageUser: (state) => loadUser(),
     removeUserData: (state) => {
-      localStorage.removeItem("userData");
+      localStorage.removeItem(STORAGE_KEY);
       return getDefaultUser();
     },
     updateUserData: (state, { payload }: PayloadAction<User>) => {
-      localStorage.setItem("userData", JSON.stringify(payload));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
       return payload;
     },
   },
