@@ -9,23 +9,36 @@ import {
   getDefaultKeyBinding,
 } from "draft-js";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
+import { UpdateProfileValues } from "../profileEditSchema";
 
 export default function useEditor() {
-  const { setValue, watch } = useFormContext<EditableProfileAttr>();
-  const overview = watch("charity_overview");
+  const {
+    setValue,
+    watch,
+    setError,
+    formState: { errors },
+  } = useFormContext<UpdateProfileValues>();
+  const overview = watch("overview") || "";
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+
+  console.log(errors);
 
   useRichTextInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
-    const rawState = convertToRaw(editorState.getCurrentContent());
-    setValue("charity_overview", JSON.stringify(rawState), {
+    const currentContent = editorState.getCurrentContent();
+    if (!currentContent.hasText()) {
+      setError("overview", { message: "overview required" });
+      return;
+    }
+    const rawState = convertToRaw(currentContent);
+    setValue("overview", JSON.stringify(rawState), {
       shouldDirty: true,
+      shouldValidate: true,
     });
     //eslint-disable-next-line
   }, [editorState]);
@@ -68,6 +81,7 @@ export default function useEditor() {
   };
 
   return {
+    errors,
     editorState,
     setEditorState,
     applyBlockStyle,
