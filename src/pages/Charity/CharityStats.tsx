@@ -3,10 +3,7 @@ import { Profile } from "services/aws/endowments/types";
 export default function CharityStats(props: Profile & { classes?: string }) {
   return (
     <ul className={`${props.classes || ""} `}>
-      <StatsItem
-        title="Registration#"
-        value={props.charity_registration_number}
-      />
+      <StatsItem title="Registration#" value={props.registration_number} />
       <StatsItem title="headquarters" value={props.country_city_origin} />
       <StatsItem
         title="avg annual budget"
@@ -23,7 +20,11 @@ export default function CharityStats(props: Profile & { classes?: string }) {
   );
 }
 
-function StatsItem(props: { title: string; value?: string; classes?: string }) {
+function StatsItem(props: {
+  title: string;
+  value?: string | number;
+  classes?: string;
+}) {
   return (
     <li className="mb-4 rounded-md">
       <p className="text-white font-light text-xs tracking-wide uppercase">

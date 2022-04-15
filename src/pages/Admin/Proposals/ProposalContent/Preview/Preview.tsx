@@ -16,6 +16,8 @@ export default function Preview(props: ProposalMeta) {
       return <Withdraw {...props.data} />;
     case proposalTypes.endowment_updateStatus:
       return <EndowmentStatusUpdate {...props.data} />;
+    case proposalTypes.endowment_updateProfile:
+      return <DiffTable diffSet={props.data} />;
     case proposalTypes.adminGroup_updateMembers:
       return <CWMemberUpdate {...props.data} />;
     case proposalTypes.adminGroup_updateCW3Config:

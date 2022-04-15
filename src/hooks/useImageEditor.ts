@@ -1,35 +1,32 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Path, useFormContext } from "react-hook-form";
-import optimizeImage from "pages/CharityEdit/optimizeImage";
+import { FieldValues, Path, useFormContext } from "react-hook-form";
+import placeHolderImage from "assets/images/home-banner.jpg";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import useFleek from "hooks/useFleek";
+import optimizeImage from "helpers/optimizeImage";
 
-export default function useImageEditor<T extends object>(fieldName: Path<T>) {
-  //TODO: make this reusable with other image changer on different context
-  const { getValues, setValue } = useFormContext<T>();
+export default function useImageEditor<T extends FieldValues>(
+  fieldName: Path<T>
+) {
+  const { getValues, setValue, watch } = useFormContext<T>();
   //use to reset input internal state
   const inputRef = useRef<HTMLInputElement>(null);
-  const currImageRef = useRef<string>(getValues(fieldName));
+  const currentImage = watch(fieldName) || placeHolderImage;
+  const initialImageRef = useRef<string>(
+    getValues(fieldName) || placeHolderImage
+  );
 
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
   const { upload, isUploading } = useFleek();
   const { showModal } = useSetModal();
-
-  useEffect(() => {
-    if (!imageUrl) {
-      setValue(fieldName, currImageRef.current as any);
-      return;
-    }
-    //eslint-disable-next-line
-  }, [imageUrl]);
 
   function handleImageReset() {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    setImageUrl("");
+    //reset to initial imageUrl or placeholder
+    setValue(fieldName, initialImageRef.current as any);
   }
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
@@ -38,23 +35,24 @@ export default function useImageEditor<T extends object>(fieldName: Path<T>) {
     const key = e.target.files[0].name;
     const file = await optimizeImage(e.target.files[0]);
     const url = await upload(key, file);
-    setLoading(false);
+
     if (url) {
-      setValue(fieldName, url as any, {
+      setValue(fieldName, encodeURI(url) as any, {
         shouldDirty: true,
         shouldValidate: true,
       });
-      setImageUrl(url);
     } else {
       showModal<PopupProps>(Popup, { message: "Error processing image" });
     }
+    setLoading(false);
   }
 
   return {
     handleFileChange,
     handleImageReset,
     loading: isUploading || loading,
-    isInitial: !imageUrl,
+    isInitial: currentImage === initialImageRef.current,
+    currentImage,
     inputRef,
   };
 }

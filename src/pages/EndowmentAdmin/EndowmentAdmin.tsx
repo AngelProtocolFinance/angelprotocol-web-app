@@ -9,6 +9,7 @@ import { useMember } from "services/terra/admin/queriers";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { admin } from "constants/routes";
+import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
 import { EndowmentAddrParams } from "./types";
@@ -40,7 +41,7 @@ export default function EndowmentAdmin() {
   } else
     return (
       <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
-        {/* <AdminNav /> */}
+        <AdminNav />
         <Routes>
           <Route path={admin.proposals} element={<Proposals />} />
           <Route path={`${admin.proposal}/:id`} element={<Proposal />} />

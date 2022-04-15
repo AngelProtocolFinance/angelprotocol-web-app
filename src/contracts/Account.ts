@@ -3,7 +3,7 @@ import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { denoms } from "constants/currency";
 import Contract from "./Contract";
-import { Source } from "./types";
+import { Source, UpdateProfilePayload } from "./types";
 
 export default class Account extends Contract {
   address: string;
@@ -16,17 +16,17 @@ export default class Account extends Contract {
     this.address = accountAddr;
 
     this.balance = {
-      address: accountAddr,
+      address: this.address,
       msg: { balance: {} },
     };
 
     this.endowmentDetails = {
-      address: accountAddr,
+      address: this.address,
       msg: { endowment: {} },
     };
 
     this.profile = {
-      address: accountAddr,
+      address: this.address,
       msg: { get_profile: {} },
     };
   }
@@ -58,12 +58,18 @@ export default class Account extends Contract {
     beneficiary: string;
   }) {
     this.checkWallet();
-
     return this.createdEmbeddedWasmMsg([], this.address, {
       withdraw: {
         sources: sources,
         beneficiary,
       },
+    });
+  }
+
+  createEmbeddedUpdateProfileMsg(payload: UpdateProfilePayload) {
+    this.checkWallet();
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      update_profile: payload,
     });
   }
 }

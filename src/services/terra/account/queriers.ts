@@ -1,5 +1,4 @@
-import Account from "contracts/Account";
-import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
 import { account_api } from "./account";
 import { holdings } from "./placeholders";
 import useAccountContract from "./useAccountContract";
@@ -38,16 +37,13 @@ export function useEndowmentCWs(address?: string) {
 }
 
 export function useEndowmentProfile(address: string, skip = false) {
-  const { wallet } = useWalletContext();
+  const { wallet, contract } = useAccountContract(address);
   const { useEndowmentProfileQuery } = account_api;
-  const contract = new Account(address);
   const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
     contract.profile,
-    {
-      skip: skip || !wallet,
-    }
+    { skip: skip || wallet?.network.chainID === chainIDs.localterra }
   );
-  console.log("profile: ", isLoading, data);
+
   return {
     profile: data,
     isProfileError: isError,
