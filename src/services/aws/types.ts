@@ -21,11 +21,13 @@ export type Metadata = {
 };
 
 export type ContactDetailsData = {
+  Registration: Pick<Registration, "CharityName" | "CharityName_ContactEmail">;
+  ContactPerson: ContactPerson;
+};
+
+export type ContactDetailsRequest = {
   PK?: string;
-  body: {
-    Registration: Pick<Registration, "CharityName">;
-    ContactPerson: ContactPerson;
-  };
+  body: ContactDetailsData;
 };
 
 export type ContactPerson = {
@@ -50,7 +52,7 @@ export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
   CharityName: string;
-  CharityName_ContactEmail: string;
+  CharityName_ContactEmail?: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
   ProofOfIdentity: FileObject;

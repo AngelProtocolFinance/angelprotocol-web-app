@@ -2,6 +2,7 @@ import { aws } from "./aws";
 import {
   CharityData,
   ContactDetailsData,
+  ContactDetailsRequest,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -51,15 +52,20 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    createNewCharity: builder.mutation<any, ContactDetailsData>({
+    createNewCharity: builder.mutation<
+      ContactDetailsData,
+      ContactDetailsRequest
+    >({
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
         body,
       }),
-      transformResponse: (response: { data: any }) => response,
     }),
-    updatePersonData: builder.mutation<any, ContactDetailsData>({
+    updatePersonData: builder.mutation<
+      ContactDetailsData,
+      ContactDetailsRequest
+    >({
       query: ({ PK, body }) => {
         return {
           url: "registration",

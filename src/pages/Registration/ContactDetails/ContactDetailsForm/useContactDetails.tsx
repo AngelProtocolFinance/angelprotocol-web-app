@@ -1,13 +1,14 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User } from "pages/Registration/store";
-import { updateUser } from "pages/Registration/store";
+import { User, updateUser } from "pages/Registration/store";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { ContactDetailsData } from "services/aws/types";
+import { ContactDetailsData, ContactDetailsRequest } from "services/aws/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -26,13 +27,12 @@ export default function useSaveContactDetails() {
   const { showModal } = useSetModal();
 
   const handleUpdateUser = useCallback(
-    (postData: ContactDetailsData) => {
+    (postData: ContactDetailsRequest) => {
       const newUserData: User = {
         ...user,
         ContactPerson: {
           ...user.ContactPerson,
           ...postData.body.ContactPerson,
-          EmailVerified: false,
         },
         Registration: {
           ...user.Registration,
@@ -51,7 +51,7 @@ export default function useSaveContactDetails() {
       // call API to add or update contact details information(contactData)
       setError(false);
       const is_create = !contactData?.uniqueID;
-      const postData: ContactDetailsData = {
+      const postData: ContactDetailsRequest = {
         PK: contactData.uniqueID,
         body: {
           Registration: {
@@ -68,16 +68,20 @@ export default function useSaveContactDetails() {
         },
       };
 
-      const response: any = is_create
+      const result = is_create
         ? await registerCharity(postData)
         : await updateContactPerson(postData);
-      const result = response.data ? response.data : response.error.data;
 
-      if (result.UUID || result.message === "Updated successfully!") {
+      const dataResult = result as {
+        data: ContactDetailsData;
+        error: FetchBaseQueryError | SerializedError;
+      };
+
+      if (!!dataResult?.data?.ContactPerson.PK) {
         handleUpdateUser(postData);
         if (is_create) {
           await resendEmail({
-            uuid: result.UUID,
+            uuid: dataResult.data.ContactPerson.PK,
             type: "verify-email",
             body: {
               ...postData.body.ContactPerson,
@@ -86,13 +90,12 @@ export default function useSaveContactDetails() {
           });
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
         } else {
-          console.log(result.message);
           navigate(`${site.app}/${app.register}/${routes.dashboard}`);
         }
       } else {
         setError(true);
         showModal<PopupProps>(Popup, {
-          message: `${result.message} Please check your email for the registration reference.`,
+          message: `${dataResult.error} Please check your email for the registration reference.`,
         });
       }
     },
