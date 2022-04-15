@@ -22,10 +22,10 @@ export type Metadata = {
 
 export type ContactDetailsData = {
   PK?: string;
-  Registration: {
-    CharityName: string;
+  body: {
+    Registration: Pick<Registration, "CharityName">;
+    ContactPerson: ContactPerson;
   };
-  ContactPerson: ContactPerson;
 };
 
 export type ContactPerson = {

@@ -31,12 +31,12 @@ export default function useSaveContactDetails() {
         ...user,
         ContactPerson: {
           ...user.ContactPerson,
-          ...postData.ContactPerson,
+          ...postData.body.ContactPerson,
           EmailVerified: false,
         },
         Registration: {
           ...user.Registration,
-          CharityName: postData.Registration.CharityName,
+          CharityName: postData.body.Registration.CharityName,
           RegistrationDate: new Date().toISOString(),
           RegistrationStatus: "Not Complete",
         },
@@ -53,16 +53,18 @@ export default function useSaveContactDetails() {
       const is_create = !contactData?.uniqueID;
       const postData: ContactDetailsData = {
         PK: contactData.uniqueID,
-        Registration: {
-          CharityName: contactData.charityName,
-        },
-        ContactPerson: {
-          FirstName: contactData.firstName,
-          LastName: contactData.lastName,
-          Email: contactData.email,
-          PhoneNumber: contactData.phone,
-          Role: contactData.orgRole,
-          OtherRole: contactData.otherRole || "",
+        body: {
+          Registration: {
+            CharityName: contactData.charityName,
+          },
+          ContactPerson: {
+            FirstName: contactData.firstName,
+            LastName: contactData.lastName,
+            Email: contactData.email,
+            PhoneNumber: contactData.phone,
+            Role: contactData.orgRole,
+            OtherRole: contactData.otherRole || "",
+          },
         },
       };
 
@@ -73,19 +75,19 @@ export default function useSaveContactDetails() {
 
       if (result.UUID || result.message === "Updated successfully!") {
         handleUpdateUser(postData);
-        if (!is_create) {
-          console.log(result.message);
-          navigate(`${site.app}/${app.register}/${routes.dashboard}`);
-        } else {
+        if (is_create) {
           await resendEmail({
             uuid: result.UUID,
             type: "verify-email",
             body: {
-              ...postData.ContactPerson,
-              CharityName: postData.Registration.CharityName,
+              ...postData.body.ContactPerson,
+              CharityName: postData.body.Registration.CharityName,
             },
           });
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
+        } else {
+          console.log(result.message);
+          navigate(`${site.app}/${app.register}/${routes.dashboard}`);
         }
       } else {
         setError(true);
