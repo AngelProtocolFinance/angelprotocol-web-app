@@ -18,10 +18,10 @@ export default function useUpload() {
   const handleError = useCallback((err) => console.log(err), []);
 
   const handleSuccess = useCallback(
-    (data?: UpdateDocumentationResult) => {
-      const userData = { ...user, ...data };
-      dispatch(updateUser(userData));
-    },
+    (data?: UpdateDocumentationResult) =>
+      dispatch(
+        updateUser({ ...user, Registration: { ...user.Registration, ...data } })
+      ),
     [dispatch, user]
   );
 

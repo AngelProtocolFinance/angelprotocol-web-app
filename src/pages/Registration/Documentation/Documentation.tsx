@@ -23,6 +23,7 @@ import useUpload from "./useUpload";
 export default function Documentation() {
   const navigate = useNavigate();
   const user = useGetter((state) => state.user);
+
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
