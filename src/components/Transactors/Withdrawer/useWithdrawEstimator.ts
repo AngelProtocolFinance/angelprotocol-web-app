@@ -1,6 +1,7 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { AmountInfo, VaultFieldIds } from "services/terra/multicall/types";
 import {
   setFee,
   setFormError,
@@ -13,22 +14,17 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { SEPARATOR } from "./constants";
-import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
+import { WithdrawResource, WithdrawValues } from "./types";
 
-export default function useWithrawEstimator() {
+const SEPARATOR = ":";
+export default function useWithrawEstimator(resources: WithdrawResource) {
   const {
     watch,
     setValue,
-    getValues,
     setError,
     clearErrors,
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
-
-  const account_addr = getValues("account_addr");
-  const { vaultLimits } = useFieldsAndLimits(account_addr);
 
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -96,7 +92,7 @@ export default function useWithrawEstimator() {
         const usdValues: Dec[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
-          const { limit, addr, rate } = vaultLimits[fieldId];
+          const { limit, addr, rate } = resources.vaultLimits[fieldId];
           if (fieldInput.amount.mul(1e6).gt(limit)) {
             setError(fieldId, { message: "not enough balance" });
           } else {
@@ -115,7 +111,7 @@ export default function useWithrawEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const account = new Account(account_addr, wallet);
+        const account = new Account(resources.accountAddr, wallet);
         const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
         const fee = await account.estimateFee([withdrawMsg]);
         const feeNum = extractFeeNum(fee);
@@ -145,7 +141,7 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary]);
+  }, [wallet, resources, debAmounts, isDebouncing, beneficiary]);
 
   return { tx, wallet };
 }

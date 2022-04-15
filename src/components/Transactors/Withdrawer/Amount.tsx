@@ -1,8 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
+import { VaultField } from "services/terra/multicall/types";
 import toCurrency from "helpers/toCurrency";
-import { VaultField, WithdrawValues } from "./types";
+import { WithdrawValues } from "./types";
 
 export default function Amount(props: VaultField) {
   const {

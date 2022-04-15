@@ -8,11 +8,26 @@ export function useEndowmentBalance(address: string) {
   const { useEndowmentBalanceQuery } = multicall_api;
   const { contract } = useContract<MC, M>(Multicall);
   const { data, isError, isLoading, isFetching } = useEndowmentBalanceQuery(
-    contract.endowmentBalance(address),
+    contract.balanceAndRates(address),
+    {}
+  );
+
+  return {
+    endowmentBalance: data,
+    isLoading: isLoading || isFetching,
+    isError,
+  };
+}
+
+export function useWithdrawConstraints(address: string) {
+  const { useWithdrawConstraintsQuery } = multicall_api;
+  const { contract } = useContract<MC, M>(Multicall);
+  const { data, isError, isLoading, isFetching } = useWithdrawConstraintsQuery(
+    contract.balanceAndRates(address),
     {}
   );
   return {
-    endowmentBalance: data,
+    withdrawContrains: data,
     isLoading: isLoading || isFetching,
     isError,
   };

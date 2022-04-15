@@ -1,28 +1,23 @@
 import { useFormContext } from "react-hook-form";
-import { tags, user } from "services/terra/tags";
+import { multicall, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
+import { WithdrawResource, WithdrawValues } from "./types";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
-export default function useWithdraw() {
+export default function useWithdraw(resources: WithdrawResource) {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
-    getValues,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { wallet, tx } = useWithrawEstimator();
+  const { wallet, tx } = useWithrawEstimator(resources);
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-
-  const accountAddr = getValues("account_addr");
-  const { vaultFields } = useFieldsAndLimits(accountAddr);
 
   function withdraw() {
     dispatch(
@@ -31,7 +26,7 @@ export default function useWithdraw() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.endowment },
+            { type: tags.multicall, id: multicall.endowmentBalance },
             { type: tags.user, id: user.terra_balance },
           ]),
         ],
@@ -42,7 +37,6 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    vaultFields,
     isSubmitDisabled:
       !isValid ||
       !isDirty ||

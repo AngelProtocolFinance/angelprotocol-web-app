@@ -12,7 +12,15 @@ import {
   MultiContractQueryArgs,
   MultiQueryRes,
 } from "../types";
-import { Airdrops, ClaimInquiry } from "./types";
+import { vaultMap } from "./constants";
+import {
+  Airdrops,
+  ClaimInquiry,
+  VaultField,
+  VaultFieldIds,
+  VaultFieldLimits,
+  VaultInfo,
+} from "./types";
 import { EndowmentBalance, RateLookUp } from "./types";
 
 export const multicall_api = terra.injectEndpoints({
@@ -39,6 +47,58 @@ export const multicall_api = terra.injectEndpoints({
           locked: locked.toNumber(),
           total: total.toNumber(),
         };
+      },
+    }),
+    withdrawConstraints: builder.query<
+      { vaultFields: VaultField[]; vaultLimits: VaultFieldLimits },
+      MultiContractQueryArgs
+    >({
+      providesTags: [{ type: tags.multicall, id: multicall.endowmentBalance }],
+      query: contract_querier,
+      transformResponse: (res: MultiQueryRes) => {
+        const [holdings, ratesRes] = decodeAggregatedResult<
+          [Holdings, VaultsRateRes]
+        >(res.query_result);
+
+        const vaultLimits: VaultFieldLimits = {
+          [VaultFieldIds.anchor1_amount]: {
+            limit: 0,
+            addr: "",
+            rate: 1,
+          },
+          [VaultFieldIds.anchor2_amount]: {
+            limit: 0,
+            addr: "",
+            rate: 1,
+          },
+        };
+
+        //map vaultFields while updating limits
+        const vaultFields = ratesRes.vaults_rate.map((vault) => {
+          const vaultHolding = holdings.liquid_cw20.find(
+            (liquidHolding) => liquidHolding.address === vault.vault_addr
+          );
+          const vaultInfo = vaultMap[vault.vault_addr];
+          let ustBalance = 0;
+
+          if (vaultHolding) {
+            ustBalance = new Dec(vaultHolding.amount)
+              .mul(vault.fx_rate)
+              .toNumber();
+            vaultLimits[vaultInfo.fieldId] = {
+              limit: ustBalance,
+              addr: vaultHolding.address,
+              rate: new Dec(vault.fx_rate).toNumber(),
+            };
+          }
+
+          return {
+            ...vaultInfo,
+            ustBalance,
+          };
+        });
+
+        return { vaultFields, vaultLimits };
       },
     }),
     airdrop: builder.query<any, WalletProxy>({
