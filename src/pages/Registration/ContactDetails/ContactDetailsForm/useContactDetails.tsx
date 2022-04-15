@@ -66,14 +66,10 @@ export default function useSaveContactDetails() {
         },
       };
 
-      let result: any = {};
-      if (is_create) {
-        const response: any = await registerCharity(postData);
-        result = response.data ? response.data : response.error.data;
-      } else {
-        const response: any = await updateContactPerson(postData);
-        result = response.data ? response.data : response.error.data;
-      }
+      const response: any = is_create
+        ? await registerCharity(postData)
+        : await updateContactPerson(postData);
+      const result = response.data ? response.data : response.error.data;
 
       if (result.UUID || result.message === "Updated successfully!") {
         handleUpdateUser(postData);
