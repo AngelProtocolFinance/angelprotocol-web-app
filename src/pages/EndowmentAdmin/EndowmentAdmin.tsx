@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { useMember } from "services/terra/admin/queriers";
+import { GuardPrompt } from "pages/Admin/Admin";
+import Proposal from "pages/Admin/Proposals/Proposal";
+import Proposals from "pages/Admin/Proposals/Proposals";
 import { setCWContracts } from "services/admin/cwContracts";
 import { useEndowmentCWs } from "services/terra/account/queriers";
-import Proposals from "pages/Admin/Proposals/Proposals";
-import Proposal from "pages/Admin/Proposals/Proposal";
-import { GuardPrompt } from "pages/Admin/Admin";
-import { admin } from "constants/routes";
+import { useMember } from "services/terra/admin/queriers";
 import { useSetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
+import { admin } from "constants/routes";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
 import { EndowmentAddrParams } from "./types";
-import useWalletContext from "hooks/useWalletContext";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();

@@ -1,9 +1,9 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { Path, useFormContext } from "react-hook-form";
 import optimizeImage from "pages/CharityEdit/optimizeImage";
-import { ChangeEvent, useState, useRef, useEffect } from "react";
-import { useFormContext, Path } from "react-hook-form";
-import useFleek from "hooks/useFleek";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import useFleek from "hooks/useFleek";
 
 export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   //TODO: make this reusable with other image changer on different context

@@ -1,8 +1,8 @@
-import { useMemo } from "react";
 import { Dec } from "@terra-money/terra.js";
+import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import toCurrency from "helpers/toCurrency";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
 
 export default function Claims() {
   const staker = useGovStaker();

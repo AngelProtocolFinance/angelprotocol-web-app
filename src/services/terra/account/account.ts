@@ -1,7 +1,7 @@
 import { CWContracts } from "contracts/Admin";
 import { CW3Config } from "../admin/types";
 import contract_querier from "../contract_querier";
-import { tags, endowment } from "../tags";
+import { endowment, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import { EndowmentDetails, Holdings } from "./types";

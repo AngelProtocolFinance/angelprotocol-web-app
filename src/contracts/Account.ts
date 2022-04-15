@@ -1,7 +1,7 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import { WalletProxy } from "providers/WalletProvider";
 import { ContractQueryArgs } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
+import { denoms } from "constants/currency";
 import Contract from "./Contract";
 import { Source } from "./types";
 

@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { FormProvider, useForm } from "react-hook-form";
 import { useCW3Config } from "services/terra/admin/queriers";
 import { CW3Config } from "services/terra/admin/types";
 import CW3ConfigForm from "./CW3ConfigForm";
 import {
   CW3ConfigPayload,
-  cw3ConfigSchema,
   CW3ConfigValues,
+  cw3ConfigSchema,
 } from "./cw3ConfigSchema";
 
 export default function CW3Configurer() {

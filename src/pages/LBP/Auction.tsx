@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import Popup, { PopupProps } from "components/Popup/Popup";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
+import { getIcon } from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import PriceGraph from "components/PriceGraph";
-import AuctionDetails from "./AuctionDetails";
-import { useGetLBPPairData } from "./useGetTokenSaleData";
 import { LaunchStatsProps } from ".";
 import "./Auction.css";
-import { getIcon } from "components/Icons/Icons";
+import AuctionDetails from "./AuctionDetails";
+import { useGetLBPPairData } from "./useGetTokenSaleData";
 
 export default function Auction() {
   const { showModal } = useSetModal();

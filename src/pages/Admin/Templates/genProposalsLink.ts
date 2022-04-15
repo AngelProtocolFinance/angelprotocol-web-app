@@ -1,6 +1,6 @@
-import { admin, app, site } from "constants/routes";
-import { CWContracts } from "contracts/Admin";
 import { SuccessLink } from "services/transaction/types";
+import { CWContracts } from "contracts/Admin";
+import { admin, app, site } from "constants/routes";
 
 function genProposalsLink(cws: Extract<CWContracts, "apTeam">): SuccessLink;
 //when passing cw3s, prompts to also pass endomwnent addr

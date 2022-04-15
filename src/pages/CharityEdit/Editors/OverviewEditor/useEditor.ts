@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
 import {
+  DraftBlockType,
+  DraftInlineStyleType,
+  EditorCommand,
   EditorState,
   RichUtils,
-  EditorCommand,
-  DraftInlineStyleType,
-  DraftBlockType,
   convertToRaw,
   getDefaultKeyBinding,
 } from "draft-js";
+import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";

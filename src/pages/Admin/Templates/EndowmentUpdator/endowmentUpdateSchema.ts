@@ -1,11 +1,11 @@
 import * as Yup from "yup";
-import { SchemaShape } from "types/schema";
-import { ProposalBase, proposalShape } from "../proposalShape";
 import {
-  EndowmentStatus as T,
   EndowmentStatusStrNum as ST,
+  EndowmentStatus as T,
 } from "services/terra/registrar/types";
 import { requiredAddress } from "schemas/string";
+import { SchemaShape } from "types/schema";
+import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type EndowmentUpdateValues = {
   endowmentAddr: string;

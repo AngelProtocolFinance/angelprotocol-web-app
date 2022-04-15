@@ -2,11 +2,11 @@ import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import {
-  VaultRateInfo,
-  VaultsRateRes,
   EndowmentEntry,
   EndowmentListRes,
   RegistrarConfig,
+  VaultRateInfo,
+  VaultsRateRes,
 } from "./types";
 
 export const registrar_api = terra.injectEndpoints({

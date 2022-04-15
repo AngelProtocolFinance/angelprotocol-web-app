@@ -22,7 +22,7 @@
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^6.2.0",
-    "react-select": "^5.2.1",
+    "react-select": "^5.3.0",
     "react-select-country-list": "^2.2.3",
     "recharts": "^2.1.9",
     "yup": "^0.32.9"
@@ -33,7 +33,8 @@
     "test": "react-app-rewired test --colors",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200"
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "sort-imports": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -76,10 +77,11 @@
     "@babel/plugin-transform-react-jsx": "^7.17.3",
     "@peculiar/webcrypto": "^1.1.7",
     "@tailwindcss/line-clamp": "^0.3.0",
-    "@testing-library/dom": "^8.12.0",
+    "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/compress.js": "^1.1.1",
     "@types/draft-js": "^0.11.9",
     "@types/jest": "^26.0.15",

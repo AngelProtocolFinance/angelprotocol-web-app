@@ -1,11 +1,11 @@
-import TextInput from "../../components/TextInput";
+import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import Label from "../../components/Label";
+import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
 import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
-import { DivContainer } from "pages/Admin/components/TemplateContainer";
 
 export default function MemberUpdateForm() {
   const { updateMembers, apCW4Members } = useUpdateMembers();

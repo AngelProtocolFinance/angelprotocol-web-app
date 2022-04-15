@@ -1,15 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { FormProvider, useForm } from "react-hook-form";
+import FormError from "pages/Admin/components/FormError";
+import FormSkeleton from "pages/Admin/components/FormSkeleton";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useGetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
-import useWalletContext from "hooks/useWalletContext";
-import FormError from "pages/Admin/components/FormError";
-import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { FormProvider, useForm } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { useGetter } from "store/accessors";
 import FundSendForm from "./FundSendForm/FundSendForm";
-import { fundSendSchema, FundSendValues } from "./fundSendSchema";
+import { FundSendValues, fundSendSchema } from "./fundSendSchema";
 
 export default function FundSender() {
   const { wallet } = useWalletContext();

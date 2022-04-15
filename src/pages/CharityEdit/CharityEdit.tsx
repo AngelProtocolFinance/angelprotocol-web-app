@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import { useProfile } from "services/aws/endowments/queriers";
-import CharityEditor from "./CharityEditor";
-import EditForm from "./EditForm";
-import { CharityParam } from "./types";
 import ContentLoader from "components/ContentLoader/ContentLoader";
 import Icon from "components/Icons/Icons";
 import useWalletContext from "hooks/useWalletContext";
+import CharityEditor from "./CharityEditor";
+import EditForm from "./EditForm";
+import { CharityParam } from "./types";
 
 export default function CharityEdit() {
   const { wallet } = useWalletContext();

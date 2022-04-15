@@ -1,6 +1,6 @@
-import { currency_text, currency_icons } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { memo } from "react";
+import { useFormContext } from "react-hook-form";
+import { currency_icons, currency_text } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 function Currency(props: { currency: FundSendValues["currency"] }) {

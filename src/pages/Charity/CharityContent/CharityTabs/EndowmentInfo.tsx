@@ -1,7 +1,7 @@
-import toCurrency from "helpers/toCurrency";
 import { useParams } from "react-router-dom";
-import { useProfileState } from "services/aws/endowments/states";
 import ancIcon from "assets/images/anchor_protocol.png";
+import { useProfileState } from "services/aws/endowments/states";
+import toCurrency from "helpers/toCurrency";
 import { CharityParam } from "../../types";
 
 export function EndowmentInfo() {

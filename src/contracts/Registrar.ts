@@ -1,4 +1,5 @@
 import { ContractQueryArgs } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
@@ -7,7 +8,6 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "./types";
-import { WalletProxy } from "providers/WalletProvider";
 
 export default class Registrar extends Contract {
   address: string;

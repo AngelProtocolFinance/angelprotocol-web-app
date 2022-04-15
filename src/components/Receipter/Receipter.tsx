@@ -1,8 +1,8 @@
-import { FormProvider, useForm } from "react-hook-form";
 // import { ReceiptStage } from "services/transaction/types";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "./schema";
 import { ReactNode } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { schema } from "./schema";
 import { Values } from "./types";
 
 export default function Receipter(props: {

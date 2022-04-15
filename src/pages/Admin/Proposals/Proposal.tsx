@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
-import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
-import PollAction from "./PollAction";
-import Status from "./Status";
-import VoteStat from "./VoteStat";
 import Icon from "components/Icons/Icons";
 import DetailLabel from "./DetailLabel";
+import PollAction from "./PollAction";
 import ProposalContent from "./ProposalContent/ProposalContent";
+import Status from "./Status";
+import VoteStat from "./VoteStat";
+import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 
 export type ProposalIdParam = { id: string };
 export default function Proposal() {

@@ -1,10 +1,10 @@
-import { useSetter } from "store/accessors";
 import {
-  undoAddMember,
-  toggleDeleteExistingMember,
   MemberCopy,
+  toggleDeleteExistingMember,
+  undoAddMember,
 } from "services/admin/apCW4Members";
 import Icon from "components/Icons/Icons";
+import { useSetter } from "store/accessors";
 
 export default function MemberItem(props: MemberCopy) {
   const dispatch = useSetter();

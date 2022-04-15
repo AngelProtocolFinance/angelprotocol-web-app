@@ -1,9 +1,9 @@
-import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
-import { ProposalBase, proposalShape } from "../proposalShape";
-import { requiredAddress, stringByteSchema } from "schemas/string";
-import { requiredPositiveNumber } from "schemas/number";
 import { futureDate } from "schemas/date";
+import { requiredPositiveNumber } from "schemas/number";
+import { requiredAddress, stringByteSchema } from "schemas/string";
+import { SchemaShape } from "types/schema";
+import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundCreatorValues = {
   //new fund member

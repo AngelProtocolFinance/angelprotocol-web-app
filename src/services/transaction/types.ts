@@ -1,11 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { tags as awsTags } from "services/aws/tags";
+import { tags as terraTags } from "services/terra/tags";
+import { WalletProxy } from "providers/WalletProvider/types";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { tags as terraTags } from "services/terra/tags";
-import { tags as awsTags } from "services/aws/tags";
-import { WalletProxy } from "providers/WalletProvider/types";
 
 export enum Step {
   form = "form",

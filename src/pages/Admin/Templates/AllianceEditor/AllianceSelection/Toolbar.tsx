@@ -1,4 +1,5 @@
 import Icon from "components/Icons/Icons";
+
 export default function Toolbar(props: {
   searchText: string;
   handleSearchTextChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

@@ -1,6 +1,6 @@
+import * as Yup from "yup";
 import { tokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import * as Yup from "yup";
 import { VaultFieldIds } from "./types";
 
 export const schema = Yup.object().shape({

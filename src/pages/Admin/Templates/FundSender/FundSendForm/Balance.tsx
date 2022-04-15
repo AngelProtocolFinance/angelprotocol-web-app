@@ -1,6 +1,6 @@
-import { currency_text, denoms } from "constants/currency";
-import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
+import toCurrency from "helpers/toCurrency";
+import { currency_text, denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 export default function Balance() {

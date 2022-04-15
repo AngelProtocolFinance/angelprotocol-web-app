@@ -1,5 +1,5 @@
 import contract_querier from "../contract_querier";
-import { tags, admin } from "../tags";
+import { admin, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import {

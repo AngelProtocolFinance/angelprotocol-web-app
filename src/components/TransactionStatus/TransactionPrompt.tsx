@@ -1,7 +1,3 @@
-import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
-import Receipter from "components/Receipter/Receipter";
-import ReceiptForm from "components/Receipter/ReceiptForm";
 import { ReactNode, useMemo } from "react";
 import { setStage } from "services/transaction/transactionSlice";
 import {
@@ -12,11 +8,16 @@ import {
   SubmitStage,
   SuccessStage,
 } from "services/transaction/types";
+import Icon from "components/Icons/Icons";
+import { useSetModal } from "components/Modal/Modal";
+import ReceiptForm from "components/Receipter/ReceiptForm";
+import Receipter from "components/Receipter/Receipter";
 import { useGetter, useSetter } from "store/accessors";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
 import Success from "./Success";
+
 export default function TransactionPrompt() {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();

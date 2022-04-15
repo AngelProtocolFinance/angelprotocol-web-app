@@ -1,10 +1,10 @@
 import React, { ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
-import useImageEditor from "hooks/useImageEditor";
-import { getIcon } from "components/Icons/Icons";
 import { EditableProfileAttr as E } from "services/aws/endowments/types";
+import { getIcon } from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
+import useImageEditor from "hooks/useImageEditor";
 
 export default function ImageEditor() {
   const { watch } = useFormContext<E>();

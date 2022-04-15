@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Member } from "services/terra/admin/types";
 
 const initialState: MemberCopy[] = [];

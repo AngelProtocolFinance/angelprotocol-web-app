@@ -1,5 +1,5 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
 import { Member } from "services/terra/admin/types";
+import Icon, { IconTypes } from "components/Icons/Icons";
 
 export default function MemberItem(props: {
   member: Member | string;

@@ -1,6 +1,6 @@
+import * as Yup from "yup";
 import { requiredPositiveNumber } from "schemas/number";
 import { SchemaShape } from "types/schema";
-import * as Yup from "yup";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type CW3ConfigPayload = {

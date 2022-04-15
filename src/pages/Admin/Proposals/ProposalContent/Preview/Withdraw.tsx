@@ -1,5 +1,5 @@
-import toCurrency from "helpers/toCurrency";
 import { WithdrawMeta } from "pages/Admin/types";
+import toCurrency from "helpers/toCurrency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 

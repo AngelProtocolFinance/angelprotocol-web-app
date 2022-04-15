@@ -1,5 +1,5 @@
-import { chainIDs } from "constants/chainIDs";
 import Indexfund, { IF, T } from "contracts/IndexFund";
+import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { indexFund_api } from "./indexFund";
 

@@ -1,7 +1,7 @@
-import { FundUpdateValues as T } from "../fundUpdatorSchema";
-import TextInput from "../../../components/TextInput";
-import useAddMember from "./useAddMember";
 import { GroupContainer } from "pages/Admin/components/TemplateContainer";
+import TextInput from "../../../components/TextInput";
+import { FundUpdateValues as T } from "../fundUpdatorSchema";
+import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
   const { addMember } = useAddMember();

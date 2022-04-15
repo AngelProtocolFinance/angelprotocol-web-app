@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { useGetter, useSetter } from "store/accessors";
 import { addMember as _addMember } from "services/admin/fundMembers";
+import { useGetter, useSetter } from "store/accessors";
 import { FundUpdateValues } from "../fundUpdatorSchema";
 
 export default function useAddMember() {

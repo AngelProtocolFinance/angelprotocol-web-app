@@ -1,9 +1,9 @@
-import { Fee, Commission, SwapRate } from "./Misc";
-import Status from "../Status";
-import Output from "./Output";
-import Amount from "./Amount";
-import useSwap from "./useSwap";
 import Icon from "components/Icons/Icons";
+import Status from "../Status";
+import Amount from "./Amount";
+import { Commission, Fee, SwapRate } from "./Misc";
+import Output from "./Output";
+import useSwap from "./useSwap";
 
 export default function SwapForm() {
   const { swap, isFormLoading, isSubmitDisabled, switchCurrency } = useSwap();

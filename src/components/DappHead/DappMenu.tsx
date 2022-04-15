@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
-import { app, site } from "constants/routes";
 import { useMember } from "services/terra/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { app, site } from "constants/routes";
 
 export default function DappMenu() {
   const { member } = useMember("apTeam");
