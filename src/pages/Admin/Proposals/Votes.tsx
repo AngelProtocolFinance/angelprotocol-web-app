@@ -3,7 +3,7 @@ import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import { useState } from "react";
 
-export default function VotesTable(props: { proposalId: number | number }) {
+export default function VotesTable(props: { proposalId: number }) {
   const [pageNum, setPageNum] = useState(0);
   const { votes, isVoteListLoading } = useVoteList(props.proposalId, pageNum);
 
@@ -26,12 +26,12 @@ export default function VotesTable(props: { proposalId: number | number }) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+          rowClass="border border-white/10 divide-x divide-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
         >
           {votes.map((vote, i) => (
             <Cells
               type="td"
-              cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full border-t border-l border-b border-r sm:flex-1"
+              cellClass="p-2 first:pl-0 last:pr-0 group pl-4 pt-8 sm:pt-2 pb-2 text-left relative w-full sm:flex-1"
               key={i}
             >
               <p className="pl-2">{vote.voter}</p>
