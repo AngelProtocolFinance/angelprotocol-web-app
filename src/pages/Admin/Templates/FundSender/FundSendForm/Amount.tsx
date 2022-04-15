@@ -1,10 +1,10 @@
-import { currency_text, denoms } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import Currency from "./Currency";
-import { FundSendValues } from "../fundSendSchema";
+import { useFormContext } from "react-hook-form";
 import Label from "pages/Admin/components/Label";
+import { currency_text, denoms } from "constants/currency";
+import { FundSendValues } from "../fundSendSchema";
 import Balance from "./Balance";
+import Currency from "./Currency";
 
 export default function Amount() {
   const {

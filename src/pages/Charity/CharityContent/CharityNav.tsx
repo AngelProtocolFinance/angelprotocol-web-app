@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { charity } from "constants/routes";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
-import useHorizontalScroll from "hooks/useHorizontalScroll";
 import Icon, { IconTypes } from "components/Icons/Icons";
+import useHorizontalScroll from "hooks/useHorizontalScroll";
+import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { charity } from "constants/routes";
 
 export default function CharityNav(props: { classes?: string }) {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(

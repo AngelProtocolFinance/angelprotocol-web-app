@@ -1,5 +1,6 @@
 import { stringByteSchema } from "schemas/string";
 import { SchemaShape } from "types/schema";
+
 export type ProposalBase = {
   title: string;
   description: string;

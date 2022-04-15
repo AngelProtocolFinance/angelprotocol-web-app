@@ -1,10 +1,10 @@
-import Icon from "components/Icons/Icons";
 import { createContext, useContext, useState } from "react";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
 } from "services/terra/admin/queriers";
 import { ProposalStatus } from "services/terra/admin/types";
+import Icon from "components/Icons/Icons";
 import { ProposalGroup } from "../types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";

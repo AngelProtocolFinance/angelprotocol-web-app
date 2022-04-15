@@ -1,10 +1,10 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { AllianceMember } from "services/terra/indexFund/types";
+import { ContractQueryArgs } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
-import { AllianceMember } from "services/terra/indexFund/types";
-import { ContractQueryArgs } from "services/terra/types";
 import Contract from "./Contract";
 import { FundConfig, FundDetails, IndexFundOwnerPayload } from "./types";
 

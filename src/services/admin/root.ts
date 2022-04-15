@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import apCW4MembersReducer from "./apCW4Members";
-import newFundMembersReducer from "./newFundMembers";
-import fundMembersReducer from "./fundMembers";
-import cwContractsReducer from "./cwContracts";
 import allianceMembersReducer from "./allianceMembers";
+import apCW4MembersReducer from "./apCW4Members";
+import cwContractsReducer from "./cwContracts";
+import fundMembersReducer from "./fundMembers";
+import newFundMembersReducer from "./newFundMembers";
 
 export const adminReducer = combineReducers({
   apCW4Members: apCW4MembersReducer,

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CWContracts } from "contracts/Admin";
 
 const initialState: { cwContracts: CWContracts } = { cwContracts: {} };

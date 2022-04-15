@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { RootState } from "store/store";
+import Contract from "contracts/Contract";
+import extractFeeNum from "helpers/extractFeeNum";
+import handleTerraError from "helpers/handleTerraError";
 import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
-import Contract from "contracts/Contract";
-import handleTerraError from "helpers/handleTerraError";
-import { RootState } from "store/store";
 import transactionSlice, { setStage } from "./transactionSlice";
 import { SenderArgs, StageUpdator, Step, WithMsg, WithTx } from "./types";
-import extractFeeNum from "helpers/extractFeeNum";
 
 export const sendTerraTx = createAsyncThunk(
   `${transactionSlice.name}/sendTerraTx`,

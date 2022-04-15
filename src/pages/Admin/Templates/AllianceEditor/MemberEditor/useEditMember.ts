@@ -2,8 +2,8 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import {
   addMember,
-  setIsEditingMember,
   saveMemberEdits,
+  setIsEditingMember,
 } from "services/admin/allianceMembers";
 import { useGetter } from "store/accessors";
 import { AllianceEditValues as AV } from "../alllianceEditSchema";

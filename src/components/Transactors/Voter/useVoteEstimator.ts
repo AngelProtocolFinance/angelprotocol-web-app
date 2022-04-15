@@ -1,11 +1,4 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import Halo from "contracts/Halo";
-import { Vote } from "contracts/types";
-import extractFeeNum from "helpers/extractFeeNum";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGovStaker } from "services/terra/gov/queriers";
@@ -16,6 +9,13 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import Halo from "contracts/Halo";
+import { Vote } from "contracts/types";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {

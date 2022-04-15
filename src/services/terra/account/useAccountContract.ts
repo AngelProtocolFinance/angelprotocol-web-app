@@ -1,6 +1,6 @@
+import { useMemo } from "react";
 import Account from "contracts/Account";
 import useWalletContext from "hooks/useWalletContext";
-import { useMemo } from "react";
 
 export default function useAccountContract(address: string) {
   const { wallet } = useWalletContext();

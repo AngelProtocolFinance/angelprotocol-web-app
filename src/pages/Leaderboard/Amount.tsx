@@ -1,7 +1,7 @@
+import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 import Summary, { SummaryProps } from "./Summary";
-import Icon from "components/Icons/Icons";
 
 type Props = {
   type: string;

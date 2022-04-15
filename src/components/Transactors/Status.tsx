@@ -1,5 +1,5 @@
-import Icon from "components/Icons/Icons";
 import { ReactNode, useState } from "react";
+import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
 
 export default function Status() {

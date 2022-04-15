@@ -1,5 +1,6 @@
 import Icon from "components/Icons/Icons";
 import useAirdrop from "./useAirdrop";
+
 export default function Airdrop() {
   const { airdrop_shown, showDetails } = useAirdrop();
 

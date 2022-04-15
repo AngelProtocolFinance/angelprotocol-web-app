@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import Admin, { CWContracts } from "contracts/Admin";
 import { useGetter } from "store/accessors";
+import Admin, { CWContracts } from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 
 export default function useAdminContract(customCWs?: CWContracts) {

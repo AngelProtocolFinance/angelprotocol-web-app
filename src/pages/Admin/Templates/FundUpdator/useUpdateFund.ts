@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta } from "pages/Admin/types";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import Indexfund from "contracts/IndexFund";
 import Admin from "contracts/Admin";
-import { FundUpdateValues } from "./fundUpdatorSchema";
-import genProposalsLink from "../genProposalsLink";
+import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genProposalsLink from "../genProposalsLink";
+import { FundUpdateValues } from "./fundUpdatorSchema";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();

@@ -1,22 +1,22 @@
 import { Dec } from "@terra-money/terra.js";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta } from "pages/Admin/types";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import { FundDetails } from "contracts/types";
-import cleanObject from "helpers/cleanObject";
-import { useState } from "react";
-import { useGetter, useSetter } from "store/accessors";
-import { INIT_SPLIT } from "./FundCreator";
-import genProposalsLink from "../genProposalsLink";
-import { FundCreatorValues } from "./fundCreatorSchema";
 import useWalletContext from "hooks/useWalletContext";
+import cleanObject from "helpers/cleanObject";
 import { proposalTypes } from "constants/routes";
+import genProposalsLink from "../genProposalsLink";
+import { INIT_SPLIT } from "./FundCreator";
+import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
   const { wallet } = useWalletContext();

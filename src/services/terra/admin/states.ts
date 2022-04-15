@@ -1,5 +1,5 @@
-import { chainIDs } from "constants/chainIDs";
 import { CWContracts } from "contracts/Admin";
+import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member } from "./placeholders";
 import useAdminContract from "./useAdminContract";

@@ -1,16 +1,16 @@
-import { proposalTypes } from "constants/routes";
-import {
-  FundConfig,
-  FundDetails,
-  RegistrarConfigPayload,
-  RegistrarOwnerPayload,
-} from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
 import {
   EndowmentStatus,
   EndowmentStatusStrNum,
 } from "services/terra/registrar/types";
+import {
+  FundConfig,
+  FundDetails,
+  RegistrarConfigPayload,
+  RegistrarOwnerPayload,
+} from "contracts/types";
+import { proposalTypes } from "constants/routes";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 

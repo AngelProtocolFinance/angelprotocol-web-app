@@ -1,20 +1,20 @@
 import { useFormContext } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { ProposalMeta } from "pages/Admin/types";
+import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { Member } from "services/terra/admin/types";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
 import { admin, tags } from "services/terra/tags";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import { MemberUpdatorValues } from "./memberUpdatorSchema";
-import genProposalsLink from "../genProposalsLink";
-import { useParams } from "react-router-dom";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
-import { ProposalMeta } from "pages/Admin/types";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genProposalsLink from "../genProposalsLink";
+import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

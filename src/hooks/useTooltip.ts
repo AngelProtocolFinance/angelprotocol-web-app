@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { FC, useState } from "react";
 
 export default function useTooltip(tooltip: FC) {
   const [hovered, setHovered] = useState(false);

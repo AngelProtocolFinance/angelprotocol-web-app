@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { web } from "constants/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { web } from "constants/routes";
 
 export default function WebMenu() {
   return (

@@ -1,14 +1,14 @@
-import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
-import { ProposalMeta } from "../../../types";
-import CWMemberUpdate from "./CWMemberUpdate";
-import Withdraw from "./Withdraw";
-import Fund from "./Fund";
-import AllianceUpdate from "./AllianceUpdate";
-import FundMemberUpdate from "./FundMemberUpdate";
 import { proposalTypes } from "constants/routes";
-import FundTransfer from "./FundTransfer";
+import { ProposalMeta } from "../../../types";
+import AllianceUpdate from "./AllianceUpdate";
+import CWMemberUpdate from "./CWMemberUpdate";
 import DiffTable from "./DiffTable";
+import EndowmentStatusUpdate from "./EndowmentStatusUpdate";
+import Fund from "./Fund";
+import FundMemberUpdate from "./FundMemberUpdate";
+import FundTransfer from "./FundTransfer";
 import OwnerUpdate from "./OwnerUpdate";
+import Withdraw from "./Withdraw";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {

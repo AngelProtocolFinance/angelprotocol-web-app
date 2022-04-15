@@ -1,8 +1,8 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, currency_icons } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { memo } from "react";
+import { useFormContext } from "react-hook-form";
+import { DonateValues } from "components/Transactors/Donater/types";
 import useTooltip from "hooks/useTooltip";
+import { currency_icons, currency_text } from "constants/currency";
 
 type Props = {
   currency: DonateValues["currency"];

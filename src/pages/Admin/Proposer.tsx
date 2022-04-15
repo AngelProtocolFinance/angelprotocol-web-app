@@ -1,18 +1,18 @@
-import { NavLink, Routes, Route } from "react-router-dom";
+import { NavLink, Route, Routes } from "react-router-dom";
+import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { proposalTypes } from "constants/routes";
-import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
+import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
+import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
 import EndowmentUpdator from "./Templates/EndowmentUpdator/EndowmentUpdator";
+import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
 import FundCreator from "./Templates/FundCreator/FundCreator";
 import FundDestroyer from "./Templates/FundDestroyer/FundDestroyer";
-import FundUpdator from "./Templates/FundUpdator/FundUpdator";
-import AllianceEditor from "./Templates/AllianceEditor/AllianceEditor";
-import FundConfigurer from "./Templates/FundConfigurer/FundConfigurer";
-import CW3Configurer from "./Templates/CW3Configurer/CW3Configurer";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
 import FundSender from "./Templates/FundSender/FundSender";
+import FundUpdator from "./Templates/FundUpdator/FundUpdator";
+import IndexFundOwner from "./Templates/IndexFundOwner/IndexFundOwner";
+import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import RegistrarConfigurer from "./Templates/RegistrarConfigurer/RegistrarConfigurer";
 import RegistrarOwner from "./Templates/RegistrarOwner/RegistrarOwner";
-import IndexFundOwner from "./Templates/IndexFundOwner/IndexFundOwner";
 
 export default function Proposer() {
   return (

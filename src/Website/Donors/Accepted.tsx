@@ -1,9 +1,9 @@
-import useObserve from "hooks/useObserver";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
-import ustIcon from "assets/images/terra_usd.png";
 import bnbIcon from "assets/images/bnb-logo.png";
 import ethIcon from "assets/images/ethereum-eth-logo.png";
 import lunaIcon from "assets/images/terra-luna-logo.png";
+import ustIcon from "assets/images/terra_usd.png";
+import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 const supportedCurrencies = [ustIcon, lunaIcon, ethIcon, bnbIcon];
 export default function Accepted() {

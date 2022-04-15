@@ -1,20 +1,20 @@
-import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
-import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
-import Admin from "contracts/Admin";
-import Indexfund from "contracts/IndexFund";
-import { EmbeddedWasmMsg } from "contracts/types";
 import { useFormContext } from "react-hook-form";
+import { ProposalMeta } from "pages/Admin/types";
+import { AllianceMember as AM } from "services/terra/indexFund/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import Popup, { PopupProps } from "components/Popup/Popup";
+import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
+import Admin from "contracts/Admin";
+import Indexfund from "contracts/IndexFund";
+import { EmbeddedWasmMsg } from "contracts/types";
+import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";
-import { AllianceMember as AM } from "services/terra/indexFund/types";
-import useWalletContext from "hooks/useWalletContext";
-import { ProposalMeta } from "pages/Admin/types";
-import { proposalTypes } from "constants/routes";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

@@ -1,6 +1,6 @@
+import wingImage from "assets/images/angelprotocol-wings-wht.png";
 import useObserve from "hooks/useObserver";
-import wingImage from "../../assets/images/angelprotocol-wings-wht.png";
-import transitionIn, { Direction } from "../../helpers/transitionIn";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Banner() {
   const { ref, isVisible } = useObserve({ threshold: 0.5 });

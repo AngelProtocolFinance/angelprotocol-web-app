@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useSetModal } from "components/Modal/Modal";
-import ExecuteForm, { Props } from "./ExecuteForm";
 import Transactor, { TxProps } from "../Transactor";
+import ExecuteForm, { Props } from "./ExecuteForm";
 
 export default function useProposalExecutor(proposal_id: number) {
   const { showModal } = useSetModal();

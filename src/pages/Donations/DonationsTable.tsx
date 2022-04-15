@@ -1,15 +1,15 @@
 import React, { PropsWithChildren } from "react";
+import { Transaction } from "services/aws/endowment_admin/types";
+import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
+import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
+import useDonor from "./useDonor";
 import useSortTransactions, {
   SortDirection,
   SortKey,
 } from "./useSortTransactions";
-import useDonor from "./useDonor";
-import { Transaction } from "services/aws/endowment_admin/types";
-import Icon from "components/Icons/Icons";
-import getTxUrl from "helpers/getTxUrl";
 
 export default function DonationsTable(props: {
   transactions: Transaction[];

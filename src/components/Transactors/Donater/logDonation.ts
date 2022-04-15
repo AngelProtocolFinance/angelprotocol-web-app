@@ -1,9 +1,9 @@
+import { Receiver, TxLogPayload } from "services/apes/types";
+import { UserTypes } from "services/user/types";
+import createAuthToken from "helpers/createAuthToken";
 import { chainIDs } from "constants/chainIDs";
 import { currency_text, denoms } from "constants/currency";
 import { apes_endpoint } from "constants/urls";
-import createAuthToken from "helpers/createAuthToken";
-import { Receiver, TxLogPayload } from "services/apes/types";
-import { UserTypes } from "services/user/types";
 
 const logDonation: DonationLogger = async (
   txhash,

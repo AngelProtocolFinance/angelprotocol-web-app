@@ -1,8 +1,8 @@
-import { Route, useLocation, Routes, Navigate } from "react-router-dom";
-import { app, site } from "../constants/routes";
-import { lazy, Suspense } from "react";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
+import { app, site } from "../constants/routes";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));

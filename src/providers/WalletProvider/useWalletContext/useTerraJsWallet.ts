@@ -1,12 +1,12 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import {
+  ConnectType,
   ConnectedWallet,
   Connection,
-  ConnectType,
   Installation,
+  WalletStatus,
   useConnectedWallet,
   useWallet,
-  WalletStatus,
 } from "@terra-money/wallet-provider";
 import { useEffect, useMemo } from "react";
 import { TerraIdentifiers } from "services/wallet/types";

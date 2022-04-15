@@ -1,5 +1,5 @@
-import { holdings } from "./placeholders";
 import { account_api } from "./account";
+import { holdings } from "./placeholders";
 import useAccountContract from "./useAccountContract";
 
 export function useEndowmentHoldingsState(address: string, skip = false) {

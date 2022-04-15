@@ -1,10 +1,4 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 // import useTerraBalance from "hooks/useTerraBalance";
@@ -15,6 +9,12 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import Halo from "contracts/Halo";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 

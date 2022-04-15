@@ -1,17 +1,17 @@
 import Label from "pages/Admin/components/Label";
-import Loader from "components/Loader/Loader";
-import TextInput from "../../components/TextInput";
-import FundSelection from "../FundSelection";
-import useUpdateFund from "./useUpdateFund";
-import { FundUpdateValues as FV } from "./fundUpdatorSchema";
-import useInitFundMembers from "./useInitFundMembers";
-import MemberItem from "./MemberItem";
-import MemberAdder from "./MemberAdder/MemberAdder";
-import Submitter from "../Submitter";
 import {
   FormContainer,
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
+import Loader from "components/Loader/Loader";
+import TextInput from "../../components/TextInput";
+import FundSelection from "../FundSelection";
+import Submitter from "../Submitter";
+import MemberAdder from "./MemberAdder/MemberAdder";
+import MemberItem from "./MemberItem";
+import { FundUpdateValues as FV } from "./fundUpdatorSchema";
+import useInitFundMembers from "./useInitFundMembers";
+import useUpdateFund from "./useUpdateFund";
 
 export default function FundUpdatorForm() {
   const { fundMembersCopy, isFundMembersLoading, isFundSelected } =

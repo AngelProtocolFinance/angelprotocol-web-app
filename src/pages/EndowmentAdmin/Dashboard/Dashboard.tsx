@@ -1,6 +1,6 @@
 import { useEndowmentHoldings } from "services/terra/account/queriers";
-import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
 import { useMemberState } from "services/terra/admin/states";
+import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
 import PageMeta from "./PageMeta";
 import Summary from "./Summary";

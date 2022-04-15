@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import Loader from "components/Loader/Loader";
 import useSubscribe from "./useSubscribe";
 
-export default function SubscriberForm() {
+export default function Subscriber() {
   const { register, isSubmitting, subscribe, errors } = useSubscribe();
   return (
     <form

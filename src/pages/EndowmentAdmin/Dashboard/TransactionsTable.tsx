@@ -1,9 +1,9 @@
 import { PropsWithChildren } from "react";
-import TableSection, { Cells } from "components/TableSection/TableSection";
 import { Transaction } from "services/aws/endowment_admin/types";
+import TableSection, { Cells } from "components/TableSection/TableSection";
+import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import getTxUrl from "helpers/getTxUrl";
 
 export default function TransactionsTable(props: {
   transactions: Transaction[];

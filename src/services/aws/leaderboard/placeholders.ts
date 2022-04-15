@@ -1,6 +1,6 @@
+import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Endowment } from "./types";
 import { Update } from "./types";
-import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 
 export const placeholderUpdate: Update = {
   endowments: [],

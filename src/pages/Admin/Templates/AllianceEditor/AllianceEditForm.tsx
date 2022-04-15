@@ -3,8 +3,8 @@ import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import AllianceSelection from "./AllianceSelection/AllianceSelection";
-import { AllianceEditValues as AV } from "./alllianceEditSchema";
 import MemberEditor from "./MemberEditor/MemberEditor";
+import { AllianceEditValues as AV } from "./alllianceEditSchema";
 import useEditAlliance from "./useEditAlliance";
 
 export default function AllianceEditForm() {

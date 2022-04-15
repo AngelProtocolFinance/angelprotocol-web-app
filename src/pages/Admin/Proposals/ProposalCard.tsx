@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Proposal } from "services/terra/admin/types";
-import toCurrency from "helpers/toCurrency";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
 import { admin } from "constants/routes";
-import useProposalDetails from "./useProposalDetails";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
+import useProposalDetails from "./useProposalDetails";
 
 export default function ProposalCard(props: Proposal) {
   const {
