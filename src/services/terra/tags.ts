@@ -5,6 +5,7 @@ export enum tags {
   lbp = "lbp",
   endowment = "endowment",
   admin = "admin",
+  multicall = "multicall",
 }
 
 export enum admin {
@@ -33,6 +34,11 @@ export enum halo {
 
 export enum lbp {
   pool = "pool",
+}
+
+export enum multicall {
+  endowmentBalance = "endowmentBalance",
+  airdrop = "airdrop",
 }
 
 export enum endowment {

@@ -37,6 +37,7 @@ export const terra = createApi({
     tags.lbp,
     tags.endowment,
     tags.admin,
+    tags.multicall,
   ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({

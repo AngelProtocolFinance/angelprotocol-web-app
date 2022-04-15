@@ -3,11 +3,11 @@ import Status from "../Status";
 import Amount from "./Amount";
 import InputField from "./InputField";
 import { Fee, ToReceive, Total } from "./Misc";
+import { WithdrawResource } from "./types";
 import useWithdraw from "./useWithdraw";
 
-export default function WithdrawForm() {
-  const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
-    useWithdraw();
+export default function WithdrawForm(resources: WithdrawResource) {
+  const { withdraw, isFormLoading, isSubmitDisabled } = useWithdraw(resources);
 
   return (
     <form
@@ -18,9 +18,9 @@ export default function WithdrawForm() {
     >
       <Status />
 
-      {vaultFields.map(
+      {resources.vaultFields.map(
         (vaultField) =>
-          vaultField.ustBalance.gt(0) && (
+          vaultField.ustBalance > 0 && (
             <Amount key={vaultField.fieldId} {...vaultField} />
           )
       )}
