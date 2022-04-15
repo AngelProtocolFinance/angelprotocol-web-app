@@ -16,8 +16,6 @@ export default function VerificationSuccessful(props: Props) {
   const dispatch = useSetter();
 
   useEffect(() => {
-    console.log("verified");
-
     dispatch(updateUser(userData));
   }, [dispatch, userData]);
 
