@@ -3,12 +3,12 @@ import toCurrency from "helpers/toCurrency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function WithdrawPreview(props: WithdrawMeta) {
+export default function Withdraw(props: WithdrawMeta) {
   return (
     <PreviewContainer>
-      {props.sourcesPreview.map((source) => (
+      {props.sourcesPreview.map((source, i) => (
         //map sources
-        <KeyValue _key={`from ${source.vaultName}`}>
+        <KeyValue key={i} _key={`from ${source.vaultName}`}>
           <span>$ {toCurrency(props.totalAmount, 2)}</span>
         </KeyValue>
       ))}

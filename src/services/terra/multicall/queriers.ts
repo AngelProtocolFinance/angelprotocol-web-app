@@ -33,6 +33,20 @@ export function useWithdrawConstraints(address: string) {
   };
 }
 
+export function useEndowmentCWs(address: string) {
+  const { useWithdrawConstraintsQuery } = multicall_api;
+  const { contract } = useContract<MC, M>(Multicall);
+  const { data, isError, isLoading, isFetching } = useWithdrawConstraintsQuery(
+    contract.balanceAndRates(address),
+    {}
+  );
+  return {
+    withdrawContrains: data,
+    isLoading: isLoading || isFetching,
+    isError,
+  };
+}
+
 export function useAirdrop() {
   const { useAirdropQuery } = multicall_api;
   const { wallet } = useWalletContext();
