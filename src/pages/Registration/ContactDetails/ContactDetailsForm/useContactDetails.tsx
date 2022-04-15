@@ -25,6 +25,27 @@ export default function useSaveContactDetails() {
   const [error, setError] = useState(false);
   const { showModal } = useSetModal();
 
+  const handleUpdateUser = useCallback(
+    (postData: ContactDetailsData) => {
+      const newUserData: User = {
+        ...user,
+        ContactPerson: {
+          ...user.ContactPerson,
+          ...postData.ContactPerson,
+          EmailVerified: false,
+        },
+        Registration: {
+          ...user.Registration,
+          CharityName: postData.Registration.CharityName,
+          RegistrationDate: new Date().toISOString(),
+          RegistrationStatus: "Not Complete",
+        },
+      };
+      dispatch(updateUser(newUserData));
+    },
+    [dispatch, user]
+  );
+
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
@@ -55,8 +76,10 @@ export default function useSaveContactDetails() {
       }
 
       if (result.UUID || result.message === "Updated successfully!") {
+        handleUpdateUser(postData);
         if (!is_create) {
           console.log(result.message);
+          navigate(`${site.app}/${app.register}/${routes.dashboard}`);
         } else {
           await resendEmail({
             uuid: result.UUID,
@@ -66,21 +89,6 @@ export default function useSaveContactDetails() {
               CharityName: postData.Registration.CharityName,
             },
           });
-          const newUserData: User = {
-            ...user,
-            ContactPerson: {
-              ...postData.ContactPerson,
-              EmailVerified: false,
-              PK: result.UUID || contactData.uniqueID,
-            },
-            Registration: {
-              ...user.Registration,
-              CharityName: postData.Registration.CharityName,
-              RegistrationDate: new Date().toISOString(),
-              RegistrationStatus: "Not Complete",
-            },
-          };
-          dispatch(updateUser(newUserData));
           navigate(`${site.app}/${app.register}/${routes.confirm}`);
         }
       } else {
@@ -91,13 +99,12 @@ export default function useSaveContactDetails() {
       }
     },
     [
-      dispatch,
       navigate,
       registerCharity,
       resendEmail,
       showModal,
       updateContactPerson,
-      user,
+      handleUpdateUser,
     ]
   );
 
