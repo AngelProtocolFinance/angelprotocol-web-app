@@ -87,9 +87,6 @@ const registration_api = aws.injectEndpoints({
           body: data.body,
         };
       },
-      transformResponse: (response: { data: UpdateDocumentationResult }) => {
-        return response.data;
-      },
     }),
     updateCharityMetadata: builder.mutation<
       UpdateCharityMetadataResult,
