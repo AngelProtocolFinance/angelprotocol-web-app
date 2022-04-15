@@ -1,17 +1,17 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
-import { EndowmentStatusNum } from "services/terra/registrar/types";
-import Admin from "contracts/Admin";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
-import { StatusChangePayload } from "contracts/types";
-import { useSetter } from "store/accessors";
-import Registrar from "contracts/Registrar";
-import cleanObject from "helpers/cleanObject";
-import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUpdateSchema";
-import { sendEndowmentReviewTx } from "services/transaction/sendEndowmentReviewTx";
 import { aws } from "services/aws/aws";
 import { admin, tags } from "services/aws/tags";
+import { EndowmentStatusNum } from "services/terra/registrar/types";
+import { sendEndowmentReviewTx } from "services/transaction/sendEndowmentReviewTx";
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
+import Admin from "contracts/Admin";
+import Registrar from "contracts/Registrar";
+import { StatusChangePayload } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
+import cleanObject from "helpers/cleanObject";
+import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUpdateSchema";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();

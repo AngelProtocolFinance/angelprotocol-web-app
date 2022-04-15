@@ -1,17 +1,17 @@
+import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import { setCWContracts } from "services/admin/cwContracts";
 import { useMember } from "services/terra/admin/queriers";
-import Loader from "components/Loader/Loader";
 import Icon from "components/Icons/Icons";
+import Loader from "components/Loader/Loader";
+import { useSetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
 import { admin } from "constants/routes";
-import Proposer from "./Proposer";
+import AdminNav from "./AdminNav";
+import Applications from "./Applications/Applications";
 import Proposal from "./Proposals/Proposal";
 import Proposals from "./Proposals/Proposals";
-import AdminNav from "./AdminNav";
-import { useEffect } from "react";
-import { setCWContracts } from "services/admin/cwContracts";
-import { useSetter } from "store/accessors";
-import Applications from "./Applications/Applications";
-import useWalletContext from "hooks/useWalletContext";
+import Proposer from "./Proposer";
 
 export default function Admin() {
   const dispatch = useSetter();

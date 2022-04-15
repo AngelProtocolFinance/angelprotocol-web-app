@@ -1,7 +1,7 @@
-import { MemberUpdatorValues as T } from "../memberUpdatorSchema";
-import TextInput from "../../../components/TextInput";
-import useAddMember from "./useAddMember";
 import { GroupContainer } from "pages/Admin/components/TemplateContainer";
+import TextInput from "../../../components/TextInput";
+import { MemberUpdatorValues as T } from "../memberUpdatorSchema";
+import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {
   const { addMember } = useAddMember();

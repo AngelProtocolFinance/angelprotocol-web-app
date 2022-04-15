@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
-import { WithdrawValues } from "./types";
 import toCurrency from "helpers/toCurrency";
+import { WithdrawValues } from "./types";
 
 function Misc(props: { title: string; value: string }) {
   return (

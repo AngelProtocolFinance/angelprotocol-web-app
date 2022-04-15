@@ -1,10 +1,9 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
-import { app, site } from "constants/routes";
-import { Link } from "react-router-dom";
-import { LinkProps, useParams } from "react-router-dom";
+import { Link, LinkProps, useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
+import Icon, { IconTypes } from "components/Icons/Icons";
+import { app, site } from "constants/routes";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {

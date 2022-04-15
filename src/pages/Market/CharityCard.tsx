@@ -1,8 +1,8 @@
-import LazyImage from "components/LazyImage/LazyImage";
 import { Link } from "react-router-dom";
-import { app, site } from "constants/routes";
-import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
 import { Profile } from "services/aws/endowments/types";
+import LazyImage from "components/LazyImage/LazyImage";
+import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
+import { app, site } from "constants/routes";
 
 export default function CharityCard(props: Profile) {
   return (

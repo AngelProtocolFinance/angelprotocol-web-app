@@ -1,6 +1,6 @@
-import { admin } from "constants/routes";
-import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { NavLink } from "react-router-dom";
+import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { admin } from "constants/routes";
 
 export default function AdminNav() {
   return (

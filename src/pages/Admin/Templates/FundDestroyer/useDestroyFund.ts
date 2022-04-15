@@ -1,18 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta } from "pages/Admin/types";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { admin, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
-import { admin, tags } from "services/terra/tags";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import { useSetter } from "store/accessors";
-import { FundDestroyValues } from "./fundDestroyerSchema";
-import genProposalsLink from "../genProposalsLink";
 import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genProposalsLink from "../genProposalsLink";
+import { FundDestroyValues } from "./fundDestroyerSchema";
 
 export default function useDestroyFund() {
   const {

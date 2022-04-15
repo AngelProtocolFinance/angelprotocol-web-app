@@ -1,10 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { currency_text, denoms } from "constants/currency";
+import { app, site } from "constants/routes";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
-import { useNavigate } from "react-router-dom";
-import { app, site } from "constants/routes";
 
 export default function Landing() {
   const { staked, percentStaked, spot_price } = useGov();

@@ -1,19 +1,19 @@
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
 import { useBalances } from "services/terra/queriers";
-import { AdminVoteValues } from "./types";
-import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import extractFeeNum from "helpers/extractFeeNum";
 import useWalletContext from "hooks/useWalletContext";
+import extractFeeNum from "helpers/extractFeeNum";
+import { denoms } from "constants/currency";
+import { AdminVoteValues } from "./types";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);

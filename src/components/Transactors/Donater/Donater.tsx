@@ -1,9 +1,9 @@
-import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Props } from "./types";
-import { schema } from "./schema";
-import { denoms } from "constants/currency";
+import { FormProvider, useForm } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
+import { denoms } from "constants/currency";
+import { schema } from "./schema";
+import { Props } from "./types";
 
 export default function Donater(props: Props) {
   const methods = useForm<DonateValues>({

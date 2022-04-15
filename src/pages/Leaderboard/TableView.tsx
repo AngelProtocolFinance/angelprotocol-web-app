@@ -1,6 +1,6 @@
-import TableEntry from "./TableEntry";
-import Heading from "./Heading";
 import { Endowment } from "services/aws/leaderboard/types";
+import Heading from "./Heading";
+import TableEntry from "./TableEntry";
 
 export default function TableView(props: { endowments: Endowment[] }) {
   return (

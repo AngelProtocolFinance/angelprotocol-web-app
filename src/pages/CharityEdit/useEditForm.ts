@@ -5,8 +5,8 @@ import { useProfileState } from "services/aws/endowments/states";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import removeReadOnlyProfileAttr from "./helpers/removeReadOnlyProfileAttr";
 import getPayloadDiff from "helpers/getPayloadDiff";
+import removeReadOnlyProfileAttr from "./helpers/removeReadOnlyProfileAttr";
 import { CharityParam } from "./types";
 
 export default function useEditForm() {

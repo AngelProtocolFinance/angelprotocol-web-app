@@ -1,6 +1,6 @@
+import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
 import { CreatePollValues } from "./types";
 
 export default function Title(props: {

@@ -3,12 +3,6 @@ import {
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import LP from "contracts/LP";
-import processEstimateError from "helpers/processEstimateError";
-import toCurrency from "helpers/toCurrency";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -18,6 +12,12 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import LP from "contracts/LP";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import processEstimateError from "helpers/processEstimateError";
+import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 

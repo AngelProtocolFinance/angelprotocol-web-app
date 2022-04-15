@@ -1,10 +1,10 @@
-import { Vote } from "contracts/types";
-import idParamToNumber from "helpers/idParamToNum";
-import useWalletContext from "hooks/useWalletContext";
 import { useMemo } from "react";
 import { useVoteList } from "services/terra/admin/queriers";
 import { Proposal, VoteInfo } from "services/terra/admin/types";
 import { useLatestBlock } from "services/terra/queriers";
+import { Vote } from "contracts/types";
+import useWalletContext from "hooks/useWalletContext";
+import idParamToNumber from "helpers/idParamToNum";
 
 export default function useProposalDetails(
   proposalInfo: Proposal

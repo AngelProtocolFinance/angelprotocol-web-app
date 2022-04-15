@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Modal, { useSetModal } from "./Modal";
 import { act } from "react-dom/test-utils";
 import Icon from "components/Icons/Icons";
+import Modal, { useSetModal } from "./Modal";
 
 const modalCssClass =
   "ap-modal bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";

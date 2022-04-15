@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
-import TextInput from "pages/Admin/components/TextInput";
 import { useFormContext } from "react-hook-form";
+import TextInput from "pages/Admin/components/TextInput";
 import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 
 export default function StatusOptions() {

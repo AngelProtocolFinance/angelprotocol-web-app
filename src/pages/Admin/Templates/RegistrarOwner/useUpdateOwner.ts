@@ -1,17 +1,17 @@
 import { useFormContext } from "react-hook-form";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import Popup from "components/Popup/Popup";
-import { useSetModal } from "components/Modal/Modal";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { terra } from "services/terra/terra";
+import { ProposalMeta } from "pages/Admin/types";
 import { admin, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import genProposalsLink from "../genProposalsLink";
-import useWalletContext from "hooks/useWalletContext";
 import Registrar from "contracts/Registrar";
-import { ProposalMeta } from "pages/Admin/types";
+import useWalletContext from "hooks/useWalletContext";
 import { proposalTypes } from "constants/routes";
+import genProposalsLink from "../genProposalsLink";
 import { RegistrarOwnerValues } from "./updateOwnerSchema";
 
 export default function useUpdateOwner() {

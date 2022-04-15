@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { govern } from "constants/routes";
-import toCurrency from "helpers/toCurrency";
-import usePollDetails from "../usePollDetails";
 import { PollStatus } from "services/terra/gov/types";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
+import { govern } from "constants/routes";
+import usePollDetails from "../usePollDetails";
 
 export default function PollCard(props: { poll_id: number }) {
   const navigate = useNavigate();

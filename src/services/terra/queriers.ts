@@ -1,8 +1,8 @@
 import { Dec } from "@terra-money/terra.js";
-import Halo, { H, T } from "contracts/Halo";
-import { denoms } from "constants/currency";
-import useWalletContext from "hooks/useWalletContext";
 import { terra } from "services/terra/terra";
+import Halo, { H, T } from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/currency";
 import { halo_info } from "./placeholders";
 import { useContract } from "./useContract";
 

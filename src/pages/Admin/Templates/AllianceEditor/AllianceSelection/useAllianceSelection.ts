@@ -1,7 +1,7 @@
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useGetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import sanitizeRegexSearchText from "helpers/sanitizeRegexSearchText";
-import { useGetter } from "store/accessors";
 
 export default function useAllianceSelection() {
   const allianceCopy = useGetter(

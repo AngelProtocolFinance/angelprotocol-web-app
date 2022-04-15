@@ -1,6 +1,6 @@
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { Path, useFormContext } from "react-hook-form";
 import optimizeImage from "pages/CharityEdit/optimizeImage";
-import { ChangeEvent, useState, useRef, useEffect } from "react";
-import { useFormContext, Path } from "react-hook-form";
 
 export default function useImageEditor<T extends object>(fieldName: Path<T>) {
   //TODO: make this reusable with other image changer on different context

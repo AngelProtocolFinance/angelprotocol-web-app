@@ -1,9 +1,9 @@
+import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { tags, admin } from "services/terra/tags";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";

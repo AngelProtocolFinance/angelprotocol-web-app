@@ -1,11 +1,11 @@
-import { useForm } from "react-hook-form";
-import { aws_endpoint } from "constants/urls";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { loginSchema } from "./loginSchema";
+import { useForm } from "react-hook-form";
+import { saveToken } from "services/auth/authSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { saveToken } from "services/auth/authSlice";
+import { aws_endpoint } from "constants/urls";
+import { loginSchema } from "./loginSchema";
 
 export default function useLogin() {
   const {

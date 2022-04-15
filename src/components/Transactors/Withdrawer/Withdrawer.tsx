@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import useWalletContext from "hooks/useWalletContext";
 import { FormProvider, useForm } from "react-hook-form";
+import useWalletContext from "hooks/useWalletContext";
 import { schema } from "./schema";
 import { Props, WithdrawValues } from "./types";
 

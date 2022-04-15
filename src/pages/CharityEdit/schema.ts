@@ -1,6 +1,6 @@
+import * as Yup from "yup";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 import { SchemaShape } from "types/schema";
-import * as Yup from "yup";
 
 //construct strict shape to avoid hardcoding shape keys
 const editProfileShape: SchemaShape<EditableProfileAttr> = {

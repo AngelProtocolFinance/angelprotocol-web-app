@@ -1,24 +1,24 @@
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta } from "pages/Admin/types";
-import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
 } from "services/terra/registrar/types";
+import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { tags, admin } from "services/terra/tags";
-import Admin from "contracts/Admin";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
-import { StatusChangePayload } from "contracts/types";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
+import { StatusChangePayload } from "contracts/types";
+import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
-import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

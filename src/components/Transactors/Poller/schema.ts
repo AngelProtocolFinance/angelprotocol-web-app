@@ -1,5 +1,5 @@
-import { stringByteSchema } from "schemas/string";
 import * as Yup from "yup";
+import { stringByteSchema } from "schemas/string";
 
 export const schema = Yup.object().shape({
   title: stringByteSchema("title", 4, 64),

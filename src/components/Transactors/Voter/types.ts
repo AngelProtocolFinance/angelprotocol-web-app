@@ -1,5 +1,5 @@
-import { Vote } from "contracts/types";
 import { FC } from "react";
+import { Vote } from "contracts/types";
 
 export interface VoteValues {
   vote: Vote;

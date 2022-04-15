@@ -1,5 +1,5 @@
+import { ContentState, EditorState, convertFromRaw } from "draft-js";
 import { useEffect, useRef } from "react";
-import { EditorState, convertFromRaw, ContentState } from "draft-js";
 
 //init rich text with edge case - content not in rt format
 export default function useRichTextInit(

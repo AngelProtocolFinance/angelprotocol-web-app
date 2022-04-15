@@ -1,8 +1,8 @@
 import { AllianceMemberWithFlags } from "services/admin/allianceMembers";
 import TableSection, { Cells } from "components/TableSection/TableSection";
-import useAllianceSelection from "./useAllianceSelection";
 import Member from "./Member";
 import Toolbar from "./Toolbar";
+import useAllianceSelection from "./useAllianceSelection";
 
 export default function AllianceSelection() {
   const { filteredMembers, handleSearchTextChange, searchText, isDebouncing } =
