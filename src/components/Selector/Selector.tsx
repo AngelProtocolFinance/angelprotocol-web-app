@@ -1,6 +1,6 @@
 import React from "react";
-import Select, { MenuPlacement } from "react-select";
 import { Controller } from "react-hook-form";
+import Select, { MenuPlacement } from "react-select";
 
 interface SelectorProps {
   name: string;

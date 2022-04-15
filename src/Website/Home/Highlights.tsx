@@ -1,6 +1,6 @@
-import trustedLogo from "assets/icons/trusted.svg";
 import protectedLogo from "assets/icons/protected.svg";
 import secureLogo from "assets/icons/secure.svg";
+import trustedLogo from "assets/icons/trusted.svg";
 
 export default function Highlights() {
   return (

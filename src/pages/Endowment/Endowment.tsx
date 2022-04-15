@@ -1,9 +1,9 @@
-import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
-import useWalletContext from "hooks/useWalletContext";
 import { useParams } from "react-router-dom";
 import { useProfile } from "services/aws/endowments/queriers";
 import { useEndowmentHoldings } from "services/terra/account/queriers";
 import { useApprovedVaultsRate } from "services/terra/registrar/queriers";
+import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
+import useWalletContext from "hooks/useWalletContext";
 import PageMeta from "./PageMeta";
 import Liquid from "./Summary";
 import TransactionList from "./TransactionList";

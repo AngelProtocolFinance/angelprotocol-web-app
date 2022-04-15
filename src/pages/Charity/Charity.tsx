@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom";
-import { useProfile } from "services/aws/endowments/queriers";
-import { CharityParam } from "./types";
-import { app, site } from "constants/routes";
 import { Link } from "react-router-dom";
-import Icon from "components/Icons/Icons";
-import CharityStats from "./CharityStats";
-import CharityHeader from "./CharityHeader/CharityHeader";
-import CharityContent from "./CharityContent/CharityContent";
+import { useProfile } from "services/aws/endowments/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
+import Icon from "components/Icons/Icons";
+import { app, site } from "constants/routes";
+import CharityContent from "./CharityContent/CharityContent";
+import CharityHeader from "./CharityHeader/CharityHeader";
+import CharityStats from "./CharityStats";
+import { CharityParam } from "./types";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();

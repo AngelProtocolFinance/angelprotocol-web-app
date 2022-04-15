@@ -1,14 +1,14 @@
 import { Dec } from "@terra-money/terra.js";
-import { useSetModal } from "components/Modal/Modal";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import Halo from "contracts/Halo";
-import useWalletContext from "hooks/useWalletContext";
 import { useMemo } from "react";
 import { Airdrops } from "services/terra/multicall/types";
 import { gov, multicall, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
+import Halo from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useSetModal();

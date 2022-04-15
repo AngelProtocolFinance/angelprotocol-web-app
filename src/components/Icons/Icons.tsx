@@ -1,46 +1,46 @@
 import { IconType } from "react-icons";
 import {
+  AiFillCaretLeft,
+  AiFillYoutube,
+  AiOutlineCheck,
+  AiOutlineCheckCircle,
+  AiOutlineCopy,
+  AiOutlineDislike,
+  AiOutlineEdit,
+  AiOutlineExclamation,
+  AiOutlineInfoCircle,
+  AiOutlineLike,
+  AiOutlineMedium,
+  AiOutlineTwitter,
+  AiOutlineUpload,
+} from "react-icons/ai";
+import { BiArrowBack, BiBold, BiGlobe, BiItalic } from "react-icons/bi";
+import { BsExclamationCircle, BsHourglassSplit } from "react-icons/bs";
+import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
+import {
+  FaClock,
+  FaCog,
+  FaExternalLinkAlt,
   FaFacebookF,
   FaLinkedinIn,
-  FaParachuteBox,
-  FaExternalLinkAlt,
-  FaListUl,
   FaListOl,
-  FaCog,
-  FaClock,
+  FaListUl,
+  FaParachuteBox,
   FaStopwatch,
   FaTelegramPlane,
 } from "react-icons/fa";
-import { RiDiscordLine } from "react-icons/ri";
-import {
-  AiOutlineTwitter,
-  AiFillYoutube,
-  AiOutlineMedium,
-  AiOutlineCopy,
-  AiOutlineCheck,
-  AiOutlineInfoCircle,
-  AiOutlineCheckCircle,
-  AiOutlineExclamation,
-  AiFillCaretLeft,
-  AiOutlineLike,
-  AiOutlineDislike,
-  AiOutlineUpload,
-  AiOutlineEdit,
-} from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
-import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
-import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { BsHourglassSplit, BsExclamationCircle } from "react-icons/bs";
-import { IoMdSettings } from "react-icons/io";
-import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
-import { BiArrowBack, BiBold, BiItalic, BiGlobe } from "react-icons/bi";
-import { SiHiveBlockchain } from "react-icons/si";
 import { GoLinkExternal } from "react-icons/go";
+import { IoMdSettings } from "react-icons/io";
+import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import { RiDiscordLine } from "react-icons/ri";
+import { SiHiveBlockchain } from "react-icons/si";
+import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"

@@ -1,14 +1,14 @@
-import createAuthToken from "helpers/createAuthToken";
+import { AWSQueryRes } from "services/aws/types";
 import { UserTypes } from "services/user/types";
+import createAuthToken from "helpers/createAuthToken";
 import { aws } from "../aws";
 import { cha, tags } from "../tags";
 import {
-  Lookup,
-  Profile,
   CategorizedProfiles,
   EditableProfileAttr,
+  Lookup,
+  Profile,
 } from "./types";
-import { AWSQueryRes } from "services/aws/types";
 
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({

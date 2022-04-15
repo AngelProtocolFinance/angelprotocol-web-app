@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
-import useScrollShadow from "hooks/useScrollShadow";
 import heart_icon from "assets/icons/broken_heart.svg";
 import ua_icon from "assets/icons/ukraine.svg";
-import { site, app } from "constants/routes";
+import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
+import Icon from "components/Icons/Icons";
+import useScrollShadow from "hooks/useScrollShadow";
+import { app, site } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
-import Icon from "components/Icons/Icons";
 
 export default function WebHead() {
   const shadowRef = useScrollShadow();

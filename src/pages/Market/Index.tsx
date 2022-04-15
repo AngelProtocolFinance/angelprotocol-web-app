@@ -1,8 +1,8 @@
-import useHorizontalScroll from "hooks/useHorizontalScroll";
-import IndexCard from "./IndexCard";
-import CharityCard from "./CharityCard";
 import { Profile } from "services/aws/endowments/types";
 import Icon, { IconTypes } from "components/Icons/Icons";
+import useHorizontalScroll from "hooks/useHorizontalScroll";
+import CharityCard from "./CharityCard";
+import IndexCard from "./IndexCard";
 
 export default function Index(props: { id: number; profiles: Profile[] }) {
   const { ref, forward, backward, showBack, showForward } =

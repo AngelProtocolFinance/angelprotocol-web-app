@@ -1,5 +1,5 @@
-import toCurrency from "helpers/toCurrency";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
 
 type LockedBalance = {
   lockedBalance: number | undefined;

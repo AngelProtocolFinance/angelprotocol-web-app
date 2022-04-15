@@ -1,7 +1,7 @@
-import { useContract } from "../useContract";
 import Registrar, { R, T } from "contracts/Registrar";
-import { registrar_api } from "./registrar";
 import { chainIDs } from "constants/chainIDs";
+import { useContract } from "../useContract";
+import { registrar_api } from "./registrar";
 
 export function useApprovedVaultsRate() {
   const { useApprovedVaultsRateQuery } = registrar_api;

@@ -32,7 +32,8 @@
     "test": "react-app-rewired test --colors",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200"
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "sort-imports": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -79,6 +80,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/compress.js": "^1.1.1",
     "@types/draft-js": "^0.11.9",
     "@types/jest": "^26.0.15",

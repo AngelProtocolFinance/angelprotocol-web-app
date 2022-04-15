@@ -1,5 +1,5 @@
-import { useSetModal } from "components/Modal/Modal";
 import Icon from "components/Icons/Icons";
+import { useSetModal } from "components/Modal/Modal";
 
 export default function WalletPrompt(props: { message: string }) {
   const { hideModal } = useSetModal();

@@ -4,16 +4,16 @@ import {
 } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { chainIDs } from "constants/chainIDs";
-import { app, site } from "constants/routes";
-import { terra_lcds } from "constants/urls";
-import Governance from "pages/Governance/Governance";
-import Leaderboard from "pages/Leaderboard/Leaderboard";
-import Market from "pages/Market/Market";
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+import Governance from "pages/Governance/Governance";
+import Leaderboard from "pages/Leaderboard/Leaderboard";
+import Market from "pages/Market/Market";
 import { store } from "store/store";
+import { chainIDs } from "constants/chainIDs";
+import { app, site } from "constants/routes";
+import { terra_lcds } from "constants/urls";
 import App from "./App";
 
 const testnet = {

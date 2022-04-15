@@ -1,5 +1,5 @@
-import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { IconType } from "react-icons/lib";
+import { useEndowmentHoldingsState } from "services/terra/account/states";
 import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import { getIcon } from "components/Icons/Icons";
 

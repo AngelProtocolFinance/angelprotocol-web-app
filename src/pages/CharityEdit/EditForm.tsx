@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
-import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
+import Icon from "components/Icons/Icons";
+import { app, site } from "constants/routes";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
+import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
 import TextInput from "./TextInput";
-import { site, app } from "constants/routes";
 import useEditForm from "./useEditForm";
-import Icon from "components/Icons/Icons";
 
 export default function EditForm() {
   const { endowment_addr, updateProfile, isSubmitDisabled } = useEditForm();

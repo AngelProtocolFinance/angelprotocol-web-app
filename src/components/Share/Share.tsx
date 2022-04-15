@@ -1,9 +1,9 @@
 import { getIcon } from "components/Icons/Icons";
 import {
-  encodedText,
   FACEBOOK_DIALOG_URL,
   LINKEDIN_SHARE_URL,
   TWITTER_SHARE_URL,
+  encodedText,
 } from "./constants";
 
 export default function Share() {

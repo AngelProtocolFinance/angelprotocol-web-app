@@ -1,9 +1,9 @@
-import Status from "../Status";
-import { Fee, ToReceive, Total } from "./Misc";
-import Amount from "./Amount";
-import useWithdraw from "./useWithdraw";
-import InputField from "./InputField";
 import Icon from "components/Icons/Icons";
+import Status from "../Status";
+import Amount from "./Amount";
+import InputField from "./InputField";
+import { Fee, ToReceive, Total } from "./Misc";
+import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm() {
   const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =

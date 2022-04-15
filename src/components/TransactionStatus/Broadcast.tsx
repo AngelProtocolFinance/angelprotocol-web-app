@@ -1,6 +1,6 @@
+import { BroadcastStage, Step } from "services/transaction/types";
 import Loader from "components/Loader/Loader";
 import getTxUrl from "helpers/getTxUrl";
-import { BroadcastStage, Step } from "services/transaction/types";
 
 export default function Broadcast(props: BroadcastStage) {
   if (props.step !== Step.broadcast) {

@@ -1,9 +1,9 @@
 import { setStage } from "services/transaction/transactionSlice";
-import { Step, ErrorStage } from "services/transaction/types";
-import getTxUrl from "helpers/getTxUrl";
+import { ErrorStage, Step } from "services/transaction/types";
+import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import { useSetter } from "store/accessors";
-import Icon from "components/Icons/Icons";
+import getTxUrl from "helpers/getTxUrl";
 
 export default function ErrPop(props: ErrorStage) {
   if (props.step !== Step.error) throw new Error("wrong component rendered");

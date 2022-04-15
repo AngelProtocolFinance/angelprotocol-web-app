@@ -1,6 +1,6 @@
-import Multicall, { MC, M } from "contracts/Multicall";
 import { WalletProxy } from "providers/WalletProvider";
 import useWalletContext from "providers/WalletProvider/useWalletContext";
+import Multicall, { M, MC } from "contracts/Multicall";
 import { useContract } from "../useContract";
 import { multicall_api } from "./multicall";
 

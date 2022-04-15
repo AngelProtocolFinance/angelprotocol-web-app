@@ -1,18 +1,18 @@
 import { Dec } from "@terra-money/terra.js";
-import { aws_endpoint } from "constants/urls";
-import Multicall from "contracts/Multicall";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops, ClaimInquiry } from "./types";
+import Multicall from "contracts/Multicall";
+import { aws_endpoint } from "constants/urls";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
 import { VaultsRateRes } from "../registrar/types";
-import { tags, multicall } from "../tags";
+import { multicall, tags } from "../tags";
 import { terra } from "../terra";
 import {
   AggregatedResult,
   MultiContractQueryArgs,
   MultiQueryRes,
 } from "../types";
+import { Airdrops, ClaimInquiry } from "./types";
 import { EndowmentBalance, RateLookUp } from "./types";
 
 export const multicall_api = terra.injectEndpoints({

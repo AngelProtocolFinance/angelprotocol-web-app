@@ -1,8 +1,8 @@
-import { useSetModal } from "components/Modal/Modal";
-import Receipter from "components/Receipter/Receipter";
-import ReceiptForm from "components/Receipter/ReceiptForm";
-import Transactor, { TxProps } from "components/Transactors/Transactor";
 import { useCallback } from "react";
+import { useSetModal } from "components/Modal/Modal";
+import ReceiptForm from "components/Receipter/ReceiptForm";
+import Receipter from "components/Receipter/Receipter";
+import Transactor, { TxProps } from "components/Transactors/Transactor";
 
 export default function useDonor(txHash: string) {
   const { showModal } = useSetModal();

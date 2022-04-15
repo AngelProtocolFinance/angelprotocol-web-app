@@ -1,5 +1,5 @@
-import { denoms } from "constants/currency";
 import { FC } from "react";
+import { denoms } from "constants/currency";
 
 export interface DonateValues {
   amount: string;

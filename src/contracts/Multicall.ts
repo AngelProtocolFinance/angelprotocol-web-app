@@ -1,13 +1,13 @@
-import { chainIDs } from "constants/chainIDs";
-import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
 import { Airdrops } from "services/terra/multicall/types";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
 } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
+import { chainIDs } from "constants/chainIDs";
+import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Account from "./Account";
 import Halo from "./Halo";
 import Registrar from "./Registrar";

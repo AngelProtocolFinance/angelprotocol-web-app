@@ -1,6 +1,6 @@
-import { useSetModal } from "components/Modal/Modal";
 import { useCallback } from "react";
 import { useAirdrop as useAirdropQuery } from "services/terra/multicall/queriers";
+import { useSetModal } from "components/Modal/Modal";
 import Transactor, { TxProps } from "../Transactor";
 import Catcher, { Props } from "./Catcher";
 
