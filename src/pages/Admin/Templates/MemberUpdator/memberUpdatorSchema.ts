@@ -1,7 +1,7 @@
+import * as Yup from "yup";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress } from "schemas/string";
 import { SchemaShape } from "types/schema";
-import * as Yup from "yup";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type MemberUpdatorValues = {

@@ -1,7 +1,7 @@
-import { requiredAddress } from "schemas/string";
-import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
 import { AllianceMember } from "services/terra/indexFund/types";
+import { requiredAddress } from "schemas/string";
+import { SchemaShape } from "types/schema";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type AllianceEditValues = Required<AllianceMember> & ProposalBase;

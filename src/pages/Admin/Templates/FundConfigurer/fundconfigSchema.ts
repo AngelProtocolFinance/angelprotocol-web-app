@@ -1,7 +1,7 @@
-import { positiveNumber, tokenAmountString } from "schemas/number";
-import { SchemaShape } from "types/schema";
 import * as Yup from "yup";
 import { FundConfig } from "contracts/types";
+import { positiveNumber, tokenAmountString } from "schemas/number";
+import { SchemaShape } from "types/schema";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundConfigValues = ProposalBase &

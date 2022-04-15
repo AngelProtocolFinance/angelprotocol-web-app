@@ -1,8 +1,8 @@
+import * as Yup from "yup";
+import { RegistrarConfigPayload } from "contracts/types";
 import { percentString, positiveNumber } from "schemas/number";
 import { address } from "schemas/string";
 import { SchemaShape } from "types/schema";
-import * as Yup from "yup";
-import { RegistrarConfigPayload } from "contracts/types";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type RegistrarConfigValues = ProposalBase &
