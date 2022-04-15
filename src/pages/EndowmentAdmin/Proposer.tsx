@@ -5,6 +5,7 @@ import createNavLinkStyler from "helpers/createNavLinkStyler";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 import CW3Configurer from "pages/Admin/Templates/CW3Configurer/CW3Configurer";
 import FundSender from "pages/Admin/Templates/FundSender/FundSender";
+import ProfileEditor from "./Templates/ProfileEditor/ProfileEditor";
 
 export default function Proposer() {
   return (
@@ -20,6 +21,10 @@ export default function Proposer() {
           path={proposalTypes.adminGroup_fundTransfer}
           element={<FundSender />}
         />
+        <Route
+          path={proposalTypes.endowment_updateProfile}
+          element={<ProfileEditor />}
+        />
       </Routes>
     </div>
   );
@@ -32,7 +37,7 @@ const styler = createNavLinkStyler(
 function ProposalTypes() {
   return (
     <div className="bg-white-grey flex flex-col py-4 shadow-md rounded-md">
-      <ProposalCategory title="admin group" />
+      <ProposalCategory title="Admin Group" />
       <NavLink end to={proposalTypes.index} className={styler}>
         Update group Members
       </NavLink>
@@ -41,6 +46,10 @@ function ProposalTypes() {
       </NavLink>
       <NavLink to={proposalTypes.adminGroup_fundTransfer} className={styler}>
         Fund transfer
+      </NavLink>
+      <ProposalCategory title="Endowment" classes="mt-4" />
+      <NavLink to={proposalTypes.endowment_updateProfile} className={styler}>
+        Update Profile
       </NavLink>
     </div>
   );

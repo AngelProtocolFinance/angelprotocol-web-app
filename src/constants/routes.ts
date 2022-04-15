@@ -22,7 +22,6 @@ export enum app {
   login = "login",
   unsdgs = "unsdgs",
   charity = "charity",
-  charity_edit = "charity-edit",
   tca = "tca",
   fund = "fund",
   govern = "govern",
@@ -68,6 +67,7 @@ export const enum proposalTypes {
   //endowment
   endowment_updateStatus = "endowment-update-status",
   endowment_withdraw = "endowment-withdraw",
+  endowment_updateProfile = "endowment-update-profile",
 
   //registrar
   registrar_updateConfig = "registrar-update-config",

@@ -13,6 +13,8 @@ export const requiredAddress = (title: string) =>
     .required(`${title} address is required`)
     .test("is valid", `${title} address format is not valid`, testAddress);
 
+export const url = Yup.string().url("invalid url").nullable();
+
 export const stringByteSchema = (
   title: string,
   minBytes: number,

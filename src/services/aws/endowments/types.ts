@@ -9,7 +9,8 @@ export interface Endowment {
   tier: number;
 }
 
-export interface Profile {
+//TODO: remove this once endowments[] is from chain
+export interface AWSCharityProfile {
   //terra
   charity_owner: string; // charity owner wallet address
   endowment_address: string; //"terra1k6v33x6sc9chztxgyh859npz740gmn9d4rnfkz"
@@ -50,22 +51,28 @@ export interface Profile {
   tier?: number;
 }
 
-export type ReadOnlyAttr =
-  | "charity_owner" //terra
-  | "endowment_address" //terra
-  | "total_liq"
-  | "total_lock"
-  | "overall"
-  | "charity_programs" //content
-  | "news_media_articles"; //content
-
-export type EditableProfileAttr = Omit<Profile, ReadOnlyAttr>;
-
-export type ProfileUpdateProps = { profile: Profile };
+export interface Profile {
+  name: string;
+  overview: string;
+  un_sdg?: number;
+  tier?: number;
+  logo?: string;
+  image?: string;
+  url?: string;
+  registration_number?: string;
+  country_city_origin?: string;
+  contact_email?: string;
+  social_media_urls: {
+    facebook?: string;
+    linkedin?: string;
+    twitter?: string;
+  };
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+}
 
 export type CategorizedProfiles = {
-  [index: number]: Profile[];
+  [index: number]: AWSCharityProfile[];
 };
-
-//owner:endowment
-export type Lookup = { [index: string]: string };

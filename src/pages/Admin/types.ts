@@ -4,6 +4,7 @@ import {
   FundDetails,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
+  UpdateProfilePayload,
 } from "contracts/types";
 import { Member } from "services/terra/admin/types";
 import { AllianceMember as AM } from "services/terra/indexFund/types";
@@ -29,6 +30,10 @@ export type ProposalMeta =
   | {
       type: proposalTypes.endowment_updateStatus;
       data: EndowmentStatusMeta;
+    }
+  | {
+      type: proposalTypes.endowment_updateProfile;
+      data: EndowmentProfileUpdateMeta;
     }
   | {
       type: proposalTypes.adminGroup_updateMembers;
@@ -110,4 +115,5 @@ export type DiffSet<T> = [keyof T, T[keyof T], T[keyof T]][];
 export type FundConfigUpdateMeta = DiffSet<FundConfig>;
 export type CW3ConfigUpdateMeta = DiffSet<CW3ConfigPayload>;
 export type RegistrarConfigUpdateMeta = DiffSet<RegistrarConfigPayload>;
+export type EndowmentProfileUpdateMeta = DiffSet<UpdateProfilePayload>;
 export type OwnerUpdateMeta = { owner: string; newOwner: string };

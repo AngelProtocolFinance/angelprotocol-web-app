@@ -1,10 +1,13 @@
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import IndexCard from "./IndexCard";
 import CharityCard from "./CharityCard";
-import { Profile } from "services/aws/endowments/types";
+import { AWSCharityProfile } from "services/aws/endowments/types";
 import Icon, { IconTypes } from "components/Icons/Icons";
 
-export default function Index(props: { id: number; profiles: Profile[] }) {
+export default function Index(props: {
+  id: number;
+  profiles: AWSCharityProfile[];
+}) {
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
   //remove infinite scroll temporarily
