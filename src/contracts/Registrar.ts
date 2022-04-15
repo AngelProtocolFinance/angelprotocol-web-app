@@ -8,22 +8,27 @@ import {
   StatusChangePayload,
 } from "./types";
 import { WalletProxy } from "providers/WalletProvider";
+import { EndowmentQueryOptions } from "services/terra/registrar/types";
+import { ContractQueryArgs as CQA } from "services/terra/types";
 
 export default class Registrar extends Contract {
   address: string;
-  endowmentList: ContractQueryArgs;
   vaultsRate: ContractQueryArgs;
   config: ContractQueryArgs;
+
+  endowmentList: (args: EndowmentQueryOptions) => CQA;
+
   constructor(wallet?: WalletProxy) {
     super(wallet);
     this.address = contracts[this.chainID][sc.registrar];
 
-    this.endowmentList = {
+    this.endowmentList = (queryOptions) => ({
       address: this.address,
       msg: {
-        endowment_list: {},
+        endowment_list: queryOptions,
       },
-    };
+    });
+
     this.vaultsRate = {
       address: this.address,
       msg: {
