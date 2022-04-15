@@ -103,9 +103,6 @@ const registration_api = aws.injectEndpoints({
           body: data.body,
         };
       },
-      transformResponse: (response: { data: UpdateCharityMetadataResult }) => {
-        return response.data;
-      },
     }),
   }),
 });

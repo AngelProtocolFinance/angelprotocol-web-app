@@ -35,6 +35,7 @@ export default function useRegisterWallet() {
           body: { TerraWallet: walletAddress },
           PK: user.ContactPerson.PK,
         });
+        console.log(response);
 
         const result = response as {
           data: UpdateCharityMetadataResult;
