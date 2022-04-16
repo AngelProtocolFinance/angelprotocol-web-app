@@ -8,6 +8,11 @@ import Contract from "./Contract";
 import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "./types";
 
 export type PageOptions = { limit?: number; start_before?: number };
+export type VotesPageOptions = {
+  proposal_id: number;
+  limit?: number;
+  start_after?: number;
+};
 export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 export default class Admin extends Contract {
   cw4: string;
@@ -20,7 +25,7 @@ export default class Admin extends Contract {
   //CW3
   proposals: (arg: PageOptions) => CQA;
   proposal: (arg: number) => CQA;
-  voteList: (arg: number) => CQA;
+  voteList: (arg: VotesPageOptions) => CQA;
   voter: CQA;
   cw3Config: CQA;
 
@@ -65,11 +70,11 @@ export default class Admin extends Contract {
       },
     });
 
-    this.voteList = (pollId: number) => ({
+    this.voteList = (options) => ({
       address: this.cw3,
       msg: {
         list_votes: {
-          proposal_id: pollId,
+          ...options,
         },
       },
     });

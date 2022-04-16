@@ -4,6 +4,7 @@ import Icon from "components/Icons/Icons";
 import DetailLabel from "./DetailLabel";
 import PollAction from "./PollAction";
 import ProposalContent from "./ProposalContent/ProposalContent";
+import VotesTable from "./Votes";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
@@ -44,6 +45,9 @@ export default function Proposal() {
           </span>
         </h4>
         <Votes {...proposalDetails} />
+        {proposalDetails.votes.length > 0 && (
+          <VotesTable proposalId={proposal.id} />
+        )}
       </div>
     </div>
   );
