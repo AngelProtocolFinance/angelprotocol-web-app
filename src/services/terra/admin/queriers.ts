@@ -1,11 +1,11 @@
-import { chainIDs } from "constants/chainIDs";
-import { CWContracts, PageOptions, VotesPageOptions } from "contracts/Admin";
-import idParamToNumber from "helpers/idParamToNum";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "pages/Admin/Proposals/Proposals";
 import { ProposalMeta } from "pages/Admin/types";
+import { CWContracts, PageOptions, VotesPageOptions } from "contracts/Admin";
+import idParamToNumber from "helpers/idParamToNum";
+import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import { Proposal } from "./types";
