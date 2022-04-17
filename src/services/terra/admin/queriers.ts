@@ -3,7 +3,7 @@ import {
   ProposalStatusOptions,
 } from "pages/Admin/Proposals/Proposals";
 import { ProposalMeta } from "pages/Admin/types";
-import { CWContracts, PageOptions } from "contracts/Admin";
+import { CWContracts, PageOptions, VotesPageOptions } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
 import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
@@ -104,6 +104,18 @@ function genPageOptions(
     return { limit: 10_000 };
   }
 }
+export const VOTES_PER_PAGE = 15;
+function genVoteListPageOptions(
+  pollId: number,
+  pageNum?: number
+): VotesPageOptions {
+  return {
+    proposal_id: pollId,
+    ...(pageNum && {
+      limit: pageNum * VOTES_PER_PAGE,
+    }),
+  };
+}
 
 export function useProposal(pollId?: string | number) {
   const { useProposalQuery } = admin_api;
@@ -124,16 +136,19 @@ export function useProposal(pollId?: string | number) {
   return { proposal: data, isProposalLoading: isFetching || isLoading };
 }
 
-export function useVoteList(pollId: number) {
+export function useVoteList(pollId: number, pageNum?: number) {
   const { useVotesQuery } = admin_api;
   const { wallet, contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,
     isLoading,
-  } = useVotesQuery(contract.voteList(pollId), {
-    skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
-  });
+  } = useVotesQuery(
+    contract.voteList(genVoteListPageOptions(pollId, pageNum)),
+    {
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.localterra,
+    }
+  );
   return { votes: data, isVoteListLoading: isFetching || isLoading };
 }
 

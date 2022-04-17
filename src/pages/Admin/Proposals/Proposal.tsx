@@ -6,6 +6,7 @@ import PollAction from "./PollAction";
 import ProposalContent from "./ProposalContent/ProposalContent";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
+import VotesTable from "./Votes";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 
 export type ProposalIdParam = { id: string };
@@ -44,6 +45,9 @@ export default function Proposal() {
           </span>
         </h4>
         <Votes {...proposalDetails} />
+        {proposalDetails.votes.length > 0 && (
+          <VotesTable proposalId={proposal.id} />
+        )}
       </div>
     </div>
   );
