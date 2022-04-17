@@ -1,4 +1,4 @@
-import { Link, LinkProps, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import { CharityParam } from "../types";
@@ -49,17 +49,6 @@ function IconLink({
     >
       <Icon type={_iconType} size={25} />
     </a>
-  );
-}
-
-function IconRouteLink({
-  _iconType,
-  ...restProps
-}: LinkProps & { _iconType: IconTypes }) {
-  return (
-    <Link {...restProps} className={linkStyle}>
-      <Icon type={_iconType} size={25} />
-    </Link>
   );
 }
 
