@@ -3,7 +3,6 @@ export enum tags {
   user = "user",
   halo = "halo",
   lbp = "lbp",
-  endowment = "endowment",
   admin = "admin",
   multicall = "multicall",
 }
@@ -39,8 +38,4 @@ export enum lbp {
 export enum multicall {
   endowmentBalance = "endowmentBalance",
   airdrop = "airdrop",
-}
-
-export enum endowment {
-  holdings = "holdings",
 }

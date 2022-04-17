@@ -8,10 +8,6 @@ export enum cha {
   profiles = "profiles",
 }
 
-export enum alliance {
-  members = "members",
-}
-
 export enum admin {
   applications = "applications",
 }
