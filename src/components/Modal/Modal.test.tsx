@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import Icon from "components/Icons/Icons";
 import Modal, { useSetModal } from "./Modal";
 

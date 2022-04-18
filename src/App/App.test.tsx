@@ -74,30 +74,30 @@ describe("<App /> routes to Gov and Leaderboard pages", () => {
   );
 
   test("Routes to governance page", async () => {
-    const { getByText, findByText } = render(component);
+    render(component);
 
-    const navigator = getByText("Governance");
+    const navigator = screen.getByText("Governance");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
     userEvent.click(navigator);
 
     // governance page is rendered
-    const navItem = await findByText(/Governance/i);
+    const navItem = await screen.findByText(/Governance/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem).toHaveAttribute("aria-current");
-    expect(await findByText("total staked")).toBeInTheDocument();
-    expect(await findByText("Trade Halo")).toBeInTheDocument();
+    expect(await screen.findByText("total staked")).toBeInTheDocument();
+    expect(await screen.findByText("Trade Halo")).toBeInTheDocument();
   });
 
   test("Routes to Leaderboard page", async () => {
-    const { getByText, findByText } = render(component);
-    const navigator = getByText("Leaderboard");
+    render(component);
+    const navigator = screen.getByText("Leaderboard");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
     userEvent.click(navigator);
 
     // Leaderboard page is rendered
-    const navItem = await findByText(/Leaderboard/i);
+    const navItem = await screen.findByText(/Leaderboard/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem).toHaveAttribute("aria-current");
   });
