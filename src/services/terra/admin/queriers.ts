@@ -32,6 +32,7 @@ export function useMember(customCWs?: CWContracts, skip = false) {
     data = member,
     isFetching,
     isLoading,
+    isError,
   } = useMemberQuery(contract.member, {
     skip:
       skip ||
@@ -39,7 +40,11 @@ export function useMember(customCWs?: CWContracts, skip = false) {
       !wallet ||
       wallet.network.chainID === chainIDs.localterra,
   });
-  return { member: data, isMemberLoading: isFetching || isLoading };
+  return {
+    member: data,
+    isMemberLoading: isFetching || isLoading,
+    isMemberError: isError,
+  };
 }
 
 export const NUM_PROPOSALS_PER_PAGE = 5;

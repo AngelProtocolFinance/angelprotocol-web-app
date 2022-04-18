@@ -1,4 +1,4 @@
-import { Profile } from "services/aws/endowments/types";
+import { Profile } from "services/terra/account/types";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import CharityNav from "./CharityNav";
 import CharityTabs from "./CharityTabs/CharityTabs";

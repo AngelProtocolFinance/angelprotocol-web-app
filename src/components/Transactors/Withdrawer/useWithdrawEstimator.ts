@@ -2,6 +2,8 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
+import { vaultMap } from "services/terra/multicall/constants";
+import { AmountInfo, VaultFieldIds } from "services/terra/multicall/types";
 import {
   setFee,
   setFormError,
@@ -16,24 +18,19 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { proposalTypes } from "constants/routes";
-import { SEPARATOR, vaultMap } from "./constants";
-import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
+import { WithdrawResource, WithdrawValues } from "./types";
 
-export default function useWithrawEstimator() {
+const SEPARATOR = ":";
+export default function useWithrawEstimator(resources: WithdrawResource) {
   const {
     watch,
     setValue,
-    getValues,
     setError,
     clearErrors,
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const account_addr = getValues("account_addr");
-  const { vaultLimits } = useFieldsAndLimits(account_addr);
-
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
@@ -102,7 +99,7 @@ export default function useWithrawEstimator() {
         const usdValues: Dec[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
-          const { limit, addr, rate } = vaultLimits[fieldId];
+          const { limit, addr, rate } = resources.vaultLimits[fieldId];
           if (fieldInput.amount.mul(1e6).gt(limit)) {
             setError(fieldId, { message: "not enough balance" });
           } else {
@@ -126,7 +123,7 @@ export default function useWithrawEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(account_addr, wallet);
+        const accountContract = new Account(resources.accountAddr, wallet);
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
@@ -177,7 +174,6 @@ export default function useWithrawEstimator() {
     //eslint-disable-next-line
   }, [
     wallet,
-    vaultLimits,
     debAmounts,
     isDebouncing,
     isDirty,

@@ -1,29 +1,13 @@
-import { Profile } from "services/aws/endowments/types";
 import { CWContracts } from "contracts/Admin";
 import { CW3Config } from "../admin/types";
 import contract_querier from "../contract_querier";
 import { endowment, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
-import { EndowmentDetails, Holdings } from "./types";
+import { EndowmentDetails, Profile } from "./types";
 
 export const account_api = terra.injectEndpoints({
   endpoints: (builder) => ({
-    endowmentHoldings: builder.query<Holdings, ContractQueryArgs>({
-      providesTags: [{ type: tags.endowment, id: endowment.holdings }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<Holdings>) => {
-        return res.query_result;
-      },
-    }),
-    endowmentDetails: builder.query<EndowmentDetails, ContractQueryArgs>({
-      providesTags: [{ type: tags.endowment, id: endowment.holdings }],
-      query: contract_querier,
-      transformResponse: (res: QueryRes<EndowmentDetails>) => {
-        return res.query_result;
-      },
-    }),
-
     endowmentCWs: builder.query<CWContracts, string>({
       async queryFn(address, queryApi, extraOptions, baseQuery) {
         try {

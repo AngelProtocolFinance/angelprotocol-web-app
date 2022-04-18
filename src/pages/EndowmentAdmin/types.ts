@@ -1,17 +1,15 @@
-import { Holding } from "services/terra/account/types";
-
 export type EndowmentAddrParams = { address: string };
 
 type LockedSummary = {
   type: "locked";
-  holdings: Holding[];
+  balance: number;
   isOwner?: never;
   opener?: never;
 };
 
 type LiquidSummary = {
   type: "liquid";
-  holdings: Holding[];
+  balance: number;
   isOwner: boolean;
   opener: () => void;
 };

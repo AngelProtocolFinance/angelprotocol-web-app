@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import Icon from "components/Icons/Icons";
 import Modal, { useSetModal } from "./Modal";
 
@@ -72,9 +71,7 @@ describe("<Modal/> is Dismissed", () => {
 
     // click on the modal wrapper to close the modal
     const wrapper = await screen.findByRole("alertdialog");
-    act(() => {
-      userEvent.click(wrapper);
-    });
+    userEvent.click(wrapper);
     expect(modalContent).not.toBeInTheDocument();
   });
 });

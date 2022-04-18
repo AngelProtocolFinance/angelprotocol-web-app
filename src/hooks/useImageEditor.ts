@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import placeHolderImage from "assets/images/home-banner.jpg";
 import { useSetModal } from "components/Modal/Modal";

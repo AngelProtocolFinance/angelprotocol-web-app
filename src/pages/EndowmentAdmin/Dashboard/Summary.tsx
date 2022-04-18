@@ -1,22 +1,8 @@
-import { Dec } from "@terra-money/terra.js";
-import { useMemo } from "react";
-import { useApprovedVaultsRateState } from "services/terra/registrar/states";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
 import { HoldingSummary } from "../types";
 
 export default function Summary(props: HoldingSummary) {
-  const { vaultsRate, isVaultsRateError } = useApprovedVaultsRateState();
-  const total_holding = useMemo(() => {
-    const total_dec = props.holdings.reduce((total, holding) => {
-      const vaultInfo = vaultsRate.find(
-        (vault) => vault.vault_addr === holding.address
-      );
-      return total.add(new Dec(holding.amount).mul(vaultInfo?.fx_rate || "0"));
-    }, new Dec(0));
-    return total_dec.div(1e6).toNumber();
-  }, [vaultsRate, props.holdings]);
-
   const title =
     props.type === "liquid" ? "Liquid Account" : "Endowment Account";
 
@@ -27,7 +13,7 @@ export default function Summary(props: HoldingSummary) {
         <span>{title}</span>
         {props.opener !== undefined && (
           <button
-            disabled={!props.isOwner || isVaultsRateError}
+            disabled={!props.isOwner}
             onClick={props.opener}
             className="ml-auto bg-angel-blue hover:bg-bright-blue disabled:bg-grey-accen px-2 py-1 rounded-md uppercase text-sm font-heading"
           >
@@ -36,7 +22,7 @@ export default function Summary(props: HoldingSummary) {
         )}
       </h3>
       <p className="font-bold text-3xl md:text-4xl font-heading mt-4 mb-2 pb-4 border-b border-white/10 text-center">
-        $ {toCurrency(total_holding)}
+        $ {toCurrency(props.balance)}
       </p>
 
       {/**TODO: render this distribution based of props.holdings */}

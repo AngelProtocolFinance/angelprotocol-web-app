@@ -1,10 +1,20 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, useParams } from "react-router-dom";
+import Icon from "components/Icons/Icons";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { admin } from "constants/routes";
+import { admin, app, site } from "constants/routes";
+import { EndowmentAddrParams } from "./types";
 
 export default function AdminNav() {
+  const { address: endowmentAddress } = useParams<EndowmentAddrParams>();
   return (
-    <div className="flex justify-end divide-x border-white/80">
+    <div className="flex justify-end ">
+      <Link
+        to={`${site.app}/${app.charity}/${endowmentAddress}`}
+        className={linkStyle + " mr-auto flex items-center"}
+      >
+        <Icon size={15} type="ArrowBack" />
+        back to profile
+      </Link>
       <NavLink end to={admin.index} className={styler}>
         dashboard
       </NavLink>
@@ -15,7 +25,6 @@ export default function AdminNav() {
   );
 }
 
-const styler = createNavLinkStyler(
-  "px-2 uppercase text-sm text-center font-semibold font-heading text-white",
-  "text-angel-orange"
-);
+const linkStyle =
+  "px-2 uppercase text-sm text-center font-semibold font-heading text-white border-r border-white/90 last:border-r-0 first:border-r-0";
+const styler = createNavLinkStyler(linkStyle, "text-angel-orange");

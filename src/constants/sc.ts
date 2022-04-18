@@ -16,4 +16,5 @@ export enum sc {
   loop_router = "loop_router",
   loop_haloust_pair = "loop_haloust_pair",
   loop_haloust_lp = "loop_haloust_lp",
+  multicall = "multicall",
 }

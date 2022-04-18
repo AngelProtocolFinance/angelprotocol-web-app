@@ -1,4 +1,4 @@
-import { Profile } from "services/aws/endowments/types";
+import { Profile } from "services/terra/account/types";
 
 export default function CharityStats(props: Profile & { classes?: string }) {
   return (

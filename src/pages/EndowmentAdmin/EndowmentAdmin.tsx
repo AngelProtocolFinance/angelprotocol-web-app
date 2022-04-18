@@ -30,7 +30,8 @@ export default function EndowmentAdmin() {
   useEffect(() => {
     if (isCWContractsLoading) return;
     dispatch(setCWContracts(cwContracts));
-  }, [cwContracts, isCWContractsLoading, dispatch]);
+    //eslint-disable-next-line
+  }, [isCWContractsLoading, dispatch]);
 
   if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
