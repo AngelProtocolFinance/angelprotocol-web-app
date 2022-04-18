@@ -1,12 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { removeUser } from "pages/Registration/store";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app } from "constants/routes";
 import { Button } from "./common";
+import { removeUser } from "./store";
 
 export default function ConfirmEmail() {
   const navigate = useNavigate();

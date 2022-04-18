@@ -2,7 +2,6 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { User, updateUser } from "pages/Registration/store";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
@@ -14,6 +13,7 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
+import { User, updateUser } from "../../store";
 import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {
@@ -63,7 +63,7 @@ export default function useSaveContactDetails() {
             Email: contactData.email,
             PhoneNumber: contactData.phone,
             Role: contactData.orgRole,
-            OtherRole: contactData.otherRole || "",
+            OtherRole: contactData.otherRole,
           },
         },
       };
@@ -77,32 +77,35 @@ export default function useSaveContactDetails() {
         error: FetchBaseQueryError | SerializedError;
       };
 
-      if (!!dataResult?.data?.ContactPerson.PK) {
-        handleUpdateUser(dataResult.data);
-        if (is_create) {
-          await resendEmail({
-            uuid: dataResult.data.ContactPerson.PK,
-            type: "verify-email",
-            body: {
-              ...postData.body.ContactPerson,
-              CharityName: postData.body.Registration.CharityName,
-            },
-          });
-          navigate(`${site.app}/${app.register}/${routes.confirm}`);
-        } else {
-          navigate(`${site.app}/${app.register}/${routes.dashboard}`);
-        }
-      } else {
+      if (!!dataResult.error) {
         setError(true);
         const resultError =
           dataResult.error ||
-          dataResult.data ||
+          (dataResult.error as FetchBaseQueryError).data ||
           (dataResult as SerializedError).message;
 
         showModal<PopupProps>(Popup, {
           message: `${resultError} Please check your email for the registration reference.`,
         });
+        return;
       }
+
+      handleUpdateUser(dataResult.data);
+
+      if (!is_create) {
+        navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+        return;
+      }
+
+      await resendEmail({
+        uuid: dataResult.data.ContactPerson.PK,
+        type: "verify-email",
+        body: {
+          ...dataResult.data.ContactPerson,
+          CharityName: dataResult.data.Registration.CharityName,
+        },
+      });
+      navigate(`${site.app}/${app.register}/${routes.confirm}`);
     },
     [
       navigate,

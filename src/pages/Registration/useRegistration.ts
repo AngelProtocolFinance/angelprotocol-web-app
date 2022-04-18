@@ -2,7 +2,6 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { updateUser } from "pages/Registration/store";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { CharityData } from "services/aws/types";
 import { useSetModal } from "components/Modal/Modal";
@@ -12,6 +11,7 @@ import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { app, site } from "constants/routes";
 import createUserData from "./createUserData";
 import routes from "./routes";
+import { updateUser } from "./store";
 
 export type ReferInfo = { refer: string };
 

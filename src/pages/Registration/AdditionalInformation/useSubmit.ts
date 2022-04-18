@@ -1,11 +1,11 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
-import { User, updateUser } from "pages/Registration/store";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
+import { updateUser } from "../store";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
@@ -17,16 +17,17 @@ export default function useSubmit() {
 
   const handleSuccess = useCallback(
     (data: UpdateCharityMetadataResult) => {
-      const userData: User = {
-        ...user,
-        Metadata: {
-          ...user.Metadata,
-          Banner: data.Banner,
-          CharityLogo: data.CharityLogo,
-          CharityOverview: data.CharityOverview,
-        },
-      };
-      dispatch(updateUser(userData));
+      dispatch(
+        updateUser({
+          ...user,
+          Metadata: {
+            ...user.Metadata,
+            Banner: data.Banner,
+            CharityLogo: data.CharityLogo,
+            CharityOverview: data.CharityOverview,
+          },
+        })
+      );
     },
     [dispatch, user]
   );

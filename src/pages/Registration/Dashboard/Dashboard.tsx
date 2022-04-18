@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { User } from "pages/Registration/store";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
+import { User } from "../store";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
