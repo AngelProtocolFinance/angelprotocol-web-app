@@ -19,11 +19,8 @@ export default function useCurrentLevel({
 
     if (
       !proofOfIdentityState.error &&
-      proofOfIdentityState.isDirty &&
       !websiteState.error &&
-      websiteState.isDirty &&
-      !proofOfRegistrationState.error &&
-      proofOfRegistrationState.isDirty
+      !proofOfRegistrationState.error
     ) {
       newLevel = 1;
     }
@@ -31,18 +28,12 @@ export default function useCurrentLevel({
     if (
       newLevel === 1 &&
       !unSdgState.error &&
-      unSdgState.isDirty &&
-      !financialStatementsState.error &&
-      financialStatementsState.isDirty
+      !financialStatementsState.error
     ) {
       newLevel = 2;
     }
 
-    if (
-      newLevel === 2 &&
-      !auditedFinancialReportState.error &&
-      auditedFinancialReportState.isDirty
-    ) {
+    if (newLevel === 2 && !auditedFinancialReportState.error) {
       newLevel = 3;
     }
 

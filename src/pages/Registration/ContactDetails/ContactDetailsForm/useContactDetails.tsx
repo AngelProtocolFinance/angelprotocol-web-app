@@ -27,16 +27,16 @@ export default function useSaveContactDetails() {
   const { showModal } = useSetModal();
 
   const handleUpdateUser = useCallback(
-    (postData: ContactDetailsRequest) => {
+    (result: ContactDetailsData) => {
       const newUserData: User = {
         ...user,
         ContactPerson: {
           ...user.ContactPerson,
-          ...postData.body.ContactPerson,
+          ...result.ContactPerson,
         },
         Registration: {
           ...user.Registration,
-          CharityName: postData.body.Registration.CharityName,
+          CharityName: result.Registration.CharityName,
           RegistrationDate: new Date().toISOString(),
           RegistrationStatus: "Not Complete",
         },
@@ -78,7 +78,7 @@ export default function useSaveContactDetails() {
       };
 
       if (!!dataResult?.data?.ContactPerson.PK) {
-        handleUpdateUser(postData);
+        handleUpdateUser(dataResult.data);
         if (is_create) {
           await resendEmail({
             uuid: dataResult.data.ContactPerson.PK,
