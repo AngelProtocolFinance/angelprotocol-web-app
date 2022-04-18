@@ -26,5 +26,9 @@ export default function WebsiteInput() {
   );
 }
 
-const transformUrl = (website: string) =>
-  website.startsWith("http") ? website : `http://${website}`;
+const transformUrl = (website: string) => {
+  if (!website) {
+    return "";
+  }
+  return website.startsWith("http") ? website : `http://${website}`;
+};
