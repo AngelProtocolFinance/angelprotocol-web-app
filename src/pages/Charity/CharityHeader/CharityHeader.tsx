@@ -2,6 +2,7 @@ import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
 import { Profile } from "services/aws/endowments/types";
 import CharityLinks from "./CharityLinks";
+import useTransak from "hooks/useTransak";
 
 export default function CharityHeader(props: Profile) {
   const showDonater = useDonater({
@@ -9,6 +10,7 @@ export default function CharityHeader(props: Profile) {
     receiver: props.endowment_address!,
   });
   const sdg = unsdgs[+props.un_sdg];
+  const { initTransak } = useTransak();
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -27,7 +29,7 @@ export default function CharityHeader(props: Profile) {
       <div className="flex items-center gap-2 flex-wrap">
         <button
           disabled={props.is_placeholder}
-          onClick={showDonater}
+          onClick={initTransak}
           className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
         >
           DONATE NOW
