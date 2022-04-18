@@ -13,7 +13,7 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
-import { User, updateUser } from "../../store";
+import { CharityData, updateCharity } from "../../store";
 import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {
@@ -22,28 +22,28 @@ export default function useSaveContactDetails() {
   const [updateContactPerson] = useUpdatePersonDataMutation();
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
   const { showModal } = useSetModal();
 
-  const handleUpdateUser = useCallback(
+  const handleUpdateCharity = useCallback(
     (result: ContactDetailsData) => {
-      const newUserData: User = {
-        ...user,
+      const newCharity: CharityData = {
+        ...charity,
         ContactPerson: {
-          ...user.ContactPerson,
+          ...charity.ContactPerson,
           ...result.ContactPerson,
         },
         Registration: {
-          ...user.Registration,
+          ...charity.Registration,
           CharityName: result.Registration.CharityName,
           RegistrationDate: new Date().toISOString(),
           RegistrationStatus: "Not Complete",
         },
       };
-      dispatch(updateUser(newUserData));
+      dispatch(updateCharity(newCharity));
     },
-    [dispatch, user]
+    [dispatch, charity]
   );
 
   const saveContactDetails = useCallback(
@@ -62,7 +62,7 @@ export default function useSaveContactDetails() {
             LastName: contactData.lastName,
             Email: contactData.email,
             PhoneNumber: contactData.phone,
-            Role: contactData.orgRole,
+            Role: contactData.role,
             OtherRole: contactData.otherRole,
           },
         },
@@ -90,7 +90,7 @@ export default function useSaveContactDetails() {
         return;
       }
 
-      handleUpdateUser(dataResult.data);
+      handleUpdateCharity(dataResult.data);
 
       if (!is_create) {
         navigate(`${site.app}/${app.register}/${routes.dashboard}`);
@@ -113,7 +113,7 @@ export default function useSaveContactDetails() {
       resendEmail,
       showModal,
       updateContactPerson,
-      handleUpdateUser,
+      handleUpdateCharity,
     ]
   );
 

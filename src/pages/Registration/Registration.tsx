@@ -5,7 +5,7 @@ import banner1 from "assets/images/banner-register-1.jpg";
 import { useSetter } from "store/accessors";
 import { Button } from "./common";
 import routes from "./routes";
-import { removeUser } from "./store";
+import { removeCharity } from "./store";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 
 const Registration = () => {
@@ -21,7 +21,7 @@ const Registration = () => {
   });
 
   const handleStart = () => {
-    dispatch(removeUser());
+    dispatch(removeCharity());
     navigate(routes.contactDetails);
   };
 

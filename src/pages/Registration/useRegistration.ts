@@ -3,15 +3,15 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { CharityData } from "services/aws/types";
+import { Charity } from "services/aws/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { app, site } from "constants/routes";
-import createUserData from "./createUserData";
+import createCharityData from "./createCharityData";
 import routes from "./routes";
-import { updateUser } from "./store";
+import { updateCharity } from "./store";
 
 export type ReferInfo = { refer: string };
 
@@ -29,7 +29,7 @@ export const useRegistration = () => {
     const result = await checkData(values.refer);
 
     const dataResult = result as {
-      data: CharityData;
+      data: Charity;
       error: FetchBaseQueryError | SerializedError;
     };
 
@@ -44,9 +44,9 @@ export const useRegistration = () => {
     const { data } = dataResult;
 
     const token = createAuthToken(UserTypes.CHARITY_OWNER);
-    const userData = createUserData(data, token);
-    dispatch(updateUser(userData));
-    if (userData.ContactPerson.EmailVerified) {
+    const charity = createCharityData(data, token);
+    dispatch(updateCharity(charity));
+    if (charity.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {
       navigate(`${site.app}/${app.register}/${routes.confirm}`, {

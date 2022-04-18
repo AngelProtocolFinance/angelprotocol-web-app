@@ -22,19 +22,21 @@ import useUpload from "./useUpload";
 
 export default function Documentation() {
   const navigate = useNavigate();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
       un_sdg:
-        user.Registration.UN_SDG >= 0 ? user.Registration.UN_SDG : undefined,
-      website: user.Registration.Website,
-      proofOfIdentity: user.Registration.ProofOfIdentity,
-      proofOfRegistration: user.Registration.ProofOfRegistration,
-      financialStatements: user.Registration.FinancialStatements,
-      auditedFinancialReports: user.Registration.AuditedFinancialReports,
+        charity.Registration.UN_SDG >= 0
+          ? charity.Registration.UN_SDG
+          : undefined,
+      website: charity.Registration.Website,
+      proofOfIdentity: charity.Registration.ProofOfIdentity,
+      proofOfRegistration: charity.Registration.ProofOfRegistration,
+      financialStatements: charity.Registration.FinancialStatements,
+      auditedFinancialReports: charity.Registration.AuditedFinancialReports,
     },
   });
   const currentLevel = useCurrentLevel(methods);

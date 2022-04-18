@@ -1,4 +1,4 @@
-import { UserRoles } from "pages/Registration/constants";
+import { ContactRoles } from "pages/Registration/constants";
 
 export interface AWSQueryRes<T> {
   Count: number;
@@ -6,7 +6,7 @@ export interface AWSQueryRes<T> {
   Items: T;
 }
 
-export type CharityData = {
+export type Charity = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
@@ -38,7 +38,7 @@ export type ContactPerson = {
   OtherRole?: string;
   PhoneNumber: string;
   PK?: string;
-  Role: UserRoles;
+  Role: ContactRoles;
   SK?: "ContactPerson";
 };
 

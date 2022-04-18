@@ -1,3 +1,3 @@
-import { CharityData } from "services/aws/types";
+import { Charity } from "services/aws/types";
 
-export type User = CharityData & { token?: string };
+export type CharityData = Charity & { token?: string };

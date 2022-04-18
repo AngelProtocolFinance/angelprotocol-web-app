@@ -5,12 +5,12 @@ import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { FileObject, UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
-import { updateUser } from "../store";
+import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
 
   // this '_' value should be used to notify the user of a failure,
@@ -20,16 +20,19 @@ export default function useUpload() {
   const handleSuccess = useCallback(
     (data?: UpdateDocumentationResult) =>
       dispatch(
-        updateUser({ ...user, Registration: { ...user.Registration, ...data } })
+        updateCharity({
+          ...charity,
+          Registration: { ...charity.Registration, ...data },
+        })
       ),
-    [dispatch, user]
+    [dispatch, charity]
   );
 
   const upload = useCallback(
     async (values: FormValues) => {
       const uploadBody = await getUploadBody(values);
 
-      const postData = { PK: user.ContactPerson.PK, body: uploadBody };
+      const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
 
       const dataResult = result as {
@@ -43,7 +46,7 @@ export default function useUpload() {
         handleSuccess(dataResult.data);
       }
     },
-    [user.ContactPerson.PK, handleSuccess, handleError, uploadDocumentation]
+    [charity.ContactPerson.PK, handleSuccess, handleError, uploadDocumentation]
   );
 
   return { upload, isSuccess };

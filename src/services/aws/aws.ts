@@ -8,10 +8,10 @@ const awsBaseQuery = retry(
     baseUrl: aws_endpoint,
     mode: "cors",
     prepareHeaders: (headers, { getState }) => {
-      const { user } = getState() as RootState;
-      // const userData: any = (getState() as TStore).user.userData;
-      if (user.token) {
-        headers.set("authorization", user.token);
+      const { charity } = getState() as RootState;
+
+      if (charity.token) {
+        headers.set("authorization", charity.token);
       }
       return headers;
     },

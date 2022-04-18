@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { UserRoles } from "../../constants";
+import { ContactRoles } from "../../constants";
 
 export type ContactDetails = {
   charityName: string;
@@ -7,7 +7,7 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
-  orgRole: UserRoles;
+  role: ContactRoles;
   otherRole: string;
   checkedPolicy: boolean;
   uniqueID: string;
@@ -23,7 +23,7 @@ export const ContactInfoSchema = Yup.object().shape({
     .email("Invalid email format")
     .required("Please enter your email."),
   // since selector logic has a default value selected, this error message should never appear
-  orgRole: Yup.string().required(
+  role: Yup.string().required(
     "Please select your role within your organization."
   ),
   otherRole: Yup.string().when("orgRole", {

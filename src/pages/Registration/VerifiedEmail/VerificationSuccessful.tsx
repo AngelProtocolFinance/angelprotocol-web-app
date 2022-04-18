@@ -2,21 +2,21 @@ import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
-import { User, updateUser } from "../store";
+import { CharityData, updateCharity } from "../store";
 
 type Props = {
-  userData: User;
+  charity: CharityData;
   onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading: boolean;
 };
 
 export default function VerificationSuccessful(props: Props) {
-  const { userData, onClick, isLoading } = props;
+  const { charity, onClick, isLoading } = props;
   const dispatch = useSetter();
 
   useEffect(() => {
-    dispatch(updateUser(userData));
-  }, [dispatch, userData]);
+    dispatch(updateCharity(charity));
+  }, [dispatch, charity]);
 
   return (
     <div className="flex flex-col gap-10 items-center">
@@ -24,13 +24,12 @@ export default function VerificationSuccessful(props: Props) {
       <div className="text-2xl font-bold">
         <p>Thank you for registering.</p>
         <p>
-          {userData.Registration.CharityName},{" "}
-          {userData.ContactPerson.FirstName}!
+          {charity.Registration.CharityName}, {charity.ContactPerson.FirstName}!
         </p>
       </div>
       <div className="text-2xl font-bold">
         <p>Your registration reference is</p>
-        <p className="text-yellow-600">{userData.ContactPerson.PK}</p>
+        <p className="text-yellow-600">{charity.ContactPerson.PK}</p>
       </div>
       <Button
         className="bg-thin-blue w-48 h-12"

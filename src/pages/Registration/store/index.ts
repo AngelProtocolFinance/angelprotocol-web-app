@@ -1,2 +1,2 @@
-export * from "./userSlice";
+export * from "./charitySlice";
 export * from "./types";

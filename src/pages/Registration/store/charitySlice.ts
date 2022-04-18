@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { User } from "./types";
+import { CharityData } from "./types";
 
-const STORAGE_KEY = "user";
+const STORAGE_KEY = "charity";
 
-const getDefaultUser = (): User => ({
+const getDefaultCharity = (): CharityData => ({
   ContactPerson: {
     Email: "",
     EmailVerified: false,
@@ -38,27 +38,29 @@ const getDefaultUser = (): User => ({
   token: "",
 });
 
-const loadUser = (): User => {
-  const localUser = localStorage.getItem(STORAGE_KEY);
-  return !!localUser ? (JSON.parse(localUser) as User) : getDefaultUser();
+const loadCharity = (): CharityData => {
+  const localCharity = localStorage.getItem(STORAGE_KEY);
+  return !!localCharity
+    ? (JSON.parse(localCharity) as CharityData)
+    : getDefaultCharity();
 };
 
-const userSlice = createSlice({
-  name: "user",
-  initialState: loadUser(),
+const charitySlice = createSlice({
+  name: "charity",
+  initialState: loadCharity(),
   reducers: {
-    removeUser: (state) => {
+    removeCharity: (state) => {
       localStorage.removeItem(STORAGE_KEY);
-      return getDefaultUser();
+      return getDefaultCharity();
     },
-    updateUser: (state, { payload }: PayloadAction<User>) => {
+    updateCharity: (state, { payload }: PayloadAction<CharityData>) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
       return payload;
     },
   },
 });
 
-const userReducer = userSlice.reducer;
+const charityReducer = charitySlice.reducer;
 
-export { userReducer };
-export const { removeUser, updateUser } = userSlice.actions;
+export { charityReducer };
+export const { removeCharity, updateCharity } = charitySlice.actions;

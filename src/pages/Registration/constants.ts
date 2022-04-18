@@ -1,4 +1,4 @@
-export type UserRoles =
+export type ContactRoles =
   | "president"
   | "vice-president"
   | "secretary"
@@ -9,7 +9,7 @@ export type UserRoles =
 
 export type OptionType = { label: string; value: any };
 
-export const userRoleOptions: OptionType[] = [
+export const contactRoleOptions: OptionType[] = [
   { label: "Chairperson / President", value: "president" },
   {
     label: "Vice-chairperson / Vice president",

@@ -3,18 +3,19 @@ import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
-import { User } from "../store";
+import { CharityData } from "../store";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
 
-  const state = getRegistrationState(user);
+  const state = getRegistrationState(charity);
 
-  const dataSubmitted = user.Registration.RegistrationStatus !== "Not Complete";
+  const dataSubmitted =
+    charity.Registration.RegistrationStatus !== "Not Complete";
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -72,15 +73,15 @@ export default function Dashboard() {
           </Button>
         )}
       </div>
-      {user.Registration.RegistrationStatus === "Active" && (
+      {charity.Registration.RegistrationStatus === "Active" && (
         <EndowmentStatus
-          registrationStatus={user.Registration.RegistrationStatus}
-          walletAddress={user.Metadata.TerraWallet}
+          registrationStatus={charity.Registration.RegistrationStatus}
+          walletAddress={charity.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {user.Registration.RegistrationStatus === "Complete" && (
-        <EndowmentCreated charityName={user.Registration.CharityName} />
+      {charity.Registration.RegistrationStatus === "Complete" && (
+        <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>
   );
@@ -100,16 +101,16 @@ type RegistrationState = {
   getIsReadyForSubmit: () => boolean;
 };
 
-function getRegistrationState(user: User): RegistrationState {
+function getRegistrationState(charity: CharityData): RegistrationState {
   return {
-    stepOne: { completed: !!user.ContactPerson.PK },
-    stepTwo: { completed: !!user.Metadata.TerraWallet },
-    stepThree: getStepThree(user),
+    stepOne: { completed: !!charity.ContactPerson.PK },
+    stepTwo: { completed: !!charity.Metadata.TerraWallet },
+    stepThree: getStepThree(charity),
     stepFour: {
       completed:
-        !!user.Metadata.CharityLogo?.sourceUrl &&
-        !!user.Metadata.Banner?.sourceUrl &&
-        !!user.Metadata.CharityOverview,
+        !!charity.Metadata.CharityLogo?.sourceUrl &&
+        !!charity.Metadata.Banner?.sourceUrl &&
+        !!charity.Metadata.CharityOverview,
     },
     getIsReadyForSubmit: function () {
       return (
@@ -122,18 +123,18 @@ function getRegistrationState(user: User): RegistrationState {
   };
 }
 
-function getStepThree(user: User): DocumentationStep {
+function getStepThree(charity: CharityData): DocumentationStep {
   const levelOneDataExists =
-    !!user.Registration.ProofOfIdentity?.sourceUrl &&
-    !!user.Registration.ProofOfRegistration?.sourceUrl &&
-    !!user.Registration.Website;
+    !!charity.Registration.ProofOfIdentity?.sourceUrl &&
+    !!charity.Registration.ProofOfRegistration?.sourceUrl &&
+    !!charity.Registration.Website;
 
   const levelTwoDataExists =
-    !!user.Registration.FinancialStatements?.length &&
-    (user.Registration.UN_SDG || -1) >= 0;
+    !!charity.Registration.FinancialStatements?.length &&
+    (charity.Registration.UN_SDG || -1) >= 0;
 
   const levelThreeDataExists =
-    !!user.Registration.AuditedFinancialReports?.length;
+    !!charity.Registration.AuditedFinancialReports?.length;
 
   const level: DocumentationLevel = levelOneDataExists
     ? levelTwoDataExists

@@ -6,14 +6,16 @@ import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
 import { app, site, web } from "constants/routes";
 import { Button } from "../../common";
-import { userRoleOptions } from "../../constants";
+import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
-import { User } from "../../store";
+import { CharityData } from "../../store";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
-export default function ContactDetailsForm({ user }: { user: User }) {
+type Props = { charity: CharityData };
+
+export default function ContactDetailsForm({ charity }: Props) {
   // 'orgRole' in the form changes automatically, but we need this state setter
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
@@ -29,15 +31,15 @@ export default function ContactDetailsForm({ user }: { user: User }) {
   } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
-      charityName: user.Registration.CharityName,
-      firstName: user.ContactPerson.FirstName,
-      lastName: user.ContactPerson.LastName,
-      email: user.ContactPerson.Email,
-      phone: user.ContactPerson.PhoneNumber,
-      orgRole: user.ContactPerson.Role,
-      otherRole: user.ContactPerson.OtherRole,
+      charityName: charity.Registration.CharityName,
+      firstName: charity.ContactPerson.FirstName,
+      lastName: charity.ContactPerson.LastName,
+      email: charity.ContactPerson.Email,
+      phone: charity.ContactPerson.PhoneNumber,
+      role: charity.ContactPerson.Role,
+      otherRole: charity.ContactPerson.OtherRole,
       checkedPolicy: false,
-      uniqueID: user.ContactPerson.PK,
+      uniqueID: charity.ContactPerson.PK,
     },
   });
 
@@ -88,8 +90,8 @@ export default function ContactDetailsForm({ user }: { user: User }) {
         />
         <RoleSelector
           label="What's your role within the organization?"
-          name="orgRole"
-          options={userRoleOptions}
+          name="role"
+          options={contactRoleOptions}
           control={control}
           onChange={(value: string) => setOrgRole(value)}
           otherRoleErrorMessage={errors.otherRole?.message}
@@ -104,7 +106,7 @@ export default function ContactDetailsForm({ user }: { user: User }) {
         centerError
       />
       <div className="flex justify-center">
-        {(user.ContactPerson.EmailVerified || isError) && (
+        {(charity.ContactPerson.EmailVerified || isError) && (
           <Button
             className="bg-green-400 w-48 h-12 mr-2"
             disabled={isSubmitting}
