@@ -12,8 +12,6 @@ import { FundConfigValues, fundConfigSchema } from "./fundconfigSchema";
 export default function FundConfigurer() {
   const { indexFundConfig, isLoading, isError } = useIndexFundConfig();
 
-  console.log(indexFundConfig);
-
   if (isLoading) return <FormSkeleton />;
   if (isError || !indexFundConfig)
     return <FormError errorMessage="failed to get index fund config" />;

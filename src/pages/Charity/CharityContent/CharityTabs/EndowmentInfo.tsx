@@ -1,23 +1,23 @@
-import { useParams } from "react-router-dom";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { useProfileState } from "services/aws/endowments/states";
 import toCurrency from "helpers/toCurrency";
-import { CharityParam } from "../../types";
 
+//TODO: refactor component markup
 export function EndowmentInfo() {
-  const { address } = useParams<CharityParam>();
-  const { profileState } = useProfileState(address!);
   const accountDetails = [
     {
       type: "Liquid Account",
-      balance: `$${toCurrency(profileState.total_liq)}`,
+      balance: "0", //total_liq missing in profile
+      // balance: `$${toCurrency(profileState.total_liq)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-green-400",
     },
     {
       type: "Endowment Account",
-      balance: `$${toCurrency(profileState.total_lock)}`,
+      //TODO: update this once balance is included in {get_profile:{}}, or
+      //something like useEndowmentBalance multicall query is available
+      balance: "0", //total_liq missing in profile
+      // balance: `$${toCurrency(profileState.total_lock)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
@@ -32,7 +32,7 @@ export function EndowmentInfo() {
             Total Account Value
           </p>
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
-            ${toCurrency(profileState.overall)}
+            ${toCurrency(0) /**overall missing in on-chain Profile */}
           </p>
           {/*          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations

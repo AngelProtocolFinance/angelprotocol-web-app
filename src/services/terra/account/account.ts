@@ -1,3 +1,4 @@
+import { Profile } from "services/aws/endowments/types";
 import { CWContracts } from "contracts/Admin";
 import { CW3Config } from "../admin/types";
 import contract_querier from "../contract_querier";
@@ -57,6 +58,14 @@ export const account_api = terra.injectEndpoints({
             },
           };
         }
+      },
+    }),
+
+    endowmentProfile: builder.query<Profile, ContractQueryArgs>({
+      providesTags: [{ type: tags.endowment, id: endowment.profile }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<Profile>) => {
+        return res.query_result;
       },
     }),
   }),

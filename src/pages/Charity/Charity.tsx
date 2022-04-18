@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useProfile } from "services/aws/endowments/queriers";
+import { useEndowmentProfile } from "services/terra/account/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
 import Icon from "components/Icons/Icons";
 import { app, site } from "constants/routes";
@@ -11,9 +11,13 @@ import { CharityParam } from "./types";
 
 const Charity = () => {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile, isProfileLoading } = useProfile(endowment_addr!);
+  const { isProfileLoading, profile, isProfileError } = useEndowmentProfile(
+    endowment_addr!,
+    !endowment_addr //skip if no endowment address
+  );
 
   if (isProfileLoading) return <CharitySkeleton />;
+  if (isProfileError || !profile) return <PageError />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <Link
@@ -22,14 +26,9 @@ const Charity = () => {
       >
         <Icon type="ArrowBack" size={15} /> back to marketplace
       </Link>
-      <CharityHeader {...{ ...profile }} />
-      <CharityContent
-        {...{
-          ...profile,
-          classes: "row-span-2",
-        }}
-      />
-      <CharityStats {...{ ...profile, classes: "hidden lg:block mt-4" }} />
+      <CharityHeader {...profile} />
+      <CharityContent {...profile} classes="row-span-2" />
+      <CharityStats {...profile} classes="hidden lg:block mt-4" />
     </section>
   );
 };
@@ -45,6 +44,24 @@ function CharitySkeleton() {
         <ContentLoader className="w-full h-full mt-2 rounded-md" />
       </div>
       <ContentLoader className="hidden lg:block mt-2 h-full w-full rounded-md" />
+    </section>
+  );
+}
+
+function PageError() {
+  return (
+    <section
+      className="padded-container grid content-center place-items-center gap-2
+  "
+    >
+      <Icon type="Warning" size={30} className="text-red-400" />
+      <p className="text-red-400 text-lg">Failed to load charity profile</p>
+      <Link
+        to={`${site.app}/${app.marketplace}`}
+        className="text-white/80 hover:text-angel-blue text-sm"
+      >
+        back to Marketplace
+      </Link>
     </section>
   );
 }

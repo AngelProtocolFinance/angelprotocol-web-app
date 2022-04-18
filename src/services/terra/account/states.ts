@@ -34,3 +34,13 @@ export function useEndowmentCWsState(address?: string) {
     isCWContractsLoading: isLoading || isFetching,
   };
 }
+
+export function useEndowmentProfileState(address: string) {
+  const { contract } = useAccountContract(address);
+  const { data } = account_api.endpoints.endowmentProfile.useQueryState(
+    contract.profile
+  );
+  return {
+    profileState: data,
+  };
+}
