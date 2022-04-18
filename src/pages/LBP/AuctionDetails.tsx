@@ -1,5 +1,5 @@
 import Copier from "components/Copier/Copier";
-import { LaunchStatsProps } from ".";
+import { LaunchStatsProps } from "./";
 
 type AuctionLinkProps = {
   PreIcon?: any;

@@ -4,7 +4,7 @@ import { getIcon } from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import PriceGraph from "components/PriceGraph";
-import { LaunchStatsProps } from ".";
+import { LaunchStatsProps } from "./";
 import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
