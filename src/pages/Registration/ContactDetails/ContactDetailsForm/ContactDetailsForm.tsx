@@ -18,7 +18,7 @@ export default function ContactDetailsForm({ user }: { user: User }) {
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
   const [, setOrgRole] = useState("");
-  const { error: isError, saveContactDetails } = useSaveContactDetails();
+  const { isError, saveContactDetails } = useSaveContactDetails();
   const navigate = useNavigate();
 
   const {

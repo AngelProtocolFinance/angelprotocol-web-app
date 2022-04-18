@@ -23,7 +23,7 @@ export default function useSaveContactDetails() {
   const navigate = useNavigate();
   const dispatch = useSetter();
   const user = useGetter((state) => state.user);
-  const [error, setError] = useState(false);
+  const [isError, setError] = useState(false);
   const { showModal } = useSetModal();
 
   const handleUpdateUser = useCallback(
@@ -94,8 +94,13 @@ export default function useSaveContactDetails() {
         }
       } else {
         setError(true);
+        const resultError =
+          dataResult.error ||
+          dataResult.data ||
+          (dataResult as SerializedError).message;
+
         showModal<PopupProps>(Popup, {
-          message: `${dataResult.error} Please check your email for the registration reference.`,
+          message: `${resultError} Please check your email for the registration reference.`,
         });
       }
     },
@@ -110,7 +115,7 @@ export default function useSaveContactDetails() {
   );
 
   return {
-    error,
+    isError,
     saveContactDetails,
   };
 }
