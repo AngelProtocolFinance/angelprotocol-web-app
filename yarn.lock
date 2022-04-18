@@ -3155,13 +3155,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@transak/transak-sdk@npm:^1.0.31":
-  version: 1.0.111
-  resolution: "@transak/transak-sdk@npm:1.0.111"
+"@transak/transak-sdk@npm:1.0.31":
+  version: 1.0.31
+  resolution: "@transak/transak-sdk@npm:1.0.31"
   dependencies:
     events: ^3.1.0
+    query-string: ^6.12.1
     request: ^2.88.2
-  checksum: a4a6f980604c29f045198841369fb895b224a5ce606ac9db139378ff889e2dd5d0e268034199ba898844e72c04f8a8fc56c43a2d26cc6754a7c91e957eba192d
+  checksum: 426876ddd05184e572f8750dac0bbcb933d12295fc477e676c38ad8cc05255a32a8fc2880d5b58bd5a2050f01ab5606d7c0c20091e6e19a86003efc0e6891a5f
   languageName: node
   linkType: hard
 
@@ -4480,7 +4481,7 @@ __metadata:
     "@testing-library/react": ^12.1.3
     "@testing-library/user-event": ^13.5.0
     "@toruslabs/openlogin": ^1.7.1
-    "@transak/transak-sdk": ^1.0.31
+    "@transak/transak-sdk": 1.0.31
     "@types/compress.js": ^1.1.1
     "@types/draft-js": ^0.11.9
     "@types/jest": ^26.0.15
@@ -7990,6 +7991,13 @@ __metadata:
   dependencies:
     to-regex-range: ^5.0.1
   checksum: cc283f4e65b504259e64fd969bcf4def4eb08d85565e906b7d36516e87819db52029a76b6363d0f02d0d532f0033c9603b9e2d943d56ee3b0d4f7ad3328ff917
+  languageName: node
+  linkType: hard
+
+"filter-obj@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "filter-obj@npm:1.1.0"
+  checksum: cf2104a7c45ff48e7f505b78a3991c8f7f30f28bd8106ef582721f321f1c6277f7751aacd5d83026cb079d9d5091082f588d14a72e7c5d720ece79118fa61e10
   languageName: node
   linkType: hard
 
@@ -12670,6 +12678,18 @@ __metadata:
     split-on-first: ^1.0.0
     strict-uri-encode: ^2.0.0
   checksum: 1019dea0ab277bdf606bcc022ec223a9ab9947608d2696114ef9198f72ae553be039705d6c52e16af43d9b79bac67385f63fb7fe9241cd2f7b703dd23c7ab8d3
+  languageName: node
+  linkType: hard
+
+"query-string@npm:^6.12.1":
+  version: 6.14.1
+  resolution: "query-string@npm:6.14.1"
+  dependencies:
+    decode-uri-component: ^0.2.0
+    filter-obj: ^1.1.0
+    split-on-first: ^1.0.0
+    strict-uri-encode: ^2.0.0
+  checksum: f2c7347578fa0f3fd4eaace506470cb4e9dc52d409a7ddbd613f614b9a594d750877e193b5d5e843c7477b3b295b857ec328903c943957adc41a3efb6c929449
   languageName: node
   linkType: hard
 
