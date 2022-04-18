@@ -29,15 +29,15 @@ export default function ContactDetailsForm({ user }: { user: User }) {
   } = useForm<ContactDetails>({
     resolver: yupResolver(ContactInfoSchema),
     defaultValues: {
-      charityName: user.Registration.CharityName || "",
-      firstName: user.ContactPerson.FirstName || "",
-      lastName: user.ContactPerson.LastName || "",
-      email: user.ContactPerson.Email || "",
-      phone: user.ContactPerson.PhoneNumber || "",
-      orgRole: user.ContactPerson.Role || "ceo",
-      otherRole: user.ContactPerson.OtherRole || "",
+      charityName: user.Registration.CharityName,
+      firstName: user.ContactPerson.FirstName,
+      lastName: user.ContactPerson.LastName,
+      email: user.ContactPerson.Email,
+      phone: user.ContactPerson.PhoneNumber,
+      orgRole: user.ContactPerson.Role,
+      otherRole: user.ContactPerson.OtherRole,
       checkedPolicy: false,
-      uniqueID: user.ContactPerson.PK || "",
+      uniqueID: user.ContactPerson.PK,
     },
   });
 
