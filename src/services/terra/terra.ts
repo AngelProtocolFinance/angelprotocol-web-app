@@ -36,6 +36,7 @@ export const terra = createApi({
     tags.halo,
     tags.lbp,
     tags.admin,
+    tags.endowment,
     tags.multicall,
   ],
   endpoints: (builder) => ({

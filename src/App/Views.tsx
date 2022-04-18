@@ -14,7 +14,6 @@ const EndowmentAdmin = lazy(
   () => import("pages/EndowmentAdmin/EndowmentAdmin")
 );
 const Charity = lazy(() => import("pages/Charity/Charity"));
-const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
 const Market = lazy(() => import("pages/Market/Market"));
 
@@ -35,10 +34,6 @@ export default function Views() {
         <Route path={`${app.marketplace}`} element={<Market />} />
         <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
         <Route path={`${app.charity}/:address/*`} element={<Charity />} />
-        <Route
-          path={`${app.charity_edit}/:address`}
-          element={<CharityEdit />}
-        />
         <Route path={`${app.login}`} element={<Login />} />
         <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />

@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import ancIcon from "assets/images/anchor_protocol.png";
+import { CharityParam } from "pages/Charity/types";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import toCurrency from "helpers/toCurrency";
-import { CharityParam } from "../../types";
 
+//TODO: refactor component markup
 export function EndowmentInfo() {
   const { address } = useParams<CharityParam>();
   //this component will not be rendered if address is undefined or incorrect
