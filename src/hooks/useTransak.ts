@@ -9,21 +9,21 @@ const apiKey = isDevelopment
 
 const env = isDevelopment ? "STAGING" : "PRODUCTION";
 
-let transak = new transakSDK({
-  apiKey: apiKey, // Your API Key (Required)
-  environment: env, // STAGING/PRODUCTION (Required)
-  cryptoCurrencyCode: currency_text[denoms.uusd],
-  network: "terra",
-  walletAddress: ap_wallets[denoms.uusd],
-  hostURL: window.location.origin,
-  widgetHeight: "550px",
-  widgetWidth: "450px",
-});
-
 export default function useTransak() {
   function initTransak() {
-    transak.init();
+    let transak = new transakSDK({
+      apiKey: apiKey, // Your API Key (Required)
+      environment: env, // STAGING/PRODUCTION (Required)
+      cryptoCurrencyCode: currency_text[denoms.uusd],
+      network: "terra",
+      walletAddress: ap_wallets[denoms.uusd],
+      hostURL: window.location.origin,
+      widgetHeight: "550px",
+      widgetWidth: "450px",
+    });
 
+    console.log(transak);
+    transak.init();
     // To get all the events
     transak.on(transak.ALL_EVENTS, () => {});
 
