@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import getDefaultUser from "./getDefaultUser";
 import { User } from "./types";
 
 const STORAGE_KEY = "user";
@@ -28,3 +27,38 @@ const userReducer = userSlice.reducer;
 
 export { userReducer };
 export const { removeUser, updateUser } = userSlice.actions;
+
+const getDefaultUser = (): User => ({
+  ContactPerson: {
+    Email: "",
+    EmailVerified: false,
+    FirstName: "",
+    LastName: "",
+    PhoneNumber: "",
+    Role: "ceo",
+    PK: "",
+  },
+  Registration: {
+    CharityName: "",
+    CharityName_ContactEmail: "",
+    RegistrationDate: "",
+    RegistrationStatus: "Not Complete",
+    Website: "",
+    UN_SDG: -1,
+    ProofOfIdentity: { name: "" },
+    ProofOfRegistration: { name: "" },
+    FinancialStatements: [],
+    AuditedFinancialReports: [],
+    ProofOfIdentityVerified: false,
+    ProofOfRegistrationVerified: false,
+    FinancialStatementsVerified: false,
+    AuditedFinancialReportsVerified: false,
+  },
+  Metadata: {
+    Banner: { name: "" },
+    CharityLogo: { name: "" },
+    CharityOverview: "",
+    TerraWallet: "",
+  },
+  token: "",
+});
