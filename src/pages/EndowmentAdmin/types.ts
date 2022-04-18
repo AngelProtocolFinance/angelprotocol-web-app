@@ -1,5 +1,3 @@
-import { Holding } from "services/terra/account/types";
-
 export type EndowmentAddrParams = { address: string };
 
 type LockedSummary = {

@@ -7,9 +7,6 @@ import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import Governance from "pages/Governance/Governance";
-import Leaderboard from "pages/Leaderboard/Leaderboard";
-import Market from "pages/Market/Market";
 import { store } from "store/store";
 import { chainIDs } from "constants/chainIDs";
 import { app, site } from "constants/routes";
@@ -51,9 +48,7 @@ describe("<App/> renders correctly", () => {
     render(
       <Wrapper>
         <Routes>
-          <Route path={site.app} element={<App />}>
-            <Route path={app.marketplace} element={<Market />} />
-          </Route>
+          <Route path={site.app + "/*"} element={<App />} />
         </Routes>
       </Wrapper>
     );
@@ -70,42 +65,39 @@ describe("<App/> renders correctly", () => {
 });
 
 describe("<App /> routes to Gov and Leaderboard pages", () => {
-  beforeEach(() => {
-    render(
-      <Wrapper>
-        <Routes>
-          <Route path={site.app} element={<App />}>
-            <Route path={app.marketplace} element={<Market />} />
-            <Route path={app.govern} element={<Governance />} />
-            <Route path={app.leaderboard} element={<Leaderboard />} />
-          </Route>
-        </Routes>
-      </Wrapper>
-    );
-  });
+  const component = (
+    <Wrapper>
+      <Routes>
+        <Route path={site.app + "/*"} element={<App />} />
+      </Routes>
+    </Wrapper>
+  );
 
   test("Routes to governance page", async () => {
-    const navigator = screen.getByText("Governance");
+    const { getByText, findByText } = render(component);
+
+    const navigator = getByText("Governance");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
     userEvent.click(navigator);
 
     // governance page is rendered
-    const navItem = await screen.findByText(/Governance/i);
+    const navItem = await findByText(/Governance/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem).toHaveAttribute("aria-current");
-    expect(await screen.findByText("total staked")).toBeInTheDocument();
-    expect(await screen.findByText("Trade Halo")).toBeInTheDocument();
+    expect(await findByText("total staked")).toBeInTheDocument();
+    expect(await findByText("Trade Halo")).toBeInTheDocument();
   });
 
   test("Routes to Leaderboard page", async () => {
-    const navigator = screen.getByText("Leaderboard");
+    const { getByText, findByText } = render(component);
+    const navigator = getByText("Leaderboard");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
     userEvent.click(navigator);
 
     // Leaderboard page is rendered
-    const navItem = await screen.findByText(/Leaderboard/i);
+    const navItem = await findByText(/Leaderboard/i);
     expect(navItem).toBeInTheDocument();
     expect(navItem).toHaveAttribute("aria-current");
   });
