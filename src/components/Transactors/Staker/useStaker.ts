@@ -1,5 +1,5 @@
-import { useSetModal } from "components/Modal/Modal";
 import { useCallback } from "react";
+import { useSetModal } from "components/Modal/Modal";
 import Transactor, { TxProps } from "../Transactor";
 import StakeForm from "./StakeForm";
 import Staker from "./Staker";

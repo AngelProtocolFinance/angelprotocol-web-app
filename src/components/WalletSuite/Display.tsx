@@ -1,11 +1,11 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import Icon from "components/Icons/Icons";
+import { useGetter } from "store/accessors";
+import useKeyPress from "hooks/useKeyPress";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { useCallback, useEffect, useRef, useState } from "react";
-import Details from "./Details";
-import { useGetter } from "store/accessors";
 import { currency_text } from "constants/currency";
-import Icon from "components/Icons/Icons";
-import useKeyPress from "hooks/useKeyPress";
+import Details from "./Details";
 import useBackdropDismiss from "./useBackdropDismiss";
 
 //this component won't be rendered if wallet is not connected

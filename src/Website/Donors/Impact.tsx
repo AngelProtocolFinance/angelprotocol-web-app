@@ -1,5 +1,5 @@
-import transitionIn, { Direction } from "helpers/transitionIn";
 import useObserve from "hooks/useObserver";
+import transitionIn, { Direction } from "helpers/transitionIn";
 
 export default function Impact() {
   const { isVisible, ref } = useObserve({ threshold: 0.3 });

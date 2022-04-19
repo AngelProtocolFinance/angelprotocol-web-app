@@ -1,8 +1,8 @@
-import Loader from "components/Loader/Loader";
-import { chainIDs } from "constants/chainIDs";
-import useWalletContext from "hooks/useWalletContext";
 import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
 import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
+import Loader from "components/Loader/Loader";
+import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
 import TableView from "./TableView";
 
 export default function Board() {

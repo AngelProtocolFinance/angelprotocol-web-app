@@ -1,6 +1,6 @@
-import Icon, { IconTypes } from "components/Icons/Icons";
 import { useParams } from "react-router-dom";
 import { useProfileState } from "services/aws/endowments/states";
+import Icon, { IconTypes } from "components/Icons/Icons";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {

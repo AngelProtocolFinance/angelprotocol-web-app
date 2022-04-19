@@ -1,6 +1,6 @@
-import { unsdgs } from "constants/unsdgs";
 import { useFormContext } from "react-hook-form";
 import { EditableProfileAttr } from "services/aws/endowments/types";
+import { unsdgs } from "constants/unsdgs";
 import Label from "./Label";
 
 export default function SDGSelector() {

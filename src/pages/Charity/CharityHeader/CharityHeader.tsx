@@ -1,14 +1,9 @@
-import useDonater from "components/Transactors/Donater/useDonater";
-import { app, site } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
-import useWalletContext from "hooks/useWalletContext";
-import React from "react";
-import { Link } from "react-router-dom";
-import { LinkProps } from "react-router-dom";
 import { Profile } from "services/aws/endowments/types";
-import CharityLinks from "./CharityLinks";
-import useTransak from "hooks/useTransak";
 import { useSetModal } from "components/Modal/Modal";
+import useDonater from "components/Transactors/Donater/useDonater";
+import useTransak from "hooks/useTransak";
+import { unsdgs } from "constants/unsdgs";
+import CharityLinks from "./CharityLinks";
 
 export default function CharityHeader(props: Profile) {
   const { showModal } = useSetModal();
@@ -16,9 +11,7 @@ export default function CharityHeader(props: Profile) {
     showModal(DonateSelection, { endowmentAddr: props.endowment_address! });
   }
 
-  const { wallet } = useWalletContext();
   const sdg = unsdgs[+props.un_sdg];
-  const isEndowmentOwner = wallet?.address === props.charity_owner;
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -38,14 +31,6 @@ export default function CharityHeader(props: Profile) {
         <Button disabled={props.is_placeholder} onClick={showDonateSelection}>
           DONATE NOW
         </Button>
-
-        {isEndowmentOwner && (
-          <LinkButton
-            to={`${site.app}/${app.charity_edit}/${props.endowment_address}`}
-          >
-            EDIT PROFILE
-          </LinkButton>
-        )}
         <CharityLinks />
       </div>
     </div>
@@ -81,7 +66,4 @@ const buttonStyle =
 
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} className={buttonStyle} />;
-}
-function LinkButton(props: LinkProps) {
-  return <Link {...props} className={buttonStyle} />;
 }

@@ -1,5 +1,5 @@
-import Split from "./Split";
 import Icon from "components/Icons/Icons";
+import Split from "./Split";
 
 export default function AdvancedOptions(props: {
   toggleAdvancedOptions: () => void;

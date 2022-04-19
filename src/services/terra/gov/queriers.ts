@@ -1,8 +1,8 @@
 import Halo, { H, T } from "contracts/Halo";
 import { chainIDs } from "constants/chainIDs";
-import { gov_api } from "./gov";
-import { gov_config, gov_state, staker, poll } from "./placeholders";
 import { useContract } from "../useContract";
+import { gov_api } from "./gov";
+import { gov_config, gov_state, poll, staker } from "./placeholders";
 
 export function useGovStaker() {
   const { useGovStakerQuery } = gov_api;

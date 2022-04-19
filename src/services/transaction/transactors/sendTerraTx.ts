@@ -1,15 +1,15 @@
-import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
+import { tags as awsTags } from "services/aws/tags";
+import { tags as terraTags } from "services/terra/tags";
+import { WalletProxy } from "providers/WalletProvider";
+import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { WalletProxy } from "providers/WalletProvider";
-import { tags as awsTags } from "services/aws/tags";
-import { tags as terraTags } from "services/terra/tags";
-import { RootState } from "store/store";
+import { chainIDs } from "constants/chainIDs";
+import { currency_text, denoms } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
 

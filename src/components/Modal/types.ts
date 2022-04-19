@@ -1,4 +1,4 @@
-import { ReactNode, FC } from "react";
+import { FC, ReactNode } from "react";
 
 export type Handler = () => void;
 export type Opener = <T = {}>(

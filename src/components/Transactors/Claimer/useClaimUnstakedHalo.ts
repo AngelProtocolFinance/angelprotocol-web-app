@@ -1,8 +1,8 @@
-import { useSetModal } from "components/Modal/Modal";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { gov, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import useClaimEstimator from "./useClaimEstimator";
 
