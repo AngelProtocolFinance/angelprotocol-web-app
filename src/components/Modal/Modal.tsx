@@ -78,11 +78,9 @@ export default function Modal(props: Props) {
       }}
     >
       {!!Content && (
-        <>
-          <div role="alertdialog" ref={handleRef} className={props.classes}>
-            {Content}
-          </div>
-        </>
+        <div role="alertdialog" ref={handleRef} className={props.classes}>
+          {Content}
+        </div>
       )}
 
       {props.children}

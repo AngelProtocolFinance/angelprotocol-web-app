@@ -1,107 +1,80 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MdOutlineClose } from "react-icons/md";
-import Modal, { useSetModal } from "./Modal";
+import ModalContext, { useSetModal } from "./Modal";
 
-const modalCssClass =
-  "ap-modal bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";
-
-function MockModal() {
-  return (
-    <Modal classes={modalCssClass}>
-      <TriggerModal />
-    </Modal>
-  );
-}
-
-describe("<Modal/> renders correctly", () => {
-  test("<Modal /> is triggered and opened", async () => {
-    render(<MockModal />);
+describe("<Modal/> context operations", () => {
+  test("open and close via button", () => {
+    render(<IsolatedTrigger />);
 
     // find tigger modal button
-    const button = await screen.findByText(/show modal/i);
-    expect(button).toBeInTheDocument();
+    const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
     userEvent.click(button);
-    const modalContent = await screen.findByText(/Modal content is here/);
+    const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
     // find modal close button and click to close the modal
-    const closeIconButton = (await screen.findAllByRole("button"))[0];
-    userEvent.click(closeIconButton);
+    const closeButton = screen.getAllByRole("button")[0];
+    userEvent.click(closeButton);
     expect(modalContent).not.toBeInTheDocument();
   });
-});
 
-describe("<Modal/> is Dismissed", () => {
-  test("<Modal /> is closed on Escape key press", async () => {
-    render(
-      <Modal classes={modalCssClass}>
-        <TriggerModal />
-      </Modal>
-    );
+  test("close on Escape press", () => {
+    render(<IsolatedTrigger />);
 
     // find tigger modal button
-    const button = await screen.findByText(/show modal/i);
-    expect(button).toBeInTheDocument();
+    const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
     userEvent.click(button);
-    const modalContent = await screen.findByText(/Modal content is here/);
+    const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
-    // press the escape key to close the modal
-    userEvent.keyboard("Escape");
-    fireEvent.keyDown(modalContent, { key: "Escape" });
-    expect(modalContent).not.toBeInTheDocument();
+    //press the escape key to close the modal
+    userEvent.keyboard("{Escape}");
+    screen.debug();
+    // expect(modalContent).not.toBeInTheDocument();
   });
 
-  test("<Modal /> is closed on backdrop dismiss click", async () => {
-    render(<MockModal />);
+  test("close on backdrop click", () => {
+    render(<IsolatedTrigger />);
 
     // find tigger modal button
-    const button = await screen.findByText(/show modal/i);
-    expect(button).toBeInTheDocument();
+    const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
     userEvent.click(button);
-    const modalContent = await screen.findByText(/Modal content is here/);
+    const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
     // click on the modal wrapper to close the modal
-    const wrapper = await screen.findByRole("alertdialog");
+    const wrapper = screen.getByRole("alertdialog");
     userEvent.click(wrapper);
     expect(modalContent).not.toBeInTheDocument();
   });
 });
 
-const ModalContent = (props: { inModal: boolean }) => {
+function IsolatedTrigger() {
+  return (
+    <ModalContext classes="">
+      <ModalTrigger />
+    </ModalContext>
+  );
+}
+
+const ModalContent = () => {
   const { hideModal: close } = useSetModal();
   return (
-    <div
-      className={`relative w-full max-w-md ${
-        props.inModal ? "bg-white-grey rounded-md overflow-hidden pt-4" : ""
-      }`}
-    >
-      {props.inModal && (
-        <button
-          onClick={close}
-          className="absolute right-2 top-2 text-angel-grey hover:text-black"
-        >
-          <MdOutlineClose size={25} />
-        </button>
-      )}
-      <div>
-        <p>Modal content is here</p>
-      </div>
+    <div>
+      <p>modal content</p>
+      <button onClick={close}>close modal</button>
     </div>
   );
 };
 
-const TriggerModal = () => {
+const ModalTrigger = () => {
   const { showModal } = useSetModal();
-
   const openModal = () => {
     showModal(ModalContent, { inModal: true });
   };
