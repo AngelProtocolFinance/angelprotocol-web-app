@@ -5,6 +5,7 @@ import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { FileObject, UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
+import uploadToIpfs from "helpers/uploadToIpfs";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
@@ -30,7 +31,7 @@ export default function useUpload() {
 
   const upload = useCallback(
     async (values: FormValues) => {
-      const uploadBody = await getUploadBody(values);
+      const uploadBody = await getUploadUrls(values);
 
       const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
@@ -50,6 +51,33 @@ export default function useUpload() {
   );
 
   return { upload, isSuccess };
+}
+
+async function getUploadUrls(values: FormValues) {
+  const poiPromise = uploadToIpfs(values.proofOfIdentity);
+  const porPromise = uploadToIpfs(values.proofOfRegistration);
+  const fsPromise = Promise.all(
+    values.financialStatements.map((x) => uploadToIpfs(x))
+  );
+  const afrPromise = Promise.all(
+    values.auditedFinancialReports.map((x) => uploadToIpfs(x))
+  );
+
+  const [
+    ProofOfIdentity,
+    ProofOfRegistration,
+    FinancialStatements,
+    AuditedFinancialReports,
+  ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
+
+  return {
+    Website: values.website,
+    UN_SDG: values.un_sdg,
+    ProofOfIdentity,
+    ProofOfRegistration,
+    FinancialStatements,
+    AuditedFinancialReports,
+  };
 }
 
 async function getUploadBody(values: FormValues) {
