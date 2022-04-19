@@ -14,15 +14,15 @@ import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
   const navigate = useNavigate();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const { submit, isSuccess } = useSubmit();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(SCHEMA),
     defaultValues: {
-      banner: user.Metadata.Banner,
-      charityOverview: user.Metadata.CharityOverview,
-      charityLogo: user.Metadata.CharityLogo,
+      banner: charity.Metadata.Banner,
+      charityOverview: charity.Metadata.CharityOverview,
+      charityLogo: charity.Metadata.CharityLogo,
     },
   });
 
@@ -41,7 +41,7 @@ export default function AdditionalInformation() {
           className="flex flex-col justify-center w-5/6 h-full gap-4"
           onSubmit={methods.handleSubmit(submit)}
         >
-          <OrganizationName />
+          <OrganizationName value={charity.Registration.CharityName} />
           <ImageInput name="banner" label="Banner image of your organization" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <OverviewInput />
@@ -60,14 +60,8 @@ function Title() {
   );
 }
 
-function OrganizationName() {
-  const user = useGetter((state) => state.user);
-
-  return (
-    <InputRow htmlFor="charityName" label="Name of your organization">
-      <span className="flex w-full font-bold">
-        {user.Registration.CharityName}
-      </span>
-    </InputRow>
-  );
-}
+const OrganizationName = ({ value }: { value: string }) => (
+  <InputRow htmlFor="charityName" label="Name of your organization">
+    <span className="flex w-full font-bold">{value}</span>
+  </InputRow>
+);

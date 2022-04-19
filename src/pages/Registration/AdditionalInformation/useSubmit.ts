@@ -3,40 +3,42 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
-import { User } from "services/user/types";
-import { updateUserData } from "services/user/userSlice";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
+import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
 
   const handleError = useCallback((err) => console.log(err), []);
 
   const handleSuccess = useCallback(
-    (data: UpdateCharityMetadataResult) => {
-      const userData: User = {
-        ...user,
-        Metadata: {
-          ...user.Metadata,
-          Banner: data.Banner,
-          CharityLogo: data.CharityLogo,
-          CharityOverview: data.CharityOverview,
-        },
-      };
-      dispatch(updateUserData(userData));
-    },
-    [dispatch, user]
+    (data: UpdateCharityMetadataResult) =>
+      dispatch(
+        updateCharity({
+          ...charity,
+          Metadata: {
+            ...charity.Metadata,
+            Banner: data.Banner,
+            CharityLogo: data.CharityLogo,
+            CharityOverview: data.CharityOverview,
+          },
+        })
+      ),
+    [dispatch, charity]
   );
 
   const submit = useCallback(
     async (values: FormValues) => {
       const body = await getUploadBody(values);
 
-      const result = await updateMetadata({ PK: user.ContactPerson.PK, body });
+      const result = await updateMetadata({
+        PK: charity.ContactPerson.PK,
+        body,
+      });
 
       const dataResult = result as {
         data: UpdateCharityMetadataResult;
@@ -49,7 +51,7 @@ export default function useSubmit() {
         handleSuccess(dataResult.data);
       }
     },
-    [user.ContactPerson.PK, handleSuccess, handleError, updateMetadata]
+    [charity.ContactPerson.PK, handleSuccess, handleError, updateMetadata]
   );
 
   return { submit, isSuccess };

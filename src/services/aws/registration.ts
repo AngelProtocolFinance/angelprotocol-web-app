@@ -1,7 +1,8 @@
 import { aws } from "./aws";
 import {
-  CharityData,
+  Charity,
   ContactDetailsData,
+  ContactDetailsRequest,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -14,26 +15,23 @@ const registration_api = aws.injectEndpoints({
       query: (data) => {
         if (data) {
           return {
-            url: `registration/list`,
+            url: "registration/list",
             params: { regStatus: data.regStatus },
             method: "GET",
           };
         } else {
           return {
-            url: `registration/list`,
+            url: "registration/list",
             method: "GET",
           };
         }
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    checkPreviousRegistration: builder.mutation<
-      CharityData,
-      string | undefined
-    >({
+    checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
       query: (uuid) => {
         return {
-          url: `registration`,
+          url: "registration",
           params: { uuid: uuid },
           method: "GET",
         };
@@ -43,7 +41,7 @@ const registration_api = aws.injectEndpoints({
     requestEmail: builder.mutation<any, any>({
       query: (data) => {
         return {
-          url: `registration/build-email`,
+          url: "registration/build-email",
           params: { uuid: data.uuid, type: data.type },
           method: "POST",
           body: data.body,
@@ -51,24 +49,26 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    createNewCharity: builder.mutation<any, ContactDetailsData>({
-      query: ({ PK, ...body }) => ({
+    createNewCharity: builder.mutation<
+      ContactDetailsData,
+      ContactDetailsRequest
+    >({
+      query: ({ body }) => ({
         url: "registration",
         method: "POST",
         body,
       }),
-      transformResponse: (response: { data: any }) => response,
     }),
-    updatePersonData: builder.mutation<any, ContactDetailsData>({
-      query: (data) => {
+    updatePersonData: builder.mutation<
+      ContactDetailsData,
+      ContactDetailsRequest
+    >({
+      query: ({ PK, body }) => {
         return {
-          url: `registration`,
-          params: { uuid: data.PK },
+          url: "registration",
+          params: { uuid: PK },
           method: "PUT",
-          body: {
-            ...data.ContactPerson,
-            CharityName: data.Registration.CharityName,
-          },
+          body,
         };
       },
     }),
@@ -78,14 +78,11 @@ const registration_api = aws.injectEndpoints({
     >({
       query: (data) => {
         return {
-          url: `registration`,
+          url: "registration",
           params: { uuid: data.PK },
           method: "PUT",
           body: data.body,
         };
-      },
-      transformResponse: (response: { data: UpdateDocumentationResult }) => {
-        return response.data;
       },
     }),
     updateCharityMetadata: builder.mutation<
@@ -94,14 +91,11 @@ const registration_api = aws.injectEndpoints({
     >({
       query: (data) => {
         return {
-          url: `registration`,
+          url: "registration",
           params: { uuid: data.PK },
           method: "PUT",
           body: data.body,
         };
-      },
-      transformResponse: (response: { data: UpdateCharityMetadataResult }) => {
-        return response.data;
       },
     }),
   }),

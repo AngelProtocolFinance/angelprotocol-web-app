@@ -1,10 +1,12 @@
+import { ContactRoles } from "pages/Registration/constants";
+
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
   Items: T;
 }
 
-export type CharityData = {
+export type Charity = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
@@ -19,22 +21,24 @@ export type Metadata = {
 };
 
 export type ContactDetailsData = {
-  PK?: string;
-  Registration: {
-    CharityName: string;
-  };
+  Registration: Pick<Registration, "CharityName" | "CharityName_ContactEmail">;
   ContactPerson: ContactPerson;
+};
+
+export type ContactDetailsRequest = {
+  PK?: string;
+  body: ContactDetailsData;
 };
 
 export type ContactPerson = {
   Email: string;
-  EmailVerified: boolean;
+  EmailVerified?: boolean;
   FirstName: string;
   LastName: string;
   OtherRole?: string;
   PhoneNumber: string;
   PK?: string;
-  Role: string;
+  Role: ContactRoles;
   SK?: "ContactPerson";
 };
 
@@ -48,7 +52,7 @@ export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
   CharityName: string;
-  CharityName_ContactEmail: string;
+  CharityName_ContactEmail?: string;
   FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
   ProofOfIdentity: FileObject;

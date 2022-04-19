@@ -1,64 +1,68 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
+import { FileWrapper } from "components/FileDropzone/types";
 import { FormValues } from "./types";
 
-export default function useCurrentLevel({
-  getFieldState,
-}: UseFormReturn<FormValues, any>) {
-  const [currentLevel, setCurrentLevel] = useState(0);
+export default function useCurrentLevel(
+  methods: UseFormReturn<FormValues, any>
+) {
+  const [level, setLevel] = useState(0);
 
-  const proofOfIdentityState = getFieldState("proofOfIdentity");
-  const websiteState = getFieldState("website");
-  const proofOfRegistrationState = getFieldState("proofOfRegistration");
-  const unSdgState = getFieldState("un_sdg");
-  const financialStatementsState = getFieldState("financialStatements");
-  const auditedFinancialReportState = getFieldState("auditedFinancialReports");
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    let newLevel = 0;
+    const currentLevel = getCurrentLevel(methods);
 
-    if (
-      !proofOfIdentityState.error &&
-      proofOfIdentityState.isDirty &&
-      !websiteState.error &&
-      websiteState.isDirty &&
-      !proofOfRegistrationState.error &&
-      proofOfRegistrationState.isDirty
-    ) {
-      newLevel = 1;
+    // this check prevents the danger of infinite useEffect runs
+    if (currentLevel !== level) {
+      setLevel(currentLevel);
     }
+  });
 
-    if (
-      newLevel === 1 &&
-      !unSdgState.error &&
-      unSdgState.isDirty &&
-      !financialStatementsState.error &&
-      financialStatementsState.isDirty
-    ) {
-      newLevel = 2;
-    }
-
-    if (
-      newLevel === 2 &&
-      !auditedFinancialReportState.error &&
-      auditedFinancialReportState.isDirty
-    ) {
-      newLevel = 3;
-    }
-
-    if (newLevel !== currentLevel) {
-      setCurrentLevel(newLevel);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    getFieldState,
-    proofOfIdentityState,
-    websiteState,
-    proofOfRegistrationState,
-    unSdgState,
-    financialStatementsState,
-    auditedFinancialReportState,
-  ]);
-
-  return currentLevel;
+  return level;
 }
+
+function getCurrentLevel(methods: UseFormReturn<FormValues, any>) {
+  let newLevel = 0;
+
+  // level checks are nested since subsequent levels can't be reached
+  // unless previous ones are reached first (can'b get level 2 if level 1 is not reached)
+  if (getIsLevelOne(methods)) {
+    newLevel = 1;
+
+    if (getIsLevelTwo(methods)) {
+      newLevel = 2;
+
+      if (getIsLevelThree(methods)) {
+        newLevel = 3;
+      }
+    }
+  }
+
+  return newLevel;
+}
+
+const getIsLevelOne = ({ control }: UseFormReturn<FormValues, any>) =>
+  // no errors
+  !control._formState.errors.proofOfIdentity &&
+  !control._formState.errors.website &&
+  !control._formState.errors.proofOfRegistration &&
+  // values inserted
+  control._formValues.proofOfIdentity.name &&
+  control._formValues.website &&
+  control._formValues.proofOfRegistration.name;
+
+const getIsLevelTwo = ({ control }: UseFormReturn<FormValues, any>) =>
+  // no errors
+  !control._formState.errors.un_sdg &&
+  !control._formState.errors.financialStatements &&
+  // values inserted
+  control._formValues.un_sdg >= 0 &&
+  control._formValues.financialStatements.some((fs: FileWrapper) => fs.name);
+
+const getIsLevelThree = ({ control }: UseFormReturn<FormValues, any>) =>
+  // no errors
+  !control._formState.errors.auditedFinancialReports &&
+  // values inserted
+  control._formValues.auditedFinancialReports.some(
+    (fs: FileWrapper) => fs.name
+  );

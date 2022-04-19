@@ -1,38 +1,38 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { removeUserData } from "services/user/userSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app } from "constants/routes";
 import { Button } from "./common";
+import { removeCharity } from "./store";
 
 export default function ConfirmEmail() {
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
   const { showModal } = useSetModal();
 
   const sendEmail = async (emailType: string) => {
-    if (!user.ContactPerson.PK) {
+    if (!charity.ContactPerson.PK) {
       console.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
     const emailPayload = {
-      CharityName: user.Registration.CharityName,
-      Email: user.ContactPerson.Email,
-      FirstName: user.ContactPerson.FirstName,
-      LastName: user.ContactPerson.LastName,
-      Role: user.ContactPerson.Role,
-      PhoneNumber: user.ContactPerson.PhoneNumber,
+      CharityName: charity.Registration.CharityName,
+      Email: charity.ContactPerson.Email,
+      FirstName: charity.ContactPerson.FirstName,
+      LastName: charity.ContactPerson.LastName,
+      Role: charity.ContactPerson.Role,
+      PhoneNumber: charity.ContactPerson.PhoneNumber,
     };
     const response: any = await resendEmail({
-      uuid: user.ContactPerson.PK,
+      uuid: charity.ContactPerson.PK,
       type: emailType,
       body: emailPayload,
     });
@@ -47,7 +47,7 @@ export default function ConfirmEmail() {
   };
 
   const handleClose = () => {
-    dispatch(removeUserData());
+    dispatch(removeCharity());
     navigate(app.index);
   };
 
@@ -57,7 +57,7 @@ export default function ConfirmEmail() {
         <>
           <img src={banner2} width="100%" className="rounded-xl" alt="" />
           <div className="text-4xl">
-            <p>Hi {user.ContactPerson.FirstName}!</p>
+            <p>Hi {charity.ContactPerson.FirstName}!</p>
             <span>
               We're still waiting for you to confirm your email address.
             </span>
@@ -67,15 +67,16 @@ export default function ConfirmEmail() {
         <div className="text-2xl">
           <p>Thank you for registering</p>
           <p className="mb-10">
-            {user.Registration.CharityName}, {user.ContactPerson.FirstName}!
+            {charity.Registration.CharityName},{" "}
+            {charity.ContactPerson.FirstName}!
           </p>
           <p>Your registration reference is</p>
-          <p className="text-orange">{user.ContactPerson.PK}</p>
+          <p className="text-orange">{charity.ContactPerson.PK}</p>
         </div>
       )}
       <span className="font-normal">
         Please click on the link in the email and you'll be able to continue
-        with the registration of {user.Registration.CharityName} on Angel
+        with the registration of {charity.Registration.CharityName} on Angel
         Protocol.
       </span>
       <div className="flex flex-col gap-1 items-center mt-3">

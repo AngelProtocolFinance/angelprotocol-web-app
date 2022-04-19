@@ -1,10 +1,14 @@
 import jwt from "jsonwebtoken";
-import { UserTypes } from "services/user/types";
 
 type Payload = {
   authorization: string;
   user: string;
 };
+
+export enum UserTypes {
+  CHARITY_OWNER = "charity-owner",
+  WEB_APP = "angelprotocol-web-app",
+}
 
 export default function createAuthToken(user: string) {
   let secret: string | undefined;

@@ -4,18 +4,18 @@ import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 
 /**
- * Checks if the user's email is verified and only if it is allows them to access the component passed
- * in "props.children", otherwise navigates to /app/register page.
+ * Checks if the charity contact person's email is verified and only if it is does it allow
+ * them to access the component passed in "props.children", otherwise navigates to /app/register page
  */
 export function StepOneCompleteGuard(props: any) {
-  const user = useGetter((state) => state.user);
+  const charity = useGetter((state) => state.charity);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user.ContactPerson.EmailVerified) {
+    if (!charity.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}`);
     }
-  }, [navigate, user]);
+  }, [navigate, charity]);
 
   return <>{props.children}</>;
 }

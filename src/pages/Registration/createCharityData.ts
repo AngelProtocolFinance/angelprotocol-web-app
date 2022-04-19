@@ -1,10 +1,10 @@
-import { CharityData, Metadata, Registration } from "services/aws/types";
-import { User } from "services/user/types";
+import { Charity, Metadata, Registration } from "services/aws/types";
+import { CharityData } from "./store";
 
-export default function createUserData(
-  jwtData: CharityData,
+export default function createCharityData(
+  jwtData: Charity,
   token: string
-): User {
+): CharityData {
   return {
     ContactPerson: { ...jwtData.ContactPerson },
     Metadata: getMetadata(jwtData),
@@ -13,7 +13,7 @@ export default function createUserData(
   };
 }
 
-function getMetadata(jwtData: CharityData): Metadata {
+function getMetadata(jwtData: Charity): Metadata {
   return {
     Banner: jwtData.Metadata?.Banner || { name: "" },
     CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },
@@ -22,7 +22,7 @@ function getMetadata(jwtData: CharityData): Metadata {
   };
 }
 
-function getRegistration({ Registration }: CharityData): Registration {
+function getRegistration({ Registration }: Charity): Registration {
   return {
     ...Registration,
     AuditedFinancialReports: Registration.AuditedFinancialReports || [],

@@ -2,14 +2,14 @@ import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { CharityData } from "services/aws/types";
+import { Charity } from "services/aws/types";
 import { app, site } from "constants/routes";
-import createUserData from "../createUserData";
+import createCharityData from "../createCharityData";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
 
-type JwtData = CharityData & {
+type JwtData = Charity & {
   authorization: string;
   exp: number;
   iat: number;
@@ -25,23 +25,23 @@ export default function VerifiedEmail() {
   const jwtData = jwtDecode<JwtData>(jwtToken);
 
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
-  const userData = createUserData(jwtData, jwtToken);
+  const charity = createCharityData(jwtData, jwtToken);
 
   const resendVerificationEmail = useCallback(async () => {
-    if (!userData.ContactPerson.PK) {
+    if (!charity.ContactPerson.PK) {
       console.error("Invalid Data. Please ask the administrator about that.");
       return;
     }
 
     const response: any = await resendEmail({
-      uuid: userData.ContactPerson.PK,
+      uuid: charity.ContactPerson.PK,
       type: "verify-email",
-      body: userData,
+      body: charity,
     });
     response.data
       ? console.info(response.data?.message)
       : console.error(response.error?.data.message);
-  }, [userData, resendEmail]);
+  }, [charity, resendEmail]);
 
   if (is_expired) {
     return (
@@ -52,7 +52,7 @@ export default function VerifiedEmail() {
   return (
     <VerificationSuccessful
       isLoading={isLoading}
-      userData={userData}
+      charity={charity}
       onClick={() =>
         navigate(`${site.app}/${app.register}/${routes.dashboard}`)
       }
