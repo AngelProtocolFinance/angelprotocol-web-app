@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ModalContext, { useSetModal } from "./Modal";
 
@@ -10,7 +10,9 @@ describe("<Modal/> context operations", () => {
     const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
-    userEvent.click(button);
+    act(() => {
+      userEvent.click(button);
+    });
     const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
@@ -27,14 +29,16 @@ describe("<Modal/> context operations", () => {
     const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
-    userEvent.click(button);
+    act(() => {
+      userEvent.click(button);
+    });
     const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
     //press the escape key to close the modal
-    userEvent.keyboard("{Escape}");
-    screen.debug();
-    // expect(modalContent).not.toBeInTheDocument();
+    act(() => {
+      userEvent.keyboard("{Escape}");
+    });
   });
 
   test("close on backdrop click", () => {
@@ -44,13 +48,18 @@ describe("<Modal/> context operations", () => {
     const button = screen.getByRole("button");
 
     // click button to show modal and render it's content
-    userEvent.click(button);
+    act(() => {
+      userEvent.click(button);
+    });
     const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
 
     // click on the modal wrapper to close the modal
     const wrapper = screen.getByRole("alertdialog");
-    userEvent.click(wrapper);
+
+    act(() => {
+      userEvent.click(wrapper);
+    });
     expect(modalContent).not.toBeInTheDocument();
   });
 });
