@@ -62,7 +62,7 @@ function DonateSelection(props: { endowmentAddr: string }) {
 }
 
 const buttonStyle =
-  "disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3";
+  "disabled:bg-grey-accent bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3";
 
 function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return <button {...props} className={buttonStyle} />;
