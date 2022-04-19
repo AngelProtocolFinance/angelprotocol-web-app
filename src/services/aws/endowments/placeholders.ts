@@ -1,6 +1,6 @@
+import { Profile } from "types/services/aws/endowments";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import image from "assets/images/home-banner.jpg";
-import { Profile } from "./types";
 
 export const profile: Profile = {
   //terra

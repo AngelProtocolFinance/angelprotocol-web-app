@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { charityRoutes } from "types/routes";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { charity } from "constants/routes";
 
 export default function CharityNav(props: { classes?: string }) {
   const { ref, forward, backward, showBack, showForward } = useHorizontalScroll(
@@ -13,19 +13,19 @@ export default function CharityNav(props: { classes?: string }) {
     <div className={`relative ${props.classes || ""} my-3`}>
       <div ref={ref} className="overflow-hidden overflow-x-auto scroll-hidden">
         <div className="bg-white text-angel-grey text-sm grid grid-cols-[repeat(5,_minmax(8rem,_1fr))] divide-x">
-          <NavLink to={charity.overview} className={styler}>
+          <NavLink to={charityRoutes.overview} className={styler}>
             overview
           </NavLink>
-          <NavLink to={charity.endowment} className={styler}>
+          <NavLink to={charityRoutes.endowment} className={styler}>
             endowments
           </NavLink>
-          <NavLink to={charity.programs} className={disabledClass}>
+          <NavLink to={charityRoutes.programs} className={disabledClass}>
             programs
           </NavLink>
-          <NavLink to={charity.media} className={disabledClass}>
+          <NavLink to={charityRoutes.media} className={disabledClass}>
             media
           </NavLink>
-          <NavLink to={charity.governance} className={disabledClass}>
+          <NavLink to={charityRoutes.governance} className={disabledClass}>
             governance
           </NavLink>
         </div>

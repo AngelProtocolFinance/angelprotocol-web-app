@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { PollStatus } from "services/terra/gov/types";
+import { PollStatus } from "types/services/terra/gov";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 import useVoter from "components/Transactors/Voter/useVoter";
 import useWalletContext from "hooks/useWalletContext";

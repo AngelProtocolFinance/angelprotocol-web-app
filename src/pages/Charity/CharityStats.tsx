@@ -1,4 +1,4 @@
-import { Profile } from "services/aws/endowments/types";
+import { Profile } from "types/services/aws/endowments";
 
 export default function CharityStats(props: Profile & { classes?: string }) {
   return (

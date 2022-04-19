@@ -2,7 +2,7 @@ import {
   NetworkInfo,
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
 import { terra_lcds } from "constants/urls";
 
 const localterra: NetworkInfo = {

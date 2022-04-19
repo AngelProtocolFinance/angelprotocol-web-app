@@ -1,4 +1,4 @@
-import { gov, tags, user } from "services/terra/tags";
+import { govTags, terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
@@ -19,9 +19,9 @@ export default function useClaimUnstakedHalo() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov, id: gov.staker },
-            { type: tags.gov, id: gov.halo_balance },
-            { type: tags.user, id: user.halo_balance },
+            { type: terraTags.gov, id: govTags.staker },
+            { type: terraTags.gov, id: govTags.halo_balance },
+            { type: terraTags.user, id: userTags.halo_balance },
           ]),
         ],
       })

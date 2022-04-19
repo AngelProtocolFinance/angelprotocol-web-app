@@ -16,6 +16,7 @@
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false,
   "importOrder": [
+    "^types/(.*)$",
     "^assets/(.*)$",
     "^pages/(.*)$",
     "^services/(.*)$",

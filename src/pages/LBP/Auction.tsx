@@ -5,7 +5,6 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import PriceGraph from "components/PriceGraph";
 import { LaunchStatsProps } from ".";
-import "./Auction.css";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
 
@@ -26,10 +25,10 @@ export default function Auction() {
 
   return (
     <div className="grid place-items-start pt-2">
-      <div className="content-section">
+      <div className="flex flex-col justify-start w-full md:mx-auto md:container text-white min-h-3/4 gap-0 mt-10 max-h-[1700px]">
         <h1 className="text-4xl font-bold font-heading pl-10 mb-5">HaloSwap</h1>
-        <div className="auction-section">
-          <div className="auction-data-section font-heading">
+        <div className="flex w-full px-10 gap-5 h-[700px]">
+          <div className="flex flex-col w-full xl:w-3/5 h-full p-5 gap-3 rounded-md bg-white/10 border border-white/10 shadow-xl font-heading">
             <AuctionStats />
             <PriceGraph
               error={error}
@@ -59,13 +58,13 @@ function AuctionStats() {
         title="Duration"
         value="3 days"
         Icon={getIcon("Clock")}
-        exClass="duration"
+        exClass="min-w-[110px]"
       />
       <StatsDetails
         title="Ends in"
         value={<CountdownTimer deadline={0} start={0} />}
         Icon={getIcon("StopWatch")}
-        exClass="ends-in"
+        exClass="min-w-[160px]"
       />
       <StatsDetails title="Price" value="UST 0.074994" />
     </div>
@@ -74,7 +73,7 @@ function AuctionStats() {
 
 const StatsDetails = ({ title, value, Icon, exClass }: LaunchStatsProps) => {
   return (
-    <div className="stats-item">
+    <div className="min-w-[110px]">
       <span className="text-xs font-light text-light-grey uppercase">
         {title}
       </span>

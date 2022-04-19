@@ -1,10 +1,10 @@
 import { BiArrowBack } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { PollStatus } from "services/terra/gov/types";
+import { appRoutes, siteRoutes } from "types/routes";
+import { PollStatus } from "types/services/terra/gov";
 import Icon from "components/Icons/Icons";
 import idParamToNumber from "helpers/idParamToNum";
-import { app, site } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 
@@ -15,7 +15,7 @@ export default function PollDetails() {
   return (
     <div className="padded-container grid content-start gap-4">
       <Link
-        to={`${site.app}/${app.govern}`}
+        to={`${siteRoutes.app}/${appRoutes.govern}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
         <BiArrowBack size={15} /> back to proposals

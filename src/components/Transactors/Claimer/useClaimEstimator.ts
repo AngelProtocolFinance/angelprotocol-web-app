@@ -1,5 +1,6 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
+import { denoms } from "types/denoms";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useBalances } from "services/terra/queriers";
 import {
@@ -12,7 +13,6 @@ import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();

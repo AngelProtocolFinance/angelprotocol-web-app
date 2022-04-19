@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
-import { Profile } from "services/aws/endowments/types";
+import { appRoutes, charityRoutes, siteRoutes } from "types/routes";
+import { Profile } from "types/services/aws/endowments";
 import LazyImage from "components/LazyImage/LazyImage";
 import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
-import { app, charity, site } from "constants/routes";
 
 export default function CharityCard(props: Profile) {
   return (
     <Link
-      to={`${site.app}/${app.charity}/${props.endowment_address}/${charity.overview}`}
+      to={`${siteRoutes.app}/${appRoutes.charity}/${props.endowment_address}/${charityRoutes.overview}`}
       className="relative rounded-md hover:shadow-lg hover:bg-bright-blue/10 transform transition ease-in hover:scale-[1.02] cursor-pointer"
     >
       <LazyImage

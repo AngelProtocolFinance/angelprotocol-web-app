@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { appRoutes, siteRoutes } from "types/routes";
 import { useProfile } from "services/aws/endowments/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
 import Icon from "components/Icons/Icons";
-import { app, site } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
@@ -17,7 +17,7 @@ const Charity = () => {
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <Link
-        to={`${site.app}/${app.marketplace}`}
+        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
         className="lg:col-span-2 flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue"
       >
         <Icon type="ArrowBack" size={15} /> back to marketplace

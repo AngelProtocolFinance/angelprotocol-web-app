@@ -1,15 +1,15 @@
 import { NavLink } from "react-router-dom";
+import { webRoutes } from "types/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { web } from "constants/routes";
 
 export default function WebMenu() {
   return (
     <nav className="hidden sm:flex justify-self-end items-center font-body text-sm lg:text-base">
-      <NavLink to={`${web.charities}`} className={styler}>
+      <NavLink to={`${webRoutes.charities}`} className={styler}>
         For Charities
       </NavLink>
 
-      <NavLink to={`${web.donors}`} className={styler}>
+      <NavLink to={`${webRoutes.donors}`} className={styler}>
         For Donors
       </NavLink>
     </nav>

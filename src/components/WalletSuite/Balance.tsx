@@ -1,13 +1,12 @@
+import { denoms } from "types/denoms";
 import toCurrency from "helpers/toCurrency";
-import { currency_icons, currency_text, denoms } from "constants/currency";
+import { currency_icons, currency_text } from "constants/currency";
 
-type Props = {
+export default function Balance(props: {
   denom: denoms;
   amount: number;
   precision: number;
-};
-
-export default function Balance(props: Props) {
+}) {
   return (
     <li className="p-3 grid grid-cols-aa1 border-b border-angel-grey/10 items-center">
       <img

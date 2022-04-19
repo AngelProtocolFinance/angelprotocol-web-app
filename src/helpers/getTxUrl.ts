@@ -1,4 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
 import { TERRA_FINDER } from "constants/urls";
 
 export default function getTxUrl(chainID: chainIDs, txhash: string) {

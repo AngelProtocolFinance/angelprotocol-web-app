@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { DepositTransactions } from "services/aws/endowment_admin/types";
-import { Holding } from "services/terra/account/types";
+import { DepositTransactions } from "types/services/aws/endowment_admin";
+import { Holding } from "types/services/terra/account";
 
 export type RouteParam = { address: string };
 

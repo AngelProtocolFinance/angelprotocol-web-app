@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import Label from "./Label";
 
 type Props = {

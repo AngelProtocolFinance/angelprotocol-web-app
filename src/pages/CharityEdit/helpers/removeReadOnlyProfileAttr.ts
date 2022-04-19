@@ -2,7 +2,7 @@ import {
   EditableProfileAttr,
   Profile,
   ReadOnlyAttr,
-} from "services/aws/endowments/types";
+} from "types/services/aws/endowments";
 
 export default function removeReadOnlyProfileAttr(
   profile: Profile

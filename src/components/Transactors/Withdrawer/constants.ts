@@ -1,6 +1,6 @@
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
+import { sc } from "types/sc";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import { VaultFieldIds, VaultMap } from "./types";
 
 export const SEPARATOR = ":";

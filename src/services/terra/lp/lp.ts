@@ -1,8 +1,17 @@
+import {
+  ContractQueryArgs,
+  QueryRes,
+  lbpTags,
+  terraTags,
+} from "types/services/terra";
+import {
+  PairInfo,
+  Pool,
+  PoolBalance,
+  Simulation,
+} from "types/services/terra/lp";
 import contract_querier from "../contract_querier";
-import { lbp, tags } from "../tags";
 import { terra } from "../terra";
-import { ContractQueryArgs, QueryRes } from "../types";
-import { PairInfo, Pool, PoolBalance, Simulation } from "./types";
 
 export const lp_api = terra.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +20,7 @@ export const lp_api = terra.injectEndpoints({
       transformResponse: (res: any) => {},
     }),
     pool: builder.query<PoolBalance, ContractQueryArgs>({
-      providesTags: [{ type: tags.lbp, id: lbp.pool }],
+      providesTags: [{ type: terraTags.lbp, id: lbpTags.pool }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Pool>) => {
         const pool = res.query_result;

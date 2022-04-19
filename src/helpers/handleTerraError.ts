@@ -5,10 +5,10 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
+import { chainIDs } from "types/chainIDs";
 import { StageUpdator, Step } from "services/transaction/types";
 import { LogDonationFail } from "components/Transactors/Donater/logDonation";
 import { Disconnected, TxResultFail } from "contracts/Errors";
-import { chainIDs } from "constants/chainIDs";
 
 export default function handleTerraError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {

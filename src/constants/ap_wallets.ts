@@ -1,4 +1,4 @@
-import { denoms } from "./currency";
+import { denoms } from "types/denoms";
 
 type Wallets = {
   [index: string]: string;

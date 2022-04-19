@@ -1,3 +1,4 @@
+import { denoms } from "types/denoms";
 import atom from "assets/icons/currencies/atom.png";
 import bnb from "assets/icons/currencies/bnb.png";
 import btc from "assets/icons/currencies/btc.png";
@@ -10,38 +11,6 @@ import sdt from "assets/icons/currencies/sdt.svg";
 import sol from "assets/icons/currencies/sol.svg";
 import token from "assets/icons/currencies/token.svg";
 import ust from "assets/icons/currencies/ust.svg";
-
-export enum denoms {
-  uluna = "uluna",
-  uaud = "uaud",
-  ucad = "ucad",
-  uchf = "uchf",
-  ucny = "ucny",
-  udkk = "udkk",
-  ueur = "ueur",
-  ugbp = "ugbp",
-  uhkd = "uhkd",
-  uidr = "uidr",
-  uinr = "uinr",
-  ujpy = "ujpy",
-  ukrw = "ukrw",
-  umnt = "umnt",
-  unok = "unok",
-  uphp = "uphp",
-  usdr = "usdr",
-  usek = "usek",
-  usgd = "usgd",
-  uthb = "uthb",
-  uusd = "uusd",
-  ether = "ether",
-  bnb = "bnb",
-  wei = "wei",
-  btc = "btc",
-  sol = "sol",
-  uatom = "uatom",
-  coin = "coin",
-  uhalo = "uhalo",
-}
 
 export const currency_text: { [key in denoms]: string } = {
   [denoms.uluna]: "LUNA",

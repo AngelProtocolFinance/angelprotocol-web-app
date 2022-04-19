@@ -30,3 +30,34 @@ export type TokenInfo = {
   decimals: number;
   total_supply: string;
 };
+
+export enum terraTags {
+  gov = "gov",
+  user = "user",
+  halo = "halo",
+  lbp = "lbp",
+  endowment = "endowment",
+}
+export enum govTags {
+  polls = "polls",
+  state = "state",
+  staker = "staker",
+  config = "config",
+  halo_balance = "halo_balance",
+}
+export enum userTags {
+  terra_balance = "terra_balance",
+  halo_balance = "halo_balance",
+}
+export enum haloTags {
+  info = "info",
+}
+
+export enum lbpTags {
+  pool = "pool",
+}
+
+export enum endowmentTags {
+  holdings = "holdings",
+  rate = "rate",
+}

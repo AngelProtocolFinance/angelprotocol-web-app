@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { appRoutes, siteRoutes } from "types/routes";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
-import { app, site } from "../constants/routes";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -29,24 +29,30 @@ export default function Views() {
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
         />
-        <Route path={`${app.marketplace}`} element={<Market />} />
-        <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
-        <Route path={`${app.charity}/:address/*`} element={<Charity />} />
+        <Route path={`${appRoutes.marketplace}`} element={<Market />} />
+        <Route path={`${appRoutes.leaderboard}`} element={<Leaderboard />} />
+        <Route path={`${appRoutes.charity}/:address/*`} element={<Charity />} />
         <Route
-          path={`${app.charity_edit}/:address`}
+          path={`${appRoutes.charity_edit}/:address`}
           element={<CharityEdit />}
         />
-        <Route path={`${app.login}`} element={<Login />} />
-        <Route path={`${app.tca}`} element={<TCA />} />
-        <Route path={`${app.govern}/*`} element={<Governance />} />
-        <Route path={`${app.auction}`} element={<Auction />} />
-        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
-        <Route path={`${app.donation}/:address`} element={<Donations />} />
+        <Route path={`${appRoutes.login}`} element={<Login />} />
+        <Route path={`${appRoutes.tca}`} element={<TCA />} />
+        <Route path={`${appRoutes.govern}/*`} element={<Governance />} />
+        <Route path={`${appRoutes.auction}`} element={<Auction />} />
         <Route
-          path={`${app.index}`}
-          element={<Navigate replace to={`${app.marketplace}`} />}
+          path={`${appRoutes.endowment}/:address`}
+          element={<Endowment />}
         />
-        <Route path="*" element={<Navigate replace to={site.app} />} />
+        <Route
+          path={`${appRoutes.donation}/:address`}
+          element={<Donations />}
+        />
+        <Route
+          path={`${appRoutes.index}`}
+          element={<Navigate replace to={`${appRoutes.marketplace}`} />}
+        />
+        <Route path="*" element={<Navigate replace to={siteRoutes.app} />} />
       </Routes>
     </Suspense>
   );

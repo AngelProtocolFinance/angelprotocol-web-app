@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { useProfileState } from "services/aws/endowments/states";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import getPayloadDiff from "./helpers/getPayloadDiff";

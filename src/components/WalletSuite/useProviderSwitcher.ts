@@ -1,7 +1,8 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
+import { chainIDs } from "types/chainIDs";
+import { chains } from "types/chains";
 import { updateChainID } from "services/chain/chainSlice";
-import { chains } from "services/chain/types";
 import {
   setActiveProvider,
   setIsSwitching,
@@ -12,7 +13,6 @@ import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useGetMetamask } from "providers/Metamask/Metamask";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();

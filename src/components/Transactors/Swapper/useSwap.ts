@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { lbp, tags, user } from "services/terra/tags";
+import { lbpTags, terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
@@ -33,9 +33,9 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.lbp, id: lbp.pool },
-            { type: tags.user, id: user.halo_balance },
-            { type: tags.user, id: user.terra_balance },
+            { type: terraTags.lbp, id: lbpTags.pool },
+            { type: terraTags.user, id: userTags.halo_balance },
+            { type: terraTags.user, id: userTags.terra_balance },
           ]),
         ],
       })

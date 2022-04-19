@@ -1,8 +1,8 @@
 import { useCallback } from "react";
+import { chainIDs } from "types/chainIDs";
 import { useAirdropQuery } from "services/aws/airdrop/airdrop";
 import { useSetModal } from "components/Modal/Modal";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import Transactor, { TxProps } from "../Transactor";
 import Catcher, { Props } from "./Catcher";
 

@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
-import { Airdrops } from "services/aws/airdrop/types";
+import { awsTags } from "types/services/aws";
+import { Airdrops } from "types/services/aws/airdrop";
+import { govTags, terraTags, userTags } from "types/services/terra";
 import { aws } from "services/aws/aws";
-import { tags as awsTags } from "services/aws/tags";
-import { gov, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
@@ -39,9 +39,9 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
         msgs: claimAirdropMsgs,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov, id: gov.staker },
-            { type: tags.gov, id: gov.halo_balance },
-            { type: tags.user, id: user.halo_balance },
+            { type: terraTags.gov, id: govTags.staker },
+            { type: terraTags.gov, id: govTags.halo_balance },
+            { type: terraTags.user, id: userTags.halo_balance },
           ]),
           aws.util.invalidateTags([{ type: awsTags.airdrop }]),
         ],

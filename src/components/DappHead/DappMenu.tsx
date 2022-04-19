@@ -1,17 +1,23 @@
 import { NavLink } from "react-router-dom";
+import { appRoutes, siteRoutes } from "types/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
-import { app, site } from "constants/routes";
 
 export default function DappMenu() {
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
-      <NavLink className={styler} to={`${site.app}/${app.marketplace}`}>
+      <NavLink
+        className={styler}
+        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+      >
         Marketplace
       </NavLink>
-      <NavLink to={`${site.app}/${app.govern}`} className={styler}>
+      <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} className={styler}>
         Governance
       </NavLink>
-      <NavLink to={`${site.app}/${app.leaderboard}`} className={styler}>
+      <NavLink
+        to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
+        className={styler}
+      >
         Leaderboard
       </NavLink>
     </nav>

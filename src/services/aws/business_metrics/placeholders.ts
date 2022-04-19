@@ -1,4 +1,4 @@
-import { DonationsMetricList } from "./types";
+import { DonationsMetricList } from "types/services/aws/business_metrics";
 
 export const dummyDonationsMetricList: DonationsMetricList = {
   donations_daily_count: 0,

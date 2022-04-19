@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import { unsdgs } from "constants/unsdgs";
 import Label from "./Label";
 

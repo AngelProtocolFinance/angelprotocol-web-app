@@ -2,16 +2,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { ReceiptPayload } from "types/services/apes";
 import { schema } from "./schema";
-import { Values } from "./types";
 
+export type ReceipterValues = ReceiptPayload;
 export default function Receipter(props: {
   children: ReactNode;
   txHash: string;
 }) {
   const { txHash } = props;
 
-  const methods = useForm<Values>({
+  const methods = useForm<ReceipterValues>({
     reValidateMode: "onChange",
     defaultValues: {
       //keep txId for receipt request that come from tx history

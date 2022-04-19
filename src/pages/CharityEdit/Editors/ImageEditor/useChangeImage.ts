@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import optimizeImage from "pages/CharityEdit/optimizeImage";
-import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function useChangeImage() {
   //TODO: make this reusable with other image changer on different context

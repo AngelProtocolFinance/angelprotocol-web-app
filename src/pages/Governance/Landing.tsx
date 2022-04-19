@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { currency_text, denoms } from "constants/currency";
-import { app, site } from "constants/routes";
+import { denoms } from "types/denoms";
+import { appRoutes, siteRoutes } from "types/routes";
+import { currency_text } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
@@ -48,7 +49,7 @@ function DonationAdvert() {
       </h4>
       <div className="w-full flex justify-center">
         <button
-          onClick={() => navigate(`${site.app}/${app.marketplace}`)}
+          onClick={() => navigate(`${siteRoutes.app}/${appRoutes.marketplace}`)}
           className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
         >
           Donate now

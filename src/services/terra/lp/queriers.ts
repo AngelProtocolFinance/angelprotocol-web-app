@@ -1,5 +1,5 @@
+import { chainIDs } from "types/chainIDs";
 import LP, { L, T } from "contracts/LP";
-import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { lp_api } from "./lp";
 import { pairInfo, pool_balance, simulation } from "./placeholders";

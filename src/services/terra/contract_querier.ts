@@ -1,4 +1,4 @@
-import { ContractQueryArgs } from "./types";
+import { ContractQueryArgs } from "types/services/terra";
 
 export default function contract_querier(arg: ContractQueryArgs) {
   const query_msg = btoa(JSON.stringify(arg.msg));

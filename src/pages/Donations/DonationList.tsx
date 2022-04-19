@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { DonationTransactions } from "types/services/aws/endowment_admin";
 import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
-import { DonationTransactions } from "services/aws/endowment_admin/types";
 import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";

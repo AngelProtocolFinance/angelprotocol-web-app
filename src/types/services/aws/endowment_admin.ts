@@ -1,4 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
 
 export interface DepositTransactions {
   endowment_address: string; // Charity's endowment address

@@ -7,12 +7,12 @@ import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
+import { chainIDs } from "types/chainIDs";
+import { appRoutes, siteRoutes } from "types/routes";
 import Governance from "pages/Governance/Governance";
 import Leaderboard from "pages/Leaderboard/Leaderboard";
 import Market from "pages/Market/Market";
 import { store } from "store/store";
-import { chainIDs } from "constants/chainIDs";
-import { app, site } from "constants/routes";
 import { terra_lcds } from "constants/urls";
 import App from "./App";
 
@@ -24,10 +24,10 @@ const testnet = {
 
 // define initial routes
 const routes = [
-  `${site.app}`,
-  `${site.app}/${app.marketplace}`,
-  `${site.app}/${app.govern}`,
-  `${site.app}/${app.leaderboard}`,
+  `${siteRoutes.app}`,
+  `${siteRoutes.app}/${appRoutes.marketplace}`,
+  `${siteRoutes.app}/${appRoutes.govern}`,
+  `${siteRoutes.app}/${appRoutes.leaderboard}`,
 ];
 
 function Wrapper(props: { children: ReactNode }) {
@@ -51,8 +51,8 @@ describe("<App/> renders correctly", () => {
     render(
       <Wrapper>
         <Routes>
-          <Route path={site.app} element={<App />}>
-            <Route path={app.marketplace} element={<Market />} />
+          <Route path={siteRoutes.app} element={<App />}>
+            <Route path={appRoutes.marketplace} element={<Market />} />
           </Route>
         </Routes>
       </Wrapper>
@@ -74,10 +74,10 @@ describe("<App /> routes to Gov and Leaderboard pages", () => {
     render(
       <Wrapper>
         <Routes>
-          <Route path={site.app} element={<App />}>
-            <Route path={app.marketplace} element={<Market />} />
-            <Route path={app.govern} element={<Governance />} />
-            <Route path={app.leaderboard} element={<Leaderboard />} />
+          <Route path={siteRoutes.app} element={<App />}>
+            <Route path={appRoutes.marketplace} element={<Market />} />
+            <Route path={appRoutes.govern} element={<Governance />} />
+            <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           </Route>
         </Routes>
       </Wrapper>

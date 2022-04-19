@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import { schema } from "./schema";
 
 export default function CharityEditor(

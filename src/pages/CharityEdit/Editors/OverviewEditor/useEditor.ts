@@ -9,7 +9,7 @@ import {
 } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { EditableProfileAttr } from "services/aws/endowments/types";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
 
 export default function useEditor() {

@@ -1,16 +1,16 @@
-import { QueryRes } from "services/terra/types";
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
+import { sc } from "types/sc";
+import { awsTags } from "types/services/aws";
+import { Airdrops, ClaimInquiry, QueryArg } from "types/services/aws/airdrop";
+import { QueryRes } from "types/services/terra";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import { terra_lcds } from "constants/urls";
 import { aws } from "../aws";
-import { tags } from "../tags";
-import { Airdrops, ClaimInquiry, QueryArg } from "./types";
 
 const airdrop_api = aws.injectEndpoints({
   endpoints: (build) => ({
     airdrop: build.query<Airdrops, QueryArg>({
-      providesTags: [{ type: tags.airdrop }],
+      providesTags: [{ type: awsTags.airdrop }],
       async queryFn(
         { wallet_addr, is_test },
         queryApi,

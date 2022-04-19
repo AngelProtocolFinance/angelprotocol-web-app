@@ -1,4 +1,4 @@
-import { Holdings } from "./types";
+import { Holdings } from "types/services/terra/account";
 
 export const holdings: Holdings = {
   locked_cw20: [],

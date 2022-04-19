@@ -1,12 +1,12 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
+import { PollStatus } from "types/services/terra/gov";
 import {
   useGovConfig,
   useGovPoll,
   useGovStaker,
 } from "services/terra/gov/queriers";
 import { useGovBalanceState } from "services/terra/gov/states";
-import { PollStatus } from "services/terra/gov/types";
 import { useLatestBlock } from "services/terra/queriers";
 import { Vote } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";

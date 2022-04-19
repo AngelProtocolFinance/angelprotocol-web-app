@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { chainIDs } from "types/chainIDs";
 import { Dwindow, Providers } from "services/provider/types";
 import logDonation from "components/Transactors/Donater/logDonation";
 import { RootState } from "store/store";
 import handleEthError from "helpers/handleEthError";
-import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
 import { EthDonateArgs } from "./transactorTypes";

@@ -1,5 +1,5 @@
-import { chainIDs } from "constants/chainIDs";
-import { sc } from "constants/sc";
+import { chainIDs } from "types/chainIDs";
+import { sc } from "types/sc";
 
 type Contracts = {
   [index: string]: {

@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import {
-  LBPPairDataQueryResult,
-  PairData,
-  useGetLBPPairDataQuery,
-} from "services/aws/lbp";
+import { LBPPairDataQueryResult, PairData } from "types/services/aws/lbp";
+import { useGetLBPPairDataQuery } from "services/aws/lbp";
 
 export interface PriceData {
   price: number;

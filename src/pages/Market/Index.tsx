@@ -1,4 +1,4 @@
-import { Profile } from "services/aws/endowments/types";
+import { Profile } from "types/services/aws/endowments";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import CharityCard from "./CharityCard";

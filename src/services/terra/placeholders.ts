@@ -1,4 +1,4 @@
-import { TokenInfo } from "./types";
+import { TokenInfo } from "types/services/terra";
 
 export const halo_info: TokenInfo = {
   name: "",

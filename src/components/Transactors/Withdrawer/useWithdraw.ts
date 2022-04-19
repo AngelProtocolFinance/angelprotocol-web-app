@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { tags, user } from "services/terra/tags";
+import { terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
@@ -31,8 +31,8 @@ export default function useWithdraw() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.endowment },
-            { type: tags.user, id: user.terra_balance },
+            { type: terraTags.endowment },
+            { type: terraTags.user, id: userTags.terra_balance },
           ]),
         ],
       })

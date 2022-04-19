@@ -1,14 +1,13 @@
-import { AWSQueryRes } from "services/aws/types";
-import { UserTypes } from "services/user/types";
-import createAuthToken from "helpers/createAuthToken";
-import { aws } from "../aws";
-import { cha, tags } from "../tags";
+import { AWSQueryRes, awsTags, chaTags } from "types/services/aws";
 import {
   CategorizedProfiles,
   EditableProfileAttr,
   Lookup,
   Profile,
-} from "./types";
+} from "types/services/aws/endowments";
+import { UserTypes } from "services/user/types";
+import createAuthToken from "helpers/createAuthToken";
+import { aws } from "../aws";
 
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -24,12 +23,12 @@ export const endowments_api = aws.injectEndpoints({
     }),
 
     profile: builder.query<Profile, string>({
-      providesTags: [{ type: tags.cha, id: cha.profile }],
+      providesTags: [{ type: awsTags.cha, id: chaTags.profile }],
       query: (charity_address) => `endowments/info/${charity_address}`,
     }),
 
     profiles: builder.query<Profile[], boolean>({
-      providesTags: [{ type: tags.cha, id: cha.profiles }],
+      providesTags: [{ type: awsTags.cha, id: chaTags.profiles }],
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: AWSQueryRes<Profile[]>) => {
@@ -37,7 +36,7 @@ export const endowments_api = aws.injectEndpoints({
       },
     }),
     useCategorizedProfiles: builder.query<CategorizedProfiles, boolean>({
-      providesTags: [{ type: tags.cha, id: cha.profiles }],
+      providesTags: [{ type: awsTags.cha, id: chaTags.profiles }],
       query: (isTest) => `endowments/info${isTest ? "/testnet" : ""}`,
       //transform response before saving to cache for easy lookup by component
       transformResponse: (res: AWSQueryRes<Profile[]>) => {
@@ -76,8 +75,8 @@ export const endowments_api = aws.injectEndpoints({
         };
       },
       invalidatesTags: [
-        { type: tags.cha, id: cha.profile },
-        { type: tags.cha, id: cha.profiles },
+        { type: awsTags.cha, id: chaTags.profile },
+        { type: awsTags.cha, id: chaTags.profiles },
       ],
     }),
   }),

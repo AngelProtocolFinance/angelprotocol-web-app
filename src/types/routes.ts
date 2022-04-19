@@ -1,4 +1,9 @@
-export enum web {
+export enum siteRoutes {
+  home = "/",
+  app = "/app",
+  admin = "/admin",
+}
+export enum webRoutes {
   index = "",
   charities = "for-charities",
   privacy = "privacy-policy",
@@ -7,13 +12,7 @@ export enum web {
   contact = "contact",
 }
 
-export enum site {
-  home = "/",
-  app = "/app",
-  admin = "/admin",
-}
-
-export enum app {
+export enum appRoutes {
   index = "/",
   dashboard = "dashboard",
   marketplace = "marketplace",
@@ -32,17 +31,15 @@ export enum app {
   donation = "donation",
 }
 
-export enum govern {
+export enum governRoutes {
   index = "",
   pollDetails = "pollDetails",
 }
 
-export enum charity {
+export enum charityRoutes {
   overview = "overview",
   endowment = "endowment",
   programs = "programs",
   media = "media",
   governance = "governance",
 }
-
-export type Handler = () => void;

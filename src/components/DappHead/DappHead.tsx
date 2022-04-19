@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { siteRoutes } from "types/routes";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import Icon from "components/Icons/Icons";
 import TransactionHint from "components/TransactionStatus/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
-import { site } from "constants/routes";
 import DappMenu from "./DappMenu";
 import MobileDappNav from "./MobileDappNav";
 
@@ -19,7 +19,7 @@ export default function DappHead() {
 
   return (
     <header className="mb-4 grid grid-cols-a1a lg:grid-cols-aa1 items-center w-full z-10 padded-container pt-3">
-      <Link to={site.home} title="to home">
+      <Link to={siteRoutes.home} title="to home">
         <img src={betaWhiteLogo} alt="" className="w-32 sm:w-36" />
       </Link>
       <DappMenu />

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { tags, user } from "services/terra/tags";
+import { terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
@@ -36,8 +36,8 @@ export default function useCreatePoll() {
         tx: { msgs: pollMsgs, fee: maxFee },
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: tags.gov },
-            { type: tags.user, id: user.halo_balance },
+            { type: terraTags.gov },
+            { type: terraTags.user, id: userTags.halo_balance },
           ]),
         ],
       })

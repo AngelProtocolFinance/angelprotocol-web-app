@@ -5,10 +5,6 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { Coin, Dec } from "@terra-money/terra.js";
-import { RootState } from "store/store";
-import { terra_lcds } from "constants/urls";
-import contract_querier from "./contract_querier";
-import { halo, tags, user } from "./tags";
 import {
   BalanceRes,
   BlockLatest,
@@ -16,7 +12,13 @@ import {
   HaloBalance,
   QueryRes,
   TokenInfo,
-} from "./types";
+  haloTags,
+  terraTags,
+  userTags,
+} from "types/services/terra";
+import { RootState } from "store/store";
+import { terra_lcds } from "constants/urls";
+import contract_querier from "./contract_querier";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -30,7 +32,13 @@ const customBaseQuery: BaseQueryFn = retry(
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp, tags.endowment],
+  tagTypes: [
+    terraTags.gov,
+    terraTags.user,
+    terraTags.halo,
+    terraTags.lbp,
+    terraTags.endowment,
+  ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
@@ -40,7 +48,7 @@ export const terra = createApi({
     }),
 
     balances: builder.query<Coin.Data[], string | undefined>({
-      providesTags: [{ type: tags.user, id: user.terra_balance }],
+      providesTags: [{ type: terraTags.user, id: userTags.terra_balance }],
       query: (address) => `/cosmos/bank/v1beta1/balances/${address}`,
       transformResponse: (res: BalanceRes) => {
         return res.balances;
@@ -48,14 +56,14 @@ export const terra = createApi({
     }),
 
     haloInfo: builder.query<TokenInfo, ContractQueryArgs>({
-      providesTags: [{ type: tags.halo, id: halo.info }],
+      providesTags: [{ type: terraTags.halo, id: haloTags.info }],
       query: contract_querier,
       transformResponse: (res: QueryRes<TokenInfo>) => {
         return res.query_result;
       },
     }),
     haloBalance: builder.query<number, ContractQueryArgs>({
-      providesTags: [{ type: tags.user, id: user.halo_balance }],
+      providesTags: [{ type: terraTags.user, id: userTags.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<HaloBalance>) => {
         const halo_amount = new Dec(res.query_result.balance)

@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { PollStatus } from "services/terra/gov/types";
+import { governRoutes } from "types/routes";
+import { PollStatus } from "types/services/terra/gov";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
-import { govern } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 
 export default function PollCard(props: { poll_id: number }) {
@@ -10,7 +10,7 @@ export default function PollCard(props: { poll_id: number }) {
   const details = usePollDetails(props.poll_id);
 
   function goToPollDetail() {
-    navigate(`${govern.pollDetails}/${props.poll_id}`);
+    navigate(`${governRoutes.pollDetails}/${props.poll_id}`);
   }
 
   return (

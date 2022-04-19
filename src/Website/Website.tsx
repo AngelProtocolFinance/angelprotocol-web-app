@@ -1,9 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { siteRoutes, webRoutes } from "types/routes";
 import Loader from "components/Loader/Loader";
 import Modal from "components/Modal/Modal";
 import useScrollTop from "hooks/useScrollTop";
-import { site, web } from "constants/routes";
 import WebHead from "./Header/WebHead";
 import Home from "./Home/Home";
 import WebFoot from "./WebFoot";
@@ -30,12 +30,15 @@ const Website = () => {
               path="/:url*(/+)"
               element={<Navigate replace to={location.pathname.slice(0, -1)} />}
             />
-            <Route path={web.contact} element={<Contact />} />
-            <Route path={web.privacy} element={<PrivacyPolicy />} />
-            <Route path={web.donors} element={<Donors />} />
-            <Route path={web.charities} element={<Charities />} />
-            <Route path={web.index} element={<Home />} />
-            <Route path="*" element={<Navigate replace to={site.home} />} />
+            <Route path={webRoutes.contact} element={<Contact />} />
+            <Route path={webRoutes.privacy} element={<PrivacyPolicy />} />
+            <Route path={webRoutes.donors} element={<Donors />} />
+            <Route path={webRoutes.charities} element={<Charities />} />
+            <Route path={webRoutes.index} element={<Home />} />
+            <Route
+              path="*"
+              element={<Navigate replace to={siteRoutes.home} />}
+            />
           </Routes>
         </Suspense>
         <WebFoot />

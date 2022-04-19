@@ -1,8 +1,8 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { denoms } from "types/denoms";
+import { sc } from "types/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class Indexfund extends Contract {

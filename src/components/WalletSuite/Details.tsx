@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { denoms } from "types/denoms";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { resetWallet } from "services/wallet/walletSlice";
@@ -10,7 +11,6 @@ import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
-import { denoms } from "constants/currency";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";

@@ -1,5 +1,5 @@
 import React from "react";
-import { PollStatus } from "services/terra/gov/types";
+import { PollStatus } from "types/services/terra/gov";
 import { PollFilterOptions } from "./Polls";
 
 export default function PollSelector(props: {

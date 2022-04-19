@@ -1,5 +1,5 @@
+import { chainIDs } from "types/chainIDs";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import { endowments_api } from "./endowments";
 import { profile } from "./placeholders";
 

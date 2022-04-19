@@ -5,7 +5,7 @@ import useTxUpdator from "services/transaction/updators";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter } from "store/accessors";
-import { Values } from "./types";
+import { ReceipterValues } from "./Receipter";
 
 export default function useReceiptForm() {
   const { updateTx } = useTxUpdator();
@@ -17,7 +17,7 @@ export default function useReceiptForm() {
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
   const fromDonor = stage.step === Step.form || !chainId || !txHash;
 
-  const submitHandler = async (data: Values) => {
+  const submitHandler = async (data: ReceipterValues) => {
     setProcessing(true);
     const response: any = await requestReceipt(data);
     setProcessing(false);

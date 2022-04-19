@@ -1,4 +1,4 @@
-import { AWSQueryRes } from "../types";
+import { AWSQueryRes } from ".";
 
 export interface Endowment {
   endowment_address: string;

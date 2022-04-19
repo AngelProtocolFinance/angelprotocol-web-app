@@ -1,5 +1,9 @@
+import {
+  Endowment,
+  LeaderBoardQueryRes,
+  Update,
+} from "types/services/aws/leaderboard";
 import { aws } from "../aws";
-import { Endowment, LeaderBoardQueryRes, Update } from "./types";
 
 const leaderboard_api = aws.injectEndpoints({
   endpoints: (builder) => ({

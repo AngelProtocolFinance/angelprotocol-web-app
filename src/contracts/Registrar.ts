@@ -1,7 +1,7 @@
-import { ContractQueryArgs } from "services/terra/types";
+import { sc } from "types/sc";
+import { ContractQueryArgs } from "types/services/terra";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {

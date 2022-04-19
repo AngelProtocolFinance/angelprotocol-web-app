@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
+import { PollStatus } from "types/services/terra/gov";
 import { useGovPolls } from "services/terra/gov/queriers";
-import { PollStatus } from "services/terra/gov/types";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 

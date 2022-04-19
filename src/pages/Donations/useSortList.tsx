@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { DonationTransactions } from "services/aws/endowment_admin/types";
+import { DonationTransactions } from "types/services/aws/endowment_admin";
 
 export enum Direction {
   Asc = "Asc",

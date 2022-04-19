@@ -1,14 +1,14 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { Airdrops } from "services/aws/airdrop/types";
-import { GovState } from "services/terra/gov/types";
-import { ContractQueryArgs } from "services/terra/types";
+import { sc } from "types/sc";
+import { Airdrops } from "types/services/aws/airdrop";
+import { ContractQueryArgs } from "types/services/terra";
+import { GovState } from "types/services/terra/gov";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 import { Vote } from "./types";
 
-// import { denoms } from "constants/currency";
+// import { denoms } from "types/denoms";
 
 export default class Halo extends Contract {
   airdrop_addr: string;

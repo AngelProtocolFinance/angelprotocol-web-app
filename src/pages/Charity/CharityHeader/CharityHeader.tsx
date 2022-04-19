@@ -1,4 +1,4 @@
-import { Profile } from "services/aws/endowments/types";
+import { Profile } from "types/services/aws/endowments";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
 import CharityLinks from "./CharityLinks";

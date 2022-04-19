@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
 import { IconType } from "react-icons";
-import { EditableProfileAttr } from "services/aws/endowments/types";
+import { EditableProfileAttr } from "types/services/aws/endowments";
 import { getIcon } from "components/Icons/Icons";
 import useChangeImage from "./useChangeImage";
 

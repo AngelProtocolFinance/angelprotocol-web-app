@@ -1,7 +1,7 @@
+import { ReceiptPayload, TxDetails } from "types/services/apes";
 import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
-import { ReceiptPayload, TxDetails } from "./types";
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({

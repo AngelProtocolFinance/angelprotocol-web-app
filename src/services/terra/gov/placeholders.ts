@@ -1,4 +1,10 @@
-import { GovConfig, GovStaker, GovState, Poll, PollStatus } from "./types";
+import {
+  GovConfig,
+  GovStaker,
+  GovState,
+  Poll,
+  PollStatus,
+} from "types/services/terra/gov";
 
 export const staker: GovStaker = {
   balance: "0",

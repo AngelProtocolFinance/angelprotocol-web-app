@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
+import { appRoutes, siteRoutes } from "types/routes";
 import Icon from "components/Icons/Icons";
-import { app, site } from "constants/routes";
 import ImageEditor from "./Editors/ImageEditor/ImageEditor";
 import OverviewEditor from "./Editors/OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
@@ -12,7 +12,7 @@ export default function EditForm() {
   return (
     <form className="max-w-3xl w-full" onSubmit={updateProfile}>
       <Link
-        to={`${site.app}/${app.charity}/${endowment_addr}`}
+        to={`${siteRoutes.app}/${appRoutes.charity}/${endowment_addr}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-md text-white hover:text-angel-orange mb-4"
       >
         <Icon type="ArrowBack" size={15} /> back to profile

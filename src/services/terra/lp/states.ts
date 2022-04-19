@@ -1,7 +1,3 @@
-/**
- * states are hooks that only uses existing cache entry and doesn't call the API when
- * there's no cache entry
- */
 import LP, { L, T } from "contracts/LP";
 import { useContract } from "../useContract";
 import { lp_api } from "./lp";

@@ -1,8 +1,8 @@
 import { Link, LinkProps, useParams } from "react-router-dom";
+import { appRoutes, siteRoutes } from "types/routes";
 import { useProfileState } from "services/aws/endowments/states";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import useWalletContext from "hooks/useWalletContext";
-import { app, site } from "constants/routes";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
@@ -37,7 +37,7 @@ export default function CharityLinks(props: { classes?: string }) {
       {isCharityOwner && (
         <IconRouteLink
           _iconType="Edit"
-          to={`${site.app}/${app.charity_edit}/${charity_addr}`}
+          to={`${siteRoutes.app}/${appRoutes.charity_edit}/${charity_addr}`}
         />
       )}
     </div>

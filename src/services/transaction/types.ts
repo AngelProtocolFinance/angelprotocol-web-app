@@ -1,4 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
+import { chainIDs } from "types/chainIDs";
 
 export enum Step {
   form = "form",

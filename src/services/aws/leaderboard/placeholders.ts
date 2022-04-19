@@ -1,6 +1,6 @@
+import { Endowment } from "types/services/aws/leaderboard";
+import { Update } from "types/services/aws/leaderboard";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
-import { Endowment } from "./types";
-import { Update } from "./types";
 
 export const placeholderUpdate: Update = {
   endowments: [],

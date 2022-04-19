@@ -1,4 +1,4 @@
-import { Endowment } from "services/aws/leaderboard/types";
+import { Endowment } from "types/services/aws/leaderboard";
 import Heading from "./Heading";
 import TableEntry from "./TableEntry";
 

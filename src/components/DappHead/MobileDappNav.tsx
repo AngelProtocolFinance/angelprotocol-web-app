@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "types/routes";
 
 //Will be for WebNav
 export default function MobileDappNav() {
@@ -9,13 +9,19 @@ export default function MobileDappNav() {
   };
   return (
     <nav className="lg:hidden flex flex-col items-end col-span-3 rounded-sm w-full font-extrabold text-base gap-1 pt-2">
-      <NavLink to={`${site.app}/${app.marketplace}`} {...linkStyles}>
+      <NavLink
+        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+        {...linkStyles}
+      >
         Marketplace
       </NavLink>
-      <NavLink to={`${site.app}/${app.govern}`} {...linkStyles}>
+      <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} {...linkStyles}>
         Governance
       </NavLink>
-      <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
+      <NavLink
+        to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
+        {...linkStyles}
+      >
         Leaderboard
       </NavLink>
     </nav>

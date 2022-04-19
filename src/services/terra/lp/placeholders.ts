@@ -1,4 +1,4 @@
-import { PairInfo, PoolBalance, Simulation } from "./types";
+import { PairInfo, PoolBalance, Simulation } from "types/services/terra/lp";
 
 const token_info = {
   info: {
