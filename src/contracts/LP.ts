@@ -1,5 +1,5 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { Simulation } from "services/terra/lp/types";
+import { Simulation } from "services/terra/lp";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
