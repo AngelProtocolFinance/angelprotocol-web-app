@@ -18,4 +18,3 @@ export type BnbDonateArgs = {
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
-
