@@ -42,16 +42,20 @@ function Wrapper(props: { children: ReactNode }) {
   );
 }
 
+function MockApp() {
+  return (
+    <Wrapper>
+      <Routes>
+        <Route path={site.app + "/*"} element={<App />} />
+      </Routes>
+    </Wrapper>
+  );
+}
+
 describe("<App/> renders correctly", () => {
   window.scrollTo = jest.fn();
   test("App renders marketplace as default route", async () => {
-    render(
-      <Wrapper>
-        <Routes>
-          <Route path={site.app + "/*"} element={<App />} />
-        </Routes>
-      </Wrapper>
-    );
+    render(<MockApp />);
 
     // check for ukrain banner
     const support = "ANGEL PROTOCOL SUPPORTS";
@@ -65,17 +69,8 @@ describe("<App/> renders correctly", () => {
 });
 
 describe("<App /> routes to Gov and Leaderboard pages", () => {
-  const component = (
-    <Wrapper>
-      <Routes>
-        <Route path={site.app + "/*"} element={<App />} />
-      </Routes>
-    </Wrapper>
-  );
-
   test("Routes to governance page", async () => {
-    render(component);
-
+    render(<MockApp />);
     const navigator = screen.getByText("Governance");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item
@@ -90,7 +85,7 @@ describe("<App /> routes to Gov and Leaderboard pages", () => {
   });
 
   test("Routes to Leaderboard page", async () => {
-    render(component);
+    render(<MockApp />);
     const navigator = screen.getByText("Leaderboard");
     expect(navigator).toBeInTheDocument();
     // click the NavLink item

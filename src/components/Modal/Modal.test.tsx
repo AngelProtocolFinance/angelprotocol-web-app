@@ -6,13 +6,17 @@ import Modal, { useSetModal } from "./Modal";
 const modalCssClass =
   "ap-modal bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-50 grid place-items-center";
 
+function MockModal() {
+  return (
+    <Modal classes={modalCssClass}>
+      <TriggerModal />
+    </Modal>
+  );
+}
+
 describe("<Modal/> renders correctly", () => {
   test("<Modal /> is triggered and opened", async () => {
-    render(
-      <Modal classes={modalCssClass}>
-        <TriggerModal />
-      </Modal>
-    );
+    render(<MockModal />);
 
     // find tigger modal button
     const button = await screen.findByText(/show modal/i);
@@ -54,11 +58,7 @@ describe("<Modal/> is Dismissed", () => {
   });
 
   test("<Modal /> is closed on backdrop dismiss click", async () => {
-    render(
-      <Modal classes={modalCssClass}>
-        <TriggerModal />
-      </Modal>
-    );
+    render(<MockModal />);
 
     // find tigger modal button
     const button = await screen.findByText(/show modal/i);
