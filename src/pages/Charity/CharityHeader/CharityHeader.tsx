@@ -39,7 +39,7 @@ export default function CharityHeader(props: Profile) {
 
 function DonateSelection(props: { endowmentAddr: string }) {
   const { hideModal } = useSetModal();
-  const { initTransak } = useTransak();
+  const { initTransak } = useTransak({ charityId: props.endowmentAddr });
   const showDonater = useDonater({
     to: "charity",
     receiver: props.endowmentAddr,

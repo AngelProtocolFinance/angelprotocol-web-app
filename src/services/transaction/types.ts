@@ -50,8 +50,8 @@ export type BroadcastStage = {
 export type SuccessStage = {
   step: Step.success;
   message: string;
-  txHash: string;
-  chainId: chainIDs;
+  txHash: string; //leave "" to not render tx link
+  chainId: chainIDs; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
 };

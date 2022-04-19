@@ -6,8 +6,8 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { StageUpdator, Step } from "services/transaction/types";
-import { LogDonationFail } from "components/Transactors/Donater/logDonation";
 import { Disconnected, TxResultFail } from "contracts/Errors";
+import { LogDonationFail } from "helpers/logDonation";
 import { chainIDs } from "constants/chainIDs";
 
 export default function handleTerraError(error: any, handler: StageUpdator) {
