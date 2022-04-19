@@ -15,10 +15,7 @@ export default function CharityHeader(props: Profile) {
   function showDonateSelection() {
     showModal(DonateSelection, { endowmentAddr: props.endowment_address! });
   }
-  const showDonater = useDonater({
-    to: "charity",
-    receiver: props.endowment_address!,
-  });
+
   const { wallet } = useWalletContext();
   const sdg = unsdgs[+props.un_sdg];
   const isEndowmentOwner = wallet?.address === props.charity_owner;

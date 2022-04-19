@@ -17,12 +17,14 @@ let transak = new transakSDK({
   hostURL: window.location.origin,
 
   //widget look
-  widgetHeight: "550px",
-  widgetWidth: "450px",
-  // hideMenu: true,
+  widgetHeight: "70vh",
+  widgetWidth: "70vmin",
+  hideMenu: true,
   isFeeCalculationHidden: true,
   disableWalletAddressForm: true,
   isDisableCrypto: true, //don't show anything crypto related
+  exchangeScreenTitle: "Donate to Angel Protocol",
+  themeColor: "#3FA9F5", //angel-blue
 });
 
 export default function useTransak() {
