@@ -11,10 +11,16 @@ export const sendDonationLog = createAsyncThunk(
     try {
       await logDonation(payload);
     } catch (err) {
+      const destination = payload.charityId
+        ? `charity:${payload.charityId}`
+        : payload.fundId
+        ? `fund:${payload.fundId}`
+        : "destination";
+
       dispatch(
         setStage({
           step: Step.error,
-          message: "Failed to log transak order",
+          message: `Failed to direct transak order (${payload.transactionId}) to ${destination}. Please contact support@angelprotocol.io`,
         })
       );
     }
