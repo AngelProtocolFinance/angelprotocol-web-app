@@ -41,6 +41,7 @@ import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
 } from "react-icons/md";
+import { HiOutlineChevronDown } from "react-icons/hi";
 
 export type IconTypes =
   | "Discord"
@@ -70,6 +71,7 @@ export type IconTypes =
   | "Upload"
   | "Wallet"
   | "Loading"
+  | "ChevronDown"
   | "Down"
   | "Up"
   | "HourglassSplit"
@@ -93,6 +95,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Undo: CgUndo,
   Loading: VscLoading,
   Down: VscTriangleDown,
+  ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
   Discord: RiDiscordLine,
   Telegram: FaTelegramPlane,

@@ -21,24 +21,24 @@ export default function Amount() {
       >
         Donation Amount
       </label>
-      <input
-        {...register("amount")}
-        autoComplete="off"
-        id="amount"
-        type="text"
-        placeholder={currency_text[denom]}
-        className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
-      />
+      <div className="flex items-center pr-1 justify-between gap-2 shadow-inner-white-grey rounded-md text-xl bg-light-grey/80 text-angel-grey">
+        <input
+          {...register("amount")}
+          autoComplete="off"
+          id="amount"
+          type="text"
+          placeholder={currency_text[denom]}
+          className="w-2/3 p-3 bg-transparent focus:outline-none"
+        />
+        <Currency />
+      </div>
       <div className="flex items-start justify-between mt-1">
-        <div className="flex mb-2">
+        {/* <div className="flex mb-2">
           <Currency currency={denoms.uusd} />
           <Currency currency={denoms.uluna} />
           <Currency currency={denoms.ether} />
           <Currency currency={denoms.bnb} />
-          {/* <Currency currency={denoms.btc} withTooltip /> */}
-          {/* <Currency currency={denoms.sol} withTooltip /> */}
-          {/* <Currency currency={denoms.uatom} withTooltip /> */}
-        </div>
+        </div> */}
         <ErrorMessage
           errors={errors}
           name="amount"

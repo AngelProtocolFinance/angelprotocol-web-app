@@ -42,6 +42,18 @@ export enum denoms {
   coin = "coin",
   uhalo = "uhalo",
 }
+export enum SupportedCurrencies {
+  ANC = "ANC",
+  MIR = "MIR",
+  MARS = "MARS",
+  ASTRO = "ASTRO",
+  MINE = "MINE",
+  PRISM = "PRISM",
+  bLUNA = "bLUNA",
+  bETH = "bETH",
+  LunaX = "LunaX",
+  xPRISM = "xPRISM",
+}
 
 export const currency_text: { [key in denoms]: string } = {
   [denoms.uluna]: "LUNA",
@@ -105,4 +117,10 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.sol]: sol,
   [denoms.uatom]: atom,
   [denoms.uhalo]: halo,
+};
+
+type TokenSymbols = `${denoms}`;
+export type Token = {
+  logo: string;
+  symbol: TokenSymbols;
 };
