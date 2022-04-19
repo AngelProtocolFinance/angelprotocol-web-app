@@ -2,10 +2,10 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { FileObject, UpdateCharityMetadataResult } from "services/aws/types";
-import { FileWrapper } from "components/FileDropzone/types";
+import { UpdateCharityMetadataResult } from "services/aws/types";
 import { useGetter, useSetter } from "store/accessors";
 import { updateCharity } from "../store";
+import uploadToIpfs from "helpers/uploadToIpfs";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
@@ -58,8 +58,8 @@ export default function useSubmit() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const CharityLogo = await readFileToDataUrl(values.charityLogo);
-  const Banner = await readFileToDataUrl(values.banner);
+  const CharityLogo = await uploadToIpfs(values.charityLogo);
+  const Banner = await uploadToIpfs(values.banner);
 
   return {
     Banner,
@@ -67,22 +67,3 @@ async function getUploadBody(values: FormValues) {
     CharityOverview: values.charityOverview,
   };
 }
-
-const readFileToDataUrl = (fileWrapper: FileWrapper) =>
-  new Promise<FileObject>((resolve, reject) => {
-    if (!fileWrapper.file) {
-      return resolve({
-        name: fileWrapper.name,
-        sourceUrl: fileWrapper.sourceUrl,
-      });
-    }
-
-    const reader = new FileReader();
-    reader.onerror = (error) => reject(error);
-    reader.onload = (e: ProgressEvent<FileReader>) =>
-      resolve({
-        name: fileWrapper.name,
-        dataUrl: e.target!.result as string,
-      });
-    reader.readAsDataURL(fileWrapper.file as Blob);
-  });
