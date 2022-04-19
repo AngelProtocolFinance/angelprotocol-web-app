@@ -31,14 +31,14 @@ const airdrop_api = aws.injectEndpoints({
 
           const claimables: Airdrops = [];
           for (const airdrop of airdrops) {
-            const msg = btoa(
+            const msg = Buffer.from(
               JSON.stringify({
                 is_claimed: {
                   stage: airdrop.stage,
                   address: wallet_addr,
                 },
               })
-            );
+            ).toString("base64");
             const claim_res = await fetch(
               `${terra_endpoint}/terra/wasm/v1beta1/contracts/${airdrop_addr}/store?query_msg=${msg}`
             );

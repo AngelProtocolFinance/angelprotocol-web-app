@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useMemo, useState } from "react";
 import { useGovBalance } from "services/terra/gov/queriers";
-import { usePairSimul } from "services/terra/lp/queriers";
+import { usePairSimul } from "services/terra/lp";
 import { useHaloInfo } from "services/terra/queriers";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 
