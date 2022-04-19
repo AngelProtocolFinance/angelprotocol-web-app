@@ -58,9 +58,8 @@ export default function useTransak(receiver: Receiver) {
             transactionDate: eventPayload.status.createdAt,
             chainId: isDevelopment ? chainIDs.testnet : chainIDs.mainnet,
             amount: eventPayload.status.cryptoAmount,
-            walletAddress: "",
-            // fiatRamp: "transak",
-            // paymentMethod: eventPayload.status.paymentOptionId,
+            fiatRamp: "transak",
+            paymentMethod: eventPayload.status.paymentOptionId,
             denomination: eventPayload.status.cryptoCurrency, //change to eventPayload
             splitLiq: "50", //default: transak widget can't be modified to accept meta fields
           };
