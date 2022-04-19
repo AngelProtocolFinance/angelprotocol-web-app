@@ -1,5 +1,6 @@
 import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
+import { chainIDs } from "constants/chainIDs";
 import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
@@ -91,6 +92,8 @@ const DonationItemInfo = (props: DonationItemProps) => {
   const data = props.item;
   const showDonor = useDonor(data.sort_key);
   const isDisabled = data.wallet_address !== wallet?.address;
+  const chainId = (data.chain_id ?? wallet?.network.chainID) as chainIDs;
+
   return (
     <tr className="hover:bg-angel-blue/20 text-white border-b-2 border-angel-blue/20">
       <td className="py-5 pl-4">
@@ -106,7 +109,7 @@ const DonationItemInfo = (props: DonationItemProps) => {
       </td>
       <td>
         <a
-          href={getTxUrl(data.chain_id!, data.sort_key)}
+          href={getTxUrl(chainId, data.sort_key)}
           target="_blank"
           rel="noreferrer noopener"
           className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

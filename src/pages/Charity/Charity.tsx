@@ -22,14 +22,9 @@ const Charity = () => {
       >
         <Icon type="ArrowBack" size={15} /> back to marketplace
       </Link>
-      <CharityHeader {...{ ...profile }} />
-      <CharityContent
-        {...{
-          ...profile,
-          classes: "row-span-2",
-        }}
-      />
-      <CharityStats {...{ ...profile, classes: "hidden lg:block mt-4" }} />
+      <CharityHeader {...profile} />
+      <CharityContent {...profile} classes="row-span-2" />
+      <CharityStats {...profile} classes="hidden lg:block mt-4" />
     </section>
   );
 };
