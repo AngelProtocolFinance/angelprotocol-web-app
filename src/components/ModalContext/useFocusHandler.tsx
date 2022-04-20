@@ -16,9 +16,10 @@ export default function useFocusHandler(
       containerRef.current?.querySelectorAll(focusableElementsString) || []
     );
     //focus first element if there's one
-    focusableElementsRef.current.length >= 1 &&
+    if (focusableElementsRef.current.length >= 1) {
       focusableElementsRef.current[0].focus();
-  }, []);
+    }
+  }, [containerRef]);
 
   // hook to trap focus within modal
   const handleKeyDown = (evt: KeyboardEvent) => {
