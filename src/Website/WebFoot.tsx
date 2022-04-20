@@ -1,4 +1,5 @@
 import { getIcon } from "components/Icons/Icons";
+import { PRIVACY_POLICY } from "constants/urls";
 import Subscriber from "./Subscriber/Subscriber";
 
 export default function WebFoot() {
@@ -40,7 +41,7 @@ export default function WebFoot() {
             Download Litepaper
           </a>
           <a
-            href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
+            href={PRIVACY_POLICY}
             target="_blank"
             rel="noreferrer"
             className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
