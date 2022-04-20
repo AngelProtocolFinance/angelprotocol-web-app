@@ -4,7 +4,6 @@ import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { app, site } from "../constants/routes";
 
-const Auction = lazy(() => import("pages/LBP/Auction"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
@@ -24,7 +23,6 @@ export default function Views() {
   return (
     <Suspense fallback={<LoaderComponent />}>
       <Routes>
-        <Route path={`${app.auction}`} element={<Auction />} />
         <Route path={`${app.charity}/:address/*`} element={<Charity />} />
         <Route
           path={`${app.charity_edit}/:address`}
@@ -33,7 +31,6 @@ export default function Views() {
         <Route path={`${app.login}`} element={<Login />} />
         <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />
-        <Route path={`${app.auction}`} element={<Auction />} />
         <Route path={`${app.endowment}/:address`} element={<Endowment />} />
         <Route path={`${app.donation}/:address`} element={<Donations />} />
         <Route

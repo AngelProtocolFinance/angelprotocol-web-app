@@ -59,7 +59,9 @@ export default class Halo extends Contract {
       send: {
         amount: uhalo.toString(),
         contract: this.gov_address,
-        msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
+        msg: Buffer.from(JSON.stringify({ stake_voting_tokens: {} })).toString(
+          "base64"
+        ),
       },
     });
   }
@@ -81,9 +83,9 @@ export default class Halo extends Contract {
         send: {
           amount: u_amount.toString(),
           contract: this.gov_address,
-          msg: btoa(
+          msg: Buffer.from(
             JSON.stringify({ create_poll: { title, description, link } })
-          ),
+          ).toString("base64"),
         },
       }
     );

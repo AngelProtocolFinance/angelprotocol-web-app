@@ -6,8 +6,15 @@ import { terra } from "services/terra/terra";
 import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { denoms } from "constants/currency";
-import { halo_info } from "./placeholders";
+import { TokenInfo } from "./types";
 import { useContract } from "./useContract";
+
+const halo_info: TokenInfo = {
+  name: "",
+  symbol: "",
+  decimals: 0,
+  total_supply: "0",
+};
 
 export function useLatestBlock() {
   const { useLatestBlockQuery } = terra;

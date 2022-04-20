@@ -23,12 +23,6 @@ export const contracts: Contracts = {
     [sc.halo_gov]: "terra1zcmp45vemypvd3j6ek2j2gz4mevjzyv3jc4ree",
     [sc.airdrop]: "terra1pe6mnf0ursz0h80h2hwk690hvrph8vgt9pnw0w",
 
-    //lbp
-    [sc.lbp_factory]: "terra10dl5u40lj50scntv4qmwykfw2zulf77zyv34u0",
-    [sc.lbp_pair]: "terra1hhpgcp2stvzx952zfxtxg4dhgf60yfzchesj3e",
-    [sc.lbp_router]: "terra1l32eafhapmn9c8m7epyraxa2yty4xngamvewfs",
-    [sc.lbp_lp]: "terra1kt26adtzwu4yefw37snr73n393vsu8w0hmazxc",
-
     //loop
     [sc.loop_factory]: "terra16hdjuvghcumu6prg22cdjl96ptuay6r0hc6yns",
     [sc.loop_router]: "",
@@ -52,12 +46,6 @@ export const contracts: Contracts = {
     [sc.halo_gov]: "terra16tw444h6qtzxr4kf2p276qt0u6w3ggtc20xgly",
     [sc.airdrop]: "terra1drmtlm4d9lps8jcecpw2erea0eg3lwnyvu4xjn",
 
-    //lbp
-    [sc.lbp_factory]: "terra167m64seqj7cucxm5wep3hyu4suqw4sl5s8uzjz",
-    [sc.lbp_pair]: "terra17al3hudq2vcxtyvw9008edjhyqaw74mayva2d8",
-    [sc.lbp_router]: "terra19dpanzuhtmdsw8ds5zschrh4mnxcejc0ut6dnk",
-    [sc.lbp_lp]: "terra19zgdunfrx79nqvznqmx4satj5kxndvmrsx502m",
-
     //loop
     [sc.loop_factory]: "terra16hdjuvghcumu6prg22cdjl96ptuay6r0hc6yns",
     [sc.loop_router]: "",
@@ -80,13 +68,7 @@ export const contracts: Contracts = {
     [sc.halo_gov]: "",
     [sc.airdrop]: "",
 
-    //lbp
-    [sc.lbp_factory]: "",
-    [sc.lbp_pair]: "",
-    [sc.lbp_router]: "",
-    [sc.lbp_lp]: "",
-
-    //lbp
+    //loop
     [sc.loop_factory]: "",
     [sc.loop_router]: "",
     [sc.loop_haloust_pair]: "",
