@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
-import { app, site, web } from "constants/routes";
+import { app, site } from "constants/routes";
+import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
@@ -134,7 +135,7 @@ const PrivacyPolicyCheckbox = forwardRef(
     <Checkbox {...props} ref={ref}>
       By checking this box, you declare that you have read and agreed to our{" "}
       <Link
-        to={`${site.home}${web.privacy}`}
+        to={PRIVACY_POLICY}
         target="_blank"
         rel="noreferrer noopener"
         className="underline text-angel-blue"
