@@ -32,16 +32,16 @@ export default function WebFoot() {
           })}
         </ul>
         <div className="flex flex-wrap gap-4">
-          <Link
-            to="/ap-litepaper.pdf"
+          <a
+            href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/ap-litepaper.pdf"
             className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
             target="_blank"
-            download
+            rel="noreferrer"
           >
             Download Litepaper
-          </Link>
+          </a>
           <a
-            href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
+            href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
             target="_blank"
             rel="noreferrer"
             className="mt-2 mb-1 font-semibold text-sm uppercase text-white-grey text-center"
