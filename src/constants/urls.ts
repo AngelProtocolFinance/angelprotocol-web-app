@@ -1,3 +1,4 @@
+import { getIcon } from "components/Icons/Icons";
 import { chainIDs } from "constants/chainIDs";
 
 export const aws_endpoint =
@@ -57,3 +58,41 @@ export const PRIVACY_POLICY =
 
 export const LITEPAPER =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/ap-litepaper.pdf";
+
+export const SOCIAL_MEDIA_LINKS = [
+  {
+    id: 1,
+    Icon: getIcon("Twitter"),
+    link: "https://twitter.com/angelprotocol",
+    textColor: "text-gray-50 hover:text-grey-50/75",
+    title: "Twitter",
+  },
+  {
+    id: 2,
+    Icon: getIcon("Telegram"),
+    link: "https://t.me/angelprotocoI",
+    textColor: "text-blue-50 hover:text-blue-50/75",
+    title: "Telegram",
+  },
+  {
+    id: 3,
+    Icon: getIcon("Youtube"),
+    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
+    textColor: "text-white hover:text-white/75",
+    title: "YouTube",
+  },
+  {
+    id: 4,
+    Icon: getIcon("Medium"),
+    link: "https://angelprotocol.medium.com/",
+    textColor: "text-white hover:text-white/75",
+    title: "Medium",
+  },
+  {
+    id: 5,
+    Icon: getIcon("Discord"),
+    link: "https://discord.gg/RhqA652ySA",
+    textColor: "text-white hover:text-white/75",
+    title: "Discord",
+  },
+];
