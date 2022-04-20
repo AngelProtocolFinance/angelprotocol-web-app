@@ -1,35 +1,36 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { ProposalMeta, SourcePreview } from "pages/Admin/types";
+import { vaultMap } from "services/terra/multicall/constants";
+import { AmountInfo, VaultFieldIds } from "services/terra/multicall/types";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
+import Admin from "contracts/Admin";
 import { Source } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { SEPARATOR } from "./constants";
-import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
+import { proposalTypes } from "constants/routes";
+import { WithdrawResource, WithdrawValues } from "./types";
 
-export default function useWithrawEstimator() {
+const SEPARATOR = ":";
+export default function useWithrawEstimator(resources: WithdrawResource) {
   const {
     watch,
     setValue,
-    getValues,
     setError,
     clearErrors,
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
-  const account_addr = getValues("account_addr");
-  const { vaultLimits } = useFieldsAndLimits(account_addr);
-
+  const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
@@ -92,11 +93,13 @@ export default function useWithrawEstimator() {
           return;
         }
 
+        //construct exec payload along with proposal sources preview
         const sources: Source[] = [];
+        const sourcesPreview: SourcePreview[] = [];
         const usdValues: Dec[] = [];
         for (const fieldInput of filteredInputs) {
           const fieldId = fieldInput.fieldId;
-          const { limit, addr, rate } = vaultLimits[fieldId];
+          const { limit, addr, rate } = resources.vaultLimits[fieldId];
           if (fieldInput.amount.mul(1e6).gt(limit)) {
             setError(fieldId, { message: "not enough balance" });
           } else {
@@ -107,6 +110,11 @@ export default function useWithrawEstimator() {
               locked: "0",
               liquid: fieldInput.amount.mul(1e6).div(rate).toInt().toString(),
             });
+
+            sourcesPreview.push({
+              vaultName: vaultMap[addr].name,
+              usdAmount: fieldInput.amount.toInt().toNumber(),
+            });
           }
         }
 
@@ -115,15 +123,34 @@ export default function useWithrawEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const account = new Account(account_addr, wallet);
-        const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
-        const fee = await account.estimateFee([withdrawMsg]);
-        const feeNum = extractFeeNum(fee);
+        const accountContract = new Account(resources.accountAddr, wallet);
+        const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
+          sources,
+          beneficiary,
+        });
 
-        //get usd total of of sources
         const usdTotal = usdValues
           .reduce((result, val) => result.add(val), new Dec(0))
           .toNumber();
+
+        //create proposal meta for tx preview
+        const proposalMeta: ProposalMeta = {
+          type: proposalTypes.endowment_withdraw,
+          data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
+        };
+
+        const adminContract = new Admin(cwContracts, wallet);
+        const proposalMsg = adminContract.createProposalMsg(
+          "withdraw funds",
+          "withdraw funds proposal",
+          [embeddedWithdrawMsg],
+          JSON.stringify(proposalMeta)
+        );
+
+        const fee = await adminContract.estimateFee([proposalMsg]);
+        const feeNum = extractFeeNum(fee);
+
+        //get usd total of of sources
 
         if (feeNum > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
@@ -135,7 +162,7 @@ export default function useWithrawEstimator() {
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
         dispatch(setFee(feeNum));
-        setTx({ msgs: [withdrawMsg], fee });
+        setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));
@@ -145,7 +172,15 @@ export default function useWithrawEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, vaultLimits, debAmounts, isDebouncing, beneficiary]);
+  }, [
+    wallet,
+    debAmounts,
+    isDebouncing,
+    isDirty,
+    isValid,
+    beneficiary,
+    cwContracts,
+  ]);
 
   return { tx, wallet };
 }

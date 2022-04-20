@@ -2,8 +2,20 @@ export enum tags {
   gov = "gov",
   user = "user",
   halo = "halo",
+  admin = "admin",
   endowment = "endowment",
+  multicall = "multicall",
 }
+
+export enum admin {
+  proposals = "proposals",
+  proposal = "proposal",
+  members = "members",
+  member = "member",
+  votes = "votes",
+  applications = "applications",
+}
+
 export enum gov {
   polls = "polls",
   state = "state",
@@ -19,7 +31,10 @@ export enum halo {
   info = "info",
 }
 
+export enum multicall {
+  endowmentBalance = "endowmentBalance",
+  airdrop = "airdrop",
+}
 export enum endowment {
-  holdings = "holdings",
-  rate = "rate",
+  profile = "profile",
 }

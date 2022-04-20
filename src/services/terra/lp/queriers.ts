@@ -6,7 +6,7 @@ import { simulation } from "./placeholders";
 
 export function usePairSimul(interval = 0, skip = false) {
   const { usePairSimulQuery } = lp_api;
-  const { wallet, contract } = useContract<L, T>(LP);
+  const { contract, wallet } = useContract<L, T>(LP);
   const { data = simulation } = usePairSimulQuery(contract.simul, {
     skip: skip || wallet?.network.chainID === chainIDs.testnet,
     pollingInterval: interval,
