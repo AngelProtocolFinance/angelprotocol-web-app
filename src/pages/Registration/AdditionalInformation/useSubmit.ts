@@ -4,8 +4,8 @@ import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
 import { useGetter, useSetter } from "store/accessors";
-import { updateCharity } from "../store";
 import uploadToIpfs from "helpers/uploadToIpfs";
+import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
 export default function useSubmit() {

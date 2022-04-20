@@ -7,6 +7,7 @@ import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
+import { Folders } from "constants/folders";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
@@ -53,13 +54,23 @@ export default function useUpload() {
 }
 
 async function getUploadUrls(values: FormValues) {
-  const poiPromise = uploadToIpfs(values.proofOfIdentity);
-  const porPromise = uploadToIpfs(values.proofOfRegistration);
+  const poiPromise = uploadToIpfs(
+    values.proofOfIdentity,
+    Folders.ProofOfIdentity
+  );
+  const porPromise = uploadToIpfs(
+    values.proofOfRegistration,
+    Folders.ProofOfRegistration
+  );
   const fsPromise = Promise.all(
-    values.financialStatements.map((x) => uploadToIpfs(x))
+    values.financialStatements.map((x) =>
+      uploadToIpfs(x, Folders.AuditedFinancialDocs)
+    )
   );
   const afrPromise = Promise.all(
-    values.auditedFinancialReports.map((x) => uploadToIpfs(x))
+    values.auditedFinancialReports.map((x) =>
+      uploadToIpfs(x, Folders.AuditedFinancialDocs)
+    )
   );
 
   const [
