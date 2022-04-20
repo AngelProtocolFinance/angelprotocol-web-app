@@ -3,10 +3,10 @@ import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
-import { CharityData } from "../store";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
+import getRegistrationState from "./getRegistrationState";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -85,64 +85,4 @@ export default function Dashboard() {
       )}
     </div>
   );
-}
-
-type DocumentationLevel = 0 | 1 | 2 | 3;
-
-type RegistrationStep = { completed: boolean };
-
-type DocumentationStep = RegistrationStep & { level: DocumentationLevel };
-
-type RegistrationState = {
-  stepOne: RegistrationStep;
-  stepTwo: RegistrationStep;
-  stepThree: DocumentationStep;
-  stepFour: RegistrationStep;
-  getIsReadyForSubmit: () => boolean;
-};
-
-function getRegistrationState(charity: CharityData): RegistrationState {
-  return {
-    stepOne: { completed: !!charity.ContactPerson.PK },
-    stepTwo: { completed: !!charity.Metadata.TerraWallet },
-    stepThree: getStepThree(charity),
-    stepFour: {
-      completed:
-        !!charity.Metadata.CharityLogo?.sourceUrl &&
-        !!charity.Metadata.Banner?.sourceUrl &&
-        !!charity.Metadata.CharityOverview,
-    },
-    getIsReadyForSubmit: function () {
-      return (
-        this.stepOne.completed &&
-        this.stepTwo.completed &&
-        this.stepThree.completed &&
-        this.stepFour.completed
-      );
-    },
-  };
-}
-
-function getStepThree(charity: CharityData): DocumentationStep {
-  const levelOneDataExists =
-    !!charity.Registration.ProofOfIdentity?.sourceUrl &&
-    !!charity.Registration.ProofOfRegistration?.sourceUrl &&
-    !!charity.Registration.Website;
-
-  const levelTwoDataExists =
-    !!charity.Registration.FinancialStatements?.length &&
-    (charity.Registration.UN_SDG || -1) >= 0;
-
-  const levelThreeDataExists =
-    !!charity.Registration.AuditedFinancialReports?.length;
-
-  const level: DocumentationLevel = levelOneDataExists
-    ? levelTwoDataExists
-      ? levelThreeDataExists
-        ? 3
-        : 2
-      : 1
-    : 0;
-
-  return { completed: levelOneDataExists, level };
 }
