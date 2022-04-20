@@ -1,8 +1,10 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { Providers } from "services/wallet/types";
 import Icon from "components/Icons/Icons";
 import { DonateValues } from "components/Transactors/Donater/types";
 import useBackdropDismiss from "components/WalletSuite/useBackdropDismiss";
+import { useGetter } from "store/accessors";
 import useTooltip from "hooks/useTooltip";
 import { currency_icons, currency_text } from "constants/currency";
 import CurrencySelector from "./CurrencySelector";
@@ -16,8 +18,11 @@ function Currency(props: Props) {
   const { enter, exit, Tooltip } = useTooltip(Tooltip_);
   const { register, watch } = useFormContext<DonateValues>();
   const selectedCurrency = watch("currency");
+  const { active: activeProvider } = useGetter((state) => state.provider);
+  const showExtra = activeProvider === Providers.terra;
   const [showSelector, setShowSelector] = useState(false);
 
+  const showModal = () => showExtra && setShowSelector(true);
   const dismissModal = () => setShowSelector(false);
   const dismissHandler = useBackdropDismiss(dismissModal);
 
@@ -52,21 +57,21 @@ function Currency(props: Props) {
       <label
         htmlFor={selectedCurrency}
         className="uppercase flex items-center text-sm cursor-pointer"
-        onClick={() => setShowSelector(true)}
+        onClick={showModal}
       >
         <img
           src={currency_icons[selectedCurrency]}
           alt=""
-          className="w-4 h-4 object-contain"
+          className="w-4 h-4 object-contain mr-0.5"
         />
         <span
           className={`${
             props.withTooltip ? "text-grey-accent" : "text-angel-grey"
-          } ml-0.5 mr-1`}
+          } mx-1`}
         >
           {currency_text[selectedCurrency]}
         </span>
-        <Icon type="ChevronDown" className="font-bold text-md" />
+        {showExtra && <Icon type="ChevronDown" className="font-bold text-md" />}
       </label>
       {props.withTooltip && <Tooltip />}
       {showSelector && <CurrencySelector closeHandler={dismissModal} />}

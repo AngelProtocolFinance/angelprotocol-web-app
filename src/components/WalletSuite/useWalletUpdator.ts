@@ -10,7 +10,7 @@ import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { denoms, supported_denoms } from "constants/currency";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -61,7 +61,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         coins: haloBalance !== 0 ? coinsWithHalo : others,
         address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
-        supported_denoms: [denoms.uusd, denoms.uluna],
+        supported_denoms: supported_denoms,
       })
     );
     dispatch(setIsUpdating(false));

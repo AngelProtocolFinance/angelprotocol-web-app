@@ -41,6 +41,7 @@ export default function useEstimator() {
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const currency = watch("currency");
+  const cw20_contract = watch("cw20_contract");
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
@@ -73,7 +74,6 @@ export default function useEstimator() {
         //check if required balance is sufficient
         const balance =
           coins.find((coin) => coin.denom === currency)?.amount || 0;
-
         if (debounced_amount >= balance) {
           dispatch(setFormError("Not enough balance"));
           return;
@@ -117,20 +117,21 @@ export default function useEstimator() {
         }
 
         //checks for uluna
-        if (currency === denoms.uluna) {
+        if (supported_denoms.includes(currency)) {
           if (activeProvider === Providers.terra) {
             //this block won't run if wallet is not connected
             //activeProvider === Providers.none
+            const denom = denoms[currency];
             const contract = new Contract(wallet);
             const sender = wallet!.address;
-            const receiver = ap_wallets[denoms.uluna];
+            const receiver = cw20_contract || ap_wallets[denom];
             const amount = new Dec(debounced_amount).mul(1e6);
 
             const msg = new MsgSend(sender, receiver, [
-              new Coin(denoms.uluna, amount.toNumber()),
+              new Coin(denom, amount.toNumber()),
             ]);
-            const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-            const numFee = extractFeeNum(aminoFee, denoms.uluna);
+            const aminoFee = await contract.estimateFee([msg], denom);
+            const numFee = extractFeeNum(aminoFee, denom);
 
             if (debounced_amount + numFee >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
@@ -223,15 +224,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_split,
-    currency,
-    coins,
-    supported_denoms,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
 
   return { terraTx, ethTx, bnbTx };
 }

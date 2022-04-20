@@ -4,28 +4,45 @@ import { useGetTerraTokensQuery } from "services/apes/currencies";
 import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
 import { DonateValues } from "components/Transactors/Donater/types";
-import { Token } from "constants/currency";
+import useWalletContext from "hooks/useWalletContext";
+import { Token, denoms } from "constants/currency";
 
 type Props = {
   closeHandler: () => void;
 };
 
 function CurrencySelector(props: Props) {
-  const { watch } = useFormContext<DonateValues>();
+  const { wallet } = useWalletContext();
+  const isTestnet = wallet?.network.name === "testnet";
+  const { watch, setValue } = useFormContext<DonateValues>();
   const { data = [], isLoading } = useGetTerraTokensQuery("");
   const [filter, setFilter] = useState("");
 
   const selectedToken = watch("currency");
 
   function getCurrency(token: Token, index: number) {
+    const s = token.native_denom ?? token.symbol;
+    const sym = denoms[s];
+    const active = selectedToken === sym;
+
+    const updateCurrency = () => {
+      setValue("currency", sym);
+      if (isTestnet) setValue("cw20_contract", token?.testnet_cw20_contract);
+    };
+
     return (
       <button
         key={index}
-        disabled={selectedToken === token.symbol}
-        className="uppercase flex items-center gap-2 p-1 text-sm cursor-pointer disabled:bg-light-blue hover:bg-light-blue hover:bg-opacity-50 group w-full"
+        disabled={active}
+        onClick={updateCurrency}
+        className="uppercase flex items-center gap-3 p-1 text-sm cursor-pointer disabled:bg-angel-blue disabled:text-white hover:bg-angel-blue disabled:bg-opacity-50 group w-full"
       >
         <img src={token.logo} alt="" className="w-4 h-4 object-contain" />
-        <p className="text-angel-grey font-semibold text-md group-hover:text-white">
+        <p
+          className={`${
+            active ? "text-white" : "text-angel-grey"
+          } font-semibold text-md group-hover:text-white`}
+        >
           {token.symbol}
         </p>
       </button>
@@ -56,7 +73,7 @@ function CurrencySelector(props: Props) {
           onChange={(e) => setFilter(e.target.value)}
         />
       </div>
-      <div className="overflow-hidden overflow-y-scroll mt-2">
+      <div className="overflow-hidden overflow-y-scroll pt-5">
         {isLoading ? (
           <Loader
             bgColorClass="bg-angel-blue"

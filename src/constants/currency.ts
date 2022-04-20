@@ -41,8 +41,21 @@ export enum denoms {
   uatom = "uatom",
   coin = "coin",
   uhalo = "uhalo",
+  ANC = "ANC",
+  ASTRO = "ASTRO",
+  MIR = "MIR",
+  MARS = "MARS",
+  MINE = "MINE",
+  PRISM = "PRISM",
+  xPRISM = "xPRISM",
+  bETH = "bETH",
+  bLUNA = "bLUNA",
+  LunaX = "LunaX",
 }
-export enum SupportedCurrencies {
+
+export enum SupportedDenoms {
+  uluna = "uluna",
+  uusd = "uusd",
   ANC = "ANC",
   MIR = "MIR",
   MARS = "MARS",
@@ -85,6 +98,16 @@ export const currency_text: { [key in denoms]: string } = {
   [denoms.sol]: "SOL",
   [denoms.uatom]: "ATOM",
   [denoms.uhalo]: "HALO",
+  [denoms.ANC]: "ANC",
+  [denoms.ASTRO]: "ASTRO",
+  [denoms.MIR]: "MIR",
+  [denoms.MARS]: "MARS",
+  [denoms.MINE]: "MINE",
+  [denoms.PRISM]: "PRISM",
+  [denoms.xPRISM]: "xPRISM",
+  [denoms.bETH]: "bETH",
+  [denoms.bLUNA]: "bLUNA",
+  [denoms.LunaX]: "LunaX",
 };
 
 export const currency_icons: { [key in denoms]: string } = {
@@ -117,10 +140,36 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.sol]: sol,
   [denoms.uatom]: atom,
   [denoms.uhalo]: halo,
+  [denoms.ANC]: "https://whitelist.anchorprotocol.com/logo/ANC.png",
+  [denoms.ASTRO]: "https://astroport.fi/astro_logo.svg",
+  [denoms.MIR]: "https://whitelist.mirror.finance/icon/MIR.png",
+  [denoms.MARS]: "https://marsprotocol.io/mars_logo_colored.svg",
+  [denoms.MINE]: "https://assets.pylon.rocks/logo/MINE.png",
+  [denoms.PRISM]: "https://app.astroport.fi/tokens/prism.png",
+  [denoms.xPRISM]: " https://app.astroport.fi/tokens/xPRISM.svg",
+  [denoms.bETH]: "https://app.astroport.fi/tokens/bETH.svg",
+  [denoms.bLUNA]: "https://whitelist.anchorprotocol.com/logo/bLUNA.png",
+  [denoms.LunaX]: "https://app.astroport.fi/tokens/lunax.svg",
 };
 
 type TokenSymbols = `${denoms}`;
-export type Token = {
+
+export type Cw20Token = {
   logo: string;
   symbol: TokenSymbols;
+  cw20_contract: string;
+  testnet_cw20_contract?: string;
+  native_denom?: never;
 };
+
+export type NativeToken = {
+  logo: string;
+  symbol: TokenSymbols;
+  native_denom: denoms.uluna | denoms.uusd;
+  cw20_contract?: never;
+  testnet_cw20_contract?: never;
+};
+
+export type Token = Cw20Token | NativeToken;
+
+export const supported_denoms = Object.keys(SupportedDenoms) as denoms[];

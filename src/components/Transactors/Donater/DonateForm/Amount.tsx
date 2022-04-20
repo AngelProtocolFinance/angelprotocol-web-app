@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, denoms } from "constants/currency";
+import { currency_text } from "constants/currency";
 import Currency from "./Currency";
 
 export default function Amount() {

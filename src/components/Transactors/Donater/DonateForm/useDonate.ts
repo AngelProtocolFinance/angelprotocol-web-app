@@ -8,10 +8,11 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { denoms } from "constants/currency";
+import { denoms, supported_denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
-type Senders = { [index: string]: (data: DonateValues) => any };
+type Sender = (data: DonateValues) => any;
+
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
@@ -66,18 +67,15 @@ export default function useDonate() {
     //eslint-disable-next-line
   }, [currency]);
 
-  const senders: Senders = {
-    [denoms.uusd]: terraSender,
-    [denoms.uluna]: terraSender,
-    [denoms.ether]: ethSender,
-    [denoms.bnb]: bnbSender,
-    // [denoms.btc]: btcSender,
-    // [denoms.sol]: solSender,
-    // [denoms.uatom]: atomSender,
+  const getSender = (currency: denoms): Sender => {
+    if (currency === denoms.ether) return ethSender;
+    if (currency === denoms.bnb) return bnbSender;
+    if (supported_denoms.includes(currency)) return terraSender;
+    throw new Error("Unsupported denomination");
   };
 
   return {
-    donate: handleSubmit(senders[currency]),
+    donate: handleSubmit(getSender(currency)),
     isSubmitDisabled: form_error !== null || form_loading,
     isFormLoading: form_loading,
     to: getValues("to"),
