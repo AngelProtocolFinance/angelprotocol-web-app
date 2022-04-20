@@ -1,9 +1,8 @@
 import { Profile } from "services/aws/endowments/types";
 import { useSetModal } from "components/Modal/Modal";
-import useDonater from "components/Transactors/Donater/useDonater";
-import useTransak from "hooks/useTransak";
 import { unsdgs } from "constants/unsdgs";
 import CharityLinks from "./CharityLinks";
+import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
   const { showModal } = useSetModal();
@@ -28,42 +27,15 @@ export default function CharityHeader(props: Profile) {
       </h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button disabled={props.is_placeholder} onClick={showDonateSelection}>
+        <button
+          className="disabled:bg-grey-accent bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+          disabled={props.is_placeholder}
+          onClick={showDonateSelection}
+        >
           DONATE NOW
-        </Button>
+        </button>
         <CharityLinks />
       </div>
     </div>
   );
-}
-
-function DonateSelection(props: { endowmentAddr: string }) {
-  const { hideModal } = useSetModal();
-  const { initTransak } = useTransak({ charityId: props.endowmentAddr });
-  const showDonater = useDonater({
-    to: "charity",
-    receiver: props.endowmentAddr,
-  });
-
-  function showTransak() {
-    hideModal();
-    initTransak();
-  }
-
-  return (
-    <div className="grid justify-items-center gap-4 w-full max-w-md min-h-[10rem] bg-white rounded-md p-4">
-      <h2 className="text-xl font-heading font-semibold">
-        How do you want to donate?
-      </h2>
-      <Button onClick={showDonater}>Cryptocurrency</Button>
-      <Button onClick={showTransak}>Fiat (USD, EUR, etc)</Button>
-    </div>
-  );
-}
-
-const buttonStyle =
-  "disabled:bg-grey-accent bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3";
-
-function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...props} className={buttonStyle} />;
 }

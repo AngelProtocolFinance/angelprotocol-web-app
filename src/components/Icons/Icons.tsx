@@ -25,11 +25,13 @@ import {
   FaLinkedinIn,
   FaListOl,
   FaListUl,
+  FaMoneyBillWave,
   FaParachuteBox,
   FaStopwatch,
   FaTelegramPlane,
 } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
+import { GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
@@ -86,7 +88,9 @@ export type IconTypes =
   | "ExchangeAlt"
   | "Edit"
   | "Globe"
-  | "Undo";
+  | "Undo"
+  | "Coins"
+  | "MoneyBill";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   ExchangeAlt: CgArrowsExchangeAltV,
@@ -133,6 +137,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ListOl: FaListOl,
   ListUl: FaListUl,
   Edit: AiOutlineEdit,
+  Coins: GiTwoCoins,
+  MoneyBill: FaMoneyBillWave,
 };
 
 interface IconProps extends IconBaseProps {
