@@ -9,7 +9,6 @@ const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
-const Auction = lazy(() => import("pages/LBP/Auction"));
 const EndowmentAdmin = lazy(
   () => import("pages/EndowmentAdmin/EndowmentAdmin")
 );
@@ -38,7 +37,6 @@ export default function Views() {
         <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />
         <Route path={`${app.admin}/*`} element={<Admin />} />
-        <Route path={`${app.auction}`} element={<Auction />} />
         <Route
           path={`${app.endowment_admin}/:address/*`}
           element={<EndowmentAdmin />}

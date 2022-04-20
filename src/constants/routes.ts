@@ -1,7 +1,6 @@
 export enum web {
   index = "",
   charities = "for-charities",
-  privacy = "privacy-policy",
   donors = "for-donors",
   about = "about",
   contact = "contact",
@@ -25,7 +24,6 @@ export enum app {
   tca = "tca",
   fund = "fund",
   govern = "govern",
-  auction = "auction",
   endowment_admin = "endowment-admin",
   donations = "donations",
 }

@@ -2,7 +2,6 @@ export enum tags {
   gov = "gov",
   user = "user",
   halo = "halo",
-  lbp = "lbp",
   admin = "admin",
   endowment = "endowment",
   multicall = "multicall",
@@ -30,10 +29,6 @@ export enum user {
 }
 export enum halo {
   info = "info",
-}
-
-export enum lbp {
-  pool = "pool",
 }
 
 export enum multicall {

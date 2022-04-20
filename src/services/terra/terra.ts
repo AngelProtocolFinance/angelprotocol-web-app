@@ -34,7 +34,6 @@ export const terra = createApi({
     tags.gov,
     tags.user,
     tags.halo,
-    tags.lbp,
     tags.admin,
     tags.endowment,
     tags.multicall,
@@ -72,7 +71,5 @@ export const terra = createApi({
         return halo_amount;
       },
     }),
-
-    //lbp_pair
   }),
 });
