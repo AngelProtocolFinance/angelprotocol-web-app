@@ -1,7 +1,6 @@
 export enum web {
   index = "",
   charities = "for-charities",
-  privacy = "privacy-policy",
   donors = "for-donors",
   about = "about",
   contact = "contact",
