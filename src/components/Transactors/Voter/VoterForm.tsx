@@ -1,7 +1,8 @@
 import Fee from "../Fee";
 import Status from "../Status";
+import VoteOption from "../VoteOption";
 import Amount from "./Amount";
-import Option from "./Option";
+import { VoteValues as V } from "./types";
 import useVote from "./useVote";
 
 export default function VoterForm() {
@@ -18,9 +19,9 @@ export default function VoterForm() {
         Votes cannot be changed after submission. Staked HALO used to vote is
         locked and cannot be withdrawn until the poll has finished.
       </p>
-      <div className="grid grid-cols-2 mb-6">
-        <Option label="yes" vote="yes" />
-        <Option label="no" vote="no" />
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <VoteOption<V> label="yes" vote="yes" />
+        <VoteOption<V> label="no" vote="no" />
       </div>
       <Amount />
       <Fee />

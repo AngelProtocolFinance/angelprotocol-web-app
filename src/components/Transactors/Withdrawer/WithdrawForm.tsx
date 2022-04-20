@@ -3,11 +3,11 @@ import Status from "../Status";
 import Amount from "./Amount";
 import InputField from "./InputField";
 import { Fee, ToReceive, Total } from "./Misc";
+import { WithdrawResource } from "./types";
 import useWithdraw from "./useWithdraw";
 
-export default function WithdrawForm() {
-  const { vaultFields, withdraw, isFormLoading, isSubmitDisabled } =
-    useWithdraw();
+export default function WithdrawForm(resources: WithdrawResource) {
+  const { withdraw, isFormLoading, isSubmitDisabled } = useWithdraw(resources);
 
   return (
     <form
@@ -18,9 +18,9 @@ export default function WithdrawForm() {
     >
       <Status />
 
-      {vaultFields.map(
+      {resources.vaultFields.map(
         (vaultField) =>
-          vaultField.ustBalance.gt(0) && (
+          vaultField.ustBalance > 0 && (
             <Amount key={vaultField.fieldId} {...vaultField} />
           )
       )}
@@ -41,10 +41,10 @@ export default function WithdrawForm() {
       <ToReceive />
       <button
         type="submit"
-        className="w-full m-auto uppercase hover:bg-blue-accent bg-angel-blue rounded-lg w-28 h-8 text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
+        className="w-full py-2 uppercase hover:bg-blue-accent bg-angel-blue rounded-lg text-white-grey text-sm font-bold disabled:bg-grey-accent mt-4"
         disabled={isSubmitDisabled}
       >
-        {isFormLoading ? "Estimating..." : "Withdraw"}
+        {isFormLoading ? "Estimating..." : "Create withdraw proposal"}
       </button>
     </form>
   );
