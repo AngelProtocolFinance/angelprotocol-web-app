@@ -5,6 +5,7 @@ import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
 import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
+import { Folders } from "constants/folders";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
@@ -58,8 +59,14 @@ export default function useSubmit() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const CharityLogo = await uploadToIpfs(values.charityLogo);
-  const Banner = await uploadToIpfs(values.banner);
+  const CharityLogo = await uploadToIpfs(
+    values.charityLogo,
+    Folders.CharityProfileImageLogo
+  );
+  const Banner = await uploadToIpfs(
+    values.banner,
+    Folders.CharityProfileImageBanners
+  );
 
   return {
     Banner,

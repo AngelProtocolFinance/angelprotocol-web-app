@@ -5,9 +5,9 @@ import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { UpdateDocumentationResult } from "services/aws/types";
 import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
+import { Folders } from "constants/folders";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
-import { Folders } from "constants/folders";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();

@@ -81,8 +81,8 @@ export interface UpdateApplication {
 export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    Banner?: FileObject;
-    CharityLogo?: FileObject;
+    Banner?: string;
+    CharityLogo?: string;
     CharityOverview?: string;
     TerraWallet?: string;
   };

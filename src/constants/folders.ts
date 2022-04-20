@@ -1,5 +1,6 @@
 export enum Folders {
   CharityProfileImages = "charity-profile-images/",
+  CharityProfileImageLogo = "charity-profile-images/logo/",
   CharityProfileImageBanners = "charity-profile-images/banner/",
   CharityRegistrationDocuments = "charity-registration-documents/",
   ProofOfIdentity = "charity-registration-documents/proof-of-identity/",
