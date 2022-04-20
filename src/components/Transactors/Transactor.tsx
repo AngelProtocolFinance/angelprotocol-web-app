@@ -1,16 +1,16 @@
 import { FC } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { useSetter } from "store/accessors";
 import { resetTxFormState } from "services/transaction/transactionSlice";
 import Icon from "components/Icons/Icons";
 
 export default function Transactor<C>(props: TxProps<C>) {
   const dispatch = useSetter();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   function close() {
     dispatch(resetTxFormState());
-    hideModal();
+    closeModal();
   }
 
   return (

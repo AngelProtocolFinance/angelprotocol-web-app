@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ModalContext, { useSetModal } from "./Modal";
+import ModalContext, { useModalContext } from "./ModalContext";
 
 describe("<Modal/> context operations", () => {
   test("open and close via button", () => {
@@ -33,8 +33,7 @@ describe("<Modal/> context operations", () => {
 
     //press the escape key to close the modal
     userEvent.keyboard("{Escape}");
-    screen.debug();
-    // expect(modalContent).not.toBeInTheDocument();
+    expect(modalContent).not.toBeInTheDocument();
   });
 
   test("close on backdrop click", () => {
@@ -57,14 +56,14 @@ describe("<Modal/> context operations", () => {
 
 function IsolatedTrigger() {
   return (
-    <ModalContext classes="">
+    <ModalContext backdropClasses="">
       <ModalTrigger />
     </ModalContext>
   );
 }
 
-const ModalContent = () => {
-  const { hideModal: close } = useSetModal();
+const Modal = () => {
+  const { closeModal: close } = useModalContext();
   return (
     <div>
       <p>modal content</p>
@@ -74,9 +73,9 @@ const ModalContent = () => {
 };
 
 const ModalTrigger = () => {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const openModal = () => {
-    showModal(ModalContent, { inModal: true });
+    showModal(Modal, { inModal: true });
   };
   return <button onClick={openModal}>show modal</button>;
 };

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import CountdownTimer from "components/CountDownTimer/CountDownTimer";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import PriceGraph from "components/PriceGraph";
 import AuctionDetails from "./AuctionDetails";
 import { useGetLBPPairData } from "./useGetTokenSaleData";
@@ -10,7 +10,7 @@ import "./Auction.css";
 import { getIcon } from "components/Icons/Icons";
 
 export default function Auction() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const { isLoading, lbpPairData, error } = useGetLBPPairData();
 
   // This could be extracted into a separate hook to be used accross the application.

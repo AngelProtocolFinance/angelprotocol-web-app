@@ -1,47 +1,24 @@
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Details from "./Details";
 import { useGetter } from "store/accessors";
 import { currency_text } from "constants/currency";
 import Icon from "components/Icons/Icons";
-import useKeyPress from "hooks/useKeyPress";
-import useBackdropDismiss from "./useBackdropDismiss";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
   const { address, displayCoin, icon, isUpdating } = useGetter(
     (state) => state.wallet
   );
-  const escKeyPressed = useKeyPress("Escape");
-  const ref = useRef<HTMLDivElement>();
 
-  const [detailsShown, showDetails] = useState(false);
+  const [detailsShown, setIsDetailsShown] = useState(false);
   const maskedAddr = maskAddress(address);
-  const toggleDetails = () => showDetails((p) => !p);
-  const hideDetails = () => showDetails(false);
-  const dismissHandler = useBackdropDismiss(hideDetails);
-
-  useEffect(() => {
-    if (escKeyPressed && detailsShown) {
-      hideDetails();
-    }
-  }, [escKeyPressed, detailsShown]);
-
-  const handleRef = useCallback(
-    (node) => {
-      if (node !== null) {
-        ref.current = node;
-        // document.addEventListener("click", dismissModal);
-        dismissHandler(ref);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
+  const toggleDetails = () => setIsDetailsShown((p) => !p);
+  const hideDetails = () => detailsShown && setIsDetailsShown(false);
 
   return (
-    <div className="flex" ref={handleRef}>
+    <div className="flex">
       <button
         disabled={isUpdating}
         onClick={toggleDetails}

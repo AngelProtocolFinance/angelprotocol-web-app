@@ -1,6 +1,6 @@
 import { Step, SuccessStage } from "services/transaction/types";
 import { setStage } from "services/transaction/transactionSlice";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import getTxUrl from "helpers/getTxUrl";
 import { useSetter } from "store/accessors";
 import SharePrompt from "components/Share/SharePrompt";
@@ -8,7 +8,7 @@ import Icon from "components/Icons/Icons";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
-  const { hideModal, showModal } = useSetModal();
+  const { closeModal, showModal } = useModalContext();
   const dispatch = useSetter();
   const { chainId, txHash, message, isReceiptEnabled, isShareEnabled } = props;
 
@@ -17,7 +17,7 @@ export default function Success(props: SuccessStage) {
       dispatch(setStage({ step: Step.receipt, chainId, txHash }));
     } else {
       dispatch(setStage({ step: Step.form }));
-      hideModal();
+      closeModal();
     }
   }
 

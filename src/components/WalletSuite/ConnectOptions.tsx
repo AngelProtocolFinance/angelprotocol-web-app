@@ -1,5 +1,5 @@
 import Icon from "components/Icons/Icons";
-import Modal from "components/Modal/Modal";
+import ModalContext from "components/ModalContext/ModalContext";
 import useWalletContext from "hooks/useWalletContext";
 import Backdrop from "./Backdrop";
 import BnbConnector from "./Connectors/BnbConnector";
@@ -19,7 +19,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
-        <Modal classes="absolute bg-white/95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
+        <ModalContext backdropClasses="absolute bg-white/95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableWallets
             .filter((wallet) => wallet.connection.type !== "READONLY")
             .map((availableWallet) => {
@@ -32,7 +32,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
             })}
           <EthConnector />
           <BnbConnector />
-        </Modal>
+        </ModalContext>
         {availableInstallations.length > 0 && (
           <>
             <p className="uppercase font-heading text-angel-grey text-sm">

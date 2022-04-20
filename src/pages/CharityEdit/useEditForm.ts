@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useUpdateProfileMutation } from "services/aws/endowments/endowments";
 import { useProfileState } from "services/aws/endowments/states";
 import { EditableProfileAttr } from "services/aws/endowments/types";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import removeReadOnlyProfileAttr from "./helpers/removeReadOnlyProfileAttr";
 import getPayloadDiff from "./helpers/getPayloadDiff";
@@ -20,7 +20,7 @@ export default function useEditForm() {
   const { profileState } = useProfileState(endowment_addr!);
   const [update] = useUpdateProfileMutation();
 
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const updateProfile = async (data: EditableProfileAttr) => {
     const prevProfile = removeReadOnlyProfileAttr(profileState);
@@ -42,7 +42,9 @@ export default function useEditForm() {
           message: "Failed to save profile changes",
         });
       } else {
-        showModal<PopupProps>(Popup, { message: "Successfully saved changes" });
+        showModal<PopupProps>(Popup, {
+          message: "Successfully saved changes",
+        });
       }
     } catch (e) {
       showModal<PopupProps>(Popup, {

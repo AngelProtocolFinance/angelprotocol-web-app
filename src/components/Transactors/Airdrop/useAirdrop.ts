@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { chainIDs } from "constants/chainIDs";
 import useWalletContext from "hooks/useWalletContext";
 import { useCallback } from "react";
@@ -8,7 +8,7 @@ import Catcher, { Props } from "./Catcher";
 
 export default function useAirdrop() {
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const is_test = wallet?.network.chainID === chainIDs.testnet;
   const { data = [] } = useAirdropQuery(

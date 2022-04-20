@@ -1,4 +1,4 @@
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
 import { denoms } from "constants/currency";
@@ -18,7 +18,7 @@ export default function useDonate() {
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { terraTx, ethTx, bnbTx } = useEstimator();
 

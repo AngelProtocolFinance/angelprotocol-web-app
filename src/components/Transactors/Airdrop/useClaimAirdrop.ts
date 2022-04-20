@@ -1,5 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
@@ -13,7 +13,7 @@ import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetter } from "store/accessors";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const { wallet } = useWalletContext();
   const dispatch = useSetter();
 

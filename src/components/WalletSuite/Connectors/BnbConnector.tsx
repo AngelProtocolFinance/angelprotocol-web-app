@@ -1,5 +1,5 @@
 import binanceIcon from "assets/icons/wallets/binance.png";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { deviceType, DeviceType } from "helpers/deviceType";
 import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { RejectBinanceLogin } from "providers/BinanceWallet/useBinance";
@@ -12,7 +12,7 @@ const dwindow = window as Dwindow;
 export default function BnbConnector() {
   const { isUpdating } = useGetter((state) => state.wallet);
   const { connect } = useSetBinance();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   async function handleClick() {
     try {

@@ -7,9 +7,9 @@ export type Opener = <T = {}>(
 ) => void;
 export type Handlers = {
   showModal: Opener;
-  hideModal: Handler;
+  closeModal: Handler;
 };
 export interface Props {
-  classes: string;
+  backdropClasses: string;
   children: ReactNode;
 }

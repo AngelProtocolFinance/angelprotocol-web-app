@@ -11,6 +11,7 @@ import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
 import { resetWallet } from "services/wallet/walletSlice";
 import { useGetter, useSetter } from "store/accessors";
+import Backdrop from "./Backdrop";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
@@ -57,35 +58,38 @@ export default function Details(props: { closeHandler: () => void }) {
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
-    <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
-      <button
-        className="text-white absolute top-2 right-2"
-        onClick={props.closeHandler}
-      >
-        <Icon type="Close" />
-      </button>
-      <div className="bg-angel-grey text-white-grey text-sm p-2">
-        <p className="uppercase">network : {chainId}</p>
-      </div>
-      {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
-      <div className="flex gap-2 items-center p-2  pb-0">
-        <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
-        <Copier text={address} colorClass="text-angel-grey text-lg" />
-      </div>
-      <Portal />
-      {(!isEmpty && <Holdings coins={filtered_coins} />) || (
-        <span className="text-angel-grey p-10 text-center text-sm uppercase">
-          Wallet is empty
-        </span>
-      )}
-      {!isSafePal && (
+    <>
+      <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
         <button
-          onClick={handleDisconnect}
-          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+          className="text-white absolute top-2 right-2"
+          onClick={props.closeHandler}
         >
-          disconnect
+          <Icon type="Close" />
         </button>
-      )}
-    </div>
+        <div className="bg-angel-grey text-white-grey text-sm p-2">
+          <p className="uppercase">network : {chainId}</p>
+        </div>
+        {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
+        <div className="flex gap-2 items-center p-2  pb-0">
+          <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
+          <Copier text={address} colorClass="text-angel-grey text-lg" />
+        </div>
+        <Portal />
+        {(!isEmpty && <Holdings coins={filtered_coins} />) || (
+          <span className="text-angel-grey p-10 text-center text-sm uppercase">
+            Wallet is empty
+          </span>
+        )}
+        {!isSafePal && (
+          <button
+            onClick={handleDisconnect}
+            className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+          >
+            disconnect
+          </button>
+        )}
+      </div>
+      <Backdrop closeHandler={props.closeHandler} />
+    </>
   );
 }

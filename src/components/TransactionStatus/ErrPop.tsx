@@ -1,19 +1,19 @@
 import { setStage } from "services/transaction/transactionSlice";
 import { Step, ErrorStage } from "services/transaction/types";
 import getTxUrl from "helpers/getTxUrl";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 
 export default function ErrPop(props: ErrorStage) {
   if (props.step !== Step.error) throw new Error("wrong component rendered");
   const dispatch = useSetter();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   const { message, chainId, txHash } = props;
 
   function acknowledge() {
     dispatch(setStage({ step: Step.form }));
-    hideModal();
+    closeModal();
   }
 
   return (

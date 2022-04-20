@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Popup, { PopupProps } from "components/Popup/Popup";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { subscriberSchema } from "./subscriberSchema";
 
 export default function useSubscribe() {
@@ -16,7 +16,7 @@ export default function useSubscribe() {
     resolver: yupResolver(subscriberSchema),
   });
 
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   async function subscribe(values: { email: string }) {
     const data = {

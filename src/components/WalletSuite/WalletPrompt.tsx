@@ -1,11 +1,11 @@
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Icon from "components/Icons/Icons";
 
 export default function WalletPrompt(props: { message: string }) {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   function acknowledge() {
-    hideModal();
+    closeModal();
   }
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg h-full content-center place-items-center">

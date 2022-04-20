@@ -1,5 +1,5 @@
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Receipter from "components/Receipter/Receipter";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import { ReactNode, useMemo } from "react";
@@ -20,7 +20,7 @@ import Success from "./Success";
 export default function TransactionPrompt() {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   const prompts: Prompts = useMemo(
     () => ({
       [Step.submit]: <Submit {...(stage as SubmitStage)} />,
@@ -44,9 +44,9 @@ export default function TransactionPrompt() {
       stage.step === Step.error
     ) {
       dispatch(setStage({ step: Step.form }));
-      hideModal();
+      closeModal();
     } else {
-      hideModal();
+      closeModal();
     }
   }
 

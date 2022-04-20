@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -16,7 +16,7 @@ export default function useVote() {
   } = useFormContext<VoteValues>();
 
   const { wallet, tx } = useVoteEstimator();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function vote() {

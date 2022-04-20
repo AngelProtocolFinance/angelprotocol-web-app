@@ -5,7 +5,7 @@ import WebFoot from "Website/WebFoot";
 import Loader from "components/Loader/Loader";
 import { site, web } from "constants/routes";
 import Home from "./Home/Home";
-import Modal from "components/Modal/Modal";
+import ModalContext from "components/ModalContext/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 const Donors = lazy(() => import("./Donors/Donors"));
 const PrivacyPolicy = lazy(() => import("./PrivacyPolicy"));
@@ -21,7 +21,7 @@ const Website = () => {
   );
   return (
     <div className="grid grid-rows-1a bg-white">
-      <Modal classes="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
+      <ModalContext backdropClasses="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
           <Routes>
@@ -38,7 +38,7 @@ const Website = () => {
           </Routes>
         </Suspense>
         <WebFoot />
-      </Modal>
+      </ModalContext>
     </div>
   );
 };
