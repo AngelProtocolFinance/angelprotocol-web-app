@@ -113,6 +113,8 @@ export default function useVoteEstimator() {
     UST_balance,
     haloBalance,
     govStaker,
+    isValid,
+    isDirty,
   ]);
 
   return { tx, wallet };

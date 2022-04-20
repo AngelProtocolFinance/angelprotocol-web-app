@@ -1,6 +1,4 @@
-import { BiArrowBack } from "react-icons/bi";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "services/terra/gov/types";
 import Icon from "components/Icons/Icons";
 import idParamToNumber from "helpers/idParamToNum";
@@ -18,7 +16,7 @@ export default function PollDetails() {
         to={`${site.app}/${app.govern}`}
         className="flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue mt-4 mb-4"
       >
-        <BiArrowBack size={15} /> back to proposals
+        <Icon type="ArrowBack" size={15} /> back to proposals
       </Link>
       <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/60 overflow-hidden">
         <div className="flex items-center text-sm mb-6">
@@ -65,7 +63,8 @@ export default function PollDetails() {
           <p className="">{details.description}</p>
         </div>
       </div>
-      <div className="bg-white/10 p-6 rounded-md shadow-lg text-white/70">
+
+      <div className="bg-white/10 p-6 shadow-inner rounded-md text-white/70">
         <h3 className="uppercase text-sm text-white/100 font-semibold mb-6">
           Vote details
         </h3>

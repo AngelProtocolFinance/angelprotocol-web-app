@@ -30,7 +30,14 @@ const customBaseQuery: BaseQueryFn = retry(
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo, tags.endowment],
+  tagTypes: [
+    tags.gov,
+    tags.user,
+    tags.halo,
+    tags.admin,
+    tags.endowment,
+    tags.multicall,
+  ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
