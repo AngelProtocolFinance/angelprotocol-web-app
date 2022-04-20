@@ -12,14 +12,6 @@ export type Charity = {
   Registration: Registration;
 };
 
-export type Metadata = {
-  SK?: "Metadata";
-  Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
-  TerraWallet: string;
-};
-
 export type ContactDetailsData = {
   Registration: Pick<Registration, "CharityName" | "CharityName_ContactEmail">;
   ContactPerson: ContactPerson;
@@ -48,6 +40,14 @@ export type FileObject = {
   sourceUrl?: string;
 };
 
+export type Metadata = {
+  SK?: "Metadata";
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  TerraWallet: string;
+};
+
 export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
@@ -72,6 +72,29 @@ export type RegistrationStatus =
   | "Active"
   | "Complete";
 
+export interface UpdateApplication {
+  PK: string;
+  poll_id: string;
+  chain_id: string;
+}
+
+export type UpdateCharityMetadataData = {
+  PK?: string;
+  body: {
+    Banner?: FileObject;
+    CharityLogo?: FileObject;
+    CharityOverview?: string;
+    TerraWallet?: string;
+  };
+};
+
+export type UpdateCharityMetadataResult = {
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  TerraWallet: string;
+};
+
 export type UpdateDocumentationData = {
   PK?: string;
   body: {
@@ -93,21 +116,4 @@ export type UpdateDocumentationResult = {
   ProofOfRegistration: FileObject;
   FinancialStatements: FileObject[];
   AuditedFinancialReports: FileObject[];
-};
-
-export type UpdateCharityMetadataData = {
-  PK?: string;
-  body: {
-    Banner?: string;
-    CharityLogo?: string;
-    CharityOverview?: string;
-    TerraWallet?: string;
-  };
-};
-
-export type UpdateCharityMetadataResult = {
-  Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
-  TerraWallet: string;
 };

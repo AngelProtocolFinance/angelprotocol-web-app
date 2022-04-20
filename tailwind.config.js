@@ -47,7 +47,6 @@ module.exports = {
         orange: "#F59700",
         "yellow-blue": "#22CCDD",
         "dark-red": "#8A3F30",
-        "dark-grey": "#999999",
         "failed-red": "#FE4454",
         "light-blue": "#1b9cef",
         "bright-blue": "#64c1fc",
@@ -135,6 +134,7 @@ module.exports = {
         450: "450px",
         600: "600px",
         136: "36rem",
+        160: "60rem",
       },
       minHeight: {
         115: "15rem",

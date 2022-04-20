@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { app, site } from "constants/routes";
 
-const LINK_STYLE =
-  "text-white-grey hover:text-white-grey/75 text-sm px-1 lg:text-base font-heading uppercase font-semibold lg:px-2";
-
 export default function AppMenu() {
+  const linkStyles = {
+    className:
+      "text-white-grey hover:text-white-grey/75 text-sm px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
+  };
   return (
     <ul className="flex lg:items-center">
       <li>
@@ -12,7 +13,7 @@ export default function AppMenu() {
           rel="noreferrer"
           target="_blank"
           href="https://share-eu1.hsforms.com/14aljI0OEQje2DDmJiZoLFgetp37"
-          className={LINK_STYLE}
+          className={linkStyles.className}
         >
           SUPPORT
         </a>
@@ -22,13 +23,16 @@ export default function AppMenu() {
           rel="noreferrer"
           target="_blank"
           href="https://share-eu1.hsforms.com/10igJPVeBQMemEpTmUsxSVwetp37"
-          className={LINK_STYLE}
+          className={linkStyles.className}
         >
           FEEDBACK
         </a>
       </li>
       <li>
-        <Link to={`${site.app}/${app.register}`} className={LINK_STYLE}>
+        <Link
+          to={`${site.app}/${app.register}`}
+          className={linkStyles.className}
+        >
           REGISTER
         </Link>
       </li>
@@ -36,8 +40,8 @@ export default function AppMenu() {
         <a
           rel="noreferrer"
           target="_blank"
-          href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
-          className={LINK_STYLE}
+          href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
+          className={linkStyles.className}
         >
           PRIVACY POLICY
         </a>

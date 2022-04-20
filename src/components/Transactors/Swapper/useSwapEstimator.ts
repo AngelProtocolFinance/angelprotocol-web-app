@@ -131,7 +131,15 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, is_buy, debounced_slippage]);
+  }, [
+    debounced_amount,
+    wallet,
+    UST_balance,
+    is_buy,
+    debounced_slippage,
+    isValid,
+    isDirty,
+  ]);
 
   return { wallet, tx };
 }

@@ -1,23 +1,25 @@
 import { useParams } from "react-router-dom";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { useProfileState } from "services/aws/endowments/states";
+import { CharityParam } from "pages/Charity/types";
+import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import toCurrency from "helpers/toCurrency";
-import { CharityParam } from "../../types";
 
+//TODO: refactor component markup
 export function EndowmentInfo() {
   const { address } = useParams<CharityParam>();
-  const { profileState } = useProfileState(address!);
+  //this component will not be rendered if address is undefined or incorrect
+  const { endowmentBalance } = useEndowmentBalance(address!);
   const accountDetails = [
     {
       type: "Liquid Account",
-      balance: `$${toCurrency(profileState.total_liq)}`,
+      balance: `$${toCurrency(endowmentBalance?.liquid || 0)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-green-400",
     },
     {
       type: "Endowment Account",
-      balance: `$${toCurrency(profileState.total_lock)}`,
+      balance: `$${toCurrency(endowmentBalance?.locked || 0)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
@@ -32,7 +34,7 @@ export function EndowmentInfo() {
             Total Account Value
           </p>
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
-            ${toCurrency(profileState.overall)}
+            ${toCurrency(endowmentBalance?.total || 0)}
           </p>
           {/*          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations

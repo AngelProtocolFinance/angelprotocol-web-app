@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Checkbox from "components/Checkbox";
-import { site, web } from "constants/routes";
+import { PRIVACY_POLICY } from "constants/urls";
 import { FormValues } from "../types";
 
 export default function PrivacyPolicyCheckbox() {
@@ -18,7 +18,7 @@ export default function PrivacyPolicyCheckbox() {
     >
       By checking this box, you declare that you have read and agreed to our{" "}
       <Link
-        to={`${site.home}${web.privacy}`}
+        to={PRIVACY_POLICY}
         target="_blank"
         rel="noreferrer noopener"
         className="underline text-angel-blue"
