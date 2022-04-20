@@ -43,10 +43,6 @@ export default function useTransak(receiver: Receiver) {
       transak.close();
     });
 
-    transak.on(transak.EVENTS.TRANSAK_WIDGET_CLOSE, () => {
-      transak.close();
-    });
-
     //runs when order is created, order completed
     transak.on(
       transak.EVENTS.TRANSAK_ORDER_SUCCESSFUL,
@@ -61,7 +57,7 @@ export default function useTransak(receiver: Receiver) {
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,
             denomination: eventPayload.status.cryptoCurrency, //change to eventPayload
-            splitLiq: "50", //default: transak widget can't be modified to accept meta fields
+            splitLiq: "0", //default: transak widget can't be modified to accept meta fields
           };
 
           dispatch(sendDonationLog(logDonationPayload));
