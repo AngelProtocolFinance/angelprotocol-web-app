@@ -1,5 +1,5 @@
-import placeHolderImage from "assets/images/home-banner.jpg";
 import React, { useRef } from "react";
+import placeHolderImage from "assets/images/home-banner.jpg";
 
 export default function ImageWrapper(
   props: React.ImgHTMLAttributes<HTMLImageElement>

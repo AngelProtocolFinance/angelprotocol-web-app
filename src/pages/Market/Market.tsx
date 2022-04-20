@@ -1,7 +1,7 @@
-import Index from "./Index";
-import Loader from "components/Loader/Loader";
 import { useCategorizedProfiles } from "services/aws/endowments/queriers";
+import Loader from "components/Loader/Loader";
 import Banner from "./Banner";
+import Index from "./Index";
 
 export default function Market() {
   const { categorizedProfiles, isProfilesLoading } = useCategorizedProfiles();

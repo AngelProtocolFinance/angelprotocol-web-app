@@ -1,5 +1,5 @@
 import { aws } from "../aws";
-import { Result, Donors } from "./types";
+import { Donors, Result } from "./types";
 
 const alliance_api = aws.injectEndpoints({
   endpoints: (builder) => ({

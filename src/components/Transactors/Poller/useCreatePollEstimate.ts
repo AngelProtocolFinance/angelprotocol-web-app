@@ -1,9 +1,4 @@
 import { Fee } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
-import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
-import processEstimateError from "helpers/processEstimateError";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -13,6 +8,11 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import Halo from "contracts/Halo";
+import useWalletContext from "hooks/useWalletContext";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 

@@ -1,18 +1,8 @@
 import LP, { L, T } from "contracts/LP";
 import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
-import { pairInfo, pool_balance, simulation } from "./placeholders";
 import { lp_api } from "./lp";
-
-export function usePairInfo() {
-  const { usePairInfoQuery } = lp_api;
-  const { wallet, contract } = useContract<L, T>(LP);
-  const { data = pairInfo } = usePairInfoQuery(contract.pairInfo, {
-    skip: wallet?.network.chainID === chainIDs.testnet,
-  });
-
-  return data;
-}
+import { simulation } from "./placeholders";
 
 export function usePairSimul(interval = 0, skip = false) {
   const { usePairSimulQuery } = lp_api;
@@ -22,14 +12,5 @@ export function usePairSimul(interval = 0, skip = false) {
     pollingInterval: interval,
   });
 
-  return data;
-}
-
-export function usePool(skip = false) {
-  const { usePoolQuery } = lp_api;
-  const { wallet, contract } = useContract<L, T>(LP);
-  const { data = pool_balance } = usePoolQuery(contract.pool, {
-    skip: skip || wallet?.network.chainID === chainIDs.testnet,
-  });
   return data;
 }

@@ -1,4 +1,4 @@
-import ancIcon from "../../assets/images/anchor_protocol.png";
+import ancIcon from "assets/images/anchor_protocol.png";
 
 type Props = { className: string; account: any };
 export function AccountInfo(props: Props) {

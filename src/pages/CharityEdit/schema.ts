@@ -1,5 +1,5 @@
-import { EditableProfileAttr } from "services/aws/endowments/types";
 import * as Yup from "yup";
+import { EditableProfileAttr } from "services/aws/endowments/types";
 
 type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 

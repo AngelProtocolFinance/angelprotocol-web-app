@@ -1,6 +1,6 @@
-import { Token } from "constants/currency";
-import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
+import createAuthToken from "helpers/createAuthToken";
+import { Token } from "constants/currency";
 import { apes } from "./apes";
 
 const currencies_api = apes.injectEndpoints({

@@ -1,5 +1,5 @@
-import Status from "../Status";
 import Fee from "../Fee";
+import Status from "../Status";
 import Claims from "./Claims";
 import useClaimUnstakedHalo from "./useClaimUnstakedHalo";
 

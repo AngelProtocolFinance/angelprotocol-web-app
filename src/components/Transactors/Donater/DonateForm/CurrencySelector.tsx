@@ -1,10 +1,11 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { useFormContext } from "react-hook-form";
 import { memo, useState } from "react";
-import Icon from "components/Icons/Icons";
+import { useFormContext } from "react-hook-form";
 import { useGetTerraTokensQuery } from "services/apes/currencies";
+import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { Token } from "constants/currency";
+
 type Props = {
   closeHandler: () => void;
 };

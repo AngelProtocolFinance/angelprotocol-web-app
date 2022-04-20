@@ -1,11 +1,11 @@
-import { aws } from "../aws";
-import { terra_lcds } from "constants/urls";
-import { sc } from "constants/sc";
+import { QueryRes } from "services/terra/types";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
-import { Airdrops, ClaimInquiry, QueryArg } from "./types";
-import { QueryRes } from "services/terra/types";
+import { sc } from "constants/sc";
+import { terra_lcds } from "constants/urls";
+import { aws } from "../aws";
 import { tags } from "../tags";
+import { Airdrops, ClaimInquiry, QueryArg } from "./types";
 
 const airdrop_api = aws.injectEndpoints({
   endpoints: (build) => ({
@@ -31,14 +31,14 @@ const airdrop_api = aws.injectEndpoints({
 
           const claimables: Airdrops = [];
           for (const airdrop of airdrops) {
-            const msg = btoa(
+            const msg = Buffer.from(
               JSON.stringify({
                 is_claimed: {
                   stage: airdrop.stage,
                   address: wallet_addr,
                 },
               })
-            );
+            ).toString("base64");
             const claim_res = await fetch(
               `${terra_endpoint}/terra/wasm/v1beta1/contracts/${airdrop_addr}/store?query_msg=${msg}`
             );

@@ -3,8 +3,8 @@ import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Endowment } from "services/aws/leaderboard/types";
 import LazyImage from "components/LazyImage/LazyImage";
 import { app } from "constants/routes";
-import projectFunds from "./projectFunds";
 import Amount from "./Amount";
+import projectFunds from "./projectFunds";
 
 export default function TableEntry(props: Endowment) {
   const { locked, liquid } = projectFunds(

@@ -1,7 +1,7 @@
-import toCurrency from "helpers/toCurrency";
 import { Airdrops } from "services/aws/airdrop/types";
-import useClaimAirdrop from "./useClaimAirdrop";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
+import useClaimAirdrop from "./useClaimAirdrop";
 
 export type Props = { airdrops: Airdrops };
 export default function Catcher(props: Props) {

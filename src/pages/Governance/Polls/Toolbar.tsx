@@ -1,10 +1,10 @@
-import usePoller from "components/Transactors/Poller/usePoller";
 import { useLatestBlock } from "services/terra/queriers";
+import Icon from "components/Icons/Icons";
+import usePoller from "components/Transactors/Poller/usePoller";
 import toCurrency from "helpers/toCurrency";
 import Button from "../Button";
-import { PollFilterOptions } from "./Polls";
 import PollSelector from "./PollSelector";
-import Icon from "components/Icons/Icons";
+import { PollFilterOptions } from "./Polls";
 
 export default function Toolbar(props: {
   pollFilter: PollFilterOptions;

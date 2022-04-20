@@ -1,7 +1,7 @@
 import Fee from "../Fee";
 import Status from "../Status";
-import Option from "./Option";
 import Amount from "./Amount";
+import Option from "./Option";
 import useVote from "./useVote";
 
 export default function VoterForm() {

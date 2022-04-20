@@ -1,12 +1,13 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
-import { WalletProxy } from "providers/WalletProvider";
 import { Airdrops } from "services/aws/airdrop/types";
 import { GovState } from "services/terra/gov/types";
 import { ContractQueryArgs } from "services/terra/types";
+import { WalletProxy } from "providers/WalletProvider";
+import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Contract from "./Contract";
 import { Vote } from "./types";
+
 // import { denoms } from "constants/currency";
 
 export default class Halo extends Contract {
@@ -58,7 +59,9 @@ export default class Halo extends Contract {
       send: {
         amount: uhalo.toString(),
         contract: this.gov_address,
-        msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
+        msg: Buffer.from(JSON.stringify({ stake_voting_tokens: {} })).toString(
+          "base64"
+        ),
       },
     });
   }
@@ -80,9 +83,9 @@ export default class Halo extends Contract {
         send: {
           amount: u_amount.toString(),
           contract: this.gov_address,
-          msg: btoa(
+          msg: Buffer.from(
             JSON.stringify({ create_poll: { title, description, link } })
-          ),
+          ).toString("base64"),
         },
       }
     );

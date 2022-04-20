@@ -1,11 +1,11 @@
-import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, currency_icons } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { memo, useCallback, useRef, useState } from "react";
-import useTooltip from "hooks/useTooltip";
+import { useFormContext } from "react-hook-form";
 import Icon from "components/Icons/Icons";
-import CurrencySelector from "./CurrencySelector";
+import { DonateValues } from "components/Transactors/Donater/types";
 import useBackdropDismiss from "components/WalletSuite/useBackdropDismiss";
+import useTooltip from "hooks/useTooltip";
+import { currency_icons, currency_text } from "constants/currency";
+import CurrencySelector from "./CurrencySelector";
 
 type Props = {
   withTooltip?: true;

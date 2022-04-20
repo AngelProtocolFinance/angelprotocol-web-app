@@ -1,6 +1,6 @@
-import optimizeImage from "pages/CharityEdit/optimizeImage";
-import { ChangeEvent, useState, useRef, useEffect } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import optimizeImage from "pages/CharityEdit/optimizeImage";
 import { EditableProfileAttr } from "services/aws/endowments/types";
 
 export default function useChangeImage() {

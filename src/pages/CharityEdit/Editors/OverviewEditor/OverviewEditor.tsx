@@ -1,10 +1,10 @@
+import { Editor } from "draft-js";
+import "draft-js/dist/Draft.css";
 import React from "react";
 import { IconType } from "react-icons";
-import { Editor } from "draft-js";
+import { getIcon } from "components/Icons/Icons";
 import Label from "../../Label";
 import useEditor from "./useEditor";
-import "draft-js/dist/Draft.css";
-import { getIcon } from "components/Icons/Icons";
 
 function OverviewEditor() {
   const {

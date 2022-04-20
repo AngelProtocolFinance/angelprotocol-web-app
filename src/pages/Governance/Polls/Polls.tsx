@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useGovPolls } from "services/terra/gov/queriers";
-import PollCard from "./PollCard";
 import { PollStatus } from "services/terra/gov/types";
+import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 
 export type PollFilterOptions = PollStatus | "all";

@@ -1,5 +1,5 @@
-import vaultIcon from "assets/icons/36_network_secure_vault.svg";
 import liquidIcon from "assets/icons/08_money_flow.svg";
+import vaultIcon from "assets/icons/36_network_secure_vault.svg";
 import useObserve from "hooks/useObserver";
 import transitionIn, { Direction } from "helpers/transitionIn";
 

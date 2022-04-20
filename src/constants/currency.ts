@@ -1,15 +1,15 @@
+import atom from "assets/icons/currencies/atom.png";
+import bnb from "assets/icons/currencies/bnb.png";
+import btc from "assets/icons/currencies/btc.png";
+import ether from "assets/icons/currencies/ether.png";
+import halo from "assets/icons/currencies/halo_outline.png";
 import krt from "assets/icons/currencies/krt.svg";
 import luna from "assets/icons/currencies/luna.svg";
 import mnt from "assets/icons/currencies/mnt.svg";
 import sdt from "assets/icons/currencies/sdt.svg";
+import sol from "assets/icons/currencies/sol.svg";
 import token from "assets/icons/currencies/token.svg";
 import ust from "assets/icons/currencies/ust.svg";
-import ether from "assets/icons/currencies/ether.png";
-import btc from "assets/icons/currencies/btc.png";
-import sol from "assets/icons/currencies/sol.svg";
-import atom from "assets/icons/currencies/atom.png";
-import halo from "assets/icons/currencies/halo_outline.png";
-import bnb from "assets/icons/currencies/bnb.png";
 
 export enum denoms {
   uluna = "uluna",
