@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step, SuccessStage } from "services/transaction/types";
 import Icon from "components/Icons/Icons";
@@ -9,16 +10,36 @@ import getTxUrl from "helpers/getTxUrl";
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
   const { hideModal, showModal } = useSetModal();
+  const navigate = useNavigate();
   const dispatch = useSetter();
-  const { chainId, txHash, message, isReceiptEnabled, isShareEnabled } = props;
+  const {
+    chainId,
+    txHash,
+    message,
+    isReceiptEnabled,
+    isShareEnabled,
+    successLink,
+  } = props;
+
+  //if no special action is needed, just shown normal acknowledge button
+  const isAcknowledgeButtonShown =
+    !isReceiptEnabled && !isShareEnabled && !successLink;
 
   function acknowledge() {
-    if (isReceiptEnabled) {
-      dispatch(setStage({ step: Step.receipt, chainId, txHash }));
-    } else {
+    dispatch(setStage({ step: Step.form }));
+    hideModal();
+  }
+
+  function showReceiptForm() {
+    dispatch(setStage({ step: Step.receipt, chainId, txHash }));
+  }
+
+  function redirectToSuccessUrl(url: string) {
+    return function () {
+      navigate(url);
       dispatch(setStage({ step: Step.form }));
       hideModal();
-    }
+    };
   }
 
   const shareDonation = () => showModal(SharePrompt, {});
@@ -40,21 +61,38 @@ export default function Success(props: SuccessStage) {
       )}
 
       <div className="flex justify-center gap-4">
-        <button
-          onClick={acknowledge}
-          className="bg-angel-orange text-white rounded-md uppercase py-1 px-4 font-bold"
-        >
-          {isReceiptEnabled ? "get receipt" : "ok"}
-        </button>
+        {isAcknowledgeButtonShown && <Button onClick={acknowledge}>ok</Button>}
+        {isReceiptEnabled && (
+          <Button onClick={showReceiptForm}>get receipt</Button>
+        )}
+
         {isShareEnabled && (
-          <button
-            onClick={shareDonation}
-            className="bg-angel-blue text-white rounded-md uppercase py-1 px-4 font-bold"
+          <Button onClick={shareDonation} _bg="bg-angel-orange">
+            share
+          </Button>
+        )}
+
+        {successLink && (
+          <Button
+            onClick={redirectToSuccessUrl(successLink.url)}
+            _bg="bg-angel-orange"
           >
-            Share
-          </button>
+            {successLink.description}
+          </Button>
         )}
       </div>
     </div>
+  );
+}
+
+function Button({
+  _bg = "bg-angel-blue",
+  ...restProps
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { _bg?: string }) {
+  return (
+    <button
+      {...restProps}
+      className={`${_bg} text-white rounded-md uppercase py-1 px-4 font-bold`}
+    />
   );
 }

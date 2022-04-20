@@ -9,7 +9,6 @@ import Home from "./Home/Home";
 import WebFoot from "./WebFoot";
 
 const Donors = lazy(() => import("./Donors/Donors"));
-const PrivacyPolicy = lazy(() => import("./PrivacyPolicy"));
 const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));
 
@@ -31,7 +30,6 @@ const Website = () => {
               element={<Navigate replace to={location.pathname.slice(0, -1)} />}
             />
             <Route path={web.contact} element={<Contact />} />
-            <Route path={web.privacy} element={<PrivacyPolicy />} />
             <Route path={web.donors} element={<Donors />} />
             <Route path={web.charities} element={<Charities />} />
             <Route path={web.index} element={<Home />} />

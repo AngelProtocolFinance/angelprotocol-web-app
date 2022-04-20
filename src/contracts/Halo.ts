@@ -1,7 +1,7 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { Airdrops } from "services/aws/airdrop/types";
 import { GovState } from "services/terra/gov/types";
-import { ContractQueryArgs } from "services/terra/types";
+import { Airdrops } from "services/terra/multicall/types";
+import { ContractQueryArgs as CQA } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
@@ -14,10 +14,11 @@ export default class Halo extends Contract {
   airdrop_addr: string;
   token_address: string;
   gov_address: string;
-  staker: ContractQueryArgs;
-  gov_balance: ContractQueryArgs;
-  gov_state: ContractQueryArgs;
-  polls: ContractQueryArgs;
+  staker: CQA;
+  gov_balance: CQA;
+  gov_state: CQA;
+  polls: CQA;
+  isAirDropClaimed: (stage: number) => CQA;
 
   constructor(wallet?: WalletProxy) {
     super(wallet);
@@ -45,10 +46,25 @@ export default class Halo extends Contract {
       address: this.gov_address,
       msg: { polls: {} },
     };
+
+    this.isAirDropClaimed = (stage) => ({
+      address: this.airdrop_addr,
+      msg: { is_claimed: { stage, address: this.walletAddr } },
+    });
   }
 
   async getGovState() {
     return this.query<GovState>(this.gov_address, this.gov_state.msg);
+  }
+
+  createEmbeddedHaloTransferMsg(amount: number, recipient: string) {
+    return this.createdEmbeddedWasmMsg([], this.token_address, {
+      transfer: {
+        //convert to uamount
+        amount: new Dec(amount).mul(1e6).toInt().toString(),
+        recipient,
+      },
+    });
   }
 
   //halo_token

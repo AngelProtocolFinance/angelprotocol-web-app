@@ -4,13 +4,15 @@ import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { app, site } from "../constants/routes";
 
+const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
-const Endowment = lazy(() => import("pages/Endowment/Endowment"));
+const EndowmentAdmin = lazy(
+  () => import("pages/EndowmentAdmin/EndowmentAdmin")
+);
 const Charity = lazy(() => import("pages/Charity/Charity"));
-const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
 const Market = lazy(() => import("pages/Market/Market"));
 
@@ -31,15 +33,15 @@ export default function Views() {
         <Route path={`${app.marketplace}`} element={<Market />} />
         <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
         <Route path={`${app.charity}/:address/*`} element={<Charity />} />
-        <Route
-          path={`${app.charity_edit}/:address`}
-          element={<CharityEdit />}
-        />
         <Route path={`${app.login}`} element={<Login />} />
         <Route path={`${app.tca}`} element={<TCA />} />
         <Route path={`${app.govern}/*`} element={<Governance />} />
-        <Route path={`${app.endowment}/:address`} element={<Endowment />} />
-        <Route path={`${app.donation}/:address`} element={<Donations />} />
+        <Route path={`${app.admin}/*`} element={<Admin />} />
+        <Route
+          path={`${app.endowment_admin}/:address/*`}
+          element={<EndowmentAdmin />}
+        />
+        <Route path={`${app.donations}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}
           element={<Navigate replace to={`${app.marketplace}`} />}
