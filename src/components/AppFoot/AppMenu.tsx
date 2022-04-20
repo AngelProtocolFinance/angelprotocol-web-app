@@ -40,7 +40,7 @@ export default function AppMenu() {
         <a
           rel="noreferrer"
           target="_blank"
-          href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
+          href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
           className={linkStyles.className}
         >
           PRIVACY POLICY
