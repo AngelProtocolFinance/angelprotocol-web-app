@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Copier from "./Copier";
 
@@ -16,31 +16,34 @@ Object.assign(navigator, {
 });
 
 describe("Copier component tests:", () => {
-  // Renders the copy button for each test block
-  let button;
-  beforeEach(() => {
+  test("copy button is visible", () => {
     render(<CopyButton />);
 
     // Looks for the copy button
-    button = screen.getByRole("button");
-  });
+    const button = screen.getByRole("button");
 
-  test("copy button is visible", () => {
     expect(button).toBeInTheDocument();
   });
 
   test("should copy correct text and change appearance when clicked", async () => {
     jest.spyOn(navigator.clipboard, "writeText");
 
+    render(<CopyButton />);
+
+    // Looks for the copy button
+    const button = screen.getByRole("button");
+
     // Clicks the copy button
     userEvent.click(button);
 
     await waitFor(() => {
       // Expects mock Clipboard API to be invoked
-      expect(navigator.clipboard.writeText).toHaveBeenCalledWith("S4mple-Text+2_Copy0");
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        "S4mple-Text+2_Copy0"
+      );
     });
 
     // Expects the button to change appearance once clicked
-    expect(screen.getByTitle("Copied!"));
+    expect(screen.getByTitle("Copied!")).toBeInTheDocument();
   });
 });
