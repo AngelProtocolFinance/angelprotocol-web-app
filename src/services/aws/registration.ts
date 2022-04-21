@@ -96,7 +96,7 @@ const registration_api = aws.injectEndpoints({
           url: "registration",
           params: { uuid: data.PK },
           method: "PUT",
-          body: data,
+          body: data.body,
         };
       },
     }),
