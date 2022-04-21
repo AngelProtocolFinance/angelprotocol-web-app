@@ -55,7 +55,7 @@ export default function useClaimEstimator() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

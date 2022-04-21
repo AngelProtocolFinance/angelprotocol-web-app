@@ -10,6 +10,7 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dwindow, Providers } from "services/provider/types";
+import { useCw20TokenBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
@@ -42,6 +43,10 @@ export default function useEstimator() {
   const split_liq = Number(watch("split_liq"));
   const currency = watch("currency");
   const cw20_contract = watch("cw20_contract");
+  const native_denoms = [denoms.uusd, denoms.uluna];
+
+  // query balance for non-native cw20Token
+  const { tokenBalance } = useCw20TokenBalance(cw20_contract || "");
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
@@ -68,12 +73,13 @@ export default function useEstimator() {
         }
 
         if (!debounced_amount) {
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           return;
         }
         //check if required balance is sufficient
         const balance =
-          coins.find((coin) => coin.denom === currency)?.amount || 0;
+          coins.find((coin) => coin.denom === currency)?.amount || tokenBalance;
+
         if (debounced_amount >= balance) {
           dispatch(setFormError("Not enough balance"));
           return;
@@ -111,33 +117,74 @@ export default function useEstimator() {
               dispatch(setFormError("Not enough balance to pay fees"));
               return;
             }
-            dispatch(setFee(feeNum));
+            dispatch(setFee({ fee: feeNum }));
             setTerraTx({ msgs: [depositMsg], fee });
           }
         }
 
         //checks for uluna
-        if (supported_denoms.includes(currency)) {
+        if (currency === denoms.uluna) {
           if (activeProvider === Providers.terra) {
             //this block won't run if wallet is not connected
             //activeProvider === Providers.none
-            const denom = denoms[currency];
             const contract = new Contract(wallet);
             const sender = wallet!.address;
-            const receiver = cw20_contract || ap_wallets[denom];
+            const receiver = ap_wallets[denoms.uluna];
             const amount = new Dec(debounced_amount).mul(1e6);
 
             const msg = new MsgSend(sender, receiver, [
-              new Coin(denom, amount.toNumber()),
+              new Coin(denoms.uluna, amount.toNumber()),
             ]);
-            const aminoFee = await contract.estimateFee([msg], denom);
-            const numFee = extractFeeNum(aminoFee, denom);
+            const aminoFee = await contract.estimateFee([msg], denoms.uluna);
+            const numFee = extractFeeNum(aminoFee, denoms.uluna);
 
             if (debounced_amount + numFee >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
               return;
             }
-            dispatch(setFee(numFee));
+            dispatch(setFee({ fee: numFee }));
+            setTerraTx({ msgs: [msg], fee: aminoFee });
+          }
+        }
+
+        //checks for supported cw20tokens
+        if (
+          supported_denoms.includes(currency) &&
+          !native_denoms.includes(currency)
+        ) {
+          if (activeProvider === Providers.terra) {
+            //this block won't run if wallet is not connected
+            //activeProvider === Providers.none
+
+            // strict check to make sure the contract address is present
+            if (!cw20_contract) {
+              dispatch(setFormError("Token contract address not found!!!"));
+              return;
+            }
+
+            const denom = denoms[currency];
+            const contract = new Contract(wallet);
+            const receiver = ap_wallets[denoms.uluna];
+            const amount = new Dec(debounced_amount)
+              .mul(1e6)
+              .toInt()
+              .toString();
+
+            const msg = contract.createCw20TransferMsg(
+              amount,
+              cw20_contract,
+              receiver
+            );
+            const aminoFee = await contract.estimateFee([msg], denom);
+            const numFee = extractFeeNum(aminoFee);
+
+            const ustBalance =
+              coins.find((coin) => coin.denom === denoms.uusd)?.amount || 0;
+            if (numFee >= ustBalance) {
+              dispatch(setFormError("Not enough balance to pay fees"));
+              return;
+            }
+            dispatch(setFee({ fee: numFee, denom: denoms.uusd }));
             setTerraTx({ msgs: [msg], fee: aminoFee });
           }
         }
@@ -174,7 +221,7 @@ export default function useEstimator() {
           const fee_eth = ethers.utils.formatEther(fee_wei);
 
           setEthTx(tx);
-          dispatch(setFee(parseFloat(fee_eth)));
+          dispatch(setFee({ fee: parseFloat(fee_eth) }));
         }
 
         //estimates for bnb
@@ -210,7 +257,7 @@ export default function useEstimator() {
           const fee_bnb = ethers.utils.formatEther(fee_wei);
 
           setBnbTx(tx);
-          dispatch(setFee(parseFloat(fee_bnb)));
+          dispatch(setFee({ fee: parseFloat(fee_bnb) }));
         }
 
         dispatch(setFormLoading(false));
@@ -224,7 +271,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
+  }, [debounced_amount, debounced_split, currency, coins, supported_denoms, tokenBalance]);
 
   return { terraTx, ethTx, bnbTx };
 }

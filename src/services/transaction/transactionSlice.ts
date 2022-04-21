@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { denoms } from "constants/currency";
 import { FormError, Stage, State, Step } from "./types";
 
 const initialState: State = {
@@ -25,17 +26,23 @@ const transactionSlice = createSlice({
     setFormLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.form_loading = payload;
     },
-    setFee: (state, { payload }: PayloadAction<number>) => {
-      state.fee = payload;
+    setFee: (
+      state,
+      { payload }: PayloadAction<{ fee: number; denom?: denoms }>
+    ) => {
+      state.fee = payload.fee;
+      state.feeDenom = payload.denom;
     },
     resetFee: (state) => {
       state.fee = 0;
+      state.feeDenom = undefined;
     },
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
     },
     resetTxFormState: (state) => {
       state.fee = 0;
+      state.feeDenom = undefined;
       state.form_error = "";
       state.form_loading = false;
     },

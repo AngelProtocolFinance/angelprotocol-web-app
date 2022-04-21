@@ -65,7 +65,7 @@ export default function useCreatePollEstimate() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {

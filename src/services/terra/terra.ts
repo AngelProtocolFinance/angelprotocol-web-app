@@ -61,7 +61,8 @@ export const terra = createApi({
         return res.query_result;
       },
     }),
-    haloBalance: builder.query<number, ContractQueryArgs>({
+
+    cW20Balance: builder.query<number, ContractQueryArgs>({
       providesTags: [{ type: tags.user, id: user.halo_balance }],
       query: contract_querier,
       transformResponse: (res: QueryRes<HaloBalance>) => {

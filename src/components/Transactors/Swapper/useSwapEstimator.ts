@@ -52,7 +52,7 @@ export default function useSwapEstimator() {
         }
 
         if (!debounced_amount) {
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           return;
         }
 
@@ -114,7 +114,7 @@ export default function useSwapEstimator() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setValue("pct_commission", toCurrency(pct_commission, 2));
         setValue(
           "return_amount",

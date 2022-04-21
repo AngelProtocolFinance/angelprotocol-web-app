@@ -27,7 +27,10 @@ function CurrencySelector(props: Props) {
 
     const updateCurrency = () => {
       setValue("currency", sym);
-      if (isTestnet) setValue("cw20_contract", token?.testnet_cw20_contract);
+      setValue(
+        "cw20_contract",
+        isTestnet ? token?.testnet_cw20_contract : token.cw20_contract
+      );
     };
 
     return (

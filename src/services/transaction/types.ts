@@ -27,6 +27,7 @@ export type State = {
   form_loading: boolean;
   form_error: FormError | null;
   fee: number;
+  feeDenom?: denoms;
   stage: Stage;
 };
 

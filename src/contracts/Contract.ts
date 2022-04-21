@@ -1,4 +1,11 @@
-import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
+import {
+  Coin,
+  Fee,
+  LCDClient,
+  Msg,
+  MsgExecuteContract,
+  TxInfo,
+} from "@terra-money/terra.js";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
@@ -98,6 +105,19 @@ export default class Contract {
         },
       },
     };
+  }
+
+  createCw20TransferMsg(
+    amount: string,
+    token_address: string,
+    recipient: string
+  ): MsgExecuteContract {
+    return new MsgExecuteContract(this.walletAddr!, token_address, {
+      transfer: {
+        amount,
+        recipient,
+      },
+    });
   }
 
   checkWallet() {

@@ -47,7 +47,7 @@ export default function useVoteEstimator() {
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           return;
         }
 
@@ -94,7 +94,7 @@ export default function useVoteEstimator() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {

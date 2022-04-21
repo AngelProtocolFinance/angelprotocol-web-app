@@ -69,14 +69,14 @@ export function useHaloInfo() {
 }
 
 export function useHaloBalance(customAddr?: string) {
-  const { useHaloBalanceQuery } = terra;
+  const { useCW20BalanceQuery } = terra;
   const { contract, wallet } = useContract<H, T>(Halo);
   const {
     data = 0,
     isLoading,
     isFetching,
     isError,
-  } = useHaloBalanceQuery(
+  } = useCW20BalanceQuery(
     {
       address: contract.token_address,
       //this query will only run if wallet is not undefined
@@ -89,5 +89,31 @@ export function useHaloBalance(customAddr?: string) {
     haloBalance: data,
     haloBalanceLoading: isLoading || isFetching,
     isHaloBalanceFailed: isError,
+  };
+}
+
+export function useCw20TokenBalance(
+  token_address: string,
+  customAddr?: string
+) {
+  const { useCW20BalanceQuery } = terra;
+  const { wallet } = useWalletContext();
+  const {
+    data = 0,
+    isLoading,
+    isFetching,
+    isError,
+  } = useCW20BalanceQuery(
+    {
+      address: token_address,
+      //this query will only run if wallet is not undefined
+      msg: { balance: { address: customAddr || wallet?.address } },
+    },
+    { skip: wallet === undefined }
+  );
+  return {
+    tokenBalance: data,
+    tokenBalanceLoading: isLoading || isFetching,
+    isTokenBalanceFailed: isError,
   };
 }

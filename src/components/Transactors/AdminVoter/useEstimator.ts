@@ -53,7 +53,7 @@ export default function useEstimator() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

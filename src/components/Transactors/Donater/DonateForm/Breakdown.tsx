@@ -5,15 +5,16 @@ import toCurrency from "helpers/toCurrency";
 import { currency_text, denoms } from "constants/currency";
 
 export default function Breakdown() {
-  const { fee } = useGetter((state) => state.transaction);
+  const { fee, feeDenom } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const currency = watch("currency");
+  const total = !feeDenom || feeDenom === currency ? amount + fee : amount;
 
   return (
     <div className="">
-      <Entry title="tx fee" amount={fee} currency={currency} />
-      <Entry title="total amount" amount={amount + fee} currency={currency} />
+      <Entry title="tx fee" amount={fee} currency={feeDenom || currency} />
+      <Entry title="total amount" amount={total} currency={currency} />
     </div>
   );
 }

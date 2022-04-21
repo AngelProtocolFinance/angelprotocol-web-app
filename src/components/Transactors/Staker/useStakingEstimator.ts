@@ -44,7 +44,7 @@ export default function useEstimator() {
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           return;
         }
 
@@ -81,7 +81,7 @@ export default function useEstimator() {
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
