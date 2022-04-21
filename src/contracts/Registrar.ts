@@ -1,3 +1,4 @@
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import { EndowmentQueryOptions } from "services/terra/registrar/types";
 import { ContractQueryArgs as CQA } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
@@ -54,8 +55,8 @@ export default class Registrar extends Contract {
     });
   }
 
-  createEmbeddedCreateEndowmentMsg(payload: RegistrarCreateEndowmentPayload) {
-    return this.createdEmbeddedWasmMsg([], this.address, {
+  createCreateEndowmentMsg(payload: RegistrarCreateEndowmentPayload) {
+    return new MsgExecuteContract(this.walletAddr!, this.address, {
       create_endowment: payload,
     });
   }
