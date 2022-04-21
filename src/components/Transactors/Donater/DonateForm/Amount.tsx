@@ -24,7 +24,7 @@ export default function Amount() {
           id="amount"
           type="text"
           placeholder="0"
-          className="w-2/3 p-3 bg-transparent focus:outline-none"
+          className="w-full p-3 bg-transparent focus:outline-none"
         />
         <Currency />
       </div>

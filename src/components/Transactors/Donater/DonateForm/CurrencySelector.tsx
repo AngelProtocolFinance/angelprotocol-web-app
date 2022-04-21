@@ -31,6 +31,7 @@ function CurrencySelector(props: Props) {
         "cw20_contract",
         isTestnet ? token?.testnet_cw20_contract : token.cw20_contract
       );
+      props.closeHandler();
     };
 
     return (

@@ -156,6 +156,7 @@ module.exports = {
         350: "350px",
       },
       width: {
+        109: "9rem",
         115: "15rem",
         120: "20rem",
         128: "28rem",
