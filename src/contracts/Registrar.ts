@@ -6,6 +6,7 @@ import { sc } from "constants/sc";
 import Contract from "./Contract";
 import {
   RegistrarConfigPayload,
+  RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "./types";
@@ -52,6 +53,13 @@ export default class Registrar extends Contract {
       update_config: payload,
     });
   }
+
+  createEmbeddedCreateEndowmentMsg(payload: RegistrarCreateEndowmentPayload) {
+    return this.createdEmbeddedWasmMsg([], this.address, {
+      create_endowment: payload,
+    });
+  }
+
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_owner: payload,

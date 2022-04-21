@@ -116,3 +116,38 @@ export type RegistrarConfigPayload = {
 export type RegistrarOwnerPayload = {
   new_owner: string;
 };
+
+type Endow_type = "Charity";
+
+export type RegistrarCreateEndowmentPayload = {
+  owner: string;
+  beneficiary: string;
+  withdraw_before_maturity?: boolean; // do not change please
+  maturity_time?: number; // do not change please
+  maturity_height?: number; // do not change please
+  guardians_multisig_addr?: string; // do not change please
+  cw4_members: []; // do not change please
+  // THE PROFILE WILL BE WHERE MOST OF THE APPLICATION DATA CAN BE PLACED
+  profile: {
+    name: string;
+    overview: string;
+    un_sdg: number; // 1 - 17 int
+    tier: number; // Tier int based on their level from compliance docs uploaded
+    logo: string; // string of the IFPS url if provided
+    image: string; // string of the IFPS url if provided
+    url: string; // string of charity website URL if provided
+    registration_number?: string; // string of charity reg # if provided
+    country_city_origin?: string;
+    contact_email: string; // string of charity contact person email if provided
+    social_media_urls: {
+      facebook?: string; // string of URL if provided
+      twitter?: string; // string of URL if provided
+      linkedin?: string; // string of URL if provided
+    };
+    number_of_employees?: number; // int value if provided
+    average_annual_budget?: string; // string value  if provided
+    annual_revenue?: string; // string value  if provided
+    charity_navigator_rating?: string; // string value  if provided
+    endow_type: Endow_type; // do not change please
+  };
+};
