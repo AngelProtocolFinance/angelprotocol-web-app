@@ -8,11 +8,11 @@ import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import torusIcon from "assets/icons/wallets/torus.jpg";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { mainnet } from "../chainOptions";
-import { ConnectionProxy, WalletProxy } from "../types";
+import { WalletProxy } from "../types";
+import { TORUS_CONNECTION } from "./types";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
@@ -27,13 +27,6 @@ const lcdClient = new LCDClient({
   URL: terra_lcds[chainIDs[NETWORK]],
   chainID: chainIDs[NETWORK],
 });
-
-const TORUS_CONNECTION: ConnectionProxy = {
-  identifier: "torus",
-  name: "Torus",
-  type: "TORUS",
-  icon: torusIcon,
-};
 
 type Result = {
   availableWallets: WalletProxy[];
