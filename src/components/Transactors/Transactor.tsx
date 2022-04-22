@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { resetTxFormState } from "services/transaction/transactionSlice";
+import { resetTxFormState } from "slices/transaction/transactionSlice";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import { useSetter } from "store/accessors";

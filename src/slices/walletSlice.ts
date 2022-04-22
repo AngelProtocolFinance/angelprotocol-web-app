@@ -1,10 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
+import { WalletInfo } from "types/slices/wallet";
 import icon from "assets/icons/wallets/unknown.svg";
-import { State, WalletInfo } from "./types";
 
-const initialState: State = {
+type IState = { isUpdating: boolean } & WalletInfo;
+
+const initialState: IState = {
   isUpdating: false,
   displayCoin: {
     amount: 0,

@@ -1,5 +1,5 @@
+import { Dwindow } from "types/slices/provider";
 import binanceIcon from "assets/icons/wallets/binance.png";
-import { Dwindow } from "services/provider/types";
 import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { RejectBinanceLogin } from "providers/BinanceWallet/useBinance";
 import { useSetModal } from "components/Modal/Modal";

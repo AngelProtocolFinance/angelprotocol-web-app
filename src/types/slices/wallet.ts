@@ -36,8 +36,6 @@ export type WalletInfo = {
   id: TerraIdentifiers | undefined;
 };
 
-export type State = { isUpdating: boolean } & WalletInfo;
-
 export type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
 
 export type EthState = {

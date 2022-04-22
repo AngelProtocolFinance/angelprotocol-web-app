@@ -16,13 +16,6 @@ export type FormError =
     }
   | string;
 
-export type State = {
-  form_loading: boolean;
-  form_error: FormError | null;
-  fee: number;
-  stage: Stage;
-};
-
 export type InitialStage = {
   step: Step.form;
   message?: never;

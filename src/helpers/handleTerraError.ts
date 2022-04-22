@@ -6,7 +6,7 @@ import {
   UserDenied,
 } from "@terra-money/wallet-provider";
 import { chainIDs } from "types/chainIDs";
-import { StageUpdator, Step } from "services/transaction/types";
+import { StageUpdator, Step } from "types/slices/transaction";
 import { LogDonationFail } from "components/Transactors/Donater/logDonation";
 import { Disconnected, TxResultFail } from "contracts/Errors";
 

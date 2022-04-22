@@ -1,4 +1,4 @@
-import { BroadcastStage, Step } from "services/transaction/types";
+import { BroadcastStage, Step } from "types/slices/transaction";
 import Loader from "components/Loader/Loader";
 import getTxUrl from "helpers/getTxUrl";
 

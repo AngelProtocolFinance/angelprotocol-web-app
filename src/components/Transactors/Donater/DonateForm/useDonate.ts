@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { resetFee } from "slices/transaction/transactionSlice";
+import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
+import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import { denoms } from "types/denoms";
-import { resetFee } from "services/transaction/transactionSlice";
-import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
-import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";

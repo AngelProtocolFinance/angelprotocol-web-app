@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Providers } from "services/wallet/types";
+import { Providers } from "types/slices/wallet";
 import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
 import useKeyPress from "hooks/useKeyPress";

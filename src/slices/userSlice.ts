@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { User } from "./types";
 
 const initialState: User = {
   Email: "",
@@ -25,14 +24,39 @@ const initialState: User = {
   IsKeyPersonCompleted: false,
   IsMetaDataCompleted: false,
 };
+
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateUserData: (state, { payload }: PayloadAction<User>) => payload,
-    removeUserData: (state) => initialState,
+    updateUserData: (_, { payload }: PayloadAction<User>) => payload,
+    removeUserData: () => initialState,
   },
 });
 
 export default userSlice.reducer;
 export const { updateUserData, removeUserData } = userSlice.actions;
+interface User {
+  Email: string;
+  FirstName: string;
+  LastName: string;
+  PhoneNumber: string;
+  Role: string;
+  SK?: string;
+  PK?: string;
+  CharityName: string;
+  CharityName_ContactEmail?: string;
+  RegistrationDate: string;
+  RegistrationStatus: string;
+  EmailVerified: boolean;
+  ProofOfIdentity?: any;
+  ProofOfEmployment?: any;
+  EndowmentAgreement?: any;
+  ProofOfIdentityVerified?: any;
+  ProofOfEmploymentVerified?: any;
+  EndowmentAgreementVerified?: any;
+  TerraWallet?: any;
+  IsKeyPersonCompleted?: boolean;
+  IsMetaDataCompleted?: boolean;
+  token?: string;
+}

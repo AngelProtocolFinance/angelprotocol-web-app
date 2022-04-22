@@ -1,5 +1,5 @@
-import { setStage } from "services/transaction/transactionSlice";
-import { Step, SuccessStage } from "services/transaction/types";
+import { setStage } from "slices/transaction/transactionSlice";
+import { Step, SuccessStage } from "types/slices/transaction";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import SharePrompt from "components/Share/SharePrompt";

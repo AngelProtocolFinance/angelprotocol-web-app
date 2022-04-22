@@ -1,11 +1,11 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { awsTags } from "types/services/aws";
 import { Airdrops } from "types/services/aws/airdrop";
 import { govTags, terraTags, userTags } from "types/services/terra";
 import { aws } from "services/aws/aws";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";

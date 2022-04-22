@@ -1,6 +1,6 @@
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";

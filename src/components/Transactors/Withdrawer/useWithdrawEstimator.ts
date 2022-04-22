@@ -5,7 +5,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
+} from "slices/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import { Source } from "contracts/types";

@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import { Step } from "services/transaction/types";
+import { Step } from "types/slices/transaction";
 import { getIcon } from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import { useGetter } from "store/accessors";

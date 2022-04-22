@@ -1,5 +1,5 @@
 import { errors } from "ethers";
-import { StageUpdator, Step } from "services/transaction/types";
+import { StageUpdator, Step } from "types/slices/transaction";
 
 export default function handleEthError(error: any, handler: StageUpdator) {
   switch (error?.code) {

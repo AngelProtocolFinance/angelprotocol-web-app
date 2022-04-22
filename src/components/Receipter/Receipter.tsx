@@ -1,4 +1,4 @@
-// import { ReceiptStage } from "services/transaction/types";
+// import { ReceiptStage } from "types/transaction";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";

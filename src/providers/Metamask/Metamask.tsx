@@ -1,6 +1,16 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import { IMetamaskState, Setters } from "./types";
 import useEthereum from "./useEthereum";
+
+interface IMetamaskState {
+  loading: boolean;
+  connected: boolean;
+  address: string | null;
+}
+
+type Setters = {
+  connect: () => Promise<void>;
+  disconnect: () => Promise<void>;
+};
 
 export default function Metamask(props: PropsWithChildren<{}>) {
   const { setters, state } = useEthereum();
@@ -25,6 +35,5 @@ const setContext = createContext<Setters>({
   disconnect: async () => {},
 });
 
-//only use this hook inside PhantomProvider
 export const useSetMetamask = () => useContext(setContext);
 export const useGetMetamask = () => useContext(getContext);

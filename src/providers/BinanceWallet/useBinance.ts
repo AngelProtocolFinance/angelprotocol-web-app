@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Dwindow } from "services/provider/types";
-import { DeviceType, deviceType } from "helpers/deviceType";
 import {
   AccountChangeHandler,
-  Binance,
   EIP1193Events,
   EIP1193Methods,
-} from "./types";
+  Web3Provider,
+} from "types/blockchain/ethereum";
+import { Dwindow } from "types/slices/provider";
+import { DeviceType, deviceType } from "helpers/deviceType";
 
 export default function useBinance() {
   //connect only if there's no active wallet
@@ -47,7 +47,7 @@ export default function useBinance() {
   }
 
   //attachers/detachers
-  const attachAccountChangeHandler = (binance: Binance) => {
+  const attachAccountChangeHandler = (binance: Web3Provider) => {
     binance.on(EIP1193Events.accountsChanged, handleAccountsChange);
   };
 
@@ -106,7 +106,7 @@ function retrieveUserAction(): Action {
 }
 
 export function getBinance() {
-  return (window as any).BinanceChain as Binance;
+  return (window as any).BinanceChain as Web3Provider;
 }
 
 export class RejectBinanceLogin extends Error {

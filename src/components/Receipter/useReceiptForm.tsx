@@ -1,7 +1,7 @@
 import { useState } from "react";
+import useTxUpdator from "slices/transaction/updators";
+import { ReceiptStage, Step } from "types/slices/transaction";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import { ReceiptStage, Step } from "services/transaction/types";
-import useTxUpdator from "services/transaction/updators";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter } from "store/accessors";

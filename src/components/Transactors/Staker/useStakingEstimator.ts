@@ -1,14 +1,14 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
-// import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
+} from "slices/transaction/transactionSlice";
+import { denoms } from "types/denoms";
+// import useTerraBalance from "hooks/useTerraBalance";
+import { useBalances } from "services/terra/queriers";
 import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useDebouncer from "hooks/useDebouncer";

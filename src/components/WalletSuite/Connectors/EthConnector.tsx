@@ -1,5 +1,5 @@
+import { Dwindow } from "types/slices/provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
-import { Dwindow } from "services/provider/types";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import { RejectMetamaskLogin } from "providers/Metamask/useEthereum";
 import { useSetModal } from "components/Modal/Modal";

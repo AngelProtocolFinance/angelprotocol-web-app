@@ -5,9 +5,13 @@ import {
   Lookup,
   Profile,
 } from "types/services/aws/endowments";
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "../aws";
+
+enum UserTypes {
+  CHARITY_OWNER = "charity-owner",
+  WEB_APP = "angelprotocol-web-app",
+}
 
 export const endowments_api = aws.injectEndpoints({
   endpoints: (builder) => ({

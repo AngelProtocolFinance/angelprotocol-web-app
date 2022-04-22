@@ -1,8 +1,8 @@
 import { useState } from "react";
+import { resetWallet } from "slices/walletSlice";
 import { denoms } from "types/denoms";
-import { Dwindow, Providers } from "services/provider/types";
-import { TerraIdentifiers } from "services/wallet/types";
-import { resetWallet } from "services/wallet/walletSlice";
+import { Dwindow, Providers } from "types/slices/provider";
+import { TerraIdentifiers } from "types/slices/wallet";
 import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import Copier from "components/Copier/Copier";

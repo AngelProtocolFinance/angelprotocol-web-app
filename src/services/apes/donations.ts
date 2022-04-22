@@ -1,5 +1,5 @@
 import { ReceiptPayload, TxDetails } from "types/services/apes";
-import { UserTypes } from "services/user/types";
+import { UserTypes } from "types/user-types";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 

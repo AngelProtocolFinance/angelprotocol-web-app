@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Providers, State } from "./types";
+import { Providers, State } from "types/slices/provider";
 
 const initialState: State = {
   active: Providers.none,

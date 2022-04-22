@@ -1,5 +1,5 @@
 import { ReactNode, useMemo } from "react";
-import { setStage } from "services/transaction/transactionSlice";
+import { setStage } from "slices/transaction/transactionSlice";
 import {
   BroadcastStage,
   ErrorStage,
@@ -7,7 +7,7 @@ import {
   Step,
   SubmitStage,
   SuccessStage,
-} from "services/transaction/types";
+} from "types/slices/transaction";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import ReceiptForm from "components/Receipter/ReceiptForm";

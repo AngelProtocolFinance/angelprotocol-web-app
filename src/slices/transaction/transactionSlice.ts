@@ -1,7 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { FormError, Stage, State, Step } from "./types";
+import { FormError, Stage, Step } from "types/slices/transaction";
 
-const initialState: State = {
+interface IState {
+  form_loading: boolean;
+  form_error: FormError | null;
+  fee: number;
+  stage: Stage;
+}
+
+const initialState: IState = {
   form_loading: false,
   form_error: null,
   fee: 0,

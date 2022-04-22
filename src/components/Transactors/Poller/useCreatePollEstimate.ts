@@ -1,13 +1,13 @@
 import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
-} from "services/transaction/transactionSlice";
+} from "slices/transaction/transactionSlice";
+import { denoms } from "types/denoms";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Dwindow } from "services/provider/types";
-import { DeviceType, deviceType } from "helpers/deviceType";
 import {
   AccountChangeHandler,
   EIP1193Events,
   EIP1193Methods,
-  Ethereum,
-} from "./types";
+  Web3Provider,
+} from "types/blockchain/ethereum";
+import { Dwindow } from "types/slices/provider";
+import { DeviceType, deviceType } from "helpers/deviceType";
 
 export default function useEthereum() {
   //connect only if there's no active wallet
@@ -49,7 +49,7 @@ export default function useEthereum() {
   }
 
   //attachers/detachers
-  const attachAccountChangeHandler = (ethereum: Ethereum) => {
+  const attachAccountChangeHandler = (ethereum: Web3Provider) => {
     ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
   };
   const detachAccountChangeHandler = () => {
@@ -116,7 +116,7 @@ function retrieveUserAction(): Action {
 }
 
 export function getEthereum() {
-  return (window as any).ethereum as Ethereum;
+  return (window as any).ethereum as Web3Provider;
 }
 
 export class RejectMetamaskLogin extends Error {

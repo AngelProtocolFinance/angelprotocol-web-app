@@ -1,7 +1,7 @@
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { Receiver, TxLogPayload } from "types/services/apes";
-import { UserTypes } from "services/user/types";
+import { UserTypes } from "types/user-types";
 import createAuthToken from "helpers/createAuthToken";
 import { currency_text } from "constants/currency";
 import { apes_endpoint } from "constants/urls";

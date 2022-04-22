@@ -5,6 +5,7 @@ import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { awsTags } from "types/services/aws";
 import { terraTags } from "types/services/terra";
+import { StageUpdator, Step } from "types/slices/transaction";
 import { WalletProxy } from "providers/WalletProvider";
 import { RootState } from "store/store";
 import Contract from "contracts/Contract";
@@ -12,7 +13,6 @@ import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
-import { StageUpdator, Step } from "../types";
 
 type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
 type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx

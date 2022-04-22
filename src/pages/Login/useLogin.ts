@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { saveToken } from "services/auth/authSlice";
+import { saveToken } from "slices/authSlice";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ReceiptStage, Step } from "services/transaction/types";
+import { ReceiptStage, Step } from "types/slices/transaction";
 import Receipter from "./Receipter";
 
 export default function TransactionReceipter(
