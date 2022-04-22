@@ -29,9 +29,19 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const [isSubmitting, setSubmitting] = useState(false);
+  const [newProposalId, setNewProposalId] = useState<string | undefined>();
 
   useEffect(() => {
     if (stage.step === Step.success) {
+      const proposalId = stage
+        .txInfo!.logs![0].events.find(
+          (event) => event.type == "instantiate_contract"
+        )
+        ?.attributes.find(
+          (attribute) => attribute.key == "contract_address"
+        )?.value;
+
+      setNewProposalId(proposalId);
     }
   }, [stage]);
 
@@ -76,7 +86,7 @@ export default function useSubmit() {
     [UST_balance, wallet, dispatch, showModal]
   );
 
-  return { submit, isSubmitting };
+  return { submit, isSubmitting, newProposalId };
 }
 
 function createMessagePayload(
