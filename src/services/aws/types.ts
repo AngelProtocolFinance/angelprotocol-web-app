@@ -42,22 +42,22 @@ export type FileObject = {
 
 export type Metadata = {
   SK?: "Metadata";
-  Banner: FileObject;
-  CharityLogo: FileObject;
+  Banner: FileObject | string;
+  CharityLogo: FileObject | string;
   CharityOverview: string;
   TerraWallet: string;
 };
 
 export type Registration = {
-  AuditedFinancialReports: FileObject[];
+  AuditedFinancialReports: FileObject[] | string[];
   AuditedFinancialReportsVerified: boolean;
   CharityName: string;
   CharityName_ContactEmail?: string;
-  FinancialStatements: FileObject[];
+  FinancialStatements: FileObject[] | string[];
   FinancialStatementsVerified: boolean;
-  ProofOfIdentity: FileObject;
+  ProofOfIdentity: FileObject | string;
   ProofOfIdentityVerified: boolean;
-  ProofOfRegistration: FileObject;
+  ProofOfRegistration: FileObject | string;
   ProofOfRegistrationVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;

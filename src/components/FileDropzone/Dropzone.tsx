@@ -57,6 +57,10 @@ function getFileNames(value: FileWrapper | FileWrapper[]) {
     return "";
   }
 
+  if (typeof value === "string") {
+    return value;
+  }
+
   const fileWrappers = !(value as FileWrapper[]).length
     ? [value as FileWrapper]
     : (value as FileWrapper[]);

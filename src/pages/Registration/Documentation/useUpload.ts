@@ -3,6 +3,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { UpdateDocumentationResult } from "services/aws/types";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
 import { Folders } from "constants/folders";
@@ -55,21 +56,21 @@ export default function useUpload() {
 
 async function getUploadUrls(values: FormValues) {
   const poiPromise = uploadToIpfs(
-    values.proofOfIdentity,
+    values.proofOfIdentity as FileWrapper,
     Folders.ProofOfIdentity
   );
   const porPromise = uploadToIpfs(
-    values.proofOfRegistration,
+    values.proofOfRegistration as FileWrapper,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
     values.financialStatements.map((x) =>
-      uploadToIpfs(x, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
     )
   );
   const afrPromise = Promise.all(
     values.auditedFinancialReports.map((x) =>
-      uploadToIpfs(x, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
     )
   );
 

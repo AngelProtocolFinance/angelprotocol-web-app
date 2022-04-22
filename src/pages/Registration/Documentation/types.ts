@@ -4,10 +4,10 @@ import { FileWrapper } from "components/FileDropzone/types";
 export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
-  proofOfIdentity: FileWrapper;
-  proofOfRegistration: FileWrapper;
-  financialStatements: FileWrapper[];
-  auditedFinancialReports: FileWrapper[];
+  proofOfIdentity: FileWrapper | string;
+  proofOfRegistration: FileWrapper | string;
+  financialStatements: FileWrapper[] | string[];
+  auditedFinancialReports: FileWrapper[] | string[];
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
