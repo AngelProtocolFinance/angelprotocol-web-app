@@ -97,11 +97,15 @@ export default function useSaveContactDetails() {
         return;
       }
 
+      // Extracting SK, EmailVerified so that 'contactPerson' does not include them
+      const { PK, SK, EmailVerified, ...contactPerson } =
+        dataResult.data.ContactPerson;
+
       await resendEmail({
-        uuid: dataResult.data.ContactPerson.PK,
+        uuid: PK,
         type: "verify-email",
         body: {
-          ...dataResult.data.ContactPerson,
+          ...contactPerson,
           CharityName: dataResult.data.Registration.CharityName,
         },
       });
