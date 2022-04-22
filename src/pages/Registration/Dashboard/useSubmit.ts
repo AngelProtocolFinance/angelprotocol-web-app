@@ -23,27 +23,39 @@ import { CharityData } from "../store";
 export default function useSubmit() {
   const [submitToAws] = useSubmitMutation();
 
-  const { stage } = useGetter((state) => state.transaction);
+  const { stage, form_loading } = useGetter((state) => state.transaction);
+  const charity = useGetter((state) => state.charity);
   const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const [isSubmitting, setSubmitting] = useState(false);
-  const [newProposalId, setNewProposalId] = useState<string | undefined>();
 
   useEffect(() => {
-    if (stage.step === Step.success) {
-      const proposalId = stage
-        .txInfo!.logs![0].events.find(
-          (event) => event.type == "instantiate_contract"
-        )
-        ?.attributes.find(
-          (attribute) => attribute.key == "contract_address"
-        )?.value;
+    async function handleSuccess() {
+      try {
+        const endowmentContract = stage
+          .txInfo!.logs![0].events.find(
+            (event) => event.type == "instantiate_contract"
+          )!
+          .attributes.find(
+            (attribute) => attribute.key == "contract_address"
+          )!.value;
 
-      setNewProposalId(proposalId);
+        await submitToAws({ PK: charity.ContactPerson.PK!, endowmentContract });
+      } catch (error) {
+        dispatch(setFormError(JSON.stringify(error)));
+      } finally {
+        dispatch(setFormLoading(false));
+      }
     }
-  }, [stage]);
+
+    if (stage.step === Step.error) {
+      console.log(stage.message);
+      dispatch(setFormLoading(false));
+    } else if (stage.step === Step.success) {
+      handleSuccess();
+    }
+  }, [stage, dispatch]);
 
   const submit = useCallback(
     async (charity: CharityData) => {
@@ -57,7 +69,6 @@ export default function useSubmit() {
         const contract = new Registrar(wallet);
         const msg = contract.createEndowmentCreationMsg(payload);
 
-        setSubmitting(true);
         dispatch(setFormLoading(true));
 
         const fee = await contract.estimateFee([msg]);
@@ -74,19 +85,16 @@ export default function useSubmit() {
         const tx: CreateTxOptions = { msgs: [msg], fee };
         dispatch(sendTerraTx({ wallet, tx: tx! }));
 
-        dispatch(setFormLoading(false));
-
         showModal(TransactionPrompt, {});
       } catch (err) {
+        // automatically sets form_loading to 'false'
         dispatch(setFormError(processEstimateError(err)));
-      } finally {
-        setSubmitting(false);
       }
     },
     [UST_balance, wallet, dispatch, showModal]
   );
 
-  return { submit, isSubmitting, newProposalId };
+  return { submit, isSubmitting: form_loading };
 }
 
 function createMessagePayload(

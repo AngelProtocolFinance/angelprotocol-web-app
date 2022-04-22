@@ -68,10 +68,11 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    submit: builder.mutation<any, any>({
-      query: ({ PK }) => ({
+    submit: builder.mutation<any, { PK: string; endowmentContract: string }>({
+      query: ({ PK, endowmentContract }) => ({
         url: `registration/${PK}/submit`,
         method: "POST",
+        body: { endowmentContract },
       }),
     }),
     updateCharityMetadata: builder.mutation<
