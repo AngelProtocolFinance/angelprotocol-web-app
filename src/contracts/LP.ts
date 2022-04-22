@@ -1,8 +1,8 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { denoms } from "types/denoms";
 import { sc } from "types/sc";
+import { Simulation } from "types/server/terra";
 import { ContractQueryArgs } from "types/services/terra";
-import { Simulation } from "types/services/terra/lp";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

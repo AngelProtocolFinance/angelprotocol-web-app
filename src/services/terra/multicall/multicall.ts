@@ -1,27 +1,44 @@
 import { Dec } from "@terra-money/terra.js";
+import { Airdrops } from "types/server/aws";
 import {
-  AggregatedResult,
+  ClaimInquiry,
+  Holding,
+  Holdings,
+  QueryRes,
+  VaultsRateRes,
+} from "types/server/terra";
+import {
   MultiContractQueryArgs,
-  MultiQueryRes,
   multicallTags,
   terraTags,
 } from "types/services/terra";
-import { Holding, Holdings } from "types/services/terra/account";
-import { VaultsRateRes } from "types/services/terra/registrar";
+import {
+  VaultField,
+  VaultFieldIds,
+  VaultFieldLimits,
+} from "types/shared/widthdraw";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
 import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 import { vaultMap } from "./constants";
-import {
-  Airdrops,
-  ClaimInquiry,
-  VaultField,
-  VaultFieldIds,
-  VaultFieldLimits,
-} from "./types";
-import { EndowmentBalance, RateLookUp } from "./types";
+
+type RateLookUp = { [index: string]: string };
+type EndowmentBalance = {
+  liquid: number;
+  locked: number;
+  total: number;
+};
+
+type MultiQueryRes = QueryRes<AggregatedResult>;
+type AggregatedResult = {
+  return_data: EncodedResultMember[];
+};
+type EncodedResultMember = {
+  success: boolean;
+  data: string; //base64 encoded msg
+};
 
 export const multicall_api = terra.injectEndpoints({
   endpoints: (builder) => ({

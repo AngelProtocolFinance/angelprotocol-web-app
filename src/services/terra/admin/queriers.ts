@@ -1,10 +1,6 @@
 import { chainIDs } from "types/chainIDs";
 import { CWContracts } from "types/contracts/admin";
-import {
-  PageOptions,
-  Proposal,
-  VotesPageOptions,
-} from "types/services/terra/admin";
+import { PageOptions, Proposal, VotesPageOptions } from "types/server/terra";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,

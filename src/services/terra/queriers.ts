@@ -1,12 +1,12 @@
 import { Dec } from "@terra-money/terra.js";
 import { denoms } from "types/denoms";
-import { TokenInfo } from "types/services/terra";
+import { TokenInfo } from "types/server/terra";
 import { terra } from "services/terra/terra";
 import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { useContract } from "./useContract";
 
-const halo_info: TokenInfo = {
+const haloPlaceHolderInfo: TokenInfo = {
   name: "",
   symbol: "",
   decimals: 0,
@@ -60,7 +60,7 @@ export function useBalances(
 export function useHaloInfo() {
   const { useHaloInfoQuery } = terra;
   const { contract } = useContract<H, T>(Halo);
-  const { data = halo_info } = useHaloInfoQuery({
+  const { data = haloPlaceHolderInfo } = useHaloInfoQuery({
     address: contract.token_address,
     msg: { token_info: {} },
   });

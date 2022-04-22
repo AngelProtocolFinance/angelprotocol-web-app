@@ -1,21 +1,23 @@
-import {
-  ContractQueryArgs,
-  QueryRes,
-  adminTags,
-  terraTags,
-} from "types/services/terra";
-import {
-  CW3Config,
-  InquiredMember,
-  Member,
-  MemberRes,
-  Proposal,
-  ProposalsRes,
-  VoteInfo,
-  VoteListRes,
-} from "types/services/terra/admin";
+import { Member, QueryRes } from "types/server/terra";
+import { AdminVoteInfo, CW3Config, Proposal } from "types/server/terra";
+import { ContractQueryArgs, adminTags, terraTags } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
+
+type MemberRes = {
+  members: Member[];
+};
+type ProposalsRes = {
+  proposals: Proposal[];
+};
+
+type InquiredMember = {
+  weight: number | null;
+};
+
+type VoteListRes = {
+  votes: AdminVoteInfo[];
+};
 
 export const admin_api = terra.injectEndpoints({
   endpoints: (builder) => ({
@@ -58,7 +60,7 @@ export const admin_api = terra.injectEndpoints({
         return res.query_result.proposals;
       },
     }),
-    votes: builder.query<VoteInfo[], ContractQueryArgs>({
+    votes: builder.query<AdminVoteInfo[], ContractQueryArgs>({
       providesTags: [{ type: terraTags.admin, id: adminTags.votes }],
       query: contract_querier,
       transformResponse: (res: QueryRes<VoteListRes>) => {

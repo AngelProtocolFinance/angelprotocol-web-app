@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { appRoutes, siteRoutes } from "types/routes";
-import { EndowmentEntry } from "types/services/terra/registrar";
+import { EndowmentEntry } from "types/server/terra";
 import image from "assets/images/home-banner.jpg";
 import LazyImage from "components/LazyImage/LazyImage";
 

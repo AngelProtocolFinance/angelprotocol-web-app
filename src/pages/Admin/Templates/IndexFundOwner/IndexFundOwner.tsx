@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { IndexFundConfig } from "types/services/terra/indexfund";
+import { IndexFundConfig } from "types/server/terra";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useIndexFundConfig } from "services/terra/indexFund/queriers";

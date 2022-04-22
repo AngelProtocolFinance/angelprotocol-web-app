@@ -1,12 +1,12 @@
 import { chainIDs } from "types/chainIDs";
 import { sc } from "types/sc";
+import { Airdrops } from "types/server/aws";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
 } from "types/services/terra";
 import { WalletProxy } from "providers/WalletProvider";
-import { Airdrops } from "services/terra/multicall/types";
 import { contracts } from "constants/contracts";
 import Account from "./Account";
 import Halo from "./Halo";

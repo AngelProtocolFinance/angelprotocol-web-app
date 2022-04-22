@@ -1,4 +1,4 @@
-import { Proposal } from "types/services/terra/admin";
+import { Proposal } from "types/server/terra";
 
 export const member = {
   weight: null,

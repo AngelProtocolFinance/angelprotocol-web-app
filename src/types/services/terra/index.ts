@@ -1,34 +1,18 @@
-import { Coin } from "@terra-money/terra.js";
+//Block
 
-export interface QueryRes<T> {
-  query_result: T;
-}
-
-export interface BalanceRes {
-  balances: Coin.Data[];
-}
-
+//Halo token
 export type ContractQueryArgs<T = object> = {
   address: string;
   msg: T;
 };
 
-//Block
-export type BlockLatest = {
-  block_id: any;
-  block: { header: { height: string } };
+export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
+export type AggregatedQuery = {
+  aggregate: { queries: EncodedQueryMember[] };
 };
-
-//Halo token
-export type HaloBalance = {
-  balance: string;
-};
-
-export type TokenInfo = {
-  name: string;
-  symbol: string;
-  decimals: number;
-  total_supply: string;
+type EncodedQueryMember = {
+  address: string;
+  data: string; //base64 encoded msg
 };
 
 export enum terraTags {
@@ -78,27 +62,3 @@ export enum multicallTags {
   endowmentBalance = "endowmentBalance",
   airdrops = "airdrop",
 }
-
-export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
-export type MultiQueryRes = QueryRes<AggregatedResult>;
-
-export type AggregatedQuery = {
-  aggregate: { queries: EncodedQueryMember[] };
-};
-export type AggregatedResult = {
-  return_data: EncodedResultMember[];
-};
-export type DecodedResultMember = {
-  success: boolean;
-  data: object; //parsed
-};
-
-type EncodedQueryMember = {
-  address: string;
-  data: string; //base64 encoded msg
-};
-
-type EncodedResultMember = {
-  success: boolean;
-  data: string; //base64 encoded msg
-};

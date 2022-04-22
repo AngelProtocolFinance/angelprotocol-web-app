@@ -4,7 +4,7 @@ import {
   GovState,
   Poll,
   PollStatus,
-} from "types/services/terra/gov";
+} from "types/server/terra";
 
 export const staker: GovStaker = {
   balance: "0",

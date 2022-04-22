@@ -1,12 +1,12 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
+import { Airdrops } from "types/server/aws";
 import {
   govTags,
   multicallTags,
   terraTags,
   userTags,
 } from "types/services/terra";
-import { Airdrops } from "services/terra/multicall/types";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useSetter } from "store/accessors";

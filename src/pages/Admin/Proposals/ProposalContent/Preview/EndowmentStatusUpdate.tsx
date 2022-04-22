@@ -1,7 +1,4 @@
-import {
-  EndowmentStatus,
-  EndowmentStatusNum,
-} from "types/services/terra/registrar";
+import { EndowmentStatus, EndowmentStatusNum } from "types/server/terra";
 import { EndowmentStatusMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";

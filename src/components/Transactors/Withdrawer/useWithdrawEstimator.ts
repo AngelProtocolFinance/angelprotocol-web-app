@@ -2,9 +2,9 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { proposalTypes } from "types/routes";
+import { AmountInfo, VaultFieldIds } from "types/shared/widthdraw";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
-import { AmountInfo, VaultFieldIds } from "services/terra/multicall/types";
 import {
   setFee,
   setFormError,

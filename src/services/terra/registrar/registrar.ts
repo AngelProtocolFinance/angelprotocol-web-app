@@ -1,12 +1,16 @@
-import { ContractQueryArgs, QueryRes, terraTags } from "types/services/terra";
 import {
   CategorizedEndowments,
   EndowmentEntry,
-  EndowmentListRes,
+  QueryRes,
   RegistrarConfig,
-} from "types/services/terra/registrar";
+} from "types/server/terra";
+import { ContractQueryArgs, terraTags } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
+
+type EndowmentListRes = {
+  endowments: EndowmentEntry[];
+};
 
 export const registrar_api = terra.injectEndpoints({
   endpoints: (builder) => ({

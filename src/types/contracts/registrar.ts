@@ -1,4 +1,4 @@
-import { EndowmentStatus } from "types/services/terra/registrar";
+import { EndowmentStatus } from "types/server/terra";
 
 //Registrar
 export type StatusChangePayload = {

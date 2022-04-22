@@ -1,11 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { StatusChangePayload } from "types/contracts/registrar";
 import { proposalTypes } from "types/routes";
+import { EndowmentStatus, EndowmentStatusNum } from "types/server/terra";
 import { adminTags, terraTags } from "types/services/terra";
-import {
-  EndowmentStatus,
-  EndowmentStatusNum,
-} from "types/services/terra/registrar";
 import { ProposalMeta } from "pages/Admin/types";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";

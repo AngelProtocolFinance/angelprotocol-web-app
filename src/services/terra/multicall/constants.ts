@@ -1,7 +1,7 @@
 import { chainIDs } from "types/chainIDs";
 import { sc } from "types/sc";
+import { VaultFieldIds, VaultMap } from "types/shared/widthdraw";
 import { contracts } from "constants/contracts";
-import { VaultFieldIds, VaultMap } from "./types";
 
 //NOTE: remove this hard-coded vaultMap once vault info is inluded in approved_vault_rate_list
 export const vaultMap: VaultMap = {

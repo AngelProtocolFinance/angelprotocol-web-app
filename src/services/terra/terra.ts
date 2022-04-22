@@ -5,13 +5,9 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { Coin, Dec } from "@terra-money/terra.js";
+import { HaloBalance, QueryRes, TokenInfo } from "types/server/terra";
 import {
-  BalanceRes,
-  BlockLatest,
   ContractQueryArgs,
-  HaloBalance,
-  QueryRes,
-  TokenInfo,
   haloTags,
   terraTags,
   userTags,
@@ -19,6 +15,15 @@ import {
 import { RootState } from "store/store";
 import { terra_lcds } from "constants/urls";
 import contract_querier from "./contract_querier";
+
+type BalanceRes = {
+  balances: Coin.Data[];
+};
+
+type BlockLatest = {
+  block_id: any;
+  block: { header: { height: string } };
+};
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {

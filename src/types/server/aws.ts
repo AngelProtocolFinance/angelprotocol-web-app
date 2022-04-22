@@ -1,16 +1,13 @@
 import { chainIDs } from "types/chainIDs";
 
-//generics
+/**result wrapper */
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
   Items: T;
 }
 
-//queries
-export type ClaimInquiry = {
-  is_claimed: boolean;
-};
+/** /aidrops ***/
 export type Airdrops = Airdrop[];
 export type Airdrop = {
   stage: number;
@@ -25,6 +22,7 @@ export type Airdrop = {
   // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
 };
 
+/** /aidrops */
 export interface Transaction {
   endowment_address: string; // Charity's endowment address
   wallet_address: string; // Owner's wallet address

@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { Vote } from "types/contracts/gov";
-import { PollStatus } from "types/services/terra/gov";
+import { PollStatus } from "types/server/terra";
 import {
   useGovConfig,
   useGovPoll,

@@ -3,12 +3,8 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { CWContracts } from "types/contracts/admin";
 import { Vote } from "types/contracts/gov";
 import { sc } from "types/sc";
+import { Member, PageOptions, VotesPageOptions } from "types/server/terra";
 import { ContractQueryArgs as CQA } from "types/services/terra";
-import {
-  Member,
-  PageOptions,
-  VotesPageOptions,
-} from "types/services/terra/admin";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Vote } from "types/contracts/gov";
-import { Proposal, VoteInfo } from "types/services/terra/admin";
+import { AdminVoteInfo, Proposal } from "types/server/terra";
 import { useVoteList } from "services/terra/admin/queriers";
 import { useLatestBlock } from "services/terra/queriers";
 import useWalletContext from "hooks/useWalletContext";
@@ -75,5 +75,5 @@ export type ProposalDetails = {
   isExecuted: boolean;
   numId: number;
   userVote?: Vote;
-  votes: VoteInfo[];
+  votes: AdminVoteInfo[];
 };

@@ -6,8 +6,8 @@ import {
 } from "types/contracts/indexfund";
 import { denoms } from "types/denoms";
 import { sc } from "types/sc";
+import { AllianceMember } from "types/server/terra";
 import { ContractQueryArgs } from "types/services/terra";
-import { AllianceMember } from "types/services/terra/indexfund";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

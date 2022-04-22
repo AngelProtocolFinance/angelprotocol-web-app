@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Profile } from "types/services/terra/account";
+import { Profile } from "types/server/terra";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
 import { CharityParam } from "../types";

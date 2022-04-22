@@ -2,12 +2,9 @@ import { UpdateProfilePayload } from "types/contracts/accounts";
 import { FundConfig, FundDetails } from "types/contracts/indexfund";
 import { RegistrarConfigPayload } from "types/contracts/registrar";
 import { proposalTypes } from "types/routes";
-import { Member } from "types/services/terra/admin";
-import { AllianceMember as AM } from "types/services/terra/indexfund";
-import {
-  EndowmentStatus,
-  EndowmentStatusStrNum,
-} from "types/services/terra/registrar";
+import { Member } from "types/server/terra";
+import { AllianceMember as AM } from "types/server/terra";
+import { EndowmentStatus, EndowmentStatusStrNum } from "types/server/terra";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 

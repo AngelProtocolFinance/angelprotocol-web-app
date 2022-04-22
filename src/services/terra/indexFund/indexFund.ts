@@ -1,13 +1,12 @@
 import { FundDetails, FundListRes } from "types/contracts/indexfund";
-import { ContractQueryArgs, QueryRes } from "types/services/terra";
-import {
-  AllianceMember,
-  AllianceMembersRes,
-  IndexFundConfig,
-} from "types/services/terra/indexfund";
+import { AllianceMember, IndexFundConfig, QueryRes } from "types/server/terra";
+import { ContractQueryArgs } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 
+type AllianceMembersRes = {
+  alliance_members: AllianceMember[];
+};
 export const indexFund_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     fundList: builder.query<FundDetails[], ContractQueryArgs>({

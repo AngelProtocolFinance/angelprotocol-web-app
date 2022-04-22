@@ -1,4 +1,4 @@
-import { Simulation } from "types/services/terra/lp";
+import { Simulation } from "types/server/terra";
 
 export const simulation: Simulation = {
   return_amount: "1000000",

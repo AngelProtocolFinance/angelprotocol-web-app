@@ -1,4 +1,4 @@
-import { Profile } from "types/services/terra/account";
+import { Profile } from "types/server/terra";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import CharityNav from "./CharityNav";
 import CharityTabs from "./CharityTabs/CharityTabs";

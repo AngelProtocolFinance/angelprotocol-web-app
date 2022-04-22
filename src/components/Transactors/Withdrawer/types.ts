@@ -2,7 +2,7 @@ import {
   VaultField,
   VaultFieldIds,
   VaultFieldLimits,
-} from "services/terra/multicall/types";
+} from "types/shared/widthdraw";
 
 type WithdrawMeta = { total_ust: number; total_receive: number };
 export type WithdrawResource = {

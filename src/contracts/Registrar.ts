@@ -4,8 +4,8 @@ import {
   StatusChangePayload,
 } from "types/contracts/registrar";
 import { sc } from "types/sc";
+import { EndowmentQueryOptions } from "types/server/terra";
 import { ContractQueryArgs as CQA } from "types/services/terra";
-import { EndowmentQueryOptions } from "types/services/terra/registrar";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";

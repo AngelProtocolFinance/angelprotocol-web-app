@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { ProposalStatus } from "types/services/terra/admin";
+import { ProposalStatus } from "types/server/terra";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
