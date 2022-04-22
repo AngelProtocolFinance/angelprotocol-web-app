@@ -41,7 +41,7 @@ export default function useSubmit() {
         }
 
         const contract = new Registrar(wallet);
-        const msg = contract.createCreateEndowmentMsg({
+        const msg = contract.createEndowmentCreationMsg({
           beneficiary: charity.Metadata.TerraWallet,
           cw4_members: [],
           owner: charity.Metadata.TerraWallet,
