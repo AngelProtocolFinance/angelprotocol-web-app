@@ -33,7 +33,6 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: terraTags.lbp, id: lbpTags.pool },
             { type: terraTags.user, id: userTags.halo_balance },
             { type: terraTags.user, id: userTags.terra_balance },
           ]),

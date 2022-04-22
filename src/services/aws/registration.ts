@@ -1,7 +1,23 @@
+import { AWSQueryRes, adminTags, awsTags } from "types/services/aws";
+import {
+  CharityApplication,
+  RegistrationStatus,
+} from "pages/Admin/Applications/types";
 import { aws } from "./aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    getCharityApplications: builder.query<any, any>({
+      providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
+      query: (status?: RegistrationStatus) => {
+        return {
+          url: `registration/list${status ? `?regStatus=${status}` : ""}`,
+          method: "Get",
+        };
+      },
+      transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
+        response.Items,
+    }),
     getRegisteredCharities: builder.mutation<any, any>({
       query: (data) => {
         if (data) {
@@ -73,23 +89,13 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updateCharityDocs: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `registration`,
-          params: { uuid: data.PK },
-          method: "PUT",
-          body: data.body,
-        };
-      },
-    }),
   }),
 });
 export const {
+  useGetCharityApplicationsQuery,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useGetRegisteredCharitiesMutation,
   useUpdatePersonDataMutation,
-  useUpdateCharityDocsMutation,
 } = registration_api;

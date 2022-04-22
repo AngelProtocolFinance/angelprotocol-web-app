@@ -1,24 +1,32 @@
-import Account from "contracts/Account";
-import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "types/chainIDs";
 import { account_api } from "./account";
-import { holdings } from "./placeholders";
+import useAccountContract from "./useAccountContract";
 
-export function useEndowmentHoldings(address: string, skip = false) {
-  const { wallet } = useWalletContext();
-  const { useEndowmentHoldingsQuery } = account_api;
-  const contract = new Account(address);
+export function useEndowmentCWs(address?: string) {
+  const { useEndowmentCWsQuery } = account_api;
   const {
-    data = holdings,
-    isError,
+    data = {},
     isLoading,
     isFetching,
-  } = useEndowmentHoldingsQuery(contract.balance, {
-    skip: skip || !wallet,
-  });
+  } = useEndowmentCWsQuery(address!, { skip: !address });
 
   return {
-    holdings: data,
-    isHoldingsError: isError,
-    isHoldingsLoading: isLoading || isFetching,
+    cwContracts: data,
+    isCWContractsLoading: isLoading || isFetching,
+  };
+}
+
+export function useEndowmentProfile(address: string, skip = false) {
+  const { wallet, contract } = useAccountContract(address);
+  const { useEndowmentProfileQuery } = account_api;
+  const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
+    contract.profile,
+    { skip: skip || wallet?.network.chainID === chainIDs.localterra }
+  );
+
+  return {
+    profile: data,
+    isProfileError: isError,
+    isProfileLoading: isLoading || isFetching,
   };
 }

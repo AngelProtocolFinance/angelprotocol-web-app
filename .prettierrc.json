@@ -28,6 +28,7 @@
     "^contracts/(.*)$",
     "^hooks/(.*)$",
     "^helpers/(.*)$",
+    "^schemas/(.*)$",
     "^constants/(.*)$",
     "^[../]",
     "^[./]"

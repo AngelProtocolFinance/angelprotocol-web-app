@@ -14,8 +14,18 @@ import {
   AiOutlineTwitter,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { BiArrowBack, BiBold, BiGlobe, BiItalic } from "react-icons/bi";
-import { BsExclamationCircle, BsHourglassSplit } from "react-icons/bs";
+import {
+  BiArrowBack,
+  BiBold,
+  BiGlobe,
+  BiItalic,
+  BiSearchAlt2,
+} from "react-icons/bi";
+import {
+  BsExclamationCircle,
+  BsHourglassSplit,
+  BsSafeFill,
+} from "react-icons/bs";
 import { CgArrowsExchangeAltV, CgUndo } from "react-icons/cg";
 import {
   FaClock,
@@ -28,8 +38,11 @@ import {
   FaParachuteBox,
   FaStopwatch,
   FaTelegramPlane,
+  FaUserCircle,
+  FaUsersCog,
 } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
+import { GiPieChart } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
@@ -84,9 +97,15 @@ export type IconTypes =
   | "Blockchain"
   | "ExternalLink"
   | "ExchangeAlt"
+  | "Undo"
+  | "Search"
   | "Edit"
+  | "User"
+  | "PieChart"
+  | "Safe"
   | "Globe"
-  | "Undo";
+  | "Admin"
+  | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   ExchangeAlt: CgArrowsExchangeAltV,
@@ -132,7 +151,12 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Clock: FaClock,
   ListOl: FaListOl,
   ListUl: FaListUl,
+  Search: BiSearchAlt2,
   Edit: AiOutlineEdit,
+  User: FaUserCircle,
+  PieChart: GiPieChart,
+  Safe: BsSafeFill,
+  Admin: FaUsersCog,
 };
 
 interface IconProps extends IconBaseProps {

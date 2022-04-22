@@ -1,22 +1,16 @@
-import {
-  AccAddress,
-  Coin,
-  Fee,
-  LCDClient,
-  Msg,
-  TxInfo,
-} from "@terra-money/terra.js";
+import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { WalletProxy } from "providers/WalletProvider";
 import { terra_lcds } from "constants/urls";
 import { Disconnected, TxResultFail } from "./Errors";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
 
 export default class Contract {
   client: LCDClient;
   chainID: string;
   url: string;
-  walletAddr?: AccAddress;
+  walletAddr?: string;
 
   constructor(wallet?: WalletProxy) {
     this.chainID = wallet?.network.chainID || chainIDs.mainnet;
@@ -40,7 +34,8 @@ export default class Contract {
     new Coin(denoms.uluna, 0.01133),
   ];
 
-  async query<T>(source: AccAddress, message: object) {
+  //for on-demand query, use RTK where possible
+  async query<T>(source: string, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
@@ -75,6 +70,34 @@ export default class Contract {
       }
       throw new TxResultFail(this.chainID, txhash);
     });
+  }
+
+  createdEmbeddedWasmMsg(
+    funds: Coin.Data[],
+    to: string,
+    msg: object
+  ): EmbeddedWasmMsg {
+    const encodedMsg = btoa(JSON.stringify(msg));
+    return {
+      wasm: {
+        execute: {
+          contract_addr: to,
+          funds,
+          msg: encodedMsg,
+        },
+      },
+    };
+  }
+
+  createdEmbeddedBankMsg(funds: Coin.Data[], to: string): EmbeddedBankMsg {
+    return {
+      bank: {
+        send: {
+          to_address: to,
+          amount: funds,
+        },
+      },
+    };
   }
 
   checkWallet() {

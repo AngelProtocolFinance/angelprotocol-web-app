@@ -1,28 +1,24 @@
 import { useFormContext } from "react-hook-form";
-import { terraTags, userTags } from "types/services/terra";
+import { adminRoutes, appRoutes, siteRoutes } from "types/routes";
+import { multicallTags, terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
+import { WithdrawResource, WithdrawValues } from "./types";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
-export default function useWithdraw() {
+export default function useWithdraw(resources: WithdrawResource) {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const {
-    getValues,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { wallet, tx } = useWithrawEstimator();
+  const { wallet, tx } = useWithrawEstimator(resources);
   const { showModal } = useSetModal();
   const dispatch = useSetter();
-
-  const accountAddr = getValues("account_addr");
-  const { vaultFields } = useFieldsAndLimits(accountAddr);
 
   function withdraw() {
     dispatch(
@@ -31,10 +27,15 @@ export default function useWithdraw() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: terraTags.endowment },
+            { type: terraTags.multicall, id: multicallTags.endowmentBalance },
             { type: terraTags.user, id: userTags.terra_balance },
           ]),
         ],
+        successLink: {
+          url: `${siteRoutes.app}/${appRoutes.endowment_admin}/${resources.accountAddr}/${adminRoutes.proposals}`,
+          description: "Go to proposals",
+        },
+        successMessage: "Withdraw proposal successfully created!",
       })
     );
     showModal(TransactionPrompt, {});
@@ -42,7 +43,6 @@ export default function useWithdraw() {
 
   return {
     withdraw: handleSubmit(withdraw),
-    vaultFields,
     isSubmitDisabled:
       !isValid ||
       !isDirty ||

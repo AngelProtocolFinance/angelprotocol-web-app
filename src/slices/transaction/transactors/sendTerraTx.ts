@@ -1,27 +1,20 @@
-import { PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
-import { awsTags } from "types/services/aws";
-import { terraTags } from "types/services/terra";
-import { StageUpdator, Step } from "types/slices/transaction";
-import { WalletProxy } from "providers/WalletProvider";
+import {
+  SenderArgs,
+  StageUpdator,
+  Step,
+  WithMsg,
+  WithTx,
+} from "types/slices/transaction";
 import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
 import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
-
-type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
-type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
-
-type SenderArgs = {
-  wallet: WalletProxy | undefined;
-  tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
-  feedDenom?: denoms;
-};
 
 export const sendTerraTx = createAsyncThunk(
   `${transactionSlice.name}/sendTerraTx`,
@@ -85,9 +78,10 @@ export const sendTerraTx = createAsyncThunk(
         if (!txInfo.code) {
           updateTx({
             step: Step.success,
-            message: "Transaction successful!",
+            message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
             chainId,
+            successLink: args.successLink,
           });
 
           //invalidate cache entries

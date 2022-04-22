@@ -8,21 +8,14 @@ import { contracts } from "constants/contracts";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
-  factory_address: string;
   pair_address: string;
-  router_adddress: string;
   lp_address: string;
   halo_address: string;
-
   simul: ContractQueryArgs;
-  pool: ContractQueryArgs;
-  pairInfo: ContractQueryArgs;
 
   constructor(wallet?: WalletProxy) {
     super(wallet);
-    this.factory_address = contracts[this.chainID][sc.loop_factory];
     this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
-    this.router_adddress = contracts[this.chainID][sc.loop_router];
     this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
     this.halo_address = contracts[this.chainID][sc.halo_token];
 
@@ -40,20 +33,6 @@ export default class LP extends Contract {
             amount: "1000000",
           },
           block_time: Math.round(new Date().getTime() / 1000 + 10),
-        },
-      },
-    };
-
-    this.pool = { address: this.pair_address, msg: { pool: {} } };
-
-    this.pairInfo = {
-      address: this.pair_address,
-      msg: {
-        pair: {
-          asset_infos: [
-            { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: denoms.uusd } },
-          ],
         },
       },
     };
@@ -126,11 +105,11 @@ export default class LP extends Contract {
       send: {
         contract: this.pair_address,
         amount: uhalo_amount,
-        msg: btoa(
+        msg: Buffer.from(
           JSON.stringify({
             swap: { belief_price, max_spread },
           })
-        ),
+        ).toString("base64"),
       },
     });
   }

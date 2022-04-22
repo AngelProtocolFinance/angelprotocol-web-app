@@ -1,3 +1,5 @@
+import { PRIVACY_POLICY } from "constants/urls";
+
 export default function AppMenu() {
   const linkStyles = {
     className:
@@ -40,7 +42,7 @@ export default function AppMenu() {
         <a
           rel="noreferrer"
           target="_blank"
-          href="https://drive.google.com/file/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/view?usp=drive_web"
+          href={PRIVACY_POLICY}
           className={linkStyles.className}
         >
           PRIVACY POLICY

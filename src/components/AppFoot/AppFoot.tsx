@@ -1,6 +1,5 @@
-import { Link } from "react-router-dom";
 import AppMenu from "components/AppFoot/AppMenu";
-import { getIcon } from "components/Icons/Icons";
+import { LITEPAPER, SOCIAL_MEDIA_LINKS } from "constants/urls";
 
 export default function AppFoot() {
   return (
@@ -11,7 +10,7 @@ export default function AppFoot() {
         </nav>
         <div className="flex flex-col items-center">
           <ul className="flex">
-            {links.map(({ id, Icon, textColor, link, title }) => {
+            {SOCIAL_MEDIA_LINKS.map(({ id, Icon, textColor, link, title }) => {
               return (
                 <li key={id}>
                   <a
@@ -27,14 +26,14 @@ export default function AppFoot() {
             })}
           </ul>
 
-          <Link
-            to="/ap-litepaper.pdf"
+          <a
+            href={LITEPAPER}
             className="mt-2 mb-1 font-semibold text-xs uppercase text-white-grey text-center"
             target="_blank"
-            download
+            rel="noreferrer"
           >
             Download Litepaper
-          </Link>
+          </a>
           <p className="text-white-grey text-center text-xs uppercase lg:order-1 lg:text-left ">
             Copyright 2021 Angel Protocol. All rights reserved
           </p>
@@ -43,41 +42,3 @@ export default function AppFoot() {
     </footer>
   );
 }
-
-const links = [
-  {
-    id: 1,
-    Icon: getIcon("Twitter"),
-    link: "https://twitter.com/angelprotocol",
-    textColor: "text-gray-50 hover:text-gray-50/75",
-    title: "Twitter",
-  },
-  {
-    id: 2,
-    Icon: getIcon("Telegram"),
-    link: "https://t.me/angelprotocoI",
-    textColor: "text-blue-50 hover:text-blue-50/75",
-    title: "Telegram",
-  },
-  {
-    id: 3,
-    Icon: getIcon("Youtube"),
-    link: "https://www.youtube.com/channel/UCPYj_fooJCfc_tc52rPiw1w",
-    textColor: "text-white hover:text-white/75",
-    title: "YouTube",
-  },
-  {
-    id: 4,
-    Icon: getIcon("Medium"),
-    link: "https://angelprotocol.medium.com/",
-    textColor: "text-white hover:text-white/75",
-    title: "Medium",
-  },
-  {
-    id: 5,
-    Icon: getIcon("Discord"),
-    link: "https://discord.gg/RhqA652ySA",
-    textColor: "text-white hover:text-white/75",
-    title: "Discord",
-  },
-];

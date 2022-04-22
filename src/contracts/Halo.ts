@@ -1,7 +1,7 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { sc } from "types/sc";
 import { Airdrops } from "types/services/aws/airdrop";
-import { ContractQueryArgs } from "types/services/terra";
+import { ContractQueryArgs as CQA } from "types/services/terra";
 import { GovState } from "types/services/terra/gov";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
@@ -14,10 +14,11 @@ export default class Halo extends Contract {
   airdrop_addr: string;
   token_address: string;
   gov_address: string;
-  staker: ContractQueryArgs;
-  gov_balance: ContractQueryArgs;
-  gov_state: ContractQueryArgs;
-  polls: ContractQueryArgs;
+  staker: CQA;
+  gov_balance: CQA;
+  gov_state: CQA;
+  polls: CQA;
+  isAirDropClaimed: (stage: number) => CQA;
 
   constructor(wallet?: WalletProxy) {
     super(wallet);
@@ -45,10 +46,25 @@ export default class Halo extends Contract {
       address: this.gov_address,
       msg: { polls: {} },
     };
+
+    this.isAirDropClaimed = (stage) => ({
+      address: this.airdrop_addr,
+      msg: { is_claimed: { stage, address: this.walletAddr } },
+    });
   }
 
   async getGovState() {
     return this.query<GovState>(this.gov_address, this.gov_state.msg);
+  }
+
+  createEmbeddedHaloTransferMsg(amount: number, recipient: string) {
+    return this.createdEmbeddedWasmMsg([], this.token_address, {
+      transfer: {
+        //convert to uamount
+        amount: new Dec(amount).mul(1e6).toInt().toString(),
+        recipient,
+      },
+    });
   }
 
   //halo_token
@@ -59,7 +75,9 @@ export default class Halo extends Contract {
       send: {
         amount: uhalo.toString(),
         contract: this.gov_address,
-        msg: btoa(JSON.stringify({ stake_voting_tokens: {} })),
+        msg: Buffer.from(JSON.stringify({ stake_voting_tokens: {} })).toString(
+          "base64"
+        ),
       },
     });
   }
@@ -81,9 +99,9 @@ export default class Halo extends Contract {
         send: {
           amount: u_amount.toString(),
           contract: this.gov_address,
-          msg: btoa(
+          msg: Buffer.from(
             JSON.stringify({ create_poll: { title, description, link } })
-          ),
+          ).toString("base64"),
         },
       }
     );

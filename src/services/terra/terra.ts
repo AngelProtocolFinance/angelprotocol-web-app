@@ -36,8 +36,9 @@ export const terra = createApi({
     terraTags.gov,
     terraTags.user,
     terraTags.halo,
-    terraTags.lbp,
+    terraTags.admin,
     terraTags.endowment,
+    terraTags.multicall,
   ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
@@ -72,7 +73,5 @@ export const terra = createApi({
         return halo_amount;
       },
     }),
-
-    //lbp_pair
   }),
 });

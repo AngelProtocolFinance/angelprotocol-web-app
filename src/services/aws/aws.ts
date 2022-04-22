@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { awsTags } from "types/services/aws";
+import { terraTags } from "types/services/terra";
 import { RootState } from "store/store";
 import { aws_endpoint } from "constants/urls";
 
@@ -21,7 +22,7 @@ const awsBaseQuery = retry(
 );
 
 export const aws = createApi({
-  tagTypes: [awsTags.cha, awsTags.airdrop],
+  tagTypes: [awsTags.admin, awsTags.cha],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: () => ({}),

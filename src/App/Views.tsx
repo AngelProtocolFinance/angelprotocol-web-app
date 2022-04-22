@@ -4,14 +4,15 @@ import { appRoutes, siteRoutes } from "types/routes";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
 
+const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Governance = lazy(() => import("pages/Governance/Governance"));
-const Auction = lazy(() => import("pages/LBP/Auction"));
-const Endowment = lazy(() => import("pages/Endowment/Endowment"));
+const EndowmentAdmin = lazy(
+  () => import("pages/EndowmentAdmin/EndowmentAdmin")
+);
 const Charity = lazy(() => import("pages/Charity/Charity"));
-const CharityEdit = lazy(() => import("pages/CharityEdit/CharityEdit"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
 const Market = lazy(() => import("pages/Market/Market"));
 
@@ -32,20 +33,23 @@ export default function Views() {
         <Route path={`${appRoutes.marketplace}`} element={<Market />} />
         <Route path={`${appRoutes.leaderboard}`} element={<Leaderboard />} />
         <Route path={`${appRoutes.charity}/:address/*`} element={<Charity />} />
-        <Route
-          path={`${appRoutes.charity_edit}/:address`}
-          element={<CharityEdit />}
-        />
+
         <Route path={`${appRoutes.login}`} element={<Login />} />
         <Route path={`${appRoutes.tca}`} element={<TCA />} />
         <Route path={`${appRoutes.govern}/*`} element={<Governance />} />
-        <Route path={`${appRoutes.auction}`} element={<Auction />} />
+
+        <Route path={`${appRoutes.admin}/*`} element={<Admin />} />
         <Route
-          path={`${appRoutes.endowment}/:address`}
-          element={<Endowment />}
+          path={`${appRoutes.endowment_admin}/:address/*`}
+          element={<EndowmentAdmin />}
         />
         <Route
-          path={`${appRoutes.donation}/:address`}
+          path={`${appRoutes.donations}/:address`}
+          element={<Donations />}
+        />
+
+        <Route
+          path={`${appRoutes.donations}/:address`}
           element={<Donations />}
         />
         <Route
