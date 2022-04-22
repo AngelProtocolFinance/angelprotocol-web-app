@@ -9,13 +9,13 @@ import {
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { denoms } from "types/denoms";
+import { Dwindow, Providers } from "types/slices/provider";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { denoms } from "types/denoms";
-import { Dwindow, Providers } from "types/slices/provider";
 import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import Contract from "contracts/Contract";

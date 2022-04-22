@@ -1,9 +1,9 @@
-import { setStage } from "slices/transaction/transactionSlice";
 import { Step, SuccessStage } from "types/slices/transaction";
+import { setStage } from "slices/transaction/transactionSlice";
+import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import SharePrompt from "components/Share/SharePrompt";
-import { useSetter } from "store/accessors";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {

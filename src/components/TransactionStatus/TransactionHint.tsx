@@ -1,8 +1,8 @@
 import { IconType } from "react-icons";
 import { Step } from "types/slices/transaction";
+import { useGetter } from "store/accessors";
 import { getIcon } from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
-import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";
 
 export default function TransactionHint() {

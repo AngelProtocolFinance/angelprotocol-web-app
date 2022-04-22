@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { denoms } from "types/denoms";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import { denoms } from "types/denoms";
+import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
-import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import useEstimator from "../useEstimator";
 

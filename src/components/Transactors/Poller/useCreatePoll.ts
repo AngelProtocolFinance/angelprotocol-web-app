@@ -1,10 +1,10 @@
 import { useFormContext } from "react-hook-form";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import { CreatePollValues } from "./types";
 import useCreatePollEstimate from "./useCreatePollEstimate";

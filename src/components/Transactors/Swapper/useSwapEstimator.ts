@@ -5,13 +5,13 @@ import {
 } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { denoms } from "types/denoms";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { denoms } from "types/denoms";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useSetter } from "store/accessors";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";

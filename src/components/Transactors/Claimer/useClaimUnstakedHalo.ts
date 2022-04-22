@@ -1,9 +1,9 @@
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { govTags, terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useGetter, useSetter } from "store/accessors";
 import useClaimEstimator from "./useClaimEstimator";
 
 export default function useClaimUnstakedHalo() {

@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { resetWallet } from "slices/walletSlice";
 import { denoms } from "types/denoms";
 import { Dwindow, Providers } from "types/slices/provider";
 import { TerraIdentifiers } from "types/slices/wallet";
-import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
-import { useSetMetamask } from "providers/Metamask/Metamask";
+import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
+import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
+import { resetWallet } from "slices/walletSlice";
+import { useGetter, useSetter } from "store/accessors";
 import Copier from "components/Copier/Copier";
 import Icon from "components/Icons/Icons";
-import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
@@ -21,7 +21,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const { active: activeProvider } = useGetter((state) => state.provider);
   const { wallet: walletTerra, availableWallets } = useWalletContext();
   const { disconnect: disconnectMetamask } = useSetMetamask();
-  const { disconnect: disconnectBinance } = useSetBinance();
+  const { disconnect: disconnectBinance } = useSetBinanceWallet();
 
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);

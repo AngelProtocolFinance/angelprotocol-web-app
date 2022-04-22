@@ -1,7 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { Dwindow, Providers } from "types/slices/provider";
@@ -9,6 +8,7 @@ import { TerraIdentifiers } from "types/slices/wallet";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 

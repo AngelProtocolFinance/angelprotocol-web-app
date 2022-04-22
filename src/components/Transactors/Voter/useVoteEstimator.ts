@@ -1,14 +1,14 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { denoms } from "types/denoms";
+import { useGovStaker } from "services/terra/gov/queriers";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { denoms } from "types/denoms";
-import { useGovStaker } from "services/terra/gov/queriers";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";

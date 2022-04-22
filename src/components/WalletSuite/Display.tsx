@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";

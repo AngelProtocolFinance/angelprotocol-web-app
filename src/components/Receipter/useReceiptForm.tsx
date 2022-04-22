@@ -1,10 +1,10 @@
 import { useState } from "react";
-import useTxUpdator from "slices/transaction/updators";
 import { ReceiptStage, Step } from "types/slices/transaction";
 import { useRequestReceiptMutation } from "services/apes/donations";
+import useTxUpdator from "slices/transaction/updators";
+import { useGetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useGetter } from "store/accessors";
 import { ReceipterValues } from "./Receipter";
 
 export default function useReceiptForm() {

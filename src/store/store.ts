@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import walletReducer from "slices/walletSlice";
 import { apes } from "services/apes/apes";
 import { aws } from "services/aws/aws";
 import { terra } from "services/terra/terra";
+import walletReducer from "slices/walletSlice";
 import authReducer from "../slices/authSlice";
 import chainReducer from "../slices/chainSlice";
 import providerReducer from "../slices/providerSlice";

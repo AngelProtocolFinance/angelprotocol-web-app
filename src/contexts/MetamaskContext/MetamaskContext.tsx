@@ -1,7 +1,7 @@
 import { PropsWithChildren, createContext, useContext } from "react";
-import useBinance from "./useBinance";
+import useEthereum from "./useMetamask";
 
-interface IBinanceState {
+interface IMetamaskState {
   loading: boolean;
   connected: boolean;
   address: string | null;
@@ -12,8 +12,8 @@ type Setters = {
   disconnect: () => Promise<void>;
 };
 
-export default function BinanceWallet(props: PropsWithChildren<{}>) {
-  const { setters, state } = useBinance();
+export default function Metamask(props: PropsWithChildren<{}>) {
+  const { setters, state } = useEthereum();
 
   return (
     <getContext.Provider value={state}>
@@ -24,17 +24,16 @@ export default function BinanceWallet(props: PropsWithChildren<{}>) {
   );
 }
 
-const initialState: IBinanceState = {
+const initialState: IMetamaskState = {
   loading: false,
   connected: false,
   address: null,
 };
-const getContext = createContext<IBinanceState>(initialState);
+const getContext = createContext<IMetamaskState>(initialState);
 const setContext = createContext<Setters>({
   connect: async () => {},
   disconnect: async () => {},
 });
 
-//only use this hook inside PhantomProvider
-export const useSetBinance = () => useContext(setContext);
-export const useGetBinance = () => useContext(getContext);
+export const useSetMetamask = () => useContext(setContext);
+export const useGetMetamask = () => useContext(getContext);

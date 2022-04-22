@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
 
 export default function Status() {
   const [detailsShown, showDetails] = useState(false);

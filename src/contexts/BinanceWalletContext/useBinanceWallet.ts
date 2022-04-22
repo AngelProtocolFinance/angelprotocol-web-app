@@ -8,7 +8,7 @@ import {
 import { Dwindow } from "types/slices/provider";
 import { DeviceType, deviceType } from "helpers/deviceType";
 
-export default function useEthereum() {
+export default function useBinanceWallet() {
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction();
 
@@ -18,24 +18,22 @@ export default function useEthereum() {
   const [address, setAddress] = useState("");
 
   useEffect(() => {
-    if (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum) {
-      setConnected(true);
-      setLoading(false);
+    if (
+      deviceType() !== DeviceType.DESKTOP &&
+      (window as Dwindow).BinanceChain
+    ) {
       return;
-    }
+    } //No binance wallet on mobile.
 
     requestAccess();
-    return () => {
-      detachAccountChangeHandler();
-    };
     //eslint-disable-next-line
   }, []);
 
   async function requestAccess(isNewConnection = false) {
-    const ethereum = getEthereum();
-    if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
-      attachAccountChangeHandler(ethereum);
-      const { result: accounts = [] } = await ethereum.send(
+    const binance = getBinance();
+    if (binance && (isNewConnection || shouldReconnect) && !connected) {
+      attachAccountChangeHandler(binance);
+      const { result: accounts = [] } = await binance.send(
         EIP1193Methods.eth_requestAccounts,
         []
       );
@@ -49,14 +47,8 @@ export default function useEthereum() {
   }
 
   //attachers/detachers
-  const attachAccountChangeHandler = (ethereum: Web3Provider) => {
-    ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
-  };
-  const detachAccountChangeHandler = () => {
-    getEthereum()?.removeListener(
-      EIP1193Events.accountsChanged,
-      handleAccountsChange
-    );
+  const attachAccountChangeHandler = (binance: Web3Provider) => {
+    binance.on(EIP1193Events.accountsChanged, handleAccountsChange);
   };
 
   //event listeners
@@ -68,7 +60,6 @@ export default function useEthereum() {
       setAddress(accounts[0]);
       //if no account is found, means user disconnected
     } else {
-      detachAccountChangeHandler();
       setConnected(false);
       saveUserAction("disconnect");
     }
@@ -76,9 +67,8 @@ export default function useEthereum() {
 
   async function disconnect() {
     if (!connected) return;
-    const ethereum = getEthereum();
-    if (!ethereum) return;
-    detachAccountChangeHandler();
+    const binance = getBinance();
+    if (!binance) return;
     setConnected(false);
     saveUserAction("disconnect");
   }
@@ -92,7 +82,7 @@ export default function useEthereum() {
       setLoading(false);
       //let caller handle error with UI
       if ("code" in err && err.code === 4001) {
-        throw new RejectMetamaskLogin();
+        throw new RejectBinanceLogin();
       } else {
         throw new Error("Uknown error occured");
       }
@@ -105,7 +95,7 @@ export default function useEthereum() {
   };
 }
 
-const ActionKey = "ethereum_pref";
+const ActionKey = "binance_pref";
 type Action = "connect" | "disconnect";
 function saveUserAction(action: Action) {
   localStorage.setItem(ActionKey, action);
@@ -115,15 +105,15 @@ function retrieveUserAction(): Action {
   return (localStorage.getItem(ActionKey) as Action) || "disconnect";
 }
 
-export function getEthereum() {
-  return (window as any).ethereum as Web3Provider;
+export function getBinance() {
+  return (window as any).BinanceChain as Web3Provider;
 }
 
-export class RejectMetamaskLogin extends Error {
+export class RejectBinanceLogin extends Error {
   constructor() {
     super();
-    this.message = "Metamask login cancelled";
-    this.name = "RejectMetamaskLogin";
+    this.message = "Binance login cancelled";
+    this.name = "RejectBinanceLogin";
   }
 }
 

@@ -1,8 +1,8 @@
-import { setStage } from "slices/transaction/transactionSlice";
 import { ErrorStage, Step } from "types/slices/transaction";
+import { setStage } from "slices/transaction/transactionSlice";
+import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
-import { useSetter } from "store/accessors";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function ErrPop(props: ErrorStage) {

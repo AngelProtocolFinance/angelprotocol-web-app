@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Providers } from "types/slices/wallet";
-import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
 import ConnectOptions from "./ConnectOptions";
 import Display from "./Display";

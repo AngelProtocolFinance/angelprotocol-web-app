@@ -1,5 +1,4 @@
 import { ReactNode, useMemo } from "react";
-import { setStage } from "slices/transaction/transactionSlice";
 import {
   BroadcastStage,
   ErrorStage,
@@ -8,11 +7,12 @@ import {
   SubmitStage,
   SuccessStage,
 } from "types/slices/transaction";
+import { setStage } from "slices/transaction/transactionSlice";
+import { useGetter, useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
-import { useGetter, useSetter } from "store/accessors";
 import Broadcast from "./Broadcast";
 import ErrPop from "./ErrPop";
 import Submit from "./Submit";
