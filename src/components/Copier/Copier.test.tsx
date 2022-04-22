@@ -15,17 +15,8 @@ Object.assign(navigator, {
   },
 });
 
-describe("Copier component tests:", () => {
-  test("copy button is visible", () => {
-    render(<CopyButton />);
-
-    // Looks for the copy button
-    const button = screen.getByRole("button");
-
-    expect(button).toBeInTheDocument();
-  });
-
-  test("should copy correct text and change appearance when clicked", async () => {
+describe("Copier component test:", () => {
+  test("copies correct text and able to change appearance when clicked", async () => {
     jest.spyOn(navigator.clipboard, "writeText");
 
     render(<CopyButton />);
@@ -45,5 +36,8 @@ describe("Copier component tests:", () => {
 
     // Expects the button to change appearance once clicked
     expect(screen.getByTitle("Copied!")).toBeInTheDocument();
+
+    // Expects the button to revert back to it's original appearance
+    expect(await screen.findByTitle("Copy Address")).toBeInTheDocument();
   });
 });
