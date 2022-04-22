@@ -20,6 +20,9 @@ import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 import { CharityData } from "../store";
 
+const FORM_ERROR =
+  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
+
 export default function useSubmit() {
   const [submitToAws] = useSubmitMutation();
 
@@ -42,16 +45,17 @@ export default function useSubmit() {
           )!.value;
 
         await submitToAws({ PK: charity.ContactPerson.PK!, endowmentContract });
-      } catch (error) {
-        dispatch(setFormError(JSON.stringify(error)));
-      } finally {
+
         dispatch(setFormLoading(false));
+      } catch (error) {
+        console.log(JSON.stringify(error));
+        dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
       }
     }
 
     if (stage.step === Step.error) {
       console.log(stage.message);
-      dispatch(setFormLoading(false));
+      dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
     } else if (stage.step === Step.success) {
       handleSuccess();
     }
@@ -87,8 +91,7 @@ export default function useSubmit() {
 
         showModal(TransactionPrompt, {});
       } catch (err) {
-        // automatically sets form_loading to 'false'
-        dispatch(setFormError(processEstimateError(err)));
+        dispatch(setFormError(processEstimateError(err))); // also sets form_loading to 'false'
       }
     },
     [UST_balance, wallet, dispatch, showModal]
