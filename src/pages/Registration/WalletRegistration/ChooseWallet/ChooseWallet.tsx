@@ -1,6 +1,7 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { useCallback } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Button } from "pages/Registration/common";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
 import { app, site } from "constants/routes";
@@ -10,6 +11,7 @@ import Title from "./Title";
 import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
+  const navigate = useNavigate();
   const { status, availableWallets } = useWalletContext();
   const login = useCallback(
     (provider: string) =>
@@ -41,6 +43,14 @@ export default function ChooseWallet() {
       >
         Click here if you have a Terra wallet
       </Link>
+      <Button
+        className="bg-green-400 w-80 h-10"
+        onClick={() =>
+          navigate(`${site.app}/${app.register}/${registerRoutes.dashboard}`)
+        }
+      >
+        Back to registration dashboard
+      </Button>
     </div>
   );
 }

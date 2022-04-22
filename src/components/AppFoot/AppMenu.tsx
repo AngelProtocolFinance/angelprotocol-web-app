@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { app, site } from "constants/routes";
+import { PRIVACY_POLICY } from "constants/urls";
 
 export default function AppMenu() {
   const linkStyles = {
     className:
       "text-white-grey hover:text-white-grey/75 text-sm px-1 lg:text-base font-heading uppercase font-semibold lg:px-2",
   };
+
   return (
     <ul className="flex lg:items-center">
       <li>
@@ -40,7 +42,7 @@ export default function AppMenu() {
         <a
           rel="noreferrer"
           target="_blank"
-          href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
+          href={PRIVACY_POLICY}
           className={linkStyles.className}
         >
           PRIVACY POLICY
