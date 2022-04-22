@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { FundDetails } from "types/contracts/indexfund";
 import { proposalTypes } from "types/routes";
 import { adminTags, terraTags } from "types/services/terra";
 import { ProposalMeta } from "pages/Admin/types";
@@ -11,7 +12,6 @@ import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import { FundDetails } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";

@@ -1,6 +1,6 @@
+import { AllianceMember } from "types/services/terra/indexfund";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { AllianceEditMeta } from "pages/Admin/types";
-import { AllianceMember } from "services/terra/indexFund/types";
 import Header from "./preview-components/Header";
 import PreviewContainer from "./preview-components/PreviewContainer";
 

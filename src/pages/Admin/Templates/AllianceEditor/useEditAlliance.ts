@@ -1,8 +1,9 @@
 import { useFormContext } from "react-hook-form";
+import { EmbeddedWasmMsg } from "types/contracts";
 import { proposalTypes } from "types/routes";
 import { adminTags, terraTags } from "types/services/terra";
+import { AllianceMember as AM } from "types/services/terra/indexfund";
 import { ProposalMeta } from "pages/Admin/types";
-import { AllianceMember as AM } from "services/terra/indexFund/types";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
@@ -11,7 +12,6 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import { EmbeddedWasmMsg } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";

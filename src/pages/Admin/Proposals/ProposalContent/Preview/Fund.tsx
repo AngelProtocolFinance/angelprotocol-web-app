@@ -1,4 +1,4 @@
-import { FundDetails } from "contracts/types";
+import { FundDetails } from "types/contracts/indexfund";
 import toCurrency from "helpers/toCurrency";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";

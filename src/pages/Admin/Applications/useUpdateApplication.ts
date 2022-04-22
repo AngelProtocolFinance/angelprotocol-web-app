@@ -1,4 +1,5 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
+import { StatusChangePayload } from "types/contracts/registrar";
 import { adminTags, awsTags } from "types/services/aws";
 import { EndowmentStatusNum } from "types/services/terra/registrar";
 import { aws } from "services/aws/aws";
@@ -8,7 +9,6 @@ import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import { StatusChangePayload } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUpdateSchema";

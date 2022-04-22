@@ -1,4 +1,4 @@
-import { Vote } from "contracts/types";
+import { Vote } from "types/contracts/gov";
 
 //Halo gov
 export enum PollStatus {

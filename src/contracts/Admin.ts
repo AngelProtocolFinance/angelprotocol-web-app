@@ -1,19 +1,18 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import { CWContracts } from "types/contracts/admin";
+import { Vote } from "types/contracts/gov";
 import { sc } from "types/sc";
 import { ContractQueryArgs as CQA } from "types/services/terra";
-import { Member } from "types/services/terra/admin";
+import {
+  Member,
+  PageOptions,
+  VotesPageOptions,
+} from "types/services/terra/admin";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Contract from "./Contract";
-import { EmbeddedBankMsg, EmbeddedWasmMsg, Vote } from "./types";
 
-export type PageOptions = { limit?: number; start_before?: number };
-export type VotesPageOptions = {
-  proposal_id: number;
-  limit?: number;
-  start_after?: number;
-};
-export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 export default class Admin extends Contract {
   cw4: string;
   cw3: string;

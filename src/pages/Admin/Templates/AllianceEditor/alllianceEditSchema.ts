@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { SchemaShape } from "types/schema";
-import { AllianceMember } from "services/terra/indexFund/types";
+import { AllianceMember } from "types/services/terra/indexfund";
 import { requiredAddress } from "schemas/string";
 import { ProposalBase, proposalShape } from "../proposalShape";
 

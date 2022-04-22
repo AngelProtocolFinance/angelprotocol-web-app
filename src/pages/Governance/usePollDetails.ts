@@ -1,5 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
+import { Vote } from "types/contracts/gov";
 import { PollStatus } from "types/services/terra/gov";
 import {
   useGovConfig,
@@ -8,7 +9,6 @@ import {
 } from "services/terra/gov/queriers";
 import { useGovBalanceState } from "services/terra/gov/states";
 import { useLatestBlock } from "services/terra/queriers";
-import { Vote } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import toCurrency from "helpers/toCurrency";
 

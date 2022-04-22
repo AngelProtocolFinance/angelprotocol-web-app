@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { IndexFundConfig } from "types/services/terra/indexfund";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useIndexFundConfig } from "services/terra/indexFund/queriers";
-import { IndexFundConfig } from "services/terra/indexFund/types";
 import OwnerUpdateForm from "./OwnerUpdateForm";
 import { IndexFundOwnerValues, updateOwnerSchema } from "./updateOwnerSchema";
 

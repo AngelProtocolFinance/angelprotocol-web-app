@@ -1,11 +1,15 @@
 import { chainIDs } from "types/chainIDs";
-import { Proposal } from "types/services/terra/admin";
+import { CWContracts } from "types/contracts/admin";
+import {
+  PageOptions,
+  Proposal,
+  VotesPageOptions,
+} from "types/services/terra/admin";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "pages/Admin/Proposals/Proposals";
 import { ProposalMeta } from "pages/Admin/types";
-import { CWContracts, PageOptions, VotesPageOptions } from "contracts/Admin";
 import idParamToNumber from "helpers/idParamToNum";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";

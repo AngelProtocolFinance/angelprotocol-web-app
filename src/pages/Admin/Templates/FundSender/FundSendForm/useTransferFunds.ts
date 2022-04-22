@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { denoms } from "types/denoms";
 import { proposalTypes } from "types/routes";
 import { adminTags, terraTags } from "types/services/terra";
@@ -14,7 +15,6 @@ import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Halo from "contracts/Halo";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import { currency_text } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";

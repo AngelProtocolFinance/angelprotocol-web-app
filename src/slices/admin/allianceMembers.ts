@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AllianceMember } from "services/terra/indexFund/types";
+import { AllianceMember } from "types/services/terra/indexfund";
 
 const initialState: {
   isEditingMember: boolean;

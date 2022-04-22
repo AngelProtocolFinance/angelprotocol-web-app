@@ -1,8 +1,8 @@
 import { useMemo } from "react";
+import { Vote } from "types/contracts/gov";
 import { Proposal, VoteInfo } from "types/services/terra/admin";
 import { useVoteList } from "services/terra/admin/queriers";
 import { useLatestBlock } from "services/terra/queriers";
-import { Vote } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import idParamToNumber from "helpers/idParamToNum";
 

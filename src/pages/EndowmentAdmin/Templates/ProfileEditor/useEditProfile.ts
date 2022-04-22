@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { UpdateProfilePayload as UP } from "types/contracts/accounts";
 import { proposalTypes } from "types/routes";
 import { adminTags, terraTags } from "types/services/terra";
 import { ObjectEntries } from "types/utils";
@@ -15,7 +16,6 @@ import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
-import { UpdateProfilePayload as UP } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";

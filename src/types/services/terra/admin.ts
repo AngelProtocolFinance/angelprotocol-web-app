@@ -1,4 +1,11 @@
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+
+export type PageOptions = { limit?: number; start_before?: number };
+export type VotesPageOptions = {
+  proposal_id: number;
+  limit?: number;
+  start_after?: number;
+};
 
 export type Member = {
   addr: string;

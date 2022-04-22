@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { RegistrarConfigPayload } from "types/contracts/registrar";
 import { proposalTypes } from "types/routes";
 import { adminTags, terraTags } from "types/services/terra";
 import { ProposalMeta } from "pages/Admin/types";
@@ -10,7 +11,6 @@ import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import { RegistrarConfigPayload } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";

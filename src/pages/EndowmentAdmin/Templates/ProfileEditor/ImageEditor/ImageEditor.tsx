@@ -1,8 +1,8 @@
 import React from "react";
 import { IconType } from "react-icons";
+import { UpdateProfilePayload as UP } from "types/contracts/accounts";
 import { getIcon } from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
-import { UpdateProfilePayload as UP } from "contracts/types";
 import useImageEditor from "hooks/useImageEditor";
 
 export default function ImageEditor() {

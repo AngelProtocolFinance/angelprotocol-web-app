@@ -1,6 +1,7 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { Vote } from "types/contracts/gov";
 import { denoms } from "types/denoms";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -11,7 +12,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
-import { Vote } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";

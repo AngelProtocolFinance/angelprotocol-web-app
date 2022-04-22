@@ -1,10 +1,10 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
 import { chainIDs } from "types/chainIDs";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
 import { denoms } from "types/denoms";
 import { WalletProxy } from "providers/WalletProvider";
 import { terra_lcds } from "constants/urls";
 import { Disconnected, TxResultFail } from "./Errors";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
 
 export default class Contract {
   client: LCDClient;

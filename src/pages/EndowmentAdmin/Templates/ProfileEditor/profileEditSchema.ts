@@ -1,10 +1,10 @@
 import * as Yup from "yup";
+import { UpdateProfilePayload } from "types/contracts/accounts";
 import { SchemaShape } from "types/schema";
 import {
   ProposalBase,
   proposalShape,
 } from "pages/Admin/Templates/proposalShape";
-import { UpdateProfilePayload } from "contracts/types";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
 

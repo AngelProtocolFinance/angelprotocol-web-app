@@ -1,4 +1,4 @@
-import { FundDetails } from "contracts/types";
+import { FundDetails } from "types/contracts/indexfund";
 
 export type EndowmentStatus = {
   Inactive: 0;

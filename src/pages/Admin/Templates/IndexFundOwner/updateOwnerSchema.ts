@@ -1,6 +1,6 @@
 import * as Yup from "yup";
+import { RegistrarOwnerPayload } from "types/contracts/registrar";
 import { SchemaShape } from "types/schema";
-import { RegistrarOwnerPayload } from "contracts/types";
 import { requiredAddress } from "schemas/string";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
