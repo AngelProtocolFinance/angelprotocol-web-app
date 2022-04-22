@@ -1,5 +1,16 @@
-import { DonationsMetricList } from "types/services/aws/business_metrics";
-import { aws } from "../aws";
+import { aws } from "./aws";
+
+interface DonationsMetricList {
+  donations_daily_count: number;
+  donations_daily_amount: number;
+  donations_total_amount: number;
+}
+
+export const dummyDonationsMetricList: DonationsMetricList = {
+  donations_daily_count: 0,
+  donations_daily_amount: 0,
+  donations_total_amount: 0,
+};
 
 const business_metrics_api = aws.injectEndpoints({
   endpoints: (builder) => ({

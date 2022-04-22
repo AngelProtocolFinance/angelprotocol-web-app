@@ -1,4 +1,4 @@
-import { Airdrops } from "types/services/aws/airdrop";
+import { Airdrops } from "types/server/aws";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
 import useClaimAirdrop from "./useClaimAirdrop";

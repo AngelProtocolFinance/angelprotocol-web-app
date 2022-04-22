@@ -1,10 +1,9 @@
-import {
-  Endowment,
-  LeaderBoardQueryRes,
-  Update,
-} from "types/services/aws/leaderboard";
-import { aws } from "../aws";
+import { AWSQueryRes, Endowment, Update } from "types/server/aws";
+import { aws } from "./aws";
 
+interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {
+  LastUpdate: string;
+}
 const leaderboard_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     leaderboards: builder.query<Update, boolean>({
@@ -19,3 +18,8 @@ const leaderboard_api = aws.injectEndpoints({
   }),
 });
 export const { useLeaderboardsQuery } = leaderboard_api;
+
+export const placeholderUpdate: Update = {
+  endowments: [],
+  last_update: new Date().toISOString(),
+};

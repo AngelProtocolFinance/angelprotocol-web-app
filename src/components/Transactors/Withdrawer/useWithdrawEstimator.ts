@@ -1,7 +1,6 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Source } from "types/contracts/accounts";
 import { proposalTypes } from "types/routes";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
@@ -20,6 +19,11 @@ import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { WithdrawResource, WithdrawValues } from "./types";
 
+interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
 const SEPARATOR = ":";
 export default function useWithrawEstimator(resources: WithdrawResource) {
   const {

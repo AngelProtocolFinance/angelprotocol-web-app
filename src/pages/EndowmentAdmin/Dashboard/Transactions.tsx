@@ -1,4 +1,4 @@
-import { useDepositTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
+import { useDepositTransactionsQuery } from "services/aws/endowment_admin";
 import TransactionsTable from "./TransactionsTable";
 
 export default function Transactions(props: { endowmentAddress: string }) {

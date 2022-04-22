@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useDonationTransactionsQuery } from "services/aws/endowment_admin/endowment_admin";
+import { useDonationTransactionsQuery } from "services/aws/endowment_admin";
 import DonationsTable from "./DonationsTable";
 
 export default function Donations() {

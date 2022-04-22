@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { awsTags } from "types/services/aws";
-import { terraTags } from "types/services/terra";
 import { RootState } from "store/store";
 import { aws_endpoint } from "constants/urls";
 

@@ -1,6 +1,8 @@
 import { chainIDs } from "types/chainIDs";
-import { useLeaderboardsQuery } from "services/aws/leaderboard/leaderboard";
-import { placeholderUpdate as leaderboard_update } from "services/aws/leaderboard/placeholders";
+import {
+  placeholderUpdate as leaderboard_update,
+  useLeaderboardsQuery,
+} from "services/aws/leaderboard";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
 import TableView from "./TableView";

@@ -7,11 +7,22 @@ import {
   useRef,
   useState,
 } from "react";
+import { FC } from "react";
 import useKeyPress from "hooks/useKeyPress";
-import { Handlers, Opener, Props } from "./types";
 import useFocusHandler from "./useFocusHandler";
 
-export default function Modal(props: Props) {
+type Handler = () => void;
+type Opener = <T = {}>(
+  Content: FC<T>,
+  props: T & { isDismissDisabled?: false }
+) => void;
+
+type Handlers = {
+  showModal: Opener;
+  hideModal: Handler;
+};
+
+export default function Modal(props: { classes: string; children: ReactNode }) {
   const [Content, setContent] = useState<ReactNode>();
   const ref = useRef<HTMLDivElement>();
   // pointer to last active dom element

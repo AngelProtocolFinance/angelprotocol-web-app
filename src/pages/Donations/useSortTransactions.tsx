@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Transaction } from "types/services/aws/endowment_admin";
+import { Transaction } from "types/server/aws";
 
 export type SortDirection = "asc" | "desc";
 export type SortKey = keyof Omit<Transaction, "chain_id">;

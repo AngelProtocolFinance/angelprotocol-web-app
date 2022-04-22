@@ -2,7 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ReceiptPayload } from "types/services/apes";
+import { ReceiptPayload } from "types/server/aws";
 import { schema } from "./schema";
 
 export type ReceipterValues = ReceiptPayload;

@@ -1,4 +1,5 @@
-import { AWSQueryRes, adminTags, awsTags } from "types/services/aws";
+import { AWSQueryRes } from "types/server/aws";
+import { adminTags, awsTags } from "types/services/aws";
 import {
   CharityApplication,
   RegistrationStatus,
