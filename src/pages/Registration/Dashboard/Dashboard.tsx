@@ -8,10 +8,12 @@ import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
 import getRegistrationState from "./getRegistrationState";
+import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
+  const { submit, isSubmitting } = useSubmit();
 
   const state = getRegistrationState(charity);
 
@@ -67,8 +69,8 @@ export default function Dashboard() {
         {!dataSubmitted && (
           <Button
             className="w-full h-10 mt-5 bg-yellow-blue"
-            onClick={() => console.log("submit")}
-            disabled={!state.getIsReadyForSubmit()}
+            onClick={() => submit(charity)}
+            disabled={!state.getIsReadyForSubmit() || isSubmitting}
           >
             Submit for review
           </Button>

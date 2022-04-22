@@ -16,6 +16,7 @@ import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";
+import { RegistrarCreateEndowmentPayload as RegistrarEndowmentCreationPayload } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
@@ -30,7 +31,7 @@ export default function useSubmit() {
   const { showModal } = useSetModal();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
-  const [isLoading, setLoading] = useState(false);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const submit = useCallback(
     async (charity: CharityData) => {
@@ -40,26 +41,11 @@ export default function useSubmit() {
           return;
         }
 
+        const payload = createMessagePayload(charity);
         const contract = new Registrar(wallet);
-        const msg = contract.createEndowmentCreationMsg({
-          beneficiary: charity.Metadata.TerraWallet,
-          cw4_members: [],
-          owner: charity.Metadata.TerraWallet,
-          profile: {
-            contact_email: charity.ContactPerson.Email,
-            endow_type: "Charity",
-            name: charity.Registration.CharityName,
-            overview: charity.Metadata.CharityOverview,
-            un_sdg: charity.Registration.UN_SDG,
-            tier: charity.Registration.Tier!,
-            logo: charity.Metadata.CharityLogo.sourceUrl!,
-            image: charity.Metadata.Banner.sourceUrl!,
-            url: charity.Registration.Website,
-            social_media_urls: {},
-          },
-        });
+        const msg = contract.createEndowmentCreationMsg(payload);
 
-        setLoading(true);
+        setSubmitting(true);
         dispatch(setFormLoading(true));
 
         const fee = await contract.estimateFee([msg]);
@@ -89,11 +75,47 @@ export default function useSubmit() {
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));
       } finally {
-        setLoading(false);
+        setSubmitting(false);
       }
     },
     [UST_balance, wallet, dispatch, showModal]
   );
 
-  return { submit, isLoading };
+  return { submit, isSubmitting };
+}
+
+function createMessagePayload(
+  charity: CharityData
+): RegistrarEndowmentCreationPayload {
+  return {
+    beneficiary: charity.Metadata.TerraWallet,
+    cw4_members: [],
+    owner: charity.Metadata.TerraWallet,
+    guardians_multisig_addr: undefined,
+    maturity_height: undefined,
+    maturity_time: undefined,
+    withdraw_before_maturity: false,
+    profile: {
+      contact_email: charity.ContactPerson.Email,
+      endow_type: "Charity",
+      name: charity.Registration.CharityName,
+      overview: charity.Metadata.CharityOverview,
+      un_sdg: charity.Registration.UN_SDG,
+      tier: charity.Registration.Tier!,
+      logo: charity.Metadata.CharityLogo.sourceUrl!,
+      image: charity.Metadata.Banner.sourceUrl!,
+      url: charity.Registration.Website,
+      social_media_urls: {
+        facebook: undefined,
+        linkedin: undefined,
+        twitter: undefined,
+      },
+      annual_revenue: undefined,
+      average_annual_budget: undefined,
+      charity_navigator_rating: undefined,
+      country_city_origin: undefined,
+      number_of_employees: undefined,
+      registration_number: undefined,
+    },
+  };
 }

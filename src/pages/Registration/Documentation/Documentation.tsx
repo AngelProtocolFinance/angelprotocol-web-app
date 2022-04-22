@@ -28,10 +28,7 @@ export default function Documentation() {
     resolver: yupResolver(SCHEMA),
     mode: "onChange",
     defaultValues: {
-      un_sdg:
-        charity.Registration.UN_SDG >= 0
-          ? charity.Registration.UN_SDG
-          : undefined,
+      un_sdg: charity.Registration.UN_SDG,
       website: charity.Registration.Website,
       proofOfIdentity: charity.Registration.ProofOfIdentity,
       proofOfRegistration: charity.Registration.ProofOfRegistration,
