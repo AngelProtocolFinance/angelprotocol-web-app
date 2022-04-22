@@ -1,17 +1,14 @@
-import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { useCallback, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import { useCallback, useEffect, useState } from "react";
 import { useSubmitMutation } from "services/aws/registration";
-import { Registration } from "services/aws/types";
 import { useBalances } from "services/terra/queriers";
-import { admin, tags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+import { Step } from "services/transaction/types";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -32,6 +29,11 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
   const [isSubmitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (stage.step === Step.success) {
+    }
+  }, [stage]);
 
   const submit = useCallback(
     async (charity: CharityData) => {
@@ -58,19 +60,12 @@ export default function useSubmit() {
         }
 
         dispatch(setFee(feeNum));
+
         const tx: CreateTxOptions = { msgs: [msg], fee };
+        dispatch(sendTerraTx({ wallet, tx: tx! }));
+
         dispatch(setFormLoading(false));
-        dispatch(
-          sendTerraTx({
-            wallet,
-            tx: tx!,
-            tagPayloads: [
-              terra.util.invalidateTags([
-                { type: tags.admin, id: admin.proposal },
-              ]),
-            ],
-          })
-        );
+
         showModal(TransactionPrompt, {});
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));

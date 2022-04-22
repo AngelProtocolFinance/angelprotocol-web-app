@@ -14,7 +14,7 @@ export default function useReceiptForm() {
   const { stage } = useGetter((state) => state.transaction);
   const { showModal } = useModalContext();
 
-  const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
+  const { chainId, txHash, txInfo } = stage as ReceiptStage; //check made on Receipter
   const fromDonor = stage.step === Step.form || !chainId || !txHash;
 
   const submitHandler = async (data: Values) => {
@@ -29,6 +29,7 @@ export default function useReceiptForm() {
           fromDonor ? "changes were applied" : "successfully sent"
         }, Your receipt will be sent to your email address`,
         txHash,
+        txInfo,
         chainId,
       });
       fromDonor && showModal(TransactionPrompt, {});
