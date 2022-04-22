@@ -7,7 +7,7 @@ const API_SECRET = process.env.REACT_APP_FLEEK_API_SECRET;
 export default function useFleek() {
   const [isUploading, setIsUploading] = useState(false);
 
-  async function upload(key: string, file: File) {
+  async function upload(key: string, file: any) {
     try {
       setIsUploading(true);
       const uploadedFile = await fleekStorage.upload({
