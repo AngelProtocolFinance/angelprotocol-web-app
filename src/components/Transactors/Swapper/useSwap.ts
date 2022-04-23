@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { lbpTags, terraTags, userTags } from "types/services/terra";
+import { terraTags, userTags } from "types/services/terra";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";

@@ -39,10 +39,6 @@ export enum haloTags {
   info = "info",
 }
 
-export enum lbpTags {
-  pool = "pool",
-}
-
 export enum endowmentTags {
   holdings = "holdings",
   rate = "rate",

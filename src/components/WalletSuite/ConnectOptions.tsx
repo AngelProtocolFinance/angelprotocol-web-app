@@ -19,7 +19,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
-        <Modal classes="absolute bg-white/95 rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
+        <Modal classes="absolute rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
           {availableWallets
             .filter((wallet) => wallet.connection.type !== "READONLY")
             .map((availableWallet) => {
