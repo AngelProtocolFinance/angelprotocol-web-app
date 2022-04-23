@@ -1,9 +1,9 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import { Step, ReceiptStage } from "services/transaction/types";
+import { ReceiptStage, Step } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter } from "store/accessors";
 import { Values } from "./types";
 

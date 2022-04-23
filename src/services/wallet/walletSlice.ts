@@ -1,8 +1,8 @@
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import icon from "assets/icons/wallets/unknown.svg";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { denoms } from "constants/currency";
 import { chainIDs } from "constants/chainIDs";
-import { WalletInfo, State } from "./types";
+import { denoms } from "constants/currency";
+import { State, WalletInfo } from "./types";
 
 const initialState: State = {
   isUpdating: false,

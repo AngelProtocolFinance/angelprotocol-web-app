@@ -1,5 +1,5 @@
-import delay from "helpers/delay";
 import { useEffect, useRef, useState } from "react";
+import delay from "helpers/delay";
 
 type NullibleNumber = number | null;
 

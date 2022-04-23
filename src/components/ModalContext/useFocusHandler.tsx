@@ -57,5 +57,5 @@ export default function useFocusHandler(
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [containerRef]);
 }

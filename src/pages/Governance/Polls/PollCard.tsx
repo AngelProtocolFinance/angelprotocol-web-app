@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { govern } from "constants/routes";
-import toCurrency from "helpers/toCurrency";
-import usePollDetails from "../usePollDetails";
 import { PollStatus } from "services/terra/gov/types";
 import Icon from "components/Icons/Icons";
+import toCurrency from "helpers/toCurrency";
+import { govern } from "constants/routes";
+import usePollDetails from "../usePollDetails";
 
 export default function PollCard(props: { poll_id: number }) {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ export default function PollCard(props: { poll_id: number }) {
   return (
     <div
       onClick={goToPollDetail}
-      className="cursor-pointer border border-white/10 bg-white/10 hover:bg-white/20 rounded-md p-6 text-white-grey/80 shadow-lg"
+      className="bg-white/10 hover:bg-white/20 cursor-pointer rounded-md p-6 text-white-grey/80 shadow-inner"
     >
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>

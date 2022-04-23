@@ -1,8 +1,8 @@
 import { FC } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import { useSetter } from "store/accessors";
 import { resetTxFormState } from "services/transaction/transactionSlice";
 import Icon from "components/Icons/Icons";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import { useSetter } from "store/accessors";
 
 export default function Transactor<C>(props: TxProps<C>) {
   const dispatch = useSetter();

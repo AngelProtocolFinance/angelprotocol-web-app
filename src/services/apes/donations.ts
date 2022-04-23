@@ -1,7 +1,7 @@
-import createAuthToken from "helpers/createAuthToken";
 import { UserTypes } from "services/user/types";
-import { ReceiptPayload, TxDetails } from "./types";
+import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
+import { ReceiptPayload, TxDetails } from "./types";
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,6 +11,7 @@ const donations_api = apes.injectEndpoints({
         return {
           url: "donation",
           method: "POST",
+          params: { app: "angel-protocol" },
           headers: { authorization: generatedToken },
           body: txPayload,
         };

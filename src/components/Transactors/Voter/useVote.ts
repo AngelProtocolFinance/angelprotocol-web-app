@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
 import { tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import useVoteEstimator from "./useVoteEstimator";
 import { VoteValues } from "./types";
+import useVoteEstimator from "./useVoteEstimator";
 
 export default function useVote() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);

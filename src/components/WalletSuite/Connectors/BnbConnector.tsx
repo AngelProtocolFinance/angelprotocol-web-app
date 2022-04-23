@@ -1,10 +1,10 @@
 import binanceIcon from "assets/icons/wallets/binance.png";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import { deviceType, DeviceType } from "helpers/deviceType";
+import { Dwindow } from "services/provider/types";
 import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { RejectBinanceLogin } from "providers/BinanceWallet/useBinance";
-import { Dwindow } from "services/provider/types";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { useGetter } from "store/accessors";
+import { DeviceType, deviceType } from "helpers/deviceType";
 import WalletPrompt from "../WalletPrompt";
 import ConnectButton from "./ConnectButton";
 

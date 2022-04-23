@@ -1,14 +1,14 @@
-import { lazy, Suspense } from "react";
-import { Route, useLocation, Routes, Navigate } from "react-router-dom";
-import WebHead from "Website/Header/WebHead";
-import WebFoot from "Website/WebFoot";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader/Loader";
-import { site, web } from "constants/routes";
-import Home from "./Home/Home";
 import ModalContext from "components/ModalContext/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
+import { site, web } from "constants/routes";
+import WebHead from "./Header/WebHead";
+import Home from "./Home/Home";
+import WebFoot from "./WebFoot";
+
 const Donors = lazy(() => import("./Donors/Donors"));
-const PrivacyPolicy = lazy(() => import("./PrivacyPolicy"));
 const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));
 
@@ -30,7 +30,6 @@ const Website = () => {
               element={<Navigate replace to={location.pathname.slice(0, -1)} />}
             />
             <Route path={web.contact} element={<Contact />} />
-            <Route path={web.privacy} element={<PrivacyPolicy />} />
             <Route path={web.donors} element={<Donors />} />
             <Route path={web.charities} element={<Charities />} />
             <Route path={web.index} element={<Home />} />

@@ -1,9 +1,10 @@
-import { useGetter } from "store/accessors";
 import { IconType } from "react-icons";
 import { Step } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "./TransactionPrompt";
 import { getIcon } from "components/Icons/Icons";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import { useGetter } from "store/accessors";
+import TransactionPrompt from "./TransactionPrompt";
+
 export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
 

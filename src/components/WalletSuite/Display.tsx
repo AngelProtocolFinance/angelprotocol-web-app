@@ -1,10 +1,10 @@
+import { useState } from "react";
+import Icon from "components/Icons/Icons";
+import { useGetter } from "store/accessors";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { useState } from "react";
-import Details from "./Details";
-import { useGetter } from "store/accessors";
 import { currency_text } from "constants/currency";
-import Icon from "components/Icons/Icons";
+import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {

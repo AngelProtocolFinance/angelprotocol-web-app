@@ -1,14 +1,14 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { DonateValues } from "components/Transactors/Donater/types";
-import { denoms } from "constants/currency";
-import useWalletContext from "hooks/useWalletContext";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { resetFee } from "services/transaction/transactionSlice";
 import { sendEthDonation } from "services/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "services/transaction/transactors/sendTerraDonation";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter, useSetter } from "store/accessors";
+import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
 type Senders = { [index: string]: (data: DonateValues) => any };

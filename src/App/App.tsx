@@ -1,7 +1,7 @@
+import { WalletProvider } from "providers";
 import AppFoot from "components/AppFoot/AppFoot";
 import DappHead from "components/DappHead/DappHead";
 import ModalContext from "components/ModalContext/ModalContext";
-import { WalletProvider } from "providers";
 import Views from "./Views";
 
 export default function App() {

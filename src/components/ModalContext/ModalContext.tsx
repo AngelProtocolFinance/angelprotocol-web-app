@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useRef, useState } from "react";
+import { ReactNode, createContext, useContext, useRef, useState } from "react";
 import Backdrop from "./Backdrop";
 import { Handlers, Opener, Props } from "./types";
 

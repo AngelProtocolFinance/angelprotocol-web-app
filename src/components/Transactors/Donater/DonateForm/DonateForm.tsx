@@ -1,9 +1,9 @@
-import Status from "../../Status";
-import Amount from "./Amount";
-import useDonate from "./useDonate";
-import Breakdown from "./Breakdown";
 import React, { useState } from "react";
+import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
+import Amount from "./Amount";
+import Breakdown from "./Breakdown";
+import useDonate from "./useDonate";
 
 export default function DonateForm() {
   const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
@@ -48,7 +48,9 @@ export default function DonateForm() {
           acknowledge that you have read and accept the{" "}
           <a
             className="text-angel-blue"
-            href="/Donor Terms of Use - Angel Protocol - v1.pdf"
+            href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Donor Terms of Use - Angel Protocol - v1.pdf"
+            target="_blank"
+            rel="noreferrer"
           >
             Donor Terms of Use
           </a>

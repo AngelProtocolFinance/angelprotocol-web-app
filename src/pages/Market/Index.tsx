@@ -1,10 +1,13 @@
-import useHorizontalScroll from "hooks/useHorizontalScroll";
-import IndexCard from "./IndexCard";
-import CharityCard from "./CharityCard";
-import { Profile } from "services/aws/endowments/types";
+import { EndowmentEntry } from "services/terra/registrar/types";
 import Icon, { IconTypes } from "components/Icons/Icons";
+import useHorizontalScroll from "hooks/useHorizontalScroll";
+import CharityCard from "./CharityCard";
+import IndexCard from "./IndexCard";
 
-export default function Index(props: { id: number; profiles: Profile[] }) {
+export default function Index(props: {
+  id: number;
+  profiles: EndowmentEntry[];
+}) {
   const { ref, forward, backward, showBack, showForward } =
     useHorizontalScroll();
   //remove infinite scroll temporarily
@@ -18,7 +21,7 @@ export default function Index(props: { id: number; profiles: Profile[] }) {
           className="flex gap-4 overflow-x-scroll scroll-hidden py-2"
         >
           {props.profiles.map((profile) => (
-            <CharityCard key={profile.endowment_address} {...profile} />
+            <CharityCard key={profile.address} {...profile} />
           ))}
         </div>
         {showBack && (

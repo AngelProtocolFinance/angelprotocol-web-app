@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
-import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGovBalance } from "services/terra/gov/queriers";
-import { usePairSimul } from "services/terra/lp/queriers";
+import { usePairSimul } from "services/terra/lp";
 import { useHaloInfo } from "services/terra/queriers";
+import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 
 export default function useGov() {
   const [staked, setStaked] = useState(0);

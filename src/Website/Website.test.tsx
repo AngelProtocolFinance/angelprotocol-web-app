@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import Website from "./Website";
-import { site, web } from "constants/routes";
 import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
+import { site, web } from "constants/routes";
+import Website from "./Website";
 
 describe("<Website/> reacts to routes", () => {
   //mock window function

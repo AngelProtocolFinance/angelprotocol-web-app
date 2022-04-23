@@ -1,8 +1,8 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { gov, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import useClaimEstimator from "./useClaimEstimator";
 

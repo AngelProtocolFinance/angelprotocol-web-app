@@ -1,20 +1,20 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Receipter from "components/Receipter/Receipter";
-import ReceiptForm from "components/Receipter/ReceiptForm";
-import Transactor, { TxProps } from "components/Transactors/Transactor";
 import { useCallback } from "react";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import ReceiptForm from "components/Receipter/ReceiptForm";
+import Receipter from "components/Receipter/Receipter";
+import Transactor, { TxProps } from "components/Transactors/Transactor";
 
-export default function useDonor(txHash: string) {
+export default function useDonor() {
   const { showModal } = useModalContext();
 
-  const showDonor = useCallback(() => {
+  const showDonor = useCallback((txHash: string) => {
     showModal<TxProps<{ txHash: string }>>(Transactor, {
       inModal: true,
       Content: Donor,
       contentProps: { txHash },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [txHash]);
+  }, []);
 
   return showDonor;
 }

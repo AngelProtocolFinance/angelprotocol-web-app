@@ -1,7 +1,8 @@
 import { FC } from "react";
+import { Vote } from "contracts/types";
 
 export interface VoteValues {
-  vote: "yes" | "no";
+  vote: Vote;
   amount: string;
   poll_id: string;
 }

@@ -14,6 +14,7 @@ export default function Summary(props: SummaryProps) {
       >
         ok
       </button>
+
       <Text type={props.type} title="Principal" />
       <Text type={props.type} title="Impact" />
     </div>

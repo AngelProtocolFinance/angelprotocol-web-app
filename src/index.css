@@ -36,6 +36,10 @@
   .shadow-inner-white-grey {
     box-shadow: inset -2px 2px 2px #c1c1c6, inset 2px -2px 2px #fff;
   }
+  
+  .shadow-outer-white-grey {
+    box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
+  }
 }
 
 @layer base {

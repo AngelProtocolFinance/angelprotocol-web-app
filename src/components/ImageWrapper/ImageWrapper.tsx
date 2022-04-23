@@ -1,5 +1,5 @@
-import placeHolderImage from "assets/images/home-banner.jpg";
 import React, { useRef } from "react";
+import placeHolderImage from "assets/images/home-banner.jpg";
 
 export default function ImageWrapper(
   props: React.ImgHTMLAttributes<HTMLImageElement>
@@ -8,5 +8,13 @@ export default function ImageWrapper(
   const handleImageLoadError = () => {
     imageRef.current?.setAttribute("src", placeHolderImage);
   };
-  return <img {...props} alt={props.alt} onError={handleImageLoadError} />;
+  return (
+    <img
+      {...props}
+      //setting src to undefined doesn't trigger load error
+      src={props.src || placeHolderImage}
+      alt={props.alt}
+      onError={handleImageLoadError}
+    />
+  );
 }

@@ -1,22 +1,22 @@
 import {
+  BaseQueryFn,
   createApi,
   fetchBaseQuery,
-  BaseQueryFn,
   retry,
 } from "@reduxjs/toolkit/query/react";
+import { Coin, Dec } from "@terra-money/terra.js";
+import { RootState } from "store/store";
 import { terra_lcds } from "constants/urls";
-import { Dec, Coin } from "@terra-money/terra.js";
+import contract_querier from "./contract_querier";
+import { halo, tags, user } from "./tags";
 import {
   BalanceRes,
   BlockLatest,
   ContractQueryArgs,
+  HaloBalance,
   QueryRes,
   TokenInfo,
-  HaloBalance,
 } from "./types";
-import { halo, tags, user } from "./tags";
-import { RootState } from "store/store";
-import contract_querier from "./contract_querier";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -30,7 +30,14 @@ const customBaseQuery: BaseQueryFn = retry(
 export const terra = createApi({
   reducerPath: "terra",
   baseQuery: customBaseQuery,
-  tagTypes: [tags.gov, tags.user, tags.halo, tags.lbp, tags.endowment],
+  tagTypes: [
+    tags.gov,
+    tags.user,
+    tags.halo,
+    tags.admin,
+    tags.endowment,
+    tags.multicall,
+  ],
   endpoints: (builder) => ({
     latestBlock: builder.query<string, unknown>({
       query: () => "/blocks/latest",
@@ -64,7 +71,5 @@ export const terra = createApi({
         return halo_amount;
       },
     }),
-
-    //lbp_pair
   }),
 });

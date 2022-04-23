@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { aws } from "services/aws/aws";
-import { terra } from "services/terra/terra";
+import { adminReducer } from "services/admin/root";
 import { apes } from "services/apes/apes";
-import userReducer from "../services/user/userSlice";
-import chainReducer from "../services/chain/chainSlice";
-import walletReducer from "../services/wallet/walletSlice";
-import providerReducer from "../services/provider/providerSlice";
-import transactionReducer from "../services/transaction/transactionSlice";
-import authReducer from "../services/auth/authSlice";
+import authReducer from "services/auth/authSlice";
+import { aws } from "services/aws/aws";
+import chainReducer from "services/chain/chainSlice";
+import providerReducer from "services/provider/providerSlice";
+import { terra } from "services/terra/terra";
+import transactionReducer from "services/transaction/transactionSlice";
+import userReducer from "services/user/userSlice";
+import walletReducer from "services/wallet/walletSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     chain: chainReducer,
     provider: providerReducer,
     wallet: walletReducer,
+    admin: adminReducer,
     auth: authReducer,
     [aws.reducerPath]: aws.reducer,
     [terra.reducerPath]: terra.reducer,

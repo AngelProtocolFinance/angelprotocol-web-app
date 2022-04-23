@@ -1,7 +1,7 @@
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import { useForm } from "react-hook-form";
 import { useModalContext } from "components/ModalContext/ModalContext";
+import Popup, { PopupProps } from "components/Popup/Popup";
 import { subscriberSchema } from "./subscriberSchema";
 
 export default function useSubscribe() {

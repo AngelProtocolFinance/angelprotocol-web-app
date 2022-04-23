@@ -1,5 +1,5 @@
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { useCallback } from "react";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Transactor, { TxProps } from "../Transactor";
 import StakeForm from "./StakeForm";
 import Staker from "./Staker";

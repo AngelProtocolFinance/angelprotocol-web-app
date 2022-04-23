@@ -1,10 +1,10 @@
-import Display from "./Display";
 import { useEffect, useState } from "react";
-import ConnectOptions from "./ConnectOptions";
-import { useGetter } from "store/accessors";
 import { Providers } from "services/wallet/types";
-import useWalletUpdator from "./useWalletUpdator";
 import Icon from "components/Icons/Icons";
+import { useGetter } from "store/accessors";
+import ConnectOptions from "./ConnectOptions";
+import Display from "./Display";
+import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);

@@ -1,6 +1,6 @@
+import { PropsWithChildren, useRef } from "react";
 import useAttachDivClickhandler from "hooks/useAttachDivClickHandler";
 import useAttachKeyPressHandler from "hooks/useAttachKeypressHandler";
-import { PropsWithChildren, useRef } from "react";
 import { useModalContext } from "./ModalContext";
 import useFocusHandler from "./useFocusHandler";
 
