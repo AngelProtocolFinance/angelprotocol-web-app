@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ModalContext, { useModalContext } from "./ModalContext";
 
@@ -15,17 +15,19 @@ describe("<Modal/> context operations", () => {
     expect(closeButton).not.toBeInTheDocument();
   });
 
-  test("focus is trapped inside modal", () => {
+  test("focus is trapped inside modal", async () => {
     render(<IsolatedTrigger />);
     //open modal
     const openButton = screen.getByRole("button");
     userEvent.click(openButton);
 
+    await waitFor(() => {
+      expect(openButton).toHaveFocus();
+    });
+
     const closeButton = screen.getAllByRole("button")[0];
     const textBox = screen.getByRole("textbox");
-    //focus on close button
-    userEvent.tab();
-    expect(closeButton).toHaveFocus();
+
     //focus on textbox
     userEvent.tab();
     expect(textBox).toHaveFocus();
@@ -34,7 +36,7 @@ describe("<Modal/> context operations", () => {
     expect(closeButton).toHaveFocus();
   });
 
-  test("Pressing enter on focused closeButton closes the modal, focus falls back to opener", () => {
+  test("Pressing enter on focused closeButton closes the modal, focus falls back to opener", async () => {
     render(<IsolatedTrigger />);
     const openButton = screen.getByRole("button");
     //open modal
@@ -42,6 +44,11 @@ describe("<Modal/> context operations", () => {
     const modalContent = screen.getByText(/modal content/i);
     expect(modalContent).toBeInTheDocument();
     //at this point the closeButton is focused
+
+    await waitFor(() => {
+      expect(openButton).toHaveFocus();
+    });
+
     userEvent.keyboard("{Enter}");
     expect(modalContent).not.toBeInTheDocument();
   });
