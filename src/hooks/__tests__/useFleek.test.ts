@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
-import useFleek from "hooks/useFleek";
 import { act } from "react-dom/test-utils";
+import useFleek from "hooks/useFleek";
 
 describe("useFleek Test", () => {
   it("should render correctly", async () => {
