@@ -173,3 +173,11 @@ export type NativeToken = {
 export type Token = Cw20Token | NativeToken;
 
 export const supported_denoms = Object.keys(SupportedDenoms) as denoms[];
+
+export const supported_bnb_tokens = [
+  { symbol: denoms.bnb, logo: currency_icons[denoms.bnb] },
+] as Token[];
+
+export const supported_eth_tokens = [
+  { symbol: denoms.ether, logo: currency_icons[denoms.ether] },
+] as Token[];

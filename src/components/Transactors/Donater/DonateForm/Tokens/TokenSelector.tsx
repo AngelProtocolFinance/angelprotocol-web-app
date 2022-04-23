@@ -6,23 +6,23 @@ import {
   OptionProps,
   ValueContainerProps,
 } from "react-select";
-import { useGetTerraTokensQuery } from "services/apes/currencies";
 import Icon from "components/Icons/Icons";
 import { Selector } from "components/Selector";
 import { DonateValues } from "components/Transactors/Donater/types";
 import useWalletContext from "hooks/useWalletContext";
 import { currency_icons, currency_text, denoms } from "constants/currency";
+import useGetTokens from "./useGetTokens";
 
 export type TokenOption = {
   value: string;
   label: string;
 };
 
-function CurrencySelector() {
+function TokenSelector() {
   const { wallet } = useWalletContext();
   const isTestnet = wallet?.network.name === "testnet";
   const { setValue, register, control, watch } = useFormContext<DonateValues>();
-  const { data = [], isLoading } = useGetTerraTokensQuery("");
+  const { data = [], isLoading } = useGetTokens();
   const selectedCurrency = watch("currency");
 
   const CustomOption = (props: OptionProps<TokenOption>) => {
@@ -139,9 +139,10 @@ function CurrencySelector() {
         IndicatorsContainer={() => null}
         ValueContainer={ValueContainer}
         Control={ControlContainer}
+        placeholder="Loading..."
       />
     </div>
   );
 }
 
-export default memo(CurrencySelector);
+export default memo(TokenSelector);
