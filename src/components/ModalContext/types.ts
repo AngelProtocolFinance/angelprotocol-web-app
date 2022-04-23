@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 
 export type Handler = () => void;
 export type Opener = <T = {}>(
@@ -9,7 +9,3 @@ export type Handlers = {
   showModal: Opener;
   closeModal: Handler;
 };
-export interface Props {
-  backdropClasses: string;
-  children: ReactNode;
-}

@@ -6,7 +6,7 @@ export default function SharePrompt() {
   const { closeModal } = useModalContext();
 
   return (
-    <div className="relative bg-white-grey rounded-md pt-4 w-full max-w-md">
+    <div className="bg-white-grey rounded-md pt-4 w-full max-w-md fixed-center z-20">
       <button
         onClick={closeModal}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"

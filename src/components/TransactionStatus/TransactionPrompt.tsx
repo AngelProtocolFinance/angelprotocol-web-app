@@ -1,13 +1,6 @@
-import { ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import { setStage } from "services/transaction/transactionSlice";
-import {
-  BroadcastStage,
-  ErrorStage,
-  ReceiptStage,
-  Step,
-  SubmitStage,
-  SuccessStage,
-} from "services/transaction/types";
+import { Step } from "services/transaction/types";
 import Icon from "components/Icons/Icons";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
@@ -22,21 +15,27 @@ export default function TransactionPrompt() {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
   const { closeModal } = useModalContext();
-  const prompts: Prompts = useMemo(
-    () => ({
-      [Step.submit]: <Submit {...(stage as SubmitStage)} />,
-      [Step.broadcast]: <Broadcast {...(stage as BroadcastStage)} />,
-      [Step.success]: <Success {...(stage as SuccessStage)} />,
-      [Step.error]: <ErrPop {...(stage as ErrorStage)} />,
-      //TODO: remove receipt to transactionPrompt to its own page
-      [Step.receipt]: (
-        <Receipter {...(stage as ReceiptStage)}>
-          <ReceiptForm />
-        </Receipter>
-      ),
-    }),
-    [stage]
-  );
+
+  const prompt = useMemo(() => {
+    switch (stage.step) {
+      case Step.submit:
+        return <Submit {...stage} />;
+      case Step.broadcast:
+        return <Broadcast {...stage} />;
+      case Step.success:
+        return <Success {...stage} />;
+      case Step.error:
+        return <ErrPop {...stage} />;
+      case Step.receipt:
+        return (
+          <Receipter {...stage}>
+            <ReceiptForm />
+          </Receipter>
+        );
+      default:
+        throw Error("wrong prompt");
+    }
+  }, [stage]);
 
   function closePrompt() {
     if (
@@ -45,14 +44,12 @@ export default function TransactionPrompt() {
       stage.step === Step.error
     ) {
       dispatch(setStage({ step: Step.form }));
-      closeModal();
-    } else {
-      closeModal();
     }
+    closeModal();
   }
 
   return (
-    <div className="relative bg-white-grey rounded-md pt-4 w-full max-w-md">
+    <div className="bg-white-grey rounded-md pt-4 w-full max-w-md fixed-center z-20">
       <button
         onClick={closePrompt}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
@@ -60,9 +57,7 @@ export default function TransactionPrompt() {
         <Icon type="Close" size={25} />
       </button>
 
-      {prompts[stage.step]}
+      {prompt}
     </div>
   );
 }
-
-type Prompts = { [key in Step]?: ReactNode };

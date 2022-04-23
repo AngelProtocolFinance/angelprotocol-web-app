@@ -8,7 +8,9 @@ export default function Reviewer(props: { application: CharityApplication }) {
 
   return (
     <div
-      className={`relative w-full max-w-md "bg-white-grey rounded-md overflow-hidden pt-4" : ""`}
+      className={
+        "w-full max-w-md bg-white-grey rounded-md overflow-hidden pt-4 fixed-center z-20"
+      }
     >
       <button
         onClick={closeModal}

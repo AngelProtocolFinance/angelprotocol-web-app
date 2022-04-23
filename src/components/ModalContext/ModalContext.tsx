@@ -1,25 +1,32 @@
-import { ReactNode, createContext, useContext, useRef, useState } from "react";
+import {
+  PropsWithChildren,
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import Backdrop from "./Backdrop";
-import { Handlers, Opener, Props } from "./types";
+import { Handlers, Opener } from "./types";
 
-export default function ModalContext(props: Props) {
-  const [Content, setContent] = useState<ReactNode>();
-  const [isBackdropDismissible, setIsBackdropDismissible] = useState(true);
+export default function ModalContext(
+  props: PropsWithChildren<{ backdropClasses: string }>
+) {
+  const [Modal, setModal] = useState<ReactNode>();
   const lastActiveElRef = useRef<HTMLElement>();
 
-  const showModal: Opener = (Content, props) => {
-    setIsBackdropDismissible(props.isDismissDisabled ?? true);
-    setContent(<Content {...props} />);
+  const showModal: Opener = useCallback((Modal, props) => {
+    setModal(<Modal {...props} />);
     // track last active element
     lastActiveElRef.current = document.activeElement as HTMLElement;
-  };
+  }, []);
 
-  function closeModal() {
-    setContent(undefined);
-    setIsBackdropDismissible(true);
+  const closeModal = useCallback(() => {
+    setModal(undefined);
     // pointer to last active dom element
     lastActiveElRef.current?.focus();
-  }
+  }, []);
 
   return (
     <setContext.Provider
@@ -28,13 +35,11 @@ export default function ModalContext(props: Props) {
         closeModal,
       }}
     >
-      {!!Content && (
-        <Backdrop
-          _classes={props.backdropClasses}
-          _isBackdropDismissible={isBackdropDismissible}
-        >
-          {Content}
-        </Backdrop>
+      {!!Modal && (
+        <>
+          <Backdrop classes={props.backdropClasses} />
+          {Modal}
+        </>
       )}
 
       {props.children}

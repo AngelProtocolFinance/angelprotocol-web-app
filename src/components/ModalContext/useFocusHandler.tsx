@@ -13,7 +13,9 @@ export default function useFocusHandler(
   //init focusable elements
   useEffect(() => {
     focusableElementsRef.current = Array.from(
-      containerRef.current?.querySelectorAll(focusableElementsString) || []
+      containerRef.current?.nextElementSibling?.querySelectorAll(
+        focusableElementsString
+      ) || []
     );
     //focus first element if there's one
     if (focusableElementsRef.current.length >= 1) {
