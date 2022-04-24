@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { PollStatus } from "types/server/terra";
+import { PollStatus } from "types/server/contracts";
 import { useGovPolls } from "services/terra/gov/queriers";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";

@@ -1,17 +1,33 @@
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/contracts";
+import { Coin } from "@terra-money/terra.js";
 
-/** registrar */
-import { FundDetails } from "types/contracts/indexfund";
-
-/** result wrapper */
+/** _wrapper */
 export interface QueryRes<T> {
   query_result: T;
 }
 
-/** shared */
-type Vote = "yes" | "no";
+/** _shared */
+export type Vote = "yes" | "no";
 
-/** account */
+export type EmbeddedWasmMsg = {
+  wasm: {
+    execute: {
+      contract_addr: string;
+      funds: Coin.Data[];
+      msg: string; //base64 endocoded msg object
+    };
+  };
+};
+
+export type EmbeddedBankMsg = {
+  bank: {
+    send: {
+      amount: Coin.Data[];
+      to_address: string;
+    };
+  };
+};
+
+/** _account */
 export interface Profile {
   name: string;
   overview: string;
@@ -43,7 +59,35 @@ export interface Holdings {
   is_placeholder?: true;
 }
 
-/** admin */
+export interface Source {
+  locked: string; //"0"
+  liquid: string; //"0"
+  vault: string; //"terra123addr"
+}
+
+export interface UpdateProfilePayload {
+  //separate shape for update
+  name?: string;
+  overview?: string;
+  un_sdg?: number;
+  tier?: number;
+  logo?: string;
+  image?: string;
+  url?: string;
+  registration_number?: string;
+  country_city_origin?: string;
+  contact_email?: string;
+  facebook?: string;
+  twitter?: string;
+  linkedin?: string;
+  number_of_employees?: number;
+  average_annual_budget?: string;
+  annual_revenue?: string;
+  charity_navigator_rating?: string;
+  endow_type?: string;
+}
+
+/** _admin */
 export type PageOptions = { limit?: number; start_before?: number };
 export type VotesPageOptions = {
   proposal_id: number;
@@ -108,7 +152,9 @@ export type AdminVoteInfo = {
   weight: number; //1
 };
 
-/** governance */
+export type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
+
+/** _governance */
 export enum PollStatus {
   in_progress = "in_progress",
   passed = "passed",
@@ -174,12 +220,12 @@ export type GovConfig = {
   snapshot_period: number; //10 num blocks passed when fresh update is made available
 };
 
-/** airdrop */
+/** _airdrop */
 export type ClaimInquiry = {
   is_claimed: boolean;
 };
 
-/** indexfund */
+/** _indexfund */
 export type AllianceMember = {
   wallet: string;
   name: string;
@@ -199,6 +245,27 @@ export type IndexFundConfig = {
   };
 };
 
+export type FundDetails = {
+  id: number;
+  name: string;
+  description: string;
+  members: string[];
+  rotating_fund?: boolean;
+  split_to_liquid?: string; //"0.63"
+  expiry_time?: number; //unix time on seconds
+  expiry_height?: number; //block height
+};
+
+export type IndexFundOwnerPayload = {
+  new_owner: string;
+};
+
+export interface FundConfig {
+  fund_rotation?: number;
+  fund_member_limit?: number;
+  funding_goal?: string;
+}
+
 /** CW20 */
 export type TokenInfo = {
   name: string;
@@ -211,7 +278,7 @@ export type HaloBalance = {
   balance: string;
 };
 
-/** lbp */
+/** _lbp */
 export type Simulation = {
   return_amount: string;
   spread_amount: string;
@@ -219,7 +286,7 @@ export type Simulation = {
   is_placeholder?: true;
 };
 
-/** registrar */
+/** _registrar */
 export type EndowmentStatus = {
   Inactive: 0;
   Approved: 1;
@@ -261,10 +328,6 @@ export interface EndowmentQueryMsg {
   };
 }
 
-export type FundListRes = {
-  funds: FundDetails[];
-};
-
 export type RegistrarConfig = {
   owner: string;
   guardians_multisig_addr?: string;
@@ -286,6 +349,29 @@ export type VaultRateInfo = {
   fx_rate: string; //"1.206784043460040765"
 };
 
-export type VaultsRateRes = {
-  vaults_rate: VaultRateInfo[];
+export type StatusChangePayload = {
+  endowment_addr: string;
+  status: EndowmentStatus[keyof EndowmentStatus];
+  beneficiary?: string;
+};
+
+export type RegistrarConfigPayload = {
+  accounts_code_id?: number;
+  index_fund_contract?: string; //addr
+  treasury?: string; //addr
+  tax_rate?: string; //decimal string
+  // approved_charities?: string[];
+  default_vault?: string;
+  guardians_multisig_addr?: string;
+  endowment_owners_group_addr?: string;
+  split_max?: string; //decimal string
+  split_min?: string; //decimal string
+  split_default?: string; //decimal string
+  halo_token?: string;
+  gov_contract?: string;
+  charity_shares_contract?: string;
+};
+
+export type RegistrarOwnerPayload = {
+  new_owner: string;
 };

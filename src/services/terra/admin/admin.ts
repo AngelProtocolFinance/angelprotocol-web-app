@@ -1,5 +1,5 @@
-import { Member, QueryRes } from "types/server/terra";
-import { AdminVoteInfo, CW3Config, Proposal } from "types/server/terra";
+import { Member, QueryRes } from "types/server/contracts";
+import { AdminVoteInfo, CW3Config, Proposal } from "types/server/contracts";
 import { ContractQueryArgs, adminTags, terraTags } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";

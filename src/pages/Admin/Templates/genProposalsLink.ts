@@ -1,5 +1,5 @@
-import { CWContracts } from "types/contracts/admin";
 import { adminRoutes, appRoutes, siteRoutes } from "types/routes";
+import { CWContracts } from "types/server/contracts";
 import { SuccessLink } from "types/slices/transaction";
 
 function genProposalsLink(cws: Extract<CWContracts, "apTeam">): SuccessLink;

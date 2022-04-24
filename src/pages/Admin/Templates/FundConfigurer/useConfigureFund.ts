@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
-import { FundConfig } from "types/contracts/indexfund";
 import { proposalTypes } from "types/routes";
+import { FundConfig } from "types/server/contracts";
 import { adminTags, terraTags } from "types/services/terra";
 import { ProposalMeta } from "pages/Admin/types";
 import { terra } from "services/terra/terra";

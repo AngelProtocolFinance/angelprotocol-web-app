@@ -5,7 +5,7 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { Coin, Dec } from "@terra-money/terra.js";
-import { HaloBalance, QueryRes, TokenInfo } from "types/server/terra";
+import { HaloBalance, QueryRes, TokenInfo } from "types/server/contracts";
 import {
   ContractQueryArgs,
   haloTags,

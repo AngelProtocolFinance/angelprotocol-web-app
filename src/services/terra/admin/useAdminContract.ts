@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { CWContracts } from "types/contracts/admin";
+import { CWContracts } from "types/server/contracts";
 import { useGetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";

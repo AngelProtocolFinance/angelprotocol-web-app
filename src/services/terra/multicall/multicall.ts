@@ -5,8 +5,8 @@ import {
   Holding,
   Holdings,
   QueryRes,
-  VaultsRateRes,
-} from "types/server/terra";
+  VaultRateInfo,
+} from "types/server/contracts";
 import {
   MultiContractQueryArgs,
   multicallTags,
@@ -23,6 +23,10 @@ import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 import { vaultMap } from "./constants";
+
+type VaultsRateRes = {
+  vaults_rate: VaultRateInfo[];
+};
 
 type RateLookUp = { [index: string]: string };
 type EndowmentBalance = {

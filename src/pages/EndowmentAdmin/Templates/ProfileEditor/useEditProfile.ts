@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { UpdateProfilePayload as UP } from "types/contracts/accounts";
 import { proposalTypes } from "types/routes";
+import { UpdateProfilePayload as UP } from "types/server/contracts";
 import { adminTags, terraTags } from "types/services/terra";
 import { ObjectEntries } from "types/utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";

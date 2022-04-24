@@ -1,4 +1,4 @@
-import { Simulation } from "types/server/terra";
+import { Simulation } from "types/server/contracts";
 
 export const simulation: Simulation = {
   return_amount: "1000000",

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CWContracts } from "types/contracts/admin";
+import { CWContracts } from "types/server/contracts";
 
 const initialState: { cwContracts: CWContracts } = { cwContracts: {} };
 

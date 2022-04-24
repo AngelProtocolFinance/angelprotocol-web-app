@@ -1,4 +1,4 @@
-import { Profile } from "types/server/terra";
+import { Profile } from "types/server/contracts";
 
 //toDO
 export default function CharityStats(props: Profile & { classes?: string }) {

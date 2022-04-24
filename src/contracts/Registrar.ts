@@ -1,10 +1,10 @@
+import { sc } from "types/sc";
 import {
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
-} from "types/contracts/registrar";
-import { sc } from "types/sc";
-import { EndowmentQueryOptions } from "types/server/terra";
+} from "types/server/contracts";
+import { EndowmentQueryOptions } from "types/server/contracts";
 import { ContractQueryArgs as CQA } from "types/services/terra";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";

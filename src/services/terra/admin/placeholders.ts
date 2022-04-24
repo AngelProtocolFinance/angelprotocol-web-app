@@ -1,4 +1,4 @@
-import { Proposal } from "types/server/terra";
+import { Proposal } from "types/server/contracts";
 
 export const member = {
   weight: null,

@@ -1,4 +1,4 @@
-import { QueryRes, Simulation } from "types/server/terra";
+import { QueryRes, Simulation } from "types/server/contracts";
 import { ContractQueryArgs } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";

@@ -7,7 +7,7 @@ import {
   Poll,
   Polls,
   QueryRes,
-} from "types/server/terra";
+} from "types/server/contracts";
 import { ContractQueryArgs, govTags, terraTags } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";

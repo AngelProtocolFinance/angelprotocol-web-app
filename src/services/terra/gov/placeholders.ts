@@ -4,7 +4,7 @@ import {
   GovState,
   Poll,
   PollStatus,
-} from "types/server/terra";
+} from "types/server/contracts";
 
 export const staker: GovStaker = {
   balance: "0",

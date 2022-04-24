@@ -3,7 +3,7 @@ import { SchemaShape } from "types/schema";
 import {
   EndowmentStatusStrNum as ST,
   EndowmentStatus as T,
-} from "types/server/terra";
+} from "types/server/contracts";
 import { requiredAddress } from "schemas/string";
 import { ProposalBase, proposalShape } from "../proposalShape";
 

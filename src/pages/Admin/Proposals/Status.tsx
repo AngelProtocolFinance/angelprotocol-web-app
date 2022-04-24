@@ -1,4 +1,4 @@
-import { ProposalStatus } from "types/server/terra";
+import { ProposalStatus } from "types/server/contracts";
 
 export default function Status(props: { status: ProposalStatus }) {
   return (

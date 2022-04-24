@@ -1,4 +1,4 @@
-import { EndowmentStatus, EndowmentStatusNum } from "types/server/terra";
+import { EndowmentStatus, EndowmentStatusNum } from "types/server/contracts";
 import { EndowmentStatusMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";

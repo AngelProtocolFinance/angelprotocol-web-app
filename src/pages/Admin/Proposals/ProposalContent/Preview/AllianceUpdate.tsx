@@ -1,4 +1,4 @@
-import { AllianceMember } from "types/server/terra";
+import { AllianceMember } from "types/server/contracts";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { AllianceEditMeta } from "pages/Admin/types";
 import Header from "./preview-components/Header";

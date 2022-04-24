@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { FundConfig } from "types/contracts/indexfund";
 import { SchemaShape } from "types/schema";
+import { FundConfig } from "types/server/contracts";
 import { positiveNumber, tokenAmountString } from "schemas/number";
 import { ProposalBase, proposalShape } from "../proposalShape";
 

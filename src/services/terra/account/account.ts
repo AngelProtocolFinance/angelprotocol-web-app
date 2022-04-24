@@ -1,6 +1,6 @@
-import { CWContracts } from "types/contracts/admin";
-import { Profile, QueryRes } from "types/server/terra";
-import { CW3Config } from "types/server/terra";
+import { CWContracts } from "types/server/contracts";
+import { Profile, QueryRes } from "types/server/contracts";
+import { CW3Config } from "types/server/contracts";
 import {
   ContractQueryArgs,
   endowmentTags,

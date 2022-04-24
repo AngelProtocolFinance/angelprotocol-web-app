@@ -3,7 +3,7 @@ import {
   EndowmentEntry,
   QueryRes,
   RegistrarConfig,
-} from "types/server/terra";
+} from "types/server/contracts";
 import { ContractQueryArgs, terraTags } from "types/services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";

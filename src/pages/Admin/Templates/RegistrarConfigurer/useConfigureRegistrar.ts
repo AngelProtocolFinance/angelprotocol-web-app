@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { RegistrarConfigPayload } from "types/contracts/registrar";
 import { proposalTypes } from "types/routes";
+import { RegistrarConfigPayload } from "types/server/contracts";
 import { adminTags, terraTags } from "types/services/terra";
 import { ProposalMeta } from "pages/Admin/types";
 import { terra } from "services/terra/terra";
