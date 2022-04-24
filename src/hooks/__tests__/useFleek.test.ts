@@ -2,7 +2,12 @@ import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
 import useFleek from "hooks/useFleek";
 
+jest.useFakeTimers("legacy");
 describe("useFleek Test", () => {
+  beforeEach((): void => {
+    jest.setTimeout(30000);
+  });
+
   it("should render correctly", async () => {
     const { result } = renderHook(() => useFleek());
     expect(result.current.isUploading).toBe(false);
@@ -11,7 +16,6 @@ describe("useFleek Test", () => {
   });
 
   it("uploads a file and returns ipfs url", async () => {
-    jest.setTimeout(30000);
     const { result } = renderHook(() => useFleek());
     let uploaded: string | undefined;
 
