@@ -1,8 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Dec } from "@terra-money/terra.js";
 import { FormProvider, useForm } from "react-hook-form";
-import { FundConfig } from "types/server/contracts";
-import { IndexFundConfig } from "types/server/contracts";
+import { FundConfig, IndexFundConfig } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useIndexFundConfig } from "services/terra/indexFund/queriers";

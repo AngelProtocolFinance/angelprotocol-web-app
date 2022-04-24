@@ -4,7 +4,7 @@ import {
   EIP1193Events,
   EIP1193Methods,
   Web3Provider,
-} from "types/blockchain/ethereum";
+} from "types/ethereum";
 import { Dwindow } from "types/slices/provider";
 import { DeviceType, deviceType } from "helpers/deviceType";
 

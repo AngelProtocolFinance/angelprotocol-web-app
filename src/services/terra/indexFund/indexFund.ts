@@ -1,6 +1,6 @@
-import { FundDetails } from "types/server/contracts";
 import {
   AllianceMember,
+  FundDetails,
   IndexFundConfig,
   QueryRes,
 } from "types/server/contracts";

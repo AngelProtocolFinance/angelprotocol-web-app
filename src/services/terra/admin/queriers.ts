@@ -1,6 +1,6 @@
 import { chainIDs } from "types/chainIDs";
-import { CWContracts } from "types/server/contracts";
 import {
+  CWContracts,
   PageOptions,
   Proposal,
   VotesPageOptions,

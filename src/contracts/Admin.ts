@@ -1,9 +1,14 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
 import { sc } from "types/sc";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { Vote } from "types/server/contracts";
-import { CWContracts } from "types/server/contracts";
-import { Member, PageOptions, VotesPageOptions } from "types/server/contracts";
+import {
+  CWContracts,
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  Member,
+  PageOptions,
+  Vote,
+  VotesPageOptions,
+} from "types/server/contracts";
 import { ContractQueryArgs as CQA } from "types/services/terra";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";

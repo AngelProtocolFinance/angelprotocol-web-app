@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { Proposal } from "types/server/contracts";
+import {
+  EmbeddedBankMsg,
+  EmbeddedWasmMsg,
+  Proposal,
+} from "types/server/contracts";
 import Icon from "components/Icons/Icons";
 import DetailLabel from "../DetailLabel";
 import Preview from "./Preview/Preview";

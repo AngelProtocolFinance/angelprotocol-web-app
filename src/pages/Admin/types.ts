@@ -1,10 +1,14 @@
 import { proposalTypes } from "types/routes";
-import { RegistrarConfigPayload } from "types/server/contracts";
-import { FundConfig, FundDetails } from "types/server/contracts";
-import { UpdateProfilePayload } from "types/server/contracts";
-import { Member } from "types/server/contracts";
-import { AllianceMember as AM } from "types/server/contracts";
-import { EndowmentStatus, EndowmentStatusStrNum } from "types/server/contracts";
+import {
+  AllianceMember as AM,
+  EndowmentStatus,
+  EndowmentStatusStrNum,
+  FundConfig,
+  FundDetails,
+  Member,
+  RegistrarConfigPayload,
+  UpdateProfilePayload,
+} from "types/server/contracts";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 

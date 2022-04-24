@@ -1,6 +1,9 @@
-import { CWContracts } from "types/server/contracts";
-import { Profile, QueryRes } from "types/server/contracts";
-import { CW3Config } from "types/server/contracts";
+import {
+  CW3Config,
+  CWContracts,
+  Profile,
+  QueryRes,
+} from "types/server/contracts";
 import {
   ContractQueryArgs,
   endowmentTags,

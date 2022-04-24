@@ -1,6 +1,8 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
-import { StatusChangePayload } from "types/server/contracts";
-import { EndowmentStatusNum } from "types/server/contracts";
+import {
+  EndowmentStatusNum,
+  StatusChangePayload,
+} from "types/server/contracts";
 import { adminTags, awsTags } from "types/services/aws";
 import { aws } from "services/aws/aws";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
