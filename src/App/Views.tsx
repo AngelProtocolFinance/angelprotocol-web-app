@@ -3,6 +3,7 @@ import { app, site } from "../constants/routes";
 import { lazy, Suspense } from "react";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
+import Dashboard from "pages/Dashboard/Dashboard";
 
 const Login = lazy(() => import("pages/Login/Login"));
 const TCA = lazy(() => import("pages/TCA/TCA"));
@@ -31,6 +32,7 @@ export default function Views() {
         />
         <Route path={`${app.marketplace}`} element={<Market />} />
         <Route path={`${app.leaderboard}`} element={<Leaderboard />} />
+        <Route path={`${app.dashboard}`} element={<Dashboard />} />
         <Route path={`${app.charity}/:address/*`} element={<Charity />} />
         <Route
           path={`${app.charity_edit}/:address`}

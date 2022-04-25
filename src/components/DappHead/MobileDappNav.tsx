@@ -18,6 +18,9 @@ export default function MobileDappNav() {
       <NavLink to={`${site.app}/${app.leaderboard}`} {...linkStyles}>
         Leaderboard
       </NavLink>
+      <NavLink to={`${site.app}/${app.dashboard}`} {...linkStyles}>
+        Dashboard
+      </NavLink>
     </nav>
   );
 }

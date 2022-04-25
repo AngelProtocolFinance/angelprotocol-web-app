@@ -14,6 +14,9 @@ export default function DappMenu() {
       <NavLink to={`${site.app}/${app.leaderboard}`} className={styler}>
         Leaderboard
       </NavLink>
+      <NavLink to={`${site.app}/${app.dashboard}`} className={styler}>
+        Dashboard
+      </NavLink>
     </nav>
   );
 }
