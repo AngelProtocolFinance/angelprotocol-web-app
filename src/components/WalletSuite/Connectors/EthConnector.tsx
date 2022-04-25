@@ -1,7 +1,7 @@
+import { RejectMetamaskLogin } from "errors/errors";
 import { Dwindow } from "types/slices/provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
-import { RejectMetamaskLogin } from "contexts/MetamaskContext/useMetamask";
 import { useGetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import { DeviceType, deviceType } from "helpers/deviceType";

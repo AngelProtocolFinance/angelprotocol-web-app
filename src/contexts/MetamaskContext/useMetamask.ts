@@ -1,3 +1,4 @@
+import { RejectMetamaskLogin } from "errors/errors";
 import { useEffect, useState } from "react";
 import {
   AccountChangeHandler,
@@ -117,14 +118,6 @@ function retrieveUserAction(): Action {
 
 export function getEthereum() {
   return (window as any).ethereum as Web3Provider;
-}
-
-export class RejectMetamaskLogin extends Error {
-  constructor() {
-    super();
-    this.message = "Metamask login cancelled";
-    this.name = "RejectMetamaskLogin";
-  }
 }
 
 //notes: 1 accountChange handler run only on first connect [] --> [something]

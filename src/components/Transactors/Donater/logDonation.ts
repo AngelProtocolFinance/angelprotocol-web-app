@@ -1,3 +1,4 @@
+import { LogDonationFail } from "errors/errors";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { Receiver, TxLogPayload } from "types/server/aws";
@@ -55,14 +56,3 @@ export type DonationLogger = (
   walletAddress: string,
   receipient: string | number
 ) => Promise<void>;
-
-export class LogDonationFail extends Error {
-  chainId: string;
-  txHash: string;
-  constructor(chainId: string, txHash: string) {
-    super();
-    this.chainId = chainId;
-    this.txHash = txHash;
-    this.name = "LogDonationFail";
-  }
-}

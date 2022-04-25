@@ -1,3 +1,4 @@
+import { RejectBinanceLogin } from "errors/errors";
 import { useEffect, useState } from "react";
 import {
   AccountChangeHandler,
@@ -107,14 +108,6 @@ function retrieveUserAction(): Action {
 
 export function getBinance() {
   return (window as any).BinanceChain as Web3Provider;
-}
-
-export class RejectBinanceLogin extends Error {
-  constructor() {
-    super();
-    this.message = "Binance login cancelled";
-    this.name = "RejectBinanceLogin";
-  }
 }
 
 //notes: 1 accountChange handler run only on first connect [] --> [something]

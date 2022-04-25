@@ -9,7 +9,7 @@ export default function handleEthError(error: any, handler: StageUpdator) {
       break;
     case 4900:
     case 4901:
-      handler({ step: Step.error, message: "Disconnected" });
+      handler({ step: Step.error, message: "WalletDisconnectError" });
       break;
     //https://eips.ethereum.org/EIPS/eip-1474#error-codes
     case 32603:

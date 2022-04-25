@@ -1,10 +1,10 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
+import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "types/chainIDs";
 import { denoms } from "types/denoms";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletProxy } from "providers/WalletProvider";
 import { terra_lcds } from "constants/urls";
-import { Disconnected, TxResultFail } from "./Errors";
 
 export default class Contract {
   client: LCDClient;
@@ -102,7 +102,7 @@ export default class Contract {
 
   checkWallet() {
     if (!this.walletAddr) {
-      throw new Disconnected();
+      throw new WalletDisconnectError();
     }
   }
 }
