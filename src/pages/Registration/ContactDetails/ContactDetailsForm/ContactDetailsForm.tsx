@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
@@ -134,14 +134,14 @@ const PrivacyPolicyCheckbox = forwardRef(
   (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
     <Checkbox {...props} ref={ref}>
       By checking this box, you declare that you have read and agreed to our{" "}
-      <Link
-        to={PRIVACY_POLICY}
+      <a
+        href={PRIVACY_POLICY}
         target="_blank"
         rel="noreferrer noopener"
         className="underline text-angel-blue"
       >
         Privacy Policy
-      </Link>
+      </a>
       <span className="text-failed-red ml-0.5">*</span>
     </Checkbox>
   )
