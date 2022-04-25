@@ -5,6 +5,7 @@ import { Button } from "../common";
 import routes from "../routes";
 import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
+import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
 import getRegistrationState from "./getRegistrationState";
 
@@ -19,6 +20,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
+      <ProgressIndicator />
       <h3 className="text-3xl font-bold">Necessary Information</h3>
       <span>
         Please complete all the following steps to be able to create your
