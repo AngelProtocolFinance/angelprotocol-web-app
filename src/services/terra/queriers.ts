@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
 import { TokenInfo } from "@types-server/contracts";
-import { denoms } from "types/denoms";
 import { terra } from "services/terra/terra";
 import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/denoms";
 import { useContract } from "./useContract";
 
 const haloPlaceHolderInfo: TokenInfo = {

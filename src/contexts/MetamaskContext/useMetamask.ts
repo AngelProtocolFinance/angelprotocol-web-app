@@ -1,3 +1,4 @@
+import { Dwindow } from "@types-slice/provider";
 import { RejectMetamaskLogin } from "errors/errors";
 import { useEffect, useState } from "react";
 import {
@@ -6,7 +7,6 @@ import {
   EIP1193Methods,
   Web3Provider,
 } from "types/ethereum";
-import { Dwindow } from "types/slices/provider";
 import { DeviceType, deviceType } from "helpers/deviceType";
 
 export default function useMetamask() {

@@ -33,7 +33,7 @@ declare module "@types-slice/transaction" {
     step: "broadcast";
     message: string;
     txHash: string;
-    chainId: chainIDs;
+    chainId: string;
     details?: never;
   };
 
@@ -42,7 +42,7 @@ declare module "@types-slice/transaction" {
     step: "success";
     message: string;
     txHash: string;
-    chainId: chainIDs;
+    chainId: string;
     isReceiptEnabled?: boolean;
     isShareEnabled?: boolean;
     successLink?: SuccessLink;
@@ -52,14 +52,14 @@ declare module "@types-slice/transaction" {
     step: "receipt";
     message?: never;
     txHash: string;
-    chainId: chainIDs;
+    chainId: string;
   };
 
   type ErrorStage = {
     step: "error";
     message: string;
     txHash?: string;
-    chainId?: chainIDs;
+    chainId?: string;
     details?: never;
   };
 

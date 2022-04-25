@@ -1,4 +1,4 @@
-import { AWSQueryRes } from "types/server/aws";
+import { AWSQueryRes } from "@types-server/aws";
 import {
   CharityApplication,
   RegistrationStatus,

@@ -1,8 +1,8 @@
 import { LogApplicationUpdateError } from "errors/errors";
-import { chainIDs } from "types/chainIDs";
-import { UserTypes } from "types/user-types";
 import createAuthToken from "helpers/createAuthToken";
+import { chainIDs } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
+import { UserTypes } from "constants/user-types";
 
 interface UpdateApplicationPayload {
   PK: string;

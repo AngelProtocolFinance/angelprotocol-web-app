@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Providers } from "types/slices/wallet";
 import { useGetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
@@ -20,7 +19,7 @@ export default function WalletSuite() {
   const hideConnectOptions = () => setConnectOptionsShown(false);
   const dismissHandler = useBackdropDismiss(hideConnectOptions);
 
-  const isProviderActive = provider.active !== Providers.none;
+  const isProviderActive = provider.active !== "terra";
   //close modal after connecting
   useEffect(() => {
     isProviderActive && setConnectOptionsShown(false);

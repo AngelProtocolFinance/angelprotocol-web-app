@@ -1,7 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { FundConfig } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -15,6 +14,7 @@ import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
+import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { FundConfigValues } from "./fundconfigSchema";

@@ -1,8 +1,8 @@
 import { Proposal } from "@types-server/contracts";
 import { Link } from "react-router-dom";
-import { adminRoutes } from "types/routes";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
+import { adminRoutes } from "constants/routes";
 import Status from "./Status";
 import VoteStat from "./VoteStat";
 import useProposalDetails from "./useProposalDetails";

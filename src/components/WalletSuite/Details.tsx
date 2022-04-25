@@ -1,6 +1,5 @@
+import { Dwindow } from "@types-slice/provider";
 import { useState } from "react";
-import { denoms } from "types/denoms";
-import { Dwindow, Providers } from "types/slices/provider";
 import { TerraIdentifiers } from "types/slices/wallet";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
@@ -11,6 +10,7 @@ import Icon from "components/Icons/Icons";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
+import { denoms } from "constants/denoms";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
@@ -39,13 +39,13 @@ export default function Details(props: { closeHandler: () => void }) {
 
   const handleDisconnect = () => {
     dispatch(resetWallet());
-    if (activeProvider === Providers.terra) {
+    if (activeProvider === "terra") {
       walletTerra!.disconnect();
     }
-    if (activeProvider === Providers.ethereum) {
+    if (activeProvider === "ethereum") {
       disconnectMetamask();
     }
-    if (activeProvider === Providers.binance) {
+    if (activeProvider === "binance") {
       disconnectBinance();
     }
   };

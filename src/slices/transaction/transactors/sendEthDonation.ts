@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Dwindow } from "@types-slice/provider";
 import { StageUpdator } from "@types-slice/transaction";
 import { ethers } from "ethers";
-import { chainIDs } from "types/chainIDs";
-import { Dwindow, Providers } from "types/slices/provider";
 import { RootState } from "store/store";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
+import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 
@@ -23,9 +23,9 @@ export const sendEthDonation = createAsyncThunk(
       updateTx({ step: "submit", message: "Submitting transaction.." });
       let provider: ethers.providers.Web3Provider;
 
-      if (activeProvider === Providers.ethereum) {
+      if (activeProvider === "ethereum") {
         provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
-      } else if (activeProvider === Providers.binance) {
+      } else if (activeProvider === "binance") {
         provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
       } else {
         provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);

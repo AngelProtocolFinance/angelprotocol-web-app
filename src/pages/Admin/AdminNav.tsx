@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { adminRoutes } from "types/routes";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { adminRoutes } from "constants/routes";
 
 export default function AdminNav() {
   return (

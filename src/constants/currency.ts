@@ -1,4 +1,3 @@
-import { denoms } from "types/denoms";
 import atom from "assets/icons/currencies/atom.png";
 import bnb from "assets/icons/currencies/bnb.png";
 import btc from "assets/icons/currencies/btc.png";
@@ -11,6 +10,7 @@ import sdt from "assets/icons/currencies/sdt.svg";
 import sol from "assets/icons/currencies/sol.svg";
 import token from "assets/icons/currencies/token.svg";
 import ust from "assets/icons/currencies/ust.svg";
+import { denoms } from "constants/denoms";
 
 export const currency_text: { [key in denoms]: string } = {
   [denoms.uluna]: "LUNA",

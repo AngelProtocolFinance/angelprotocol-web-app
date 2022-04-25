@@ -1,7 +1,7 @@
 import { Link, NavLink, useParams } from "react-router-dom";
-import { adminRoutes, appRoutes, siteRoutes } from "types/routes";
 import Icon from "components/Icons/Icons";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import { EndowmentAddrParams } from "./types";
 
 export default function AdminNav() {

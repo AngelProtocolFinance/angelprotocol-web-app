@@ -1,8 +1,8 @@
 import { ContractQueryArgs } from "#types-services/terra";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { Source, UpdateProfilePayload } from "@types-server/contracts";
-import { denoms } from "types/denoms";
 import { WalletProxy } from "providers/WalletProvider";
+import { denoms } from "constants/denoms";
 import Contract from "./Contract";
 
 export default class Account extends Contract {

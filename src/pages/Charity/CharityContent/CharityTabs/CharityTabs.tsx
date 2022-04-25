@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { charityRoutes } from "types/routes";
+import { charityRoutes } from "constants/routes";
 import { EndowmentInfo } from "./EndowmentInfo";
 import Overview from "./Overview";
 

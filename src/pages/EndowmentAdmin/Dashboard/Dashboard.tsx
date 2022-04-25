@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import { useMemberState } from "services/terra/admin/states";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
 import Icon from "components/Icons/Icons";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
+import { appRoutes, siteRoutes } from "constants/routes";
 import Summary from "./Summary";
 import Transactions from "./Transactions";
 

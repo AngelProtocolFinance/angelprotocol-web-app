@@ -1,8 +1,8 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 const Admin = lazy(() => import("pages/Admin/Admin"));
 const Login = lazy(() => import("pages/Login/Login"));

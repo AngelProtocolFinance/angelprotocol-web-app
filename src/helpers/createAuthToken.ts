@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserTypes } from "types/user-types";
+import { UserTypes } from "constants/user-types";
 
 type Payload = {
   authorization: string;

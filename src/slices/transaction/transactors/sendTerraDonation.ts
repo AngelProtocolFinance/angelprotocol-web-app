@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { StageUpdator } from "@types-slice/transaction";
-import { chainIDs } from "types/chainIDs";
 import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
+import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { TerraDonateArgs } from "./transactorTypes";
 

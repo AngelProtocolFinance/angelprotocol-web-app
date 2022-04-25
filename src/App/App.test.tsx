@@ -7,9 +7,9 @@ import userEvent from "@testing-library/user-event";
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { chainIDs } from "types/chainIDs";
-import { appRoutes, siteRoutes } from "types/routes";
 import { store } from "store/store";
+import { chainIDs } from "constants/chainIDs";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { terra_lcds } from "constants/urls";
 import App from "./App";
 

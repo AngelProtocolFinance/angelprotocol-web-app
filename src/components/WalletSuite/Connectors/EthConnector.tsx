@@ -1,5 +1,5 @@
+import { Dwindow } from "@types-slice/provider";
 import { RejectMetamaskLogin } from "errors/errors";
-import { Dwindow } from "types/slices/provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { useGetter } from "store/accessors";

@@ -1,10 +1,11 @@
+import { Transaction } from "@types-server/aws";
 import React, { PropsWithChildren } from "react";
-import { Transaction } from "types/server/aws";
 import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
+import { chainIDs } from "constants/chainIDs";
 import useDonor from "./useDonor";
 import useSortTransactions, {
   SortDirection,
@@ -61,7 +62,7 @@ export default function DonationsTable(props: {
               {maskAddress(tx.endowment_address)}
             </span>
             <a
-              href={getTxUrl(tx.chain_id!, tx.sort_key)}
+              href={getTxUrl(tx.chain_id! as chainIDs, tx.sort_key)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

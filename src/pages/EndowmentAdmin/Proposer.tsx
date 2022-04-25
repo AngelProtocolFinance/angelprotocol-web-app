@@ -1,10 +1,10 @@
 import { NavLink, Route, Routes } from "react-router-dom";
-import { proposalTypes } from "types/routes";
 import CW3Configurer from "pages/Admin/Templates/CW3Configurer/CW3Configurer";
 import FundSender from "pages/Admin/Templates/FundSender/FundSender";
 import MemberUpdator from "pages/Admin/Templates/MemberUpdator/MemberUpdator";
 // import MemberUpdator from "./Templates/MemberUpdator/MemberUpdator";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
+import { proposalTypes } from "constants/routes";
 import ProfileEditor from "./Templates/ProfileEditor/ProfileEditor";
 
 export default function Proposer() {

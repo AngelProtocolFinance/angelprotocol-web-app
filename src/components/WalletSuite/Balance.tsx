@@ -1,6 +1,6 @@
-import { denoms } from "types/denoms";
 import toCurrency from "helpers/toCurrency";
 import { currency_icons, currency_text } from "constants/currency";
+import { denoms } from "constants/denoms";
 
 export default function Balance(props: {
   denom: denoms;

@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { adminRoutes } from "types/routes";
 import { useMember } from "services/terra/admin/queriers";
 import { setCWContracts } from "slices/admin/cwContracts";
 import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
+import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Applications from "./Applications/Applications";
 import Proposal from "./Proposals/Proposal";

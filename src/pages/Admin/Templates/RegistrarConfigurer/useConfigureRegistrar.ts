@@ -1,6 +1,5 @@
 import { RegistrarConfigPayload } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -14,6 +13,7 @@ import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
+import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { RegistrarConfigValues } from "./registrarConfigSchema";

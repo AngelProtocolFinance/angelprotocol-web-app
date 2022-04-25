@@ -8,7 +8,7 @@ import {
   RegistrarConfigPayload,
   UpdateProfilePayload,
 } from "@types-server/contracts";
-import { proposalTypes } from "types/routes";
+import { proposalTypes } from "constants/routes";
 import { CW3ConfigPayload } from "./Templates/CW3Configurer/cw3ConfigSchema";
 import { FundSendPayload } from "./Templates/FundSender/fundSendSchema";
 

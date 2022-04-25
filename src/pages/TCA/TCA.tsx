@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-import { appRoutes } from "types/routes";
 import { useGetter } from "store/accessors";
 import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import Donater from "components/Transactors/Donater/Donater";
 import { Props as C } from "components/Transactors/Donater/types";
 import Transactor from "components/Transactors/Transactor";
+import { appRoutes } from "constants/routes";
 
 export default function TCA() {
   const { tca: token } = useGetter((state) => state.auth);

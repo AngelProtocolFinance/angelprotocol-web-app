@@ -4,13 +4,13 @@ import {
   Proposal,
   VotesPageOptions,
 } from "@types-server/contracts";
-import { chainIDs } from "types/chainIDs";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,
 } from "pages/Admin/Proposals/Proposals";
 import { ProposalMeta } from "pages/Admin/types";
 import idParamToNumber from "helpers/idParamToNum";
+import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import useAdminContract from "./useAdminContract";

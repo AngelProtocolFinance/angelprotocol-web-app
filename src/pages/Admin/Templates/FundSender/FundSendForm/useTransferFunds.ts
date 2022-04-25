@@ -2,8 +2,6 @@ import { Dec } from "@terra-money/terra.js";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { denoms } from "types/denoms";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -17,6 +15,8 @@ import Admin from "contracts/Admin";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { currency_text } from "constants/currency";
+import { denoms } from "constants/denoms";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../../genProposalsLink";
 import { FundSendValues } from "../fundSendSchema";
 

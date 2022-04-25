@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { denoms } from "types/denoms";
 import { DonateValues } from "components/Transactors/Donater/types";
+import { denoms } from "constants/denoms";
 import { schema } from "./schema";
 import { Props } from "./types";
 

@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { governRoutes } from "types/routes";
+import { governRoutes } from "constants/routes";
 import Landing from "./Landing";
 import PollDetails from "./PollDetails/PollDetails";
 

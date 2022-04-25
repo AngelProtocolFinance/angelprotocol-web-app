@@ -1,8 +1,6 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
+import { ProviderStates } from "@types-slice/provider";
 import { useEffect, useRef } from "react";
-import { chainIDs } from "types/chainIDs";
-import { chains } from "types/chains";
-import { ProviderStates, Providers } from "types/slices/provider";
 import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useGetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { terra } from "services/terra/terra";
@@ -10,6 +8,8 @@ import { updateChainID } from "slices/chainSlice";
 import { setActiveProvider, setIsSwitching } from "slices/providerSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
+import { chains } from "constants/chains";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -27,9 +27,9 @@ export default function useProviderSwitcher() {
     useGetBinanceWallet();
 
   const providerStates: ProviderStates = [
-    [Providers.terra, terraConnected],
-    [Providers.ethereum, isMetamaskConnected],
-    [Providers.binance, isBinanceConnected],
+    ["terra", terraConnected],
+    ["ethereum", isMetamaskConnected],
+    ["binance", isBinanceConnected],
   ];
 
   //find first connected provider
@@ -50,10 +50,10 @@ export default function useProviderSwitcher() {
       const [provider] = activeProvider;
       dispatch(setActiveProvider(provider));
     } else {
-      dispatch(setActiveProvider(Providers.none));
+      dispatch(setActiveProvider("none"));
     }
     return () => {
-      dispatch(setActiveProvider(Providers.none));
+      dispatch(setActiveProvider("none"));
     };
     //eslint-disable-next-line
   }, [activeProvider]);

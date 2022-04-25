@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import { currency_icons } from "constants/currency";
+import { denoms } from "constants/denoms";
 import { SwapValues } from "./types";
 
 export default function Output() {

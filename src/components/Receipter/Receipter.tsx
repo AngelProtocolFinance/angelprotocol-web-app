@@ -1,8 +1,8 @@
 // import { ReceiptStage } from "types/transaction";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ReceiptPayload } from "@types-server/aws";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ReceiptPayload } from "types/server/aws";
 import { schema } from "./schema";
 
 export type ReceipterValues = ReceiptPayload;

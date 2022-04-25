@@ -1,7 +1,6 @@
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { proposalTypes } from "types/routes";
 import { ObjectEntries } from "types/utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
@@ -19,6 +18,7 @@ import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
+import { proposalTypes } from "constants/routes";
 import { UpdateProfileValues } from "./profileEditSchema";
 
 export default function useEditProfile() {

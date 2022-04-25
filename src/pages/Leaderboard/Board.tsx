@@ -1,10 +1,10 @@
-import { chainIDs } from "types/chainIDs";
 import {
   placeholderUpdate as leaderboard_update,
   useLeaderboardsQuery,
 } from "services/aws/leaderboard";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
 import TableView from "./TableView";
 
 export default function Board() {

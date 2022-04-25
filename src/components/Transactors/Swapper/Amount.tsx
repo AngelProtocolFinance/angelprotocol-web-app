@@ -1,9 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import Icon from "components/Icons/Icons";
 import { currency_icons } from "constants/currency";
+import { denoms } from "constants/denoms";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 import { SwapValues } from "./types";

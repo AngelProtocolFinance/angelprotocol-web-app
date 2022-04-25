@@ -1,4 +1,4 @@
-import { denoms } from "types/denoms";
+import { denoms } from "constants/denoms";
 
 type Wallets = {
   [index: string]: string;

@@ -1,8 +1,12 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Providers, State } from "types/slices/provider";
+import { Providers } from "@types-slice/provider";
 
-const initialState: State = {
-  active: Providers.none,
+interface IState {
+  active: Providers;
+  isSwitching: boolean;
+}
+const initialState: IState = {
+  active: "none",
   isSwitching: false,
 };
 

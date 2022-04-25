@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useGetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/denoms";
 import FundSendForm from "./FundSendForm/FundSendForm";
 import { FundSendValues, fundSendSchema } from "./fundSendSchema";
 

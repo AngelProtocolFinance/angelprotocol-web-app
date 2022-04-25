@@ -1,9 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
+import { Dwindow, Providers } from "@types-slice/provider";
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
-import { Dwindow, Providers } from "types/slices/provider";
 import { TerraIdentifiers } from "types/slices/wallet";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -11,6 +9,8 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/denoms";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -20,7 +20,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
   //updator for terra-station and wallet connect
   useEffect(() => {
-    if (activeProvider !== Providers.terra) {
+    if (activeProvider !== "terra") {
       dispatch(setIsUpdating(false));
       return;
     }
@@ -72,7 +72,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
   useEffect(() => {
     (async () => {
       try {
-        if (activeProvider !== Providers.terra) {
+        if (activeProvider !== "terra") {
           return;
         }
         if (!wallet) {
@@ -147,7 +147,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     (async () => {
       try {
         const dwindow = window as Dwindow;
-        if (activeProvider !== Providers.ethereum) return;
+        if (activeProvider !== "ethereum") return;
         dispatch(setIsUpdating(true));
         const provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
         const network = await provider.getNetwork();
@@ -186,7 +186,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     (async () => {
       try {
         const dwindow = window as Dwindow;
-        if (activeProvider !== Providers.binance) return;
+        if (activeProvider !== "binance") return;
         dispatch(setIsUpdating(true));
         const provider = new ethers.providers.Web3Provider(
           dwindow.BinanceChain!

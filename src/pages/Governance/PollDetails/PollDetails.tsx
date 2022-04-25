@@ -1,8 +1,8 @@
 import { PollStatus } from "@types-server/contracts";
 import { Link, useParams } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import Icon from "components/Icons/Icons";
 import idParamToNumber from "helpers/idParamToNum";
+import { appRoutes, siteRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 import PollAction from "./PollAction";
 

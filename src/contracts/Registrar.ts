@@ -5,9 +5,9 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "@types-server/contracts";
-import { sc } from "types/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class Registrar extends Contract {

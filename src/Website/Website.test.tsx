@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { siteRoutes, webRoutes } from "types/routes";
+import { siteRoutes, webRoutes } from "constants/routes";
 import Website from "./Website";
 
 describe("<Website/> reacts to routes", () => {

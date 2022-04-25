@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
@@ -9,6 +8,7 @@ import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
 import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/denoms";
 import useEstimator from "../useEstimator";
 
 type Senders = { [index: string]: (data: DonateValues) => any };

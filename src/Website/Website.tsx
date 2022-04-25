@@ -1,9 +1,9 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { siteRoutes, webRoutes } from "types/routes";
 import Loader from "components/Loader/Loader";
 import Modal from "components/Modal/Modal";
 import useScrollTop from "hooks/useScrollTop";
+import { siteRoutes, webRoutes } from "constants/routes";
 import WebHead from "./Header/WebHead";
 import Home from "./Home/Home";
 import WebFoot from "./WebFoot";

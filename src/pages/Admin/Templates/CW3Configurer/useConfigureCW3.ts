@@ -1,6 +1,5 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -13,6 +12,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import getPayloadDiff from "helpers/getPayloadDiff";
+import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";

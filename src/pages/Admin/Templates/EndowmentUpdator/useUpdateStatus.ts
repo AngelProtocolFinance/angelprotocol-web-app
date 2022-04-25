@@ -4,7 +4,6 @@ import {
   StatusChangePayload,
 } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -17,6 +16,7 @@ import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 

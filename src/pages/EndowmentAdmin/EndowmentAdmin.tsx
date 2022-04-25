@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { adminRoutes } from "types/routes";
 import { GuardPrompt } from "pages/Admin/Admin";
 import Proposal from "pages/Admin/Proposals/Proposal";
 import Proposals from "pages/Admin/Proposals/Proposals";
@@ -9,6 +8,7 @@ import { useMember } from "services/terra/admin/queriers";
 import { setCWContracts } from "slices/admin/cwContracts";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";

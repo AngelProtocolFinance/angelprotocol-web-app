@@ -12,7 +12,7 @@ import {
   TxResultFail,
   WalletDisconnectError,
 } from "errors/errors";
-import { chainIDs } from "types/chainIDs";
+import { chainIDs } from "constants/chainIDs";
 
 export default function handleTerraError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {

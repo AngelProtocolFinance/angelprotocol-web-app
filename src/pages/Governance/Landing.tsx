@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { denoms } from "types/denoms";
-import { appRoutes, siteRoutes } from "types/routes";
 import { currency_text } from "constants/currency";
+import { denoms } from "constants/denoms";
+import { appRoutes, siteRoutes } from "constants/routes";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";

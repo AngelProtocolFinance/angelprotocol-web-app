@@ -1,5 +1,4 @@
 import { useFormContext } from "react-hook-form";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -11,6 +10,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { IndexFundOwnerValues } from "./updateOwnerSchema";
 

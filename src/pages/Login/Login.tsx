@@ -2,9 +2,9 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import eyeIcon from "assets/images/eye.png";
+import { appRoutes, siteRoutes } from "constants/routes";
 import useLogin from "./useLogin";
 
 const Login = () => {

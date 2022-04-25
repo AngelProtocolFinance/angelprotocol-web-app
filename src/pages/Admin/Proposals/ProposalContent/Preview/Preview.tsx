@@ -1,4 +1,4 @@
-import { proposalTypes } from "types/routes";
+import { proposalTypes } from "constants/routes";
 import { ProposalMeta } from "../../../types";
 import AllianceUpdate from "./AllianceUpdate";
 import CWMemberUpdate from "./CWMemberUpdate";

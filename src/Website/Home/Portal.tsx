@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { webRoutes } from "types/routes";
+import { webRoutes } from "constants/routes";
 
 export default function Portal() {
   return (

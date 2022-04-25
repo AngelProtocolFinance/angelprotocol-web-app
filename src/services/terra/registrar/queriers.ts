@@ -1,6 +1,6 @@
-import { chainIDs } from "types/chainIDs";
 import Registrar, { R, T } from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
+import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
 

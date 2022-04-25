@@ -1,4 +1,4 @@
-import { chainIDs } from "types/chainIDs";
+import { chainIDs } from "constants/chainIDs";
 import { account_api } from "./account";
 import useAccountContract from "./useAccountContract";
 

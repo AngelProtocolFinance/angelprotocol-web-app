@@ -6,13 +6,13 @@ import {
   WithMsg,
   WithTx,
 } from "@types-slice/transaction";
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
 import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
+import { chainIDs } from "constants/chainIDs";
 import { currency_text } from "constants/currency";
+import { denoms } from "constants/denoms";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(

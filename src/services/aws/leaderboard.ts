@@ -1,4 +1,4 @@
-import { AWSQueryRes, Endowment, Update } from "types/server/aws";
+import { AWSQueryRes, Endowment, Update } from "@types-server/aws";
 import { aws } from "./aws";
 
 interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {

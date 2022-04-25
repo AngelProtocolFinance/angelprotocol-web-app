@@ -6,11 +6,10 @@ import {
   MsgExecuteContract,
   MsgSend,
 } from "@terra-money/terra.js";
+import { Dwindow } from "@types-slice/provider";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
-import { Dwindow, Providers } from "types/slices/provider";
 import {
   setFee,
   setFormError,
@@ -25,6 +24,7 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
+import { denoms } from "constants/denoms";
 import { DonateValues } from "./types";
 
 export default function useEstimator() {
@@ -52,7 +52,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (activeProvider === Providers.none) {
+        if (activeProvider === "none") {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -83,7 +83,7 @@ export default function useEstimator() {
 
         //checks for uusd
         if (currency === denoms.uusd) {
-          if (activeProvider === Providers.terra) {
+          if (activeProvider === "terra") {
             const receiver = getValues("receiver");
             let depositMsg: MsgExecuteContract;
             if (
@@ -118,9 +118,9 @@ export default function useEstimator() {
 
         //checks for uluna
         if (currency === denoms.uluna) {
-          if (activeProvider === Providers.terra) {
+          if (activeProvider === "terra") {
             //this block won't run if wallet is not connected
-            //activeProvider === Providers.none
+            //activeProvider === "none"
             const contract = new Contract(wallet);
             const sender = wallet!.address;
             const receiver = ap_wallets[denoms.uluna];
@@ -147,7 +147,7 @@ export default function useEstimator() {
           //provider is present at this point
           let provider: ethers.providers.Web3Provider;
 
-          if (activeProvider === Providers.ethereum) {
+          if (activeProvider === "ethereum") {
             provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
           } else {
             provider = new ethers.providers.Web3Provider(
@@ -182,7 +182,7 @@ export default function useEstimator() {
           //provider is present at this point
           let provider: ethers.providers.Web3Provider;
 
-          if (activeProvider === Providers.binance) {
+          if (activeProvider === "binance") {
             provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
           } else if (dwindow.xfi?.ethereum!) {
             provider = new ethers.providers.Web3Provider(

@@ -1,8 +1,8 @@
 import { EndowmentEntry } from "@types-server/contracts";
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import image from "assets/images/home-banner.jpg";
 import LazyImage from "components/LazyImage/LazyImage";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 export default function CharityCard(props: EndowmentEntry) {
   return (

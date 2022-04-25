@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { siteRoutes } from "types/routes";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import Icon from "components/Icons/Icons";
 import TransactionHint from "components/TransactionStatus/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
+import { siteRoutes } from "constants/routes";
 import DappMenu from "./DappMenu";
 import MobileDappNav from "./MobileDappNav";
 

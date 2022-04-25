@@ -1,7 +1,7 @@
 import { VaultMap } from "@types-shared/withdraw";
-import { chainIDs } from "types/chainIDs";
-import { sc } from "types/sc";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 
 //NOTE: remove this hard-coded vaultMap once vault info is inluded in approved_vault_rate_list
 export const vaultMap: VaultMap = {

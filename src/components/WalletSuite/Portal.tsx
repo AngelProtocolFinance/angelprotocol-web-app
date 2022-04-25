@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { appRoutes, siteRoutes } from "types/routes";
 import useWalletContext from "hooks/useWalletContext";
+import { appRoutes, siteRoutes } from "constants/routes";
 
 export default function Portal() {
   const { wallet } = useWalletContext();

@@ -1,8 +1,8 @@
 import { PollStatus } from "@types-server/contracts";
 import { useNavigate } from "react-router-dom";
-import { governRoutes } from "types/routes";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
+import { governRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";
 
 export default function PollCard(props: { poll_id: number }) {

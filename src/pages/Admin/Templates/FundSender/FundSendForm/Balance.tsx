@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";
+import { denoms } from "constants/denoms";
 import { FundSendValues } from "../fundSendSchema";
 
 export default function Balance() {

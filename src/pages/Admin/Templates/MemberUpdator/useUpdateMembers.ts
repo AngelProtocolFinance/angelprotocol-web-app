@@ -1,7 +1,6 @@
 import { Member } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { proposalTypes } from "types/routes";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -13,6 +12,7 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
+import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 

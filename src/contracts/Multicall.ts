@@ -3,11 +3,11 @@ import {
   ContractQueryArgs,
   MultiContractQueryArgs,
 } from "#types-services/terra";
-import { chainIDs } from "types/chainIDs";
-import { sc } from "types/sc";
-import { Airdrops } from "types/server/aws";
+import { Airdrops } from "@types-server/aws";
 import { WalletProxy } from "providers/WalletProvider";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { sc } from "constants/sc";
 import Account from "./Account";
 import Halo from "./Halo";
 import Registrar from "./Registrar";

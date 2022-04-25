@@ -1,7 +1,6 @@
 import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
@@ -13,6 +12,7 @@ import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/denoms";
 import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {

@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { denoms } from "types/denoms";
 import { SchemaShape } from "types/schema";
 import { requiredTokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
+import { denoms } from "constants/denoms";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundSendPayload = {

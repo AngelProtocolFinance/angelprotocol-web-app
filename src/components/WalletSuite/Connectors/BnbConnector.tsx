@@ -1,5 +1,5 @@
+import { Dwindow } from "@types-slice/provider";
 import { RejectBinanceLogin } from "errors/errors";
-import { Dwindow } from "types/slices/provider";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useGetter } from "store/accessors";

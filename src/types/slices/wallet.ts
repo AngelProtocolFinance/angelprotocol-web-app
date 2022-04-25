@@ -1,5 +1,5 @@
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
+import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/denoms";
 
 export enum TerraIdentifiers {
   //watch for this to change in @terra-money/wallet-provider updates

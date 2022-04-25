@@ -1,5 +1,6 @@
 import { MultiContractQueryArgs } from "#types-services/terra";
 import { Dec } from "@terra-money/terra.js";
+import { Airdrops } from "@types-server/aws";
 import {
   ClaimInquiry,
   Holding,
@@ -12,7 +13,6 @@ import {
   VaultFieldIds,
   VaultFieldLimits,
 } from "@types-shared/withdraw";
-import { Airdrops } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { multicallTags, terraTags } from "services/terra/tags";
 import Multicall from "contracts/Multicall";

@@ -5,7 +5,6 @@ import {
 } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { denoms } from "types/denoms";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
@@ -18,6 +17,7 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/denoms";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
