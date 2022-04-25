@@ -1,4 +1,4 @@
-import { govTags, terraTags, userTags } from "types/services/terra";
+import { govTags, terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";

@@ -1,11 +1,11 @@
-import { chainIDs } from "types/chainIDs";
-import { sc } from "types/sc";
-import { Airdrops } from "types/server/aws";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
-} from "types/services/terra";
+} from "#types-services/terra";
+import { chainIDs } from "types/chainIDs";
+import { sc } from "types/sc";
+import { Airdrops } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import Account from "./Account";

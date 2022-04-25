@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 
 export const TCA_TOKEN_KEY = "tca";
-export type State = { tca: string | null };
+type State = { tca: string | null };
 
 const authSlice = createSlice({
   name: "auth",

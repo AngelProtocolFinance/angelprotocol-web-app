@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { StageUpdator } from "@types-slice/transaction";
 import { chainIDs } from "types/chainIDs";
-import { StageUpdator, Step } from "types/slices/transaction";
 import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
@@ -15,16 +15,16 @@ export const sendTerraDonation = createAsyncThunk(
     };
     try {
       if (!args.wallet) {
-        updateStage({ step: Step.error, message: "Wallet is not connected" });
+        updateStage({ step: "error", message: "Wallet is not connected" });
         return;
       }
-      updateStage({ step: Step.submit, message: "Submitting transaction.." });
+      updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const response = await args.wallet.post(args.tx!);
       const chainId = args.wallet.network.chainID as chainIDs;
 
       if (response.success) {
-        updateStage({ step: Step.submit, message: "Saving donation details" });
+        updateStage({ step: "submit", message: "Saving donation details" });
 
         const walletAddress = args.wallet.address;
         const { receiver, currency, amount, split_liq } = args.donateValues;
@@ -42,7 +42,7 @@ export const sendTerraDonation = createAsyncThunk(
         }
 
         updateStage({
-          step: Step.broadcast,
+          step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
           chainId,
@@ -54,7 +54,7 @@ export const sendTerraDonation = createAsyncThunk(
 
         if (!txInfo.code) {
           updateStage({
-            step: Step.success,
+            step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
             chainId,
@@ -64,7 +64,7 @@ export const sendTerraDonation = createAsyncThunk(
           });
         } else {
           updateStage({
-            step: Step.error,
+            step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
             chainId,

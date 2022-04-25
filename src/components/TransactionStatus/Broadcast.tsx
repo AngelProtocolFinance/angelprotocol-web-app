@@ -1,11 +1,8 @@
-import { BroadcastStage, Step } from "types/slices/transaction";
+import { BroadcastStage } from "@types-slice/transaction";
 import Loader from "components/Loader/Loader";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Broadcast(props: BroadcastStage) {
-  if (props.step !== Step.broadcast) {
-    throw new Error("component and stage mismatch");
-  }
   const { message, chainId, txHash } = props;
 
   return (

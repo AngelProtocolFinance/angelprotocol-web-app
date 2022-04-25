@@ -1,3 +1,4 @@
+import { ContractQueryArgs } from "#types-services/terra";
 import { Dec } from "@terra-money/terra.js";
 import {
   GovConfig,
@@ -7,8 +8,8 @@ import {
   Poll,
   Polls,
   QueryRes,
-} from "types/server/contracts";
-import { ContractQueryArgs, govTags, terraTags } from "types/services/terra";
+} from "@types-server/contracts";
+import { govTags, terraTags } from "services/terra/tags";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

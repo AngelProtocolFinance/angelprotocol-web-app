@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { proposalTypes } from "types/routes";
-import { adminTags, terraTags } from "types/services/terra";
 import { ProposalMeta } from "pages/Admin/types";
+import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";

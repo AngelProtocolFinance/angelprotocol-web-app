@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
+import { Vote } from "@types-server/contracts";
+import { PollStatus } from "@types-server/contracts";
 import { useEffect, useState } from "react";
-import { Vote } from "types/server/contracts";
-import { PollStatus } from "types/server/contracts";
 import {
   useGovConfig,
   useGovPoll,
@@ -114,7 +114,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
 
 const placeholder_data: ProcessedPollData = {
   id: 0,
-  status: PollStatus.in_progress,
+  status: "in_progress",
   title: "",
   creator: "",
   amount: "0",

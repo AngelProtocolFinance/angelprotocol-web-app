@@ -1,14 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
 import {
   SenderArgs,
   StageUpdator,
-  Step,
   WithMsg,
   WithTx,
-} from "types/slices/transaction";
+} from "@types-slice/transaction";
+import { chainIDs } from "types/chainIDs";
+import { denoms } from "types/denoms";
 import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
@@ -28,11 +27,11 @@ export const sendTerraTx = createAsyncThunk(
 
     try {
       if (!args.wallet) {
-        updateTx({ step: Step.error, message: "Wallet is not connected" });
+        updateTx({ step: "error", message: "Wallet is not connected" });
         return;
       }
 
-      updateTx({ step: Step.submit, message: "Submitting transaction..." });
+      updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
       const contract = new Contract(args.wallet);
@@ -45,14 +44,14 @@ export const sendTerraTx = createAsyncThunk(
         const feeNum = extractFeeNum(fee);
 
         const state = getState() as RootState;
-        const feeDenom = args.feedDenom || denoms.uusd;
+        const feeDenom = (args.feedDenom as denoms) || denoms.uusd;
         const walletBalanceForFee =
           state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
           0;
 
         if (feeNum > walletBalanceForFee) {
           updateTx({
-            step: Step.error,
+            step: "error",
             message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
           });
           return;
@@ -64,7 +63,7 @@ export const sendTerraTx = createAsyncThunk(
       const chainId = contract.chainID as chainIDs;
 
       updateTx({
-        step: Step.broadcast,
+        step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
         chainId,
@@ -77,7 +76,7 @@ export const sendTerraTx = createAsyncThunk(
 
         if (!txInfo.code) {
           updateTx({
-            step: Step.success,
+            step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
             chainId,
@@ -90,7 +89,7 @@ export const sendTerraTx = createAsyncThunk(
           }
         } else {
           updateTx({
-            step: Step.error,
+            step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
             chainId,
@@ -98,7 +97,7 @@ export const sendTerraTx = createAsyncThunk(
         }
       } else {
         updateTx({
-          step: Step.error,
+          step: "error",
           message: "Transaction failed",
           txHash: response.result.txhash,
           chainId,

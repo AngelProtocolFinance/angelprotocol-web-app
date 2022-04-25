@@ -1,8 +1,8 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { Vote } from "@types-server/contracts";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { denoms } from "types/denoms";
-import { Vote } from "types/server/contracts";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {

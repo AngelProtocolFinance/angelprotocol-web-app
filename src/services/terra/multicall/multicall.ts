@@ -1,23 +1,20 @@
+import { MultiContractQueryArgs } from "#types-services/terra";
 import { Dec } from "@terra-money/terra.js";
-import { Airdrops } from "types/server/aws";
 import {
   ClaimInquiry,
   Holding,
   Holdings,
   QueryRes,
   VaultRateInfo,
-} from "types/server/contracts";
-import {
-  MultiContractQueryArgs,
-  multicallTags,
-  terraTags,
-} from "types/services/terra";
+} from "@types-server/contracts";
 import {
   VaultField,
   VaultFieldIds,
   VaultFieldLimits,
-} from "types/shared/widthdraw";
+} from "@types-shared/withdraw";
+import { Airdrops } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
+import { multicallTags, terraTags } from "services/terra/tags";
 import Multicall from "contracts/Multicall";
 import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
@@ -86,12 +83,12 @@ export const multicall_api = terra.injectEndpoints({
         >(res.query_result);
 
         const vaultLimits: VaultFieldLimits = {
-          [VaultFieldIds.anchor1_amount]: {
+          anchor1_amount: {
             limit: 0,
             addr: "",
             rate: 1,
           },
-          [VaultFieldIds.anchor2_amount]: {
+          anchor2_amount: {
             limit: 0,
             addr: "",
             rate: 1,

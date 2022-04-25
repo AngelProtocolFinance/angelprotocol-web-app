@@ -1,3 +1,4 @@
+import { ContractQueryArgs } from "#types-services/terra";
 import {
   BaseQueryFn,
   createApi,
@@ -5,13 +6,8 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { Coin, Dec } from "@terra-money/terra.js";
-import { HaloBalance, QueryRes, TokenInfo } from "types/server/contracts";
-import {
-  ContractQueryArgs,
-  haloTags,
-  terraTags,
-  userTags,
-} from "types/services/terra";
+import { HaloBalance, QueryRes, TokenInfo } from "@types-server/contracts";
+import { haloTags, terraTags, userTags } from "services/terra/tags";
 import { RootState } from "store/store";
 import { terra_lcds } from "constants/urls";
 import contract_querier from "./contract_querier";

@@ -1,8 +1,8 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { AmountInfo } from "@types-shared/withdraw";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { proposalTypes } from "types/routes";
-import { AmountInfo, VaultFieldIds } from "types/shared/widthdraw";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
 import {
@@ -40,8 +40,8 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
 
-  const anchor1_amount = watch(VaultFieldIds.anchor1_amount) || "0";
-  const anchor2_amount = watch(VaultFieldIds.anchor2_amount) || "0";
+  const anchor1_amount = watch("anchor1_amount") || "0";
+  const anchor2_amount = watch("anchor2_amount") || "0";
 
   const concatenatedAmounts = [anchor1_amount, anchor2_amount].join(SEPARATOR);
 
@@ -76,11 +76,11 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //NOTE: change this pre-construction on addition on future vaults
         const fieldInputs: AmountInfo[] = [
           {
-            fieldId: VaultFieldIds.anchor1_amount,
+            fieldId: "anchor1_amount",
             amount: new Dec(debAnchor1Amount || "0"),
           },
           {
-            fieldId: VaultFieldIds.anchor2_amount,
+            fieldId: "anchor2_amount",
             amount: new Dec(debAnchor2Amount || "0"),
           },
         ];

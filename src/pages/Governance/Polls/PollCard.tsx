@@ -1,6 +1,6 @@
+import { PollStatus } from "@types-server/contracts";
 import { useNavigate } from "react-router-dom";
 import { governRoutes } from "types/routes";
-import { PollStatus } from "types/server/contracts";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";
 import usePollDetails from "../usePollDetails";
@@ -21,7 +21,7 @@ export default function PollCard(props: { poll_id: number }) {
       <div className="flex justify-between text-sm mb-4">
         <p>ID: {details.id}</p>
         <p className="text-white bg-white/10 px-3 pt-1.5 pb-1 rounded-md uppercase font-heading text-2xs">
-          {details.vote_ended && details.status === PollStatus.in_progress
+          {details.vote_ended && details.status === "in_progress"
             ? "vote period ended"
             : details.status.replace("_", " ")}
         </p>

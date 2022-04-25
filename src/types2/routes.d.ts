@@ -52,7 +52,7 @@ declare module "@types-routes" {
     proposal_types = "proposal-types",
   }
 
-  const enum proposalTypes {
+  enum proposalTypes {
     index = "",
     //index fund
     indexFund_allianceEdits = "indexfund-alliance-edit",

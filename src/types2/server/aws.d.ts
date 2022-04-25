@@ -1,6 +1,4 @@
 declare module "@types-server/aws" {
-  import { chainIDs } from "@types-chainIDs";
-
   /**result wrapper */
   export interface AWSQueryRes<T> {
     Count: number;
@@ -32,7 +30,7 @@ declare module "@types-server/aws" {
     amount: number; // 14.251521
     app_used: string; // "restore-earth"
     transaction_type: string; // "deposit"
-    chain_id?: chainIDs;
+    chain_id?: string;
   }
 
   //payloads

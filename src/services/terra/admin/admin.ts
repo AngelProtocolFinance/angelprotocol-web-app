@@ -1,11 +1,12 @@
+import { ContractQueryArgs } from "#types-services/terra";
 import {
   AdminVoteInfo,
   CW3Config,
   Member,
   Proposal,
   QueryRes,
-} from "types/server/contracts";
-import { ContractQueryArgs, adminTags, terraTags } from "types/services/terra";
+} from "@types-server/contracts";
+import { adminTags, terraTags } from "services/terra/tags";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

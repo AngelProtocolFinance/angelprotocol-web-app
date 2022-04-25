@@ -1,10 +1,4 @@
-import {
-  GovConfig,
-  GovStaker,
-  GovState,
-  Poll,
-  PollStatus,
-} from "types/server/contracts";
+import { GovConfig, GovStaker, GovState, Poll } from "@types-server/contracts";
 
 export const staker: GovStaker = {
   balance: "0",
@@ -14,7 +8,7 @@ export const staker: GovStaker = {
 export const poll: Poll = {
   id: 0,
   creator: "",
-  status: PollStatus.in_progress,
+  status: "in_progress",
   end_height: 0,
   title: "",
   description: ".",

@@ -1,9 +1,9 @@
 import { AWSQueryRes } from "types/server/aws";
-import { adminTags, awsTags } from "types/services/aws";
 import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
+import { adminTags, awsTags } from "services/aws/tags";
 import { aws } from "./aws";
 
 const registration_api = aws.injectEndpoints({

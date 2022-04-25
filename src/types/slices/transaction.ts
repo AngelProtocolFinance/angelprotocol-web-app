@@ -1,20 +1,15 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import { chainIDs } from "types/chainIDs";
-import { denoms } from "types/denoms";
-import { awsTags } from "types/services/aws";
-import { terraTags } from "types/services/terra";
 import { WalletProxy } from "providers/WalletProvider/types";
 
-export enum Step {
-  form = "form",
-  submit = "submit",
-  broadcast = "broadcast",
-  success = "success",
-  error = "error",
-  receipt = "receipt",
-}
+export type Step =
+  | "form"
+  | "submit"
+  | "broadcast"
+  | "success"
+  | "error"
+  | "receipt";
 
 export type FormError =
   | {
@@ -24,7 +19,7 @@ export type FormError =
   | string;
 
 export type InitialStage = {
-  step: Step.form;
+  step: "form";
   message?: never;
   txHash?: never;
   chainId?: never;
@@ -32,7 +27,7 @@ export type InitialStage = {
 };
 
 export type SubmitStage = {
-  step: Step.submit;
+  step: "submit";
   message: string;
   txHash?: never;
   chainId?: never;
@@ -40,36 +35,36 @@ export type SubmitStage = {
 };
 
 export type BroadcastStage = {
-  step: Step.broadcast;
+  step: "broadcast";
   message: string;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
   details?: never;
 };
 
 export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
-  step: Step.success;
+  step: "success";
   message: string;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
 };
 
 export type ReceiptStage = {
-  step: Step.receipt;
+  step: "receipt";
   message?: never;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
 };
 
 export type ErrorStage = {
-  step: Step.error;
+  step: "error";
   message: string;
   txHash?: string;
-  chainId?: chainIDs;
+  chainId?: string;
   details?: never;
 };
 
@@ -87,8 +82,8 @@ export type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
 
 export type SenderArgs = {
   wallet: WalletProxy | undefined;
-  tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
+  tagPayloads?: PayloadAction<TagDescription<string>[], string>[];
   successMessage?: string;
   successLink?: SuccessLink;
-  feedDenom?: denoms;
+  feedDenom?: string;
 };

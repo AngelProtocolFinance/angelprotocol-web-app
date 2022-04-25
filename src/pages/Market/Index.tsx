@@ -1,4 +1,4 @@
-import { EndowmentEntry } from "types/server/contracts";
+import { EndowmentEntry } from "@types-server/contracts";
 import Icon, { IconTypes } from "components/Icons/Icons";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import CharityCard from "./CharityCard";

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { adminRoutes, appRoutes, siteRoutes } from "types/routes";
-import { multicallTags, terraTags, userTags } from "types/services/terra";
+import { multicallTags, terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";

@@ -2,7 +2,7 @@ import {
   VaultField,
   VaultFieldIds,
   VaultFieldLimits,
-} from "types/shared/widthdraw";
+} from "@types-shared/withdraw";
 
 type WithdrawMeta = { total_ust: number; total_receive: number };
 export type WithdrawResource = {

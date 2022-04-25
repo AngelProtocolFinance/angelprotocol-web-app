@@ -1,12 +1,4 @@
-import { ReactNode, useMemo } from "react";
-import {
-  BroadcastStage,
-  ErrorStage,
-  ReceiptStage,
-  Step,
-  SubmitStage,
-  SuccessStage,
-} from "types/slices/transaction";
+import { useMemo } from "react";
 import { setStage } from "slices/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
@@ -22,29 +14,32 @@ export default function TransactionPrompt() {
   const stage = useGetter((state) => state.transaction.stage);
   const dispatch = useSetter();
   const { hideModal } = useSetModal();
-  const prompts: Prompts = useMemo(
-    () => ({
-      [Step.submit]: <Submit {...(stage as SubmitStage)} />,
-      [Step.broadcast]: <Broadcast {...(stage as BroadcastStage)} />,
-      [Step.success]: <Success {...(stage as SuccessStage)} />,
-      [Step.error]: <ErrPop {...(stage as ErrorStage)} />,
-      //TODO: remove receipt to transactionPrompt to its own page
-      [Step.receipt]: (
-        <Receipter {...(stage as ReceiptStage)}>
-          <ReceiptForm />
-        </Receipter>
-      ),
-    }),
-    [stage]
-  );
+  const prompt = useMemo(() => {
+    switch (stage.step) {
+      case "submit":
+        return <Submit {...stage} />;
+      case "broadcast":
+        return <Broadcast {...stage} />;
+      case "success":
+        return <Success {...stage} />;
+      case "error":
+        return <ErrPop {...stage} />;
+      case "receipt":
+        return (
+          <Receipter {...stage}>
+            <ReceiptForm />
+          </Receipter>
+        );
+    }
+  }, [stage]);
 
   function closePrompt() {
     if (
-      stage.step === Step.success ||
-      stage.step === Step.receipt ||
-      stage.step === Step.error
+      stage.step === "success" ||
+      stage.step === "receipt" ||
+      stage.step === "error"
     ) {
-      dispatch(setStage({ step: Step.form }));
+      dispatch(setStage({ step: "form" }));
       hideModal();
     } else {
       hideModal();
@@ -60,9 +55,7 @@ export default function TransactionPrompt() {
         <Icon type="Close" size={25} />
       </button>
 
-      {prompts[stage.step]}
+      {prompt}
     </div>
   );
 }
-
-type Prompts = { [key in Step]?: ReactNode };

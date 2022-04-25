@@ -1,4 +1,4 @@
-import { FundDetails } from "types/server/contracts";
+import { FundDetails } from "@types-server/contracts";
 import toCurrency from "helpers/toCurrency";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";

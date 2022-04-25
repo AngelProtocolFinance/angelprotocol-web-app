@@ -1,5 +1,5 @@
+import { PollStatus } from "@types-server/contracts";
 import { ReactNode } from "react";
-import { PollStatus } from "types/server/contracts";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 import useVoter from "components/Transactors/Voter/useVoter";
 import useWalletContext from "hooks/useWalletContext";
@@ -14,7 +14,7 @@ export default function PollAction(props: { poll_id: number }) {
   const W = !!wallet;
   const V = is_voted;
   const E = details.vote_ended;
-  const P = details.status !== PollStatus.in_progress;
+  const P = details.status !== "in_progress";
   const C = details.creator === wallet?.address;
   let node: ReactNode = null;
 

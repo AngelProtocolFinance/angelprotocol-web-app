@@ -1,10 +1,7 @@
-import { Dec } from "@terra-money/terra.js";
-
-declare module "@types-shared/widthdraw" {
-  enum VaultFieldIds {
-    anchor1_amount = "anchor1_amount",
-    anchor2_amount = "anchor2_amount",
-  } // others
+declare module "@types-shared/withdraw" {
+  import { Dec } from "@terra-money/terra.js";
+  type VaultFieldIds = "anchor1_amount" | "anchor2_amount";
+  // others
   type VaultInfo = {
     name: string;
     fieldId: VaultFieldIds;

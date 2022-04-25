@@ -1,4 +1,4 @@
-import { ContractQueryArgs } from "types/services/terra";
+import { ContractQueryArgs } from "#types-services/terra";
 
 export default function contract_querier(arg: ContractQueryArgs) {
   const query_msg = Buffer.from(JSON.stringify(arg.msg)).toString("base64");

@@ -1,4 +1,4 @@
-import { Profile } from "types/server/contracts";
+import { Profile } from "@types-server/contracts";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import CharityNav from "./CharityNav";
 import CharityTabs from "./CharityTabs/CharityTabs";

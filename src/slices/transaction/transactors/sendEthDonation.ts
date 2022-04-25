@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { StageUpdator } from "@types-slice/transaction";
 import { ethers } from "ethers";
 import { chainIDs } from "types/chainIDs";
 import { Dwindow, Providers } from "types/slices/provider";
-import { StageUpdator, Step } from "types/slices/transaction";
 import { RootState } from "store/store";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
@@ -20,7 +20,7 @@ export const sendEthDonation = createAsyncThunk(
       const dwindow = window as Dwindow;
       const state = getState() as RootState;
       const activeProvider = state.provider.active;
-      updateTx({ step: Step.submit, message: "Submitting transaction.." });
+      updateTx({ step: "submit", message: "Submitting transaction.." });
       let provider: ethers.providers.Web3Provider;
 
       if (activeProvider === Providers.ethereum) {
@@ -37,7 +37,7 @@ export const sendEthDonation = createAsyncThunk(
       const chainId = `${chainNum}` as chainIDs;
       const response = await signer.sendTransaction(args.tx!);
 
-      updateTx({ step: Step.submit, message: "Saving donation info.." });
+      updateTx({ step: "submit", message: "Saving donation info.." });
       const { receiver, currency, amount, split_liq } = args.donateValues;
       if (typeof receiver !== "undefined") {
         await logDonation(
@@ -51,7 +51,7 @@ export const sendEthDonation = createAsyncThunk(
         );
       }
       updateTx({
-        step: Step.success,
+        step: "success",
         message: "Thank you for your donation!",
         txHash: response.hash,
         chainId,

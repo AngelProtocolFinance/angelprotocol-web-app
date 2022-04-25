@@ -2,9 +2,9 @@
 import {
   EndowmentStatusNum,
   StatusChangePayload,
-} from "types/server/contracts";
-import { adminTags, awsTags } from "types/services/aws";
+} from "@types-server/contracts";
 import { aws } from "services/aws/aws";
+import { adminTags, awsTags } from "services/aws/tags";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
 import { useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";

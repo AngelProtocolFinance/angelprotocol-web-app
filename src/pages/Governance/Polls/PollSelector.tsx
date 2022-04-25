@@ -1,5 +1,4 @@
 import React from "react";
-import { PollStatus } from "types/server/contracts";
 import { PollFilterOptions } from "./Polls";
 
 export default function PollSelector(props: {
@@ -33,11 +32,10 @@ export default function PollSelector(props: {
 
 const pollFilterOptions: { [key in PollFilterOptions]: string } = {
   all: "all",
-  [PollStatus.executed]: "executed",
-  [PollStatus.executed]: "executed",
-  [PollStatus.expired]: "expired",
-  [PollStatus.failed]: "failed",
-  [PollStatus.in_progress]: "in progress",
-  [PollStatus.passed]: "passed",
-  [PollStatus.rejected]: "rejected",
+  executed: "executed",
+  expired: "expired",
+  failed: "failed",
+  in_progress: "in progress",
+  passed: "passed",
+  rejected: "rejected",
 };

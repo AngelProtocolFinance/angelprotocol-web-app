@@ -1,10 +1,11 @@
+import { ContractQueryArgs } from "#types-services/terra";
 import {
   CategorizedEndowments,
   EndowmentEntry,
   QueryRes,
   RegistrarConfig,
-} from "types/server/contracts";
-import { ContractQueryArgs, terraTags } from "types/services/terra";
+} from "@types-server/contracts";
+import { terraTags } from "services/terra/tags";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

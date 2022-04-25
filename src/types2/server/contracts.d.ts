@@ -1,6 +1,5 @@
-import { Coin } from "@terra-money/terra.js";
-
-declare module "@types-server/contract" {
+declare module "@types-server/contracts" {
+  import { Coin } from "@terra-money/terra.js";
   /** _wrapper */
   interface QueryRes<T> {
     query_result: T;
@@ -151,14 +150,13 @@ declare module "@types-server/contract" {
   type CWContracts = "apTeam" | { cw3?: string; cw4?: string };
 
   /** _governance */
-  enum PollStatus {
-    in_progress = "in_progress",
-    passed = "passed",
-    rejected = "rejected",
-    executed = "executed",
-    expired = "expired", //deprecated
-    failed = "failed",
-  }
+  type PollStatus =
+    | "in_progress"
+    | "passed"
+    | "rejected"
+    | "executed"
+    | "expired"
+    | "failed";
 
   type Poll = {
     id: number;

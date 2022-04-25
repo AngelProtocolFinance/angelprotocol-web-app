@@ -1,5 +1,5 @@
+import { AdminVoteInfo, Proposal, Vote } from "@types-server/contracts";
 import { useMemo } from "react";
-import { AdminVoteInfo, Proposal, Vote } from "types/server/contracts";
 import { useVoteList } from "services/terra/admin/queriers";
 import { useLatestBlock } from "services/terra/queriers";
 import useWalletContext from "hooks/useWalletContext";

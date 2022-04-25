@@ -1,4 +1,4 @@
-import { StageUpdator } from "types/slices/transaction";
+import { StageUpdator } from "@types-slice/transaction";
 import { useSetter } from "store/accessors";
 import { setStage } from "./transactionSlice";
 

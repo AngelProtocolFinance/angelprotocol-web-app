@@ -1,5 +1,5 @@
+import { ReceiptStage } from "@types-slice/transaction";
 import { useState } from "react";
-import { ReceiptStage, Step } from "types/slices/transaction";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import useTxUpdator from "slices/transaction/updators";
 import { useGetter } from "store/accessors";
@@ -15,7 +15,7 @@ export default function useReceiptForm() {
   const { showModal } = useSetModal();
 
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
-  const fromDonor = stage.step === Step.form || !chainId || !txHash;
+  const fromDonor = stage.step === "form" || !chainId || !txHash;
 
   const submitHandler = async (data: ReceipterValues) => {
     setProcessing(true);
@@ -24,7 +24,7 @@ export default function useReceiptForm() {
 
     if (response.data) {
       updateTx({
-        step: Step.success,
+        step: "success",
         message: `Receipt request ${
           fromDonor ? "changes were applied" : "successfully sent"
         }, Your receipt will be sent to your email address`,
@@ -34,7 +34,7 @@ export default function useReceiptForm() {
       fromDonor && showModal(TransactionPrompt, {});
     } else {
       updateTx({
-        step: Step.error,
+        step: "error",
         message: `Error processing your receipt ${fromDonor && "update"}`,
         txHash,
         chainId,

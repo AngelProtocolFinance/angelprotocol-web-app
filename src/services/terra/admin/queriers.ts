@@ -1,10 +1,10 @@
-import { chainIDs } from "types/chainIDs";
 import {
   CWContracts,
   PageOptions,
   Proposal,
   VotesPageOptions,
-} from "types/server/contracts";
+} from "@types-server/contracts";
+import { chainIDs } from "types/chainIDs";
 import {
   ProposalGroupOptions,
   ProposalStatusOptions,

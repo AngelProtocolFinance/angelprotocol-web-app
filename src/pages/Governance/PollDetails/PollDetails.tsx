@@ -1,6 +1,6 @@
+import { PollStatus } from "@types-server/contracts";
 import { Link, useParams } from "react-router-dom";
 import { appRoutes, siteRoutes } from "types/routes";
-import { PollStatus } from "types/server/contracts";
 import Icon from "components/Icons/Icons";
 import idParamToNumber from "helpers/idParamToNum";
 import usePollDetails from "../usePollDetails";
@@ -29,7 +29,7 @@ export default function PollDetails() {
               } mr-1`}
             ></span>
             <span className={`${statusColors[details.status].text}`}>
-              {details.vote_ended && details.status === PollStatus.in_progress
+              {details.vote_ended && details.status === "in_progress"
                 ? "vote period ended"
                 : details.status.replace("_", " ")}
             </span>
@@ -93,12 +93,12 @@ export default function PollDetails() {
 }
 
 const statusColors: { [key in PollStatus]: { bg: string; text: string } } = {
-  [PollStatus.executed]: { bg: "bg-green-400", text: "text-green-400" },
-  [PollStatus.expired]: { bg: "bg-white", text: "text-white-grey" },
-  [PollStatus.failed]: { bg: "bg-red-300", text: "text-red-300" },
-  [PollStatus.in_progress]: { bg: "bg-white", text: "text-white-grey" },
-  [PollStatus.passed]: { bg: "bg-green-400", text: "text-green-400" },
-  [PollStatus.rejected]: { bg: "bg-red-300", text: "text-red-300" },
+  executed: { bg: "bg-green-400", text: "text-green-400" },
+  expired: { bg: "bg-white", text: "text-white-grey" },
+  failed: { bg: "bg-red-300", text: "text-red-300" },
+  in_progress: { bg: "bg-white", text: "text-white-grey" },
+  passed: { bg: "bg-green-400", text: "text-green-400" },
+  rejected: { bg: "bg-red-300", text: "text-red-300" },
 };
 
 function Count(props: {

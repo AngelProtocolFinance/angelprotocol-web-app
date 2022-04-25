@@ -1,6 +1,6 @@
+import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import React from "react";
 import { IconType } from "react-icons";
-import { UpdateProfilePayload as UP } from "types/server/contracts";
 import { getIcon } from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
 import useImageEditor from "hooks/useImageEditor";

@@ -1,5 +1,4 @@
 import { IconType } from "react-icons";
-import { Step } from "types/slices/transaction";
 import { useGetter } from "store/accessors";
 import { getIcon } from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
@@ -9,16 +8,16 @@ export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
 
   switch (step) {
-    case Step.error:
+    case "error":
       return (
         <StatusButton Icon={getIcon("Exclamation")} iconClass="text-red-300" />
       );
-    case Step.broadcast:
-    case Step.submit:
+    case "broadcast":
+    case "submit":
       return (
         <StatusButton Icon={getIcon("Loading")} iconClass="animate-spin" />
       );
-    case Step.success:
+    case "success":
       return (
         <StatusButton Icon={getIcon("Check")} iconClass="text-green-300" />
       );
