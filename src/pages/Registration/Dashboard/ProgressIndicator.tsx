@@ -23,7 +23,7 @@ export default function ProgressIndicator(props: {}) {
     <div className="w-full mb-5">
       <div className="flex justify-between items-center mb-2">
         <p>
-          Step {completedCount} of {progress.length}
+          {completedCount} of {progress.length} Steps
         </p>
         <p>{percent}%</p>
       </div>
