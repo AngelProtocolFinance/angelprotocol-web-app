@@ -20,6 +20,6 @@ export default function getTxUrl(chainID: chainIDs, txhash: string) {
     case chainIDs.bnb_main:
       return `https://bscscan.com/tx/${txhash}`;
     default:
-      return `https://notfoundterra.com/home`;
+      return TERRA_FINDER;
   }
 }
