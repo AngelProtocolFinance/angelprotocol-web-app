@@ -1,5 +1,5 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
 import { useBalances } from "services/terra/queriers";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -38,11 +38,9 @@ export default function useSubmit() {
       try {
         const endowmentContract = stage
           .txInfo!.logs![0].events.find(
-            (event) => event.type == "instantiate_contract"
+            (event) => event.type === "instantiate_contract"
           )!
-          .attributes.find(
-            (attribute) => attribute.key == "contract_address"
-          )!.value;
+          .attributes.find((attr) => attr.key === "contract_address")!.value;
 
         await submitToAws({ PK: charity.ContactPerson.PK!, endowmentContract });
 
@@ -59,7 +57,8 @@ export default function useSubmit() {
     } else if (stage.step === Step.success) {
       handleSuccess();
     }
-  }, [stage, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, dispatch, submitToAws]);
 
   const submit = useCallback(
     async (charity: CharityData) => {
