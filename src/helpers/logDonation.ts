@@ -1,6 +1,5 @@
 import { TxLogPayload } from "services/apes/types";
-import { UserTypes } from "services/user/types";
-import createAuthToken from "helpers/createAuthToken";
+import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { apes_endpoint } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {
