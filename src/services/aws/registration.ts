@@ -10,7 +10,6 @@ import {
   Charity,
   ContactDetailsData,
   ContactDetailsRequest,
-  UpdateApplication,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -88,13 +87,13 @@ const registration_api = aws.injectEndpoints({
       UpdateDocumentationResult,
       UpdateDocumentationData
     >({
-      query: (data) => {
+      query: ({ PK, body }) => {
         return {
           url: "registration",
           method: "PUT",
-          params: { uuid: data.PK },
+          params: { uuid: PK },
           headers,
-          body: data.body,
+          body,
         };
       },
     }),
