@@ -2,6 +2,7 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
+import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { admin, tags } from "./tags";
 import {
@@ -16,14 +17,20 @@ import {
   UpdateDocumentationResult,
 } from "./types";
 
+// need this mostly for /registration endpoints
+const headers = {
+  authorization: createAuthToken(UserTypes.CHARITY_OWNER),
+};
+
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
       query: (uuid) => {
         return {
           url: "registration",
-          params: { uuid: uuid },
           method: "GET",
+          params: { uuid: uuid },
+          headers,
         };
       },
     }),
@@ -34,6 +41,7 @@ const registration_api = aws.injectEndpoints({
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
+        headers,
         body,
       }),
     }),
@@ -43,6 +51,7 @@ const registration_api = aws.injectEndpoints({
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
           method: "Get",
+          headers,
         };
       },
       transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
@@ -55,11 +64,13 @@ const registration_api = aws.injectEndpoints({
             url: "registration/list",
             params: { regStatus: data.regStatus },
             method: "GET",
+            headers,
           };
         } else {
           return {
             url: "registration/list",
             method: "GET",
+            headers,
           };
         }
       },
@@ -70,8 +81,9 @@ const registration_api = aws.injectEndpoints({
       query: (data) => {
         return {
           url: "registration/build-email",
-          params: { uuid: data.uuid, type: data.type },
           method: "POST",
+          params: { uuid: data.uuid, type: data.type },
+          headers,
           body: data.body,
         };
       },
@@ -81,8 +93,9 @@ const registration_api = aws.injectEndpoints({
       query: (data) => {
         return {
           url: "registration",
-          params: { uuid: data.PK },
           method: "PUT",
+          params: { uuid: data.PK },
+          headers,
           body: data,
         };
       },
@@ -94,8 +107,9 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: PK },
           method: "PUT",
+          params: { uuid: PK },
+          headers,
           body,
         };
       },
@@ -107,8 +121,9 @@ const registration_api = aws.injectEndpoints({
       query: (data) => {
         return {
           url: "registration",
-          params: { uuid: data.PK },
           method: "PUT",
+          params: { uuid: data.PK },
+          headers,
           body: data.body,
         };
       },
@@ -120,8 +135,9 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: PK },
           method: "PUT",
+          params: { uuid: PK },
+          headers,
           body,
         };
       },
