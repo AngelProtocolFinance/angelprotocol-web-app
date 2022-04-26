@@ -1,10 +1,9 @@
-import { FileObject } from "services/aws/types";
-import { CharityData } from "../store";
+import { Charity, FileObject } from "services/aws/types";
 
 const isString = (data: string | FileObject) => typeof data === "string";
 
 export default function getRegistrationState(
-  charity: CharityData
+  charity: Charity
 ): RegistrationState {
   const logo = isString(charity.Metadata.CharityLogo)
     ? charity.Metadata.CharityLogo
@@ -32,7 +31,7 @@ export default function getRegistrationState(
   };
 }
 
-function getStepThree(charity: CharityData): DocumentationStep {
+function getStepThree(charity: Charity): DocumentationStep {
   const ProofOfIdentity = isString(charity.Registration.ProofOfIdentity)
     ? charity.Registration.ProofOfIdentity
     : (charity.Registration.ProofOfIdentity as FileObject)?.sourceUrl;

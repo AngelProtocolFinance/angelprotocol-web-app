@@ -2,6 +2,7 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
+import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { admin, tags } from "./tags";
 import {
@@ -9,12 +10,15 @@ import {
   Charity,
   ContactDetailsData,
   ContactDetailsRequest,
-  UpdateApplication,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "./types";
+
+const headers = {
+  authorization: createAuthToken(UserTypes.CHARITY_OWNER),
+};
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -22,8 +26,9 @@ const registration_api = aws.injectEndpoints({
       query: (uuid) => {
         return {
           url: "registration",
-          params: { uuid: uuid },
           method: "GET",
+          params: { uuid: uuid },
+          headers,
         };
       },
     }),
@@ -34,6 +39,7 @@ const registration_api = aws.injectEndpoints({
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
+        headers,
         body,
       }),
     }),
@@ -43,49 +49,24 @@ const registration_api = aws.injectEndpoints({
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
           method: "Get",
+          headers,
         };
       },
       transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
         response.Items,
     }),
-    getRegisteredCharities: builder.mutation<any, any>({
-      query: (data) => {
-        if (data) {
-          return {
-            url: "registration/list",
-            params: { regStatus: data.regStatus },
-            method: "GET",
-          };
-        } else {
-          return {
-            url: "registration/list",
-            method: "GET",
-          };
-        }
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
-      query: (data) => {
+      query: ({ uuid, type, body }) => {
         return {
           url: "registration/build-email",
-          params: { uuid: data.uuid, type: data.type },
           method: "POST",
-          body: data.body,
+          params: { uuid, type },
+          headers,
+          body,
         };
       },
       transformResponse: (response: { data: any }) => response,
-    }),
-    updateCharityApplication: builder.mutation<any, UpdateApplication>({
-      query: (data) => {
-        return {
-          url: "registration",
-          params: { uuid: data.PK },
-          method: "PUT",
-          body: data,
-        };
-      },
     }),
     updateCharityMetadata: builder.mutation<
       UpdateCharityMetadataResult,
@@ -94,8 +75,9 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: PK },
           method: "PUT",
+          params: { uuid: PK },
+          headers,
           body,
         };
       },
@@ -104,12 +86,13 @@ const registration_api = aws.injectEndpoints({
       UpdateDocumentationResult,
       UpdateDocumentationData
     >({
-      query: (data) => {
+      query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: data.PK },
           method: "PUT",
-          body: data.body,
+          params: { uuid: PK },
+          headers,
+          body,
         };
       },
     }),
@@ -120,8 +103,9 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: PK },
           method: "PUT",
+          params: { uuid: PK },
+          headers,
           body,
         };
       },
@@ -132,9 +116,7 @@ export const {
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
-  useGetRegisteredCharitiesMutation,
   useRequestEmailMutation,
-  useUpdateCharityApplicationMutation,
   useUpdateCharityMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,

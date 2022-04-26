@@ -1,15 +1,10 @@
 import { Charity, Metadata, Registration } from "services/aws/types";
-import { CharityData } from "./store";
 
-export default function createCharityData(
-  jwtData: Charity,
-  token: string
-): CharityData {
+export default function createCharity(jwtData: Charity): Charity {
   return {
     ContactPerson: { ...jwtData.ContactPerson },
     Metadata: getMetadata(jwtData),
     Registration: getRegistration(jwtData),
-    token: token,
   };
 }
 

@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { Charity } from "services/aws/types";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
@@ -9,12 +10,11 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
-import { CharityData } from "../../store";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
-type Props = { charity: CharityData };
+type Props = { charity: Charity };
 
 export default function ContactDetailsForm({ charity }: Props) {
   // 'orgRole' in the form changes automatically, but we need this state setter
