@@ -1,4 +1,5 @@
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { useGetTVLQuery } from "services/flipside/overview";
 import Figure from "../Governance/Figure";
 
 const data = [
@@ -47,6 +48,10 @@ const data = [
 ];
 
 export default function Dashboard() {
+  const { data: TVLData } = useGetTVLQuery("endowmentsAPI");
+
+  const totalValueLocked = TVLData?.filter((d: any) => d.type === "Total");
+
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
@@ -63,25 +68,30 @@ export default function Dashboard() {
         />
       </div>
       <ResponsiveContainer height="100%" width="100%">
-        <LineChart height={300} data={data}>
-          <XAxis dataKey="name" />
-          {/* <YAxis /> */}
-          {/* <CartesianGrid stroke="#eee" strokeDasharray="5 5" /> */}
-          {/* <Line
+        {!totalValueLocked || totalValueLocked.length === 0 ? (
+          <></>
+        ) : (
+          <LineChart height={300} data={totalValueLocked}>
+            <XAxis dataKey="date" />
+            {/* <YAxis /> */}
+            {/* <CartesianGrid stroke="#eee" strokeDasharray="5 5" /> */}
+            {/* <Line
             type="monotone"
             dataKey="uv"
             stroke="#8884d8"
             strokeWidth={3}
             className="shadow-xl"
           /> */}
-          <Line
-            type="monotone"
-            dataKey="pv"
-            stroke="#82ca9d"
-            strokeWidth={3}
-            className="shadow-xl"
-          />
-        </LineChart>
+            <Line
+              dot={false}
+              type="monotone"
+              dataKey="value"
+              stroke="#82ca9d"
+              strokeWidth={3}
+              className="shadow-xl"
+            />
+          </LineChart>
+        )}
       </ResponsiveContainer>
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
         HALO Token

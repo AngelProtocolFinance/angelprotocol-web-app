@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { aws } from "services/aws/aws";
 import { terra } from "services/terra/terra";
+import { endowmentsAPI } from "services/flipside/overview";
 import { apes } from "services/apes/apes";
 import userReducer from "../services/user/userSlice";
 import chainReducer from "../services/chain/chainSlice";
@@ -20,6 +21,7 @@ export const store = configureStore({
     [aws.reducerPath]: aws.reducer,
     [terra.reducerPath]: terra.reducer,
     [apes.reducerPath]: apes.reducer,
+    [endowmentsAPI.reducerPath]: endowmentsAPI.reducer,
     //auth: authReducer,
     //future: futureReducer,
   },
@@ -28,6 +30,7 @@ export const store = configureStore({
       aws.middleware,
       terra.middleware,
       apes.middleware,
+      endowmentsAPI.middleware,
     ]),
 });
 export type RootState = ReturnType<typeof store.getState>;
