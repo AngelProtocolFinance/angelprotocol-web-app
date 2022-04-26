@@ -2,9 +2,11 @@ import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { FileObject, UpdateDocumentationResult } from "services/aws/types";
+import { UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
+import uploadToIpfs from "helpers/uploadToIpfs";
+import { Folders } from "constants/folders";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
@@ -30,7 +32,7 @@ export default function useUpload() {
 
   const upload = useCallback(
     async (values: FormValues) => {
-      const uploadBody = await getUploadBody(values);
+      const uploadBody = await getUploadUrls(values);
 
       const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
@@ -52,14 +54,24 @@ export default function useUpload() {
   return { upload, isSuccess };
 }
 
-async function getUploadBody(values: FormValues) {
-  const poiPromise = readFileToDataUrl(values.proofOfIdentity);
-  const porPromise = readFileToDataUrl(values.proofOfRegistration);
+async function getUploadUrls(values: FormValues) {
+  const poiPromise = uploadToIpfs(
+    values.proofOfIdentity as FileWrapper,
+    Folders.ProofOfIdentity
+  );
+  const porPromise = uploadToIpfs(
+    values.proofOfRegistration as FileWrapper,
+    Folders.ProofOfRegistration
+  );
   const fsPromise = Promise.all(
-    values.financialStatements.map((x) => readFileToDataUrl(x))
+    values.financialStatements.map((x) =>
+      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+    )
   );
   const afrPromise = Promise.all(
-    values.auditedFinancialReports.map((x) => readFileToDataUrl(x))
+    values.auditedFinancialReports.map((x) =>
+      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+    )
   );
 
   const [
@@ -78,22 +90,3 @@ async function getUploadBody(values: FormValues) {
     AuditedFinancialReports,
   };
 }
-
-const readFileToDataUrl = (fileWrapper: FileWrapper) =>
-  new Promise<FileObject>((resolve, reject) => {
-    if (!fileWrapper.file) {
-      return resolve({
-        name: fileWrapper.name,
-        sourceUrl: fileWrapper.sourceUrl,
-      });
-    }
-
-    const reader = new FileReader();
-    reader.onerror = (error) => reject(error);
-    reader.onload = (e: ProgressEvent<FileReader>) =>
-      resolve({
-        name: fileWrapper.name,
-        dataUrl: e.target!.result as string,
-      });
-    reader.readAsDataURL(fileWrapper.file as Blob);
-  });

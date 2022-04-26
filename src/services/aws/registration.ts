@@ -91,12 +91,12 @@ const registration_api = aws.injectEndpoints({
       UpdateCharityMetadataResult,
       UpdateCharityMetadataData
     >({
-      query: (data) => {
+      query: ({ PK, body }) => {
         return {
           url: "registration",
-          params: { uuid: data.PK },
+          params: { uuid: PK },
           method: "PUT",
-          body: data.body,
+          body,
         };
       },
     }),
