@@ -57,25 +57,6 @@ const registration_api = aws.injectEndpoints({
       transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
         response.Items,
     }),
-    getRegisteredCharities: builder.mutation<any, any>({
-      query: (data) => {
-        if (data) {
-          return {
-            url: "registration/list",
-            params: { regStatus: data.regStatus },
-            method: "GET",
-            headers,
-          };
-        } else {
-          return {
-            url: "registration/list",
-            method: "GET",
-            headers,
-          };
-        }
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
       query: (data) => {
@@ -148,7 +129,6 @@ export const {
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
-  useGetRegisteredCharitiesMutation,
   useRequestEmailMutation,
   useUpdateCharityApplicationMutation,
   useUpdateCharityMetadataMutation,
