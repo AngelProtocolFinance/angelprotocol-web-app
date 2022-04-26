@@ -16,7 +16,6 @@ import {
   UpdateDocumentationResult,
 } from "./types";
 
-// need this mostly for /registration endpoints
 const headers = {
   authorization: createAuthToken(UserTypes.CHARITY_OWNER),
 };
