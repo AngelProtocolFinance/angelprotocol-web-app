@@ -7,9 +7,8 @@ import { Charity } from "services/aws/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
-import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { app, site } from "constants/routes";
-import createCharityData from "./createCharityData";
+import createCharity from "./createCharity";
 import routes from "./routes";
 import { updateCharity } from "./store";
 
@@ -41,11 +40,9 @@ export const useRegistration = () => {
       return console.log(dataResult.error);
     }
 
-    const { data } = dataResult;
-
-    const token = createAuthToken(UserTypes.CHARITY_OWNER);
-    const charity = createCharityData(data, token);
+    const charity = createCharity(dataResult.data);
     dispatch(updateCharity(charity));
+
     if (charity.ContactPerson.EmailVerified) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     } else {

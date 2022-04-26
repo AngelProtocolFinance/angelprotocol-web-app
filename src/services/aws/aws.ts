@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { RootState } from "store/store";
+import createAuthToken, { UserTypes } from "helpers/createAuthToken";
 import { aws_endpoint } from "constants/urls";
 import { tags } from "./tags";
 
@@ -7,12 +7,10 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: aws_endpoint,
     mode: "cors",
-    prepareHeaders: (headers, { getState }) => {
-      const { charity } = getState() as RootState;
-
-      if (charity.token) {
-        headers.set("authorization", charity.token);
-      }
+    prepareHeaders: (headers) => {
+      // need this mostly for /registration endpoints
+      const token = createAuthToken(UserTypes.CHARITY_OWNER);
+      headers.set("authorization", token);
       return headers;
     },
   }),

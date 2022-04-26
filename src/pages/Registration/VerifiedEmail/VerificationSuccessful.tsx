@@ -1,11 +1,12 @@
 import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
+import { Charity } from "services/aws/types";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
-import { CharityData, updateCharity } from "../store";
+import { updateCharity } from "../store";
 
 type Props = {
-  charity: CharityData;
+  charity: Charity;
   onClick: MouseEventHandler<HTMLButtonElement>;
   isLoading: boolean;
 };

@@ -7,13 +7,17 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { ContactDetailsData, ContactDetailsRequest } from "services/aws/types";
+import {
+  Charity,
+  ContactDetailsData,
+  ContactDetailsRequest,
+} from "services/aws/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
-import { CharityData, updateCharity } from "../../store";
+import { updateCharity } from "../../store";
 import { ContactDetails } from "./types";
 
 export default function useSaveContactDetails() {
@@ -28,7 +32,7 @@ export default function useSaveContactDetails() {
 
   const handleUpdateCharity = useCallback(
     (result: ContactDetailsData) => {
-      const newCharity: CharityData = {
+      const newCharity: Charity = {
         ...charity,
         ContactPerson: {
           ...charity.ContactPerson,

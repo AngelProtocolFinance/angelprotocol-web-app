@@ -1,9 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { CharityData } from "./types";
+import { Charity } from "services/aws/types";
 
-const STORAGE_KEY = "charity";
-
-const getDefaultCharity = (): CharityData => ({
+const getDefaultCharity = (): Charity => ({
   ContactPerson: {
     Email: "",
     EmailVerified: false,
@@ -35,13 +33,14 @@ const getDefaultCharity = (): CharityData => ({
     CharityOverview: "",
     TerraWallet: "",
   },
-  token: "",
 });
 
-const loadCharity = (): CharityData => {
+const STORAGE_KEY = "charity";
+
+const loadCharity = (): Charity => {
   const localCharity = localStorage.getItem(STORAGE_KEY);
   return !!localCharity
-    ? (JSON.parse(localCharity) as CharityData)
+    ? (JSON.parse(localCharity) as Charity)
     : getDefaultCharity();
 };
 
@@ -53,7 +52,7 @@ const charitySlice = createSlice({
       localStorage.removeItem(STORAGE_KEY);
       return getDefaultCharity();
     },
-    updateCharity: (state, { payload }: PayloadAction<CharityData>) => {
+    updateCharity: (state, { payload }: PayloadAction<Charity>) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
       return payload;
     },
