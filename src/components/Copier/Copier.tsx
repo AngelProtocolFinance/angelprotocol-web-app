@@ -14,7 +14,7 @@ export default function Copier(props: { text: string; colorClass: string }) {
       )) || (
         <Icon
           type="Copy"
-          className={`${props.colorClass} hover:text-orange"`}
+          className={`${props.colorClass} hover:text-orange`}
           title="Copy Address"
         />
       )}
