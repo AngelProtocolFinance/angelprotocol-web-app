@@ -30,6 +30,8 @@ declare module "@types-lists" {
     | "coin"
     | "uhalo";
 
+  type Chains = "terra" | "ethereum";
+
   type ChainIDs =
     | "testnet" //gen_testnet | sol_test
     | "mainnet" //gen_mainnet

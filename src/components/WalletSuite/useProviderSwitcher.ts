@@ -9,7 +9,6 @@ import { updateChainID } from "slices/chainSlice";
 import { setActiveProvider, setIsSwitching } from "slices/providerSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { chains } from "constants/chains";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
@@ -64,7 +63,7 @@ export default function useProviderSwitcher() {
       (wallet?.network.chainID as ChainIDs) || "columbus-5";
     dispatch(
       updateChainID({
-        chain: chains.terra,
+        chain: "terra",
         chainID: chainID,
       })
     );
