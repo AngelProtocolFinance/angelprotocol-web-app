@@ -1,12 +1,12 @@
-import { Dwindow } from "@types-slice/provider";
-import { RejectBinanceLogin } from "errors/errors";
-import { useEffect, useState } from "react";
 import {
   AccountChangeHandler,
   EIP1193Events,
   EIP1193Methods,
   Web3Provider,
-} from "types/ethereum";
+} from "@types-ethereum";
+import { Dwindow } from "@types-slice/provider";
+import { RejectBinanceLogin } from "errors/errors";
+import { useEffect, useState } from "react";
 import { DeviceType, deviceType } from "helpers/deviceType";
 
 export default function useBinanceWallet() {
@@ -34,10 +34,8 @@ export default function useBinanceWallet() {
     const binance = getBinance();
     if (binance && (isNewConnection || shouldReconnect) && !connected) {
       attachAccountChangeHandler(binance);
-      const { result: accounts = [] } = await binance.send(
-        EIP1193Methods.eth_requestAccounts,
-        []
-      );
+      const method: EIP1193Methods = "eth_requestAccounts";
+      const { result: accounts = [] } = await binance.send(method, []);
 
       setConnected(true);
       setAddress(accounts[0]);
@@ -49,7 +47,8 @@ export default function useBinanceWallet() {
 
   //attachers/detachers
   const attachAccountChangeHandler = (binance: Web3Provider) => {
-    binance.on(EIP1193Events.accountsChanged, handleAccountsChange);
+    const event: EIP1193Events = "accountsChanged";
+    binance.on(event, handleAccountsChange);
   };
 
   //event listeners

@@ -1,14 +1,16 @@
-import { Dwindow } from "@types-slice/provider";
-import { RejectMetamaskLogin } from "errors/errors";
-import { useEffect, useState } from "react";
 import {
   AccountChangeHandler,
   EIP1193Events,
   EIP1193Methods,
   Web3Provider,
-} from "types/ethereum";
+} from "@types-ethereum";
+import { Dwindow } from "@types-slice/provider";
+import { RejectMetamaskLogin } from "errors/errors";
+import { useEffect, useState } from "react";
 import { DeviceType, deviceType } from "helpers/deviceType";
 
+const requestAccountsMethod: EIP1193Methods = "eth_requestAccounts";
+const accountChangeEvent: EIP1193Events = "accountsChanged";
 export default function useMetamask() {
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction();
@@ -36,8 +38,9 @@ export default function useMetamask() {
     const ethereum = getEthereum();
     if (ethereum && (isNewConnection || shouldReconnect) && !connected) {
       attachAccountChangeHandler(ethereum);
+
       const { result: accounts = [] } = await ethereum.send(
-        EIP1193Methods.eth_requestAccounts,
+        requestAccountsMethod,
         []
       );
 
@@ -51,13 +54,10 @@ export default function useMetamask() {
 
   //attachers/detachers
   const attachAccountChangeHandler = (ethereum: Web3Provider) => {
-    ethereum.on(EIP1193Events.accountsChanged, handleAccountsChange);
+    ethereum.on(accountChangeEvent, handleAccountsChange);
   };
   const detachAccountChangeHandler = () => {
-    getEthereum()?.removeListener(
-      EIP1193Events.accountsChanged,
-      handleAccountsChange
-    );
+    getEthereum()?.removeListener(accountChangeEvent, handleAccountsChange);
   };
 
   //event listeners
