@@ -1,10 +1,10 @@
-import { currency_text, denoms } from "constants/currency";
-import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { VoteValues } from "./types";
-import Balance from "../Staker/Balance";
 import { Dec } from "@terra-money/terra.js";
+import { useFormContext } from "react-hook-form";
 import { useGovStakerState } from "services/terra/gov/states";
+import { currency_text, denoms } from "constants/currency";
+import Balance from "../Staker/Balance";
+import { VoteValues } from "./types";
 
 export default function Amount() {
   const {

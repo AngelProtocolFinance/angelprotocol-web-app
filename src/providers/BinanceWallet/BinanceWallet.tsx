@@ -1,6 +1,6 @@
+import { PropsWithChildren, createContext, useContext } from "react";
+import { IBinanceState, Setters } from "./types";
 import useBinance from "./useBinance";
-import { createContext, useContext, PropsWithChildren } from "react";
-import { Setters, IBinanceState } from "./types";
 
 export default function BinanceWallet(props: PropsWithChildren<{}>) {
   const { setters, state } = useBinance();

@@ -6,11 +6,11 @@ import {
 } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
-import torusIcon from "assets/icons/wallets/torus.jpg";
 import { entropyToMnemonic } from "bip39";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import torusIcon from "assets/icons/wallets/torus.jpg";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { mainnet } from "../chainOptions";
 import { ConnectionProxy, WalletProxy } from "../types";
 

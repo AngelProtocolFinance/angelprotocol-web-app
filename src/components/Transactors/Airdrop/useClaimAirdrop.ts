@@ -1,16 +1,14 @@
 import { Dec } from "@terra-money/terra.js";
+import { useMemo } from "react";
+import { Airdrops } from "services/terra/multicall/types";
+import { gov, multicall, tags, user } from "services/terra/tags";
+import { terra } from "services/terra/terra";
+import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
-import { useMemo } from "react";
-import { Airdrops } from "services/aws/airdrop/types";
-import { aws } from "services/aws/aws";
-import { tags as awsTags } from "services/aws/tags";
-import { gov, tags, user } from "services/terra/tags";
-import { terra } from "services/terra/terra";
-import { sendTerraTx } from "services/transaction/transactors/sendTerraTx";
-import { useSetter } from "store/accessors";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useSetModal();
@@ -42,8 +40,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
             { type: tags.gov, id: gov.staker },
             { type: tags.gov, id: gov.halo_balance },
             { type: tags.user, id: user.halo_balance },
+            { type: tags.multicall, id: multicall.airdrop },
           ]),
-          aws.util.invalidateTags([{ type: awsTags.airdrop }]),
         ],
       })
     );

@@ -1,28 +1,39 @@
-/**
- * queriers are hooks that calls the API when there's no entry on cache
- */
 import { Dec } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { terra } from "services/terra/terra";
 import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
-import { terra } from "services/terra/terra";
-import { halo_info } from "./placeholders";
+import { denoms } from "constants/currency";
+import { TokenInfo } from "./types";
 import { useContract } from "./useContract";
 
-export function useLatestBlock() {
+const halo_info: TokenInfo = {
+  name: "",
+  symbol: "",
+  decimals: 0,
+  total_supply: "0",
+};
+
+export function useLatestBlock(pollInterval = 0) {
   const { useLatestBlockQuery } = terra;
-  const { data = "0" } = useLatestBlockQuery("", { pollingInterval: 10_000 });
+  const { data = "0" } = useLatestBlockQuery("", {
+    pollingInterval: pollInterval,
+  });
   return data;
 }
 
-export function useBalances(main: denoms, others?: denoms[]) {
+export function useBalances(
+  main: denoms,
+  others?: denoms[],
+  customAddr?: string
+) {
   const { wallet } = useWalletContext();
   const { useBalancesQuery } = terra;
   const {
     data = [],
     isLoading,
     isFetching,
-  } = useBalancesQuery(wallet?.address, {
+    isError,
+  } = useBalancesQuery(customAddr || wallet?.address, {
     skip: wallet === undefined,
   });
 
@@ -42,6 +53,7 @@ export function useBalances(main: denoms, others?: denoms[]) {
     main: _main,
     others: _others,
     terraBalancesLoading: isLoading || isFetching,
+    isTerraBalancesFailed: isError,
   };
 }
 
@@ -56,21 +68,26 @@ export function useHaloInfo() {
   return data;
 }
 
-export function useHaloBalance() {
+export function useHaloBalance(customAddr?: string) {
   const { useHaloBalanceQuery } = terra;
-  const { wallet, contract } = useContract<H, T>(Halo);
+  const { contract, wallet } = useContract<H, T>(Halo);
   const {
     data = 0,
     isLoading,
     isFetching,
+    isError,
   } = useHaloBalanceQuery(
     {
       address: contract.token_address,
       //this query will only run if wallet is not undefined
-      msg: { balance: { address: wallet?.address } },
+      msg: { balance: { address: customAddr || wallet?.address } },
     },
     { skip: wallet === undefined }
   );
 
-  return { haloBalance: data, haloBalanceLoading: isLoading || isFetching };
+  return {
+    haloBalance: data,
+    haloBalanceLoading: isLoading || isFetching,
+    isHaloBalanceFailed: isError,
+  };
 }

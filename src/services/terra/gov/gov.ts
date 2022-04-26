@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
-import { terra } from "../terra";
-import { GovState, GovConfig, GovStaker, Poll, Polls } from "./types";
-import { QueryRes, ContractQueryArgs, HaloBalance } from "../types";
-import { gov, tags } from "../tags";
 import contract_querier from "../contract_querier";
+import { gov, tags } from "../tags";
+import { terra } from "../terra";
+import { ContractQueryArgs, HaloBalance, QueryRes } from "../types";
+import { GovConfig, GovStaker, GovState, Poll, Polls } from "./types";
 
 export const gov_api = terra.injectEndpoints({
   endpoints: (builder) => ({

@@ -1,21 +1,19 @@
-import useDonater from "components/Transactors/Donater/useDonater";
-import { app, site } from "constants/routes";
+import { useParams } from "react-router-dom";
+import { Profile } from "services/terra/account/types";
+import { useSetModal } from "components/Modal/Modal";
 import { unsdgs } from "constants/unsdgs";
-import useWalletContext from "hooks/useWalletContext";
-import React from "react";
-import { Link } from "react-router-dom";
-import { LinkProps } from "react-router-dom";
-import { Profile } from "services/aws/endowments/types";
+import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";
+import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
-  const showDonater = useDonater({
-    to: "charity",
-    receiver: props.endowment_address!,
-  });
-  const { wallet } = useWalletContext();
-  const sdg = unsdgs[+props.un_sdg];
-  const isEndowmentOwner = wallet?.address === props.charity_owner;
+  const { address: endowment_addr } = useParams<CharityParam>();
+  const { showModal } = useSetModal();
+  function showDonateSelection() {
+    showModal(DonateSelection, { endowmentAddr: endowment_addr! });
+  }
+
+  const sdg = unsdgs[props.un_sdg || 0];
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -27,33 +25,17 @@ export default function CharityHeader(props: Profile) {
         </p>
       )}
 
-      <h3 className="text-3xl font-bold text-white uppercase">
-        {props.charity_name}
-      </h3>
+      <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button disabled={props.is_placeholder} onClick={showDonater}>
+        <button
+          className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+          onClick={showDonateSelection}
+        >
           DONATE NOW
-        </Button>
-        {isEndowmentOwner && (
-          <LinkButton
-            to={`${site.app}/${app.charity_edit}/${props.endowment_address}`}
-          >
-            EDIT PROFILE
-          </LinkButton>
-        )}
+        </button>
         <CharityLinks />
       </div>
     </div>
   );
-}
-
-const buttonStyle =
-  "disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3";
-
-function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...props} className={buttonStyle} />;
-}
-function LinkButton(props: LinkProps) {
-  return <Link {...props} className={buttonStyle} />;
 }

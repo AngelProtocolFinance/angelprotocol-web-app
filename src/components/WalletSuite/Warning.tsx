@@ -1,5 +1,5 @@
-import { useSetModal } from "components/Modal/Modal";
 import Icon from "components/Icons/Icons";
+import { useSetModal } from "components/Modal/Modal";
 
 export type Props = { text: string };
 export default function Warning(props: Props) {

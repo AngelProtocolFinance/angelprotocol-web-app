@@ -1,12 +1,13 @@
-import { lazy, Suspense } from "react";
-import { Route, useLocation, Routes, Navigate } from "react-router-dom";
-import WebHead from "Website/Header/WebHead";
-import WebFoot from "Website/WebFoot";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader/Loader";
-import { site, web } from "constants/routes";
-import Home from "./Home/Home";
 import Modal from "components/Modal/Modal";
 import useScrollTop from "hooks/useScrollTop";
+import { site, web } from "constants/routes";
+import WebHead from "./Header/WebHead";
+import Home from "./Home/Home";
+import WebFoot from "./WebFoot";
+
 const Donors = lazy(() => import("./Donors/Donors"));
 const Charities = lazy(() => import("./Charities/Charities"));
 const Contact = lazy(() => import("./Contact/Contact"));

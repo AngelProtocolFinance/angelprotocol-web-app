@@ -1,10 +1,10 @@
-import usePoller from "components/Transactors/Poller/usePoller";
 import { useLatestBlock } from "services/terra/queriers";
+import Icon from "components/Icons/Icons";
+import usePoller from "components/Transactors/Poller/usePoller";
 import toCurrency from "helpers/toCurrency";
 import Button from "../Button";
-import { PollFilterOptions } from "./Polls";
 import PollSelector from "./PollSelector";
-import Icon from "components/Icons/Icons";
+import { PollFilterOptions } from "./Polls";
 
 export default function Toolbar(props: {
   pollFilter: PollFilterOptions;
@@ -14,7 +14,7 @@ export default function Toolbar(props: {
   const showPoller = usePoller();
 
   return (
-    <div className="flex items-center gap-2 border border-white/10 px-6 py-2 mb-3 bg-white/10 shadow-md rounded-md">
+    <div className="flex items-center gap-2 mb-2 rounded-md">
       <p className="uppercase text-2xl font-bold text-white-grey mr-1">Polls</p>
 
       <PollSelector

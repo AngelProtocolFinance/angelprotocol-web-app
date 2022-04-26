@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fleekhq/fleek-storage-js": "^1.0.21",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.8.3",
     "@reduxjs/toolkit": "^1.7.1",
     "@terra-money/terra.js": "^3.0.7",
     "@terra-money/wallet-provider": "^3.8.0",
     "@toruslabs/openlogin": "^1.7.1",
+    "@transak/transak-sdk": "1.0.31",
     "bip39": "^3.0.4",
     "compress.js": "^1.2.2",
     "draft-js": "^0.11.7",
@@ -23,7 +25,6 @@
     "react-router-dom": "^6.2.0",
     "react-select": "^5.3.0",
     "react-select-country-list": "^2.2.3",
-    "recharts": "^2.1.9",
     "yup": "^0.32.9"
   },
   "scripts": {
@@ -32,7 +33,8 @@
     "test": "react-app-rewired test --colors",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200"
+    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -79,6 +81,7 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "@types/compress.js": "^1.1.1",
     "@types/draft-js": "^0.11.9",
     "@types/jest": "^26.0.15",
@@ -97,7 +100,6 @@
     "postcss": "^8.4.8",
     "prettier": "^2.6.0",
     "process": "^0.11.10",
-    "prop-types": "^15.8.1",
     "react-app-rewired": "^2.2.1",
     "react-scripts": "^5.0.0",
     "stream-browserify": "^3.0.0",

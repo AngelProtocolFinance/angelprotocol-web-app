@@ -6,16 +6,7 @@ import {
   MsgExecuteContract,
   MsgSend,
 } from "@terra-money/terra.js";
-import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
-import Account from "contracts/Account";
-import Contract from "contracts/Contract";
-import Indexfund from "contracts/IndexFund";
 import { ethers } from "ethers";
-import extractFeeNum from "helpers/extractFeeNum";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dwindow, Providers } from "services/provider/types";
@@ -25,6 +16,15 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
+import Account from "contracts/Account";
+import Contract from "contracts/Contract";
+import Indexfund from "contracts/IndexFund";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+import extractFeeNum from "helpers/extractFeeNum";
+import processEstimateError from "helpers/processEstimateError";
+import { ap_wallets } from "constants/ap_wallets";
+import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
 
 export default function useEstimator() {
@@ -223,7 +223,15 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, currency, coins, supported_denoms]);
+  }, [
+    debounced_amount,
+    debounced_split,
+    currency,
+    coins,
+    supported_denoms,
+    isValid,
+    isDirty,
+  ]);
 
   return { terraTx, ethTx, bnbTx };
 }

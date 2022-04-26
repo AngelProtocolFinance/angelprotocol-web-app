@@ -1,5 +1,5 @@
-import Loader from "components/Loader/Loader";
 import { SubmitStage } from "services/transaction/types";
+import Loader from "components/Loader/Loader";
 
 export default function Submit(props: SubmitStage) {
   const { message } = props;

@@ -1,5 +1,5 @@
-import { chainIDs } from "constants/chainIDs";
 import Halo, { H, T } from "contracts/Halo";
+import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { gov_api } from "./gov";
 import { staker } from "./placeholders";
@@ -13,7 +13,7 @@ export function useGovBalanceState() {
 }
 
 export function useGovStakerState() {
-  const { wallet, contract } = useContract<H, T>(Halo);
+  const { contract, wallet } = useContract<H, T>(Halo);
   const { data = staker } = gov_api.endpoints.govStaker.useQueryState(
     contract.staker,
     {

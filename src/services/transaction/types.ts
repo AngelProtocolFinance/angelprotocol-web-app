@@ -1,4 +1,11 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { tags as awsTags } from "services/aws/tags";
+import { tags as terraTags } from "services/terra/tags";
+import { WalletProxy } from "providers/WalletProvider/types";
 import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
 
 export enum Step {
   form = "form",
@@ -47,13 +54,15 @@ export type BroadcastStage = {
   details?: never;
 };
 
+export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: Step.success;
   message: string;
-  txHash: string;
-  chainId: chainIDs;
+  txHash: string; //leave "" to not render tx link
+  chainId: chainIDs; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
+  successLink?: SuccessLink;
 };
 
 export type ReceiptStage = {
@@ -79,3 +88,14 @@ export type Stage =
   | ReceiptStage
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
+
+export type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
+export type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
+
+export type SenderArgs = {
+  wallet: WalletProxy | undefined;
+  tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
+  successMessage?: string;
+  successLink?: SuccessLink;
+  feedDenom?: denoms;
+};

@@ -1,13 +1,13 @@
-import useKeyPress from "hooks/useKeyPress";
 import {
-  createContext,
   ReactNode,
+  createContext,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
+import useKeyPress from "hooks/useKeyPress";
 import { Handlers, Opener, Props } from "./types";
 import useFocusHandler from "./useFocusHandler";
 

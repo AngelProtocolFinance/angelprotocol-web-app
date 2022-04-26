@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { MdOutlineClose } from "react-icons/md";
+import Icon from "components/Icons/Icons";
 import Modal, { useSetModal } from "./Modal";
 
 const modalCssClass =
@@ -89,7 +89,7 @@ const ModalContent = (props: { inModal: boolean }) => {
           onClick={close}
           className="absolute right-2 top-2 text-angel-grey hover:text-black"
         >
-          <MdOutlineClose size={25} />
+          <Icon type="Close" size={25} />
         </button>
       )}
       <div>

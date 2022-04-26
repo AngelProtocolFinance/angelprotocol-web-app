@@ -1,10 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { currency_text, denoms } from "constants/currency";
+import { app, site } from "constants/routes";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
-import { useNavigate } from "react-router-dom";
-import { app, site } from "constants/routes";
 
 export default function Landing() {
   const { staked, percentStaked, spot_price } = useGov();
@@ -39,7 +39,7 @@ export default function Landing() {
 function DonationAdvert() {
   const navigate = useNavigate();
   return (
-    <div className="mt-5 w-full col-span-2 border-white/10 bg-white/10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
+    <div className="mt-5 w-full col-span-2 rounded-md p-3 text-white-grey cursor-pointer">
       <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden p-3 pl-10 pr-10">
         The charity marketplace is now open!
         <br />
