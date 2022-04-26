@@ -1,6 +1,6 @@
 import { ChainIDs } from "@types-lists";
-import { LogApplicationUpdateError } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
+import { LogApplicationUpdateError } from "errors/errors";
 import { aws_endpoint } from "constants/urls";
 
 interface UpdateApplicationPayload {

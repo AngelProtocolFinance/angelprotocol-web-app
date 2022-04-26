@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DonateValues, Props } from "@types-component/donater";
 import { FormProvider, useForm } from "react-hook-form";
+import { DonateValues, Props } from "@types-component/donater";
 import { schema } from "./schema";
 
 export default function Donater(props: Props) {

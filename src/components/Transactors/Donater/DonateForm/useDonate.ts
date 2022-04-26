@@ -1,6 +1,6 @@
-import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";

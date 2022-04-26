@@ -1,5 +1,5 @@
-import { AllianceMember as AM, EmbeddedWasmMsg } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "@types-server/contracts";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";

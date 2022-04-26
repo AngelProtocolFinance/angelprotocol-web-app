@@ -6,11 +6,11 @@ import {
   MsgExecuteContract,
   MsgSend,
 } from "@terra-money/terra.js";
-import { DonateValues } from "@types-component/donater";
-import { Dwindow } from "@types-slice/provider";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "@types-component/donater";
+import { Dwindow } from "@types-slice/provider";
 import {
   setFee,
   setFormError,

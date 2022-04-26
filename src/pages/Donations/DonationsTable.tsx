@@ -1,5 +1,5 @@
-import { Transaction } from "@types-server/aws";
 import React, { PropsWithChildren } from "react";
+import { Transaction } from "@types-server/aws";
 import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import getTxUrl from "helpers/getTxUrl";

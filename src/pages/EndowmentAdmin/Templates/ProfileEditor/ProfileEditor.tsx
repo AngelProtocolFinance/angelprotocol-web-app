@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { UpdateProfilePayload } from "@types-server/contracts";
-import { Profile } from "@types-server/contracts";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { UpdateProfilePayload } from "@types-server/contracts";
+import { Profile } from "@types-server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";

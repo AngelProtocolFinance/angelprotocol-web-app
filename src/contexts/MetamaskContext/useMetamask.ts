@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   AccountChangeHandler,
   EIP1193Events,
@@ -5,9 +6,8 @@ import {
   Web3Provider,
 } from "@types-ethereum";
 import { Dwindow } from "@types-slice/provider";
-import { RejectMetamaskLogin } from "errors/errors";
-import { useEffect, useState } from "react";
 import { DeviceType, deviceType } from "helpers/deviceType";
+import { RejectMetamaskLogin } from "errors/errors";
 
 const requestAccountsMethod: EIP1193Methods = "eth_requestAccounts";
 const accountChangeEvent: EIP1193Events = "accountsChanged";

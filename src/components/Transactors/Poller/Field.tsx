@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { CreatePollValues } from "@types-component/poller";
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import { CreatePollValues } from "@types-component/poller";
 
 export default function Title(props: {
   id: keyof CreatePollValues;

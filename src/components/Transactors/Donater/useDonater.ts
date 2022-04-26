@@ -1,5 +1,5 @@
-import { FundFlow, Props } from "@types-component/donater";
 import { useCallback } from "react";
+import { FundFlow, Props } from "@types-component/donater";
 import { useSetModal } from "components/Modal/Modal";
 import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import Transactor, { TxProps } from "../Transactor";

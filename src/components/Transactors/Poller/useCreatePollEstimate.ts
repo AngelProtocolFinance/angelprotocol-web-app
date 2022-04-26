@@ -1,7 +1,7 @@
 import { Fee } from "@terra-money/terra.js";
-import { CreatePollValues } from "@types-component/poller";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { CreatePollValues } from "@types-component/poller";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,

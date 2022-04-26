@@ -1,5 +1,5 @@
-import { Dwindow } from "@types-slice/provider";
 import { useState } from "react";
+import { Dwindow } from "@types-slice/provider";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { resetWallet } from "slices/walletSlice";

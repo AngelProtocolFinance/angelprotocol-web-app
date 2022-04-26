@@ -1,6 +1,6 @@
+import * as Yup from "yup";
 import { Denoms } from "@types-lists";
 import { SchemaShape } from "@types-schema";
-import * as Yup from "yup";
 import { requiredTokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
 import { ProposalBase, proposalShape } from "../proposalShape";

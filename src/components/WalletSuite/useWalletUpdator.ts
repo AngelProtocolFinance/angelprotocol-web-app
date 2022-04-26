@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
+import { ethers } from "ethers";
+import { useEffect } from "react";
 import { ChainIDs, Denoms } from "@types-lists";
 import { Dwindow, Providers } from "@types-slice/provider";
 import { Coin } from "@types-slice/wallet";
-import { ethers } from "ethers";
-import { useEffect } from "react";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useBalances, useHaloBalance } from "services/terra/queriers";

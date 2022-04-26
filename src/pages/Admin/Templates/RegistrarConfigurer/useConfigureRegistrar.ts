@@ -1,5 +1,5 @@
-import { RegistrarConfigPayload } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
+import { RegistrarConfigPayload } from "@types-server/contracts";
 import { ProposalMeta } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";

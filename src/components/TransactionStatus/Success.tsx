@@ -1,5 +1,5 @@
-import { SuccessStage } from "@types-slice/transaction";
 import { useNavigate } from "react-router-dom";
+import { SuccessStage } from "@types-slice/transaction";
 import { setStage } from "slices/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";

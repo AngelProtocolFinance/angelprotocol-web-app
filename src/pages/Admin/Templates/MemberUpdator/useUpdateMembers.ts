@@ -1,6 +1,6 @@
-import { Member } from "@types-server/contracts";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { Member } from "@types-server/contracts";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";

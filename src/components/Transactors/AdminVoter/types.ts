@@ -1,5 +1,5 @@
-import { Vote } from "@types-server/contracts";
 import { FC } from "react";
+import { Vote } from "@types-server/contracts";
 
 export type AdminVoteValues = {
   vote: Vote;

@@ -1,7 +1,7 @@
 import { ChainIDs, Denoms, UserTypes } from "@types-lists";
 import { Receiver, TxLogPayload } from "@types-server/aws";
-import { LogDonationFail } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
+import { LogDonationFail } from "errors/errors";
 import { currency_text } from "constants/currency";
 import { apes_endpoint } from "constants/urls";
 

@@ -1,5 +1,5 @@
-import { DonateValues } from "@types-component/donater";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "@types-component/donater";
 import { useGetter } from "store/accessors";
 
 export default function Slider() {

@@ -1,5 +1,5 @@
-import { ReceiptStage } from "@types-slice/transaction";
 import { useState } from "react";
+import { ReceiptStage } from "@types-slice/transaction";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import useTxUpdator from "slices/transaction/updators";
 import { useGetter } from "store/accessors";

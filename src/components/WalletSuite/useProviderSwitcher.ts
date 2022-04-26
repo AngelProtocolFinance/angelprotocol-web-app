@@ -1,7 +1,7 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
+import { useEffect, useRef } from "react";
 import { ChainIDs } from "@types-lists";
 import { ProviderStates } from "@types-slice/provider";
-import { useEffect, useRef } from "react";
 import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useGetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { terra } from "services/terra/terra";

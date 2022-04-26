@@ -8,8 +8,8 @@ import {
   useConnectedWallet,
   useWallet,
 } from "@terra-money/wallet-provider";
-import { TerraWalletIDs } from "@types-slice/wallet";
 import { useEffect, useMemo } from "react";
+import { TerraWalletIDs } from "@types-slice/wallet";
 import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
 

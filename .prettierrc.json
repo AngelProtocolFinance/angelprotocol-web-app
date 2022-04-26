@@ -16,7 +16,7 @@
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false,
   "importOrder": [
-    "^types/(.*)$",
+    "^@types-",
     "^assets/(.*)$",
     "^pages/(.*)$",
     "^contexts/(.*)$",
@@ -29,6 +29,7 @@
     "^hooks/(.*)$",
     "^helpers/(.*)$",
     "^schemas/(.*)$",
+    "^errors/(.*)$",
     "^constants/(.*)$",
     "^[../]",
     "^[./]"

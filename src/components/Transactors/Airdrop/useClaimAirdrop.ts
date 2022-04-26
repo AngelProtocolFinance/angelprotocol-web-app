@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
-import { Airdrops } from "@types-server/aws";
 import { useMemo } from "react";
+import { Airdrops } from "@types-server/aws";
 import {
   govTags,
   multicallTags,

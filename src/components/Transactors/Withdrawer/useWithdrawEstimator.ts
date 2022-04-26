@@ -1,7 +1,7 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { AmountInfo } from "@types-shared/withdraw";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { AmountInfo } from "@types-shared/withdraw";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
 import {

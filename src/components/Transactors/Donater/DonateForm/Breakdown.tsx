@@ -1,5 +1,5 @@
-import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { useFormContext } from "react-hook-form";
+import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { useGetter } from "store/accessors";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";

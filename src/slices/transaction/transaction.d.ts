@@ -78,10 +78,7 @@ declare module "@types-slice/transaction" {
 
   type SenderArgs = {
     wallet: WalletProxy | undefined;
-    tagPayloads?: PayloadAction<
-      TagDescription<terraTags | awsTags>[],
-      string
-    >[];
+    tagPayloads?: PayloadAction<TagDescription<string>[], string>[];
     successMessage?: string;
     successLink?: SuccessLink;
     feedDenom?: Denoms;

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CreatePollValues, Props } from "@types-component/poller";
 import { FormProvider, useForm } from "react-hook-form";
+import { CreatePollValues, Props } from "@types-component/poller";
 import { schema } from "./schema";
 
 export default function Poller(props: Props) {

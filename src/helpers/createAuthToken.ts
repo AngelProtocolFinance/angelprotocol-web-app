@@ -1,5 +1,5 @@
-import { UserTypes } from "@types-lists";
 import jwt from "jsonwebtoken";
+import { UserTypes } from "@types-lists";
 
 type Payload = {
   authorization: string;

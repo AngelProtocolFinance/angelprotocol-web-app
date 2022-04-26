@@ -1,8 +1,8 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
 import { Denoms, TerraChainIDs } from "@types-lists";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
-import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { WalletProxy } from "providers/WalletProvider";
+import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { terra_lcds } from "constants/urls";
 
 export default class Contract {

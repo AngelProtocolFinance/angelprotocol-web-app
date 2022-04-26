@@ -1,10 +1,10 @@
 import { Dwindow } from "@types-slice/provider";
-import { RejectBinanceLogin } from "errors/errors";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useGetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import { DeviceType, deviceType } from "helpers/deviceType";
+import { RejectBinanceLogin } from "errors/errors";
 import WalletPrompt from "../WalletPrompt";
 import ConnectButton from "./ConnectButton";
 

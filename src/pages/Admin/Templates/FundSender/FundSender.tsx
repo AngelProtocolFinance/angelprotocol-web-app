@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TerraChainIDs } from "@types-lists";
 import { FormProvider, useForm } from "react-hook-form";
+import { TerraChainIDs } from "@types-lists";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useBalances, useHaloBalance } from "services/terra/queriers";

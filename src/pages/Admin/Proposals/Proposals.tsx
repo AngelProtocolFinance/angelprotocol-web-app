@@ -1,5 +1,5 @@
-import { ProposalStatus } from "@types-server/contracts";
 import { createContext, useContext, useState } from "react";
+import { ProposalStatus } from "@types-server/contracts";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,

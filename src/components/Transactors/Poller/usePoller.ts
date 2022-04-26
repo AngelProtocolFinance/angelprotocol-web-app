@@ -1,5 +1,5 @@
-import { Props } from "@types-component/poller";
 import { useCallback } from "react";
+import { Props } from "@types-component/poller";
 import { useSetModal } from "components/Modal/Modal";
 import Transactor, { TxProps } from "../Transactor";
 import Poller from "./Poller";
