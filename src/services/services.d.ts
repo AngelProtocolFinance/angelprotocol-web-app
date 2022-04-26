@@ -1,4 +1,4 @@
-declare module "#types-services/terra" {
+declare module "@types-services/terra" {
   type ContractQueryArgs<T = object> = {
     address: string;
     msg: T;

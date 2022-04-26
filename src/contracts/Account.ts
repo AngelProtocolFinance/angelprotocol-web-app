@@ -1,8 +1,7 @@
-import { ContractQueryArgs } from "#types-services/terra";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { Source, UpdateProfilePayload } from "@types-server/contracts";
+import { ContractQueryArgs } from "@types-services/terra";
 import { WalletProxy } from "providers/WalletProvider";
-import { denoms } from "constants/denoms";
 import Contract from "./Contract";
 
 export default class Account extends Contract {
@@ -46,7 +45,7 @@ export default class Account extends Contract {
           liquid_percentage: pctLiquid.toFixed(2),
         },
       },
-      [new Coin(denoms.uusd, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
   }
 

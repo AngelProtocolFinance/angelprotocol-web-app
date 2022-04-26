@@ -1,9 +1,9 @@
+import { FundFlow, Props } from "@types-component/donater";
 import { useCallback } from "react";
 import { useSetModal } from "components/Modal/Modal";
 import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import Transactor, { TxProps } from "../Transactor";
 import Donater from "./Donater";
-import { FundFlow, Props } from "./types";
 
 export default function useDonater(args: FundFlow) {
   const { showModal } = useSetModal();

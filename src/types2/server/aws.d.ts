@@ -1,4 +1,5 @@
 declare module "@types-server/aws" {
+  import { ChainIDs, Denoms } from "@types-lists";
   /**result wrapper */
   export interface AWSQueryRes<T> {
     Count: number;
@@ -30,7 +31,7 @@ declare module "@types-server/aws" {
     amount: number; // 14.251521
     app_used: string; // "restore-earth"
     transaction_type: string; // "deposit"
-    chain_id?: string;
+    chain_id?: ChainIDs;
   }
 
   //payloads
@@ -70,11 +71,11 @@ declare module "@types-server/aws" {
   type TxDetails = {
     transactionId: string;
     transactionDate: string;
-    chainId: string;
+    chainId: ChainIDs;
     amount: number;
     splitLiq: string;
     walletAddress: string;
-    denomination: string;
+    denomination: string; //currency_text
   };
 
   type TxDataPermissions = {

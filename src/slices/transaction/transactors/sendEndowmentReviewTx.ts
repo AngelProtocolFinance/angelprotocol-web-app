@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
+import { ChainIDs } from "@types-lists";
 import {
   SenderArgs,
   StageUpdator,
@@ -11,9 +12,7 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SenderArgs & {
@@ -49,7 +48,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         const feeNum = extractFeeNum(fee);
 
         const state = getState() as RootState;
-        const feeDenom = (args.feedDenom as denoms) || denoms.uusd;
+        const feeDenom = args.feedDenom || "uusd";
         const walletBalanceForFee =
           state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
           0;
@@ -65,7 +64,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       }
 
       const response = await args.wallet.post(tx);
-      const chainId = contract.chainID as chainIDs;
+      const chainId = contract.chainID;
 
       updateTx({
         step: "broadcast",
@@ -100,7 +99,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.network.chainID,
+            chain_id: args.wallet.network.chainID as ChainIDs,
             PK: args.applicationId,
           });
 

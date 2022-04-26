@@ -6,16 +6,19 @@ import {
 } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
+import { TerraChainIDs } from "@types-lists";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import torusIcon from "assets/icons/wallets/torus.jpg";
-import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { mainnet } from "../chainOptions";
 import { ConnectionProxy, WalletProxy } from "../types";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
+
+const CHAIN_ID: TerraChainIDs =
+  NETWORK === "mainnet" ? "columbus-5" : "bombay-12";
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
@@ -24,8 +27,8 @@ const openLogin = new OpenLogin({
 });
 
 const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
+  URL: terra_lcds[CHAIN_ID],
+  chainID: CHAIN_ID,
 });
 
 const TORUS_CONNECTION: ConnectionProxy = {
@@ -144,18 +147,13 @@ function convertToWalletProxy(
   connect: () => Promise<void>,
   disconnect: () => Promise<void>
 ): WalletProxy {
-  const networkName =
-    Object.entries(chainIDs).find(
-      ([_, value]) => value === torusWallet.lcd.config.chainID
-    )?.[0] || "";
-
   return {
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
     network: {
       chainID: torusWallet.lcd.config.chainID,
       lcd: torusWallet.lcd.config.URL,
-      name: networkName,
+      name: CHAIN_ID,
     },
     connect,
     disconnect,

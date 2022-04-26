@@ -1,11 +1,11 @@
+import { TerraChainIDs } from "@types-lists";
+import { Airdrops } from "@types-server/aws";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
-} from "#types-services/terra";
-import { Airdrops } from "@types-server/aws";
+} from "@types-services/terra";
 import { WalletProxy } from "providers/WalletProvider";
-import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Account from "./Account";
@@ -22,7 +22,8 @@ export default class Multicall {
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
-    this.address = contracts[wallet?.network.chainID as chainIDs][sc.multicall];
+    this.address =
+      contracts[wallet?.network.chainID as TerraChainIDs][sc.multicall];
     this.registrarContract = new Registrar(wallet);
     this.haloContract = new Halo(wallet);
 

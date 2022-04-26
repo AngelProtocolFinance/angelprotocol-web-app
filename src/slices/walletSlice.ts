@@ -1,8 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { WalletInfo } from "types/slices/wallet";
+import { WalletInfo } from "@types-slice/wallet";
 import icon from "assets/icons/wallets/unknown.svg";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/denoms";
 
 type IState = { isUpdating: boolean } & WalletInfo;
 
@@ -10,14 +8,14 @@ const initialState: IState = {
   isUpdating: false,
   displayCoin: {
     amount: 0,
-    denom: denoms.uusd,
+    denom: "uusd",
   },
   coins: [],
   icon: icon,
   address: "walletaddrs",
   supported_denoms: [],
   id: undefined,
-  chainId: chainIDs.mainnet,
+  chainId: "columbus-5",
 };
 
 const walletSlice = createSlice({

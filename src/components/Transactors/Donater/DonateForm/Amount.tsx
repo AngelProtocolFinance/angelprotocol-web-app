@@ -1,8 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { DonateValues } from "@types-component/donater";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 import Currency from "./Currency";
 
 export default function Amount() {
@@ -32,10 +31,10 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency currency={denoms.uusd} />
-          <Currency currency={denoms.uluna} />
-          <Currency currency={denoms.ether} />
-          <Currency currency={denoms.bnb} />
+          <Currency currency="uusd" />
+          <Currency currency="uluna" />
+          <Currency currency="ether" />
+          <Currency currency="bnb" />
           {/* <Currency currency={denoms.btc} withTooltip /> */}
           {/* <Currency currency={denoms.sol} withTooltip /> */}
           {/* <Currency currency={denoms.uatom} withTooltip /> */}

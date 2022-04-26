@@ -1,8 +1,8 @@
+import { DonateValues } from "@types-component/donater";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
+import { decimals } from "../constants";
 
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
@@ -25,9 +25,3 @@ export default function usePortion(type: string) {
     disp_split: isLocked ? split_locked : split_liq,
   };
 }
-
-const decimals: { [index: string]: number } = {
-  [denoms.uusd]: 2,
-  [denoms.btc]: 6,
-  [denoms.ether]: 6,
-};

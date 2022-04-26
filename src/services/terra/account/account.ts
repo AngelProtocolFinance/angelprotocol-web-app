@@ -1,10 +1,10 @@
-import { ContractQueryArgs } from "#types-services/terra";
 import {
   CW3Config,
   CWContracts,
   Profile,
   QueryRes,
 } from "@types-server/contracts";
+import { ContractQueryArgs } from "@types-services/terra";
 import { endowmentTags, terraTags } from "services/terra/tags";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";

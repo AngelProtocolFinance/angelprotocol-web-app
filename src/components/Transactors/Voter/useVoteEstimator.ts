@@ -15,7 +15,6 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/denoms";
 import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
@@ -26,7 +25,7 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: UST_balance } = useBalances("uusd");
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();

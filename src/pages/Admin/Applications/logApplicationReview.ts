@@ -1,18 +1,18 @@
+import { ChainIDs } from "@types-lists";
 import { LogApplicationUpdateError } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
-import { chainIDs } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 import { UserTypes } from "constants/user-types";
 
 interface UpdateApplicationPayload {
   PK: string;
   poll_id: string;
-  chain_id: string;
+  chain_id: ChainIDs;
 }
 type ReviewLogger = (payload: UpdateApplicationPayload) => Promise<void>;
 const logApplicationReview: ReviewLogger = async (payload) => {
   const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
-  const is_test = payload.chain_id === chainIDs.testnet;
+  const is_test = payload.chain_id === "bombay-12";
   const chain_id = is_test ? "testnet" : "mainnet";
   const response = await fetch(
     `${aws_endpoint}/registration?uuid=${payload.PK}`,

@@ -1,6 +1,6 @@
+import { DonateValues } from "@types-component/donater";
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
 import useTooltip from "hooks/useTooltip";
 import { currency_icons, currency_text } from "constants/currency";
 

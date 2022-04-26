@@ -1,10 +1,10 @@
-import { ContractQueryArgs } from "#types-services/terra";
 import {
   AllianceMember,
   FundDetails,
   IndexFundConfig,
   QueryRes,
 } from "@types-server/contracts";
+import { ContractQueryArgs } from "@types-services/terra";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

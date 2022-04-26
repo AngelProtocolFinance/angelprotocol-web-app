@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import Label from "pages/Admin/components/Label";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 import { FundSendValues } from "../fundSendSchema";
 import Balance from "./Balance";
 import Currency from "./Currency";
@@ -32,8 +31,8 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency currency={denoms.uusd} />
-          <Currency currency={denoms.uhalo} />
+          <Currency currency="uusd" />
+          <Currency currency="uhalo" />
         </div>
         <ErrorMessage
           errors={errors}

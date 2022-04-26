@@ -1,3 +1,4 @@
+import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { resetFee } from "slices/transaction/transactionSlice";
@@ -6,12 +7,10 @@ import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonat
 import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { DonateValues } from "components/Transactors/Donater/types";
 import useWalletContext from "hooks/useWalletContext";
-import { denoms } from "constants/denoms";
 import useEstimator from "../useEstimator";
 
-type Senders = { [index: string]: (data: DonateValues) => any };
+type Senders = { [key in SupportedDenoms]: (data: DonateValues) => any };
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
@@ -53,7 +52,7 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
-  const denomRef = useRef<denoms>(denoms.uusd);
+  const denomRef = useRef<SupportedDenoms>("uusd");
   const currency = watch("currency");
 
   //reset amount when changing currency
@@ -67,13 +66,10 @@ export default function useDonate() {
   }, [currency]);
 
   const senders: Senders = {
-    [denoms.uusd]: terraSender,
-    [denoms.uluna]: terraSender,
-    [denoms.ether]: ethSender,
-    [denoms.bnb]: bnbSender,
-    // [denoms.btc]: btcSender,
-    // [denoms.sol]: solSender,
-    // [denoms.uatom]: atomSender,
+    uusd: terraSender,
+    uluna: terraSender,
+    ether: ethSender,
+    bnb: bnbSender,
   };
 
   return {

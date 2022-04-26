@@ -1,4 +1,5 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
+import { ChainIDs } from "@types-lists";
 import { ProviderStates } from "@types-slice/provider";
 import { useEffect, useRef } from "react";
 import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
@@ -8,12 +9,11 @@ import { updateChainID } from "slices/chainSlice";
 import { setActiveProvider, setIsSwitching } from "slices/providerSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import { chains } from "constants/chains";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
-  const terra_chain_ref = useRef<string>(chainIDs.testnet);
+  const terra_chain_ref = useRef<ChainIDs>("bombay-12");
 
   //terra states
   const { status: terraStatus, wallet } = useWalletContext();
@@ -60,11 +60,12 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
-    const chainID = wallet?.network.chainID || chainIDs.mainnet;
+    const chainID: ChainIDs =
+      (wallet?.network.chainID as ChainIDs) || "columbus-5";
     dispatch(
       updateChainID({
         chain: chains.terra,
-        chainID: chainID as chainIDs,
+        chainID: chainID,
       })
     );
 

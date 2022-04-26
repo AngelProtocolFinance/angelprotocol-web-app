@@ -1,4 +1,3 @@
-import { MultiContractQueryArgs } from "#types-services/terra";
 import { Dec } from "@terra-money/terra.js";
 import { Airdrops } from "@types-server/aws";
 import {
@@ -8,11 +7,8 @@ import {
   QueryRes,
   VaultRateInfo,
 } from "@types-server/contracts";
-import {
-  VaultField,
-  VaultFieldIds,
-  VaultFieldLimits,
-} from "@types-shared/withdraw";
+import { MultiContractQueryArgs } from "@types-services/terra";
+import { VaultField, VaultFieldLimits } from "@types-shared/withdraw";
 import { WalletProxy } from "providers/WalletProvider";
 import { multicallTags, terraTags } from "services/terra/tags";
 import Multicall from "contracts/Multicall";

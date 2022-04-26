@@ -2,25 +2,24 @@ import {
   NetworkInfo,
   WalletControllerChainOptions,
 } from "@terra-money/wallet-provider";
-import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 
 const localterra: NetworkInfo = {
   name: "localterra",
-  chainID: chainIDs.localterra,
-  lcd: terra_lcds[chainIDs.localterra],
+  chainID: "localterra",
+  lcd: terra_lcds["localterra"],
 };
 
 export const mainnet: NetworkInfo = {
   name: "mainnet",
-  chainID: chainIDs.mainnet,
-  lcd: terra_lcds[chainIDs.mainnet],
+  chainID: "columbus-5",
+  lcd: terra_lcds["columbus-5"],
 };
 
 const testnet: NetworkInfo = {
   name: "testnet",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
+  chainID: "bombay-12",
+  lcd: terra_lcds["bombay-12"],
 };
 
 export const chainOptions: WalletControllerChainOptions = {

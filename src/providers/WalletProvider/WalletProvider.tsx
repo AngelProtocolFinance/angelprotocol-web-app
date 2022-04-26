@@ -3,7 +3,7 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { PropsWithChildren, createContext } from "react";
-import BinanceContext from "contexts/BinanceWalletContext/BinanceWalletContext";
+import BinanceWalletContext from "contexts/BinanceWalletContext/BinanceWalletContext";
 import MetamaskContext from "contexts/MetamaskContext/MetamaskContext";
 import { chainOptions } from "./chainOptions";
 import { IWalletContext } from "./types";
@@ -20,9 +20,9 @@ export function WalletProvider(props: PropsWithChildren<{}>) {
   return (
     <TerraProvider {...chainOptions}>
       <MetamaskContext>
-        <BinanceContext>
+        <BinanceWalletContext>
           <WalletProxyProvider>{props.children}</WalletProxyProvider>
-        </BinanceContext>
+        </BinanceWalletContext>
       </MetamaskContext>
     </TerraProvider>
   );

@@ -1,4 +1,3 @@
-import { ContractQueryArgs } from "#types-services/terra";
 import {
   BaseQueryFn,
   createApi,
@@ -6,7 +5,9 @@ import {
   retry,
 } from "@reduxjs/toolkit/query/react";
 import { Coin, Dec } from "@terra-money/terra.js";
+import { TerraChainIDs } from "@types-lists";
 import { HaloBalance, QueryRes, TokenInfo } from "@types-server/contracts";
+import { ContractQueryArgs } from "@types-services/terra";
 import { haloTags, terraTags, userTags } from "services/terra/tags";
 import { RootState } from "store/store";
 import { terra_lcds } from "constants/urls";
@@ -24,7 +25,7 @@ type BlockLatest = {
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
     const chainID = (api.getState() as RootState).chain.terra;
-    const base_url = terra_lcds[chainID];
+    const base_url = terra_lcds[chainID as TerraChainIDs];
     return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
   },
   { maxRetries: 1 }

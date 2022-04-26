@@ -1,8 +1,8 @@
+import { Denoms } from "@types-lists";
 import * as Yup from "yup";
 import { SchemaShape } from "types/schema";
 import { requiredTokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { denoms } from "constants/denoms";
 import { ProposalBase, proposalShape } from "../proposalShape";
 
 export type FundSendPayload = {
@@ -10,7 +10,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: denoms.uusd | denoms.uhalo;
+  currency: Extract<Denoms, "uusd" | "uhalo">;
   haloBalance: number;
   ustBalance: number;
 };

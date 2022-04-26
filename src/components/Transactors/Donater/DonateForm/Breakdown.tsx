@@ -1,9 +1,9 @@
+import { DonateValues, SupportedDenoms } from "@types-component/donater";
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
-import { DonateValues } from "components/Transactors/Donater/types";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
+import { decimals } from "../constants";
 
 export default function Breakdown() {
   const { fee } = useGetter((state) => state.transaction);
@@ -19,23 +19,18 @@ export default function Breakdown() {
   );
 }
 
-function Entry(props: { title: string; amount: number; currency: string }) {
+function Entry(props: {
+  title: string;
+  amount: number;
+  currency: SupportedDenoms;
+}) {
   return (
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
         {toCurrency(props.amount, decimals[props.currency])}{" "}
-        {currency_text[props.currency as denoms]}
+        {currency_text[props.currency]}
       </p>
     </div>
   );
 }
-
-const decimals: { [index: string]: number } = {
-  [denoms.uusd]: 2,
-  [denoms.btc]: 6,
-  [denoms.ether]: 6,
-  [denoms.sol]: 6,
-  [denoms.uluna]: 6,
-  [denoms.bnb]: 6,
-};

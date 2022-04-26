@@ -1,9 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
+import { Denoms } from "@types-lists";
 import { TokenInfo } from "@types-server/contracts";
 import { terra } from "services/terra/terra";
 import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
-import { denoms } from "constants/denoms";
 import { useContract } from "./useContract";
 
 const haloPlaceHolderInfo: TokenInfo = {
@@ -22,8 +22,8 @@ export function useLatestBlock(pollInterval = 0) {
 }
 
 export function useBalances(
-  main: denoms,
-  others?: denoms[],
+  main: Denoms,
+  others?: Denoms[],
   customAddr?: string
 ) {
   const { wallet } = useWalletContext();
@@ -39,7 +39,7 @@ export function useBalances(
 
   //convert from utoken to token
   const coins = data.map(({ denom, amount }) => ({
-    denom: denom as denoms,
+    denom: denom as Denoms,
     amount: new Dec(amount).mul(1e-6).toNumber(),
   }));
 

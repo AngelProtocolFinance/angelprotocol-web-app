@@ -1,5 +1,5 @@
 import Halo, { H, T } from "contracts/Halo";
-import { chainIDs } from "constants/chainIDs";
+import { LOCAL_TERRA } from "../constants";
 import { useContract } from "../useContract";
 import { gov_api } from "./gov";
 import { staker } from "./placeholders";
@@ -17,8 +17,7 @@ export function useGovStakerState() {
   const { data = staker } = gov_api.endpoints.govStaker.useQueryState(
     contract.staker,
     {
-      skip:
-        wallet === undefined || wallet.network.chainID === chainIDs.localterra,
+      skip: wallet === undefined || wallet.network.chainID === LOCAL_TERRA,
     }
   );
   return data;

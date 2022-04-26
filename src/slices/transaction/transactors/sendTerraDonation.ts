@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ChainIDs } from "@types-lists";
 import { StageUpdator } from "@types-slice/transaction";
 import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { TerraDonateArgs } from "./transactorTypes";
 
@@ -21,7 +21,7 @@ export const sendTerraDonation = createAsyncThunk(
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
       const response = await args.wallet.post(args.tx!);
-      const chainId = args.wallet.network.chainID as chainIDs;
+      const chainId = args.wallet.network.chainID as ChainIDs;
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });

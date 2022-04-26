@@ -1,4 +1,3 @@
-import { ContractQueryArgs } from "#types-services/terra";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import {
   AllianceMember,
@@ -6,9 +5,9 @@ import {
   FundDetails,
   IndexFundOwnerPayload,
 } from "@types-server/contracts";
+import { ContractQueryArgs } from "@types-services/terra";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/denoms";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
 
@@ -111,7 +110,7 @@ export default class Indexfund extends Contract {
           split: `${splitToLiquid}`,
         },
       },
-      [new Coin(denoms.uusd, micro_UST_Amount)]
+      [new Coin("uusd", micro_UST_Amount)]
     );
   }
 }

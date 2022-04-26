@@ -1,3 +1,4 @@
+import { CreatePollValues } from "@types-component/poller";
 import { useFormContext } from "react-hook-form";
 import { terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -6,7 +7,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Halo from "contracts/Halo";
-import { CreatePollValues } from "./types";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {

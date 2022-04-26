@@ -1,13 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { TerraChainIDs } from "@types-lists";
 import { FormProvider, useForm } from "react-hook-form";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { useGetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/denoms";
 import FundSendForm from "./FundSendForm/FundSendForm";
 import { FundSendValues, fundSendSchema } from "./fundSendSchema";
 
@@ -16,7 +15,8 @@ export default function FundSender() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const cw3address =
     cwContracts === "apTeam"
-      ? contracts[wallet?.network.chainID || chainIDs.testnet].apCW3
+      ? contracts[(wallet?.network.chainID as TerraChainIDs) || "bombay-12"]
+          .apCW3
       : cwContracts.cw3;
 
   //cw3 balances
@@ -24,7 +24,7 @@ export default function FundSender() {
     main: ustBalance,
     terraBalancesLoading,
     isTerraBalancesFailed,
-  } = useBalances(denoms.uusd, [], cw3address);
+  } = useBalances("uusd", [], cw3address);
 
   const { haloBalance, haloBalanceLoading, isHaloBalanceFailed } =
     useHaloBalance(cw3address);
@@ -45,7 +45,7 @@ function FundSendContext(props: { haloBalance: number; ustBalance: number }) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      currency: denoms.uusd,
+      currency: "uusd",
       haloBalance: props.haloBalance,
       ustBalance: props.ustBalance,
     },

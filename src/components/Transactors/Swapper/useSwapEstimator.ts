@@ -17,7 +17,6 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/denoms";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
@@ -29,7 +28,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: UST_balance } = useBalances("uusd");
   const { haloBalance } = useHaloBalance();
 
   const { wallet } = useWalletContext();
@@ -102,7 +101,7 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= UST_balance) {

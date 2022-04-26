@@ -1,5 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
+import { ChainIDs, Denoms } from "@types-lists";
 import { Dwindow, Providers } from "@types-slice/provider";
+import { Coin } from "@types-slice/wallet";
 import { ethers } from "ethers";
 import { useEffect } from "react";
 import { TerraIdentifiers } from "types/slices/wallet";
@@ -9,13 +11,11 @@ import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/denoms";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
+  const { main, others, terraBalancesLoading } = useBalances("uusd");
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
 
   //updator for terra-station and wallet connect
@@ -50,18 +50,18 @@ export default function useWalletUpdator(activeProvider: Providers) {
     //append halo balance
     const coinsWithHalo = [
       ...others,
-      { amount: haloBalance, denom: denoms.uhalo },
+      { amount: haloBalance, denom: "uhalo" as Denoms },
     ];
 
     dispatch(
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
-        displayCoin: { amount: main, denom: denoms.uusd },
+        displayCoin: { amount: main, denom: "uusd" },
         coins: haloBalance !== 0 ? coinsWithHalo : others,
         address: wallet.address,
-        chainId: wallet.network.chainID as chainIDs,
-        supported_denoms: [denoms.uusd, denoms.uluna],
+        chainId: wallet.network.chainID as ChainIDs,
+        supported_denoms: ["uusd", "uluna"],
       })
     );
     dispatch(setIsUpdating(false));
@@ -110,26 +110,26 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const coins_copy = [...others];
         coins_copy.push({
           amount: eth_balance,
-          denom: isBinance ? denoms.bnb : denoms.ether,
+          denom: isBinance ? "bnb" : "ether",
         });
 
-        const supported_denoms = [denoms.uusd, denoms.uluna];
-        supported_denoms.push(isBinance ? denoms.bnb : denoms.ether);
+        const supported_denoms: Denoms[] = ["uusd", "uluna"];
+        supported_denoms.push(isBinance ? "bnb" : "ether");
 
         dispatch(
           setWalletDetails({
             id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
-            displayCoin: { amount: main, denom: denoms.uusd },
+            displayCoin: { amount: main, denom: "uusd" },
             coins: coins_copy,
             address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
             chainId:
-              wallet.network.chainID === chainIDs.mainnet
-                ? chainIDs.gen_mainnet
-                : wallet.network.chainID === chainIDs.testnet
-                ? chainIDs.gen_testnet
-                : (`${network.chainId}` as chainIDs),
+              wallet.network.chainID === "columbus-5"
+                ? "mainnet"
+                : wallet.network.chainID === "bombay-12"
+                ? "testnet"
+                : (`${network.chainId}` as ChainIDs),
             supported_denoms,
           })
         );
@@ -157,7 +157,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
-        const eth_coin = { amount: eth_balance, denom: denoms.ether };
+        const eth_coin: Coin = { amount: eth_balance, denom: "ether" };
 
         dispatch(
           setWalletDetails({
@@ -166,8 +166,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
             displayCoin: eth_coin,
             coins: [eth_coin],
             address,
-            chainId: `${network.chainId}` as chainIDs,
-            supported_denoms: [denoms.ether, denoms.bnb],
+            chainId: `${network.chainId}` as ChainIDs,
+            supported_denoms: ["ether", "bnb"],
           })
         );
 
@@ -198,7 +198,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const bnb_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
-        const bnb_coin = { amount: bnb_balance, denom: denoms.bnb };
+        const bnb_coin: Coin = { amount: bnb_balance, denom: "bnb" };
 
         dispatch(
           setWalletDetails({
@@ -207,8 +207,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
             displayCoin: bnb_coin,
             coins: [bnb_coin],
             address,
-            chainId: `${network.chainId}` as chainIDs,
-            supported_denoms: [denoms.bnb],
+            chainId: `${network.chainId}` as ChainIDs,
+            supported_denoms: ["bnb"],
           })
         );
 

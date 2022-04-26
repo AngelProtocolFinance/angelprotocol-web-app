@@ -1,4 +1,4 @@
-import { Coin } from "types/slices/wallet";
+import { Coin } from "@types-slice/wallet";
 import toCurrency from "helpers/toCurrency";
 import { currency_icons, currency_text } from "constants/currency";
 

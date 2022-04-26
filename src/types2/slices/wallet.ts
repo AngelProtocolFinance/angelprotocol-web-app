@@ -1,5 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/denoms";
+import { ChainIDs, Denoms } from "@types-lists";
 
 export enum TerraIdentifiers {
   //watch for this to change in @terra-money/wallet-provider updates
@@ -23,7 +22,7 @@ export enum Providers {
 
 export type Coin = {
   amount: number; // "1000"
-  denom: denoms; //"denoms.uusd, denoms.uluna"
+  denom: Denoms; //"denoms.uusd, denoms.uluna"
 };
 
 export type WalletInfo = {
@@ -31,8 +30,8 @@ export type WalletInfo = {
   displayCoin: Coin;
   coins: Coin[];
   address: string;
-  chainId: chainIDs;
-  supported_denoms: denoms[];
+  chainId: ChainIDs;
+  supported_denoms: Denoms[];
   id: TerraIdentifiers | undefined;
 };
 

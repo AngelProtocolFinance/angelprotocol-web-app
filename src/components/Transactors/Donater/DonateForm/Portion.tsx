@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import usePortion from "./usePortion";
 
-export type Type = "locked" | "liquid";
+type Type = "locked" | "liquid";
 
 type Props = {
   children?: ReactNode;

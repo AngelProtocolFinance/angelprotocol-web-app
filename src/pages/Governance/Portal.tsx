@@ -3,7 +3,6 @@ import useClaimer from "components/Transactors/Claimer/useClaimer";
 import useStaker from "components/Transactors/Staker/useStaker";
 import useSwapper from "components/Transactors/Swapper/useSwapper";
 import { currency_icons } from "constants/currency";
-import { denoms } from "constants/denoms";
 import Button from "./Button";
 
 export default function Portal() {
@@ -18,7 +17,7 @@ export default function Portal() {
         <div className="relative">
           <div className="absolute w-full h-full border-4 border-white/80 rounded-full animate-pulse shadow-md"></div>
           <img
-            src={currency_icons[denoms.uhalo]}
+            src={currency_icons["uhalo"]}
             alt=""
             className="w-14 h-14 m-2 opacity-90 shadow-lg rounded-full"
           />

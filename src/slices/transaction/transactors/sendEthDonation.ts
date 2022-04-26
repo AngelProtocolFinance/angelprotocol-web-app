@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { ChainIDs } from "@types-lists";
 import { Dwindow } from "@types-slice/provider";
 import { StageUpdator } from "@types-slice/transaction";
 import { ethers } from "ethers";
 import { RootState } from "store/store";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
-import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { EthDonateArgs } from "./transactorTypes";
 
@@ -34,7 +34,7 @@ export const sendEthDonation = createAsyncThunk(
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
-      const chainId = `${chainNum}` as chainIDs;
+      const chainId = `${chainNum}` as ChainIDs;
       const response = await signer.sendTransaction(args.tx!);
 
       updateTx({ step: "submit", message: "Saving donation info.." });

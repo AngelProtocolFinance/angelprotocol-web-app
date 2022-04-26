@@ -1,9 +1,9 @@
+import { Denoms } from "@types-lists";
 import toCurrency from "helpers/toCurrency";
 import { currency_icons, currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 
 export default function Balance(props: {
-  denom: denoms;
+  denom: Denoms;
   amount: number;
   precision: number;
 }) {

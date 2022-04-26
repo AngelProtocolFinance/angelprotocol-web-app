@@ -1,15 +1,15 @@
+import { ChainIDs } from "@types-lists";
 import {
   placeholderUpdate as leaderboard_update,
   useLeaderboardsQuery,
 } from "services/aws/leaderboard";
 import Loader from "components/Loader/Loader";
 import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import TableView from "./TableView";
 
 export default function Board() {
   const { wallet } = useWalletContext();
-  const is_test = wallet?.network.chainID === chainIDs.testnet;
+  const is_test = (wallet?.network.chainID as ChainIDs) === "bombay-12";
   const { data: update = leaderboard_update, isLoading } =
     useLeaderboardsQuery(is_test);
   return (

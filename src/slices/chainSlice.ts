@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { chainIDs } from "constants/chainIDs";
+import { ChainIDs } from "@types-lists";
 import { chains } from "constants/chains";
 
 type State = {
-  [key in chains]: string;
+  [key in chains]: ChainIDs;
 };
 
 const initialState: State = {
-  [chains.terra]: chainIDs.mainnet,
-  [chains.ethereum]: chainIDs.eth_main,
+  [chains.terra]: "columbus-5",
+  [chains.ethereum]: "1",
 };
 
 const chainSlice = createSlice({
@@ -17,7 +17,7 @@ const chainSlice = createSlice({
   reducers: {
     updateChainID: (
       state,
-      { payload }: PayloadAction<{ chain: chains; chainID: string }>
+      { payload }: PayloadAction<{ chain: chains; chainID: ChainIDs }>
     ) => {
       state[payload.chain] = payload.chainID;
     },

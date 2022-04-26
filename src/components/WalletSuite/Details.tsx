@@ -1,6 +1,5 @@
 import { Dwindow } from "@types-slice/provider";
 import { useState } from "react";
-import { TerraIdentifiers } from "types/slices/wallet";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { resetWallet } from "slices/walletSlice";
@@ -10,7 +9,6 @@ import Icon from "components/Icons/Icons";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
-import { denoms } from "constants/denoms";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
@@ -29,8 +27,8 @@ export default function Details(props: { closeHandler: () => void }) {
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
-      coin.denom === denoms.uusd ||
-      coin.denom === denoms.uhalo ||
+      coin.denom === "uusd" ||
+      coin.denom === "uhalo" ||
       Number(coin.amount) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);
@@ -52,7 +50,7 @@ export default function Details(props: { closeHandler: () => void }) {
 
   const isSafePal =
     availableWallets.some(
-      (wallet) => wallet.connection.identifier === TerraIdentifiers.safepal
+      (wallet) => wallet.connection.identifier === "SafePal"
     ) ||
     (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 

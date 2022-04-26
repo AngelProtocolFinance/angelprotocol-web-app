@@ -12,14 +12,13 @@ import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/denoms";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
   const { wallet } = useWalletContext();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: UST_balance } = useBalances("uusd");
 
   useEffect(() => {
     (async () => {

@@ -1,10 +1,10 @@
-import { ContractQueryArgs as CQA } from "#types-services/terra";
 import {
   EndowmentQueryOptions,
   RegistrarConfigPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "@types-server/contracts";
+import { ContractQueryArgs as CQA } from "@types-services/terra";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";

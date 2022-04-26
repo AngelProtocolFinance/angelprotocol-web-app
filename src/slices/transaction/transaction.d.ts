@@ -1,4 +1,5 @@
 declare module "@types-slice/transaction" {
+  import { ChainIDs, Denoms } from "@types-lists";
   import { PayloadAction } from "@reduxjs/toolkit";
   import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
   import { CreateTxOptions, Msg } from "@terra-money/terra.js";
@@ -17,7 +18,7 @@ declare module "@types-slice/transaction" {
     step: "form";
     message?: never;
     txHash?: never;
-    chainId?: never;
+    chainId?: ChainIDs;
     details?: never;
   };
 
@@ -25,7 +26,7 @@ declare module "@types-slice/transaction" {
     step: "submit";
     message: string;
     txHash?: never;
-    chainId?: never;
+    chainId?: ChainIDs;
     details?: never;
   };
 
@@ -33,7 +34,7 @@ declare module "@types-slice/transaction" {
     step: "broadcast";
     message: string;
     txHash: string;
-    chainId: string;
+    chainId: ChainIDs;
     details?: never;
   };
 
@@ -42,7 +43,7 @@ declare module "@types-slice/transaction" {
     step: "success";
     message: string;
     txHash: string;
-    chainId: string;
+    chainId: ChainIDs;
     isReceiptEnabled?: boolean;
     isShareEnabled?: boolean;
     successLink?: SuccessLink;
@@ -52,14 +53,14 @@ declare module "@types-slice/transaction" {
     step: "receipt";
     message?: never;
     txHash: string;
-    chainId: string;
+    chainId: ChainIDs;
   };
 
   type ErrorStage = {
     step: "error";
     message: string;
     txHash?: string;
-    chainId?: string;
+    chainId?: ChainIDs;
     details?: never;
   };
 
@@ -83,6 +84,6 @@ declare module "@types-slice/transaction" {
     >[];
     successMessage?: string;
     successLink?: SuccessLink;
-    feedDenom?: string;
+    feedDenom?: Denoms;
   };
 }

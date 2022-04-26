@@ -1,9 +1,8 @@
+import { ChainIDs, Denoms } from "@types-lists";
 import { Receiver, TxLogPayload } from "@types-server/aws";
 import { LogDonationFail } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
-import { chainIDs } from "constants/chainIDs";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 import { apes_endpoint } from "constants/urls";
 import { UserTypes } from "constants/user-types";
 
@@ -47,11 +46,11 @@ const logDonation: DonationLogger = async (
 
 export default logDonation;
 
-export type DonationLogger = (
+type DonationLogger = (
   txhash: string,
-  chainId: chainIDs,
+  chainId: ChainIDs,
   amount: string,
-  denom: denoms,
+  denom: Denoms,
   splitLiq: string,
   walletAddress: string,
   receipient: string | number

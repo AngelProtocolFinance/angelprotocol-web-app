@@ -1,6 +1,9 @@
+import { DonateValues } from "@types-component/donater";
 import * as Yup from "yup";
+import { SchemaShape } from "types/schema";
 import { requiredTokenAmount } from "schemas/number";
 
-export const schema = Yup.object().shape({
+const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,
-});
+};
+export const schema = Yup.object().shape(shape);

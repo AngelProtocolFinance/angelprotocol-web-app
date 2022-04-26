@@ -6,6 +6,7 @@ import {
   MsgExecuteContract,
   MsgSend,
 } from "@terra-money/terra.js";
+import { DonateValues } from "@types-component/donater";
 import { Dwindow } from "@types-slice/provider";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -24,8 +25,6 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/denoms";
-import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
@@ -82,7 +81,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         //checks for uusd
-        if (currency === denoms.uusd) {
+        if (currency === "uusd") {
           if (activeProvider === "terra") {
             const receiver = getValues("receiver");
             let depositMsg: MsgExecuteContract;
@@ -117,20 +116,20 @@ export default function useEstimator() {
         }
 
         //checks for uluna
-        if (currency === denoms.uluna) {
+        if (currency === "uluna") {
           if (activeProvider === "terra") {
             //this block won't run if wallet is not connected
             //activeProvider === "none"
             const contract = new Contract(wallet);
             const sender = wallet!.address;
-            const receiver = ap_wallets[denoms.uluna];
+            const receiver = ap_wallets["uluna"];
             const amount = new Dec(debounced_amount).mul(1e6);
 
             const msg = new MsgSend(sender, receiver, [
-              new Coin(denoms.uluna, amount.toNumber()),
+              new Coin("uluna", amount.toNumber()),
             ]);
-            const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-            const numFee = extractFeeNum(aminoFee, denoms.uluna);
+            const aminoFee = await contract.estimateFee([msg], "uluna");
+            const numFee = extractFeeNum(aminoFee, "uluna");
 
             if (debounced_amount + numFee >= balance) {
               dispatch(setFormError("Not enough balance to pay fees"));
@@ -142,7 +141,7 @@ export default function useEstimator() {
         }
 
         //estimates for eth
-        if (currency === denoms.ether) {
+        if (currency === "ether") {
           const dwindow = window as Dwindow;
           //provider is present at this point
           let provider: ethers.providers.Web3Provider;
@@ -163,7 +162,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets["ether"],
             value: wei_amount,
           };
 
@@ -177,7 +176,7 @@ export default function useEstimator() {
         }
 
         //estimates for bnb
-        if (currency === denoms.bnb) {
+        if (currency === "bnb") {
           const dwindow = window as Dwindow;
           //provider is present at this point
           let provider: ethers.providers.Web3Provider;
@@ -199,7 +198,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets["ether"],
             value: wei_amount,
           };
 

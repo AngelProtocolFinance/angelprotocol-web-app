@@ -1,5 +1,5 @@
 import Indexfund, { IF, T } from "contracts/IndexFund";
-import { chainIDs } from "constants/chainIDs";
+import { LOCAL_TERRA } from "../constants";
 import { useContract } from "../useContract";
 import { indexFund_api } from "./indexFund";
 
@@ -11,7 +11,7 @@ export function useFundList() {
     isLoading,
     isFetching,
   } = useFundListQuery(contract.fundList, {
-    skip: wallet?.network.chainID === chainIDs.localterra,
+    skip: wallet?.network.chainID === LOCAL_TERRA,
   });
 
   return { fundList: data, isFundListLoading: isLoading || isFetching };
@@ -24,7 +24,7 @@ export function useFundMembers(fundId: string) {
   const { fundMembers = [], isFundMembersLoading } = useFundListQuery(
     contract.fundList,
     {
-      skip: fundId === "" || wallet?.network.chainID === chainIDs.localterra,
+      skip: fundId === "" || wallet?.network.chainID === LOCAL_TERRA,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
         fundMembers: data?.find((fund) => fund.id === +fundId)?.members,
         isFundMembersLoading: isLoading || isFetching,
@@ -44,7 +44,7 @@ export function useAllianceMembers() {
     isFetching,
     isError,
   } = useAllianceMembersQuery(contract.allianceMembers, {
-    skip: wallet?.network.chainID === chainIDs.localterra,
+    skip: wallet?.network.chainID === LOCAL_TERRA,
   });
 
   return {
@@ -60,7 +60,7 @@ export function useIndexFundConfig() {
   const { data, isLoading, isFetching, isError } = useConfigQuery(
     contract.config,
     {
-      skip: wallet?.network.chainID === chainIDs.localterra,
+      skip: wallet?.network.chainID === LOCAL_TERRA,
     }
   );
 

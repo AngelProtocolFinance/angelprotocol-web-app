@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Icon from "components/Icons/Icons";
 import { currency_icons } from "constants/currency";
-import { denoms } from "constants/denoms";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 import { SwapValues } from "./types";
@@ -49,7 +48,7 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
+            src={currency_icons[is_buy ? "uusd" : "uhalo"]}
             alt=""
           />
           <span className="block font-bold text-2xl">

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { ChainIDs } from "@types-lists";
 import {
   SenderArgs,
   StageUpdator,
@@ -10,9 +11,7 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
 import { currency_text } from "constants/currency";
-import { denoms } from "constants/denoms";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
@@ -44,7 +43,7 @@ export const sendTerraTx = createAsyncThunk(
         const feeNum = extractFeeNum(fee);
 
         const state = getState() as RootState;
-        const feeDenom = (args.feedDenom as denoms) || denoms.uusd;
+        const feeDenom = args.feedDenom || "uusd";
         const walletBalanceForFee =
           state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
           0;
@@ -60,7 +59,7 @@ export const sendTerraTx = createAsyncThunk(
       }
 
       const response = await args.wallet.post(tx);
-      const chainId = contract.chainID as chainIDs;
+      const chainId = contract.chainID as ChainIDs;
 
       updateTx({
         step: "broadcast",

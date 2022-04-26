@@ -12,7 +12,6 @@ import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
-import { denoms } from "constants/denoms";
 import { AdminVoteValues } from "./types";
 
 export default function useEstimator() {
@@ -20,7 +19,7 @@ export default function useEstimator() {
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: UST_balance } = useBalances("uusd");
   const { wallet } = useWalletContext();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);

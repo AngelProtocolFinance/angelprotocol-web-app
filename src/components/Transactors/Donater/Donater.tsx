@@ -1,9 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { DonateValues, Props } from "@types-component/donater";
 import { FormProvider, useForm } from "react-hook-form";
-import { DonateValues } from "components/Transactors/Donater/types";
-import { denoms } from "constants/denoms";
 import { schema } from "./schema";
-import { Props } from "./types";
 
 export default function Donater(props: Props) {
   const methods = useForm<DonateValues>({
@@ -13,7 +11,7 @@ export default function Donater(props: Props) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      currency: denoms.uusd,
+      currency: "uusd",
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

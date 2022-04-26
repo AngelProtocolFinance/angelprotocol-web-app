@@ -1,4 +1,5 @@
 import {
+  NetworkInfo,
   StaticWalletProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
@@ -8,17 +9,15 @@ import { ReactNode } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { store } from "store/store";
-import { chainIDs } from "constants/chainIDs";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { terra_lcds } from "constants/urls";
 import App from "./App";
 
-const testnet = {
+const testnet: NetworkInfo = {
   name: "bombay",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
+  chainID: "bombay-12",
+  lcd: terra_lcds["bombay-12"],
 };
-
 // define initial routes
 const routes = [
   `${siteRoutes.app}`,
