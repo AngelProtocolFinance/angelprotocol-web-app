@@ -59,27 +59,16 @@ const registration_api = aws.injectEndpoints({
     }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
-      query: (data) => {
+      query: ({ uuid, type, body }) => {
         return {
           url: "registration/build-email",
           method: "POST",
-          params: { uuid: data.uuid, type: data.type },
+          params: { uuid, type },
           headers,
-          body: data.body,
+          body,
         };
       },
       transformResponse: (response: { data: any }) => response,
-    }),
-    updateCharityApplication: builder.mutation<any, UpdateApplication>({
-      query: (data) => {
-        return {
-          url: "registration",
-          method: "PUT",
-          params: { uuid: data.PK },
-          headers,
-          body: data,
-        };
-      },
     }),
     updateCharityMetadata: builder.mutation<
       UpdateCharityMetadataResult,
@@ -130,7 +119,6 @@ export const {
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
   useRequestEmailMutation,
-  useUpdateCharityApplicationMutation,
   useUpdateCharityMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
