@@ -7,6 +7,7 @@ import {
   setFee,
   setFormError,
   setFormLoading,
+  setStage,
 } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { useSetModal } from "components/Modal/Modal";
@@ -36,6 +37,8 @@ export default function useSubmit() {
   useEffect(() => {
     async function handleSuccess() {
       try {
+        console.log(stage);
+
         const endowmentContract = stage
           .txInfo!.logs![0].events.find(
             (event) => event.type === "instantiate_contract"
@@ -47,7 +50,8 @@ export default function useSubmit() {
         dispatch(setFormLoading(false));
       } catch (error) {
         console.log(JSON.stringify(error));
-        dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
+        dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
+        dispatch(setFormLoading(false));
       }
     }
 
@@ -64,7 +68,9 @@ export default function useSubmit() {
     async (charity: CharityData) => {
       try {
         if (!wallet) {
-          dispatch(setFormError("Wallet is disconnected"));
+          dispatch(
+            setStage({ step: Step.error, message: "Wallet is not connected" })
+          );
           return;
         }
 
@@ -79,7 +85,13 @@ export default function useSubmit() {
 
         //2nd balance check including fees
         if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+          dispatch(
+            setStage({
+              step: Step.error,
+              message: "Not enough UST to pay fees",
+            })
+          );
+          dispatch(setFormLoading(false));
           return;
         }
 
@@ -87,10 +99,12 @@ export default function useSubmit() {
 
         const tx: CreateTxOptions = { msgs: [msg], fee };
         dispatch(sendTerraTx({ wallet, tx: tx! }));
-
-        showModal(TransactionPrompt, {});
       } catch (err) {
-        dispatch(setFormError(processEstimateError(err))); // also sets form_loading to 'false'
+        console.log(processEstimateError(err));
+        dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
+        dispatch(setFormLoading(false));
+      } finally {
+        showModal(TransactionPrompt, {});
       }
     },
     [UST_balance, wallet, dispatch, showModal]
