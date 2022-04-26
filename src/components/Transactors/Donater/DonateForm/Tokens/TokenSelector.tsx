@@ -2,15 +2,16 @@ import { memo } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   ControlProps,
+  MenuListProps,
   MenuProps,
   OptionProps,
   ValueContainerProps,
 } from "react-select";
 import Icon from "components/Icons/Icons";
-import { Selector } from "components/Selector";
 import { DonateValues } from "components/Transactors/Donater/types";
 import useWalletContext from "hooks/useWalletContext";
 import { currency_icons, currency_text, denoms } from "constants/currency";
+import { Selector } from "./Selector";
 import useGetTokens from "./useGetTokens";
 
 export type TokenOption = {
@@ -57,6 +58,20 @@ function TokenSelector() {
         className="absolute top-100 left-0 w-115 bg-white scroll-hidden p-2 rounded-lg"
       >
         <h1 className="text-sm font-bold mb-2">Select token</h1>
+        {children}
+      </div>
+    );
+  };
+
+  const MenuList = (props: MenuListProps) => {
+    const { children, innerRef, innerProps } = props;
+
+    return (
+      <div
+        ref={innerRef}
+        {...innerProps}
+        className="bg-white scroll-hidden max-h-116 overflow-y-auto"
+      >
         {children}
       </div>
     );
@@ -132,9 +147,9 @@ function TokenSelector() {
         register={register}
         menuPlacement="bottom"
         isOptionSelected={isOptionSelected}
-        customComponents={true}
         Option={CustomOption}
         Menu={CustomMenu}
+        MenuList={MenuList}
         IndicatorSeparator={() => null}
         IndicatorsContainer={() => null}
         ValueContainer={ValueContainer}

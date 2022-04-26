@@ -93,7 +93,7 @@ export function useHaloBalance(customAddr?: string) {
 }
 
 export function useCw20TokenBalance(
-  token_address: string,
+  contract_address: string,
   customAddr?: string
 ) {
   const { useCW20BalanceQuery } = terra;
@@ -105,11 +105,11 @@ export function useCw20TokenBalance(
     isError,
   } = useCW20BalanceQuery(
     {
-      address: token_address,
+      address: contract_address,
       //this query will only run if wallet is not undefined
       msg: { balance: { address: customAddr || wallet?.address } },
     },
-    { skip: wallet === undefined }
+    { skip: !contract_address }
   );
   return {
     tokenBalance: data,

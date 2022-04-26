@@ -46,7 +46,7 @@ export default function useEstimator() {
   const native_denoms = [denoms.uusd, denoms.uluna];
 
   // query balance for non-native cw20Token
-  const { tokenBalance } = useCw20TokenBalance(cw20_contract || "");
+  const { tokenBalance } = useCw20TokenBalance(cw20_contract!);
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
