@@ -4,6 +4,8 @@ import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
+import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
 import { Folders } from "constants/folders";
@@ -14,8 +16,14 @@ export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
+  const { showModal } = useSetModal();
 
-  const handleError = useCallback((err) => console.log(err), []);
+  const handleError = useCallback((err) => {
+    showModal(Popup, {
+      message: err?.data?.message || "Error updating profile ❌",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSuccess = useCallback(
     (data: UpdateCharityMetadataResult) =>
@@ -36,6 +44,8 @@ export default function useSubmit() {
   const submit = useCallback(
     async (values: FormValues) => {
       const body = await getUploadBody(values);
+      if (!body)
+        return showModal(Popup, { message: "Error uploading files ❌" });
 
       const result = await updateMetadata({
         PK: charity.ContactPerson.PK,
@@ -48,26 +58,34 @@ export default function useSubmit() {
       };
 
       if (dataResult.error) {
-        handleError(JSON.stringify(dataResult.error));
+        handleError(dataResult.error);
       } else {
         handleSuccess(dataResult.data);
       }
     },
-    [charity.ContactPerson.PK, handleSuccess, handleError, updateMetadata]
+    [
+      showModal,
+      updateMetadata,
+      charity.ContactPerson.PK,
+      handleError,
+      handleSuccess,
+    ]
   );
 
   return { submit, isSuccess };
 }
 
 async function getUploadBody(values: FormValues) {
-  const CharityLogo = await uploadToIpfs(
+  const logoPromise = await uploadToIpfs(
     values.charityLogo as FileWrapper,
     Folders.CharityProfileImageLogo
   );
-  const Banner = await uploadToIpfs(
+  const bannerPromise = await uploadToIpfs(
     values.banner as FileWrapper,
     Folders.CharityProfileImageBanners
   );
+  const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
+  if (!CharityLogo || !Banner) return null;
 
   return {
     Banner,

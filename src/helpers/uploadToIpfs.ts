@@ -11,13 +11,14 @@ export default async function uploadToIpfs(
   try {
     const uploadedFile = await fleekStorage.upload({
       key: folder ? [folder, file.name].join("") : file.name,
-      apiKey: API_KEY!,
+      apiKey: "API_KEY"!,
       apiSecret: API_SECRET!,
       data: file.file,
     });
     return uploadedFile.publicUrl;
   } catch (e) {
-    console.log("Error uploading file: ", e);
-    throw new Error("Error uploading file to ipfs");
+    // console.log("Error uploading file: ", file.name);
+    // throw new Error("Error uploading file to ipfs");
+    return "";
   }
 }
