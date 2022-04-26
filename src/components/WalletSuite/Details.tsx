@@ -6,12 +6,12 @@ import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import Copier from "components/Copier/Copier";
 import Icon from "components/Icons/Icons";
+import Backdrop from "components/ModalContext/Backdrop";
 import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
 import { denoms } from "constants/currency";
-import Backdrop from "./Backdrop";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
@@ -59,6 +59,10 @@ export default function Details(props: { closeHandler: () => void }) {
 
   return (
     <>
+      <Backdrop
+        classes="z-10 fixed inset-0"
+        customCloseHandler={props.closeHandler}
+      />
       <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
         <button
           className="text-white absolute top-2 right-2"
@@ -89,7 +93,6 @@ export default function Details(props: { closeHandler: () => void }) {
           </button>
         )}
       </div>
-      <Backdrop closeHandler={props.closeHandler} />
     </>
   );
 }

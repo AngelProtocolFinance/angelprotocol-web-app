@@ -1,7 +1,7 @@
 import Icon from "components/Icons/Icons";
+import Backdrop from "components/ModalContext/Backdrop";
 import ModalContext from "components/ModalContext/ModalContext";
 import useWalletContext from "hooks/useWalletContext";
-import Backdrop from "./Backdrop";
 import BnbConnector from "./Connectors/BnbConnector";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
@@ -12,6 +12,10 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
 
   return (
     <>
+      <Backdrop
+        customCloseHandler={props.closeHandler}
+        classes="z-10 fixed inset-0"
+      />
       <div className="w-max absolute top-full right-0 flex flex-col gap-3 bg-white p-4 pt-4 mt-2 rounded-md shadow-2xl z-50">
         <p className="uppercase font-heading text-angel-grey font-bold">
           Choose wallet
@@ -50,7 +54,6 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           </>
         )}
       </div>
-      <Backdrop closeHandler={props.closeHandler} />
     </>
   );
 }
