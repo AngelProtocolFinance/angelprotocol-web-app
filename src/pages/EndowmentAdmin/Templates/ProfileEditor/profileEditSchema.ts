@@ -1,6 +1,6 @@
+import { SchemaShape } from "@types-schema";
 import { UpdateProfilePayload } from "@types-server/contracts";
 import * as Yup from "yup";
-import { SchemaShape } from "types/schema";
 import {
   ProposalBase,
   proposalShape,

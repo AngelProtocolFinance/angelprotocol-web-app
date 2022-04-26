@@ -1,11 +1,11 @@
-import { ChainIDs, Denoms } from "@types-lists";
+import { ChainIDs, Denoms, UserTypes } from "@types-lists";
 import { Receiver, TxLogPayload } from "@types-server/aws";
 import { LogDonationFail } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
 import { currency_text } from "constants/currency";
 import { apes_endpoint } from "constants/urls";
-import { UserTypes } from "constants/user-types";
 
+const userType: UserTypes = "angelprotocol-web-app";
 const logDonation: DonationLogger = async (
   txhash,
   chainId,
@@ -31,7 +31,7 @@ const logDonation: DonationLogger = async (
     chainId,
   };
 
-  const generatedToken = createAuthToken(UserTypes.WEB_APP);
+  const generatedToken = createAuthToken(userType);
   const response = await fetch(apes_endpoint + "/donation", {
     method: "POST",
     headers: { authorization: generatedToken },

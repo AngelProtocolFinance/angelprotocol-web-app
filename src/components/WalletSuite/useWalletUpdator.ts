@@ -4,7 +4,6 @@ import { Dwindow, Providers } from "@types-slice/provider";
 import { Coin } from "@types-slice/wallet";
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import { TerraIdentifiers } from "types/slices/wallet";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -33,10 +32,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
     if (
       //only run this updator when wallet is terra extension or leap-wallet or wallet-connect
       !(
-        wallet.connection.identifier === TerraIdentifiers.torus ||
-        wallet.connection.identifier === TerraIdentifiers.station ||
-        wallet.connection.identifier === TerraIdentifiers.leap ||
-        wallet.connection.identifier === TerraIdentifiers.safepal ||
+        wallet.connection.identifier === "torus" ||
+        wallet.connection.identifier === "station" ||
+        wallet.connection.identifier === "leap-wallet" ||
+        wallet.connection.identifier === "SafePal" ||
         wallet.connection.identifier === undefined
       )
     ) {
@@ -55,7 +54,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
     dispatch(
       setWalletDetails({
-        id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
+        id: wallet.connection.identifier || "terra_wc",
         icon: wallet.connection.icon,
         displayCoin: { amount: main, denom: "uusd" },
         coins: haloBalance !== 0 ? coinsWithHalo : others,
@@ -81,7 +80,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         if (
           //only run this updator when wallet is terra extension or wallet connect
-          !(wallet.connection.identifier === TerraIdentifiers.xdefi)
+          !(wallet.connection.identifier === "xdefi-wallet")
         ) {
           return;
         }
@@ -118,7 +117,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         dispatch(
           setWalletDetails({
-            id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
+            id: wallet.connection.identifier || "terra_wc",
             icon: wallet.connection.icon,
             displayCoin: { amount: main, denom: "uusd" },
             coins: coins_copy,

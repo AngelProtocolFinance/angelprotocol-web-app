@@ -1,5 +1,5 @@
+import { SchemaShape } from "@types-schema";
 import * as Yup from "yup";
-import { SchemaShape } from "types/schema";
 import { futureDate } from "schemas/date";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress, stringByteSchema } from "schemas/string";

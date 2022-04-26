@@ -1,4 +1,3 @@
-import { PollStatus } from "@types-server/contracts";
 import { useNavigate } from "react-router-dom";
 import Icon from "components/Icons/Icons";
 import toCurrency from "helpers/toCurrency";

@@ -2,7 +2,6 @@ import { ChainIDs } from "@types-lists";
 import { LogApplicationUpdateError } from "errors/errors";
 import createAuthToken from "helpers/createAuthToken";
 import { aws_endpoint } from "constants/urls";
-import { UserTypes } from "constants/user-types";
 
 interface UpdateApplicationPayload {
   PK: string;
@@ -11,7 +10,7 @@ interface UpdateApplicationPayload {
 }
 type ReviewLogger = (payload: UpdateApplicationPayload) => Promise<void>;
 const logApplicationReview: ReviewLogger = async (payload) => {
-  const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
+  const generatedToken = createAuthToken("charity-owner");
   const is_test = payload.chain_id === "bombay-12";
   const chain_id = is_test ? "testnet" : "mainnet";
   const response = await fetch(

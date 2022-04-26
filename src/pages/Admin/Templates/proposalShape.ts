@@ -1,4 +1,4 @@
-import { SchemaShape } from "types/schema";
+import { SchemaShape } from "@types-schema";
 import { stringByteSchema } from "schemas/string";
 
 export type ProposalBase = {

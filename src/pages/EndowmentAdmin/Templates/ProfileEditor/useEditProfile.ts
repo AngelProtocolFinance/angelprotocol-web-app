@@ -1,7 +1,7 @@
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
+import { ObjectEntries } from "@types-utils";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ObjectEntries } from "types/utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
 import { ProposalMeta } from "pages/Admin/types";

@@ -8,8 +8,8 @@ import {
   useConnectedWallet,
   useWallet,
 } from "@terra-money/wallet-provider";
+import { TerraWalletIDs } from "@types-slice/wallet";
 import { useEffect, useMemo } from "react";
-import { TerraIdentifiers } from "types/slices/wallet";
 import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
 
@@ -35,8 +35,9 @@ export default function useTerraJsWallet(): Result {
 
   // Automatically connect with SafePal if and when available
   useEffect(() => {
+    const safePalId: TerraWalletIDs = "SafePal";
     const safePal = availableConnections.find(
-      (x) => x.identifier === TerraIdentifiers.safepal
+      (x) => x.identifier === safePalId
     );
 
     if (safePal) {
@@ -83,7 +84,10 @@ function createWallet(
         connect: () =>
           new Promise((resolve) =>
             resolve(
-              connect(wallet.connection.type, wallet.connection.identifier)
+              connect(
+                wallet.connection.type,
+                wallet.connection.identifier as TerraWalletIDs
+              )
             )
           ),
         disconnect: () => new Promise((resolve) => resolve(disconnect())),

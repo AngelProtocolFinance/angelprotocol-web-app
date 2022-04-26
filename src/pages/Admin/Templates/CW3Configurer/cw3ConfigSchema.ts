@@ -1,5 +1,5 @@
+import { SchemaShape } from "@types-schema";
 import * as Yup from "yup";
-import { SchemaShape } from "types/schema";
 import { requiredPositiveNumber } from "schemas/number";
 import { ProposalBase, proposalShape } from "../proposalShape";
 

@@ -1,4 +1,3 @@
-import { PollStatus } from "@types-server/contracts";
 import { ReactNode } from "react";
 import usePollEnder from "components/Transactors/PollEnder/usePolllEnder";
 import useVoter from "components/Transactors/Voter/useVoter";
