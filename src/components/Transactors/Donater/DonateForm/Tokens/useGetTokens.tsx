@@ -26,11 +26,10 @@ export default function useGetTokens() {
     } else if (activeProvider === Providers.ethereum) {
       setTokens(supported_eth_tokens);
       setNativeDenom(denoms.ether);
-    } else {
-      setTokens([]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeProvider, terraTokens]);
+  }, [activeProvider, isLoading]);
+
   return {
     nativeDenom,
     data: tokens,

@@ -90,7 +90,6 @@ export const Selector = React.memo(
                 props.onChange && props.onChange(option?.value);
               }}
               styles={colourStyles}
-              isOptionDisabled={props.isOptionDisabled}
               isOptionSelected={props.isOptionSelected}
               isSearchable={props.isSearchable}
               options={props.options}
