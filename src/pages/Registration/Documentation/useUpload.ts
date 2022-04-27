@@ -4,6 +4,8 @@ import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
+import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import uploadToIpfs from "helpers/uploadToIpfs";
 import { Folders } from "constants/folders";
@@ -14,10 +16,16 @@ export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
+  const { showModal } = useSetModal();
 
   // this '_' value should be used to notify the user of a failure,
   // or to put in our logs once (and if) they're ever implemented
-  const handleError = useCallback((err) => console.log(err), []);
+  const handleError = useCallback((err) => {
+    showModal(Popup, {
+      message: err?.data?.message || "Error updating profile ❌",
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSuccess = useCallback(
     (data?: UpdateDocumentationResult) =>
@@ -34,6 +42,11 @@ export default function useUpload() {
     async (values: FormValues) => {
       const uploadBody = await getUploadUrls(values);
 
+      if (!uploadBody)
+        return showModal(Popup, {
+          message: "Error uploading files ❌",
+        });
+
       const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
       const result = await uploadDocumentation(postData);
 
@@ -43,12 +56,18 @@ export default function useUpload() {
       };
 
       if (dataResult.error) {
-        handleError(JSON.stringify(dataResult.error));
+        handleError(dataResult.error);
       } else {
         handleSuccess(dataResult.data);
       }
     },
-    [charity.ContactPerson.PK, handleSuccess, handleError, uploadDocumentation]
+    [
+      showModal,
+      charity.ContactPerson.PK,
+      uploadDocumentation,
+      handleError,
+      handleSuccess,
+    ]
   );
 
   return { upload, isSuccess };
@@ -80,6 +99,11 @@ async function getUploadUrls(values: FormValues) {
     FinancialStatements,
     AuditedFinancialReports,
   ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
+
+  const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
+    (url) => url === ""
+  );
+  if (!ProofOfIdentity || !ProofOfRegistration || hasError) return null;
 
   return {
     Website: values.website,
