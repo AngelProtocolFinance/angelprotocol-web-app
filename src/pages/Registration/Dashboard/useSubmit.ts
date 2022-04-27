@@ -1,6 +1,7 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useCallback, useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
+import { Charity } from "services/aws/types";
 import { useBalances } from "services/terra/queriers";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {
@@ -19,7 +20,6 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
-import { CharityData } from "../store";
 
 const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
@@ -65,7 +65,7 @@ export default function useSubmit() {
   }, [stage, dispatch, submitToAws]);
 
   const submit = useCallback(
-    async (charity: CharityData) => {
+    async (charity: Charity) => {
       try {
         if (!wallet) {
           dispatch(
@@ -114,7 +114,7 @@ export default function useSubmit() {
 }
 
 function createMessagePayload(
-  charity: CharityData
+  charity: Charity
 ): RegistrarEndowmentCreationPayload {
   return {
     beneficiary: charity.Metadata.TerraWallet,
