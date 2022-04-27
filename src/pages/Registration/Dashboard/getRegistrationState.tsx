@@ -1,24 +1,17 @@
-import { Charity, EndowmentTier, FileObject } from "services/aws/types";
-
-const isString = (data: string | FileObject) => typeof data === "string";
+import { Charity, EndowmentTier } from "services/aws/types";
 
 export default function getRegistrationState(
   charity: Charity
 ): RegistrationState {
-  const logo = isString(charity.Metadata.CharityLogo)
-    ? charity.Metadata.CharityLogo
-    : (charity.Metadata.CharityLogo as FileObject)?.sourceUrl;
-
-  const banner = isString(charity.Metadata.Banner)
-    ? charity.Metadata.Banner
-    : (charity.Metadata.Banner as FileObject)?.sourceUrl;
-
   return {
     stepOne: { completed: !!charity.ContactPerson.PK },
     stepTwo: { completed: !!charity.Metadata.TerraWallet },
     stepThree: getStepThree(charity),
     stepFour: {
-      completed: !!logo && !!banner && !!charity.Metadata.CharityOverview,
+      completed:
+        !!charity.Metadata.CharityLogo?.sourceUrl &&
+        !!charity.Metadata.Banner?.sourceUrl &&
+        !!charity.Metadata.CharityOverview,
     },
     getIsReadyForSubmit: function () {
       return (
@@ -32,17 +25,9 @@ export default function getRegistrationState(
 }
 
 function getStepThree(charity: Charity): DocumentationStep {
-  const ProofOfIdentity = isString(charity.Registration.ProofOfIdentity)
-    ? charity.Registration.ProofOfIdentity
-    : (charity.Registration.ProofOfIdentity as FileObject)?.sourceUrl;
-
-  const ProofOfRegistration = isString(charity.Registration.ProofOfRegistration)
-    ? charity.Registration.ProofOfRegistration
-    : (charity.Registration.ProofOfRegistration as FileObject)?.sourceUrl;
-
   const levelOneDataExists =
-    !!ProofOfIdentity &&
-    !!ProofOfRegistration &&
+    !!charity.Registration.ProofOfIdentity?.sourceUrl &&
+    !!charity.Registration.ProofOfRegistration?.sourceUrl &&
     !!charity.Registration.Website;
 
   const levelTwoDataExists =

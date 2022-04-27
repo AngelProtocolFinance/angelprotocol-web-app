@@ -3,7 +3,7 @@ import { FieldValues } from "react-hook-form";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { BaseProps, FileWrapper } from "./types";
 
-type FileValue = (string | FileWrapper)[];
+type Value = FileWrapper | FileWrapper[];
 
 type Props<T extends FieldValues> = BaseProps<T> & {
   onDrop: <K extends File>(
@@ -11,7 +11,7 @@ type Props<T extends FieldValues> = BaseProps<T> & {
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void;
-  value: FileValue;
+  value: Value;
 };
 
 export default function Dropzone<T extends FieldValues>(props: Props<T>) {
@@ -37,7 +37,7 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   );
 }
 
-type DropzoneTextProps = { value: FileValue };
+type DropzoneTextProps = { value: Value };
 
 function DropzoneText({ value }: DropzoneTextProps) {
   const fileNames = getFileNames(value);
@@ -54,27 +54,14 @@ function DropzoneText({ value }: DropzoneTextProps) {
   );
 }
 
-function getFileNames(value: FileValue) {
+function getFileNames(value: Value) {
   if (!value) {
     return "";
   }
 
-  if (typeof value === "string") {
-    return extractFileName(value);
-  }
+  const fileWrappers = !(value as FileWrapper[])?.length
+    ? [value as FileWrapper]
+    : (value as FileWrapper[]);
 
-  const files = !value.length ? [value] : value;
-
-  return files
-    .map((file) =>
-      typeof file === "string"
-        ? extractFileName(file)
-        : (file as FileWrapper).name
-    )
-    .join(", ");
-}
-
-function extractFileName(url: string) {
-  const fragments = url.split("/");
-  return fragments[fragments.length - 1];
+  return fileWrappers.map((fileWrapper) => fileWrapper.name).join(", ");
 }

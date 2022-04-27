@@ -101,7 +101,7 @@ async function getUploadUrls(values: FormValues) {
   ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
 
   const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
-    (url) => url === ""
+    (x) => !x.sourceUrl
   );
   if (!ProofOfIdentity || !ProofOfRegistration || hasError) return null;
 

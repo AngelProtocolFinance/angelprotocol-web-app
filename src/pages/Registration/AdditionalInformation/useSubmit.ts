@@ -3,7 +3,6 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
-import { FileWrapper } from "components/FileDropzone/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -77,14 +76,15 @@ export default function useSubmit() {
 
 async function getUploadBody(values: FormValues) {
   const logoPromise = uploadToIpfs(
-    values.charityLogo as FileWrapper,
+    values.charityLogo,
     Folders.CharityProfileImageLogo
   );
   const bannerPromise = uploadToIpfs(
-    values.banner as FileWrapper,
+    values.banner,
     Folders.CharityProfileImageBanners
   );
   const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
+
   if (!CharityLogo || !Banner) return null;
 
   return {

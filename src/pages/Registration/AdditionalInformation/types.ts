@@ -3,8 +3,8 @@ import { FileWrapper } from "components/FileDropzone/types";
 
 export type FormValues = {
   charityOverview: string;
-  charityLogo: FileWrapper | string;
-  banner: FileWrapper | string;
+  charityLogo: FileWrapper;
+  banner: FileWrapper;
 };
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
