@@ -1,5 +1,5 @@
+import Backdrop from "components/Backdrop/Backdrop";
 import Icon from "components/Icons/Icons";
-import Backdrop from "components/ModalContext/Backdrop";
 import ModalContext from "components/ModalContext/ModalContext";
 import useWalletContext from "hooks/useWalletContext";
 import BnbConnector from "./Connectors/BnbConnector";

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import useAttachKeyPressHandler from "hooks/useAttachKeypressHandler";
-import { useModalContext } from "./ModalContext";
-import useFocusHandler from "./useFocusHandler";
+import { useModalContext } from "../ModalContext/ModalContext";
+import useFocusHandler from "../ModalContext/useFocusHandler";
 
 export default function Backdrop(props: {
   classes: string;

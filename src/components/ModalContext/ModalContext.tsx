@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import Backdrop from "./Backdrop";
+import Backdrop from "../Backdrop/Backdrop";
 import { Handlers, Opener } from "./types";
 
 export default function ModalContext(
