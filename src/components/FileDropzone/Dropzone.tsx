@@ -37,9 +37,7 @@ export default function Dropzone<T extends FieldValues>(props: Props<T>) {
   );
 }
 
-type DropzoneTextProps = { value: Value };
-
-function DropzoneText({ value }: DropzoneTextProps) {
+function DropzoneText({ value }: { value: Value }) {
   const fileNames = getFileNames(value);
 
   return !fileNames.length ? (

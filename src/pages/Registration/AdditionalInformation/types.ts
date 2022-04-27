@@ -27,7 +27,7 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
       // file name must be set
       !!fileWrapper.name &&
       // either new file is uploaded or source URL to file is set
-      (!!fileWrapper.file || !!fileWrapper.sourceUrl),
+      (!!fileWrapper.file || !!fileWrapper.publicUrl),
   });
 
 export const SCHEMA = Yup.object().shape({

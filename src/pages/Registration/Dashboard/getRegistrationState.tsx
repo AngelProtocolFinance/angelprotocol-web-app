@@ -9,8 +9,8 @@ export default function getRegistrationState(
     stepThree: getStepThree(charity),
     stepFour: {
       completed:
-        !!charity.Metadata.CharityLogo?.sourceUrl &&
-        !!charity.Metadata.Banner?.sourceUrl &&
+        !!charity.Metadata.CharityLogo.publicUrl &&
+        !!charity.Metadata.Banner.publicUrl &&
         !!charity.Metadata.CharityOverview,
     },
     getIsReadyForSubmit: function () {
@@ -26,16 +26,16 @@ export default function getRegistrationState(
 
 function getStepThree(charity: Charity): DocumentationStep {
   const levelOneDataExists =
-    !!charity.Registration.ProofOfIdentity?.sourceUrl &&
-    !!charity.Registration.ProofOfRegistration?.sourceUrl &&
+    !!charity.Registration.ProofOfIdentity.publicUrl &&
+    !!charity.Registration.ProofOfRegistration.publicUrl &&
     !!charity.Registration.Website;
 
   const levelTwoDataExists =
-    !!charity.Registration.FinancialStatements?.length &&
+    !!charity.Registration.FinancialStatements.length &&
     (charity.Registration.UN_SDG || -1) >= 0;
 
   const levelThreeDataExists =
-    !!charity.Registration.AuditedFinancialReports?.length;
+    !!charity.Registration.AuditedFinancialReports.length;
 
   const tier = levelOneDataExists
     ? levelTwoDataExists

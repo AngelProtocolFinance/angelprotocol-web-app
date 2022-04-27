@@ -75,21 +75,21 @@ export default function useUpload() {
 
 async function getUploadUrls(values: FormValues) {
   const poiPromise = uploadToIpfs(
-    values.proofOfIdentity as FileWrapper,
+    values.proofOfIdentity.file,
     Folders.ProofOfIdentity
   );
   const porPromise = uploadToIpfs(
-    values.proofOfRegistration as FileWrapper,
+    values.proofOfRegistration.file,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
     values.financialStatements.map((x) =>
-      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x.file, Folders.AuditedFinancialDocs)
     )
   );
   const afrPromise = Promise.all(
     values.auditedFinancialReports.map((x) =>
-      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x.file, Folders.AuditedFinancialDocs)
     )
   );
 
@@ -101,9 +101,9 @@ async function getUploadUrls(values: FormValues) {
   ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
 
   const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
-    (x) => !x.sourceUrl
+    (x) => !x.publicUrl
   );
-  if (!ProofOfIdentity.sourceUrl || !ProofOfRegistration.sourceUrl || hasError)
+  if (!ProofOfIdentity.publicUrl || !ProofOfRegistration.publicUrl || hasError)
     return null;
 
   return {

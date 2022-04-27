@@ -38,7 +38,7 @@ export type EndowmentTier = 1 | 2 | 3;
 
 export type FileObject = {
   name: string;
-  sourceUrl?: string;
+  publicUrl?: string;
 };
 
 export type Metadata = {
