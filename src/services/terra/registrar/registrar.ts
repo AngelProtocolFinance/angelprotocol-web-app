@@ -1,5 +1,5 @@
 import contract_querier from "../contract_querier";
-import { tags } from "../tags";
+import { registrar, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";
 import {
@@ -12,12 +12,14 @@ import {
 export const registrar_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     endowments: builder.query<EndowmentEntry[], ContractQueryArgs>({
+      providesTags: [{ type: tags.registrar, id: registrar.endowments }],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         return res.query_result.endowments;
       },
     }),
     config: builder.query<RegistrarConfig, ContractQueryArgs>({
+      providesTags: [{ type: tags.registrar, id: registrar.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {
         return res.query_result;
@@ -27,7 +29,7 @@ export const registrar_api = terra.injectEndpoints({
       CategorizedEndowments,
       ContractQueryArgs
     >({
-      providesTags: [{ type: tags.endowment }],
+      providesTags: [{ type: tags.registrar, id: registrar.endowments }],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
         return res.query_result.endowments.reduce((result, profile) => {
