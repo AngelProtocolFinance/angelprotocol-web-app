@@ -119,28 +119,51 @@ export default function Dashboard() {
         </ResponsiveContainer>
       </div>
       <h2 className="font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-        HALO Metrics
+        Token
       </h2>
-      <div>
-        <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-10">
-          <div className="flex flex-wrap">
-            <div className="flex w-full">
-              <h1>Price: </h1>
-              <h1>{0.05} UST</h1>
-            </div>
+      <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-3 h-fit">
+        <div className="h-96">
+          <div className="flex flex-row items-center justify-between px-5 w-full h-16 border border-white/10 shadow-xl rounded-md mb-3">
+            <h1 className="text-xl font-bold uppercase text-white-grey/80">
+              Halo Price:{" "}
+            </h1>
+            <h1 className="text-xl font-bold uppercase text-white-grey/80">
+              {0.05} UST
+            </h1>
           </div>
-          <div className="border border-white/10 shadow-xl rounded-md p-5 flex flex-wrap">
-            <div className="grid grid-cols-2 gap-3 w-full">
-              <HaloFigure title="Circulating Supply" value={0.05} />
-              <HaloFigure title="# of HALO Staked" value={0.05} />
-            </div>
-            <ResponsiveContainer
-              maxHeight={400}
-              height="100%"
-              width="99%"
-              aspect={3}
-            >
-              <BarChart height={400} data={data}>
+          <div className="h-72 w-full border border-white/10 shadow-xl">
+            <ResponsiveContainer height="100%" width="100%">
+              <LineChart data={chart}>
+                <XAxis dataKey="date" stroke="#d7e0e8" opacity={0.7} />
+                <YAxis dataKey="value" stroke="#d7e0e8" opacity={0.7} />
+                <Tooltip cursor={false} />
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#82ca9d"
+                  strokeWidth={3}
+                />
+                <Line
+                  dot={false}
+                  type="monotone"
+                  dataKey="total_ust_donated"
+                  stroke="orange"
+                  strokeWidth={3}
+                  className="shadow-xl"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+        <div className="border border-white/10 shadow-xl rounded-md p-5 flex-col w-full h-96">
+          <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-3 w-full mb-10 h-fit">
+            <HaloFigure title="Circulating Supply" value={0.05} />
+            <HaloFigure title="# of HALO Staked" value={0.05} />
+          </div>
+          <div className="h-60">
+            <ResponsiveContainer height="100%" width="100%">
+              <BarChart data={data}>
                 <XAxis dataKey="name" />
                 <Tooltip />
                 <Legend />
