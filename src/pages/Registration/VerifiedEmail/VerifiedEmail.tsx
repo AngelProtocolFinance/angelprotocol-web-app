@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { Charity } from "services/aws/types";
 import { app, site } from "constants/routes";
-import createCharity from "../createCharity";
+import createInitializedCharity from "../createInitializedCharity";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
@@ -25,7 +25,7 @@ export default function VerifiedEmail() {
   const jwtData = jwtDecode<JwtData>(jwtToken);
 
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
-  const charity = createCharity(jwtData);
+  const charity = createInitializedCharity(jwtData);
 
   const resendVerificationEmail = useCallback(async () => {
     if (!charity.ContactPerson.PK) {
