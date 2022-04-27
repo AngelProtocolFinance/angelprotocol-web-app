@@ -85,7 +85,7 @@ async function getUploadBody(values: FormValues) {
   );
   const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
-  if (!CharityLogo || !Banner) return null;
+  if (!CharityLogo.sourceUrl || !Banner.sourceUrl) return null;
 
   return {
     Banner,

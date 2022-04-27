@@ -103,7 +103,8 @@ async function getUploadUrls(values: FormValues) {
   const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
     (x) => !x.sourceUrl
   );
-  if (!ProofOfIdentity || !ProofOfRegistration || hasError) return null;
+  if (!ProofOfIdentity.sourceUrl || !ProofOfRegistration.sourceUrl || hasError)
+    return null;
 
   return {
     Website: values.website,
