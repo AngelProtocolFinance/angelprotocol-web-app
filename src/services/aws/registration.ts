@@ -2,7 +2,7 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
-import createAuthToken, { UserTypes } from "helpers/createAuthToken";
+import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { admin, tags } from "./tags";
 import {
@@ -17,7 +17,7 @@ import {
 } from "./types";
 
 const headers = {
-  authorization: createAuthToken(UserTypes.CHARITY_OWNER),
+  authorization: createAuthToken("charity-owner"),
 };
 
 const registration_api = aws.injectEndpoints({

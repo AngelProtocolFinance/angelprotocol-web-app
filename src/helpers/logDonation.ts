@@ -1,9 +1,9 @@
 import { TxLogPayload } from "services/apes/types";
-import createAuthToken, { UserTypes } from "helpers/createAuthToken";
+import createAuthToken from "helpers/createAuthToken";
 import { apes_endpoint } from "constants/urls";
 
 const logDonation = async (payload: TxLogPayload) => {
-  const generatedToken = createAuthToken(UserTypes.WEB_APP);
+  const generatedToken = createAuthToken("angelprotocol-web-app");
   const response = await fetch(apes_endpoint + "/donation", {
     method: "POST",
     headers: { authorization: generatedToken },
