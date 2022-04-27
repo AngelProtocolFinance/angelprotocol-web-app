@@ -1,9 +1,9 @@
 import { memo } from "react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
+import Select, { Options, ThemeConfig } from "react-select";
 import { DonateValues } from "components/Transactors/Donater/types";
 import useWalletContext from "hooks/useWalletContext";
-import { currency_text, denoms } from "constants/currency";
-import { Selector } from "./Selector";
+import { currency_icons, currency_text, denoms } from "constants/currency";
 import {
   ControlContainer,
   CustomMenu,
@@ -11,23 +11,47 @@ import {
   MenuList,
   ValueContainer,
 } from "./SelectorComponents";
-import { TokenOption } from "./types";
 import useGetTokens from "./useGetTokens";
+
+interface TokenSelectorOption {
+  value: string;
+  label: string;
+}
+
+const defaultClassName = "outline-none border-none w-full";
+const colourStyles = {
+  control: (styles: any) => ({
+    ...styles,
+    backgroundColor: "transparent",
+    border: "0px",
+    outline: "none",
+    fontSize: "14px",
+  }),
+  option: (styles: any, { isSelected }: any) => {
+    return {
+      ...styles,
+      backgroundColor: isSelected ? "grey" : "white",
+      color: "#222",
+      fontSize: "14px",
+      cursor: isSelected ? "not-allowed" : "default",
+    };
+  },
+};
 
 function TokenSelector() {
   const { wallet } = useWalletContext();
   const isTestnet = wallet?.network.name === "testnet";
   const { setValue, register, control } = useFormContext<DonateValues>();
-  const { data = [], isLoading } = useGetTokens();
+  const { data = [] } = useGetTokens();
 
   const isOptionSelected = (
-    option: TokenOption,
-    selectValue: TokenOption[]
+    option: TokenSelectorOption,
+    selectValue: Options<TokenSelectorOption>
   ) => {
     return option.value === selectValue[0].value;
   };
 
-  const onChange = (denom: denoms) => {
+  const onTokenSelected = (denom: denoms) => {
     const token = data.find(
       (t) => t.native_denom === denom || t.symbol === denom
     );
@@ -38,32 +62,47 @@ function TokenSelector() {
     );
   };
 
+  const options: TokenSelectorOption[] = data.map((token) => ({
+    value: token.native_denom || token.symbol,
+    label: currency_text[token.native_denom || token.symbol],
+    logo: currency_icons[token.native_denom || token.symbol],
+  }));
+
   return (
-    <div className="w-full p-2">
-      <Selector
-        isLoading={isLoading}
-        name="currency"
-        className="outline-none border-none bg-transparent"
-        onChange={onChange}
-        options={data.map((token) => ({
-          value: token.native_denom || token.symbol,
-          label: currency_text[token.native_denom || token.symbol],
-          logo: token.logo,
-        }))}
-        control={control}
-        register={register}
-        menuPlacement="bottom"
-        isOptionSelected={isOptionSelected}
-        Option={CustomOption}
-        Menu={CustomMenu}
-        MenuList={MenuList}
-        IndicatorSeparator={() => null}
-        IndicatorsContainer={() => null}
-        ValueContainer={ValueContainer}
-        Control={ControlContainer}
-        placeholder="Loading..."
-      />
-    </div>
+    <Controller
+      {...register("currency")}
+      name="currency"
+      control={control}
+      render={({ field: { value, onChange } }) => {
+        return (
+          <Select
+            className={defaultClassName}
+            placeholder="Loading..."
+            value={options.filter((option) => value === option.value)}
+            onChange={(option: any) => {
+              onChange(option?.value);
+              onTokenSelected && onTokenSelected(option?.value);
+            }}
+            styles={colourStyles}
+            isOptionSelected={isOptionSelected}
+            isSearchable={true}
+            options={options}
+            menuPlacement="bottom"
+            isMulti={false}
+            theme={{ borderRadius: 0 } as ThemeConfig}
+            components={{
+              Option: CustomOption,
+              Menu: CustomMenu,
+              ValueContainer: ValueContainer,
+              Control: ControlContainer,
+              MenuList: MenuList,
+              IndicatorSeparator: () => null,
+              IndicatorsContainer: () => null,
+            }}
+          />
+        );
+      }}
+    />
   );
 }
 

@@ -1,7 +1,8 @@
-import { memo } from "react";
+import { ComponentType, memo } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   ControlProps,
+  GroupBase,
   MenuListProps,
   MenuProps,
   OptionProps,
@@ -12,7 +13,9 @@ import { currency_icons } from "constants/currency";
 import { DonateValues } from "../../types";
 import { TokenOption } from "./types";
 
-export const CustomOption = memo((props: OptionProps<TokenOption>) => {
+export const CustomOption:
+  | ComponentType<OptionProps<any, boolean, GroupBase<any>>>
+  | undefined = (props: OptionProps<TokenOption>) => {
   const { data: option, innerRef, innerProps, isSelected } = props;
   return (
     <div ref={innerRef} {...innerProps} className="w-full">
@@ -27,9 +30,11 @@ export const CustomOption = memo((props: OptionProps<TokenOption>) => {
       </button>
     </div>
   );
-});
+};
 
-export const CustomMenu = memo((props: MenuProps<TokenOption>) => {
+export const CustomMenu:
+  | ComponentType<MenuProps<any, boolean, GroupBase<any>>>
+  | undefined = memo((props: MenuProps<TokenOption>) => {
   const { children, innerRef, innerProps } = props;
   return (
     <div
@@ -43,7 +48,9 @@ export const CustomMenu = memo((props: MenuProps<TokenOption>) => {
   );
 });
 
-export const MenuList = memo((props: MenuListProps) => {
+export const MenuList:
+  | ComponentType<MenuListProps<any, boolean, GroupBase<any>>>
+  | undefined = memo((props: MenuListProps) => {
   const { children, innerRef, innerProps } = props;
   return (
     <div
@@ -56,7 +63,9 @@ export const MenuList = memo((props: MenuListProps) => {
   );
 });
 
-export const ValueContainer = memo((props: ValueContainerProps) => {
+export const ValueContainer:
+  | ComponentType<ValueContainerProps<any, boolean, GroupBase<any>>>
+  | undefined = memo((props: ValueContainerProps) => {
   const { children, innerProps } = props;
   const { watch } = useFormContext<DonateValues>();
   const selectedCurrency = watch("currency");
@@ -80,7 +89,9 @@ export const ValueContainer = memo((props: ValueContainerProps) => {
   );
 });
 
-export const ControlContainer = memo((props: ControlProps) => {
+export const ControlContainer:
+  | ComponentType<ControlProps<any, boolean, GroupBase<any>>>
+  | undefined = memo((props: ControlProps) => {
   const { children, innerProps, innerRef } = props;
   return (
     <div
