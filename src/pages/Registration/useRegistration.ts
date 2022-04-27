@@ -8,7 +8,7 @@ import { useSetModal } from "components/Modal/Modal";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
-import createInitializedCharity from "./createInitializedCharity";
+import { createInitializedCharity } from "./helpers";
 import routes from "./routes";
 import { updateCharity } from "./store";
 

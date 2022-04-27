@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { Charity } from "services/aws/types";
 import { app, site } from "constants/routes";
-import createInitializedCharity from "../createInitializedCharity";
+import { createInitializedCharity } from "../helpers";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
 import VerificationSuccessful from "./VerificationSuccessful";
