@@ -34,6 +34,8 @@ export type ContactPerson = {
   SK?: "ContactPerson";
 };
 
+export type EndowmentTier = 1 | 2 | 3;
+
 export type FileObject = {
   name: string;
   dataUrl?: string;
@@ -62,6 +64,7 @@ export type Registration = {
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
   SK?: "Registration";
+  Tier?: EndowmentTier;
   UN_SDG: number;
   Website: string;
 };
@@ -110,6 +113,7 @@ export type UpdateDocumentationData = {
 // this is Partial data from User type
 // src/services/user/types.ts -> User
 export type UpdateDocumentationResult = {
+  Tier: EndowmentTier;
   Website: string;
   UN_SDG: number;
   ProofOfIdentity: FileObject;

@@ -1,4 +1,4 @@
-import { Charity, FileObject } from "services/aws/types";
+import { Charity, EndowmentTier, FileObject } from "services/aws/types";
 
 const isString = (data: string | FileObject) => typeof data === "string";
 
@@ -52,22 +52,20 @@ function getStepThree(charity: Charity): DocumentationStep {
   const levelThreeDataExists =
     !!charity.Registration.AuditedFinancialReports?.length;
 
-  const level: DocumentationLevel = levelOneDataExists
+  const tier = levelOneDataExists
     ? levelTwoDataExists
       ? levelThreeDataExists
         ? 3
         : 2
       : 1
-    : 0;
+    : undefined;
 
-  return { completed: levelOneDataExists, level };
+  return { completed: levelOneDataExists, tier };
 }
-
-type DocumentationLevel = 0 | 1 | 2 | 3;
 
 type RegistrationStep = { completed: boolean };
 
-type DocumentationStep = RegistrationStep & { level: DocumentationLevel };
+type DocumentationStep = RegistrationStep & { tier?: EndowmentTier };
 
 type RegistrationState = {
   stepOne: RegistrationStep;
