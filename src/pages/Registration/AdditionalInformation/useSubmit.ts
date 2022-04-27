@@ -76,11 +76,11 @@ export default function useSubmit() {
 }
 
 async function getUploadBody(values: FormValues) {
-  const logoPromise = await uploadToIpfs(
+  const logoPromise = uploadToIpfs(
     values.charityLogo as FileWrapper,
     Folders.CharityProfileImageLogo
   );
-  const bannerPromise = await uploadToIpfs(
+  const bannerPromise = uploadToIpfs(
     values.banner as FileWrapper,
     Folders.CharityProfileImageBanners
   );
