@@ -26,8 +26,6 @@ export default function AdditionalInformation() {
     },
   });
 
-  console.log(methods.control._formValues);
-
   useEffect(() => {
     if (isSuccess) {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
