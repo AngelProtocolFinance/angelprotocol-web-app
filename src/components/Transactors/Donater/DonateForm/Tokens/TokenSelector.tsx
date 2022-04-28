@@ -70,12 +70,12 @@ function TokenSelector() {
 
   return (
     <Controller
-      {...register("currency")}
       name="currency"
       control={control}
       render={({ field: { value, onChange } }) => {
         return (
           <Select
+            {...register("currency")}
             className={defaultClassName}
             placeholder="Loading..."
             value={options.filter((option) => value === option.value)}
