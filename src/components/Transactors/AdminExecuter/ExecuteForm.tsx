@@ -1,8 +1,15 @@
+import { TagPayloads } from "services/transaction/types";
 import useExecuteProposal from "./useExecuteProposal";
 
-export type Props = { proposal_id: number };
+export type Props = {
+  proposal_id: number;
+  tagPayloads?: TagPayloads;
+};
 export default function ExecuteForm(props: Props) {
-  const { executeProposal } = useExecuteProposal(props.proposal_id);
+  const { executeProposal } = useExecuteProposal(
+    props.proposal_id,
+    props.tagPayloads
+  );
   return (
     <div className="bg-white grid justify-items-center p-4 rounded-md w-full">
       <p className="text-angel-grey">
