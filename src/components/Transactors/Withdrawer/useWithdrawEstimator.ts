@@ -2,7 +2,7 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "@types-component/withdrawer";
-import { ProposalMeta, SourcePreview } from "@types-page/admin";
+import { EndowmentWithdrawMeta, SourcePreview } from "@types-page/admin";
 import { AmountInfo } from "@types-shared/withdraw";
 import { vaultMap } from "services/terra/multicall/constants";
 import {
@@ -17,7 +17,6 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { proposalTypes } from "constants/routes";
 
 interface Source {
   locked: string; //"0"
@@ -139,8 +138,8 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           .toNumber();
 
         //create proposal meta for tx preview
-        const proposalMeta: ProposalMeta = {
-          type: proposalTypes.endowment_withdraw,
+        const proposalMeta: EndowmentWithdrawMeta = {
+          type: "endowment-withdraw",
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 

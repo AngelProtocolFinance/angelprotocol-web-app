@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { CreateFundMeta } from "@types-page/admin";
 import { FundDetails } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -13,7 +13,6 @@ import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
 import { FundCreatorValues } from "./fundCreatorSchema";
@@ -75,8 +74,8 @@ export default function useCreateFund() {
     );
 
     //create proposal meta
-    const createFundMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_createFund,
+    const createFundMeta: CreateFundMeta = {
+      type: "indexfund-create-fund",
       data: newFundDetails,
     };
     //create proposal msg

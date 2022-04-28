@@ -125,7 +125,7 @@ declare module "@types-page/admin" {
     }
   >;
 
-  type WithdrawMeta = MetaConstructor<
+  type EndowmentWithdrawMeta = MetaConstructor<
     "endowment-withdraw",
     {
       totalAmount: number;

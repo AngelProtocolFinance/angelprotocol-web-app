@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { ProposalMeta } from "@types-page/admin";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
+import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -28,7 +28,7 @@ export default function useConfigureCW3() {
   const { showModal } = useSetModal();
   const dispatch = useSetter();
 
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
   async function configureCW3({

@@ -13,7 +13,7 @@ const registration_api = aws.injectEndpoints({
       query: (status?: RegistrationStatus) => {
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
-          method: "Get",
+          method: "GET",
         };
       },
       transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>

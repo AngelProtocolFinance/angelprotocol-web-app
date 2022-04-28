@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { ProposalMeta } from "@types-page/admin";
+import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import { ObjectEntries } from "@types-utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
-import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -22,7 +22,7 @@ import { proposalTypes } from "constants/routes";
 import { UpdateProfileValues } from "./profileEditSchema";
 
 export default function useEditProfile() {
-  const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
+  const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
