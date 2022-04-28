@@ -47,7 +47,7 @@ export default function Documentation() {
       navigate(`${site.app}/${app.register}/${routes.dashboard}`);
     }
   }, [isSuccess, navigate]);
-
+  console.log("level: ", currentLevel);
   return (
     <Container>
       <Title level={currentLevel} />
@@ -75,9 +75,9 @@ export default function Documentation() {
                 <AuditedFinancialReports />
               </Column>
             </Column>
-            <Column>
+            <Column className="border-8 border-white/20 w-full px-2">
               {" "}
-              <Column colored={currentLevel >= 1}>
+              <Column>
                 <Header>Level 1</Header>
                 <p>
                   Your organization is eligible to create its endowment. Donors
@@ -86,14 +86,14 @@ export default function Documentation() {
                   on the marketplace and cannot be found through the search bar.
                 </p>
               </Column>{" "}
-              <Column className="mt-6" colored={currentLevel >= 2}>
+              <Column className="mt-0">
                 <Header>Level 2</Header>
                 <p>
                   All benefits from Level 1 + your organization will be visible
                   in the marketplace.
                 </p>
               </Column>
-              <Column className="mt-11" colored={currentLevel === 3}>
+              <Column className="mt-4">
                 <Header>Level 3</Header>
                 <p>
                   All benefits from Level 2 + your organization will be able to
@@ -123,15 +123,15 @@ const Container = ({ children }: PropsWithChildren<{}>) => (
 const Title = ({ level }: { level: number }) => (
   <div className="flex justify-center w-full gap-2">
     <Header className="w-full ml-2">
-      {`Currently, your organization is in ${
-        !!level ? `Level ${level}` : "not classified"
-      }${
-        !!level && level < 3
-          ? ", Upload the relevant documentation to apply for the next level."
-          : ""
+      {`Currently, your organization is ${
+        !!level ? `in Level ${level}.` : "not classified."
+      } ${
+        level < 3
+          ? "Upload the relevant documentation to apply for the next level."
+          : "Upload to proceed..."
       }`}
     </Header>
-    <Header className="w-full ml-20">What are levels?</Header>
+    <Header className="w-2/3 ml-0">What are levels?</Header>
   </div>
 );
 
