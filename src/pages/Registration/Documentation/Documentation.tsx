@@ -123,8 +123,6 @@ const Container = ({ children }: PropsWithChildren<{}>) => (
 const Title = ({ level }: { level: number }) => (
   <div className="flex justify-center w-full gap-2">
     <Header className="w-full ml-2">
-      {/* Please upload the following documentation. The documentation you provide
-      will inform which Level your organization will be */}
       {`Currently, your organization is in ${
         !!level ? `Level ${level}` : "not classified"
       }${
@@ -133,12 +131,7 @@ const Title = ({ level }: { level: number }) => (
           : ""
       }`}
     </Header>
-    <Header className="w-full ml-20">
-      {/* {`Currently, your organization is ${
-        !!level ? `Level ${level}` : "not classified"
-      }`} */}
-      What are levels?
-    </Header>
+    <Header className="w-full ml-20">What are levels?</Header>
   </div>
 );
 
