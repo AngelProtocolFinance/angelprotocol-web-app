@@ -1,7 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { schema } from "./schema";
-import { Props, VoteValues } from "./types";
+import * as Yup from "yup";
+import { Props, VoteValues } from "@types-component/voter";
+import { requiredTokenAmount } from "schemas/number";
+import VoterForm from "./VoterForm";
+
+const schema = Yup.object().shape({
+  amount: requiredTokenAmount,
+});
 
 export default function Voter(props: Props) {
   const methods = useForm<VoteValues>({
@@ -16,7 +22,7 @@ export default function Voter(props: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <props.Form />
+      <VoterForm />
     </FormProvider>
   );
 }

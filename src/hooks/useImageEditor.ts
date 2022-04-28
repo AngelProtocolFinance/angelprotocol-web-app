@@ -2,7 +2,7 @@ import { ChangeEvent, useRef, useState } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import placeHolderImage from "assets/images/home-banner.jpg";
 import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import Popup from "components/Popup/Popup";
 import useFleek from "hooks/useFleek";
 import optimizeImage from "helpers/optimizeImage";
 
@@ -42,7 +42,7 @@ export default function useImageEditor<T extends FieldValues>(
         shouldValidate: true,
       });
     } else {
-      showModal<PopupProps>(Popup, { message: "Error processing image" });
+      showModal(Popup, { message: "Error processing image" });
     }
     setLoading(false);
   }

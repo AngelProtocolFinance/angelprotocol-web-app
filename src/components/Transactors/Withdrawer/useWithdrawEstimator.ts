@@ -1,8 +1,9 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { WithdrawResource, WithdrawValues } from "@types-component/withdrawer";
+import { ProposalMeta, SourcePreview } from "@types-page/admin";
 import { AmountInfo } from "@types-shared/withdraw";
-import { ProposalMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
 import {
   setFee,
@@ -17,7 +18,6 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { proposalTypes } from "constants/routes";
-import { WithdrawResource, WithdrawValues } from "./types";
 
 interface Source {
   locked: string; //"0"

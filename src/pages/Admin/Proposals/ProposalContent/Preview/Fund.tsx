@@ -1,11 +1,11 @@
-import { FundDetails } from "@types-server/contracts";
+import { FundPreview } from "@types-page/admin";
 import toCurrency from "helpers/toCurrency";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";
 import MemberItem from "./preview-components/MemberItem";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function Fund(props: Omit<FundDetails, "id">) {
+export default function Fund(props: FundPreview) {
   return (
     <PreviewContainer>
       <KeyValue _key="fund name">
@@ -47,8 +47,8 @@ export default function Fund(props: Omit<FundDetails, "id">) {
 
 const secToMillisFactor = 1000;
 function getExpiry(
-  time: FundDetails["expiry_time"],
-  height: FundDetails["expiry_height"]
+  time: FundPreview["expiry_time"],
+  height: FundPreview["expiry_height"]
 ) {
   let expiry: string = "no expiry";
 

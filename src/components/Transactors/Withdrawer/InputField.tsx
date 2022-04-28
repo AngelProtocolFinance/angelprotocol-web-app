@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { InputHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
-import { WithdrawValues } from "./types";
+import { WithdrawValues } from "@types-component/withdrawer";
 
 type InputFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;

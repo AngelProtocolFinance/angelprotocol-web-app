@@ -1,14 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { ProposalMeta } from "@types-page/admin";
 import { Member } from "@types-server/contracts";
-import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
@@ -51,7 +51,7 @@ export default function useUpdateMembers() {
     );
 
     if (to_remove.length <= 0 && to_add.length <= 0) {
-      showModal<PopupProps>(Popup, { message: "No member changes" });
+      showModal(Popup, { message: "No member changes" });
       return;
     }
     const contract = new Admin(cwContracts, wallet);

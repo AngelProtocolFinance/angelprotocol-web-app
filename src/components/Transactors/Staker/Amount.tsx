@@ -1,9 +1,9 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
+import { HaloStakingValues } from "@types-component/staker";
 import { currency_text } from "constants/currency";
 import Balance from "./Balance";
-import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
 export default function Amount() {

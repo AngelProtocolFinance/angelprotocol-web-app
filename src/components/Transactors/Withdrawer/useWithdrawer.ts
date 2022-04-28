@@ -1,8 +1,8 @@
 import { useCallback } from "react";
+import { WithdrawerProps } from "@types-component/withdrawer";
 import { useSetModal } from "components/Modal/Modal";
 import Transactor, { TxProps } from "../Transactor";
 import Withdrawer from "./Withdrawer";
-import { WithdrawerProps } from "./types";
 
 export default function useWithdrawer(account_addr: string) {
   const { showModal } = useSetModal();

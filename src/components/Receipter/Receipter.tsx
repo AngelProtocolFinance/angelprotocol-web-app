@@ -2,10 +2,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { ReceiptPayload } from "@types-server/aws";
+import { ReceipterValues } from "@types-component/receipter";
 import { schema } from "./schema";
 
-export type ReceipterValues = ReceiptPayload;
 export default function Receipter(props: {
   children: ReactNode;
   txHash: string;

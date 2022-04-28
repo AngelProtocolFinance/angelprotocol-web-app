@@ -1,5 +1,4 @@
-import { proposalTypes } from "constants/routes";
-import { ProposalMeta } from "../../../types";
+import { ProposalMeta } from "@types-page/admin";
 import AllianceUpdate from "./AllianceUpdate";
 import CWMemberUpdate from "./CWMemberUpdate";
 import DiffTable from "./DiffTable";
@@ -12,35 +11,40 @@ import Withdraw from "./Withdraw";
 
 export default function Preview(props: ProposalMeta) {
   switch (props.type) {
-    case proposalTypes.endowment_withdraw:
-      return <Withdraw {...props.data} />;
-    case proposalTypes.endowment_updateStatus:
-      return <EndowmentStatusUpdate {...props.data} />;
-    case proposalTypes.endowment_updateProfile:
-      return <DiffTable diffSet={props.data} />;
-    case proposalTypes.adminGroup_updateMembers:
-      return <CWMemberUpdate {...props.data} />;
-    case proposalTypes.adminGroup_updateCW3Config:
-      return <DiffTable diffSet={props.data} />;
-    case proposalTypes.adminGroup_fundTransfer:
-      return <FundTransfer {...props.data} />;
-    case proposalTypes.indexFund_createFund:
-      return <Fund {...props.data} />;
-    case proposalTypes.indexFund_removeFund:
-      return <Fund {...props.data} />;
-    case proposalTypes.indexFund_allianceEdits:
+    /**_indexfund */
+    case "indexfund-alliance-edit":
       return <AllianceUpdate {...props.data} />;
-    case proposalTypes.indexFund_updateFundMembers:
+    case "indexfund-create-fund":
+      return <Fund {...props.data} />;
+    case "indexfund-remove-fund":
+      return <Fund {...props.data} />;
+    case "indexfund-update-fund-members":
       return <FundMemberUpdate {...props.data} />;
-    case proposalTypes.indexFund_configUpdate:
+    case "indexfund-config-update":
       return <DiffTable diffSet={props.data} />;
-    case proposalTypes.indexFund_ownerUpdate:
-      return <OwnerUpdate {...props.data} />;
-    case proposalTypes.registrar_updateConfig:
-      return <DiffTable diffSet={props.data} />;
-    case proposalTypes.registrar_updateOwner:
+    case "indexfund-owner-update":
       return <OwnerUpdate {...props.data} />;
 
+    /** _admin-group */
+    case "admin-group-update-members":
+      return <CWMemberUpdate {...props.data} />;
+    case "admin-group-update-cw3-config":
+      return <DiffTable diffSet={props.data} />;
+    case "admin-group-fund-transfer":
+      return <FundTransfer {...props.data} />;
+
+    /** _endowment-group */
+    case "endowment-update-status":
+      return <EndowmentStatusUpdate {...props.data} />;
+    case "endowment-withdraw":
+      return <Withdraw {...props.data} />;
+    case "endowment-update-profile":
+      return <DiffTable diffSet={props.data} />;
+
+    case "registrar-update-config":
+      return <DiffTable diffSet={props.data} />;
+    case "registrar-update-owner":
+      return <OwnerUpdate {...props.data} />;
     default:
       return <div className="p-2">no preview</div>;
   }

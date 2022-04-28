@@ -1,6 +1,7 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { AdminVoteValues } from "@types-component/admin-voter";
 import { useBalances } from "services/terra/queriers";
 import {
   setFee,
@@ -12,7 +13,6 @@ import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
-import { AdminVoteValues } from "./types";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);

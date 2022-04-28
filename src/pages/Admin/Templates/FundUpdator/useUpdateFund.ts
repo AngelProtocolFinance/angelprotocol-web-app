@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
@@ -33,7 +33,7 @@ export default function useUpdateFund() {
 
       const fundId = getValues("fundId");
       if (fundId === "") {
-        showModal<PopupProps>(Popup, { message: "No fund selected" });
+        showModal(Popup, { message: "No fund selected" });
         return;
       }
       //check if there are changes
@@ -52,7 +52,7 @@ export default function useUpdateFund() {
       );
 
       if (toRemove.length <= 0 && toAdd.length <= 0) {
-        showModal<PopupProps>(Popup, { message: "No fund member changes" });
+        showModal(Popup, { message: "No fund member changes" });
         return;
       }
       const indexFundContract = new Indexfund(wallet);

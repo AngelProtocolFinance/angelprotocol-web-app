@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "@types-component/swapper";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import toCurrency from "helpers/toCurrency";
-import { SwapValues } from "./types";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();

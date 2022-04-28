@@ -5,6 +5,7 @@ import {
 } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "@types-component/swapper";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
@@ -18,7 +19,6 @@ import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { getSpotPrice } from "./getSpotPrice";
-import { SwapValues } from "./types";
 
 export default function useSwapEstimator() {
   const {

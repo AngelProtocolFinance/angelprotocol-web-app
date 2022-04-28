@@ -1,10 +1,10 @@
-import { FundSendMeta } from "pages/Admin/types";
+import { FundSendMeta } from "@types-page/admin";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function FundTransfer(props: FundSendMeta) {
+export default function FundTransfer(props: FundSendMeta["data"]) {
   return (
     <PreviewContainer>
       <KeyValue _key="from">

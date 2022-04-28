@@ -1,9 +1,9 @@
-import { WithdrawMeta } from "pages/Admin/types";
+import { WithdrawMeta } from "@types-page/admin";
 import toCurrency from "helpers/toCurrency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
-export default function Withdraw(props: WithdrawMeta) {
+export default function Withdraw(props: WithdrawMeta["data"]) {
   return (
     <PreviewContainer>
       {props.sourcesPreview.map((source, i) => (

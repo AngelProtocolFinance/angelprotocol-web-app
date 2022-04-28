@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { SwapValues } from "./types";
+import { SwapValues } from "@types-component/swapper";
 
 export default function Slippage() {
   return (

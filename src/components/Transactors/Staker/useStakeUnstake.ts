@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { HaloStakingValues } from "@types-component/staker";
 import { govTags, terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
-import { HaloStakingValues } from "./types";
 import useStakingEstimator from "./useStakingEstimator";
 
 export default function useStakeUnstake() {

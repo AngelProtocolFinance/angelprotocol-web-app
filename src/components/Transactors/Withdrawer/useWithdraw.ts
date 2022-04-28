@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { WithdrawResource, WithdrawValues } from "@types-component/withdrawer";
 import { multicallTags, terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -6,7 +7,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
-import { WithdrawResource, WithdrawValues } from "./types";
 import useWithrawEstimator from "./useWithdrawEstimator";
 
 export default function useWithdraw(resources: WithdrawResource) {

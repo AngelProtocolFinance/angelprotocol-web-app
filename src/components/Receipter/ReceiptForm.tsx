@@ -2,10 +2,10 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import countryList from "react-select-country-list";
+import { ReceipterValues } from "@types-component/receipter";
 import useReceiptForm from "components/Receipter/useReceiptForm";
 import { Selector } from "components/Selector";
 import maskAddress from "helpers/maskAddress";
-import { ReceipterValues } from "./Receipter";
 import TextInput from "./TextInput";
 
 export default function ReceiptForm() {

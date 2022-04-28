@@ -2,8 +2,7 @@ import { PropsWithChildren } from "react";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 
-export type PopupProps = PropsWithChildren<{ message: string }>;
-export default function Popup(props: PopupProps) {
+export default function Popup(props: PropsWithChildren<{ message: string }>) {
   const { hideModal } = useSetModal();
   return (
     <div className="p-4 grid grid-rows-1a place-items-center  bg-white-grey w-full max-w-xs min-h-115  rounded-xl shadow-lg overflow-hidden relative">

@@ -1,10 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { ProposalMeta } from "@types-page/admin";
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import { ObjectEntries } from "@types-utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
-import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";

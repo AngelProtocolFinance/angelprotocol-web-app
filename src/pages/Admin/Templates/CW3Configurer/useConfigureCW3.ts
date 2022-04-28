@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "pages/Admin/types";
+import { ProposalMeta } from "@types-page/admin";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
