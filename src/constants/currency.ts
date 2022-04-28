@@ -54,6 +54,8 @@ export enum denoms {
 }
 
 export enum SupportedDenoms {
+  ueur = "ueur",
+  ukrw = "ukrw",
   uluna = "uluna",
   uusd = "uusd",
   ANC = "ANC",
@@ -117,7 +119,7 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uchf]: token,
   [denoms.ucny]: token,
   [denoms.udkk]: token,
-  [denoms.ueur]: token,
+  [denoms.ueur]: "https://assets.terra.money/icon/60/EUT.png",
   [denoms.ugbp]: token,
   [denoms.uhkd]: token,
   [denoms.uidr]: token,
