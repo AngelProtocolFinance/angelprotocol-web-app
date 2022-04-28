@@ -37,13 +37,13 @@ export default function useSubmit() {
   useEffect(() => {
     async function handleSuccess() {
       try {
-        console.log(stage);
-
         const endowmentContract = stage
           .txInfo!.logs![0].events.find(
             (event) => event.type === "instantiate_contract"
           )!
           .attributes.find((attr) => attr.key === "contract_address")!.value;
+        // const endowmentContract =
+        //   "terra15d4g9gv4664dqsf57unrgk052447wz950f6ks7";
 
         await submitToAws({ PK: charity.ContactPerson.PK!, endowmentContract });
 
@@ -54,6 +54,7 @@ export default function useSubmit() {
         dispatch(setFormLoading(false));
       }
     }
+    console.log("handleSuccess", stage);
 
     if (stage.step === Step.error) {
       console.log(stage.message);
@@ -98,7 +99,7 @@ export default function useSubmit() {
         dispatch(setFee(feeNum));
 
         const tx: CreateTxOptions = { msgs: [msg], fee };
-        dispatch(sendTerraTx({ wallet, tx: tx! }));
+        dispatch(sendTerraTx({ wallet, tx }));
       } catch (err) {
         console.log(processEstimateError(err));
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
@@ -119,32 +120,33 @@ function createMessagePayload(
   return {
     beneficiary: charity.Metadata.TerraWallet,
     cw4_members: [],
-    owner: charity.Metadata.TerraWallet,
     guardians_multisig_addr: undefined,
     maturity_height: undefined,
     maturity_time: undefined,
-    withdraw_before_maturity: false,
+    owner: charity.Metadata.TerraWallet,
     profile: {
+      annual_revenue: undefined,
+      average_annual_budget: undefined,
+      charity_navigator_rating: undefined,
       contact_email: charity.ContactPerson.Email,
+      country_of_origin: undefined,
       endow_type: "Charity",
-      name: charity.Registration.CharityName,
-      overview: charity.Metadata.CharityOverview,
-      un_sdg: charity.Registration.UN_SDG,
-      tier: charity.Registration.Tier!,
-      logo: charity.Metadata.CharityLogo.publicUrl!,
       image: charity.Metadata.Banner.publicUrl!,
-      url: charity.Registration.Website,
+      logo: charity.Metadata.CharityLogo.publicUrl!,
+      name: charity.Registration.CharityName,
+      number_of_employees: undefined,
+      overview: charity.Metadata.CharityOverview,
+      registration_number: undefined,
       social_media_urls: {
         facebook: undefined,
         linkedin: undefined,
         twitter: undefined,
       },
-      annual_revenue: undefined,
-      average_annual_budget: undefined,
-      charity_navigator_rating: undefined,
-      country_city_origin: undefined,
-      number_of_employees: undefined,
-      registration_number: undefined,
+      street_address: undefined,
+      tier: charity.Registration.Tier!,
+      un_sdg: charity.Registration.UN_SDG,
+      url: charity.Registration.Website,
     },
+    withdraw_before_maturity: false,
   };
 }

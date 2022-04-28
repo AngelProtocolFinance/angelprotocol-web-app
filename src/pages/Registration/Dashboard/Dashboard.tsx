@@ -33,7 +33,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.contactDetails}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed
         />
         <Step
@@ -41,7 +41,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.wallet}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepTwo.completed}
         />
         <Step
@@ -49,7 +49,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepThree.completed}
           // TODO: implement level logic
           statusComplete={
@@ -63,7 +63,7 @@ export default function Dashboard() {
               `${site.app}/${app.register}/${routes.additionalInformation}`
             )
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepFour.completed}
         />
         {!dataSubmitted && (

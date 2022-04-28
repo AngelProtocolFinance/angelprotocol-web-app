@@ -137,7 +137,8 @@ export type RegistrarCreateEndowmentPayload = {
     image: string; // string of the IFPS url if provided
     url: string; // string of charity website URL if provided
     registration_number: undefined; // string of charity reg # if provided
-    country_city_origin: undefined;
+    country_of_origin: undefined;
+    street_address: undefined;
     contact_email: string; // string of charity contact person email if provided
     social_media_urls: {
       facebook: undefined; // string of URL if provided
