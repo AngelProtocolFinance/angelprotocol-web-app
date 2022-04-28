@@ -131,8 +131,8 @@ function createMessagePayload(
       overview: charity.Metadata.CharityOverview,
       un_sdg: charity.Registration.UN_SDG,
       tier: charity.Registration.Tier!,
-      logo: charity.Metadata.CharityLogo.sourceUrl!,
-      image: charity.Metadata.Banner.sourceUrl!,
+      logo: charity.Metadata.CharityLogo.publicUrl!,
+      image: charity.Metadata.Banner.publicUrl!,
       url: charity.Registration.Website,
       social_media_urls: {
         facebook: undefined,
