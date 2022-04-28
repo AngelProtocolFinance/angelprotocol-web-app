@@ -1,11 +1,8 @@
 import * as Yup from "yup";
+import { FundConfigValues } from "@types-page/admin";
 import { SchemaShape } from "@types-schema";
-import { FundConfig } from "@types-server/contracts";
 import { positiveNumber, tokenAmountString } from "schemas/number";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type FundConfigValues = ProposalBase &
-  FundConfig & { initialConfigPayload: FundConfig };
+import { proposalShape } from "../proposalShape";
 
 const fundConfigShape: SchemaShape<FundConfigValues> = {
   ...proposalShape,

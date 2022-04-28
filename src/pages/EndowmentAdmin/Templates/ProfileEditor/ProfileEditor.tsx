@@ -1,7 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { EndowmentAdminParams } from "@types-page/endowment-admin";
+import {
+  EndowmentAdminParams,
+  UpdateProfileValues,
+} from "@types-page/endowment-admin";
 import { UpdateProfilePayload } from "@types-server/contracts";
 import { Profile } from "@types-server/contracts";
 import FormError from "pages/Admin/components/FormError";
@@ -9,7 +12,7 @@ import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useEndowmentProfile } from "services/terra/account/queriers";
 import useWalletContext from "hooks/useWalletContext";
 import EditForm from "./EditForm";
-import { UpdateProfileValues, profileEditSchema } from "./profileEditSchema";
+import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
   const { wallet } = useWalletContext();

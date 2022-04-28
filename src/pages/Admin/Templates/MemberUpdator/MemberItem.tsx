@@ -1,5 +1,5 @@
+import { MemberCopy } from "@types-slice/admin";
 import {
-  MemberCopy,
   toggleDeleteExistingMember,
   undoAddMember,
 } from "slices/admin/apCW4Members";

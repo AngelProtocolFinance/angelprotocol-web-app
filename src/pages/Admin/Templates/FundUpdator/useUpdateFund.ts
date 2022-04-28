@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FundMemberUpdateMeta } from "@types-page/admin";
+import { FundUpdateValues } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -12,7 +13,6 @@ import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
-import { FundUpdateValues } from "./fundUpdatorSchema";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();

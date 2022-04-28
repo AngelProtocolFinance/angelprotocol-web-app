@@ -1,7 +1,7 @@
 declare module "@types-page/admin" {
   import { Denoms } from "@types-lists";
   import {
-    AllianceMember as AM,
+    AllianceMember,
     EndowmentStatus,
     EndowmentStatusStrNum,
     FundConfig,
@@ -10,30 +10,32 @@ declare module "@types-page/admin" {
     RegistrarConfigPayload,
     UpdateProfilePayload,
     ProposalStatus,
+    RegistrarOwnerPayload,
   } from "@types-server/contracts";
 
   type AdminProposalParam = { id: string };
 
-  type CW3ConfigPayload = {
-    //percent vote to pass poll
-    threshold: number;
-    //poll duration in block height
-    height: number;
-  };
-
-  type FundSendPayload = {
-    amount: number;
-    recipient: string;
-
-    //metadata
-    currency: Extract<Denoms, "uusd" | "uhalo">;
-    haloBalance: number;
-    ustBalance: number;
-  };
-
   type ProposalGroup = "indexfund" | "admin-group" | "endowment" | "registrar";
   type ProposalGroupOptions = ProposalGroup | "all";
   type ProposalStatusOptions = ProposalStatus | "all";
+
+  type ProposalDetails = {
+    numYes: number;
+    numNo: number;
+    numNotYet: number;
+    pctYes: number;
+    pctNo: number;
+    pctNotYet: number;
+    blockHeight: string;
+    expiry: number;
+    remainingBlocks: number;
+    isVoteEnded: boolean;
+    isExecutable: boolean;
+    isExecuted: boolean;
+    numId: number;
+    userVote?: Vote;
+    votes: AdminVoteInfo[];
+  };
 
   type AdminProposalTypes =
     //index fund
@@ -74,9 +76,9 @@ declare module "@types-page/admin" {
   type AllianceEditMeta = MetaConstructor<
     "indexfund-alliance-edit",
     {
-      toAddMembers: AM[];
-      toRemoveMembers: AM[];
-      editedMembers: AM[];
+      toAddMembers: AllianceMember[];
+      toRemoveMembers: AllianceMember[];
+      editedMembers: AllianceMember[];
     }
   >;
   type CreateFundMeta = MetaConstructor<"indexfund-create-fund", FundPreview>;
@@ -166,4 +168,77 @@ declare module "@types-page/admin" {
     | EndowmentProfileUpdateMeta
     //registrar
     | RegistrarConfigUpdateMeta;
+
+  /** _templates */
+  type ProposalBase = {
+    title: string;
+    description: string;
+  };
+  type FundIdContext = { fundId: string };
+  type AllianceEditValues = ProposalBase & Required<AllianceMember>;
+
+  type CW3ConfigPayload = {
+    //percent vote to pass poll
+    threshold: number;
+    //poll duration in block height
+    height: number;
+  };
+  type CW3ConfigValues = ProposalBase &
+    CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
+  type EndowmentUpdateValues = ProposalBase & {
+    endowmentAddr: string;
+    status: EndowmentStatusStrNum;
+    //address to transfer funds when endowment will be closed
+    beneficiary?: string;
+
+    //metadata
+    prevStatus?: keyof EndowmentStatus;
+  };
+  type FundConfigValues = ProposalBase &
+    FundConfig & { initialConfigPayload: FundConfig };
+
+  type FundCreatorValues = ProposalBase & {
+    //new fund member
+    newFundAddr: string;
+
+    //fund details
+    fundName: string;
+    fundDescription: string;
+    expiryHeight: string;
+    expiryTime: string;
+    isFundRotating: boolean; //defaulted to true
+    splitToLiquid: string; //handled by slider limits
+  };
+
+  type FundDestroyValues = ProposalBase & { fundId: string };
+
+  type FundSendPayload = {
+    amount: number;
+    recipient: string;
+
+    //metadata
+    currency: Extract<Denoms, "uusd" | "uhalo">;
+    haloBalance: number;
+    ustBalance: number;
+  };
+
+  type FundSendValues = ProposalBase & FundSendPayload;
+  type FundUpdateValues = ProposalBase & {
+    fundId: string;
+    newMemberAddr: string;
+  };
+
+  type IndexFundOwnerValues = ProposalBase &
+    RegistrarOwnerPayload & { initialOwner: string };
+
+  type MemberUpdatorValues = ProposalBase & {
+    addr: string;
+    weight: string;
+  };
+
+  type RegistrarConfigValues = ProposalBase &
+    RegistrarConfigPayload & { initialConfigPayload: RegistrarConfigPayload };
+
+  type RegistrarOwnerValues = ProposalBase &
+    RegistrarOwnerPayload & { initialOwner: string };
 }

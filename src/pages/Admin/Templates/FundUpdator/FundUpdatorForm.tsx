@@ -1,3 +1,4 @@
+import { FundUpdateValues as FV } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import {
   FormContainer,
@@ -9,7 +10,6 @@ import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
-import { FundUpdateValues as FV } from "./fundUpdatorSchema";
 import useInitFundMembers from "./useInitFundMembers";
 import useUpdateFund from "./useUpdateFund";
 

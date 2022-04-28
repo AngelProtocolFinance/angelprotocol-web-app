@@ -1,13 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { AllianceEditValues } from "@types-page/admin";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useAllianceMembers } from "services/terra/indexFund/queriers";
 import { setMembers } from "slices/admin/allianceMembers";
 import { useSetter } from "store/accessors";
 import AllianceEditForm from "./AllianceEditForm";
-import { AllianceEditValues, allianceEditSchema } from "./alllianceEditSchema";
+import { allianceEditSchema } from "./alllianceEditSchema";
 
 export default function AllianceEditor() {
   const dispatch = useSetter();

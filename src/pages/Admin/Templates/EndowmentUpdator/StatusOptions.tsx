@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
+import { EndowmentUpdateValues as V } from "@types-page/admin";
 import TextInput from "pages/Admin/components/TextInput";
-import { EndowmentUpdateValues as V } from "./endowmentUpdateSchema";
 
 export default function StatusOptions() {
   const {

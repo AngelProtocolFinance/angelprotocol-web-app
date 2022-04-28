@@ -1,16 +1,8 @@
 import * as Yup from "yup";
+import { CW3ConfigValues } from "@types-page/admin";
 import { SchemaShape } from "@types-schema";
 import { requiredPositiveNumber } from "schemas/number";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type CW3ConfigPayload = {
-  //percent vote to pass poll
-  threshold: number;
-  //poll duration in block height
-  height: number;
-};
-export type CW3ConfigValues = ProposalBase &
-  CW3ConfigPayload & { initialCW3Config: CW3ConfigPayload };
+import { proposalShape } from "../proposalShape";
 
 const cw3ConfigShape: SchemaShape<CW3ConfigValues> = {
   ...proposalShape,

@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
+import { FundSendValues } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import { currency_text } from "constants/currency";
-import { FundSendValues } from "../fundSendSchema";
 import Balance from "./Balance";
 import Currency from "./Currency";
 

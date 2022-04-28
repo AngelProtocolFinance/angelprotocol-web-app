@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { FundDestroyValues } from "@types-page/admin";
 import FundDestroyerForm from "./FundDestroyerForm";
-import { FundDestroyValues, fundDestroyerSchema } from "./fundDestroyerSchema";
+import { fundDestroyerSchema } from "./fundDestroyerSchema";
 
 export default function FundDestroyer() {
   const methods = useForm<FundDestroyValues>({

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Member } from "@types-server/contracts";
+import { MemberCopy } from "@types-slice/admin";
 
 const initialState: MemberCopy[] = [];
 
@@ -31,5 +32,3 @@ export const {
   undoAddMember,
   setMembers,
 } = apCW4MembersSlice.actions;
-
-export type MemberCopy = Member & { is_deleted: boolean; is_added: boolean };

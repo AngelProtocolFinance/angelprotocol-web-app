@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { RegistrarConfigValues } from "@types-page/admin";
 import {
   RegistrarConfig,
   RegistrarConfigPayload,
@@ -8,10 +9,7 @@ import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useRegistrarConfig } from "services/terra/registrar/queriers";
 import RegistrarConfigForm from "./RegistrarConfigForm";
-import {
-  RegistrarConfigValues,
-  registrarConfigSchema,
-} from "./registrarConfigSchema";
+import { registrarConfigSchema } from "./registrarConfigSchema";
 
 export default function RegistrarConfigurer() {
   const { registrarConfig, isLoading, isError } = useRegistrarConfig();

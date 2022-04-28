@@ -1,5 +1,5 @@
 import React from "react";
-import { PollFilterOptions } from "./Polls";
+import { PollFilterOptions } from "@types-page/governance";
 
 export default function PollSelector(props: {
   pollFilter: PollFilterOptions;

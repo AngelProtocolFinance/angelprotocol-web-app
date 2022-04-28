@@ -1,11 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import { DonateValues } from "@types-component/donater";
 import { ChainIDs } from "@types-lists";
 import { StageUpdator } from "@types-slice/transaction";
+import { WalletProxy } from "providers/WalletProvider";
 import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import transactionSlice, { setStage } from "../transactionSlice";
-import { TerraDonateArgs } from "./transactorTypes";
+
+type TerraDonateArgs = {
+  donateValues: DonateValues;
+  tx: CreateTxOptions;
+  wallet: WalletProxy | undefined;
+};
 
 export const sendTerraDonation = createAsyncThunk(
   `${transactionSlice.name}/terraDonate`,

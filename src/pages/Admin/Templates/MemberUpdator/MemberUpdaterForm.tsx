@@ -1,10 +1,10 @@
+import { MemberUpdatorValues as T } from "@types-page/admin";
 import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import Label from "../../components/Label";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import MemberAdder from "./MemberAdder/MemberAdder";
 import MemberItem from "./MemberItem";
-import { MemberUpdatorValues as T } from "./memberUpdatorSchema";
 import useUpdateMembers from "./useUpdateMembers";
 
 export default function MemberUpdateForm() {

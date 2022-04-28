@@ -1,5 +1,6 @@
 import { useMemo } from "react";
-import { AdminVoteInfo, Proposal, Vote } from "@types-server/contracts";
+import { ProposalDetails } from "@types-page/admin";
+import { Proposal, Vote } from "@types-server/contracts";
 import { useVoteList } from "services/terra/admin/queriers";
 import { useLatestBlock } from "services/terra/queriers";
 import useWalletContext from "hooks/useWalletContext";
@@ -58,21 +59,3 @@ export default function useProposalDetails(
     userVote,
   };
 }
-
-export type ProposalDetails = {
-  numYes: number;
-  numNo: number;
-  numNotYet: number;
-  pctYes: number;
-  pctNo: number;
-  pctNotYet: number;
-  blockHeight: string;
-  expiry: number;
-  remainingBlocks: number;
-  isVoteEnded: boolean;
-  isExecutable: boolean;
-  isExecuted: boolean;
-  numId: number;
-  userVote?: Vote;
-  votes: AdminVoteInfo[];
-};

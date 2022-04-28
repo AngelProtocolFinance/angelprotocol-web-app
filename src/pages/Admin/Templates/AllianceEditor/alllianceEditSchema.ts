@@ -1,10 +1,8 @@
 import * as Yup from "yup";
+import { AllianceEditValues } from "@types-page/admin";
 import { SchemaShape } from "@types-schema";
-import { AllianceMember } from "@types-server/contracts";
 import { requiredAddress } from "schemas/string";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type AllianceEditValues = Required<AllianceMember> & ProposalBase;
+import { proposalShape } from "../proposalShape";
 
 const allianceEditShape: SchemaShape<AllianceEditValues> = {
   ...proposalShape,

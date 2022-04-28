@@ -1,4 +1,5 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
+import { EndowmentUpdateValues } from "@types-page/admin";
 import {
   EndowmentStatusNum,
   StatusChangePayload,
@@ -13,7 +14,6 @@ import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
-import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUpdateSchema";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();

@@ -1,6 +1,6 @@
+import { MemberUpdatorValues as T } from "@types-page/admin";
 import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../../components/TextInput";
-import { MemberUpdatorValues as T } from "../memberUpdatorSchema";
 import useAddMember from "./useAddMember";
 
 export default function MemberAdder() {

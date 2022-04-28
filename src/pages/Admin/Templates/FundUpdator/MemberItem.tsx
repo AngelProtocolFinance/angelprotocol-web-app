@@ -1,8 +1,8 @@
+import { AddressWithFlags } from "@types-slice/admin";
 import {
   toggleDeleteExistingMember,
   undoAddMember,
 } from "slices/admin/fundMembers";
-import { AddressWithFlags } from "slices/admin/fundMembers";
 import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
 

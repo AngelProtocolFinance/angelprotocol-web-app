@@ -1,5 +1,7 @@
+import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { DonateValues } from "@types-component/donater";
 import { ChainIDs } from "@types-lists";
 import { Dwindow } from "@types-slice/provider";
 import { StageUpdator } from "@types-slice/transaction";
@@ -7,7 +9,11 @@ import { RootState } from "store/store";
 import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
 import transactionSlice, { setStage } from "../transactionSlice";
-import { EthDonateArgs } from "./transactorTypes";
+
+type EthDonateArgs = {
+  tx: TransactionRequest;
+  donateValues: DonateValues;
+};
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,

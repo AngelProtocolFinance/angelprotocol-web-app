@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
+import { FundIdContext } from "@types-page/admin";
 import { useFundList } from "services/terra/indexFund/queriers";
 import { useLatestBlock } from "services/terra/queriers";
-import { FundIdContext } from "./FundSelection";
 
 export default function useFundSelection<T extends FundIdContext>(
   fieldName: Path<T>

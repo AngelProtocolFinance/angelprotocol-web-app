@@ -1,3 +1,4 @@
+import { UpdateProfileValues as UV } from "@types-page/endowment-admin";
 import Submitter from "pages/Admin/Templates/Submitter";
 import Label from "pages/Admin/components/Label";
 import {
@@ -8,7 +9,6 @@ import TextInput from "pages/Admin/components/TextInput";
 import ImageEditor from "./ImageEditor/ImageEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
-import { UpdateProfileValues as UV } from "./profileEditSchema";
 import useEditForm from "./useEditProfile";
 
 export default function EditForm() {

@@ -1,13 +1,9 @@
 import * as Yup from "yup";
+import { MemberUpdatorValues } from "@types-page/admin";
 import { SchemaShape } from "@types-schema";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type MemberUpdatorValues = {
-  addr: string;
-  weight: string;
-} & ProposalBase;
+import { proposalShape } from "../proposalShape";
 
 const memberUpdateShape: SchemaShape<MemberUpdatorValues> = {
   ...proposalShape,

@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
+import { FundSendValues } from "@types-page/admin";
 import toCurrency from "helpers/toCurrency";
 import { currency_text } from "constants/currency";
-import { FundSendValues } from "../fundSendSchema";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<FundSendValues>();

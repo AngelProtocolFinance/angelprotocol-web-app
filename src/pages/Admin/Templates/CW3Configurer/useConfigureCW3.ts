@@ -1,6 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { CW3ConfigUpdateMeta } from "@types-page/admin";
+import {
+  CW3ConfigPayload,
+  CW3ConfigUpdateMeta,
+  CW3ConfigValues,
+} from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -14,7 +18,6 @@ import useWalletContext from "hooks/useWalletContext";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
-import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
 
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];

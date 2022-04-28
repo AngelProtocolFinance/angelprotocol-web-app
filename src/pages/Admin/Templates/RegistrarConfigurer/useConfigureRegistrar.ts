@@ -1,5 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { RegistrarConfigUpdateMeta } from "@types-page/admin";
+import {
+  RegistrarConfigUpdateMeta,
+  RegistrarConfigValues,
+} from "@types-page/admin";
 import { RegistrarConfigPayload } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -15,7 +18,6 @@ import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
-import { RegistrarConfigValues } from "./registrarConfigSchema";
 
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];

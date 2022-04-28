@@ -1,7 +1,10 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { EndowmentProfileUpdateMeta } from "@types-page/admin";
-import { EndowmentAdminParams } from "@types-page/endowment-admin";
+import {
+  EndowmentAdminParams,
+  UpdateProfileValues,
+} from "@types-page/endowment-admin";
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import { ObjectEntries } from "@types-utils";
 import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
@@ -18,7 +21,6 @@ import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { UpdateProfileValues } from "./profileEditSchema";
 
 export default function useEditProfile() {
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();

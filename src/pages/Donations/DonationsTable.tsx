@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from "react";
+import { SortDirection, SortKey } from "@types-page/donations";
 import { Transaction } from "@types-server/aws";
 import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
@@ -6,10 +7,7 @@ import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import useDonor from "./useDonor";
-import useSortTransactions, {
-  SortDirection,
-  SortKey,
-} from "./useSortTransactions";
+import useSortTransactions from "./useSortTransactions";
 
 export default function DonationsTable(props: {
   transactions: Transaction[];

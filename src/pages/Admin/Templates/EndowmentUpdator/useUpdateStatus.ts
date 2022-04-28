@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { EndowmentStatusMeta } from "@types-page/admin";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "@types-page/admin";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
@@ -17,7 +17,6 @@ import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
-import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();

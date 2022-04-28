@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta } from "@types-page/admin";
+import { OwnerUpdateMeta, RegistrarOwnerValues } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -11,7 +11,6 @@ import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
-import { RegistrarOwnerValues } from "./updateOwnerSchema";
 
 export default function useUpdateOwner() {
   const { wallet } = useWalletContext();

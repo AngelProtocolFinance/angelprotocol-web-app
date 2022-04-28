@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { CWMemberUpdateMeta } from "@types-page/admin";
+import { CWMemberUpdateMeta, MemberUpdatorValues } from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { Member } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -13,7 +13,6 @@ import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
-import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
 export default function useUpdateMembers() {
   const { trigger, reset, getValues } = useFormContext<MemberUpdatorValues>();

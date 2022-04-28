@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreateFundMeta } from "@types-page/admin";
+import { CreateFundMeta, FundCreatorValues } from "@types-page/admin";
 import { FundDetails } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -15,7 +15,6 @@ import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
-import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
   const { wallet } = useWalletContext();

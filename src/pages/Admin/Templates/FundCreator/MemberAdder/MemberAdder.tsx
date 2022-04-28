@@ -1,5 +1,5 @@
+import { FundCreatorValues as V } from "@types-page/admin";
 import TextInput from "pages/Admin/components/TextInput";
-import { FundCreatorValues as V } from "../fundCreatorSchema";
 import MemberItem from "./MemberItem";
 import useAddMember from "./useAddMember";
 

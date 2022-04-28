@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
-import { FundConfigUpdateMeta } from "@types-page/admin";
+import { FundConfigUpdateMeta, FundConfigValues } from "@types-page/admin";
 import { FundConfig } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -16,7 +16,6 @@ import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
-import { FundConfigValues } from "./fundconfigSchema";
 
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];

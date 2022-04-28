@@ -9,8 +9,8 @@ import {
 } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { UpdateProfileValues } from "@types-page/endowment-admin";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
-import { UpdateProfileValues } from "../profileEditSchema";
 
 export default function useEditor() {
   const {

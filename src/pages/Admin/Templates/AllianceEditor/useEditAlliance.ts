@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AllianceEditMeta } from "@types-page/admin";
+import { AllianceEditMeta, AllianceEditValues } from "@types-page/admin";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -12,7 +12,6 @@ import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
-import { AllianceEditValues } from "./alllianceEditSchema";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();

@@ -1,15 +1,15 @@
 declare module "@types-server/aws" {
   import { ChainIDs, Denoms } from "@types-lists";
   /**result wrapper */
-  export interface AWSQueryRes<T> {
+  interface AWSQueryRes<T> {
     Count: number;
     ScannedCount: number;
     Items: T;
   }
 
   /** /airdrop */
-  export type Airdrops = Airdrop[];
-  export type Airdrop = {
+  type Airdrops = Airdrop[];
+  type Airdrop = {
     stage: number;
     haloTokens: string; // uhalo amount
     proof: string[];
@@ -23,7 +23,7 @@ declare module "@types-server/aws" {
   };
 
   /** /transactions */
-  export interface Transaction {
+  interface Transaction {
     endowment_address: string; // Charity's endowment address
     wallet_address: string; // Owner's wallet address
     sort_key: string; // Transaction hash
@@ -35,7 +35,7 @@ declare module "@types-server/aws" {
   }
 
   /** /apes/donation */
-  export type ReceiptPayload = {
+  type ReceiptPayload = {
     transactionId: string; // tx hash
     fullName: string; // "John Doe"
     email: string; // "john@doe.email.com"

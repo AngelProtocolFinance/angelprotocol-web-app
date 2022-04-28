@@ -1,10 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-
-export type AddressWithFlags = {
-  addr: string;
-  isDeleted: boolean;
-  isAdded: boolean;
-};
+import { AddressWithFlags } from "@types-slice/admin";
 
 const initialState: AddressWithFlags[] = [];
 

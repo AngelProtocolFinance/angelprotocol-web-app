@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { AllianceMember } from "@types-server/contracts";
+import { AllianceMemberWithFlags } from "@types-slice/admin";
 
 const initialState: {
   isEditingMember: boolean;
@@ -73,9 +74,3 @@ export const {
   saveMemberEdits,
   resetMemberEdits,
 } = allianceMembersSlice.actions;
-
-export type AllianceMemberWithFlags = AllianceMember & {
-  isDeleted: boolean;
-  isAdded: boolean;
-  edits?: AllianceMember;
-};

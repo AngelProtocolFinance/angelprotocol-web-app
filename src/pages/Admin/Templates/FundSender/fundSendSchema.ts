@@ -1,20 +1,9 @@
 import * as Yup from "yup";
-import { Denoms } from "@types-lists";
+import { FundSendValues } from "@types-page/admin";
 import { SchemaShape } from "@types-schema";
 import { requiredTokenAmount } from "schemas/number";
 import { requiredAddress } from "schemas/string";
-import { ProposalBase, proposalShape } from "../proposalShape";
-
-export type FundSendPayload = {
-  amount: number;
-  recipient: string;
-
-  //metadata
-  currency: Extract<Denoms, "uusd" | "uhalo">;
-  haloBalance: number;
-  ustBalance: number;
-};
-export type FundSendValues = ProposalBase & FundSendPayload;
+import { proposalShape } from "../proposalShape";
 
 const fundSendShape: SchemaShape<FundSendValues> = {
   ...proposalShape,

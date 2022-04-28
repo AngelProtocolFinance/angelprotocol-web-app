@@ -1,6 +1,6 @@
 import React from "react";
+import { AllianceMemberWithFlags } from "@types-slice/admin";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
-import { AllianceMemberWithFlags } from "slices/admin/allianceMembers";
 import Icon from "components/Icons/Icons";
 import { Cells } from "components/TableSection/TableSection";
 import useMember from "./useMember";
