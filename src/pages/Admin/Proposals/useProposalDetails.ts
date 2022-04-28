@@ -57,6 +57,7 @@ export default function useProposalDetails(
     numId: idParamToNumber(proposalInfo.id),
     votes,
     userVote,
+    meta: proposalInfo.meta,
   };
 }
 
@@ -76,4 +77,5 @@ export type ProposalDetails = {
   numId: number;
   userVote?: Vote;
   votes: VoteInfo[];
+  meta?: string;
 };
