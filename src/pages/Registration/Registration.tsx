@@ -8,7 +8,7 @@ import routes from "./routes";
 import { removeCharity } from "./store";
 import { FormInfoSchema, useRegistration } from "./useRegistration";
 
-const Registration = () => {
+export default function Registration() {
   const { onResume } = useRegistration();
   const navigate = useNavigate();
   const dispatch = useSetter();
@@ -63,6 +63,4 @@ const Registration = () => {
       </p>
     </div>
   );
-};
-
-export default Registration;
+}

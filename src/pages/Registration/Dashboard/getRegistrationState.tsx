@@ -1,24 +1,17 @@
-import { Charity, FileObject } from "services/aws/types";
-
-const isString = (data: string | FileObject) => typeof data === "string";
+import { Charity, EndowmentTier } from "services/aws/types";
 
 export default function getRegistrationState(
   charity: Charity
 ): RegistrationState {
-  const logo = isString(charity.Metadata.CharityLogo)
-    ? charity.Metadata.CharityLogo
-    : (charity.Metadata.CharityLogo as FileObject)?.sourceUrl;
-
-  const banner = isString(charity.Metadata.Banner)
-    ? charity.Metadata.Banner
-    : (charity.Metadata.Banner as FileObject)?.sourceUrl;
-
   return {
     stepOne: { completed: !!charity.ContactPerson.PK },
     stepTwo: { completed: !!charity.Metadata.TerraWallet },
     stepThree: getStepThree(charity),
     stepFour: {
-      completed: !!logo && !!banner && !!charity.Metadata.CharityOverview,
+      completed:
+        !!charity.Metadata.CharityLogo.publicUrl &&
+        !!charity.Metadata.Banner.publicUrl &&
+        !!charity.Metadata.CharityOverview,
     },
     getIsReadyForSubmit: function () {
       return (
@@ -32,42 +25,32 @@ export default function getRegistrationState(
 }
 
 function getStepThree(charity: Charity): DocumentationStep {
-  const ProofOfIdentity = isString(charity.Registration.ProofOfIdentity)
-    ? charity.Registration.ProofOfIdentity
-    : (charity.Registration.ProofOfIdentity as FileObject)?.sourceUrl;
-
-  const ProofOfRegistration = isString(charity.Registration.ProofOfRegistration)
-    ? charity.Registration.ProofOfRegistration
-    : (charity.Registration.ProofOfRegistration as FileObject)?.sourceUrl;
-
   const levelOneDataExists =
-    !!ProofOfIdentity &&
-    !!ProofOfRegistration &&
+    !!charity.Registration.ProofOfIdentity.publicUrl &&
+    !!charity.Registration.ProofOfRegistration.publicUrl &&
     !!charity.Registration.Website;
 
   const levelTwoDataExists =
-    !!charity.Registration.FinancialStatements?.length &&
+    !!charity.Registration.FinancialStatements.length &&
     (charity.Registration.UN_SDG || -1) >= 0;
 
   const levelThreeDataExists =
-    !!charity.Registration.AuditedFinancialReports?.length;
+    !!charity.Registration.AuditedFinancialReports.length;
 
-  const level: DocumentationLevel = levelOneDataExists
+  const tier = levelOneDataExists
     ? levelTwoDataExists
       ? levelThreeDataExists
         ? 3
         : 2
       : 1
-    : 0;
+    : undefined;
 
-  return { completed: levelOneDataExists, level };
+  return { completed: levelOneDataExists, tier };
 }
-
-type DocumentationLevel = 0 | 1 | 2 | 3;
 
 type RegistrationStep = { completed: boolean };
 
-type DocumentationStep = RegistrationStep & { level: DocumentationLevel };
+type DocumentationStep = RegistrationStep & { tier?: EndowmentTier };
 
 type RegistrationState = {
   stepOne: RegistrationStep;

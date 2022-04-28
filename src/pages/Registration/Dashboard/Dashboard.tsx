@@ -52,7 +52,7 @@ export default function Dashboard() {
           completed={state.stepThree.completed}
           // TODO: implement level logic
           statusComplete={
-            state.stepThree.completed && `Level ${state.stepThree.level}`
+            state.stepThree.completed && `Level ${state.stepThree.tier}`
           }
         />
         <Step

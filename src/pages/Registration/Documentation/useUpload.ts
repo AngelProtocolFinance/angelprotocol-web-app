@@ -7,8 +7,8 @@ import { FileWrapper } from "components/FileDropzone/types";
 import { useSetModal } from "components/Modal/Modal";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import uploadToIpfs from "helpers/uploadToIpfs";
 import { Folders } from "constants/folders";
+import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";
 
@@ -75,21 +75,21 @@ export default function useUpload() {
 
 async function getUploadUrls(values: FormValues) {
   const poiPromise = uploadToIpfs(
-    values.proofOfIdentity as FileWrapper,
+    values.proofOfIdentity.file,
     Folders.ProofOfIdentity
   );
   const porPromise = uploadToIpfs(
-    values.proofOfRegistration as FileWrapper,
+    values.proofOfRegistration.file,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
     values.financialStatements.map((x) =>
-      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x.file, Folders.AuditedFinancialDocs)
     )
   );
   const afrPromise = Promise.all(
     values.auditedFinancialReports.map((x) =>
-      uploadToIpfs(x as FileWrapper, Folders.AuditedFinancialDocs)
+      uploadToIpfs(x.file, Folders.AuditedFinancialDocs)
     )
   );
 
@@ -101,9 +101,10 @@ async function getUploadUrls(values: FormValues) {
   ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
 
   const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
-    (url) => url === ""
+    (x) => !x.publicUrl
   );
-  if (!ProofOfIdentity || !ProofOfRegistration || hasError) return null;
+  if (!ProofOfIdentity.publicUrl || !ProofOfRegistration.publicUrl || hasError)
+    return null;
 
   return {
     Website: values.website,

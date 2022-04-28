@@ -34,34 +34,36 @@ export type ContactPerson = {
   SK?: "ContactPerson";
 };
 
+export type EndowmentTier = 1 | 2 | 3;
+
 export type FileObject = {
   name: string;
-  dataUrl?: string;
-  sourceUrl?: string;
+  publicUrl?: string;
 };
 
 export type Metadata = {
   SK?: "Metadata";
-  Banner: FileObject | string;
-  CharityLogo: FileObject | string;
+  Banner: FileObject;
+  CharityLogo: FileObject;
   CharityOverview: string;
   TerraWallet: string;
 };
 
 export type Registration = {
-  AuditedFinancialReports: FileObject[] | string[];
+  AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
   CharityName: string;
   CharityName_ContactEmail?: string;
-  FinancialStatements: FileObject[] | string[];
+  FinancialStatements: FileObject[];
   FinancialStatementsVerified: boolean;
-  ProofOfIdentity: FileObject | string;
+  ProofOfIdentity: FileObject;
   ProofOfIdentityVerified: boolean;
-  ProofOfRegistration: FileObject | string;
+  ProofOfRegistration: FileObject;
   ProofOfRegistrationVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
   SK?: "Registration";
+  Tier?: EndowmentTier;
   UN_SDG: number;
   Website: string;
 };
@@ -81,8 +83,8 @@ export interface UpdateApplication {
 export type UpdateCharityMetadataData = {
   PK?: string;
   body: {
-    Banner?: string;
-    CharityLogo?: string;
+    Banner?: FileObject;
+    CharityLogo?: FileObject;
     CharityOverview?: string;
     TerraWallet?: string;
   };
@@ -100,16 +102,15 @@ export type UpdateDocumentationData = {
   body: {
     Website: string;
     UN_SDG: number;
-    ProofOfIdentity: string;
-    ProofOfRegistration: string;
-    FinancialStatements: string[];
-    AuditedFinancialReports: string[];
+    ProofOfIdentity: FileObject;
+    ProofOfRegistration: FileObject;
+    FinancialStatements: FileObject[];
+    AuditedFinancialReports: FileObject[];
   };
 };
 
-// this is Partial data from User type
-// src/services/user/types.ts -> User
 export type UpdateDocumentationResult = {
+  Tier: EndowmentTier;
   Website: string;
   UN_SDG: number;
   ProofOfIdentity: FileObject;

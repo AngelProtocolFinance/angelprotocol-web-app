@@ -1,19 +1,19 @@
 import { Charity, Metadata, Registration } from "services/aws/types";
 
-export default function createCharity(jwtData: Charity): Charity {
+export default function createInitializedCharity(charity: Charity): Charity {
   return {
-    ContactPerson: { ...jwtData.ContactPerson },
-    Metadata: getMetadata(jwtData),
-    Registration: getRegistration(jwtData),
+    ContactPerson: { ...charity.ContactPerson },
+    Metadata: getMetadata(charity),
+    Registration: getRegistration(charity),
   };
 }
 
-function getMetadata(jwtData: Charity): Metadata {
+function getMetadata({ Metadata }: Charity): Metadata {
   return {
-    Banner: jwtData.Metadata?.Banner || { name: "" },
-    CharityLogo: jwtData.Metadata?.CharityLogo || { name: "" },
-    CharityOverview: jwtData.Metadata?.CharityOverview || "",
-    TerraWallet: jwtData.Metadata?.TerraWallet || "",
+    Banner: Metadata?.Banner || { name: "" },
+    CharityLogo: Metadata?.CharityLogo || { name: "" },
+    CharityOverview: Metadata?.CharityOverview || "",
+    TerraWallet: Metadata?.TerraWallet || "",
   };
 }
 

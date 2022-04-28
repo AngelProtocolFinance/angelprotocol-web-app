@@ -4,10 +4,10 @@ import { FileWrapper } from "components/FileDropzone/types";
 export type FormValues = {
   // Expects an array because FileDropzone component always returns an array of Files,
   // so this way it's easier to handle (Yup validation ensures single file uploaded)
-  proofOfIdentity: FileWrapper | string;
-  proofOfRegistration: FileWrapper | string;
-  financialStatements: FileWrapper[] | string[];
-  auditedFinancialReports: FileWrapper[] | string[];
+  proofOfIdentity: FileWrapper;
+  proofOfRegistration: FileWrapper;
+  financialStatements: FileWrapper[];
+  auditedFinancialReports: FileWrapper[];
   website: string;
   checkedAuthority: boolean;
   checkedPolicy: boolean;
@@ -44,7 +44,7 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
       // file name must be set
       !!fileWrapper.name &&
       // either new file is uploaded or source URL to file is set
-      (!!fileWrapper.file || !!fileWrapper.sourceUrl),
+      (!!fileWrapper.file || !!fileWrapper.publicUrl),
   });
 
 export const SCHEMA = Yup.object({
