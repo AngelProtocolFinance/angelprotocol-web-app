@@ -119,6 +119,9 @@ module.exports = {
         12: "12px",
         69: "69px",
       },
+      spacing: {
+        20: "20%",
+      },
       maxWidth: {
         "4/5": "80%",
         500: "500px",

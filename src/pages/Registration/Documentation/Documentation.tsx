@@ -59,58 +59,54 @@ export default function Documentation() {
         >
           <RowContainer>
             <Column>
-              <Header>Level 1</Header>
-              <ProofOfIdentity />
-              <WebsiteInput />
-              <ProofOfRegistration />
+              <Column>
+                <Header>Level 1</Header>
+                <ProofOfIdentity />
+                <WebsiteInput />
+                <ProofOfRegistration />
+              </Column>
+              <Column>
+                <Header>Level 2</Header>
+                <UnSdgSelector />
+                <FinancialStatements />
+              </Column>
+              <Column>
+                <Header>Level 3</Header>
+                <AuditedFinancialReports />
+              </Column>
             </Column>
-
-            <Column colored={currentLevel >= 1}>
-              <Header>Level 1</Header>
-              <p>
-                Your organization is eligible to create its endowment. Donors
-                can donate funds through your organization’s landing page on
-                Angel Protocol’s interface. Your organization is not displayed
-                on the marketplace and cannot be found through the search bar.
-              </p>
-            </Column>
-          </RowContainer>
-
-          <RowContainer>
             <Column>
-              <Header>Level 2</Header>
-              <UnSdgSelector />
-              <FinancialStatements />
-            </Column>
-            <Column colored={currentLevel >= 2}>
-              <Header>Level 2</Header>
-              <p>
-                All benefits from Level 1 + your organization will be visible in
-                the marketplace.
-              </p>
+              {" "}
+              <Column colored={currentLevel >= 1}>
+                <Header>Level 1</Header>
+                <p>
+                  Your organization is eligible to create its endowment. Donors
+                  can donate funds through your organization’s landing page on
+                  Angel Protocol’s interface. Your organization is not displayed
+                  on the marketplace and cannot be found through the search bar.
+                </p>
+              </Column>{" "}
+              <Column className="mt-6" colored={currentLevel >= 2}>
+                <Header>Level 2</Header>
+                <p>
+                  All benefits from Level 1 + your organization will be visible
+                  in the marketplace.
+                </p>
+              </Column>
+              <Column className="mt-11" colored={currentLevel === 3}>
+                <Header>Level 3</Header>
+                <p>
+                  All benefits from Level 2 + your organization will be able to
+                  receive automatic donations from members of the Angel Charity
+                  Alliance.
+                </p>
+              </Column>
             </Column>
           </RowContainer>
-
-          <RowContainer>
-            <Column>
-              <Header>Level 3</Header>
-              <AuditedFinancialReports />
-            </Column>
-            <Column colored={currentLevel === 3}>
-              <Header>Level 3</Header>
-              <p>
-                All benefits from Level 2 + your organization will be able to
-                receive automatic donations from members of the Angel Charity
-                Alliance.
-              </p>
-            </Column>
-          </RowContainer>
-
           <div className="flex flex-col gap-1 w-full">
             <AuthorityToCreateCheckbox />
             <PrivacyPolicyCheckbox />
           </div>
-
           <ButtonSection />
         </form>
       </FormProvider>
@@ -125,35 +121,50 @@ const Container = ({ children }: PropsWithChildren<{}>) => (
 );
 
 const Title = ({ level }: { level: number }) => (
-  <RowContainer>
-    <Header>
-      Please upload the following documentation. The documentation you provide
-      will inform which Level your organization will be
-    </Header>
-    <Header>
-      {`Currently, your organization is ${
+  <div className="flex justify-center w-full gap-2">
+    <Header className="w-full ml-2">
+      {/* Please upload the following documentation. The documentation you provide
+      will inform which Level your organization will be */}
+      {`Currently, your organization is in ${
         !!level ? `Level ${level}` : "not classified"
+      }${
+        !!level && level < 3
+          ? ", Upload the relevant documentation to apply for the next level."
+          : ""
       }`}
     </Header>
-  </RowContainer>
+    <Header className="w-full ml-20">
+      {/* {`Currently, your organization is ${
+        !!level ? `Level ${level}` : "not classified"
+      }`} */}
+      What are levels?
+    </Header>
+  </div>
 );
 
-const Header = ({ children }: PropsWithChildren<{}>) => (
-  <h3 className="text-lg font-bold">{children}</h3>
+const Header = ({
+  children,
+  className,
+}: PropsWithChildren<{ className?: string }>) => (
+  <h3 className={`text-lg font-bold ${className ?? ""}`}>{children}</h3>
 );
 
 const RowContainer = ({ children }: PropsWithChildren<{}>) => (
   <div className="grid grid-cols-32 gap-3 text-sm">{children}</div>
 );
 
-type ColumnProps = PropsWithChildren<{ colored?: boolean }>;
+type ColumnProps = PropsWithChildren<{ colored?: boolean; className?: string }>;
 
-const Column = ({ colored, children }: ColumnProps) => {
+const Column = ({ colored, children, className }: ColumnProps) => {
   const styles = colored
     ? "ring ring-angel-blue rounded-md bg-angel-blue/50"
     : "";
   return (
-    <div className={`flex flex-col text-left p-1 gap-3 ${styles}`}>
+    <div
+      className={`flex flex-col text-left p-1 gap-3 ${styles} ${
+        className ?? ""
+      }`}
+    >
       {children}
     </div>
   );
