@@ -72,6 +72,7 @@ const registration_api = aws.injectEndpoints({
       query: ({ PK, endowmentContract }) => ({
         url: `registration/${PK}/submit`,
         method: "POST",
+        headers,
         body: { endowmentContract }, // TODO: UPDATE LAMBDA TO SAVE THIS
       }),
     }),
