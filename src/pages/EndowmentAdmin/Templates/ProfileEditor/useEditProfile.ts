@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "@types-page/admin";
+import { EndowmentProfileUpdateMeta } from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { UpdateProfilePayload as UP } from "@types-server/contracts";
 import { ObjectEntries } from "@types-utils";
@@ -18,7 +18,6 @@ import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalTypes } from "constants/routes";
 import { UpdateProfileValues } from "./profileEditSchema";
 
 export default function useEditProfile() {
@@ -55,8 +54,8 @@ export default function useEditProfile() {
       cleanObject(data)
     );
 
-    const profileUpdateMeta: ProposalMeta = {
-      type: proposalTypes.endowment_updateProfile,
+    const profileUpdateMeta: EndowmentProfileUpdateMeta = {
+      type: "endowment-update-profile",
       data: genDiffMeta(diffEntries, initialProfile),
     };
 

@@ -1,7 +1,8 @@
 import { useCallback } from "react";
 import { Props } from "@types-component/staker";
+import { TxProps } from "@types-component/transactor";
 import { useSetModal } from "components/Modal/Modal";
-import Transactor, { TxProps } from "../Transactor";
+import Transactor from "../Transactor";
 import Staker from "./Staker";
 
 export default function useStaker() {

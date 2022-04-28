@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { AllianceEditMeta } from "@types-page/admin";
 import { AllianceMember as AM, EmbeddedWasmMsg } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -11,7 +11,6 @@ import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { AllianceEditValues } from "./alllianceEditSchema";
 
@@ -68,8 +67,8 @@ export default function useEditAlliance() {
     const adminContract = new Admin("apTeam", wallet);
 
     //construct proposal meta for preview
-    const editAllianceMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_allianceEdits,
+    const editAllianceMeta: AllianceEditMeta = {
+      type: "indexfund-alliance-edit",
       data: {
         toAddMembers,
         toRemoveMembers,

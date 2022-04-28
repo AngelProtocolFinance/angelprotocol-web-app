@@ -1,23 +1,20 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { IconTypes } from "@types-component/icons";
+import { CharityParams } from "@types-page/charity";
+import { proposalRoutes } from "pages/Admin/constants";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useEndowmentProfile } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
-import Icon, { IconTypes } from "components/Icons/Icons";
-import {
-  adminRoutes,
-  appRoutes,
-  proposalTypes,
-  siteRoutes,
-} from "constants/routes";
+import Icon from "components/Icons/Icons";
+import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
-import { CharityParam } from "./types";
 
 export default function Charity() {
-  const { address: endowment_addr } = useParams<CharityParam>();
+  const { address: endowment_addr } = useParams<CharityParams>();
   const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
     endowment_addr!
   );
@@ -48,7 +45,7 @@ export default function Charity() {
         </LinkIcon>
         {isUserAdminMember && (
           <LinkIcon
-            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalTypes.endowment_updateProfile}`} //change to multisig edit
+            to={`${siteRoutes.app}/${appRoutes.endowment_admin}/${endowment_addr}/${adminRoutes.proposal_types}/${proposalRoutes["endowment-update-profile"]}`} //change to multisig edit
             _iconType="Edit"
             className="ml-auto border-r border-white/30 pr-2"
           >

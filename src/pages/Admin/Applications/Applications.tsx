@@ -1,13 +1,12 @@
 import { useGetCharityApplicationsQuery } from "services/aws/registration";
 import ApplicationsTable from "./ApplicationsTable";
-import { RegistrationStatus } from "./types";
 
 export default function Applications() {
   const {
     data = [],
     isLoading,
     isError,
-  } = useGetCharityApplicationsQuery(RegistrationStatus.InReview);
+  } = useGetCharityApplicationsQuery("under-review");
 
   return (
     <div className="p-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">

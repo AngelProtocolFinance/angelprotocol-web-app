@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { RemoveFundMeta } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -10,7 +10,6 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { FundDestroyValues } from "./fundDestroyerSchema";
 
@@ -35,8 +34,8 @@ export default function useDestroyFund() {
 
     //get fund details for proposal preview
     const fundDetails = await indexFundContract.getFundDetails(+data.fundId);
-    const removeFundMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_removeFund,
+    const removeFundMeta: RemoveFundMeta = {
+      type: "indexfund-remove-fund",
       data: fundDetails,
     };
 

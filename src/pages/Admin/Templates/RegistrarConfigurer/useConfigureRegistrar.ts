@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { RegistrarConfigUpdateMeta } from "@types-page/admin";
 import { RegistrarConfigPayload } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -13,7 +13,6 @@ import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { RegistrarConfigValues } from "./registrarConfigSchema";
@@ -56,8 +55,8 @@ export default function useConfigureRegistrar() {
       cleanObject(finalPayload)
     );
 
-    const configUpdateMeta: ProposalMeta = {
-      type: proposalTypes.registrar_updateConfig,
+    const configUpdateMeta: RegistrarConfigUpdateMeta = {
+      type: "registrar-update-config",
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 

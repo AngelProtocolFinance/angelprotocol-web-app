@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { ProposalGroup } from "@types-page/admin";
-import { ProposalStatus } from "@types-server/contracts";
+import { ProposalGroupOptions, ProposalStatusOptions } from "@types-page/admin";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,
@@ -81,8 +80,6 @@ export default function Proposals() {
   );
 }
 
-export type ProposalGroupOptions = ProposalGroup | "all";
-export type ProposalStatusOptions = ProposalStatus | "all";
 interface State {
   activeStatus: ProposalStatusOptions;
   activeGroup: ProposalGroupOptions;

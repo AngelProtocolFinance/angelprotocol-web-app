@@ -9,7 +9,10 @@ declare module "@types-page/admin" {
     Member,
     RegistrarConfigPayload,
     UpdateProfilePayload,
+    ProposalStatus,
   } from "@types-server/contracts";
+
+  type AdminProposalParam = { id: string };
 
   type CW3ConfigPayload = {
     //percent vote to pass poll
@@ -28,11 +31,9 @@ declare module "@types-page/admin" {
     ustBalance: number;
   };
 
-  export type ProposalGroup =
-    | "indexfund"
-    | "admin-group"
-    | "endowment"
-    | "registrar";
+  type ProposalGroup = "indexfund" | "admin-group" | "endowment" | "registrar";
+  type ProposalGroupOptions = ProposalGroup | "all";
+  type ProposalStatusOptions = ProposalStatus | "all";
 
   type AdminProposalTypes =
     //index fund
@@ -65,7 +66,7 @@ declare module "@types-page/admin" {
   type SourcePreview = { vaultName: string; usdAmount: number };
 
   /** _shared */
-  export type OwnerUpdateMeta = MetaConstructor<
+  type OwnerUpdateMeta = MetaConstructor<
     "indexfund-owner-update" | "registrar-update-owner",
     { owner: string; newOwner: string }
   >;

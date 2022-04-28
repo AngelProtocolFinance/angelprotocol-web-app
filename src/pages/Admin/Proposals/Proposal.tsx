@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { AdminProposalParam } from "@types-page/admin";
 import { useProposal } from "services/terra/admin/queriers";
 import Icon from "components/Icons/Icons";
 import DetailLabel from "./DetailLabel";
@@ -9,9 +10,8 @@ import VoteStat from "./VoteStat";
 import VotesTable from "./Votes";
 import useProposalDetails, { ProposalDetails } from "./useProposalDetails";
 
-export type ProposalIdParam = { id: string };
 export default function Proposal() {
-  const params = useParams<ProposalIdParam>();
+  const params = useParams<AdminProposalParam>();
   const proposalId = params.id;
   const { proposal } = useProposal(proposalId);
   const proposalDetails = useProposalDetails(proposal);

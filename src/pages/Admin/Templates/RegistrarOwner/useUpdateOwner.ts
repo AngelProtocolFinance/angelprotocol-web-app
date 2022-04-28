@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { OwnerUpdateMeta } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -10,7 +10,6 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { RegistrarOwnerValues } from "./updateOwnerSchema";
 
@@ -36,8 +35,8 @@ export default function useUpdateOwner() {
       new_owner: data.new_owner,
     });
 
-    const ownerUpdateMeta: ProposalMeta = {
-      type: proposalTypes.registrar_updateOwner,
+    const ownerUpdateMeta: OwnerUpdateMeta = {
+      type: "registrar-update-owner",
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 

@@ -1,14 +1,14 @@
-import { ProposalMeta } from "@types-page/admin";
+import {
+  ProposalGroupOptions,
+  ProposalMeta,
+  ProposalStatusOptions,
+} from "@types-page/admin";
 import {
   CWContracts,
   PageOptions,
   Proposal,
   VotesPageOptions,
 } from "@types-server/contracts";
-import {
-  ProposalGroupOptions,
-  ProposalStatusOptions,
-} from "pages/Admin/Proposals/Proposals";
 import idParamToNumber from "helpers/idParamToNum";
 import { LOCAL_TERRA } from "../constants";
 import { admin_api } from "./admin";

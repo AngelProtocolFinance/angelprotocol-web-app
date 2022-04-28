@@ -1,16 +1,19 @@
-import { AWSQueryRes } from "@types-server/aws";
 import {
+  AWSQueryRes,
   CharityApplication,
   RegistrationStatus,
-} from "pages/Admin/Applications/types";
+} from "@types-server/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { aws } from "./aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    getCharityApplications: builder.query<any, any>({
+    getCharityApplications: builder.query<
+      CharityApplication[],
+      RegistrationStatus | undefined
+    >({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
-      query: (status?: RegistrationStatus) => {
+      query: (status) => {
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
           method: "GET",

@@ -1,7 +1,6 @@
 import useEndPoll from "./useEndPoll";
 
-export type Props = { poll_id: number };
-export default function EnderForm(props: Props) {
+export default function EnderForm(props: { poll_id: number }) {
   const { endPoll } = useEndPoll(props.poll_id);
   return (
     <div className="bg-white-grey grid justify-items-center p-4 rounded-md w-full">

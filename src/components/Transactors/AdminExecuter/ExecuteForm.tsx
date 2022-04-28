@@ -1,7 +1,6 @@
 import useExecuteProposal from "./useExecuteProposal";
 
-export type Props = { proposal_id: number };
-export default function ExecuteForm(props: Props) {
+export default function ExecuteForm(props: { proposal_id: number }) {
   const { executeProposal } = useExecuteProposal(props.proposal_id);
   return (
     <div className="bg-white grid justify-items-center p-4 rounded-md w-full">

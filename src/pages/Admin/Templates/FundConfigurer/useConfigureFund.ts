@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { FundConfigUpdateMeta } from "@types-page/admin";
 import { FundConfig } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -14,7 +14,6 @@ import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { FundConfigValues } from "./fundconfigSchema";
@@ -45,8 +44,8 @@ export default function useConfigureFund() {
       return;
     }
 
-    const configUpdateMeta: ProposalMeta = {
-      type: proposalTypes.indexFund_configUpdate,
+    const configUpdateMeta: FundConfigUpdateMeta = {
+      type: "indexfund-config-update",
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 

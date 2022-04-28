@@ -7,7 +7,7 @@ declare module "@types-server/aws" {
     Items: T;
   }
 
-  /** /aidrops ***/
+  /** /airdrop */
   export type Airdrops = Airdrop[];
   export type Airdrop = {
     stage: number;
@@ -22,7 +22,7 @@ declare module "@types-server/aws" {
     // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
   };
 
-  /** /aidrops */
+  /** /transactions */
   export interface Transaction {
     endowment_address: string; // Charity's endowment address
     wallet_address: string; // Owner's wallet address
@@ -34,7 +34,7 @@ declare module "@types-server/aws" {
     chain_id?: ChainIDs;
   }
 
-  //payloads
+  /** /apes/donation */
   export type ReceiptPayload = {
     transactionId: string; // tx hash
     fullName: string; // "John Doe"
@@ -48,26 +48,6 @@ declare module "@types-server/aws" {
     consent_marketing: boolean;
   };
 
-  export interface Endowment {
-    endowment_address: string;
-    charity_owner: string;
-    charity_name: string;
-    total_liq: number;
-    total_lock: number;
-    overall: number;
-    charity_logo?: string;
-    charity_overview: string;
-    url: string;
-    tier: number;
-    iconLight?: boolean;
-  }
-
-  export interface Update {
-    endowments: Endowment[];
-    last_update: string;
-  }
-
-  //logDonation
   type TxDetails = {
     transactionId: string;
     transactionDate: string;
@@ -83,12 +63,52 @@ declare module "@types-server/aws" {
     consent_marketing?: boolean;
   };
 
-  export type Receiver =
+  type Receiver =
     | {
         charityId: string;
         fundId?: never;
       }
     | { fundId: number; charityId?: never };
 
-  export type TxLogPayload = Receiver & TxDetails & TxDataPermissions;
+  type TxLogPayload = Receiver & TxDetails & TxDataPermissions;
+
+  /** /leaderboards */
+  export interface Endowment {
+    endowment_address: string;
+    charity_owner: string;
+    charity_name: string;
+    total_liq: number;
+    total_lock: number;
+    overall: number;
+    charity_logo?: string;
+    charity_overview: string;
+    url: string;
+    tier: number;
+    iconLight?: boolean;
+  }
+
+  interface Update {
+    endowments: Endowment[];
+    last_update: string;
+  }
+
+  /** /registration */
+  interface CharityApplication {
+    CharityName: string;
+    CharityName_ContactEmail: string;
+    EndowmentAgreement: string;
+    EndowmentAgreementVerified: boolean;
+    PK: string;
+    ProofOfEmployment: string;
+    ProofOfEmploymentVerified: boolean;
+    ProofOfIdentity: string;
+    ProofOfIdentityVerified: boolean;
+    RegistrationDate: string;
+    RegistrationStatus: string;
+    SK: string;
+    TerraWallet: string;
+    poll_id: number;
+  }
+
+  type RegistrationStatus = "approved" | "not-complete" | "under-review";
 }

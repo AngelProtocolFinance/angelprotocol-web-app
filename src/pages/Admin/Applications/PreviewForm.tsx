@@ -1,11 +1,11 @@
 import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useNavigate } from "react-router-dom";
+import { CharityApplication } from "@types-server/aws";
 import { useProposal } from "services/terra/admin/queriers";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import { adminRoutes } from "constants/routes";
 import useProposalDetails from "../Proposals/useProposalDetails";
-import { CharityApplication } from "./types";
 import useUpdateApplicationStatus from "./useUpdateApplication";
 
 export default function PreviewForm({

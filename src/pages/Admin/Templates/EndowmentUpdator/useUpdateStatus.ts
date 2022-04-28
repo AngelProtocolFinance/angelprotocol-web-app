@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { EndowmentStatusMeta } from "@types-page/admin";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
@@ -16,7 +16,6 @@ import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { EndowmentUpdateValues } from "./endowmentUpdateSchema";
 
@@ -53,8 +52,8 @@ export default function useUpdateStatus() {
       );
 
     //construct endowment payload preview
-    const statusUpdateMeta: ProposalMeta = {
-      type: proposalTypes.endowment_updateStatus,
+    const statusUpdateMeta: EndowmentStatusMeta = {
+      type: "endowment-update-status",
       data: {
         fromStatus: data.prevStatus,
         toStatus: data.status,

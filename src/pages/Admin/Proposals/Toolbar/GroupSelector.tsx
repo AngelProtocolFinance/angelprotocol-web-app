@@ -1,8 +1,5 @@
-import {
-  ProposalGroupOptions,
-  useGetProposalsState,
-  useSetProposalsState,
-} from "../Proposals";
+import { ProposalGroupOptions } from "@types-page/admin";
+import { useGetProposalsState, useSetProposalsState } from "../Proposals";
 
 export default function GroupSelector() {
   const { activeGroup } = useGetProposalsState();

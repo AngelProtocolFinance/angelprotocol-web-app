@@ -1,7 +1,7 @@
+import { CharityApplication } from "@types-server/aws";
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 import PreviewForm from "./PreviewForm";
-import { CharityApplication } from "./types";
 
 export default function Reviewer(props: { application: CharityApplication }) {
   const { hideModal } = useSetModal();

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "@types-page/admin";
+import { CWMemberUpdateMeta } from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { Member } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -12,7 +12,6 @@ import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { MemberUpdatorValues } from "./memberUpdatorSchema";
 
@@ -61,8 +60,8 @@ export default function useUpdateMembers() {
     );
 
     //create meta for proposal preview
-    const memberUpdateMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_updateMembers,
+    const memberUpdateMeta: CWMemberUpdateMeta = {
+      type: "admin-group-update-members",
       data: {
         toAdd: to_add,
         toRemove: to_remove,

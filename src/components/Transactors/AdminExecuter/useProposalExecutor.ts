@@ -1,12 +1,13 @@
 import { useCallback } from "react";
+import { TxProps } from "@types-component/transactor";
 import { useSetModal } from "components/Modal/Modal";
-import Transactor, { TxProps } from "../Transactor";
-import ExecuteForm, { Props } from "./ExecuteForm";
+import Transactor from "../Transactor";
+import ExecuteForm from "./ExecuteForm";
 
 export default function useProposalExecutor(proposal_id: number) {
   const { showModal } = useSetModal();
   const showPollEnder = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
+    showModal<TxProps<{ proposal_id: number }>>(Transactor, {
       inModal: true,
       Content: ExecuteForm,
       contentProps: { proposal_id },

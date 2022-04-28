@@ -1,7 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "@types-page/admin";
+import { FundSendMeta } from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
@@ -15,7 +15,6 @@ import Admin from "contracts/Admin";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { currency_text } from "constants/currency";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../../genProposalsLink";
 import { FundSendValues } from "../fundSendSchema";
 
@@ -60,8 +59,8 @@ export default function useTransferFunds() {
     }
 
     const adminContract = new Admin(cwContracts, wallet);
-    const fundTransferMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_fundTransfer,
+    const fundTransferMeta: FundSendMeta = {
+      type: "admin-group-fund-transfer",
       data: {
         amount: data.amount,
         currency: data.currency,

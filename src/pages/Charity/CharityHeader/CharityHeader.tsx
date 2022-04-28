@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
+import { CharityParams } from "@types-page/charity";
 import { Profile } from "@types-server/contracts";
 import useDonater from "components/Transactors/Donater/useDonater";
 import { unsdgs } from "constants/unsdgs";
-import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";
 
 export default function CharityHeader(props: Profile) {
-  const { address: endowment_addr } = useParams<CharityParam>();
+  const { address: endowment_addr } = useParams<CharityParams>();
   const showDonater = useDonater({
     to: "charity",
     receiver: endowment_addr!,

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { TxProps } from "@types-component/transactor";
 import { resetTxFormState } from "slices/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
 import Icon from "components/Icons/Icons";
@@ -31,9 +31,3 @@ export default function Transactor<C>(props: TxProps<C>) {
     </div>
   );
 }
-
-export type TxProps<C> = {
-  Content: FC<C>;
-  contentProps: C;
-  inModal?: true;
-};

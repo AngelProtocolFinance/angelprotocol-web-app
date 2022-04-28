@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { ProposalMeta } from "@types-page/admin";
+import { FundMemberUpdateMeta } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
@@ -11,7 +11,6 @@ import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
-import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../genProposalsLink";
 import { FundUpdateValues } from "./fundUpdatorSchema";
 
@@ -65,8 +64,8 @@ export default function useUpdateFund() {
 
       const fundDetails = await indexFundContract.getFundDetails(+fundId);
 
-      const fundUpdateMembersMeta: ProposalMeta = {
-        type: proposalTypes.indexFund_updateFundMembers,
+      const fundUpdateMembersMeta: FundMemberUpdateMeta = {
+        type: "indexfund-update-fund-members",
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 

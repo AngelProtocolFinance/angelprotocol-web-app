@@ -1,8 +1,7 @@
 import Icon from "components/Icons/Icons";
 import { useSetModal } from "components/Modal/Modal";
 
-export type Props = { text: string };
-export default function Warning(props: Props) {
+export default function Warning(props: { text: string }) {
   const { hideModal } = useSetModal();
   return (
     <div className="grid justify-items-center p-5 text-angel-grey">

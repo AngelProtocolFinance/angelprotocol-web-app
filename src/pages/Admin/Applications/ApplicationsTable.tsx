@@ -1,8 +1,8 @@
 import { PropsWithChildren } from "react";
+import { CharityApplication } from "@types-server/aws";
 import { useSetModal } from "components/Modal/Modal";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import Reviewer from "./Previewer";
-import { CharityApplication } from "./types";
 
 export default function ApplicationsTable(props: {
   applications: CharityApplication[];

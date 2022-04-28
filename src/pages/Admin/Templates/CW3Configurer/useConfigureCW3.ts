@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { ProposalMeta } from "@types-page/admin";
+import { CW3ConfigUpdateMeta } from "@types-page/admin";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
@@ -12,7 +12,6 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import getPayloadDiff from "helpers/getPayloadDiff";
-import { proposalTypes } from "constants/routes";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
 import { CW3ConfigPayload, CW3ConfigValues } from "./cw3ConfigSchema";
@@ -50,8 +49,8 @@ export default function useConfigureCW3() {
       (data.threshold / 100).toFixed(3)
     );
 
-    const configUpdateMeta: ProposalMeta = {
-      type: proposalTypes.adminGroup_updateCW3Config,
+    const configUpdateMeta: CW3ConfigUpdateMeta = {
+      type: "admin-group-update-cw3-config",
       data: genDiffMeta(diffEntries, initialCW3Config),
     };
 
