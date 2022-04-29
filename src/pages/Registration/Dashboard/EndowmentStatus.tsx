@@ -6,11 +6,11 @@ import { Button } from "../common";
 type Props = {
   walletAddress: string;
   registrationStatus: RegistrationStatus;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onActivate: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function EndowmentStatus(props: Props) {
-  const { registrationStatus, walletAddress, onClick } = props;
+  const { registrationStatus, walletAddress, onActivate } = props;
 
   return (
     <div className="flex w-9/12 items-center justify-end rounded-md border-2 border-white border-solid p-2 px-9 font-bold">
@@ -23,7 +23,7 @@ export default function EndowmentStatus(props: Props) {
       {registrationStatus === "Approved" && (
         <>
           <p className="uppercase text-green-500 w-40">Available</p>
-          <Button className="w-40 h-10 bg-thin-blue" onClick={onClick}>
+          <Button className="w-40 h-10 bg-thin-blue" onClick={onActivate}>
             Create
           </Button>
         </>

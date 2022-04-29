@@ -24,12 +24,19 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    activate: builder.mutation<{ isActive: boolean }, string | undefined>({
+      query: (PK) => ({
+        url: `registration/${PK}/activate`,
+        method: "POST",
+        headers,
+      }),
+    }),
     checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
       query: (uuid) => {
         return {
           url: "registration",
           method: "GET",
-          params: { uuid: uuid },
+          params: { uuid },
           headers,
         };
       },
@@ -123,6 +130,7 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
+  useActivateMutation,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
