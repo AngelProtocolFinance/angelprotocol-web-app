@@ -23,7 +23,7 @@ export enum Providers {
 
 export type Coin = {
   amount: number; // "1000"
-  denom: denoms; //"denoms.uusd, denoms.uluna"
+  denom: string; //"denoms.uusd, denoms.uluna"
 };
 
 export type WalletInfo = {
@@ -31,8 +31,8 @@ export type WalletInfo = {
   displayCoin: Coin;
   coins: Coin[];
   address: string;
-  chainId: chainIDs;
-  supported_denoms: denoms[];
+  chainId: string;
+  supported_denoms: string[];
   id: TerraIdentifiers | undefined;
 };
 

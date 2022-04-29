@@ -2,7 +2,6 @@ import { Receiver, TxLogPayload } from "services/apes/types";
 import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
 import { apes_endpoint } from "constants/urls";
 
 const logDonation: DonationLogger = async (
@@ -23,7 +22,7 @@ const logDonation: DonationLogger = async (
     ...receiver,
     transactionDate: new Date().toISOString(),
     transactionId: txhash,
-    denomination: currency_text[denom],
+    denomination: denom,
     amount: parseFloat(amount),
     splitLiq,
     walletAddress,
@@ -49,7 +48,7 @@ export type DonationLogger = (
   txhash: string,
   chainId: chainIDs,
   amount: string,
-  denom: denoms,
+  denom: string,
   splitLiq: string,
   walletAddress: string,
   receipient: string | number

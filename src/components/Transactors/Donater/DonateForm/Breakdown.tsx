@@ -5,16 +5,18 @@ import toCurrency from "helpers/toCurrency";
 import { currency_text, denoms } from "constants/currency";
 
 export default function Breakdown() {
-  const { fee, feeDenom } = useGetter((state) => state.transaction);
+  const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
-  const currency = watch("currency");
-  const total = !feeDenom || feeDenom === currency ? amount + fee : amount;
+  const token = watch("token");
+  const isTokenNative = !!token.native_denom;
+  const total = isTokenNative ? amount + fee : amount;
+  const feeCurrency = isTokenNative ? token.symbol : "UST"; //for CW20 tx, fee is in UST
 
   return (
     <div className="">
-      <Entry title="tx fee" amount={fee} currency={feeDenom || currency} />
-      <Entry title="total amount" amount={total} currency={currency} />
+      <Entry title="tx fee" amount={fee} currency={feeCurrency} />
+      <Entry title="total amount" amount={total} currency={token.symbol} />
     </div>
   );
 }

@@ -2,9 +2,23 @@ import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { Token } from "constants/currency";
 import { apes } from "./apes";
+import { TokenInfo } from "./types";
 
 const currencies_api = apes.injectEndpoints({
   endpoints: (builder) => ({
+    terraTokens: builder.query<TokenInfo[], unknown>({
+      query: () => {
+        const generatedToken = createAuthToken(UserTypes.WEB_APP);
+        return {
+          url: "terra-token/list",
+          method: "GET",
+          headers: { authorization: generatedToken },
+        };
+      },
+      transformResponse: (res: TokenInfo[]) => {
+        return res;
+      },
+    }),
     getTerraTokens: builder.query<Token[], unknown>({
       query: () => {
         const generatedToken = createAuthToken(UserTypes.WEB_APP);
@@ -28,4 +42,8 @@ const currencies_api = apes.injectEndpoints({
   }),
 });
 
-export const { useGetTerraTokensQuery, useGetTerraTokenQuery } = currencies_api;
+export const {
+  useGetTerraTokensQuery,
+  useGetTerraTokenQuery,
+  useTerraTokensQuery,
+} = currencies_api;

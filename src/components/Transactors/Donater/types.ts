@@ -1,16 +1,15 @@
 import { FC } from "react";
-import { denoms } from "constants/currency";
+import { TokenInfo } from "services/apes/types";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  currency: denoms; //denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
+  token: TokenInfo; //denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
-  cw20_contract?: string;
 }
 
 interface FromTCA {
@@ -36,4 +35,4 @@ interface ToCharity {
 }
 
 export type FundFlow = ToFund | ToCharity | FromTCA;
-export type Props = FundFlow & { Form: FC };
+export type Props = FundFlow;

@@ -1,0 +1,82 @@
+[
+  {
+    "cw20_contract": "terra14z56l0fp2lsf86zy3hty2z47ezkhnthtr9yq76",
+    "testnet_cw20_contract": "terra1747mad58h0w4y589y3sk84r5efqdev9q4r02pc",
+    "logo": "https://whitelist.anchorprotocol.com/logo/ANC.png",
+    "symbol": "ANC"
+  },
+  {
+    "cw20_contract": "terra1xj49zyqrwpv5k928jwfpfy2ha668nwdgkwlrg3",
+    "testnet_cw20_contract": "terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5",
+    "logo": "https://astroport.fi/astro_logo.svg",
+    "symbol": "ASTRO"
+  },
+  {
+    "cw20_contract": "terra1dzhzukyezv0etz22ud940z7adyv7xgcjkahuun",
+    "testnet_cw20_contract": "",
+    "logo": "https://app.astroport.fi/tokens/bETH.svg",
+    "symbol": "bETH"
+  },
+  {
+    "cw20_contract": "terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp",
+    "testnet_cw20_contract": "terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x",
+    "logo": "https://whitelist.anchorprotocol.com/logo/bLUNA.png",
+    "symbol": "bLUNA"
+  },
+  {
+    "native_denom": "ueur",
+    "logo": "https://assets.terra.money/icon/60/EUT.png",
+    "symbol": "EUT"
+  },
+  {
+    "native_denom": "ukrw",
+    "logo": "https://assets.terra.money/icon/60/KRT.png",
+    "symbol": "KRT"
+  },
+  {
+    "native_denom": "uluna",
+    "logo": "https://assets.terra.money/icon/60/Luna.png",
+    "symbol": "LUNA"
+  },
+  {
+    "cw20_contract": "terra17y9qkl8dfkeg4py7n0g5407emqnemc3yqk5rup",
+    "testnet_cw20_contract": "",
+    "logo": "https://app.astroport.fi/tokens/lunax.svg",
+    "symbol": "LunaX"
+  },
+  {
+    "cw20_contract": "terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n",
+    "testnet_cw20_contract": "",
+    "logo": "https://marsprotocol.io/mars_logo_colored.svg",
+    "symbol": "MARS"
+  },
+  {
+    "cw20_contract": "terra1kcthelkax4j9x8d3ny6sdag0qmxxynl3qtcrpy",
+    "testnet_cw20_contract": "terra1lqm5tutr5xcw9d5vc4457exa3ghd4sr9mzwdex",
+    "logo": "https://assets.pylon.rocks/logo/MINE.png",
+    "symbol": "MINE"
+  },
+  {
+    "cw20_contract": "terra15gwkyepfc6xgca5t5zefzwy42uts8l2m4g40k6",
+    "testnet_cw20_contract": "terra10llyp6v3j3her8u3ce66ragytu45kcmd9asj3u",
+    "logo": "https://whitelist.mirror.finance/icon/MIR.png",
+    "symbol": "MIR"
+  },
+  {
+    "cw20_contract": "terra1dh9478k2qvqhqeajhn75a2a7dsnf74y5ukregw",
+    "testnet_cw20_contract": "",
+    "logo": "https://app.astroport.fi/tokens/prism.png",
+    "symbol": "PRISM"
+  },
+  {
+    "native_denom": "uusd",
+    "logo": "https://assets.terra.money/icon/60/UST.png",
+    "symbol": "UST"
+  },
+  {
+    "cw20_contract": "terra1042wzrwg2uk6jqxjm34ysqquyr9esdgm5qyswz",
+    "testnet_cw20_contract": "",
+    "logo": "https://app.astroport.fi/tokens/xPRISM.svg",
+    "symbol": "xPRISM"
+  }
+]

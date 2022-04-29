@@ -1,3 +1,21 @@
+type CW20TokenInfo = {
+  logo: string;
+  symbol: string;
+  native_denom?: never;
+  cw20_contract: string;
+  testnet_cw20_contract: string; // "" - none
+};
+
+type NativeTokenInfo = {
+  logo: string;
+  symbol: string;
+  native_denom: string;
+  cw20_contract?: never;
+  testnet_cw20_contract?: never;
+};
+
+export type TokenInfo = NativeTokenInfo | CW20TokenInfo;
+
 export type TxDetails = {
   transactionId: string;
   transactionDate: string;

@@ -54,28 +54,28 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
-  const denomRef = useRef<denoms>(denoms.uusd);
-  const currency = watch("currency");
+  const denomRef = useRef<string>(denoms.uusd);
+  const token = watch("token");
+  const denom = token.native_denom || token.symbol;
 
   //reset amount when changing currency
   useEffect(() => {
-    if (denomRef.current !== currency) {
+    if (denomRef.current !== denom) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
-    denomRef.current = currency;
+    denomRef.current = denom;
     //eslint-disable-next-line
-  }, [currency]);
+  }, [denom]);
 
-  const getSender = (currency: denoms): Sender => {
-    if (currency === denoms.ether) return ethSender;
-    if (currency === denoms.bnb) return bnbSender;
-    if (supported_denoms.includes(currency)) return terraSender;
-    throw new Error("Unsupported denomination");
+  const getSender = (denom: string): Sender => {
+    if (denom === denoms.ether) return ethSender;
+    if (denom === denoms.bnb) return bnbSender;
+    return terraSender;
   };
 
   return {
-    donate: handleSubmit(getSender(currency)),
+    donate: handleSubmit(getSender(denom)),
     isSubmitDisabled: form_error !== null || form_loading,
     isFormLoading: form_loading,
     to: getValues("to"),

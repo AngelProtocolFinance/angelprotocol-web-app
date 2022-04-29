@@ -1,5 +1,4 @@
 import { Navigate } from "react-router-dom";
-import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import Donater from "components/Transactors/Donater/Donater";
 import { Props as C } from "components/Transactors/Donater/types";
 import Transactor from "components/Transactors/Transactor";
@@ -17,7 +16,6 @@ export default function TCA() {
         <Transactor<C>
           Content={Donater}
           contentProps={{
-            Form: DonateForm,
             to: "tca",
           }}
         />

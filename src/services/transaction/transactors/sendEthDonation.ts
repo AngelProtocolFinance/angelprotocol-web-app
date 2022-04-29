@@ -38,13 +38,13 @@ export const sendEthDonation = createAsyncThunk(
       const response = await signer.sendTransaction(args.tx!);
 
       updateTx({ step: Step.submit, message: "Saving donation info.." });
-      const { receiver, currency, amount, split_liq } = args.donateValues;
+      const { receiver, token, amount, split_liq } = args.donateValues;
       if (typeof receiver !== "undefined") {
         await logDonation(
           response.hash,
           chainId,
           amount,
-          currency,
+          token.symbol,
           split_liq,
           walletAddress,
           receiver

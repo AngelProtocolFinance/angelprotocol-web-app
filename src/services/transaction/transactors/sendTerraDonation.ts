@@ -27,14 +27,14 @@ export const sendTerraDonation = createAsyncThunk(
         updateStage({ step: Step.submit, message: "Saving donation details" });
 
         const walletAddress = args.wallet.address;
-        const { receiver, currency, amount, split_liq } = args.donateValues;
+        const { receiver, token, amount, split_liq } = args.donateValues;
 
         if (typeof receiver !== "undefined") {
           await logDonation(
             response.result.txhash,
             chainId,
             amount,
-            currency,
+            token.symbol,
             split_liq,
             walletAddress,
             receiver
