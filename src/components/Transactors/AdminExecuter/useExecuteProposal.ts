@@ -1,6 +1,5 @@
-import { admin, tags } from "services/terra/tags";
-import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
+import { TagPayloads } from "services/transaction/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -8,7 +7,10 @@ import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 
-export default function useExecuteProposal(proposal_id: number) {
+export default function useExecuteProposal(
+  proposal_id: number,
+  tagPayloads?: TagPayloads
+) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useWalletContext();
   const dispatch = useSetter();
@@ -25,15 +27,7 @@ export default function useExecuteProposal(proposal_id: number) {
       sendTerraTx({
         wallet,
         msgs: [execMsg],
-        tagPayloads: [
-          terra.util.invalidateTags([
-            //TODO: invalidate corresponding cache based on proposal executed
-            { type: tags.admin, id: admin.members },
-            { type: tags.admin, id: admin.member },
-            { type: tags.admin, id: admin.proposal },
-            { type: tags.admin, id: admin.proposals },
-          ]),
-        ],
+        tagPayloads,
       })
     );
     showModal(TransactionPrompt, {});

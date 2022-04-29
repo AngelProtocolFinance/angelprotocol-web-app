@@ -33,7 +33,7 @@ export const admin_api = terra.injectEndpoints({
 
     //CW3
     cw3Config: builder.query<CW3Config, ContractQueryArgs>({
-      providesTags: [{ type: tags.admin, id: admin.member }],
+      providesTags: [{ type: tags.admin, id: admin.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW3Config>) => {
         return res.query_result;
