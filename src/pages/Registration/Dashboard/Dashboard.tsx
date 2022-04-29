@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Loader from "components/Loader/Loader";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
@@ -77,14 +78,16 @@ export default function Dashboard() {
           </Button>
         )}
       </div>
-      {charity.Registration.RegistrationStatus !== "Inactive" && (
-        <EndowmentStatus
-          registrationStatus={charity.Registration.RegistrationStatus}
-          walletAddress={charity.Metadata.TerraWallet}
-          onActivate={() => activate(charity.ContactPerson.PK)}
-          activateDisabled={isActivateSubmitting}
-        />
-      )}
+      {charity.Registration.RegistrationStatus !== "Inactive" &&
+        (isActivateSubmitting ? (
+          <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+        ) : (
+          <EndowmentStatus
+            registrationStatus={charity.Registration.RegistrationStatus}
+            walletAddress={charity.Metadata.TerraWallet}
+            onActivate={() => activate(charity.ContactPerson.PK)}
+          />
+        ))}
       {charity.Registration.RegistrationStatus === "Active" && (
         <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}

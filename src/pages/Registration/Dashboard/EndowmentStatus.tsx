@@ -7,7 +7,6 @@ type Props = {
   walletAddress: string;
   registrationStatus: RegistrationStatus;
   onActivate: MouseEventHandler<HTMLButtonElement>;
-  activateDisabled: boolean;
 };
 
 export default function EndowmentStatus(props: Props) {
@@ -22,11 +21,7 @@ export default function EndowmentStatus(props: Props) {
       {props.registrationStatus === "Approved" && (
         <>
           <p className="uppercase text-green-500 w-40">Available</p>
-          <Button
-            className="w-40 h-10 bg-thin-blue"
-            onClick={props.onActivate}
-            disabled={props.activateDisabled}
-          >
+          <Button className="w-40 h-10 bg-thin-blue" onClick={props.onActivate}>
             Create
           </Button>
         </>
