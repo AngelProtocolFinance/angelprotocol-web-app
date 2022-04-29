@@ -10,6 +10,8 @@ import {
   Charity,
   ContactDetailsData,
   ContactDetailsRequest,
+  SubmitData,
+  SubmitResult,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -68,12 +70,12 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    submit: builder.mutation<any, { PK: string; endowmentContract: string }>({
-      query: ({ PK, endowmentContract }) => ({
+    submit: builder.mutation<SubmitResult, SubmitData>({
+      query: ({ PK, EndowmentContract }) => ({
         url: `registration/${PK}/submit`,
         method: "POST",
         headers,
-        body: { endowmentContract }, // TODO: UPDATE LAMBDA TO SAVE THIS
+        body: { EndowmentContract },
       }),
     }),
     updateCharityMetadata: builder.mutation<

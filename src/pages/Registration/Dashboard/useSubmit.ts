@@ -1,7 +1,9 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useCallback, useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
-import { Charity } from "services/aws/types";
+import { Charity, SubmitResult } from "services/aws/types";
 import { useBalances } from "services/terra/queriers";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {
@@ -12,6 +14,7 @@ import {
 } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import { useSetModal } from "components/Modal/Modal";
+import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";
@@ -20,6 +23,7 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
+import { updateCharity } from "../store";
 
 const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
@@ -34,18 +38,58 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
 
-  useEffect(() => {
-    async function handleSuccess() {
-      try {
-        const endowmentContract = stage
-          .txInfo!.logs![0].events.find(
-            (event) => event.type === "instantiate_contract"
-          )!
-          .attributes.find((attr) => attr.key === "contract_address")!.value;
-        // const endowmentContract =
-        //   "terra15d4g9gv4664dqsf57unrgk052447wz950f6ks7";
+  const handleError = useCallback(
+    (err) => {
+      console.log(err);
+      showModal(Popup, { message: FORM_ERROR });
+    },
+    [showModal]
+  );
 
-        await submitToAws({ PK: charity.ContactPerson.PK!, endowmentContract });
+  const handleSuccess = useCallback(
+    (data: SubmitResult) =>
+      dispatch(
+        updateCharity({
+          ...charity,
+          Registration: {
+            ...charity.Registration,
+            RegistrationStatus: data.RegistrationStatus,
+          },
+          Metadata: {
+            ...charity.Metadata,
+            EndowmentContract: data.EndowmentContract,
+          },
+        })
+      ),
+    [dispatch, charity]
+  );
+
+  useEffect(() => {
+    async function handle() {
+      try {
+        // const endowmentContract = stage
+        //   .txInfo!.logs![0].events.find(
+        //     (event) => event.type === "instantiate_contract"
+        //   )!
+        //   .attributes.find((attr) => attr.key === "contract_address")!.value;
+        const EndowmentContract =
+          "terra15d4g9gv4664dqsf57unrgk052447wz950f6ks7";
+
+        const result = await submitToAws({
+          PK: charity.ContactPerson.PK!,
+          EndowmentContract,
+        });
+
+        const dataResult = result as {
+          data: SubmitResult;
+          error: FetchBaseQueryError | SerializedError;
+        };
+
+        if (dataResult.error) {
+          handleError(dataResult.error);
+        } else {
+          handleSuccess(dataResult.data);
+        }
 
         dispatch(setFormLoading(false));
       } catch (error) {
@@ -55,15 +99,16 @@ export default function useSubmit() {
       }
     }
     console.log("handleSuccess", stage);
+    handle();
 
     if (stage.step === Step.error) {
       console.log(stage.message);
       dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
     } else if (stage.step === Step.success) {
-      handleSuccess();
+      handle();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage, dispatch, submitToAws]);
+  }, [stage, dispatch, submitToAws, handleError]);
 
   const submit = useCallback(
     async (charity: Charity) => {

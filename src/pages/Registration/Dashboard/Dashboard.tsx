@@ -51,7 +51,6 @@ export default function Dashboard() {
           }
           disabled={dataSubmitted || isSubmitting}
           completed={state.stepThree.completed}
-          // TODO: implement level logic
           statusComplete={
             state.stepThree.completed && `Level ${state.stepThree.tier}`
           }
@@ -76,7 +75,7 @@ export default function Dashboard() {
           </Button>
         )}
       </div>
-      {charity.Registration.RegistrationStatus === "Active" && (
+      {charity.Registration.RegistrationStatus !== "Not Complete" && (
         <EndowmentStatus
           registrationStatus={charity.Registration.RegistrationStatus}
           walletAddress={charity.Metadata.TerraWallet}

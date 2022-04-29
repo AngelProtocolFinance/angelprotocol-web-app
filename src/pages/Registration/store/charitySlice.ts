@@ -31,6 +31,7 @@ const getDefaultCharity = (): Charity => ({
     Banner: { name: "" },
     CharityLogo: { name: "" },
     CharityOverview: "",
+    EndowmentContract: "",
     TerraWallet: "",
   },
 });

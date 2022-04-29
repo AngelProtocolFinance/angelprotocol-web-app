@@ -13,6 +13,7 @@ function getMetadata({ Metadata }: Charity): Metadata {
     Banner: Metadata?.Banner || { name: "" },
     CharityLogo: Metadata?.CharityLogo || { name: "" },
     CharityOverview: Metadata?.CharityOverview || "",
+    EndowmentContract: Metadata?.EndowmentContract || "",
     TerraWallet: Metadata?.TerraWallet || "",
   };
 }
