@@ -20,7 +20,7 @@ export default function EndowmentStatus(props: Props) {
           Under Review
         </p>
       )}
-      {registrationStatus === "Active" && (
+      {registrationStatus === "Approved" && (
         <>
           <p className="uppercase text-green-500 w-40">Available</p>
           <Button className="w-40 h-10 bg-thin-blue" onClick={onClick}>
