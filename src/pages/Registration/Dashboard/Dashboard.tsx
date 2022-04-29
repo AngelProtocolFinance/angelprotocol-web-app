@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { useActivateMutation } from "services/aws/registration";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
@@ -9,13 +8,14 @@ import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
 import getRegistrationState from "./getRegistrationState";
+import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
   const { submit, isSubmitting } = useSubmit();
-  const [activate, { isLoading }] = useActivateMutation();
+  const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 
   const state = getRegistrationState(charity);
 
@@ -82,7 +82,7 @@ export default function Dashboard() {
           registrationStatus={charity.Registration.RegistrationStatus}
           walletAddress={charity.Metadata.TerraWallet}
           onActivate={() => activate(charity.ContactPerson.PK)}
-          activateDisabled={isLoading}
+          activateDisabled={isActivateSubmitting}
         />
       )}
       {charity.Registration.RegistrationStatus === "Active" && (

@@ -17,12 +17,14 @@ export default function useSubmit() {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
-  const handleError = useCallback((err) => {
-    showModal(Popup, {
-      message: err?.data?.message || "Error updating profile ❌",
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleError = useCallback(
+    (err) => {
+      showModal(Popup, {
+        message: err?.data?.message || "Error updating profile ❌",
+      });
+    },
+    [showModal]
+  );
 
   const handleSuccess = useCallback(
     (data: UpdateCharityMetadataResult) =>

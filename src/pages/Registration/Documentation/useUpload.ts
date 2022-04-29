@@ -17,14 +17,14 @@ export default function useUpload() {
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
-  // this '_' value should be used to notify the user of a failure,
-  // or to put in our logs once (and if) they're ever implemented
-  const handleError = useCallback((err) => {
-    showModal(Popup, {
-      message: err?.data?.message || "Error updating profile ❌",
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const handleError = useCallback(
+    (err) => {
+      showModal(Popup, {
+        message: err?.data?.message || "Error updating profile ❌",
+      });
+    },
+    [showModal]
+  );
 
   const handleSuccess = useCallback(
     (data?: UpdateDocumentationResult) =>

@@ -24,7 +24,7 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    activate: builder.mutation<{ isActive: boolean }, string | undefined>({
+    activate: builder.mutation<any, string | undefined>({
       query: (PK) => ({
         url: `registration/${PK}/activate`,
         method: "POST",

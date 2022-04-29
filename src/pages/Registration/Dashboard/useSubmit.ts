@@ -21,6 +21,10 @@ import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import { updateCharity } from "../store";
 
+type Result =
+  | { data: SubmitResult }
+  | { error: FetchBaseQueryError | SerializedError };
+
 const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
@@ -60,11 +64,7 @@ export default function useSubmit() {
   );
 
   const handleResult = useCallback(
-    (
-      result:
-        | { data: SubmitResult }
-        | { error: FetchBaseQueryError | SerializedError }
-    ) => {
+    (result: Result) => {
       const dataResult = result as {
         data: SubmitResult;
         error: FetchBaseQueryError | SerializedError;
