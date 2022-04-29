@@ -28,7 +28,7 @@ export default function EndowmentStatus(props: Props) {
           </Button>
         </>
       )}
-      {registrationStatus === "Approved" && (
+      {registrationStatus === "Active" && (
         <p className="flex items-center h-10 ml-14 mr-auto text-green-500 uppercase">
           Created: {maskAddress(walletAddress)}
         </p>

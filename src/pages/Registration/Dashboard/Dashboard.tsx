@@ -75,14 +75,14 @@ export default function Dashboard() {
           </Button>
         )}
       </div>
-      {charity.Registration.RegistrationStatus !== "Not Complete" && (
+      {charity.Registration.RegistrationStatus !== "Inactive" && (
         <EndowmentStatus
           registrationStatus={charity.Registration.RegistrationStatus}
           walletAddress={charity.Metadata.TerraWallet}
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {charity.Registration.RegistrationStatus === "Approved" && (
+      {charity.Registration.RegistrationStatus === "Active" && (
         <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>
