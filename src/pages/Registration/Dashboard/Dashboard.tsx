@@ -15,7 +15,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
   const { submit, isSubmitting } = useSubmit();
-  const [activate] = useActivateMutation();
+  const [activate, { isLoading }] = useActivateMutation();
 
   const state = getRegistrationState(charity);
 
@@ -82,6 +82,7 @@ export default function Dashboard() {
           registrationStatus={charity.Registration.RegistrationStatus}
           walletAddress={charity.Metadata.TerraWallet}
           onActivate={() => activate(charity.ContactPerson.PK)}
+          activateDisabled={isLoading}
         />
       )}
       {charity.Registration.RegistrationStatus === "Active" && (
