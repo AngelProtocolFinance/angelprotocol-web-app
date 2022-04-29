@@ -59,8 +59,8 @@ export type SuccessLink = { url: string; description: string };
 export type SuccessStage = {
   step: Step.success;
   message: string;
-  txHash: string;
-  chainId: chainIDs;
+  txHash: string; //leave "" to not render tx link
+  chainId: chainIDs; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
@@ -92,10 +92,14 @@ export type StageUpdator = (update: Stage) => void;
 
 export type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
 export type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
+export type TagPayloads = PayloadAction<
+  TagDescription<terraTags | awsTags>[],
+  string
+>[];
 
 export type SenderArgs = {
   wallet: WalletProxy | undefined;
-  tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
+  tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
   feedDenom?: denoms;

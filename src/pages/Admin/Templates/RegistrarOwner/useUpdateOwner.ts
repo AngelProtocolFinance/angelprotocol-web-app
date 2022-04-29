@@ -3,7 +3,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -21,7 +21,7 @@ export default function useUpdateOwner() {
     formState: { isDirty, isSubmitting },
   } = useFormContext<RegistrarOwnerValues>();
 
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateOwner(data: RegistrarOwnerValues) {

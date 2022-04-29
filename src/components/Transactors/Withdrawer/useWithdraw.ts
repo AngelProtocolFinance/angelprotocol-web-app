@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { multicall, tags, user } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { admin, app, site } from "constants/routes";
@@ -17,7 +17,7 @@ export default function useWithdraw(resources: WithdrawResource) {
   } = useFormContext<WithdrawValues>();
 
   const { wallet, tx } = useWithrawEstimator(resources);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function withdraw() {

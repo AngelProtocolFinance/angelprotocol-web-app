@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import { ReceiptStage, Step } from "services/transaction/types";
 import useTxUpdator from "services/transaction/updators";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter } from "store/accessors";
 import { Values } from "./types";
@@ -12,7 +12,7 @@ export default function useReceiptForm() {
   const [processing, setProcessing] = useState(false);
   const [requestReceipt] = useRequestReceiptMutation();
   const { stage } = useGetter((state) => state.transaction);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const { chainId, txHash } = stage as ReceiptStage; //check made on Receipter
   const fromDonor = stage.step === Step.form || !chainId || !txHash;

@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { saveToken } from "services/auth/authSlice";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { aws_endpoint } from "constants/urls";
@@ -20,7 +20,7 @@ export default function useLogin() {
 
   const { tca: tcaToken } = useGetter((state) => state.auth);
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   async function login(values: { password: string }) {
     //start request

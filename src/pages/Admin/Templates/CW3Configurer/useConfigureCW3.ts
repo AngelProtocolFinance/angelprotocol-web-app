@@ -5,7 +5,7 @@ import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -25,7 +25,7 @@ export default function useConfigureCW3() {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<CW3ConfigValues>();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
