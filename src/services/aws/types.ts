@@ -13,13 +13,22 @@ export type Charity = {
 };
 
 export type ContactDetailsData = {
-  Registration: Pick<Registration, "CharityName" | "CharityName_ContactEmail">;
   ContactPerson: ContactPerson;
+  Registration: Pick<
+    Registration,
+    | "CharityName"
+    | "CharityName_ContactEmail"
+    | "RegistrationDate"
+    | "RegistrationStatus"
+  >;
 };
 
 export type ContactDetailsRequest = {
   PK?: string;
-  body: ContactDetailsData;
+  body: {
+    ContactPerson: Omit<ContactPerson, "EmailVerified">;
+    Registration: Pick<Registration, "CharityName">;
+  };
 };
 
 export type ContactPerson = {

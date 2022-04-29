@@ -55,7 +55,7 @@ export const SCHEMA = Yup.object({
   website: Yup.string()
     .required("Organization website required")
     .url("Must be a valid URL"),
-  un_sdg: Yup.number().min(0),
+  un_sdg: Yup.number().min(0).max(17),
   checkedAuthority: Yup.bool().isTrue("Authority checkbox must be checked"),
   checkedPolicy: Yup.bool().isTrue("Policy checkbox must be checked"),
 });

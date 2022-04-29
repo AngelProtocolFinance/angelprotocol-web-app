@@ -7,11 +7,7 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import {
-  Charity,
-  ContactDetailsData,
-  ContactDetailsRequest,
-} from "services/aws/types";
+import { ContactDetailsData, ContactDetailsRequest } from "services/aws/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -32,20 +28,19 @@ export default function useSaveContactDetails() {
 
   const handleUpdateCharity = useCallback(
     (result: ContactDetailsData) => {
-      const newCharity: Charity = {
-        ...charity,
-        ContactPerson: {
-          ...charity.ContactPerson,
-          ...result.ContactPerson,
-        },
-        Registration: {
-          ...charity.Registration,
-          CharityName: result.Registration.CharityName,
-          RegistrationDate: new Date().toISOString(),
-          RegistrationStatus: "Inactive",
-        },
-      };
-      dispatch(updateCharity(newCharity));
+      dispatch(
+        updateCharity({
+          ...charity,
+          ContactPerson: {
+            ...charity.ContactPerson,
+            ...result.ContactPerson,
+          },
+          Registration: {
+            ...charity.Registration,
+            ...result.Registration,
+          },
+        })
+      );
     },
     [dispatch, charity]
   );
