@@ -1,18 +1,16 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { CreateTxOptions } from "@terra-money/terra.js";
 import { useCallback, useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
 import { Charity, SubmitResult } from "services/aws/types";
-import { useBalances } from "services/terra/queriers";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import {
-  setFee,
   setFormError,
   setFormLoading,
   setStage,
 } from "services/transaction/transactionSlice";
 import { Stage, Step } from "services/transaction/types";
+import { WalletProxy } from "providers/WalletProvider";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -20,9 +18,7 @@ import { useGetter, useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";
 import { RegistrarCreateEndowmentPayload as RegistrarEndowmentCreationPayload } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
-import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 import { updateCharity } from "../store";
 
 const FORM_ERROR =
@@ -36,7 +32,6 @@ export default function useSubmit() {
   const { wallet } = useWalletContext();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
 
   const handleError = useCallback(
     (err) => {
@@ -119,31 +114,11 @@ export default function useSubmit() {
           return;
         }
 
-        const payload = createMessagePayload(charity);
-        const contract = new Registrar(wallet);
-        const msg = contract.createEndowmentCreationMsg(payload);
-
         dispatch(setFormLoading(true));
 
-        const fee = await contract.estimateFee([msg]);
-        const feeNum = extractFeeNum(fee);
+        const msg = createEndowmentCreationMsg(charity, wallet);
 
-        //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(
-            setStage({
-              step: Step.error,
-              message: "Not enough UST to pay fees",
-            })
-          );
-          dispatch(setFormLoading(false));
-          return;
-        }
-
-        dispatch(setFee(feeNum));
-
-        const tx: CreateTxOptions = { msgs: [msg], fee };
-        dispatch(sendTerraTx({ wallet, tx }));
+        dispatch(sendTerraTx({ wallet, msgs: [msg] }));
       } catch (err) {
         console.log(processEstimateError(err));
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
@@ -152,10 +127,16 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [UST_balance, wallet, dispatch, showModal]
+    [wallet, dispatch, showModal]
   );
 
   return { submit, isSubmitting: form_loading };
+}
+
+function createEndowmentCreationMsg(charity: Charity, wallet?: WalletProxy) {
+  const payload = createMessagePayload(charity);
+  const contract = new Registrar(wallet);
+  return contract.createEndowmentCreationMsg(payload);
 }
 
 function createMessagePayload(
