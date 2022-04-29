@@ -67,13 +67,11 @@ export default function useSubmit() {
   useEffect(() => {
     async function handle() {
       try {
-        // const endowmentContract = stage
-        //   .txInfo!.logs![0].events.find(
-        //     (event) => event.type === "instantiate_contract"
-        //   )!
-        //   .attributes.find((attr) => attr.key === "contract_address")!.value;
-        const EndowmentContract =
-          "terra15d4g9gv4664dqsf57unrgk052447wz950f6ks7";
+        const EndowmentContract = stage
+          .txInfo!.logs![0].events.find(
+            (event) => event.type === "instantiate_contract"
+          )!
+          .attributes.find((attr) => attr.key === "contract_address")!.value;
 
         const result = await submitToAws({
           PK: charity.ContactPerson.PK!,
@@ -90,16 +88,13 @@ export default function useSubmit() {
         } else {
           handleSuccess(dataResult.data);
         }
-
-        dispatch(setFormLoading(false));
       } catch (error) {
         console.log(JSON.stringify(error));
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
+      } finally {
         dispatch(setFormLoading(false));
       }
     }
-    console.log("handleSuccess", stage);
-    handle();
 
     if (stage.step === Step.error) {
       console.log(stage.message);
