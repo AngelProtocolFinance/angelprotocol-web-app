@@ -8,8 +8,8 @@ import { admin, tags } from "./tags";
 import {
   AWSQueryRes,
   Charity,
-  ContactDetailsData,
   ContactDetailsRequest,
+  ContactDetailsData as ContactDetailsResult,
   SubmitData,
   SubmitResult,
   UpdateCharityMetadataData,
@@ -42,7 +42,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     createNewCharity: builder.mutation<
-      ContactDetailsData,
+      ContactDetailsResult,
       ContactDetailsRequest
     >({
       query: ({ body }) => ({
@@ -114,7 +114,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updatePersonData: builder.mutation<
-      ContactDetailsData,
+      ContactDetailsResult,
       ContactDetailsRequest
     >({
       query: ({ PK, body }) => {
