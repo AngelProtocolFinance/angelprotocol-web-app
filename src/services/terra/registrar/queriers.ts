@@ -1,6 +1,5 @@
 import { ChainIDs } from "@types-lists";
 import Registrar, { R, T } from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
 
@@ -42,9 +41,8 @@ export function useRegistrarConfig() {
 }
 
 export function useCategorizedEndowments() {
-  const { wallet } = useWalletContext();
   const { useCategorizedEndowmentsQuery } = registrar_api;
-  const contract = new Registrar(wallet);
+  const { contract } = useContract<R, T>(Registrar);
   const {
     data = {},
     isError,
@@ -54,10 +52,7 @@ export function useCategorizedEndowments() {
     contract.endowmentList({
       endow_type: "charity",
       status: "1",
-    }),
-    {
-      skip: !wallet,
-    }
+    })
   );
 
   return {

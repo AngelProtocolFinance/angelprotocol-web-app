@@ -48,14 +48,32 @@ declare module "@types-server/aws" {
     consent_marketing: boolean;
   };
 
-  type TxDetails = {
+  type CryptoTxDetails = {
+    walletAddress: string; //user wallet address, undefined for
+    fiatRamp?: never;
+    paymentMethod?: never;
+
     transactionId: string;
     transactionDate: string;
     chainId: ChainIDs;
     amount: number;
-    splitLiq: string;
-    walletAddress: string;
-    denomination: string; //currency_text
+    splitLiq: string; //"50"
+    denomination: string; //currency_text "UST", "LUNA"
+  };
+
+  type FiatTxDetails = {
+    walletAddress?: never;
+    fiatRamp: string;
+    //payment methods
+    //https://www.notion.so/6cbdfa08522e444fadd732d73a7e15ad?v=68fdb3f0310d42e0b7cb28684449bb81
+    paymentMethod: string;
+
+    transactionId: string;
+    transactionDate: string;
+    chainId: ChainIDs;
+    amount: number;
+    splitLiq: string; //"50"
+    denomination: string; //currency_text "UST", "LUNA"
   };
 
   type TxDataPermissions = {
@@ -68,12 +86,14 @@ declare module "@types-server/aws" {
         charityId: string;
         fundId?: never;
       }
-    | { fundId: number; charityId?: never };
+    | { fundId: number | undefined; charityId?: never };
 
-  type TxLogPayload = Receiver & TxDetails & TxDataPermissions;
+  type TxLogPayload = Receiver &
+    (CryptoTxDetails | FiatTxDetails) &
+    TxDataPermissions;
 
   /** /leaderboards */
-  export interface Endowment {
+  interface Endowment {
     endowment_address: string;
     charity_owner: string;
     charity_name: string;

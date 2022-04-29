@@ -31,7 +31,7 @@ export default function Admin() {
     return <GuardPrompt message="You are not authorized to view this page" />;
   } else
     return (
-      <div className="padded-container min-h-screen grid grid-rows-a1 pb-4 gap-2">
+      <div className="padded-container min-h-3/4 grid grid-rows-a1 pb-4 gap-2">
         <AdminNav />
         <Routes>
           <Route path={`${adminRoutes.proposal}/:id`} element={<Proposal />} />

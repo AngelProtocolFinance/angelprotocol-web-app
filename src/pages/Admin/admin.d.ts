@@ -35,6 +35,7 @@ declare module "@types-page/admin" {
     numId: number;
     userVote?: Vote;
     votes: AdminVoteInfo[];
+    meta?: string;
   };
 
   type AdminProposalTypes =
@@ -164,7 +165,7 @@ declare module "@types-page/admin" {
     | FundSendMeta
     //endowment
     | EndowmentStatusMeta
-    | WithdrawMeta
+    | EndowmentWithdrawMeta
     | EndowmentProfileUpdateMeta
     //registrar
     | RegistrarConfigUpdateMeta;

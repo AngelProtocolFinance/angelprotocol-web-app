@@ -1,19 +1,20 @@
 import { useCallback } from "react";
+import { AdmiExecuterProps } from "@types-component/admin-executer";
 import { TxProps } from "@types-component/transactor";
 import { useSetModal } from "components/Modal/Modal";
 import Transactor from "../Transactor";
 import ExecuteForm from "./ExecuteForm";
 
-export default function useProposalExecutor(proposal_id: number) {
+export default function useProposalExecutor(args: AdmiExecuterProps) {
   const { showModal } = useSetModal();
   const showPollEnder = useCallback(() => {
-    showModal<TxProps<{ proposal_id: number }>>(Transactor, {
+    showModal<TxProps<AdmiExecuterProps>>(Transactor, {
       inModal: true,
       Content: ExecuteForm,
-      contentProps: { proposal_id },
+      contentProps: args,
     });
     //eslint-disable-next-line
-  }, [proposal_id]);
+  }, [args]);
 
   return showPollEnder;
 }

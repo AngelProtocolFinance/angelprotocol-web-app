@@ -2,11 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { DonateValues } from "@types-component/donater";
 import { ChainIDs } from "@types-lists";
+import { Receiver } from "@types-server/aws";
 import { StageUpdator } from "@types-slice/transaction";
 import { WalletProxy } from "providers/WalletProvider";
-import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
+import logDonation from "helpers/logDonation";
+import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {
@@ -37,16 +39,22 @@ export const sendTerraDonation = createAsyncThunk(
         const walletAddress = args.wallet.address;
         const { receiver, currency, amount, split_liq } = args.donateValues;
 
+        const receipient: Receiver =
+          typeof receiver === "string"
+            ? { charityId: receiver }
+            : { fundId: receiver };
+
         if (typeof receiver !== "undefined") {
-          await logDonation(
-            response.result.txhash,
+          await logDonation({
+            ...receipient,
+            transactionId: response.result.txhash,
+            transactionDate: new Date().toISOString(),
             chainId,
-            amount,
-            currency,
-            split_liq,
+            amount: +amount,
+            denomination: currency_text[currency],
+            splitLiq: split_liq,
             walletAddress,
-            receiver
-          );
+          });
         }
 
         updateStage({

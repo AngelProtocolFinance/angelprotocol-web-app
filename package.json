@@ -10,6 +10,7 @@
     "@terra-money/terra.js": "^3.0.7",
     "@terra-money/wallet-provider": "^3.8.0",
     "@toruslabs/openlogin": "^1.7.1",
+    "@transak/transak-sdk": "1.0.31",
     "bip39": "^3.0.4",
     "compress.js": "^1.2.2",
     "draft-js": "^0.11.7",
@@ -33,7 +34,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
-    "sort-imports": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
+    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [

@@ -49,5 +49,7 @@ declare module "@types-component/icons" {
     | "Safe"
     | "Globe"
     | "Admin"
+    | "Coins"
+    | "MoneyBill"
     | "PieChart";
 }

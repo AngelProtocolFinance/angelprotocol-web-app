@@ -36,6 +36,8 @@ export const terra = createApi({
   baseQuery: customBaseQuery,
   tagTypes: [
     terraTags.gov,
+    terraTags.indexfund,
+    terraTags.registrar,
     terraTags.user,
     terraTags.halo,
     terraTags.admin,

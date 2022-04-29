@@ -3,11 +3,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
 import { DonateValues } from "@types-component/donater";
 import { ChainIDs } from "@types-lists";
+import { Receiver } from "@types-server/aws";
 import { Dwindow } from "@types-slice/provider";
 import { StageUpdator } from "@types-slice/transaction";
 import { RootState } from "store/store";
-import logDonation from "components/Transactors/Donater/logDonation";
 import handleEthError from "helpers/handleEthError";
+import logDonation from "helpers/logDonation";
+import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
@@ -45,16 +47,22 @@ export const sendEthDonation = createAsyncThunk(
 
       updateTx({ step: "submit", message: "Saving donation info.." });
       const { receiver, currency, amount, split_liq } = args.donateValues;
+      const receipient: Receiver =
+        typeof receiver === "string"
+          ? { charityId: receiver }
+          : { fundId: receiver };
+
       if (typeof receiver !== "undefined") {
-        await logDonation(
-          response.hash,
+        await logDonation({
+          ...receipient,
+          transactionId: response.hash,
+          transactionDate: new Date().toISOString(),
           chainId,
-          amount,
-          currency,
-          split_liq,
+          amount: +amount,
+          denomination: currency_text[currency],
+          splitLiq: split_liq,
           walletAddress,
-          receiver
-        );
+        });
       }
       updateTx({
         step: "success",

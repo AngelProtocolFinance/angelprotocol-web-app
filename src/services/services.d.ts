@@ -12,4 +12,15 @@ declare module "@types-services/terra" {
     address: string;
     data: string; //base64 encoded msg
   };
+
+  type TerraTags =
+    | "gov"
+    | "indexfund"
+    | "user"
+    | "halo"
+    | "lbp"
+    | "endowment"
+    | "admin"
+    | "multicall"
+    | "registrar";
 }

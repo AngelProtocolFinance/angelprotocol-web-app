@@ -5,6 +5,10 @@ declare module "@types-slice/transaction" {
   import { CreateTxOptions, Msg } from "@terra-money/terra.js";
   import { WalletProxy } from "providers/WalletProvider/types";
 
+  type Tag = TagDescription<string>;
+  type Tags = TagDescription<string>[];
+  type TagPayload = PayloadAction<TagDescription<string>[], string>;
+  type TagPayloads = TagPayload[];
   type Step = "form" | "submit" | "broadcast" | "success" | "error" | "receipt";
 
   type FormError =
@@ -78,7 +82,7 @@ declare module "@types-slice/transaction" {
 
   type SenderArgs = {
     wallet: WalletProxy | undefined;
-    tagPayloads?: PayloadAction<TagDescription<string>[], string>[];
+    tagPayloads?: TagPayloads;
     successMessage?: string;
     successLink?: SuccessLink;
     feedDenom?: Denoms;

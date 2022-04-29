@@ -1,7 +1,8 @@
+import { AdmiExecuterProps } from "@types-component/admin-executer";
 import useExecuteProposal from "./useExecuteProposal";
 
-export default function ExecuteForm(props: { proposal_id: number }) {
-  const { executeProposal } = useExecuteProposal(props.proposal_id);
+export default function ExecuteForm(props: AdmiExecuterProps) {
+  const { executeProposal } = useExecuteProposal(props);
   return (
     <div className="bg-white grid justify-items-center p-4 rounded-md w-full">
       <p className="text-angel-grey">

@@ -35,6 +35,7 @@ import {
   FaLinkedinIn,
   FaListOl,
   FaListUl,
+  FaMoneyBillWave,
   FaParachuteBox,
   FaStopwatch,
   FaTelegramPlane,
@@ -42,7 +43,7 @@ import {
   FaUsersCog,
 } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
-import { GiPieChart } from "react-icons/gi";
+import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
@@ -102,6 +103,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   ListUl: FaListUl,
   Search: BiSearchAlt2,
   Edit: AiOutlineEdit,
+  Coins: GiTwoCoins,
+  MoneyBill: FaMoneyBillWave,
   User: FaUserCircle,
   PieChart: GiPieChart,
   Safe: BsSafeFill,
