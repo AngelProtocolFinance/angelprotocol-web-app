@@ -5,7 +5,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
@@ -20,7 +20,7 @@ import { FundCreatorValues } from "./fundCreatorSchema";
 
 export default function useCreateFund() {
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);

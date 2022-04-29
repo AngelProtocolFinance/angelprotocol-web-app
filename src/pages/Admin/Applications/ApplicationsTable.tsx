@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import Reviewer from "./Previewer";
 import { CharityApplication } from "./types";
@@ -8,7 +8,7 @@ export default function ApplicationsTable(props: {
   applications: CharityApplication[];
   isError: boolean;
 }) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   if (props.isError) {
     return <Tooltip>failed to get applications..</Tooltip>;
   }

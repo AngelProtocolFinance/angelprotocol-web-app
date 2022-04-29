@@ -1,24 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Providers } from "services/wallet/types";
 import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
-import useKeyPress from "hooks/useKeyPress";
 import ConnectOptions from "./ConnectOptions";
 import Display from "./Display";
-import useBackdropDismiss from "./useBackdropDismiss";
 import useWalletUpdator from "./useWalletUpdator";
 
 export default function WalletSuite() {
   const provider = useGetter((state) => state.provider);
-  const escKeyPressed = useKeyPress("Escape");
-  const ref = useRef<HTMLDivElement>();
 
   useWalletUpdator(provider.active);
 
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => setConnectOptionsShown(false);
-  const dismissHandler = useBackdropDismiss(hideConnectOptions);
 
   const isProviderActive = provider.active !== Providers.none;
 
@@ -28,29 +23,8 @@ export default function WalletSuite() {
     //eslint-disable-next-line
   }, [isProviderActive]);
 
-  useEffect(() => {
-    if (escKeyPressed && connectOptionsShown) {
-      hideConnectOptions();
-    }
-    //eslint-disable-next-line
-  }, [escKeyPressed, connectOptionsShown]);
-
-  const handleRef = useCallback(
-    (node) => {
-      if (node !== null) {
-        ref.current = node;
-        dismissHandler(ref);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
   return (
-    <div
-      ref={handleRef}
-      className="relative border border-white/40 hover:bg-white/10 rounded-md"
-    >
+    <div className="relative border border-white/40 hover:bg-white/10 rounded-md">
       {!isProviderActive && (
         <button
           className="flex py-2 px-3 items-center text-white  "

@@ -1,22 +1,24 @@
 import { FC } from "react";
 import { resetTxFormState } from "services/transaction/transactionSlice";
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { useSetter } from "store/accessors";
 
 export default function Transactor<C>(props: TxProps<C>) {
   const dispatch = useSetter();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   function close() {
     dispatch(resetTxFormState());
-    hideModal();
+    closeModal();
   }
 
   return (
     <div
-      className={`relative w-full max-w-md ${
-        props.inModal ? "bg-white-grey rounded-md overflow-hidden pt-4" : ""
+      className={`w-full max-w-md ${
+        props.inModal
+          ? "bg-white-grey rounded-md overflow-hidden pt-4 fixed-center z-20"
+          : "relative"
       }`}
     >
       {props.inModal && (

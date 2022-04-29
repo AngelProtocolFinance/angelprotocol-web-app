@@ -9,6 +9,12 @@
 }
 
 @layer utilities {
+  .fixed-center {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  }
 
   .box-delay-1 {
     animation-delay: 300ms;
@@ -36,7 +42,7 @@
   .shadow-inner-white-grey {
     box-shadow: inset -2px 2px 2px #c1c1c6, inset 2px -2px 2px #fff;
   }
-  
+
   .shadow-outer-white-grey {
     box-shadow: outset -2px 2px 2px #c1c1c6, outset 2px -2px 2px #fff;
   }

@@ -4,7 +4,7 @@ import { AllianceMember as AM } from "services/terra/indexFund/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -22,7 +22,7 @@ export default function useEditAlliance() {
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function editAlliance() {
