@@ -27,34 +27,7 @@ export default function useTransactionResultHandler() {
   const dispatch = useSetter();
 
   const { showModal } = useModalContext();
-
   const [submitToAws] = useSubmitMutation();
-
-  const handleError = useCallback(
-    (err) => {
-      console.log(err);
-      showModal(Popup, { message: FORM_ERROR });
-    },
-    [showModal]
-  );
-
-  const handleSuccess = useCallback(
-    (data: SubmitResult) =>
-      dispatch(
-        updateCharity({
-          ...charity,
-          Registration: {
-            ...charity.Registration,
-            RegistrationStatus: data.RegistrationStatus,
-          },
-          Metadata: {
-            ...charity.Metadata,
-            EndowmentContract: data.EndowmentContract,
-          },
-        })
-      ),
-    [dispatch, charity]
-  );
 
   const handleResult = useCallback(
     (result: Result) => {
@@ -64,12 +37,25 @@ export default function useTransactionResultHandler() {
       };
 
       if (dataResult.error) {
-        handleError(dataResult.error);
+        console.log(dataResult.error);
+        showModal(Popup, { message: FORM_ERROR });
       } else {
-        handleSuccess(dataResult.data);
+        dispatch(
+          updateCharity({
+            ...charity,
+            Registration: {
+              ...charity.Registration,
+              RegistrationStatus: dataResult.data.RegistrationStatus,
+            },
+            Metadata: {
+              ...charity.Metadata,
+              EndowmentContract: dataResult.data.EndowmentContract,
+            },
+          })
+        );
       }
     },
-    [handleError, handleSuccess]
+    [charity, dispatch, showModal]
   );
 
   useEffect(() => {
