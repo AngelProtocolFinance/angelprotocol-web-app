@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Transactor, { TxProps } from "../Transactor";
 import SwapForm from "./SwapForm";
 import Swapper from "./Swapper";
 import { Props } from "./types";
 
 export default function useSwapper() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const showSwapper = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {
       inModal: true,

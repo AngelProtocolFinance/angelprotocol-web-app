@@ -7,7 +7,7 @@ import {
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
@@ -24,7 +24,7 @@ export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
     if (!data.prevStatus) {

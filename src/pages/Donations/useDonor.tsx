@@ -1,11 +1,11 @@
 import { useCallback } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
 import Transactor, { TxProps } from "components/Transactors/Transactor";
 
 export default function useDonor() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const showDonor = useCallback((txHash: string) => {
     showModal<TxProps<{ txHash: string }>>(Transactor, {

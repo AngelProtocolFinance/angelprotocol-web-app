@@ -1,4 +1,4 @@
-import transakSDK from "@transak/transak-sdk";
+import { transakSDK } from "@transak/transak-sdk";
 import { Receiver, TxLogPayload } from "services/apes/types";
 import { sendDonationLog } from "services/transaction/transactors/sendDonationLog";
 import { useSetter } from "store/accessors";

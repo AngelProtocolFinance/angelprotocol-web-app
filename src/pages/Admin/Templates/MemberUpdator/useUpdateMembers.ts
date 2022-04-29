@@ -6,7 +6,7 @@ import { Member } from "services/terra/admin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -22,7 +22,7 @@ export default function useUpdateMembers() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateMembers() {

@@ -7,7 +7,7 @@ import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -30,7 +30,7 @@ export default function useEditProfile() {
   const { wallet } = useWalletContext();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const editProfile = async ({
     title,

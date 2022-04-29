@@ -1,6 +1,6 @@
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { TagPayloads } from "services/transaction/types";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -14,7 +14,7 @@ export default function useExecuteProposal(
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useWalletContext();
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function executeProposal() {
     if (proposal_id === 0) {

@@ -1,10 +1,10 @@
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import useDonater from "components/Transactors/Donater/useDonater";
 import useTransak from "hooks/useTransak";
 
 export default function DonateSelection(props: { endowmentAddr: string }) {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   const { initTransak } = useTransak({ charityId: props.endowmentAddr });
   const showDonater = useDonater({
     to: "charity",
@@ -12,14 +12,14 @@ export default function DonateSelection(props: { endowmentAddr: string }) {
   });
 
   function showTransak() {
-    hideModal();
+    closeModal();
     initTransak();
   }
 
   return (
     <div className="grid justify-items-center gap-2 w-full max-w-md min-h-[10rem] bg-white rounded-md p-4 pb-6">
       <button
-        onClick={hideModal}
+        onClick={closeModal}
         className="justify-self-end text-angel-grey hover:text-black"
       >
         <Icon type="Close" size={20} />

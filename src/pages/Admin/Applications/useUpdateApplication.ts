@@ -3,7 +3,7 @@ import { aws } from "services/aws/aws";
 import { admin, tags } from "services/aws/tags";
 import { EndowmentStatusNum } from "services/terra/registrar/types";
 import { sendEndowmentReviewTx } from "services/transaction/sendEndowmentReviewTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
@@ -16,7 +16,7 @@ import { EndowmentUpdateValues } from "../Templates/EndowmentUpdator/endowmentUp
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
     const statusChangePayload: StatusChangePayload = {
