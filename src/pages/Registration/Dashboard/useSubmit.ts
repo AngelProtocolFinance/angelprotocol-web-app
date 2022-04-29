@@ -13,7 +13,7 @@ import {
   setStage,
 } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -34,7 +34,7 @@ export default function useSubmit() {
   const { stage, form_loading } = useGetter((state) => state.transaction);
   const charity = useGetter((state) => state.charity);
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { main: UST_balance } = useBalances(denoms.uusd);
 
