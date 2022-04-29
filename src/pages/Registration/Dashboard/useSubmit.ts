@@ -12,7 +12,7 @@ import {
   setFormLoading,
   setStage,
 } from "services/transaction/transactionSlice";
-import { Step } from "services/transaction/types";
+import { Stage, Step } from "services/transaction/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -64,30 +64,35 @@ export default function useSubmit() {
     [dispatch, charity]
   );
 
+  const handleResult = useCallback(
+    (
+      result:
+        | { data: SubmitResult }
+        | { error: FetchBaseQueryError | SerializedError }
+    ) => {
+      const dataResult = result as {
+        data: SubmitResult;
+        error: FetchBaseQueryError | SerializedError;
+      };
+
+      if (dataResult.error) {
+        handleError(dataResult.error);
+      } else {
+        handleSuccess(dataResult.data);
+      }
+    },
+    [handleError, handleSuccess]
+  );
+
   useEffect(() => {
     async function handle() {
       try {
-        const EndowmentContract = stage
-          .txInfo!.logs![0].events.find(
-            (event) => event.type === "instantiate_contract"
-          )!
-          .attributes.find((attr) => attr.key === "contract_address")!.value;
-
         const result = await submitToAws({
           PK: charity.ContactPerson.PK!,
-          EndowmentContract,
+          EndowmentContract: getEndowmentContract(stage),
         });
 
-        const dataResult = result as {
-          data: SubmitResult;
-          error: FetchBaseQueryError | SerializedError;
-        };
-
-        if (dataResult.error) {
-          handleError(dataResult.error);
-        } else {
-          handleSuccess(dataResult.data);
-        }
+        handleResult(result);
       } catch (error) {
         console.log(JSON.stringify(error));
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
@@ -102,8 +107,7 @@ export default function useSubmit() {
     } else if (stage.step === Step.success) {
       handle();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage, dispatch, submitToAws, handleError]);
+  }, [charity.ContactPerson.PK, stage, dispatch, submitToAws, handleResult]);
 
   const submit = useCallback(
     async (charity: Charity) => {
@@ -189,4 +193,12 @@ function createMessagePayload(
     },
     withdraw_before_maturity: false,
   };
+}
+
+function getEndowmentContract(stage: Stage) {
+  return stage
+    .txInfo!.logs![0].events.find(
+      (event) => event.type === "instantiate_contract"
+    )!
+    .attributes.find((attr) => attr.key === "contract_address")!.value;
 }
