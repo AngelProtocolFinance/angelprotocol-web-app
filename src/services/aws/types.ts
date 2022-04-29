@@ -69,10 +69,10 @@ export type Registration = {
 };
 
 export type RegistrationStatus =
-  | "Not Complete"
-  | "UnderReview"
-  | "Active"
-  | "Complete";
+  | "Inactive"
+  | "Under Review"
+  | "Approved"
+  | "Active";
 
 export interface UpdateApplication {
   PK: string;

@@ -42,7 +42,7 @@ export default function useSaveContactDetails() {
           ...charity.Registration,
           CharityName: result.Registration.CharityName,
           RegistrationDate: new Date().toISOString(),
-          RegistrationStatus: "Not Complete",
+          RegistrationStatus: "Inactive",
         },
       };
       dispatch(updateCharity(newCharity));

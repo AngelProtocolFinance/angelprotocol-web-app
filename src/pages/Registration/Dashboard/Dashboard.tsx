@@ -15,8 +15,7 @@ export default function Dashboard() {
 
   const state = getRegistrationState(charity);
 
-  const dataSubmitted =
-    charity.Registration.RegistrationStatus !== "Not Complete";
+  const dataSubmitted = charity.Registration.RegistrationStatus !== "Inactive";
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -82,7 +81,7 @@ export default function Dashboard() {
           onClick={() => console.log("Create endowment clicked")}
         />
       )}
-      {charity.Registration.RegistrationStatus === "Complete" && (
+      {charity.Registration.RegistrationStatus === "Approved" && (
         <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>

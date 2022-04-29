@@ -15,7 +15,7 @@ const getDefaultCharity = (): Charity => ({
     CharityName: "",
     CharityName_ContactEmail: "",
     RegistrationDate: "",
-    RegistrationStatus: "Not Complete",
+    RegistrationStatus: "Inactive",
     Website: "",
     UN_SDG: -1,
     ProofOfIdentity: { name: "" },
