@@ -1,4 +1,5 @@
 import { Coin } from "@terra-money/terra.js";
+import { EndowmentTier } from "services/aws/types";
 import { EndowmentStatus } from "services/terra/registrar/types";
 
 //Contract types
@@ -120,35 +121,34 @@ export type RegistrarOwnerPayload = {
 type Endow_type = "Charity";
 
 export type RegistrarCreateEndowmentPayload = {
-  owner: string;
   beneficiary: string;
-  withdraw_before_maturity: false; // do not change please
-  maturity_time: undefined; // do not change please
-  maturity_height: undefined; // do not change please
-  guardians_multisig_addr: undefined; // do not change please
-  cw4_members: []; // do not change please
-  // THE PROFILE WILL BE WHERE MOST OF THE APPLICATION DATA CAN BE PLACED
+  cw4_members: [];
+  guardians_multisig_addr: undefined;
+  maturity_time: undefined;
+  maturity_height: undefined;
+  owner: string;
+  withdraw_before_maturity: false;
   profile: {
-    name: string;
-    overview: string;
-    un_sdg: number; // 1 - 17 int
-    tier: number; // Tier int based on their level from compliance docs uploaded
-    logo: string; // string of the IFPS url if provided
-    image: string; // string of the IFPS url if provided
-    url: string; // string of charity website URL if provided
-    registration_number: undefined; // string of charity reg # if provided
+    annual_revenue: undefined; // string value if provided
+    average_annual_budget: undefined; // string value if provided
+    charity_navigator_rating: undefined; // string value if provided
+    contact_email: string;
     country_of_origin: undefined;
-    street_address: undefined;
-    contact_email: string; // string of charity contact person email if provided
+    endow_type: Endow_type;
+    image: string;
+    logo: string;
+    name: string;
+    number_of_employees: undefined; // int value if provided
+    overview: string;
+    registration_number: undefined; // string of charity reg # if provided
     social_media_urls: {
       facebook: undefined; // string of URL if provided
       twitter: undefined; // string of URL if provided
       linkedin: undefined; // string of URL if provided
     };
-    number_of_employees: undefined; // int value if provided
-    average_annual_budget: undefined; // string value  if provided
-    annual_revenue: undefined; // string value  if provided
-    charity_navigator_rating: undefined; // string value  if provided
-    endow_type: Endow_type; // do not change please
+    street_address: undefined;
+    tier: EndowmentTier;
+    un_sdg: number; // 1 - 17 int
+    url: string; // string of charity website URL if provided
   };
 };
