@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { Charity } from "services/aws/types";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
@@ -22,7 +22,7 @@ export const useRegistration = () => {
   const [checkData] = useCheckPreviousRegistrationMutation();
   const dispatch = useSetter();
   const navigate = useNavigate();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const onResume = async (values: ReferInfo) => {
     const result = await checkData(values.refer);

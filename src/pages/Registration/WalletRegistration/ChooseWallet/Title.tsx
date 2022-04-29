@@ -1,5 +1,5 @@
 import { BsExclamationCircle } from "react-icons/bs";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TerraInfoModal from "./TerraInfoModal";
 
 // Purpose of this component is to avoid rendering the InfoIcon in a non-intuitive way on smaller screens
@@ -37,12 +37,11 @@ export default function Title() {
 }
 
 function InfoIcon() {
-  const { showModal } = useSetModal();
-  const showTerraInfoModal = () => showModal(TerraInfoModal, {});
+  const { showModal } = useModalContext();
   return (
     <BsExclamationCircle
       className="text-thin-blue cursor-pointer"
-      onClick={showTerraInfoModal}
+      onClick={() => showModal(TerraInfoModal, {})}
     />
   );
 }

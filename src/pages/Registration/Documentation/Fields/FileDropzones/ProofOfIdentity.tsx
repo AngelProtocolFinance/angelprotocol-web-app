@@ -1,7 +1,7 @@
 import { FieldError, useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import FileDropzone from "components/FileDropzone";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { Button, InputRow } from "../../../common";
 import { FormValues } from "../../types";
 
@@ -34,19 +34,19 @@ export default function ProofOfIdentity() {
 }
 
 function ProofOfIdentityModal() {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   return (
     <div className="bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
       <BsX
         className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
-        onClick={hideModal}
+        onClick={closeModal}
       />
       <p className="p-4">
         ### EXPLANATION FOR REASONS FOR ASKING PROOF OF IDENTITY AND ACCEPTABLE
         TYPES ###
       </p>
-      <Button className="bg-thin-blue w-40 h-10" onClick={hideModal}>
+      <Button className="bg-thin-blue w-40 h-10" onClick={closeModal}>
         Got it
       </Button>
     </div>

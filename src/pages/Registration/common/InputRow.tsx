@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 
 export type InputRowProps = PropsWithChildren<{
   htmlFor?: string;
@@ -29,7 +29,7 @@ export default function InputRow(props: InputRowProps) {
 }
 
 function InfoIcon({ modal }: { modal: FC<{}> }) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   return (
     <BsQuestionCircle
       className="text-thin-blue cursor-pointer"

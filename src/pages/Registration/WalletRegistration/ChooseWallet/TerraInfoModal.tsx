@@ -1,15 +1,15 @@
 import { BsX } from "react-icons/bs";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { Button } from "../../common";
 
 export default function TerraInfoModal() {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   return (
     <div className="bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
       <BsX
         className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
-        onClick={hideModal}
+        onClick={closeModal}
       />
       <p className="p-4">
         <b>Terra</b> is the blockchain on which Angel Protocol is built.
@@ -19,7 +19,7 @@ export default function TerraInfoModal() {
         blockchain. It has a unique public/private addresses pair, can hold
         balances and is used to sign transactions.
       </p>
-      <Button className="bg-thin-blue w-40 h-10" onClick={hideModal}>
+      <Button className="bg-thin-blue w-40 h-10" onClick={closeModal}>
         Got it
       </Button>
     </div>

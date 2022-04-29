@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app } from "constants/routes";
@@ -15,7 +15,7 @@ export default function ConfirmEmail() {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const sendEmail = async (emailType: string) => {
     if (!charity.ContactPerson.PK) {

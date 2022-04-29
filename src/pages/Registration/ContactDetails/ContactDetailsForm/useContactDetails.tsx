@@ -12,7 +12,7 @@ import {
   ContactDetailsData,
   ContactDetailsRequest,
 } from "services/aws/types";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
@@ -28,7 +28,7 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   const handleUpdateCharity = useCallback(
     (result: ContactDetailsData) => {
