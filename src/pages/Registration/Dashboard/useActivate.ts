@@ -39,7 +39,7 @@ export default function useActivate() {
         );
       }
     },
-    [showModal, activateMutation]
+    [charity, activateMutation, dispatch, showModal]
   );
 
   return { activate, isSubmitting: isLoading };
