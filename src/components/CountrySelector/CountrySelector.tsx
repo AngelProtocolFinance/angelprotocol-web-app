@@ -93,7 +93,7 @@ const CustomOption: FC<OptionProps<CountryOption>> = ({
       <img
         src={data.flags.svg || data.flags.png || defaultIcon}
         alt="flag"
-        className="w-6 aspect object-contain"
+        className="w-6 aspect-video object-contain"
       />
       <span className="text-angel-grey">{children}</span>
     </div>
