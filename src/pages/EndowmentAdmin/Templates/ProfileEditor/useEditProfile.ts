@@ -21,6 +21,7 @@ import { ObjectEntries } from "types/utils";
 import { proposalTypes } from "constants/routes";
 import { UpdateProfileValues } from "./profileEditSchema";
 
+const PLACEHOLDER_DESC = "[text]";
 export default function useEditProfile() {
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const {
@@ -42,7 +43,9 @@ export default function useEditProfile() {
 
     const diff = getPayloadDiff(initialProfile, data);
     if ("overview" in diff) {
-      diff.overview = "[text]";
+      //remove desc diff on tx preview
+      diff.overview = PLACEHOLDER_DESC;
+      initialProfile.overview = PLACEHOLDER_DESC;
     }
 
     const diffEntries = Object.entries(diff) as ObjectEntries<UP>;
