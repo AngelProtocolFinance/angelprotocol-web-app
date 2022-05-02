@@ -7,9 +7,13 @@ import { UpdateProfilePayload } from "contracts/types";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
 import { SchemaShape } from "types/schema";
+import { CountryOption } from "../CountrySelector/CountrySelector";
 
 export type UpdateProfileValues = ProposalBase &
-  UpdateProfilePayload & { initialProfile: UpdateProfilePayload };
+  UpdateProfilePayload & {
+    initialProfile: UpdateProfilePayload;
+    test: CountryOption;
+  };
 
 //construct strict shape to avoid hardcoding shape keys
 const profileEditShape: SchemaShape<UpdateProfileValues> = {

@@ -5,6 +5,7 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
+import CountrySelector from "../CountrySelector/CountrySelector";
 import ImageEditor from "./ImageEditor/ImageEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
@@ -15,6 +16,7 @@ export default function EditForm() {
   const { editProfile, isSubmitDisabled } = useEditForm();
   return (
     <FormContainer onSubmit={editProfile}>
+      <CountrySelector />
       <TextInput<UV> title="Proposal Title" name="title" required />
       <TextInput<UV>
         title="proposal description"
