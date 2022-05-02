@@ -3,11 +3,11 @@ import {
   ProposalBase,
   proposalShape,
 } from "pages/Admin/Templates/proposalShape";
+import { CountryOption } from "components/CountrySelector/CountrySelector";
 import { UpdateProfilePayload } from "contracts/types";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
 import { SchemaShape } from "types/schema";
-import { CountryOption } from "../CountrySelector/CountrySelector";
 
 export type UpdateProfileValues = ProposalBase &
   UpdateProfilePayload & {

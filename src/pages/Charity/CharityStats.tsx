@@ -4,7 +4,8 @@ export default function CharityStats(props: Profile & { classes?: string }) {
   return (
     <ul className={`${props.classes || ""} `}>
       <StatsItem title="Registration#" value={props.registration_number} />
-      <StatsItem title="headquarters" value={props.country_city_origin} />
+      <StatsItem title="Address" value={props.street_address} />
+      <StatsItem title="Country" value={props.country_of_origin} />
       <StatsItem
         title="avg annual budget"
         value={props.average_annual_budget}

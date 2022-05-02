@@ -42,7 +42,8 @@ export interface UpdateProfilePayload {
   image?: string;
   url?: string;
   registration_number?: string;
-  country_city_origin?: string;
+  country_of_origin?: string;
+  street_address?: string;
   contact_email?: string;
   facebook?: string;
   twitter?: string;

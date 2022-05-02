@@ -5,7 +5,7 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import CountrySelector from "../CountrySelector/CountrySelector";
+import CountrySelector from "../../../../components/CountrySelector/CountrySelector";
 import ImageEditor from "./ImageEditor/ImageEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
@@ -16,7 +16,6 @@ export default function EditForm() {
   const { editProfile, isSubmitDisabled } = useEditForm();
   return (
     <FormContainer onSubmit={editProfile}>
-      <CountrySelector />
       <TextInput<UV> title="Proposal Title" name="title" required />
       <TextInput<UV>
         title="proposal description"
@@ -39,10 +38,12 @@ export default function EditForm() {
         placeholder="AP2022HLO"
       />
       <TextInput<UV>
-        name="country_city_origin"
-        title="Location"
+        name="street_address"
+        title="Street address"
         placeholder="Manila, Philippines"
       />
+      <Label className="text-angel-grey -mb-2">Country</Label>
+      <CountrySelector<UV> fieldName="country_of_origin" classes="mb-6 z-10" />
       <Label className="text-angel-grey -mb-2">Overview</Label>
       <OverviewEditor />
 

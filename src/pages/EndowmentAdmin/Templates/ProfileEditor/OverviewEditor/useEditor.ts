@@ -24,8 +24,6 @@ export default function useEditor() {
     EditorState.createEmpty()
   );
 
-  console.log(errors);
-
   useRichTextInit(overview, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
