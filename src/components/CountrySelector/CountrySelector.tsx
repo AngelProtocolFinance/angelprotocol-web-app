@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import { OptionProps } from "react-select";
 import AsyncSelect from "react-select/async";
-import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
+import defaultIcon from "assets/images/angelprotocol-wings-bl.png";
 
 export type CountryOption = {
   name: {
