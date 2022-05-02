@@ -17,7 +17,7 @@ export default function DonateSelection(props: { endowmentAddr: string }) {
   }
 
   return (
-    <div className="grid justify-items-center gap-2 w-full max-w-md min-h-[10rem] bg-white rounded-md p-4 pb-6">
+    <div className="fixed-center z-20 grid justify-items-center gap-2 w-full max-w-md min-h-[10rem] bg-white rounded-md p-4 pb-6 ">
       <button
         onClick={closeModal}
         className="justify-self-end text-angel-grey hover:text-black"
