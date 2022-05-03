@@ -5,7 +5,7 @@ import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
-import { createInitializedCharity } from "./helpers";
+import { createCharityWithStepOneData } from "./helpers";
 import routes from "./routes";
 import { updateCharity } from "./store";
 
@@ -27,7 +27,7 @@ export default function useResume() {
         });
       }
 
-      const charity = createInitializedCharity(result.data);
+      const charity = createCharityWithStepOneData(result.data);
       dispatch(updateCharity(charity));
 
       if (charity.ContactPerson.EmailVerified) {

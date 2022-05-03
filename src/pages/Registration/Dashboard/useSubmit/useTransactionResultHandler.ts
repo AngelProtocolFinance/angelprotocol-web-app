@@ -1,8 +1,5 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
-import { SubmitResult } from "services/aws/types";
 import {
   setFormError,
   setFormLoading,
@@ -33,13 +30,8 @@ export default function useTransactionResultHandler() {
           EndowmentContract: getEndowmentContract(stage),
         });
 
-        const dataResult = result as {
-          data: SubmitResult;
-          error: FetchBaseQueryError | SerializedError;
-        };
-
-        if (dataResult.error) {
-          console.log(dataResult.error);
+        if ("error" in result) {
+          console.log(result.error);
           showModal(Popup, { message: FORM_ERROR });
         } else {
           dispatch(
@@ -47,11 +39,11 @@ export default function useTransactionResultHandler() {
               ...charity,
               Registration: {
                 ...charity.Registration,
-                RegistrationStatus: dataResult.data.RegistrationStatus,
+                RegistrationStatus: result.data.RegistrationStatus,
               },
               Metadata: {
                 ...charity.Metadata,
-                EndowmentContract: dataResult.data.EndowmentContract,
+                EndowmentContract: result.data.EndowmentContract,
               },
             })
           );

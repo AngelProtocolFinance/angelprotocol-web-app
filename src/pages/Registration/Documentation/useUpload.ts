@@ -1,6 +1,5 @@
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
@@ -24,35 +23,31 @@ export default function useUpload() {
     [showModal]
   );
 
-  const handleSuccess = useCallback(
-    (data?: UpdateDocumentationResult) =>
-      dispatch(
-        updateCharity({
-          ...charity,
-          Registration: { ...charity.Registration, ...data },
-        })
-      ),
-    [dispatch, charity]
-  );
-
   const upload = useCallback(
     async (values: FormValues) => {
       try {
-        const uploadBody = await getUploadUrls(values);
+        const body = await getUploadUrls(values);
 
-        const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
-        const result = await uploadDocumentation(postData);
+        const result = await uploadDocumentation({
+          PK: charity.ContactPerson.PK,
+          body,
+        });
 
         if ("error" in result) {
           handleError(result.error);
         } else {
-          handleSuccess(result.data);
+          dispatch(
+            updateCharity({
+              ...charity,
+              Registration: { ...charity.Registration, ...result.data },
+            })
+          );
         }
       } catch (error) {
         handleError(error);
       }
     },
-    [charity.ContactPerson.PK, uploadDocumentation, handleError, handleSuccess]
+    [charity, dispatch, handleError, uploadDocumentation]
   );
 
   return { upload, isSuccess };

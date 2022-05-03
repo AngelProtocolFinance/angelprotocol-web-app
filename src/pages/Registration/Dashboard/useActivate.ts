@@ -1,5 +1,3 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useActivateCharityMutation } from "services/aws/registration";
 import { useModalContext } from "components/ModalContext/ModalContext";
@@ -20,12 +18,8 @@ export default function useActivate() {
     async (primaryKey?: string) => {
       const result = await activateCharity(primaryKey);
 
-      const dataResult = result as {
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (dataResult.error) {
-        console.log(dataResult.error);
+      if ("error" in result) {
+        console.log(result.error);
         showModal(Popup, { message: FORM_ERROR });
       } else {
         dispatch(
