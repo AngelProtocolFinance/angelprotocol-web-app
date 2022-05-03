@@ -82,6 +82,7 @@ export default function Dashboard() {
   }, [TVLData, USTDonatedData]);
 
   useEffect(() => {
+    if (!USTDonatedData) return;
     setTotalUSTWithdrawn(
       USTWithdrawnData[USTWithdrawnData.length - 1].total_ust_withdrawn
     );
@@ -189,7 +190,7 @@ export default function Dashboard() {
                 <XAxis dataKey="name" />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" fill="#8884d8" />
+                <Bar dataKey="pv" fill="#3e769a" />
                 <Bar dataKey="uv" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
