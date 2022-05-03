@@ -84,7 +84,7 @@ export default function Dashboard() {
         <Figure title="Total UST Withdrawn" denom="UST" value={latestTVL} />
         <Figure title="Number of Donations" denom="" value={150} />
       </div>
-      <div className="shadow-xl border-4 border-white/10 w-full rounded-md pt-10 pb-5 px-10 max-h-min">
+      <div className="shadow-xl border-4 border-white/10 w-full rounded-md pt-10 pb-5 px-10 max-h-[550px]">
         <div className="max-w-fit bg-white/10 shadow-xl mb-5">Hello</div>
         <ResponsiveContainer
           maxHeight={400}
