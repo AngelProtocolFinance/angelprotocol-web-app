@@ -7,11 +7,9 @@ import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app } from "constants/routes";
 import { Button } from "./common";
+import { FORM_ERROR } from "./constants";
 import { removeCharity } from "./store";
 import useHandleError from "./useHandleError";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function ConfirmEmail() {
   const navigate = useNavigate();

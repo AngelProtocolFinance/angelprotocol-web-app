@@ -1,6 +1,7 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FORM_ERROR } from "pages/Registration/constants";
 import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
@@ -13,9 +14,6 @@ import { app, site } from "constants/routes";
 import routes from "../../routes";
 import { updateCharity } from "../../store";
 import { ContactDetails } from "./types";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();

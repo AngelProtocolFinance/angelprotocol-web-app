@@ -3,13 +3,11 @@ import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone/types";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
+import { FORM_ERROR } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
 import useHandleError from "../useHandleError";
 import { FormValues } from "./types";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();

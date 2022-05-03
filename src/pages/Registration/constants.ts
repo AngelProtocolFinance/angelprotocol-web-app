@@ -64,3 +64,6 @@ export const UN_SDGS = [
   "Peace, justice and strong institutions",
   "Partnership for the goals",
 ];
+
+export const FORM_ERROR =
+  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";

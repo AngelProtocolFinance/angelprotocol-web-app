@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { FORM_ERROR } from "pages/Registration/constants";
 import { useSubmitMutation } from "services/aws/registration";
 import {
   setFormError,
@@ -9,9 +10,6 @@ import { Stage, Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
 import { updateCharity } from "../../store";
 import useHandleError from "../../useHandleError";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useTransactionResultHandler() {
   const charity = useGetter((state) => state.charity);
