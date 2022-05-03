@@ -11,7 +11,7 @@ describe("useFleek Test", () => {
     expect(typeof result.current.upload).toBe("function");
   });
 
-  it("uploads a file and returns ipfs url", async () => {
+  it("uploads file to ipfs", async () => {
     const { result } = renderHook(() => useFleek());
     let uploaded: string | undefined;
 
