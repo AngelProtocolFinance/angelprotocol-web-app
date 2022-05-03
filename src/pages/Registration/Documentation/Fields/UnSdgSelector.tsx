@@ -12,7 +12,7 @@ const OPTIONS = Object.entries(unsdgs).map(([_key, val]) => ({
 export default function UnSdgSelector() {
   const {
     control,
-    formState: { isSubmitting },
+    formState: { errors, isSubmitting },
   } = useFormContext<FormValues>();
 
   return (
@@ -27,6 +27,11 @@ export default function UnSdgSelector() {
         control={control}
         disabled={isSubmitting}
       />
+      {errors.un_sdg?.message && (
+        <p className="w-full text-xs text-failed-red text-center">
+          {errors.un_sdg.message}
+        </p>
+      )}
     </InputRow>
   );
 }

@@ -8,8 +8,10 @@ import { admin, tags } from "./tags";
 import {
   AWSQueryRes,
   Charity,
-  ContactDetailsData,
   ContactDetailsRequest,
+  ContactDetailsData as ContactDetailsResult,
+  SubmitData,
+  SubmitResult,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -22,18 +24,25 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    activate: builder.mutation<any, string | undefined>({
+      query: (PK) => ({
+        url: `registration/${PK}/activate`,
+        method: "POST",
+        headers,
+      }),
+    }),
     checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
       query: (uuid) => {
         return {
           url: "registration",
           method: "GET",
-          params: { uuid: uuid },
+          params: { uuid },
           headers,
         };
       },
     }),
     createNewCharity: builder.mutation<
-      ContactDetailsData,
+      ContactDetailsResult,
       ContactDetailsRequest
     >({
       query: ({ body }) => ({
@@ -68,6 +77,14 @@ const registration_api = aws.injectEndpoints({
       },
       transformResponse: (response: { data: any }) => response,
     }),
+    submit: builder.mutation<SubmitResult, SubmitData>({
+      query: ({ PK, EndowmentContract }) => ({
+        url: `registration/${PK}/submit`,
+        method: "POST",
+        headers,
+        body: { EndowmentContract },
+      }),
+    }),
     updateCharityMetadata: builder.mutation<
       UpdateCharityMetadataResult,
       UpdateCharityMetadataData
@@ -97,7 +114,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     updatePersonData: builder.mutation<
-      ContactDetailsData,
+      ContactDetailsResult,
       ContactDetailsRequest
     >({
       query: ({ PK, body }) => {
@@ -113,10 +130,12 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
+  useActivateMutation,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
   useRequestEmailMutation,
+  useSubmitMutation,
   useUpdateCharityMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,

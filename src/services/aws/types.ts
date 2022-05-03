@@ -13,13 +13,22 @@ export type Charity = {
 };
 
 export type ContactDetailsData = {
-  Registration: Pick<Registration, "CharityName" | "CharityName_ContactEmail">;
   ContactPerson: ContactPerson;
+  Registration: Pick<
+    Registration,
+    | "CharityName"
+    | "CharityName_ContactEmail"
+    | "RegistrationDate"
+    | "RegistrationStatus"
+  >;
 };
 
 export type ContactDetailsRequest = {
   PK?: string;
-  body: ContactDetailsData;
+  body: {
+    ContactPerson: Omit<ContactPerson, "EmailVerified">;
+    Registration: Pick<Registration, "CharityName">;
+  };
 };
 
 export type ContactPerson = {
@@ -47,6 +56,7 @@ export type Metadata = {
   CharityLogo: FileObject;
   CharityOverview: string;
   TerraWallet: string;
+  EndowmentContract: string;
 };
 
 export type Registration = {
@@ -73,6 +83,16 @@ export type RegistrationStatus =
   | "Under Review"
   | "Approved"
   | "Active";
+
+export type SubmitData = {
+  PK: string;
+  EndowmentContract: string;
+};
+
+export type SubmitResult = {
+  RegistrationStatus: RegistrationStatus;
+  EndowmentContract: string;
+};
 
 export interface UpdateApplication {
   PK: string;

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Loader from "components/Loader/Loader";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
@@ -8,10 +9,14 @@ import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
 import getRegistrationState from "./getRegistrationState";
+import useActivate from "./useActivate";
+import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
+  const { submit, isSubmitting } = useSubmit();
+  const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 
   const state = getRegistrationState(charity);
 
@@ -31,7 +36,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.contactDetails}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed
         />
         <Step
@@ -39,7 +44,7 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.wallet}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepTwo.completed}
         />
         <Step
@@ -47,9 +52,8 @@ export default function Dashboard() {
           onClick={() =>
             navigate(`${site.app}/${app.register}/${routes.documentation}`)
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepThree.completed}
-          // TODO: implement level logic
           statusComplete={
             state.stepThree.completed && `Level ${state.stepThree.tier}`
           }
@@ -61,27 +65,30 @@ export default function Dashboard() {
               `${site.app}/${app.register}/${routes.additionalInformation}`
             )
           }
-          disabled={dataSubmitted}
+          disabled={dataSubmitted || isSubmitting}
           completed={state.stepFour.completed}
         />
         {!dataSubmitted && (
           <Button
             className="w-full h-10 mt-5 bg-yellow-blue"
-            onClick={() => console.log("submit")}
-            disabled={!state.getIsReadyForSubmit()}
+            onClick={() => submit(charity)}
+            disabled={!state.getIsReadyForSubmit() || isSubmitting}
           >
             Submit for review
           </Button>
         )}
       </div>
+      {charity.Registration.RegistrationStatus !== "Inactive" &&
+        (isActivateSubmitting ? (
+          <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
+        ) : (
+          <EndowmentStatus
+            registrationStatus={charity.Registration.RegistrationStatus}
+            walletAddress={charity.Metadata.TerraWallet}
+            onActivate={() => activate(charity.ContactPerson.PK)}
+          />
+        ))}
       {charity.Registration.RegistrationStatus === "Active" && (
-        <EndowmentStatus
-          registrationStatus={charity.Registration.RegistrationStatus}
-          walletAddress={charity.Metadata.TerraWallet}
-          onClick={() => console.log("Create endowment clicked")}
-        />
-      )}
-      {charity.Registration.RegistrationStatus === "Approved" && (
         <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>

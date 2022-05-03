@@ -17,7 +17,7 @@ const getDefaultCharity = (): Charity => ({
     RegistrationDate: "",
     RegistrationStatus: "Inactive",
     Website: "",
-    UN_SDG: -1,
+    UN_SDG: 0,
     ProofOfIdentity: { name: "" },
     ProofOfRegistration: { name: "" },
     FinancialStatements: [],
@@ -31,6 +31,7 @@ const getDefaultCharity = (): Charity => ({
     Banner: { name: "" },
     CharityLogo: { name: "" },
     CharityOverview: "",
+    EndowmentContract: "",
     TerraWallet: "",
   },
 });
