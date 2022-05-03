@@ -13,6 +13,7 @@ import {
 import { useGetTVLQuery } from "services/flipside/overview";
 import Figure from "../Governance/Figure";
 import HaloFigure from "./HaloFigure";
+import PriceFigure from "./PriceFigure";
 
 const data = [
   {
@@ -63,6 +64,11 @@ export default function Dashboard() {
   const [totalUSTDonated, setTotalUSTDonated] = useState<number>(0);
   const [totalUSTWithdrawn, setTotalUSTWithdrawn] = useState<number>(0);
   const [totalNumDonations, setTotalNumDonations] = useState<number>(0);
+  const [haloData, setHaloData] = useState<any>({
+    price: 0,
+    circulating_supply: 0,
+    halo_staked: 0,
+  });
 
   useEffect(() => {
     if (!TVLData || !USTDonatedData) return;
@@ -87,6 +93,17 @@ export default function Dashboard() {
       USTWithdrawnData[USTWithdrawnData.length - 1].total_ust_withdrawn
     );
   }, [USTWithdrawnData]);
+
+  useEffect(() => {
+    if (!HaloPriceData) return;
+
+    const latestHaloData = HaloPriceData[HaloPriceData.length - 1];
+    setHaloData({
+      price: latestHaloData.price_usd,
+      circulating_supply: latestHaloData.circulating_supply,
+      halo_staked: 0,
+    });
+  }, [HaloPriceData]);
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
@@ -151,38 +168,37 @@ export default function Dashboard() {
               Halo Price:{" "}
             </h1>
             <h1 className="text-xl font-bold uppercase text-white-grey/80">
-              {0.05} UST
+              {haloData.price.toFixed(3)} UST
             </h1>
           </div>
           <div className="h-72 w-full border border-white/10 shadow-xl">
             <ResponsiveContainer height="100%" width="100%">
-              <LineChart data={chart}>
-                <XAxis dataKey="date" stroke="#d7e0e8" opacity={0.7} />
-                <YAxis dataKey="value" stroke="#d7e0e8" opacity={0.7} />
-                <Tooltip cursor={false} />
-                <Line
-                  dot={false}
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#82ca9d"
-                  strokeWidth={3}
-                />
-                <Line
-                  dot={false}
-                  type="monotone"
-                  dataKey="total_ust_donated"
-                  stroke="orange"
-                  strokeWidth={3}
-                  className="shadow-xl"
-                />
-              </LineChart>
+              {HaloPriceData ? (
+                <LineChart data={HaloPriceData}>
+                  <XAxis dataKey="date" stroke="#d7e0e8" opacity={0.7} />
+                  <YAxis dataKey="price_usd" stroke="#d7e0e8" opacity={0.7} />
+                  <Tooltip cursor={false} />
+                  <Line
+                    dot={false}
+                    type="monotone"
+                    dataKey="price_usd"
+                    stroke="#82ca9d"
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              ) : (
+                <></>
+              )}
             </ResponsiveContainer>
           </div>
         </div>
         <div className="border border-white/10 shadow-xl rounded-md p-5 flex-col w-full h-96">
           <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-3 w-full mb-10 h-fit">
-            <HaloFigure title="Circulating Supply" value={0.05} />
-            <HaloFigure title="# of HALO Staked" value={0.05} />
+            <PriceFigure
+              title="Circulating Supply"
+              value={haloData.circulating_supply}
+            />
+            <PriceFigure title="Amount Staked" value={haloData.halo_staked} />
           </div>
           <div className="h-60">
             <ResponsiveContainer height="100%" width="100%">
