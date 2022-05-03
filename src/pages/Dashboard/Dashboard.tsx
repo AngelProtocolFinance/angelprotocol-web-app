@@ -1,3 +1,4 @@
+import toCurrency from "helpers/toCurrency";
 import { useEffect, useState } from "react";
 import {
   Line,
@@ -136,8 +137,21 @@ export default function Dashboard() {
             <></>
           ) : (
             <LineChart data={chart}>
-              <XAxis dataKey="date" stroke="#d7e0e8" opacity={0.7} />
-              <YAxis dataKey="value" stroke="#d7e0e8" opacity={0.7} />
+              <XAxis
+                interval={Math.floor(chart.length / 10)}
+                dataKey="date"
+                stroke="#d7e0e8"
+                opacity={0.7}
+                tickFormatter={(value) =>
+                  new Date(value).toISOString().split("T")[0]
+                }
+              />
+              <YAxis
+                dataKey="value"
+                stroke="#d7e0e8"
+                opacity={0.7}
+                tickFormatter={(value) => toCurrency(value, 0, true)}
+              />
               <Tooltip cursor={false} />
               <Line
                 dot={false}
