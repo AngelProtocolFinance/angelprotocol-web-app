@@ -17,7 +17,6 @@ export default function useFleek() {
         data: file,
       });
       setIsUploading(false);
-      console.log({ url: uploadedFile.publicUrl });
       return uploadedFile.publicUrl;
     } catch (e) {
       setIsUploading(false);

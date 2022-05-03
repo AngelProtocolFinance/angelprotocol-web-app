@@ -46,3 +46,6 @@ jobs:
 
       - name: Test codebase
         run: yarn run test
+        env:
+          REACT_APP_FLEEK_API_KEY: 8piLIWpjQGTXfcaqWj1Uyg==
+          REACT_APP_FLEEK_API_SECRET: bo+5ue2U9bCPYLcTBy83Bjp6tjsIzZDthl4FUvSu4hg=

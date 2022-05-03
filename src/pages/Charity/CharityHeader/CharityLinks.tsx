@@ -57,6 +57,7 @@ function formatUrl(
   url: string,
   socialMedia: "facebook" | "linkedin" | "twitter"
 ) {
+  console.log(url, `https://${socialMedia}.com/${url}`);
   if (/http/.test(url)) {
     return url;
   } else {
