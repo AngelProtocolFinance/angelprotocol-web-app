@@ -6,7 +6,7 @@ import { useModalContext } from "components/ModalContext/ModalContext";
 
 export default function ImgCropper(props: {
   src: string;
-  saveCroppedFile: (file: File) => void;
+  setCropedImage: (dataUrl: string) => void;
 }) {
   const { closeModal } = useModalContext();
   const [error, setError] = useState<string>();
@@ -15,7 +15,7 @@ export default function ImgCropper(props: {
 
   //init cropper
   useEffect(() => {
-    //ref is available when this effect runs
+    //imageRef.current is available when this effect runs
     cropperRef.current = new Cropper(imageRef.current!, {
       aspectRatio: 4 / 1,
       viewMode: 1,
@@ -30,14 +30,11 @@ export default function ImgCropper(props: {
 
   function handleSave() {
     setError(undefined);
-    cropperRef.current?.getCroppedCanvas().toBlob((blob) => {
-      if (blob) {
-        props.saveCroppedFile(new File([blob], "cropped_image"));
-        closeModal();
-      } else {
-        setError("failed to save image");
-      }
-    });
+    if (cropperRef.current) {
+      const dataUrl = cropperRef.current.getCroppedCanvas().toDataURL();
+      props.setCropedImage(dataUrl);
+      closeModal();
+    }
   }
 
   return (
@@ -49,7 +46,7 @@ export default function ImgCropper(props: {
         <Button iconType={"Save"} onClick={handleSave} />
         <Button iconType={"Close"} onClick={closeModal} />
       </div>
-      <img ref={imageRef} src={props.src} className="w-full" />
+      <img ref={imageRef} src={props.src} className="w-full" alt="banner" />
     </div>
   );
 }

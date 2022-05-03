@@ -5,7 +5,6 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import ImageEditor from "./ImageEditor/ImageEditor";
 import ImgEditor from "./ImgEditor/ImgEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";

@@ -21,10 +21,24 @@ export default function useImgEditor() {
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
+    function handleFileLoad(e: ProgressEvent<FileReader>) {
+      // fileReader.readAsDataURL is only ran if there's file
+      setValue("image", e.target!.result as string, {
+        shouldDirty: true,
+      });
+      setLoading(false);
+    }
+
+    function handleFileError() {
+      setError("failed to load image");
+      setLoading(false);
+    }
+
     if (imageFile === null) {
       setValue("image", initialImageRef.current);
       return;
     }
+
     setLoading(true);
 
     const fileReader = new FileReader();
@@ -32,20 +46,7 @@ export default function useImgEditor() {
     fileReader.onload = handleFileLoad;
     fileReader.onerror = handleFileError;
     //no need to remove  for will be garbage collected
-  }, [imageFile]);
-
-  function handleFileLoad(e: ProgressEvent<FileReader>) {
-    // fileReader.readAsDataURL is only ran if there's file
-    setValue("image", e.target!.result as string, {
-      shouldDirty: true,
-    });
-    setLoading(false);
-  }
-
-  function handleFileError() {
-    setError("failed to load image");
-    setLoading(false);
-  }
+  }, [imageFile, setValue]);
 
   function handleImageReset() {
     if (inputRef.current) {
@@ -55,10 +56,12 @@ export default function useImgEditor() {
   }
 
   function handleOpenCropper() {
-    //cropper is disabled when image is not new
+    //cropper is disabled when imageFile is null
     showModal(ImgCropper, {
       src: imageUrl!,
-      saveCroppedFile: (file) => setImageFile(file),
+      setCropedImage: (dataURL) => {
+        setValue("image", dataURL);
+      },
     });
   }
 
