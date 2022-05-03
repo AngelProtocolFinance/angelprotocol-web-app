@@ -46,7 +46,7 @@ import { FiMenu } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
-import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
+import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
@@ -109,6 +109,7 @@ export type IconTypes =
   | "Coins"
   | "MoneyBill"
   | "Admin"
+  | "Crop"
   | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
@@ -163,6 +164,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   PieChart: GiPieChart,
   Safe: BsSafeFill,
   Admin: FaUsersCog,
+  Crop: IoCrop,
 };
 
 interface IconProps extends IconBaseProps {
