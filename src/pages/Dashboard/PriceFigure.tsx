@@ -1,3 +1,5 @@
+import toCurrency from "helpers/toCurrency";
+
 export default function PriceFigure({
   title,
   value,
@@ -10,7 +12,9 @@ export default function PriceFigure({
       <h1 className="font-heading font-bold mb-1 uppercase text-white-grey">
         {title}
       </h1>
-      <h4 className="font-bold text-white-grey/80">{value} HALO</h4>
+      <h4 className="font-bold text-white-grey/80">
+        {toCurrency(value, 2, true)} HALO
+      </h4>
     </div>
   );
 }
