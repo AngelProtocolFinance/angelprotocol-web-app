@@ -53,25 +53,39 @@ const data = [
 ];
 
 export default function Dashboard() {
-  const { data: TVLData } = useGetTVLQuery("tvl");
+  const { data: TVLData } = useGetTVLQuery("tvl?type=Total");
   const { data: USTDonatedData } = useGetTVLQuery("ust_donated");
+  const { data: USTWithdrawnData } = useGetTVLQuery("ust_withdrawn");
   const { data: HaloPriceData } = useGetTVLQuery("halo_price");
 
   const [chart, setChart] = useState<any>([]);
   const [latestTVL, setLatestTVL] = useState<number>(0);
+  const [totalUSTDonated, setTotalUSTDonated] = useState<number>(0);
+  const [totalUSTWithdrawn, setTotalUSTWithdrawn] = useState<number>(0);
+  const [totalNumDonations, setTotalNumDonations] = useState<number>(0);
 
   useEffect(() => {
     if (!TVLData || !USTDonatedData) return;
-    const tvl = TVLData?.filter((d: any) => d.type === "Total");
-
-    const chart = tvl.map((t: any) => ({
+    const chart = TVLData.map((t: any) => ({
       ...t,
       ...USTDonatedData.find((ust: any) => ust.date === t.date),
     }));
 
-    setLatestTVL(tvl[tvl.length - 1].value);
+    setLatestTVL(TVLData[TVLData.length - 1].value);
+    setTotalNumDonations(
+      USTDonatedData[USTDonatedData.length - 1].total_number_of_donations
+    );
+    setTotalUSTDonated(
+      USTDonatedData[USTDonatedData.length - 1].total_ust_donated
+    );
     setChart(chart);
   }, [TVLData, USTDonatedData]);
+
+  useEffect(() => {
+    setTotalUSTWithdrawn(
+      USTWithdrawnData[USTWithdrawnData.length - 1].total_ust_withdrawn
+    );
+  }, [USTWithdrawnData]);
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
@@ -79,10 +93,18 @@ export default function Dashboard() {
         Endowments
       </h2>
       <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-4 gap-3 mb-5">
-        <Figure title="Total UST Donated" denom="UST" value={latestTVL} />
+        <Figure title="Total UST Donated" denom="UST" value={totalUSTDonated} />
         <Figure title="Total Value Locked" denom="UST" value={latestTVL} />
-        <Figure title="Total UST Withdrawn" denom="UST" value={latestTVL} />
-        <Figure title="Number of Donations" denom="" value={150} />
+        <Figure
+          title="Total UST Withdrawn"
+          denom="UST"
+          value={totalUSTWithdrawn}
+        />
+        <Figure
+          title="Number of Donations"
+          denom=""
+          value={totalNumDonations}
+        />
       </div>
       <div className="shadow-xl border-4 border-white/10 w-full rounded-md pt-10 pb-5 px-10 max-h-[550px]">
         <div className="max-w-fit bg-white/10 shadow-xl mb-5">Hello</div>
