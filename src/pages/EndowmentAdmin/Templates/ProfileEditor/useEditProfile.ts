@@ -91,7 +91,6 @@ export default function useEditProfile() {
     }
 
     const accountContract = new Account(endowmentAddr!, wallet);
-    console.log(cleanObject(data));
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
