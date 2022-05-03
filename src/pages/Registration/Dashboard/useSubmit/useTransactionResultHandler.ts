@@ -6,10 +6,9 @@ import {
   setStage,
 } from "services/transaction/transactionSlice";
 import { Stage, Step } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { updateCharity } from "../../store";
+import useHandleError from "../../useHandleError";
 
 const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
@@ -19,7 +18,7 @@ export default function useTransactionResultHandler() {
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
-  const { showModal } = useModalContext();
+  const handleError = useHandleError();
   const [submit] = useSubmitMutation();
 
   useEffect(() => {
@@ -31,8 +30,7 @@ export default function useTransactionResultHandler() {
         });
 
         if ("error" in result) {
-          console.log(result.error);
-          showModal(Popup, { message: FORM_ERROR });
+          handleError(result.error, FORM_ERROR);
         } else {
           dispatch(
             updateCharity({
@@ -62,7 +60,7 @@ export default function useTransactionResultHandler() {
     } else if (stage.step === Step.success) {
       handle();
     }
-  }, [charity, stage, dispatch, showModal, submit]);
+  }, [charity, stage, dispatch, handleError, submit]);
 }
 
 function getEndowmentContract(stage: Stage) {

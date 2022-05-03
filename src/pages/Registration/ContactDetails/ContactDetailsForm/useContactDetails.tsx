@@ -1,14 +1,13 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { ContactDetailsRequest } from "services/aws/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
@@ -26,7 +25,7 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
-  const { showModal } = useModalContext();
+  const handleError = useHandleError();
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
@@ -55,15 +54,12 @@ export default function useSaveContactDetails() {
         : await updateContactPerson(postData);
 
       if ("error" in result) {
-        console.log(result.error);
-
         setError(true);
         const message =
           (result.error as FetchBaseQueryError).status === 404
             ? "Not found. Please check your email for the registration reference."
             : FORM_ERROR;
-
-        return showModal<PopupProps>(Popup, { message });
+        return handleError(result.error, message);
       }
 
       const { data } = result;
@@ -102,10 +98,10 @@ export default function useSaveContactDetails() {
     [
       charity,
       dispatch,
+      handleError,
       navigate,
       registerCharity,
       resendEmail,
-      showModal,
       updateContactPerson,
     ]
   );

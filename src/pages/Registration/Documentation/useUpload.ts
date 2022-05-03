@@ -1,27 +1,21 @@
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 import { FormValues } from "./types";
+
+const FORM_ERROR =
+  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
-
-  const handleError = useCallback(
-    (error) => {
-      console.log(error);
-      showModal(Popup, { message: "Error updating charity ❌" });
-    },
-    [showModal]
-  );
+  const handleError = useHandleError();
 
   const upload = useCallback(
     async (values: FormValues) => {
@@ -34,7 +28,7 @@ export default function useUpload() {
         });
 
         if ("error" in result) {
-          handleError(result.error);
+          handleError(result.error, FORM_ERROR);
         } else {
           dispatch(
             updateCharity({
@@ -44,7 +38,7 @@ export default function useUpload() {
           );
         }
       } catch (error) {
-        handleError(error);
+        handleError(error, FORM_ERROR);
       }
     },
     [charity, dispatch, handleError, uploadDocumentation]

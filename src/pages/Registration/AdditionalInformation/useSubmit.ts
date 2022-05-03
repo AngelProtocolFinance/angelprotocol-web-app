@@ -1,27 +1,18 @@
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
-
-  const handleError = useCallback(
-    (error) => {
-      console.log(error);
-      showModal(Popup, { message: "Error updating profile ❌" });
-    },
-    [showModal]
-  );
+  const handleError = useHandleError();
 
   const submit = useCallback(
     async (values: FormValues) => {
@@ -34,7 +25,7 @@ export default function useSubmit() {
         });
 
         if ("error" in result) {
-          handleError(result.error);
+          handleError(result.error, "Error updating profile ❌");
         } else {
           const { TerraWallet, ...resultMetadata } = result.data;
           dispatch(
@@ -48,7 +39,7 @@ export default function useSubmit() {
           );
         }
       } catch (error) {
-        handleError(error);
+        handleError(error, "Error updating profile ❌");
       }
     },
     [charity, dispatch, handleError, updateMetadata]

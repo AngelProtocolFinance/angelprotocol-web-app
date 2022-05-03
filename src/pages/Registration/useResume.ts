@@ -1,30 +1,28 @@
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { createCharityWithStepOneData } from "./helpers";
 import routes from "./routes";
 import { updateCharity } from "./store";
+import useHandleError from "./useHandleError";
 
 export default function useResume() {
   const [checkData] = useCheckPreviousRegistrationMutation();
   const dispatch = useSetter();
   const navigate = useNavigate();
-  const { showModal } = useModalContext();
+  const handleError = useHandleError();
 
   const resume = useCallback(
     async (values: { refer: string }) => {
       const result = await checkData(values.refer);
 
       if ("error" in result) {
-        console.log(result.error);
-        return showModal<PopupProps>(Popup, {
-          message:
-            "No active charity application found with this registration reference",
-        });
+        return handleError(
+          result.error,
+          "No active charity application found with this registration reference"
+        );
       }
 
       const charity = createCharityWithStepOneData(result.data);
@@ -38,7 +36,7 @@ export default function useResume() {
         });
       }
     },
-    [checkData, showModal, dispatch, navigate]
+    [checkData, dispatch, handleError, navigate]
   );
 
   return resume;

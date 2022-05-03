@@ -20,9 +20,10 @@ async function uploadToIpfs(file: File, folder?: Folders): Promise<FileObject> {
     };
   } catch (e) {
     console.log(`Error uploading file ${file?.name}`, e);
-    // console.log("Error uploading file: ", filename);
-    // throw new Error("Error uploading file to ipfs");
-    return { name: "", publicUrl: "" };
+    return {
+      name: "",
+      publicUrl: "",
+    };
   }
 }
 
