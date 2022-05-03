@@ -4625,6 +4625,7 @@ __metadata:
     bip39: ^3.0.4
     buffer: ^6.0.3
     compress.js: ^1.2.2
+    cropperjs: ^1.5.12
     crypto-browserify: ^3.12.0
     draft-js: ^0.11.7
     eslint: ^8.12.0
@@ -4642,7 +4643,6 @@ __metadata:
     react-dropzone: ^12.0.4
     react-hook-form: ^7.27.1
     react-icons: ^4.2.0
-    react-image-crop: ^10.0.0
     react-redux: ^7.2.5
     react-router-dom: ^6.2.0
     react-scripts: ^5.0.0
@@ -5916,13 +5916,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^1.1.1":
-  version: 1.1.1
-  resolution: "clsx@npm:1.1.1"
-  checksum: ff052650329773b9b245177305fc4c4dc3129f7b2be84af4f58dc5defa99538c61d4207be7419405a5f8f3d92007c954f4daba5a7b74e563d5de71c28c830063
-  languageName: node
-  linkType: hard
-
 "co@npm:^4.6.0":
   version: 4.6.0
   resolution: "co@npm:4.6.0"
@@ -6259,6 +6252,13 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:^1.5.12":
+  version: 1.5.12
+  resolution: "cropperjs@npm:1.5.12"
+  checksum: 8dcbceb3659ad72d421038abf7f9d08ca13a061dc6c643497efc043033e22b17411b5558db29a841cb4f0a3b7943a20e6a3d9fecf3901185b7cd027f8097442b
   languageName: node
   linkType: hard
 
@@ -12981,17 +12981,6 @@ __metadata:
   peerDependencies:
     react: "*"
   checksum: 2cc608acdd3e906aa3aaee290b8398220639677c949382d86e554020e5dab6a9f1ed7484418aa5272cb5c5c018e1fc9a323d433d901697a76530029f9ecb1263
-  languageName: node
-  linkType: hard
-
-"react-image-crop@npm:^10.0.0":
-  version: 10.0.0
-  resolution: "react-image-crop@npm:10.0.0"
-  dependencies:
-    clsx: ^1.1.1
-  peerDependencies:
-    react: ">=16.13.1"
-  checksum: 4b9aed909baf20fa76767a1bd8aa3527e17b3705e72e64f893c7308329fff0f295cdf76bd4c09b7b89a2c8c086c76fc3143da3941c57a65f2d2997fa746908cc
   languageName: node
   linkType: hard
 

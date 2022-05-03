@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import { UpdateProfileValues } from "../profileEditSchema";
-import Cropper from "./Cropper";
+import ImgCropper from "./ImgCropper";
 
 export default function useImgEditor() {
   //TODO: make this reusable with other image changer on different context
@@ -57,7 +57,10 @@ export default function useImgEditor() {
 
   function handleOpenCropper() {
     //cropper is disabled when image is not new
-    showModal(Cropper, { src: imageUrl! });
+    showModal(ImgCropper, {
+      src: imageUrl!,
+      saveCroppedImageHandler: () => alert("save crop"),
+    });
   }
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
