@@ -2,112 +2,141 @@ import {
   CharityApplication,
   RegistrationStatus,
 } from "pages/Admin/Applications/types";
+import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { admin, tags } from "./tags";
-import { AWSQueryRes, UpdateApplication } from "./types";
+import {
+  AWSQueryRes,
+  Charity,
+  ContactDetailsRequest,
+  ContactDetailsData as ContactDetailsResult,
+  SubmitData,
+  SubmitResult,
+  UpdateCharityMetadataData,
+  UpdateCharityMetadataResult,
+  UpdateDocumentationData,
+  UpdateDocumentationResult,
+} from "./types";
+
+const headers = {
+  authorization: createAuthToken("charity-owner"),
+};
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    activate: builder.mutation<any, string | undefined>({
+      query: (PK) => ({
+        url: `registration/${PK}/activate`,
+        method: "POST",
+        headers,
+      }),
+    }),
+    checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
+      query: (uuid) => {
+        return {
+          url: "registration",
+          method: "GET",
+          params: { uuid },
+          headers,
+        };
+      },
+    }),
+    createNewCharity: builder.mutation<
+      ContactDetailsResult,
+      ContactDetailsRequest
+    >({
+      query: ({ body }) => ({
+        url: "registration",
+        method: "POST",
+        headers,
+        body,
+      }),
+    }),
     getCharityApplications: builder.query<any, any>({
       providesTags: [{ type: tags.admin, id: admin.applications }],
       query: (status?: RegistrationStatus) => {
         return {
           url: `registration/list${status ? `?regStatus=${status}` : ""}`,
           method: "Get",
+          headers,
         };
       },
       transformResponse: (response: AWSQueryRes<CharityApplication[]>) =>
         response.Items,
     }),
-    getRegisteredCharities: builder.mutation<any, any>({
-      query: (data) => {
-        if (data) {
-          return {
-            url: `registration/list`,
-            params: { regStatus: data.regStatus },
-            method: "GET",
-          };
-        } else {
-          return {
-            url: `registration/list`,
-            method: "GET",
-          };
-        }
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
-    checkPreviousRegistration: builder.mutation<any, string>({
-      query: (uuid) => {
-        return {
-          url: `registration`,
-          params: { uuid: uuid },
-          method: "GET",
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
-    createCharityMetaData: builder.mutation<any, any>({
-      query: (data) => {
-        return {
-          url: `registration`,
-          params: { uuid: data.uuid },
-          method: "POST",
-          body: data.body,
-        };
-      },
-      transformResponse: (response: { data: any }) => response,
-    }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
-      query: (data) => {
+      query: ({ uuid, type, body }) => {
         return {
-          url: `registration/build-email`,
-          params: { uuid: data.uuid, type: data.type },
+          url: "registration/build-email",
           method: "POST",
-          body: data.body,
+          params: { uuid, type },
+          headers,
+          body,
         };
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    createNewCharity: builder.mutation<any, any>({
-      query: (body) => ({
-        url: "registration",
+    submit: builder.mutation<SubmitResult, SubmitData>({
+      query: ({ PK, EndowmentContract }) => ({
+        url: `registration/${PK}/submit`,
         method: "POST",
-        body,
+        headers,
+        body: { EndowmentContract },
       }),
-      transformResponse: (response: { data: any }) => response,
     }),
-    updatePersonData: builder.mutation<any, any>({
-      query: (data) => {
+    updateCharityMetadata: builder.mutation<
+      UpdateCharityMetadataResult,
+      UpdateCharityMetadataData
+    >({
+      query: ({ PK, body }) => {
         return {
-          url: `registration`,
-          params: { uuid: data.ContactPerson.UUID },
+          url: "registration",
           method: "PUT",
-          body: {
-            ...data.ContactPerson,
-            CharityName: data.Registration.CharityName,
-          },
+          params: { uuid: PK },
+          headers,
+          body,
         };
       },
     }),
-    updateCharityApplication: builder.mutation<any, UpdateApplication>({
-      query: (data) => {
+    updateDocumentation: builder.mutation<
+      UpdateDocumentationResult,
+      UpdateDocumentationData
+    >({
+      query: ({ PK, body }) => {
         return {
-          url: `registration`,
-          params: { uuid: data.PK },
+          url: "registration",
           method: "PUT",
-          body: data,
+          params: { uuid: PK },
+          headers,
+          body,
+        };
+      },
+    }),
+    updatePersonData: builder.mutation<
+      ContactDetailsResult,
+      ContactDetailsRequest
+    >({
+      query: ({ PK, body }) => {
+        return {
+          url: "registration",
+          method: "PUT",
+          params: { uuid: PK },
+          headers,
+          body,
         };
       },
     }),
   }),
 });
 export const {
-  useGetCharityApplicationsQuery,
+  useActivateMutation,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
+  useGetCharityApplicationsQuery,
   useRequestEmailMutation,
-  useGetRegisteredCharitiesMutation,
+  useSubmitMutation,
+  useUpdateCharityMetadataMutation,
+  useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
-  useUpdateCharityApplicationMutation,
 } = registration_api;

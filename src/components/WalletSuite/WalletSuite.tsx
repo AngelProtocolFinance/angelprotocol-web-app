@@ -16,6 +16,7 @@ export default function WalletSuite() {
   const hideConnectOptions = () => setConnectOptionsShown(false);
 
   const isProviderActive = provider.active !== Providers.none;
+
   //close modal after connecting
   useEffect(() => {
     isProviderActive && setConnectOptionsShown(false);

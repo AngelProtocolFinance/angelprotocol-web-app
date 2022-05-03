@@ -17,7 +17,7 @@ export default function useWalletContext(): IWalletContext {
   } = useTorusWallet();
 
   const walletContext: IWalletContext = useMemo(() => {
-    // These if-checks are safe for setting connected wallets, because
+    // This ||-assignment is safe for setting connected wallets, because
     // at any point only one will be connected.
     const wallet = walletTerraJs || walletTorus;
     return {
