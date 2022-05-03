@@ -18,22 +18,21 @@ export default function useImgEditor() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fileList, setFileList] = useState<FileList | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   useEffect(() => {
-    if (fileList === null) {
+    if (imageFile === null) {
       setValue("image", initialImageRef.current);
       return;
     }
     setLoading(true);
-    if (fileList.length > 0) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(fileList[0]);
-      fileReader.onload = handleFileLoad;
-      fileReader.onerror = handleFileError;
-      //no need to remove  for will be garbage collected
-    }
-  }, [fileList]);
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(imageFile);
+    fileReader.onload = handleFileLoad;
+    fileReader.onerror = handleFileError;
+    //no need to remove  for will be garbage collected
+  }, [imageFile]);
 
   function handleFileLoad(e: ProgressEvent<FileReader>) {
     // fileReader.readAsDataURL is only ran if there's file
@@ -52,19 +51,21 @@ export default function useImgEditor() {
     if (inputRef.current) {
       inputRef.current.value = "";
     }
-    setFileList(null);
+    setImageFile(null);
   }
 
   function handleOpenCropper() {
     //cropper is disabled when image is not new
     showModal(ImgCropper, {
       src: imageUrl!,
-      saveCroppedImageHandler: () => alert("save crop"),
+      saveCroppedFile: (file) => setImageFile(file),
     });
   }
 
   async function handleFileChange(e: ChangeEvent<HTMLInputElement>) {
-    setFileList(e.target.files);
+    if (e.target.files && e.target.files.length > 0) {
+      setImageFile(e.target.files[0]);
+    }
   }
 
   return {
@@ -73,7 +74,7 @@ export default function useImgEditor() {
     handleOpenCropper,
     loading,
     error,
-    isInitial: fileList === null,
+    isInitial: imageFile === null,
     inputRef,
     currentImage: imageUrl,
   };

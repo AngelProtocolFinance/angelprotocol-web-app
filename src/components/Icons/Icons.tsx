@@ -19,6 +19,7 @@ import {
   BiBold,
   BiGlobe,
   BiItalic,
+  BiSave,
   BiSearchAlt2,
 } from "react-icons/bi";
 import {
@@ -110,6 +111,7 @@ export type IconTypes =
   | "MoneyBill"
   | "Admin"
   | "Crop"
+  | "Save"
   | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
@@ -165,6 +167,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Safe: BsSafeFill,
   Admin: FaUsersCog,
   Crop: IoCrop,
+  Save: BiSave,
 };
 
 interface IconProps extends IconBaseProps {

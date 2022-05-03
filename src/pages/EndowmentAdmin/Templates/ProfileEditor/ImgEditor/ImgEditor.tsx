@@ -15,7 +15,6 @@ export default function ImgEditor() {
     currentImage,
   } = useImgEditor();
 
-  console.log({ loading, isInitial });
   return (
     <div
       className={`grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
