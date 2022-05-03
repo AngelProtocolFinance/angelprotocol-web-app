@@ -3024,12 +3024,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tailwindcss/line-clamp@npm:^0.3.0":
-  version: 0.3.1
-  resolution: "@tailwindcss/line-clamp@npm:0.3.1"
+"@tailwindcss/line-clamp@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@tailwindcss/line-clamp@npm:0.4.0"
   peerDependencies:
     tailwindcss: ">=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1"
-  checksum: 805322a6333f029d6d961e02f23099d16f55d31f4736511bc741efff4097a1ad1574a7dff0530b17dbc974e08138b3beb13766f809e0116ebc192b0edf38b737
+  checksum: 71ba25a4a18323496a7af34e55871121b8459530b0e5696c4173fd65a76162675619f1d1158a8a32e1ace2069333949bef6f1061b17f49fef98dc2291a979dcd
   languageName: node
   linkType: hard
 
@@ -4601,7 +4601,7 @@ __metadata:
     "@hookform/resolvers": ^2.8.3
     "@peculiar/webcrypto": ^1.1.7
     "@reduxjs/toolkit": ^1.7.1
-    "@tailwindcss/line-clamp": ^0.3.0
+    "@tailwindcss/line-clamp": ^0.4.0
     "@terra-money/terra.js": ^3.0.7
     "@terra-money/wallet-provider": ^3.8.0
     "@testing-library/dom": ^8.13.0
