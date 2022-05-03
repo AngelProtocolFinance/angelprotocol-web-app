@@ -68,16 +68,16 @@ export default function Dashboard() {
           disabled={dataSubmitted || isSubmitting}
           completed={state.stepFour.completed}
         />
-        {!dataSubmitted && (
-          <Button
-            className="w-full h-10 mt-5 bg-yellow-blue"
-            onClick={() => submit(charity)}
-            disabled={!state.getIsReadyForSubmit() || isSubmitting}
-          >
-            Submit for review
-          </Button>
-        )}
       </div>
+      {!dataSubmitted && (
+        <Button
+          className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
+          onClick={() => submit(charity)}
+          disabled={!state.getIsReadyForSubmit() || isSubmitting}
+        >
+          Submit for review
+        </Button>
+      )}
       {charity.Registration.RegistrationStatus !== "Inactive" &&
         (isActivateSubmitting ? (
           <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
