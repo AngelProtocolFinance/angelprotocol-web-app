@@ -78,17 +78,16 @@ export default function Dashboard() {
           Submit for review
         </Button>
       )}
-      {charity.Registration.RegistrationStatus !== "Inactive" &&
+      {charity.Registration.RegistrationStatus === "Inactive" &&
         (isActivateSubmitting ? (
           <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
         ) : (
           <EndowmentStatus
-            registrationStatus={charity.Registration.RegistrationStatus}
-            walletAddress={charity.Metadata.TerraWallet}
+            charity={charity}
             onActivate={() => activate(charity.ContactPerson.PK)}
           />
         ))}
-      {charity.Registration.RegistrationStatus === "Active" && (
+      {charity.Registration.RegistrationStatus !== "Active" && (
         <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>
