@@ -1,10 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import Loader from "components/Loader/Loader";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { Button } from "../common";
 import routes from "../routes";
-import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
 import Step from "./Step";
@@ -69,7 +67,13 @@ export default function Dashboard() {
           completed={state.stepFour.completed}
         />
       </div>
-      {!dataSubmitted && (
+      {dataSubmitted ? (
+        <EndowmentStatus
+          charity={charity}
+          isLoading={isActivateSubmitting}
+          onActivate={() => activate(charity.ContactPerson.PK)}
+        />
+      ) : (
         <Button
           className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
           onClick={() => submit(charity)}
@@ -77,18 +81,6 @@ export default function Dashboard() {
         >
           Submit for review
         </Button>
-      )}
-      {charity.Registration.RegistrationStatus === "Inactive" &&
-        (isActivateSubmitting ? (
-          <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
-        ) : (
-          <EndowmentStatus
-            charity={charity}
-            onActivate={() => activate(charity.ContactPerson.PK)}
-          />
-        ))}
-      {charity.Registration.RegistrationStatus !== "Active" && (
-        <EndowmentCreated charityName={charity.Registration.CharityName} />
       )}
     </div>
   );

@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { app, site } from "constants/routes";
-import { Button } from "../common";
-import routes from "../routes";
+import { Button } from "../../common";
+import routes from "../../routes";
 
 export default function EndowmentCreated(props: { charityName: string }) {
   const navigate = useNavigate();
