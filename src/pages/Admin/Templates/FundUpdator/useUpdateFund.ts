@@ -4,7 +4,7 @@ import { ProposalMeta } from "pages/Admin/types";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -20,7 +20,7 @@ export default function useUpdateFund() {
   const [isLoading, setIsLoading] = useState(false);
   const { wallet } = useWalletContext();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateFund() {

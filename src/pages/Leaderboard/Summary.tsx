@@ -1,15 +1,15 @@
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import toCurrency from "helpers/toCurrency";
 
 export type SummaryProps = { type: string; principal: number; impact: number };
 export default function Summary(props: SummaryProps) {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   return (
     <div className="bg-white p-8 rounded-2xl shadow-lg max-w-md grid content-start">
       <Amount title="principal" value={props.principal} />
       <Amount title="impact" value={props.impact} />
       <button
-        onClick={hideModal}
+        onClick={closeModal}
         className="my-4 bg-angel-blue hover:bg-angel-blue/90 text-white font-bold font-heading w-32 py-1.5 rounded-md uppercase text-sm justify-self-center"
       >
         ok

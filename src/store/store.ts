@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { charityReducer } from "pages/Registration/store";
 import { adminReducer } from "services/admin/root";
 import { apes } from "services/apes/apes";
 import authReducer from "services/auth/authSlice";
@@ -6,13 +7,12 @@ import { aws } from "services/aws/aws";
 import chainReducer from "services/chain/chainSlice";
 import providerReducer from "services/provider/providerSlice";
 import { terra } from "services/terra/terra";
-import transactionReducer from "services/transaction/transactionSlice";
-import userReducer from "services/user/userSlice";
-import walletReducer from "services/wallet/walletSlice";
+import transactionReducer from "../services/transaction/transactionSlice";
+import walletReducer from "../services/wallet/walletSlice";
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    charity: charityReducer,
     transaction: transactionReducer,
     chain: chainReducer,
     provider: providerReducer,

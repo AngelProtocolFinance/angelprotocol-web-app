@@ -28,7 +28,7 @@ export default function Amount() {
     <div className="grid mb-1">
       <label
         htmlFor="amount"
-        className="uppercase mb-2 flex justify-between text-angel-grey font-bold items-end"
+        className="text-angel-grey uppercase font-bold mb-2"
       >
         <span>Deposit amount</span>
         <Balance amount={+govStakedHalo} title="Balance" />

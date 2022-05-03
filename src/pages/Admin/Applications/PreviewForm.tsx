@@ -2,7 +2,7 @@ import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useNavigate } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { admin } from "constants/routes";
 import useProposalDetails from "../Proposals/useProposalDetails";
 import { CharityApplication } from "./types";
@@ -14,7 +14,7 @@ export default function PreviewForm({
   application: CharityApplication;
 }) {
   const wallet = useConnectedWallet();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
   const { userVote } = useProposalDetails(proposal);
@@ -29,7 +29,7 @@ export default function PreviewForm({
 
   const openPoll = () => {
     navigate(`admin/${admin.proposal}/${ap.poll_id}`);
-    hideModal();
+    closeModal();
   };
 
   return (

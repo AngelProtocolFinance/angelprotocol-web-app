@@ -1,7 +1,7 @@
 import { ChangeEvent, useRef, useState } from "react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";
 import placeHolderImage from "assets/images/home-banner.jpg";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import useFleek from "hooks/useFleek";
 import optimizeImage from "helpers/optimizeImage";
@@ -19,7 +19,7 @@ export default function useImageEditor<T extends FieldValues>(
 
   const [loading, setLoading] = useState(false);
   const { upload, isUploading } = useFleek();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function handleImageReset() {
     if (inputRef.current) {

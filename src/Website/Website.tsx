@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Loader from "components/Loader/Loader";
-import Modal from "components/Modal/Modal";
+import ModalContext from "components/ModalContext/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { site, web } from "constants/routes";
 import WebHead from "./Header/WebHead";
@@ -21,7 +21,7 @@ const Website = () => {
   );
   return (
     <div className="grid grid-rows-1a bg-white">
-      <Modal classes="bg-black/50 fixed top-0 right-0 bottom-0 left-0 z-10 grid place-items-center">
+      <ModalContext backdropClasses="fixed inset-0 z-10 bg-black/50">
         <WebHead />
         <Suspense fallback={<LoaderComponent />}>
           <Routes>
@@ -37,7 +37,7 @@ const Website = () => {
           </Routes>
         </Suspense>
         <WebFoot />
-      </Modal>
+      </ModalContext>
     </div>
   );
 };

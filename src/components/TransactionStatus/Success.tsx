@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step, SuccessStage } from "services/transaction/types";
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import SharePrompt from "components/Share/SharePrompt";
 import { useSetter } from "store/accessors";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {
   if (props.step !== Step.success) throw new Error("wrong component rendered");
-  const { hideModal, showModal } = useSetModal();
+  const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
   const {
@@ -27,7 +27,7 @@ export default function Success(props: SuccessStage) {
 
   function acknowledge() {
     dispatch(setStage({ step: Step.form }));
-    hideModal();
+    closeModal();
   }
 
   function showReceiptForm() {
@@ -38,7 +38,7 @@ export default function Success(props: SuccessStage) {
     return function () {
       navigate(url);
       dispatch(setStage({ step: Step.form }));
-      hideModal();
+      closeModal();
     };
   }
 
