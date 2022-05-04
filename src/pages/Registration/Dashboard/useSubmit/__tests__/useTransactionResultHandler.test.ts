@@ -45,19 +45,42 @@ jest.mock("store/accessors", () => {
   };
 });
 
-beforeEach(() => {
-  mockUseSubmitMutation.mockClear();
-});
+describe("useTransactionResultHandler tests", () => {
+  test("useTransactionResultHandler does nothing when not in success/error stage", () => {
+    function runTest(step: Step) {
+      const mockDispatch = jest.fn();
+      mockUseGetter.mockReturnValueOnce(getCharity());
+      mockUseGetter.mockReturnValueOnce({
+        form_loading: false,
+        form_error: null,
+        fee: 0,
+        stage: { step },
+      });
+      mockUseSetter.mockReturnValue(mockDispatch);
+      const mockSubmit = jest.fn((..._: any[]) => ({}));
+      mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
-test("useTransactionResultHandler does nothing when not in success/error stage", () => {
-  function runTest(step: Step) {
+      renderHook(() => useTransactionResultHandler());
+
+      expect(mockSubmit).not.toHaveBeenCalled();
+      expect(mockDispatch).not.toHaveBeenCalled();
+      expect(mockShowModal).not.toHaveBeenCalled();
+    }
+
+    runTest(Step.form);
+    runTest(Step.broadcast);
+    runTest(Step.submit);
+    runTest(Step.receipt);
+  });
+
+  test("useTransactionResultHandler handles error stage", () => {
     const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(getCharity());
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
       form_error: null,
       fee: 0,
-      stage: { step },
+      stage: { step: Step.error, message: "error" },
     });
     mockUseSetter.mockReturnValue(mockDispatch);
     const mockSubmit = jest.fn((..._: any[]) => ({}));
@@ -66,114 +89,89 @@ test("useTransactionResultHandler does nothing when not in success/error stage",
     renderHook(() => useTransactionResultHandler());
 
     expect(mockSubmit).not.toHaveBeenCalled();
-    expect(mockDispatch).not.toHaveBeenCalled();
     expect(mockShowModal).not.toHaveBeenCalled();
-  }
-
-  runTest(Step.form);
-  runTest(Step.broadcast);
-  runTest(Step.submit);
-  runTest(Step.receipt);
-});
-
-test("useTransactionResultHandler handles error stage", () => {
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValueOnce(getCharity());
-  mockUseGetter.mockReturnValueOnce({
-    form_loading: false,
-    form_error: null,
-    fee: 0,
-    stage: { step: Step.error, message: "error" },
+    expect(mockDispatch).toHaveBeenCalled();
   });
-  mockUseSetter.mockReturnValue(mockDispatch);
-  const mockSubmit = jest.fn((..._: any[]) => ({}));
-  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
-  renderHook(() => useTransactionResultHandler());
+  test("useTransactionResultHandler handles success step with error", async () => {
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValueOnce(getCharity());
+    mockUseGetter.mockReturnValueOnce({
+      form_loading: false,
+      form_error: null,
+      fee: 0,
+      stage: getSuccessStage(),
+    });
+    mockUseSetter.mockReturnValue(mockDispatch);
+    const mockSubmit = jest.fn();
+    mockSubmit.mockResolvedValue({
+      error: { status: "FETCH_ERROR", error: "error" },
+    });
+    mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
-  expect(mockSubmit).not.toHaveBeenCalled();
-  expect(mockShowModal).not.toHaveBeenCalled();
-  expect(mockDispatch).toHaveBeenCalled();
-});
+    const { waitFor } = renderHook(() => useTransactionResultHandler());
 
-test("useTransactionResultHandler handles success step with error", async () => {
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValueOnce(getCharity());
-  mockUseGetter.mockReturnValueOnce({
-    form_loading: false,
-    form_error: null,
-    fee: 0,
-    stage: getSuccessStage(),
+    await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+
+    // if 'showModal' call is not await like this, jest tries to somehow
+    // assert this before 'mockSubmit' has been called
+    await waitFor(() => expect(mockShowModal).toHaveBeenCalled());
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "transaction/setFormLoading",
+      payload: false,
+    });
   });
-  mockUseSetter.mockReturnValue(mockDispatch);
-  const mockSubmit = jest.fn();
-  mockSubmit.mockResolvedValue({
-    error: { status: "FETCH_ERROR", error: "error" },
+
+  test("useTransactionResultHandler handles success step with data", async () => {
+    const charity = getCharity();
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValueOnce(charity);
+    mockUseGetter.mockReturnValueOnce({
+      form_loading: false,
+      form_error: null,
+      fee: 0,
+      stage: getSuccessStage(),
+    });
+    mockUseSetter.mockReturnValue(mockDispatch);
+    const mockSubmit = jest.fn();
+    mockSubmit.mockResolvedValue({
+      data: {
+        RegistrationStatus: "Under Review",
+        EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+      } as SubmitResult,
+    });
+    mockUseSubmitMutation.mockReturnValue([mockSubmit]);
+
+    const { waitFor } = renderHook(() => useTransactionResultHandler());
+
+    await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+
+    // if 'mockDispatch' call is not await like this, jest tries to somehow
+    // assert this before 'mockSubmit' has been called
+    await waitFor(() =>
+      expect(mockDispatch).toHaveBeenNthCalledWith(1, {
+        type: "charity/updateCharity",
+        payload: {
+          ...charity,
+          Registration: {
+            ...charity.Registration,
+            RegistrationStatus: "Under Review",
+          },
+          Metadata: {
+            ...charity.Metadata,
+            EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+          },
+        } as Charity,
+      })
+    );
+
+    expect(mockDispatch).toHaveBeenNthCalledWith(2, {
+      type: "transaction/setFormLoading",
+      payload: false,
+    });
+    expect(mockShowModal).not.toHaveBeenCalled();
   });
-  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
-
-  const { waitFor } = renderHook(() => useTransactionResultHandler());
-
-  await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
-
-  // if 'showModal' call is not await like this, jest tries to somehow
-  // assert this before 'mockSubmit' has been called
-  await waitFor(() => expect(mockShowModal).toHaveBeenCalled());
-
-  expect(mockDispatch).toHaveBeenCalledWith({
-    type: "transaction/setFormLoading",
-    payload: false,
-  });
-});
-
-test("useTransactionResultHandler handles success step with data", async () => {
-  const charity = getCharity();
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValueOnce(charity);
-  mockUseGetter.mockReturnValueOnce({
-    form_loading: false,
-    form_error: null,
-    fee: 0,
-    stage: getSuccessStage(),
-  });
-  mockUseSetter.mockReturnValue(mockDispatch);
-  const mockSubmit = jest.fn();
-  mockSubmit.mockResolvedValue({
-    data: {
-      RegistrationStatus: "Under Review",
-      EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
-    } as SubmitResult,
-  });
-  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
-
-  const { waitFor } = renderHook(() => useTransactionResultHandler());
-
-  await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
-
-  // if 'mockDispatch' call is not await like this, jest tries to somehow
-  // assert this before 'mockSubmit' has been called
-  await waitFor(() =>
-    expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-      type: "charity/updateCharity",
-      payload: {
-        ...charity,
-        Registration: {
-          ...charity.Registration,
-          RegistrationStatus: "Under Review",
-        },
-        Metadata: {
-          ...charity.Metadata,
-          EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
-        },
-      } as Charity,
-    })
-  );
-
-  expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-    type: "transaction/setFormLoading",
-    payload: false,
-  });
-  expect(mockShowModal).not.toHaveBeenCalled();
 });
 
 const getCharity = (): Charity => ({
