@@ -10,7 +10,6 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dwindow, Providers } from "services/provider/types";
-import { useCw20TokenBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
@@ -18,11 +17,13 @@ import {
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
+import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
 import Indexfund from "contracts/IndexFund";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
@@ -31,6 +32,7 @@ import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
+  const isTestnet = (wallet?.network.chainID as chainIDs) === chainIDs.testnet;
   const dispatch = useSetter();
   const {
     watch,
@@ -38,18 +40,11 @@ export default function useEstimator() {
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
-  const { coins, supported_denoms } = useGetter((state) => state.wallet);
+  const { coins } = useGetter((state) => state.wallet);
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const token = watch("token");
-
-  // query balance for non-native cw20Token
-  const isTestnet = wallet?.network.chainID === chainIDs.testnet;
-  const tokenContract = isTestnet
-    ? token.testnet_cw20_contract
-    : token.cw20_contract;
-  const { tokenBalance } = useCw20TokenBalance(tokenContract);
 
   const [terraTx, setTerraTx] = useState<CreateTxOptions>();
   const [ethTx, setEthTx] = useState<TransactionRequest>();
@@ -73,18 +68,48 @@ export default function useEstimator() {
           return;
         }
 
+        const tokenBalance = getTokenBalance(coins, token.min_denom);
+        if (debounced_amount > tokenBalance) {
+          dispatch(setFormError("Not enough balance"));
+          return;
+        }
+
         dispatch(setFormLoading(true));
 
-        if (token.native_denom) {
-          const balance =
-            coins.find((coin) => coin.denom === token.native_denom)?.amount ||
-            0;
-          if (debounced_amount >= balance) {
-            dispatch(setFormError("Not enough balance"));
+        //CW20 TOKENS
+        if (token.cw20_contracts) {
+          const tokenContract =
+            token.cw20_contracts[isTestnet ? "testnet" : "mainnet"];
+          if (tokenContract) {
+            if (activeProvider === Providers.terra) {
+              const contract = new CW20(tokenContract);
+              const receiver = ap_wallets[token.symbol];
+
+              const msg = contract.createTransferMsg(
+                debounced_amount,
+                receiver
+              );
+              const aminoFee = await contract.estimateFee([msg]);
+              const numFee = extractFeeNum(aminoFee);
+
+              const ustBalance = getTokenBalance(coins, "uusd");
+              if (numFee >= ustBalance) {
+                dispatch(setFormError("Not enough balance to pay fees"));
+                return;
+              }
+              dispatch(setFee({ fee: numFee }));
+              setTerraTx({ msgs: [msg], fee: aminoFee });
+              dispatch(setFormLoading(false));
+            }
+          } else {
+            dispatch(setFormError("token not supported in this network"));
             return;
           }
+
+          //NATIVE TOKEN
+        } else {
           //checks for uusd
-          if (token.native_denom === denoms.uusd) {
+          if (token.min_denom === "uusd") {
             if (activeProvider === Providers.terra) {
               const receiver = getValues("receiver");
               let depositMsg: MsgExecuteContract;
@@ -109,7 +134,7 @@ export default function useEstimator() {
               const feeNum = extractFeeNum(fee);
 
               //2nd balance check including fees
-              if (debounced_amount + feeNum >= balance) {
+              if (debounced_amount + feeNum >= tokenBalance) {
                 dispatch(setFormError("Not enough balance to pay fees"));
                 return;
               }
@@ -119,7 +144,7 @@ export default function useEstimator() {
           }
 
           //checks for uluna
-          if (token.native_denom === denoms.uluna) {
+          if (token.min_denom === denoms.uluna) {
             if (activeProvider === Providers.terra) {
               //this block won't run if wallet is not connected
               //activeProvider === Providers.none
@@ -134,7 +159,7 @@ export default function useEstimator() {
               const aminoFee = await contract.estimateFee([msg], denoms.uluna);
               const numFee = extractFeeNum(aminoFee, denoms.uluna);
 
-              if (debounced_amount + numFee >= balance) {
+              if (debounced_amount + numFee >= tokenBalance) {
                 dispatch(setFormError("Not enough balance to pay fees"));
                 return;
               }
@@ -144,7 +169,7 @@ export default function useEstimator() {
           }
 
           //estimates for eth
-          if (token.native_denom === denoms.ether) {
+          if (token.min_denom === denoms.ether) {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
@@ -171,7 +196,6 @@ export default function useEstimator() {
 
             const gasLimit = await signer.estimateGas(tx);
             const fee_wei = gasLimit.mul(gasPrice);
-
             const fee_eth = ethers.utils.formatEther(fee_wei);
 
             setEthTx(tx);
@@ -179,7 +203,7 @@ export default function useEstimator() {
           }
 
           //estimates for bnb
-          if (token.native_denom === denoms.bnb) {
+          if (token.min_denom === denoms.bnb) {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
@@ -220,41 +244,6 @@ export default function useEstimator() {
         }
 
         //CW20 token estimate
-        if (tokenContract) {
-          if (debounced_amount > tokenBalance) {
-            dispatch(setFormError("Not enough balance"));
-            return;
-          }
-          if (activeProvider === Providers.terra) {
-            const contract = new Contract(wallet);
-            const receiver = ap_wallets[token.symbol];
-            const amount = new Dec(debounced_amount)
-              .mul(1e6)
-              .toInt()
-              .toString();
-
-            const msg = contract.createCw20TransferMsg(
-              amount,
-              tokenContract,
-              receiver
-            );
-            const aminoFee = await contract.estimateFee([msg]);
-            const numFee = extractFeeNum(aminoFee);
-
-            const ustBalance =
-              coins.find((coin) => coin.denom === denoms.uusd)?.amount || 0;
-            if (numFee >= ustBalance) {
-              dispatch(setFormError("Not enough balance to pay fees"));
-              return;
-            }
-            dispatch(setFee({ fee: numFee }));
-            setTerraTx({ msgs: [msg], fee: aminoFee });
-            dispatch(setFormLoading(false));
-          }
-        } else {
-          dispatch(setFormError("Not enough balance to pay fees"));
-          dispatch(setFormLoading(false));
-        }
       } catch (err) {
         const formError = processEstimateError(err);
         dispatch(setFormError(formError));
@@ -265,14 +254,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_split,
-    token,
-    coins,
-    supported_denoms,
-    tokenBalance,
-  ]);
+  }, [debounced_amount, debounced_split, token, coins]);
 
   return { terraTx, ethTx, bnbTx };
 }

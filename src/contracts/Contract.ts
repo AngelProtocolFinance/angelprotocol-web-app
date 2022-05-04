@@ -109,19 +109,6 @@ export default class Contract {
     };
   }
 
-  createCw20TransferMsg(
-    amount: string,
-    token_address: string,
-    recipient: string
-  ): MsgExecuteContract {
-    return new MsgExecuteContract(this.walletAddr!, token_address, {
-      transfer: {
-        amount,
-        recipient,
-      },
-    });
-  }
-
   checkWallet() {
     if (!this.walletAddr) {
       throw new Disconnected();

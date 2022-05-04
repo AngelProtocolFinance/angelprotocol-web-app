@@ -40,8 +40,8 @@ export const sendTerraTx = createAsyncThunk(
         const state = getState() as RootState;
         const feeDenom = args.feedDenom || denoms.uusd;
         const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
-          0;
+          state.wallet.coins.find((coin) => coin.min_denom === feeDenom)
+            ?.balance || 0;
 
         if (feeNum > walletBalanceForFee) {
           updateTx({

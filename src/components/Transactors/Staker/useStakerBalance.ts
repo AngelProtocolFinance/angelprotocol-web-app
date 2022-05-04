@@ -1,13 +1,15 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useHaloBalance } from "services/terra/queriers";
+import { useGetter } from "store/accessors";
+import getTokenBalance from "helpers/getTokenBalance";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();
-  const { haloBalance } = useHaloBalance();
+  const { coins } = useGetter((state) => state.wallet);
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
+    const haloBalance = getTokenBalance(coins, "uhalo");
     const staked = new Dec(gov_staker.balance);
     if (is_stake) {
       return [new Dec(haloBalance).mul(1e6), new Dec(0)];
@@ -22,7 +24,7 @@ export default function useStakerBalance(is_stake: boolean) {
       return [staked, vote_locked];
     }
     // is_stake ? haloBalance : new Dec(gov_staker.balance).div(1e6).toNumber();
-  }, [gov_staker, haloBalance, is_stake]);
+  }, [gov_staker, coins, is_stake]);
 
   return { balance, locked };
 }

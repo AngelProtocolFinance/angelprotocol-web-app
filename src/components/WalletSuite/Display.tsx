@@ -4,7 +4,6 @@ import { useGetter } from "store/accessors";
 import useKeyPress from "hooks/useKeyPress";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { currency_text, denoms } from "constants/currency";
 import Details from "./Details";
 import useBackdropDismiss from "./useBackdropDismiss";
 
@@ -59,8 +58,7 @@ export default function Display() {
           {isUpdating ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
-          {currency_text[displayCoin.denom as denoms]}{" "}
-          {toCurrency(displayCoin.amount, 3, true)}
+          {displayCoin.symbol} {toCurrency(displayCoin.amount, 3, true)}
         </span>
       </button>
       {detailsShown && <Details closeHandler={hideDetails} />}

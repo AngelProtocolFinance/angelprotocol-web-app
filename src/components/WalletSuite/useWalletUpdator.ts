@@ -4,19 +4,20 @@ import { useEffect } from "react";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { Dwindow, Providers } from "services/provider/types";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useTerraBalances } from "services/terra/multicall/queriers";
 import { TerraIdentifiers } from "services/wallet/types";
 import { setIsUpdating, setWalletDetails } from "services/wallet/walletSlice";
 import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
 import { denoms, supported_denoms } from "constants/currency";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
-  const { haloBalance, haloBalanceLoading } = useHaloBalance();
+  const { terraBalances, isTerraBalancesLoading } = useTerraBalances();
+  const ustBalance = getTokenBalance(terraBalances, "uusd");
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -43,22 +44,17 @@ export default function useWalletUpdator(activeProvider: Providers) {
       return;
     }
 
-    if (terraBalancesLoading || haloBalanceLoading) {
+    if (isTerraBalancesLoading) {
       dispatch(setIsUpdating(true));
       return;
     }
-    //append halo balance
-    const coinsWithHalo = [
-      ...others,
-      { amount: haloBalance, denom: denoms.uhalo },
-    ];
 
     dispatch(
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
-        displayCoin: { amount: main, denom: denoms.uusd },
-        coins: haloBalance !== 0 ? coinsWithHalo : others,
+        displayCoin: { amount: ustBalance, symbol: "UST" },
+        coins: terraBalances,
         address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
         supported_denoms: supported_denoms,
@@ -66,7 +62,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
     );
     dispatch(setIsUpdating(false));
     //eslint-disable-next-line
-  }, [wallet, activeProvider, terraBalancesLoading, haloBalanceLoading]);
+  }, [wallet, activeProvider, isTerraBalancesLoading]);
 
   //updator of xdefi
   useEffect(() => {
@@ -86,7 +82,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
           return;
         }
 
-        if (terraBalancesLoading || haloBalanceLoading) {
+        if (isTerraBalancesLoading) {
           dispatch(setIsUpdating(true));
           return;
         }
@@ -107,10 +103,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
         const isBinance = provider._network.name.includes("bnb");
 
-        const coins_copy = [...others];
+        const coins_copy = [...terraBalances];
         coins_copy.push({
-          amount: eth_balance,
-          denom: isBinance ? denoms.bnb : denoms.ether,
+          balance: eth_balance,
+          min_denom: isBinance ? denoms.bnb : denoms.ether,
+          logo: "",
+          symbol: isBinance ? "BNB" : "ETH",
+          decimals: 18,
         });
 
         const supported_denoms = [denoms.uusd, denoms.uluna];
@@ -120,7 +119,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
           setWalletDetails({
             id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
-            displayCoin: { amount: main, denom: denoms.uusd },
+            displayCoin: { amount: ustBalance, symbol: "UST" },
             coins: coins_copy,
             address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
@@ -140,7 +139,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
       }
     })();
     //eslint-disable-next-line
-  }, [wallet, activeProvider, haloBalanceLoading, terraBalancesLoading]);
+  }, [wallet, activeProvider, isTerraBalancesLoading]);
 
   //updator for metamask
   useEffect(() => {
@@ -157,13 +156,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
-        const eth_coin = { amount: eth_balance, denom: denoms.ether };
+        const eth_coin = createEthToken(eth_balance);
 
         dispatch(
           setWalletDetails({
             id: undefined,
             icon: metamaskIcon,
-            displayCoin: eth_coin,
+            displayCoin: { amount: eth_coin.balance, symbol: eth_coin.symbol },
             coins: [eth_coin],
             address,
             chainId: `${network.chainId}` as chainIDs,
@@ -198,13 +197,13 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const bnb_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
           .div(1e18)
           .toNumber();
-        const bnb_coin = { amount: bnb_balance, denom: denoms.bnb };
+        const bnb_coin = createBnbToken(bnb_balance);
 
         dispatch(
           setWalletDetails({
             id: undefined,
             icon: binanceIcon,
-            displayCoin: bnb_coin,
+            displayCoin: { amount: bnb_coin.balance, symbol: "BNB" },
             coins: [bnb_coin],
             address,
             chainId: `${network.chainId}` as chainIDs,
@@ -221,4 +220,24 @@ export default function useWalletUpdator(activeProvider: Providers) {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeProvider]);
+}
+
+function createBnbToken(balance: number) {
+  return {
+    balance,
+    min_denom: "bnb",
+    symbol: "BNB",
+    decimals: 18,
+    logo: "",
+  };
+}
+
+function createEthToken(balance: number) {
+  return {
+    balance,
+    min_denom: "wei",
+    symbol: "ETH",
+    decimals: 18,
+    logo: "",
+  };
 }

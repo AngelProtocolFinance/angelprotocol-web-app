@@ -18,6 +18,7 @@ import {
 } from "../types";
 import { vaultMap } from "./constants";
 import {
+  Airdrop,
   Airdrops,
   ClaimInquiry,
   Token,
@@ -106,7 +107,7 @@ export const multicall_api = terra.injectEndpoints({
         return { vaultFields, vaultLimits };
       },
     }),
-    airdrop: builder.query<any, WalletProxy>({
+    airdrop: builder.query<Airdrop[], WalletProxy>({
       providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
       async queryFn(wallet, queryApi, extraOptions, baseQuery) {
         try {
@@ -139,16 +140,20 @@ export const multicall_api = terra.injectEndpoints({
       },
     }),
     //terra native balances, and cw20 balances
-    terraBalances: builder.query<TokenWithBalance[], WalletProxy>({
+    terraBalances: builder.query<
+      TokenWithBalance[],
+      { wallet: WalletProxy; customAddr?: string }
+    >({
       providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
-      async queryFn(wallet, queryApi, extraOptions, baseQuery) {
+      async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
+          const queryAddr = args.wallet.address || args.customAddr;
           const isTestnet =
-            (wallet.network.chainID as chainIDs) === chainIDs.testnet;
+            (args.wallet.network.chainID as chainIDs) === chainIDs.testnet;
 
           //1st query
           const bankBalancesRes = await baseQuery(
-            `/cosmos/bank/v1beta1/balances/${wallet.address}`
+            `/cosmos/bank/v1beta1/balances/${queryAddr}`
           );
           const bankBalances = (bankBalancesRes.data as QueryRes<BalanceRes>)
             .query_result.balances;
@@ -175,23 +180,17 @@ export const multicall_api = terra.injectEndpoints({
             }
           }, [] as TokenWithBalance[]);
 
-          const multicallContract = new Multicall(wallet);
+          const multicallContract = new Multicall(args.wallet);
           //2nd pass to token list
-          const cw20Tokens = tokenList.reduce((result, token) => {
+          const cw20Tokens = tokenList.filter((token) => {
             //pass to multicall only tokens with contract depending on network
-            const cwContract =
-              token.cw20_contracts?.[isTestnet ? "mainnet" : "testnet"];
-            if (cwContract) {
-              result.push(token);
-              return result;
-            } else {
-              return result;
-            }
+            return !!token.cw20_contracts?.[isTestnet ? "mainnet" : "testnet"];
           }, [] as Token[]);
 
           const cw20BalancesRes = await baseQuery(
             contract_querier(
-              multicallContract.cw20Balances(wallet.address, cw20Tokens)
+              //this query will not run, if !wallet or !customAddr
+              multicallContract.cw20Balances(queryAddr!, cw20Tokens)
             )
           );
 

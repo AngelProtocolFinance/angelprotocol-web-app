@@ -1,15 +1,16 @@
 import { useFormContext } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useGetter } from "store/accessors";
+import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
 import { SwapValues } from "./types";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();
-  const { haloBalance } = useHaloBalance();
-  const { main: ust_balance } = useBalances(denoms.uusd);
   const is_buy = watch("is_buy");
-  const balance = is_buy ? ust_balance : haloBalance;
+  const { coins } = useGetter((state) => state.wallet);
+  const ustBalance = getTokenBalance(coins, "uusd");
+  const haloBalance = getTokenBalance(coins, "uhalo");
+  const balance = is_buy ? ustBalance : haloBalance;
 
   function setAmount() {
     setValue("amount", `${balance}`, {

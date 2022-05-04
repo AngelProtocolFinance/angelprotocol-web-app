@@ -1,18 +1,17 @@
 import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
@@ -20,11 +19,9 @@ export default function useCreatePollEstimate() {
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
-
   const [maxFee, setMaxFee] = useState<Fee>();
 
   useEffect(() => {
@@ -39,6 +36,8 @@ export default function useCreatePollEstimate() {
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
+
+        const haloBalance = getTokenBalance(coins, "uhalo");
         if (amount >= haloBalance) {
           dispatch(setFormError("Not enough halo balance"));
           return;
@@ -60,7 +59,8 @@ export default function useCreatePollEstimate() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
+        const ustBalance = getTokenBalance(coins, "uusd");
+        if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
@@ -77,7 +77,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
+  }, [wallet, coins, isDirty, isValid]);
 
   return { wallet, maxFee };
 

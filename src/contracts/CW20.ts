@@ -1,4 +1,4 @@
-import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec, Msg, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import Contract from "./Contract";
@@ -29,6 +29,17 @@ export default class CW20 extends Contract {
 
   createEmbeddedTransferMsg(amount: number, recipient: string) {
     return this.createdEmbeddedWasmMsg([], this.cw20ContractAddr, {
+      transfer: {
+        //convert to uamount
+        amount: new Dec(amount).mul(1e6).toInt().toString(),
+        recipient,
+      },
+    });
+  }
+
+  createTransferMsg(amount: number, recipient: string) {
+    this.checkWallet();
+    return new MsgExecuteContract(this.walletAddr!, this.cw20ContractAddr, {
       transfer: {
         //convert to uamount
         amount: new Dec(amount).mul(1e6).toInt().toString(),
