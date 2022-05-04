@@ -1,6 +1,6 @@
 import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
 import { SubmitResult } from "services/aws/types";
 import {
@@ -14,10 +14,6 @@ import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { updateCharity } from "../../store";
 
-type Result =
-  | { data: SubmitResult }
-  | { error: FetchBaseQueryError | SerializedError };
-
 const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
@@ -29,35 +25,6 @@ export default function useTransactionResultHandler() {
   const { showModal } = useModalContext();
   const [submitToAws] = useSubmitMutation();
 
-  const handleResult = useCallback(
-    (result: Result) => {
-      const dataResult = result as {
-        data: SubmitResult;
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (dataResult.error) {
-        console.log(dataResult.error);
-        showModal(Popup, { message: FORM_ERROR });
-      } else {
-        dispatch(
-          updateCharity({
-            ...charity,
-            Registration: {
-              ...charity.Registration,
-              RegistrationStatus: dataResult.data.RegistrationStatus,
-            },
-            Metadata: {
-              ...charity.Metadata,
-              EndowmentContract: dataResult.data.EndowmentContract,
-            },
-          })
-        );
-      }
-    },
-    [charity, dispatch, showModal]
-  );
-
   useEffect(() => {
     async function handle() {
       try {
@@ -66,7 +33,29 @@ export default function useTransactionResultHandler() {
           EndowmentContract: getEndowmentContract(stage),
         });
 
-        handleResult(result);
+        const dataResult = result as {
+          data: SubmitResult;
+          error: FetchBaseQueryError | SerializedError;
+        };
+
+        if (dataResult.error) {
+          console.log(dataResult.error);
+          showModal(Popup, { message: FORM_ERROR });
+        } else {
+          dispatch(
+            updateCharity({
+              ...charity,
+              Registration: {
+                ...charity.Registration,
+                RegistrationStatus: dataResult.data.RegistrationStatus,
+              },
+              Metadata: {
+                ...charity.Metadata,
+                EndowmentContract: dataResult.data.EndowmentContract,
+              },
+            })
+          );
+        }
       } catch (error) {
         console.log(JSON.stringify(error));
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
@@ -81,7 +70,7 @@ export default function useTransactionResultHandler() {
     } else if (stage.step === Step.success) {
       handle();
     }
-  }, [charity.ContactPerson.PK, stage, dispatch, submitToAws, handleResult]);
+  }, [charity.ContactPerson.PK, stage, dispatch, showModal, submitToAws]);
 }
 
 function getEndowmentContract(stage: Stage) {
