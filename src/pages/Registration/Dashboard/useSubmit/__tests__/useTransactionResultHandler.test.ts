@@ -7,45 +7,34 @@ const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
 
 const mockUseSubmitMutation = jest.fn();
 
-jest.mock("services/aws/registration", () => {
-  const originalModule = jest.requireActual("services/aws/registration");
+jest.mock("services/aws/registration", () => ({
+  __esModule: true,
+  useSubmitMutation: () => mockUseSubmitMutation(),
+}));
 
-  return {
-    __esModule: true,
-    ...originalModule,
-    useSubmitMutation: () => mockUseSubmitMutation(),
-  };
-});
+const mockShowModal = jest.fn();
 
-const mockShowModal = jest.fn().mockImplementation((..._args: any[]) => {});
-
-jest.mock("components/ModalContext/ModalContext", () => {
-  const originalModule = jest.requireActual(
-    "components/ModalContext/ModalContext"
-  );
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    useModalContext: () => ({ showModal: mockShowModal }),
-  };
-});
+jest.mock("components/ModalContext/ModalContext", () => ({
+  __esModule: true,
+  useModalContext: () => ({ showModal: mockShowModal }),
+}));
 
 const mockUseGetter = jest.fn();
 const mockUseSetter = jest.fn();
 
-jest.mock("store/accessors", () => {
-  const originalModule = jest.requireActual("store/accessors");
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    useGetter: (..._: any[]) => mockUseGetter(),
-    useSetter: () => mockUseSetter(),
-  };
-});
+jest.mock("store/accessors", () => ({
+  __esModule: true,
+  useGetter: (..._: any[]) => mockUseGetter(),
+  useSetter: () => mockUseSetter(),
+}));
 
 describe("useTransactionResultHandler tests", () => {
+  afterAll(() => {
+    jest.unmock("services/aws/registration");
+    jest.unmock("components/ModalContext/ModalContext");
+    jest.unmock("store/accessors");
+  });
+
   test("useTransactionResultHandler does nothing when not in success/error stage", () => {
     function runTest(step: Step) {
       const mockDispatch = jest.fn();

@@ -7,109 +7,106 @@ const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
 
 const mockUseActivateMutation = jest.fn();
 
-jest.mock("services/aws/registration", () => {
-  const originalModule = jest.requireActual("services/aws/registration");
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    useActivateMutation: () => mockUseActivateMutation(),
-  };
-});
+jest.mock("services/aws/registration", () => ({
+  __esModule: true,
+  useActivateMutation: () => mockUseActivateMutation(),
+}));
 
 const mockShowModal = jest.fn();
 
-jest.mock("components/ModalContext/ModalContext", () => {
-  const originalModule = jest.requireActual(
-    "components/ModalContext/ModalContext"
-  );
-
-  return {
-    __esModule: true,
-    ...originalModule,
-    useModalContext: () => ({ showModal: mockShowModal }),
-  };
-});
+jest.mock("components/ModalContext/ModalContext", () => ({
+  __esModule: true,
+  useModalContext: () => ({ showModal: mockShowModal }),
+}));
 
 const mockUseGetter = jest.fn();
 const mockUseSetter = jest.fn();
 
-jest.mock("store/accessors", () => {
-  const originalModule = jest.requireActual("store/accessors");
+jest.mock("store/accessors", () => ({
+  __esModule: true,
+  useGetter: (..._: any[]) => mockUseGetter(),
+  useSetter: () => mockUseSetter(),
+}));
 
-  return {
-    __esModule: true,
-    ...originalModule,
-    useGetter: (..._: any[]) => mockUseGetter(),
-    useSetter: () => mockUseSetter(),
-  };
-});
-
-it("should return default values on initialization", () => {
-  mockUseActivateMutation.mockReturnValue([
-    (_: string) => ({}),
-    { isLoading: false },
-  ]);
-  const { result } = renderHook(() => useActivate());
-
-  expect(result.current.isSubmitting).toBeFalsy();
-});
-
-it("should return isSubmitting that is equal to useActivateMutation.isLoading", () => {
-  mockUseActivateMutation.mockReturnValue([
-    (_: string) => {},
-    { isLoading: true },
-  ]);
-  const { result } = renderHook(() => useActivate());
-
-  expect(result.current.isSubmitting).toBe(true);
-});
-
-test("activate handles happy flow correctly", async () => {
-  const charity = getCharity();
-  const mockActivate = jest.fn(() => ({}));
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValue(charity);
-  mockUseSetter.mockReturnValue(mockDispatch);
-  mockUseActivateMutation.mockReturnValue([mockActivate, { isLoading: false }]);
-
-  const { result } = renderHook(() => useActivate());
-
-  await act(() => result.current.activate(PK));
-
-  expect(mockActivate).toHaveBeenCalledWith(PK);
-  expect(mockActivate).toHaveBeenCalledTimes(1);
-  expect(mockDispatch).toHaveBeenCalledTimes(1);
-  expect(mockDispatch).toHaveBeenCalledWith({
-    type: "charity/updateCharity",
-    payload: {
-      ...charity,
-      Registration: {
-        ...charity.Registration,
-        RegistrationStatus: "Active",
-      },
-    },
+describe("useActivate tests", () => {
+  afterAll(() => {
+    jest.unmock("services/aws/registration");
+    jest.unmock("components/ModalContext/ModalContext");
+    jest.unmock("store/accessors");
   });
-});
 
-test("activate handles error flow correctly", async () => {
-  const error = {
-    error: { status: "FETCH_ERROR", error: "some error" },
-  };
-  const mockActivate = jest.fn(() => error);
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValue(getCharity());
-  mockUseSetter.mockReturnValue(mockDispatch);
-  mockUseActivateMutation.mockReturnValue([mockActivate, { isLoading: false }]);
+  it("should return default values on initialization", () => {
+    mockUseActivateMutation.mockReturnValue([
+      (_: string) => ({}),
+      { isLoading: false },
+    ]);
+    const { result } = renderHook(() => useActivate());
 
-  const { result } = renderHook(() => useActivate());
+    expect(result.current.isSubmitting).toBeFalsy();
+  });
 
-  await act(() => result.current.activate(PK));
+  it("should return isSubmitting that is equal to useActivateMutation.isLoading", () => {
+    mockUseActivateMutation.mockReturnValue([
+      (_: string) => {},
+      { isLoading: true },
+    ]);
+    const { result } = renderHook(() => useActivate());
 
-  expect(mockActivate).toHaveBeenCalledWith(PK);
-  expect(mockActivate).toHaveBeenCalled();
-  expect(mockShowModal).toHaveBeenCalled();
-  expect(mockDispatch).not.toBeCalled();
+    expect(result.current.isSubmitting).toBe(true);
+  });
+
+  test("activate handles happy flow correctly", async () => {
+    const charity = getCharity();
+    const mockActivate = jest.fn(() => ({}));
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValue(charity);
+    mockUseSetter.mockReturnValue(mockDispatch);
+    mockUseActivateMutation.mockReturnValue([
+      mockActivate,
+      { isLoading: false },
+    ]);
+
+    const { result } = renderHook(() => useActivate());
+
+    await act(() => result.current.activate(PK));
+
+    expect(mockActivate).toHaveBeenCalledWith(PK);
+    expect(mockActivate).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "charity/updateCharity",
+      payload: {
+        ...charity,
+        Registration: {
+          ...charity.Registration,
+          RegistrationStatus: "Active",
+        },
+      },
+    });
+  });
+
+  test("activate handles error flow correctly", async () => {
+    const error = {
+      error: { status: "FETCH_ERROR", error: "some error" },
+    };
+    const mockActivate = jest.fn(() => error);
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValue(getCharity());
+    mockUseSetter.mockReturnValue(mockDispatch);
+    mockUseActivateMutation.mockReturnValue([
+      mockActivate,
+      { isLoading: false },
+    ]);
+
+    const { result } = renderHook(() => useActivate());
+
+    await act(() => result.current.activate(PK));
+
+    expect(mockActivate).toHaveBeenCalledWith(PK);
+    expect(mockActivate).toHaveBeenCalled();
+    expect(mockShowModal).toHaveBeenCalled();
+    expect(mockDispatch).not.toBeCalled();
+  });
 });
 
 const getCharity = (): Charity => ({
