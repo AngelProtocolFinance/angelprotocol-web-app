@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity } from "services/aws/types";
+import { Charity, SubmitResult } from "services/aws/types";
 import { Stage, Step } from "services/transaction/types";
 import useTransactionResultHandler from "../useTransactionResultHandler";
 
@@ -96,7 +96,7 @@ test("useTransactionResultHandler handles error stage", () => {
   expect(mockDispatch).toHaveBeenCalled();
 });
 
-test("useTransactionResultHandler handles success step with error stage", async () => {
+test("useTransactionResultHandler handles success step with error", async () => {
   const mockDispatch = jest.fn();
   mockUseGetter.mockReturnValueOnce(getCharity());
   mockUseGetter.mockReturnValueOnce({
@@ -124,6 +124,56 @@ test("useTransactionResultHandler handles success step with error stage", async 
     type: "transaction/setFormLoading",
     payload: false,
   });
+});
+
+test("useTransactionResultHandler handles success step with data", async () => {
+  const charity = getCharity();
+  const mockDispatch = jest.fn();
+  mockUseGetter.mockReturnValueOnce(charity);
+  mockUseGetter.mockReturnValueOnce({
+    form_loading: false,
+    form_error: null,
+    fee: 0,
+    stage: getSuccessStage(),
+  });
+  mockUseSetter.mockReturnValue(mockDispatch);
+  const mockSubmit = jest.fn();
+  mockSubmit.mockResolvedValue({
+    data: {
+      RegistrationStatus: "Under Review",
+      EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+    } as SubmitResult,
+  });
+  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
+
+  const { waitFor } = renderHook(() => useTransactionResultHandler());
+
+  await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+
+  // if 'mockDispatch' call is not await like this, jest tries to somehow
+  // assert this before 'mockSubmit' has been called
+  await waitFor(() =>
+    expect(mockDispatch).toHaveBeenNthCalledWith(1, {
+      type: "charity/updateCharity",
+      payload: {
+        ...charity,
+        Registration: {
+          ...charity.Registration,
+          RegistrationStatus: "Under Review",
+        },
+        Metadata: {
+          ...charity.Metadata,
+          EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+        },
+      } as Charity,
+    })
+  );
+
+  expect(mockDispatch).toHaveBeenNthCalledWith(2, {
+    type: "transaction/setFormLoading",
+    payload: false,
+  });
+  expect(mockShowModal).not.toHaveBeenCalled();
 });
 
 const getCharity = (): Charity => ({
