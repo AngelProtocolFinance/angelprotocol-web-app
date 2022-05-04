@@ -9,7 +9,7 @@ export default function Breakdown() {
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isTokenNative = !token.cw20_contracts;
+  const isTokenNative = !token.cw20_contract;
   const total = isTokenNative ? amount + fee : amount;
   const feeCurrency = isTokenNative ? token.symbol : "UST"; //for CW20 tx, fee is in UST
 

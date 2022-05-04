@@ -55,7 +55,7 @@ export default class Multicall {
           const isTest =
             (wallet?.network.chainID as chainIDs) === chainIDs.testnet;
           const cw20ContractAddr =
-            cw20token.cw20_contracts?.[isTest ? "testnet" : "mainnet"];
+            cw20token.cw20_contract?.[isTest ? "testnet" : "mainnet"];
           //cw20tokens are already filtered to have valid contractAddr
           const cw20Contract = new CW20(cw20ContractAddr!);
           return cw20Contract.balance(address);

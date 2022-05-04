@@ -151,19 +151,16 @@ export const multicall_api = terra.injectEndpoints({
           const isTestnet =
             (args.wallet.network.chainID as chainIDs) === chainIDs.testnet;
 
-          console.log("run");
           //1st query
           const bankBalancesRes = await baseQuery(
             `/cosmos/bank/v1beta1/balances/${queryAddr}`
           );
-          console.log(bankBalancesRes);
+
           const bankBalances = (bankBalancesRes.data as BalanceRes).balances;
 
-          console.log(bankBalances);
           //2nd query
           const tokenListRes = await fetch(`${apes_endpoint}/token/list`);
           const tokenList = (await tokenListRes.json()) as Token[];
-
           //first pass to tokenList, get native token balances
           //O(t * b) time; b = bankBalances which is finite since normal users doesn't hold too many coins
           const nativeBalances = tokenList.reduce((result, token) => {
@@ -176,20 +173,23 @@ export const multicall_api = terra.injectEndpoints({
             } else {
               result.push({
                 ...token,
-                balance: new Dec(tokenBankBalance.amount).div(1e6).toNumber(),
+                balance: new Dec(tokenBankBalance.amount)
+                  .div(Dec.pow(10, token.decimals))
+                  .toNumber(),
               });
               return result;
             }
           }, [] as TokenWithBalance[]);
 
-          console.log(nativeBalances);
-
           const multicallContract = new Multicall(args.wallet);
           //2nd pass to token list
-          const cw20Tokens = tokenList.filter((token) => {
-            //pass to multicall only tokens with contract depending on network
-            return !!token.cw20_contracts?.[isTestnet ? "mainnet" : "testnet"];
-          }, [] as Token[]);
+
+          const cw20Tokens = tokenList.filter(
+            (token) =>
+              !!token.cw20_contract?.[isTestnet ? "testnet" : "mainnet"]
+          );
+
+          console.log({ cw20Tokens });
 
           const cw20BalancesRes = await baseQuery(
             contract_querier(
@@ -199,12 +199,20 @@ export const multicall_api = terra.injectEndpoints({
           );
 
           const cw20MultiQueryRes = cw20BalancesRes.data as MultiQueryRes;
+          console.log({ cw20MultiQueryRes });
           const cw20Balances: TokenWithBalance[] = decodeAggregatedResult<
             CW20Balance[]
-          >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => ({
-            ...cw20Tokens[i],
-            balance: new Dec(cw20Balance.balance).div(1e6).toNumber(),
-          }));
+          >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => {
+            console.log({ cw20Balance, i });
+            return {
+              ...cw20Tokens[i],
+              balance: new Dec(cw20Balance.balance)
+                .div(Dec.pow(10, cw20Tokens[i].decimals))
+                .toNumber(),
+            };
+          });
+
+          console.log(cw20Balances);
 
           return { data: nativeBalances.concat(cw20Balances) };
         } catch (err) {

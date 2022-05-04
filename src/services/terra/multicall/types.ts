@@ -4,7 +4,7 @@ import { WalletProxy } from "providers/WalletProvider";
 export type Token = {
   min_denom: string;
   symbol: string;
-  cw20_contracts?: {
+  cw20_contract?: {
     mainnet: string;
     testnet?: string;
   };

@@ -20,8 +20,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
   const { terraBalances, isTerraBalancesLoading } = useTerraBalances();
   const ustBalance = getTokenBalance(terraBalances, "uusd");
 
-  console.log(terraBalances);
-
   //updator for terra-station and wallet connect
   useEffect(() => {
     if (activeProvider !== Providers.terra) {

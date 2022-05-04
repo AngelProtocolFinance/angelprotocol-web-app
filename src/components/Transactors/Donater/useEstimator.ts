@@ -77,9 +77,9 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         //CW20 TOKENS
-        if (token.cw20_contracts) {
+        if (token.cw20_contract) {
           const tokenContract =
-            token.cw20_contracts[isTestnet ? "testnet" : "mainnet"];
+            token.cw20_contract[isTestnet ? "testnet" : "mainnet"];
           if (tokenContract) {
             if (activeProvider === Providers.terra) {
               const contract = new CW20(tokenContract);
