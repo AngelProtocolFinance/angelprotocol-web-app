@@ -125,7 +125,16 @@ export default function Dashboard() {
         />
       </div>
       <div className="shadow-xl border-4 border-white/10 w-full rounded-md pt-10 pb-5 px-10 max-h-[550px]">
-        <div className="max-w-fit bg-white/10 shadow-xl mb-5">Hello</div>
+        <div className="max-w-fit bg-white/10 shadow-xl mb-5 px-5 py-2 flex gap-5 rounded-md">
+          <div className="flex gap-2 items-center">
+            <div className="w-5 h-5 rounded-full bg-blue-500"/>
+            <h1 className="text-l font-bold text-white-grey/80">Total Value Locked</h1>
+          </div>
+          <div className="flex gap-2 items-center">
+            <div className="w-5 h-5 rounded-full bg-green-400"/>
+            <h1 className="text-l font-bold text-white-grey/80">Total UST Donated</h1>
+          </div>
+        </div>
         <ResponsiveContainer
           maxHeight={400}
           height="100%"
