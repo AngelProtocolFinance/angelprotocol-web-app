@@ -151,13 +151,15 @@ export const multicall_api = terra.injectEndpoints({
           const isTestnet =
             (args.wallet.network.chainID as chainIDs) === chainIDs.testnet;
 
+          console.log("run");
           //1st query
           const bankBalancesRes = await baseQuery(
             `/cosmos/bank/v1beta1/balances/${queryAddr}`
           );
-          const bankBalances = (bankBalancesRes.data as QueryRes<BalanceRes>)
-            .query_result.balances;
+          console.log(bankBalancesRes);
+          const bankBalances = (bankBalancesRes.data as BalanceRes).balances;
 
+          console.log(bankBalances);
           //2nd query
           const tokenListRes = await fetch(`${apes_endpoint}/token/list`);
           const tokenList = (await tokenListRes.json()) as Token[];
@@ -179,6 +181,8 @@ export const multicall_api = terra.injectEndpoints({
               return result;
             }
           }, [] as TokenWithBalance[]);
+
+          console.log(nativeBalances);
 
           const multicallContract = new Multicall(args.wallet);
           //2nd pass to token list

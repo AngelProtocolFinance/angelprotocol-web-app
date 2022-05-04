@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
 import toCurrency from "helpers/toCurrency";
-import { currency_text, denoms } from "constants/currency";
 
 export default function usePortion(type: string) {
   const isLocked = type === "locked";
@@ -12,9 +11,10 @@ export default function usePortion(type: string) {
   const token = watch("token");
 
   //values
-  const disp_amount = `${
-    currency_text[(token.native_denom || token.symbol) as denoms]
-  } ${toCurrency(((isLocked ? split_locked : split_liq) / 100) * amount, 6)}`;
+  const disp_amount = `${token.symbol} ${toCurrency(
+    ((isLocked ? split_locked : split_liq) / 100) * amount,
+    6
+  )}`;
 
   return {
     disp_amount,

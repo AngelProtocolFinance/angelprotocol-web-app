@@ -8,7 +8,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
-import { denoms, supported_denoms } from "constants/currency";
+import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
 type Sender = (data: DonateValues) => any;
@@ -56,7 +56,7 @@ export default function useDonate() {
   // const atomSender = useAtomSender();
   const denomRef = useRef<string>(denoms.uusd);
   const token = watch("token");
-  const denom = token.native_denom || token.symbol;
+  const denom = token.min_denom;
 
   //reset amount when changing currency
   useEffect(() => {

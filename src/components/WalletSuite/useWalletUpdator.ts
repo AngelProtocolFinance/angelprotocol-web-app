@@ -1,6 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { ethers } from "ethers";
 import { useEffect } from "react";
+import ustLogo from "assets/icons/currencies/ust.svg";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { Dwindow, Providers } from "services/provider/types";
@@ -18,6 +19,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
   const { wallet } = useWalletContext();
   const { terraBalances, isTerraBalancesLoading } = useTerraBalances();
   const ustBalance = getTokenBalance(terraBalances, "uusd");
+
+  console.log(terraBalances);
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -228,7 +231,7 @@ function createBnbToken(balance: number) {
     min_denom: "bnb",
     symbol: "BNB",
     decimals: 18,
-    logo: "",
+    logo: ustLogo,
   };
 }
 
@@ -238,6 +241,14 @@ function createEthToken(balance: number) {
     min_denom: "wei",
     symbol: "ETH",
     decimals: 18,
-    logo: "",
+    logo: ustLogo,
   };
 }
+
+export const createUSTToken = (balance: number) => ({
+  balance,
+  min_denom: "uusd",
+  symbol: "UST",
+  decimals: 6,
+  logo: ustLogo,
+});
