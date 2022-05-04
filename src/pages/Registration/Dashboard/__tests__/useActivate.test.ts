@@ -1,7 +1,11 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { useActivateMutation } from "services/aws/registration";
+import { act } from "react-dom/test-utils";
 import { Charity } from "services/aws/types";
 import useActivate from "../useActivate";
+
+const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
+
+const mockUseActivateMutation = jest.fn();
 
 jest.mock("services/aws/registration", () => {
   const originalModule = jest.requireActual("services/aws/registration");
@@ -9,7 +13,7 @@ jest.mock("services/aws/registration", () => {
   return {
     __esModule: true,
     ...originalModule,
-    useActivateMutation: () => [(_: string) => {}, { isLoading: false }],
+    useActivateMutation: () => mockUseActivateMutation(),
   };
 });
 
@@ -25,25 +29,69 @@ jest.mock("components/ModalContext/ModalContext", () => {
   };
 });
 
+const mockUseGetter = jest.fn();
+const mockUseSetter = jest.fn();
+
 jest.mock("store/accessors", () => {
   const originalModule = jest.requireActual("store/accessors");
 
   return {
     __esModule: true,
     ...originalModule,
-    useGetter: (...args: any[]): Charity => getCharity(),
-    useSetter:
-      () =>
-      (...args: any[]) => {},
+    useGetter: (..._: any[]) => mockUseGetter(),
+    useSetter: () => mockUseSetter(),
   };
 });
 
 describe("useActivate initializes correctly", () => {
   it("should return default values on initialization", () => {
+    mockUseActivateMutation.mockReturnValue([
+      (_: string) => ({}),
+      { isLoading: false },
+    ]);
     const { result } = renderHook(() => useActivate());
 
     expect(result.current.isSubmitting).toBeFalsy();
-    expect(result.current.activate).toBeDefined();
+  });
+
+  it("should return isSubmitting that is equal to useActivateMutation.isLoading", () => {
+    mockUseActivateMutation.mockReturnValue([
+      (_: string) => {},
+      { isLoading: true },
+    ]);
+    const { result } = renderHook(() => useActivate());
+
+    expect(result.current.isSubmitting).toBe(true);
+  });
+
+  test("activate handles happy flow correctly", async () => {
+    const charity = getCharity();
+    const mockActivate = jest.fn(() => ({}));
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValue(charity);
+    mockUseSetter.mockReturnValue(mockDispatch);
+    mockUseActivateMutation.mockReturnValue([
+      mockActivate,
+      { isLoading: false },
+    ]);
+
+    const { result } = renderHook(() => useActivate());
+
+    await act(() => result.current.activate(PK));
+
+    expect(mockActivate).toHaveBeenCalledWith(PK);
+    expect(mockActivate).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "charity/updateCharity",
+      payload: {
+        ...charity,
+        Registration: {
+          ...charity.Registration,
+          RegistrationStatus: "Active",
+        },
+      },
+    });
   });
 });
 
@@ -55,7 +103,7 @@ const getCharity = (): Charity => ({
     LastName: "last",
     PhoneNumber: "+114323888",
     Role: "ceo",
-    PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+    PK,
   },
   Registration: {
     CharityName: "charity",
