@@ -11,9 +11,8 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { useGetTVLQuery } from "services/flipside/overview";
+import { useGetFlipsideQueryQuery } from "services/flipside/overview";
 import Figure from "../Governance/Figure";
-import HaloFigure from "./HaloFigure";
 import PriceFigure from "./PriceFigure";
 
 const data = [
@@ -55,10 +54,10 @@ const data = [
 ];
 
 export default function Dashboard() {
-  const { data: TVLData } = useGetTVLQuery("tvl?type=Total");
-  const { data: USTDonatedData } = useGetTVLQuery("ust_donated");
-  const { data: USTWithdrawnData } = useGetTVLQuery("ust_withdrawn");
-  const { data: HaloPriceData } = useGetTVLQuery("halo_price");
+  const { data: TVLData } = useGetFlipsideQueryQuery("tvl?type=Total");
+  const { data: USTDonatedData } = useGetFlipsideQueryQuery("ust_donated");
+  const { data: USTWithdrawnData } = useGetFlipsideQueryQuery("ust_withdrawn");
+  const { data: HaloPriceData } = useGetFlipsideQueryQuery("halo_price");
 
   const [chart, setChart] = useState<any>([]);
   const [latestTVL, setLatestTVL] = useState<number>(0);
@@ -89,7 +88,7 @@ export default function Dashboard() {
   }, [TVLData, USTDonatedData]);
 
   useEffect(() => {
-    if (!USTDonatedData) return;
+    if (!USTWithdrawnData) return;
     setTotalUSTWithdrawn(
       USTWithdrawnData[USTWithdrawnData.length - 1].total_ust_withdrawn
     );
@@ -157,14 +156,14 @@ export default function Dashboard() {
                 dot={false}
                 type="monotone"
                 dataKey="value"
-                stroke="#82ca9d"
+                stroke="#54A3D9"
                 strokeWidth={3}
               />
               <Line
                 dot={false}
                 type="monotone"
                 dataKey="total_ust_donated"
-                stroke="orange"
+                stroke="#7ec682"
                 strokeWidth={3}
                 className="shadow-xl"
               />
@@ -196,7 +195,7 @@ export default function Dashboard() {
                     dot={false}
                     type="monotone"
                     dataKey="price_usd"
-                    stroke="#82ca9d"
+                    stroke="#54A3D9"
                     strokeWidth={3}
                   />
                 </LineChart>
@@ -221,7 +220,7 @@ export default function Dashboard() {
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="pv" fill="#3e769a" />
-                <Bar dataKey="uv" fill="#82ca9d" />
+                <Bar dataKey="uv" fill="#7ec682" />
               </BarChart>
             </ResponsiveContainer>
           </div>
