@@ -57,7 +57,7 @@ export default function useTransactionResultHandler() {
           );
         }
       } catch (error) {
-        console.log(JSON.stringify(error));
+        console.log(error);
         dispatch(setStage({ step: Step.error, message: FORM_ERROR }));
       } finally {
         dispatch(setFormLoading(false));

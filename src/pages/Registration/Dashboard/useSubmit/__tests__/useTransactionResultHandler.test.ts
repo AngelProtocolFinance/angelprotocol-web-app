@@ -17,7 +17,7 @@ jest.mock("services/aws/registration", () => {
   };
 });
 
-const mockShowModal = jest.fn();
+const mockShowModal = jest.fn().mockImplementation((..._args: any[]) => {});
 
 jest.mock("components/ModalContext/ModalContext", () => {
   const originalModule = jest.requireActual(
@@ -43,6 +43,10 @@ jest.mock("store/accessors", () => {
     useGetter: (..._: any[]) => mockUseGetter(),
     useSetter: () => mockUseSetter(),
   };
+});
+
+beforeEach(() => {
+  mockUseSubmitMutation.mockClear();
 });
 
 test("useTransactionResultHandler does nothing when not in success/error stage", () => {
@@ -92,6 +96,36 @@ test("useTransactionResultHandler handles error stage", () => {
   expect(mockDispatch).toHaveBeenCalled();
 });
 
+test("useTransactionResultHandler handles success step with error stage", async () => {
+  const mockDispatch = jest.fn();
+  mockUseGetter.mockReturnValueOnce(getCharity());
+  mockUseGetter.mockReturnValueOnce({
+    form_loading: false,
+    form_error: null,
+    fee: 0,
+    stage: getSuccessStage(),
+  });
+  mockUseSetter.mockReturnValue(mockDispatch);
+  const mockSubmit = jest.fn();
+  mockSubmit.mockResolvedValue({
+    error: { status: "FETCH_ERROR", error: "error" },
+  });
+  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
+
+  const { waitFor } = renderHook(() => useTransactionResultHandler());
+
+  await waitFor(() => expect(mockSubmit).toHaveBeenCalled());
+
+  // if 'showModal' call is not await like this, jest tries to somehow
+  // assert this before 'mockSubmit' has been called
+  await waitFor(() => expect(mockShowModal).toHaveBeenCalled());
+
+  expect(mockDispatch).toHaveBeenCalledWith({
+    type: "transaction/setFormLoading",
+    payload: false,
+  });
+});
+
 const getCharity = (): Charity => ({
   ContactPerson: {
     Email: "test@test.com",
@@ -130,3 +164,26 @@ const getCharity = (): Charity => ({
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
 });
+
+function getSuccessStage() {
+  return {
+    step: Step.success,
+    txInfo: {
+      logs: [
+        {
+          events: [
+            {
+              type: "instantiate_contract",
+              attributes: [
+                {
+                  key: "contract_address",
+                  value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  } as Stage;
+}
