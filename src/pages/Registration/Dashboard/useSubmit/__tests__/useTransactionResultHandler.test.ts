@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "services/aws/types";
-import { Step } from "services/transaction/types";
+import { Stage, Step } from "services/transaction/types";
 import useTransactionResultHandler from "../useTransactionResultHandler";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
@@ -46,23 +46,30 @@ jest.mock("store/accessors", () => {
 });
 
 test("useTransactionResultHandler does nothing when not in success/error stage", () => {
-  const mockDispatch = jest.fn();
-  mockUseGetter.mockReturnValueOnce(getCharity());
-  mockUseGetter.mockReturnValueOnce({
-    form_loading: false,
-    form_error: null,
-    fee: 0,
-    stage: { step: Step.form },
-  });
-  mockUseSetter.mockReturnValue(mockDispatch);
-  const mockSubmit = jest.fn((..._: any[]) => ({}));
-  mockUseSubmitMutation.mockReturnValue([mockSubmit]);
+  function runTest(step: Step) {
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValueOnce(getCharity());
+    mockUseGetter.mockReturnValueOnce({
+      form_loading: false,
+      form_error: null,
+      fee: 0,
+      stage: { step },
+    });
+    mockUseSetter.mockReturnValue(mockDispatch);
+    const mockSubmit = jest.fn((..._: any[]) => ({}));
+    mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
-  renderHook(() => useTransactionResultHandler());
+    renderHook(() => useTransactionResultHandler());
 
-  expect(mockSubmit).not.toHaveBeenCalled();
-  expect(mockDispatch).not.toHaveBeenCalled();
-  expect(mockShowModal).not.toHaveBeenCalled();
+    expect(mockSubmit).not.toHaveBeenCalled();
+    expect(mockDispatch).not.toHaveBeenCalled();
+    expect(mockShowModal).not.toHaveBeenCalled();
+  }
+
+  runTest(Step.form);
+  runTest(Step.broadcast);
+  runTest(Step.submit);
+  runTest(Step.receipt);
 });
 
 test("useTransactionResultHandler handles error stage", () => {
