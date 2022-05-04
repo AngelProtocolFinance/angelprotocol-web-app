@@ -1,4 +1,18 @@
 import { Dec } from "@terra-money/terra.js";
+import { WalletProxy } from "providers/WalletProvider";
+
+export type Token = {
+  min_denom: string;
+  symbol: string;
+  cw20_contracts?: {
+    mainnet: string;
+    testnet?: string;
+  };
+  logo: string;
+  decimals: number;
+};
+
+export type TokenWithBalance = Token & { balance: number };
 
 //endowment balance transform
 export type RateLookUp = { [index: string]: string };

@@ -1,17 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { terra } from "services/terra/terra";
-import Halo, { H, T } from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import { denoms } from "constants/currency";
-import { TokenInfo } from "./types";
-import { useContract } from "./useContract";
-
-const halo_info: TokenInfo = {
-  name: "",
-  symbol: "",
-  decimals: 0,
-  total_supply: "0",
-};
 
 export function useLatestBlock(pollInterval = 0) {
   const { useLatestBlockQuery } = terra;
@@ -54,66 +44,5 @@ export function useBalances(
     others: _others,
     terraBalancesLoading: isLoading || isFetching,
     isTerraBalancesFailed: isError,
-  };
-}
-
-export function useHaloInfo() {
-  const { useHaloInfoQuery } = terra;
-  const { contract } = useContract<H, T>(Halo);
-  const { data = halo_info } = useHaloInfoQuery({
-    address: contract.token_address,
-    msg: { token_info: {} },
-  });
-
-  return data;
-}
-
-export function useHaloBalance(customAddr?: string) {
-  const { useCW20BalanceQuery } = terra;
-  const { contract, wallet } = useContract<H, T>(Halo);
-  const {
-    data = 0,
-    isLoading,
-    isFetching,
-    isError,
-  } = useCW20BalanceQuery(
-    {
-      address: contract.token_address,
-      //this query will only run if wallet is not undefined
-      msg: { balance: { address: customAddr || wallet?.address } },
-    },
-    { skip: wallet === undefined }
-  );
-
-  return {
-    haloBalance: data,
-    haloBalanceLoading: isLoading || isFetching,
-    isHaloBalanceFailed: isError,
-  };
-}
-
-export function useCw20TokenBalance(
-  contract_address?: string,
-  //to query cw20 balance other than the user's wallet
-  customAddr?: string
-) {
-  const { useCW20BalanceQuery } = terra;
-  const { wallet } = useWalletContext();
-  const {
-    data = 0,
-    isLoading,
-    isFetching,
-    isError,
-  } = useCW20BalanceQuery(
-    {
-      address: contract_address!,
-      msg: { balance: { address: customAddr || wallet?.address } },
-    },
-    { skip: !contract_address && !wallet }
-  );
-  return {
-    tokenBalance: data,
-    tokenBalanceLoading: isLoading || isFetching,
-    isTokenBalanceFailed: isError,
   };
 }

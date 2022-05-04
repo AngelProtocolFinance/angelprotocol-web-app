@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { TokenInfo } from "services/apes/types";
 
 export interface DonateValues {

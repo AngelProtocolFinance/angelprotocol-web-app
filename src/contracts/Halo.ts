@@ -23,7 +23,7 @@ export default class Halo extends Contract {
   constructor(wallet?: WalletProxy) {
     super(wallet);
     this.token_address = contracts[this.chainID][sc.halo_token];
-    this.gov_address = contracts[this.chainID][sc.halo_gov];
+    this.gov_address = contracts[this.chainID][sc.gov];
     this.airdrop_addr = contracts[this.chainID][sc.airdrop];
 
     //query args

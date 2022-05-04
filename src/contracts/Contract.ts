@@ -14,12 +14,14 @@ import { Disconnected, TxResultFail } from "./Errors";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
 
 export default class Contract {
+  wallet?: WalletProxy;
   client: LCDClient;
   chainID: string;
   url: string;
   walletAddr?: string;
 
   constructor(wallet?: WalletProxy) {
+    this.wallet = wallet;
     this.chainID = wallet?.network.chainID || chainIDs.mainnet;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.address;

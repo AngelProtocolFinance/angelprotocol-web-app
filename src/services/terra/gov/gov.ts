@@ -1,8 +1,9 @@
 import { Dec } from "@terra-money/terra.js";
 import contract_querier from "../contract_querier";
+import { CW20Balance, CW20Info } from "../cw20/cw20";
 import { gov, tags } from "../tags";
 import { terra } from "../terra";
-import { ContractQueryArgs, HaloBalance, QueryRes } from "../types";
+import { ContractQueryArgs, QueryRes } from "../types";
 import { GovConfig, GovStaker, GovState, Poll, Polls } from "./types";
 
 export const gov_api = terra.injectEndpoints({
@@ -35,14 +36,18 @@ export const gov_api = terra.injectEndpoints({
         return res.query_result;
       },
     }),
-    govBalance: builder.query<number, ContractQueryArgs>({
+    govHaloBalance: builder.query<number, ContractQueryArgs>({
       providesTags: [{ type: tags.gov, id: gov.halo_balance }],
       query: contract_querier,
-      transformResponse: (res: QueryRes<HaloBalance>) => {
-        const halo_amount = new Dec(res.query_result.balance)
-          .div(1e6)
-          .toNumber();
-        return halo_amount;
+      transformResponse: (res: QueryRes<CW20Balance>) => {
+        return new Dec(res.query_result.balance).div(1e6).toNumber();
+      },
+    }),
+    haloInfo: builder.query<CW20Info, ContractQueryArgs>({
+      providesTags: [{ type: tags.gov, id: gov.halo_info }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<CW20Info>) => {
+        return res.query_result;
       },
     }),
   }),

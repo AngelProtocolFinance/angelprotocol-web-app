@@ -19,18 +19,6 @@ export type BlockLatest = {
   block: { header: { height: string } };
 };
 
-//Halo token
-export type HaloBalance = {
-  balance: string;
-};
-
-export type TokenInfo = {
-  name: string;
-  symbol: string;
-  decimals: number;
-  total_supply: string;
-};
-
 export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
 export type MultiQueryRes = QueryRes<AggregatedResult>;
 

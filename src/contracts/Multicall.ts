@@ -1,4 +1,4 @@
-import { Airdrops } from "services/terra/multicall/types";
+import { Airdrops, Token } from "services/terra/multicall/types";
 import {
   AggregatedQuery,
   ContractQueryArgs,
@@ -9,6 +9,7 @@ import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Account from "./Account";
+import CW20 from "./CW20";
 import Halo from "./Halo";
 import Registrar from "./Registrar";
 
@@ -19,6 +20,10 @@ export default class Multicall {
   haloContract: Halo;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
+  cw20Balances: (
+    address: string,
+    cw20tokens: Token[]
+  ) => MultiContractQueryArgs;
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
@@ -40,6 +45,21 @@ export default class Multicall {
         airdrops.map((airdrop) =>
           this.haloContract.isAirDropClaimed(airdrop.stage)
         )
+      ),
+    });
+
+    this.cw20Balances = (address, cw20tokens) => ({
+      address: this.address,
+      msg: this.constructAggregatedQuery(
+        cw20tokens.map((cw20token) => {
+          const isTest =
+            (wallet?.network.chainID as chainIDs) === chainIDs.testnet;
+          const cw20ContractAddr =
+            cw20token.cw20_contracts?.[isTest ? "testnet" : "mainnet"];
+          //cw20tokens are already filtered to have valid contractAddr
+          const cw20Contract = new CW20(cw20ContractAddr!);
+          return cw20Contract.balance(address);
+        })
       ),
     });
   }

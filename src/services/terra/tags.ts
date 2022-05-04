@@ -1,7 +1,7 @@
 export enum tags {
   gov = "gov",
   user = "user",
-  halo = "halo",
+  cw20 = "cw20",
   admin = "admin",
   endowment = "endowment",
   multicall = "multicall",
@@ -22,18 +22,21 @@ export enum gov {
   staker = "staker",
   config = "config",
   halo_balance = "halo_balance",
+  halo_info = "halo_info",
 }
 export enum user {
   terra_balance = "terra_balance",
   halo_balance = "halo_balance",
 }
-export enum halo {
+export enum cw20 {
   info = "info",
+  balance = "balance",
 }
 
 export enum multicall {
   endowmentBalance = "endowmentBalance",
   airdrop = "airdrop",
+  terraBalances = "terraBalances",
 }
 export enum endowment {
   profile = "profile",

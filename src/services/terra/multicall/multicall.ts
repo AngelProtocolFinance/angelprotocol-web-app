@@ -1,21 +1,27 @@
 import { Dec } from "@terra-money/terra.js";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
-import { aws_endpoint } from "constants/urls";
+import { chainIDs } from "constants/chainIDs";
+import { apes_endpoint, aws_endpoint } from "constants/urls";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
+import { CW20Balance } from "../cw20/cw20";
 import { VaultsRateRes } from "../registrar/types";
 import { multicall, tags } from "../tags";
 import { terra } from "../terra";
 import {
   AggregatedResult,
+  BalanceRes,
   MultiContractQueryArgs,
   MultiQueryRes,
+  QueryRes,
 } from "../types";
 import { vaultMap } from "./constants";
 import {
   Airdrops,
   ClaimInquiry,
+  Token,
+  TokenWithBalance,
   VaultField,
   VaultFieldIds,
   VaultFieldLimits,
@@ -121,6 +127,83 @@ export const multicall_api = terra.injectEndpoints({
           });
 
           return { data: claimables };
+        } catch (err) {
+          return {
+            error: {
+              status: 500,
+              statusText: "Query error",
+              data: "Airdrop custom query encountered an error",
+            },
+          };
+        }
+      },
+    }),
+    //terra native balances, and cw20 balances
+    terraBalances: builder.query<TokenWithBalance[], WalletProxy>({
+      providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
+      async queryFn(wallet, queryApi, extraOptions, baseQuery) {
+        try {
+          const isTestnet =
+            (wallet.network.chainID as chainIDs) === chainIDs.testnet;
+
+          //1st query
+          const bankBalancesRes = await baseQuery(
+            `/cosmos/bank/v1beta1/balances/${wallet.address}`
+          );
+          const bankBalances = (bankBalancesRes.data as QueryRes<BalanceRes>)
+            .query_result.balances;
+
+          //2nd query
+          const tokenListRes = await fetch(`${apes_endpoint}/token/list`);
+          const tokenList = (await tokenListRes.json()) as Token[];
+
+          //first pass to tokenList, get native token balances
+          //O(t * b) time; b = bankBalances which is finite since normal users doesn't hold too many coins
+          const nativeBalances = tokenList.reduce((result, token) => {
+            const tokenBankBalance = bankBalances.find(
+              (balance) => balance.denom === token.min_denom
+            );
+            //exclude from tokenListWithBalance if no entry (meaning 0)
+            if (!tokenBankBalance) {
+              return result;
+            } else {
+              result.push({
+                ...token,
+                balance: new Dec(tokenBankBalance.amount).div(1e6).toNumber(),
+              });
+              return result;
+            }
+          }, [] as TokenWithBalance[]);
+
+          const multicallContract = new Multicall(wallet);
+          //2nd pass to token list
+          const cw20Tokens = tokenList.reduce((result, token) => {
+            //pass to multicall only tokens with contract depending on network
+            const cwContract =
+              token.cw20_contracts?.[isTestnet ? "mainnet" : "testnet"];
+            if (cwContract) {
+              result.push(token);
+              return result;
+            } else {
+              return result;
+            }
+          }, [] as Token[]);
+
+          const cw20BalancesRes = await baseQuery(
+            contract_querier(
+              multicallContract.cw20Balances(wallet.address, cw20Tokens)
+            )
+          );
+
+          const cw20MultiQueryRes = cw20BalancesRes.data as MultiQueryRes;
+          const cw20Balances: TokenWithBalance[] = decodeAggregatedResult<
+            CW20Balance[]
+          >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => ({
+            ...cw20Tokens[i],
+            balance: new Dec(cw20Balance.balance).div(1e6).toNumber(),
+          }));
+
+          return { data: nativeBalances.concat(cw20Balances) };
         } catch (err) {
           return {
             error: {
