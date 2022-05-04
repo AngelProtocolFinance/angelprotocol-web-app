@@ -142,6 +142,7 @@ const getCharity = (): Charity => ({
       name: "por",
       publicUrl: "https://www.storage.path/por",
     },
+    Tier: 1,
     FinancialStatements: [],
     AuditedFinancialReports: [],
     ProofOfIdentityVerified: true,
