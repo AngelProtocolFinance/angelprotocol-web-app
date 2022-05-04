@@ -17,6 +17,8 @@ jest.mock("services/aws/registration", () => {
   };
 });
 
+const mockShowModal = jest.fn();
+
 jest.mock("components/ModalContext/ModalContext", () => {
   const originalModule = jest.requireActual(
     "components/ModalContext/ModalContext"
@@ -25,7 +27,7 @@ jest.mock("components/ModalContext/ModalContext", () => {
   return {
     __esModule: true,
     ...originalModule,
-    showModal: (...args: any[]) => {},
+    useModalContext: () => ({ showModal: mockShowModal }),
   };
 });
 
@@ -92,6 +94,29 @@ describe("useActivate initializes correctly", () => {
         },
       },
     });
+  });
+
+  test("activate handles error flow correctly", async () => {
+    const error = {
+      error: { status: "FETCH_ERROR", error: "some error" },
+    };
+    const mockActivate = jest.fn(() => error);
+    const mockDispatch = jest.fn();
+    mockUseGetter.mockReturnValue(getCharity());
+    mockUseSetter.mockReturnValue(mockDispatch);
+    mockUseActivateMutation.mockReturnValue([
+      mockActivate,
+      { isLoading: false },
+    ]);
+
+    const { result } = renderHook(() => useActivate());
+
+    await act(() => result.current.activate(PK));
+
+    expect(mockActivate).toHaveBeenCalledWith(PK);
+    expect(mockActivate).toHaveBeenCalled();
+    expect(mockShowModal).toHaveBeenCalled();
+    expect(mockDispatch).not.toBeCalled();
   });
 });
 
