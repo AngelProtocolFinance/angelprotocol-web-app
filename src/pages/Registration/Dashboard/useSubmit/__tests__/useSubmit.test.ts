@@ -1,5 +1,8 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
+import { Charity } from "services/aws/types";
+import { Step } from "services/transaction/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
@@ -41,10 +44,41 @@ describe("useSubmit tests", () => {
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet });
+
     const { result } = renderHook(() => useSubmit());
 
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.submit).toBeDefined();
+  });
+
+  it("assigns 'isSubmitting' value correctly", () => {
+    mockUseGetter.mockReturnValue({ form_loading: true });
+    mockUseWalletContext.mockReturnValue({ wallet });
+
+    const { result } = renderHook(() => useSubmit());
+
+    expect(result.current.isSubmitting).toBe(true);
+  });
+
+  it("sets the Stage to 'error' Step when wallet not connected", async () => {
+    const mockDispatch = jest.fn();
+    mockUseSetter.mockReturnValue(mockDispatch);
+    mockUseGetter.mockReturnValue({ form_loading: false });
+    mockUseWalletContext.mockReturnValue({ wallet: undefined });
+
+    const { result } = renderHook(() => useSubmit());
+
+    await act(() => result.current.submit(getCharity()));
+
+    expect(result.current.isSubmitting).toBe(false);
+    expect(mockShowModal).toBeCalled();
+    expect(mockDispatch).toBeCalledWith({
+      type: "transaction/setStage",
+      payload: {
+        step: Step.error,
+        message: "Wallet is not connected",
+      },
+    });
   });
 });
 
@@ -64,3 +98,42 @@ const wallet: WalletProxy = {
   connect: async (..._: any[]) => {},
   disconnect: async () => {},
 };
+
+const getCharity = (): Charity => ({
+  ContactPerson: {
+    Email: "test@test.com",
+    EmailVerified: true,
+    FirstName: "first",
+    LastName: "last",
+    PhoneNumber: "+114323888",
+    Role: "ceo",
+    PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+  },
+  Registration: {
+    CharityName: "charity",
+    CharityName_ContactEmail: "CHARITY_test@test.com",
+    RegistrationDate: "2022-05-04T10:10:10Z",
+    RegistrationStatus: "Inactive",
+    Website: "www.test.com",
+    UN_SDG: 0,
+    ProofOfIdentity: { name: "poi", publicUrl: "https://www.storage.path/poi" },
+    ProofOfRegistration: {
+      name: "por",
+      publicUrl: "https://www.storage.path/por",
+    },
+    Tier: 1,
+    FinancialStatements: [],
+    AuditedFinancialReports: [],
+    ProofOfIdentityVerified: false,
+    ProofOfRegistrationVerified: false,
+    FinancialStatementsVerified: false,
+    AuditedFinancialReportsVerified: false,
+  },
+  Metadata: {
+    Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
+    CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
+    CharityOverview: "some overview",
+    EndowmentContract: "",
+    TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+  },
+});
