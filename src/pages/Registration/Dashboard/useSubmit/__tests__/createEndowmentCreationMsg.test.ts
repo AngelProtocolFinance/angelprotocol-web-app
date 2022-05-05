@@ -7,7 +7,7 @@ import createEndowmentCreationMsg from "../createEndowmentCreationMsg";
 
 describe("createEndowmentCreationMsg tests", () => {
   it("should return payload", () => {
-    const payload = createEndowmentCreationMsg(charity, walletProxy);
+    const payload = createEndowmentCreationMsg(CHARITY, WALLET);
 
     expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
     expect(payload.execute_msg).toStrictEqual({
@@ -47,7 +47,7 @@ describe("createEndowmentCreationMsg tests", () => {
   });
 });
 
-const charity: Charity = {
+const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -86,7 +86,7 @@ const charity: Charity = {
   },
 };
 
-const walletProxy: WalletProxy = {
+const WALLET: WalletProxy = {
   connection: TORUS_CONNECTION,
   address: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   network: chainOptions.walletConnectChainIds[0], // testnet

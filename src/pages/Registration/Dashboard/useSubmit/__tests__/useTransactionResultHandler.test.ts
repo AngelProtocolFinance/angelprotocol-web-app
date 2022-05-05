@@ -37,7 +37,7 @@ describe("useTransactionResultHandler tests", () => {
 
   it("does nothing when not in success/error stage", () => {
     function runTest(step: Step) {
-      mockUseGetter.mockReturnValueOnce(getCharity());
+      mockUseGetter.mockReturnValueOnce(CHARITY);
       mockUseGetter.mockReturnValueOnce({
         form_loading: false,
         form_error: null,
@@ -61,7 +61,7 @@ describe("useTransactionResultHandler tests", () => {
   });
 
   it("handles error stage", () => {
-    mockUseGetter.mockReturnValueOnce(getCharity());
+    mockUseGetter.mockReturnValueOnce(CHARITY);
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
       form_error: null,
@@ -79,12 +79,12 @@ describe("useTransactionResultHandler tests", () => {
   });
 
   it("handles success step with error", async () => {
-    mockUseGetter.mockReturnValueOnce(getCharity());
+    mockUseGetter.mockReturnValueOnce(CHARITY);
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
       form_error: null,
       fee: 0,
-      stage: getSuccessStage(),
+      stage: SUCCESS_STAGE,
     });
     const mockSubmit = jest.fn();
     mockSubmit.mockResolvedValue({
@@ -107,13 +107,12 @@ describe("useTransactionResultHandler tests", () => {
   });
 
   it("handles success step with data", async () => {
-    const charity = getCharity();
-    mockUseGetter.mockReturnValueOnce(charity);
+    mockUseGetter.mockReturnValueOnce(CHARITY);
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
       form_error: null,
       fee: 0,
-      stage: getSuccessStage(),
+      stage: SUCCESS_STAGE,
     });
     const mockSubmit = jest.fn();
     mockSubmit.mockResolvedValue({
@@ -134,13 +133,13 @@ describe("useTransactionResultHandler tests", () => {
       expect(mockDispatch).toHaveBeenNthCalledWith(1, {
         type: "charity/updateCharity",
         payload: {
-          ...charity,
+          ...CHARITY,
           Registration: {
-            ...charity.Registration,
+            ...CHARITY.Registration,
             RegistrationStatus: "Under Review",
           },
           Metadata: {
-            ...charity.Metadata,
+            ...CHARITY.Metadata,
             EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
           },
         } as Charity,
@@ -155,7 +154,7 @@ describe("useTransactionResultHandler tests", () => {
   });
 });
 
-const getCharity = (): Charity => ({
+const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -192,27 +191,25 @@ const getCharity = (): Charity => ({
     EndowmentContract: "",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
-});
+};
 
-function getSuccessStage() {
-  return {
-    step: Step.success,
-    txInfo: {
-      logs: [
-        {
-          events: [
-            {
-              type: "instantiate_contract",
-              attributes: [
-                {
-                  key: "contract_address",
-                  value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  } as Stage;
-}
+const SUCCESS_STAGE = {
+  step: Step.success,
+  txInfo: {
+    logs: [
+      {
+        events: [
+          {
+            type: "instantiate_contract",
+            attributes: [
+              {
+                key: "contract_address",
+                value: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+} as Stage;

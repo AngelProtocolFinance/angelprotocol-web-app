@@ -56,9 +56,8 @@ describe("useActivate tests", () => {
   });
 
   it("handles happy flow correctly", async () => {
-    const charity = getCharity();
     const mockActivate = jest.fn(() => ({}));
-    mockUseGetter.mockReturnValue(charity);
+    mockUseGetter.mockReturnValue(CHARITY);
     mockUseActivateMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
@@ -74,9 +73,9 @@ describe("useActivate tests", () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "charity/updateCharity",
       payload: {
-        ...charity,
+        ...CHARITY,
         Registration: {
-          ...charity.Registration,
+          ...CHARITY.Registration,
           RegistrationStatus: "Active",
         },
       },
@@ -88,7 +87,7 @@ describe("useActivate tests", () => {
       error: { status: "FETCH_ERROR", error: "some error" },
     };
     const mockActivate = jest.fn(() => error);
-    mockUseGetter.mockReturnValue(getCharity());
+    mockUseGetter.mockReturnValue(CHARITY);
     mockUseActivateMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
@@ -105,7 +104,7 @@ describe("useActivate tests", () => {
   });
 });
 
-const getCharity = (): Charity => ({
+const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -142,4 +141,4 @@ const getCharity = (): Charity => ({
     EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
-});
+};
