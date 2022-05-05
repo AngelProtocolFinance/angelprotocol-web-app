@@ -3,16 +3,12 @@ import { Charity } from "services/aws/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
-import { chainIDs } from "constants/chainIDs";
-import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import createEndowmentCreationMsg from "../createEndowmentCreationMsg";
 
 describe("createEndowmentCreationMsg tests", () => {
   it("should return payload", () => {
     const payload = createEndowmentCreationMsg(charity, walletProxy);
 
-    expect(payload.contract).toBe(contracts[chainIDs.testnet][sc.registrar]);
     expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
     expect(payload.execute_msg).toStrictEqual({
       create_endowment: {
