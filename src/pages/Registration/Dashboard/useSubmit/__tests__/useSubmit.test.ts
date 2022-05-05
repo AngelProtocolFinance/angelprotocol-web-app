@@ -10,6 +10,13 @@ import useSubmit from "../useSubmit";
 
 jest.mock("../useTransactionResultHandler");
 
+const mockCreateEndowmentCreationMsg = jest.fn();
+
+jest.mock("../createEndowmentCreationMsg", () => ({
+  __esModule: true,
+  default: () => mockCreateEndowmentCreationMsg(),
+}));
+
 const mockUseWalletContext = jest.fn();
 
 jest.mock("hooks/useWalletContext", () => ({
@@ -24,20 +31,21 @@ jest.mock("components/ModalContext/ModalContext", () => ({
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
+const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
-const mockUseSetter = jest.fn();
 
 jest.mock("store/accessors", () => ({
   __esModule: true,
   useGetter: (..._: any[]) => mockUseGetter(),
-  useSetter: () => mockUseSetter(),
+  useSetter: () => mockDispatch,
 }));
 
 describe("useSubmit tests", () => {
   afterAll(() => {
-    jest.unmock("hooks/useWalletContext");
     jest.unmock("components/ModalContext/ModalContext");
+    jest.unmock("hooks/useWalletContext");
     jest.unmock("store/accessors");
+    jest.unmock("../createEndowmentCreationMsg");
     jest.unmock("../useTransactionResultHandler");
   });
 
@@ -61,14 +69,12 @@ describe("useSubmit tests", () => {
   });
 
   it("sets the Stage to 'error' Step when wallet not connected", async () => {
-    const mockDispatch = jest.fn();
-    mockUseSetter.mockReturnValue(mockDispatch);
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: undefined });
 
     const { result } = renderHook(() => useSubmit());
 
-    await act(() => result.current.submit(getCharity()));
+    await act(() => result.current.submit(charity));
 
     expect(result.current.isSubmitting).toBe(false);
     expect(mockShowModal).toBeCalled();
@@ -80,6 +86,25 @@ describe("useSubmit tests", () => {
       },
     });
   });
+
+  // it("handles thrown errors", async () => {
+  //   mockUseGetter.mockReturnValue({ form_loading: false });
+  //   mockUseWalletContext.mockReturnValue({ wallet });
+
+  //   const { result } = renderHook(() => useSubmit());
+
+  //   await act(() => result.current.submit(charity));
+
+  //   expect(result.current.isSubmitting).toBe(false);
+  //   expect(mockShowModal).toBeCalled();
+  //   expect(mockDispatch).toBeCalledWith({
+  //     type: "transaction/setStage",
+  //     payload: {
+  //       step: Step.error,
+  //       message: "Wallet is not connected",
+  //     },
+  //   });
+  // });
 });
 
 const wallet: WalletProxy = {
@@ -99,7 +124,7 @@ const wallet: WalletProxy = {
   disconnect: async () => {},
 };
 
-const getCharity = (): Charity => ({
+const charity: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -136,4 +161,4 @@ const getCharity = (): Charity => ({
     EndowmentContract: "",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
-});
+};

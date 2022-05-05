@@ -19,13 +19,13 @@ jest.mock("components/ModalContext/ModalContext", () => ({
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
+const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
-const mockUseSetter = jest.fn();
 
 jest.mock("store/accessors", () => ({
   __esModule: true,
   useGetter: (..._: any[]) => mockUseGetter(),
-  useSetter: () => mockUseSetter(),
+  useSetter: () => mockDispatch,
 }));
 
 describe("useTransactionResultHandler tests", () => {
@@ -37,7 +37,6 @@ describe("useTransactionResultHandler tests", () => {
 
   it("does nothing when not in success/error stage", () => {
     function runTest(step: Step) {
-      const mockDispatch = jest.fn();
       mockUseGetter.mockReturnValueOnce(getCharity());
       mockUseGetter.mockReturnValueOnce({
         form_loading: false,
@@ -45,7 +44,6 @@ describe("useTransactionResultHandler tests", () => {
         fee: 0,
         stage: { step },
       });
-      mockUseSetter.mockReturnValue(mockDispatch);
       const mockSubmit = jest.fn((..._: any[]) => ({}));
       mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
@@ -63,7 +61,6 @@ describe("useTransactionResultHandler tests", () => {
   });
 
   it("handles error stage", () => {
-    const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(getCharity());
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
@@ -71,7 +68,6 @@ describe("useTransactionResultHandler tests", () => {
       fee: 0,
       stage: { step: Step.error, message: "error" },
     });
-    mockUseSetter.mockReturnValue(mockDispatch);
     const mockSubmit = jest.fn((..._: any[]) => ({}));
     mockUseSubmitMutation.mockReturnValue([mockSubmit]);
 
@@ -83,7 +79,6 @@ describe("useTransactionResultHandler tests", () => {
   });
 
   it("handles success step with error", async () => {
-    const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(getCharity());
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
@@ -91,7 +86,6 @@ describe("useTransactionResultHandler tests", () => {
       fee: 0,
       stage: getSuccessStage(),
     });
-    mockUseSetter.mockReturnValue(mockDispatch);
     const mockSubmit = jest.fn();
     mockSubmit.mockResolvedValue({
       error: { status: "FETCH_ERROR", error: "error" },
@@ -114,7 +108,6 @@ describe("useTransactionResultHandler tests", () => {
 
   it("handles success step with data", async () => {
     const charity = getCharity();
-    const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(charity);
     mockUseGetter.mockReturnValueOnce({
       form_loading: false,
@@ -122,7 +115,6 @@ describe("useTransactionResultHandler tests", () => {
       fee: 0,
       stage: getSuccessStage(),
     });
-    mockUseSetter.mockReturnValue(mockDispatch);
     const mockSubmit = jest.fn();
     mockSubmit.mockResolvedValue({
       data: {

@@ -19,13 +19,13 @@ jest.mock("components/ModalContext/ModalContext", () => ({
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
+const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
-const mockUseSetter = jest.fn();
 
 jest.mock("store/accessors", () => ({
   __esModule: true,
   useGetter: (..._: any[]) => mockUseGetter(),
-  useSetter: () => mockUseSetter(),
+  useSetter: () => mockDispatch,
 }));
 
 describe("useActivate tests", () => {
@@ -58,9 +58,7 @@ describe("useActivate tests", () => {
   it("handles happy flow correctly", async () => {
     const charity = getCharity();
     const mockActivate = jest.fn(() => ({}));
-    const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValue(charity);
-    mockUseSetter.mockReturnValue(mockDispatch);
     mockUseActivateMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
@@ -90,9 +88,7 @@ describe("useActivate tests", () => {
       error: { status: "FETCH_ERROR", error: "some error" },
     };
     const mockActivate = jest.fn(() => error);
-    const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValue(getCharity());
-    mockUseSetter.mockReturnValue(mockDispatch);
     mockUseActivateMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
