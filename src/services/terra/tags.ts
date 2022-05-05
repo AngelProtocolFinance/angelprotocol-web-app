@@ -1,6 +1,5 @@
 export enum tags {
   gov = "gov",
-  cw20 = "cw20",
   admin = "admin",
   endowment = "endowment",
   multicall = "multicall",
@@ -22,11 +21,6 @@ export enum gov {
   config = "config",
   halo_balance = "halo_balance",
   halo_info = "halo_info",
-}
-
-export enum cw20 {
-  info = "info",
-  balance = "balance",
 }
 
 export enum multicall {
