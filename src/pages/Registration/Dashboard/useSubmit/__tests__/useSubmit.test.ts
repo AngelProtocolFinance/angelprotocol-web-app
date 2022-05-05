@@ -1,9 +1,8 @@
-import { AsyncThunkAction, ThunkAction } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "services/aws/types";
-import { SenderArgs, Step, WithMsg, WithTx } from "services/transaction/types";
+import { Step } from "services/transaction/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
@@ -70,7 +69,7 @@ describe("useSubmit tests", () => {
 
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet });
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -80,7 +79,7 @@ describe("useSubmit tests", () => {
 
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
-    mockUseWalletContext.mockReturnValue({ wallet });
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -93,7 +92,7 @@ describe("useSubmit tests", () => {
 
     const { result } = renderHook(() => useSubmit());
 
-    await act(() => result.current.submit(charity));
+    await act(() => result.current.submit(CHARITY));
 
     expect(mockShowModal).toBeCalled();
     expect(mockDispatch).toBeCalledWith({
@@ -107,14 +106,14 @@ describe("useSubmit tests", () => {
 
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet });
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
     mockCreateEndowmentCreationMsg.mockImplementation((..._: any[]) => {
       throw "error";
     });
 
     const { result } = renderHook(() => useSubmit());
 
-    await act(() => result.current.submit(charity));
+    await act(() => result.current.submit(CHARITY));
 
     expect(mockDispatch).toHaveBeenCalledWith({
       type: "transaction/setFormLoading",
@@ -137,12 +136,12 @@ describe("useSubmit tests", () => {
 
   it("dispatches action sending a Terra Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseWalletContext.mockReturnValue({ wallet });
-    mockCreateEndowmentCreationMsg.mockReturnValue(msgExecuteContract);
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    mockCreateEndowmentCreationMsg.mockReturnValue(MSG_EXECUTE_CONTRACT);
 
     const { result } = renderHook(() => useSubmit());
 
-    await act(() => result.current.submit(charity));
+    await act(() => result.current.submit(CHARITY));
 
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setFormLoading",
@@ -153,7 +152,7 @@ describe("useSubmit tests", () => {
   });
 });
 
-const wallet: WalletProxy = {
+const WALLET: WalletProxy = {
   connection: TORUS_CONNECTION,
   address: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
   network: chainOptions.walletConnectChainIds[0], // testnet
@@ -170,7 +169,7 @@ const wallet: WalletProxy = {
   disconnect: async () => {},
 };
 
-const charity: Charity = {
+const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
     EmailVerified: true,
@@ -209,7 +208,7 @@ const charity: Charity = {
   },
 };
 
-const msgExecuteContract = {
+const MSG_EXECUTE_CONTRACT = {
   execute_msg: {
     create_endowment: {
       beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
