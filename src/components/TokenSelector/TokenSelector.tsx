@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import Select, {
   ControlProps,
   MenuListProps,
@@ -9,16 +9,18 @@ import Select, {
   ValueContainerProps,
 } from "react-select";
 import { Token, useTokensQuery } from "services/apes/tokens";
-import { DonateValues } from "components/Transactors/Donater/types";
 import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
 
-export default function TokenSelector(props: { classes?: string }) {
-  const { control } = useFormContext<DonateValues>();
+export default function TokenSelector<T extends FieldValues>(props: {
+  classes?: string;
+  fieldName: Path<T>;
+}) {
+  const { control } = useFormContext<T>();
   const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
 
   return (
     <Controller
-      name="token"
+      name={props.fieldName}
       control={control}
       render={({ field: { value, onChange } }) => {
         return (

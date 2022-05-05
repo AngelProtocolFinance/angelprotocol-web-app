@@ -1,9 +1,7 @@
-import { Dec, Msg, MsgExecuteContract } from "@terra-money/terra.js";
+import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import Contract from "./Contract";
-
-// import { denoms } from "constants/currency";
 
 export default class CW20 extends Contract {
   cw20ContractAddr: string;

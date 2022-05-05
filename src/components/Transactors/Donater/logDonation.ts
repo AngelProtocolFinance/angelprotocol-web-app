@@ -1,7 +1,6 @@
 import { Receiver, TxLogPayload } from "services/apes/types";
 import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
-import { chainIDs } from "constants/chainIDs";
 import { apes_endpoint } from "constants/urls";
 
 const logDonation: DonationLogger = async (
@@ -46,7 +45,7 @@ export default logDonation;
 
 export type DonationLogger = (
   txhash: string,
-  chainId: chainIDs,
+  chainId: string,
   amount: string,
   denom: string,
   splitLiq: string,

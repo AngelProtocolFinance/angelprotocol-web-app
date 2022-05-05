@@ -3,6 +3,7 @@ import { FormError } from "services/transaction/types";
 
 export default function processEstimateError(err: unknown): FormError {
   const _err = err as any;
+  console.log(err);
   if ("response" in _err) {
     let response: AxiosResponse<EstimateErrorData> = _err.response;
     return {

@@ -9,7 +9,6 @@ import { LogApplicationUpdateError } from "pages/Admin/Applications/logApplicati
 import { StageUpdator, Step } from "services/transaction/types";
 import { LogDonationFail } from "components/Transactors/Donater/logDonation";
 import { Disconnected, TxResultFail } from "contracts/Errors";
-import { chainIDs } from "constants/chainIDs";
 
 export default function handleTerraError(error: any, handler: StageUpdator) {
   if (error instanceof UserDenied) {
@@ -25,7 +24,7 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
       step: Step.error,
       message: "Timeout: failed to wait for transaction result.",
       txHash: error.txHash,
-      chainId: error.chainId as chainIDs,
+      chainId: error.chainId,
     });
   } else if (error instanceof LogDonationFail) {
     handler({
@@ -33,13 +32,13 @@ export default function handleTerraError(error: any, handler: StageUpdator) {
       message:
         "Failed to log your donation for receipt purposes. Kindly send an email to support@angelprotocol.io",
       txHash: error.txHash,
-      chainId: error.chainId as chainIDs,
+      chainId: error.chainId,
     });
   } else if (error instanceof LogApplicationUpdateError) {
     handler({
       step: Step.error,
       message: "Failed to log the Poll ID of your proposal.",
-      chainId: error.chainId as chainIDs,
+      chainId: error.chainId,
     });
   } else if (error instanceof Timeout) {
     handler({ step: Step.error, message: "Transaction timeout" });

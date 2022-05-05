@@ -10,15 +10,17 @@ import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Account from "./Account";
+import Airdrop from "./Airdrop";
 import CW20 from "./CW20";
-import Halo from "./Halo";
+import Gov from "./Gov";
 import Registrar from "./Registrar";
 
 export default class Multicall {
   wallet?: WalletProxy;
   address: string;
   registrarContract: Registrar;
-  haloContract: Halo;
+  govContract: Gov;
+  airdropContract: Airdrop;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
   cw20Balances: (
@@ -28,9 +30,11 @@ export default class Multicall {
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
-    this.address = contracts[wallet?.network.chainID as chainIDs][sc.multicall];
+    this.address =
+      contracts[wallet?.network.chainID || chainIDs.mainnet][sc.multicall];
     this.registrarContract = new Registrar(wallet);
-    this.haloContract = new Halo(wallet);
+    this.govContract = new Gov(wallet);
+    this.airdropContract = new Airdrop(wallet);
 
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
@@ -44,7 +48,7 @@ export default class Multicall {
       address: this.address,
       msg: this.constructAggregatedQuery(
         airdrops.map((airdrop) =>
-          this.haloContract.isAirDropClaimed(airdrop.stage)
+          this.airdropContract.isAirDropClaimed(airdrop.stage)
         )
       ),
     });
@@ -53,8 +57,7 @@ export default class Multicall {
       address: this.address,
       msg: this.constructAggregatedQuery(
         cw20tokens.map((cw20token) => {
-          const isTest =
-            (wallet?.network.chainID as chainIDs) === chainIDs.testnet;
+          const isTest = wallet?.network.chainID === chainIDs.testnet;
           const cw20ContractAddr =
             cw20token.cw20_contract?.[isTest ? "testnet" : "mainnet"];
           //cw20tokens are already filtered to have valid contractAddr

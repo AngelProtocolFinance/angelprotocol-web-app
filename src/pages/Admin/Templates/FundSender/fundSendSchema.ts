@@ -9,7 +9,7 @@ export type FundSendPayload = {
   recipient: string;
 
   //metadata
-  currency: string;
+  currency: "uusd" | "halo";
   haloBalance: number;
   ustBalance: number;
 };

@@ -10,7 +10,6 @@ import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
-import { denoms } from "constants/currency";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";

@@ -1,19 +1,18 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import Label from "pages/Admin/components/Label";
-import { denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 import Balance from "./Balance";
 import Currency from "./Currency";
 
 export default function Amount() {
   const {
-    register,
     watch,
+    register,
     formState: { errors },
   } = useFormContext<FundSendValues>();
 
-  const denom = watch("currency");
+  const denomText = watch("currency") === "uusd" ? "UST" : "HALO";
 
   return (
     <div className="grid mb-4">
@@ -26,13 +25,13 @@ export default function Amount() {
         autoComplete="off"
         id="amount"
         type="text"
-        placeholder="TOKEN"
+        placeholder={denomText}
         className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency currency={"uusd"} />
-          <Currency currency={"halo"} />
+          <Currency currency="uusd" />
+          <Currency currency="halo" />
         </div>
         <ErrorMessage
           errors={errors}

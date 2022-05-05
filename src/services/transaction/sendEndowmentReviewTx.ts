@@ -5,7 +5,6 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
 import transactionSlice, { setStage } from "./transactionSlice";
 import { SenderArgs, StageUpdator, Step, WithMsg, WithTx } from "./types";
 
@@ -58,7 +57,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       }
 
       const response = await args.wallet.post(tx);
-      const chainId = contract.chainID as chainIDs;
+      const chainId = contract.chainID;
 
       updateTx({
         step: Step.broadcast,

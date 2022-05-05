@@ -8,7 +8,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import { Vote } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -21,6 +21,7 @@ export default function useVoteEstimator() {
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
@@ -71,12 +72,12 @@ export default function useVoteEstimator() {
         const vote_amount = new Dec(debounced_amount).mul(1e6);
 
         if (staked_amount.lt(vote_amount)) {
-          dispatch(setFormError(`Not enough staked`));
+          setError("amount", { message: "not enough staked" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -89,7 +90,7 @@ export default function useVoteEstimator() {
         const ustBalance = getTokenBalance(coins, "uusd");
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 

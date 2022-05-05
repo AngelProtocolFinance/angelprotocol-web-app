@@ -11,9 +11,10 @@ import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
-import Halo from "contracts/Halo";
+import CW20 from "contracts/CW20";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
+import { contracts } from "constants/contracts";
 import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../../genProposalsLink";
 import { FundSendValues } from "../fundSendSchema";
@@ -41,14 +42,16 @@ export default function useTransferFunds() {
     }
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
-    const haloContract = new Halo(wallet);
+    //this wallet is not even rendered when wallet is disconnected
+    const haloContractAddr = contracts[wallet?.network.chainID!]["halo_token"];
+    const cw20Contract = new CW20(haloContractAddr, wallet);
     if (data.currency === "halo") {
-      embeddedMsg = haloContract.createEmbeddedHaloTransferMsg(
+      embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
         data.recipient
       );
     } else {
-      embeddedMsg = haloContract.createdEmbeddedBankMsg(
+      embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
         [
           {
             amount: new Dec(data.amount).mul(1e6).toInt().toString(),

@@ -1,7 +1,6 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,

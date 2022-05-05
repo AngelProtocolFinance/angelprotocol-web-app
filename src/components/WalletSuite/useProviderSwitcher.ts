@@ -67,7 +67,7 @@ export default function useProviderSwitcher() {
     dispatch(
       updateChainID({
         chain: chains.terra,
-        chainID: chainID as chainIDs,
+        chainID: chainID,
       })
     );
 

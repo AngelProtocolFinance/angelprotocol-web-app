@@ -7,7 +7,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
@@ -43,7 +43,7 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);

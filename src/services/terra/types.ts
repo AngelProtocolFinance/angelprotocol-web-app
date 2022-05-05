@@ -4,10 +4,6 @@ export interface QueryRes<T> {
   query_result: T;
 }
 
-export interface BalanceRes {
-  balances: Coin.Data[];
-}
-
 export type ContractQueryArgs<T = object> = {
   address: string;
   msg: T;

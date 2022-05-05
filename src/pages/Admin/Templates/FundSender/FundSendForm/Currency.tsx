@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { currency_icons } from "constants/currency";
+import { denomIcons } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 function Currency(props: { currency: FundSendValues["currency"] }) {
@@ -26,7 +26,7 @@ function Currency(props: { currency: FundSendValues["currency"] }) {
         className="uppercase flex items-center text-sm cursor-pointer"
       >
         <img
-          src={currency_icons[props.currency]}
+          src={denomIcons[props.currency]}
           alt=""
           className="w-4 h-4 object-contain"
         />

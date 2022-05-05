@@ -1,7 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import ustLogo from "assets/icons/currencies/ust.svg";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { Dwindow, Providers } from "services/provider/types";
@@ -12,7 +11,7 @@ import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { denomIcons } from "constants/currency";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -57,7 +56,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         displayCoin: { amount: ustBalance, symbol: "UST" },
         coins: terraBalances,
         address: wallet.address,
-        chainId: wallet.network.chainID as chainIDs,
+        chainId: wallet.network.chainID,
       })
     );
     dispatch(setIsUpdating(false));
@@ -106,7 +105,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const coins_copy = [...terraBalances];
         coins_copy.push({
           balance: eth_balance,
-          min_denom: isBinance ? denoms.bnb : denoms.wei,
+          min_denom: isBinance ? "bnb" : "wei",
           logo: "",
           symbol: isBinance ? "BNB" : "ETH",
           decimals: 18,
@@ -125,7 +124,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
                 ? chainIDs.gen_mainnet
                 : wallet.network.chainID === chainIDs.testnet
                 ? chainIDs.gen_testnet
-                : (`${network.chainId}` as chainIDs),
+                : `${network.chainId}`,
           })
         );
         dispatch(setIsUpdating(false));
@@ -161,7 +160,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
             displayCoin: { amount: eth_coin.balance, symbol: eth_coin.symbol },
             coins: [eth_coin],
             address,
-            chainId: `${network.chainId}` as chainIDs,
+            chainId: `${network.chainId}`,
           })
         );
 
@@ -201,7 +200,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
             displayCoin: { amount: bnb_coin.balance, symbol: "BNB" },
             coins: [bnb_coin],
             address,
-            chainId: `${network.chainId}` as chainIDs,
+            chainId: `${network.chainId}`,
           })
         );
 
@@ -222,7 +221,7 @@ function createBnbToken(balance: number) {
     min_denom: "bnb",
     symbol: "BNB",
     decimals: 18,
-    logo: ustLogo,
+    logo: denomIcons.bnb,
   };
 }
 
@@ -232,7 +231,7 @@ function createEthToken(balance: number) {
     min_denom: "wei",
     symbol: "ETH",
     decimals: 18,
-    logo: ustLogo,
+    logo: denomIcons.wei,
   };
 }
 
@@ -241,5 +240,5 @@ export const createUSTToken = (balance: number) => ({
   min_denom: "uusd",
   symbol: "UST",
   decimals: 6,
-  logo: ustLogo,
+  logo: denomIcons.uusd,
 });

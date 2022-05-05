@@ -16,7 +16,7 @@ function Portion(props: Props) {
   const { disp_amount, disp_split } = usePortion(props.type);
   return (
     <div
-      className={`flex flex-col items-center border-2 ${props.border_class} border-white/40 p-2 rounded-md`}
+      className={`flex flex-col items-center border-2 ${props.border_class} p-2 rounded-md`}
     >
       <p className={`${props.text_class} font-bold text-lg`}>{props.title}</p>
       <p className={`${props.text_class} text-lg mb-2 font-bold`}>

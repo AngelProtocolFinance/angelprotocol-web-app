@@ -5,26 +5,15 @@ import ether from "assets/icons/currencies/ether.png";
 import halo from "assets/icons/currencies/halo_outline.png";
 import luna from "assets/icons/currencies/luna.svg";
 import sol from "assets/icons/currencies/sol.svg";
-import token from "assets/icons/currencies/token.svg";
+import ust from "assets/icons/currencies/ust.svg";
 
-export enum denoms {
-  uluna = "uluna",
-  uusd = "uusd",
-  wei = "wei",
-  bnb = "bnb",
-  satoshi = "satoshi",
-  lamports = "lamports",
-  uatom = "uatom",
-  halo = "halo",
-}
-
-export const currency_icons: { [index: string]: string } = {
-  [denoms.uluna]: luna,
-  [denoms.uusd]: ether,
-  [denoms.bnb]: bnb,
-  [denoms.wei]: token,
-  [denoms.bnb]: btc,
-  [denoms.lamports]: sol,
-  [denoms.uatom]: atom,
-  [denoms.halo]: halo,
+export const denomIcons = {
+  uluna: luna,
+  uusd: ust,
+  bnb: bnb,
+  wei: ether,
+  satoshi: btc,
+  lamports: sol,
+  uatom: atom,
+  halo: halo,
 };

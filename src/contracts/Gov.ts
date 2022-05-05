@@ -72,23 +72,9 @@ export default class Gov extends Contract {
     // msgs?: PollExecuteMsg[]
   ) {
     const cw20Contract = new CW20(this.haloContractAddr, this.wallet);
-    const pollMsgs: MsgExecuteContract[] = [];
-    const createPollMsg = cw20Contract.createSendMsg(
-      amount,
-      this.govContractAddr,
-      { create_poll: { title, description, link } }
-    );
-    const govState = await this.getGovState();
-    const snapShotMsg = new MsgExecuteContract(
-      this.walletAddr!,
-      this.govContractAddr,
-      {
-        snapshot_poll: { poll_id: govState.poll_count + 1 },
-      }
-    );
-    pollMsgs.push(createPollMsg);
-    pollMsgs.push(snapShotMsg);
-    return pollMsgs;
+    return cw20Contract.createSendMsg(amount, this.govContractAddr, {
+      create_poll: { title, description, link },
+    });
   }
 
   //halo_gov

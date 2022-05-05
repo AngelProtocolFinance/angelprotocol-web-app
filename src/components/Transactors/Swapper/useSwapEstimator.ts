@@ -17,7 +17,6 @@ import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
-import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
@@ -25,6 +24,7 @@ export default function useSwapEstimator() {
   const {
     watch,
     setValue,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
@@ -60,12 +60,12 @@ export default function useSwapEstimator() {
         // first balance check
         if (is_buy) {
           if (amount > ustBalance) {
-            dispatch(setFormError("Not enough UST"));
+            setError("amount", { message: "not enough UST" });
             return;
           }
         } else {
           if (amount > haloBalance) {
-            dispatch(setFormError("Not enough HALO"));
+            setError("amount", { message: "not enough HALO" });
             return;
           }
         }
@@ -103,15 +103,15 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
         if (!is_buy && feeNum >= ustBalance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 

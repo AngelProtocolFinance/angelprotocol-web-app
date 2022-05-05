@@ -7,7 +7,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
@@ -16,6 +16,7 @@ import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
   const {
+    setError,
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
@@ -39,12 +40,12 @@ export default function useCreatePollEstimate() {
 
         const haloBalance = getTokenBalance(coins, "halo");
         if (amount >= haloBalance) {
-          dispatch(setFormError("Not enough halo balance"));
+          setError("amount", { message: "not enough HALO balance" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const pollMsgs = await contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
@@ -55,13 +56,13 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee(pollMsgs);
+        const fee = await contract.estimateFee([pollMsgs]);
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
         const ustBalance = getTokenBalance(coins, "uusd");
         if (feeNum >= ustBalance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 

@@ -13,7 +13,7 @@ export default function Breakdown() {
   const feeSymbol = isTokenNative ? token.symbol : "UST"; //for CW20 tx, fee is in UST
 
   return (
-    <div className="">
+    <div className="m-1">
       <Entry title="tx fee" amount={fee} symbol={feeSymbol} />
       <Entry title="total amount" amount={total} symbol={token.symbol} />
     </div>
@@ -25,8 +25,7 @@ function Entry(props: { title: string; amount: number; symbol: string }) {
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
-        {toCurrency(props.amount, 6)}
-        {props.symbol}
+        {toCurrency(props.amount, 6)} {props.symbol}
       </p>
     </div>
   );

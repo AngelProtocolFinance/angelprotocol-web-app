@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import { Coin, Dec } from "@terra-money/terra.js";
 import { Token } from "services/apes/tokens";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
@@ -12,7 +12,6 @@ import { multicall, tags } from "../tags";
 import { terra } from "../terra";
 import {
   AggregatedResult,
-  BalanceRes,
   MultiContractQueryArgs,
   MultiQueryRes,
 } from "../types";
@@ -28,6 +27,9 @@ import {
 } from "./types";
 import { EndowmentBalance, RateLookUp } from "./types";
 
+interface BalanceRes {
+  balances: Coin.Data[];
+}
 export const multicall_api = terra.injectEndpoints({
   endpoints: (builder) => ({
     endowmentBalance: builder.query<EndowmentBalance, MultiContractQueryArgs>({
@@ -146,9 +148,8 @@ export const multicall_api = terra.injectEndpoints({
       providesTags: [{ type: tags.multicall, id: multicall.airdrop }],
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
-          const queryAddr = args.wallet.address || args.customAddr;
-          const isTestnet =
-            (args.wallet.network.chainID as chainIDs) === chainIDs.testnet;
+          const queryAddr = args.customAddr || args.wallet.address;
+          const isTestnet = args.wallet.network.chainID === chainIDs.testnet;
 
           //1st query
           const bankBalancesRes = await baseQuery(
@@ -200,7 +201,6 @@ export const multicall_api = terra.injectEndpoints({
           const cw20Balances: TokenWithBalance[] = decodeAggregatedResult<
             CW20Balance[]
           >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => {
-            console.log({ cw20Balance, i });
             return {
               ...cw20Tokens[i],
               balance: new Dec(cw20Balance.balance)

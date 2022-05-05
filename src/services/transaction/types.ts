@@ -4,8 +4,6 @@ import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { tags as awsTags } from "services/aws/tags";
 import { tags as terraTags } from "services/terra/tags";
 import { WalletProxy } from "providers/WalletProvider/types";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
 
 export enum Step {
   form = "form",
@@ -51,7 +49,7 @@ export type BroadcastStage = {
   step: Step.broadcast;
   message: string;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
   details?: never;
 };
 
@@ -60,7 +58,7 @@ export type SuccessStage = {
   step: Step.success;
   message: string;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
@@ -70,14 +68,14 @@ export type ReceiptStage = {
   step: Step.receipt;
   message?: never;
   txHash: string;
-  chainId: chainIDs;
+  chainId: string;
 };
 
 export type ErrorStage = {
   step: Step.error;
   message: string;
   txHash?: string;
-  chainId?: chainIDs;
+  chainId?: string;
   details?: never;
 };
 

@@ -31,11 +31,12 @@ import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
-  const isTestnet = (wallet?.network.chainID as chainIDs) === chainIDs.testnet;
+  const isTestnet = wallet?.network.chainID === chainIDs.testnet;
   const dispatch = useSetter();
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
@@ -69,7 +70,7 @@ export default function useEstimator() {
 
         const tokenBalance = getTokenBalance(coins, token.min_denom);
         if (debounced_amount > tokenBalance) {
-          dispatch(setFormError("Not enough balance"));
+          setError("amount", { message: "not enough balance" });
           return;
         }
 
@@ -81,7 +82,7 @@ export default function useEstimator() {
             token.cw20_contract[isTestnet ? "testnet" : "mainnet"];
           if (tokenContract) {
             if (activeProvider === Providers.terra) {
-              const contract = new CW20(tokenContract);
+              const contract = new CW20(tokenContract, wallet);
               const receiver = ap_wallets.terra;
 
               const msg = contract.createTransferMsg(
@@ -93,7 +94,9 @@ export default function useEstimator() {
 
               const ustBalance = getTokenBalance(coins, "uusd");
               if (numFee >= ustBalance) {
-                dispatch(setFormError("Not enough balance to pay fees"));
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
                 return;
               }
               dispatch(setFee({ fee: numFee }));
@@ -134,7 +137,9 @@ export default function useEstimator() {
 
               //2nd balance check including fees
               if (debounced_amount + feeNum >= tokenBalance) {
-                dispatch(setFormError("Not enough balance to pay fees"));
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
                 return;
               }
               dispatch(setFee({ fee: feeNum }));
@@ -159,7 +164,9 @@ export default function useEstimator() {
               const numFee = extractFeeNum(aminoFee, "uluna");
 
               if (debounced_amount + numFee >= tokenBalance) {
-                dispatch(setFormError("Not enough balance to pay fees"));
+                setError("amount", {
+                  message: "not enough balance to pay for fees",
+                });
                 return;
               }
               dispatch(setFee({ fee: numFee }));

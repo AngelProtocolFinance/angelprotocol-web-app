@@ -1,4 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { multicall, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
 import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
@@ -21,7 +23,7 @@ export const sendTerraDonation = createAsyncThunk(
       updateStage({ step: Step.submit, message: "Submitting transaction.." });
 
       const response = await args.wallet.post(args.tx!);
-      const chainId = args.wallet.network.chainID as chainIDs;
+      const chainId = args.wallet.network.chainID;
 
       if (response.success) {
         updateStage({ step: Step.submit, message: "Saving donation details" });
@@ -62,6 +64,14 @@ export const sendTerraDonation = createAsyncThunk(
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
+
+          //invalidate user balance and endowment balance
+          dispatch(
+            terra.util.invalidateTags([
+              { type: tags.multicall, id: multicall.endowmentBalance },
+              { type: tags.multicall, id: multicall.terraBalances },
+            ])
+          );
         } else {
           updateStage({
             step: Step.error,

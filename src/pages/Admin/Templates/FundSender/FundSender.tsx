@@ -8,7 +8,6 @@ import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
 import FundSendForm from "./FundSendForm/FundSendForm";
 import { FundSendValues, fundSendSchema } from "./fundSendSchema";
 
@@ -39,7 +38,7 @@ function FundSendContext(props: { haloBalance: number; ustBalance: number }) {
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
-      currency: denoms.uusd,
+      currency: "uusd",
       haloBalance: props.haloBalance,
       ustBalance: props.ustBalance,
     },

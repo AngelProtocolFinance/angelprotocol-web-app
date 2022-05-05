@@ -4,11 +4,10 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { Coin } from "@terra-money/terra.js";
 import { RootState } from "store/store";
 import { terra_lcds } from "constants/urls";
-import { tags, user } from "./tags";
-import { BalanceRes, BlockLatest } from "./types";
+import { tags } from "./tags";
+import { BlockLatest } from "./types";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
@@ -35,13 +34,6 @@ export const terra = createApi({
       query: () => "/blocks/latest",
       transformResponse: (res: BlockLatest) => {
         return res.block.header.height;
-      },
-    }),
-    balances: builder.query<Coin.Data[], string | undefined>({
-      providesTags: [{ type: tags.user, id: user.terra_balance }],
-      query: (address) => `/cosmos/bank/v1beta1/balances/${address}`,
-      transformResponse: (res: BalanceRes) => {
-        return res.balances;
       },
     }),
   }),

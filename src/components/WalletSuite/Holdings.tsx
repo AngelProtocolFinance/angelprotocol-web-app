@@ -2,6 +2,7 @@ import { TokenWithBalance } from "services/terra/multicall/types";
 import toCurrency from "helpers/toCurrency";
 
 export default function Holdings(props: { coins: TokenWithBalance[] }) {
+  console.log(props.coins);
   return (
     <ul className="p-4">
       {props.coins.map(({ balance, symbol, logo }) => {

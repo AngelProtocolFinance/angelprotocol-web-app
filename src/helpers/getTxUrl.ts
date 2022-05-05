@@ -1,7 +1,7 @@
 import { chainIDs } from "constants/chainIDs";
 import { TERRA_FINDER } from "constants/urls";
 
-export default function getTxUrl(chainID: chainIDs, txhash: string) {
+export default function getTxUrl(chainID: string, txhash: string) {
   switch (chainID) {
     case chainIDs.gen_mainnet:
       return `${TERRA_FINDER}mainnet/tx/${txhash}`;
