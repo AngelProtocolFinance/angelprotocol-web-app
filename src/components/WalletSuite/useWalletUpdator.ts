@@ -100,16 +100,12 @@ export default function useWalletUpdator(activeProvider: Providers) {
           .div(1e18)
           .toNumber();
 
-        const isBinance = provider._network.name.includes(denoms.bnb);
-
+        const isBinance = provider._network.name.includes("bnb");
         const coins_copy = [...terraBalances];
-        coins_copy.push({
-          balance: eth_balance,
-          min_denom: isBinance ? denoms.bnb : denoms.wei,
-          logo: "",
-          symbol: isBinance ? "BNB" : "ETH",
-          decimals: 18,
-        });
+
+        coins_copy.push(
+          isBinance ? createBnbToken(eth_balance) : createEthToken(eth_balance)
+        );
 
         dispatch(
           setWalletDetails({
@@ -192,7 +188,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
           .div(1e18)
           .toNumber();
         const bnb_coin = createBnbToken(bnb_balance);
-
         dispatch(
           setWalletDetails({
             id: undefined,

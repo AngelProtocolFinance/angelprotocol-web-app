@@ -76,10 +76,13 @@ export function useTerraBalances(customAddr?: string) {
     isError,
     isLoading,
     isFetching,
-  } = useTerraBalancesQuery({
-    wallet: getSerializableWallet(wallet)!,
-    customAddr,
-  });
+  } = useTerraBalancesQuery(
+    {
+      wallet: getSerializableWallet(wallet)!,
+      customAddr,
+    },
+    { skip: !wallet && !customAddr }
+  );
   return {
     terraBalances: data,
     isTerraBalancesLoading: isLoading || isFetching,
