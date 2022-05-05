@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Receiver } from "services/apes/types";
 import { multicall, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import logDonation from "components/Transactors/Donater/logDonation";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
+import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
 import { TerraDonateArgs } from "./transactorTypes";
@@ -31,16 +31,22 @@ export const sendTerraDonation = createAsyncThunk(
         const walletAddress = args.wallet.address;
         const { receiver, token, amount, split_liq } = args.donateValues;
 
+        const receipient: Receiver =
+          typeof receiver === "string"
+            ? { charityId: receiver }
+            : { fundId: receiver };
+
         if (typeof receiver !== "undefined") {
-          await logDonation(
-            response.result.txhash,
+          await logDonation({
+            ...receipient,
+            transactionId: response.result.txhash,
+            transactionDate: new Date().toISOString(),
             chainId,
-            amount,
-            token.symbol,
-            split_liq,
+            amount: +amount,
+            denomination: token.symbol,
+            splitLiq: split_liq,
             walletAddress,
-            receiver
-          );
+          });
         }
 
         updateStage({
@@ -59,6 +65,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: Step.success,
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
+            txInfo,
             chainId,
             isReceiptEnabled: typeof receiver !== "undefined",
             //share is enabled for both individual and tca donations

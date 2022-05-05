@@ -1,16 +1,18 @@
 import { useParams } from "react-router-dom";
 import { Profile } from "services/terra/account/types";
-import useDonater from "components/Transactors/Donater/useDonater";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import { unsdgs } from "constants/unsdgs";
 import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";
+import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
   const { address: endowment_addr } = useParams<CharityParam>();
-  const showDonater = useDonater({
-    to: "charity",
-    receiver: endowment_addr!,
-  });
+  const { showModal } = useModalContext();
+  function showDonateSelection() {
+    showModal(DonateSelection, { endowmentAddr: endowment_addr! });
+  }
+
   const sdg = unsdgs[props.un_sdg || 0];
 
   return (
@@ -27,11 +29,12 @@ export default function CharityHeader(props: Profile) {
 
       <div className="flex items-center gap-2 flex-wrap">
         <button
-          onClick={showDonater}
           className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+          onClick={showDonateSelection}
         >
           DONATE NOW
         </button>
+
         <CharityLinks />
       </div>
     </div>

@@ -1,39 +1,17 @@
-import {
-  CreateTxOptions,
-  LCDClient,
-  MnemonicKey,
-  Wallet,
-} from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
-import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import torusIcon from "assets/icons/wallets/torus.jpg";
-import { chainIDs } from "constants/chainIDs";
-import { terra_lcds } from "constants/urls";
 import { mainnet } from "../chainOptions";
-import { ConnectionProxy, WalletProxy } from "../types";
-
-const NETWORK =
-  process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
+import { WalletProxy } from "../types";
+import createWalletProxy from "./createWalletProxy";
+import { NETWORK, TORUS_CONNECTION } from "./types";
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
   network: NETWORK,
   uxMode: "popup",
 });
-
-const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
-});
-
-const TORUS_CONNECTION: ConnectionProxy = {
-  identifier: "torus",
-  name: "Torus",
-  type: "TORUS",
-  icon: torusIcon,
-};
 
 type Result = {
   availableWallets: WalletProxy[];
@@ -58,29 +36,34 @@ export default function useTorusWallet(): Result {
     }
   }, []);
 
-  const connect = useCallback(async () => {
-    setStatus(WalletStatus.INITIALIZING);
+  const connect = useCallback(
+    async (loginProvider: string) => {
+      setStatus(WalletStatus.INITIALIZING);
 
-    let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
+      let finalStatus = WalletStatus.WALLET_NOT_CONNECTED;
 
-    try {
-      const loginResult = await openLogin.login();
+      try {
+        const loginResult = !!loginProvider
+          ? await openLogin.login({ loginProvider })
+          : await openLogin.login();
 
-      if (loginResult?.privKey) {
-        const newWalletProxy = createWalletProxy(
-          loginResult.privKey,
-          connect,
-          disconnect
-        );
-        setWalletProxy(newWalletProxy);
-        finalStatus = WalletStatus.WALLET_CONNECTED;
+        if (loginResult?.privKey) {
+          const newWalletProxy = createWalletProxy(
+            loginResult.privKey,
+            connect,
+            disconnect
+          );
+          setWalletProxy(newWalletProxy);
+          finalStatus = WalletStatus.WALLET_CONNECTED;
+        }
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setStatus(finalStatus);
       }
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setStatus(finalStatus);
-    }
-  }, [disconnect]);
+    },
+    [disconnect]
+  );
 
   useEffect(() => {
     async function initializeOpenlogin() {
@@ -127,56 +110,9 @@ export default function useTorusWallet(): Result {
   }, [walletProxy, connect, disconnect, status]);
 }
 
-const createWalletProxy = (
-  privateKey: string,
-  connect: () => Promise<void>,
-  disconnect: () => Promise<void>
-) => {
-  const mnemonic = entropyToMnemonic(privateKey);
-  const mnemonicKey = new MnemonicKey({ mnemonic });
-  const wallet = lcdClient.wallet(mnemonicKey);
-  const walletProxy = convertToWalletProxy(wallet, connect, disconnect);
-  return walletProxy;
-};
-
-function convertToWalletProxy(
-  torusWallet: Wallet,
-  connect: () => Promise<void>,
-  disconnect: () => Promise<void>
-): WalletProxy {
-  const networkName =
-    Object.entries(chainIDs).find(
-      ([_, value]) => value === torusWallet.lcd.config.chainID
-    )?.[0] || "";
-
-  return {
-    address: torusWallet.key.accAddress,
-    connection: TORUS_CONNECTION,
-    network: {
-      chainID: torusWallet.lcd.config.chainID,
-      lcd: torusWallet.lcd.config.URL,
-      name: networkName,
-    },
-    connect,
-    disconnect,
-    post: async (txOptions: CreateTxOptions) => {
-      const tx = await torusWallet.createAndSignTx(txOptions);
-      const res = await torusWallet.lcd.tx.broadcast(tx);
-      return {
-        ...txOptions,
-        result: {
-          height: res.height,
-          raw_log: res.raw_log,
-          txhash: res.txhash,
-        },
-        success: true,
-      };
-    },
-  };
-}
 function getAvailableWallets(
   wallet: WalletProxy | undefined,
-  connect: () => Promise<void>,
+  connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ) {
   return wallet

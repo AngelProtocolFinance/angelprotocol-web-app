@@ -1,10 +1,10 @@
 import { useCallback } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Transactor, { TxProps } from "../Transactor";
 import ClaimForm from "./ClaimForm";
 
 export default function useClaimer() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const showClaimer = useCallback(() => {
     showModal<TxProps<{}>>(Transactor, {
       inModal: true,

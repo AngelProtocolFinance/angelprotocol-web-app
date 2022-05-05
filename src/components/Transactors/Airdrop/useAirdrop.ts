@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useAirdrop as useAirdropQuery } from "services/terra/multicall/queriers";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import Transactor, { TxProps } from "../Transactor";
 import Catcher, { Props } from "./Catcher";
 
 export default function useAirdrop() {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const { airdrops } = useAirdropQuery();
 
   const showDetails = useCallback(() => {

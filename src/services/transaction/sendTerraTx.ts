@@ -71,6 +71,7 @@ export const sendTerraTx = createAsyncThunk(
             step: Step.success,
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
+            txInfo: txInfo,
             chainId,
             successLink: args.successLink,
           });

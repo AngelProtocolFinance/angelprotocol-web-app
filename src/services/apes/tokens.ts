@@ -1,4 +1,3 @@
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 
@@ -16,7 +15,7 @@ const tokens_api = apes.injectEndpoints({
   endpoints: (builder) => ({
     tokens: builder.query<Token[], unknown>({
       query: () => {
-        const generatedToken = createAuthToken(UserTypes.WEB_APP);
+        const generatedToken = createAuthToken("angelprotocol-web-app");
         return {
           url: "token/list",
           method: "GET",

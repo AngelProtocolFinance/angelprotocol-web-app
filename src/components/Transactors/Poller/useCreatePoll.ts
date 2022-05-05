@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { multicall, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Gov from "contracts/Gov";
@@ -17,7 +17,7 @@ export default function useCreatePoll() {
 
   const { form_error, form_loading } = useGetter((state) => state.transaction);
   const { wallet, maxFee } = useCreatePollEstimate();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {

@@ -1,5 +1,4 @@
 import Registrar, { R, T } from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
@@ -41,9 +40,8 @@ export function useRegistrarConfig() {
 }
 
 export function useCategorizedEndowments() {
-  const { wallet } = useWalletContext();
   const { useCategorizedEndowmentsQuery } = registrar_api;
-  const contract = new Registrar(wallet);
+  const { contract } = useContract<R, T>(Registrar);
   const {
     data = {},
     isError,

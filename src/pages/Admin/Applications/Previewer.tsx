@@ -1,17 +1,19 @@
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import PreviewForm from "./PreviewForm";
 import { CharityApplication } from "./types";
 
 export default function Reviewer(props: { application: CharityApplication }) {
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
 
   return (
     <div
-      className={`relative w-full max-w-md "bg-white-grey rounded-md overflow-hidden pt-4" : ""`}
+      className={
+        "w-full max-w-md bg-white-grey rounded-md overflow-hidden pt-4 fixed-center z-20"
+      }
     >
       <button
-        onClick={hideModal}
+        onClick={closeModal}
         className="absolute right-2 top-2 text-angel-grey hover:text-black"
       >
         <Icon type="Close" size={25} />

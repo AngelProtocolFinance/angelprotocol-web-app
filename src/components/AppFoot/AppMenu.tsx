@@ -1,3 +1,7 @@
+import { Link } from "react-router-dom";
+import { app, site } from "constants/routes";
+import { PRIVACY_POLICY } from "constants/urls";
+
 export default function AppMenu() {
   const linkStyles = {
     className:
@@ -27,20 +31,18 @@ export default function AppMenu() {
         </a>
       </li>
       <li>
-        <a
-          rel="noreferrer"
-          target="_blank"
-          href="https://www.angelprotocol.io/contact"
+        <Link
+          to={`${site.app}/${app.register}`}
           className={linkStyles.className}
         >
           REGISTER
-        </a>
+        </Link>
       </li>
       <li>
         <a
           rel="noreferrer"
           target="_blank"
-          href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx"
+          href={PRIVACY_POLICY}
           className={linkStyles.className}
         >
           PRIVACY POLICY

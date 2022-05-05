@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "components/ModalContext/ModalContext";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import Reviewer from "./Previewer";
 import { CharityApplication } from "./types";
@@ -8,16 +8,16 @@ export default function ApplicationsTable(props: {
   applications: CharityApplication[];
   isError: boolean;
 }) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   if (props.isError) {
     return <Tooltip>failed to get applications..</Tooltip>;
   }
 
   return (
-    <table className="mt-4 w-full text-white/80 mt-4 overflow-hidden">
+    <table className="w-full text-white/80 overflow-hidden">
       <TableSection
         type="thead"
-        rowClass="sm:visible invisible  sm:flex sm:inline-block mb-2"
+        rowClass="sm:visible invisible sm:flex sm:inline-block mb-2"
       >
         <Cells type="th" cellClass="px-2 first:pl-0 last:pr-0 text-left flex-1">
           <>Name</>
@@ -30,7 +30,7 @@ export default function ApplicationsTable(props: {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
+        rowClass="border-white hover:bg-angel-blue hover:bg-angel-blue/10 mb-6 sm:mb-0 flex flex-row flex-wrap sm:flex-no-wrap"
       >
         {props.applications.map((ap) => (
           <Cells
