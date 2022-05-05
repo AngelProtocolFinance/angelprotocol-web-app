@@ -1,8 +1,9 @@
+import { AsyncThunkAction, ThunkAction } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "services/aws/types";
-import { Step } from "services/transaction/types";
+import { SenderArgs, Step, WithMsg, WithTx } from "services/transaction/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
@@ -27,6 +28,13 @@ jest.mock("hooks/useWalletContext", () => ({
   default: () => mockUseWalletContext(),
 }));
 
+const mockSendTerraTx = jest.fn();
+
+jest.mock("services/transaction/sendTerraTx", () => ({
+  __esModule: true,
+  sendTerraTx: (..._: any[]) => mockSendTerraTx,
+}));
+
 const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
 
@@ -40,16 +48,21 @@ const mockCreateEndowmentCreationMsg = jest.fn();
 
 jest.mock("../createEndowmentCreationMsg", () => ({
   __esModule: true,
-  default: () => mockCreateEndowmentCreationMsg(),
+  default: (..._: any[]) => mockCreateEndowmentCreationMsg(),
 }));
 
 jest.mock("../useTransactionResultHandler");
 
 describe("useSubmit tests", () => {
+  beforeAll(() => {
+    mockCreateEndowmentCreationMsg.mockClear();
+  });
+
   afterAll(() => {
     jest.unmock("components/ModalContext/ModalContext");
     jest.unmock("helpers/processEstimateError");
     jest.unmock("hooks/useWalletContext");
+    jest.unmock("services/transaction/sendTerraTx");
     jest.unmock("store/accessors");
     jest.unmock("../createEndowmentCreationMsg");
     jest.unmock("../useTransactionResultHandler");
@@ -121,6 +134,23 @@ describe("useSubmit tests", () => {
     });
     expect(mockShowModal).toBeCalled();
   });
+
+  it("dispatches action sending a Terra Tx", async () => {
+    mockUseGetter.mockReturnValue({ form_loading: false });
+    mockUseWalletContext.mockReturnValue({ wallet });
+    mockCreateEndowmentCreationMsg.mockReturnValue(msgExecuteContract);
+
+    const { result } = renderHook(() => useSubmit());
+
+    await act(() => result.current.submit(charity));
+
+    expect(mockDispatch).toBeCalledWith({
+      type: "transaction/setFormLoading",
+      payload: true,
+    });
+    expect(mockDispatch).toBeCalledWith(mockSendTerraTx);
+    expect(mockShowModal).toBeCalled();
+  });
 });
 
 const wallet: WalletProxy = {
@@ -176,5 +206,42 @@ const charity: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+  },
+};
+
+const msgExecuteContract = {
+  execute_msg: {
+    create_endowment: {
+      beneficiary: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      cw4_members: [],
+      guardians_multisig_addr: undefined,
+      maturity_height: undefined,
+      maturity_time: undefined,
+      owner: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+      profile: {
+        annual_revenue: undefined,
+        average_annual_budget: undefined,
+        charity_navigator_rating: undefined,
+        contact_email: "test@test.com",
+        country_of_origin: undefined,
+        endow_type: "Charity",
+        image: "https://www.storage.path/banner",
+        logo: "https://www.storage.path/logo",
+        name: "charity",
+        number_of_employees: undefined,
+        overview: "some overview",
+        registration_number: undefined,
+        social_media_urls: {
+          facebook: undefined,
+          linkedin: undefined,
+          twitter: undefined,
+        },
+        street_address: undefined,
+        tier: 1,
+        un_sdg: 0,
+        url: "www.test.com",
+      },
+      withdraw_before_maturity: false,
+    },
   },
 };
