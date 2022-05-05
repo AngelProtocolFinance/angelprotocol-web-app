@@ -6,7 +6,6 @@ import { chainIDs } from "constants/chainIDs";
 import { apes_endpoint, aws_endpoint } from "constants/urls";
 import { Holding, Holdings } from "../account/types";
 import contract_querier from "../contract_querier";
-import { CW20Balance } from "../cw20/cw20";
 import { VaultsRateRes } from "../registrar/types";
 import { multicall, tags } from "../tags";
 import { terra } from "../terra";
@@ -25,7 +24,7 @@ import {
   VaultFieldIds,
   VaultFieldLimits,
 } from "./types";
-import { EndowmentBalance, RateLookUp } from "./types";
+import { CW20Balance, EndowmentBalance, RateLookUp } from "./types";
 
 interface BalanceRes {
   balances: Coin.Data[];

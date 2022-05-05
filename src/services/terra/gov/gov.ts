@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import contract_querier from "../contract_querier";
-import { CW20Balance, CW20Info } from "../cw20/cw20";
+import { CW20Balance, CW20Info } from "../multicall/types";
 import { gov, tags } from "../tags";
 import { terra } from "../terra";
 import { ContractQueryArgs, QueryRes } from "../types";

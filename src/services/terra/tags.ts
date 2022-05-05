@@ -1,6 +1,5 @@
 export enum tags {
   gov = "gov",
-  user = "user",
   cw20 = "cw20",
   admin = "admin",
   endowment = "endowment",
@@ -24,10 +23,7 @@ export enum gov {
   halo_balance = "halo_balance",
   halo_info = "halo_info",
 }
-export enum user {
-  terra_balance = "terra_balance",
-  halo_balance = "halo_balance",
-}
+
 export enum cw20 {
   info = "info",
   balance = "balance",

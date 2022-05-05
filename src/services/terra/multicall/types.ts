@@ -1,6 +1,16 @@
 import { Dec } from "@terra-money/terra.js";
 import { Token } from "services/apes/tokens";
 
+export type CW20Balance = {
+  balance: string;
+};
+export type CW20Info = {
+  name: string;
+  symbol: string;
+  decimals: number;
+  total_supply: string;
+};
+
 export type TokenWithBalance = Token & { balance: number };
 
 //endowment balance transform

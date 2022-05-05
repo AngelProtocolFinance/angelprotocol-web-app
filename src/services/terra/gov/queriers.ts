@@ -1,6 +1,6 @@
 import Gov, { G, TG } from "contracts/Gov";
 import { chainIDs } from "constants/chainIDs";
-import { placeHolderCW20Info } from "../cw20/queriers";
+import { CW20Info } from "../multicall/types";
 import { useContract } from "../useContract";
 import { gov_api } from "./gov";
 import { gov_config, gov_state, poll, staker } from "./placeholders";
@@ -71,6 +71,12 @@ export function useGovHaloBalance() {
   return data;
 }
 
+const placeHolderCW20Info: CW20Info = {
+  name: "",
+  symbol: "",
+  decimals: 6,
+  total_supply: "1",
+};
 export function useHaloInfo() {
   const { useHaloInfoQuery } = gov_api;
   const { wallet, contract } = useContract<G, TG>(Gov);
