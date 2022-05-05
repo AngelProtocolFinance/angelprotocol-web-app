@@ -31,7 +31,7 @@ import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
-  const isTestnet = wallet?.network.chainID === chainIDs.testnet;
+  const isTestnet = wallet?.network.chainID === chainIDs.terra_test;
   const dispatch = useSetter();
   const {
     watch,

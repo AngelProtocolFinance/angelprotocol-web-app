@@ -16,7 +16,7 @@ import { chainIDs } from "constants/chainIDs";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
-  const terra_chain_ref = useRef<string>(chainIDs.testnet);
+  const terra_chain_ref = useRef<string>(chainIDs.terra_main);
 
   //terra states
   const { status: terraStatus, wallet } = useWalletContext();
@@ -63,14 +63,13 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
-    const chainID = wallet?.network.chainID || chainIDs.mainnet;
+    const chainID = wallet?.network.chainID || chainIDs.terra_main;
     dispatch(
       updateChainID({
         chain: chains.terra,
         chainID: chainID,
       })
     );
-
     //if network is changed invalidate terra services
     if (terra_chain_ref.current !== chainID) {
       dispatch(terra.util.resetApiState());

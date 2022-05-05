@@ -149,7 +149,7 @@ export const multicall_api = terra.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const queryAddr = args.customAddr || args.wallet.address;
-          const isTestnet = args.wallet.network.chainID === chainIDs.testnet;
+          const isTestnet = args.wallet.network.chainID === chainIDs.terra_test;
 
           //1st query
           const bankBalancesRes = await baseQuery(

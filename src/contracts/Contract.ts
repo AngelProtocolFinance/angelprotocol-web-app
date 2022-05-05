@@ -14,7 +14,7 @@ export default class Contract {
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
-    this.chainID = wallet?.network.chainID || chainIDs.mainnet;
+    this.chainID = wallet?.network.chainID || chainIDs.terra_main;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.address;
     this.client = new LCDClient({

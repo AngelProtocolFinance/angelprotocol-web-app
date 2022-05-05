@@ -31,7 +31,7 @@ export default class Multicall {
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
     this.address =
-      contracts[wallet?.network.chainID || chainIDs.mainnet][sc.multicall];
+      contracts[wallet?.network.chainID || chainIDs.terra_main][sc.multicall];
     this.registrarContract = new Registrar(wallet);
     this.govContract = new Gov(wallet);
     this.airdropContract = new Airdrop(wallet);
@@ -57,7 +57,7 @@ export default class Multicall {
       address: this.address,
       msg: this.constructAggregatedQuery(
         cw20tokens.map((cw20token) => {
-          const isTest = wallet?.network.chainID === chainIDs.testnet;
+          const isTest = wallet?.network.chainID === chainIDs.terra_test;
           const cw20ContractAddr =
             cw20token.cw20_contract?.[isTest ? "testnet" : "mainnet"];
           //cw20tokens are already filtered to have valid contractAddr

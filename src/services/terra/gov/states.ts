@@ -10,7 +10,7 @@ export function useGovStakerState() {
     contract.staker,
     {
       skip:
-        wallet === undefined || wallet.network.chainID === chainIDs.localterra,
+        wallet === undefined || wallet.network.chainID === chainIDs.terra_local,
     }
   );
   return data;
@@ -21,7 +21,7 @@ export function useGovHaloBalance() {
   const { data = 0 } = gov_api.endpoints.govHaloBalance.useQueryState(
     contract.haloBalance,
     {
-      skip: wallet && wallet.network.chainID === chainIDs.localterra,
+      skip: wallet && wallet.network.chainID === chainIDs.terra_local,
     }
   );
   return data;

@@ -16,7 +16,7 @@ export default function FundSender() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const cw3address =
     cwContracts === "apTeam"
-      ? contracts[wallet?.network.chainID || chainIDs.testnet].apCW3
+      ? contracts[wallet?.network.chainID || chainIDs.terra_test].apCW3
       : cwContracts.cw3;
 
   //cw3 balances

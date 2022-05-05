@@ -15,8 +15,8 @@ import App from "./App";
 
 const testnet = {
   name: "bombay",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
+  chainID: chainIDs.terra_test,
+  lcd: terra_lcds[chainIDs.terra_test],
 };
 
 // define initial routes

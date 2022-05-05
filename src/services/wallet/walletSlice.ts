@@ -13,7 +13,7 @@ const initialState: State = {
   icon: icon,
   address: "walletaddrs",
   id: undefined,
-  chainId: chainIDs.mainnet,
+  chainId: chainIDs.terra_main,
 };
 
 const walletSlice = createSlice({
