@@ -12,7 +12,7 @@ import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
-import { denoms, supported_denoms } from "constants/currency";
+import { denoms } from "constants/currency";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
@@ -58,7 +58,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
         coins: terraBalances,
         address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
-        supported_denoms: supported_denoms,
       })
     );
     dispatch(setIsUpdating(false));
@@ -107,14 +106,11 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const coins_copy = [...terraBalances];
         coins_copy.push({
           balance: eth_balance,
-          min_denom: isBinance ? denoms.bnb : denoms.ether,
+          min_denom: isBinance ? denoms.bnb : denoms.wei,
           logo: "",
           symbol: isBinance ? "BNB" : "ETH",
           decimals: 18,
         });
-
-        const supported_denoms = [denoms.uusd, denoms.uluna];
-        supported_denoms.push(isBinance ? denoms.bnb : denoms.ether);
 
         dispatch(
           setWalletDetails({
@@ -130,7 +126,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
                 : wallet.network.chainID === chainIDs.testnet
                 ? chainIDs.gen_testnet
                 : (`${network.chainId}` as chainIDs),
-            supported_denoms,
           })
         );
         dispatch(setIsUpdating(false));
@@ -167,7 +162,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
             coins: [eth_coin],
             address,
             chainId: `${network.chainId}` as chainIDs,
-            supported_denoms: [denoms.ether, denoms.bnb],
           })
         );
 
@@ -208,7 +202,6 @@ export default function useWalletUpdator(activeProvider: Providers) {
             coins: [bnb_coin],
             address,
             chainId: `${network.chainId}` as chainIDs,
-            supported_denoms: [denoms.bnb],
           })
         );
 

@@ -1,4 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
+import { Token } from "services/apes/tokens";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
 import { chainIDs } from "constants/chainIDs";
@@ -14,14 +15,12 @@ import {
   BalanceRes,
   MultiContractQueryArgs,
   MultiQueryRes,
-  QueryRes,
 } from "../types";
 import { vaultMap } from "./constants";
 import {
   Airdrop,
   Airdrops,
   ClaimInquiry,
-  Token,
   TokenWithBalance,
   VaultField,
   VaultFieldIds,
@@ -189,8 +188,6 @@ export const multicall_api = terra.injectEndpoints({
               !!token.cw20_contract?.[isTestnet ? "testnet" : "mainnet"]
           );
 
-          console.log({ cw20Tokens });
-
           const cw20BalancesRes = await baseQuery(
             contract_querier(
               //this query will not run, if !wallet or !customAddr
@@ -199,7 +196,7 @@ export const multicall_api = terra.injectEndpoints({
           );
 
           const cw20MultiQueryRes = cw20BalancesRes.data as MultiQueryRes;
-          console.log({ cw20MultiQueryRes });
+
           const cw20Balances: TokenWithBalance[] = decodeAggregatedResult<
             CW20Balance[]
           >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => {
@@ -211,8 +208,6 @@ export const multicall_api = terra.injectEndpoints({
                 .toNumber(),
             };
           });
-
-          console.log(cw20Balances);
 
           return { data: nativeBalances.concat(cw20Balances) };
         } catch (err) {
@@ -239,8 +234,6 @@ function getTotalHolding(holdings: Holding[], ratesMap: RateLookUp) {
     .div(1e6);
 }
 
-function decodeAggregatedResult<T extends object[]>(
-  result: AggregatedResult
-): T {
+function decodeAggregatedResult<T extends object[]>(result: AggregatedResult) {
   return result.return_data.map((data) => JSON.parse(atob(data.data))) as T;
 }

@@ -56,7 +56,7 @@ export default function useSwapEstimator() {
         }
 
         const ustBalance = getTokenBalance(coins, "uusd");
-        const haloBalance = getTokenBalance(coins, "uhalo");
+        const haloBalance = getTokenBalance(coins, "halo");
         // first balance check
         if (is_buy) {
           if (amount > ustBalance) {

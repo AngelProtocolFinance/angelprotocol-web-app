@@ -27,7 +27,7 @@ export type State = {
   form_loading: boolean;
   form_error: FormError | null;
   fee: number;
-  feeDenom?: denoms;
+  feeSymbol?: string;
   stage: Stage;
 };
 
@@ -98,5 +98,5 @@ export type SenderArgs = {
   tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
   successMessage?: string;
   successLink?: SuccessLink;
-  feedDenom?: denoms;
+  feeSymbol?: string;
 };

@@ -1,11 +1,12 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { currency_icons, currency_text } from "constants/currency";
+import { currency_icons } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 function Currency(props: { currency: FundSendValues["currency"] }) {
   const { register, watch } = useFormContext<FundSendValues>();
   const isActive = watch("currency") === props.currency;
+  const denomText = props.currency === "uusd" ? "UST" : "HALO";
 
   return (
     <div
@@ -29,7 +30,7 @@ function Currency(props: { currency: FundSendValues["currency"] }) {
           alt=""
           className="w-4 h-4 object-contain"
         />
-        <span className={`ml-0.5`}>{currency_text[props.currency]}</span>
+        <span className={`ml-0.5`}>{denomText}</span>
       </label>
     </div>
   );

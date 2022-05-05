@@ -27,7 +27,6 @@ import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
 
 export default function useEstimator() {
@@ -83,7 +82,7 @@ export default function useEstimator() {
           if (tokenContract) {
             if (activeProvider === Providers.terra) {
               const contract = new CW20(tokenContract);
-              const receiver = ap_wallets[token.symbol];
+              const receiver = ap_wallets.terra;
 
               const msg = contract.createTransferMsg(
                 debounced_amount,
@@ -144,20 +143,20 @@ export default function useEstimator() {
           }
 
           //checks for uluna
-          if (token.min_denom === denoms.uluna) {
+          if (token.min_denom === "uluna") {
             if (activeProvider === Providers.terra) {
               //this block won't run if wallet is not connected
               //activeProvider === Providers.none
               const contract = new Contract(wallet);
               const sender = wallet!.address;
-              const receiver = ap_wallets[denoms.uluna];
+              const receiver = ap_wallets.terra;
               const amount = new Dec(debounced_amount).mul(1e6);
 
               const msg = new MsgSend(sender, receiver, [
-                new Coin(denoms.uluna, amount.toNumber()),
+                new Coin("uluna", amount.toNumber()),
               ]);
-              const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-              const numFee = extractFeeNum(aminoFee, denoms.uluna);
+              const aminoFee = await contract.estimateFee([msg], "uluna");
+              const numFee = extractFeeNum(aminoFee, "uluna");
 
               if (debounced_amount + numFee >= tokenBalance) {
                 dispatch(setFormError("Not enough balance to pay fees"));
@@ -169,7 +168,7 @@ export default function useEstimator() {
           }
 
           //estimates for eth
-          if (token.min_denom === denoms.ether) {
+          if (token.min_denom === "wei") {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
@@ -190,7 +189,7 @@ export default function useEstimator() {
 
             const tx: TransactionRequest = {
               from: sender,
-              to: ap_wallets[denoms.ether],
+              to: ap_wallets.eth,
               value: wei_amount,
             };
 
@@ -203,7 +202,7 @@ export default function useEstimator() {
           }
 
           //estimates for bnb
-          if (token.min_denom === denoms.bnb) {
+          if (token.min_denom === "bnb") {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
@@ -227,7 +226,7 @@ export default function useEstimator() {
 
             const tx: TransactionRequest = {
               from: sender,
-              to: ap_wallets[denoms.ether],
+              to: ap_wallets.eth,
               value: wei_amount,
             };
 

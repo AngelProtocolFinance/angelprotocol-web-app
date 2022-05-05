@@ -23,7 +23,7 @@ export default function FundSender() {
   //cw3 balances
   const { terraBalances, isTerraBalancesError, isTerraBalancesLoading } =
     useTerraBalances(cw3address);
-  const haloBalance = getTokenBalance(terraBalances, "uhalo");
+  const haloBalance = getTokenBalance(terraBalances, "halo");
   const ustBalance = getTokenBalance(terraBalances, "uusd");
 
   if (isTerraBalancesLoading) return <FormSkeleton />;

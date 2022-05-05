@@ -1,25 +1,24 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
+  const { coins } = useGetter((state) => state.wallet);
   const gov_staker = useGovStaker();
   const { wallet } = useWalletContext();
-  const { main: UST_balance } = useBalances(denoms.uusd);
 
   useEffect(() => {
     (async () => {
@@ -49,8 +48,9 @@ export default function useClaimEstimator() {
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);
 
+        const ustBalance = getTokenBalance(coins, "uusd");
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
+        if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
@@ -68,7 +68,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, UST_balance, gov_staker]);
+  }, [wallet, coins, gov_staker]);
 
   return { wallet, tx };
 }

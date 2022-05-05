@@ -14,7 +14,6 @@ import Admin from "contracts/Admin";
 import Halo from "contracts/Halo";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "contracts/types";
 import useWalletContext from "hooks/useWalletContext";
-import { currency_text, denoms } from "constants/currency";
 import { proposalTypes } from "constants/routes";
 import genProposalsLink from "../../genProposalsLink";
 import { FundSendValues } from "../fundSendSchema";
@@ -32,17 +31,18 @@ export default function useTransferFunds() {
 
   function transferFunds(data: FundSendValues) {
     const balance =
-      data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
+      data.currency === "uusd" ? data.ustBalance : data.haloBalance;
+    const denomText = data.currency === "uusd" ? "UST" : "HALO";
     if (data.amount > balance) {
       showModal(Popup, {
-        message: `not enough ${currency_text[data.currency]} balance`,
+        message: `not enough ${denomText} balance`,
       });
       return;
     }
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     const haloContract = new Halo(wallet);
-    if (data.currency === denoms.uhalo) {
+    if (data.currency === "halo") {
       embeddedMsg = haloContract.createEmbeddedHaloTransferMsg(
         data.amount,
         data.recipient
@@ -52,7 +52,7 @@ export default function useTransferFunds() {
         [
           {
             amount: new Dec(data.amount).mul(1e6).toInt().toString(),
-            denom: denoms.uusd,
+            denom: "uusd",
           },
         ],
         data.recipient

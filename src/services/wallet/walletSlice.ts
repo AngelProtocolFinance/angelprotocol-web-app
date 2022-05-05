@@ -12,7 +12,6 @@ const initialState: State = {
   coins: [],
   icon: icon,
   address: "walletaddrs",
-  supported_denoms: [],
   id: undefined,
   chainId: chainIDs.mainnet,
 };
@@ -30,7 +29,6 @@ const walletSlice = createSlice({
       state.coins = payload.coins;
       state.address = payload.address;
       state.chainId = payload.chainId;
-      state.supported_denoms = payload.supported_denoms;
       state.id = payload.id;
     },
     setIsUpdating: (state, { payload }: PayloadAction<boolean>) => {

@@ -9,7 +9,7 @@ export default function Balance() {
   const is_buy = watch("is_buy");
   const { coins } = useGetter((state) => state.wallet);
   const ustBalance = getTokenBalance(coins, "uusd");
-  const haloBalance = getTokenBalance(coins, "uhalo");
+  const haloBalance = getTokenBalance(coins, "halo");
   const balance = is_buy ? ustBalance : haloBalance;
 
   function setAmount() {

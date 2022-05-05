@@ -2,19 +2,18 @@ import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 // import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
-import { denoms } from "constants/currency";
 import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
@@ -27,7 +26,7 @@ export default function useEstimator() {
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { coins } = useGetter((state) => state.wallet);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -76,7 +75,8 @@ export default function useEstimator() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
+        const ustBalance = getTokenBalance(coins, "uusd");
+        if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
@@ -93,15 +93,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    wallet,
-    UST_balance,
-    balance,
-    locked,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, wallet, coins, balance, locked, isValid, isDirty]);
 
   return { tx, wallet };
 }

@@ -26,7 +26,6 @@ export type WalletInfo = {
   coins: TokenWithBalance[];
   address: string;
   chainId: string;
-  supported_denoms: string[];
   id: TerraIdentifiers | undefined;
 };
 

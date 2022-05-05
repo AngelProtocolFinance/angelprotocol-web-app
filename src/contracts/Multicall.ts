@@ -1,4 +1,5 @@
-import { Airdrops, Token } from "services/terra/multicall/types";
+import { Token } from "services/apes/tokens";
+import { Airdrops } from "services/terra/multicall/types";
 import {
   AggregatedQuery,
   ContractQueryArgs,

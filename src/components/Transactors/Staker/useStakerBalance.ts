@@ -9,7 +9,7 @@ export default function useStakerBalance(is_stake: boolean) {
   const { coins } = useGetter((state) => state.wallet);
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
-    const haloBalance = getTokenBalance(coins, "uhalo");
+    const haloBalance = getTokenBalance(coins, "halo");
     const staked = new Dec(gov_staker.balance);
     if (is_stake) {
       return [new Dec(haloBalance).mul(1e6), new Dec(0)];

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
-import Token from "./Tokens/Token";
+import TokenSelector from "./TokenSelector";
 
 export default function Amount() {
   const {
@@ -26,16 +26,15 @@ export default function Amount() {
           placeholder="0"
           className="w-full p-3 bg-transparent focus:outline-none"
         />
-        <Token />
+        <TokenSelector classes="border-l-2 pl-2" />
       </div>
-      <div className="flex items-start justify-between mt-1">
-        <ErrorMessage
-          errors={errors}
-          name="amount"
-          as="span"
-          className="text-red-400 text-xs mb-1 mt-0.5 text-right"
-        />
-      </div>
+
+      <ErrorMessage
+        errors={errors}
+        name="amount"
+        as="p"
+        className="text-red-400 text-xs m-1 text-left"
+      />
     </div>
   );
 }

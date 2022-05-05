@@ -7,7 +7,7 @@ export default function Output() {
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");
-  const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
+  const icon = currency_icons[is_buy ? denoms.halo : denoms.uusd];
 
   return (
     <div className="grid grid-cols-a1 bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">

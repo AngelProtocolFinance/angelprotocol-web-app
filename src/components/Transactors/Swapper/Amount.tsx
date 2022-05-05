@@ -48,7 +48,7 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
+            src={currency_icons[is_buy ? denoms.uusd : denoms.halo]}
             alt=""
           />
           <span className="block font-bold text-2xl">

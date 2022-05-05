@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import toCurrency from "helpers/toCurrency";
-import { currency_text, denoms } from "constants/currency";
+import { denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 export default function Balance() {
@@ -25,7 +25,7 @@ export default function Balance() {
     >
       <span className="uppercase text-xs">balance:</span>
       <span>{toCurrency(displayBalance, 3, true)}</span>
-      <span>{currency_text[currency]}</span>
+      <span>{"TOKEN"}</span>
     </button>
   );
 }

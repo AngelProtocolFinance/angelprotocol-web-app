@@ -30,7 +30,7 @@ export default function Details(props: { closeHandler: () => void }) {
     (coin) =>
       filtered ||
       coin.min_denom === "uusd" ||
-      coin.min_denom === "uhalo" ||
+      coin.min_denom === "halo" ||
       Number(coin.balance) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);

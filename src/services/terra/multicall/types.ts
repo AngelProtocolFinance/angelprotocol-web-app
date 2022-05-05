@@ -1,16 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
-import { WalletProxy } from "providers/WalletProvider";
-
-export type Token = {
-  min_denom: string;
-  symbol: string;
-  cw20_contract?: {
-    mainnet: string;
-    testnet?: string;
-  };
-  logo: string;
-  decimals: number;
-};
+import { Token } from "services/apes/tokens";
 
 export type TokenWithBalance = Token & { balance: number };
 

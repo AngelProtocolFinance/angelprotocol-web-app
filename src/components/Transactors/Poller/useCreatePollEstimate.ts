@@ -37,7 +37,7 @@ export default function useCreatePollEstimate() {
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
 
-        const haloBalance = getTokenBalance(coins, "uhalo");
+        const haloBalance = getTokenBalance(coins, "halo");
         if (amount >= haloBalance) {
           dispatch(setFormError("Not enough halo balance"));
           return;

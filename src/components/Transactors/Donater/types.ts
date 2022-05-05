@@ -1,10 +1,10 @@
-import { Token } from "services/terra/multicall/types";
+import { Token } from "services/apes/tokens";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: Token; //denoms.btc | denoms.ether | denoms.sol | denoms.uatom;
+  token: Token;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
