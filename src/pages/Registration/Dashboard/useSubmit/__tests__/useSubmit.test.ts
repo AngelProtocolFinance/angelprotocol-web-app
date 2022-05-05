@@ -8,13 +8,16 @@ import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import useSubmit from "../useSubmit";
 
-jest.mock("../useTransactionResultHandler");
+const mockShowModal = jest.fn();
 
-const mockCreateEndowmentCreationMsg = jest.fn();
-
-jest.mock("../createEndowmentCreationMsg", () => ({
+jest.mock("components/ModalContext/ModalContext", () => ({
   __esModule: true,
-  default: () => mockCreateEndowmentCreationMsg(),
+  useModalContext: () => ({ showModal: mockShowModal }),
+}));
+
+jest.mock("helpers/processEstimateError", () => ({
+  __esModule: true,
+  default: (_: any) => {},
 }));
 
 const mockUseWalletContext = jest.fn();
@@ -22,13 +25,6 @@ const mockUseWalletContext = jest.fn();
 jest.mock("hooks/useWalletContext", () => ({
   __esModule: true,
   default: () => mockUseWalletContext(),
-}));
-
-const mockShowModal = jest.fn();
-
-jest.mock("components/ModalContext/ModalContext", () => ({
-  __esModule: true,
-  useModalContext: () => ({ showModal: mockShowModal }),
 }));
 
 const mockDispatch = jest.fn();
@@ -40,9 +36,19 @@ jest.mock("store/accessors", () => ({
   useSetter: () => mockDispatch,
 }));
 
+const mockCreateEndowmentCreationMsg = jest.fn();
+
+jest.mock("../createEndowmentCreationMsg", () => ({
+  __esModule: true,
+  default: () => mockCreateEndowmentCreationMsg(),
+}));
+
+jest.mock("../useTransactionResultHandler");
+
 describe("useSubmit tests", () => {
   afterAll(() => {
     jest.unmock("components/ModalContext/ModalContext");
+    jest.unmock("helpers/processEstimateError");
     jest.unmock("hooks/useWalletContext");
     jest.unmock("store/accessors");
     jest.unmock("../createEndowmentCreationMsg");
@@ -76,7 +82,6 @@ describe("useSubmit tests", () => {
 
     await act(() => result.current.submit(charity));
 
-    expect(result.current.isSubmitting).toBe(false);
     expect(mockShowModal).toBeCalled();
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
@@ -87,24 +92,35 @@ describe("useSubmit tests", () => {
     });
   });
 
-  // it("handles thrown errors", async () => {
-  //   mockUseGetter.mockReturnValue({ form_loading: false });
-  //   mockUseWalletContext.mockReturnValue({ wallet });
+  it("handles thrown errors", async () => {
+    mockUseGetter.mockReturnValue({ form_loading: false });
+    mockUseWalletContext.mockReturnValue({ wallet });
+    mockCreateEndowmentCreationMsg.mockImplementation((..._: any[]) => {
+      throw "error";
+    });
 
-  //   const { result } = renderHook(() => useSubmit());
+    const { result } = renderHook(() => useSubmit());
 
-  //   await act(() => result.current.submit(charity));
+    await act(() => result.current.submit(charity));
 
-  //   expect(result.current.isSubmitting).toBe(false);
-  //   expect(mockShowModal).toBeCalled();
-  //   expect(mockDispatch).toBeCalledWith({
-  //     type: "transaction/setStage",
-  //     payload: {
-  //       step: Step.error,
-  //       message: "Wallet is not connected",
-  //     },
-  //   });
-  // });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "transaction/setFormLoading",
+      payload: true,
+    });
+    expect(mockDispatch).toBeCalledWith({
+      type: "transaction/setStage",
+      payload: {
+        step: Step.error,
+        message:
+          "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io",
+      },
+    });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "transaction/setFormLoading",
+      payload: false,
+    });
+    expect(mockShowModal).toBeCalled();
+  });
 });
 
 const wallet: WalletProxy = {
