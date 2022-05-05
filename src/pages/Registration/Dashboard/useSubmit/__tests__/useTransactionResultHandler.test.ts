@@ -35,7 +35,7 @@ describe("useTransactionResultHandler tests", () => {
     jest.unmock("store/accessors");
   });
 
-  test("useTransactionResultHandler does nothing when not in success/error stage", () => {
+  it("does nothing when not in success/error stage", () => {
     function runTest(step: Step) {
       const mockDispatch = jest.fn();
       mockUseGetter.mockReturnValueOnce(getCharity());
@@ -62,7 +62,7 @@ describe("useTransactionResultHandler tests", () => {
     runTest(Step.receipt);
   });
 
-  test("useTransactionResultHandler handles error stage", () => {
+  it("handles error stage", () => {
     const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(getCharity());
     mockUseGetter.mockReturnValueOnce({
@@ -82,7 +82,7 @@ describe("useTransactionResultHandler tests", () => {
     expect(mockDispatch).toHaveBeenCalled();
   });
 
-  test("useTransactionResultHandler handles success step with error", async () => {
+  it("handles success step with error", async () => {
     const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(getCharity());
     mockUseGetter.mockReturnValueOnce({
@@ -112,7 +112,7 @@ describe("useTransactionResultHandler tests", () => {
     });
   });
 
-  test("useTransactionResultHandler handles success step with data", async () => {
+  it("handles success step with data", async () => {
     const charity = getCharity();
     const mockDispatch = jest.fn();
     mockUseGetter.mockReturnValueOnce(charity);

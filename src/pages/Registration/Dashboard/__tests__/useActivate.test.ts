@@ -55,7 +55,7 @@ describe("useActivate tests", () => {
     expect(result.current.isSubmitting).toBe(true);
   });
 
-  test("activate handles happy flow correctly", async () => {
+  it("handles happy flow correctly", async () => {
     const charity = getCharity();
     const mockActivate = jest.fn(() => ({}));
     const mockDispatch = jest.fn();
@@ -85,7 +85,7 @@ describe("useActivate tests", () => {
     });
   });
 
-  test("activate handles error flow correctly", async () => {
+  it("handles error flow correctly", async () => {
     const error = {
       error: { status: "FETCH_ERROR", error: "some error" },
     };
