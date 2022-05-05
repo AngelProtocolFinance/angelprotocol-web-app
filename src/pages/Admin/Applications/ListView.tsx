@@ -33,7 +33,7 @@ const ApplicationCard = (props: { ap: CharityApplication }) => {
       </p>
       <p className="fw-42">
         <Text colored title="Wallet Address" />
-        <Text title={props.ap.TerraWallet} />
+        <Text title={props.ap.TerraWallet || "-"} />
       </p>
       <div className="w-42">
         <Text colored title="Click to review" />
@@ -51,9 +51,9 @@ const ApplicationCard = (props: { ap: CharityApplication }) => {
 function Text(props: { title: string; colored?: boolean }) {
   return (
     <span
-      className={`block text-white uppercase inset-x-0 p-1 pl-2 ${
+      className={`block text-white inset-x-0 p-1 pl-2 ${
         props.colored
-          ? "bg-gray-200/20 text-xs tracking-wider"
+          ? "bg-gray-200/20 text-xs tracking-wider uppercase"
           : "text-md font-semibold"
       }`}
     >

@@ -14,7 +14,7 @@ export default function TableView(props: {
       <TableSection type="thead" rowClass="flex inline-block">
         <Cells
           type="th"
-          cellClass="px-2 first:pl-0 last:pr-0 text-left flex-1 uppercase bg-gray-200/20 py-2"
+          cellClass="px-2 last:pr-0 text-left flex-1 uppercase bg-gray-200/20 py-2"
         >
           <>Name</>
           <>Contact Email</>
@@ -41,7 +41,9 @@ export default function TableView(props: {
               {new Date(ap.RegistrationDate).toDateString()}
             </p>
             <p className="font-mono flex justify-between items-center w-42 sm:w-32">
-              <span className="text-base truncate w-22">{ap.TerraWallet}</span>
+              <span className="text-base truncate w-22">
+                {ap.TerraWallet || "-"}
+              </span>
             </p>
             <div className="w-42 sm:w-32">
               <button
