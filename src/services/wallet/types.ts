@@ -30,11 +30,3 @@ export type WalletInfo = {
 };
 
 export type State = { isUpdating: boolean } & WalletInfo;
-
-export type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
-
-export type EthState = {
-  connected: boolean;
-  network: EthNetworks;
-  balance: number;
-} & WalletInfo;

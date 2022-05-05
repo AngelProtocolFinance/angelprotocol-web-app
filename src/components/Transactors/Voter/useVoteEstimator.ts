@@ -15,6 +15,7 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
@@ -87,7 +88,7 @@ export default function useVoteEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, "uusd");
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });

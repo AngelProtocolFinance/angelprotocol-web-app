@@ -3,6 +3,7 @@ import { Simulation } from "services/terra/lp";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
 import Contract from "./Contract";
 
@@ -26,7 +27,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: denoms.uusd,
               },
             },
             amount: "1000000",
@@ -43,7 +44,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: "uusd",
+            denom: denoms.uusd,
           },
         }
       : {
@@ -79,7 +80,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: "uusd",
+                denom: denoms.uusd,
               },
             },
             amount: uust_amount,
@@ -89,7 +90,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin("uusd", uust_amount)]
+      [new Coin(denoms.uusd, uust_amount)]
     );
   }
 

@@ -1,12 +1,12 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { denomIcons } from "constants/currency";
+import { denomIcons, denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 function Currency(props: { currency: FundSendValues["currency"] }) {
   const { register, watch } = useFormContext<FundSendValues>();
   const isActive = watch("currency") === props.currency;
-  const denomText = props.currency === "uusd" ? "UST" : "HALO";
+  const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
 
   return (
     <div

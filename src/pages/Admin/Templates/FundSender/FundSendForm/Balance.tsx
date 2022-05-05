@@ -1,5 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 
 export default function Balance() {
@@ -8,8 +9,8 @@ export default function Balance() {
   const haloBalance = watch("haloBalance");
   const ustBalance = watch("ustBalance");
 
-  const displayBalance = currency === "uusd" ? ustBalance : haloBalance;
-  const denomText = currency === "uusd" ? "UST" : "HALO";
+  const displayBalance = currency === denoms.uusd ? ustBalance : haloBalance;
+  const denomText = currency === denoms.uusd ? "UST" : "HALO";
 
   function setMax() {
     setValue("amount", displayBalance, {

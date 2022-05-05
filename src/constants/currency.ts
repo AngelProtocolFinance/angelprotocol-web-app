@@ -7,6 +7,17 @@ import luna from "assets/icons/currencies/luna.svg";
 import sol from "assets/icons/currencies/sol.svg";
 import ust from "assets/icons/currencies/ust.svg";
 
+export const denoms = {
+  uluna: "uluna",
+  uusd: "uusd",
+  bnb: "bnb",
+  wei: "wei",
+  satoshi: "satoshi",
+  lamport: "lamport",
+  uatom: "uatom",
+  halo: "halo",
+};
+
 export const denomIcons = {
   uluna: luna,
   uusd: ust,

@@ -1,10 +1,11 @@
 import { FundSendMeta } from "pages/Admin/types";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function FundTransfer(props: FundSendMeta) {
-  const denomText = props.currency === "uusd" ? "UST" : "HALO";
+  const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
   return (
     <PreviewContainer>
       <KeyValue _key="from">

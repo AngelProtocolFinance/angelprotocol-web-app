@@ -3,13 +3,14 @@ import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useGetter } from "store/accessors";
 import getTokenBalance from "helpers/getTokenBalance";
+import { denoms } from "constants/currency";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();
   const { coins } = useGetter((state) => state.wallet);
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
-    const haloBalance = getTokenBalance(coins, "halo");
+    const haloBalance = getTokenBalance(coins, denoms.halo);
     const staked = new Dec(gov_staker.balance);
     if (is_stake) {
       return [new Dec(haloBalance).mul(1e6), new Dec(0)];

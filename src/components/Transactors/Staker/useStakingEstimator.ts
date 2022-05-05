@@ -14,6 +14,7 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
@@ -78,7 +79,7 @@ export default function useEstimator() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(coins, "uusd");
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         if (feeNum >= ustBalance) {
           setError("amount", {
             message: "not enough UST to pay for fees",

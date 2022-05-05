@@ -12,6 +12,7 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
+import { denoms } from "constants/currency";
 import { AdminVoteValues } from "./types";
 
 export default function useEstimator() {
@@ -46,7 +47,7 @@ export default function useEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, "uusd");
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         //check if user has enough balance to pay for fees
         if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));

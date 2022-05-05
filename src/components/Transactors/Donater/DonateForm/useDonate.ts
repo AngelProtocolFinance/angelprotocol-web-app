@@ -8,6 +8,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
 import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
 type Sender = (data: DonateValues) => any;
@@ -53,7 +54,7 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
-  const denomRef = useRef<string>("uusd");
+  const denomRef = useRef<string>(denoms.uusd);
   const token = watch("token");
   const denom = token.min_denom;
 
@@ -68,8 +69,8 @@ export default function useDonate() {
   }, [denom]);
 
   const getSender = (denom: string): Sender => {
-    if (denom === "wei") return ethSender;
-    if (denom === "bnb") return bnbSender;
+    if (denom === denoms.wei) return ethSender;
+    if (denom === denoms.bnb) return bnbSender;
     return terraSender;
   };
 

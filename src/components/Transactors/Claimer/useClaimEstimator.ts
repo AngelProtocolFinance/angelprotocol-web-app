@@ -12,6 +12,7 @@ import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
@@ -48,7 +49,7 @@ export default function useClaimEstimator() {
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, "uusd");
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));

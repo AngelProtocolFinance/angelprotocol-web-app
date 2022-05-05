@@ -17,6 +17,7 @@ import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
@@ -55,8 +56,8 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const ustBalance = getTokenBalance(coins, "uusd");
-        const haloBalance = getTokenBalance(coins, "halo");
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const haloBalance = getTokenBalance(coins, denoms.halo);
         // first balance check
         if (is_buy) {
           if (amount > ustBalance) {
@@ -103,7 +104,7 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= ustBalance) {

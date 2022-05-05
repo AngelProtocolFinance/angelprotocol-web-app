@@ -10,6 +10,7 @@ import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
+import { denoms } from "constants/currency";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
@@ -28,8 +29,8 @@ export default function Details(props: { closeHandler: () => void }) {
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
-      coin.min_denom === "uusd" ||
-      coin.min_denom === "halo" ||
+      coin.min_denom === denoms.uusd ||
+      coin.min_denom === denoms.halo ||
       Number(coin.balance) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);

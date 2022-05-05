@@ -1,6 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import Label from "pages/Admin/components/Label";
+import { denoms } from "constants/currency";
 import { FundSendValues } from "../fundSendSchema";
 import Balance from "./Balance";
 import Currency from "./Currency";
@@ -12,7 +13,7 @@ export default function Amount() {
     formState: { errors },
   } = useFormContext<FundSendValues>();
 
-  const denomText = watch("currency") === "uusd" ? "UST" : "HALO";
+  const denomText = watch("currency") === denoms.uusd ? "UST" : "HALO";
 
   return (
     <div className="grid mb-4">

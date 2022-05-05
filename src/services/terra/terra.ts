@@ -12,7 +12,6 @@ import { BlockLatest } from "./types";
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
     const chainID = (api.getState() as RootState).chain.terra;
-    console.log(chainID);
     const base_url = terra_lcds[chainID];
     return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
   },

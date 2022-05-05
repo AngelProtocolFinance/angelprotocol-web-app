@@ -8,6 +8,7 @@ import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/currency";
 import FundSendForm from "./FundSendForm/FundSendForm";
 import { FundSendValues, fundSendSchema } from "./fundSendSchema";
 
@@ -22,8 +23,8 @@ export default function FundSender() {
   //cw3 balances
   const { terraBalances, isTerraBalancesError, isTerraBalancesLoading } =
     useTerraBalances(cw3address);
-  const haloBalance = getTokenBalance(terraBalances, "halo");
-  const ustBalance = getTokenBalance(terraBalances, "uusd");
+  const haloBalance = getTokenBalance(terraBalances, denoms.halo);
+  const ustBalance = getTokenBalance(terraBalances, denoms.uusd);
 
   if (isTerraBalancesLoading) return <FormSkeleton />;
   if (isTerraBalancesError) {

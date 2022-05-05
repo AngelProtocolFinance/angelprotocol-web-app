@@ -27,6 +27,7 @@ import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
 
 export default function useEstimator() {
@@ -92,7 +93,7 @@ export default function useEstimator() {
               const aminoFee = await contract.estimateFee([msg]);
               const numFee = extractFeeNum(aminoFee);
 
-              const ustBalance = getTokenBalance(coins, "uusd");
+              const ustBalance = getTokenBalance(coins, denoms.uusd);
               if (numFee >= ustBalance) {
                 setError("amount", {
                   message: "not enough balance to pay for fees",
@@ -111,7 +112,7 @@ export default function useEstimator() {
           //NATIVE TOKEN
         } else {
           //checks for uusd
-          if (token.min_denom === "uusd") {
+          if (token.min_denom === denoms.uusd) {
             if (activeProvider === Providers.terra) {
               const receiver = getValues("receiver");
               let depositMsg: MsgExecuteContract;
@@ -148,7 +149,7 @@ export default function useEstimator() {
           }
 
           //checks for uluna
-          if (token.min_denom === "uluna") {
+          if (token.min_denom === denoms.uluna) {
             if (activeProvider === Providers.terra) {
               //this block won't run if wallet is not connected
               //activeProvider === Providers.none
@@ -158,10 +159,10 @@ export default function useEstimator() {
               const amount = new Dec(debounced_amount).mul(1e6);
 
               const msg = new MsgSend(sender, receiver, [
-                new Coin("uluna", amount.toNumber()),
+                new Coin(denoms.uluna, amount.toNumber()),
               ]);
-              const aminoFee = await contract.estimateFee([msg], "uluna");
-              const numFee = extractFeeNum(aminoFee, "uluna");
+              const aminoFee = await contract.estimateFee([msg], denoms.uluna);
+              const numFee = extractFeeNum(aminoFee, denoms.uluna);
 
               if (debounced_amount + numFee >= tokenBalance) {
                 setError("amount", {
@@ -175,7 +176,7 @@ export default function useEstimator() {
           }
 
           //estimates for eth
-          if (token.min_denom === "wei") {
+          if (token.min_denom === denoms.wei) {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
@@ -209,7 +210,7 @@ export default function useEstimator() {
           }
 
           //estimates for bnb
-          if (token.min_denom === "bnb") {
+          if (token.min_denom === denoms.bnb) {
             const dwindow = window as Dwindow;
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;

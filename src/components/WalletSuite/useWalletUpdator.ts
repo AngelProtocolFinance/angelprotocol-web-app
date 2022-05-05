@@ -11,13 +11,13 @@ import { useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { chainIDs } from "constants/chainIDs";
-import { denomIcons } from "constants/currency";
+import { denomIcons, denoms } from "constants/currency";
 
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
   const { terraBalances, isTerraBalancesLoading } = useTerraBalances();
-  const ustBalance = getTokenBalance(terraBalances, "uusd");
+  const ustBalance = getTokenBalance(terraBalances, denoms.uusd);
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -100,12 +100,12 @@ export default function useWalletUpdator(activeProvider: Providers) {
           .div(1e18)
           .toNumber();
 
-        const isBinance = provider._network.name.includes("bnb");
+        const isBinance = provider._network.name.includes(denoms.bnb);
 
         const coins_copy = [...terraBalances];
         coins_copy.push({
           balance: eth_balance,
-          min_denom: isBinance ? "bnb" : "wei",
+          min_denom: isBinance ? denoms.bnb : denoms.wei,
           logo: "",
           symbol: isBinance ? "BNB" : "ETH",
           decimals: 18,
@@ -218,7 +218,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
 function createBnbToken(balance: number) {
   return {
     balance,
-    min_denom: "bnb",
+    min_denom: denoms.bnb,
     symbol: "BNB",
     decimals: 18,
     logo: denomIcons.bnb,
@@ -228,7 +228,7 @@ function createBnbToken(balance: number) {
 function createEthToken(balance: number) {
   return {
     balance,
-    min_denom: "wei",
+    min_denom: denoms.wei,
     symbol: "ETH",
     decimals: 18,
     logo: denomIcons.wei,
@@ -237,7 +237,7 @@ function createEthToken(balance: number) {
 
 export const createUSTToken = (balance: number) => ({
   balance,
-  min_denom: "uusd",
+  min_denom: denoms.uusd,
   symbol: "UST",
   decimals: 6,
   logo: denomIcons.uusd,
