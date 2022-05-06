@@ -18,6 +18,8 @@ const FORM_ERROR =
   "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useTransactionResultHandler() {
+  console.log(" i entered useTransactionResultHandler");
+
   const charity = useGetter((state) => state.charity);
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
