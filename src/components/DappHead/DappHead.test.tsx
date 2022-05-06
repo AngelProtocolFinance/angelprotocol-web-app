@@ -39,9 +39,11 @@ describe("DappHead test", () => {
 
     //marketplace --> governance
     userEvent.click(govLink);
-    //page is lazy loaded, test details in `pages/Governance.test.tsx`
-    expect(await screen.findByText("total staked")).toBeInTheDocument();
-    expect(await screen.findByText("halo price")).toBeInTheDocument();
+    //page is lazy loaded, test details in `pages/Governance.test.tsx
+    waitFor(async () => {
+      expect(await screen.findByText(/total staked/i)).toBeInTheDocument();
+      expect(await screen.findByText(/halo price/i)).toBeInTheDocument();
+    });
 
     //governance --> leaderboard
     userEvent.click(leaderboardLink);
