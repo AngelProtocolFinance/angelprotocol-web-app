@@ -50,7 +50,10 @@ jest.mock("../createEndowmentCreationMsg", () => ({
   default: (..._: any[]) => mockCreateEndowmentCreationMsg(),
 }));
 
-jest.mock("../useTransactionResultHandler");
+jest.mock("../useTransactionResultHandler", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+}));
 
 describe("useSubmit tests", () => {
   beforeAll(() => {
