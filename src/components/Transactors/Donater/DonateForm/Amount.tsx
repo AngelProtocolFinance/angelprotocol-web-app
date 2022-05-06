@@ -2,6 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
 import TokenSelector from "components/TokenSelector/TokenSelector";
 import { DonateValues as DV } from "components/Transactors/Donater/types";
+import Balance from "./Balance";
 
 export default function Amount() {
   const {
@@ -11,12 +12,16 @@ export default function Amount() {
 
   return (
     <div className="grid">
-      <label
-        htmlFor="amount"
-        className="text-angel-grey text-lg uppercase font-bold mb-2"
-      >
-        Donation Amount
-      </label>
+      <div className="flex items-baseline justify-between mb-1">
+        <label
+          htmlFor="amount"
+          className="text-angel-grey text-lg uppercase font-bold"
+        >
+          Donation Amount
+        </label>
+        <Balance />
+      </div>
+
       <div className="flex items-center pr-1 justify-between gap-2 shadow-inner-white-grey rounded-md text-xl bg-light-grey/80 text-angel-grey">
         <input
           {...register("amount")}

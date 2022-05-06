@@ -3,6 +3,7 @@ import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
 import Select, {
   ControlProps,
   MenuListProps,
+  MenuProps,
   NoticeProps,
   OptionProps,
   SingleValueProps,
@@ -36,6 +37,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
               ValueContainer,
               SingleValue,
               IndicatorSeparator: null,
+              Menu,
               MenuList,
               Option,
               NoOptionsMessage,
@@ -53,7 +55,7 @@ const Control: FC<ControlProps<Token>> = ({
   innerRef,
 }) => {
   return (
-    <div ref={innerRef} {...innerProps} className="flex gap-2">
+    <div ref={innerRef} {...innerProps} className="relative flex gap-2">
       {children}
     </div>
   );
@@ -92,10 +94,17 @@ const Option: FC<OptionProps<Token>> = ({
     <div
       ref={innerRef}
       {...innerProps}
-      className="w-full flex items-center gap-2 p-2 hover:bg-angel-blue cursor-pointer"
+      className="w-full flex items-center gap-2 p-2 pr-4 hover:bg-angel-blue cursor-pointer"
     >
       <img src={option.logo} alt="" className="w-6 h-6 object-contain" />
       <p className="text-angel-grey text-sm">{children}</p>
+    </div>
+  );
+};
+const Menu: FC<MenuProps<Token>> = ({ innerProps, innerRef, children }) => {
+  return (
+    <div ref={innerRef} {...innerProps} className="absolute right-0 shadow-lg">
+      {children}
     </div>
   );
 };
