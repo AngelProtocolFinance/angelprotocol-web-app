@@ -31,6 +31,9 @@ describe("DappHead test", () => {
   test("dapphead routing", async () => {
     render(<TestApp />);
 
+    const govText1 = /total staked/i;
+    const govText2 = /halo price/i;
+
     //get links
     const leaderboardLink = screen.getByText(/leaderboard/i);
     const marketPlaceLink = screen.getByText(/marketplace/i);
@@ -38,10 +41,13 @@ describe("DappHead test", () => {
 
     //marketplace --> governance
     userEvent.click(govLink);
-    //page is lazy loaded, test details in `pages/Governance.test.tsx
+    //page is still loading lazilly
+    expect(screen.queryByText(govText1)).toBeNull();
+    expect(screen.queryByText(govText2)).toBeNull();
 
-    expect(await screen.findByText(/total staked/i)).toBeInTheDocument();
-    expect(await screen.findByText(/halo price/i)).toBeInTheDocument();
+    //page loaded
+    expect(await screen.findByText(govText1)).toBeInTheDocument();
+    expect(await screen.findByText(govText2)).toBeInTheDocument();
 
     //governance --> leaderboard
     userEvent.click(leaderboardLink);
