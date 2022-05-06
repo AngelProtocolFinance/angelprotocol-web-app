@@ -1,26 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import Loader from "components/Loader/Loader";
 import { useGetter } from "store/accessors";
-import { app, site } from "constants/routes";
 import { Button } from "../common";
-import routes from "../routes";
-import EndowmentCreated from "./EndowmentCreated";
 import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
-import Step from "./Step";
+import Steps from "./Steps";
 import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 
   const state = getRegistrationState(charity);
 
-  const dataSubmitted = charity.Registration.RegistrationStatus !== "Inactive";
+  const isDataSubmitted =
+    charity.Registration.RegistrationStatus !== "Inactive";
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
@@ -30,66 +25,24 @@ export default function Dashboard() {
         Please complete all the following steps to be able to create your
         endowment
       </span>
-      <div className="w-full md:w-2/3 flex flex-col items-center gap-4">
-        <Step
-          title="Step #1: Contact Details"
-          onClick={() =>
-            navigate(`${site.app}/${app.register}/${routes.contactDetails}`)
-          }
-          disabled={dataSubmitted || isSubmitting}
-          completed
+      <Steps
+        disabled={isDataSubmitted || isSubmitting}
+        registrationState={state}
+      />
+      {isDataSubmitted ? (
+        <EndowmentStatus
+          charity={charity}
+          isLoading={isActivateSubmitting}
+          onActivate={() => activate(charity.ContactPerson.PK)}
         />
-        <Step
-          title="Step #2: Wallet Address"
-          onClick={() =>
-            navigate(`${site.app}/${app.register}/${routes.wallet}`)
-          }
-          disabled={dataSubmitted || isSubmitting}
-          completed={state.stepTwo.completed}
-        />
-        <Step
-          title="Step #3: Documentation"
-          onClick={() =>
-            navigate(`${site.app}/${app.register}/${routes.documentation}`)
-          }
-          disabled={dataSubmitted || isSubmitting}
-          completed={state.stepThree.completed}
-          statusComplete={
-            state.stepThree.completed && `Level ${state.stepThree.tier}`
-          }
-        />
-        <Step
-          title="Step #4: Additional Information"
-          onClick={() =>
-            navigate(
-              `${site.app}/${app.register}/${routes.additionalInformation}`
-            )
-          }
-          disabled={dataSubmitted || isSubmitting}
-          completed={state.stepFour.completed}
-        />
-        {!dataSubmitted && (
-          <Button
-            className="w-full h-10 mt-5 bg-yellow-blue"
-            onClick={() => submit(charity)}
-            disabled={!state.getIsReadyForSubmit() || isSubmitting}
-          >
-            Submit for review
-          </Button>
-        )}
-      </div>
-      {charity.Registration.RegistrationStatus !== "Inactive" &&
-        (isActivateSubmitting ? (
-          <Loader bgColorClass="bg-white" widthClass="w-3" gapClass="gap-1" />
-        ) : (
-          <EndowmentStatus
-            registrationStatus={charity.Registration.RegistrationStatus}
-            walletAddress={charity.Metadata.TerraWallet}
-            onActivate={() => activate(charity.ContactPerson.PK)}
-          />
-        ))}
-      {charity.Registration.RegistrationStatus === "Active" && (
-        <EndowmentCreated charityName={charity.Registration.CharityName} />
+      ) : (
+        <Button
+          className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
+          onClick={() => submit(charity)}
+          disabled={!state.getIsReadyForSubmit() || isSubmitting}
+        >
+          Submit for review
+        </Button>
       )}
     </div>
   );
