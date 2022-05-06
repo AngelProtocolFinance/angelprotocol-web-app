@@ -23,7 +23,7 @@ export default function Donations() {
   });
   return (
     <div className="grid content-start padded-container pb-2">
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold uppercase text-white mt-2 mb-4">
           My Donations
         </h1>
