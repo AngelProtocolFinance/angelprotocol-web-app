@@ -4638,6 +4638,7 @@ __metadata:
     process: ^0.11.10
     react: ^17.0.2
     react-app-rewired: ^2.2.1
+    react-csv: ^2.2.2
     react-dom: ^17.0.2
     react-dropzone: ^12.0.4
     react-hook-form: ^7.27.1
@@ -12879,6 +12880,13 @@ __metadata:
   bin:
     react-app-rewired: bin/index.js
   checksum: 0b330c2b46413dc5fbb68e68c07704830397b1cfc8335f65d8f856bfbb6c4d8259fad049fc2a117c18794f321e726b844649266f42ff4c3fa044f00be48c1850
+  languageName: node
+  linkType: hard
+
+"react-csv@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "react-csv@npm:2.2.2"
+  checksum: a6ffabd67fc9ba1478b003977923cfa3ccdd9553ac5edcc3824b4a5ea849b87cb2acfcc0781b0cd0a259bf56e6a7dfd35cfc307576aa51819fc5a32b03118fab
   languageName: node
   linkType: hard
 
