@@ -44,12 +44,13 @@ export default function useSwapEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid || !isDirty) return;
-        dispatch(setFormError(null));
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
+
+        if (!isValid || !isDirty) return;
+        dispatch(setFormError(null));
 
         if (!debounced_amount) {
           dispatch(setFee({ fee: 0 }));
