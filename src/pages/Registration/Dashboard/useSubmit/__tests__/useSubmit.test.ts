@@ -7,7 +7,6 @@ import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import useSubmit from "../useSubmit";
-import useTransactionResultHandler from "../useTransactionResultHandler";
 
 const mockShowModal = jest.fn();
 
@@ -51,11 +50,13 @@ jest.mock("../createEndowmentCreationMsg", () => ({
   default: (..._: any[]) => mockCreateEndowmentCreationMsg(),
 }));
 
-jest.mock("../useTransactionResultHandler");
+jest.mock("../useTransactionResultHandler", () => ({
+  __esModule: true,
+  default: () => jest.fn(),
+}));
 
 describe("useSubmit tests", () => {
   beforeAll(() => {
-    (useTransactionResultHandler as jest.Mock).mockImplementation(() => {});
     mockCreateEndowmentCreationMsg.mockClear();
   });
 
