@@ -25,7 +25,11 @@ export default function Transactions(props: { endowmentAddress: string }) {
         <h3 className="text-lg font-bold uppercase flex items-center justify-start text-white mb-2">
           Transaction History
         </h3>
-        <CsvExporter headers={headers} data={data} filename="donations.csv" />
+        <CsvExporter
+          headers={headers}
+          data={data}
+          filename="transactions.csv"
+        />
       </div>
       <TransactionsTable
         transactions={data}
