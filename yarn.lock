@@ -3754,6 +3754,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-csv@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "@types/react-csv@npm:1.1.2"
+  dependencies:
+    "@types/react": "*"
+  checksum: 0c69c969544cfbbf9b921e3bc8933d83a976af6edd1e126098467d47bb1e3f5c49b1aa6ecd3d5ec0b713c08ec5371ded4db121a91929ace893ef06d200557f49
+  languageName: node
+  linkType: hard
+
 "@types/react-dom@npm:*, @types/react-dom@npm:^17.0.11":
   version: 17.0.14
   resolution: "@types/react-dom@npm:17.0.14"
@@ -4618,6 +4627,7 @@ __metadata:
     "@types/jsonwebtoken": ^8.5.5
     "@types/node": ^17.0.19
     "@types/react": ^17.0.39
+    "@types/react-csv": ^1.1.2
     "@types/react-dom": ^17.0.11
     "@types/react-router-dom": ^5.1.8
     "@types/react-select-country-list": ^2.2.0
