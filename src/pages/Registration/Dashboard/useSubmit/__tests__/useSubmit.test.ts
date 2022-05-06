@@ -7,6 +7,7 @@ import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import useSubmit from "../useSubmit";
+import useTransactionResultHandler from "../useTransactionResultHandler";
 
 const mockShowModal = jest.fn();
 
@@ -54,6 +55,7 @@ jest.mock("../useTransactionResultHandler");
 
 describe("useSubmit tests", () => {
   beforeAll(() => {
+    (useTransactionResultHandler as jest.Mock).mockImplementation(() => {});
     mockCreateEndowmentCreationMsg.mockClear();
   });
 
