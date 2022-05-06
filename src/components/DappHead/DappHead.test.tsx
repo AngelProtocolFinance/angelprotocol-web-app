@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "App/App";
 import { Route, Routes } from "react-router-dom";
@@ -8,7 +8,6 @@ import { app, site } from "constants/routes";
 /**
  * @jest-environment jsdom
  */
-
 // define initial routes
 const routes = [
   `${site.app}`,
@@ -41,10 +40,8 @@ describe("DappHead test", () => {
     userEvent.click(govLink);
     //page is lazy loaded, test details in `pages/Governance.test.tsx
 
-    await waitFor(() => {
-      expect(screen.getByText(/total staked/i)).toBeInTheDocument();
-      expect(screen.getByText(/halo price/i)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(/total staked/i)).toBeInTheDocument();
+    expect(await screen.findByText(/halo price/i)).toBeInTheDocument();
 
     //governance --> leaderboard
     userEvent.click(leaderboardLink);
