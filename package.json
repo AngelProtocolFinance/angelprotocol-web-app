@@ -40,7 +40,8 @@
   "jest": {
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.ts"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   },
   "eslintConfig": {
     "extends": [
