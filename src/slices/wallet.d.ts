@@ -22,6 +22,4 @@ declare module "@types-slice/wallet" {
     supported_denoms: Denoms[];
     id: TerraWalletIDs | undefined;
   };
-
-  type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
 }
