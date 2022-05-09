@@ -57,7 +57,7 @@ export default function HaloBoard() {
 
   return (
     <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-3 h-fit">
-      <div className="h-96 w-full">
+      <div className="h-fit w-full">
         <div className="flex flex-row items-center justify-between px-5 w-full h-16 border border-white/10 shadow-xl rounded-md mb-3">
           <h1 className="text-xl font-bold uppercase text-white-grey/80">
             Halo Price:{" "}
@@ -66,7 +66,7 @@ export default function HaloBoard() {
             {price.toFixed(3)} UST
           </h1>
         </div>
-        <div className="h-52 md:h-72 w-full border border-white/10 shadow-xl pb-5 pt-10 pl-0 pr-5">
+        <div className="h-[315px] w-full border border-white/10 shadow-xl pb-5 pt-10 pl-0 pr-5">
           <ResponsiveContainer height="100%" width="100%">
             {HaloPriceData ? (
               <LineChart data={HaloPriceData}>

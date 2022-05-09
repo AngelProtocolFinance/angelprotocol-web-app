@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
-      <nav className="flex flex-row gap-10">
+      <nav className="flex flex-row gap-10 mb-5">
         <DashLink
           setLink={() => setActive(ActiveLink.HALO)}
           active={active === ActiveLink.HALO}
