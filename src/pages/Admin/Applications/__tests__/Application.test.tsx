@@ -1,5 +1,15 @@
 /* eslint-disable testing-library/no-debugging-utils */
+import { CreateTxOptions } from "@terra-money/terra.js";
+import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
+import { WalletProxy } from "providers/WalletProvider";
+import { chainOptions, testnet } from "providers/WalletProvider/chainOptions";
+import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
+import ModalContext from "components/ModalContext/ModalContext";
+import { store } from "store/store";
 import Applications from "../Applications";
 import { CharityApplication } from "../types";
 
@@ -7,6 +17,28 @@ const mockUseGetCharityApplicationsQuery = jest.fn();
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
   useGetCharityApplicationsQuery: () => mockUseGetCharityApplicationsQuery(),
+}));
+
+const TestApp = (props: { routes?: string[]; initialRouteIndex?: number }) => (
+  <MemoryRouter
+    initialEntries={props.routes}
+    initialIndex={props.initialRouteIndex}
+  >
+    <Provider store={store}>
+      <StaticWalletProvider defaultNetwork={testnet}>
+        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+          <Applications />
+        </ModalContext>
+      </StaticWalletProvider>
+    </Provider>
+  </MemoryRouter>
+);
+
+const mockUseWalletContext = jest.fn();
+
+jest.mock("hooks/useWalletContext", () => ({
+  __esModule: true,
+  default: () => mockUseWalletContext(),
 }));
 
 describe("Charity applications review", () => {
@@ -54,6 +86,48 @@ describe("Charity applications review", () => {
     // assert table has only 3 rows (heading + 2 charity applications)
     const rows = screen.getAllByRole("row");
     expect(rows.length).toBe(3);
+    // screen.debug();
+  });
+
+  test("Application preview Modal renders 1st application", async () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+    render(<TestApp />);
+
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("heading", { name: /Charity applications/i })
+    ).toBeInTheDocument();
+
+    const reviewButton = screen.getAllByRole("button", { name: /review/i })[0];
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    userEvent.click(reviewButton);
+
+    expect(
+      screen.getByRole("heading", { name: /review application/i })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
+    // screen.debug();
+  });
+
+  test("Application preview modal renders 2nd application", async () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+    render(<TestApp />);
+
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("heading", { name: /Charity applications/i })
+    ).toBeInTheDocument();
+
+    const reviewButton = screen.getAllByRole("button", { name: /review/i })[1];
+    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
+    userEvent.click(reviewButton);
+
+    expect(
+      screen.getByRole("heading", { name: /review application/i })
+    ).toBeInTheDocument();
+
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
   });
 });
 
@@ -112,4 +186,21 @@ const loadedState = {
   data: mockReviewsData,
   isLoading: false,
   isError: false,
+};
+
+const WALLET: WalletProxy = {
+  connection: TORUS_CONNECTION,
+  address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
+  network: chainOptions.walletConnectChainIds[0], // testnet
+  post: async (_: CreateTxOptions) => ({
+    result: {
+      height: 1,
+      raw_log: "",
+      txhash: "",
+    },
+    success: true,
+    msgs: [],
+  }),
+  connect: async (..._: any[]) => {},
+  disconnect: async () => {},
 };
