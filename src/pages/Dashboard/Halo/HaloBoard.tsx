@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { useGetFlipsideQuery } from "services/flipside/overview";
 import CircStakeData from "./CircStakeData";
+import MCData from "./MCData";
 import PriceData from "./PriceData";
 import PriceFigure from "./PriceFigure";
 
@@ -23,6 +24,7 @@ export default function HaloBoard() {
   const { data: HaloPriceData } = useGetFlipsideQuery("halo_price");
   const { data: StakedInfo } = useGetFlipsideQuery("halo_stake");
 
+  const [marketCap, setMarketCap] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [circ, setCirc] = useState<number>(0);
   const [staked, setStaked] = useState<number>(0);
@@ -33,6 +35,7 @@ export default function HaloBoard() {
 
     const latestHaloData = HaloPriceData[HaloPriceData.length - 1];
 
+    setMarketCap(latestHaloData.market_cap);
     setPrice(latestHaloData.price_usd);
     setCirc(latestHaloData.circulating_supply);
   }, [HaloPriceData]);
@@ -56,7 +59,7 @@ export default function HaloBoard() {
 
   return (
     <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-5 h-fit">
-      <div>Hello</div>
+      <MCData mc={marketCap} HaloPriceData={HaloPriceData} />
       <PriceData price={price} HaloPriceData={HaloPriceData} />
       <CircStakeData circ={circ} staked={staked} stakedChart={stakedChart} />
     </div>
