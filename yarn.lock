@@ -4625,6 +4625,7 @@ __metadata:
     bip39: ^3.0.4
     buffer: ^6.0.3
     compress.js: ^1.2.2
+    cropperjs: ^1.5.12
     crypto-browserify: ^3.12.0
     draft-js: ^0.11.7
     eslint: ^8.14.0
@@ -6251,6 +6252,13 @@ __metadata:
   version: 1.1.1
   resolution: "create-require@npm:1.1.1"
   checksum: a9a1503d4390d8b59ad86f4607de7870b39cad43d929813599a23714831e81c520bddf61bcdd1f8e30f05fd3a2b71ae8538e946eb2786dc65c2bbc520f692eff
+  languageName: node
+  linkType: hard
+
+"cropperjs@npm:^1.5.12":
+  version: 1.5.12
+  resolution: "cropperjs@npm:1.5.12"
+  checksum: 8dcbceb3659ad72d421038abf7f9d08ca13a061dc6c643497efc043033e22b17411b5558db29a841cb4f0a3b7943a20e6a3d9fecf3901185b7cd027f8097442b
   languageName: node
   linkType: hard
 
