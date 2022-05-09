@@ -8,11 +8,11 @@ import {
   Tooltip,
   Line,
 } from "recharts";
-import { useGetFlipsideQueryQuery } from "services/flipside/overview";
+import { useGetFlipsideQuery } from "services/flipside/overview";
 import EndowmentStats from "./EndowmentStats";
 
 export default function EndowmentBoard() {
-  const { data: USTDetailData } = useGetFlipsideQueryQuery("ust_details");
+  const { data: USTDetailData } = useGetFlipsideQuery("ust_details");
 
   const [latestTVL, setLatestTVL] = useState<number>(0);
   const [totalUSTDonated, setTotalUSTDonated] = useState<number>(0);

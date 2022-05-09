@@ -10,7 +10,7 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { useGetFlipsideQueryQuery } from "services/flipside/overview";
+import { useGetFlipsideQuery } from "services/flipside/overview";
 import PriceFigure from "./PriceFigure";
 
 interface CircStake {
@@ -21,8 +21,8 @@ interface CircStake {
 }
 
 export default function HaloBoard() {
-  const { data: HaloPriceData } = useGetFlipsideQueryQuery("halo_price");
-  const { data: StakedInfo } = useGetFlipsideQueryQuery("halo_stake");
+  const { data: HaloPriceData } = useGetFlipsideQuery("halo_price");
+  const { data: StakedInfo } = useGetFlipsideQuery("halo_stake");
 
   const [price, setPrice] = useState<number>(0);
   const [circ, setCirc] = useState<number>(0);
@@ -56,7 +56,7 @@ export default function HaloBoard() {
   }, [StakedInfo]);
 
   return (
-    <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-3 h-fit">
+    <div className="flex flex-wrap lg:grid lg:grid-cols-2 xl:grid-cols-2 gap-5 h-fit">
       <div className="h-fit w-full">
         <div className="flex flex-row items-center justify-between px-5 w-full h-16 border border-white/10 shadow-xl rounded-md mb-3">
           <h1 className="text-xl font-bold uppercase text-white-grey/80">

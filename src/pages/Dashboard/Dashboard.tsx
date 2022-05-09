@@ -10,6 +10,7 @@ enum ActiveLink {
 
 const HaloBoard = lazy(() => import("./Halo/HaloBoard"));
 const EndowmentBoard = lazy(() => import("./Endowment/EndowmentBoard"));
+const ValidatorBoard = lazy(() => import("./Validator/ValidatorBoard"));
 
 export default function Dashboard() {
   const [active, setActive] = useState<Partial<ActiveLink>>(ActiveLink.HALO);
@@ -40,6 +41,7 @@ export default function Dashboard() {
       </nav>
       {active === ActiveLink.HALO && <HaloBoard />}
       {active === ActiveLink.ENDOW && <EndowmentBoard />}
+      {active === ActiveLink.VALID && <ValidatorBoard />}
     </div>
   );
 }
