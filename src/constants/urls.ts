@@ -96,3 +96,5 @@ export const SOCIAL_MEDIA_LINKS = [
     title: "Discord",
   },
 ];
+
+export const COUNTRIES_REST_ENDPOINT = "https://restcountries.com/v3.1";

@@ -39,8 +39,10 @@ export default function useEditProfile() {
     initialProfile,
     ...data
   }: UpdateProfileValues) => {
-    //transform country to string
-
+    //extract [code]
+    if (data.country_of_origin) {
+      data.country_of_origin = data.country_of_origin.split(" ")[0];
+    }
     const diff = getPayloadDiff(initialProfile, data);
     if ("overview" in diff) {
       //remove desc diff on tx preview
