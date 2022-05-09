@@ -1,4 +1,3 @@
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 import { ReceiptPayload } from "./types";
@@ -7,7 +6,7 @@ const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({
     requestReceipt: builder.mutation<any, ReceiptPayload>({
       query: (receiptPayload) => {
-        const generatedToken = createAuthToken(UserTypes.WEB_APP);
+        const generatedToken = createAuthToken("angelprotocol-web-app");
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
           url: `donation`,

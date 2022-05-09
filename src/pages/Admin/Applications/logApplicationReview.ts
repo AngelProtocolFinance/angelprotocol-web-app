@@ -1,11 +1,10 @@
 import { UpdateApplication } from "services/aws/types";
-import { UserTypes } from "services/user/types";
 import createAuthToken from "helpers/createAuthToken";
 import { chainIDs } from "constants/chainIDs";
 import { aws_endpoint } from "constants/urls";
 
 const logApplicationReview: ReviewLogger = async (payload) => {
-  const generatedToken = createAuthToken(UserTypes.CHARITY_OWNER);
+  const generatedToken = createAuthToken("charity-owner");
   const is_test = payload.chain_id === chainIDs.testnet;
   const chain_id = is_test ? "testnet" : "mainnet";
   const response = await fetch(

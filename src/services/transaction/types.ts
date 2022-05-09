@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { tags as awsTags } from "services/aws/tags";
 import { tags as terraTags } from "services/terra/tags";
 import { WalletProxy } from "providers/WalletProvider/types";
@@ -34,6 +34,7 @@ export type InitialStage = {
   step: Step.form;
   message?: never;
   txHash?: never;
+  txInfo?: never;
   chainId?: never;
   details?: never;
 };
@@ -42,6 +43,7 @@ export type SubmitStage = {
   step: Step.submit;
   message: string;
   txHash?: never;
+  txInfo?: never;
   chainId?: never;
   details?: never;
 };
@@ -50,6 +52,7 @@ export type BroadcastStage = {
   step: Step.broadcast;
   message: string;
   txHash: string;
+  txInfo?: never;
   chainId: chainIDs;
   details?: never;
 };
@@ -59,6 +62,7 @@ export type SuccessStage = {
   step: Step.success;
   message: string;
   txHash: string; //leave "" to not render tx link
+  txInfo?: TxInfo;
   chainId: chainIDs; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
@@ -69,6 +73,7 @@ export type ReceiptStage = {
   step: Step.receipt;
   message?: never;
   txHash: string;
+  txInfo?: never;
   chainId: chainIDs;
 };
 
@@ -76,6 +81,7 @@ export type ErrorStage = {
   step: Step.error;
   message: string;
   txHash?: string;
+  txInfo?: never;
   chainId?: chainIDs;
   details?: never;
 };

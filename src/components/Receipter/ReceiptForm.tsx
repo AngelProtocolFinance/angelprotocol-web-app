@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import countryList from "react-select-country-list";
 import useReceiptForm from "components/Receipter/useReceiptForm";
-import { Selector } from "components/Selector";
+import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
 import { Values } from "./types";
@@ -64,7 +64,6 @@ export default function ReceiptForm() {
               label: item.label,
             }))}
             control={control}
-            register={register}
             menuPlacement="top"
           />
           <ErrorMessage

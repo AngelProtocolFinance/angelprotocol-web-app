@@ -112,10 +112,17 @@ module.exports = {
         a1: "auto 1fr",
         a1a: "auto 1fr auto",
         aa1: "auto auto 1fr",
+        32: "3fr 2fr",
+        "21a": "2fr 1fr auto",
       },
       inset: {
         12: "12px",
         69: "69px",
+      },
+      spacing: {
+        20: "20%",
+        23: "23px",
+        15: "15px",
       },
       maxWidth: {
         "4/5": "80%",

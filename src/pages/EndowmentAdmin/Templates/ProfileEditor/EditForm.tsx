@@ -5,8 +5,8 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import CountrySelector from "../../../../components/CountrySelector/CountrySelector";
-import ImageEditor from "./ImageEditor/ImageEditor";
+import CountrySelector from "components/CountrySelector/CountrySelector";
+import ImgEditor from "./ImgEditor/ImgEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
 import { UpdateProfileValues as UV } from "./profileEditSchema";
@@ -24,7 +24,7 @@ export default function EditForm() {
         required
       />
       <Label className="text-angel-grey -mb-2">Banner</Label>
-      <ImageEditor />
+      <ImgEditor />
       <Label className="text-angel-grey -mb-2">SDG#</Label>
       <SDGSelector />
       <TextInput<UV>
