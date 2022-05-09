@@ -1,130 +1,115 @@
 /* eslint-disable testing-library/no-debugging-utils */
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { StaticWalletProvider } from "@terra-money/wallet-provider";
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved,
-} from "@testing-library/react";
-import App from "App/App";
-import { PropsWithChildren } from "react";
-import { Provider } from "react-redux";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import icon from "assets/icons/wallets/unknown.svg";
-import Admin from "pages/Admin/Admin";
-import Market from "pages/Market/Market";
-import { State } from "services/wallet/types";
-import { WalletProxy } from "providers/WalletProvider";
-import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
-import { store } from "store/store";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
-import { admin, app, site } from "constants/routes";
-import { terra_lcds } from "constants/urls";
+import { render, screen } from "@testing-library/react";
 import Applications from "../Applications";
+import { CharityApplication } from "../types";
 
-const testnet = {
-  name: "bombay",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
-};
-
-function AppWrapper(
-  props: PropsWithChildren<{ routes: string[]; startingRouteIndex: number }>
-) {
-  return (
-    <MemoryRouter initialEntries={props.routes} initialIndex={0}>
-      <Provider store={store}>
-        <StaticWalletProvider defaultNetwork={testnet}>
-          {props.children}
-        </StaticWalletProvider>
-      </Provider>
-    </MemoryRouter>
-  );
-}
-
-const routes = [
-  `${site.app}`,
-  `${site.app}`,
-  `${site.app}/${app.admin}`,
-  `${site.app}/${app.admin}/${admin.charity_applications}`,
-];
-
-const TestAdminApp = () => (
-  <AppWrapper routes={routes} startingRouteIndex={3}>
-    <Routes>
-      <Route path={routes[1]} element={<App />}>
-        <Route path={`${routes[1]}${app.marketplace}`} element={<Market />} />
-        <Route path={`${routes[1]}${app.admin}`} element={<Admin />}>
-          <Route
-            path={`${routes[1]}/${app.admin}/${admin.charity_applications}`}
-            element={<Applications />}
-          />
-        </Route>
-      </Route>
-    </Routes>
-  </AppWrapper>
-);
-
-const mockUseWalletContext = jest.fn();
-jest.mock("hooks/useWalletContext", () => ({
+const mockUseGetCharityApplicationsQuery = jest.fn();
+jest.mock("services/aws/registration", () => ({
   __esModule: true,
-  default: () => mockUseWalletContext(),
+  useGetCharityApplicationsQuery: () => mockUseGetCharityApplicationsQuery(),
 }));
 
-const mockUseSetter = jest.fn();
-const mockUseGetter = jest.fn();
-jest.mock("store/accessors", () => ({
-  useSetter: () => mockUseSetter,
-  useGetter: () => mockUseGetter(),
-}));
-
-describe("Test Charity applications review", () => {
-  beforeAll(() => {
-    window.scrollTo = jest.fn();
-    (window.scrollTo as jest.Mock).mockImplementation(
-      (options: ScrollToOptions) => {}
-    );
+describe("Charity applications review", () => {
+  afterAll(() => {
+    jest.unmock("services/aws/registration");
   });
 
-  test("Charity application review renders correctly", async () => {
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
-    mockUseGetter.mockReturnValue({ cwContracts: "apTeam", ...walletState });
+  test("Renders Initial state", async () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
+    render(<Applications />);
 
-    render(<TestAdminApp />);
-    // await waitForElementToBeRemoved(() => screen.queryByTestId("loader"));
-    screen.debug();
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(/No applications found/i)).toBeInTheDocument();
+  });
+
+  test("Renders loading state", async () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadingState);
+    render(<Applications />);
+
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(/Loading Applications/i)).toBeInTheDocument();
+  });
+
+  test("Application reviews rendered", async () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+    render(<Applications />);
+
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("heading", { name: /Charity applications/i })
+    ).toBeInTheDocument();
+
+    // assert that both application names are rendered in table cells
+    expect(
+      screen.getByRole("cell", {
+        name: /123_company_chinadev20@outlook\.com/i,
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("cell", {
+        name: /all4good_ms@mail\.com/i,
+      })
+    ).toBeInTheDocument();
+
+    // assert table has only 3 rows (heading + 2 charity applications)
+    const rows = screen.getAllByRole("row");
+    expect(rows.length).toBe(3);
   });
 });
 
-const WALLET: WalletProxy = {
-  connection: TORUS_CONNECTION,
-  address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
-  network: chainOptions.walletConnectChainIds[0], // testnet
-  post: async (_: CreateTxOptions) => ({
-    result: {
-      height: 1,
-      raw_log: "",
-      txhash: "",
-    },
-    success: true,
-    msgs: [],
-  }),
-  connect: async (..._: any[]) => {},
-  disconnect: async () => {},
+const initialState = {
+  data: [],
+  isLoading: false,
+  isError: true,
 };
 
-const walletState: State = {
-  isUpdating: false,
-  displayCoin: {
-    amount: 0,
-    denom: denoms.uusd,
+const loadingState = {
+  data: [],
+  isLoading: true,
+  isError: false,
+};
+
+const mockReviewsData: CharityApplication[] = [
+  {
+    ProofOfEmploymentVerified: false,
+    ProofOfIdentityVerified: false,
+    RegistrationDate: "2021-10-19T06:45:46.313Z",
+    CharityName: "123_Company",
+    EndowmentAgreementVerified: false,
+    ProofOfEmployment:
+      "https://charity-registration-documents.s3.amazonaws.com/proof-of-employment/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png",
+    CharityName_ContactEmail: "123_COMPANY_chinadev20@outlook.com",
+    ProofOfIdentity:
+      "https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png",
+    TerraWallet: "terra11",
+    SK: "Registration",
+    RegistrationStatus: "Under Review",
+    PK: "eafe2aa3-6882-49f9-8f32-bc7f721fb3ab",
+    EndowmentAgreement:
+      "https://charity-registration-documents.s3.amazonaws.com/endowment-agreement/eafe2aa3-6882-49f9-8f32-bc7f721fb3ab.png",
   },
-  coins: [],
-  icon: icon,
-  address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
-  supported_denoms: [],
-  id: undefined,
-  chainId: chainIDs.mainnet,
+  {
+    ProofOfEmploymentVerified: false,
+    ProofOfIdentityVerified: false,
+    RegistrationDate: "2021-10-19T06:49:46.313Z",
+    CharityName: "All4Good",
+    EndowmentAgreementVerified: false,
+    ProofOfEmployment:
+      "https://charity-registration-documents.s3.amazonaws.com/proof-of-employment/06c08277-bc60-4df8-b0a3-3d00e7e2f1be.png",
+    CharityName_ContactEmail: "ALL4GOOD_ms@mail.com",
+    ProofOfIdentity:
+      "https://charity-registration-documents.s3.amazonaws.com/proof-of-identity/06c08277-bc60-4df8-b0a3-3d00e7e2f1be.png",
+    TerraWallet: "terra23",
+    SK: "Registration",
+    RegistrationStatus: "Under Review",
+    PK: "06c08277-bc60-4df8-b0a3-3d00e7e2f1be",
+    EndowmentAgreement:
+      "https://charity-registration-documents.s3.amazonaws.com/endowment-agreement/06c08277-bc60-4df8-b0a3-3d00e7e2f1be.png",
+  },
+];
+
+const loadedState = {
+  data: mockReviewsData,
+  isLoading: false,
+  isError: false,
 };
