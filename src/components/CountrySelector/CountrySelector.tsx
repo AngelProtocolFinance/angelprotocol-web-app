@@ -14,7 +14,6 @@ export type CountryOption = {
   };
 };
 
-const COUNTRIES_ENDPOINT = "https://restcountries.com/v3.1/name";
 export default function CountrySelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
@@ -50,11 +49,9 @@ export default function CountrySelector<T extends FieldValues>(props: {
     />
   );
 }
-
 async function loadOptions(inputValue: string) {
   const countriesRes = await fetch(`
-  ${COUNTRIES_ENDPOINT}/${inputValue}?fields=name,flags`);
-
+  https://restcountries.com/v3.1/name/${inputValue}?fields=name,flags`);
   if (countriesRes.status !== 200) {
     return [];
   }
