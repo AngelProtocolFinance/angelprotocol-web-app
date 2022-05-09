@@ -55,12 +55,9 @@ const data = [
 ];
 
 export default function Dashboard() {
-  const { data: TVLData } = useGetFlipsideQueryQuery("tvl?type=Total");
-  const { data: USTDonatedData } = useGetFlipsideQueryQuery("ust_donated");
-  const { data: USTWithdrawnData } = useGetFlipsideQueryQuery("ust_withdrawn");
+  const { data: USTDetailData } = useGetFlipsideQueryQuery("ust_details");
   const { data: HaloPriceData } = useGetFlipsideQueryQuery("halo_price");
 
-  const [chart, setChart] = useState<any>([]);
   const [latestTVL, setLatestTVL] = useState<number>(0);
   const [totalUSTDonated, setTotalUSTDonated] = useState<number>(0);
   const [totalUSTWithdrawn, setTotalUSTWithdrawn] = useState<number>(0);
@@ -72,28 +69,14 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    if (!TVLData || !USTDonatedData) return;
-    const chart = TVLData.map((t: any) => ({
-      ...t,
-      ...USTDonatedData.find((ust: any) => ust.date === t.date),
-    }));
+    if (!USTDetailData) return;
 
-    setLatestTVL(TVLData[TVLData.length - 1].value);
-    setTotalNumDonations(
-      USTDonatedData[USTDonatedData.length - 1].total_number_of_donations
-    );
-    setTotalUSTDonated(
-      USTDonatedData[USTDonatedData.length - 1].total_ust_donated
-    );
-    setChart(chart);
-  }, [TVLData, USTDonatedData]);
-
-  useEffect(() => {
-    if (!USTWithdrawnData) return;
-    setTotalUSTWithdrawn(
-      USTWithdrawnData[USTWithdrawnData.length - 1].total_ust_withdrawn
-    );
-  }, [USTWithdrawnData]);
+    const latestData = USTDetailData[USTDetailData.length - 1];
+    setLatestTVL(latestData.tvl);
+    setTotalNumDonations(latestData.total_number_of_donations);
+    setTotalUSTDonated(latestData.total_ust_donated);
+    setTotalUSTWithdrawn(latestData.total_ust_withdrawn);
+  }, [USTDetailData]);
 
   useEffect(() => {
     if (!HaloPriceData) return;
@@ -108,16 +91,39 @@ export default function Dashboard() {
 
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
-      <EndowmentStats latestTVL={latestTVL} totalNumDonations={totalNumDonations} totalUSTDonated={totalUSTDonated} totalUSTWithdrawn={totalUSTWithdrawn}/>
+      <nav className="flex flex-row gap-10">
+        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
+          Halo
+        </h2>
+        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
+          Endowments
+        </h2>
+        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
+          Liquidity
+        </h2>
+        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
+          Validator
+        </h2>
+      </nav>
+      <EndowmentStats
+        latestTVL={latestTVL}
+        totalNumDonations={totalNumDonations}
+        totalUSTDonated={totalUSTDonated}
+        totalUSTWithdrawn={totalUSTWithdrawn}
+      />
       <div className="shadow-none md:shadow-xl border-0 md:border-4 md:border-white/10 w-full rounded-md p-0 md:pt-10 md:pb-5 md:px-10 max-h-[550px]">
         <div className="max-w-fit bg-white/10 shadow-xl mb-5 px-5 py-2 flex flex-col md:flex-row gap-2 md:gap-5 rounded-md">
           <div className="flex gap-2 items-center">
-            <div className="w-5 h-5 rounded-full bg-blue-500"/>
-            <h1 className="text-l font-bold text-white-grey/80">Total Value Locked</h1>
+            <div className="w-5 h-5 rounded-full bg-blue-500" />
+            <h1 className="text-l font-bold text-white-grey/80">
+              Total Value Locked
+            </h1>
           </div>
           <div className="flex gap-2 items-center">
-            <div className="w-5 h-5 rounded-full bg-green-400"/>
-            <h1 className="text-l font-bold text-white-grey/80">Total UST Donated</h1>
+            <div className="w-5 h-5 rounded-full bg-green-400" />
+            <h1 className="text-l font-bold text-white-grey/80">
+              Total UST Donated
+            </h1>
           </div>
         </div>
         <ResponsiveContainer
@@ -126,12 +132,12 @@ export default function Dashboard() {
           width="99%"
           aspect={3}
         >
-          {chart.length === 0 ? (
+          {!USTDetailData ? (
             <></>
           ) : (
-            <LineChart data={chart}>
+            <LineChart data={USTDetailData}>
               <XAxis
-                interval={Math.floor(chart.length / 10)}
+                interval={Math.floor(USTDetailData.length / 10)}
                 dataKey="date"
                 stroke="#d7e0e8"
                 opacity={0.7}
@@ -140,18 +146,21 @@ export default function Dashboard() {
                 }
               />
               <YAxis
-                dataKey="value"
+                dataKey="tvl"
                 stroke="#d7e0e8"
                 opacity={0.7}
                 tickFormatter={(value) => toCurrency(value, 0, true)}
               />
-              <Tooltip cursor={false} labelFormatter={(value) =>
+              <Tooltip
+                cursor={false}
+                labelFormatter={(value) =>
                   new Date(value).toISOString().split("T")[0]
-                  }/>
+                }
+              />
               <Line
                 dot={false}
                 type="monotone"
-                dataKey="value"
+                dataKey="tvl"
                 name="TVL"
                 stroke="#54A3D9"
                 strokeWidth={4}
@@ -186,13 +195,21 @@ export default function Dashboard() {
             <ResponsiveContainer height="100%" width="100%">
               {HaloPriceData ? (
                 <LineChart data={HaloPriceData}>
-                  <XAxis dataKey="date" stroke="#d7e0e8" opacity={0.7} tickFormatter={(value) =>
-                  new Date(value).toISOString().split("T")[0]
-                  }/>
+                  <XAxis
+                    dataKey="date"
+                    stroke="#d7e0e8"
+                    opacity={0.7}
+                    tickFormatter={(value) =>
+                      new Date(value).toISOString().split("T")[0]
+                    }
+                  />
                   <YAxis dataKey="price_usd" stroke="#d7e0e8" opacity={0.7} />
-                  <Tooltip cursor={false} labelFormatter={(value) =>
-                  new Date(value).toISOString().split("T")[0]
-                  }/>
+                  <Tooltip
+                    cursor={false}
+                    labelFormatter={(value) =>
+                      new Date(value).toISOString().split("T")[0]
+                    }
+                  />
                   <Line
                     dot={false}
                     type="monotone"
