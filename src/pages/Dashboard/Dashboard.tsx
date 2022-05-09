@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { useGetFlipsideQueryQuery } from "services/flipside/overview";
 import Figure from "../Governance/Figure";
+import DashLink from "./DashLink";
 import EndowmentStats from "./EndowmentStats";
 import PriceFigure from "./PriceFigure";
 
@@ -54,10 +55,18 @@ const data = [
   },
 ];
 
+enum ActiveLink {
+  HALO = 0,
+  ENDOW = 1,
+  LIQUID = 2,
+  VALID = 3,
+}
+
 export default function Dashboard() {
   const { data: USTDetailData } = useGetFlipsideQueryQuery("ust_details");
   const { data: HaloPriceData } = useGetFlipsideQueryQuery("halo_price");
 
+  const [active, setActive] = useState<Partial<ActiveLink>>(ActiveLink.HALO);
   const [latestTVL, setLatestTVL] = useState<number>(0);
   const [totalUSTDonated, setTotalUSTDonated] = useState<number>(0);
   const [totalUSTWithdrawn, setTotalUSTWithdrawn] = useState<number>(0);
@@ -92,18 +101,26 @@ export default function Dashboard() {
   return (
     <div className="padded-container grid grid-rows-aa1 gap-4 pb-4 min-h-screen">
       <nav className="flex flex-row gap-10">
-        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-          Halo
-        </h2>
-        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-          Endowments
-        </h2>
-        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-          Liquidity
-        </h2>
-        <h2 className="cursor-pointer font-heading uppercase font-bold text-4xl mt-4 text-white-grey">
-          Validator
-        </h2>
+        <DashLink
+          setLink={() => setActive(ActiveLink.HALO)}
+          active={active === ActiveLink.HALO}
+          text="Halo"
+        />
+        <DashLink
+          setLink={() => setActive(ActiveLink.ENDOW)}
+          active={active === ActiveLink.ENDOW}
+          text="Endowments"
+        />
+        <DashLink
+          setLink={() => setActive(ActiveLink.LIQUID)}
+          active={active === ActiveLink.LIQUID}
+          text="Liquidity"
+        />
+        <DashLink
+          setLink={() => setActive(ActiveLink.VALID)}
+          active={active === ActiveLink.VALID}
+          text="Validator"
+        />
       </nav>
       <EndowmentStats
         latestTVL={latestTVL}
