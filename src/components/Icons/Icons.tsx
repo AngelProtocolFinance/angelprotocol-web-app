@@ -52,6 +52,7 @@ import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
+  MdOutlineFileDownload,
 } from "react-icons/md";
 import { RiDiscordLine } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -59,6 +60,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"
+  | "FileDownload"
   | "Telegram"
   | "Twitter"
   | "Youtube"
@@ -115,6 +117,7 @@ export type IconTypes =
   | "PieChart";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  FileDownload: MdOutlineFileDownload,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,
