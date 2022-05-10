@@ -6,8 +6,7 @@ export const aws_endpoint =
 export const apes_endpoint =
   "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com";
 
-export const flipside_endpoint =
-  "https://flipside.leslug.com/angel/endowment_donation_transactions/";
+export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
