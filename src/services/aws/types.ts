@@ -40,7 +40,7 @@ export type ContactPerson = {
   PhoneNumber: string;
   PK?: string;
   Role: ContactRoles;
-  SK?: "ContactPerson";
+  SK: "ContactPerson";
 };
 
 export type EndowmentTier = 1 | 2 | 3;
@@ -51,12 +51,12 @@ export type FileObject = {
 };
 
 export type Metadata = {
-  SK?: "Metadata";
   Banner: FileObject;
   CharityLogo: FileObject;
   CharityOverview: string;
-  TerraWallet: string;
   EndowmentContract: string;
+  SK: "Metadata";
+  TerraWallet: string;
 };
 
 export type Registration = {
@@ -72,7 +72,7 @@ export type Registration = {
   ProofOfRegistrationVerified: boolean;
   RegistrationDate: string;
   RegistrationStatus: RegistrationStatus;
-  SK?: "Registration";
+  SK: "Registration";
   Tier?: EndowmentTier;
   UN_SDG: number;
   Website: string;
