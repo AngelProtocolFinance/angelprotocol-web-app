@@ -26,7 +26,7 @@ export type ContactDetailsData = {
 export type ContactDetailsRequest = {
   PK?: string;
   body: {
-    ContactPerson: Omit<ContactPerson, "EmailVerified">;
+    ContactPerson: Omit<ContactPerson, "EmailVerified" | "SK">;
     Registration: Pick<Registration, "CharityName">;
   };
 };
