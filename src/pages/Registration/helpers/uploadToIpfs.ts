@@ -1,9 +1,11 @@
 import fleekStorage from "@fleekhq/fleek-storage-js";
 import { FileObject } from "services/aws/types";
+import { Folders } from "../constants";
 
-async function uploadToIpfs(file: File, folder: string): Promise<FileObject> {
+async function uploadToIpfs(file: File, folder?: Folders): Promise<FileObject> {
   try {
-    const relativePath = [folder, encodeURIComponent(file.name)].join("");
+    const encodedName = encodeURIComponent(file.name);
+    const relativePath = folder ? [folder, encodedName].join("/") : encodedName;
 
     const result = await fleekStorage.upload({
       key: relativePath,
@@ -17,6 +19,7 @@ async function uploadToIpfs(file: File, folder: string): Promise<FileObject> {
       publicUrl: result.publicUrl,
     };
   } catch (e) {
+    console.log(`Error uploading file ${file.name}`, e);
     // console.log("Error uploading file: ", filename);
     // throw new Error("Error uploading file to ipfs");
     return { name: "", publicUrl: "" };
