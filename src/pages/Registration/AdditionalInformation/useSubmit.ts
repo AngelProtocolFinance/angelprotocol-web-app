@@ -6,7 +6,7 @@ import { UpdateCharityMetadataResult } from "services/aws/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { Folders } from "constants/folders";
+import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
 import { FormValues } from "./types";

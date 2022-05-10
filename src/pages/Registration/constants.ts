@@ -27,6 +27,15 @@ export const contactRoleOptions: OptionType[] = [
   { label: "Other", value: "other" },
 ];
 
+export enum Folders {
+  AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",
+  CharityProfileImageLogo = "charity-profile-images/logo",
+  CharityProfileImageBanners = "charity-profile-images/banner",
+  FinancialStatements = "charity-registration-documents/financial-statements",
+  ProofOfIdentity = "charity-registration-documents/proof-of-identity",
+  ProofOfRegistration = "charity-registration-documents/proof-of-registration",
+}
+
 export const RevenueRanges: OptionType[] = [
   { label: "0 - 500k", value: "500" },
   { label: "500k - 1m", value: "1000" },
