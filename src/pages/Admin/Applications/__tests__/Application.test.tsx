@@ -46,7 +46,7 @@ describe("Charity applications review", () => {
     jest.unmock("services/aws/registration");
   });
 
-  test("Renders Initial state", async () => {
+  test("Renders Initial state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
     render(<Applications />);
 
@@ -54,7 +54,7 @@ describe("Charity applications review", () => {
     expect(screen.getByText(/No applications found/i)).toBeInTheDocument();
   });
 
-  test("Renders loading state", async () => {
+  test("Renders loading state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadingState);
     render(<Applications />);
 
@@ -62,7 +62,7 @@ describe("Charity applications review", () => {
     expect(screen.getByText(/Loading Applications/i)).toBeInTheDocument();
   });
 
-  test("Application reviews rendered", async () => {
+  test("Application reviews rendered", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
     render(<Applications />);
 
@@ -86,10 +86,9 @@ describe("Charity applications review", () => {
     // assert table has only 3 rows (heading + 2 charity applications)
     const rows = screen.getAllByRole("row");
     expect(rows.length).toBe(3);
-    // screen.debug();
   });
 
-  test("Application preview Modal renders 1st application", async () => {
+  test("Application preview Modal renders 1st application", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
     render(<TestApp />);
 
@@ -107,10 +106,9 @@ describe("Charity applications review", () => {
     ).toBeInTheDocument();
 
     expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
-    // screen.debug();
   });
 
-  test("Application preview modal renders 2nd application", async () => {
+  test("Application preview modal renders 2nd application", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
     render(<TestApp />);
 
