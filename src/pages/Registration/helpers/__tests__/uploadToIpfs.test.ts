@@ -55,7 +55,7 @@ describe("uploadToIpfs tests", () => {
 
   it("returns empty strings for values when error is thrown", async () => {
     mockFleekUpload.mockImplementation((_: any) => {
-      throw new Error("Error");
+      throw new Error();
     });
 
     const result = await uploadToIpfs(new File([], "test-file.txt"));
