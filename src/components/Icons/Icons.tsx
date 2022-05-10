@@ -19,6 +19,7 @@ import {
   BiBold,
   BiGlobe,
   BiItalic,
+  BiSave,
   BiSearchAlt2,
 } from "react-icons/bi";
 import {
@@ -46,11 +47,12 @@ import { FiMenu } from "react-icons/fi";
 import { GiPieChart, GiTwoCoins } from "react-icons/gi";
 import { GoLinkExternal } from "react-icons/go";
 import { IoMdSettings } from "react-icons/io";
-import { IoClose, IoWalletSharp, IoWarning } from "react-icons/io5";
+import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
 import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
+  MdOutlineFileDownload,
 } from "react-icons/md";
 import { RiDiscordLine } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -58,6 +60,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import { IconTypes } from "@types-component/icons";
 
 export const iconList: { [key in IconTypes]: IconType } = {
+  FileDownload: MdOutlineFileDownload,
   ExchangeAlt: CgArrowsExchangeAltV,
   Undo: CgUndo,
   Loading: VscLoading,
@@ -109,6 +112,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   PieChart: GiPieChart,
   Safe: BsSafeFill,
   Admin: FaUsersCog,
+  Crop: IoCrop,
+  Save: BiSave,
 };
 
 interface IconProps extends IconBaseProps {

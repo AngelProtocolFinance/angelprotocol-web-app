@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 
 export default function AppMenu() {
@@ -29,14 +31,12 @@ export default function AppMenu() {
         </a>
       </li>
       <li>
-        <a
-          rel="noreferrer"
-          target="_blank"
-          href="https://www.angelprotocol.io/contact"
+        <Link
+          to={`${siteRoutes.app}/${appRoutes.register}`}
           className={linkStyles.className}
         >
           REGISTER
-        </a>
+        </Link>
       </li>
       <li>
         <a

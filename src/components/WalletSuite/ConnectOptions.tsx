@@ -1,7 +1,7 @@
+import ModalContext from "contexts/ModalContext/ModalContext";
+import Backdrop from "components/Backdrop/Backdrop";
 import Icon from "components/Icons/Icons";
-import Modal from "components/Modal/Modal";
 import useWalletContext from "hooks/useWalletContext";
-import Backdrop from "./Backdrop";
 import BnbConnector from "./Connectors/BnbConnector";
 import EthConnector from "./Connectors/EthConnector";
 import TerraConnector from "./Connectors/TerraConnector";
@@ -12,6 +12,10 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
 
   return (
     <>
+      <Backdrop
+        customCloseHandler={props.closeHandler}
+        classes="z-10 fixed inset-0"
+      />
       <div className="w-max absolute top-full right-0 flex flex-col gap-3 bg-white p-4 pt-4 mt-2 rounded-md shadow-2xl z-50">
         <p className="uppercase font-heading text-angel-grey font-bold">
           Choose wallet
@@ -19,7 +23,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         <button className="absolute top-2 right-2" onClick={props.closeHandler}>
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
-        <Modal classes="absolute rounded-md right-0 left-0 bottom-0 top-0 z-10 grid place-items-center">
+        <ModalContext backdropClasses="absolute bg-black/50 inset-0 z-10">
           {availableWallets
             .filter((wallet) => wallet.connection.type !== "READONLY")
             .map((availableWallet) => {
@@ -32,7 +36,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
             })}
           <EthConnector />
           <BnbConnector />
-        </Modal>
+        </ModalContext>
         {availableInstallations.length > 0 && (
           <>
             <p className="uppercase font-heading text-angel-grey text-sm">
@@ -50,7 +54,6 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           </>
         )}
       </div>
-      <Backdrop closeHandler={props.closeHandler} />
     </>
   );
 }

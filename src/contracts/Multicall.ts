@@ -23,7 +23,9 @@ export default class Multicall {
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
     this.address =
-      contracts[wallet?.network.chainID as TerraChainIDs][sc.multicall];
+      contracts[(wallet?.network.chainID as TerraChainIDs) || "columbus-5"][
+        sc.multicall
+      ];
     this.registrarContract = new Registrar(wallet);
     this.haloContract = new Halo(wallet);
 

@@ -3,11 +3,11 @@ import { OwnerUpdateMeta } from "@types-page/admin";
 import { IndexFundOwnerValues } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
@@ -20,7 +20,7 @@ export default function useUpdateOwner() {
     formState: { isDirty, isSubmitting },
   } = useFormContext<IndexFundOwnerValues>();
 
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateOwner(data: IndexFundOwnerValues) {

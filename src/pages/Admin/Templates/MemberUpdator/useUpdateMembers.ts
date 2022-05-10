@@ -5,11 +5,11 @@ import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { Member } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
@@ -20,7 +20,7 @@ export default function useUpdateMembers() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateMembers() {

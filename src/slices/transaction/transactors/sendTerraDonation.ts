@@ -73,6 +73,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "success",
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
+            txInfo,
             chainId,
             isReceiptEnabled: typeof receiver !== "undefined",
             //share is enabled for both individual and tca donations

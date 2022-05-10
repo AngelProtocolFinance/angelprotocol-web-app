@@ -1,14 +1,14 @@
 import { govTags, terraTags, userTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useClaimEstimator from "./useClaimEstimator";
 
 export default function useClaimUnstakedHalo() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const { tx, wallet } = useClaimEstimator();
   const dispatch = useSetter();
 

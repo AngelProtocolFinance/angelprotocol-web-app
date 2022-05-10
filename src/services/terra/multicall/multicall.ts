@@ -9,8 +9,8 @@ import {
 } from "@types-server/contracts";
 import { MultiContractQueryArgs } from "@types-services/terra";
 import { VaultField, VaultFieldLimits } from "@types-shared/withdraw";
-import { WalletProxy } from "providers/WalletProvider";
 import { multicallTags, terraTags } from "services/terra/tags";
+import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
 import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";

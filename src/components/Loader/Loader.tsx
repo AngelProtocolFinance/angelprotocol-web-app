@@ -8,6 +8,7 @@ export default function Loader({ bgColorClass, widthClass, gapClass }: Props) {
   const boxStyles = `${bgColorClass} ${widthClass} aspect-square rounded-full animate-bounce`;
   return (
     <div
+      data-testid="loader"
       className={`w-full h-full bg-none-400 flex items-center justify-center ${gapClass}`}
     >
       <div className={`${boxStyles}`}></div>

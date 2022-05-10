@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { FundCreatorValues as V } from "@types-page/admin";
-import { addFundMember } from "slices/admin/newFundMembers";
 import { useGetter } from "store/accessors";
+import { addFundMember } from "slices/admin/newFundMembers";
 
 export default function useAddMember() {
   const { getValues, setError, resetField, trigger } = useFormContext<V>();

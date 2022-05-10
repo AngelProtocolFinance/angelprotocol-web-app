@@ -4,11 +4,11 @@ import { FundConfigUpdateMeta, FundConfigValues } from "@types-page/admin";
 import { FundConfig } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
@@ -25,7 +25,7 @@ export default function useConfigureFund() {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<FundConfigValues>();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function configureFund({

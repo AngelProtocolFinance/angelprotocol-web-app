@@ -1,6 +1,7 @@
 declare module "@types-component/icons" {
   type IconTypes =
     | "Discord"
+    | "FileDownload"
     | "Telegram"
     | "Twitter"
     | "Youtube"
@@ -48,8 +49,11 @@ declare module "@types-component/icons" {
     | "PieChart"
     | "Safe"
     | "Globe"
-    | "Admin"
+    | "Undo"
     | "Coins"
     | "MoneyBill"
+    | "Admin"
+    | "Crop"
+    | "Save"
     | "PieChart";
 }

@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
 import toCurrency from "helpers/toCurrency";
 import Summary from "./Summary";
 
@@ -9,7 +9,7 @@ type Props = {
   liquid: number;
 };
 export default function Amount(props: Props) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   function showSummary() {
     showModal(Summary, {
       type: props.type,

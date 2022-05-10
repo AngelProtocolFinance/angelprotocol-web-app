@@ -1,6 +1,8 @@
+import { MsgExecuteContract } from "@terra-money/terra.js";
 import {
   EndowmentQueryOptions,
   RegistrarConfigPayload,
+  RegistrarCreateEndowmentPayload,
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "@types-server/contracts";
@@ -52,6 +54,13 @@ export default class Registrar extends Contract {
       update_config: payload,
     });
   }
+
+  createEndowmentCreationMsg(payload: RegistrarCreateEndowmentPayload) {
+    return new MsgExecuteContract(this.walletAddr!, this.address, {
+      create_endowment: payload,
+    });
+  }
+
   createEmbeddedOwnerUpdateMsg(payload: RegistrarOwnerPayload) {
     return this.createdEmbeddedWasmMsg([], this.address, {
       update_owner: payload,

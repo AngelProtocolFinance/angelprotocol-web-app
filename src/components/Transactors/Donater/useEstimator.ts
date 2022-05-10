@@ -11,12 +11,12 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "@types-component/donater";
 import { Dwindow } from "@types-slice/provider";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import Contract from "contracts/Contract";
 import Indexfund from "contracts/IndexFund";

@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
-import { useGetter } from "store/accessors";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import { getIcon } from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";
 
 export default function TransactionHint() {
@@ -27,7 +27,7 @@ export default function TransactionHint() {
 }
 
 function StatusButton(props: { Icon: IconType; iconClass?: string }) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   function showPrompt() {
     showModal(TransactionPrompt, {});
   }

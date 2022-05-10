@@ -83,6 +83,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
+            txInfo,
             chainId,
             successLink: args.successLink,
           });

@@ -1,19 +1,19 @@
 import { ErrorStage } from "@types-slice/transaction";
-import { setStage } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Icon from "components/Icons/Icons";
-import { useSetModal } from "components/Modal/Modal";
+import { useSetter } from "store/accessors";
+import { setStage } from "slices/transaction/transactionSlice";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function ErrPop(props: ErrorStage) {
   if (props.step !== "error") throw new Error("wrong component rendered");
   const dispatch = useSetter();
-  const { hideModal } = useSetModal();
+  const { closeModal } = useModalContext();
   const { message, chainId, txHash } = props;
 
   function acknowledge() {
     dispatch(setStage({ step: "form" }));
-    hideModal();
+    closeModal();
   }
 
   return (

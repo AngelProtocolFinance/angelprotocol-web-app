@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { TxProps } from "@types-component/transactor";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Transactor from "../Transactor";
 import EnderForm from "./EnderForm";
 
 export default function usePollEnder(poll_id: number) {
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const showPollEnder = useCallback(() => {
     showModal<TxProps<{ poll_id: number }>>(Transactor, {
       inModal: true,

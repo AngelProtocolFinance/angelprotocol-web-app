@@ -16,7 +16,7 @@ export const mainnet: NetworkInfo = {
   lcd: terra_lcds["columbus-5"],
 };
 
-const testnet: NetworkInfo = {
+export const testnet: NetworkInfo = {
   name: "testnet",
   chainID: "bombay-12",
   lcd: terra_lcds["bombay-12"],

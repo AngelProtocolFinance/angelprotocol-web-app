@@ -5,10 +5,10 @@ import { CreateFundMeta, FundCreatorValues } from "@types-page/admin";
 import { FundDetails } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
@@ -18,7 +18,7 @@ import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
   const newFundMembers = useGetter((state) => state.admin.newFundMembers);

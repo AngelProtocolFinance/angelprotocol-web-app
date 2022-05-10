@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AdminVoteValues } from "@types-component/admin-voter";
 import { useBalances } from "services/terra/queriers";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";

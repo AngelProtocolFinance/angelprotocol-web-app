@@ -4,11 +4,11 @@ import { FundMemberUpdateMeta } from "@types-page/admin";
 import { FundUpdateValues } from "@types-page/admin";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
 import useWalletContext from "hooks/useWalletContext";
@@ -19,7 +19,7 @@ export default function useUpdateFund() {
   const [isLoading, setIsLoading] = useState(false);
   const { wallet } = useWalletContext();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function updateFund() {

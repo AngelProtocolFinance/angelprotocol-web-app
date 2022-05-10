@@ -7,8 +7,8 @@ import { Coin } from "@types-slice/wallet";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import { useSetter } from "store/accessors";
+import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import useWalletContext from "hooks/useWalletContext";
 
 export default function useWalletUpdator(activeProvider: Providers) {

@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues, SupportedDenoms } from "@types-component/donater";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import useWalletContext from "hooks/useWalletContext";
 import useEstimator from "../useEstimator";
 
@@ -17,7 +17,7 @@ export default function useDonate() {
   const { watch, handleSubmit, setValue, getValues } =
     useFormContext<DonateValues>();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { terraTx, ethTx, bnbTx } = useEstimator();
 

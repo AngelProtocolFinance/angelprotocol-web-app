@@ -4,12 +4,12 @@ import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "@types-component/staker";
 // import useTerraBalance from "hooks/useTerraBalance";
 import { useBalances } from "services/terra/queriers";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";

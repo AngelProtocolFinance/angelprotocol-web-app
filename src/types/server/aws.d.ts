@@ -1,4 +1,5 @@
 declare module "@types-server/aws" {
+  import { EndowmentTierNum } from "@types-shared/registration";
   import { ChainIDs, Denoms } from "@types-lists";
   /**result wrapper */
   interface AWSQueryRes<T> {
@@ -113,6 +114,8 @@ declare module "@types-server/aws" {
   }
 
   /** /registration */
+
+  type ApplicationStatus = "approved" | "not-complete" | "under-review";
   interface CharityApplication {
     CharityName: string;
     CharityName_ContactEmail: string;
@@ -130,5 +133,139 @@ declare module "@types-server/aws" {
     poll_id: number;
   }
 
-  type RegistrationStatus = "approved" | "not-complete" | "under-review";
+  type ContactPerson = {
+    Email: string;
+    EmailVerified?: boolean;
+    FirstName: string;
+    LastName: string;
+    OtherRole?: string;
+    PhoneNumber: string;
+    PK?: string;
+    Role: ContactRoles;
+    SK?: "ContactPerson";
+  };
+
+  type FileObject = {
+    name: string;
+    publicUrl?: string;
+  };
+
+  type RegistrationStatus = "Inactive" | "Under Review" | "Approved" | "Active";
+  type Registration = {
+    AuditedFinancialReports: FileObject[];
+    AuditedFinancialReportsVerified: boolean;
+    CharityName: string;
+    CharityName_ContactEmail?: string;
+    FinancialStatements: FileObject[];
+    FinancialStatementsVerified: boolean;
+    ProofOfIdentity: FileObject;
+    ProofOfIdentityVerified: boolean;
+    ProofOfRegistration: FileObject;
+    ProofOfRegistrationVerified: boolean;
+    RegistrationDate: string;
+    RegistrationStatus: RegistrationStatus;
+    SK?: "Registration";
+    Tier?: EndowmentTierNum;
+    UN_SDG: number;
+    Website: string;
+  };
+
+  //*
+  type Charity = {
+    ContactPerson: ContactPerson;
+    Metadata: Metadata;
+    Registration: Registration;
+  };
+
+  //*
+  type ContactDetailsData = {
+    ContactPerson: ContactPerson;
+    Registration: Pick<
+      Registration,
+      | "CharityName"
+      | "CharityName_ContactEmail"
+      | "RegistrationDate"
+      | "RegistrationStatus"
+    >;
+  };
+
+  //*
+  type ContactDetailsRequest = {
+    PK?: string;
+    body: {
+      ContactPerson: Omit<ContactPerson, "EmailVerified">;
+      Registration: Pick<Registration, "CharityName">;
+    };
+  };
+
+  type Metadata = {
+    SK?: "Metadata";
+    Banner: FileObject;
+    CharityLogo: FileObject;
+    CharityOverview: string;
+    TerraWallet: string;
+    EndowmentContract: string;
+  };
+
+  //*
+  type SubmitData = {
+    PK: string;
+    EndowmentContract: string;
+  };
+
+  //*
+  type SubmitResult = {
+    RegistrationStatus: RegistrationStatus;
+    EndowmentContract: string;
+  };
+
+  interface UpdateApplication {
+    PK: string;
+    poll_id: string;
+    chain_id: string;
+  }
+
+  type UpdateCharityMetadataData = {
+    PK?: string;
+    body: {
+      Banner?: FileObject;
+      CharityLogo?: FileObject;
+      CharityOverview?: string;
+      TerraWallet?: string;
+    };
+  };
+
+  type UpdateCharityMetadataResult = {
+    Banner: FileObject;
+    CharityLogo: FileObject;
+    CharityOverview: string;
+    TerraWallet: string;
+  };
+
+  type UpdateDocumentationData = {
+    PK?: string;
+    body: {
+      Website: string;
+      UN_SDG: number;
+      ProofOfIdentity: FileObject;
+      ProofOfRegistration: FileObject;
+      FinancialStatements: FileObject[];
+      AuditedFinancialReports: FileObject[];
+    };
+  };
+
+  type UpdateDocumentationResult = {
+    Tier: EndowmentTierNum;
+    Website: string;
+    UN_SDG: number;
+    ProofOfIdentity: FileObject;
+    ProofOfRegistration: FileObject;
+    FinancialStatements: FileObject[];
+    AuditedFinancialReports: FileObject[];
+  };
 }
+
+/**
+ *
+ *
+ */

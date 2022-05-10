@@ -7,11 +7,11 @@ import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
@@ -24,7 +24,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
   const { wallet } = useWalletContext();
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);

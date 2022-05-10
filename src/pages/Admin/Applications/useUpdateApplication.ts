@@ -6,10 +6,10 @@ import {
 } from "@types-server/contracts";
 import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
-import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
-import { useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useSetter } from "store/accessors";
+import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
@@ -18,7 +18,7 @@ import cleanObject from "helpers/cleanObject";
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
     const statusChangePayload: StatusChangePayload = {

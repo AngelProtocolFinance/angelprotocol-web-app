@@ -5,8 +5,8 @@ import { MemberUpdatorValues } from "@types-page/admin";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useMembers } from "services/terra/admin/queriers";
-import { setMembers } from "slices/admin/apCW4Members";
 import { useSetter } from "store/accessors";
+import { setMembers } from "slices/admin/apCW4Members";
 import MemberUpdateForm from "./MemberUpdaterForm";
 import { memberUpdatorSchema } from "./memberUpdatorSchema";
 

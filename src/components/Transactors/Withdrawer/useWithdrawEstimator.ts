@@ -5,12 +5,12 @@ import { WithdrawResource, WithdrawValues } from "@types-component/withdrawer";
 import { EndowmentWithdrawMeta, SourcePreview } from "@types-page/admin";
 import { AmountInfo } from "@types-shared/withdraw";
 import { vaultMap } from "services/terra/multicall/constants";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";

@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "@types-component/poller";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";

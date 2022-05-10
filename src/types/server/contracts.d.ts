@@ -1,5 +1,6 @@
 declare module "@types-server/contracts" {
   import { Coin } from "@terra-money/terra.js";
+  import { EndowmentTierNum } from "@types-shared/registration";
   /** _wrapper */
   interface QueryRes<T> {
     query_result: T;
@@ -368,5 +369,39 @@ declare module "@types-server/contracts" {
 
   type RegistrarOwnerPayload = {
     new_owner: string;
+  };
+
+  type Endow_type = "Charity";
+  type RegistrarCreateEndowmentPayload = {
+    beneficiary: string;
+    cw4_members: [];
+    guardians_multisig_addr: undefined;
+    maturity_time: undefined;
+    maturity_height: undefined;
+    owner: string;
+    withdraw_before_maturity: false;
+    profile: {
+      annual_revenue: undefined; // string value if provided
+      average_annual_budget: undefined; // string value if provided
+      charity_navigator_rating: undefined; // string value if provided
+      contact_email: string;
+      country_of_origin: undefined;
+      endow_type: Endow_type;
+      image: string;
+      logo: string;
+      name: string;
+      number_of_employees: undefined; // int value if provided
+      overview: string;
+      registration_number: undefined; // string of charity reg # if provided
+      social_media_urls: {
+        facebook: undefined; // string of URL if provided
+        twitter: undefined; // string of URL if provided
+        linkedin: undefined; // string of URL if provided
+      };
+      street_address: undefined;
+      tier: EndowmentTierNum;
+      un_sdg: number; // 1 - 17 int
+      url: string; // string of charity website URL if provided
+    };
   };
 }

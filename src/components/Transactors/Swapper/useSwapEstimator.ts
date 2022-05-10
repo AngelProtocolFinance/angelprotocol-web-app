@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "@types-component/swapper";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";

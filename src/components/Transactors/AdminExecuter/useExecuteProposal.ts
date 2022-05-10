@@ -1,9 +1,9 @@
 import { AdmiExecuterProps } from "@types-component/admin-executer";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { useGetter, useSetter } from "store/accessors";
-import { useSetModal } from "components/Modal/Modal";
+import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { useGetter, useSetter } from "store/accessors";
+import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import useWalletContext from "hooks/useWalletContext";
 
@@ -11,7 +11,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { wallet } = useWalletContext();
   const dispatch = useSetter();
-  const { showModal } = useSetModal();
+  const { showModal } = useModalContext();
 
   function executeProposal() {
     if (args.proposal_id === 0) {

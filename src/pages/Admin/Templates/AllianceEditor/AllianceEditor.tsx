@@ -5,8 +5,8 @@ import { AllianceEditValues } from "@types-page/admin";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useAllianceMembers } from "services/terra/indexFund/queriers";
-import { setMembers } from "slices/admin/allianceMembers";
 import { useSetter } from "store/accessors";
+import { setMembers } from "slices/admin/allianceMembers";
 import AllianceEditForm from "./AllianceEditForm";
 import { allianceEditSchema } from "./alllianceEditSchema";
 

@@ -1,98 +1,50 @@
-import {
-  NetworkInfo,
-  StaticWalletProvider,
-  WalletStatus,
-} from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { ReactNode } from "react";
-import { Provider } from "react-redux";
-import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { store } from "store/store";
-import { appRoutes, siteRoutes } from "constants/routes";
-import { terra_lcds } from "constants/urls";
+import { Route, Routes } from "react-router-dom";
+import AppWrapper from "test/AppWrapper";
+import { siteRoutes } from "constants/routes";
 import App from "./App";
 
-const testnet: NetworkInfo = {
-  name: "bombay",
-  chainID: "bombay-12",
-  lcd: terra_lcds["bombay-12"],
-};
 // define initial routes
-const routes = [
-  `${siteRoutes.app}`,
-  `${siteRoutes.app}/${appRoutes.marketplace}`,
-  `${siteRoutes.app}/${appRoutes.govern}`,
-  `${siteRoutes.app}/${appRoutes.leaderboard}`,
-];
+const routes = [`${siteRoutes.app}`];
 
-function Wrapper(props: { children: ReactNode }) {
+function TestApp() {
   return (
-    <MemoryRouter initialEntries={routes} initialIndex={0}>
-      <Provider store={store}>
-        <StaticWalletProvider
-          defaultNetwork={testnet}
-          status={WalletStatus.WALLET_CONNECTED}
-        >
-          {props.children}
-        </StaticWalletProvider>
-      </Provider>
-    </MemoryRouter>
-  );
-}
-
-function MockApp() {
-  return (
-    <Wrapper>
+    <AppWrapper routes={routes} startingRouteIndex={0}>
       <Routes>
         <Route path={siteRoutes.app + "/*"} element={<App />} />
       </Routes>
-    </Wrapper>
+    </AppWrapper>
   );
 }
 
-describe("<App/> renders correctly", () => {
+describe("User visits app", () => {
   window.scrollTo = jest.fn();
-  test("App renders marketplace as default route", async () => {
-    render(<MockApp />);
+  test("App's default page is lazy loaded Marketplace", async () => {
+    render(<TestApp />);
 
-    // check for ukrain banner
-    const support = "ANGEL PROTOCOL SUPPORTS";
-    const ukraine = "DISPLACED UKRAINIANS.";
-    expect(await screen.findByText(support)).toBeInTheDocument();
-    expect(await screen.findByText(ukraine)).toBeInTheDocument();
-    const navItem = await screen.findByText(/Marketplace/i);
-    expect(navItem).toBeInTheDocument();
-    expect(navItem.getAttribute("aria-current")).toBe("page");
-  });
-});
+    //header is immediately rendered
+    //role here https://www.w3.org/TR/html-aria/#docconformance
+    const header = screen.getByRole("banner");
+    expect(header).toBeInTheDocument();
 
-describe("<App /> routes to Gov and Leaderboard pages", () => {
-  test("Routes to governance page", async () => {
-    render(<MockApp />);
-    const navigator = screen.getByText("Governance");
-    expect(navigator).toBeInTheDocument();
-    // click the NavLink item
-    userEvent.click(navigator);
+    //footer is immediately rendered
+    //role here https://www.w3.org/TR/html-aria/#docconformance
+    const footer = screen.getByRole("contentinfo");
+    expect(footer).toBeInTheDocument();
 
-    // governance page is rendered
-    const navItem = await screen.findByText(/Governance/i);
-    expect(navItem).toBeInTheDocument();
-    expect(navItem).toHaveAttribute("aria-current");
-    expect(await screen.findByText("total staked")).toBeInTheDocument();
-    expect(await screen.findByText("Trade Halo")).toBeInTheDocument();
-  });
+    //loader is rendered because content is being lazy loaded
+    const loader = screen.getByTestId("loader");
+    expect(loader).toBeInTheDocument();
 
-  test("Routes to Leaderboard page", async () => {
-    render(<MockApp />);
-    const navigator = screen.getByText("Leaderboard");
-    expect(navigator).toBeInTheDocument();
-    // click the NavLink item
-    userEvent.click(navigator);
+    //view is not yet rendered and being lazy loaded
+    const text1 = /angel protocol supports/i;
+    const text2 = /displaced ukrainians/i;
+    expect(screen.queryByText(text1)).toBeNull();
+    expect(screen.queryByText(text2)).toBeNull();
 
-    // Leaderboard page is rendered
-    const navItem = await screen.findByText(/Leaderboard/i);
-    expect(navItem).toBeInTheDocument();
-    expect(navItem).toHaveAttribute("aria-current");
+    //view is finally loaded,
+    expect(await screen.findByText(text1)).toBeInTheDocument();
+    expect(await screen.findByText(text2)).toBeInTheDocument();
+    expect(loader).not.toBeInTheDocument();
   });
 });

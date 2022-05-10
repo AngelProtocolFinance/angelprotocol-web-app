@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
 import { Props } from "@types-component/donater";
-import { useGetter } from "store/accessors";
 import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
 import Donater from "components/Transactors/Donater/Donater";
 import Transactor from "components/Transactors/Transactor";
+import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 
 export default function TCA() {

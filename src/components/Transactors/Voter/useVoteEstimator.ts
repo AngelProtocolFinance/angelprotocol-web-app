@@ -5,12 +5,12 @@ import { VoteValues } from "@types-component/voter";
 import { Vote } from "@types-server/contracts";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";

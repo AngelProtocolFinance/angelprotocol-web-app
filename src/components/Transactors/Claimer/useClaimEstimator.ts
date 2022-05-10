@@ -2,12 +2,12 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useBalances } from "services/terra/queriers";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
 import Halo from "contracts/Halo";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";

@@ -1,4 +1,5 @@
 import {
+  NetworkInfo,
   WalletProvider as TerraProvider,
   WalletStatus,
 } from "@terra-money/wallet-provider";
@@ -16,9 +17,16 @@ export const WalletContext = createContext<IWalletContext>({
   availableInstallations: [],
 });
 
-export function WalletProvider(props: PropsWithChildren<{}>) {
+type Props = PropsWithChildren<{ defaultNetwork?: NetworkInfo }>;
+
+export function WalletProvider(props: Props) {
+  const options = {
+    ...chainOptions,
+    defaultNetwork: props.defaultNetwork || chainOptions.defaultNetwork,
+  };
+
   return (
-    <TerraProvider {...chainOptions}>
+    <TerraProvider {...options}>
       <MetamaskContext>
         <BinanceWalletContext>
           <WalletProxyProvider>{props.children}</WalletProxyProvider>
