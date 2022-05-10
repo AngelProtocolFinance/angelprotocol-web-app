@@ -29,12 +29,6 @@ jest.mock("store/accessors", () => ({
 }));
 
 describe("useTransactionResultHandler tests", () => {
-  afterAll(() => {
-    jest.unmock("services/aws/registration");
-    jest.unmock("components/ModalContext/ModalContext");
-    jest.unmock("store/accessors");
-  });
-
   it("does nothing when not in success/error stage", () => {
     function runTest(step: Step) {
       mockUseGetter.mockReturnValueOnce(CHARITY);

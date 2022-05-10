@@ -56,20 +56,6 @@ jest.mock("../useTransactionResultHandler", () => ({
 }));
 
 describe("useSubmit tests", () => {
-  beforeAll(() => {
-    mockCreateEndowmentCreationMsg.mockClear();
-  });
-
-  afterAll(() => {
-    jest.unmock("components/ModalContext/ModalContext");
-    jest.unmock("helpers/processEstimateError");
-    jest.unmock("hooks/useWalletContext");
-    jest.unmock("services/transaction/sendTerraTx");
-    jest.unmock("store/accessors");
-    jest.unmock("../createEndowmentCreationMsg");
-    jest.unmock("../useTransactionResultHandler");
-  });
-
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });

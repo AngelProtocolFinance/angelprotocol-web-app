@@ -29,12 +29,6 @@ jest.mock("store/accessors", () => ({
 }));
 
 describe("useActivate tests", () => {
-  afterAll(() => {
-    jest.unmock("services/aws/registration");
-    jest.unmock("components/ModalContext/ModalContext");
-    jest.unmock("store/accessors");
-  });
-
   it("should return default values on initialization", () => {
     mockUseActivateMutation.mockReturnValue([
       (_: string) => ({}),
