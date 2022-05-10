@@ -2,6 +2,7 @@ import { useDepositTransactionsQuery } from "services/aws/endowment_admin/endowm
 import { Transaction } from "services/aws/endowment_admin/types";
 import CsvExporter from "components/CsvExporter";
 import TransactionsTable from "./TransactionsTable";
+import useEndowmentDonations from "./useEndowmentDonations";
 
 const headers: { key: keyof Transaction; label: string }[] = [
   { key: "transaction_type", label: "Type" },
@@ -18,7 +19,8 @@ export default function Transactions(props: { endowmentAddress: string }) {
     isFetching,
     isError,
   } = useDepositTransactionsQuery(props.endowmentAddress);
-
+  const { data: res } = useEndowmentDonations(props.endowmentAddress);
+  console.log(res);
   return (
     <div className="col-span-2 flex flex-col bg-white/10 p-4 rounded-md shadow-md shadow-inner overflow-auto h-process">
       <div className="flex justify-between items-center">
