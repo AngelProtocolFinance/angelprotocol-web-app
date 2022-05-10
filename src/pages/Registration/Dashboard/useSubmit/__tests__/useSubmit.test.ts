@@ -97,7 +97,7 @@ describe("useSubmit tests", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
     mockCreateEndowmentCreationMsg.mockImplementation((..._: any[]) => {
-      throw "error";
+      throw new Error();
     });
 
     const { result } = renderHook(() => useSubmit());
