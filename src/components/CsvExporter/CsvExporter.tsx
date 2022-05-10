@@ -3,7 +3,7 @@ import { Headers } from "react-csv/components/CommonPropTypes";
 import Icon from "../Icons/Icons";
 
 type Props = {
-  headers: Headers;
+  headers?: Headers;
   data: string | object[];
   filename: string;
 };
