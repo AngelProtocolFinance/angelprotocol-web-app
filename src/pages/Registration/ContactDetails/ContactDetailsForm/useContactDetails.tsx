@@ -82,7 +82,7 @@ export default function useSaveContactDetails() {
           (dataResult.error as FetchBaseQueryError).data ||
           (dataResult as SerializedError).message;
 
-        if (resultError == "Charity already exists.") {
+        if (resultError === "Charity already exists.") {
           showModal<PopupProps>(Popup, {
             message: `${resultError} Please check your email for the registration reference.`,
           });
