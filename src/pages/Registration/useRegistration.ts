@@ -8,7 +8,7 @@ import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
-import { createInitializedCharity } from "./helpers";
+import { createCharityWithStepOneData } from "./helpers";
 import routes from "./routes";
 import { updateCharity } from "./store";
 
@@ -40,7 +40,7 @@ export const useRegistration = () => {
       return console.log(dataResult.error);
     }
 
-    const charity = createInitializedCharity(dataResult.data);
+    const charity = createCharityWithStepOneData(dataResult.data);
     dispatch(updateCharity(charity));
 
     if (charity.ContactPerson.EmailVerified) {

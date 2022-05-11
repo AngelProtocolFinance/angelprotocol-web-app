@@ -8,8 +8,9 @@ const getDefaultCharity = (): Charity => ({
     FirstName: "",
     LastName: "",
     PhoneNumber: "",
-    Role: "ceo",
     PK: "",
+    Role: "ceo",
+    SK: "ContactPerson",
   },
   Registration: {
     CharityName: "",
@@ -26,12 +27,14 @@ const getDefaultCharity = (): Charity => ({
     ProofOfRegistrationVerified: false,
     FinancialStatementsVerified: false,
     AuditedFinancialReportsVerified: false,
+    SK: "Registration",
   },
   Metadata: {
     Banner: { name: "" },
     CharityLogo: { name: "" },
     CharityOverview: "",
     EndowmentContract: "",
+    SK: "Metadata",
     TerraWallet: "",
   },
 });
