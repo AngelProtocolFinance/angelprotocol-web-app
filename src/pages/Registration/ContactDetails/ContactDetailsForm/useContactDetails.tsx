@@ -60,9 +60,9 @@ export default function useSaveContactDetails() {
             FirstName: contactData.firstName,
             LastName: contactData.lastName,
             Email: contactData.email,
+            OtherRole: contactData.otherRole,
             PhoneNumber: contactData.phone,
             Role: contactData.role,
-            OtherRole: contactData.otherRole,
           },
         },
       };
