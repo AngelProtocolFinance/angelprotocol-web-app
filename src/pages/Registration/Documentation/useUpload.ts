@@ -52,13 +52,7 @@ export default function useUpload() {
         handleError(error);
       }
     },
-    [
-      showModal,
-      charity.ContactPerson.PK,
-      uploadDocumentation,
-      handleError,
-      handleSuccess,
-    ]
+    [charity.ContactPerson.PK, uploadDocumentation, handleError, handleSuccess]
   );
 
   return { upload, isSuccess };

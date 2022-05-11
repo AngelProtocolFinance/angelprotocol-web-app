@@ -66,13 +66,7 @@ export default function useSubmit() {
         handleError(error);
       }
     },
-    [
-      showModal,
-      updateMetadata,
-      charity.ContactPerson.PK,
-      handleError,
-      handleSuccess,
-    ]
+    [updateMetadata, charity.ContactPerson.PK, handleError, handleSuccess]
   );
 
   return { submit, isSuccess };
