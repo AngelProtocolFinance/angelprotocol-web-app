@@ -1,4 +1,5 @@
 import { Charity, EndowmentTier } from "services/aws/types";
+import { RegistrationState } from "./types";
 
 export default function getRegistrationState(
   charity: Charity
@@ -24,7 +25,7 @@ export default function getRegistrationState(
   };
 }
 
-function getStepThree(charity: Charity): DocumentationStep {
+function getStepThree(charity: Charity) {
   const levelOneDataExists =
     !!charity.Registration.ProofOfIdentity.publicUrl &&
     !!charity.Registration.ProofOfRegistration.publicUrl &&
@@ -37,7 +38,7 @@ function getStepThree(charity: Charity): DocumentationStep {
   const levelThreeDataExists =
     !!charity.Registration.AuditedFinancialReports.length;
 
-  const tier = levelOneDataExists
+  const tier: EndowmentTier | undefined = levelOneDataExists
     ? levelTwoDataExists
       ? levelThreeDataExists
         ? 3
@@ -47,15 +48,3 @@ function getStepThree(charity: Charity): DocumentationStep {
 
   return { completed: levelOneDataExists, tier };
 }
-
-type RegistrationStep = { completed: boolean };
-
-type DocumentationStep = RegistrationStep & { tier?: EndowmentTier };
-
-type RegistrationState = {
-  stepOne: RegistrationStep;
-  stepTwo: RegistrationStep;
-  stepThree: DocumentationStep;
-  stepFour: RegistrationStep;
-  getIsReadyForSubmit: () => boolean;
-};

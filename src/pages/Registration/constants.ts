@@ -19,8 +19,22 @@ export const contactRoleOptions: OptionType[] = [
   { label: "Treasurer", value: "treasurer" },
   { label: "CEO", value: "ceo" },
   { label: "CFO", value: "cfo" },
+  { label: "Board Member", value: "board-member" },
+  { label: "Leadership Team", value: "leadership-team" },
+  { label: "Fundraising / Finance", value: "fundraising-finance" },
+  { label: "Legal", value: "legal" },
+  { label: "Communications", value: "communications" },
   { label: "Other", value: "other" },
 ];
+
+export enum Folders {
+  AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",
+  CharityProfileImageLogo = "charity-profile-images/logo",
+  CharityProfileImageBanners = "charity-profile-images/banner",
+  FinancialStatements = "charity-registration-documents/financial-statements",
+  ProofOfIdentity = "charity-registration-documents/proof-of-identity",
+  ProofOfRegistration = "charity-registration-documents/proof-of-registration",
+}
 
 export const RevenueRanges: OptionType[] = [
   { label: "0 - 500k", value: "500" },

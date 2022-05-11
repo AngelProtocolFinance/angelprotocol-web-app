@@ -1,27 +1,29 @@
 import fleekStorage from "@fleekhq/fleek-storage-js";
 import { FileObject } from "services/aws/types";
+import { Folders } from "../constants";
 
-const API_KEY = process.env.REACT_APP_FLEEK_API_KEY;
-const API_SECRET = process.env.REACT_APP_FLEEK_API_SECRET;
-
-export default async function uploadToIpfs(
-  file: File,
-  folder?: string
-): Promise<FileObject> {
+async function uploadToIpfs(file: File, folder?: Folders): Promise<FileObject> {
   try {
-    const uploadedFile = await fleekStorage.upload({
-      key: folder ? [folder, file.name].join("") : file.name,
-      apiKey: API_KEY!,
-      apiSecret: API_SECRET!,
+    const encodedName = encodeURIComponent(file.name);
+    const relativePath = folder ? [folder, encodedName].join("/") : encodedName;
+
+    const result = await fleekStorage.upload({
+      key: relativePath,
+      apiKey: process.env.REACT_APP_FLEEK_API_KEY!,
+      apiSecret: process.env.REACT_APP_FLEEK_API_SECRET!,
       data: file,
     });
+
     return {
       name: file.name,
-      publicUrl: uploadedFile.publicUrl,
+      publicUrl: result.publicUrl,
     };
   } catch (e) {
-    // console.log("Error uploading file: ", file.name);
+    console.log(`Error uploading file ${file.name}`, e);
+    // console.log("Error uploading file: ", filename);
     // throw new Error("Error uploading file to ipfs");
     return { name: "", publicUrl: "" };
   }
 }
+
+export default uploadToIpfs;

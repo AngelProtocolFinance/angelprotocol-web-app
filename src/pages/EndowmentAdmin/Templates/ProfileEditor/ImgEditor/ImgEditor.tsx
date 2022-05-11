@@ -2,18 +2,19 @@ import React from "react";
 import { IconType } from "react-icons";
 import { getIcon } from "components/Icons/Icons";
 import Loader from "components/Loader/Loader";
-import { UpdateProfilePayload as UP } from "contracts/types";
-import useImageEditor from "hooks/useImageEditor";
+import useImgEditor from "./useImgEditor";
 
-export default function ImageEditor() {
+export default function ImgEditor() {
   const {
     handleFileChange,
     handleImageReset,
+    handleOpenCropper,
     loading,
     isInitial,
     inputRef,
     currentImage,
-  } = useImageEditor<UP>("image");
+  } = useImgEditor();
+
   return (
     <div
       className={`grid place-items-center relative group w-full aspect-[4/1] p-1 rounded-md mb-4 bg-light-grey shadow-inner-white-grey`}
@@ -30,9 +31,15 @@ export default function ImageEditor() {
             disabled={loading}
           />
           <ImageControl
-            type="reset"
+            type="btn"
             onClick={handleImageReset}
             Icon={getIcon("Undo")}
+            disabled={isInitial || loading}
+          />
+          <ImageControl
+            type="btn"
+            onClick={handleOpenCropper}
+            Icon={getIcon("Crop")}
             disabled={isInitial || loading}
           />
           <input
@@ -54,13 +61,13 @@ type Common = { Icon: IconType; disabled?: boolean };
 type ControlProps =
   | { type: "upload"; onClick?: never; htmlFor: string }
   | {
-      type: "reset";
+      type: "btn";
       onClick: () => void;
       htmlFor?: never;
     };
 function ImageControl(props: ControlProps & Common) {
   const { Icon, type, ...valitAttrs } = props;
-  return React.createElement(props.type === "reset" ? "button" : "label", {
+  return React.createElement(props.type === "btn" ? "button" : "label", {
     ...valitAttrs,
     className:
       "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",

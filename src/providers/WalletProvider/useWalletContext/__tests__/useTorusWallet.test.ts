@@ -14,7 +14,7 @@ const mockWalletProxy: WalletProxy = {
   connection: TORUS_CONNECTION,
   address: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
   network: chainOptions.walletConnectChainIds[0], // testnet
-  post: async (txOptions: CreateTxOptions) => ({
+  post: async (_: CreateTxOptions) => ({
     result: {
       height: 1,
       raw_log: "",
@@ -23,7 +23,7 @@ const mockWalletProxy: WalletProxy = {
     success: true,
     msgs: [],
   }),
-  connect: async (...args: any[]) => {},
+  connect: async (..._: any[]) => {},
   disconnect: async () => {},
 };
 
