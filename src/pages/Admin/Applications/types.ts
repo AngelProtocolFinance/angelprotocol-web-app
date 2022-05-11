@@ -20,5 +20,5 @@ export interface CharityApplication {
   RegistrationStatus: string;
   SK: string;
   TerraWallet: string;
-  poll_id: number;
+  poll_id?: number;
 }
