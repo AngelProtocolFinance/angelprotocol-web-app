@@ -17,9 +17,9 @@ export default function useUpload() {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(
-    (error, message) => {
+    (error) => {
       console.log(error);
-      showModal(Popup, { message });
+      showModal(Popup, { message: "Error updating charity ❌" });
     },
     [showModal]
   );
@@ -44,12 +44,12 @@ export default function useUpload() {
         const result = await uploadDocumentation(postData);
 
         if ("error" in result) {
-          handleError(result.error, "Error updating charity ❌");
+          handleError(result.error);
         } else {
           handleSuccess(result.data);
         }
       } catch (error) {
-        handleError(error, "Error updating charity ❌");
+        handleError(error);
       }
     },
     [
@@ -101,7 +101,9 @@ async function getUploadUrls(values: FormValues) {
       return false;
     });
 
-  if (hasError) throw new Error("Error uploading files ❌");
+  if (hasError) {
+    throw new Error("Error uploading files ❌");
+  }
 
   return {
     Website: values.website,
