@@ -25,11 +25,12 @@ export default function useTransactionResultHandler() {
   const { showModal } = useModalContext();
   const [submit] = useSubmitMutation();
 
+  const PK = charity.ContactPerson.PK;
   useEffect(() => {
     async function handle() {
       try {
         const result = await submit({
-          PK: charity.ContactPerson.PK!,
+          PK: PK!,
           EndowmentContract: getEndowmentContract(stage),
         });
 
@@ -70,7 +71,7 @@ export default function useTransactionResultHandler() {
     } else if (stage.step === Step.success) {
       handle();
     }
-  }, [charity.ContactPerson.PK, stage, dispatch, showModal, submit]);
+  }, [charity, PK, stage, dispatch, showModal, submit]);
 }
 
 function getEndowmentContract(stage: Stage) {

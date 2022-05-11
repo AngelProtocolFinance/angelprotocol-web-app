@@ -5,8 +5,10 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
+import RichTextEditor, {
+  EditorClasses,
+} from "components/RichTextEditor/RichTextEditor";
 import ImgEditor from "./ImgEditor/ImgEditor";
-import OverviewEditor from "./OverviewEditor/OverviewEditor";
 import SDGSelector from "./SDGSelector";
 import { UpdateProfileValues as UV } from "./profileEditSchema";
 import useEditForm from "./useEditProfile";
@@ -42,7 +44,11 @@ export default function EditForm() {
         placeholder="Manila, Philippines"
       />
       <Label className="text-angel-grey -mb-2">Overview</Label>
-      <OverviewEditor />
+      <RichTextEditor<UV>
+        fieldName="overview"
+        editorClasses={editorClasses}
+        placeHolder="an overview of your charity"
+      />
 
       <Label className="text-angel-grey -mb-2">Organization</Label>
       <GroupContainer>
@@ -105,3 +111,11 @@ export default function EditForm() {
     </FormContainer>
   );
 }
+
+const editorClasses: EditorClasses = {
+  container: "text-black p-3 rounded-md bg-light-grey shadow-inner-white-grey",
+  controlContainer: "flex gap-2 mt-2 mb-4",
+  control:
+    "p-1.5 text-white-grey bg-angel-blue rounded-sm hover:bg-bright-blue hover:text-white shadow-md",
+  error: "font-mono font-semibold text-right text-red-400 text-xs m-1 -mt-3",
+};

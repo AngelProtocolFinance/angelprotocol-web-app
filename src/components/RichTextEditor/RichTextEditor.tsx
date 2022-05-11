@@ -35,7 +35,6 @@ export default function RichTextEditor<T extends FieldValues>(props: {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-
   //init rich text editor
   useRichTextInit(value, setEditorState);
 
@@ -83,44 +82,46 @@ export default function RichTextEditor<T extends FieldValues>(props: {
   };
 
   return (
-    <div className={props.editorClasses?.container}>
-      <div className={props.editorClasses?.controlContainer}>
-        <Button
-          _classes={props.editorClasses?.control}
-          onClick={applyInlineStyle("BOLD")}
-          _iconType="Bold"
-        />
-        <Button
-          _classes={props.editorClasses?.control}
-          _iconType="Italic"
-          onClick={applyInlineStyle("ITALIC")}
-        />
-        <Button
-          _classes={props.editorClasses?.control}
-          _iconType="ListUl"
-          onClick={applyBlockStyle("unordered-list-item")}
-        />
-        <Button
-          _classes={props.editorClasses?.control}
-          _iconType="ListOl"
-          onClick={applyBlockStyle("ordered-list-item")}
+    <>
+      <div className={props.editorClasses?.container}>
+        <div className={props.editorClasses?.controlContainer}>
+          <Button
+            _classes={props.editorClasses?.control}
+            onClick={applyInlineStyle("BOLD")}
+            _iconType="Bold"
+          />
+          <Button
+            _classes={props.editorClasses?.control}
+            _iconType="Italic"
+            onClick={applyInlineStyle("ITALIC")}
+          />
+          <Button
+            _classes={props.editorClasses?.control}
+            _iconType="ListUl"
+            onClick={applyBlockStyle("unordered-list-item")}
+          />
+          <Button
+            _classes={props.editorClasses?.control}
+            _iconType="ListOl"
+            onClick={applyBlockStyle("ordered-list-item")}
+          />
+        </div>
+        <Editor
+          readOnly={isSubmitting}
+          editorState={editorState}
+          onChange={setEditorState}
+          handleKeyCommand={handleKeyCommand}
+          keyBindingFn={keyBinder}
+          placeholder={props.placeHolder}
         />
       </div>
-      <Editor
-        readOnly={isSubmitting}
-        editorState={editorState}
-        onChange={setEditorState}
-        handleKeyCommand={handleKeyCommand}
-        keyBindingFn={keyBinder}
-        placeholder={props.placeHolder}
-      />
       <ErrorMessage
         errors={errors}
         name={props.fieldName as any}
         as="p"
         className={props.editorClasses?.error}
       />
-    </div>
+    </>
   );
 }
 

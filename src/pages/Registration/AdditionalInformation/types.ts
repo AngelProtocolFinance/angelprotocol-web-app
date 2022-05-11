@@ -1,5 +1,6 @@
 import * as Yup from "yup";
 import { FileWrapper } from "components/FileDropzone/types";
+import { stringByteSchema } from "schemas/string";
 
 export type FormValues = {
   charityOverview: string;
@@ -31,7 +32,7 @@ const FILE_SCHEMA = Yup.mixed<FileWrapper>()
   });
 
 export const SCHEMA = Yup.object().shape({
-  charityOverview: Yup.string().required("Organization description required"),
+  charityOverview: stringByteSchema("description", 4, 1024),
   charityLogo: FILE_SCHEMA.test({
     name: "fileSize",
     message: "Image size must be smaller than 300KB",

@@ -13,6 +13,7 @@ export default function OverviewInput() {
       <RichTextEditor<FormValues>
         fieldName="charityOverview"
         editorClasses={editorClasses}
+        placeHolder="an overview of your organization"
       />
     </div>
   );
@@ -22,5 +23,5 @@ const editorClasses: EditorClasses = {
   container: "text-white/80 p-3 rounded-md bg-white/10 shadow-inner",
   controlContainer: "flex gap-2 mt-2 mb-4",
   control: "p-1.5 bg-angel-blue rounded-sm hover:bg-blue-accent shadow-md",
-  error: "text-sm text-failed-red",
+  error: "text-sm text-failed-red ml-1",
 };
