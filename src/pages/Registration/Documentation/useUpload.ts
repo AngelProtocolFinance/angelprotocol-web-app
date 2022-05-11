@@ -1,8 +1,7 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
 import { UpdateDocumentationResult } from "services/aws/types";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -18,10 +17,9 @@ export default function useUpload() {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(
-    (err) => {
-      showModal(Popup, {
-        message: err?.data?.message || "Error updating profile ❌",
-      });
+    (error, message) => {
+      console.log(error);
+      showModal(Popup, { message });
     },
     [showModal]
   );
@@ -39,25 +37,19 @@ export default function useUpload() {
 
   const upload = useCallback(
     async (values: FormValues) => {
-      const uploadBody = await getUploadUrls(values);
+      try {
+        const uploadBody = await getUploadUrls(values);
 
-      if (!uploadBody)
-        return showModal(Popup, {
-          message: "Error uploading files ❌",
-        });
+        const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
+        const result = await uploadDocumentation(postData);
 
-      const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
-      const result = await uploadDocumentation(postData);
-
-      const dataResult = result as {
-        data: UpdateDocumentationResult;
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (dataResult.error) {
-        handleError(dataResult.error);
-      } else {
-        handleSuccess(dataResult.data);
+        if ("error" in result) {
+          handleError(result.error, "Error updating charity ❌");
+        } else {
+          handleSuccess(result.data);
+        }
+      } catch (error) {
+        handleError(error, "Error updating charity ❌");
       }
     },
     [
@@ -73,22 +65,22 @@ export default function useUpload() {
 }
 
 async function getUploadUrls(values: FormValues) {
-  const poiPromise = uploadToIpfs(
-    values.proofOfIdentity.file,
+  const poiPromise = uploadIfNecessary(
+    values.proofOfIdentity,
     Folders.ProofOfIdentity
   );
-  const porPromise = uploadToIpfs(
-    values.proofOfRegistration.file,
+  const porPromise = uploadIfNecessary(
+    values.proofOfRegistration,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
     values.financialStatements.map((x) =>
-      uploadToIpfs(x.file, Folders.FinancialStatements)
+      uploadIfNecessary(x, Folders.FinancialStatements)
     )
   );
   const afrPromise = Promise.all(
     values.auditedFinancialReports.map((x) =>
-      uploadToIpfs(x.file, Folders.AuditedFinancialReports)
+      uploadIfNecessary(x, Folders.AuditedFinancialReports)
     )
   );
 
@@ -99,11 +91,17 @@ async function getUploadUrls(values: FormValues) {
     AuditedFinancialReports,
   ] = await Promise.all([poiPromise, porPromise, fsPromise, afrPromise]);
 
-  const hasError = FinancialStatements.concat(AuditedFinancialReports).some(
-    (x) => !x.publicUrl
-  );
-  if (!ProofOfIdentity.publicUrl || !ProofOfRegistration.publicUrl || hasError)
-    return null;
+  const hasError = FinancialStatements.concat(AuditedFinancialReports)
+    .concat([ProofOfIdentity, ProofOfRegistration])
+    .some((x) => {
+      if (!x.publicUrl) {
+        console.log(`Error occured. File ${x.name} does not have a publicUrl`);
+        return true;
+      }
+      return false;
+    });
+
+  if (hasError) throw new Error("Error uploading files ❌");
 
   return {
     Website: values.website,
@@ -112,5 +110,21 @@ async function getUploadUrls(values: FormValues) {
     ProofOfRegistration,
     FinancialStatements,
     AuditedFinancialReports,
+  };
+}
+
+async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
+  if (!fileWrapper.file) {
+    return {
+      name: fileWrapper.name,
+      publicUrl: fileWrapper.publicUrl,
+    };
+  }
+
+  const result = await uploadToIpfs(fileWrapper.file, folder);
+
+  return {
+    name: fileWrapper.file.name,
+    publicUrl: result.publicUrl,
   };
 }
