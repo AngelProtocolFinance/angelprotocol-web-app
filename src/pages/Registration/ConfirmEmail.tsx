@@ -39,7 +39,7 @@ export default function ConfirmEmail() {
     response.data
       ? showModal<PopupProps>(Popup, {
           message:
-            "We have sent you another verification email. If you still don't receive anything, please get in touch with us.",
+            "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
         })
       : showModal<PopupProps>(Popup, {
           message: response.error.data.message,
