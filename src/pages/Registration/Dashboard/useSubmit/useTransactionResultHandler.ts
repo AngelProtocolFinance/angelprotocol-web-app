@@ -70,7 +70,7 @@ export default function useTransactionResultHandler() {
     } else if (stage.step === Step.success) {
       handle();
     }
-  }, [charity.ContactPerson.PK, stage, dispatch, showModal, submit]);
+  }, [charity, stage, dispatch, showModal, submit]);
 }
 
 function getEndowmentContract(stage: Stage) {
