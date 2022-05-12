@@ -1,8 +1,10 @@
+import createCounterPlugin from "@draft-js-plugins/counter";
+import "@draft-js-plugins/counter/lib/plugin.css";
+import Editor from "@draft-js-plugins/editor";
 import { ErrorMessage } from "@hookform/error-message";
 import {
   DraftBlockType,
   DraftInlineStyleType,
-  Editor,
   EditorCommand,
   EditorState,
   RichUtils,
@@ -21,6 +23,9 @@ export type EditorClasses = {
   controlContainer?: string;
   error?: string;
 };
+
+const counterPlugin = createCounterPlugin();
+const { WordCounter } = counterPlugin;
 
 export default function RichTextEditor<T extends FieldValues>(props: {
   fieldName: Path<T>;
@@ -107,6 +112,7 @@ export default function RichTextEditor<T extends FieldValues>(props: {
           />
         </div>
         <Editor
+          plugins={[counterPlugin]}
           readOnly={isSubmitting}
           editorState={editorState}
           onChange={setEditorState}
@@ -114,6 +120,10 @@ export default function RichTextEditor<T extends FieldValues>(props: {
           keyBindingFn={keyBinder}
           placeholder={props.placeHolder}
         />
+        <div className="font-thin text-xs text-right">
+          <span className="uppercase">words : </span>
+          <WordCounter />
+        </div>
       </div>
       <ErrorMessage
         errors={errors}

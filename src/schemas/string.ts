@@ -29,7 +29,7 @@ export const stringByteSchema = (
     )
     .test(
       "max_length",
-      `title must be less than ${maxBytes} bytes `,
+      `${title} must be less than ${maxBytes} bytes `,
       getBytesComparer("lt", maxBytes)
     );
 
