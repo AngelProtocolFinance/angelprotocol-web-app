@@ -1,11 +1,8 @@
-export enum RegistrationStatus {
-  Approved = "approved",
-  NotComplete = "not-complete",
-  InReview = "under-review",
-}
+export type ApplicationStatus = "approved" | "not-complete" | "under-review";
+// | "inactive"
+// | "active";
 
-// export type ApplicationStatus = "approved" | "not-complete" | "under-review";
-
+export type ApplicationStatusOptions = ApplicationStatus | "all";
 export interface CharityApplication {
   CharityName: string;
   CharityName_ContactEmail: string;
@@ -17,7 +14,7 @@ export interface CharityApplication {
   ProofOfIdentity: string;
   ProofOfIdentityVerified: boolean;
   RegistrationDate: string;
-  RegistrationStatus: string;
+  RegistrationStatus: ApplicationStatus;
   SK: string;
   TerraWallet: string;
   poll_id?: number;
