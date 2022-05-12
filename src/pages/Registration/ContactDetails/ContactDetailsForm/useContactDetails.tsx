@@ -79,12 +79,16 @@ export default function useSaveContactDetails() {
       if (!!dataResult.error) {
         setError(true);
         const resultError =
-          (dataResult.error as FetchBaseQueryError).data ||
+          (dataResult.error as FetchBaseQueryError) ||
           (dataResult as SerializedError).message;
 
-        if (resultError === "Charity already exists.") {
+        if (resultError.status === 409) {
           showModal<PopupProps>(Popup, {
-            message: `${resultError} Please check your email for the registration reference.`,
+            message: `${resultError.data} Please check your email for the registration reference.`,
+          });
+        } else if (resultError.status !== 409) {
+          showModal<PopupProps>(Popup, {
+            message: `${resultError.data}`,
           });
         } else {
           showModal<PopupProps>(Popup, {
