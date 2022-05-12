@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { ContactRoles } from "../../constants";
+import { ContactRoles, ReferralMethods } from "../../constants";
 
 export type ContactDetails = {
   charityName: string;
@@ -7,6 +7,8 @@ export type ContactDetails = {
   lastName: string;
   email: string;
   phone: string;
+  referralMethod: ReferralMethods;
+  otherReferralMethod: string;
   role: ContactRoles;
   otherRole: string;
   checkedPolicy: boolean;
@@ -31,6 +33,10 @@ export const ContactInfoSchema = Yup.object().shape({
     then: Yup.string().required(
       "Please enter your role within your organization."
     ),
+  }),
+  otherReferralMethod: Yup.string().when("referralMethod", {
+    is: "other",
+    then: Yup.string().required("Please enter your referral method."),
   }),
   checkedPolicy: Yup.bool().isTrue("Checkbox must be checked"),
 });

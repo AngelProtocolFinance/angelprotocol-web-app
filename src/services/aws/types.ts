@@ -1,4 +1,4 @@
-import { ContactRoles } from "pages/Registration/constants";
+import { ContactRoles, ReferralMethods } from "pages/Registration/constants";
 
 export interface AWSQueryRes<T> {
   Count: number;
@@ -37,8 +37,10 @@ export type ContactPerson = {
   FirstName: string;
   LastName: string;
   OtherRole?: string;
+  OtherReferralMethod?: string;
   PhoneNumber: string;
   PK?: string;
+  ReferralMethod: ReferralMethods;
   Role: ContactRoles;
   SK: "ContactPerson";
 };

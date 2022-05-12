@@ -36,6 +36,29 @@ export enum Folders {
   ProofOfRegistration = "charity-registration-documents/proof-of-registration",
 }
 
+export type ReferralMethods =
+  | "angel-alliance"
+  | "discord"
+  | "facebook"
+  | "linkedin"
+  | "medium"
+  | "press"
+  | "search-engines"
+  | "twitter"
+  | "other";
+
+export const referralMethodOptions: OptionType[] = [
+  { label: "Angel Alliance", value: "angel-alliance" },
+  { label: "Discord", value: "discord" },
+  { label: "Facebook", value: "facebook" },
+  { label: "LinkedIn", value: "linkedin" },
+  { label: "Medium", value: "medium" },
+  { label: "Press", value: "press" },
+  { label: "Search Engines", value: "search-engines" },
+  { label: "Twitter", value: "twitter" },
+  { label: "Other", value: "other" },
+];
+
 export const RevenueRanges: OptionType[] = [
   { label: "0 - 500k", value: "500" },
   { label: "500k - 1m", value: "1000" },

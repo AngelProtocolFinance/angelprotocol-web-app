@@ -9,6 +9,7 @@ const getDefaultCharity = (): Charity => ({
     LastName: "",
     PhoneNumber: "",
     PK: "",
+    ReferralMethod: "angel-alliance",
     Role: "ceo",
     SK: "ContactPerson",
   },

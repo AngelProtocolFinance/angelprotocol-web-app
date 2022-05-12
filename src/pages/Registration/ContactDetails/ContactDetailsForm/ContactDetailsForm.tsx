@@ -8,8 +8,9 @@ import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
-import { contactRoleOptions } from "../../constants";
+import { contactRoleOptions, referralMethodOptions } from "../../constants";
 import routes from "../../routes";
+import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
@@ -21,6 +22,7 @@ export default function ContactDetailsForm({ charity }: Props) {
   // just to cause a re-render when the role selection changes, mainly because
   // we need the "Other role" field rendering when role "other" is selected
   const [, setOrgRole] = useState("");
+  const [, setReferralMethod] = useState("");
   const { isError, saveContactDetails } = useSaveContactDetails();
   const navigate = useNavigate();
 
@@ -37,6 +39,8 @@ export default function ContactDetailsForm({ charity }: Props) {
       lastName: charity.ContactPerson.LastName,
       email: charity.ContactPerson.Email,
       phone: charity.ContactPerson.PhoneNumber,
+      referralMethod: charity.ContactPerson.ReferralMethod,
+      otherReferralMethod: charity.ContactPerson.OtherReferralMethod,
       role: charity.ContactPerson.Role,
       otherRole: charity.ContactPerson.OtherRole,
       checkedPolicy: false,
@@ -96,6 +100,16 @@ export default function ContactDetailsForm({ charity }: Props) {
           control={control}
           onChange={(value: string) => setOrgRole(value)}
           otherRoleErrorMessage={errors.otherRole?.message}
+          register={register}
+          disabled={isSubmitting}
+        />
+        <ReferralSelector
+          label="How did you find out about us?"
+          name="referralMethod"
+          options={referralMethodOptions}
+          control={control}
+          onChange={(value: string) => setReferralMethod(value)}
+          otherReferralMethodErrorMessage={errors.otherReferralMethod?.message}
           register={register}
           disabled={isSubmitting}
         />
