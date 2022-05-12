@@ -7,11 +7,9 @@ import {
 } from "services/transaction/transactionSlice";
 import { Stage, Step } from "services/transaction/types";
 import { useGetter, useSetter } from "store/accessors";
+import { FORM_ERROR } from "../../constants";
 import { updateCharity } from "../../store";
 import useHandleError from "../../useHandleError";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useTransactionResultHandler() {
   const charity = useGetter((state) => state.charity);
