@@ -1,5 +1,5 @@
-import { FC, useEffect } from "react";
-import { Controller, FieldValues, Path, useFormContext } from "react-hook-form";
+import { FC, useEffect, useRef } from "react";
+import { FieldValues, Path, useController } from "react-hook-form";
 import { OptionProps, SingleValueProps } from "react-select";
 import AsyncSelect from "react-select/async";
 import defaultIcon from "assets/images/angelprotocol-wings-bl.png";
@@ -21,47 +21,66 @@ export default function CountrySelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
 }) {
-  const { control, getValues, setValue } = useFormContext<T>();
+  const {
+    formState: { isSubmitting },
+    field: { onChange, value: countryStr },
+  } = useController<T>({ name: props.fieldName });
 
-  //convert country code to `[code] [country name]` format
+  const countryRefStr = useRef<string>();
+
   useEffect(() => {
-    const countryCode = getValues(props.fieldName);
-    if (!countryCode) return;
-    fetch(`${COUNTRIES_REST_ENDPOINT}/alpha/${countryCode}?fields=name,cca2`)
+    const initCountryCode = countryStr; //starting value country code | null
+    if (!initCountryCode) return;
+    fetch(
+      `${COUNTRIES_REST_ENDPOINT}/alpha/${initCountryCode}?fields=name,cca2`
+    )
       .then((res) => res.json())
       .then((country: CountryOption) => {
-        setValue(props.fieldName, combineCodeAndName(country) as any);
+        //if valid country code, set & save initial value
+        const countryStr = combineCodeAndName(country);
+        countryRefStr.current = countryStr;
+        onChange(countryStr);
+      })
+      //if starting value is not a valid country code
+      //just clear singleVal container
+      .catch(() => {
+        onChange(null);
       });
-  }, [getValues, setValue, props.fieldName]);
+    //eslint-disable-next-line
+  }, []);
 
   return (
-    <Controller
-      control={control}
-      name={props.fieldName}
-      render={({ field: { onChange, value }, fieldState: { isDirty } }) => (
-        <AsyncSelect
-          className={props.classes}
-          //transform to string for consumption in form
-          onChange={(newCountry) => {
-            if (newCountry && "name" in newCountry) {
-              onChange(combineCodeAndName(newCountry));
-            } else {
-              onChange(null);
-            }
-          }}
-          onMenuOpen={() => onChange(null)}
-          //transform from string to CountryOption
-          value={transformValtoCountry(value)}
-          getOptionLabel={getOptionLabel}
-          getOptionValue={getOptionValue}
-          loadOptions={loadOptions}
-          cacheOptions={true}
-          isClearable={true}
-          placeholder="Search country"
-          noOptionsMessage={getOptionNotFoundMessage}
-          components={{ Option, SingleValue }}
-        />
-      )}
+    <AsyncSelect
+      isDisabled={isSubmitting}
+      className={props.classes}
+      //transform to string for consumption in form
+      onChange={(newCountry) => {
+        if (newCountry && "name" in newCountry) {
+          const countryStr = combineCodeAndName(newCountry);
+          onChange(countryStr);
+          //change attempt would clear initial value
+          countryRefStr.current = countryStr;
+        } else {
+          onChange(null);
+        }
+      }}
+      onMenuOpen={() => {
+        onChange(null);
+      }}
+      onMenuClose={() => {
+        //go back to previously saved countryStr
+        onChange(countryRefStr.current);
+      }}
+      //transform from string to CountryOption
+      value={transformValtoCountry(countryStr)}
+      getOptionLabel={getOptionLabel}
+      getOptionValue={getOptionValue}
+      loadOptions={loadOptions}
+      cacheOptions={true}
+      isClearable={true}
+      placeholder="Search country"
+      noOptionsMessage={getOptionNotFoundMessage}
+      components={{ Option, SingleValue }}
     />
   );
 }
