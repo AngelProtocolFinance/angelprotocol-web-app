@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { CharityParam } from "pages/Charity/types";
+import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin/endowment_admin";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import toCurrency from "helpers/toCurrency";
 
@@ -9,6 +10,7 @@ export function EndowmentInfo() {
   const { address } = useParams<CharityParam>();
   //this component will not be rendered if address is undefined or incorrect
   const { endowmentBalance } = useEndowmentBalance(address!);
+  const { data } = useDepositTransactionsQuery(address!);
   const accountDetails = [
     {
       type: "Liquid Account",
@@ -36,10 +38,12 @@ export function EndowmentInfo() {
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
             ${toCurrency(endowmentBalance?.total || 0)}
           </p>
-          {/*          <p className="uppercase font-bold text-thin-blue text-sm">
+          <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations
           </p>
-          <p className="uppercase font-bold text-thin-blue text-3xl">154</p>*/}
+          <p className="uppercase font-bold text-thin-blue text-3xl">
+            {data ? data.length : "-"}
+          </p>
         </div>
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">
           <p className="text-center">Charts</p>
