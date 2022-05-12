@@ -17,21 +17,22 @@ describe("uploadToIpfs tests", () => {
   it("returns correctly extracted data after successful upload", async () => {
     const filename = "test-file.txt";
     const folder = Folders.ProofOfIdentity;
-    const publicUrl = `https://mockfleek.com/${folder}/${filename}`;
+    const path = `${folder}/${filename}`;
+    const publicUrl = `https://mockfleek.com/${path}`;
     mockFleekUpload.mockResolvedValue({ publicUrl });
     const mockFile = new File([], filename);
 
-    const result = await uploadToIpfs(mockFile, folder);
+    const result = await uploadToIpfs(path, mockFile);
 
     expect(mockFleekUpload).toHaveBeenCalledWith(
       expect.objectContaining({
-        key: `${folder}/${filename}`,
+        key: path,
         apiKey: API_KEY,
         apiSecret: API_SECRET,
         data: mockFile,
       })
     );
-    expect(result).toStrictEqual({ name: filename, publicUrl });
+    expect(result).toStrictEqual(publicUrl);
   });
 
   it("returns correctly extracted data after successful upload (no folder)", async () => {
@@ -40,7 +41,7 @@ describe("uploadToIpfs tests", () => {
     mockFleekUpload.mockResolvedValue({ publicUrl });
     const mockFile = new File([], filename);
 
-    const result = await uploadToIpfs(mockFile);
+    const result = await uploadToIpfs(filename, mockFile);
 
     expect(mockFleekUpload).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -50,16 +51,17 @@ describe("uploadToIpfs tests", () => {
         data: mockFile,
       })
     );
-    expect(result).toStrictEqual({ name: filename, publicUrl });
+    expect(result).toStrictEqual(publicUrl);
   });
 
   it("returns empty strings for values when error is thrown", async () => {
+    const filename = "test-file.txt";
     mockFleekUpload.mockImplementation((_: any) => {
       throw new Error();
     });
 
-    const result = await uploadToIpfs(new File([], "test-file.txt"));
+    const result = await uploadToIpfs(filename, new File([], filename));
 
-    expect(result).toStrictEqual({ name: "", publicUrl: "" });
+    expect(result).toBe("");
   });
 });
