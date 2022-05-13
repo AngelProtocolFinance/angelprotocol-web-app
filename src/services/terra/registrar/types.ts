@@ -9,7 +9,7 @@ export type EndowmentStatus = {
 
 export type EndowmentStatusNum = EndowmentStatus[keyof EndowmentStatus];
 export type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
-export type EndowmentType = "charity";
+export type EndowmentType = "charity" | "normal";
 
 export type EndowmentListRes = {
   endowments: EndowmentEntry[];
@@ -19,6 +19,8 @@ export type EndowmentEntry = {
   address: string;
   status: keyof EndowmentStatus;
   name: string;
+  logo?: string;
+  image?: string;
   owner?: string;
   tier?: EndowmentTier;
   endow_type?: EndowmentType;

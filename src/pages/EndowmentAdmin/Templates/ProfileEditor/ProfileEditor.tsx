@@ -41,7 +41,7 @@ function ProfileEditContext(props: Profile) {
     image: props.image,
     url: props.url,
     registration_number: props.registration_number,
-    country_city_origin: props.country_city_origin,
+    country_city_origin: props.country_city_origin || "",
     contact_email: props.contact_email,
     facebook: props.social_media_urls.facebook,
     twitter: props.social_media_urls.twitter,

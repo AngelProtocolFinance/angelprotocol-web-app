@@ -25,7 +25,6 @@ import { UpdateProfileValues } from "./profileEditSchema";
 
 const PLACEHOLDER_OVERVIEW = "[text]";
 const PLACEHOLDER_IMAGE = "[img]";
-const DEFAULT_BANNER_NAME = "banner";
 export default function useEditProfile() {
   const { address: endowmentAddr } = useParams<EndowmentAddrParams>();
   const {
@@ -76,7 +75,7 @@ export default function useEditProfile() {
       //convert dataURL to file
       const imageRes = await fetch(data.image);
       const imageBlob = await imageRes.blob();
-      const imageFile = new File([imageBlob], DEFAULT_BANNER_NAME);
+      const imageFile = new File([imageBlob], `banner_${endowmentAddr}`); //use endow address as unique imageName
 
       const key = imageFile.name;
       const file = await optimizeImage(imageFile);
