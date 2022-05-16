@@ -3,6 +3,12 @@ export type ApplicationStatus = "approved" | "not-complete" | "under-review";
 // | "active";
 
 export type ApplicationStatusOptions = ApplicationStatus | "all";
+export type RegistrationStatus =
+  | "Not Complete"
+  | "Inactive"
+  | "Active"
+  | "Approved"
+  | "Under Review";
 export interface CharityApplication {
   CharityName: string;
   CharityName_ContactEmail: string;
@@ -14,7 +20,7 @@ export interface CharityApplication {
   ProofOfIdentity: string;
   ProofOfIdentityVerified: boolean;
   RegistrationDate: string;
-  RegistrationStatus: ApplicationStatus;
+  RegistrationStatus: RegistrationStatus;
   SK: string;
   TerraWallet: string;
   poll_id?: number;
