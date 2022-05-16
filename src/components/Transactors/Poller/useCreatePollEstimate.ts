@@ -1,30 +1,29 @@
 import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
+import { useGetter, useSetter } from "store/accessors";
+import Gov from "contracts/Gov";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
   const {
+    setError,
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
-
   const [maxFee, setMaxFee] = useState<Fee>();
 
   useEffect(() => {
@@ -39,13 +38,15 @@ export default function useCreatePollEstimate() {
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
+
+        const haloBalance = getTokenBalance(coins, denoms.halo);
         if (amount >= haloBalance) {
-          dispatch(setFormError("Not enough halo balance"));
+          setError("amount", { message: "not enough HALO balance" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const pollMsgs = await contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
@@ -56,16 +57,17 @@ export default function useCreatePollEstimate() {
         );
 
         //max fee estimate with extreme payload
-        const fee = await contract.estimateFee(pollMsgs);
+        const fee = await contract.estimateFee([pollMsgs]);
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        if (feeNum >= ustBalance) {
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -77,7 +79,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
+  }, [wallet, coins, isDirty, isValid]);
 
   return { wallet, maxFee };
 

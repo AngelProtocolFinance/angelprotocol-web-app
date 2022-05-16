@@ -5,8 +5,6 @@ import { Dwindow, Providers } from "services/provider/types";
 import { RootState } from "store/store";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
-import { chainIDs } from "constants/chainIDs";
-import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
 import { EthDonateArgs } from "./transactorTypes";
@@ -36,11 +34,11 @@ export const sendEthDonation = createAsyncThunk(
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
-      const chainId = `${chainNum}` as chainIDs;
+      const chainId = `${chainNum}`;
       const response = await signer.sendTransaction(args.tx!);
 
       updateTx({ step: Step.submit, message: "Saving donation info.." });
-      const { receiver, currency, amount, split_liq } = args.donateValues;
+      const { receiver, token, amount, split_liq } = args.donateValues;
       const receipient: Receiver =
         typeof receiver === "string"
           ? { charityId: receiver }
@@ -53,7 +51,7 @@ export const sendEthDonation = createAsyncThunk(
           transactionDate: new Date().toISOString(),
           chainId,
           amount: +amount,
-          denomination: currency_text[currency],
+          denomination: token.symbol,
           splitLiq: split_liq,
           walletAddress,
         });

@@ -5,8 +5,6 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
 import transactionSlice, { setStage } from "./transactionSlice";
 import { SenderArgs, StageUpdator, Step, WithMsg, WithTx } from "./types";
 
@@ -43,15 +41,15 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         const feeNum = extractFeeNum(fee);
 
         const state = getState() as RootState;
-        const feeDenom = args.feedDenom || denoms.uusd;
+        const feeSymbol = args.feeSymbol || "UST";
         const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
-          0;
+          state.wallet.coins.find((coin) => coin.symbol === feeSymbol)
+            ?.balance || 0;
 
         if (feeNum > walletBalanceForFee) {
           updateTx({
             step: Step.error,
-            message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
+            message: `Not enough ${feeSymbol} to pay for fees`,
           });
           return;
         }
@@ -59,7 +57,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       }
 
       const response = await args.wallet.post(tx);
-      const chainId = contract.chainID as chainIDs;
+      const chainId = contract.chainID;
 
       updateTx({
         step: Step.broadcast,

@@ -6,7 +6,7 @@ export enum sc {
   apCW4 = "apCW4",
   apCW3 = "apCW3",
   halo_token = "halo_token",
-  halo_gov = "halo_gov",
+  gov = "gov",
   airdrop = "airdrop",
   loop_factory = "loop_factory",
   loop_router = "loop_router",

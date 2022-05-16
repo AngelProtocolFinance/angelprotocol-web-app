@@ -3,7 +3,6 @@ import Icon from "components/Icons/Icons";
 import { useGetter } from "store/accessors";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
-import { currency_text } from "constants/currency";
 import Details from "./Details";
 
 //this component won't be rendered if wallet is not connected
@@ -36,8 +35,7 @@ export default function Display() {
           {isUpdating ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
-          {currency_text[displayCoin.denom]}{" "}
-          {toCurrency(displayCoin.amount, 3, true)}
+          {displayCoin.symbol} {toCurrency(displayCoin.amount, 3, true)}
         </span>
       </button>
       {detailsShown && <Details closeHandler={hideDetails} />}

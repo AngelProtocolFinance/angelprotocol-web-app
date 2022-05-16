@@ -5,6 +5,7 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
+import CountrySelector from "components/CountrySelector/CountrySelector";
 import RichTextEditor, {
   EditorClasses,
 } from "components/RichTextEditor/RichTextEditor";
@@ -39,10 +40,12 @@ export default function EditForm() {
         placeholder="AP2022HLO"
       />
       <TextInput<UV>
-        name="country_city_origin"
-        title="Location"
+        name="street_address"
+        title="Street address"
         placeholder="Manila, Philippines"
       />
+      <Label className="text-angel-grey -mb-2">Country</Label>
+      <CountrySelector<UV> fieldName="country_of_origin" classes="mb-6 z-10" />
       <Label className="text-angel-grey -mb-2">Overview</Label>
       <RichTextEditor<UV>
         fieldName="overview"
@@ -87,7 +90,7 @@ export default function EditForm() {
           plain
         />
         <TextInput<UV>
-          name="facebook"
+          name="twitter"
           title="Twitter"
           placeholder="https://twitter.com/angelprotocol"
           plain

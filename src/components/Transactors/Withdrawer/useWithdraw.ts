@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { multicall, tags, user } from "services/terra/tags";
+import { multicall, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
 import { useModalContext } from "components/ModalContext/ModalContext";
@@ -28,7 +28,7 @@ export default function useWithdraw(resources: WithdrawResource) {
         tagPayloads: [
           terra.util.invalidateTags([
             { type: tags.multicall, id: multicall.endowmentBalance },
-            { type: tags.user, id: user.terra_balance },
+            { type: tags.multicall, id: multicall.terraBalances },
           ]),
         ],
         successLink: {

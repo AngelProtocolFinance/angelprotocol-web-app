@@ -87,7 +87,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //if all fields are blank, return
         if (filteredInputs.length <= 0) {
           dispatch(setFormError("No withdraw amount provided"));
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           setValue("total_ust", 0);
           setValue("total_receive", 0);
           return;
@@ -161,7 +161,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [proposalMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

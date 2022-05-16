@@ -65,6 +65,31 @@ export function useAirdrop() {
   };
 }
 
+export function useTerraBalances(customAddr?: string) {
+  /**
+   * @param customAddr address other than user's wallet address
+   */
+  const { useTerraBalancesQuery } = multicall_api;
+  const { wallet } = useWalletContext();
+  const {
+    data = [],
+    isError,
+    isLoading,
+    isFetching,
+  } = useTerraBalancesQuery(
+    {
+      wallet: getSerializableWallet(wallet)!,
+      customAddr,
+    },
+    { skip: !wallet && !customAddr }
+  );
+  return {
+    terraBalances: data,
+    isTerraBalancesLoading: isLoading || isFetching,
+    isTerraBalancesError: isError,
+  };
+}
+
 //strip wallet Proxy of unserializable attr since
 
 type SerializableWalletProxy = Pick<

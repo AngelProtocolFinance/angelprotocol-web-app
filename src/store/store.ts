@@ -5,6 +5,7 @@ import { apes } from "services/apes/apes";
 import authReducer from "services/auth/authSlice";
 import { aws } from "services/aws/aws";
 import chainReducer from "services/chain/chainSlice";
+import { flipside } from "services/flipslide/flipslide";
 import providerReducer from "services/provider/providerSlice";
 import { terra } from "services/terra/terra";
 import transactionReducer from "../services/transaction/transactionSlice";
@@ -22,6 +23,7 @@ export const store = configureStore({
     [aws.reducerPath]: aws.reducer,
     [terra.reducerPath]: terra.reducer,
     [apes.reducerPath]: apes.reducer,
+    [flipside.reducerPath]: flipside.reducer,
     //auth: authReducer,
     //future: futureReducer,
   },

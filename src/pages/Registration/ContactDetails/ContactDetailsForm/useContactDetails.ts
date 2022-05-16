@@ -7,9 +7,9 @@ import {
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { ContactDetailsData, ContactDetailsRequest } from "services/aws/types";
+import { ContactDetailsRequest } from "services/aws/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup, { PopupProps } from "components/Popup/Popup";
+import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
@@ -25,25 +25,6 @@ export default function useSaveContactDetails() {
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
   const { showModal } = useModalContext();
-
-  const handleUpdateCharity = useCallback(
-    (result: ContactDetailsData) => {
-      dispatch(
-        updateCharity({
-          ...charity,
-          ContactPerson: {
-            ...charity.ContactPerson,
-            ...result.ContactPerson,
-          },
-          Registration: {
-            ...charity.Registration,
-            ...result.Registration,
-          },
-        })
-      );
-    },
-    [dispatch, charity]
-  );
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
@@ -71,52 +52,70 @@ export default function useSaveContactDetails() {
         ? await registerCharity(postData)
         : await updateContactPerson(postData);
 
-      const dataResult = result as {
-        data: ContactDetailsData;
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (!!dataResult.error) {
+      if ("error" in result) {
         setError(true);
         const resultError =
-          dataResult.error ||
-          (dataResult.error as FetchBaseQueryError).data ||
-          (dataResult as SerializedError).message;
+          (result.error as FetchBaseQueryError) ||
+          (result as SerializedError).message;
 
-        showModal<PopupProps>(Popup, {
-          message: `${resultError} Please check your email for the registration reference.`,
-        });
+        if (resultError.status === 409) {
+          showModal(Popup, {
+            message: `${resultError.data} Please check your email for the registration reference.`,
+          });
+        } else if (resultError.status !== 409) {
+          showModal(Popup, {
+            message: `${resultError.data}`,
+          });
+        } else {
+          showModal(Popup, {
+            message: `${resultError}`,
+          });
+        }
+
         return;
       }
 
-      handleUpdateCharity(dataResult.data);
+      const { data } = result;
+
+      dispatch(
+        updateCharity({
+          ...charity,
+          ContactPerson: {
+            ...charity.ContactPerson,
+            ...data.ContactPerson,
+          },
+          Registration: {
+            ...charity.Registration,
+            ...data.Registration,
+          },
+        })
+      );
 
       if (!is_create) {
-        navigate(`${site.app}/${app.register}/${routes.dashboard}`);
-        return;
+        return navigate(`${site.app}/${app.register}/${routes.dashboard}`);
       }
 
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
-      const { PK, SK, EmailVerified, ...contactPerson } =
-        dataResult.data.ContactPerson;
+      const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
 
       await resendEmail({
         uuid: PK,
         type: "verify-email",
         body: {
           ...contactPerson,
-          CharityName: dataResult.data.Registration.CharityName,
+          CharityName: data.Registration.CharityName,
         },
       });
       navigate(`${site.app}/${app.register}/${routes.confirm}`);
     },
     [
+      charity,
+      showModal,
+      dispatch,
       navigate,
       registerCharity,
       resendEmail,
-      showModal,
       updateContactPerson,
-      handleUpdateCharity,
     ]
   );
 

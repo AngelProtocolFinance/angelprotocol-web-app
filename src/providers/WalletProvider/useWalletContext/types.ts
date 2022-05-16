@@ -8,5 +8,5 @@ export const TORUS_CONNECTION: ConnectionProxy = {
   icon: torusIcon,
 };
 
-export const NETWORK =
-  process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
+const isDevelopment = process.env.NODE_ENV === "development";
+export const NETWORK = isDevelopment ? "testnet" : "mainnet";
