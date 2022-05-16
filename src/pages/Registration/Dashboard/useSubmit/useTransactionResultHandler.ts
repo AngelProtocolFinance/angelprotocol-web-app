@@ -1,28 +1,22 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect } from "react";
 import { useSubmitMutation } from "services/aws/registration";
-import { SubmitResult } from "services/aws/types";
 import {
   setFormError,
   setFormLoading,
   setStage,
 } from "services/transaction/transactionSlice";
 import { Stage, Step } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
+import { FORM_ERROR } from "../../constants";
 import { updateCharity } from "../../store";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
+import useHandleError from "../../useHandleError";
 
 export default function useTransactionResultHandler() {
   const charity = useGetter((state) => state.charity);
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
-  const { showModal } = useModalContext();
+  const handleError = useHandleError();
   const [submit] = useSubmitMutation();
 
   useEffect(() => {
@@ -33,25 +27,19 @@ export default function useTransactionResultHandler() {
           EndowmentContract: getEndowmentContract(stage),
         });
 
-        const dataResult = result as {
-          data: SubmitResult;
-          error: FetchBaseQueryError | SerializedError;
-        };
-
-        if (dataResult.error) {
-          console.log(dataResult.error);
-          showModal(Popup, { message: FORM_ERROR });
+        if ("error" in result) {
+          handleError(result.error, FORM_ERROR);
         } else {
           dispatch(
             updateCharity({
               ...charity,
               Registration: {
                 ...charity.Registration,
-                RegistrationStatus: dataResult.data.RegistrationStatus,
+                RegistrationStatus: result.data.RegistrationStatus,
               },
               Metadata: {
                 ...charity.Metadata,
-                EndowmentContract: dataResult.data.EndowmentContract,
+                EndowmentContract: result.data.EndowmentContract,
               },
             })
           );
@@ -70,7 +58,7 @@ export default function useTransactionResultHandler() {
     } else if (stage.step === Step.success) {
       handle();
     }
-  }, [charity, stage, dispatch, showModal, submit]);
+  }, [charity, stage, dispatch, handleError, submit]);
 }
 
 function getEndowmentContract(stage: Stage) {

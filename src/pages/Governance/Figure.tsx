@@ -3,7 +3,7 @@ import toCurrency from "helpers/toCurrency";
 type Props = {
   title: string;
   value: number;
-  denom: string;
+  symbol: string;
   percent?: number;
   position?: string;
   precision?: number;
@@ -23,7 +23,7 @@ export default function Figure(props: Props) {
         <span className="">
           {toCurrency(props.value, props.precision || 2, true)}
         </span>
-        <span className=""> {props.denom}</span>
+        <span className=""> {props.symbol}</span>
         {/* {(props.percent && (
           <span className="text-lg pl-2 font-body">
             ( {toCurrency(props.percent)}% )

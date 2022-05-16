@@ -5,15 +5,13 @@ import useActivate from "../useActivate";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
 
-const mockUseActivateMutation = jest.fn();
-
+const mockUseActivateCharityMutation = jest.fn();
 jest.mock("services/aws/registration", () => ({
   __esModule: true,
-  useActivateMutation: () => mockUseActivateMutation(),
+  useActivateCharityMutation: () => mockUseActivateCharityMutation(),
 }));
 
 const mockShowModal = jest.fn();
-
 jest.mock("components/ModalContext/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
@@ -21,7 +19,6 @@ jest.mock("components/ModalContext/ModalContext", () => ({
 
 const mockDispatch = jest.fn();
 const mockUseGetter = jest.fn();
-
 jest.mock("store/accessors", () => ({
   __esModule: true,
   useGetter: (..._: any[]) => mockUseGetter(),
@@ -30,7 +27,7 @@ jest.mock("store/accessors", () => ({
 
 describe("useActivate tests", () => {
   it("should return default values on initialization", () => {
-    mockUseActivateMutation.mockReturnValue([
+    mockUseActivateCharityMutation.mockReturnValue([
       (_: string) => ({}),
       { isLoading: false },
     ]);
@@ -40,7 +37,7 @@ describe("useActivate tests", () => {
   });
 
   it("should return isSubmitting that is equal to useActivateMutation.isLoading", () => {
-    mockUseActivateMutation.mockReturnValue([
+    mockUseActivateCharityMutation.mockReturnValue([
       (_: string) => {},
       { isLoading: true },
     ]);
@@ -52,7 +49,7 @@ describe("useActivate tests", () => {
   it("handles happy flow correctly", async () => {
     const mockActivate = jest.fn(() => ({}));
     mockUseGetter.mockReturnValue(CHARITY);
-    mockUseActivateMutation.mockReturnValue([
+    mockUseActivateCharityMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
     ]);
@@ -82,7 +79,7 @@ describe("useActivate tests", () => {
     };
     const mockActivate = jest.fn(() => error);
     mockUseGetter.mockReturnValue(CHARITY);
-    mockUseActivateMutation.mockReturnValue([
+    mockUseActivateCharityMutation.mockReturnValue([
       mockActivate,
       { isLoading: false },
     ]);

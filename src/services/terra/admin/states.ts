@@ -15,7 +15,7 @@ export function useMemberState(customCWs?: CWContracts, skip = false) {
       skip ||
       isAdminSkip ||
       !wallet ||
-      wallet.network.chainID === chainIDs.localterra,
+      wallet.network.chainID === chainIDs.terra_local,
   });
   return { member: data, isMemberLoading: isFetching || isLoading };
 }

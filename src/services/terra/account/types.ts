@@ -24,7 +24,8 @@ export interface Profile {
   image?: string;
   url?: string;
   registration_number?: string;
-  country_city_origin?: string;
+  street_address?: string;
+  country_of_origin?: string;
   contact_email?: string;
   social_media_urls: {
     facebook?: string;
