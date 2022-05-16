@@ -3,6 +3,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
 import { UpdateCharityMetadataResult } from "services/aws/types";
+import { FileWrapper } from "components/FileDropzone/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
@@ -18,10 +19,9 @@ export default function useSubmit() {
   const { showModal } = useModalContext();
 
   const handleError = useCallback(
-    (err) => {
-      showModal(Popup, {
-        message: err?.data?.message || "Error updating profile ❌",
-      });
+    (error) => {
+      console.log(error);
+      showModal(Popup, { message: "Error updating profile ❌" });
     },
     [showModal]
   );
@@ -44,54 +44,80 @@ export default function useSubmit() {
 
   const submit = useCallback(
     async (values: FormValues) => {
-      const body = await getUploadBody(values);
-      if (!body)
-        return showModal(Popup, { message: "Error uploading files ❌" });
+      try {
+        const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
-      const result = await updateMetadata({
-        PK: charity.ContactPerson.PK,
-        body,
-      });
+        const result = await updateMetadata({
+          PK: charity.ContactPerson.PK,
+          body,
+        });
 
-      const dataResult = result as {
-        data: UpdateCharityMetadataResult;
-        error: FetchBaseQueryError | SerializedError;
-      };
+        const dataResult = result as {
+          data: UpdateCharityMetadataResult;
+          error: FetchBaseQueryError | SerializedError;
+        };
 
-      if (dataResult.error) {
-        handleError(dataResult.error);
-      } else {
-        handleSuccess(dataResult.data);
+        if (dataResult.error) {
+          handleError(dataResult.error);
+        } else {
+          handleSuccess(dataResult.data);
+        }
+      } catch (error) {
+        handleError(error);
       }
     },
-    [
-      showModal,
-      updateMetadata,
-      charity.ContactPerson.PK,
-      handleError,
-      handleSuccess,
-    ]
+    [updateMetadata, charity.ContactPerson.PK, handleError, handleSuccess]
   );
 
   return { submit, isSuccess };
 }
 
-async function getUploadBody(values: FormValues) {
-  const logoPromise = uploadToIpfs(
-    values.charityLogo.file,
+async function getUploadBody(primaryKey: string, values: FormValues) {
+  const logoPromise = uploadIfNecessary(
+    primaryKey,
+    values.charityLogo,
     Folders.CharityProfileImageLogo
   );
-  const bannerPromise = uploadToIpfs(
-    values.banner.file,
+  const bannerPromise = uploadIfNecessary(
+    primaryKey,
+    values.banner,
     Folders.CharityProfileImageBanners
   );
   const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
-  if (!CharityLogo.publicUrl || !Banner.publicUrl) return null;
+  if (!CharityLogo.publicUrl || !Banner.publicUrl) {
+    throw new Error(
+      `Error uploading file ${
+        !CharityLogo.publicUrl ? values.charityLogo.name : values.banner.name
+      }`
+    );
+  }
 
   return {
     Banner,
     CharityLogo,
     CharityOverview: values.charityOverview,
+  };
+}
+
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
+  if (!fileWrapper.file) {
+    return {
+      name: fileWrapper.name,
+      publicUrl: fileWrapper.publicUrl,
+    };
+  }
+
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
+
+  return {
+    name: fileWrapper.file.name,
+    publicUrl,
   };
 }
