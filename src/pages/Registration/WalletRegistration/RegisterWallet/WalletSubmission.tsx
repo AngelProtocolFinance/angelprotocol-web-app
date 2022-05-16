@@ -35,7 +35,7 @@ export default function WalletSubmission(props: Props) {
           <p>
             If you wish to register another wallet, you need to Disconnect using
             the wallet logo located at the top right of your screen and resume
-            the process with another wallet
+            the process with another wallet.
           </p>
           <div className="flex flex-col gap-10 items-center w-128">
             <FormInput
