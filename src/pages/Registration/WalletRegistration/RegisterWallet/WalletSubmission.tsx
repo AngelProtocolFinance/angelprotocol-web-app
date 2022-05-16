@@ -23,9 +23,9 @@ export default function WalletSubmission(props: Props) {
     <div className="flex flex-col h-full items-center gap-10 justify-center">
       <p className="text-3xl font-bold">Register your wallet</p>
       <p>
-        {/* As discussed with Lambert, this placeholder value will be replaces with the real text
-        once we receive it (the real text)*/}
-        ### EXPLANATION ABOUT WHAT REGISTERING THE WALLET DOES ###
+        Once you have connected the terra wallet of your choice, we shall be
+        able to create your Angel Protocol endowment account using that wallet
+        address. We recommend using a new wallet.
       </p>
       {/** only Terra wallet status can be passed (using useWalletProxy), other wallets handled separately */}
       {status !== WalletStatus.WALLET_CONNECTED ? (
