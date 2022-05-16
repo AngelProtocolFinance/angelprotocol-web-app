@@ -84,7 +84,7 @@ export default function EditForm() {
           plain
         />
         <TextInput<UV>
-          name="facebook"
+          name="twitter"
           title="Twitter"
           placeholder="https://twitter.com/angelprotocol"
           plain

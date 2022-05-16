@@ -1,8 +1,8 @@
-import { useConnectedWallet } from "@terra-money/wallet-provider";
 import { useNavigate } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
 import Icon from "components/Icons/Icons";
 import { useModalContext } from "components/ModalContext/ModalContext";
+import useWalletContext from "hooks/useWalletContext";
 import { admin } from "constants/routes";
 import useProposalDetails from "../Proposals/useProposalDetails";
 import { CharityApplication } from "./types";
@@ -13,7 +13,7 @@ export default function PreviewForm({
 }: {
   application: CharityApplication;
 }) {
-  const wallet = useConnectedWallet();
+  const { wallet } = useWalletContext();
   const { closeModal } = useModalContext();
   const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
@@ -25,7 +25,7 @@ export default function PreviewForm({
   const getTitle = (status: string) =>
     `${status} ${ap.CharityName} Application`;
   const getDescription = (status: string) =>
-    `${status} ${ap.CharityName} by ${wallet?.walletAddress}`;
+    `${status} ${ap.CharityName} by ${wallet?.address}`;
 
   const openPoll = () => {
     navigate(`admin/${admin.proposal}/${ap.poll_id}`);
@@ -33,7 +33,10 @@ export default function PreviewForm({
   };
 
   return (
-    <div className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto">
+    <div
+      className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
+      data-testid="preview-form"
+    >
       <h1 className="font-heading font-bold text-angel-grey uppercase">
         Review Application
       </h1>
