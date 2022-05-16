@@ -23,6 +23,7 @@ import {
   BiSearchAlt2,
 } from "react-icons/bi";
 import {
+  BsDiscord,
   BsExclamationCircle,
   BsHourglassSplit,
   BsSafeFill,
@@ -32,7 +33,9 @@ import {
   FaClock,
   FaCog,
   FaExternalLinkAlt,
+  FaFacebook,
   FaFacebookF,
+  FaLinkedin,
   FaLinkedinIn,
   FaListOl,
   FaListUl,
@@ -61,13 +64,16 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"
+  | "DiscordLine"
   | "FileDownload"
   | "Telegram"
   | "Twitter"
   | "Youtube"
   | "Medium"
   | "Facebook"
+  | "FacebookCircle"
   | "Linkedin"
+  | "LinkedinSquare"
   | "Parachute"
   | "Link"
   | "ListUl"
@@ -126,7 +132,9 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Down: VscTriangleDown,
   ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
-  Discord: RiDiscordLine,
+  FacebookCircle: FaFacebook,
+  Discord: BsDiscord,
+  DiscordLine: RiDiscordLine,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
   Youtube: AiFillYoutube,
@@ -136,6 +144,7 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Menu: FiMenu,
   Close: IoClose,
   Linkedin: FaLinkedinIn,
+  LinkedinSquare: FaLinkedin,
   Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
