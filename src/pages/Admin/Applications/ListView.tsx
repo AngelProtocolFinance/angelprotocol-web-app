@@ -8,7 +8,7 @@ export default function ListView(props: {
   return (
     <ul className="grid grid-cols-1 sm:grid-cols-2 sm:hidden">
       {props.applications.map((ap) => (
-        <ApplicationCard ap={ap} />
+        <ApplicationCard ap={ap} key={ap.PK} />
       ))}
     </ul>
   );

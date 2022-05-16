@@ -4,10 +4,10 @@ import { Vote } from "@types-server/contracts";
 import { PollStatus } from "@types-server/contracts";
 import {
   useGovConfig,
+  useGovHaloBalance,
   useGovPoll,
   useGovStaker,
 } from "services/terra/gov/queriers";
-import { useGovBalanceState } from "services/terra/gov/states";
 import { useLatestBlock } from "services/terra/queriers";
 import useWalletContext from "hooks/useWalletContext";
 import toCurrency from "helpers/toCurrency";
@@ -37,7 +37,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
   const { wallet } = useWalletContext();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
-  const gov_staked = useGovBalanceState();
+  const gov_staked = useGovHaloBalance();
   const gov_staker = useGovStaker();
   const block_height = useLatestBlock();
 

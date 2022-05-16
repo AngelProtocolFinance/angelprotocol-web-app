@@ -1,13 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { TerraChainIDs } from "@types-lists";
 import { FundSendValues } from "@types-page/admin";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
+import { useTerraBalances } from "services/terra/multicall/queriers";
 import { useGetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
+import getTokenBalance from "helpers/getTokenBalance";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
+import { denoms } from "constants/currency";
 import FundSendForm from "./FundSendForm/FundSendForm";
 import { fundSendSchema } from "./fundSendSchema";
 
@@ -16,27 +18,19 @@ export default function FundSender() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const cw3address =
     cwContracts === "apTeam"
-      ? contracts[(wallet?.network.chainID as TerraChainIDs) || "bombay-12"]
-          .apCW3
+      ? contracts[wallet?.network.chainID || chainIDs.terra_test].apCW3
       : cwContracts.cw3;
 
   //cw3 balances
-  const {
-    main: ustBalance,
-    terraBalancesLoading,
-    isTerraBalancesFailed,
-  } = useBalances("uusd", [], cw3address);
+  const { terraBalances, isTerraBalancesError, isTerraBalancesLoading } =
+    useTerraBalances(cw3address);
+  const haloBalance = getTokenBalance(terraBalances, denoms.halo);
+  const ustBalance = getTokenBalance(terraBalances, denoms.uusd);
 
-  const { haloBalance, haloBalanceLoading, isHaloBalanceFailed } =
-    useHaloBalance(cw3address);
-
-  const isBalancesLoading = haloBalanceLoading || terraBalancesLoading;
-  const isBalancesError = isTerraBalancesFailed || isHaloBalanceFailed;
-
-  if (isBalancesLoading) return <FormSkeleton />;
-  if (isBalancesError)
+  if (isTerraBalancesLoading) return <FormSkeleton />;
+  if (isTerraBalancesError) {
     return <FormError errorMessage="failed to get cw3 balances" />;
-
+  }
   return <FundSendContext {...{ haloBalance, ustBalance }} />;
 }
 

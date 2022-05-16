@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { EndowmentEntry } from "@types-server/contracts";
-import image from "assets/images/home-banner.jpg";
+import defaultBanner from "assets/images/home-banner.jpg";
 import LazyImage from "components/LazyImage/LazyImage";
 import { appRoutes, siteRoutes } from "constants/routes";
 
@@ -12,7 +12,7 @@ export default function CharityCard(props: EndowmentEntry) {
     >
       <LazyImage
         classes="mt-2 mx-2 w-64 h-32 bg-white rounded-lg img-no-drag object-cover object-center rounded-md"
-        src={image}
+        src={props.image || defaultBanner}
         alt="charity banner"
       />
       <div className="mx-2 w-64 cursor-pointer font-heading text-white-grey font-bold text-sm uppercase my-2.5">

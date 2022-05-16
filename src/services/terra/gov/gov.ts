@@ -1,9 +1,10 @@
 import { Dec } from "@terra-money/terra.js";
 import {
+  CW20Balance,
+  CW20Info,
   GovConfig,
   GovStaker,
   GovState,
-  HaloBalance,
   Poll,
   Polls,
   QueryRes,
@@ -43,14 +44,18 @@ export const gov_api = terra.injectEndpoints({
         return res.query_result;
       },
     }),
-    govBalance: builder.query<number, ContractQueryArgs>({
+    govHaloBalance: builder.query<number, ContractQueryArgs>({
       providesTags: [{ type: terraTags.gov, id: govTags.halo_balance }],
       query: contract_querier,
-      transformResponse: (res: QueryRes<HaloBalance>) => {
-        const halo_amount = new Dec(res.query_result.balance)
-          .div(1e6)
-          .toNumber();
-        return halo_amount;
+      transformResponse: (res: QueryRes<CW20Balance>) => {
+        return new Dec(res.query_result.balance).div(1e6).toNumber();
+      },
+    }),
+    haloInfo: builder.query<CW20Info, ContractQueryArgs>({
+      providesTags: [{ type: terraTags.gov, id: govTags.halo_info }],
+      query: contract_querier,
+      transformResponse: (res: QueryRes<CW20Info>) => {
+        return res.query_result;
       },
     }),
   }),

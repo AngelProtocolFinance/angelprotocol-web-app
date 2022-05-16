@@ -1,8 +1,8 @@
-import { ChainIDs, TerraChainIDs } from "@types-lists";
 import { getIcon } from "components/Icons/Icons";
+import { chainIDs } from "./chainIDs";
 
-type URL_GROUP<T extends ChainIDs> = {
-  [key in T]: string;
+type URL_GROUP = {
+  [index: string]: string;
 };
 
 export const aws_endpoint =
@@ -10,42 +10,47 @@ export const aws_endpoint =
 export const apes_endpoint =
   "https://9t0u8zpqjk.execute-api.us-east-1.amazonaws.com";
 
+export const flipside_endpoint = "https://flipside.leslug.com/angel";
+
 //terra urls
-export const terra_lcds: URL_GROUP<TerraChainIDs> = {
-  "bombay-12":
+export const terra_lcds: URL_GROUP = {
+  [chainIDs.terra_test]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/test",
-  "columbus-5":
+  [chainIDs.terra_main]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  localterra: "http://localhost:3060",
+  [chainIDs.terra_local]: "http://localhost:3060",
 };
 
-export const terra_rpcs: URL_GROUP<TerraChainIDs> = {
-  "bombay-12":
+export const terra_rpcs: URL_GROUP = {
+  [chainIDs.terra_test]:
     "https://bombay-12--rcp--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
-  "columbus-5":
+  [chainIDs.terra_main]:
     "https://columbus-5--rpc--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
-  localterra: "",
+  [chainIDs.terra_local]: "",
 };
 
 //cosmos urls
-export const cosmos4_lcds: URL_GROUP<"cosmoshub-4" | "cosmoshub-testnet"> = {
-  "cosmoshub-4":
+export const cosmos4_lcds: URL_GROUP = {
+  [chainIDs.cosmos_4]:
     "https://cosmoshub-4--lcd--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67",
-  "cosmoshub-testnet": "https://api.testnet.cosmos.network:443",
+  [chainIDs.cosmos_test]: "https://api.testnet.cosmos.network:443",
 };
 
-export const cosmos4_rpcs: URL_GROUP<"cosmoshub-4" | "cosmoshub-testnet"> = {
-  "cosmoshub-4":
+export const cosmos4_rpcs: URL_GROUP = {
+  [chainIDs.cosmos_4]:
     "https://cosmoshub-4--rpc--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67",
-  "cosmoshub-testnet":
+  [chainIDs.cosmos_test]:
     "https://cosmoshub-4--lcd--full.datahub.figment.io/apikey/afe639fa07917ec085c0ce737ab39e67",
 };
 
 //ethereum
-export const eth_rpcs: URL_GROUP<"1" | "3" | "42"> = {
-  1: "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-  3: "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-  42: "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+export const eth_rpcs: URL_GROUP = {
+  [chainIDs.eth_main]:
+    "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+  [chainIDs.eth_ropsten]:
+    "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+  [chainIDs.eth_kovan]:
+    "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
 };
 
 export const TERRA_FINDER = "https://terrascope.info/";
@@ -93,3 +98,5 @@ export const SOCIAL_MEDIA_LINKS = [
     title: "Discord",
   },
 ];
+
+export const COUNTRIES_REST_ENDPOINT = "https://restcountries.com/v3.1";

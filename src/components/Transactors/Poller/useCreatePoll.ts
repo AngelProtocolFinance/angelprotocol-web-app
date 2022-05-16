@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "@types-component/poller";
-import { terraTags, userTags } from "services/terra/tags";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import useCreatePollEstimate from "./useCreatePollEstimate";
 
 export default function useCreatePoll() {
@@ -21,9 +21,9 @@ export default function useCreatePoll() {
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Halo(wallet);
+    const contract = new Gov(wallet);
     const { amount, title, description, link } = data;
-    const pollMsgs = await contract.createPollMsgs(
+    const pollMsg = await contract.createPollMsgs(
       +amount,
       title,
       description,
@@ -33,11 +33,11 @@ export default function useCreatePoll() {
     dispatch(
       sendTerraTx({
         wallet,
-        tx: { msgs: pollMsgs, fee: maxFee },
+        tx: { msgs: [pollMsg], fee: maxFee },
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.gov },
-            { type: terraTags.user, id: userTags.halo_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

@@ -23,19 +23,17 @@ declare module "@types-server/aws" {
     // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
   };
 
-  /** /transactions */
+  /** flipside */
   interface Transaction {
-    endowment_address: string; // Charity's endowment address
-    wallet_address: string; // Owner's wallet address
-    sort_key: string; // Transaction hash
-    transaction_date: string; // "2021-12-21T08:06:13.598Z"
-    amount: number; // 14.251521
-    app_used: string; // "restore-earth"
-    transaction_type: string; // "deposit"
-    chain_id?: ChainIDs;
+    name: string;
+    tx_id: string; // Transaction hash
+    block_timestamp: string; // "2021-12-21T08:06:13.598Z"
+    ust_amount: number; // 14.251521
+    chain_id?: chainIDs;
+    donator: string;
   }
 
-  /** /apes/donation */
+  /** apes/donation */
   type ReceiptPayload = {
     transactionId: string; // tx hash
     fullName: string; // "John Doe"
@@ -56,7 +54,7 @@ declare module "@types-server/aws" {
 
     transactionId: string;
     transactionDate: string;
-    chainId: ChainIDs;
+    chainId: string;
     amount: number;
     splitLiq: string; //"50"
     denomination: string; //currency_text "UST", "LUNA"
@@ -71,7 +69,7 @@ declare module "@types-server/aws" {
 
     transactionId: string;
     transactionDate: string;
-    chainId: ChainIDs;
+    chainId: string;
     amount: number;
     splitLiq: string; //"50"
     denomination: string; //currency_text "UST", "LUNA"
@@ -92,6 +90,18 @@ declare module "@types-server/aws" {
   type TxLogPayload = Receiver &
     (CryptoTxDetails | FiatTxDetails) &
     TxDataPermissions;
+
+  /** apes/token-list */
+  type Token = {
+    min_denom: string;
+    symbol: string;
+    cw20_contract?: {
+      mainnet: string;
+      testnet?: string;
+    };
+    logo: string;
+    decimals: number;
+  };
 
   /** /leaderboards */
   interface Endowment {
@@ -130,7 +140,7 @@ declare module "@types-server/aws" {
     RegistrationStatus: string;
     SK: string;
     TerraWallet: string;
-    poll_id: number;
+    poll_id?: number;
   }
 
   type ContactPerson = {
@@ -142,7 +152,7 @@ declare module "@types-server/aws" {
     PhoneNumber: string;
     PK?: string;
     Role: ContactRoles;
-    SK?: "ContactPerson";
+    SK: "ContactPerson";
   };
 
   type FileObject = {
@@ -164,7 +174,7 @@ declare module "@types-server/aws" {
     ProofOfRegistrationVerified: boolean;
     RegistrationDate: string;
     RegistrationStatus: RegistrationStatus;
-    SK?: "Registration";
+    SK: "Registration";
     Tier?: EndowmentTierNum;
     UN_SDG: number;
     Website: string;
@@ -193,18 +203,18 @@ declare module "@types-server/aws" {
   type ContactDetailsRequest = {
     PK?: string;
     body: {
-      ContactPerson: Omit<ContactPerson, "EmailVerified">;
+      ContactPerson: Omit<ContactPerson, "EmailVerified" | "SK">;
       Registration: Pick<Registration, "CharityName">;
     };
   };
 
   type Metadata = {
-    SK?: "Metadata";
     Banner: FileObject;
     CharityLogo: FileObject;
     CharityOverview: string;
-    TerraWallet: string;
     EndowmentContract: string;
+    SK: "Metadata";
+    TerraWallet: string;
   };
 
   //*
@@ -264,8 +274,3 @@ declare module "@types-server/aws" {
     AuditedFinancialReports: FileObject[];
   };
 }
-
-/**
- *
- *
- */

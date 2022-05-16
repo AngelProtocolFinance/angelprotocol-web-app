@@ -2,31 +2,33 @@ import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "@types-component/staker";
+import { useGetter, useSetter } from "store/accessors";
 // import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances } from "services/terra/queriers";
-import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
+import { denoms } from "constants/currency";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances("uusd");
+  const { coins } = useGetter((state) => state.wallet);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -50,12 +52,14 @@ export default function useEstimator() {
         if (is_stake) {
           //check $HALO balance
           if (balance.div(1e6).lt(debounced_amount)) {
-            dispatch(setFormError("Not enough Halo balance"));
+            setError("amount", { message: "not enough HALO balance" });
             return;
           }
         } else {
           if (balance.sub(locked).div(1e6).lt(debounced_amount)) {
-            dispatch(setFormError("Not enough staked halo less locked"));
+            setError("amount", {
+              message: "not enough staked halo less locked",
+            });
             return;
           }
         }
@@ -63,7 +67,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let govMsg: MsgExecuteContract;
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
 
         if (is_stake) {
           govMsg = contract.createGovStakeMsg(debounced_amount);
@@ -75,8 +79,11 @@ export default function useEstimator() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        if (feeNum >= ustBalance) {
+          setError("amount", {
+            message: "not enough UST to pay for fees",
+          });
           return;
         }
 
@@ -92,15 +99,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    wallet,
-    UST_balance,
-    balance,
-    locked,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, wallet, coins, balance, locked, isValid, isDirty]);
 
   return { tx, wallet };
 }

@@ -3,7 +3,6 @@ import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "@types-component/voter";
 import { useGovStakerState } from "services/terra/gov/states";
-import { currency_text } from "constants/currency";
 import Balance from "../Staker/Balance";
 
 export default function Amount() {
@@ -39,7 +38,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={currency_text["uhalo"]}
+          placeholder="HALO"
           className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div

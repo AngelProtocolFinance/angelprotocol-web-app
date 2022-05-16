@@ -1,6 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { Props } from "@types-component/donater";
-import DonateForm from "components/Transactors/Donater/DonateForm/DonateForm";
+import { FundFlow } from "@types-component/donater";
 import Donater from "components/Transactors/Donater/Donater";
 import Transactor from "components/Transactors/Transactor";
 import { useGetter } from "store/accessors";
@@ -14,10 +13,9 @@ export default function TCA() {
   } else {
     return (
       <div className="grid place-items-center pt-2">
-        <Transactor<Props>
+        <Transactor<FundFlow>
           Content={Donater}
           contentProps={{
-            Form: DonateForm,
             to: "tca",
           }}
         />

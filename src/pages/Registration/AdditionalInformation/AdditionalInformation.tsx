@@ -44,7 +44,9 @@ export default function AdditionalInformation() {
         >
           <OrganizationName value={charity.Registration.CharityName} />
           <ImageInput name="banner" label="Banner image of your organization" />
+          <ImageSizeInfo limit="1MB" />
           <ImageInput name="charityLogo" label="Logo of your organization" />
+          <ImageSizeInfo limit="1MB" />
           <OverviewInput />
           <ButtonSection />
         </form>
@@ -60,6 +62,12 @@ function Title() {
     </h2>
   );
 }
+
+const ImageSizeInfo = (props: { limit: string }) => (
+  <p className="text-xs -mt-5 text-left font-thin text-white/70">
+    should be less than {props.limit}
+  </p>
+);
 
 const OrganizationName = ({ value }: { value: string }) => (
   <InputRow htmlFor="charityName" label="Name of your organization">

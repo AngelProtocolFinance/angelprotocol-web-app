@@ -2,6 +2,13 @@ declare module "@types-page/registration" {
   import { EndowmentTierNum } from "@types-shared/registration";
   import { FileWrapper } from "@types-component/file-dropzone";
 
+  type DecodedJWTData<T> = T & {
+    authorization: string;
+    exp: number;
+    iat: number;
+    user: string;
+  };
+
   type RegistrationStep = { completed: boolean };
   type DocumentationStep = RegistrationStep & { tier?: EndowmentTierNum };
 
@@ -24,7 +31,6 @@ declare module "@types-page/registration" {
     | "other";
 
   /**forms */
-
   type DocumentationValues = {
     // Expects an array because FileDropzone component always returns an array of Files,
     // so this way it's easier to handle (Yup validation ensures single file uploaded)

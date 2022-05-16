@@ -13,9 +13,10 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import Halo from "contracts/Halo";
+import CW20 from "contracts/CW20";
 import useWalletContext from "hooks/useWalletContext";
-import { currency_text } from "constants/currency";
+import { contracts } from "constants/contracts";
+import { denoms } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";
 
 export default function useTransferFunds() {
@@ -31,23 +32,26 @@ export default function useTransferFunds() {
 
   function transferFunds(data: FundSendValues) {
     const balance =
-      data.currency === "uusd" ? data.ustBalance : data.haloBalance;
+      data.currency === denoms.uusd ? data.ustBalance : data.haloBalance;
+    const denomText = data.currency === denoms.uusd ? "UST" : "HALO";
     if (data.amount > balance) {
       showModal(Popup, {
-        message: `not enough ${currency_text[data.currency]} balance`,
+        message: `not enough ${denomText} balance`,
       });
       return;
     }
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
-    const haloContract = new Halo(wallet);
-    if (data.currency === "uhalo") {
-      embeddedMsg = haloContract.createEmbeddedHaloTransferMsg(
+    //this wallet is not even rendered when wallet is disconnected
+    const haloContractAddr = contracts[wallet?.network.chainID!]["halo_token"];
+    const cw20Contract = new CW20(haloContractAddr, wallet);
+    if (data.currency === denoms.halo) {
+      embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
         data.recipient
       );
     } else {
-      embeddedMsg = haloContract.createdEmbeddedBankMsg(
+      embeddedMsg = cw20Contract.createdEmbeddedBankMsg(
         [
           {
             amount: new Dec(data.amount).mul(1e6).toInt().toString(),

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "@types-component/swapper";
-import { terraTags, userTags } from "services/terra/tags";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -33,8 +33,7 @@ export default function useSwap() {
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
-            { type: terraTags.user, id: userTags.halo_balance },
-            { type: terraTags.user, id: userTags.terra_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

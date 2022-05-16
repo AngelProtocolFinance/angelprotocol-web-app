@@ -12,7 +12,7 @@ export default function ButtonSection() {
   } = useFormContext();
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-10">
       {isSubmitting ? (
         <Loader bgColorClass="bg-white" widthClass="w-4" gapClass="gap-1" />
       ) : (

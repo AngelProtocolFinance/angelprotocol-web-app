@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 import { SortDirection, SortKey } from "@types-page/donations";
-import { Transaction } from "@types-server/aws";
+import { Transaction } from "services/flipslide/endowment_admin/types";
 
 export default function useSortedTransactions(transactions: Transaction[]) {
-  const [sortKey, setSortKey] = useState<SortKey>("transaction_date");
+  const [sortKey, setSortKey] = useState<SortKey>("block_timestamp");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
   //if key is already set, just toggle direction

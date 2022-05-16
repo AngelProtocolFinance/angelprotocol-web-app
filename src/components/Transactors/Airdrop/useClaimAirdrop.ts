@@ -1,18 +1,13 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
 import { Airdrops } from "@types-server/aws";
-import {
-  govTags,
-  multicallTags,
-  terraTags,
-  userTags,
-} from "services/terra/tags";
+import { govTags, multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Halo from "contracts/Halo";
+import Airdrop from "contracts/Airdrop";
 import useWalletContext from "hooks/useWalletContext";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
@@ -30,8 +25,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   );
 
   const claimAirdrop = (isStake: boolean) => () => {
-    const haloContract = new Halo(wallet);
-    const claimAirdropMsgs = haloContract.createAirdropClaimMsg(
+    const airdropContract = new Airdrop(wallet);
+    const claimAirdropMsgs = airdropContract.createAirdropClaimMsg(
       airdrops,
       isStake
     );
@@ -44,8 +39,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
           terra.util.invalidateTags([
             { type: terraTags.gov, id: govTags.staker },
             { type: terraTags.gov, id: govTags.halo_balance },
-            { type: terraTags.user, id: userTags.halo_balance },
-            { type: terraTags.multicall, id: multicallTags.airdrops },
+            { type: terraTags.multicall, id: multicallTags.endowmentBalance },
+            { type: terraTags.multicall, id: multicallTags.airdrop },
           ]),
         ],
       })

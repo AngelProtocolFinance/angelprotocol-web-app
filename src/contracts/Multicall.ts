@@ -1,33 +1,40 @@
-import { TerraChainIDs } from "@types-lists";
 import { Airdrops } from "@types-server/aws";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
 } from "@types-services/terra";
+import { Token } from "services/apes/tokens";
 import { WalletProxy } from "providers/WalletProvider";
+import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
 import Account from "./Account";
-import Halo from "./Halo";
+import Airdrop from "./Airdrop";
+import CW20 from "./CW20";
+import Gov from "./Gov";
 import Registrar from "./Registrar";
 
 export default class Multicall {
   wallet?: WalletProxy;
   address: string;
   registrarContract: Registrar;
-  haloContract: Halo;
+  govContract: Gov;
+  airdropContract: Airdrop;
   balanceAndRates: (endowmentAddr: string) => MultiContractQueryArgs;
   airDropInquiries: (airdrops: Airdrops) => MultiContractQueryArgs;
+  cw20Balances: (
+    address: string,
+    cw20tokens: Token[]
+  ) => MultiContractQueryArgs;
 
   constructor(wallet?: WalletProxy) {
     this.wallet = wallet;
     this.address =
-      contracts[(wallet?.network.chainID as TerraChainIDs) || "columbus-5"][
-        sc.multicall
-      ];
+      contracts[wallet?.network.chainID || chainIDs.terra_main][sc.multicall];
     this.registrarContract = new Registrar(wallet);
-    this.haloContract = new Halo(wallet);
+    this.govContract = new Gov(wallet);
+    this.airdropContract = new Airdrop(wallet);
 
     this.balanceAndRates = (endowmentAddr) => ({
       address: this.address,
@@ -41,8 +48,22 @@ export default class Multicall {
       address: this.address,
       msg: this.constructAggregatedQuery(
         airdrops.map((airdrop) =>
-          this.haloContract.isAirDropClaimed(airdrop.stage)
+          this.airdropContract.isAirDropClaimed(airdrop.stage)
         )
+      ),
+    });
+
+    this.cw20Balances = (address, cw20tokens) => ({
+      address: this.address,
+      msg: this.constructAggregatedQuery(
+        cw20tokens.map((cw20token) => {
+          const isTest = wallet?.network.chainID === chainIDs.terra_test;
+          const cw20ContractAddr =
+            cw20token.cw20_contract?.[isTest ? "testnet" : "mainnet"];
+          //cw20tokens are already filtered to have valid contractAddr
+          const cw20Contract = new CW20(cw20ContractAddr!);
+          return cw20Contract.balance(address);
+        })
       ),
     });
   }

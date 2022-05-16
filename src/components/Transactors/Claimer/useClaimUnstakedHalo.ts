@@ -1,4 +1,4 @@
-import { govTags, terraTags, userTags } from "services/terra/tags";
+import { govTags, multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -21,7 +21,7 @@ export default function useClaimUnstakedHalo() {
           terra.util.invalidateTags([
             { type: terraTags.gov, id: govTags.staker },
             { type: terraTags.gov, id: govTags.halo_balance },
-            { type: terraTags.user, id: userTags.halo_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

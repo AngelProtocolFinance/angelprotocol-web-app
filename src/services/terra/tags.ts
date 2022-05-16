@@ -3,13 +3,10 @@ import { TerraTags } from "@types-services/terra";
 export const terraTags: { [key in TerraTags]: string } = {
   gov: "gov",
   admin: "admin",
-  endowment: "endowment",
-  halo: "halo",
   indexfund: "indexfund",
-  lbp: "lbp",
   multicall: "multicall",
+  endowment: "endowment",
   registrar: "registrar",
-  user: "user",
 };
 
 export enum adminTags {
@@ -28,6 +25,7 @@ export enum govTags {
   staker = "staker",
   config = "config",
   halo_balance = "halo_balance",
+  halo_info = "halo_info",
 }
 
 export enum indexfundTags {
@@ -41,21 +39,12 @@ export enum registrarTags {
   config = "config",
 }
 
-export enum userTags {
-  terra_balance = "terra_balance",
-  halo_balance = "halo_balance",
-}
-export enum haloTags {
-  info = "info",
-}
-
 export enum endowmentTags {
-  holdings = "holdings",
-  rate = "rate",
   profile = "profile",
 }
 
 export enum multicallTags {
   endowmentBalance = "endowmentBalance",
-  airdrops = "airdrop",
+  airdrop = "airdrop",
+  terraBalances = "terraBalances",
 }

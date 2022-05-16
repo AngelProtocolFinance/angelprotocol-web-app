@@ -8,7 +8,6 @@ import {
   multicallTags,
   registrarTags,
   terraTags,
-  userTags,
 } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
@@ -109,16 +108,10 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
       break;
 
     case "admin-group-fund-transfer":
-      tagsToInvalidate.push(
-        {
-          type: terraTags.user,
-          id: userTags.terra_balance,
-        },
-        {
-          type: terraTags.user,
-          id: userTags.halo_balance,
-        }
-      );
+      tagsToInvalidate.push({
+        type: terraTags.multicall,
+        id: multicallTags.terraBalances,
+      });
       break;
 
     case "endowment-update-status":
@@ -136,12 +129,8 @@ function getTagPayloads(proposalMeta: ProposalDetails["meta"]) {
         },
         //edge: user transfers to CW20 or Native to his connected wallet
         {
-          type: terraTags.user,
-          id: userTags.halo_balance,
-        },
-        {
-          type: terraTags.user,
-          id: userTags.terra_balance,
+          type: terraTags.multicall,
+          id: multicallTags.terraBalances,
         }
       );
       break;

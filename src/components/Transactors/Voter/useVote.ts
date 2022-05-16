@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "@types-component/voter";
-import { terraTags, userTags } from "services/terra/tags";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
@@ -27,7 +27,7 @@ export default function useVote() {
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.gov },
-            { type: terraTags.user, id: userTags.halo_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

@@ -1,4 +1,5 @@
 declare module "@types-services/terra" {
+  import { Token } from "@types-server/aws";
   type ContractQueryArgs<T = object> = {
     address: string;
     msg: T;
@@ -16,11 +17,11 @@ declare module "@types-services/terra" {
   type TerraTags =
     | "gov"
     | "indexfund"
-    | "user"
-    | "halo"
-    | "lbp"
-    | "endowment"
     | "admin"
+    | "endowment"
     | "multicall"
     | "registrar";
+
+  /** multicall */
+  type TokenWithBalance = Token & { balance: number };
 }

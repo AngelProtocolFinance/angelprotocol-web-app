@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues, SupportedDenoms } from "@types-component/donater";
+import { DonateValues } from "@types-component/donater";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -8,9 +8,11 @@ import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import useWalletContext from "hooks/useWalletContext";
+import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
-type Senders = { [key in SupportedDenoms]: (data: DonateValues) => any };
+type Sender = (data: DonateValues) => any;
+
 export default function useDonate() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
@@ -52,28 +54,28 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
-  const denomRef = useRef<SupportedDenoms>("uusd");
-  const currency = watch("currency");
+  const denomRef = useRef<string>(denoms.uusd);
+  const token = watch("token");
+  const denom = token.min_denom;
 
   //reset amount when changing currency
   useEffect(() => {
-    if (denomRef.current !== currency) {
+    if (denomRef.current !== denom) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
-    denomRef.current = currency;
+    denomRef.current = denom;
     //eslint-disable-next-line
-  }, [currency]);
+  }, [denom]);
 
-  const senders: Senders = {
-    uusd: terraSender,
-    uluna: terraSender,
-    ether: ethSender,
-    bnb: bnbSender,
+  const getSender = (denom: string): Sender => {
+    if (denom === denoms.wei) return ethSender;
+    if (denom === denoms.bnb) return bnbSender;
+    return terraSender;
   };
 
   return {
-    donate: handleSubmit(senders[currency]),
+    donate: handleSubmit(getSender(denom)),
     isSubmitDisabled: form_error !== null || form_loading,
     isFormLoading: form_loading,
     to: getValues("to"),

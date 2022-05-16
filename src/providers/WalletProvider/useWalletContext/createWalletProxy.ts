@@ -5,10 +5,13 @@ import {
   Wallet,
 } from "@terra-money/terra.js";
 import { entropyToMnemonic } from "bip39";
+import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { WalletProxy } from "../types";
-import { CHAIN_ID, TORUS_CONNECTION } from "./types";
+import { NETWORK, TORUS_CONNECTION } from "./types";
 
+const CHAIN_ID =
+  NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_main;
 const lcdClient = new LCDClient({
   URL: terra_lcds[CHAIN_ID],
   chainID: CHAIN_ID,
@@ -31,13 +34,20 @@ function convertToWalletProxy(
   connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ): WalletProxy {
+  console.log(torusWallet);
+  const network =
+    torusWallet.lcd.config.chainID === chainIDs.testnet
+      ? //"testnet" --> "bombay-12" : "columbus-5"
+        chainIDs.terra_test
+      : chainIDs.terra_main;
+
   return {
     address: torusWallet.key.accAddress,
     connection: TORUS_CONNECTION,
     network: {
-      chainID: torusWallet.lcd.config.chainID,
+      chainID: network,
       lcd: torusWallet.lcd.config.URL,
-      name: CHAIN_ID,
+      name: network,
     },
     connect,
     disconnect,

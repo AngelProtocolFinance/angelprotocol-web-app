@@ -1,4 +1,4 @@
-import { LOCAL_TERRA } from "../constants";
+import { chainIDs } from "constants/chainIDs";
 import { account_api } from "./account";
 import useAccountContract from "./useAccountContract";
 
@@ -21,7 +21,7 @@ export function useEndowmentProfile(address: string, skip = false) {
   const { useEndowmentProfileQuery } = account_api;
   const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
     contract.profile,
-    { skip: skip || wallet?.network.chainID === LOCAL_TERRA }
+    { skip: skip || wallet?.network.chainID === chainIDs.terra_local }
   );
 
   return {

@@ -1,5 +1,5 @@
 declare module "@types-slice/wallet" {
-  import { ChainIDs, Denoms } from "@types-lists";
+  import { TokenWithBalance } from "@types-services/terra";
   type TerraWalletIDs =
     | "terra_wc"
     | "station"
@@ -8,18 +8,12 @@ declare module "@types-slice/wallet" {
     | "SafePal"
     | "torus";
 
-  type Coin = {
-    amount: number; // "1000"
-    denom: Denoms; //"denoms.uusd, denoms.uluna"
-  };
-
   type WalletInfo = {
     icon: string;
-    displayCoin: Coin;
-    coins: Coin[];
+    displayCoin: { amount: number; symbol: string };
+    coins: TokenWithBalance[];
     address: string;
-    chainId: ChainIDs;
-    supported_denoms: Denoms[];
-    id: TerraWalletIDs | undefined;
+    chainId: string;
+    id: TerraIdentifiers | undefined;
   };
 }

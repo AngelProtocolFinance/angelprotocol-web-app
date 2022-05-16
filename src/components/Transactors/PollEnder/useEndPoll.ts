@@ -1,11 +1,11 @@
-import { terraTags, userTags } from "services/terra/tags";
+import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Halo from "contracts/Halo";
+import Gov from "contracts/Gov";
 import useWalletContext from "hooks/useWalletContext";
 
 export default function useEndPoll(pollId: number) {
@@ -19,7 +19,7 @@ export default function useEndPoll(pollId: number) {
       return;
     }
 
-    const contract = new Halo(wallet);
+    const contract = new Gov(wallet);
     const msg = contract.createEndPollMsg(pollId);
 
     dispatch(
@@ -29,7 +29,7 @@ export default function useEndPoll(pollId: number) {
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.gov },
-            { type: terraTags.user, id: userTags.halo_balance },
+            { type: terraTags.multicall, id: multicallTags.terraBalances },
           ]),
         ],
       })

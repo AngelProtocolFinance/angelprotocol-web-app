@@ -1,17 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
 import { useSetter } from "store/accessors";
 import { Button } from "./common";
 import routes from "./routes";
 import { removeCharity } from "./store";
-import { FormInfoSchema, useRegistration } from "./useRegistration";
+import useResume from "./useResume";
+
+const FormInfoSchema = Yup.object().shape({
+  refer: Yup.string().required("Please enter your registration reference."),
+});
 
 export default function Registration() {
-  const { onResume } = useRegistration();
+  const resume = useResume();
   const navigate = useNavigate();
   const dispatch = useSetter();
+
   const {
     register,
     handleSubmit,
@@ -40,7 +46,7 @@ export default function Registration() {
       </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
-        onSubmit={handleSubmit(onResume)}
+        onSubmit={handleSubmit(resume)}
         className="flex flex-col items-center gap-2 w-full"
       >
         <input

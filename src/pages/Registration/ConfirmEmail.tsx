@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
@@ -6,7 +7,9 @@ import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 import { Button } from "./common";
+import { FORM_ERROR } from "./constants";
 import { removeCharity } from "./store";
+import useHandleError from "./useHandleError";
 
 export default function ConfirmEmail() {
   const navigate = useNavigate();
@@ -15,36 +18,42 @@ export default function ConfirmEmail() {
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
+  const handleError = useHandleError();
   const { showModal } = useModalContext();
 
-  const sendEmail = async (emailType: string) => {
-    if (!charity.ContactPerson.PK) {
-      console.error("Invalid Data. Please ask the administrator about that.");
-      return;
-    }
+  const sendEmail = useCallback(
+    async (emailType: string) => {
+      if (!charity.ContactPerson.PK) {
+        return handleError(
+          "Invalid Data. Please ask the administrator about that."
+        );
+      }
 
-    const emailPayload = {
-      CharityName: charity.Registration.CharityName,
-      Email: charity.ContactPerson.Email,
-      FirstName: charity.ContactPerson.FirstName,
-      LastName: charity.ContactPerson.LastName,
-      Role: charity.ContactPerson.Role,
-      PhoneNumber: charity.ContactPerson.PhoneNumber,
-    };
-    const response: any = await resendEmail({
-      uuid: charity.ContactPerson.PK,
-      type: emailType,
-      body: emailPayload,
-    });
-    response.data
-      ? showModal(Popup, {
+      const emailPayload = {
+        CharityName: charity.Registration.CharityName,
+        Email: charity.ContactPerson.Email,
+        FirstName: charity.ContactPerson.FirstName,
+        LastName: charity.ContactPerson.LastName,
+        Role: charity.ContactPerson.Role,
+        PhoneNumber: charity.ContactPerson.PhoneNumber,
+      };
+      const result = await resendEmail({
+        uuid: charity.ContactPerson.PK,
+        type: emailType,
+        body: emailPayload,
+      });
+
+      if ("error" in result) {
+        handleError(result.error, FORM_ERROR);
+      } else {
+        showModal(Popup, {
           message:
-            "We have sent you another verification email. If you still don't receive anything, please get in touch with us.",
-        })
-      : showModal(Popup, {
-          message: response.error.data.message,
+            "We have sent you another verification email. If you still don't receive anything, please get in touch with us at support@angelprotocol.io",
         });
-  };
+      }
+    },
+    [charity, handleError, resendEmail, showModal]
+  );
 
   const handleClose = () => {
     dispatch(removeCharity());

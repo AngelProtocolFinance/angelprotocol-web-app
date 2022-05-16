@@ -10,7 +10,7 @@ import {
   VotesPageOptions,
 } from "@types-server/contracts";
 import idParamToNumber from "helpers/idParamToNum";
-import { LOCAL_TERRA } from "../constants";
+import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import useAdminContract from "./useAdminContract";
@@ -24,7 +24,7 @@ export function useMembers() {
     isLoading,
     isError,
   } = useMembersQuery(contract.members, {
-    skip: isAdminSkip || wallet?.network.chainID === LOCAL_TERRA,
+    skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
   });
   return { members: data, isMembersLoading: isFetching || isLoading, isError };
 }
@@ -39,7 +39,10 @@ export function useMember(customCWs?: CWContracts, skip = false) {
     isError,
   } = useMemberQuery(contract.member, {
     skip:
-      skip || isAdminSkip || !wallet || wallet.network.chainID === LOCAL_TERRA,
+      skip ||
+      isAdminSkip ||
+      !wallet ||
+      wallet.network.chainID === chainIDs.terra_local,
   });
   return {
     member: data,
@@ -59,7 +62,7 @@ export function useFilteredProposals(
   const { filteredProposals, isLoading, isError } = useProposalsQuery(
     contract.proposals(genPageOptions(pageNum, status, group)),
     {
-      skip: isAdminSkip || wallet?.network.chainID === LOCAL_TERRA,
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
       selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {
         function proposalFilter(proposal: Proposal): boolean {
           const proposalMeta = JSON.parse(
@@ -137,7 +140,7 @@ export function useProposal(pollId?: string | number) {
     skip:
       isAdminSkip ||
       numberPollId === 0 ||
-      wallet?.network.chainID === LOCAL_TERRA,
+      wallet?.network.chainID === chainIDs.terra_local,
   });
   return { proposal: data, isProposalLoading: isFetching || isLoading };
 }
@@ -152,7 +155,7 @@ export function useVoteList(pollId: number, pageNum?: number) {
   } = useVotesQuery(
     contract.voteList(genVoteListPageOptions(pollId, pageNum)),
     {
-      skip: isAdminSkip || wallet?.network.chainID === LOCAL_TERRA,
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
     }
   );
   return { votes: data, isVoteListLoading: isFetching || isLoading };
@@ -164,7 +167,7 @@ export function useCW3Config() {
   const { data, isFetching, isLoading, isError } = useCw3ConfigQuery(
     contract.cw3Config,
     {
-      skip: isAdminSkip || wallet?.network.chainID === LOCAL_TERRA,
+      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
     }
   );
   return {

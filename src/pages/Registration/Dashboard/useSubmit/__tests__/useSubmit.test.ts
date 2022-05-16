@@ -1,4 +1,4 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
+import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "services/aws/types";
@@ -6,6 +6,7 @@ import { Step } from "services/transaction/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
+import Registrar from "contracts/Registrar";
 import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
@@ -43,33 +44,12 @@ jest.mock("store/accessors", () => ({
   useSetter: () => mockDispatch,
 }));
 
-const mockCreateEndowmentCreationMsg = jest.fn();
-
-jest.mock("../createEndowmentCreationMsg", () => ({
-  __esModule: true,
-  default: (..._: any[]) => mockCreateEndowmentCreationMsg(),
-}));
-
 jest.mock("../useTransactionResultHandler", () => ({
   __esModule: true,
   default: () => jest.fn(),
 }));
 
 describe("useSubmit tests", () => {
-  beforeAll(() => {
-    mockCreateEndowmentCreationMsg.mockClear();
-  });
-
-  afterAll(() => {
-    jest.unmock("components/ModalContext/ModalContext");
-    jest.unmock("helpers/processEstimateError");
-    jest.unmock("hooks/useWalletContext");
-    jest.unmock("services/transaction/sendTerraTx");
-    jest.unmock("store/accessors");
-    jest.unmock("../createEndowmentCreationMsg");
-    jest.unmock("../useTransactionResultHandler");
-  });
-
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
@@ -110,9 +90,11 @@ describe("useSubmit tests", () => {
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
-    mockCreateEndowmentCreationMsg.mockImplementation((..._: any[]) => {
-      throw "error";
-    });
+    jest
+      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .mockImplementation((..._: any[]) => {
+        throw new Error();
+      });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -140,7 +122,9 @@ describe("useSubmit tests", () => {
   it("dispatches action sending a Terra Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
-    mockCreateEndowmentCreationMsg.mockReturnValue(MSG_EXECUTE_CONTRACT);
+    jest
+      .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
+      .mockReturnValue(MSG_EXECUTE_CONTRACT);
 
     const { result } = renderHook(() => useSubmit());
 
@@ -181,6 +165,7 @@ const CHARITY: Charity = {
     PhoneNumber: "+114323888",
     Role: "ceo",
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+    SK: "ContactPerson",
   },
   Registration: {
     CharityName: "charity",
@@ -201,12 +186,14 @@ const CHARITY: Charity = {
     ProofOfRegistrationVerified: false,
     FinancialStatementsVerified: false,
     AuditedFinancialReportsVerified: false,
+    SK: "Registration",
   },
   Metadata: {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "",
+    SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
 };
@@ -246,4 +233,4 @@ const MSG_EXECUTE_CONTRACT = {
       withdraw_before_maturity: false,
     },
   },
-};
+} as MsgExecuteContract;

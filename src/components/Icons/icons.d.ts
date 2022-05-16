@@ -28,6 +28,7 @@ declare module "@types-component/icons" {
     | "Upload"
     | "Wallet"
     | "Loading"
+    | "ChevronDown"
     | "Down"
     | "Up"
     | "HourglassSplit"

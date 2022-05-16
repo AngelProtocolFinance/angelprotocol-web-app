@@ -1,11 +1,11 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "@types-page/donations";
-import { Transaction } from "@types-server/aws";
+import { Transaction } from "services/flipslide/endowment_admin/types";
 import Icon from "components/Icons/Icons";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import getTxUrl from "helpers/getTxUrl";
-import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
+import { chainIDs } from "constants/chainIDs";
 import useDonor from "./useDonor";
 import useSortTransactions from "./useSortTransactions";
 
@@ -24,6 +24,12 @@ export default function DonationsTable(props: {
 
   if (props.isError) {
     return <Tooltip>failed to get transactions..</Tooltip>;
+  }
+
+  if (!props.isError && !props.isLoading && props.transactions.length === 0) {
+    return (
+      <Tooltip classes="mt-10">You have not made any donations yet!!!</Tooltip>
+    );
   }
 
   return (
@@ -48,29 +54,23 @@ export default function DonationsTable(props: {
         rowClass="border-b border-white/10 hover:bg-angel-blue hover:bg-angel-blue/10"
       >
         {sortedTransactions.map((tx) => (
-          <Cells
-            key={tx.sort_key}
-            type="td"
-            cellClass="p-2 first:pl-0 last:pr-0"
-          >
-            <p className="text-base font-bold">$ {toCurrency(tx.amount)}</p>
-            <>{tx.transaction_date.substring(0, 10)}</>
-            <span className="font-mono">
-              {maskAddress(tx.endowment_address)}
-            </span>
+          <Cells key={tx.tx_id} type="td" cellClass="p-2 first:pl-0 last:pr-0">
+            <p className="text-base font-bold">$ {toCurrency(tx.ust_amount)}</p>
+            <>{tx.block_timestamp.substring(0, 10)}</>
+            <span className="font-mono">{tx.name}</span>
             <a
-              href={getTxUrl(tx.chain_id!, tx.sort_key)}
+              href={getTxUrl(chainIDs.mainnet, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"
             >
               <span className="inline-block text-base w-36 truncate">
-                {tx.sort_key}
+                {tx.tx_id}
               </span>
             </a>
             <button
               className="font-heading text-sm text-white-grey bg-angel-blue hover:bg-bright-blue  shadow-sm w-32 uppercase text-center pt-1.5 pb-1 mb-1 lg:mb-0 rounded-md disabled:bg-gray-400 disabled:cursor-default"
-              onClick={() => showDonor(tx.sort_key)}
+              onClick={() => showDonor(tx.tx_id)}
             >
               Update
             </button>
@@ -82,14 +82,22 @@ export default function DonationsTable(props: {
 }
 
 const headers: { key: SortKey; name: string }[] = [
-  { key: "amount", name: "amount" },
-  { key: "transaction_date", name: "date" },
-  { key: "endowment_address", name: "endowment" },
-  { key: "sort_key", name: "transaction hash" },
+  { key: "ust_amount", name: "amount" },
+  { key: "block_timestamp", name: "date" },
+  { key: "name", name: "Charity" },
+  { key: "tx_id", name: "transaction hash" },
 ];
 
-function Tooltip(props: PropsWithChildren<{}>) {
-  return <p className="text-white font-mono text-sm">{props.children}</p>;
+function Tooltip(props: PropsWithChildren<{ classes?: string }>) {
+  return (
+    <p
+      className={`text-white font-mono text-sm text-center ${
+        props.classes ?? ""
+      }`}
+    >
+      {props.children}
+    </p>
+  );
 }
 
 function HeaderButton(

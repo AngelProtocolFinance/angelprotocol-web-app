@@ -1,10 +1,11 @@
 import { FundSendMeta } from "@types-page/admin";
 import toCurrency from "helpers/toCurrency";
-import { currency_text } from "constants/currency";
+import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 
 export default function FundTransfer(props: FundSendMeta["data"]) {
+  const denomText = props.currency === denoms.uusd ? "UST" : "HALO";
   return (
     <PreviewContainer>
       <KeyValue _key="from">
@@ -14,7 +15,7 @@ export default function FundTransfer(props: FundSendMeta["data"]) {
       </KeyValue>
       <KeyValue _key="total amount" _classes="border-t border-white/10 mt-2">
         <span>
-          {toCurrency(props.amount, 3)} {currency_text[props.currency]}
+          {toCurrency(props.amount, 3)} {denomText}
         </span>
       </KeyValue>
       <KeyValue _key="recipient">

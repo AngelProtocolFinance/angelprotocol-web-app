@@ -6,8 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "@types-component/swapper";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -16,20 +15,22 @@ import {
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
+import { denoms } from "constants/currency";
 import { getSpotPrice } from "./getSpotPrice";
 
 export default function useSwapEstimator() {
   const {
     watch,
     setValue,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances("uusd");
-  const { haloBalance } = useHaloBalance();
+  const { coins } = useGetter((state) => state.wallet);
 
   const { wallet } = useWalletContext();
 
@@ -43,27 +44,30 @@ export default function useSwapEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!isValid || !isDirty) return;
-        dispatch(setFormError(null));
         if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
+
+        if (!isValid || !isDirty) return;
+        dispatch(setFormError(null));
 
         if (!debounced_amount) {
           dispatch(setFee(0));
           return;
         }
 
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const haloBalance = getTokenBalance(coins, denoms.halo);
         // first balance check
         if (is_buy) {
-          if (amount > UST_balance) {
-            dispatch(setFormError("Not enough UST"));
+          if (amount > ustBalance) {
+            setError("amount", { message: "not enough UST" });
             return;
           }
         } else {
           if (amount > haloBalance) {
-            dispatch(setFormError("Not enough HALO"));
+            setError("amount", { message: "not enough HALO" });
             return;
           }
         }
@@ -104,12 +108,12 @@ export default function useSwapEstimator() {
         const feeNum = fee.amount.get("uusd")!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (is_buy && feeNum + debounced_amount >= ustBalance) {
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
-        if (!is_buy && feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (!is_buy && feeNum >= ustBalance) {
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
@@ -133,7 +137,7 @@ export default function useSwapEstimator() {
   }, [
     debounced_amount,
     wallet,
-    UST_balance,
+    coins,
     is_buy,
     debounced_slippage,
     isValid,

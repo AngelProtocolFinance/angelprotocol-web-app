@@ -29,7 +29,8 @@ declare module "@types-server/contracts" {
   };
 
   /** _account */
-  interface Profile {
+
+  export interface Profile {
     name: string;
     overview: string;
     un_sdg?: number;
@@ -38,7 +39,8 @@ declare module "@types-server/contracts" {
     image?: string;
     url?: string;
     registration_number?: string;
-    country_city_origin?: string;
+    street_address?: string;
+    country_of_origin?: string;
     contact_email?: string;
     social_media_urls: {
       facebook?: string;
@@ -76,7 +78,8 @@ declare module "@types-server/contracts" {
     image?: string;
     url?: string;
     registration_number?: string;
-    country_city_origin?: string;
+    country_of_origin?: string;
+    street_address?: string;
     contact_email?: string;
     facebook?: string;
     twitter?: string;
@@ -262,14 +265,14 @@ declare module "@types-server/contracts" {
   }
 
   /** CW20 */
-  type TokenInfo = {
+  type CW20Info = {
     name: string;
     symbol: string;
     decimals: number;
     total_supply: string;
   };
 
-  type HaloBalance = {
+  type CW20Balance = {
     balance: string;
   };
 
@@ -289,7 +292,7 @@ declare module "@types-server/contracts" {
     Closed: 3;
   };
 
-  type EndowmentType = "charity";
+  type EndowmentType = "charity" | "normal";
   type EndowmentStatusNum = EndowmentStatus[keyof EndowmentStatus];
   type EndowmentStatusStrNum = `${EndowmentStatusNum}`;
 
@@ -298,6 +301,8 @@ declare module "@types-server/contracts" {
     address: string;
     status: keyof EndowmentStatus;
     name: string;
+    logo?: string;
+    image?: string;
     owner?: string;
     tier?: EndowmentTier;
     endow_type?: EndowmentType;

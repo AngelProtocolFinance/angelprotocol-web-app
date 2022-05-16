@@ -1,8 +1,7 @@
 import { Dec } from "@terra-money/terra.js";
 import { useEffect, useMemo, useState } from "react";
-import { useGovBalance } from "services/terra/gov/queriers";
+import { useGovHaloBalance, useHaloInfo } from "services/terra/gov/queriers";
 import { usePairSimul } from "services/terra/lp/queriers";
-import { useHaloInfo } from "services/terra/queriers";
 import { getSpotPrice } from "components/Transactors/Swapper/getSpotPrice";
 
 export default function useGov() {
@@ -10,25 +9,24 @@ export default function useGov() {
   const [percentStaked, setPercentStaked] = useState(0);
 
   const simul = usePairSimul();
-
   const spot_price = useMemo(() => getSpotPrice(simul), [simul]);
-  const token_info = useHaloInfo();
-  const gov_balance = useGovBalance();
+  const haloInfo = useHaloInfo();
+  const govHaloBalance = useGovHaloBalance();
 
   useEffect(() => {
     (async () => {
-      const halo_supply = new Dec(token_info.total_supply);
-      const halo_balance = new Dec(gov_balance);
-      const _staked = halo_balance.toNumber();
-      const _pct_staked = halo_supply.lte(0)
+      const haloSupply = new Dec(haloInfo.total_supply);
+      const haloBalance = new Dec(govHaloBalance);
+      const _staked = haloBalance.toNumber();
+      const _pct_staked = haloSupply.lte(0)
         ? 0
         : //convert back to utoken
-          halo_balance.mul(1e6).div(halo_supply).mul(100).toNumber();
+          haloBalance.mul(1e6).div(haloSupply).mul(100).toNumber();
 
       setStaked(_staked);
       setPercentStaked(_pct_staked);
     })();
-  }, [token_info, gov_balance]);
+  }, [haloInfo, govHaloBalance]);
 
   return { staked, percentStaked, spot_price: spot_price.toNumber() };
 }

@@ -1,18 +1,21 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
-import { Denoms, TerraChainIDs } from "@types-lists";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
 import { WalletProxy } from "providers/WalletProvider";
 import { TxResultFail, WalletDisconnectError } from "errors/errors";
+import { chainIDs } from "constants/chainIDs";
+import { denoms } from "constants/currency";
 import { terra_lcds } from "constants/urls";
 
 export default class Contract {
+  wallet?: WalletProxy;
   client: LCDClient;
-  chainID: TerraChainIDs;
+  chainID: string;
   url: string;
   walletAddr?: string;
 
   constructor(wallet?: WalletProxy) {
-    this.chainID = (wallet?.network.chainID as TerraChainIDs) || "columbus-5";
+    this.wallet = wallet;
+    this.chainID = wallet?.network.chainID || chainIDs.terra_main;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.address;
     this.client = new LCDClient({
@@ -35,7 +38,7 @@ export default class Contract {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[], denom: Denoms = "uusd"): Promise<Fee> {
+  async estimateFee(msgs: Msg[], denom: string = denoms.uusd): Promise<Fee> {
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(

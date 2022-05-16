@@ -1,17 +1,15 @@
 import { useCallback } from "react";
 import { Charity } from "@types-server/aws";
+import { FORM_ERROR } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
+import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
-import createEndowmentCreationMsg from "./createEndowmentCreationMsg";
 import useTransactionResultHandler from "./useTransactionResultHandler";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
 
 export default function useSubmit() {
   const { form_loading } = useGetter((state) => state.transaction);
@@ -36,7 +34,8 @@ export default function useSubmit() {
 
         dispatch(setFormLoading(true));
 
-        const msg = createEndowmentCreationMsg(charity, wallet);
+        const contract = new Registrar(wallet);
+        const msg = contract.createEndowmentCreationMsg(charity);
 
         dispatch(sendTerraTx({ wallet, msgs: [msg] }));
       } catch (err) {

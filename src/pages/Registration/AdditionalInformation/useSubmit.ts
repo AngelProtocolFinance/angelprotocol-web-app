@@ -1,93 +1,99 @@
 import { useCallback } from "react";
+import { FileWrapper } from "@types-component/file-dropzone";
 import { AdditionalInfoValues } from "@types-page/registration";
-import { UpdateCharityMetadataResult } from "@types-server/aws";
-import { Result } from "@types-utils";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { Folders } from "constants/folders";
+import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 
 export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
-
-  const handleError = useCallback(
-    (err) => {
-      showModal(Popup, {
-        message: err?.data?.message || "Error updating profile ❌",
-      });
-    },
-    [showModal]
-  );
-
-  const handleSuccess = useCallback(
-    (data: UpdateCharityMetadataResult) =>
-      dispatch(
-        updateCharity({
-          ...charity,
-          Metadata: {
-            ...charity.Metadata,
-            Banner: data.Banner,
-            CharityLogo: data.CharityLogo,
-            CharityOverview: data.CharityOverview,
-          },
-        })
-      ),
-    [dispatch, charity]
-  );
+  const handleError = useHandleError();
 
   const submit = useCallback(
     async (values: AdditionalInfoValues) => {
-      const body = await getUploadBody(values);
-      if (!body)
-        return showModal(Popup, { message: "Error uploading files ❌" });
+      try {
+        const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
-      const result = await updateMetadata({
-        PK: charity.ContactPerson.PK,
-        body,
-      });
+        const result = await updateMetadata({
+          PK: charity.ContactPerson.PK,
+          body,
+        });
 
-      const dataResult = result as Result<UpdateCharityMetadataResult>;
-
-      if (dataResult.error) {
-        handleError(dataResult.error);
-      } else {
-        handleSuccess(dataResult.data);
+        if ("error" in result) {
+          handleError(result.error, "Error updating profile ❌");
+        } else {
+          const { TerraWallet, ...resultMetadata } = result.data;
+          dispatch(
+            updateCharity({
+              ...charity,
+              Metadata: {
+                ...charity.Metadata,
+                ...resultMetadata,
+              },
+            })
+          );
+        }
+      } catch (error) {
+        handleError(error, "Error updating profile ❌");
       }
     },
-    [
-      showModal,
-      updateMetadata,
-      charity.ContactPerson.PK,
-      handleError,
-      handleSuccess,
-    ]
+    [charity, dispatch, handleError, updateMetadata]
   );
 
   return { submit, isSuccess };
 }
 
-async function getUploadBody(values: AdditionalInfoValues) {
-  const logoPromise = uploadToIpfs(
-    values.charityLogo.file,
+async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
+  const logoPromise = uploadIfNecessary(
+    primaryKey,
+    values.charityLogo,
     Folders.CharityProfileImageLogo
   );
-  const bannerPromise = uploadToIpfs(
-    values.banner.file,
+  const bannerPromise = uploadIfNecessary(
+    primaryKey,
+    values.banner,
     Folders.CharityProfileImageBanners
   );
   const [CharityLogo, Banner] = await Promise.all([logoPromise, bannerPromise]);
 
-  if (!CharityLogo.publicUrl || !Banner.publicUrl) return null;
+  if (!CharityLogo.publicUrl || !Banner.publicUrl) {
+    throw new Error(
+      `Error uploading file ${
+        !CharityLogo.publicUrl ? values.charityLogo.name : values.banner.name
+      }`
+    );
+  }
 
   return {
     Banner,
     CharityLogo,
     CharityOverview: values.charityOverview,
+  };
+}
+
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
+  if (!fileWrapper.file) {
+    return {
+      name: fileWrapper.name,
+      publicUrl: fileWrapper.publicUrl,
+    };
+  }
+
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
+
+  return {
+    name: fileWrapper.file.name,
+    publicUrl,
   };
 }

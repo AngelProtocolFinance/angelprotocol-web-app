@@ -22,7 +22,7 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    activate: builder.mutation<any, string | undefined>({
+    activateCharity: builder.mutation<any, string | undefined>({
       query: (PK) => ({
         url: `registration/${PK}/activate`,
         method: "POST",
@@ -131,7 +131,7 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
-  useActivateMutation,
+  useActivateCharityMutation,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,

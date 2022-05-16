@@ -218,7 +218,7 @@ declare module "@types-page/admin" {
     recipient: string;
 
     //metadata
-    currency: Extract<Denoms, "uusd" | "uhalo">;
+    currency: "uusd" | "halo";
     haloBalance: number;
     ustBalance: number;
   };

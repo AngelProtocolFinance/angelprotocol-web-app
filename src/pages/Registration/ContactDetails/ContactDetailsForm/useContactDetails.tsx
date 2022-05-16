@@ -3,7 +3,8 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactValues } from "@types-page/registration";
-import { ContactDetailsData, ContactDetailsRequest } from "@types-server/aws";
+import { ContactDetailsRequest } from "@types-server/aws";
+import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
@@ -24,26 +25,8 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
+  const handleError = useHandleError();
   const { showModal } = useModalContext();
-
-  const handleUpdateCharity = useCallback(
-    (result: ContactDetailsData) => {
-      dispatch(
-        updateCharity({
-          ...charity,
-          ContactPerson: {
-            ...charity.ContactPerson,
-            ...result.ContactPerson,
-          },
-          Registration: {
-            ...charity.Registration,
-            ...result.Registration,
-          },
-        })
-      );
-    },
-    [dispatch, charity]
-  );
 
   const saveContactDetails = useCallback(
     async (contactData: ContactValues) => {
@@ -60,9 +43,9 @@ export default function useSaveContactDetails() {
             FirstName: contactData.firstName,
             LastName: contactData.lastName,
             Email: contactData.email,
+            OtherRole: contactData.otherRole,
             PhoneNumber: contactData.phone,
             Role: contactData.role,
-            OtherRole: contactData.otherRole,
           },
         },
       };
@@ -71,52 +54,72 @@ export default function useSaveContactDetails() {
         ? await registerCharity(postData)
         : await updateContactPerson(postData);
 
-      const dataResult = result as {
-        data: ContactDetailsData;
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (!!dataResult.error) {
+      if ("error" in result) {
         setError(true);
         const resultError =
-          dataResult.error ||
-          (dataResult.error as FetchBaseQueryError).data ||
-          (dataResult as SerializedError).message;
+          (result.error as FetchBaseQueryError) ||
+          (result as SerializedError).message;
 
-        showModal(Popup, {
-          message: `${resultError} Please check your email for the registration reference.`,
-        });
+        if (resultError.status === 409) {
+          showModal(Popup, {
+            message: `${resultError.data} Please check your email for the registration reference.`,
+          });
+        } else if (resultError.status !== 409) {
+          showModal(Popup, {
+            message: `${resultError.data}`,
+          });
+        } else {
+          showModal(Popup, {
+            message: `${resultError}`,
+          });
+        }
+
         return;
       }
 
-      handleUpdateCharity(dataResult.data);
+      const { data } = result;
+
+      dispatch(
+        updateCharity({
+          ...charity,
+          ContactPerson: {
+            ...charity.ContactPerson,
+            ...data.ContactPerson,
+          },
+          Registration: {
+            ...charity.Registration,
+            ...data.Registration,
+          },
+        })
+      );
 
       if (!is_create) {
-        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
-        return;
+        return navigate(
+          `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+        );
       }
 
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
-      const { PK, SK, EmailVerified, ...contactPerson } =
-        dataResult.data.ContactPerson;
+      const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
 
       await resendEmail({
         uuid: PK,
         type: "verify-email",
         body: {
           ...contactPerson,
-          CharityName: dataResult.data.Registration.CharityName,
+          CharityName: data.Registration.CharityName,
         },
       });
       navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`);
     },
     [
+      charity,
+      dispatch,
+      handleError,
       navigate,
       registerCharity,
       resendEmail,
-      showModal,
       updateContactPerson,
-      handleUpdateCharity,
     ]
   );
 

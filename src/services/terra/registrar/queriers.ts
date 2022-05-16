@@ -1,16 +1,15 @@
-import { ChainIDs } from "@types-lists";
 import Registrar, { R, T } from "contracts/Registrar";
+import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
 
-const LOCAL_TERRA: ChainIDs = "localterra";
 export function useEndowmentStatus(address: string, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
   const { wallet, contract } = useContract<R, T>(Registrar);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
     contract.endowmentList({}),
     {
-      skip: skip || wallet?.network.chainID === LOCAL_TERRA,
+      skip: skip || wallet?.network.chainID === chainIDs.terra_local,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
         endowmentStatus: data?.find(
           (endowment) => endowment.address === address
@@ -29,7 +28,7 @@ export function useRegistrarConfig() {
   const { data, isError, isLoading, isFetching } = useConfigQuery(
     contract.config,
     {
-      skip: wallet?.network.chainID === LOCAL_TERRA,
+      skip: wallet?.network.chainID === chainIDs.terra_local,
     }
   );
 

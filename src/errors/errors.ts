@@ -46,9 +46,9 @@ export class WalletDisconnectError extends Error {
 }
 
 export class TxResultFail extends Error {
-  chainId: ChainIDs;
+  chainId: string;
   txHash: string;
-  constructor(chainId: ChainIDs, txHash: string) {
+  constructor(chainId: string, txHash: string) {
     super();
     this.chainId = chainId;
     this.txHash = txHash;

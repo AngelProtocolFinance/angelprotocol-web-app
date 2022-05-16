@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { ChainIDs } from "@types-lists";
 import {
   SenderArgs,
   StageUpdator,
@@ -11,7 +10,6 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
-import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
@@ -43,15 +41,15 @@ export const sendTerraTx = createAsyncThunk(
         const feeNum = extractFeeNum(fee);
 
         const state = getState() as RootState;
-        const feeDenom = args.feedDenom || "uusd";
+        const feeSymbol = args.feeSymbol || "UST";
         const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
-          0;
+          state.wallet.coins.find((coin) => coin.symbol === feeSymbol)
+            ?.balance || 0;
 
         if (feeNum > walletBalanceForFee) {
           updateTx({
             step: "error",
-            message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
+            message: `Not enough ${feeSymbol} to pay for fees`,
           });
           return;
         }
@@ -59,7 +57,7 @@ export const sendTerraTx = createAsyncThunk(
       }
 
       const response = await args.wallet.post(tx);
-      const chainId = contract.chainID as ChainIDs;
+      const chainId = contract.chainID;
 
       updateTx({
         step: "broadcast",

@@ -3,11 +3,12 @@ import { Charity } from "services/aws/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
-import createEndowmentCreationMsg from "../createEndowmentCreationMsg";
+import Registrar from "contracts/Registrar";
 
-describe("createEndowmentCreationMsg tests", () => {
-  it("should return payload", () => {
-    const payload = createEndowmentCreationMsg(CHARITY, WALLET);
+describe("Registrar tests", () => {
+  test("createEndowmentCreationMsg should return valid MsgExecuteContract", () => {
+    const registrar = new Registrar(WALLET);
+    const payload = registrar.createEndowmentCreationMsg(CHARITY);
 
     expect(payload.sender).toBe("terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek");
     expect(payload.execute_msg).toStrictEqual({
@@ -54,8 +55,9 @@ const CHARITY: Charity = {
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",
-    Role: "ceo",
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+    Role: "ceo",
+    SK: "ContactPerson",
   },
   Registration: {
     CharityName: "charity",
@@ -76,12 +78,14 @@ const CHARITY: Charity = {
     ProofOfRegistrationVerified: false,
     FinancialStatementsVerified: false,
     AuditedFinancialReportsVerified: false,
+    SK: "Registration",
   },
   Metadata: {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "",
+    SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
 };
