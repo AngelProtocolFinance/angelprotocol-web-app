@@ -55,25 +55,11 @@ export default function useSaveContactDetails() {
 
       if ("error" in result) {
         setError(true);
-        const resultError =
-          (dataResult.error as FetchBaseQueryError) ||
-          (dataResult as SerializedError).message;
-
-        if (resultError.status === 409) {
-          showModal<PopupProps>(Popup, {
-            message: `${resultError.data} Please check your email for the registration reference.`,
-          });
-        } else if (resultError.status !== 409) {
-          showModal<PopupProps>(Popup, {
-            message: `${resultError.data}`,
-          });
-        } else {
-          showModal<PopupProps>(Popup, {
-            message: `${resultError}`,
-          });
-        }
-
-        return;
+        const message =
+          (result.error as FetchBaseQueryError).status === 404
+            ? "Not found. Please check your email for the registration reference."
+            : FORM_ERROR;
+        return handleError(result.error, message);
       }
 
       const { data } = result;

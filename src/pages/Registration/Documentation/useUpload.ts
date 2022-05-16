@@ -23,7 +23,7 @@ export default function useUpload() {
         );
         const result = await uploadDocumentation({
           PK: charity.ContactPerson.PK,
-          body,
+          body: uploadBody,
         });
 
         if ("error" in result) {
