@@ -9,7 +9,7 @@ export function useEndowmentStatus(address: string, skip = false) {
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
     contract.endowmentList({}),
     {
-      skip: skip || wallet?.network.chainID === chainIDs.localterra,
+      skip: skip || wallet?.network.chainID === chainIDs.terra_local,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
         endowmentStatus: data?.find(
           (endowment) => endowment.address === address
@@ -28,7 +28,7 @@ export function useRegistrarConfig() {
   const { data, isError, isLoading, isFetching } = useConfigQuery(
     contract.config,
     {
-      skip: wallet?.network.chainID === chainIDs.localterra,
+      skip: wallet?.network.chainID === chainIDs.terra_local,
     }
   );
 

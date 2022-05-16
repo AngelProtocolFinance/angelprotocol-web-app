@@ -7,20 +7,20 @@ import { terra_lcds } from "constants/urls";
 
 const localterra: NetworkInfo = {
   name: "localterra",
-  chainID: chainIDs.localterra,
-  lcd: terra_lcds[chainIDs.localterra],
+  chainID: chainIDs.terra_local,
+  lcd: terra_lcds[chainIDs.terra_local],
 };
 
 export const mainnet: NetworkInfo = {
   name: "mainnet",
-  chainID: chainIDs.mainnet,
-  lcd: terra_lcds[chainIDs.mainnet],
+  chainID: chainIDs.terra_main,
+  lcd: terra_lcds[chainIDs.terra_main],
 };
 
 export const testnet: NetworkInfo = {
   name: "testnet",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
+  chainID: chainIDs.terra_test,
+  lcd: terra_lcds[chainIDs.terra_test],
 };
 
 export const chainOptions: WalletControllerChainOptions = {

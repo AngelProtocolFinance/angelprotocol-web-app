@@ -7,13 +7,15 @@ import { Disconnected, TxResultFail } from "./Errors";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
 
 export default class Contract {
+  wallet?: WalletProxy;
   client: LCDClient;
   chainID: string;
   url: string;
   walletAddr?: string;
 
   constructor(wallet?: WalletProxy) {
-    this.chainID = wallet?.network.chainID || chainIDs.mainnet;
+    this.wallet = wallet;
+    this.chainID = wallet?.network.chainID || chainIDs.terra_main;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.address;
     this.client = new LCDClient({
@@ -39,7 +41,7 @@ export default class Contract {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[], denom = denoms.uusd): Promise<Fee> {
+  async estimateFee(msgs: Msg[], denom: string = denoms.uusd): Promise<Fee> {
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(

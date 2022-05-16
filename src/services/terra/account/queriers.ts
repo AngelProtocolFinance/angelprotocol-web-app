@@ -21,7 +21,7 @@ export function useEndowmentProfile(address: string, skip = false) {
   const { useEndowmentProfileQuery } = account_api;
   const { data, isError, isLoading, isFetching } = useEndowmentProfileQuery(
     contract.profile,
-    { skip: skip || wallet?.network.chainID === chainIDs.localterra }
+    { skip: skip || wallet?.network.chainID === chainIDs.terra_local }
   );
 
   return {

@@ -2,10 +2,10 @@ import { Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import {
   useGovConfig,
+  useGovHaloBalance,
   useGovPoll,
   useGovStaker,
 } from "services/terra/gov/queriers";
-import { useGovBalanceState } from "services/terra/gov/states";
 import { PollStatus } from "services/terra/gov/types";
 import { useLatestBlock } from "services/terra/queriers";
 import { Vote } from "contracts/types";
@@ -37,7 +37,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
   const { wallet } = useWalletContext();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
-  const gov_staked = useGovBalanceState();
+  const gov_staked = useGovHaloBalance();
   const gov_staker = useGovStaker();
   const block_height = useLatestBlock();
 

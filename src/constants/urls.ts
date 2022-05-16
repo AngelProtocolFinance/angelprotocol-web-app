@@ -10,19 +10,19 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.testnet]:
+  [chainIDs.terra_test]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/test",
-  [chainIDs.mainnet]:
+  [chainIDs.terra_main]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  [chainIDs.localterra]: "http://localhost:3060",
+  [chainIDs.terra_local]: "http://localhost:3060",
 };
 
 export const terra_rpcs: URL_GROUP = {
-  [chainIDs.testnet]:
+  [chainIDs.terra_test]:
     "https://bombay-12--rcp--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
-  [chainIDs.mainnet]:
+  [chainIDs.terra_main]:
     "https://columbus-5--rpc--full.datahub.figment.io/apikey/1ddd68fdcf80475836f8f815095d34c6",
-  [chainIDs.localterra]: "",
+  [chainIDs.terra_local]: "",
 };
 
 //cosmos urls

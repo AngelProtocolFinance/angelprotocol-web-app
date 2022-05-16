@@ -17,7 +17,7 @@ export default function Transactor<C>(props: TxProps<C>) {
     <div
       className={`w-full max-w-md ${
         props.inModal
-          ? "bg-white-grey rounded-md overflow-hidden pt-4 fixed-center z-20"
+          ? "bg-white-grey rounded-md overflow-visible pt-4 fixed-center z-20"
           : "relative"
       }`}
     >

@@ -25,17 +25,23 @@ const transactionSlice = createSlice({
     setFormLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.form_loading = payload;
     },
-    setFee: (state, { payload }: PayloadAction<number>) => {
-      state.fee = payload;
+    setFee: (
+      state,
+      { payload }: PayloadAction<Pick<State, "fee" | "feeSymbol">>
+    ) => {
+      state.fee = payload.fee;
+      state.feeSymbol = payload.feeSymbol;
     },
     resetFee: (state) => {
       state.fee = 0;
+      state.feeSymbol = undefined;
     },
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
     },
     resetTxFormState: (state) => {
       state.fee = 0;
+      state.feeSymbol = undefined;
       state.form_error = "";
       state.form_loading = false;
     },
