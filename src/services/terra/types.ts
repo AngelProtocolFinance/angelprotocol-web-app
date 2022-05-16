@@ -1,5 +1,3 @@
-import { Coin } from "@terra-money/terra.js";
-
 export interface QueryRes<T> {
   query_result: T;
 }
