@@ -43,6 +43,10 @@ export default function useEditProfile() {
     initialProfile,
     ...data
   }: UpdateProfileValues) => {
+    //extract [code]
+    if (data.country_of_origin) {
+      data.country_of_origin = data.country_of_origin.split(" ")[0];
+    }
     const diff = getPayloadDiff(initialProfile, data);
 
     //if overview has changed, and is set to something
