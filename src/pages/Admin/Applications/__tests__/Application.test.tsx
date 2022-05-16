@@ -42,10 +42,6 @@ jest.mock("hooks/useWalletContext", () => ({
 }));
 
 describe("Charity applications review", () => {
-  afterAll(() => {
-    jest.unmock("services/aws/registration");
-  });
-
   test("Renders Initial state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
     render(<Applications />);
@@ -96,7 +92,7 @@ describe("Charity applications review", () => {
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })
     ).toBeInTheDocument();
-
+    screen.debug();
     const reviewButton = screen.getAllByRole("button", { name: /review/i })[0];
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
     userEvent.click(reviewButton);
@@ -105,7 +101,7 @@ describe("Charity applications review", () => {
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
 
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
   });
 
   test("Application preview modal renders 2nd application", () => {
@@ -125,7 +121,7 @@ describe("Charity applications review", () => {
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
 
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
   });
 });
 
