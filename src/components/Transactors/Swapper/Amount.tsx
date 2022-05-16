@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Icon from "components/Icons/Icons";
-import { currency_icons, denoms } from "constants/currency";
+import { denomIcons } from "constants/currency";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 import { SwapValues } from "./types";
@@ -48,7 +48,7 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
+            src={is_buy ? denomIcons.uusd : denomIcons.halo}
             alt=""
           />
           <span className="block font-bold text-2xl">
@@ -69,7 +69,7 @@ export default function Amount() {
         errors={errors}
         name="amount"
         as="span"
-        className="text-right text-red-400 text-sm mb-1 mt-1 mr-1"
+        className="text-right text-red-400 text-xs font-semibold font-mono m-1"
       />
     </div>
   );

@@ -34,8 +34,8 @@ export const SCHEMA = Yup.object().shape({
   charityOverview: Yup.string().required("Organization description required"),
   charityLogo: FILE_SCHEMA.test({
     name: "fileSize",
-    message: "Image size must be smaller than 300KB",
-    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 3e5,
+    message: "Image size must be smaller than 1MB",
+    test: (fileWrapper) => (fileWrapper?.file?.size || 0) <= 1e6,
   }),
   banner: FILE_SCHEMA.test({
     name: "fileSize",

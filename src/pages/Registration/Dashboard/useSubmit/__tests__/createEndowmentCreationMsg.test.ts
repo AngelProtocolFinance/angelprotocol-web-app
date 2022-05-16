@@ -54,8 +54,9 @@ const CHARITY: Charity = {
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",
-    Role: "ceo",
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+    Role: "ceo",
+    SK: "ContactPerson",
   },
   Registration: {
     CharityName: "charity",
@@ -76,12 +77,14 @@ const CHARITY: Charity = {
     ProofOfRegistrationVerified: false,
     FinancialStatementsVerified: false,
     AuditedFinancialReportsVerified: false,
+    SK: "Registration",
   },
   Metadata: {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "",
+    SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
 };

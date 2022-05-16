@@ -2,18 +2,18 @@ import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
-import Halo from "contracts/Halo";
+import { useGetter, useSetter } from "store/accessors";
+import Gov from "contracts/Gov";
 import { Vote } from "contracts/types";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 import { VoteValues } from "./types";
@@ -22,12 +22,12 @@ export default function useVoteEstimator() {
   const {
     watch,
     getValues,
+    setError,
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
+  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
-  const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
@@ -47,7 +47,7 @@ export default function useVoteEstimator() {
         if (!isValid || !isDirty) return;
 
         if (!debounced_amount) {
-          dispatch(setFee(0));
+          dispatch(setFee({ fee: 0 }));
           return;
         }
 
@@ -73,12 +73,12 @@ export default function useVoteEstimator() {
         const vote_amount = new Dec(debounced_amount).mul(1e6);
 
         if (staked_amount.lt(vote_amount)) {
-          dispatch(setFormError(`Not enough staked`));
+          setError("amount", { message: "not enough staked" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Halo(wallet);
+        const contract = new Gov(wallet);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -88,13 +88,14 @@ export default function useVoteEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeNum >= ustBalance) {
+          setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -110,8 +111,7 @@ export default function useVoteEstimator() {
     debounced_amount,
     debounced_vote,
     wallet,
-    UST_balance,
-    haloBalance,
+    coins,
     govStaker,
     isValid,
     isDirty,

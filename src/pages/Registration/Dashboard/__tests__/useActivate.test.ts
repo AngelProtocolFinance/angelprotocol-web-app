@@ -29,12 +29,6 @@ jest.mock("store/accessors", () => ({
 }));
 
 describe("useActivate tests", () => {
-  afterAll(() => {
-    jest.unmock("services/aws/registration");
-    jest.unmock("components/ModalContext/ModalContext");
-    jest.unmock("store/accessors");
-  });
-
   it("should return default values on initialization", () => {
     mockUseActivateMutation.mockReturnValue([
       (_: string) => ({}),
@@ -111,8 +105,9 @@ const CHARITY: Charity = {
     FirstName: "first",
     LastName: "last",
     PhoneNumber: "+114323888",
-    Role: "ceo",
     PK,
+    Role: "ceo",
+    SK: "ContactPerson",
   },
   Registration: {
     CharityName: "charity",
@@ -133,12 +128,14 @@ const CHARITY: Charity = {
     ProofOfRegistrationVerified: true,
     FinancialStatementsVerified: false,
     AuditedFinancialReportsVerified: false,
+    SK: "Registration",
   },
   Metadata: {
     Banner: { name: "banner", publicUrl: "https://www.storage.path/banner" },
     CharityLogo: { name: "logo", publicUrl: "https://www.storage.path/logo" },
     CharityOverview: "some overview",
     EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
+    SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
   },
 };

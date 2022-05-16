@@ -4,7 +4,6 @@ import { sendDonationLog } from "services/transaction/transactors/sendDonationLo
 import { useSetter } from "store/accessors";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const apiKey = isDevelopment
@@ -15,9 +14,9 @@ const env = isDevelopment ? "STAGING" : "PRODUCTION";
 let transak = new transakSDK({
   apiKey: apiKey,
   environment: env,
-  cryptoCurrencyCode: currency_text[denoms.uusd],
+  cryptoCurrencyCode: "UST",
   network: "terra", //on staging environment, this will automatically be on bombay-12
-  walletAddress: ap_wallets[denoms.uusd],
+  walletAddress: ap_wallets["terra"],
   hostURL: window.location.origin,
 
   //widget look

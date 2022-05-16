@@ -15,7 +15,9 @@ const percentConstraint = Yup.number()
   .min(0, "invalid: should not be negative")
   .max(100, "invalid: should not be greater than 100");
 
-export const requiredTokenAmount = tokenConstraint;
+export const requiredTokenAmount = Yup.lazy((value) =>
+  value === "" ? Yup.string().required("required") : tokenConstraint
+);
 export const tokenAmount = Yup.lazy((value) =>
   value === "" ? Yup.string() : tokenConstraint
 );

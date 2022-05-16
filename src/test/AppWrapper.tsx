@@ -8,8 +8,8 @@ import { terra_lcds } from "constants/urls";
 
 const testnet = {
   name: "bombay",
-  chainID: chainIDs.testnet,
-  lcd: terra_lcds[chainIDs.testnet],
+  chainID: chainIDs.terra_test,
+  lcd: terra_lcds[chainIDs.terra_test],
 };
 
 export default function AppWrapper(
