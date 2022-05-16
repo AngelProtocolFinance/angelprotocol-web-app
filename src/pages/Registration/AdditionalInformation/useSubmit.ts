@@ -17,7 +17,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (values: FormValues) => {
       try {
-        const body = await getUploadBody(values);
+        const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
         const result = await updateMetadata({
           PK: charity.ContactPerson.PK,
@@ -48,12 +48,14 @@ export default function useSubmit() {
   return { submit, isSuccess };
 }
 
-async function getUploadBody(values: FormValues) {
+async function getUploadBody(primaryKey: string, values: FormValues) {
   const logoPromise = uploadIfNecessary(
+    primaryKey,
     values.charityLogo,
     Folders.CharityProfileImageLogo
   );
   const bannerPromise = uploadIfNecessary(
+    primaryKey,
     values.banner,
     Folders.CharityProfileImageBanners
   );
@@ -74,7 +76,11 @@ async function getUploadBody(values: FormValues) {
   };
 }
 
-async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
@@ -82,10 +88,12 @@ async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
     };
   }
 
-  const result = await uploadToIpfs(fileWrapper.file, folder);
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,
-    publicUrl: result.publicUrl,
+    publicUrl,
   };
 }
