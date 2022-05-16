@@ -1,9 +1,7 @@
-import { ChainIDs } from "@types-lists";
-
 export class LogApplicationUpdateError extends Error {
-  chainId: ChainIDs;
+  chainId: string;
   pollId: string;
-  constructor(chainId: ChainIDs, pollId: string) {
+  constructor(chainId: string, pollId: string) {
     super();
     this.chainId = chainId;
     this.pollId = pollId;
@@ -12,9 +10,9 @@ export class LogApplicationUpdateError extends Error {
 }
 
 export class LogDonationFail extends Error {
-  chainId: ChainIDs;
+  chainId: string;
   txHash: string;
-  constructor(chainId: ChainIDs, txHash: string) {
+  constructor(chainId: string, txHash: string) {
     super();
     this.chainId = chainId;
     this.txHash = txHash;

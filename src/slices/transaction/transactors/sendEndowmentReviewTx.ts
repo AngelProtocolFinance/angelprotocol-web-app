@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import { ChainIDs } from "@types-lists";
 import {
   SenderArgs,
   StageUpdator,
@@ -99,7 +98,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.network.chainID as ChainIDs,
+            chain_id: args.wallet.network.chainID,
             PK: args.applicationId,
           });
 
