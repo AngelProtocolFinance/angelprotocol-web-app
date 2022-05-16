@@ -31,24 +31,31 @@ export default function WalletSubmission(props: Props) {
       {status !== WalletStatus.WALLET_CONNECTED ? (
         <UnsupportedWalletConnected />
       ) : (
-        <div className="flex flex-col gap-10 items-center w-3/4">
-          <FormInput
-            id="walletAddress"
-            label="Terra Wallet"
-            placeholder="terra1..."
-            value={walletAddress}
-            disabled
-            required
-          />
-          <Button
-            submit
-            className="bg-thin-blue w-48 h-10"
-            isLoading={isSubmitting}
-            onClick={onClick}
-          >
-            Submit
-          </Button>
-        </div>
+        <>
+          <p>
+            If you wish to register another wallet, you need to Disconnect using
+            the wallet logo located at the top right of your screen and resume
+            the process with another wallet
+          </p>
+          <div className="flex flex-col gap-10 items-center w-128">
+            <FormInput
+              id="walletAddress"
+              label="Terra Wallet"
+              placeholder="terra1..."
+              value={walletAddress}
+              disabled
+              required
+            />
+            <Button
+              submit
+              className="bg-thin-blue w-48 h-10"
+              isLoading={isSubmitting}
+              onClick={onClick}
+            >
+              Submit
+            </Button>
+          </div>
+        </>
       )}
       <Button
         className="bg-green-400 w-80 h-10"
