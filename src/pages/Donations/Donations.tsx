@@ -23,7 +23,7 @@ export default function Donations() {
   });
 
   return (
-    <div className="grid content-start padded-container p-4 mt-10 bg-white/10 overflow-auto h-process rounded-md shadow-md shadow-inner">
+    <div className="grid content-start padded-container p-4 mt-10 bg-white/10 overflow-auto h-36 rounded-md shadow-md shadow-inner">
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-bold uppercase text-white mb-4">
           My Donations
