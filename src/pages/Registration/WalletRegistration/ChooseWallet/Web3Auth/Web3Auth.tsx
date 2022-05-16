@@ -21,7 +21,7 @@ export default function Web3Auth({ onLogin }: Props) {
         </ButtonSocial>
 
         <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.LINKEDIN)}>
-          <Icon type="LinkedinSquare" className="text-blue-500" size={30} />
+          <Icon type="Linkedin" className="text-blue-500" size={30} />
         </ButtonSocial>
 
         <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.DISCORD)}>

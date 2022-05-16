@@ -14,7 +14,7 @@ export default function Share() {
       </div>
       <div className="flex justify-center my-5 ">
         <IconLink link={TWITTER_SHARE_URL} icon={getIcon("Twitter")} />
-        <IconLink link={LINKEDIN_SHARE_URL} icon={getIcon("Linkedin")} />
+        <IconLink link={LINKEDIN_SHARE_URL} icon={getIcon("LinkedinIn")} />
         <IconLink link={FACEBOOK_DIALOG_URL} icon={getIcon("Facebook")} />
       </div>
     </div>

@@ -73,7 +73,7 @@ export type IconTypes =
   | "Facebook"
   | "FacebookCircle"
   | "Linkedin"
-  | "LinkedinSquare"
+  | "LinkedinIn"
   | "Parachute"
   | "Link"
   | "ListUl"
@@ -143,8 +143,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Check: AiOutlineCheck,
   Menu: FiMenu,
   Close: IoClose,
-  Linkedin: FaLinkedinIn,
-  LinkedinSquare: FaLinkedin,
+  Linkedin: FaLinkedin,
+  LinkedinIn: FaLinkedinIn,
   Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
