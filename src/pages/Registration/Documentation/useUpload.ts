@@ -38,7 +38,10 @@ export default function useUpload() {
   const upload = useCallback(
     async (values: FormValues) => {
       try {
-        const uploadBody = await getUploadUrls(values);
+        const uploadBody = await getUploadUrls(
+          charity.ContactPerson.PK!,
+          values
+        );
 
         const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
         const result = await uploadDocumentation(postData);
@@ -58,23 +61,29 @@ export default function useUpload() {
   return { upload, isSuccess };
 }
 
-async function getUploadUrls(values: FormValues) {
+async function getUploadUrls(primaryKey: string, values: FormValues) {
   const poiPromise = uploadIfNecessary(
+    primaryKey,
     values.proofOfIdentity,
     Folders.ProofOfIdentity
   );
   const porPromise = uploadIfNecessary(
+    primaryKey,
     values.proofOfRegistration,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
-    values.financialStatements.map((x) =>
-      uploadIfNecessary(x, Folders.FinancialStatements)
+    values.financialStatements.map((fileWrapper) =>
+      uploadIfNecessary(primaryKey, fileWrapper, Folders.FinancialStatements)
     )
   );
   const afrPromise = Promise.all(
-    values.auditedFinancialReports.map((x) =>
-      uploadIfNecessary(x, Folders.AuditedFinancialReports)
+    values.auditedFinancialReports.map((fileWrapper) =>
+      uploadIfNecessary(
+        primaryKey,
+        fileWrapper,
+        Folders.AuditedFinancialReports
+      )
     )
   );
 
@@ -109,7 +118,11 @@ async function getUploadUrls(values: FormValues) {
   };
 }
 
-async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
@@ -117,10 +130,11 @@ async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
     };
   }
 
-  const result = await uploadToIpfs(fileWrapper.file, folder);
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,
-    publicUrl: result.publicUrl,
+    publicUrl,
   };
 }
