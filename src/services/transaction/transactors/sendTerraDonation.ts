@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Receiver } from "services/apes/types";
+import { multicall, tags } from "services/terra/tags";
+import { terra } from "services/terra/terra";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
-import { chainIDs } from "constants/chainIDs";
-import { currency_text } from "constants/currency";
 import transactionSlice, { setStage } from "../transactionSlice";
 import { StageUpdator, Step } from "../types";
 import { TerraDonateArgs } from "./transactorTypes";
@@ -23,13 +23,13 @@ export const sendTerraDonation = createAsyncThunk(
       updateStage({ step: Step.submit, message: "Submitting transaction.." });
 
       const response = await args.wallet.post(args.tx!);
-      const chainId = args.wallet.network.chainID as chainIDs;
+      const chainId = args.wallet.network.chainID;
 
       if (response.success) {
         updateStage({ step: Step.submit, message: "Saving donation details" });
 
         const walletAddress = args.wallet.address;
-        const { receiver, currency, amount, split_liq } = args.donateValues;
+        const { receiver, token, amount, split_liq } = args.donateValues;
 
         const receipient: Receiver =
           typeof receiver === "string"
@@ -43,7 +43,7 @@ export const sendTerraDonation = createAsyncThunk(
             transactionDate: new Date().toISOString(),
             chainId,
             amount: +amount,
-            denomination: currency_text[currency],
+            denomination: token.symbol,
             splitLiq: split_liq,
             walletAddress,
           });
@@ -71,6 +71,14 @@ export const sendTerraDonation = createAsyncThunk(
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });
+
+          //invalidate user balance and endowment balance
+          dispatch(
+            terra.util.invalidateTags([
+              { type: tags.multicall, id: multicall.endowmentBalance },
+              { type: tags.multicall, id: multicall.terraBalances },
+            ])
+          );
         } else {
           updateStage({
             step: Step.error,

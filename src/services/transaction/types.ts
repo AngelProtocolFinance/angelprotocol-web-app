@@ -4,8 +4,6 @@ import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
 import { tags as awsTags } from "services/aws/tags";
 import { tags as terraTags } from "services/terra/tags";
 import { WalletProxy } from "providers/WalletProvider/types";
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
 
 export enum Step {
   form = "form",
@@ -27,6 +25,7 @@ export type State = {
   form_loading: boolean;
   form_error: FormError | null;
   fee: number;
+  feeSymbol?: string;
   stage: Stage;
 };
 
@@ -53,7 +52,7 @@ export type BroadcastStage = {
   message: string;
   txHash: string;
   txInfo?: never;
-  chainId: chainIDs;
+  chainId: string;
   details?: never;
 };
 
@@ -63,7 +62,7 @@ export type SuccessStage = {
   message: string;
   txHash: string; //leave "" to not render tx link
   txInfo?: TxInfo;
-  chainId: chainIDs; //leave "" to not render tx link
+  chainId: string; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
@@ -74,7 +73,7 @@ export type ReceiptStage = {
   message?: never;
   txHash: string;
   txInfo?: never;
-  chainId: chainIDs;
+  chainId: string;
 };
 
 export type ErrorStage = {
@@ -82,7 +81,7 @@ export type ErrorStage = {
   message: string;
   txHash?: string;
   txInfo?: never;
-  chainId?: chainIDs;
+  chainId?: string;
   details?: never;
 };
 
@@ -107,5 +106,5 @@ export type SenderArgs = {
   tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
-  feedDenom?: denoms;
+  feeSymbol?: string;
 };

@@ -1,32 +1,22 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
-import { useActivateMutation } from "services/aws/registration";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
+import { useActivateCharityMutation } from "services/aws/registration";
 import { useGetter, useSetter } from "store/accessors";
+import { FORM_ERROR } from "../constants";
 import { updateCharity } from "../store";
-
-const FORM_ERROR =
-  "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io";
+import useHandleError from "../useHandleError";
 
 export default function useActivate() {
-  const [activateMutation, { isLoading }] = useActivateMutation();
-  const { showModal } = useModalContext();
+  const [activateCharity, { isLoading }] = useActivateCharityMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
+  const handleError = useHandleError();
 
   const activate = useCallback(
     async (primaryKey?: string) => {
-      const result = await activateMutation(primaryKey);
+      const result = await activateCharity(primaryKey);
 
-      const dataResult = result as {
-        error: FetchBaseQueryError | SerializedError;
-      };
-
-      if (dataResult.error) {
-        console.log(dataResult.error);
-        showModal(Popup, { message: FORM_ERROR });
+      if ("error" in result) {
+        handleError(result.error, FORM_ERROR);
       } else {
         dispatch(
           updateCharity({
@@ -39,7 +29,7 @@ export default function useActivate() {
         );
       }
     },
-    [charity, activateMutation, dispatch, showModal]
+    [charity, activateCharity, dispatch, handleError]
   );
 
   return { activate, isSubmitting: isLoading };

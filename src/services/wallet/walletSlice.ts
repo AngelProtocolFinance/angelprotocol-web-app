@@ -1,37 +1,32 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import icon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
 import { State, WalletInfo } from "./types";
 
 const initialState: State = {
   isUpdating: false,
   displayCoin: {
     amount: 0,
-    denom: denoms.uusd,
+    symbol: "UST",
   },
   coins: [],
   icon: icon,
   address: "walletaddrs",
-  supported_denoms: [],
   id: undefined,
-  chainId: chainIDs.mainnet,
+  chainId: chainIDs.terra_main,
 };
 
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    resetWallet: (state) => {
-      state = initialState;
-    },
+    resetWallet: (state) => initialState,
     setWalletDetails: (state, { payload }: PayloadAction<WalletInfo>) => {
       state.icon = payload.icon;
       state.displayCoin = payload.displayCoin;
       state.coins = payload.coins;
       state.address = payload.address;
       state.chainId = payload.chainId;
-      state.supported_denoms = payload.supported_denoms;
       state.id = payload.id;
     },
     setIsUpdating: (state, { payload }: PayloadAction<boolean>) => {

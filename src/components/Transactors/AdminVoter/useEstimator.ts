@@ -1,7 +1,6 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
@@ -12,15 +11,16 @@ import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
+import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 import { AdminVoteValues } from "./types";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
+  const { coins } = useGetter((state) => state.wallet);
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
   const { wallet } = useWalletContext();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
@@ -47,13 +47,14 @@ export default function useEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
+        const ustBalance = getTokenBalance(coins, denoms.uusd);
         //check if user has enough balance to pay for fees
-        if (feeNum >= UST_balance) {
+        if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [voteMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -64,7 +65,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_vote, wallet, UST_balance]);
+  }, [debounced_vote, wallet, coins]);
 
   return tx;
 }

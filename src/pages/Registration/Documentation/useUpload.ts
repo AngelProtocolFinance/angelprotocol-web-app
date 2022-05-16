@@ -1,80 +1,74 @@
 import { useCallback } from "react";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { UpdateDocumentationResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
-import { Folders } from "../constants";
+import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 import { FormValues } from "./types";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
-
-  const handleError = useCallback(
-    (error) => {
-      console.log(error);
-      showModal(Popup, { message: "Error updating charity ❌" });
-    },
-    [showModal]
-  );
-
-  const handleSuccess = useCallback(
-    (data?: UpdateDocumentationResult) =>
-      dispatch(
-        updateCharity({
-          ...charity,
-          Registration: { ...charity.Registration, ...data },
-        })
-      ),
-    [dispatch, charity]
-  );
+  const handleError = useHandleError();
 
   const upload = useCallback(
     async (values: FormValues) => {
       try {
-        const uploadBody = await getUploadUrls(values);
-
-        const postData = { PK: charity.ContactPerson.PK, body: uploadBody };
-        const result = await uploadDocumentation(postData);
+        const uploadBody = await getUploadUrls(
+          charity.ContactPerson.PK!,
+          values
+        );
+        const result = await uploadDocumentation({
+          PK: charity.ContactPerson.PK,
+          body,
+        });
 
         if ("error" in result) {
-          handleError(result.error);
+          handleError(result.error, FORM_ERROR);
         } else {
-          handleSuccess(result.data);
+          dispatch(
+            updateCharity({
+              ...charity,
+              Registration: { ...charity.Registration, ...result.data },
+            })
+          );
         }
       } catch (error) {
-        handleError(error);
+        handleError(error, FORM_ERROR);
       }
     },
-    [charity.ContactPerson.PK, uploadDocumentation, handleError, handleSuccess]
+    [charity, dispatch, handleError, uploadDocumentation]
   );
 
   return { upload, isSuccess };
 }
 
-async function getUploadUrls(values: FormValues) {
+async function getUploadUrls(primaryKey: string, values: FormValues) {
   const poiPromise = uploadIfNecessary(
+    primaryKey,
     values.proofOfIdentity,
     Folders.ProofOfIdentity
   );
   const porPromise = uploadIfNecessary(
+    primaryKey,
     values.proofOfRegistration,
     Folders.ProofOfRegistration
   );
   const fsPromise = Promise.all(
-    values.financialStatements.map((x) =>
-      uploadIfNecessary(x, Folders.FinancialStatements)
+    values.financialStatements.map((fileWrapper) =>
+      uploadIfNecessary(primaryKey, fileWrapper, Folders.FinancialStatements)
     )
   );
   const afrPromise = Promise.all(
-    values.auditedFinancialReports.map((x) =>
-      uploadIfNecessary(x, Folders.AuditedFinancialReports)
+    values.auditedFinancialReports.map((fileWrapper) =>
+      uploadIfNecessary(
+        primaryKey,
+        fileWrapper,
+        Folders.AuditedFinancialReports
+      )
     )
   );
 
@@ -109,7 +103,11 @@ async function getUploadUrls(values: FormValues) {
   };
 }
 
-async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
@@ -117,10 +115,11 @@ async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
     };
   }
 
-  const result = await uploadToIpfs(fileWrapper.file, folder);
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,
-    publicUrl: result.publicUrl,
+    publicUrl,
   };
 }

@@ -1,5 +1,4 @@
-import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { TokenWithBalance } from "services/terra/multicall/types";
 
 export enum TerraIdentifiers {
   //watch for this to change in @terra-money/wallet-provider updates
@@ -21,27 +20,13 @@ export enum Providers {
   // keplr = "keplr",
 }
 
-export type Coin = {
-  amount: number; // "1000"
-  denom: denoms; //"denoms.uusd, denoms.uluna"
-};
-
 export type WalletInfo = {
   icon: string;
-  displayCoin: Coin;
-  coins: Coin[];
+  displayCoin: { amount: number; symbol: string };
+  coins: TokenWithBalance[];
   address: string;
-  chainId: chainIDs;
-  supported_denoms: denoms[];
+  chainId: string;
   id: TerraIdentifiers | undefined;
 };
 
 export type State = { isUpdating: boolean } & WalletInfo;
-
-export type EthNetworks = "homestead" | "ropsten" | "bnb" | "bnbt";
-
-export type EthState = {
-  connected: boolean;
-  network: EthNetworks;
-  balance: number;
-} & WalletInfo;

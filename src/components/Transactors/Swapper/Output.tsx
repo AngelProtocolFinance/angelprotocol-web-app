@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { currency_icons, denoms } from "constants/currency";
+import { denomIcons } from "constants/currency";
 import { SwapValues } from "./types";
 
 export default function Output() {
@@ -7,7 +7,7 @@ export default function Output() {
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");
-  const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
+  const icon = denomIcons[is_buy ? "halo" : "uusd"];
 
   return (
     <div className="grid grid-cols-a1 bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">

@@ -1,83 +1,61 @@
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback } from "react";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { UpdateCharityMetadataResult } from "services/aws/types";
 import { FileWrapper } from "components/FileDropzone/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 import { FormValues } from "./types";
 
 export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
   const charity = useGetter((state) => state.charity);
   const dispatch = useSetter();
-  const { showModal } = useModalContext();
-
-  const handleError = useCallback(
-    (error) => {
-      console.log(error);
-      showModal(Popup, { message: "Error updating profile ❌" });
-    },
-    [showModal]
-  );
-
-  const handleSuccess = useCallback(
-    (data: UpdateCharityMetadataResult) =>
-      dispatch(
-        updateCharity({
-          ...charity,
-          Metadata: {
-            ...charity.Metadata,
-            Banner: data.Banner,
-            CharityLogo: data.CharityLogo,
-            CharityOverview: data.CharityOverview,
-          },
-        })
-      ),
-    [dispatch, charity]
-  );
+  const handleError = useHandleError();
 
   const submit = useCallback(
     async (values: FormValues) => {
       try {
-        const body = await getUploadBody(values);
+        const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
         const result = await updateMetadata({
           PK: charity.ContactPerson.PK,
           body,
         });
 
-        const dataResult = result as {
-          data: UpdateCharityMetadataResult;
-          error: FetchBaseQueryError | SerializedError;
-        };
-
-        if (dataResult.error) {
-          handleError(dataResult.error);
+        if ("error" in result) {
+          handleError(result.error, "Error updating profile ❌");
         } else {
-          handleSuccess(dataResult.data);
+          const { TerraWallet, ...resultMetadata } = result.data;
+          dispatch(
+            updateCharity({
+              ...charity,
+              Metadata: {
+                ...charity.Metadata,
+                ...resultMetadata,
+              },
+            })
+          );
         }
       } catch (error) {
-        handleError(error);
+        handleError(error, "Error updating profile ❌");
       }
     },
-    [updateMetadata, charity.ContactPerson.PK, handleError, handleSuccess]
+    [charity, dispatch, handleError, updateMetadata]
   );
 
   return { submit, isSuccess };
 }
 
-async function getUploadBody(values: FormValues) {
+async function getUploadBody(primaryKey: string, values: FormValues) {
   const logoPromise = uploadIfNecessary(
+    primaryKey,
     values.charityLogo,
     Folders.CharityProfileImageLogo
   );
   const bannerPromise = uploadIfNecessary(
+    primaryKey,
     values.banner,
     Folders.CharityProfileImageBanners
   );
@@ -98,7 +76,11 @@ async function getUploadBody(values: FormValues) {
   };
 }
 
-async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
+async function uploadIfNecessary(
+  primaryKey: string,
+  fileWrapper: FileWrapper,
+  folder: Folders
+) {
   if (!fileWrapper.file) {
     return {
       name: fileWrapper.name,
@@ -106,10 +88,12 @@ async function uploadIfNecessary(fileWrapper: FileWrapper, folder: Folders) {
     };
   }
 
-  const result = await uploadToIpfs(fileWrapper.file, folder);
+  const path = `${folder}/${primaryKey}-${fileWrapper.name}`;
+
+  const publicUrl = await uploadToIpfs(path, fileWrapper.file);
 
   return {
     name: fileWrapper.file.name,
-    publicUrl: result.publicUrl,
+    publicUrl,
   };
 }

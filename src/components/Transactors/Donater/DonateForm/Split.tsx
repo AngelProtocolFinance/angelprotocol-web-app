@@ -10,14 +10,14 @@ export default function Split() {
       <div className="grid grid-cols-2 gap-2 mb-2">
         <Portion
           type="locked"
-          border_class="border-green-500"
+          border_class="border-green-500/80"
           text_class="text-green-500 uppercase"
           title="Endowment"
           action="Compounded forever"
         />
         <Portion
           type="liquid"
-          border_class="border-angel-blue"
+          border_class="border-angel-blue/80"
           text_class="text-blue-accent uppercase"
           title="Liquid"
           action="Instantly available"

@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { currency_text, denoms } from "constants/currency";
 import { app, site } from "constants/routes";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
@@ -18,14 +17,14 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
-          denom={currency_text[denoms.uusd]}
+          symbol="UST"
           precision={6}
         />
         <Figure
           position="lg:row-start-2"
           title="total staked"
           value={staked}
-          denom={currency_text[denoms.uhalo]}
+          symbol="HALO"
           percent={percentStaked}
         />
         <Portal />
