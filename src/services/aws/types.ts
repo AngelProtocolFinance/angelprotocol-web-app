@@ -34,6 +34,7 @@ export type ContactDetailsRequest = {
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
+  Goals: string;
   FirstName: string;
   LastName: string;
   OtherRole?: string;

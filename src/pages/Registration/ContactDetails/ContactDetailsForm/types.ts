@@ -6,6 +6,7 @@ export type ContactDetails = {
   firstName: string;
   lastName: string;
   email: string;
+  goals: string;
   phone: string;
   referralMethod: ReferralMethods;
   otherReferralMethod: string;
@@ -24,6 +25,9 @@ export const ContactInfoSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
     .required("Please enter your email."),
+  goals: Yup.string().required(
+    "Please state your goal in working with Angel Protocol."
+  ),
   // since selector logic has a default value selected, this error message should never appear
   role: Yup.string().required(
     "Please select your role within your organization."

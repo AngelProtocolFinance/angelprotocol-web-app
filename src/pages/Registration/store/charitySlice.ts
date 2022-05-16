@@ -6,6 +6,7 @@ const getDefaultCharity = (): Charity => ({
     Email: "",
     EmailVerified: false,
     FirstName: "",
+    Goals: "",
     LastName: "",
     PhoneNumber: "",
     PK: "",

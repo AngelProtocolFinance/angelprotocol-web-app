@@ -15,7 +15,7 @@ type Props = {
   disabled: boolean;
 };
 
-export default function RoleSelector(props: Props) {
+export default function ReferralSelector(props: Props) {
   return (
     <div className="flex flex-col gap-1 w-full text-left">
       <label htmlFor={props.name} className="text-dark-grey">

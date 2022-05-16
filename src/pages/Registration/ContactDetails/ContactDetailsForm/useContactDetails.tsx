@@ -40,6 +40,7 @@ export default function useSaveContactDetails() {
             FirstName: contactData.firstName,
             LastName: contactData.lastName,
             Email: contactData.email,
+            Goals: contactData.goals,
             OtherReferralMethod: contactData.otherReferralMethod,
             OtherRole: contactData.otherRole,
             PhoneNumber: contactData.phone,
