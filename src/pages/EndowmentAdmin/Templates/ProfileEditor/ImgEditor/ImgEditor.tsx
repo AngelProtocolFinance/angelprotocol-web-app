@@ -1,6 +1,5 @@
 import React from "react";
-import { IconType } from "react-icons";
-import { getIcon } from "components/Icon";
+import Icon, { IconTypes } from "components/Icon";
 import Loader from "components/Loader/Loader";
 import useImgEditor from "./useImgEditor";
 
@@ -27,19 +26,19 @@ export default function ImgEditor() {
           <ImageControl
             type="upload"
             htmlFor="file__image"
-            Icon={getIcon("Upload")}
+            iconType="Upload"
             disabled={loading}
           />
           <ImageControl
             type="btn"
             onClick={handleImageReset}
-            Icon={getIcon("Undo")}
+            iconType="Undo"
             disabled={isInitial || loading}
           />
           <ImageControl
             type="btn"
             onClick={handleOpenCropper}
-            Icon={getIcon("Crop")}
+            iconType="Crop"
             disabled={isInitial || loading}
           />
           <input
@@ -57,7 +56,7 @@ export default function ImgEditor() {
   );
 }
 
-type Common = { Icon: IconType; disabled?: boolean };
+type Common = { iconType: IconTypes; disabled?: boolean };
 type ControlProps =
   | { type: "upload"; onClick?: never; htmlFor: string }
   | {
@@ -66,12 +65,12 @@ type ControlProps =
       htmlFor?: never;
     };
 function ImageControl(props: ControlProps & Common) {
-  const { Icon, type, ...valitAttrs } = props;
+  const { iconType, type, ...valitAttrs } = props;
   return React.createElement(props.type === "btn" ? "button" : "label", {
     ...valitAttrs,
     className:
       "cursor-pointer text-white text-lg bg-angel-blue hover:bg-blue-accent disabled:bg-grey-accent/90 p-2 m-1 rounded-md shadow-lg",
-    children: <Icon />,
+    children: <Icon type={iconType} />,
   });
 }
 

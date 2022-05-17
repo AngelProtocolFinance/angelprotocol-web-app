@@ -1,4 +1,4 @@
-import { getIcon } from "components/Icon";
+import Icon, { IconTypes } from "components/Icon";
 
 export default function Share() {
   return (
@@ -13,9 +13,9 @@ export default function Share() {
         </span>
       </div>
       <div className="flex justify-center my-5 ">
-        <IconLink link={TWITTER_SHARE_URL} icon={getIcon("Twitter")} />
-        <IconLink link={LINKEDIN_SHARE_URL} icon={getIcon("LinkedinIn")} />
-        <IconLink link={FACEBOOK_DIALOG_URL} icon={getIcon("Facebook")} />
+        <IconLink link={TWITTER_SHARE_URL} iconType="Twitter" />
+        <IconLink link={LINKEDIN_SHARE_URL} iconType="LinkedinIn" />
+        <IconLink link={FACEBOOK_DIALOG_URL} iconType="Facebook" />
       </div>
     </div>
   );
@@ -29,10 +29,10 @@ const FACEBOOK_DIALOG_URL = `https://www.facebook.com/dialog/share?app_id=145634
 
 type IconLinkProps = {
   link: string;
-  icon: React.ComponentType<any>;
+  iconType: IconTypes;
 };
 
-const IconLink = ({ link, icon: Icon }: IconLinkProps) => {
+const IconLink = ({ link, iconType }: IconLinkProps) => {
   return (
     <a
       href={link}
@@ -40,7 +40,7 @@ const IconLink = ({ link, icon: Icon }: IconLinkProps) => {
       rel="noreferrer"
       className="flex justify-center items-center rounded-full border-thin-blue p-2 border-2 border-solid mx-1 text-3xl text-thin-blue"
     >
-      <Icon />
+      <Icon type={iconType} />
     </a>
   );
 };
