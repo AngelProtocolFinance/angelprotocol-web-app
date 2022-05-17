@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ContactRoles } from "pages/Registration/constants";
 import { Charity } from "services/aws/types";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
