@@ -1,15 +1,14 @@
-import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FORM_ERROR } from "pages/Registration/constants";
+import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { ContactDetailsRequest } from "services/aws/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
@@ -24,7 +23,7 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
-  const { showModal } = useModalContext();
+  const handleError = useHandleError();
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
@@ -108,7 +107,6 @@ export default function useSaveContactDetails() {
     [
       charity,
       dispatch,
-      showModal,
       handleError,
       navigate,
       registerCharity,
