@@ -54,22 +54,19 @@ export default function useSaveContactDetails() {
 
       if ("error" in result) {
         setError(true);
-        const resultError =
-          (result.error as FetchBaseQueryError) ||
-          (result as SerializedError).message;
 
-        if (resultError.status === 409) {
-          showModal(Popup, {
-            message: `${resultError.data} Please check your email for the registration reference.`,
-          });
-        } else if (resultError.status !== 409) {
-          showModal(Popup, {
-            message: `${resultError.data}`,
-          });
+        const fetchError = result.error as FetchBaseQueryError;
+        if (fetchError) {
+          if (fetchError.status === 409) {
+            handleError(
+              fetchError,
+              `${fetchError.data} Please check your email for the registration reference.`
+            );
+          } else {
+            handleError(fetchError, `${fetchError.data}`);
+          }
         } else {
-          showModal(Popup, {
-            message: `${resultError}`,
-          });
+          handleError(result.error, FORM_ERROR);
         }
 
         return;
@@ -112,6 +109,7 @@ export default function useSaveContactDetails() {
       charity,
       dispatch,
       showModal,
+      handleError,
       navigate,
       registerCharity,
       resendEmail,

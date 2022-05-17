@@ -12,12 +12,10 @@ export default function TerraInfoModal() {
         onClick={closeModal}
       />
       <p className="p-4">
-        <b>Terra</b> is the blockchain on which Angel Protocol is built.
-      </p>
-      <p className="p-4">
-        A <b>Terra wallet</b> is a virtual account siting on the Terra
-        blockchain. It has a unique public/private addresses pair, can hold
-        balances and is used to sign transactions.
+        A <b>Terra wallet</b> is an account sitting on the Terra blockchain on
+        which Angel Protocol is built. It is in effect your ‘virtual bank
+        account’, has unique public and private addresses, will hold your
+        endowment balances and is used to authorise transactions.
       </p>
       <Button className="bg-thin-blue w-40 h-10" onClick={closeModal}>
         Got it
