@@ -34,6 +34,7 @@ export default function ContactDetailsForm({ charity }: Props) {
       firstName: charity.ContactPerson.FirstName,
       lastName: charity.ContactPerson.LastName,
       email: charity.ContactPerson.Email,
+      goals: charity.ContactPerson.Goals,
       phone: charity.ContactPerson.PhoneNumber,
       referralMethod: charity.ContactPerson.ReferralMethod,
       otherReferralMethod: charity.ContactPerson.OtherReferralMethod,
