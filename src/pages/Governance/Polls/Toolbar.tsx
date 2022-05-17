@@ -1,5 +1,5 @@
 import { useLatestBlock } from "services/terra/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
 import toCurrency from "helpers/toCurrency";
 import Button from "../Button";

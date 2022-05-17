@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useCopier from "./useCopier";
 
 export default function Copier(props: { text: string; colorClass: string }) {

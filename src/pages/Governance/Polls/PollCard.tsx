@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { PollStatus } from "services/terra/gov/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import { govern } from "constants/routes";
 import usePollDetails from "../usePollDetails";

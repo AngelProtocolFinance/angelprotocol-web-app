@@ -1,5 +1,5 @@
 import { EndowmentEntry } from "services/terra/registrar/types";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import CharityCard from "./CharityCard";
 import IndexCard from "./IndexCard";

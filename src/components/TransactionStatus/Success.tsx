@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step, SuccessStage } from "services/transaction/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import SharePrompt from "components/Share/SharePrompt";
 import { useSetter } from "store/accessors";

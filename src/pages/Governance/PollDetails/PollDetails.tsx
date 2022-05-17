@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { PollStatus } from "services/terra/gov/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import idParamToNumber from "helpers/idParamToNum";
 import { app, site } from "constants/routes";
 import usePollDetails from "../usePollDetails";

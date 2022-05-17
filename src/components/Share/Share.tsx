@@ -1,4 +1,4 @@
-import { getIcon } from "components/Icons/Icons";
+import { getIcon } from "components/Icon";
 
 export default function Share() {
   return (

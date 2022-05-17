@@ -1,6 +1,6 @@
 import { IconType } from "react-icons";
 import { Step } from "services/transaction/types";
-import { getIcon } from "components/Icons/Icons";
+import { getIcon } from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";

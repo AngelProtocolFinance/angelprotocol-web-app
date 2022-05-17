@@ -1,6 +1,6 @@
 import { setStage } from "services/transaction/transactionSlice";
 import { ErrorStage, Step } from "services/transaction/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import { useSetter } from "store/accessors";
 import getTxUrl from "helpers/getTxUrl";

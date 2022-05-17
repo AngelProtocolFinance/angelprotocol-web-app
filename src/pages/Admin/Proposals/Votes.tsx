@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { VOTES_PER_PAGE, useVoteList } from "services/terra/admin/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 
 export default function VotesTable(props: { proposalId: number }) {

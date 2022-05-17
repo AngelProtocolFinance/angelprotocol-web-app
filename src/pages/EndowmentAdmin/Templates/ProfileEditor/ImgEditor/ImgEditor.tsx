@@ -1,6 +1,6 @@
 import React from "react";
 import { IconType } from "react-icons";
-import { getIcon } from "components/Icons/Icons";
+import { getIcon } from "components/Icon";
 import Loader from "components/Loader/Loader";
 import useImgEditor from "./useImgEditor";
 

@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 
 export default function Toolbar(props: {
   searchText: string;

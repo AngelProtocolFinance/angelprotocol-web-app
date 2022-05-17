@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import Status from "../Status";
 import Amount from "./Amount";
 import { Commission, Fee, SwapRate } from "./Misc";

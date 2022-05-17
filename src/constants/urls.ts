@@ -1,4 +1,4 @@
-import { getIcon } from "components/Icons/Icons";
+import { getIcon } from "components/Icon";
 import { chainIDs } from "constants/chainIDs";
 
 export const aws_endpoint =
