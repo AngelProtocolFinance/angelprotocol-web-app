@@ -1,14 +1,15 @@
+import { SerializedError } from "@reduxjs/toolkit";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FORM_ERROR } from "pages/Registration/constants";
-import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
 import { ContactDetailsRequest } from "services/aws/types";
+import { useModalContext } from "components/ModalContext/ModalContext";
+import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import routes from "../../routes";
@@ -23,7 +24,7 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
-  const handleError = useHandleError();
+  const { showModal } = useModalContext();
 
   const saveContactDetails = useCallback(
     async (contactData: ContactDetails) => {
@@ -54,19 +55,19 @@ export default function useSaveContactDetails() {
       if ("error" in result) {
         setError(true);
         const resultError =
-          (dataResult.error as FetchBaseQueryError) ||
-          (dataResult as SerializedError).message;
+          (result.error as FetchBaseQueryError) ||
+          (result as SerializedError).message;
 
         if (resultError.status === 409) {
-          showModal<PopupProps>(Popup, {
+          showModal(Popup, {
             message: `${resultError.data} Please check your email for the registration reference.`,
           });
         } else if (resultError.status !== 409) {
-          showModal<PopupProps>(Popup, {
+          showModal(Popup, {
             message: `${resultError.data}`,
           });
         } else {
-          showModal<PopupProps>(Popup, {
+          showModal(Popup, {
             message: `${resultError}`,
           });
         }
@@ -110,7 +111,7 @@ export default function useSaveContactDetails() {
     [
       charity,
       dispatch,
-      handleError,
+      showModal,
       navigate,
       registerCharity,
       resendEmail,
