@@ -92,7 +92,7 @@ export const SOCIAL_MEDIA_LINKS = [
   },
   {
     id: 5,
-    Icon: getIcon("Discord"),
+    Icon: getIcon("DiscordLine"),
     link: "https://discord.gg/RhqA652ySA",
     textColor: "text-white hover:text-white/75",
     title: "Discord",
