@@ -18,7 +18,7 @@ export default function ErrPop(props: ErrorStage) {
 
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
-      <Icon type="Info" className="text-angel-grey text-2xl mb-2 " />
+      <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
       <p className="text-center text-angel-grey mb-2 ">{message}</p>
       {chainId && txHash && (
         <a
