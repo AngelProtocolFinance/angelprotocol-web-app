@@ -1,13 +1,13 @@
 import { Control, UseFormRegister } from "react-hook-form";
 import FormInput from "components/FormInput";
 import Selector from "components/Selector";
-import { OptionType } from "../../constants";
+import { ContactRoles, OptionType } from "../../constants";
 import { ContactDetails } from "./types";
 
 type Props = {
   label: string;
   name: keyof ContactDetails;
-  options: OptionType[];
+  options: OptionType<ContactRoles>[];
   control: Control<ContactDetails, object>;
   otherRoleErrorMessage: string | undefined;
   onChange: (value: string) => void;

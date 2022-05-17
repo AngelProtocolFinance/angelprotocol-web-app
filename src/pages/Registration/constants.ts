@@ -1,19 +1,24 @@
 export type ContactRoles =
-  | "president"
-  | "vice-president"
-  | "secretary"
-  | "treasurer"
+  | "board-member"
   | "ceo"
   | "cfo"
-  | "other";
+  | "communications"
+  | "fundraising-finance"
+  | "leadership-team"
+  | "legal"
+  | "other"
+  | "president"
+  | "secretary"
+  | "treasurer"
+  | "vice-president";
 
-export type OptionType = { label: string; value: any };
+export type OptionType<T> = { label: string; value: T };
 
-export const contactRoleOptions: OptionType[] = [
+export const contactRoleOptions: OptionType<ContactRoles>[] = [
   { label: "Chairperson / President", value: "president" },
   {
     label: "Vice-chairperson / Vice president",
-    value: "vice_president",
+    value: "vice-president",
   },
   { label: "Secretary", value: "secretary" },
   { label: "Treasurer", value: "treasurer" },
@@ -36,7 +41,7 @@ export enum Folders {
   ProofOfRegistration = "charity-registration-documents/proof-of-registration",
 }
 
-export const RevenueRanges: OptionType[] = [
+export const RevenueRanges: OptionType<string>[] = [
   { label: "0 - 500k", value: "500" },
   { label: "500k - 1m", value: "1000" },
   { label: "1m - 5m", value: "5000" },
