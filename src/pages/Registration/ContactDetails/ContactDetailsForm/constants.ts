@@ -1,4 +1,4 @@
-import { ContactRoles } from "pages/Registration/constants";
+import { ContactRoles } from "services/aws/types";
 
 export type OptionType = { label: string; value: ContactRoles };
 

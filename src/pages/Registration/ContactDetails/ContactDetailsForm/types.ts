@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { ContactRoles } from "../../constants";
+import { ContactRoles } from "services/aws/types";
 
 export type ContactDetails = {
   charityName: string;

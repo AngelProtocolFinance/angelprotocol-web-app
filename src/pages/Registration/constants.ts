@@ -1,17 +1,3 @@
-export type ContactRoles =
-  | "board-member"
-  | "ceo"
-  | "cfo"
-  | "communications"
-  | "fundraising-finance"
-  | "leadership-team"
-  | "legal"
-  | "other"
-  | "president"
-  | "secretary"
-  | "treasurer"
-  | "vice-president";
-
 export enum Folders {
   AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",
   CharityProfileImageLogo = "charity-profile-images/logo",

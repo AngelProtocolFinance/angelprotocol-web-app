@@ -1,5 +1,3 @@
-import { ContactRoles } from "pages/Registration/constants";
-
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -42,6 +40,20 @@ export type ContactPerson = {
   Role: ContactRoles;
   SK: "ContactPerson";
 };
+
+export type ContactRoles =
+  | "board-member"
+  | "ceo"
+  | "cfo"
+  | "communications"
+  | "fundraising-finance"
+  | "leadership-team"
+  | "legal"
+  | "other"
+  | "president"
+  | "secretary"
+  | "treasurer"
+  | "vice-president";
 
 export type EndowmentTier = 1 | 2 | 3;
 
