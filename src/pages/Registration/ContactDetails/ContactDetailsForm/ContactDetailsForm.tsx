@@ -2,19 +2,37 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { ContactRoles, OptionType } from "pages/Registration/constants";
 import { Charity } from "services/aws/types";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
-import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
 import RoleSelector from "./RoleSelector";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
 type Props = { charity: Charity };
+
+const contactRoleOptions: OptionType<ContactRoles>[] = [
+  { label: "Chairperson / President", value: "president" },
+  {
+    label: "Vice-chairperson / Vice president",
+    value: "vice-president",
+  },
+  { label: "Secretary", value: "secretary" },
+  { label: "Treasurer", value: "treasurer" },
+  { label: "CEO", value: "ceo" },
+  { label: "CFO", value: "cfo" },
+  { label: "Board Member", value: "board-member" },
+  { label: "Leadership Team", value: "leadership-team" },
+  { label: "Fundraising / Finance", value: "fundraising-finance" },
+  { label: "Legal", value: "legal" },
+  { label: "Communications", value: "communications" },
+  { label: "Other", value: "other" },
+];
 
 export default function ContactDetailsForm({ charity }: Props) {
   // 'orgRole' in the form changes automatically, but we need this state setter
