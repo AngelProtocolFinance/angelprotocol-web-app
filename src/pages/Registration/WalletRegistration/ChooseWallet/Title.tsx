@@ -1,4 +1,4 @@
-import { BsExclamationCircle } from "react-icons/bs";
+import Icon from "components/Icons/Icons";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import TerraInfoModal from "./TerraInfoModal";
 
@@ -18,7 +18,8 @@ export default function Title() {
 function InfoIcon() {
   const { showModal } = useModalContext();
   return (
-    <BsExclamationCircle
+    <Icon
+      type="ExclamationCircle"
       className="text-thin-blue cursor-pointer"
       onClick={() => showModal(TerraInfoModal, {})}
     />
