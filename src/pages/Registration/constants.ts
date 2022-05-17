@@ -12,8 +12,6 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
-export type OptionType<T> = { label: string; value: T };
-
 export enum Folders {
   AuditedFinancialReports = "charity-registration-documents/audited-financial-reports",
   CharityProfileImageLogo = "charity-profile-images/logo",
@@ -22,15 +20,6 @@ export enum Folders {
   ProofOfIdentity = "charity-registration-documents/proof-of-identity",
   ProofOfRegistration = "charity-registration-documents/proof-of-registration",
 }
-
-export const RevenueRanges: OptionType<string>[] = [
-  { label: "0 - 500k", value: "500" },
-  { label: "500k - 1m", value: "1000" },
-  { label: "1m - 5m", value: "5000" },
-  { label: "5m - 10m", value: "10000" },
-  { label: "10m - 20m", value: "20000" },
-  { label: "20m+", value: "full" },
-];
 
 export const UN_SDGS = [
   "No poverty",

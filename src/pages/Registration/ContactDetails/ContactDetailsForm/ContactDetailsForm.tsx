@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { ForwardedRef, forwardRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { ContactRoles, OptionType } from "pages/Registration/constants";
+import { ContactRoles } from "pages/Registration/constants";
 import { Charity } from "services/aws/types";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import FormInput from "components/FormInput";
@@ -11,12 +11,13 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
 import routes from "../../routes";
 import RoleSelector from "./RoleSelector";
+import { OptionType } from "./constants";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
 type Props = { charity: Charity };
 
-const contactRoleOptions: OptionType<ContactRoles>[] = [
+const contactRoleOptions: OptionType[] = [
   { label: "Chairperson / President", value: "president" },
   {
     label: "Vice-chairperson / Vice president",
