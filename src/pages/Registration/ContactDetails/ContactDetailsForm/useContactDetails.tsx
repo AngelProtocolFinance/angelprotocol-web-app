@@ -53,6 +53,7 @@ export default function useSaveContactDetails() {
 
       if ("error" in result) {
         setError(true);
+
         const fetchError = result.error as FetchBaseQueryError;
         if (fetchError) {
           if (fetchError.status === 409) {
