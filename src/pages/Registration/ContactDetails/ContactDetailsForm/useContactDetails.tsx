@@ -56,11 +56,22 @@ export default function useSaveContactDetails() {
 
       if ("error" in result) {
         setError(true);
-        const message =
-          (result.error as FetchBaseQueryError).status === 404
-            ? "Not found. Please check your email for the registration reference."
-            : FORM_ERROR;
-        return handleError(result.error, message);
+
+        const fetchError = result.error as FetchBaseQueryError;
+        if (fetchError) {
+          if (fetchError.status === 409) {
+            handleError(
+              fetchError,
+              `${fetchError.data} Please check your email for the registration reference.`
+            );
+          } else {
+            handleError(fetchError, `${fetchError.data}`);
+          }
+        } else {
+          handleError(result.error, FORM_ERROR);
+        }
+
+        return;
       }
 
       const { data } = result;

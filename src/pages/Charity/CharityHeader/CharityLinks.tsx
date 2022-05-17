@@ -17,7 +17,7 @@ export default function CharityLinks(props: { classes?: string }) {
       )}
       {profileState?.social_media_urls.linkedin && (
         <IconLink
-          _iconType="Linkedin"
+          _iconType="LinkedinIn"
           href={formatUrl(profileState?.social_media_urls.linkedin, "linkedin")}
         />
       )}
