@@ -8,9 +8,9 @@ import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
-import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
 import RoleSelector from "./RoleSelector";
+import { contactRoleOptions } from "./constants";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
