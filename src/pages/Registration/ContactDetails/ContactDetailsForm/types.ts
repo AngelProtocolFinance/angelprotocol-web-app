@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { ContactRoles, ReferralMethods } from "../../constants";
+import { ContactRoles, ReferralMethods } from "services/aws/types";
 
 export type ContactDetails = {
   charityName: string;

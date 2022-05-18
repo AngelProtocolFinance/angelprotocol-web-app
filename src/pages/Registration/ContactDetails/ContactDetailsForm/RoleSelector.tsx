@@ -1,7 +1,7 @@
 import { Control, UseFormRegister } from "react-hook-form";
 import FormInput from "components/FormInput";
 import Selector from "components/Selector";
-import { OptionType } from "../../constants";
+import { OptionType } from "./constants";
 import { ContactDetails } from "./types";
 
 type Props = {

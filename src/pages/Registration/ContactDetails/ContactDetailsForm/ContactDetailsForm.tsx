@@ -8,11 +8,11 @@ import FormInput from "components/FormInput";
 import { app, site } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
-import { contactRoleOptions, referralMethodOptions } from "../../constants";
 import routes from "../../routes";
 import GoalsInput from "./GoalsInput";
 import ReferralSelector from "./ReferralSelector";
 import RoleSelector from "./RoleSelector";
+import { contactRoleOptions, referralMethodOptions } from "./constants";
 import { ContactDetails, ContactInfoSchema } from "./types";
 import useSaveContactDetails from "./useContactDetails";
 
