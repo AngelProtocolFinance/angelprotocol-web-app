@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import Share from "./Share";
 

@@ -6,7 +6,7 @@ export default function TerraInfoModal() {
   const { closeModal } = useModalContext();
 
   return (
-    <div className="bg-white-grey max-w-sm p-3 pb-5 rounded-xl shadow-lg text-center text-thin-blue">
+    <div className="fixed-center w-full max-w-sm p-3 pb-5 z-20 rounded-xl shadow-lg text-center bg-white-grey text-thin-blue">
       <BsX
         className="text-gray-300 text-2xl ml-auto hover:cursor-pointer"
         onClick={closeModal}

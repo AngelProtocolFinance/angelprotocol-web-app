@@ -3,7 +3,7 @@ import {
   toggleDeleteExistingMember,
   undoAddMember,
 } from "services/admin/apCW4Members";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 
 export default function MemberItem(props: MemberCopy) {

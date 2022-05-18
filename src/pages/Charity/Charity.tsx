@@ -4,7 +4,7 @@ import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useEndowmentProfile } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import { admin, app, proposalTypes, site } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";

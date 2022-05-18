@@ -1,7 +1,7 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
 import gmailIcon from "assets/images/gmail.webp";
 import web3AuthLogo from "assets/images/web3auth-logo.webp";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
 
