@@ -4,7 +4,7 @@ import {
   useFilteredProposals,
 } from "services/terra/admin/queriers";
 import { ProposalStatus } from "services/terra/admin/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { ProposalGroup } from "../types";
 import ProposalCard from "./ProposalCard";
 import Toolbar from "./Toolbar/Toolbar";

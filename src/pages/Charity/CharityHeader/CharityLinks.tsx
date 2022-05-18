@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEndowmentProfileState } from "services/terra/account/states";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLatestBlock } from "services/terra/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import { admin } from "constants/routes";
 import GroupSelector from "./GroupSelector";

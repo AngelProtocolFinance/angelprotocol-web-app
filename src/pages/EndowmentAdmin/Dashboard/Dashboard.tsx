@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useMemberState } from "services/terra/admin/states";
 import { useEndowmentBalance } from "services/terra/multicall/queriers";
 import ContentLoader from "components/ContentLoader/ContentLoader";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useWithdrawer from "components/Transactors/Withdrawer/useWithdrawer";
 import { app, site } from "constants/routes";
 import Summary from "./Summary";

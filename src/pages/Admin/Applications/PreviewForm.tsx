@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import useWalletContext from "hooks/useWalletContext";
 import { admin } from "constants/routes";

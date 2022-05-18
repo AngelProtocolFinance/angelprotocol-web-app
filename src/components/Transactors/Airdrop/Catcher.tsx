@@ -1,5 +1,5 @@
 import { Airdrops } from "services/terra/multicall/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import useClaimAirdrop from "./useClaimAirdrop";
 

@@ -1,5 +1,5 @@
 import { Link, NavLink, useParams } from "react-router-dom";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { admin, app, site } from "constants/routes";
 import { EndowmentAddrParams } from "./types";

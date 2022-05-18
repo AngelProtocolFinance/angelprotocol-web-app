@@ -52,7 +52,6 @@ import { GoLinkExternal } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
-import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -184,15 +183,3 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Crop: IoCrop,
   Save: BiSave,
 };
-
-interface IconProps extends IconBaseProps {
-  type: IconTypes;
-}
-
-export default function Icon(props: IconProps) {
-  const { type, ...rest } = props;
-  const Icon = iconList[type];
-  return <Icon {...rest} />;
-}
-
-export const getIcon = (type: IconTypes) => iconList[type];

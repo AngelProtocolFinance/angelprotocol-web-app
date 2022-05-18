@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { Editor } from "draft-js";
 import "draft-js/dist/Draft.css";
 import React from "react";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import useEditor from "./useEditor";
 
 function OverviewEditor() {

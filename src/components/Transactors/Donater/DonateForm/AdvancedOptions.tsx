@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import Split from "./Split";
 
 export default function AdvancedOptions(props: {
