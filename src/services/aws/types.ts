@@ -32,11 +32,14 @@ export type ContactDetailsRequest = {
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
+  Goals: string;
   FirstName: string;
   LastName: string;
   OtherRole?: string;
+  OtherReferralMethod?: string;
   PhoneNumber: string;
   PK?: string;
+  ReferralMethod: ReferralMethods;
   Role: ContactRoles;
   SK: "ContactPerson";
 };
@@ -70,6 +73,17 @@ export type Metadata = {
   SK: "Metadata";
   TerraWallet: string;
 };
+
+export type ReferralMethods =
+  | "angel-alliance"
+  | "discord"
+  | "facebook"
+  | "linkedin"
+  | "medium"
+  | "press"
+  | "search-engines"
+  | "twitter"
+  | "other";
 
 export type Registration = {
   AuditedFinancialReports: FileObject[];
