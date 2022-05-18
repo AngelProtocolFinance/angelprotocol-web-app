@@ -1,5 +1,4 @@
 declare module "@types-component/voter" {
-  import { FC } from "react";
   import { Vote } from "@types-server/contracts";
 
   interface VoteValues {

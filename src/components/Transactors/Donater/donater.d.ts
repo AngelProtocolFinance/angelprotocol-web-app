@@ -1,6 +1,5 @@
 declare module "@types-component/donater" {
   import { Token } from "@types-server/aws";
-  import { FC } from "react";
 
   interface DonateValues {
     amount: string;

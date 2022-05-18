@@ -1,5 +1,4 @@
 declare module "@types-component/admin-voter" {
-  import { FC } from "react";
   import { Vote } from "@types-server/contracts";
 
   type AdminVoteValues = {
