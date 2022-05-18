@@ -1,17 +1,9 @@
 import * as Yup from "yup";
-import { ProposalBase } from "@types-page/admin";
+import { UpdateProfileValues } from "@types-page/endowment-admin";
 import { SchemaShape } from "@types-schema";
-import { UpdateProfilePayload } from "@types-server/contracts";
 import { proposalShape } from "pages/Admin/Templates/proposalShape";
-import { CountryOption } from "components/CountrySelector/CountrySelector";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
-
-export type UpdateProfileValues = ProposalBase &
-  UpdateProfilePayload & {
-    initialProfile: UpdateProfilePayload;
-    test: CountryOption;
-  };
 
 //construct strict shape to avoid hardcoding shape keys
 const profileEditShape: SchemaShape<UpdateProfileValues> = {

@@ -1,6 +1,7 @@
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
 import Select, { GroupBase, MenuPlacement, StylesConfig } from "react-select";
-import { OptionType } from "./constants";
+
+type OptionType = { label: string; value: any };
 
 interface Props<T extends FieldValues> {
   name: Path<T> & keyof T;

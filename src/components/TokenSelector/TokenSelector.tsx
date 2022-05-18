@@ -9,7 +9,8 @@ import Select, {
   SingleValueProps,
   ValueContainerProps,
 } from "react-select";
-import { Token, useTokensQuery } from "services/apes/tokens";
+import { Token } from "@types-server/aws";
+import { useTokensQuery } from "services/apes/tokens";
 import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
 
 export default function TokenSelector<T extends FieldValues>(props: {

@@ -1,6 +1,4 @@
-import { ContactRoles } from "@types-page/registration";
-
-export type OptionType = { label: string; value: ContactRoles };
+import { OptionType } from "@types-page/registration";
 
 export const contactRoleOptions: OptionType[] = [
   { label: "Chairperson / President", value: "president" },

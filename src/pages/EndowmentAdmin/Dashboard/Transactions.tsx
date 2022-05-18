@@ -1,5 +1,5 @@
 import { Transaction } from "@types-server/aws";
-import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin/endowment_admin";
+import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
 import CsvExporter from "components/CsvExporter";
 import TransactionsTable from "./TransactionsTable";
 

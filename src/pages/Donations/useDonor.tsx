@@ -20,7 +20,6 @@ export default function useDonor() {
   return showDonor;
 }
 
-// export type DonorProps =
 const Donor = (props: { txHash: string }) => {
   return (
     <Receipter txHash={props.txHash}>

@@ -29,8 +29,7 @@ declare module "@types-server/contracts" {
   };
 
   /** _account */
-
-  export interface Profile {
+  interface Profile {
     name: string;
     overview: string;
     un_sdg?: number;

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { SortDirection, SortKey } from "@types-page/donations";
-import { Transaction } from "services/flipslide/endowment_admin/types";
+import { Transaction } from "@types-server/aws";
 
 export default function useSortedTransactions(transactions: Transaction[]) {
   const [sortKey, setSortKey] = useState<SortKey>("block_timestamp");

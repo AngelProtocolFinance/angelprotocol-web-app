@@ -1,5 +1,5 @@
 declare module "@types-component/icons" {
-  export type IconTypes =
+  type IconTypes =
     | "Discord"
     | "DiscordLine"
     | "FileDownload"
