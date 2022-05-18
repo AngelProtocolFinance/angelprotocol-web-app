@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactValues } from "@types-page/registration";
 import { ContactDetailsRequest } from "@types-server/aws";
-import useHandleError from "pages/Registration/useHandleError";
 import {
   useCreateNewCharityMutation,
   useRequestEmailMutation,
@@ -25,7 +24,6 @@ export default function useSaveContactDetails() {
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
-  const handleError = useHandleError();
   const { showModal } = useModalContext();
 
   const saveContactDetails = useCallback(
@@ -115,7 +113,7 @@ export default function useSaveContactDetails() {
     [
       charity,
       dispatch,
-      handleError,
+      showModal,
       navigate,
       registerCharity,
       resendEmail,

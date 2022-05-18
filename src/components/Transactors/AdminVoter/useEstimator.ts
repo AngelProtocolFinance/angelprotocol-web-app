@@ -27,7 +27,7 @@ export default function useEstimator() {
 
   //TODO: check also if voter already voted
   useEffect(() => {
-    async () => {
+    (async () => {
       try {
         if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
@@ -35,7 +35,6 @@ export default function useEstimator() {
         }
 
         const proposal_id = getValues("proposal_id");
-
         if (proposal_id === 0) {
           dispatch(setFormError("Error getting poll info"));
           return;
@@ -60,12 +59,12 @@ export default function useEstimator() {
       } catch (err) {
         dispatch(setFormError("Error estimating transcation"));
       }
-    };
+    })();
     return () => {
       dispatch(setFormError(null));
     };
+    //eslint-disable-next-line
   }, []);
-  //eslint-disable-next-line
 
   return tx;
 }
