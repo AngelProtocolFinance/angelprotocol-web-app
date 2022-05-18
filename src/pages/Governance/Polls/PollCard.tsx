@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import { governRoutes } from "constants/routes";
 import usePollDetails from "../usePollDetails";

@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { removeFundMember } from "slices/admin/newFundMembers";
 

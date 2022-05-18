@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useAirdrop from "./useAirdrop";
 
 export default function Airdrop() {

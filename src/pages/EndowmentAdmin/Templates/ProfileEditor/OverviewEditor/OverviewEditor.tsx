@@ -3,7 +3,7 @@ import { Editor } from "draft-js";
 import "draft-js/dist/Draft.css";
 import React from "react";
 import { IconTypes } from "@types-component/icons";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useEditor from "./useEditor";
 
 function OverviewEditor() {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useGetter } from "store/accessors";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";

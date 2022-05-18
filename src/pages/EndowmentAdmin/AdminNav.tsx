@@ -1,6 +1,6 @@
 import { Link, NavLink, useParams } from "react-router-dom";
 import { EndowmentAdminParams } from "@types-page/endowment-admin";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 

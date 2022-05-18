@@ -1,8 +1,7 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity } from "services/aws/types";
-import { Step } from "services/transaction/types";
+import { Charity } from "@types-server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
@@ -11,7 +10,7 @@ import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
 
-jest.mock("components/ModalContext/ModalContext", () => ({
+jest.mock("contexts/ModalContext/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
@@ -30,7 +29,7 @@ jest.mock("hooks/useWalletContext", () => ({
 
 const mockSendTerraTx = jest.fn();
 
-jest.mock("services/transaction/sendTerraTx", () => ({
+jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
   __esModule: true,
   sendTerraTx: (..._: any[]) => mockSendTerraTx,
 }));
@@ -81,7 +80,7 @@ describe("useSubmit tests", () => {
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
       payload: {
-        step: Step.error,
+        step: "error",
         message: "Wallet is not connected",
       },
     });
@@ -107,7 +106,7 @@ describe("useSubmit tests", () => {
     expect(mockDispatch).toBeCalledWith({
       type: "transaction/setStage",
       payload: {
-        step: Step.error,
+        step: "error",
         message:
           "An error occured. Please try again and if the error persists after two failed attempts, please contact support@angelprotocol.io",
       },

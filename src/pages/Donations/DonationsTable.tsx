@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "@types-page/donations";
 import { Transaction } from "services/flipslide/endowment_admin/types";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import toCurrency from "helpers/toCurrency";

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { IconTypes } from "@types-component/icons";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useHorizontalScroll from "hooks/useHorizontalScroll";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { charityRoutes } from "constants/routes";

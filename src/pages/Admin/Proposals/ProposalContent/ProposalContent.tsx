@@ -4,7 +4,7 @@ import {
   EmbeddedWasmMsg,
   Proposal,
 } from "@types-server/contracts";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import DetailLabel from "../DetailLabel";
 import Preview from "./Preview/Preview";
 

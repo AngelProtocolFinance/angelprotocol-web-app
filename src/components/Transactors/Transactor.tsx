@@ -1,6 +1,6 @@
 import { TxProps } from "@types-component/transactor";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { resetTxFormState } from "slices/transaction/transactionSlice";
 

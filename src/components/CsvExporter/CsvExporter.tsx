@@ -1,6 +1,6 @@
 import { CSVLink } from "react-csv";
 import { Headers } from "react-csv/components/CommonPropTypes";
-import Icon from "../Icons/Icons";
+import Icon from "../Icon";
 
 type Props = {
   headers: Headers;

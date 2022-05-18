@@ -1,6 +1,6 @@
 import { ErrorStage } from "@types-slice/transaction";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
 import getTxUrl from "helpers/getTxUrl";
@@ -18,7 +18,7 @@ export default function ErrPop(props: ErrorStage) {
 
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full shadow-lg min-h-115 content-center place-items-center">
-      <Icon type="Info" className="text-angel-grey text-2xl mb-2 " />
+      <Icon type="Info" className="text-angel-grey text-2xl mb-2" />
       <p className="text-center text-angel-grey mb-2 ">{message}</p>
       {chainId && txHash && (
         <a

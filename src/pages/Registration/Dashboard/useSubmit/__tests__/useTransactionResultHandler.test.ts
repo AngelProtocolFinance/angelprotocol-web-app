@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity, SubmitResult } from "services/aws/types";
-import { Stage, Step } from "services/transaction/types";
+import { Charity, SubmitResult } from "@types-server/aws";
+import { Stage, Step } from "@types-slice/transaction";
 import useTransactionResultHandler from "../useTransactionResultHandler";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
@@ -14,7 +14,7 @@ jest.mock("services/aws/registration", () => ({
 
 const mockShowModal = jest.fn();
 
-jest.mock("components/ModalContext/ModalContext", () => ({
+jest.mock("contexts/ModalContext/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));
@@ -48,10 +48,10 @@ describe("useTransactionResultHandler tests", () => {
       expect(mockShowModal).not.toHaveBeenCalled();
     }
 
-    runTest(Step.form);
-    runTest(Step.broadcast);
-    runTest(Step.submit);
-    runTest(Step.receipt);
+    runTest("form");
+    runTest("broadcast");
+    runTest("submit");
+    runTest("receipt");
   });
 
   it("handles error stage", () => {
@@ -60,7 +60,7 @@ describe("useTransactionResultHandler tests", () => {
       form_loading: false,
       form_error: null,
       fee: 0,
-      stage: { step: Step.error, message: "error" },
+      stage: { step: "error", message: "error" },
     });
     const mockSubmit = jest.fn((..._: any[]) => ({}));
     mockUseSubmitMutation.mockReturnValue([mockSubmit]);
@@ -191,7 +191,7 @@ const CHARITY: Charity = {
 };
 
 const SUCCESS_STAGE = {
-  step: Step.success,
+  step: "success",
   txInfo: {
     logs: [
       {

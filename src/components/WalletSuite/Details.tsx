@@ -4,7 +4,7 @@ import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWallet
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import Backdrop from "components/Backdrop/Backdrop";
 import Copier from "components/Copier/Copier";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { resetWallet } from "slices/walletSlice";
 import useWalletContext from "hooks/useWalletContext";

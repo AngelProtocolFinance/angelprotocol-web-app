@@ -1,13 +1,16 @@
 declare module "@types-component/icons" {
-  type IconTypes =
+  export type IconTypes =
     | "Discord"
+    | "DiscordLine"
     | "FileDownload"
     | "Telegram"
     | "Twitter"
     | "Youtube"
     | "Medium"
     | "Facebook"
+    | "FacebookCircle"
     | "Linkedin"
+    | "LinkedinIn"
     | "Parachute"
     | "Link"
     | "ListUl"

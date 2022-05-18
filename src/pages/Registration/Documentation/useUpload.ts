@@ -17,13 +17,10 @@ export default function useUpload() {
   const upload = useCallback(
     async (values: DocumentationValues) => {
       try {
-        const uploadBody = await getUploadUrls(
-          charity.ContactPerson.PK!,
-          values
-        );
+        const body = await getUploadUrls(charity.ContactPerson.PK!, values);
         const result = await uploadDocumentation({
           PK: charity.ContactPerson.PK,
-          body: uploadBody,
+          body,
         });
 
         if ("error" in result) {

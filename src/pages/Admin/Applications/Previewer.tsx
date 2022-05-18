@@ -1,6 +1,6 @@
 import { CharityApplication } from "@types-server/aws";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import PreviewForm from "./PreviewForm";
 
 export default function Reviewer(props: { application: CharityApplication }) {

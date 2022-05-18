@@ -3,7 +3,7 @@ import "cropperjs/dist/cropper.min.css";
 import React, { useEffect, useRef, useState } from "react";
 import { IconTypes } from "@types-component/icons";
 import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 
 export default function ImgCropper(props: {
   src: string;

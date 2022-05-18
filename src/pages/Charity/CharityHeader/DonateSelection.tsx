@@ -1,5 +1,5 @@
 import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import useDonater from "components/Transactors/Donater/useDonater";
 import useTransak from "hooks/useTransak";
 

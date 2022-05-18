@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useMember } from "services/terra/admin/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import Loader from "components/Loader/Loader";
 import { useSetter } from "store/accessors";
 import { setCWContracts } from "slices/admin/cwContracts";

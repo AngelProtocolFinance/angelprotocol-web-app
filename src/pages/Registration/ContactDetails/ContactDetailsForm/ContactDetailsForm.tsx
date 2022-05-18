@@ -10,9 +10,9 @@ import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Button } from "../../common";
-import { contactRoleOptions } from "../../constants";
 import routes from "../../routes";
 import RoleSelector from "./RoleSelector";
+import { contactRoleOptions } from "./constants";
 import { ContactInfoSchema } from "./contactDetailsSchema";
 import useSaveContactDetails from "./useContactDetails";
 

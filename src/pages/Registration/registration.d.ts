@@ -20,16 +20,20 @@ declare module "@types-page/registration" {
     getIsReadyForSubmit: () => boolean;
   };
 
-  type OptionType = { label: string; value: any };
   type ContactRoles =
-    | "president"
-    | "vice-president"
-    | "secretary"
-    | "treasurer"
+    | "board-member"
     | "ceo"
     | "cfo"
-    | "other";
-
+    | "communications"
+    | "fundraising-finance"
+    | "leadership-team"
+    | "legal"
+    | "other"
+    | "president"
+    | "secretary"
+    | "treasurer"
+    | "vice-president";
+  type OptionType = { label: string; value: ContactRoles };
   /**forms */
   type DocumentationValues = {
     // Expects an array because FileDropzone component always returns an array of Files,

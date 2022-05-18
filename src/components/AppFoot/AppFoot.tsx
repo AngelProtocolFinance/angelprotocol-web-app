@@ -1,4 +1,5 @@
 import AppMenu from "components/AppFoot/AppMenu";
+import Icon from "components/Icon";
 import { LITEPAPER, SOCIAL_MEDIA_LINKS } from "constants/urls";
 
 export default function AppFoot() {
@@ -10,20 +11,22 @@ export default function AppFoot() {
         </nav>
         <div className="flex flex-col items-center">
           <ul className="flex">
-            {SOCIAL_MEDIA_LINKS.map(({ id, Icon, textColor, link, title }) => {
-              return (
-                <li key={id}>
-                  <a
-                    href={link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`${textColor} block m-2`}
-                  >
-                    <Icon className="w-8 h-8" title={title} />
-                  </a>
-                </li>
-              );
-            })}
+            {SOCIAL_MEDIA_LINKS.map(
+              ({ id, iconType, textColor, link, title }) => {
+                return (
+                  <li key={id}>
+                    <a
+                      href={link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`${textColor} block m-2`}
+                    >
+                      <Icon type={iconType} className="w-8 h-8" title={title} />
+                    </a>
+                  </li>
+                );
+              }
+            )}
           </ul>
 
           <a
