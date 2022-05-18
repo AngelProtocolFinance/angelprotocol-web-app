@@ -31,8 +31,8 @@ export default function Amount() {
       />
       <div className="flex items-start justify-between mt-1">
         <div className="flex mb-2">
-          <Currency currency={denoms.uusd} />
-          <Currency currency={denoms.uluna} />
+          {/* <Currency currency={denoms.uusd} />
+          <Currency currency={denoms.uluna} /> */}
           <Currency currency={denoms.ether} />
           <Currency currency={denoms.bnb} />
           {/* <Currency currency={denoms.btc} withTooltip /> */}
