@@ -143,14 +143,42 @@ declare module "@types-server/aws" {
     poll_id?: number;
   }
 
+  type ReferralMethods =
+    | "angel-alliance"
+    | "discord"
+    | "facebook"
+    | "linkedin"
+    | "medium"
+    | "press"
+    | "search-engines"
+    | "twitter"
+    | "other";
+
+  type ContactRoles =
+    | "board-member"
+    | "ceo"
+    | "cfo"
+    | "communications"
+    | "fundraising-finance"
+    | "leadership-team"
+    | "legal"
+    | "other"
+    | "president"
+    | "secretary"
+    | "treasurer"
+    | "vice-president";
+
   type ContactPerson = {
     Email: string;
     EmailVerified?: boolean;
+    Goals: string;
     FirstName: string;
     LastName: string;
     OtherRole?: string;
+    OtherReferralMethod?: string;
     PhoneNumber: string;
     PK?: string;
+    ReferralMethod: ReferralMethods;
     Role: ContactRoles;
     SK: "ContactPerson";
   };

@@ -1,7 +1,7 @@
 import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ContactValues } from "@types-page/registration";
+import { ContactDetails } from "@types-page/registration";
 import { ContactDetailsRequest } from "@types-server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import useHandleError from "pages/Registration/useHandleError";
@@ -26,7 +26,7 @@ export default function useSaveContactDetails() {
   const handleError = useHandleError();
 
   const saveContactDetails = useCallback(
-    async (contactData: ContactValues) => {
+    async (contactData: ContactDetails) => {
       // call API to add or update contact details information(contactData)
       setError(false);
       const is_create = !contactData?.uniqueID;
@@ -40,8 +40,11 @@ export default function useSaveContactDetails() {
             FirstName: contactData.firstName,
             LastName: contactData.lastName,
             Email: contactData.email,
+            Goals: contactData.goals,
+            OtherReferralMethod: contactData.otherReferralMethod,
             OtherRole: contactData.otherRole,
             PhoneNumber: contactData.phone,
+            ReferralMethod: contactData.referralMethod,
             Role: contactData.role,
           },
         },

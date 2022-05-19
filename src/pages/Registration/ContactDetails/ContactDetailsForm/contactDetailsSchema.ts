@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { ContactValues } from "@types-page/registration";
+import { ContactDetails } from "@types-page/registration";
 import { SchemaShape } from "@types-schema";
 
-const contactInfoShape: SchemaShape<ContactValues> = {
+export const contactInfoShape: SchemaShape<ContactDetails> = {
   charityName: Yup.string().required(
     "Please enter the name of your organization."
   ),
@@ -11,15 +11,22 @@ const contactInfoShape: SchemaShape<ContactValues> = {
   email: Yup.string()
     .email("Invalid email format")
     .required("Please enter your email."),
+  goals: Yup.string().required(
+    "Please state your goal in working with Angel Protocol."
+  ),
   // since selector logic has a default value selected, this error message should never appear
   role: Yup.string().required(
     "Please select your role within your organization."
   ),
-  otherRole: Yup.string().when("orgRole", {
+  otherRole: Yup.string().when("role", {
     is: "other",
     then: Yup.string().required(
       "Please enter your role within your organization."
     ),
+  }),
+  otherReferralMethod: Yup.string().when("referralMethod", {
+    is: "other",
+    then: Yup.string().required("Please enter your referral method."),
   }),
   checkedPolicy: Yup.bool().isTrue("Checkbox must be checked"),
 };

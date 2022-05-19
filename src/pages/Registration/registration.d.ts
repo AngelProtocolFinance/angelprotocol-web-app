@@ -1,13 +1,7 @@
 declare module "@types-page/registration" {
   import { EndowmentTierNum } from "@types-shared/registration";
+  import { ContactRoles, ReferralMethods } from "@types-server/aws";
   import { FileWrapper } from "@types-component/file-dropzone";
-
-  type DecodedJWTData<T> = T & {
-    authorization: string;
-    exp: number;
-    iat: number;
-    user: string;
-  };
 
   type RegistrationStep = { completed: boolean };
   type DocumentationStep = RegistrationStep & { tier?: EndowmentTierNum };
@@ -20,20 +14,8 @@ declare module "@types-page/registration" {
     getIsReadyForSubmit: () => boolean;
   };
 
-  type ContactRoles =
-    | "board-member"
-    | "ceo"
-    | "cfo"
-    | "communications"
-    | "fundraising-finance"
-    | "leadership-team"
-    | "legal"
-    | "other"
-    | "president"
-    | "secretary"
-    | "treasurer"
-    | "vice-president";
   type OptionType = { label: string; value: ContactRoles };
+  type ReferralOptionType = { label: string; value: ReferralMethods };
   /**forms */
   type DocumentationValues = {
     // Expects an array because FileDropzone component always returns an array of Files,
@@ -54,12 +36,15 @@ declare module "@types-page/registration" {
     banner: FileWrapper;
   };
 
-  type ContactValues = {
+  type ContactDetails = {
     charityName: string;
     firstName: string;
     lastName: string;
     email: string;
+    goals: string;
     phone: string;
+    referralMethod: ReferralMethods;
+    otherReferralMethod: string;
     role: ContactRoles;
     otherRole: string;
     checkedPolicy: boolean;
