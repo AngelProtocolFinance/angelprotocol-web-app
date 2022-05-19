@@ -4,6 +4,7 @@ import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
 import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
 import { ProposalMeta } from "pages/Admin/types";
 import { EndowmentAddrParams } from "pages/EndowmentAdmin/types";
+import { uploadToIpfs } from "pages/Registration/helpers";
 import { admin, tags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { sendTerraTx } from "services/transaction/sendTerraTx";
@@ -14,7 +15,6 @@ import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import { UpdateProfilePayload as UP } from "contracts/types";
-import useFleek from "hooks/useFleek";
 import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
@@ -35,7 +35,6 @@ export default function useEditProfile() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { upload } = useFleek();
 
   const editProfile = async ({
     title,
@@ -83,7 +82,7 @@ export default function useEditProfile() {
 
       const key = imageFile.name;
       const file = await optimizeImage(imageFile);
-      const url = await upload(key, file);
+      const url = await uploadToIpfs(key, file);
 
       if (url) {
         data.image = url;
