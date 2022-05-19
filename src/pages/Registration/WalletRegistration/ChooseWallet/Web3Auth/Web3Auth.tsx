@@ -1,8 +1,7 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
-import { BsDiscord } from "react-icons/bs";
-import { FaFacebook, FaLinkedin } from "react-icons/fa";
 import gmailIcon from "assets/images/gmail.webp";
 import web3AuthLogo from "assets/images/web3auth-logo.webp";
+import Icon from "components/Icon";
 import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
 
@@ -18,15 +17,15 @@ export default function Web3Auth({ onLogin }: Props) {
 
       <div className="flex justify-between gap-4">
         <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.FACEBOOK)}>
-          <FaFacebook className="text-blue-accent" size={30} />
+          <Icon type="FacebookCircle" className="text-blue-accent" size={30} />
         </ButtonSocial>
 
         <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.LINKEDIN)}>
-          <FaLinkedin className="text-blue-500" size={30} />
+          <Icon type="Linkedin" className="text-blue-500" size={30} />
         </ButtonSocial>
 
         <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.DISCORD)}>
-          <BsDiscord className="text-purple-600" size={30} />
+          <Icon type="Discord" className="text-purple-600" size={30} />
         </ButtonSocial>
       </div>
 

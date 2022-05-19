@@ -23,6 +23,7 @@ import {
   BiSearchAlt2,
 } from "react-icons/bi";
 import {
+  BsDiscord,
   BsExclamationCircle,
   BsHourglassSplit,
   BsSafeFill,
@@ -32,7 +33,9 @@ import {
   FaClock,
   FaCog,
   FaExternalLinkAlt,
+  FaFacebook,
   FaFacebookF,
+  FaLinkedin,
   FaLinkedinIn,
   FaListOl,
   FaListUl,
@@ -49,7 +52,6 @@ import { GoLinkExternal } from "react-icons/go";
 import { HiOutlineChevronDown } from "react-icons/hi";
 import { IoMdSettings } from "react-icons/io";
 import { IoClose, IoCrop, IoWalletSharp, IoWarning } from "react-icons/io5";
-import { IconBaseProps } from "react-icons/lib";
 import {
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
@@ -61,13 +63,16 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export type IconTypes =
   | "Discord"
+  | "DiscordLine"
   | "FileDownload"
   | "Telegram"
   | "Twitter"
   | "Youtube"
   | "Medium"
   | "Facebook"
+  | "FacebookCircle"
   | "Linkedin"
+  | "LinkedinIn"
   | "Parachute"
   | "Link"
   | "ListUl"
@@ -126,7 +131,9 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Down: VscTriangleDown,
   ChevronDown: HiOutlineChevronDown,
   Facebook: FaFacebookF,
-  Discord: RiDiscordLine,
+  FacebookCircle: FaFacebook,
+  Discord: BsDiscord,
+  DiscordLine: RiDiscordLine,
   Telegram: FaTelegramPlane,
   Twitter: AiOutlineTwitter,
   Youtube: AiFillYoutube,
@@ -135,7 +142,8 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Check: AiOutlineCheck,
   Menu: FiMenu,
   Close: IoClose,
-  Linkedin: FaLinkedinIn,
+  Linkedin: FaLinkedin,
+  LinkedinIn: FaLinkedinIn,
   Link: FaExternalLinkAlt,
   Info: AiOutlineInfoCircle,
   CheckCircle: AiOutlineCheckCircle,
@@ -175,15 +183,3 @@ export const iconList: { [key in IconTypes]: IconType } = {
   Crop: IoCrop,
   Save: BiSave,
 };
-
-interface IconProps extends IconBaseProps {
-  type: IconTypes;
-}
-
-export default function Icon(props: IconProps) {
-  const { type, ...rest } = props;
-  const Icon = iconList[type];
-  return <Icon {...rest} />;
-}
-
-export const getIcon = (type: IconTypes) => iconList[type];

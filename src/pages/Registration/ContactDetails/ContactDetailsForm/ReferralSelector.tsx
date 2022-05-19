@@ -1,21 +1,21 @@
 import { Control, UseFormRegister } from "react-hook-form";
 import FormInput from "components/FormInput";
 import Selector from "components/Selector";
-import { OptionType } from "./constants";
+import { ReferralOptionType } from "./constants";
 import { ContactDetails } from "./types";
 
 type Props = {
   label: string;
   name: keyof ContactDetails;
-  options: OptionType[];
+  options: ReferralOptionType[];
   control: Control<ContactDetails, object>;
-  otherRoleErrorMessage: string | undefined;
+  otherReferralMethodErrorMessage: string | undefined;
   onChange: (value: string) => void;
   register: UseFormRegister<ContactDetails>;
   disabled: boolean;
 };
 
-export default function RoleSelector(props: Props) {
+export default function ReferralSelector(props: Props) {
   return (
     <div className="flex flex-col gap-1 w-full text-left">
       <label htmlFor={props.name} className="text-dark-grey">
@@ -31,10 +31,10 @@ export default function RoleSelector(props: Props) {
       />
       {props.control._formValues[props.name] === "other" && (
         <FormInput
-          label="Specify your role"
-          placeholder="Specify your role"
-          registerReturn={props.register("otherRole")}
-          errorMessage={props.otherRoleErrorMessage}
+          label="Please specify"
+          placeholder="Please specify"
+          registerReturn={props.register("otherReferralMethod")}
+          errorMessage={props.otherReferralMethodErrorMessage}
           required
           disabled={props.disabled}
           className="mt-3"

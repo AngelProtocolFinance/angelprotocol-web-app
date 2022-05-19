@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 
 export type PopupProps = PropsWithChildren<{ message: string }>;

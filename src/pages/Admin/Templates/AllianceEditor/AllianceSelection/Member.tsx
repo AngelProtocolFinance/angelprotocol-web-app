@@ -1,7 +1,7 @@
 import React from "react";
 import defaultIcon from "assets/icons/tca/Angel-Alliance-logo.png";
 import { AllianceMemberWithFlags } from "services/admin/allianceMembers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { Cells } from "components/TableSection/TableSection";
 import useMember from "./useMember";
 

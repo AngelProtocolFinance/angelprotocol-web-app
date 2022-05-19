@@ -59,7 +59,7 @@ export default function EditorComponent(props: Props) {
 }
 
 const Container = ({ children }: PropsWithChildren<{}>) => (
-  <div className="text-white/80 p-3 rounded-md bg-white/10 shadow-inner">
+  <div className="text-white/80 p-3 rounded-md bg-white/10 shadow-inner z-0">
     {children}
   </div>
 );

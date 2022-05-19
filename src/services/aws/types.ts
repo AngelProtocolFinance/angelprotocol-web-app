@@ -1,5 +1,3 @@
-import { ContactRoles } from "pages/Registration/constants";
-
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
@@ -34,14 +32,31 @@ export type ContactDetailsRequest = {
 export type ContactPerson = {
   Email: string;
   EmailVerified?: boolean;
+  Goals: string;
   FirstName: string;
   LastName: string;
   OtherRole?: string;
+  OtherReferralMethod?: string;
   PhoneNumber: string;
   PK?: string;
+  ReferralMethod: ReferralMethods;
   Role: ContactRoles;
   SK: "ContactPerson";
 };
+
+export type ContactRoles =
+  | "board-member"
+  | "ceo"
+  | "cfo"
+  | "communications"
+  | "fundraising-finance"
+  | "leadership-team"
+  | "legal"
+  | "other"
+  | "president"
+  | "secretary"
+  | "treasurer"
+  | "vice-president";
 
 export type EndowmentTier = 1 | 2 | 3;
 
@@ -58,6 +73,17 @@ export type Metadata = {
   SK: "Metadata";
   TerraWallet: string;
 };
+
+export type ReferralMethods =
+  | "angel-alliance"
+  | "discord"
+  | "facebook"
+  | "linkedin"
+  | "medium"
+  | "press"
+  | "search-engines"
+  | "twitter"
+  | "other";
 
 export type Registration = {
   AuditedFinancialReports: FileObject[];

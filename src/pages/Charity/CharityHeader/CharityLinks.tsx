@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEndowmentProfileState } from "services/terra/account/states";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
@@ -17,7 +17,7 @@ export default function CharityLinks(props: { classes?: string }) {
       )}
       {profileState?.social_media_urls.linkedin && (
         <IconLink
-          _iconType="Linkedin"
+          _iconType="LinkedinIn"
           href={formatUrl(profileState?.social_media_urls.linkedin, "linkedin")}
         />
       )}

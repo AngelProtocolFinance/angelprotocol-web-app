@@ -1,3 +1,4 @@
+import Icon from "components/Icon";
 import { LITEPAPER, PRIVACY_POLICY, SOCIAL_MEDIA_LINKS } from "constants/urls";
 import Subscriber from "./Subscriber/Subscriber";
 
@@ -15,20 +16,22 @@ export default function WebFoot() {
       </section>
       <section className="grid justify-items-center content-center lg:order-1 mt-10 md:mt-0">
         <ul className="flex">
-          {SOCIAL_MEDIA_LINKS.map(({ id, Icon, textColor, link, title }) => {
-            return (
-              <li key={id}>
-                <a
-                  href={link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`${textColor} block m-2`}
-                >
-                  <Icon className="w-8 h-8" title={title} />
-                </a>
-              </li>
-            );
-          })}
+          {SOCIAL_MEDIA_LINKS.map(
+            ({ id, iconType, textColor, link, title }) => {
+              return (
+                <li key={id}>
+                  <a
+                    href={link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={`${textColor} block m-2`}
+                  >
+                    <Icon type={iconType} className="w-8 h-8" title={title} />
+                  </a>
+                </li>
+              );
+            }
+          )}
         </ul>
         <div className="flex flex-wrap gap-4">
           <a
