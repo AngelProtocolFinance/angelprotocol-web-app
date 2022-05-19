@@ -1,5 +1,4 @@
 import Subscriber from "Website/Subscriber/Subscriber";
-import { Link } from "react-router-dom";
 import { getIcon } from "components/Icons/Icons";
 
 export default function WebFoot() {

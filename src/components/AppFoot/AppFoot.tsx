@@ -1,5 +1,4 @@
 import AppMenu from "components/AppFoot/AppMenu";
-import { Link } from "react-router-dom";
 import { getIcon } from "components/Icons/Icons";
 
 export default function AppFoot() {
