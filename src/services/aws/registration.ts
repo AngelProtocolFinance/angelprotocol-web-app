@@ -1,6 +1,6 @@
 import {
+  ApplicationStatusOptions,
   CharityApplication,
-  RegistrationStatus,
 } from "pages/Admin/Applications/types";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
@@ -54,9 +54,11 @@ const registration_api = aws.injectEndpoints({
     }),
     getCharityApplications: builder.query<any, any>({
       providesTags: [{ type: tags.admin, id: admin.applications }],
-      query: (status?: RegistrationStatus) => {
+      query: (status: ApplicationStatusOptions) => {
         return {
-          url: `registration/list${status ? `?regStatus=${status}` : ""}`,
+          url: `registration/list${
+            status !== "all" ? `?regStatus=${status}` : ""
+          }`,
           method: "Get",
           headers,
         };

@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/no-debugging-utils */
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
@@ -42,10 +41,6 @@ jest.mock("hooks/useWalletContext", () => ({
 }));
 
 describe("Charity applications review", () => {
-  afterAll(() => {
-    jest.unmock("services/aws/registration");
-  });
-
   test("Renders Initial state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
     render(<Applications />);
@@ -105,7 +100,7 @@ describe("Charity applications review", () => {
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
 
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
   });
 
   test("Application preview modal renders 2nd application", () => {
@@ -125,7 +120,7 @@ describe("Charity applications review", () => {
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
 
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
   });
 });
 
