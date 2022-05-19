@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/no-debugging-utils */
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
@@ -92,7 +91,7 @@ describe("Charity applications review", () => {
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })
     ).toBeInTheDocument();
-    screen.debug();
+
     const reviewButton = screen.getAllByRole("button", { name: /review/i })[0];
     mockUseWalletContext.mockReturnValue({ wallet: WALLET });
     userEvent.click(reviewButton);

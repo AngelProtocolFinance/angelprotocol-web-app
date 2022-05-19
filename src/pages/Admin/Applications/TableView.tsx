@@ -30,9 +30,9 @@ export default function TableView(props: {
               <HeaderButton
                 key={header.key}
                 onClick={handleHeaderClick(header.key)}
-                _activeSortKey={sortKey}
-                _sortKey={header.key}
-                _sortDirection={sortDirection}
+                activeSortKey={sortKey}
+                sortKey={header.key}
+                sortDirection={sortDirection}
               >
                 {header.name}
               </HeaderButton>
@@ -97,12 +97,12 @@ const headers: { key: SortKey; name: string }[] = [
 
 function HeaderButton(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
-    _sortDirection: SortDirection;
-    _sortKey: SortKey;
-    _activeSortKey: SortKey;
+    sortDirection: SortDirection;
+    sortKey: SortKey;
+    activeSortKey: SortKey;
   }
 ) {
-  const { _activeSortKey, _sortKey, _sortDirection, children, ...restProps } =
+  const { activeSortKey, sortKey, sortDirection, children, ...restProps } =
     props;
   return (
     <button
@@ -110,8 +110,8 @@ function HeaderButton(
       className="w-full flex items-center justify-start gap-1 uppercase font-heading font-semibold text-sm text-white/100"
     >
       <span>{children}</span>
-      {_activeSortKey === _sortKey &&
-        (_sortDirection === "asc" ? <Icon type="Up" /> : <Icon type="Down" />)}
+      {activeSortKey === sortKey &&
+        (sortDirection === "asc" ? <Icon type="Up" /> : <Icon type="Down" />)}
     </button>
   );
 }

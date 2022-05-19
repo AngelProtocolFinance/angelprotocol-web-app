@@ -1,12 +1,12 @@
-import {
-  useGetApplicationsState,
-  useSetApplicationsState,
-} from "./Applications";
 import { ApplicationStatusOptions } from "./types";
 
-export default function StatusSelector() {
-  const { activeStatus } = useGetApplicationsState();
-  const { handleStatusChange } = useSetApplicationsState();
+type Props = {
+  activeStatus: ApplicationStatusOptions;
+  onStatusChange: (ev: React.ChangeEvent<HTMLSelectElement>) => void;
+};
+
+export default function StatusSelector(props: Props) {
+  const { activeStatus, onStatusChange } = props;
   return (
     <div className="flex gap-2 items-center">
       <label
@@ -17,7 +17,7 @@ export default function StatusSelector() {
       </label>
       <select
         value={activeStatus}
-        onChange={handleStatusChange}
+        onChange={onStatusChange}
         id="status_selector"
         className="bg-white/10 text-white-grey p-2 text-sm rounded-md focus:outline-none uppercase "
       >
@@ -26,7 +26,7 @@ export default function StatusSelector() {
             <option
               key={optionValue}
               value={optionValue}
-              className={`text-sm text-angel-grey uppercase p-1`}
+              className="text-sm text-angel-grey uppercase p-1"
             >
               {optionDescription}
             </option>
@@ -41,7 +41,6 @@ const pollStatusOptions: { [key in ApplicationStatusOptions]: string } = {
   all: "all",
   // active: "Active",
   approved: "Approved",
-  // inactive: "Inactive",
+  inactive: "Inactive",
   "under-review": "Under-Review",
-  "not-complete": "not complete",
 };

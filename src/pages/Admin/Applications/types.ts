@@ -1,14 +1,9 @@
-export type ApplicationStatus = "approved" | "not-complete" | "under-review";
-// | "inactive"
-// | "active";
+import { RegistrationStatus } from "services/aws/types";
+
+export type ApplicationStatus = "approved" | "inactive" | "under-review";
 
 export type ApplicationStatusOptions = ApplicationStatus | "all";
-export type RegistrationStatus =
-  | "Not Complete"
-  | "Inactive"
-  | "Active"
-  | "Approved"
-  | "Under Review";
+
 export interface CharityApplication {
   CharityName: string;
   CharityName_ContactEmail: string;
