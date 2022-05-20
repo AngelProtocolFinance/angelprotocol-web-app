@@ -28,7 +28,7 @@ export default function WebHead() {
           to={`${site.app}/${app.marketplace}`}
           className={`justify-self-end border border-angel-orange/40 rounded-md bg-angel-orange text-white uppercase transform hover:scale-105 hover:shadow-lg transition active:translate-x-1 active:shadow-md ml-0 md:ml-2 py-2 px-4 `}
         >
-          Donate
+          Web app
         </Link>
         <button
           className="text-angel-grey block sm:hidden ml-2 justify-self-end"
