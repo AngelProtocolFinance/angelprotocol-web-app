@@ -36,6 +36,7 @@ type IconLinkProps = {
 const IconLink = ({ link, iconType }: IconLinkProps) => {
   return (
     <a
+      data-testid={iconType}
       href={link}
       target="_blank"
       rel="noreferrer"

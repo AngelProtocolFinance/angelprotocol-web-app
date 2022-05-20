@@ -1,4 +1,5 @@
 declare module "@types-page/admin" {
+  import { CharityApplication } from "@types-server/aws";
   import { Denoms } from "@types-lists";
   import {
     AllianceMember,
@@ -242,4 +243,14 @@ declare module "@types-page/admin" {
 
   type RegistrarOwnerValues = ProposalBase &
     RegistrarOwnerPayload & { initialOwner: string };
+
+  type SortDirection = "asc" | "desc";
+  type SortKey = keyof Pick<
+    CharityApplication,
+    | "CharityName"
+    | "RegistrationDate"
+    | "RegistrationStatus"
+    | "CharityName_ContactEmail"
+    | "TerraWallet"
+  >;
 }

@@ -124,24 +124,9 @@ declare module "@types-server/aws" {
   }
 
   /** /registration */
-
+  type RegistrationStatus = "Inactive" | "Under Review" | "Approved" | "Active";
   type ApplicationStatus = "approved" | "not-complete" | "under-review";
-  interface CharityApplication {
-    CharityName: string;
-    CharityName_ContactEmail: string;
-    EndowmentAgreement: string;
-    EndowmentAgreementVerified: boolean;
-    PK: string;
-    ProofOfEmployment: string;
-    ProofOfEmploymentVerified: boolean;
-    ProofOfIdentity: string;
-    ProofOfIdentityVerified: boolean;
-    RegistrationDate: string;
-    RegistrationStatus: string;
-    SK: string;
-    TerraWallet: string;
-    poll_id?: number;
-  }
+  type ApplicationStatusOptions = ApplicationStatus | "all";
 
   type ReferralMethods =
     | "angel-alliance"
@@ -168,6 +153,23 @@ declare module "@types-server/aws" {
     | "treasurer"
     | "vice-president";
 
+  interface CharityApplication {
+    CharityName: string;
+    CharityName_ContactEmail: string;
+    EndowmentAgreement: string;
+    EndowmentAgreementVerified: boolean;
+    PK: string;
+    ProofOfEmployment: string;
+    ProofOfEmploymentVerified: boolean;
+    ProofOfIdentity: string;
+    ProofOfIdentityVerified: boolean;
+    RegistrationDate: string;
+    RegistrationStatus: RegistrationStatus;
+    SK: string;
+    TerraWallet: string;
+    poll_id?: number;
+  }
+
   type ContactPerson = {
     Email: string;
     EmailVerified?: boolean;
@@ -188,7 +190,6 @@ declare module "@types-server/aws" {
     publicUrl?: string;
   };
 
-  type RegistrationStatus = "Inactive" | "Under Review" | "Approved" | "Active";
   type Registration = {
     AuditedFinancialReports: FileObject[];
     AuditedFinancialReportsVerified: boolean;

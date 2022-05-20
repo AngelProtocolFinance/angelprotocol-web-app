@@ -1,6 +1,6 @@
 import {
   AWSQueryRes,
-  ApplicationStatus,
+  ApplicationStatusOptions,
   Charity,
   CharityApplication,
   ContactDetailsRequest,
@@ -12,9 +12,10 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "@types-server/aws";
+import { adminTags } from "services/terra/tags";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
-import { adminTags, awsTags } from "./tags";
+import { awsTags } from "./tags";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
@@ -50,14 +51,13 @@ const registration_api = aws.injectEndpoints({
         body,
       }),
     }),
-    getCharityApplications: builder.query<
-      CharityApplication[],
-      ApplicationStatus | undefined
-    >({
+    getCharityApplications: builder.query<any, any>({
       providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
-      query: (status) => {
+      query: (status: ApplicationStatusOptions) => {
         return {
-          url: `registration/list${status ? `?regStatus=${status}` : ""}`,
+          url: `registration/list${
+            status !== "all" ? `?regStatus=${status}` : ""
+          }`,
           method: "Get",
           headers,
         };
