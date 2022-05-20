@@ -32,7 +32,7 @@ export default function CharityHeader(props: Profile) {
       </h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <Button disabled={props.is_placeholder} onClick={showDonater}>
+        <Button disabled={true} /**disabled until v2 */ onClick={showDonater}>
           DONATE NOW
         </Button>
         {isEndowmentOwner && (
