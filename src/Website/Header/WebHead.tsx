@@ -61,11 +61,11 @@ export default function WebHead() {
   );
 }
 
-function Word(props: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center mr-2">
-      <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
-      <span className="md:uppercase">{props.title}</span>
-    </div>
-  );
-}
+// function Word(props: { icon: string; title: string }) {
+//   return (
+//     <div className="flex items-center mr-2">
+//       <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
+//       <span className="md:uppercase">{props.title}</span>
+//     </div>
+//   );
+// }
