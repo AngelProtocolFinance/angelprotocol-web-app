@@ -43,7 +43,7 @@ export default function WebHead() {
         {navShown && <MobileNav />}
       </div>
 
-      <a
+      {/*<a
         ref={shadowRef}
         href={`https://ukraine.angelprotocol.io/`}
         target="_blank"
@@ -56,7 +56,7 @@ export default function WebHead() {
         </span>
         <Word icon={ua_icon} title="" />
         <Icon type="ExternalLink" className="text-lg" />
-      </a>
+      </a>*/}
     </header>
   );
 }
