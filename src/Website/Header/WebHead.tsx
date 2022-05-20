@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
-import useScrollShadow from "hooks/useScrollShadow";
-import heart_icon from "assets/icons/broken_heart.svg";
-import ua_icon from "assets/icons/ukraine.svg";
 import { site, app } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
 import Icon from "components/Icons/Icons";
+// import useScrollShadow from "hooks/useScrollShadow";
+// import heart_icon from "assets/icons/broken_heart.svg";
+// import ua_icon from "assets/icons/ukraine.svg";
 
 export default function WebHead() {
-  const shadowRef = useScrollShadow();
+  // const shadowRef = useScrollShadow();
   const [navShown, showNav] = useState(false);
   function toggleNav() {
     showNav((prevState) => !prevState);
@@ -43,7 +43,7 @@ export default function WebHead() {
         {navShown && <MobileNav />}
       </div>
 
-      <a
+      {/*<a
         ref={shadowRef}
         href={`https://ukraine.angelprotocol.io/`}
         target="_blank"
@@ -56,16 +56,16 @@ export default function WebHead() {
         </span>
         <Word icon={ua_icon} title="" />
         <Icon type="ExternalLink" className="text-lg" />
-      </a>
+      </a>*/}
     </header>
   );
 }
 
-function Word(props: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center mr-2">
-      <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
-      <span className="md:uppercase">{props.title}</span>
-    </div>
-  );
-}
+// function Word(props: { icon: string; title: string }) {
+//   return (
+//     <div className="flex items-center mr-2">
+//       <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
+//       <span className="md:uppercase">{props.title}</span>
+//     </div>
+//   );
+// }
