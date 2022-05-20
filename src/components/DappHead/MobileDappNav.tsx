@@ -14,14 +14,8 @@ export default function MobileDappNav() {
       <NavLink to={`${site.app}/${app.marketplace}`} className={styler}>
         Marketplace
       </NavLink>
-      <NavLink to={`${site.app}/${app.govern}`} className={styler}>
-        Governance
-      </NavLink>
       <NavLink to={`${site.app}/${app.leaderboard}`} className={styler}>
         Leaderboard
-      </NavLink>
-      <NavLink to={`${site.app}/${app.admin}`} className={styler}>
-        Admin
       </NavLink>
     </nav>
   );

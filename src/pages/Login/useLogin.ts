@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useModalContext } from "contexts/ModalContext";
 import { useForm } from "react-hook-form";
 import { saveToken } from "services/auth/authSlice";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import Popup, { PopupProps } from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { aws_endpoint } from "constants/urls";

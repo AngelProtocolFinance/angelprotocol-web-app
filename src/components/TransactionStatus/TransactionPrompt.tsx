@@ -1,8 +1,8 @@
+import { useModalContext } from "contexts/ModalContext";
 import { useMemo } from "react";
 import { setStage } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
 import { useGetter, useSetter } from "store/accessors";

@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useSubscribe from "./useSubscribe";
 
 export default function Subscriber() {

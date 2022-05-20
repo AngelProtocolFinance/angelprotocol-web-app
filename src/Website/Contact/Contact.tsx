@@ -1,4 +1,4 @@
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useHBSTCreator from "hooks/useHBSTCreator";
 
 export default function Contact() {

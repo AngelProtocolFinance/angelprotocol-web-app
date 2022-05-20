@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import delay from "helpers/delay";
 
 type NullibleNumber = number | null;
 
@@ -139,3 +138,11 @@ export default function useHorizontalScroll(props?: Props) {
     showForward,
   };
 }
+
+const delay = async (ms: number) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, ms);
+  });
+};

@@ -12,7 +12,6 @@ import { app, site } from "constants/routes";
 const routes = [
   `${site.app}`,
   `${site.app}/${app.marketplace}`,
-  `${site.app}/${app.govern}`,
   `${site.app}/${app.leaderboard}`,
 ];
 
@@ -30,9 +29,6 @@ describe("DappHead test", () => {
   window.scrollTo = jest.fn();
   test("dapphead routing", async () => {
     render(<TestApp />);
-
-    const govText1 = /total staked/i;
-    const govText2 = /halo price/i;
 
     const marketText1 = /angel protocol supports/i;
     const marketText2 = /displaced ukrainians/i;
@@ -53,30 +49,13 @@ describe("DappHead test", () => {
     expect(await screen.findByText(marketText2)).toBeInTheDocument();
     expect(loader).not.toBeInTheDocument();
 
-    //user goes to governance
-    const govLink = screen.getByText(/governance/i);
-    userEvent.click(govLink);
-
-    /** user is in governance */
-    const loader2 = screen.getByTestId("loader");
-    expect(loader2).toBeInTheDocument();
-
-    //view is not yet rendered and being lazy loaded
-    expect(screen.queryByText(govText1)).toBeNull();
-    expect(screen.queryByText(govText2)).toBeNull();
-
-    //view is finally loaded,
-    expect(await screen.findByText(govText1)).toBeInTheDocument();
-    expect(await screen.findByText(govText2)).toBeInTheDocument();
-    expect(loader2).not.toBeInTheDocument();
-
     //user goes to leaderboard
     const leaderboardLink = screen.getByText(/leaderboard/i);
     userEvent.click(leaderboardLink);
 
     /** user is in leaderboard */
-    const loader3 = screen.getByTestId("loader");
-    expect(loader3).toBeInTheDocument();
+    const loader2 = screen.getByTestId("loader");
+    expect(loader2).toBeInTheDocument();
 
     //view is not yet rendered and being lazy loaded
     expect(screen.queryByText(leaderboardText1)).toBeNull();
@@ -85,7 +64,7 @@ describe("DappHead test", () => {
     //view is finally loaded,
     expect(await screen.findByText(leaderboardText1)).toBeInTheDocument();
     expect(await screen.findByText(leaderboardText2)).toBeInTheDocument();
-    expect(loader3).not.toBeInTheDocument();
+    expect(loader2).not.toBeInTheDocument();
 
     //user goes back to marketplace
     const marketPlaceLink = screen.getByText(/marketplace/i);

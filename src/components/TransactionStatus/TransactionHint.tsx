@@ -1,6 +1,6 @@
+import { useModalContext } from "contexts/ModalContext";
 import { Step } from "services/transaction/types";
 import Icon, { IconTypes } from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";
 

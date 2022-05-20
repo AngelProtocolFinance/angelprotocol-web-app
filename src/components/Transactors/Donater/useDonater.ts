@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext";
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import Transactor, { TxProps } from "../Transactor";
 import Donater from "./Donater";
 import { FundFlow, Props } from "./types";

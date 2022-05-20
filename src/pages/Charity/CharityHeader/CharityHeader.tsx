@@ -1,6 +1,6 @@
+import { useModalContext } from "contexts/ModalContext";
 import { useParams } from "react-router-dom";
 import { Profile } from "services/terra/account/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { unsdgs } from "constants/unsdgs";
 import { CharityParam } from "../types";
 import CharityLinks from "./CharityLinks";

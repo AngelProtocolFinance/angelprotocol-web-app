@@ -1,3 +1,4 @@
+import { useModalContext } from "contexts/ModalContext";
 import { useCallback } from "react";
 import { FORM_ERROR } from "pages/Registration/constants";
 import { Charity } from "services/aws/types";
@@ -7,7 +8,6 @@ import {
   setStage,
 } from "services/transaction/transactionSlice";
 import { Step } from "services/transaction/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import Registrar from "contracts/Registrar";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Profile } from "services/terra/account/types";
-import { CountryOption } from "components/CountrySelector/CountrySelector";
+import { CountryOption } from "components/CountrySelector";
 import { COUNTRIES_REST_ENDPOINT } from "constants/urls";
 
 export default function CharityStats(props: Profile & { classes?: string }) {

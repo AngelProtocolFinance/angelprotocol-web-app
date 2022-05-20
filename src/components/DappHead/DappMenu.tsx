@@ -1,26 +1,16 @@
 import { NavLink } from "react-router-dom";
-import { useMember } from "services/terra/admin/queriers";
 import createNavLinkStyler from "helpers/createNavLinkStyler";
 import { app, site } from "constants/routes";
 
 export default function DappMenu() {
-  const { member } = useMember("apTeam");
   return (
     <nav className="hidden lg:flex lg:row-start-1 lg:col-span-1 lg:col-start-2 flex justify-self-end items-center font-body text-sm lg:text-base ml-2">
       <NavLink className={styler} to={`${site.app}/${app.marketplace}`}>
         Marketplace
       </NavLink>
-      <NavLink to={`${site.app}/${app.govern}`} className={styler}>
-        Governance
-      </NavLink>
       <NavLink to={`${site.app}/${app.leaderboard}`} className={styler}>
         Leaderboard
       </NavLink>
-      {member.weight && (
-        <NavLink to={`${site.app}/${app.admin}`} className={styler}>
-          Admin
-        </NavLink>
-      )}
     </nav>
   );
 }

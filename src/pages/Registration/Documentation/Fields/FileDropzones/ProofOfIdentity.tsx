@@ -1,7 +1,7 @@
+import { useModalContext } from "contexts/ModalContext";
 import { FieldError, useFormContext } from "react-hook-form";
 import { BsX } from "react-icons/bs";
 import FileDropzone from "components/FileDropzone";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { Button, InputRow } from "../../../common";
 import { FormValues } from "../../types";
 

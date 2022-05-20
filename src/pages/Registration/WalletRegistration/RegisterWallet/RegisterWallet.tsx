@@ -1,7 +1,7 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useWalletContext from "hooks/useWalletContext";
 import RegistrationSuccessful from "./RegistrationSuccessful";
 import WalletSubmission from "./WalletSubmission";

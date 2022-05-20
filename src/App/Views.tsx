@@ -1,16 +1,11 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { app, site } from "../constants/routes";
 
-const Admin = lazy(() => import("pages/Admin/Admin"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
-const EndowmentAdmin = lazy(
-  () => import("pages/EndowmentAdmin/EndowmentAdmin")
-);
-const Governance = lazy(() => import("pages/Governance/Governance"));
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Login = lazy(() => import("pages/Login/Login"));
 const Market = lazy(() => import("pages/Market/Market"));
@@ -28,12 +23,6 @@ export default function Views() {
         <Route path={`${app.charity}/:address/*`} element={<Charity />} />
         <Route path={`${app.login}`} element={<Login />} />
         <Route path={`${app.tca}`} element={<TCA />} />
-        <Route path={`${app.govern}/*`} element={<Governance />} />
-        <Route path={`${app.admin}/*`} element={<Admin />} />
-        <Route
-          path={`${app.endowment_admin}/:address/*`}
-          element={<EndowmentAdmin />}
-        />
         <Route path={`${app.donations}/:address`} element={<Donations />} />
         <Route
           path={`${app.index}`}

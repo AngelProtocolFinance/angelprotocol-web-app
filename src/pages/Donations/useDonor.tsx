@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext";
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
 import Transactor, { TxProps } from "components/Transactors/Transactor";

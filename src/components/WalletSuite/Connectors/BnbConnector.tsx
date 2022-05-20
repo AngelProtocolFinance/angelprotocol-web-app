@@ -1,8 +1,8 @@
+import { useModalContext } from "contexts/ModalContext";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import { Dwindow } from "services/provider/types";
 import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { RejectBinanceLogin } from "providers/BinanceWallet/useBinance";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { useGetter } from "store/accessors";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import WalletPrompt from "../WalletPrompt";

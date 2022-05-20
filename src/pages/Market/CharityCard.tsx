@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import defaultBanner from "assets/images/home-banner.jpg";
 import { EndowmentEntry } from "services/terra/registrar/types";
-import LazyImage from "components/LazyImage/LazyImage";
+import LazyImage from "components/LazyImage";
 import { app, site } from "constants/routes";
 
 export default function CharityCard(props: EndowmentEntry) {

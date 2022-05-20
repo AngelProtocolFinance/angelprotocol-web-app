@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import { Endowment } from "services/aws/leaderboard/types";
-import LazyImage from "components/LazyImage/LazyImage";
+import LazyImage from "components/LazyImage";
 import { app } from "constants/routes";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";

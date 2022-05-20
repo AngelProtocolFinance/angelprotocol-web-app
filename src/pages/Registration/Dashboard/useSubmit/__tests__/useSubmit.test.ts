@@ -11,7 +11,7 @@ import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
 
-jest.mock("components/ModalContext/ModalContext", () => ({
+jest.mock("components/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));

@@ -1,5 +1,5 @@
 import { BroadcastStage, Step } from "services/transaction/types";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Broadcast(props: BroadcastStage) {
