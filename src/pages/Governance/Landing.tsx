@@ -48,9 +48,8 @@ function DonationAdvert() {
       </h4>
       <div className="w-full flex justify-center">
         <button
-          disabled={true} /**disabled until v2 */
           onClick={() => navigate(`${site.app}/${app.marketplace}`)}
-          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent disabled:bg-grey-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+          className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
         >
           Donate now
         </button>
