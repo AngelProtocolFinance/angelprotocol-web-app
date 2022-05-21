@@ -1,5 +1,5 @@
-import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import { MemberUpdatorValues as T } from "pages/Admin/types";
+import { GroupContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../../components/TextInput";
 import useAddMember from "./useAddMember";
 

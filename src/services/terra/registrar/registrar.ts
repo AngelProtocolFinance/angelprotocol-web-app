@@ -1,3 +1,4 @@
+import { ContractQueryArgs } from "services/types";
 import {
   CategorizedEndowments,
   EndowmentEntry,
@@ -5,7 +6,6 @@ import {
   RegistrarConfig,
 } from "types/server/contracts";
 import { registrarTags, terraTags } from "services/terra/tags";
-import { ContractQueryArgs } from "services/types";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

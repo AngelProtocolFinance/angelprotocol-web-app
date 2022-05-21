@@ -1,14 +1,14 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { UpdateProfilePayload as UP } from "types/server/contracts";
-import { ObjectEntries } from "types/utils";
-import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
-import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
 import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
 import {
   EndowmentAdminParams,
   UpdateProfileValues,
 } from "pages/EndowmentAdmin/types";
+import { UpdateProfilePayload as UP } from "types/server/contracts";
+import { ObjectEntries } from "types/utils";
+import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
+import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
 import { uploadToIpfs } from "pages/Registration/helpers";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";

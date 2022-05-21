@@ -1,5 +1,5 @@
-import { useSetter } from "store/accessors";
 import { StageUpdator } from "slices/transaction/types";
+import { useSetter } from "store/accessors";
 import { setStage } from "./transactionSlice";
 
 export default function useTxUpdator() {

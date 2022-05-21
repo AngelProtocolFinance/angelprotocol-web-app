@@ -1,3 +1,4 @@
+import { UpdateProfileValues as UV } from "pages/EndowmentAdmin/types";
 import Submitter from "pages/Admin/Templates/Submitter";
 import Label from "pages/Admin/components/Label";
 import {
@@ -5,7 +6,6 @@ import {
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import { UpdateProfileValues as UV } from "pages/EndowmentAdmin/types";
 import CountrySelector from "components/CountrySelector";
 import ImgEditor from "./ImgEditor/ImgEditor";
 import OverviewEditor from "./OverviewEditor/OverviewEditor";

@@ -1,13 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
-import { RootState } from "store/store";
 import {
   SenderArgs,
   StageUpdator,
   WithMsg,
   WithTx,
 } from "slices/transaction/types";
+import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
+import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";

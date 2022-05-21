@@ -1,5 +1,5 @@
-import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import { MemberUpdatorValues as T } from "pages/Admin/types";
+import { DivContainer } from "pages/Admin/components/TemplateContainer";
 import Label from "../../components/Label";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";

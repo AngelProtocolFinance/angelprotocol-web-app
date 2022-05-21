@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
+import { CharityParams } from "../types";
 import { Profile } from "types/server/contracts";
 import { useModalContext } from "contexts/ModalContext";
 import { unsdgs } from "constants/unsdgs";
-import { CharityParams } from "../types";
 import CharityLinks from "./CharityLinks";
 import DonateSelection from "./DonateSelection";
 

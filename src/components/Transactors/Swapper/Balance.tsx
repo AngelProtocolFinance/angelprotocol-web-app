@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "./types";
 import { useGetter } from "store/accessors";
 import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
-import { SwapValues } from "./types";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();

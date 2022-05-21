@@ -1,6 +1,6 @@
+import { RegistrarOwnerValues as RV } from "pages/Admin/types";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
-import { RegistrarOwnerValues as RV } from "pages/Admin/types";
 import Submitter from "../Submitter";
 import useUpdateOwner from "./useUpdateOwner";
 

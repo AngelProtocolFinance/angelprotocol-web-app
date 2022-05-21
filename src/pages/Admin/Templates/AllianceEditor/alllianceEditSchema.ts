@@ -1,7 +1,7 @@
 import * as Yup from "yup";
 import { AllianceEditValues } from "pages/Admin/types";
-import { requiredAddress } from "schemas/string";
 import { SchemaShape } from "schemas/types";
+import { requiredAddress } from "schemas/string";
 import { proposalShape } from "../proposalShape";
 
 const allianceEditShape: SchemaShape<AllianceEditValues> = {

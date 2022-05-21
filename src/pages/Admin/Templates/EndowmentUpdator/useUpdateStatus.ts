@@ -1,10 +1,10 @@
 import { useFormContext } from "react-hook-form";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
 } from "types/server/contracts";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";

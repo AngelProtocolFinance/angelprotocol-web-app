@@ -1,5 +1,5 @@
-import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import { CW3ConfigValues as CV } from "pages/Admin/types";
+import { FormContainer } from "pages/Admin/components/TemplateContainer";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import useConfigureCW3 from "./useConfigureCW3";

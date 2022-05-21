@@ -2,10 +2,10 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { renderHook } from "@testing-library/react-hooks";
 import OpenLogin from "@toruslabs/openlogin";
-import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { WalletProxy } from "providers/WalletProvider/types";
-import createWalletProxy from "../createWalletProxy";
 import { TORUS_CONNECTION } from "../types";
+import { WalletProxy } from "providers/WalletProvider/types";
+import { chainOptions } from "providers/WalletProvider/chainOptions";
+import createWalletProxy from "../createWalletProxy";
 import useTorusWallet from "../useTorusWallet";
 
 jest.mock("../createWalletProxy");

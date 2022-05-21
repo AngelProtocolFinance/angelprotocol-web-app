@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { useGovPolls } from "services/terra/gov/queriers";
 import { PollFilterOptions } from "../types";
+import { useGovPolls } from "services/terra/gov/queriers";
 import PollCard from "./PollCard";
 import Toolbar from "./Toolbar";
 

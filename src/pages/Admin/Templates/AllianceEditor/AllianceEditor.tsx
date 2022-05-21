@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { AllianceEditValues } from "pages/Admin/types";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { AllianceEditValues } from "pages/Admin/types";
 import { useAllianceMembers } from "services/terra/indexFund/queriers";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/allianceMembers";

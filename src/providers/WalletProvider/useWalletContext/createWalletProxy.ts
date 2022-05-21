@@ -5,10 +5,10 @@ import {
   Wallet,
 } from "@terra-money/terra.js";
 import { entropyToMnemonic } from "bip39";
-import { chainIDs } from "constants/chainIDs";
-import { terra_lcds } from "constants/urls";
 import { WalletProxy } from "../types";
 import { NETWORK, TORUS_CONNECTION } from "./types";
+import { chainIDs } from "constants/chainIDs";
+import { terra_lcds } from "constants/urls";
 
 const CHAIN_ID =
   NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_main;

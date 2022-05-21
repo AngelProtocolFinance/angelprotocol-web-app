@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { requiredTokenAmount } from "schemas/number";
-import { SchemaShape } from "schemas/types";
-import StakeForm from "./StakeForm";
 import { HaloStakingValues, Props } from "./types";
+import { SchemaShape } from "schemas/types";
+import { requiredTokenAmount } from "schemas/number";
+import StakeForm from "./StakeForm";
 
 const shape: SchemaShape<HaloStakingValues> = {
   amount: requiredTokenAmount,

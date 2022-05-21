@@ -1,6 +1,6 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { Source, UpdateProfilePayload } from "types/server/contracts";
 import { ContractQueryArgs } from "services/types";
+import { Source, UpdateProfilePayload } from "types/server/contracts";
 import { WalletProxy } from "providers/WalletProvider";
 import Contract from "./Contract";
 

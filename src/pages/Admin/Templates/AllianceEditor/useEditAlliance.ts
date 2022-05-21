@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
 import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";

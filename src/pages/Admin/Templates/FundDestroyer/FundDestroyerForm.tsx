@@ -1,6 +1,6 @@
+import { FundDestroyValues as FD } from "pages/Admin/types";
 import Label from "pages/Admin/components/Label";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
-import { FundDestroyValues as FD } from "pages/Admin/types";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";

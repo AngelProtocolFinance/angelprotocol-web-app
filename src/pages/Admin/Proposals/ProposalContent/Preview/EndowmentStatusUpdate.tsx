@@ -1,5 +1,5 @@
-import { EndowmentStatus, EndowmentStatusNum } from "types/server/contracts";
 import { EndowmentStatusMeta } from "pages/Admin/types";
+import { EndowmentStatus, EndowmentStatusNum } from "types/server/contracts";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 

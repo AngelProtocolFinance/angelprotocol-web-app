@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Stage } from "slices/transaction/types";
 import { useSubmitMutation } from "services/aws/registration";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -6,7 +7,6 @@ import {
   setFormLoading,
   setStage,
 } from "slices/transaction/transactionSlice";
-import { Stage } from "slices/transaction/types";
 import { FORM_ERROR } from "../../constants";
 import { updateCharity } from "../../store";
 import useHandleError from "../../useHandleError";

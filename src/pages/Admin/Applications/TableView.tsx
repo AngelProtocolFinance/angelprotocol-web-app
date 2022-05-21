@@ -1,5 +1,5 @@
-import { CharityApplication } from "types/server/aws";
 import { SortDirection, SortKey } from "pages/Admin/types";
+import { CharityApplication } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection/TableSection";

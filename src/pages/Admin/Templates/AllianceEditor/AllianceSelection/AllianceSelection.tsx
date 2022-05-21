@@ -1,5 +1,5 @@
-import TableSection, { Cells } from "components/TableSection/TableSection";
 import { AllianceMemberWithFlags } from "slices/admin/types";
+import TableSection, { Cells } from "components/TableSection/TableSection";
 import Member from "./Member";
 import Toolbar from "./Toolbar";
 import useAllianceSelection from "./useAllianceSelection";

@@ -1,6 +1,6 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
-import { GovState, Vote } from "types/server/contracts";
 import { ContractQueryArgs as CQA } from "services/types";
+import { GovState, Vote } from "types/server/contracts";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";

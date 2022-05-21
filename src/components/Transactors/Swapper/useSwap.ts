@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "./types";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import { SwapValues } from "./types";
 import useSwapEstimator from "./useSwapEstimator";
 
 export default function useSwap() {

@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { CW3ConfigPayload, CW3ConfigValues } from "pages/Admin/types";
 import { CW3Config } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
-import { CW3ConfigPayload, CW3ConfigValues } from "pages/Admin/types";
 import { useCW3Config } from "services/terra/admin/queriers";
 import CW3ConfigForm from "./CW3ConfigForm";
 import { cw3ConfigSchema } from "./cw3ConfigSchema";

@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity, SubmitResult } from "types/server/aws";
 import { Stage, Step } from "slices/transaction/types";
+import { Charity, SubmitResult } from "types/server/aws";
 import useTransactionResultHandler from "../useTransactionResultHandler";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";

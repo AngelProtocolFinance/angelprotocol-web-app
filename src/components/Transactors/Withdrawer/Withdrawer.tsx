@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
+import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
 import { useWithdrawConstraints } from "services/terra/multicall/queriers";
 import ContentLoader from "components/ContentLoader";
 import useWalletContext from "hooks/useWalletContext";
 import WithdrawForm from "./WithdrawForm";
-import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
 import { withdrawSchema } from "./withdrawSchema";
 
 export default function Withdrawer(props: WithdrawerProps) {

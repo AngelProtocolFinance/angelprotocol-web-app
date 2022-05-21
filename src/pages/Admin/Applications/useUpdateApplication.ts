@@ -1,9 +1,9 @@
 // import { useConnectedWallet } from "@terra-money/use-wallet";
+import { EndowmentUpdateValues } from "pages/Admin/types";
 import {
   EndowmentStatusNum,
   StatusChangePayload,
 } from "types/server/contracts";
-import { EndowmentUpdateValues } from "pages/Admin/types";
 import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";

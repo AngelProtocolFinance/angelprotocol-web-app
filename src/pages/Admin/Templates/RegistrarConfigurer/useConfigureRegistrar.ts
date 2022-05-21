@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { RegistrarConfigPayload } from "types/server/contracts";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
 } from "pages/Admin/types";
+import { RegistrarConfigPayload } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";

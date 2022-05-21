@@ -9,9 +9,9 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { useEffect, useMemo } from "react";
+import { WalletProxy } from "../types";
 import { TerraWalletIDs } from "slices/walletSlice";
 import { mainnet } from "../chainOptions";
-import { WalletProxy } from "../types";
 
 type Connect = (type?: ConnectType, identifier?: string) => void;
 type Disconnect = () => void;

@@ -1,3 +1,4 @@
+import { ContractQueryArgs } from "services/types";
 import {
   CW3Config,
   CWContracts,
@@ -5,7 +6,6 @@ import {
   QueryRes,
 } from "types/server/contracts";
 import { endowmentTags, terraTags } from "services/terra/tags";
-import { ContractQueryArgs } from "services/types";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

@@ -1,11 +1,11 @@
 import { useState } from "react";
+import { ReceipterValues } from "./types";
+import { ReceiptStage } from "slices/transaction/types";
 import { useRequestReceiptMutation } from "services/apes/donations";
 import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter } from "store/accessors";
-import { ReceiptStage } from "slices/transaction/types";
 import useTxUpdator from "slices/transaction/updators";
-import { ReceipterValues } from "./types";
 
 export default function useReceiptForm() {
   const { updateTx } = useTxUpdator();

@@ -1,11 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { SwapValues } from "./types";
 import Icon from "components/Icon";
 import { denomIcons } from "constants/currency";
 import Balance from "./Balance";
 import Slippage from "./Slippage";
-import { SwapValues } from "./types";
 
 export default function Amount() {
   const [settings_shown, show_settings] = useState(false);

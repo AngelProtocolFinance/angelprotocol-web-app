@@ -1,4 +1,5 @@
 import { Dec } from "@terra-money/terra.js";
+import { ContractQueryArgs } from "services/types";
 import {
   CW20Balance,
   CW20Info,
@@ -10,7 +11,6 @@ import {
   QueryRes,
 } from "types/server/contracts";
 import { govTags, terraTags } from "services/terra/tags";
-import { ContractQueryArgs } from "services/types";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

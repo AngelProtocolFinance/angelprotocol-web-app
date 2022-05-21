@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import icon from "assets/icons/wallets/unknown.svg";
 import { TokenWithBalance } from "services/types";
+import icon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
 
 export type TerraWalletIDs =

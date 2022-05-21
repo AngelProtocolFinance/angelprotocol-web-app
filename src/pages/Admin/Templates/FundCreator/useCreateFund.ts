@@ -1,8 +1,8 @@
 import { Dec } from "@terra-money/terra.js";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundDetails } from "types/server/contracts";
 import { CreateFundMeta, FundCreatorValues } from "pages/Admin/types";
+import { FundDetails } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";

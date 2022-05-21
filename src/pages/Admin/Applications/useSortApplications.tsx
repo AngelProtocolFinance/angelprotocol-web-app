@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { CharityApplication } from "types/server/aws";
 import { SortDirection, SortKey } from "pages/Admin/types";
+import { CharityApplication } from "types/server/aws";
 
 export default function useSortedApplications(
   applications: CharityApplication[]

@@ -1,9 +1,9 @@
 import * as Yup from "yup";
-import { proposalShape } from "pages/Admin/Templates/proposalShape";
 import { UpdateProfileValues } from "pages/EndowmentAdmin/types";
+import { SchemaShape } from "schemas/types";
+import { proposalShape } from "pages/Admin/Templates/proposalShape";
 import { positiveNumber } from "schemas/number";
 import { stringByteSchema, url } from "schemas/string";
-import { SchemaShape } from "schemas/types";
 
 //construct strict shape to avoid hardcoding shape keys
 const profileEditShape: SchemaShape<UpdateProfileValues> = {

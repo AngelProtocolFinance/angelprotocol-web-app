@@ -9,6 +9,7 @@ import {
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "./types";
 import { useGetter, useSetter } from "store/accessors";
 import { Dwindow } from "slices/providerSlice";
 import {
@@ -28,7 +29,6 @@ import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();

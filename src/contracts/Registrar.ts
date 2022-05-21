@@ -1,4 +1,5 @@
 import { MsgExecuteContract } from "@terra-money/terra.js";
+import { ContractQueryArgs as CQA } from "services/types";
 import { Charity } from "types/server/aws";
 import {
   EndowmentQueryOptions,
@@ -7,7 +8,6 @@ import {
   RegistrarOwnerPayload,
   StatusChangePayload,
 } from "types/server/contracts";
-import { ContractQueryArgs as CQA } from "services/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";

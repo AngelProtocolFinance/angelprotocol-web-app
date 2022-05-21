@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
+import { Props, VoteValues } from "./types";
 import { requiredTokenAmount } from "schemas/number";
 import VoterForm from "./VoterForm";
-import { Props, VoteValues } from "./types";
 
 const schema = Yup.object().shape({
   amount: requiredTokenAmount,

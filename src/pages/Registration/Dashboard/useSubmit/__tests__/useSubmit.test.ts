@@ -1,10 +1,10 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
+import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import { Charity } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import Registrar from "contracts/Registrar";
 import useSubmit from "../useSubmit";
 

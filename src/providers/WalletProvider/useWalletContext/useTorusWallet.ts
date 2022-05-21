@@ -2,10 +2,10 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
-import createWalletProxy from "./createWalletProxy";
 import { NETWORK, TORUS_CONNECTION } from "./types";
+import { mainnet } from "../chainOptions";
+import createWalletProxy from "./createWalletProxy";
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",

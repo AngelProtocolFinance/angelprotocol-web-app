@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { requiredTokenAmount } from "schemas/number";
-import { SchemaShape } from "schemas/types";
-import SwapForm from "./SwapForm";
 import { SwapValues } from "./types";
+import { SchemaShape } from "schemas/types";
+import { requiredTokenAmount } from "schemas/number";
+import SwapForm from "./SwapForm";
 
 const shape: SchemaShape<SwapValues> = { amount: requiredTokenAmount };
 const schema = Yup.object().shape(shape);

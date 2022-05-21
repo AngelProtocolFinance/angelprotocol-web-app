@@ -2,8 +2,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ReactNode } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { schema } from "./schema";
 import { ReceipterValues } from "./types";
+import { schema } from "./schema";
 
 export default function Receipter(props: {
   children: ReactNode;

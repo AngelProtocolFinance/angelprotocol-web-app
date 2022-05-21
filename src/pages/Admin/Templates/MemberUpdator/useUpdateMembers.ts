@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { Member } from "types/server/contracts";
 import { CWMemberUpdateMeta, MemberUpdatorValues } from "pages/Admin/types";
 import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
+import { Member } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";

@@ -1,8 +1,8 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import { Charity } from "services/aws/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import Registrar from "contracts/Registrar";
 
 describe("Registrar tests", () => {

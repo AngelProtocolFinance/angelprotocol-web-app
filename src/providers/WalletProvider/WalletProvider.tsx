@@ -4,10 +4,10 @@ import {
   WalletStatus,
 } from "@terra-money/wallet-provider";
 import { PropsWithChildren, createContext } from "react";
+import { IWalletContext } from "./types";
 import BinanceWalletContext from "contexts/BinanceWalletContext/BinanceWalletContext";
 import MetamaskContext from "contexts/MetamaskContext/MetamaskContext";
 import { chainOptions } from "./chainOptions";
-import { IWalletContext } from "./types";
 import useWalletContext from "./useWalletContext";
 
 export const WalletContext = createContext<IWalletContext>({

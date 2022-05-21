@@ -1,11 +1,11 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { DonateValues } from "components/Transactors/Donater";
 import { RootState } from "store/store";
 import { Dwindow } from "slices/providerSlice";
-import { StageUpdator } from "slices/transaction/types";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";

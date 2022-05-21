@@ -1,5 +1,5 @@
-import torusIcon from "assets/icons/wallets/torus.jpg";
 import { ConnectionProxy } from "../types";
+import torusIcon from "assets/icons/wallets/torus.jpg";
 
 export const TORUS_CONNECTION: ConnectionProxy = {
   identifier: "torus",
