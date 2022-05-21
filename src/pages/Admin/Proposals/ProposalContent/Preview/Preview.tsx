@@ -1,4 +1,4 @@
-import { ProposalMeta } from "@types-page/admin";
+import { ProposalMeta } from "pages/Admin/types";
 import AllianceUpdate from "./AllianceUpdate";
 import CWMemberUpdate from "./CWMemberUpdate";
 import DiffTable from "./DiffTable";

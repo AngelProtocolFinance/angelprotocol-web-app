@@ -1,4 +1,4 @@
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import toCurrency from "helpers/toCurrency";
 
 type SummaryProps = { type: string; principal: number; impact: number };

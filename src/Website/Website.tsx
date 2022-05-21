@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import ModalContext from "contexts/ModalContext/ModalContext";
+import ModalContext from "contexts/ModalContext";
 import Loader from "components/Loader/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { siteRoutes, webRoutes } from "constants/routes";

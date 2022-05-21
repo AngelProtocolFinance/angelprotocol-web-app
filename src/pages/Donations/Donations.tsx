@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { Transaction } from "@types-server/aws";
+import { Transaction } from "types/server/aws";
 import { useDonationTransactionsQuery } from "services/flipslide/endowment_admin";
 import CsvExporter from "components/CsvExporter";
 import DonationsTable from "./DonationsTable";

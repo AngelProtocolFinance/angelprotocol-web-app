@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 import { BsQuestionCircle } from "react-icons/bs";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 
 type InputRowProps = PropsWithChildren<{
   htmlFor?: string;

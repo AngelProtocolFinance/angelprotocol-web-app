@@ -9,7 +9,7 @@ import {
 } from "draft-js";
 import React, { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { UpdateProfileValues } from "@types-page/endowment-admin";
+import { UpdateProfileValues } from "pages/EndowmentAdmin/types";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
 
 export default function useEditor() {

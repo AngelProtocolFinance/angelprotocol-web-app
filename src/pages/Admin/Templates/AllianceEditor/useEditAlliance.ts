@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { AllianceEditMeta, AllianceEditValues } from "@types-page/admin";
-import { AllianceMember as AM, EmbeddedWasmMsg } from "@types-server/contracts";
+import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
+import { AllianceEditMeta, AllianceEditValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";

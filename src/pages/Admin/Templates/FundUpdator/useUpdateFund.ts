@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundMemberUpdateMeta } from "@types-page/admin";
-import { FundUpdateValues } from "@types-page/admin";
+import { FundMemberUpdateMeta } from "pages/Admin/types";
+import { FundUpdateValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";

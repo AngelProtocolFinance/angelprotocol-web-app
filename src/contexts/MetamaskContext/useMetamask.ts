@@ -4,8 +4,8 @@ import {
   EIP1193Events,
   EIP1193Methods,
   Web3Provider,
-} from "@types-ethereum";
-import { Dwindow } from "@types-slice/provider";
+} from "types/ethereum";
+import { Dwindow } from "slices/providerSlice";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import { RejectMetamaskLogin } from "errors/errors";
 

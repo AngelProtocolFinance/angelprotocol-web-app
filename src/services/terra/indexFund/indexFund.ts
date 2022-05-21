@@ -3,8 +3,8 @@ import {
   FundDetails,
   IndexFundConfig,
   QueryRes,
-} from "@types-server/contracts";
-import { ContractQueryArgs } from "@types-services/terra";
+} from "types/server/contracts";
+import { ContractQueryArgs } from "services/types";
 import contract_querier from "../contract_querier";
 import { indexfundTags, terraTags } from "../tags";
 import { terra } from "../terra";

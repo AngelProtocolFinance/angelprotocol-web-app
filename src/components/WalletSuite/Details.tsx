@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Dwindow } from "@types-slice/provider";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
-import Backdrop from "components/Backdrop/Backdrop";
+import Backdrop from "components/Backdrop";
 import Copier from "components/Copier/Copier";
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
+import { Dwindow } from "slices/providerSlice";
 import { resetWallet } from "slices/walletSlice";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";

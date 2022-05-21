@@ -3,7 +3,7 @@ import {
   EmbeddedBankMsg,
   EmbeddedWasmMsg,
   Proposal,
-} from "@types-server/contracts";
+} from "types/server/contracts";
 import Icon from "components/Icon";
 import DetailLabel from "../DetailLabel";
 import Preview from "./Preview/Preview";

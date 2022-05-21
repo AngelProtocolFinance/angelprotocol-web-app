@@ -4,11 +4,11 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { CharityApplication } from "@types-server/aws";
+import { CharityApplication } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions, testnet } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
-import ModalContext from "contexts/ModalContext/ModalContext";
+import ModalContext from "contexts/ModalContext";
 import { store } from "store/store";
 import Applications from "../Applications";
 

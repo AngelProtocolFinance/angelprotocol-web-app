@@ -1,4 +1,4 @@
-import { TokenWithBalance } from "@types-services/terra";
+import { TokenWithBalance } from "services/types";
 import toCurrency from "helpers/toCurrency";
 
 export default function Holdings(props: { coins: TokenWithBalance[] }) {

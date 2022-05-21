@@ -1,4 +1,4 @@
-import { VaultMap } from "@types-shared/withdraw";
+import { VaultMap } from "types/shared/withdraw";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";

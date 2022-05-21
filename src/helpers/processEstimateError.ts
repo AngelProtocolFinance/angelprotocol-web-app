@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { FormError } from "@types-slice/transaction";
+import { FormError } from "slices/transaction/types";
 
 export default function processEstimateError(err: unknown): FormError {
   const _err = err as any;

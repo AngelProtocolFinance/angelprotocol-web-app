@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { DocumentationValues } from "@types-page/registration";
+import { DocumentationValues } from "pages/Registration/types";
 import Selector from "components/Selector";
 import { unsdgs } from "constants/unsdgs";
 import { InputRow } from "../../common";

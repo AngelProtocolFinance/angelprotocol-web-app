@@ -1,9 +1,9 @@
-import { WithdrawResource } from "@types-component/withdrawer";
 import Icon from "components/Icon";
 import Status from "../Status";
 import Amount from "./Amount";
 import InputField from "./InputField";
 import { Fee, ToReceive, Total } from "./Misc";
+import { WithdrawResource } from "./types";
 import useWithdraw from "./useWithdraw";
 
 export default function WithdrawForm(resources: WithdrawResource) {

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundUpdateValues } from "@types-page/admin";
+import { FundUpdateValues } from "pages/Admin/types";
 import { useFundMembers } from "services/terra/indexFund/queriers";
 import { useGetter, useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/fundMembers";

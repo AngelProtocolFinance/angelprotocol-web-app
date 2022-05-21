@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Endowment } from "@types-server/aws";
+import { Endowment } from "types/server/aws";
 import defaultIcon from "assets/images/angelprotocol-horiz-blu.png";
 import LazyImage from "components/LazyImage/LazyImage";
 import { appRoutes } from "constants/routes";

@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
-import { EndowmentStatusMeta, EndowmentUpdateValues } from "@types-page/admin";
 import {
   EndowmentStatus,
   EndowmentStatusNum,
   StatusChangePayload,
-} from "@types-server/contracts";
+} from "types/server/contracts";
+import { EndowmentStatusMeta, EndowmentUpdateValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";

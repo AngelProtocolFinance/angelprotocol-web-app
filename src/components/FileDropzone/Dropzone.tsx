@@ -1,7 +1,7 @@
 import { DropEvent, FileRejection, useDropzone } from "react-dropzone";
 import { FieldValues } from "react-hook-form";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { BaseProps, FileWrapper } from "@types-component/file-dropzone";
+import { BaseProps, FileWrapper } from "./types";
 
 type Value = FileWrapper | FileWrapper[];
 

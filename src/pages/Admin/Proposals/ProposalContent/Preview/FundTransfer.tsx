@@ -1,4 +1,4 @@
-import { FundSendMeta } from "@types-page/admin";
+import { FundSendMeta } from "pages/Admin/types";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
 import KeyValue from "./preview-components/KeyValue";

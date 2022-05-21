@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@types-page/admin";
+import { FundSendValues } from "pages/Admin/types";
 import { denomIcons, denoms } from "constants/currency";
 
 function Currency(props: { currency: FundSendValues["currency"] }) {

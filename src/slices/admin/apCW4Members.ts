@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Member } from "@types-server/contracts";
-import { MemberCopy } from "@types-slice/admin";
+import { Member } from "types/server/contracts";
+import { MemberCopy } from "slices/admin/types";
 
 const initialState: MemberCopy[] = [];
 

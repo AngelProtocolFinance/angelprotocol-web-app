@@ -1,7 +1,7 @@
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { createCharityWithStepOneData } from "../helpers";

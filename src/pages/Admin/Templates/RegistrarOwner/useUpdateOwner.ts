@@ -1,8 +1,8 @@
 import { useFormContext } from "react-hook-form";
-import { OwnerUpdateMeta, RegistrarOwnerValues } from "@types-page/admin";
+import { OwnerUpdateMeta, RegistrarOwnerValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";

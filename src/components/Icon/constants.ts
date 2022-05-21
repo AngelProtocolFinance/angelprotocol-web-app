@@ -60,7 +60,7 @@ import {
 import { RiDiscordLine } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { IconTypes } from "@types-component/icons";
+import { IconTypes } from ".";
 
 export const iconList: { [key in IconTypes]: IconType } = {
   FileDownload: MdOutlineFileDownload,

@@ -1,4 +1,4 @@
-import { ProposalGroupOptions } from "@types-page/admin";
+import { ProposalGroupOptions } from "pages/Admin/types";
 import { useGetProposalsState, useSetProposalsState } from "../Proposals";
 
 export default function GroupSelector() {

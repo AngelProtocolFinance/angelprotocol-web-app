@@ -1,7 +1,6 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { HaloStakingValues } from "@types-component/staker";
 import { useGetter, useSetter } from "store/accessors";
 // import useTerraBalance from "hooks/useTerraBalance";
 import {
@@ -16,6 +15,7 @@ import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
+import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {

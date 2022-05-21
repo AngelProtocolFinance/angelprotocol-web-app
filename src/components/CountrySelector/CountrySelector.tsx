@@ -2,9 +2,9 @@ import { FC, useEffect, useRef } from "react";
 import { FieldValues, Path, useController } from "react-hook-form";
 import { OptionProps, SingleValueProps } from "react-select";
 import AsyncSelect from "react-select/async";
-import { CountryOption } from "@types-component/country-selector";
 import defaultIcon from "assets/images/angelprotocol-wings-bl.png";
 import { COUNTRIES_REST_ENDPOINT } from "constants/urls";
+import { CountryOption } from "./types";
 
 const VALUE_SEPARATOR = " ";
 export default function CountrySelector<T extends FieldValues>(props: {

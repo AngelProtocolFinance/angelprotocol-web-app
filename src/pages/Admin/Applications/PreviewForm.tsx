@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { CharityApplication } from "@types-server/aws";
+import { CharityApplication } from "types/server/aws";
 import { useProposal } from "services/terra/admin/queriers";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import useWalletContext from "hooks/useWalletContext";
 import { adminRoutes } from "constants/routes";

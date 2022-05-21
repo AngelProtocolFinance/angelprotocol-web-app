@@ -1,4 +1,4 @@
-import { OptionType, ReferralOptionType } from "@types-page/registration";
+import { OptionType, ReferralOptionType } from "pages/Registration/types";
 
 export const contactRoleOptions: OptionType[] = [
   { label: "Chairperson / President", value: "president" },

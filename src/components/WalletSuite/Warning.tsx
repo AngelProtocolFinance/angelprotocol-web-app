@@ -1,4 +1,4 @@
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 
 type Props = { text: string };

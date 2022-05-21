@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { DocumentationValues } from "@types-page/registration";
+import { DocumentationValues } from "pages/Registration/types";
 import { useGetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../routes";

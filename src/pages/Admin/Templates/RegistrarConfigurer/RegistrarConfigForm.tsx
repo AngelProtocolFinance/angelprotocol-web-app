@@ -1,10 +1,10 @@
-import { RegistrarConfigValues as RV } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import {
   FormContainer,
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
 import TextInput from "pages/Admin/components/TextInput";
+import { RegistrarConfigValues as RV } from "pages/Admin/types";
 import Submitter from "../Submitter";
 import useConfigureRegistrar from "./useConfigureRegistrar";
 

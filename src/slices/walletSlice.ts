@@ -1,7 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { WalletInfo } from "@types-slice/wallet";
 import icon from "assets/icons/wallets/unknown.svg";
+import { TokenWithBalance } from "services/types";
 import { chainIDs } from "constants/chainIDs";
+
+export type TerraWalletIDs =
+  | "terra_wc"
+  | "station"
+  | "xdefi-wallet"
+  | "leap-wallet"
+  | "SafePal"
+  | "torus";
+
+export type WalletInfo = {
+  icon: string;
+  displayCoin: { amount: number; symbol: string };
+  coins: TokenWithBalance[];
+  address: string;
+  chainId: string;
+  id: TerraWalletIDs | undefined;
+};
 
 type IState = { isUpdating: boolean } & WalletInfo;
 

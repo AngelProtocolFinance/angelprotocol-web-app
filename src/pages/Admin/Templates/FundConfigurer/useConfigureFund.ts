@@ -1,10 +1,10 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
-import { FundConfigUpdateMeta, FundConfigValues } from "@types-page/admin";
-import { FundConfig } from "@types-server/contracts";
+import { FundConfig } from "types/server/contracts";
+import { FundConfigUpdateMeta, FundConfigValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";

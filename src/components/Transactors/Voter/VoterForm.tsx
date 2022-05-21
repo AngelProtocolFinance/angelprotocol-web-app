@@ -1,8 +1,8 @@
-import { VoteValues as V } from "@types-component/voter";
 import Fee from "../Fee";
 import Status from "../Status";
 import VoteOption from "../VoteOption";
 import Amount from "./Amount";
+import { VoteValues as V } from "./types";
 import useVote from "./useVote";
 
 export default function VoterForm() {

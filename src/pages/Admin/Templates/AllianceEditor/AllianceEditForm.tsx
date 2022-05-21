@@ -1,6 +1,6 @@
-import { AllianceEditValues as AV } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import { DivContainer } from "pages/Admin/components/TemplateContainer";
+import { AllianceEditValues as AV } from "pages/Admin/types";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import AllianceSelection from "./AllianceSelection/AllianceSelection";

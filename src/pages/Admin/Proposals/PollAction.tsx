@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
-import { ProposalDetails, ProposalMeta } from "@types-page/admin";
-import { Tags } from "@types-slice/transaction";
+import { ProposalDetails, ProposalMeta } from "pages/Admin/types";
 import {
   adminTags,
   endowmentTags,
@@ -12,6 +11,7 @@ import {
 import { terra } from "services/terra/terra";
 import useProposalExecutor from "components/Transactors/AdminExecuter/useProposalExecutor";
 import useAdminVoter from "components/Transactors/AdminVoter/useAdminVoter";
+import { Tags } from "slices/transaction/types";
 
 export default function PollAction(props: ProposalDetails) {
   const showAdminVoter = useAdminVoter(props.numId);

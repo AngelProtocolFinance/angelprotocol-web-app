@@ -1,10 +1,10 @@
-import { MemberCopy } from "@types-slice/admin";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import {
   toggleDeleteExistingMember,
   undoAddMember,
 } from "slices/admin/apCW4Members";
+import { MemberCopy } from "slices/admin/types";
 
 export default function MemberItem(props: MemberCopy) {
   const dispatch = useSetter();

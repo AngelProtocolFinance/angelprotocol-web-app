@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CountryOption } from "@types-component/country-selector";
-import { Profile } from "@types-server/contracts";
+import { Profile } from "types/server/contracts";
+import { CountryOption } from "components/CountrySelector";
 import { COUNTRIES_REST_ENDPOINT } from "constants/urls";
 
 //toDO

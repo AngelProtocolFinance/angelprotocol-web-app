@@ -1,11 +1,11 @@
 import { WalletStatus } from "@terra-money/wallet-provider";
 import { useEffect, useRef } from "react";
-import { ProviderStates } from "@types-slice/provider";
 import { terra } from "services/terra/terra";
 import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useGetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import { useSetter } from "store/accessors";
 import { updateChainID } from "slices/chainSlice";
+import { ProviderStates } from "slices/providerSlice";
 import { setActiveProvider, setIsSwitching } from "slices/providerSlice";
 import useWalletContext from "hooks/useWalletContext";
 import { chainIDs } from "constants/chainIDs";

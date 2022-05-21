@@ -1,4 +1,4 @@
-import { CWMemberUpdateMeta } from "@types-page/admin";
+import { CWMemberUpdateMeta } from "pages/Admin/types";
 import Header from "./preview-components/Header";
 import MemberItem from "./preview-components/MemberItem";
 import PreviewContainer from "./preview-components/PreviewContainer";

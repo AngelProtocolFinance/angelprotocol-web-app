@@ -1,5 +1,5 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { WalletProxy } from "providers/WalletProvider";
 import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";

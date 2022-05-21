@@ -1,9 +1,9 @@
-import { PollFilterOptions } from "@types-page/governance";
 import { useLatestBlock } from "services/terra/queriers";
 import Icon from "components/Icon";
 import usePoller from "components/Transactors/Poller/usePoller";
 import toCurrency from "helpers/toCurrency";
 import Button from "../Button";
+import { PollFilterOptions } from "../types";
 import PollSelector from "./PollSelector";
 
 export default function Toolbar(props: {

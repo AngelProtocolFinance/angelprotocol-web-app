@@ -1,4 +1,4 @@
-import { IconTypes } from "@types-component/icons";
+import { IconTypes } from "components/Icon";
 import { chainIDs } from "./chainIDs";
 
 type URL_GROUP = {

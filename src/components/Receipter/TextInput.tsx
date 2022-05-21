@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { ReceipterValues as RV } from "@types-component/receipter";
+import { ReceipterValues as RV } from "./types";
 
 export default function TextInput(props: {
   id: string;

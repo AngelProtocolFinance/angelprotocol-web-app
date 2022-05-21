@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FundCreatorValues as V } from "@types-page/admin";
 import { DivContainer } from "pages/Admin/components/TemplateContainer";
+import { FundCreatorValues as V } from "pages/Admin/types";
 import Label from "../../components/Label";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";

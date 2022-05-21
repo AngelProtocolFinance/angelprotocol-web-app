@@ -1,4 +1,4 @@
-import { AWSQueryRes, Transaction } from "@types-server/aws";
+import { AWSQueryRes, Transaction } from "types/server/aws";
 import { aws } from "./aws";
 
 interface DonationQueryRes<T> {

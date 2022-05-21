@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { AdditionalInfoValues } from "@types-page/registration";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import RichTextEditor from "components/RichTextEditor";
 
 export default function OverviewInput() {

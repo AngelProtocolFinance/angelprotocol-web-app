@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FundCreatorValues } from "@types-page/admin";
+import { FundCreatorValues } from "pages/Admin/types";
 import FundCreatorForm from "./FundCreatorForm";
 import { fundCreatorSchema } from "./fundCreatorSchema";
 

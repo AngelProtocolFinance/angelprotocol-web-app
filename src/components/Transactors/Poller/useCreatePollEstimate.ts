@@ -1,7 +1,6 @@
 import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { CreatePollValues } from "@types-component/poller";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
@@ -14,6 +13,7 @@ import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
+import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
   const {

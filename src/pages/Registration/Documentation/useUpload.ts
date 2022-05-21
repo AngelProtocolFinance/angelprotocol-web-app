@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { FileWrapper } from "@types-component/file-dropzone";
-import { DocumentationValues } from "@types-page/registration";
+import { DocumentationValues } from "pages/Registration/types";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
+import { FileWrapper } from "components/FileDropzone";
 import { useGetter, useSetter } from "store/accessors";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";

@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { AdditionalInfoValues } from "@types-page/registration";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import FileDropzone from "components/FileDropzone";
 import { InputRow } from "../common";
 

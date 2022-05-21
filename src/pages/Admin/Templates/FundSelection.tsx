@@ -1,5 +1,5 @@
 import { Path } from "react-hook-form";
-import { FundIdContext } from "@types-page/admin";
+import { FundIdContext } from "pages/Admin/types";
 import TableSection, { Cells } from "components/TableSection/TableSection";
 import useFundSelection from "./useFundSelection";
 

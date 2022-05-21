@@ -1,6 +1,6 @@
-import { EndowmentUpdateValues as V } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
+import { EndowmentUpdateValues as V } from "pages/Admin/types";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import EndowmentPreview from "./EndowmentPreview";

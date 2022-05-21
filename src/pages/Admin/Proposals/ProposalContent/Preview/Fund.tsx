@@ -1,4 +1,4 @@
-import { FundPreview } from "@types-page/admin";
+import { FundPreview } from "pages/Admin/types";
 import toCurrency from "helpers/toCurrency";
 import Header from "./preview-components/Header";
 import KeyValue from "./preview-components/KeyValue";

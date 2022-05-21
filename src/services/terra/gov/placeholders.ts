@@ -1,4 +1,4 @@
-import { GovConfig, GovStaker, GovState, Poll } from "@types-server/contracts";
+import { GovConfig, GovStaker, GovState, Poll } from "types/server/contracts";
 
 export const staker: GovStaker = {
   balance: "0",

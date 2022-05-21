@@ -1,4 +1,4 @@
-import { CW20Info } from "@types-server/contracts";
+import { CW20Info } from "types/server/contracts";
 import Gov, { G, TG } from "contracts/Gov";
 import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";

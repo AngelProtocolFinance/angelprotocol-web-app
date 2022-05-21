@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
+import { RegistrarConfigPayload } from "types/server/contracts";
 import {
   RegistrarConfigUpdateMeta,
   RegistrarConfigValues,
-} from "@types-page/admin";
-import { RegistrarConfigPayload } from "@types-server/contracts";
+} from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";

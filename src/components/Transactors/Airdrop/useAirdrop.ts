@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { TxProps } from "@types-component/transactor";
-import { Airdrops } from "@types-server/aws";
+import { Airdrops } from "types/server/aws";
 import { useAirdrop as useAirdropQuery } from "services/terra/multicall/queriers";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Transactor from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import Catcher from "./Catcher";
 
 export default function useAirdrop() {

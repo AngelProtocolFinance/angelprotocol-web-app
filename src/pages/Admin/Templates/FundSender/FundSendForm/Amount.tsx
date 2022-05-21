@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
+import { FundSendValues } from "pages/Admin/types";
 import { denoms } from "constants/currency";
 import Balance from "./Balance";
 import Currency from "./Currency";

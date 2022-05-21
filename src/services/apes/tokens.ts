@@ -1,4 +1,4 @@
-import { Token } from "@types-server/aws";
+import { Token } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 

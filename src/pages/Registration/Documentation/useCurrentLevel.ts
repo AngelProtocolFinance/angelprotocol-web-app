@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
-import { FileWrapper } from "@types-component/file-dropzone";
-import { DocumentationValues } from "@types-page/registration";
+import { DocumentationValues } from "pages/Registration/types";
+import { FileWrapper } from "components/FileDropzone";
 
 export default function useCurrentLevel(
   methods: UseFormReturn<DocumentationValues, any>

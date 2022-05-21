@@ -1,4 +1,4 @@
-import { ApplicationStatusOptions } from "@types-server/aws";
+import { ApplicationStatusOptions } from "types/server/aws";
 
 type Props = {
   activeStatus: ApplicationStatusOptions;

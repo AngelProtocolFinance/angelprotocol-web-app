@@ -1,4 +1,4 @@
-import { ProposalStatusOptions } from "@types-page/admin";
+import { ProposalStatusOptions } from "pages/Admin/types";
 import { useGetProposalsState, useSetProposalsState } from "../Proposals";
 
 export default function StatusSelector() {

@@ -1,4 +1,4 @@
-import { ReceiptPayload } from "@types-server/aws";
+import { ReceiptPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
 

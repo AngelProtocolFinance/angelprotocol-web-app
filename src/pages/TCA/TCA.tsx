@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { FundFlow } from "@types-component/donater";
-import Donater from "components/Transactors/Donater/Donater";
-import Transactor from "components/Transactors/Transactor";
+import Transactor from "components/Transactors";
+import Donater, { FundFlow } from "components/Transactors/Donater";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 

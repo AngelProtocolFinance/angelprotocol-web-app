@@ -1,4 +1,4 @@
-import { AdminProposalTypes } from "@types-page/admin";
+import { AdminProposalTypes } from "pages/Admin/types";
 
 export const proposalRoutes: { [key in AdminProposalTypes | "index"]: string } =
   {

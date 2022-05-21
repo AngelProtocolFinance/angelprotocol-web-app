@@ -1,9 +1,9 @@
-import { FundUpdateValues as FV } from "@types-page/admin";
 import Label from "pages/Admin/components/Label";
 import {
   FormContainer,
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
+import { FundUpdateValues as FV } from "pages/Admin/types";
 import Loader from "components/Loader/Loader";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";

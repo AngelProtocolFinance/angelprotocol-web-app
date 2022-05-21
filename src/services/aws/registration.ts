@@ -11,7 +11,7 @@ import {
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
-} from "@types-server/aws";
+} from "types/server/aws";
 import { adminTags } from "services/terra/tags";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";

@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { AllianceEditValues as AV } from "@types-page/admin";
+import { AllianceEditValues as AV } from "pages/Admin/types";
 import { useGetter } from "store/accessors";
 import {
   addMember,

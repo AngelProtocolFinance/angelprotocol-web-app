@@ -1,4 +1,4 @@
-import { Airdrops } from "@types-server/aws";
+import { Airdrops } from "types/server/aws";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import useClaimAirdrop from "./useClaimAirdrop";

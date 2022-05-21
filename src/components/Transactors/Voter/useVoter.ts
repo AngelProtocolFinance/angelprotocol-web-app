@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { TxProps } from "@types-component/transactor";
-import { Props } from "@types-component/voter";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Transactor from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import Voter from "./Voter";
+import { Props } from "./types";
 
 export default function useVoter(poll_id: number) {
   const { showModal } = useModalContext();

@@ -1,5 +1,5 @@
-import { FundConfigValues as FV } from "@types-page/admin";
 import { FormContainer } from "pages/Admin/components/TemplateContainer";
+import { FundConfigValues as FV } from "pages/Admin/types";
 import TextInput from "../../components/TextInput";
 import Submitter from "../Submitter";
 import useConfigureFund from "./useConfigureFund";

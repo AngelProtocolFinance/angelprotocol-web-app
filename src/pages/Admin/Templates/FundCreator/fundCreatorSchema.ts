@@ -1,9 +1,9 @@
 import * as Yup from "yup";
-import { FundCreatorValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { FundCreatorValues } from "pages/Admin/types";
 import { futureDate } from "schemas/date";
 import { requiredPositiveNumber } from "schemas/number";
 import { requiredAddress, stringByteSchema } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const fundCreatorShape: SchemaShape<FundCreatorValues> = {

@@ -1,6 +1,5 @@
-import { IconTypes } from "@types-component/icons";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Icon from "components/Icon";
+import { useModalContext } from "contexts/ModalContext";
+import Icon, { IconTypes } from "components/Icon";
 import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";
 

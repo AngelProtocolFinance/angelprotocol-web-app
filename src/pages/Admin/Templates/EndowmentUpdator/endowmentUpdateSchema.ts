@@ -1,8 +1,8 @@
+import { EndowmentStatusStrNum as ST } from "types/server/contracts";
 import * as Yup from "yup";
-import { EndowmentUpdateValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
-import { EndowmentStatusStrNum as ST } from "@types-server/contracts";
+import { EndowmentUpdateValues } from "pages/Admin/types";
 import { requiredAddress } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const endowmentUpdateShape: SchemaShape<EndowmentUpdateValues> = {

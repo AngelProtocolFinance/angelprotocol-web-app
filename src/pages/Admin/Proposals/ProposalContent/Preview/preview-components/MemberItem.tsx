@@ -1,6 +1,5 @@
-import { IconTypes } from "@types-component/icons";
-import { Member } from "@types-server/contracts";
-import Icon from "components/Icon";
+import { Member } from "types/server/contracts";
+import Icon, { IconTypes } from "components/Icon";
 
 export default function MemberItem(props: {
   member: Member | string;

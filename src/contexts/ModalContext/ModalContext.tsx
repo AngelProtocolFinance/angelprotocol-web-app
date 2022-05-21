@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { FC } from "react";
-import Backdrop from "../../components/Backdrop/Backdrop";
+import Backdrop from "../../components/Backdrop";
 
 type Handler = () => void;
 type Opener = <T = {}>(

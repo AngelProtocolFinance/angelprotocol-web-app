@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { CharityApplication } from "@types-server/aws";
+import { CharityApplication } from "types/server/aws";
 import ListView from "./ListView";
 import TableView from "./TableView";
 

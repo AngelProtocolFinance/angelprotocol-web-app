@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { FileWrapper } from "@types-component/file-dropzone";
-import { AdditionalInfoValues } from "@types-page/registration";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
+import { FileWrapper } from "components/FileDropzone";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";

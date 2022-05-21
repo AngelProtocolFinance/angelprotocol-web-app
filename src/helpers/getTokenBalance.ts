@@ -1,4 +1,4 @@
-import { TokenWithBalance } from "@types-services/terra";
+import { TokenWithBalance } from "services/types";
 
 export default function getTokenBalance(
   tokenBalances: TokenWithBalance[],

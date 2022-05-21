@@ -1,18 +1,18 @@
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { EndowmentProfileUpdateMeta } from "@types-page/admin";
+import { UpdateProfilePayload as UP } from "types/server/contracts";
+import { ObjectEntries } from "types/utils";
+import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
+import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
+import { EndowmentProfileUpdateMeta } from "pages/Admin/types";
 import {
   EndowmentAdminParams,
   UpdateProfileValues,
-} from "@types-page/endowment-admin";
-import { UpdateProfilePayload as UP } from "@types-server/contracts";
-import { ObjectEntries } from "@types-utils";
-import genDiffMeta from "pages/Admin/Templates/genDiffMeta";
-import genProposalsLink from "pages/Admin/Templates/genProposalsLink";
+} from "pages/EndowmentAdmin/types";
 import { uploadToIpfs } from "pages/Registration/helpers";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";

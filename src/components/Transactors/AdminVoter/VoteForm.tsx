@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
-import { AdminVoteValues as V } from "@types-component/admin-voter";
 import { useGetter } from "store/accessors";
 import Fee from "../Fee";
 import Status from "../Status";
 import VoteOption from "../VoteOption";
+import { AdminVoteValues as V } from "./types";
 import useVote from "./useVote";
 
 export default function VoteForm() {

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { ProposalGroupOptions, ProposalStatusOptions } from "@types-page/admin";
+import { ProposalGroupOptions, ProposalStatusOptions } from "pages/Admin/types";
 import {
   NUM_PROPOSALS_PER_PAGE,
   useFilteredProposals,

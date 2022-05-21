@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "@types-component/donater";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
@@ -9,6 +8,7 @@ import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation"
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import useWalletContext from "hooks/useWalletContext";
 import { denoms } from "constants/currency";
+import { DonateValues } from "../types";
 import useEstimator from "../useEstimator";
 
 type Sender = (data: DonateValues) => any;

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { ContactDetails } from "@types-page/registration";
+import { ContactDetails } from "pages/Registration/types";
 import RichTextEditor from "components/RichTextEditor";
 
 export default function GoalsInput() {

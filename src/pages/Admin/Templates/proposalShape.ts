@@ -1,6 +1,6 @@
-import { ProposalBase } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { ProposalBase } from "pages/Admin/types";
 import { stringByteSchema } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 
 export const proposalShape: SchemaShape<ProposalBase> = {
   title: stringByteSchema("title", 4, 64),

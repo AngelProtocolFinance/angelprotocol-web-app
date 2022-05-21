@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 
 export default function useHandleError() {

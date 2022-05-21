@@ -1,5 +1,5 @@
 import { ForwardedRef, forwardRef } from "react";
-import { CheckboxProps } from "@types-component/checkbox";
+import { CheckboxProps } from "./types";
 
 const Checkbox = forwardRef(
   (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => {

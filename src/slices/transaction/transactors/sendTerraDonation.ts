@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { DonateValues } from "@types-component/donater";
-import { Receiver } from "@types-server/aws";
-import { StageUpdator } from "@types-slice/transaction";
+import { Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { WalletProxy } from "providers/WalletProvider";
+import { DonateValues } from "components/Transactors/Donater";
+import { StageUpdator } from "slices/transaction/types";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";

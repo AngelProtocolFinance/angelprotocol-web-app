@@ -1,8 +1,8 @@
-import { Dwindow } from "@types-slice/provider";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import { useGetter } from "store/accessors";
+import { Dwindow } from "slices/providerSlice";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import { RejectMetamaskLogin } from "errors/errors";
 import WalletPrompt from "../WalletPrompt";

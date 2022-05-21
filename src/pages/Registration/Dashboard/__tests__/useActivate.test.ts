@@ -1,6 +1,6 @@
 import { renderHook } from "@testing-library/react-hooks";
 import { act } from "react-dom/test-utils";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import useActivate from "../useActivate";
 
 const PK = "7fe792be-5132-4f2b-b37c-4bcd9445b773";
@@ -12,7 +12,7 @@ jest.mock("services/aws/registration", () => ({
 }));
 
 const mockShowModal = jest.fn();
-jest.mock("contexts/ModalContext/ModalContext", () => ({
+jest.mock("contexts/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));

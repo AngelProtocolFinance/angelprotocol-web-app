@@ -4,11 +4,11 @@ import {
   CW3ConfigPayload,
   CW3ConfigUpdateMeta,
   CW3ConfigValues,
-} from "@types-page/admin";
-import { EndowmentAdminParams } from "@types-page/endowment-admin";
+} from "pages/Admin/types";
+import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";

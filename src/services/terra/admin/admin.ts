@@ -4,9 +4,9 @@ import {
   Member,
   Proposal,
   QueryRes,
-} from "@types-server/contracts";
-import { ContractQueryArgs } from "@types-services/terra";
+} from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
+import { ContractQueryArgs } from "services/types";
 import contract_querier from "../contract_querier";
 import { terra } from "../terra";
 

@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { appRoutes } from "constants/routes";

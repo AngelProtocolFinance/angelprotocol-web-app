@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { EndowmentUpdateValues } from "@types-page/admin";
+import { EndowmentUpdateValues } from "pages/Admin/types";
 import { useEndowmentStatus } from "services/terra/registrar/queriers";
 import useDebouncer from "hooks/useDebouncer";
 

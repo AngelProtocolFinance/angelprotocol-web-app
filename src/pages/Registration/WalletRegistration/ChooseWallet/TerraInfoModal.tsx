@@ -1,5 +1,5 @@
 import { BsX } from "react-icons/bs";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import { Button } from "../../common";
 
 export default function TerraInfoModal() {

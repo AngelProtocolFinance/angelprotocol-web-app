@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import ContentLoader from "components/ContentLoader/ContentLoader";
+import ContentLoader from "components/ContentLoader";
 import ImageWrapper from "components/ImageWrapper/ImageWrapper";
 import useObserve from "hooks/useObserver";
 

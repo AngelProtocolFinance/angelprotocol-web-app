@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { DocumentationValues } from "@types-page/registration";
+import { DocumentationValues } from "pages/Registration/types";
 import { InputRow } from "../../common";
 
 export default function WebsiteInput() {

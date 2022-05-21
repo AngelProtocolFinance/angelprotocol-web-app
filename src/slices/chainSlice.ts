@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Chains } from "@types-lists";
+import { Chains } from "types/lists";
 import { chainIDs } from "constants/chainIDs";
 
 type State = {

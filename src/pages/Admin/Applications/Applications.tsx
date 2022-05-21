@@ -1,8 +1,5 @@
 import { useState } from "react";
-import {
-  ApplicationStatusOptions,
-  RegistrationStatus,
-} from "@types-server/aws";
+import { ApplicationStatusOptions, RegistrationStatus } from "types/server/aws";
 import { useGetCharityApplicationsQuery } from "services/aws/registration";
 import ApplicationsTable from "./ApplicationsTable";
 import StatusSelector from "./StatusSelector";

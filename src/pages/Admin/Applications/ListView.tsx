@@ -1,5 +1,5 @@
-import { CharityApplication } from "@types-server/aws";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { CharityApplication } from "types/server/aws";
+import { useModalContext } from "contexts/ModalContext";
 import Reviewer from "./Previewer";
 
 export default function ListView(props: {

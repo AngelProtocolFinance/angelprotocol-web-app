@@ -1,7 +1,6 @@
 import { useCallback } from "react";
-import { TxProps } from "@types-component/transactor";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Transactor from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import ClaimForm from "./ClaimForm";
 
 export default function useClaimer() {

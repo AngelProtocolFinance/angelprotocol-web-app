@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { Props } from "@types-component/staker";
-import { TxProps } from "@types-component/transactor";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Transactor from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import Staker from "./Staker";
+import { Props } from "./types";
 
 export default function useStaker() {
   const { showModal } = useModalContext();

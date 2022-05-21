@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Path, useFormContext } from "react-hook-form";
-import { FundIdContext } from "@types-page/admin";
+import { FundIdContext } from "pages/Admin/types";
 import { useFundList } from "services/terra/indexFund/queriers";
 import { useLatestBlock } from "services/terra/queriers";
 

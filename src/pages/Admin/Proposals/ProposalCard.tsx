@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Proposal } from "@types-server/contracts";
+import { Proposal } from "types/server/contracts";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import { adminRoutes } from "constants/routes";

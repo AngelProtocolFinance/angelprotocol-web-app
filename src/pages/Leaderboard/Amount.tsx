@@ -1,4 +1,4 @@
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
 import Summary from "./Summary";

@@ -4,8 +4,8 @@ import {
   FundConfig,
   FundDetails,
   IndexFundOwnerPayload,
-} from "@types-server/contracts";
-import { ContractQueryArgs } from "@types-services/terra";
+} from "types/server/contracts";
+import { ContractQueryArgs } from "services/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";

@@ -1,13 +1,13 @@
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { FundSendMeta } from "@types-page/admin";
-import { FundSendValues } from "@types-page/admin";
-import { EndowmentAdminParams } from "@types-page/endowment-admin";
-import { EmbeddedBankMsg, EmbeddedWasmMsg } from "@types-server/contracts";
+import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
+import { FundSendMeta } from "pages/Admin/types";
+import { FundSendValues } from "pages/Admin/types";
+import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";

@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { RegistrarOwnerValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { RegistrarOwnerValues } from "pages/Admin/types";
 import { requiredAddress } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const registrarConfigShape: SchemaShape<RegistrarOwnerValues> = {

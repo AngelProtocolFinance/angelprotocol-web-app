@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TxLogPayload } from "@types-server/aws";
+import { TxLogPayload } from "types/server/aws";
 import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 

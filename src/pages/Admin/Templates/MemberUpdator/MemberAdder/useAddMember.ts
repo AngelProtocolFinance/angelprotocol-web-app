@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { MemberUpdatorValues } from "@types-page/admin";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import { useGetter, useSetter } from "store/accessors";
 import { addMember as _addMember } from "slices/admin/apCW4Members";
 

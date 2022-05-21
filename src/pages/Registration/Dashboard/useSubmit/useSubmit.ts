@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";

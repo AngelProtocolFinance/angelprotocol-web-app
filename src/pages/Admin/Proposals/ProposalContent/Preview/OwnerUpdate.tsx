@@ -1,4 +1,4 @@
-import { OwnerUpdateMeta } from "@types-page/admin";
+import { OwnerUpdateMeta } from "pages/Admin/types";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";
 

@@ -9,7 +9,7 @@ import {
   useWallet,
 } from "@terra-money/wallet-provider";
 import { useEffect, useMemo } from "react";
-import { TerraWalletIDs } from "@types-slice/wallet";
+import { TerraWalletIDs } from "slices/walletSlice";
 import { mainnet } from "../chainOptions";
 import { WalletProxy } from "../types";
 

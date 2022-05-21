@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { MemberUpdatorValues } from "@types-page/admin";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
+import { MemberUpdatorValues } from "pages/Admin/types";
 import { useMembers } from "services/terra/admin/queriers";
 import { useSetter } from "store/accessors";
 import { setMembers } from "slices/admin/apCW4Members";

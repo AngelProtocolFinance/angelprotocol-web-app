@@ -1,17 +1,16 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { IconTypes } from "@types-component/icons";
-import { CharityParams } from "@types-page/charity";
 import { proposalRoutes } from "pages/Admin/constants";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useEndowmentProfile } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
-import ContentLoader from "components/ContentLoader/ContentLoader";
-import Icon from "components/Icon";
+import ContentLoader from "components/ContentLoader";
+import Icon, { IconTypes } from "components/Icon";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
+import { CharityParams } from "./types";
 
 export default function Charity() {
   const { address: endowment_addr } = useParams<CharityParams>();

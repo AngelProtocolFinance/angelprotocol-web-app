@@ -1,11 +1,11 @@
 import { Dec } from "@terra-money/terra.js";
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import { Dwindow, Providers } from "@types-slice/provider";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { useTerraBalances } from "services/terra/multicall/queriers";
 import { useSetter } from "store/accessors";
+import { Dwindow, Providers } from "slices/providerSlice";
 import { setIsUpdating, setWalletDetails } from "slices/walletSlice";
 import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";

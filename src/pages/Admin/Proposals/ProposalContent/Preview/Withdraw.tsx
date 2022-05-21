@@ -1,4 +1,4 @@
-import { EndowmentWithdrawMeta } from "@types-page/admin";
+import { EndowmentWithdrawMeta } from "pages/Admin/types";
 import toCurrency from "helpers/toCurrency";
 import KeyValue from "./preview-components/KeyValue";
 import PreviewContainer from "./preview-components/PreviewContainer";

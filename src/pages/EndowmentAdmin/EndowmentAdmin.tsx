@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { EndowmentAdminParams } from "@types-page/endowment-admin";
 import { GuardPrompt } from "pages/Admin/Admin";
 import Proposal from "pages/Admin/Proposals/Proposal";
 import Proposals from "pages/Admin/Proposals/Proposals";
@@ -13,6 +12,7 @@ import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard/Dashboard";
 import Proposer from "./Proposer";
+import { EndowmentAdminParams } from "./types";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();

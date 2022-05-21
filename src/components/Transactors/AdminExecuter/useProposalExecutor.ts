@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { AdmiExecuterProps } from "@types-component/admin-executer";
-import { TxProps } from "@types-component/transactor";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
-import Transactor from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import ExecuteForm from "./ExecuteForm";
+import { AdmiExecuterProps } from "./types";
 
 export default function useProposalExecutor(args: AdmiExecuterProps) {
   const { showModal } = useModalContext();

@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FundSendValues } from "@types-page/admin";
+import { FundSendValues } from "pages/Admin/types";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
 

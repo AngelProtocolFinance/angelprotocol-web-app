@@ -1,4 +1,4 @@
-import { Endowment } from "@types-server/aws";
+import { Endowment } from "types/server/aws";
 import Heading from "./Heading";
 import TableEntry from "./TableEntry";
 

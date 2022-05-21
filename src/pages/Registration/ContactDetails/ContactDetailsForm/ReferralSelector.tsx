@@ -1,5 +1,5 @@
 import { Control, UseFormRegister } from "react-hook-form";
-import { ContactDetails, ReferralOptionType } from "@types-page/registration";
+import { ContactDetails, ReferralOptionType } from "pages/Registration/types";
 import FormInput from "components/FormInput";
 import Selector from "components/Selector";
 

@@ -1,5 +1,5 @@
 import { MouseEventHandler } from "react";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import Loader from "components/Loader/Loader";
 import maskAddress from "helpers/maskAddress";
 import { Button } from "../../common";

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AllianceMember } from "@types-server/contracts";
-import { AllianceMemberWithFlags } from "@types-slice/admin";
+import { AllianceMember } from "types/server/contracts";
+import { AllianceMemberWithFlags } from "slices/admin/types";
 
 const initialState: {
   isEditingMember: boolean;

@@ -1,9 +1,9 @@
 import { useCallback } from "react";
-import { TxProps } from "@types-component/transactor";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
-import Transactor from "components/Transactors/Transactor";
+import { TxProps } from "components/Transactors";
+import Transactor from "components/Transactors";
 
 export default function useDonor() {
   const { showModal } = useModalContext();

@@ -1,9 +1,8 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { WithdrawResource, WithdrawValues } from "@types-component/withdrawer";
-import { EndowmentWithdrawMeta, SourcePreview } from "@types-page/admin";
-import { AmountInfo } from "@types-shared/withdraw";
+import { AmountInfo } from "types/shared/withdraw";
+import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
 import { vaultMap } from "services/terra/multicall/constants";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -17,6 +16,7 @@ import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
+import { WithdrawResource, WithdrawValues } from "./types";
 
 interface Source {
   locked: string; //"0"

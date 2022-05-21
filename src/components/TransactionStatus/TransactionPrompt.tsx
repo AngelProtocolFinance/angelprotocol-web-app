@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";

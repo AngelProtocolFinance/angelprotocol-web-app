@@ -1,6 +1,6 @@
 import { FormProvider, useForm } from "react-hook-form";
-import { AdminVoteValues, Props } from "@types-component/admin-voter";
 import VoteForm from "./VoteForm";
+import { AdminVoteValues, Props } from "./types";
 
 export default function Voter(props: Props) {
   const methods = useForm<AdminVoteValues>({

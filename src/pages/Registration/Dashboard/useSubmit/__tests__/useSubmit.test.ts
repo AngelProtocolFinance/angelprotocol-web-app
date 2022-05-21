@@ -1,7 +1,7 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainOptions } from "providers/WalletProvider/chainOptions";
 import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
@@ -10,7 +10,7 @@ import useSubmit from "../useSubmit";
 
 const mockShowModal = jest.fn();
 
-jest.mock("contexts/ModalContext/ModalContext", () => ({
+jest.mock("contexts/ModalContext", () => ({
   __esModule: true,
   useModalContext: () => ({ showModal: mockShowModal }),
 }));

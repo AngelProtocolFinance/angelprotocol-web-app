@@ -1,5 +1,4 @@
-import { IconTypes } from "@types-component/icons";
-import Icon from "components/Icon";
+import Icon, { IconTypes } from "components/Icon";
 
 export default function Share() {
   return (

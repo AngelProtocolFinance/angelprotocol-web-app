@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { ContactDetails } from "@types-page/registration";
-import { SchemaShape } from "@types-schema";
+import { ContactDetails } from "pages/Registration/types";
+import { SchemaShape } from "schemas/types";
 
 export const contactInfoShape: SchemaShape<ContactDetails> = {
   charityName: Yup.string().required(

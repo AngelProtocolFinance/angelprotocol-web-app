@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { CreatePollValues } from "@types-component/poller";
-import { SchemaShape } from "@types-schema";
 import { stringByteSchema } from "schemas/string";
+import { SchemaShape } from "schemas/types";
+import { CreatePollValues } from "./types";
 
 const shape: SchemaShape<CreatePollValues> = {
   title: stringByteSchema("title", 4, 64),

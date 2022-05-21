@@ -1,4 +1,4 @@
-import { AdmiExecuterProps } from "@types-component/admin-executer";
+import { AdmiExecuterProps } from "./types";
 import useExecuteProposal from "./useExecuteProposal";
 
 export default function ExecuteForm(props: AdmiExecuterProps) {

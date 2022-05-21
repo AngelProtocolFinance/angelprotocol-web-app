@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { ReceipterValues } from "@types-component/receipter";
-import { SchemaShape } from "@types-schema";
+import { SchemaShape } from "schemas/types";
+import { ReceipterValues } from "./types";
 
 const shape: SchemaShape<ReceipterValues> = {
   email: Yup.string().email("email is invalid").required("email is required"),

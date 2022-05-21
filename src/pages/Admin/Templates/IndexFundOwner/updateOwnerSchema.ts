@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { IndexFundOwnerValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { IndexFundOwnerValues } from "pages/Admin/types";
 import { requiredAddress } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const indexFundOwnerShape: SchemaShape<IndexFundOwnerValues> = {

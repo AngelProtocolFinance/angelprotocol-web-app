@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { RegistrarConfigValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { RegistrarConfigValues } from "pages/Admin/types";
 import { percentString, positiveNumber } from "schemas/number";
 import { address } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const contractAddrSchema = address("contract").nullable();

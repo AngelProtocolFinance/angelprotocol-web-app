@@ -9,7 +9,7 @@ import Select, {
   SingleValueProps,
   ValueContainerProps,
 } from "react-select";
-import { Token } from "@types-server/aws";
+import { Token } from "types/server/aws";
 import { useTokensQuery } from "services/apes/tokens";
 import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
 

@@ -5,7 +5,7 @@ import {
   TxUnspecifiedError,
   UserDenied,
 } from "@terra-money/wallet-provider";
-import { StageUpdator } from "@types-slice/transaction";
+import { StageUpdator } from "slices/transaction/types";
 import { LogDonationFail } from "helpers/logDonation";
 import {
   LogApplicationUpdateError,

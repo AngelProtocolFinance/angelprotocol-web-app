@@ -1,6 +1,31 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-const initialState: User = {
+interface IUser {
+  Email: string;
+  FirstName: string;
+  LastName: string;
+  PhoneNumber: string;
+  Role: string;
+  SK?: string;
+  PK?: string;
+  CharityName: string;
+  CharityName_ContactEmail?: string;
+  RegistrationDate: string;
+  RegistrationStatus: string;
+  EmailVerified: boolean;
+  ProofOfIdentity?: any;
+  ProofOfEmployment?: any;
+  EndowmentAgreement?: any;
+  ProofOfIdentityVerified?: any;
+  ProofOfEmploymentVerified?: any;
+  EndowmentAgreementVerified?: any;
+  TerraWallet?: any;
+  IsKeyPersonCompleted?: boolean;
+  IsMetaDataCompleted?: boolean;
+  token?: string;
+}
+
+const initialState: IUser = {
   Email: "",
   FirstName: "",
   LastName: "",
@@ -29,34 +54,10 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    updateUserData: (_, { payload }: PayloadAction<User>) => payload,
+    updateUserData: (_, { payload }: PayloadAction<IUser>) => payload,
     removeUserData: () => initialState,
   },
 });
 
 export default userSlice.reducer;
 export const { updateUserData, removeUserData } = userSlice.actions;
-interface User {
-  Email: string;
-  FirstName: string;
-  LastName: string;
-  PhoneNumber: string;
-  Role: string;
-  SK?: string;
-  PK?: string;
-  CharityName: string;
-  CharityName_ContactEmail?: string;
-  RegistrationDate: string;
-  RegistrationStatus: string;
-  EmailVerified: boolean;
-  ProofOfIdentity?: any;
-  ProofOfEmployment?: any;
-  EndowmentAgreement?: any;
-  ProofOfIdentityVerified?: any;
-  ProofOfEmploymentVerified?: any;
-  EndowmentAgreementVerified?: any;
-  TerraWallet?: any;
-  IsKeyPersonCompleted?: boolean;
-  IsMetaDataCompleted?: boolean;
-  token?: string;
-}

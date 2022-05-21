@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { FileWrapper } from "@types-component/file-dropzone";
-import { AdditionalInfoValues } from "@types-page/registration";
-import { SchemaShape } from "@types-schema";
+import { AdditionalInfoValues } from "pages/Registration/types";
+import { FileWrapper } from "components/FileDropzone";
+import { SchemaShape } from "schemas/types";
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 

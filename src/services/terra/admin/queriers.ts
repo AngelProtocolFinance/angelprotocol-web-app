@@ -1,14 +1,14 @@
 import {
-  ProposalGroupOptions,
-  ProposalMeta,
-  ProposalStatusOptions,
-} from "@types-page/admin";
-import {
   CWContracts,
   PageOptions,
   Proposal,
   VotesPageOptions,
-} from "@types-server/contracts";
+} from "types/server/contracts";
+import {
+  ProposalGroupOptions,
+  ProposalMeta,
+  ProposalStatusOptions,
+} from "pages/Admin/types";
 import idParamToNumber from "helpers/idParamToNum";
 import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";

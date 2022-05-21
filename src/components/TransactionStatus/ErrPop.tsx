@@ -1,8 +1,8 @@
-import { ErrorStage } from "@types-slice/transaction";
-import { useModalContext } from "contexts/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
+import { ErrorStage } from "slices/transaction/types";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function ErrPop(props: ErrorStage) {

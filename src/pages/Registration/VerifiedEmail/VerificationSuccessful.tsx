@@ -1,6 +1,6 @@
 import { MouseEventHandler, useEffect } from "react";
 import { FaCheck } from "react-icons/fa";
-import { Charity } from "@types-server/aws";
+import { Charity } from "types/server/aws";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
 import { updateCharity } from "../store";

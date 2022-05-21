@@ -1,6 +1,6 @@
 import * as Yup from "yup";
-import { FundDestroyValues } from "@types-page/admin";
-import { SchemaShape } from "@types-schema";
+import { FundDestroyValues } from "pages/Admin/types";
+import { SchemaShape } from "schemas/types";
 import { proposalShape } from "../proposalShape";
 
 const fundDestroyerShape: SchemaShape<FundDestroyValues> = {

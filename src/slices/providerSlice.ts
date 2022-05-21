@@ -1,5 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Providers } from "@types-slice/provider";
+
+export type Providers = "none" | "ethereum" | "binance" | "terra";
+export type ProviderStates = Array<[Providers, boolean]>;
+export interface Dwindow extends Window {
+  xfi?: {
+    ethereum?: any;
+  };
+  ethereum?: any;
+  BinanceChain?: any;
+}
 
 interface IState {
   active: Providers;

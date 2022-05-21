@@ -1,9 +1,9 @@
-import { Airdrops, Token } from "@types-server/aws";
+import { Airdrops, Token } from "types/server/aws";
 import {
   AggregatedQuery,
   ContractQueryArgs,
   MultiContractQueryArgs,
-} from "@types-services/terra";
+} from "services/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainIDs } from "constants/chainIDs";
 import { contracts } from "constants/contracts";

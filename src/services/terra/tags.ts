@@ -1,4 +1,4 @@
-import { TerraTags } from "@types-services/terra";
+import { TerraTags } from "services/types";
 
 export const terraTags: { [key in TerraTags]: string } = {
   gov: "gov",

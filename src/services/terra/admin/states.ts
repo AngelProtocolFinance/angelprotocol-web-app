@@ -1,4 +1,4 @@
-import { CWContracts } from "@types-server/contracts";
+import { CWContracts } from "types/server/contracts";
 import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member } from "./placeholders";

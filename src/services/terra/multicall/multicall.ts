@@ -1,5 +1,5 @@
 import { Coin, Dec } from "@terra-money/terra.js";
-import { Airdrop, Airdrops, Token } from "@types-server/aws";
+import { Airdrop, Airdrops, Token } from "types/server/aws";
 import {
   CW20Balance,
   ClaimInquiry,
@@ -7,12 +7,9 @@ import {
   Holdings,
   QueryRes,
   VaultRateInfo,
-} from "@types-server/contracts";
-import {
-  MultiContractQueryArgs,
-  TokenWithBalance,
-} from "@types-services/terra";
-import { VaultField, VaultFieldLimits } from "@types-shared/withdraw";
+} from "types/server/contracts";
+import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
+import { MultiContractQueryArgs, TokenWithBalance } from "services/types";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
 import { chainIDs } from "constants/chainIDs";
