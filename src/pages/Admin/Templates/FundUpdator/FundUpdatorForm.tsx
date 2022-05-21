@@ -4,7 +4,7 @@ import {
   FormContainer,
   GroupContainer,
 } from "pages/Admin/components/TemplateContainer";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import TextInput from "../../components/TextInput";
 import FundSelection from "../FundSelection";
 import Submitter from "../Submitter";

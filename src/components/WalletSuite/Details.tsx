@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
 import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import Backdrop from "components/Backdrop";
-import Copier from "components/Copier/Copier";
+import Copier from "components/Copier";
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { Dwindow } from "slices/providerSlice";

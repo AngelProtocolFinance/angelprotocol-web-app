@@ -261,12 +261,6 @@ export type SubmitResult = {
   EndowmentContract: string;
 };
 
-interface UpdateApplication {
-  PK: string;
-  poll_id: string;
-  chain_id: string;
-}
-
 export type UpdateCharityMetadataData = {
   PK?: string;
   body: {

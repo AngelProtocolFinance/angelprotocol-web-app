@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import ContentLoader from "components/ContentLoader";
-import ImageWrapper from "components/ImageWrapper/ImageWrapper";
+import ImageWrapper from "components/ImageWrapper";
 import useObserve from "hooks/useObserver";
 
 export default function LazyImage(props: {

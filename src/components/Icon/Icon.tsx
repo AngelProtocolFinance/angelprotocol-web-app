@@ -1,5 +1,5 @@
 import { IconBaseProps } from "react-icons";
-import { IconTypes } from ".";
+import { IconTypes } from "./types";
 import { iconList } from "./constants";
 
 interface IconProps extends IconBaseProps {

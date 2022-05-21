@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
 import Icon from "components/Icon";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import toCurrency from "helpers/toCurrency";
 import { chainIDs } from "constants/chainIDs";

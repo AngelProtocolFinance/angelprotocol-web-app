@@ -2,7 +2,7 @@ import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import { store } from "store/store";
 import { siteRoutes } from "constants/routes";
 import "./index.css";

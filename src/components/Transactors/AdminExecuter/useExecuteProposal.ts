@@ -1,6 +1,6 @@
 import { AdmiExecuterProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup/Popup";
+import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { CharityParams } from "../../types";
 import { useEndowmentProfileState } from "services/terra/account/states";
-import RichTextRenderer from "components/RichTextRenderer/RichTextRenderer";
+import RichTextRenderer from "components/RichTextRenderer";
 
 export default function Overview() {
   const { address: charity_addr } = useParams<CharityParams>();

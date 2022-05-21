@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useMember } from "services/terra/admin/queriers";
 import Icon from "components/Icon";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { setCWContracts } from "slices/admin/cwContracts";
 import useWalletContext from "hooks/useWalletContext";

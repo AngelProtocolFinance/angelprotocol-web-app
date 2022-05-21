@@ -1,6 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes, siteRoutes } from "constants/routes";
 

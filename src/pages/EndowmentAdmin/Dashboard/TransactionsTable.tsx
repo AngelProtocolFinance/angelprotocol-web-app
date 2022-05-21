@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { Transaction } from "types/server/aws";
-import TableSection, { Cells } from "components/TableSection/TableSection";
+import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";

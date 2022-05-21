@@ -1,5 +1,5 @@
 import { useCategorizedEndowments } from "services/terra/registrar/queriers";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import Banner from "./Banner";
 import Index from "./Index";
 

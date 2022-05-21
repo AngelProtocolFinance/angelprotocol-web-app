@@ -1,6 +1,6 @@
 import React from "react";
 import Icon, { IconTypes } from "components/Icon";
-import Loader from "components/Loader/Loader";
+import Loader from "components/Loader";
 import useImgEditor from "./useImgEditor";
 
 export default function ImgEditor() {
