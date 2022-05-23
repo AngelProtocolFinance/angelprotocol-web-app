@@ -5,7 +5,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import "draft-js/dist/Draft.css";
 import React from "react";
 import { FieldValues, Path } from "react-hook-form";
-import Icon, { IconTypes } from "components/Icons/Icons";
+import Icon, { IconTypes } from "components/Icon";
 import useRichTextEditor from "./useRichTextEditor";
 
 export type EditorClasses = {

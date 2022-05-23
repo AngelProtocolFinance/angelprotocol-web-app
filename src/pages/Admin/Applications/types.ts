@@ -1,10 +1,8 @@
-export enum RegistrationStatus {
-  Approved = "approved",
-  NotComplete = "not-complete",
-  InReview = "under-review",
-}
+import { RegistrationStatus } from "services/aws/types";
 
-// export type ApplicationStatus = "approved" | "not-complete" | "under-review";
+export type ApplicationStatus = "approved" | "inactive" | "under-review";
+
+export type ApplicationStatusOptions = ApplicationStatus | "all";
 
 export interface CharityApplication {
   CharityName: string;
@@ -17,7 +15,7 @@ export interface CharityApplication {
   ProofOfIdentity: string;
   ProofOfIdentityVerified: boolean;
   RegistrationDate: string;
-  RegistrationStatus: string;
+  RegistrationStatus: RegistrationStatus;
   SK: string;
   TerraWallet: string;
   poll_id?: number;

@@ -1,21 +1,36 @@
+import { useState } from "react";
 import { useGetCharityApplicationsQuery } from "services/aws/registration";
+import { RegistrationStatus } from "services/aws/types";
 import ApplicationsTable from "./ApplicationsTable";
-import { RegistrationStatus } from "./types";
+import StatusSelector from "./StatusSelector";
+import { ApplicationStatusOptions } from "./types";
 
 export default function Applications() {
+  const [applicationStatus, setApplicationStatus] =
+    useState<ApplicationStatusOptions>("all");
   const {
     data = [],
     isLoading,
     isError,
-  } = useGetCharityApplicationsQuery(RegistrationStatus.InReview);
+  } = useGetCharityApplicationsQuery(applicationStatus);
+
+  function handleStatusChange(ev: React.ChangeEvent<HTMLSelectElement>) {
+    setApplicationStatus(ev.target.value as ApplicationStatusOptions);
+  }
 
   return (
     <div className="px-3 pb-3 grid grid-rows-a1 bg-white/10 shadow-inner rounded-md">
       {(data.length > 0 && (
         <div className="scroll-hidden p-3 overflow-auto ">
-          <h1 className="text-2xl text-white font-semibold mb-10">
-            Charity Applications
-          </h1>
+          <div className="flex flex-row justify-between mb-10">
+            <h1 className="text-2xl text-white font-semibold">
+              Charity Applications
+            </h1>
+            <StatusSelector
+              activeStatus={applicationStatus}
+              onStatusChange={handleStatusChange}
+            />
+          </div>
           <ApplicationsTable applications={data} isError={isError} />
         </div>
       )) || (
@@ -28,3 +43,10 @@ export default function Applications() {
     </div>
   );
 }
+
+export const statusColorClasses: Record<RegistrationStatus, string> = {
+  Inactive: "bg-grey-accent",
+  "Under Review": "bg-orange",
+  Approved: "bg-bright-green",
+  Active: "bg-bright-green",
+};

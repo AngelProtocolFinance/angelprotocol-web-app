@@ -6,7 +6,7 @@ import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
 import { useSetMetamask } from "providers/Metamask/Metamask";
 import Backdrop from "components/Backdrop/Backdrop";
 import Copier from "components/Copier/Copier";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import useWalletContext from "hooks/useWalletContext";
 import { DeviceType, deviceType } from "helpers/deviceType";

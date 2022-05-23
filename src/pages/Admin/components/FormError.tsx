@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { DivContainer } from "./TemplateContainer";
 
 export default function FormError(props: { errorMessage: string }) {

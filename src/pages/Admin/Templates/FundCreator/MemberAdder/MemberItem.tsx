@@ -1,5 +1,5 @@
 import { removeFundMember } from "services/admin/newFundMembers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useSetter } from "store/accessors";
 
 export default function MemberItem(props: { address: string }) {

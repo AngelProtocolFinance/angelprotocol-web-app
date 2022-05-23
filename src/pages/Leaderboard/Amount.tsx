@@ -1,4 +1,4 @@
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import toCurrency from "helpers/toCurrency";
 import Summary, { SummaryProps } from "./Summary";

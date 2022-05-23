@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useProposal } from "services/terra/admin/queriers";
-import Icon from "components/Icons/Icons";
+import Icon from "components/Icon";
 import DetailLabel from "./DetailLabel";
 import PollAction from "./PollAction";
 import ProposalContent from "./ProposalContent/ProposalContent";
