@@ -17,17 +17,11 @@ export default function MobileDappNav() {
       >
         Marketplace
       </NavLink>
-      <NavLink to={`${siteRoutes.app}/${appRoutes.govern}`} className={styler}>
-        Governance
-      </NavLink>
       <NavLink
         to={`${siteRoutes.app}/${appRoutes.leaderboard}`}
         className={styler}
       >
         Leaderboard
-      </NavLink>
-      <NavLink to={`${siteRoutes.app}/${appRoutes.admin}`} className={styler}>
-        Admin
       </NavLink>
     </nav>
   );

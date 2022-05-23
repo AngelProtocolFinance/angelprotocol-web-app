@@ -4,13 +4,9 @@ import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes, siteRoutes } from "constants/routes";
 
-const Admin = lazy(() => import("pages/Admin/Admin"));
 const Charity = lazy(() => import("pages/Charity/Charity"));
 const Donations = lazy(() => import("pages/Donations/Donations"));
-const EndowmentAdmin = lazy(
-  () => import("pages/EndowmentAdmin/EndowmentAdmin")
-);
-const Governance = lazy(() => import("pages/Governance/Governance"));
+
 const Leaderboard = lazy(() => import("pages/Leaderboard/Leaderboard"));
 const Login = lazy(() => import("pages/Login/Login"));
 const Market = lazy(() => import("pages/Market/Market"));
@@ -28,12 +24,6 @@ export default function Views() {
         <Route path={`${appRoutes.charity}/:address/*`} element={<Charity />} />
         <Route path={`${appRoutes.login}`} element={<Login />} />
         <Route path={`${appRoutes.tca}`} element={<TCA />} />
-        <Route path={`${appRoutes.govern}/*`} element={<Governance />} />
-        <Route path={`${appRoutes.admin}/*`} element={<Admin />} />
-        <Route
-          path={`${appRoutes.endowment_admin}/:address/*`}
-          element={<EndowmentAdmin />}
-        />
         <Route
           path={`${appRoutes.donations}/:address`}
           element={<Donations />}
