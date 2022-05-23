@@ -12,10 +12,9 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/server/aws";
-import { adminTags } from "services/terra/tags";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
-import { awsTags } from "./tags";
+import { adminTags, awsTags } from "./tags";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),

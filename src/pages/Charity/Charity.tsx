@@ -1,7 +1,7 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { CharityParams } from "./types";
-import { useEndowmentProfile } from "services/terra/account/queriers";
+import { useProfileQuery } from "services/aws/endowments";
 import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
 import { appRoutes, siteRoutes } from "constants/routes";
@@ -11,12 +11,10 @@ import CharityStats from "./CharityStats";
 
 export default function Charity() {
   const { address: endowment_addr } = useParams<CharityParams>();
-  const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
-    endowment_addr!
-  );
+  const { data, isLoading, isError } = useProfileQuery(endowment_addr!);
 
-  if (isProfileLoading) return <CharitySkeleton />;
-  if (isProfileError || !profile) return <PageError />;
+  if (isLoading) return <CharitySkeleton />;
+  if (isError || !data) return <PageError />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
@@ -37,9 +35,9 @@ export default function Charity() {
         )}
       </div>
 
-      <CharityHeader {...profile} />
-      <CharityContent {...profile} classes="row-span-2" />
-      <CharityStats {...profile} classes="hidden lg:block mt-4" />
+      <CharityHeader {...data} />
+      <CharityContent {...data} classes="row-span-2" />
+      <CharityStats {...data} classes="hidden lg:block mt-4" />
     </section>
   );
 }

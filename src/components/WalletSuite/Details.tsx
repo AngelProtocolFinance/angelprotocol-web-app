@@ -1,14 +1,8 @@
 import { useState } from "react";
-import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
-import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import Backdrop from "components/Backdrop";
 import Copier from "components/Copier";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { Dwindow } from "slices/providerSlice";
-import { resetWallet } from "slices/walletSlice";
-import useWalletContext from "hooks/useWalletContext";
-import { DeviceType, deviceType } from "helpers/deviceType";
+import { useGetter } from "store/accessors";
 import maskAddress from "helpers/maskAddress";
 import { denoms } from "constants/currency";
 import Filter from "./Filter";
@@ -17,12 +11,6 @@ import Portal from "./Portal";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
-  const dispatch = useSetter();
-  const { active: activeProvider } = useGetter((state) => state.provider);
-  const { wallet: walletTerra, availableWallets } = useWalletContext();
-  const { disconnect: disconnectMetamask } = useSetMetamask();
-  const { disconnect: disconnectBinance } = useSetBinanceWallet();
-
   const [filtered, setFilter] = useState(false);
   const { coins, chainId, address } = useGetter((state) => state.wallet);
 
@@ -34,27 +22,7 @@ export default function Details(props: { closeHandler: () => void }) {
       Number(coin.balance) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);
-
   const isEmpty = filtered_coins.length <= 0;
-
-  const handleDisconnect = () => {
-    dispatch(resetWallet());
-    if (activeProvider === "terra") {
-      walletTerra!.disconnect();
-    }
-    if (activeProvider === "ethereum") {
-      disconnectMetamask();
-    }
-    if (activeProvider === "binance") {
-      disconnectBinance();
-    }
-  };
-
-  const isSafePal =
-    availableWallets.some(
-      (wallet) => wallet.connection.identifier === "SafePal"
-    ) ||
-    (deviceType() === DeviceType.MOBILE && (window as Dwindow).ethereum);
 
   return (
     <>
@@ -82,14 +50,6 @@ export default function Details(props: { closeHandler: () => void }) {
           <span className="text-angel-grey p-10 text-center text-sm uppercase">
             Wallet is empty
           </span>
-        )}
-        {!isSafePal && (
-          <button
-            onClick={handleDisconnect}
-            className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
-          >
-            disconnect
-          </button>
         )}
       </div>
     </>

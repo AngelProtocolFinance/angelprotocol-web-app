@@ -1,27 +1,27 @@
 import { useParams } from "react-router-dom";
 import { CharityParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
-import { useDepositTransactionsQuery } from "services/flipslide/endowment_admin";
-import { useEndowmentBalance } from "services/terra/multicall/queriers";
+import { useDepositTransactionsQuery } from "services/aws/endowment_admin";
+import { useProfileQueryState } from "services/aws/endowments";
 import toCurrency from "helpers/toCurrency";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {
   const { address } = useParams<CharityParams>();
   //this component will not be rendered if address is undefined or incorrect
-  const { endowmentBalance } = useEndowmentBalance(address!);
-  const { data } = useDepositTransactionsQuery(address!);
+  const { data: profileState } = useProfileQueryState(address!);
+  const { data: transactions } = useDepositTransactionsQuery(address!);
   const accountDetails = [
     {
       type: "Liquid Account",
-      balance: `$${toCurrency(endowmentBalance?.liquid || 0)}`,
+      balance: `$${toCurrency(profileState?.total_liq || 0)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-green-400",
     },
     {
       type: "Endowment Account",
-      balance: `$${toCurrency(endowmentBalance?.locked || 0)}`,
+      balance: `$${toCurrency(profileState?.total_lock || 0)}`,
       strategy: "Anchor Protocol",
       allocation: "100%",
       color: "bg-orange",
@@ -36,13 +36,13 @@ export function EndowmentInfo() {
             Total Account Value
           </p>
           <p className="uppercase font-bold text-thin-blue text-6xl my-5">
-            ${toCurrency(endowmentBalance?.total || 0)}
+            ${toCurrency(profileState?.overall || 0)}
           </p>
           <p className="uppercase font-bold text-thin-blue text-sm">
             Total donations
           </p>
           <p className="uppercase font-bold text-thin-blue text-3xl">
-            {data ? data.length : "-"}
+            {transactions ? transactions.length : "-"}
           </p>
         </div>
         {/* <div className="endowment_graph flex-grow bg-blue-100 hidden lg:block">

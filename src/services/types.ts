@@ -1,4 +1,4 @@
-import { Token } from "types/server/aws";
+import { Profile, Token } from "types/server/aws";
 
 export type ContractQueryArgs<T = object> = {
   address: string;
@@ -24,3 +24,8 @@ export type TerraTags =
 
 /** multicall */
 export type TokenWithBalance = Token & { balance: number };
+
+/**endowments */
+export type CategorizedProfiles = {
+  [index: number]: Profile[];
+};

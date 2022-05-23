@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { CharityParams } from "../types";
-import { Profile } from "types/server/contracts";
+import { Profile } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { unsdgs } from "constants/unsdgs";
 import CharityLinks from "./CharityLinks";
@@ -13,7 +13,7 @@ export default function CharityHeader(props: Profile) {
     showModal(DonateSelection, { endowmentAddr: endowment_addr! });
   }
 
-  const sdg = unsdgs[props.un_sdg || 0];
+  const sdg = unsdgs[+props.un_sdg || 0];
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -25,7 +25,9 @@ export default function CharityHeader(props: Profile) {
         </p>
       )}
 
-      <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
+      <h3 className="text-3xl font-bold text-white uppercase">
+        {props.charity_name}
+      </h3>
 
       <div className="flex items-center gap-2 flex-wrap">
         <button
