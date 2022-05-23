@@ -3,7 +3,6 @@ import { charityReducer } from "pages/Registration/store";
 import { apes } from "services/apes/apes";
 import { aws } from "services/aws/aws";
 import { flipside } from "services/flipslide/flipslide";
-import { adminReducer } from "slices/admin/root";
 import authReducer from "slices/authSlice";
 import chainReducer from "slices/chainSlice";
 import providerReducer from "slices/providerSlice";
@@ -17,7 +16,6 @@ export const store = configureStore({
     chain: chainReducer,
     provider: providerReducer,
     wallet: walletReducer,
-    admin: adminReducer,
     auth: authReducer,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,

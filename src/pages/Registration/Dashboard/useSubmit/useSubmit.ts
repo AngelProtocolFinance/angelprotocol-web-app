@@ -5,10 +5,7 @@ import { useModalContext } from "contexts/ModalContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
-import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
-import Registrar from "contracts/Registrar";
 import useWalletContext from "hooks/useWalletContext";
-import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
@@ -31,15 +28,9 @@ export default function useSubmit() {
           );
           return;
         }
-
-        dispatch(setFormLoading(true));
-
-        const contract = new Registrar(wallet);
-        const msg = contract.createEndowmentCreationMsg(charity);
-
-        dispatch(sendTerraTx({ wallet, msgs: [msg] }));
+        console.log(charity);
+        alert("submit terra tx to registrar");
       } catch (err) {
-        console.log(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
         dispatch(setFormLoading(false));
       } finally {
