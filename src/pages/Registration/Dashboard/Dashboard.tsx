@@ -5,11 +5,10 @@ import ProgressIndicator from "./ProgressIndicator";
 import Steps from "./Steps";
 import getRegistrationState from "./getRegistrationState";
 import useActivate from "./useActivate";
-import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
   const charity = useGetter((state) => state.charity);
-  const { submit, isSubmitting } = useSubmit();
+  const isSubmitting = false;
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 
   const state = getRegistrationState(charity);
@@ -38,7 +37,9 @@ export default function Dashboard() {
       ) : (
         <Button
           className="w-full md:w-2/3 h-10 mt-5 bg-yellow-blue"
-          onClick={() => submit(charity)}
+          onClick={() => {
+            alert("create charity proposal");
+          }}
           disabled={!state.getIsReadyForSubmit() || isSubmitting}
         >
           Submit for review

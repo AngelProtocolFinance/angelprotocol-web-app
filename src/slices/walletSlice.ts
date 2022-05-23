@@ -32,14 +32,14 @@ const initialState: IState = {
   icon: icon,
   address: "walletaddrs",
   id: undefined,
-  chainId: chainIDs.terra_main,
+  chainId: chainIDs.mainnet,
 };
 
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
   reducers: {
-    resetWallet: (state) => initialState,
+    resetWallet: () => initialState,
     setWalletDetails: (state, { payload }: PayloadAction<WalletInfo>) => {
       state.icon = payload.icon;
       state.displayCoin = payload.displayCoin;

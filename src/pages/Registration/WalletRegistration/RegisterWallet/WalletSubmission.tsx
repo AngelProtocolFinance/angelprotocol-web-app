@@ -1,4 +1,3 @@
-import { WalletStatus } from "@terra-money/wallet-provider";
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
@@ -9,7 +8,7 @@ import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {
-  status: WalletStatus;
+  status: "connected" | "not-connected";
   walletAddress: string;
   isSubmitting: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -28,7 +27,7 @@ export default function WalletSubmission(props: Props) {
         address. We recommend using a new wallet.
       </p>
       {/** only Terra wallet status can be passed (using useWalletProxy), other wallets handled separately */}
-      {status !== WalletStatus.WALLET_CONNECTED ? (
+      {status !== "not-connected" ? (
         <UnsupportedWalletConnected />
       ) : (
         <>

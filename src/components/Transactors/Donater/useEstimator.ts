@@ -10,17 +10,13 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import getInjectedProvider from "helpers/getInjectedProvider";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 
 export default function useEstimator() {
-  const { wallet } = useWalletContext();
-  const isTestnet = wallet?.network.chainID === chainIDs.terra_test;
   const dispatch = useSetter();
   const {
     watch,
@@ -62,48 +58,33 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        //CW20 TOKENS
-        if (token.cw20_contract) {
-          const tokenContract =
-            token.cw20_contract[isTestnet ? "testnet" : "mainnet"];
-          if (tokenContract) {
-          } else {
-            dispatch(setFormError("token not supported in this network"));
-            return;
-          }
-        } else {
-          //estimates for eth and bnb
-          if (
-            token.min_denom === denoms.wei ||
-            token.min_denom === denoms.bnb
-          ) {
-            const provider = new ethers.providers.Web3Provider(
-              getInjectedProvider(activeProvider)
-            );
-            //no network request
-            const signer = provider.getSigner();
-            const sender = await signer.getAddress();
+        if (token.min_denom === denoms.wei || token.min_denom === denoms.bnb) {
+          const provider = new ethers.providers.Web3Provider(
+            getInjectedProvider(activeProvider)
+          );
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
 
-            const gasPrice = await signer.getGasPrice();
-            const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
 
-            const tx: TransactionRequest = {
-              from: sender,
-              to: ap_wallets.eth,
-              value: wei_amount,
-            };
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets.eth,
+            value: wei_amount,
+          };
 
-            const gasLimit = await signer.estimateGas(tx);
-            const fee_wei = gasLimit.mul(gasPrice);
-            const fee_eth = ethers.utils.formatEther(fee_wei);
+          const gasLimit = await signer.estimateGas(tx);
+          const fee_wei = gasLimit.mul(gasPrice);
+          const fee_eth = ethers.utils.formatEther(fee_wei);
 
-            setEthTx(tx);
-            dispatch(setFee(parseFloat(fee_eth)));
-          }
-
-          dispatch(setFormLoading(false));
-          return;
+          setEthTx(tx);
+          dispatch(setFee(parseFloat(fee_eth)));
         }
+
+        dispatch(setFormLoading(false));
+        return;
 
         //CW20 token estimate
       } catch (err) {
