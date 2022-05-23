@@ -1,11 +1,12 @@
-import { EndowmentTierNum } from "types/shared/registration";
-
 /**result wrapper */
 export interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
   Items: T;
 }
+
+/** shared */
+export type EndowmentTierNum = 1 | 2 | 3;
 
 /** /airdrop */
 export type Airdrops = Airdrop[];
@@ -139,7 +140,7 @@ export interface Profile {
   news_media_articles: string; //""You can view our Newsroom here: https://yellowboat.org/about-us/newsroom/.""
 
   //meta
-  tier?: number;
+  tier?: EndowmentTierNum;
 }
 
 /** /leaderboards */
@@ -153,7 +154,7 @@ export interface Endowment {
   charity_logo?: string;
   charity_overview: string;
   url: string;
-  tier: number;
+  tier: EndowmentTierNum;
   iconLight?: boolean;
 }
 

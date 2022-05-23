@@ -1,5 +1,8 @@
-import { ContactRoles, ReferralMethods } from "types/server/aws";
-import { EndowmentTierNum } from "types/shared/registration";
+import {
+  ContactRoles,
+  EndowmentTierNum,
+  ReferralMethods,
+} from "types/server/aws";
 import { FileWrapper } from "components/FileDropzone";
 
 export type RegistrationStep = { completed: boolean };
