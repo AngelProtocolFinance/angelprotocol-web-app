@@ -5,7 +5,7 @@ import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { DonateValues } from "components/Transactors/Donater";
 import { RootState } from "store/store";
-import { Dwindow } from "slices/providerSlice";
+import getInjectedProvider from "helpers/getInjectedProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -23,19 +23,13 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
-      const dwindow = window as Dwindow;
       const state = getState() as RootState;
       const activeProvider = state.provider.active;
       updateTx({ step: "submit", message: "Submitting transaction.." });
-      let provider: ethers.providers.Web3Provider;
 
-      if (activeProvider === "ethereum") {
-        provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
-      } else if (activeProvider === "binance") {
-        provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
-      } else {
-        provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
-      }
+      const provider = new ethers.providers.Web3Provider(
+        getInjectedProvider(activeProvider)
+      );
 
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();

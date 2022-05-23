@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "./types";
 import { useGetter, useSetter } from "store/accessors";
-import { Dwindow } from "slices/providerSlice";
 import {
   setFee,
   setFormError,
@@ -12,6 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
+import getInjectedProvider from "helpers/getInjectedProvider";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
@@ -77,17 +77,9 @@ export default function useEstimator() {
             token.min_denom === denoms.wei ||
             token.min_denom === denoms.bnb
           ) {
-            const dwindow = window as Dwindow;
-            //provider is present at this point
-            let provider: ethers.providers.Web3Provider;
-
-            if (activeProvider === "ethereum") {
-              provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
-            } else {
-              provider = new ethers.providers.Web3Provider(
-                dwindow.xfi?.ethereum!
-              );
-            }
+            const provider = new ethers.providers.Web3Provider(
+              getInjectedProvider(activeProvider)
+            );
             //no network request
             const signer = provider.getSigner();
             const sender = await signer.getAddress();
