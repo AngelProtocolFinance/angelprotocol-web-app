@@ -1,5 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
-import { ethers } from "ethers";
+import { ethers, utils } from "ethers";
 import { useEffect } from "react";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
@@ -23,9 +22,7 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         const wei_balance = await signer.getBalance();
-        const eth_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
-          .div(1e18)
-          .toNumber();
+        const eth_balance = +utils.formatUnits(wei_balance, 18);
         const eth_coin = createEthToken(eth_balance);
 
         dispatch(
@@ -63,9 +60,8 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         const wei_balance = await signer.getBalance();
-        const bnb_balance = new Dec(parseInt(wei_balance.toHexString(), 16))
-          .div(1e18)
-          .toNumber();
+        const bnb_balance = +utils.formatUnits(wei_balance, 18);
+
         const bnb_coin = createBnbToken(bnb_balance);
         dispatch(
           setWalletDetails({

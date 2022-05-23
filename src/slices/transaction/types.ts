@@ -1,5 +1,3 @@
-import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
-
 export type Step =
   | "form"
   | "submit"
@@ -47,7 +45,7 @@ export type SuccessStage = {
   step: "success";
   message: string;
   txHash: string; //leave "" to not render tx link
-  txInfo?: TxInfo;
+  txInfo?: any;
   chainId: string; //leave "" to not render tx link
   isReceiptEnabled?: boolean;
   isShareEnabled?: boolean;
@@ -79,6 +77,3 @@ export type Stage =
   | ReceiptStage
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
-
-export type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
-export type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
