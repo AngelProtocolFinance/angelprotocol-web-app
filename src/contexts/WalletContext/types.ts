@@ -30,18 +30,18 @@ export type InjectedProvider = {
 
 //FOR ADDING CHAIN
 //specs: https://eips.ethereum.org/EIPS/eip-3085
-// interface EthereumChain {
-//   chainId: string;
-//   blockExplorerUrls?: string[];
-//   chainName?: string;
-//   iconUrls?: string[];
-//   nativeCurrency?: {
-//     name: string;
-//     symbol: string;
-//     decimals: number;
-//   };
-//   rpcUrls?: string[];
-// }
+export interface ChainParams {
+  chainId: string;
+  blockExplorerUrls?: string[];
+  chainName?: string;
+  iconUrls?: string[];
+  nativeCurrency?: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls?: string[];
+}
 
 export type ProviderId = "binance-wallet" | "metamask";
 export type Connection = {

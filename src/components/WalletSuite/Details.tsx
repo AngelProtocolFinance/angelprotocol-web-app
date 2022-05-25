@@ -14,7 +14,7 @@ import Portal from "./Portal";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
-  const { coins, chainId, address } = useGetWallet();
+  const { coins, address, displayCoin } = useGetWallet();
   const { disconnect } = useSetWallet();
   const [filtered, setFilter] = useState(false);
 
@@ -34,14 +34,13 @@ export default function Details(props: { closeHandler: () => void }) {
         customCloseHandler={props.closeHandler}
       />
       <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
-        <button
-          className="text-white absolute top-2 right-2"
-          onClick={props.closeHandler}
-        >
-          <Icon type="Close" />
-        </button>
-        <div className="bg-angel-grey text-white-grey text-sm p-2">
-          <p className="uppercase">network : {chainId}</p>
+        <div className="bg-angel-grey flex justify-end">
+          <button className="text-white p-1" onClick={props.closeHandler}>
+            <Icon type="Close" />
+          </button>
+        </div>
+        <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
+          <p className="uppercase">network : {displayCoin.chainName}</p>
         </div>
         {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
         <div className="flex gap-2 items-center p-2  pb-0">

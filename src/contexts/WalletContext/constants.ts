@@ -1,13 +1,16 @@
-import { NativeToken, ProviderId } from "./types";
+import { NativeToken, NativeTokenWithBalance, ProviderId } from "./types";
+import coinIcon from "assets/icons/currencies/coin.svg";
+import ethLogo from "assets/icons/currencies/ether.png";
 import binanceWalletIcon from "assets/icons/wallets/binance.svg";
 import metamaskIcon from "assets/icons/wallets/metamask.svg";
+import { chainIDs } from "constants/chainIDs";
 
 export const EIP1193Events = {
   accountsChanged: "accountsChanged",
   chainChanged: "chainChanged",
 };
 
-export const EIP1193Methods = {
+export const EIPMethods = {
   eth_requestAccounts: "eth_requestAccounts",
   wallet_addEthereumChain: "wallet_addEthereumChain",
   eth_chainId: "eth_chainId",
@@ -53,6 +56,32 @@ const ethereumToken: NativeToken = {
   chainName: "Kovan Test Network",
   blockExplorerUrl: "https://kovan.etherscan.io/",
   erc20Tokens: [],
+};
+
+export const placeHolderToken: NativeTokenWithBalance = {
+  min_denom: "wei",
+  symbol: "ETH",
+  logo: ethLogo,
+  decimals: 18,
+  chainId: "1",
+  rpcUrl: "",
+  chainName: "Ethereum mainnet",
+  blockExplorerUrl: "https://etherscan.io/",
+  erc20Tokens: [],
+  balance: "0",
+};
+
+export const unSupportedToken: NativeTokenWithBalance = {
+  min_denom: "xx",
+  symbol: "XX",
+  logo: coinIcon,
+  decimals: 18,
+  chainId: chainIDs.unsupported,
+  rpcUrl: "",
+  chainName: "Unsuported Network",
+  blockExplorerUrl: "",
+  erc20Tokens: [],
+  balance: "0",
 };
 
 export const providerIcons: { [key in ProviderId]: string } = {

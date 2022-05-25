@@ -15,12 +15,20 @@ import {
   ProviderStatuses,
 } from "./types";
 import { chainIDs } from "constants/chainIDs";
-import { tokenList } from "./constants";
+import {
+  EIPMethods,
+  placeHolderToken,
+  tokenList,
+  unSupportedToken,
+} from "./constants";
+import { getChainParamsFromCoin } from "./helpers/genChainParams";
+import genUnsupportedToken from "./helpers/genUnsupportedToken";
+import { getProvider } from "./helpers/getProvider";
 import useInjectedWallet from "./useInjectedProvider";
 
 type IWalletState = {
   walletIcon: string;
-  displayCoin: { amount: number; symbol: string };
+  displayCoin: NativeTokenWithBalance;
   coins: NativeTokenWithBalance[];
   address: string;
   chainId: string;
@@ -34,12 +42,13 @@ type IState = IWalletState & {
 
 type Setters = {
   disconnect(): void;
+  networkSwitcher(coin: NativeTokenWithBalance): () => Promise<void>;
   connections: Connection[];
 };
 
 const initialWalletState: IWalletState = {
   walletIcon: "",
-  displayCoin: { amount: 0, symbol: "ETH" },
+  displayCoin: placeHolderToken,
   coins: [],
   address: "",
   chainId: chainIDs.eth_main,
@@ -54,7 +63,6 @@ const initialState: IState = {
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const [isWalletLoading, setIsWalletLoading] = useState(false); //getting wallet resources
   const [wallet, setWallet] = useState<IWalletState>(initialState);
-  console.log(isWalletLoading);
 
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
@@ -87,6 +95,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const prevProviderInfo = usePrevious(activeProviderInfo);
 
   //get wallet Balance
+  //TODO: transfer to RTK query
   useEffect(() => {
     (async () => {
       try {
@@ -98,16 +107,34 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
         if (
           (!prevProviderInfo && !activeProviderInfo) ||
+          //shallow compare : providerInfo is shallow object
           JSON.stringify(activeProviderInfo) !==
             JSON.stringify(prevProviderInfo)
         ) {
-          //fetch wallet resources
-
           const { address, id, chainId, logo } = activeProviderInfo!; //found to be defined;
+          //set active provider
+          setWallet((prev) => ({ ...prev, providerId: id }));
+          //fetch wallet resources
           setIsWalletLoading(true);
-          setWallet((prev) => ({ ...prev, id }));
 
-          //get token list from server and query corresponding rpc
+          const isChainSupported =
+            //TODO: get supported token list from server
+            tokenList.find((token) => token.chainId === chainId) !== undefined;
+
+          if (!isChainSupported) {
+            const walletInfo: IWalletState = {
+              walletIcon: logo,
+              displayCoin: unSupportedToken,
+              coins: tokenList.map((token) => ({ ...token, balance: "0" })),
+              address,
+              chainId,
+              providerId: id,
+            };
+            setWallet(walletInfo);
+            return;
+          }
+
+          //query only if chain is supported
           const balanceQueries = tokenList.map((token) => {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
               token.rpcUrl
@@ -117,40 +144,36 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           const queryResult = await Promise.allSettled(balanceQueries);
 
           //map balances
-          const balances: NativeTokenWithBalance[] = queryResult.map(
-            (result, i) =>
-              result.status === "fulfilled"
-                ? {
-                    ...tokenList[i],
-                    balance: utils.formatUnits(
-                      result.value,
-                      tokenList[i].decimals
-                    ),
-                  }
-                : { ...tokenList[i], balance: "0" }
+          const coins: NativeTokenWithBalance[] = queryResult.map((result, i) =>
+            result.status === "fulfilled"
+              ? {
+                  ...tokenList[i],
+                  balance: utils.formatUnits(
+                    result.value,
+                    tokenList[i].decimals
+                  ),
+                }
+              : { ...tokenList[i], balance: "0" }
           );
 
-          const dispBalance = balances.find(
+          const displayCoin = coins.find(
             (balance) => balance.chainId === chainId
           );
 
           const walletInfo: IWalletState = {
             walletIcon: logo,
-            displayCoin: {
-              amount: +(dispBalance?.balance || "0"),
-              symbol: dispBalance?.symbol || "ETH",
-            },
-            coins: balances,
+            displayCoin: displayCoin || genUnsupportedToken(chainId),
+            coins,
             address,
             chainId,
             providerId: id,
           };
           setWallet(walletInfo);
-          setIsWalletLoading(false);
         }
       } catch (err) {
         console.error(err);
         setWallet(initialWalletState);
+      } finally {
         setIsWalletLoading(false);
       }
     })();
@@ -169,6 +192,25 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [wallet, disconnectBinanceWallet, disconnectMetamask]);
 
+  const networkSwitcher = useCallback(
+    (coin: NativeTokenWithBalance) => {
+      return async function switchNetwork() {
+        try {
+          if (wallet.providerId) {
+            const provider = getProvider(wallet.providerId);
+            await provider?.request({
+              method: EIPMethods.wallet_addEthereumChain,
+              params: [getChainParamsFromCoin(coin)],
+            });
+          }
+        } catch (err: any) {
+          console.error(err);
+        }
+      };
+    },
+    [wallet]
+  );
+
   return (
     <getContext.Provider
       value={{
@@ -181,6 +223,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [metamaskConnection, binanceWalletConnection],
           disconnect: disconnect,
+          networkSwitcher,
         }}
       >
         {props.children}
@@ -193,6 +236,7 @@ const getContext = createContext<IState>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
+  networkSwitcher: () => async () => {},
 });
 
 export const useSetWallet = () => useContext(setContext);

@@ -3,18 +3,19 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
+import { chainIDs } from "constants/chainIDs";
 import Details from "./Details";
+import NetworkSelection from "./NetworkSelection";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
   const { address, displayCoin, walletIcon, isWalletLoading } = useGetWallet();
-  console.log({ isWalletLoading });
-
   const [detailsShown, setIsDetailsShown] = useState(false);
   const maskedAddr = maskAddress(address);
   const toggleDetails = () => setIsDetailsShown((p) => !p);
   const hideDetails = () => detailsShown && setIsDetailsShown(false);
 
+  const isChainSupported = displayCoin.chainId !== chainIDs.unsupported;
   return (
     <div className="flex">
       <button
@@ -22,7 +23,6 @@ export default function Display() {
         onClick={toggleDetails}
         className="flex items-center py-2 px-3 text-white-grey disabled:text-grey-accent"
       >
-        {/* <img src={terraIcon} alt="" className="w-6 h-6 rounded-full mr-2" /> */}
         {(!isWalletLoading && (
           <img
             src={walletIcon}
@@ -31,13 +31,24 @@ export default function Display() {
           />
         )) || <Icon type="Loading" className="animate-spin mr-1" />}
         <span className="pr-2 text-sm hidden sm:block">
-          {isWalletLoading ? "loading..." : maskedAddr}
+          {isWalletLoading
+            ? "loading..."
+            : isChainSupported
+            ? maskedAddr
+            : "Unsupported Network"}
         </span>
-        <span className="pl-2 text-sm text-sm sm:border-l">
-          {displayCoin.symbol} {toCurrency(displayCoin.amount, 3, true)}
-        </span>
+        {isChainSupported && (
+          <span className="pl-2 text-sm text-sm sm:border-l">
+            {displayCoin.symbol} {toCurrency(+displayCoin.balance, 3, true)}
+          </span>
+        )}
       </button>
-      {detailsShown && <Details closeHandler={hideDetails} />}
+      {detailsShown && isChainSupported && (
+        <Details closeHandler={hideDetails} />
+      )}
+      {detailsShown && !isChainSupported && (
+        <NetworkSelection closeHandler={hideDetails} />
+      )}
     </div>
   );
 }

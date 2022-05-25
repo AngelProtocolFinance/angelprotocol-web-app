@@ -7,7 +7,7 @@ import {
   ProviderId,
   ProviderInfo,
 } from "./types";
-import { EIP1193Methods, providerIcons } from "./constants";
+import { EIPMethods, providerIcons } from "./constants";
 import { getProvider } from "./helpers/getProvider";
 
 export default function useInjectedProvider(providerId: ProviderId) {
@@ -61,10 +61,10 @@ export default function useInjectedProvider(providerId: ProviderId) {
       attachAccountChangeHandler(injectedProvider);
       attachChainChangedHandler(injectedProvider);
       const accounts = await injectedProvider.request<string[]>({
-        method: EIP1193Methods.eth_requestAccounts,
+        method: EIPMethods.eth_requestAccounts,
       });
       const hexChainId = await injectedProvider.request<string>({
-        method: EIP1193Methods.eth_chainId,
+        method: EIPMethods.eth_chainId,
       });
 
       setAddress(accounts[0]);

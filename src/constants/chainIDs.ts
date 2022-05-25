@@ -9,4 +9,5 @@ export enum chainIDs {
   bnb_main = "56",
   bnb_test = "97",
   btc_test = "1",
+  unsupported = "-1",
 }
