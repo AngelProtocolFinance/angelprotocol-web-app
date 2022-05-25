@@ -5,6 +5,7 @@ export type FormValues = {
   charityOverview: string;
   charityLogo: FileWrapper;
   banner: FileWrapper;
+  kycDonorsOnly: boolean;
 };
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
