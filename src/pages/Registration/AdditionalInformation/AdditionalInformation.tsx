@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
+import { ForwardedRef, forwardRef, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { useGetter } from "store/accessors";
 import { app, site } from "constants/routes";
 import { InputRow } from "../common";
@@ -23,8 +24,13 @@ export default function AdditionalInformation() {
       banner: charity.Metadata.Banner,
       charityOverview: charity.Metadata.CharityOverview,
       charityLogo: charity.Metadata.CharityLogo,
+      kycDonorsOnly: charity.Metadata.KycDonorsOnly,
     },
   });
+  const {
+    register,
+    formState: { isSubmitting },
+  } = methods;
 
   useEffect(() => {
     if (isSuccess) {
@@ -47,6 +53,10 @@ export default function AdditionalInformation() {
           <ImageInput name="charityLogo" label="Logo of your organization" />
           <ImageSizeInfo limit="1MB" />
           <OverviewInput />
+          <KycDonorsOnlyCheckbox
+            disabled={isSubmitting}
+            {...register("kycDonorsOnly")}
+          />
           <ButtonSection />
         </form>
       </FormProvider>
@@ -66,6 +76,14 @@ const ImageSizeInfo = (props: { limit: string }) => (
   <p className="text-xs -mt-5 text-left font-thin text-white/70">
     should be less than {props.limit}
   </p>
+);
+
+const KycDonorsOnlyCheckbox = forwardRef(
+  (props: CheckboxProps, ref: ForwardedRef<HTMLInputElement>) => (
+    <Checkbox {...props} ref={ref}>
+      <span className="text-base">Only accept donations from KYC Donors.</span>
+    </Checkbox>
+  )
 );
 
 const OrganizationName = ({ value }: { value: string }) => (

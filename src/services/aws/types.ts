@@ -70,6 +70,7 @@ export type Metadata = {
   CharityLogo: FileObject;
   CharityOverview: string;
   EndowmentContract: string;
+  KycDonorsOnly: boolean;
   SK: "Metadata";
   TerraWallet: string;
 };
