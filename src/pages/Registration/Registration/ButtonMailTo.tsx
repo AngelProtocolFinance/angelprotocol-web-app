@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 type Props = { mailTo: string; label: string };
 
 export default function ButtonMailTo({ mailTo, label }: Props) {
