@@ -1,10 +1,11 @@
+import { Connection } from "contexts/WalletContext/types";
 import ModalContext from "contexts/ModalContext";
+import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
-import BnbConnector from "./Connectors/BnbConnector";
-import EthConnector from "./Connectors/EthConnector";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
+  const { connections } = useSetWallet();
   return (
     <>
       <Backdrop
@@ -19,10 +20,27 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
         <ModalContext backdropClasses="absolute bg-black/50 inset-0 z-10">
-          <EthConnector />
-          <BnbConnector />
+          {connections.map((connection) => (
+            <Connector key={connection.name} {...connection} />
+          ))}
         </ModalContext>
       </div>
     </>
+  );
+}
+
+function Connector(props: Connection) {
+  return (
+    <button
+      onClick={props.connect}
+      className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
+    >
+      <img
+        src={props.logo}
+        className="w-8 h-8 p-1.5 bg-white-grey rounded-full shadow-md"
+        alt=""
+      />
+      <p className="uppercase text-sm text-white">{props.name}</p>
+    </button>
   );
 }

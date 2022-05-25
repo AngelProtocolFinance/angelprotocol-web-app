@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { useSetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
-import { useSetMetamask } from "contexts/MetamaskContext/MetamaskContext";
+import {
+  useGetWallet,
+  useSetWallet,
+} from "contexts/WalletContext/WalletContext";
 import Backdrop from "components/Backdrop";
 import Copier from "components/Copier";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { resetWallet } from "slices/walletSlice";
 import maskAddress from "helpers/maskAddress";
 import { denoms } from "constants/currency";
 import Filter from "./Filter";
@@ -14,32 +14,19 @@ import Portal from "./Portal";
 
 const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
-  const dispatch = useSetter();
+  const { coins, chainId, address } = useGetWallet();
+  const { disconnect } = useSetWallet();
   const [filtered, setFilter] = useState(false);
-  const { active: activeProvider } = useGetter((state) => state.provider);
-  const { coins, chainId, address } = useGetter((state) => state.wallet);
-  const { disconnect: disconnectMetamask } = useSetMetamask();
-  const { disconnect: disconnectBinance } = useSetBinanceWallet();
 
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
-      coin.min_denom === denoms.uusd ||
-      coin.min_denom === denoms.halo ||
+      coin.min_denom === denoms.wei ||
       Number(coin.balance) > criterionAmount
   );
   const handleFilter = () => setFilter((p) => !p);
   const isEmpty = filtered_coins.length <= 0;
 
-  const handleDisconnect = () => {
-    dispatch(resetWallet());
-    if (activeProvider === "ethereum") {
-      disconnectMetamask();
-    }
-    if (activeProvider === "binance") {
-      disconnectBinance();
-    }
-  };
   return (
     <>
       <Backdrop
@@ -61,14 +48,14 @@ export default function Details(props: { closeHandler: () => void }) {
           <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
           <Copier text={address} colorClass="text-angel-grey text-lg" />
         </div>
-        <Portal />
+        <Portal address={address} />
         {(!isEmpty && <Holdings coins={filtered_coins} />) || (
           <span className="text-angel-grey p-10 text-center text-sm uppercase">
             Wallet is empty
           </span>
         )}
         <button
-          onClick={handleDisconnect}
+          onClick={disconnect}
           className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
         >
           disconnect

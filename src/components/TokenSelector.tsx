@@ -11,7 +11,7 @@ import Select, {
 } from "react-select";
 import { Token } from "types/server/aws";
 import { useTokensQuery } from "services/apes/tokens";
-import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
+import { denomIcons, denoms } from "constants/currency";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;
@@ -133,3 +133,11 @@ const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
     </div>
   );
 };
+
+const createUSTToken = (balance: number) => ({
+  balance,
+  min_denom: denoms.uusd,
+  symbol: "UST",
+  decimals: 6,
+  logo: denomIcons.uusd,
+});

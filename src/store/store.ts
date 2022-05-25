@@ -22,7 +22,11 @@ export const store = configureStore({
     //future: futureReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([aws.middleware, apes.middleware]),
+    getDefaultMiddleware().concat([
+      aws.middleware,
+      apes.middleware,
+      flipside.middleware,
+    ]),
 });
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

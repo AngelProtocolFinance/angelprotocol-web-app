@@ -1,7 +1,7 @@
-import { TokenWithBalance } from "services/types";
+import { NativeTokenWithBalance } from "contexts/WalletContext/types";
 import toCurrency from "helpers/toCurrency";
 
-export default function Holdings(props: { coins: TokenWithBalance[] }) {
+export default function Holdings(props: { coins: NativeTokenWithBalance[] }) {
   return (
     <ul className="p-4">
       {props.coins.map(({ balance, symbol, logo }) => {
@@ -15,7 +15,7 @@ export default function Holdings(props: { coins: TokenWithBalance[] }) {
               {symbol}
             </span>
             <span className="ml-auto text-angel-grey">
-              {toCurrency(balance, 3, true)}
+              {toCurrency(+balance, 3, true)}
             </span>
           </li>
         );

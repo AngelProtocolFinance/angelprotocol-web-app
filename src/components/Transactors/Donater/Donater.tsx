@@ -3,8 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, FundFlow } from "./types";
 import { SchemaShape } from "schemas/types";
-import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
 import { requiredTokenAmount } from "schemas/number";
+import { denomIcons, denoms } from "constants/currency";
 import DonateForm from "./DonateForm/DonateForm";
 
 const shape: SchemaShape<DonateValues> = {
@@ -34,3 +34,11 @@ export default function Donater(props: FundFlow) {
     </FormProvider>
   );
 }
+
+const createUSTToken = (balance: number) => ({
+  balance,
+  min_denom: denoms.uusd,
+  symbol: "UST",
+  decimals: 6,
+  logo: denomIcons.uusd,
+});
