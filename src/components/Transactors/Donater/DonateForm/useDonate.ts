@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
@@ -10,6 +11,7 @@ import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
+  const { providerId } = useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const { watch, handleSubmit, setValue, getValues } =
@@ -20,7 +22,7 @@ export default function useDonate() {
 
   const ethSender = useCallback(
     (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
+      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data, providerId }));
       showModal(TransactionPrompt, {});
     },
     //eslint-disable-next-line

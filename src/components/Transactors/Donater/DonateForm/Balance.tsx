@@ -1,13 +1,13 @@
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
-import { useGetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
-  const { coins } = useGetter((state) => state.wallet);
+  const { coins } = useGetWallet();
   const token = watch("token");
   const tokenBalance = useMemo(
     () => getTokenBalance(coins, token.min_denom),

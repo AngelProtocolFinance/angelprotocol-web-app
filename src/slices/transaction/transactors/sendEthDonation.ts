@@ -1,34 +1,34 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ethers } from "ethers";
+import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
+import { getProvider } from "contexts/WalletContext/helpers/getProvider";
 import { DonateValues } from "components/Transactors/Donater";
-import { RootState } from "store/store";
-import getInjectedProvider from "helpers/getInjectedProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
+  providerId?: ProviderId;
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
-  async (args: EthDonateArgs, { dispatch, getState }) => {
+  async (args: EthDonateArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
     try {
-      const state = getState() as RootState;
-      const activeProvider = state.provider.active;
       updateTx({ step: "submit", message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(
-        getInjectedProvider(activeProvider)
+        //wallet is connected to send this tx
+        getProvider(args.providerId!) as any
       );
 
       const signer = provider.getSigner();

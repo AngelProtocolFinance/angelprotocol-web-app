@@ -1,7 +1,5 @@
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
-import { useGetMetamask } from "contexts/MetamaskContext/MetamaskContext";
 import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";
@@ -72,10 +70,7 @@ export default function WalletSubmission(props: Props) {
 }
 
 function UnsupportedWalletConnected() {
-  const { connected: isMetamaskConnected } = useGetMetamask();
-  const { connected: isBinanceConnected } = useGetBinanceWallet();
-
-  return isMetamaskConnected || isBinanceConnected ? (
+  return true ? (
     <div className="flex flex-col gap-3">
       <p>Only Terra compatible wallets are allowed!</p>
       <p>Please connect your Terra wallet</p>

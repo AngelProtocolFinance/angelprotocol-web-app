@@ -5,7 +5,7 @@ import ConnectOptions from "./ConnectOptions";
 import Display from "./Display";
 
 export default function WalletSuite() {
-  const { id: providerId, isProviderLoading } = useGetWallet();
+  const { providerId, isProviderLoading } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {

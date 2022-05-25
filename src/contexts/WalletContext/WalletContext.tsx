@@ -24,7 +24,7 @@ type IWalletState = {
   coins: NativeTokenWithBalance[];
   address: string;
   chainId: string;
-  id?: ProviderId;
+  providerId?: ProviderId;
 };
 
 type IState = IWalletState & {
@@ -143,7 +143,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             coins: balances,
             address,
             chainId,
-            id,
+            providerId: id,
           };
           setWallet(walletInfo);
           setIsWalletLoading(false);
@@ -157,7 +157,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   }, [activeProviderInfo, prevProviderInfo]);
 
   const disconnect = useCallback(() => {
-    switch (wallet.id) {
+    switch (wallet.providerId) {
       case "metamask":
         disconnectMetamask();
         break;

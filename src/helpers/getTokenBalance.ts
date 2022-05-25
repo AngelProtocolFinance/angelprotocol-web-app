@@ -1,12 +1,17 @@
-import { TokenWithBalance } from "services/types";
+import { NativeTokenWithBalance } from "contexts/WalletContext/types";
 
 export default function getTokenBalance(
-  tokenBalances: TokenWithBalance[],
+  tokenBalances: NativeTokenWithBalance[],
   denom: string
 ) {
-  return tokenBalances.find((token) => token.min_denom === denom)?.balance || 0;
+  const balance =
+    tokenBalances.find((token) => token.min_denom === denom)?.balance || "0";
+  return +balance;
 }
 
-export function getToken(tokenBalances: TokenWithBalance[], denom: string) {
+export function getToken(
+  tokenBalances: NativeTokenWithBalance[],
+  denom: string
+) {
   return tokenBalances.find((token) => token.min_denom === denom) || {};
 }

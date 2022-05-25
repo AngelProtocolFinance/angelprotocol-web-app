@@ -4,16 +4,12 @@ import { apes } from "services/apes/apes";
 import { aws } from "services/aws/aws";
 import { flipside } from "services/flipslide/flipslide";
 import authReducer from "slices/authSlice";
-import providerReducer from "slices/providerSlice";
 import transactionReducer from "slices/transaction/transactionSlice";
-import walletReducer from "slices/walletSlice";
 
 export const store = configureStore({
   reducer: {
     charity: charityReducer,
     transaction: transactionReducer,
-    provider: providerReducer,
-    wallet: walletReducer,
     auth: authReducer,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,

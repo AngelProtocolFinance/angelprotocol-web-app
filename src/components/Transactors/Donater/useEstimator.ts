@@ -3,14 +3,15 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "./types";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { getProvider } from "contexts/WalletContext/helpers/getProvider";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
-import getInjectedProvider from "helpers/getInjectedProvider";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
@@ -23,8 +24,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
-  const { active: activeProvider } = useGetter((state) => state.provider);
-  const { coins } = useGetter((state) => state.wallet);
+  const { providerId, coins } = useGetWallet();
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
@@ -38,7 +38,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (activeProvider === "none") {
+        if (!providerId) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -60,7 +60,7 @@ export default function useEstimator() {
 
         if (token.min_denom === denoms.wei || token.min_denom === denoms.bnb) {
           const provider = new ethers.providers.Web3Provider(
-            getInjectedProvider(activeProvider)
+            getProvider(providerId) as any
           );
           //no network request
           const signer = provider.getSigner();
