@@ -134,7 +134,8 @@ function retrieveUserAction(key: string): Action {
 }
 
 function removeAllListeners(providerId: ProviderId) {
-  getProvider(providerId)?.removeAllListeners();
+  const provider = getProvider(providerId);
+  provider?.removeAllListeners && provider.removeAllListeners();
 }
 
 export class RejectMetamaskLogin extends Error {

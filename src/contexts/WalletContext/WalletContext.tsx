@@ -14,6 +14,7 @@ import {
   ProviderId,
   ProviderStatuses,
 } from "./types";
+import unknownWaleltIcon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
 import {
   EIPMethods,
@@ -47,7 +48,7 @@ type Setters = {
 };
 
 const initialWalletState: IWalletState = {
-  walletIcon: "",
+  walletIcon: unknownWaleltIcon,
   displayCoin: placeHolderToken,
   coins: [],
   address: "",
@@ -56,12 +57,12 @@ const initialWalletState: IWalletState = {
 
 const initialState: IState = {
   ...initialWalletState,
-  isWalletLoading: false,
-  isProviderLoading: false,
+  isWalletLoading: true,
+  isProviderLoading: true,
 };
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
-  const [isWalletLoading, setIsWalletLoading] = useState(false); //getting wallet resources
+  const [isWalletLoading, setIsWalletLoading] = useState(true); //getting wallet resources
   const [wallet, setWallet] = useState<IWalletState>(initialState);
 
   const {
@@ -131,6 +132,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
               providerId: id,
             };
             setWallet(walletInfo);
+            setIsWalletLoading(false);
             return;
           }
 
@@ -169,12 +171,12 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             providerId: id,
           };
           setWallet(walletInfo);
+          setIsWalletLoading(false);
         }
       } catch (err) {
         console.error(err);
-        setWallet(initialWalletState);
-      } finally {
         setIsWalletLoading(false);
+        setWallet(initialWalletState);
       }
     })();
   }, [activeProviderInfo, prevProviderInfo]);

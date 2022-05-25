@@ -16,16 +16,18 @@ const criterionAmount = 0.1;
 export default function Details(props: { closeHandler: () => void }) {
   const { coins, address, displayCoin } = useGetWallet();
   const { disconnect } = useSetWallet();
-  const [filtered, setFilter] = useState(false);
+  const [isFiltered, setIsFiltered] = useState(false);
 
-  const filtered_coins = coins.filter(
-    (coin) =>
-      filtered ||
-      coin.min_denom === denoms.wei ||
-      Number(coin.balance) > criterionAmount
+  const filtered_coins = coins.filter((coin) =>
+    //show atleast eth
+    coin.balance !== "0" || coin.min_denom === denoms.wei || isFiltered
+      ? +coin.balance > criterionAmount
+      : false
   );
-  const handleFilter = () => setFilter((p) => !p);
+
+  const handleFilter = () => setIsFiltered((p) => !p);
   const isEmpty = filtered_coins.length <= 0;
+  const isFilterable = filtered_coins.length > 1;
 
   return (
     <>
@@ -42,7 +44,9 @@ export default function Details(props: { closeHandler: () => void }) {
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
           <p className="uppercase">network : {displayCoin.chainName}</p>
         </div>
-        {!isEmpty && <Filter filtered={filtered} handleFilter={handleFilter} />}
+        {!isEmpty && isFilterable && (
+          <Filter filtered={isFiltered} handleFilter={handleFilter} />
+        )}
         <div className="flex gap-2 items-center p-2  pb-0">
           <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
           <Copier text={address} colorClass="text-angel-grey text-lg" />

@@ -16,6 +16,10 @@ export default function Display() {
   const hideDetails = () => detailsShown && setIsDetailsShown(false);
 
   const isChainSupported = displayCoin.chainId !== chainIDs.unsupported;
+  const isDetailsShown = detailsShown && isChainSupported && !isWalletLoading;
+  const isNetworkSelectionShown =
+    detailsShown && !isChainSupported && !isWalletLoading;
+
   return (
     <div className="flex">
       <button
@@ -43,10 +47,8 @@ export default function Display() {
           </span>
         )}
       </button>
-      {detailsShown && isChainSupported && (
-        <Details closeHandler={hideDetails} />
-      )}
-      {detailsShown && !isChainSupported && (
+      {isDetailsShown && <Details closeHandler={hideDetails} />}
+      {isNetworkSelectionShown && (
         <NetworkSelection closeHandler={hideDetails} />
       )}
     </div>
