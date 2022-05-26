@@ -8,14 +8,11 @@ export default function Breakdown() {
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isTokenNative = !token.cw20_contract;
-  const total = isTokenNative ? amount + fee : amount;
-  const feeSymbol = isTokenNative ? token.symbol : "UST"; //for CW20 tx, fee is in UST
 
   return (
     <div className="m-1">
-      <Entry title="tx fee" amount={fee} symbol={feeSymbol} />
-      <Entry title="total amount" amount={total} symbol={token.symbol} />
+      <Entry title="tx fee" amount={fee} symbol={token.symbol} />
+      <Entry title="total amount" amount={fee + amount} symbol={token.symbol} />
     </div>
   );
 }

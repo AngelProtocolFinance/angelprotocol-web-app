@@ -92,16 +92,6 @@ export type TxLogPayload = Receiver &
   TxDataPermissions;
 
 /** apes/token-list */
-export type Token = {
-  min_denom: string;
-  symbol: string;
-  cw20_contract?: {
-    mainnet: string;
-    testnet?: string;
-  };
-  logo: string;
-  decimals: number;
-};
 
 /** /endowments */
 export interface Profile {

@@ -13,9 +13,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
-import processEstimateError from "helpers/processEstimateError";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const dispatch = useSetter();
@@ -58,38 +56,33 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        if (token.min_denom === denoms.wei || token.min_denom === denoms.bnb) {
-          const provider = new ethers.providers.Web3Provider(
-            getProvider(providerId) as any
-          );
-          //no network request
-          const signer = provider.getSigner();
-          const sender = await signer.getAddress();
+        const provider = new ethers.providers.Web3Provider(
+          getProvider(providerId) as any
+        );
+        //no network request
+        const signer = provider.getSigner();
+        const sender = await signer.getAddress();
 
-          const gasPrice = await signer.getGasPrice();
-          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+        const gasPrice = await signer.getGasPrice();
+        const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
 
-          const tx: TransactionRequest = {
-            from: sender,
-            to: ap_wallets.eth,
-            value: wei_amount,
-          };
+        const tx: TransactionRequest = {
+          from: sender,
+          to: ap_wallets.eth,
+          value: wei_amount,
+        };
 
-          const gasLimit = await signer.estimateGas(tx);
-          const fee_wei = gasLimit.mul(gasPrice);
-          const fee_eth = ethers.utils.formatEther(fee_wei);
+        const gasLimit = await signer.estimateGas(tx);
+        const minFee = gasLimit.mul(gasPrice);
+        const fee = ethers.utils.formatUnits(minFee, token.decimals);
 
-          setEthTx(tx);
-          dispatch(setFee(parseFloat(fee_eth)));
-        }
-
+        setEthTx(tx);
+        dispatch(setFee(parseFloat(fee)));
         dispatch(setFormLoading(false));
-        return;
 
         //CW20 token estimate
       } catch (err) {
-        const formError = processEstimateError(err);
-        dispatch(setFormError(formError));
+        dispatch(setFormError("tx simulation failed"));
       }
     })();
 

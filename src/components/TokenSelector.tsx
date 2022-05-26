@@ -9,8 +9,9 @@ import Select, {
   SingleValueProps,
   ValueContainerProps,
 } from "react-select";
-import { Token } from "types/server/aws";
-import { useTokensQuery } from "services/apes/tokens";
+import { NativeToken } from "contexts/WalletContext/types";
+// import { useTokensQuery } from "services/apes/tokens";
+import { tokenList as tokens } from "contexts/WalletContext/constants";
 import { denomIcons, denoms } from "constants/currency";
 
 export default function TokenSelector<T extends FieldValues>(props: {
@@ -18,7 +19,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
   fieldName: Path<T>;
 }) {
   const { control } = useFormContext<T>();
-  const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
+  // const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
 
   return (
     <Controller
@@ -50,7 +51,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
   );
 }
 
-const Control: FC<ControlProps<Token>> = ({
+const Control: FC<ControlProps<NativeToken>> = ({
   children,
   innerProps,
   innerRef,
@@ -62,7 +63,7 @@ const Control: FC<ControlProps<Token>> = ({
   );
 };
 
-const ValueContainer: FC<ValueContainerProps<Token>> = ({
+const ValueContainer: FC<ValueContainerProps<NativeToken>> = ({
   innerProps,
   children,
 }) => (
@@ -71,7 +72,7 @@ const ValueContainer: FC<ValueContainerProps<Token>> = ({
   </div>
 );
 
-const SingleValue: FC<SingleValueProps<Token>> = ({
+const SingleValue: FC<SingleValueProps<NativeToken>> = ({
   children,
   data,
   innerProps,
@@ -84,8 +85,8 @@ const SingleValue: FC<SingleValueProps<Token>> = ({
   );
 };
 
-const getOptionLabel = (option: Token) => option.symbol;
-const Option: FC<OptionProps<Token>> = ({
+const getOptionLabel = (option: NativeToken) => option.symbol;
+const Option: FC<OptionProps<NativeToken>> = ({
   data: option,
   innerRef,
   innerProps,
@@ -102,7 +103,11 @@ const Option: FC<OptionProps<Token>> = ({
     </div>
   );
 };
-const Menu: FC<MenuProps<Token>> = ({ innerProps, innerRef, children }) => {
+const Menu: FC<MenuProps<NativeToken>> = ({
+  innerProps,
+  innerRef,
+  children,
+}) => {
   return (
     <div ref={innerRef} {...innerProps} className="absolute right-0 shadow-lg">
       {children}
@@ -110,7 +115,7 @@ const Menu: FC<MenuProps<Token>> = ({ innerProps, innerRef, children }) => {
   );
 };
 
-const MenuList: FC<MenuListProps<Token>> = ({
+const MenuList: FC<MenuListProps<NativeToken>> = ({
   innerProps,
   innerRef,
   children,
@@ -126,7 +131,10 @@ const MenuList: FC<MenuListProps<Token>> = ({
   );
 };
 
-const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
+const NoOptionsMessage: FC<NoticeProps<NativeToken>> = ({
+  innerProps,
+  children,
+}) => {
   return (
     <div {...innerProps} className="text-sm text-red-400/70 p-2">
       {children}
@@ -134,10 +142,10 @@ const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
   );
 };
 
-const createUSTToken = (balance: number) => ({
-  balance,
-  min_denom: denoms.uusd,
-  symbol: "UST",
-  decimals: 6,
-  logo: denomIcons.uusd,
-});
+// const createUSTToken = (balance: number) => ({
+//   balance,
+//   min_denom: denoms.uusd,
+//   symbol: "UST",
+//   decimals: 6,
+//   logo: denomIcons.uusd,
+// });

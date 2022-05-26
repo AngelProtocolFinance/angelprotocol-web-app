@@ -1,10 +1,10 @@
-import { Token } from "types/server/aws";
+import { NativeToken } from "contexts/WalletContext/types";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: Token;
+  token: NativeToken;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";

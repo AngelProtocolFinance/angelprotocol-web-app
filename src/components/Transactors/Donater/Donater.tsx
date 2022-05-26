@@ -3,6 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, FundFlow } from "./types";
 import { SchemaShape } from "schemas/types";
+import { placeHolderToken } from "contexts/WalletContext/constants";
 import { requiredTokenAmount } from "schemas/number";
 import { denomIcons, denoms } from "constants/currency";
 import DonateForm from "./DonateForm/DonateForm";
@@ -20,7 +21,7 @@ export default function Donater(props: FundFlow) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: createUSTToken(0),
+      token: placeHolderToken,
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

@@ -1,19 +1,10 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { Profile, Token } from "types/server/aws";
+import { Profile } from "types/server/aws";
 
 export type ContractQueryArgs<T = object> = {
   address: string;
   msg: T;
-};
-
-export type MultiContractQueryArgs = ContractQueryArgs<AggregatedQuery>;
-export type AggregatedQuery = {
-  aggregate: { queries: EncodedQueryMember[] };
-};
-export type EncodedQueryMember = {
-  address: string;
-  data: string; //base64 encoded msg
 };
 
 export type TerraTags =
@@ -23,9 +14,6 @@ export type TerraTags =
   | "endowment"
   | "multicall"
   | "registrar";
-
-/** multicall */
-export type TokenWithBalance = Token & { balance: number };
 
 /**endowments */
 export type CategorizedProfiles = {
