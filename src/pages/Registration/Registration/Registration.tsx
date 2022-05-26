@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
 import { useSetter } from "store/accessors";
-import { Button } from "./common";
-import routes from "./routes";
-import { removeCharity } from "./store";
+import { Button } from "../common";
+import routes from "../routes";
+import { removeCharity } from "../store";
+import ButtonMailTo from "./ButtonMailTo";
 import useResume from "./useResume";
 
 const FormInfoSchema = Yup.object().shape({
@@ -47,7 +48,7 @@ export default function Registration() {
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
         onSubmit={handleSubmit(resume)}
-        className="flex flex-col items-center gap-2 w-full"
+        className="flex flex-col items-center gap-2 w-full mb-5"
       >
         <input
           {...register("refer")}
@@ -64,9 +65,11 @@ export default function Registration() {
           Resume
         </Button>
       </form>
-      <p className="mt-5 italic underline">
-        <a href="#new-form">Having trouble resuming your registration?</a>
-      </p>
+      <ButtonMailTo
+        label="Having trouble resuming your registration?"
+        mailTo="support@angelprotocol.io"
+        subject="Charity Registration: Trouble with confirmation email"
+      />
     </div>
   );
 }
