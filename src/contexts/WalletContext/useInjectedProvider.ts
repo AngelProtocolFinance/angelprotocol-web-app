@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { EIP1193Error } from "errors/errors";
 import { getProvider } from "../../helpers/getProvider";
 import { EIPMethods, providerIcons } from "./constants";
 import {
@@ -90,14 +91,11 @@ export default function useInjectedProvider(providerId: ProviderId) {
       await requestAccess(true);
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
-      console.error(err);
       setIsLoading(false);
-      //let caller handle error with UI
-      if ("code" in err && err.code === 4001) {
-        throw new RejectMetamaskLogin();
-      } else {
-        throw new Error("Uknown error occured");
-      }
+      throw new EIP1193Error(
+        err?.message || "Unknown error occured",
+        err?.code || 0
+      );
     }
   };
 
@@ -138,14 +136,6 @@ function retrieveUserAction(key: string): Action {
 function removeAllListeners(providerId: ProviderId) {
   const provider = getProvider(providerId);
   provider?.removeAllListeners && provider.removeAllListeners();
-}
-
-export class RejectMetamaskLogin extends Error {
-  constructor() {
-    super();
-    this.message = "Metamask login cancelled";
-    this.name = "RejectMetamaskLogin";
-  }
 }
 
 //notes: 1 accountChange handler run only on first connect [] --> [something]

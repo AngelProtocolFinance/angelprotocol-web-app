@@ -14,18 +14,15 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
         customCloseHandler={props.closeHandler}
       />
       <div className="w-max z-50 grid content-start absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
-        <ModalContext backdropClasses="z-10 absolute inset-0 bg-white/50">
-          <div className="bg-angel-grey flex justify-end">
-            <button
-              className="text-white p-1 pb-0"
-              onClick={props.closeHandler}
-            >
-              <Icon type="Close" />
-            </button>
-          </div>
-          <p className="bg-angel-grey text-white-grey text-sm p-2 pt-0">
-            Please select network
-          </p>
+        <div className="bg-angel-grey flex justify-end">
+          <button className="text-white p-1 pb-0" onClick={props.closeHandler}>
+            <Icon type="Close" />
+          </button>
+        </div>
+        <p className="bg-angel-grey text-white-grey text-sm p-2 pt-0">
+          Please select network
+        </p>
+        <ModalContext backdropClasses="z-10 absolute inset-0 bg-black/50">
           {coins.map((coin) => (
             <NetworkOption
               key={coin.chainId}

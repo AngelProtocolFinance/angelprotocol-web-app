@@ -20,22 +20,6 @@ export class LogDonationFail extends Error {
   }
 }
 
-export class RejectBinanceLogin extends Error {
-  constructor() {
-    super();
-    this.message = "Binance login cancelled";
-    this.name = "RejectBinanceLogin";
-  }
-}
-
-export class RejectMetamaskLogin extends Error {
-  constructor() {
-    super();
-    this.message = "Metamask login cancelled";
-    this.name = "RejectMetamaskLogin";
-  }
-}
-
 export class WalletDisconnectError extends Error {
   constructor() {
     super();
@@ -43,13 +27,14 @@ export class WalletDisconnectError extends Error {
   }
 }
 
-export class TxResultFail extends Error {
-  chainId: string;
-  txHash: string;
-  constructor(chainId: string, txHash: string) {
+export class EIP1193Error extends Error {
+  code: number;
+  message: string;
+  data?: unknown;
+  constructor(message: string, code: number, data?: unknown) {
     super();
-    this.chainId = chainId;
-    this.txHash = txHash;
-    this.name = "TxResultFailt";
+    this.code = code;
+    this.message = message;
+    this.data = data;
   }
 }

@@ -1,8 +1,10 @@
-import ModalContext from "contexts/ModalContext";
+import ModalContext, { useModalContext } from "contexts/ModalContext";
 import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import { Connection } from "contexts/WalletContext/types";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
+import { EIP1193Error } from "errors/errors";
+import WalletPrompt from "./WalletPrompt";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
   const { connections } = useSetWallet();
@@ -30,9 +32,20 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
 }
 
 function Connector(props: Connection) {
+  const { showModal } = useModalContext();
+  //wrapper with error handler
+  async function handleConnect() {
+    try {
+      await props.connect();
+    } catch (_err: any) {
+      const err: EIP1193Error = _err;
+      showModal(WalletPrompt, { message: err.message });
+    }
+  }
+
   return (
     <button
-      onClick={props.connect}
+      onClick={handleConnect}
       className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
     >
       <img
