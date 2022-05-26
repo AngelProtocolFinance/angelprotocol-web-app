@@ -1,21 +1,18 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { useModalContext } from "contexts/ModalContext";
-import {
-  useGetWallet,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { resetFee } from "slices/transaction/transactionSlice";
+import { resetFee, setFormError } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
+import switchNetwork from "helpers/switchNetwork";
 import { denoms } from "constants/currency";
 import { DonateValues } from "../types";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
   const { providerId, displayCoin, isWalletLoading } = useGetWallet();
-  const { networkSwitcher } = useSetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const {
@@ -32,19 +29,26 @@ export default function useDonate() {
   const denomRef = useRef<string>(denoms.uusd);
   const token = watch("token");
 
-  const ethSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data, providerId }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [ethTx]
-  );
+  const ethSender = (data: DonateValues) => {
+    dispatch(sendEthDonation({ tx: ethTx!, donateValues: data, providerId }));
+    showModal(TransactionPrompt, {});
+  };
+
+  async function handleNetworkChange() {
+    try {
+      if (!providerId) {
+        dispatch(setFormError("Wallet is not connected"));
+        return;
+      }
+      await switchNetwork(token, providerId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   const denom = token.min_denom;
-  const isInCorrectNetwork = token.chainId !== displayCoin.chainId;
+  const isInCorrectNetwork = token.chainId === displayCoin.chainId;
   const incorrectNetworkMessage = `To transact ${token.symbol} token, kindly switch wallet network to ${token.chainName}`;
-
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
@@ -60,7 +64,7 @@ export default function useDonate() {
     isInCorrectNetwork,
     incorrectNetworkMessage,
     isSwitchingNetwork: isWalletLoading,
-    switchNetwork: networkSwitcher(token),
+    handleNetworkChange,
     isSubmitDisabled:
       form_error !== null || form_loading || !isValid || !isDirty,
     isFormLoading: form_loading,

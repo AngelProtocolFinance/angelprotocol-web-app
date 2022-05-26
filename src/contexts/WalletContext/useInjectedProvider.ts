@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
+import { getProvider } from "../../helpers/getProvider";
 import { EIPMethods, providerIcons } from "./constants";
-import { getProvider } from "./helpers/getProvider";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -27,7 +27,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     //eslint-disable-next-line
   }, []);
 
-  //attachers/detachers
+  /** attachers/detachers */
   const attachChainChangedHandler = (provider: InjectedProvider) => {
     provider.on("chainChanged", handleChainChange);
   };
@@ -36,7 +36,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     provider.on("accountsChanged", handleAccountsChange);
   };
 
-  //event handlers
+  /** event handlers */
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
     setChainId(`${parseInt(hexChainId, 16)}`);
   };
@@ -60,6 +60,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     if (injectedProvider && (isNewConnection || shouldReconnect) && !address) {
       attachAccountChangeHandler(injectedProvider);
       attachChainChangedHandler(injectedProvider);
+
       const accounts = await injectedProvider.request<string[]>({
         method: EIPMethods.eth_requestAccounts,
       });
@@ -100,7 +101,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     }
   };
 
-  //consolidate to one object
+  //consolidate to one object for diff
   const providerInfo: ProviderInfo = {
     logo: providerIcons[providerId],
     id: providerId,
@@ -108,6 +109,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     address: address || "",
   };
 
+  //connection object to render <Connector/>
   const connection: Connection = {
     name: providerId.replace("-", " "),
     logo: providerIcons[providerId],

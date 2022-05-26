@@ -3,7 +3,6 @@ import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { getProvider } from "contexts/WalletContext/helpers/getProvider";
 import { useSetter } from "store/accessors";
 import {
   setFee,
@@ -11,6 +10,7 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
+import { getProvider } from "helpers/getProvider";
 import getTokenBalance from "helpers/getTokenBalance";
 import { ap_wallets } from "constants/ap_wallets";
 import { DonateValues } from "./types";

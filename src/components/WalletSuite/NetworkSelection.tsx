@@ -2,13 +2,14 @@ import {
   useGetWallet,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
-import { NativeTokenWithBalance } from "contexts/WalletContext/types";
+import { NativeToken, ProviderId } from "contexts/WalletContext/types";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
+import switchNetwork from "helpers/switchNetwork";
 
 export default function NetworkSelection(props: { closeHandler: () => void }) {
-  const { coins } = useGetWallet();
-  const { disconnect, networkSwitcher } = useSetWallet();
+  const { coins, providerId } = useGetWallet();
+  const { disconnect } = useSetWallet();
 
   return (
     <>
@@ -29,7 +30,9 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
           <NetworkOption
             key={coin.chainId}
             {...coin}
-            switchNetwork={networkSwitcher(coin)}
+            providerId={
+              providerId! /**this component is rendered only when a provider is connected */
+            }
           />
         ))}
         <button
@@ -44,12 +47,20 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
 }
 
 function NetworkOption({
-  switchNetwork,
+  providerId,
   ...coin
-}: NativeTokenWithBalance & { switchNetwork(): Promise<void> }) {
+}: NativeToken & { providerId: ProviderId }) {
+  async function handleNetworkChange() {
+    try {
+      await switchNetwork(coin, providerId);
+    } catch (err) {
+      //render appropriate prompt
+      console.error(err);
+    }
+  }
   return (
     <button
-      onClick={switchNetwork}
+      onClick={handleNetworkChange}
       className="flex items-center hover:bg-angel-blue/10 active:bg-angel-blue/30 gap-2 p-2 mt-2 mx-2 rounded-md border border-angel-blue/30"
     >
       <img src={coin.logo} alt="" className="w-6 h-6 object-contain" />

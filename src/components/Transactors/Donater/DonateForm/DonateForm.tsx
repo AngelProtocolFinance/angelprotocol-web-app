@@ -14,7 +14,7 @@ export default function DonateForm() {
     isInCorrectNetwork,
     isSwitchingNetwork,
     incorrectNetworkMessage,
-    switchNetwork,
+    handleNetworkChange,
   } = useDonate();
 
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
@@ -74,7 +74,7 @@ export default function DonateForm() {
           </p>
           <button
             disabled={isSwitchingNetwork}
-            onClick={switchNetwork}
+            onClick={handleNetworkChange}
             className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
             type="button"
           >

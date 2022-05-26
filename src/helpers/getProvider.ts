@@ -1,4 +1,8 @@
-import { Dwindow, InjectedProvider, ProviderId } from "../types";
+import {
+  Dwindow,
+  InjectedProvider,
+  ProviderId,
+} from "../contexts/WalletContext/types";
 
 export function getProvider(
   providerId: ProviderId
@@ -10,6 +14,6 @@ export function getProvider(
     case "metamask":
       return dwindow.ethereum;
     default:
-      throw new Error("wallet is not connected");
+      return undefined;
   }
 }

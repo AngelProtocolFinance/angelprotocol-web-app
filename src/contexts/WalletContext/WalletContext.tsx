@@ -10,18 +10,10 @@ import {
 } from "react";
 import unknownWaleltIcon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
-import {
-  EIPMethods,
-  placeHolderToken,
-  tokenList,
-  unSupportedToken,
-} from "./constants";
-import { getChainParamsFromCoin } from "./helpers/genChainParams";
+import { placeHolderToken, tokenList, unSupportedToken } from "./constants";
 import genUnsupportedToken from "./helpers/genUnsupportedToken";
-import { getProvider } from "./helpers/getProvider";
 import {
   Connection,
-  NativeToken,
   NativeTokenWithBalance,
   ProviderId,
   ProviderStatuses,
@@ -44,7 +36,6 @@ type IState = IWalletState & {
 
 type Setters = {
   disconnect(): void;
-  networkSwitcher(coin: NativeToken): () => Promise<void>;
   connections: Connection[];
 };
 
@@ -195,25 +186,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [wallet, disconnectBinanceWallet, disconnectMetamask]);
 
-  const networkSwitcher = useCallback(
-    (coin: NativeTokenWithBalance) => {
-      return async function switchNetwork() {
-        try {
-          if (wallet.providerId) {
-            const provider = getProvider(wallet.providerId);
-            await provider?.request({
-              method: EIPMethods.wallet_addEthereumChain,
-              params: [getChainParamsFromCoin(coin)],
-            });
-          }
-        } catch (err: any) {
-          console.error(err);
-        }
-      };
-    },
-    [wallet]
-  );
-
   return (
     <getContext.Provider
       value={{
@@ -226,7 +198,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         value={{
           connections: [metamaskConnection, binanceWalletConnection],
           disconnect: disconnect,
-          networkSwitcher,
         }}
       >
         {props.children}
@@ -239,7 +210,6 @@ const getContext = createContext<IState>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},
-  networkSwitcher: () => async () => {},
 });
 
 export const useSetWallet = () => useContext(setContext);
