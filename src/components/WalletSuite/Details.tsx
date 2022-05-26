@@ -7,27 +7,25 @@ import Backdrop from "components/Backdrop";
 import Copier from "components/Copier";
 import Icon from "components/Icon";
 import maskAddress from "helpers/maskAddress";
-import { denoms } from "constants/currency";
 import Filter from "./Filter";
 import Holdings from "./Holdings";
 import Portal from "./Portal";
 
-const criterionAmount = 0.1;
+const criterionAmount = 0.001;
 export default function Details(props: { closeHandler: () => void }) {
   const { coins, address, displayCoin } = useGetWallet();
   const { disconnect } = useSetWallet();
-  const [isFiltered, setIsFiltered] = useState(false);
+  const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
 
-  const filtered_coins = coins.filter((coin) =>
+  const filteredCoins = coins.filter((coin) =>
     //show atleast eth
-    coin.balance !== "0" || coin.min_denom === denoms.wei || isFiltered
-      ? +coin.balance > criterionAmount
-      : false
+    +coin.balance > 0 && isSmallAmountsShown
+      ? true
+      : +coin.balance > criterionAmount
   );
 
-  const handleFilter = () => setIsFiltered((p) => !p);
-  const isEmpty = filtered_coins.length <= 0;
-  const isFilterable = filtered_coins.length > 1;
+  const toggleFilter = () => setIsSmallAmountShown((p) => !p);
+  const isEmpty = coins.length <= 0;
 
   return (
     <>
@@ -44,15 +42,18 @@ export default function Details(props: { closeHandler: () => void }) {
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
           <p className="uppercase">network : {displayCoin.chainName}</p>
         </div>
-        {!isEmpty && isFilterable && (
-          <Filter filtered={isFiltered} handleFilter={handleFilter} />
+        {!isEmpty && (
+          <Filter
+            isSmallAmountShown={isSmallAmountsShown}
+            toggleFilter={toggleFilter}
+          />
         )}
         <div className="flex gap-2 items-center p-2  pb-0">
           <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
           <Copier text={address} colorClass="text-angel-grey text-lg" />
         </div>
         <Portal address={address} />
-        {(!isEmpty && <Holdings coins={filtered_coins} />) || (
+        {(!isEmpty && <Holdings coins={filteredCoins} />) || (
           <span className="text-angel-grey p-10 text-center text-sm uppercase">
             Wallet is empty
           </span>

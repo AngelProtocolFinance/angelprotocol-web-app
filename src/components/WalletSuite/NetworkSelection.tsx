@@ -16,15 +16,15 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
         classes="z-10 fixed inset-0"
         customCloseHandler={props.closeHandler}
       />
-      <div className="w-max z-50 grid grid-rows-a1a absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
+      <div className="w-max z-50 grid content-start absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
         <div className="bg-angel-grey flex justify-end">
-          <button className="text-white p-1" onClick={props.closeHandler}>
+          <button className="text-white p-1 pb-0" onClick={props.closeHandler}>
             <Icon type="Close" />
           </button>
         </div>
-        <div className="bg-angel-grey text-white-grey text-sm p-2 pt-0">
-          <p className="uppercase">Please select network</p>
-        </div>
+        <p className="bg-angel-grey text-white-grey text-sm p-2 pt-0">
+          Please select network
+        </p>
         {coins.map((coin) => (
           <NetworkOption
             key={coin.chainId}
@@ -34,7 +34,7 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
         ))}
         <button
           onClick={disconnect}
-          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 mt-2 text-white"
         >
           disconnect
         </button>
@@ -48,7 +48,10 @@ function NetworkOption({
   ...coin
 }: NativeTokenWithBalance & { switchNetwork(): Promise<void> }) {
   return (
-    <button onClick={switchNetwork} className="flex items-center gap-2 p-3">
+    <button
+      onClick={switchNetwork}
+      className="flex items-center hover:bg-angel-blue/10 active:bg-angel-blue/30 gap-2 p-2 mt-2 mx-2 rounded-md border border-angel-blue/30"
+    >
       <img src={coin.logo} alt="" className="w-6 h-6 object-contain" />
       <p className="text-angel-grey text-sm">{coin.chainName}</p>
     </button>
