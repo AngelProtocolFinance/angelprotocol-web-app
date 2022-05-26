@@ -9,9 +9,9 @@ import Select, {
   SingleValueProps,
   ValueContainerProps,
 } from "react-select";
-import { NativeToken } from "contexts/WalletContext/types";
 // import { useTokensQuery } from "services/apes/tokens";
 import { tokenList as tokens } from "contexts/WalletContext/constants";
+import { NativeToken } from "contexts/WalletContext/types";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;

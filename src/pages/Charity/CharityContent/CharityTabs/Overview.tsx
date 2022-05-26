@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
-import { CharityParams } from "../../types";
 import { useProfileQueryState } from "services/aws/endowments";
 import RichTextRenderer from "components/RichTextRenderer";
+import { CharityParams } from "../../types";
 
 export default function Overview() {
   const { address: charity_addr } = useParams<CharityParams>();

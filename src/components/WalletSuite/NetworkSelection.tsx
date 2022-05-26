@@ -1,8 +1,8 @@
-import { NativeTokenWithBalance } from "contexts/WalletContext/types";
 import {
   useGetWallet,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
+import { NativeTokenWithBalance } from "contexts/WalletContext/types";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
 

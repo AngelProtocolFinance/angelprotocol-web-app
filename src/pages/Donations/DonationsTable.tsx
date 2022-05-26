@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
-import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
+import { SortDirection, SortKey } from "pages/Donations/types";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";

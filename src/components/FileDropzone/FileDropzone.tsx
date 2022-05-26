@@ -1,6 +1,6 @@
 import { Controller, FieldValues, useFormContext } from "react-hook-form";
-import { BaseProps, FileWrapper } from "./types";
 import Dropzone from "./Dropzone";
+import { BaseProps, FileWrapper } from "./types";
 
 export default function FileDropzone<T extends FieldValues>(
   props: BaseProps<T>

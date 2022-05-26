@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { SortDirection, SortKey } from "pages/Donations/types";
 import { Transaction } from "types/server/aws";
+import { SortDirection, SortKey } from "pages/Donations/types";
 
 export default function useSortedTransactions(transactions: Transaction[]) {
   const [sortKey, setSortKey] = useState<SortKey>("block_timestamp");

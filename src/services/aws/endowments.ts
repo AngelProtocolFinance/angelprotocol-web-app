@@ -1,5 +1,5 @@
-import { CategorizedProfiles } from "services/types";
 import { AWSQueryRes, Profile } from "types/server/aws";
+import { CategorizedProfiles } from "services/types";
 import { aws } from "./aws";
 import { awsTags, chaTags } from "./tags";
 

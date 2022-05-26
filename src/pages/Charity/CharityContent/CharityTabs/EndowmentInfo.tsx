@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import { CharityParams } from "../../types";
 import ancIcon from "assets/images/anchor_protocol.png";
 import { useDepositTransactionsQuery } from "services/aws/endowment_admin";
 import { useProfileQueryState } from "services/aws/endowments";
 import toCurrency from "helpers/toCurrency";
+import { CharityParams } from "../../types";
 
 //TODO: refactor component markup
 export function EndowmentInfo() {

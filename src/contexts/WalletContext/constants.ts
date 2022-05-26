@@ -1,9 +1,9 @@
-import { NativeToken, NativeTokenWithBalance, ProviderId } from "./types";
 import coinIcon from "assets/icons/currencies/coin.svg";
 import ethLogo from "assets/icons/currencies/ether.png";
 import binanceWalletIcon from "assets/icons/wallets/binance.svg";
 import metamaskIcon from "assets/icons/wallets/metamask.svg";
 import { chainIDs } from "constants/chainIDs";
+import { NativeToken, NativeTokenWithBalance, ProviderId } from "./types";
 
 export const EIP1193Events = {
   accountsChanged: "accountsChanged",

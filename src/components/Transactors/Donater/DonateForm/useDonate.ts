@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
 import { useModalContext } from "contexts/ModalContext";
 import {
   useGetWallet,
@@ -11,6 +10,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { denoms } from "constants/currency";
+import { DonateValues } from "../types";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {

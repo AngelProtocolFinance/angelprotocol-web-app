@@ -1,9 +1,9 @@
 import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
+import { DonateValues } from "../types";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();

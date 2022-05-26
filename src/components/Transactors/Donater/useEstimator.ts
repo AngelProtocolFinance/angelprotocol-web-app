@@ -2,7 +2,6 @@ import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { getProvider } from "contexts/WalletContext/helpers/getProvider";
 import { useSetter } from "store/accessors";
@@ -14,6 +13,7 @@ import {
 import useDebouncer from "hooks/useDebouncer";
 import getTokenBalance from "helpers/getTokenBalance";
 import { ap_wallets } from "constants/ap_wallets";
+import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const dispatch = useSetter();

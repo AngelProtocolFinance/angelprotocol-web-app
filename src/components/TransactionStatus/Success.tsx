@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { SuccessStage } from "slices/transaction/types";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import SharePrompt from "components/Share";
 import { useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
+import { SuccessStage } from "slices/transaction/types";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {

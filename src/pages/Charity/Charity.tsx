@@ -1,6 +1,5 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { CharityParams } from "./types";
 import { useProfileQuery } from "services/aws/endowments";
 import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
@@ -8,6 +7,7 @@ import { appRoutes, siteRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
+import { CharityParams } from "./types";
 
 export default function Charity() {
   const { address: endowment_addr } = useParams<CharityParams>();

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { EIPMethods, providerIcons } from "./constants";
+import { getProvider } from "./helpers/getProvider";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
@@ -7,8 +9,6 @@ import {
   ProviderId,
   ProviderInfo,
 } from "./types";
-import { EIPMethods, providerIcons } from "./constants";
-import { getProvider } from "./helpers/getProvider";
 
 export default function useInjectedProvider(providerId: ProviderId) {
   const actionKey = `${providerId}__pref`;

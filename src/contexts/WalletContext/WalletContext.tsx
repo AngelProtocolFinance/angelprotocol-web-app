@@ -8,13 +8,6 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  Connection,
-  NativeToken,
-  NativeTokenWithBalance,
-  ProviderId,
-  ProviderStatuses,
-} from "./types";
 import unknownWaleltIcon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
 import {
@@ -26,6 +19,13 @@ import {
 import { getChainParamsFromCoin } from "./helpers/genChainParams";
 import genUnsupportedToken from "./helpers/genUnsupportedToken";
 import { getProvider } from "./helpers/getProvider";
+import {
+  Connection,
+  NativeToken,
+  NativeTokenWithBalance,
+  ProviderId,
+  ProviderStatuses,
+} from "./types";
 import useInjectedWallet from "./useInjectedProvider";
 
 type IWalletState = {

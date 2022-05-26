@@ -1,7 +1,7 @@
 import * as Yup from "yup";
-import { AdditionalInfoValues } from "../types";
-import { SchemaShape } from "schemas/types";
 import { FileWrapper } from "components/FileDropzone";
+import { SchemaShape } from "schemas/types";
+import { AdditionalInfoValues } from "../types";
 
 const VALID_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
