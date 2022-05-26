@@ -6,7 +6,16 @@ import Breakdown from "./Breakdown";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
-  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
+  const {
+    donate,
+    to,
+    isFormLoading,
+    isSubmitDisabled,
+    isInCorrectNetwork,
+    isSwitchingNetwork,
+    incorrectNetworkMessage,
+    switchNetwork,
+  } = useDonate();
 
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
@@ -57,13 +66,32 @@ export default function DonateForm() {
           .
         </label>
       </div>
-      <button
-        disabled={isSubmitDisabled || !isTermsAccepted}
-        className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-        type="submit"
-      >
-        {isFormLoading ? "estimating fee.." : "proceed"}
-      </button>
+
+      {!isInCorrectNetwork && (
+        <>
+          <p className="text-xs font-heading text-center font-semibold text-angel-blue">
+            {incorrectNetworkMessage}
+          </p>
+          <button
+            disabled={isSwitchingNetwork}
+            onClick={switchNetwork}
+            className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+            type="button"
+          >
+            {isSwitchingNetwork ? "Switching..." : "Switch Network"}
+          </button>
+        </>
+      )}
+
+      {isInCorrectNetwork && (
+        <button
+          disabled={isSubmitDisabled || !isTermsAccepted}
+          className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+          type="submit"
+        >
+          {isFormLoading ? "estimating fee.." : "proceed"}
+        </button>
+      )}
     </form>
   );
 }

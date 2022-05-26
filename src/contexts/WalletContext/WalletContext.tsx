@@ -10,6 +10,7 @@ import {
 } from "react";
 import {
   Connection,
+  NativeToken,
   NativeTokenWithBalance,
   ProviderId,
   ProviderStatuses,
@@ -43,7 +44,7 @@ type IState = IWalletState & {
 
 type Setters = {
   disconnect(): void;
-  networkSwitcher(coin: NativeTokenWithBalance): () => Promise<void>;
+  networkSwitcher(coin: NativeToken): () => Promise<void>;
   connections: Connection[];
 };
 
