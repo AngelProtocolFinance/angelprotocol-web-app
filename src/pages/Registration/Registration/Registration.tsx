@@ -68,6 +68,7 @@ export default function Registration() {
       <ButtonMailTo
         label="Having trouble resuming your registration?"
         mailTo="support@angelprotocol.io"
+        subject="Charity Registration: Trouble with confirmation email"
       />
     </div>
   );

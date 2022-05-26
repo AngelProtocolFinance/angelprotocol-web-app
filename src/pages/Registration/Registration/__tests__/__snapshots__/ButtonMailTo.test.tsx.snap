@@ -3,7 +3,7 @@
 exports[`ButtonMailTo tests matches snapshot 1`] = `
 <a
   className="italic underline"
-  href="mailto:some@email.com?subject=Charity%20Registration%3A%20Trouble%20with%20confirmation%20email"
+  href="mailto:some@email.com?subject=Subject"
 >
   Label
 </a>

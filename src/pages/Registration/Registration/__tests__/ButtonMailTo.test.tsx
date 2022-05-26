@@ -3,12 +3,12 @@ import { MemoryRouter } from "react-router-dom";
 import renderer from "react-test-renderer";
 import ButtonMailTo from "../ButtonMailTo";
 
-type Props = { label: string; mailTo: string };
+type Props = { label: string; mailTo: string; subject: string };
 
-const MockComponent = ({ label, mailTo }: Props) => {
+const MockComponent = (props: Props) => {
   return (
     <MemoryRouter>
-      <ButtonMailTo label={label} mailTo={mailTo} />
+      <ButtonMailTo {...props} />
     </MemoryRouter>
   );
 };
@@ -16,7 +16,7 @@ const MockComponent = ({ label, mailTo }: Props) => {
 describe("ButtonMailTo tests", () => {
   it("matches snapshot", () => {
     const component = renderer.create(
-      <MockComponent label="Label" mailTo="some@email.com" />
+      <MockComponent label="Label" mailTo="some@email.com" subject="Subject" />
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -25,7 +25,13 @@ describe("ButtonMailTo tests", () => {
   it("opens email with correct recepient and subject", () => {
     const expectedLabel = "Label";
     const email = "test@email.com";
-    render(<MockComponent label={expectedLabel} mailTo={email} />);
+    render(
+      <MockComponent
+        label={expectedLabel}
+        mailTo={email}
+        subject="Charity Registration: Trouble with confirmation email"
+      />
+    );
 
     const link = screen.getByRole("link");
     expect(link).toHaveAttribute(

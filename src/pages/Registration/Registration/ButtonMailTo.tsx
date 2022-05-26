@@ -1,11 +1,11 @@
-type Props = { mailTo: string; label: string };
+type Props = { label: string; mailTo: string; subject: string };
 
-export default function ButtonMailTo({ mailTo, label }: Props) {
+export default function ButtonMailTo({ mailTo, label, subject }: Props) {
   return (
     <a
-      href={`mailto:${mailTo}?subject=${encodeURIComponent(
-        "Charity Registration: Trouble with confirmation email"
-      )}`}
+      href={`mailto:${mailTo}${
+        subject ? `?subject=${encodeURIComponent(subject)}` : ""
+      }`}
       className="italic underline"
     >
       {label}
