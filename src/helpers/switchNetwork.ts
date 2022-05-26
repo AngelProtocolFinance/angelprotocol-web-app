@@ -11,15 +11,12 @@ export default async function switchNetwork(
   coin: NativeToken,
   providerId: ProviderId
 ) {
-  try {
-    const provider = getProvider(providerId);
-    await provider?.request({
-      method: EIPMethods.wallet_addEthereumChain,
-      params: [getChainParamsFromCoin(coin)],
-    });
-  } catch (err: any) {
-    console.error(err);
-  }
+  const provider = getProvider(providerId);
+  await provider?.request({
+    method: EIPMethods.wallet_addEthereumChain,
+    params: [getChainParamsFromCoin(coin)],
+  });
+  //let caller catch error
 }
 
 function getChainParamsFromCoin(coin: NativeToken): ChainParams {

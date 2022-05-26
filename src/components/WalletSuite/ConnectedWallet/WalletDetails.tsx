@@ -12,7 +12,7 @@ import Holdings from "./Holdings";
 import Portal from "./Portal";
 
 const criterionAmount = 0.001;
-export default function Details(props: { closeHandler: () => void }) {
+export default function WalletDetails(props: { closeHandler: () => void }) {
   const { coins, address, displayCoin } = useGetWallet();
   const { disconnect } = useSetWallet();
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);

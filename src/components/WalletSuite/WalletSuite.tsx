@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
+import { chainIDs } from "constants/chainIDs";
 import ConnectOptions from "./ConnectOptions";
-import Display from "./Display";
+import WalletOpener from "./ConnectedWallet/WalletOpener";
+import NetworkSelectionOpener from "./NetworkSelector/NetworkSelectionOpener";
 
 export default function WalletSuite() {
-  const { providerId, isProviderLoading } = useGetWallet();
+  const { providerId, isProviderLoading, displayCoin } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {
@@ -20,8 +22,14 @@ export default function WalletSuite() {
     //eslint-disable-next-line
   }, [providerId]);
 
+  const isNetworkSupported = displayCoin.chainId !== chainIDs.unsupported;
+
   return (
-    <div className="relative border border-white/40 hover:bg-white/10 rounded-md">
+    <div
+      className={`relative border ${
+        isNetworkSupported ? "border-white/40" : "border-red-200/80"
+      } hover:bg-white/10 rounded-md`}
+    >
       {!providerId && (
         <button
           className="flex py-2 px-3 items-center text-white  "
@@ -32,7 +40,8 @@ export default function WalletSuite() {
           <span>{isProviderLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {providerId && <Display />}
+      {providerId && isNetworkSupported && <WalletOpener />}
+      {providerId && !isNetworkSupported && <NetworkSelectionOpener />}
       {connectOptionsShown && (
         <ConnectOptions closeHandler={hideConnectOptions} />
       )}
