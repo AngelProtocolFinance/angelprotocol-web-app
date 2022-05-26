@@ -12,7 +12,6 @@ import Select, {
 import { NativeToken } from "contexts/WalletContext/types";
 // import { useTokensQuery } from "services/apes/tokens";
 import { tokenList as tokens } from "contexts/WalletContext/constants";
-import { denomIcons, denoms } from "constants/currency";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;

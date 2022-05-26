@@ -36,6 +36,7 @@ export type AdditionalInfoValues = {
   charityOverview: string;
   charityLogo: FileWrapper;
   banner: FileWrapper;
+  kycDonorsOnly: boolean;
 };
 
 export type ContactDetails = {

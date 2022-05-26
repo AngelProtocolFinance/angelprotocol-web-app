@@ -36,10 +36,10 @@ export default function Donater(props: FundFlow) {
   );
 }
 
-const createUSTToken = (balance: number) => ({
-  balance,
-  min_denom: denoms.uusd,
-  symbol: "UST",
-  decimals: 6,
-  logo: denomIcons.uusd,
-});
+// const createUSTToken = (balance: number) => ({
+//   balance,
+//   min_denom: denoms.uusd,
+//   symbol: "UST",
+//   decimals: 6,
+//   logo: denomIcons.uusd,
+// });

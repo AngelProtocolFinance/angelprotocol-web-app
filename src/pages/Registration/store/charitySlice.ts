@@ -36,6 +36,7 @@ const getDefaultCharity = (): Charity => ({
     CharityLogo: { name: "" },
     CharityOverview: "",
     EndowmentContract: "",
+    KycDonorsOnly: false,
     SK: "Metadata",
     TerraWallet: "",
   },

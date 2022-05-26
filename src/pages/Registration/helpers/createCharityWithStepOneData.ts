@@ -16,6 +16,7 @@ function getMetadata(): Metadata {
     CharityLogo: { name: "" },
     CharityOverview: "",
     EndowmentContract: "",
+    KycDonorsOnly: false,
     SK: "Metadata",
     TerraWallet: "",
   };

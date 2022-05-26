@@ -73,6 +73,7 @@ async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
     Banner,
     CharityLogo,
     CharityOverview: values.charityOverview,
+    KycDonorsOnly: values.kycDonorsOnly,
   };
 }
 
