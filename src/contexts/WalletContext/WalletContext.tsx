@@ -71,6 +71,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: binanceWalletInfo,
   } = useInjectedWallet("binance-wallet");
 
+  const {
+    isLoading: isXdefiLoading,
+    connection: xdefiConnection,
+    disconnect: disconnectXdefi,
+    providerInfo: xdefiWalletInfo,
+  } = useInjectedWallet("xdefi");
+
   const providerStatuses: ProviderStatuses = [
     {
       providerInfo: binanceWalletInfo,
@@ -79,6 +86,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       providerInfo: metamaskInfo,
       isLoading: isMetamaskLoading,
+    },
+    {
+      providerInfo: xdefiWalletInfo,
+      isLoading: isXdefiLoading,
     },
   ];
   const activeProviderInfo = providerStatuses.find(
@@ -181,22 +192,30 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "binance-wallet":
         disconnectBinanceWallet();
         break;
+      case "xdefi":
+        disconnectXdefi();
+        break;
       default:
         throw new Error("no wallet is connected");
     }
-  }, [wallet, disconnectBinanceWallet, disconnectMetamask]);
+  }, [wallet, disconnectBinanceWallet, disconnectMetamask, disconnectXdefi]);
 
   return (
     <getContext.Provider
       value={{
         ...wallet,
         isWalletLoading,
-        isProviderLoading: isBinanceWalletLoading || isMetamaskLoading,
+        isProviderLoading:
+          isBinanceWalletLoading || isMetamaskLoading || isXdefiLoading,
       }}
     >
       <setContext.Provider
         value={{
-          connections: [metamaskConnection, binanceWalletConnection],
+          connections: [
+            metamaskConnection,
+            binanceWalletConnection,
+            xdefiConnection,
+          ],
           disconnect: disconnect,
         }}
       >

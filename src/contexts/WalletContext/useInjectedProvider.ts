@@ -6,6 +6,7 @@ import {
   AccountChangeHandler,
   ChainChangeHandler,
   Connection,
+  Dwindow,
   InjectedProvider,
   ProviderId,
   ProviderInfo,
@@ -87,6 +88,28 @@ export default function useInjectedProvider(providerId: ProviderId) {
 
   const connect = async () => {
     try {
+      const dwindow = window as Dwindow;
+      //connecting xdefi
+      if (providerId === "xdefi") {
+        if (!dwindow?.xfi) {
+          throw new EIP1193Error("Xdefi is not installed", 0);
+        }
+        if (!dwindow?.xfi?.ethereum?.isMetaMask) {
+          throw new EIP1193Error(
+            "Kindly prioritize Xdefi and reload the page",
+            0
+          );
+        }
+        //connecting other wallet
+      } else {
+        if (dwindow?.xfi?.ethereum?.isMetaMask) {
+          throw new EIP1193Error(
+            "Kindly remove priority to xdefi and reload the page",
+            0
+          );
+        }
+      }
+
       setIsLoading(true);
       await requestAccess(true);
       saveUserAction(actionKey, "connect");

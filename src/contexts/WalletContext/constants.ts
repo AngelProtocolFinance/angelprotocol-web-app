@@ -2,6 +2,7 @@ import coinIcon from "assets/icons/currencies/coin.svg";
 import ethLogo from "assets/icons/currencies/ether.png";
 import binanceWalletIcon from "assets/icons/wallets/binance.svg";
 import metamaskIcon from "assets/icons/wallets/metamask.svg";
+import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 import { chainIDs } from "constants/chainIDs";
 import { NativeToken, NativeTokenWithBalance, ProviderId } from "./types";
 
@@ -87,6 +88,7 @@ export const unSupportedToken: NativeTokenWithBalance = {
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
   metamask: metamaskIcon,
+  xdefi: xdefiIcon,
 };
 
 //TODO: get this from server

@@ -43,7 +43,7 @@ export interface ChainParams {
   rpcUrls?: string[];
 }
 
-export type ProviderId = "binance-wallet" | "metamask";
+export type ProviderId = "binance-wallet" | "metamask" | "xdefi";
 export type Connection = {
   logo: string;
   name: string;
