@@ -48,7 +48,6 @@ export default function useDonate() {
 
   const denom = token.min_denom;
   const isInCorrectNetwork = token.chainId === displayCoin.chainId;
-  const incorrectNetworkMessage = `To transact ${token.symbol} token, kindly switch wallet network to ${token.chainName}`;
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
@@ -62,11 +61,19 @@ export default function useDonate() {
   return {
     donate: handleSubmit(ethSender),
     isInCorrectNetwork,
-    incorrectNetworkMessage,
+    correctNetworkInfo: {
+      name: token.chainName,
+      symbol: token.symbol,
+    },
     isSwitchingNetwork: isWalletLoading,
     handleNetworkChange,
     isSubmitDisabled:
-      form_error !== null || form_loading || !isValid || !isDirty,
+      form_error !== null ||
+      form_loading ||
+      !isValid ||
+      !isDirty ||
+      isWalletLoading ||
+      !isInCorrectNetwork,
     isFormLoading: form_loading,
     to: getValues("to"),
   };

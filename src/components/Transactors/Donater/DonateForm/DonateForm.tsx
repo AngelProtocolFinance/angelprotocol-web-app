@@ -12,8 +12,8 @@ export default function DonateForm() {
     isFormLoading,
     isSubmitDisabled,
     isInCorrectNetwork,
+    correctNetworkInfo,
     isSwitchingNetwork,
-    incorrectNetworkMessage,
     handleNetworkChange,
   } = useDonate();
 
@@ -32,6 +32,28 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
+      {!isInCorrectNetwork && (
+        <div className="grid bg-amber-400/5 border-2 rounded-md border-amber-400/20 p-1.5 mb-2">
+          <div className="text-sm text-left text-amber-500">
+            <p className="leading-normal">
+              To transact{" "}
+              <span className="font-semibold">{correctNetworkInfo.symbol}</span>
+              , kindly switch wallet network to
+            </p>
+            <p className="text-amber-500 font-semibold uppercase">
+              {correctNetworkInfo.name}
+            </p>
+          </div>
+          <button
+            disabled={isSwitchingNetwork}
+            onClick={handleNetworkChange}
+            className="justify-self-end text-xs font-bold text-angel-blue hover:text-bright-blue active:text-angel-orange uppercase font-heading"
+            type="button"
+          >
+            {isSwitchingNetwork ? "Switching..." : "Switch to Network"}
+          </button>
+        </div>
+      )}
       <Amount />
       <Breakdown />
 
@@ -67,31 +89,13 @@ export default function DonateForm() {
         </label>
       </div>
 
-      {!isInCorrectNetwork && (
-        <>
-          <p className="text-xs font-heading text-center font-semibold text-angel-blue">
-            {incorrectNetworkMessage}
-          </p>
-          <button
-            disabled={isSwitchingNetwork}
-            onClick={handleNetworkChange}
-            className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-            type="button"
-          >
-            {isSwitchingNetwork ? "Switching..." : "Switch Network"}
-          </button>
-        </>
-      )}
-
-      {isInCorrectNetwork && (
-        <button
-          disabled={isSubmitDisabled || !isTermsAccepted}
-          className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
-          type="submit"
-        >
-          {isFormLoading ? "estimating fee.." : "proceed"}
-        </button>
-      )}
+      <button
+        disabled={isSubmitDisabled || !isTermsAccepted}
+        className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        type="submit"
+      >
+        {isFormLoading ? "estimating fee.." : "proceed"}
+      </button>
     </form>
   );
 }

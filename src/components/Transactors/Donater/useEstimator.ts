@@ -22,11 +22,11 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
-  const { providerId, coins } = useGetWallet();
+  const { providerId, coins, chainId } = useGetWallet();
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
-  const token = watch("token");
+  const selectedToken = watch("token");
 
   const [ethTx, setEthTx] = useState<TransactionRequest>();
 
@@ -48,17 +48,20 @@ export default function useEstimator() {
           return;
         }
 
-        const tokenBalance = getTokenBalance(coins, token.min_denom);
+        const tokenBalance = getTokenBalance(coins, selectedToken.min_denom);
         if (debounced_amount > tokenBalance) {
           setError("amount", { message: "not enough balance" });
           return;
         }
+
+        if (chainId !== selectedToken.chainId) return; //network selection prompt is shown to user
 
         dispatch(setFormLoading(true));
 
         const provider = new ethers.providers.Web3Provider(
           getProvider(providerId) as any
         );
+        console.log(getProvider(providerId) as any);
         //no network request
         const signer = provider.getSigner();
         const sender = await signer.getAddress();
@@ -74,7 +77,7 @@ export default function useEstimator() {
 
         const gasLimit = await signer.estimateGas(tx);
         const minFee = gasLimit.mul(gasPrice);
-        const fee = ethers.utils.formatUnits(minFee, token.decimals);
+        const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
 
         setEthTx(tx);
         dispatch(setFee(parseFloat(fee)));
@@ -82,6 +85,7 @@ export default function useEstimator() {
 
         //CW20 token estimate
       } catch (err) {
+        console.error(err);
         dispatch(setFormError("tx simulation failed"));
       }
     })();
@@ -90,7 +94,14 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, token, coins]);
+  }, [
+    debounced_amount,
+    debounced_split,
+    selectedToken,
+    coins,
+    providerId,
+    chainId,
+  ]);
 
   return { ethTx };
 }

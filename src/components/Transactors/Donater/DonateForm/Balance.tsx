@@ -15,7 +15,7 @@ export default function Balance() {
   );
 
   function setMaxVal() {
-    setValue("amount", `${tokenBalance}`, {
+    setValue("amount", toCurrency(tokenBalance, 4), {
       shouldDirty: true,
       shouldValidate: true,
     });
