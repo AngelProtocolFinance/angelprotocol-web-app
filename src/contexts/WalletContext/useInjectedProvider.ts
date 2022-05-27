@@ -124,7 +124,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
   //consolidate to one object for diff
   const providerInfo: ProviderInfo = {
     logo: providerIcons[providerId],
-    id: providerId,
+    providerId,
     chainId: chainId || "",
     address: address || "",
   };

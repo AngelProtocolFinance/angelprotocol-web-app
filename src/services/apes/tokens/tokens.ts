@@ -2,7 +2,7 @@ import { ethers, utils } from "ethers";
 import { TokenWithBalance } from "services/types";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "../apes";
-import { tokenList } from "./constants";
+import { tokenList, unSupportedToken } from "./constants";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 
 const tokens_api = apes.injectEndpoints({
@@ -17,13 +17,29 @@ const tokens_api = apes.injectEndpoints({
         };
       },
     }),
-    ethBalances: builder.query<any, { chainId: string; address: string }>({
+    ethBalances: builder.query<
+      TokenWithBalance[],
+      { chainId: string; address: string }
+    >({
       providesTags: [],
       //address
       //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
-          //TODO: get tokenList from server
+          //TODO: get supported token list from server
+          const isChainSupported =
+            tokenList.find((token) => token.chainId === args.chainId) !==
+            undefined;
+
+          if (!isChainSupported) {
+            return {
+              data: [
+                unSupportedToken,
+                ...tokenList.map((token) => ({ ...token, balance: "0" })),
+              ],
+            };
+          }
+
           const balanceQueries = tokenList.map((token) => {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
               token.rpcUrl

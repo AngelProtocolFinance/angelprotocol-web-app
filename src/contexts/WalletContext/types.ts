@@ -5,7 +5,7 @@ export type Connection = {
   connect(): Promise<void>;
 };
 export type ProviderInfo = {
-  id: ProviderId;
+  providerId: ProviderId;
   logo: string;
   chainId: string;
   address: string;
