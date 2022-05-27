@@ -7,7 +7,7 @@ import {
 } from "contexts/WalletContext/types";
 import { getProvider } from "helpers/getProvider";
 
-export default async function switchNetwork(
+export default async function addNetworkAndSwitch(
   coin: NativeToken,
   providerId: ProviderId
 ) {

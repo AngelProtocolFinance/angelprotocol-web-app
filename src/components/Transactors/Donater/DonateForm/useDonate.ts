@@ -6,7 +6,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee, setFormError } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
-import switchNetwork from "helpers/switchNetwork";
+import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import { denoms } from "constants/currency";
 import { DonateValues } from "../types";
 import useEstimator from "../useEstimator";
@@ -40,9 +40,20 @@ export default function useDonate() {
         dispatch(setFormError("Wallet is not connected"));
         return;
       }
-      await switchNetwork(token, providerId);
+      await addNetworkAndSwitch(token, providerId);
     } catch (err) {
       console.error(err);
+      dispatch(
+        setFormError(
+          /**generalize this error, since manifestation is different on wallets
+           * metamask: errs code -32603 if network is a default metamask network,
+           * but also errs -32603 on other type of error
+           *
+           * binance-wallet: error message
+           */
+          "Unknown error: Kindly switch your wallet network manually"
+        )
+      );
     }
   }
 

@@ -1,6 +1,6 @@
 import { useModalContext } from "contexts/ModalContext";
 import { NativeToken, ProviderId } from "contexts/WalletContext/types";
-import switchNetwork from "helpers/switchNetwork";
+import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import WalletPrompt from "../WalletPrompt";
 
 export default function NetworkOption({
@@ -10,13 +10,13 @@ export default function NetworkOption({
   const { showModal } = useModalContext();
   async function handleNetworkChange() {
     try {
-      await switchNetwork(coin, providerId);
+      await addNetworkAndSwitch(coin, providerId);
     } catch (err) {
-      showModal(WalletPrompt, {
-        message: "This network might not be supported by your wallet",
-      });
-      //render appropriate prompt
       console.error(err);
+      //render appropriate prompt
+      showModal(WalletPrompt, {
+        message: "Unknown error: Kindly switch your wallet network manually",
+      });
     }
   }
   return (

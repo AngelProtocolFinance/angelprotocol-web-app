@@ -61,7 +61,6 @@ export default function useEstimator() {
         const provider = new ethers.providers.Web3Provider(
           getProvider(providerId) as any
         );
-        console.log(getProvider(providerId) as any);
         //no network request
         const signer = provider.getSigner();
         const sender = await signer.getAddress();
