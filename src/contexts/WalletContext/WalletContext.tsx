@@ -9,15 +9,15 @@ import {
   useState,
 } from "react";
 import unknownWaleltIcon from "assets/icons/wallets/unknown.svg";
-import { chainIDs } from "constants/chainIDs";
-import { placeHolderToken, tokenList, unSupportedToken } from "./constants";
-import genUnsupportedToken from "./helpers/genUnsupportedToken";
 import {
-  Connection,
-  NativeTokenWithBalance,
-  ProviderId,
-  ProviderStatuses,
-} from "./types";
+  placeHolderToken,
+  tokenList,
+  unSupportedToken,
+} from "services/apes/tokens/constants";
+import { NativeTokenWithBalance } from "services/types";
+import { chainIDs } from "constants/chainIDs";
+import genUnsupportedToken from "./helpers/genUnsupportedToken";
+import { Connection, ProviderId, ProviderStatuses } from "./types";
 import useInjectedWallet from "./useInjectedProvider";
 
 type IWalletState = {

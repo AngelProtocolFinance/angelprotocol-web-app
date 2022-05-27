@@ -93,6 +93,26 @@ export type TxLogPayload = Receiver &
 
 /** apes/token-list */
 
+type ERC20Token = {
+  contractAddr: string;
+  logo: string;
+};
+
+export type NativeToken = {
+  min_denom: string; //avax
+  symbol: string; //AVAX
+  logo: string;
+  decimals: number; //18
+  chainId: string; // "1"-mainnet "97"-binance-test "43017"-avax
+
+  //additional info for adding chain in wallet
+  rpcUrl: string;
+  chainName: string; //Avalanche
+  blockExplorerUrl: string; //https://testnet.snowtrace.io
+
+  erc20Tokens: ERC20Token[];
+};
+
 /** /endowments */
 export interface Profile {
   //terra

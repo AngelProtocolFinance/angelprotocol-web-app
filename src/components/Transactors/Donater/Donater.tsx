@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { placeHolderToken } from "contexts/WalletContext/constants";
+import { placeHolderToken } from "services/apes/tokens/constants";
 import { requiredTokenAmount } from "schemas/number";
 import { SchemaShape } from "schemas/types";
 import DonateForm from "./DonateForm/DonateForm";

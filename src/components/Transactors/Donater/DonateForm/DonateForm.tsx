@@ -11,7 +11,7 @@ export default function DonateForm() {
     to,
     isFormLoading,
     isSubmitDisabled,
-    isInCorrectNetwork,
+    isNetworkPromptShown,
     correctNetworkInfo,
     isSwitchingNetwork,
     handleNetworkChange,
@@ -32,18 +32,16 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
-      {!isInCorrectNetwork && (
+      {isNetworkPromptShown && (
         <div className="grid bg-amber-400/5 border-2 rounded-md border-amber-400/20 p-1.5 mb-2">
-          <div className="text-sm text-left text-amber-500">
-            <p className="leading-normal">
-              To transact{" "}
-              <span className="font-semibold">{correctNetworkInfo.symbol}</span>
-              , kindly switch wallet network to
-            </p>
-            <p className="text-amber-500 font-semibold uppercase">
+          <p className="text-xs font-mono text-amber-500">
+            To transact{" "}
+            <span className="font-semibold">{correctNetworkInfo.symbol}</span>,
+            kindly switch wallet network to{" "}
+            <span className="text-amber-500 font-semibold">
               {correctNetworkInfo.name}
-            </p>
-          </div>
+            </span>
+          </p>
           <button
             disabled={isSwitchingNetwork}
             onClick={handleNetworkChange}

@@ -1,4 +1,4 @@
-import { NativeToken } from "contexts/WalletContext/types";
+import { NativeToken } from "types/server/aws";
 
 export interface DonateValues {
   amount: string;

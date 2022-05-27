@@ -71,11 +71,11 @@ export default function useDonate() {
 
   return {
     donate: handleSubmit(ethSender),
-    isInCorrectNetwork,
     correctNetworkInfo: {
       name: token.chainName,
       symbol: token.symbol,
     },
+    isNetworkPromptShown: !isInCorrectNetwork && providerId,
     isSwitchingNetwork: isWalletLoading,
     handleNetworkChange,
     isSubmitDisabled:

@@ -1,4 +1,4 @@
-import { NativeTokenWithBalance } from "contexts/WalletContext/types";
+import { NativeTokenWithBalance } from "services/types";
 
 export default function getTokenBalance(
   tokenBalances: NativeTokenWithBalance[],

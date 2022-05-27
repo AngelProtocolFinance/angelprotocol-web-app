@@ -1,8 +1,5 @@
-import {
-  Dwindow,
-  InjectedProvider,
-  ProviderId,
-} from "../contexts/WalletContext/types";
+import { Dwindow, InjectedProvider } from "types/ethereum";
+import { ProviderId } from "contexts/WalletContext/types";
 
 export function getProvider(
   providerId: ProviderId

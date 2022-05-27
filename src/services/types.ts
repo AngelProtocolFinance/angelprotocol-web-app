@@ -1,19 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { Profile } from "types/server/aws";
+import { NativeToken, Profile } from "types/server/aws";
 
-export type ContractQueryArgs<T = object> = {
-  address: string;
-  msg: T;
-};
-
-export type TerraTags =
-  | "gov"
-  | "indexfund"
-  | "admin"
-  | "endowment"
-  | "multicall"
-  | "registrar";
+/** tokens */
+export type NativeTokenWithBalance = NativeToken & { balance: string };
 
 /**endowments */
 export type CategorizedProfiles = {

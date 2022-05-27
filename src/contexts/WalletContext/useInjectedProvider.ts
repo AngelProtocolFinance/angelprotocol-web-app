@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { EIP1193Error } from "errors/errors";
-import { getProvider } from "../../helpers/getProvider";
-import { EIPMethods, providerIcons } from "./constants";
 import {
   AccountChangeHandler,
   ChainChangeHandler,
-  Connection,
   Dwindow,
   InjectedProvider,
-  ProviderId,
-  ProviderInfo,
-} from "./types";
+} from "types/ethereum";
+import { EIP1193Error } from "errors/errors";
+import { EIPMethods } from "constants/ethereum";
+import { getProvider } from "../../helpers/getProvider";
+import { providerIcons } from "./constants";
+import { Connection, ProviderId, ProviderInfo } from "./types";
 
 export default function useInjectedProvider(providerId: ProviderId) {
   const actionKey = `${providerId}__pref`;

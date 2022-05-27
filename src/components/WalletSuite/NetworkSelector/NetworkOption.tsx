@@ -1,5 +1,6 @@
+import { NativeToken } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { NativeToken, ProviderId } from "contexts/WalletContext/types";
+import { ProviderId } from "contexts/WalletContext/types";
 import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import WalletPrompt from "../WalletPrompt";
 

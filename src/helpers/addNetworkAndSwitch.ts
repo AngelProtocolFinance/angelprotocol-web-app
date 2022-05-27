@@ -1,11 +1,9 @@
 import { ethers } from "ethers";
-import { EIPMethods } from "contexts/WalletContext/constants";
-import {
-  ChainParams,
-  NativeToken,
-  ProviderId,
-} from "contexts/WalletContext/types";
+import { ChainParams } from "types/ethereum";
+import { NativeToken } from "types/server/aws";
+import { ProviderId } from "contexts/WalletContext/types";
 import { getProvider } from "helpers/getProvider";
+import { EIPMethods } from "constants/ethereum";
 
 export default async function addNetworkAndSwitch(
   coin: NativeToken,

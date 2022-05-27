@@ -1,4 +1,4 @@
-import { NativeTokenWithBalance } from "contexts/WalletContext/types";
+import { NativeTokenWithBalance } from "services/types";
 import toCurrency from "helpers/toCurrency";
 
 export default function Holdings(props: { coins: NativeTokenWithBalance[] }) {
