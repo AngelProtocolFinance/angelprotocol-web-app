@@ -23,15 +23,17 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
           Please select network
         </p>
         <ModalContext backdropClasses="z-10 absolute inset-0 bg-black/50">
-          {coins.map((coin) => (
-            <NetworkOption
-              key={coin.chainId}
-              {...coin}
-              providerId={
-                providerId! /**this component is rendered only when a provider is connected */
-              }
-            />
-          ))}
+          {coins
+            .slice(1) /**don't include display coin on unsupported case*/
+            .map((coin) => (
+              <NetworkOption
+                key={coin.chainId}
+                {...coin}
+                providerId={
+                  providerId! /**this component is rendered only when a provider is connected */
+                }
+              />
+            ))}
         </ModalContext>
       </div>
     </>

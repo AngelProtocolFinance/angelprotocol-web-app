@@ -22,7 +22,9 @@ export default function NetworkSelectionOpener() {
           {isWalletLoading ? "Switching.." : "Unsupported network"}
         </p>
       </button>
-      {optionsShown && <NetworkSelection closeHandler={hideDetails} />}
+      {optionsShown && !isWalletLoading && (
+        <NetworkSelection closeHandler={hideDetails} />
+      )}
     </>
   );
 }
