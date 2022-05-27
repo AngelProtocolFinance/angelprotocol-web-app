@@ -1,10 +1,10 @@
-import { NativeToken } from "types/server/aws";
+import { Token } from "types/server/aws";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: NativeToken;
+  token: Token;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";

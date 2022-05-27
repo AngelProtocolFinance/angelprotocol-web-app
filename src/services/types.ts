@@ -1,9 +1,9 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { NativeToken, Profile } from "types/server/aws";
+import { Profile, Token } from "types/server/aws";
 
 /** tokens */
-export type NativeTokenWithBalance = NativeToken & { balance: string };
+export type TokenWithBalance = Token & { balance: string };
 
 /**endowments */
 export type CategorizedProfiles = {

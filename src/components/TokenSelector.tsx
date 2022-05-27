@@ -9,7 +9,7 @@ import Select, {
   SingleValueProps,
   ValueContainerProps,
 } from "react-select";
-import { NativeToken } from "types/server/aws";
+import { Token } from "types/server/aws";
 // import { useTokensQuery } from "services/apes/tokens";
 import { tokenList as tokens } from "services/apes/tokens/constants";
 
@@ -50,7 +50,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
   );
 }
 
-const Control: FC<ControlProps<NativeToken>> = ({
+const Control: FC<ControlProps<Token>> = ({
   children,
   innerProps,
   innerRef,
@@ -62,7 +62,7 @@ const Control: FC<ControlProps<NativeToken>> = ({
   );
 };
 
-const ValueContainer: FC<ValueContainerProps<NativeToken>> = ({
+const ValueContainer: FC<ValueContainerProps<Token>> = ({
   innerProps,
   children,
 }) => (
@@ -71,7 +71,7 @@ const ValueContainer: FC<ValueContainerProps<NativeToken>> = ({
   </div>
 );
 
-const SingleValue: FC<SingleValueProps<NativeToken>> = ({
+const SingleValue: FC<SingleValueProps<Token>> = ({
   children,
   data,
   innerProps,
@@ -84,8 +84,8 @@ const SingleValue: FC<SingleValueProps<NativeToken>> = ({
   );
 };
 
-const getOptionLabel = (option: NativeToken) => option.symbol;
-const Option: FC<OptionProps<NativeToken>> = ({
+const getOptionLabel = (option: Token) => option.symbol;
+const Option: FC<OptionProps<Token>> = ({
   data: option,
   innerRef,
   innerProps,
@@ -102,11 +102,7 @@ const Option: FC<OptionProps<NativeToken>> = ({
     </div>
   );
 };
-const Menu: FC<MenuProps<NativeToken>> = ({
-  innerProps,
-  innerRef,
-  children,
-}) => {
+const Menu: FC<MenuProps<Token>> = ({ innerProps, innerRef, children }) => {
   return (
     <div ref={innerRef} {...innerProps} className="absolute right-0 shadow-lg">
       {children}
@@ -114,7 +110,7 @@ const Menu: FC<MenuProps<NativeToken>> = ({
   );
 };
 
-const MenuList: FC<MenuListProps<NativeToken>> = ({
+const MenuList: FC<MenuListProps<Token>> = ({
   innerProps,
   innerRef,
   children,
@@ -130,10 +126,7 @@ const MenuList: FC<MenuListProps<NativeToken>> = ({
   );
 };
 
-const NoOptionsMessage: FC<NoticeProps<NativeToken>> = ({
-  innerProps,
-  children,
-}) => {
+const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
   return (
     <div {...innerProps} className="text-sm text-red-400/70 p-2">
       {children}

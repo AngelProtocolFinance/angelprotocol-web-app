@@ -1,4 +1,4 @@
-import { NativeToken } from "types/server/aws";
+import { Token } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
 import { ProviderId } from "contexts/WalletContext/types";
 import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
@@ -7,7 +7,7 @@ import WalletPrompt from "../WalletPrompt";
 export default function NetworkOption({
   providerId,
   ...coin
-}: NativeToken & { providerId: ProviderId }) {
+}: Token & { providerId: ProviderId }) {
   const { showModal } = useModalContext();
   async function handleNetworkChange() {
     try {

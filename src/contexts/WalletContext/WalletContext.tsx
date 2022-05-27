@@ -14,7 +14,8 @@ import {
   tokenList,
   unSupportedToken,
 } from "services/apes/tokens/constants";
-import { NativeTokenWithBalance } from "services/types";
+import { useEthBalancesQuery } from "services/apes/tokens/tokens";
+import { TokenWithBalance } from "services/types";
 import { chainIDs } from "constants/chainIDs";
 import genUnsupportedToken from "./helpers/genUnsupportedToken";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
@@ -22,8 +23,8 @@ import useInjectedWallet from "./useInjectedProvider";
 
 type IWalletState = {
   walletIcon: string;
-  displayCoin: NativeTokenWithBalance;
-  coins: NativeTokenWithBalance[];
+  displayCoin: TokenWithBalance;
+  coins: TokenWithBalance[];
   address: string;
   chainId: string;
   providerId?: ProviderId;
@@ -56,6 +57,11 @@ const initialState: IState = {
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const [isWalletLoading, setIsWalletLoading] = useState(true); //getting wallet resources
   const [wallet, setWallet] = useState<IWalletState>(initialState);
+
+  useEthBalancesQuery(
+    { address: wallet.address, chainId: wallet.chainId },
+    { skip: !wallet.address }
+  );
 
   const {
     isLoading: isMetamaskLoading, //requesting permission, attaching event listeners
@@ -149,7 +155,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           const queryResult = await Promise.allSettled(balanceQueries);
 
           //map balances
-          const coins: NativeTokenWithBalance[] = queryResult.map((result, i) =>
+          const coins: TokenWithBalance[] = queryResult.map((result, i) =>
             result.status === "fulfilled"
               ? {
                   ...tokenList[i],

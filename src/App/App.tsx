@@ -1,3 +1,4 @@
+import { useEthBalancesQuery } from "services/apes/tokens/tokens";
 import ModalContext from "contexts/ModalContext";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import AppFoot from "./AppFoot";

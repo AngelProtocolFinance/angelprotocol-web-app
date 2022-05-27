@@ -93,12 +93,7 @@ export type TxLogPayload = Receiver &
 
 /** apes/token-list */
 
-type ERC20Token = {
-  contractAddr: string;
-  logo: string;
-};
-
-export type NativeToken = {
+export type Token = {
   min_denom: string; //avax
   symbol: string; //AVAX
   logo: string;
@@ -110,7 +105,11 @@ export type NativeToken = {
   chainName: string; //Avalanche
   blockExplorerUrl: string; //https://testnet.snowtrace.io
 
-  erc20Tokens: ERC20Token[];
+  contractAddr?: string;
+  erc20Tokens: {
+    contractAddr: string;
+    logo: string;
+  }[];
 };
 
 /** /endowments */

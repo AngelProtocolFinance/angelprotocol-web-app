@@ -1,10 +1,10 @@
-import { NativeToken } from "types/server/aws";
+import { Token } from "types/server/aws";
 import coinIcon from "assets/icons/currencies/coin.svg";
 import ethLogo from "assets/icons/currencies/ether.png";
-import { NativeTokenWithBalance } from "services/types";
+import { TokenWithBalance } from "services/types";
 import { chainIDs } from "constants/chainIDs";
 
-export const placeHolderToken: NativeTokenWithBalance = {
+export const placeHolderToken: TokenWithBalance = {
   min_denom: "wei",
   symbol: "ETH",
   logo: ethLogo,
@@ -17,7 +17,7 @@ export const placeHolderToken: NativeTokenWithBalance = {
   balance: "0",
 };
 
-export const unSupportedToken: NativeTokenWithBalance = {
+export const unSupportedToken: TokenWithBalance = {
   min_denom: "xx",
   symbol: "XX",
   logo: coinIcon,
@@ -30,7 +30,7 @@ export const unSupportedToken: NativeTokenWithBalance = {
   balance: "0",
 };
 
-const avalancheToken: NativeToken = {
+const avalancheToken: Token = {
   min_denom: "avax",
   symbol: "AVAX",
   logo: "https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=022",
@@ -47,7 +47,7 @@ const avalancheToken: NativeToken = {
   ],
 };
 
-const binanceToken: NativeToken = {
+const binanceToken: Token = {
   min_denom: "bnb",
   symbol: "BNB",
   logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=022",
@@ -59,7 +59,7 @@ const binanceToken: NativeToken = {
   erc20Tokens: [],
 };
 
-const ethereumToken: NativeToken = {
+const ethereumToken: Token = {
   min_denom: "wei",
   symbol: "ETH",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",
@@ -72,8 +72,4 @@ const ethereumToken: NativeToken = {
 };
 
 //TODO: get this from server
-export const tokenList: NativeToken[] = [
-  avalancheToken,
-  binanceToken,
-  ethereumToken,
-];
+export const tokenList: Token[] = [avalancheToken, binanceToken, ethereumToken];

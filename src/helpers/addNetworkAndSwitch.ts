@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
 import { ChainParams } from "types/ethereum";
-import { NativeToken } from "types/server/aws";
+import { Token } from "types/server/aws";
 import { ProviderId } from "contexts/WalletContext/types";
 import { getProvider } from "helpers/getProvider";
 import { EIPMethods } from "constants/ethereum";
 
 export default async function addNetworkAndSwitch(
-  coin: NativeToken,
+  coin: Token,
   providerId: ProviderId
 ) {
   const provider = getProvider(providerId);
@@ -17,7 +17,7 @@ export default async function addNetworkAndSwitch(
   //let caller catch error
 }
 
-function getChainParamsFromCoin(coin: NativeToken): ChainParams {
+function getChainParamsFromCoin(coin: Token): ChainParams {
   return {
     chainId: ethers.BigNumber.from(coin.chainId).toHexString(),
     blockExplorerUrls: [coin.blockExplorerUrl],

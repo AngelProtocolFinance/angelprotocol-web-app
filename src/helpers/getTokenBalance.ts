@@ -1,7 +1,7 @@
-import { NativeTokenWithBalance } from "services/types";
+import { TokenWithBalance } from "services/types";
 
 export default function getTokenBalance(
-  tokenBalances: NativeTokenWithBalance[],
+  tokenBalances: TokenWithBalance[],
   denom: string
 ) {
   const balance =
@@ -9,9 +9,6 @@ export default function getTokenBalance(
   return +balance;
 }
 
-export function getToken(
-  tokenBalances: NativeTokenWithBalance[],
-  denom: string
-) {
+export function getToken(tokenBalances: TokenWithBalance[], denom: string) {
   return tokenBalances.find((token) => token.min_denom === denom) || {};
 }
