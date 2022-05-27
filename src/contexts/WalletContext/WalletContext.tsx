@@ -4,11 +4,8 @@ import {
   useCallback,
   useContext,
 } from "react";
-import unknownWaleltIcon from "assets/icons/wallets/unknown.svg";
-import {
-  placeHolderToken,
-  unSupportedToken,
-} from "services/apes/tokens/constants";
+import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
+import { placeHolderToken } from "services/apes/tokens/constants";
 import { useEthBalancesQuery } from "services/apes/tokens/tokens";
 import { TokenWithBalance } from "services/types";
 import { chainIDs } from "constants/chainIDs";
@@ -35,7 +32,7 @@ type Setters = {
 };
 
 const initialWalletState: IWalletState = {
-  walletIcon: unknownWaleltIcon,
+  walletIcon: unknownWalletIcon,
   displayCoin: placeHolderToken,
   coins: [],
   address: "",
@@ -97,7 +94,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   } = activeProviderInfo || {};
 
   const {
-    data: coinWithBalances = [unSupportedToken],
+    data: coinWithBalances = [placeHolderToken],
     isLoading,
     isFetching,
   } = useEthBalancesQuery({ address, chainId }, { skip: !address || !chainId });

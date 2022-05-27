@@ -13,6 +13,8 @@ export async function getERC20Holdings(
   holderAddress: string,
   ERC20ContractAddresses: string[]
 ) {
+  if (ERC20ContractAddresses.length <= 0) return [];
+
   const multicall = new Multicall({
     nodeUrl,
     tryAggregate: true,

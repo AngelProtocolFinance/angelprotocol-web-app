@@ -57,22 +57,33 @@ export default function useInjectedProvider(providerId: ProviderId) {
   };
 
   const requestAccess = async (isNewConnection = false) => {
-    const injectedProvider = getProvider(providerId);
-    if (injectedProvider && (isNewConnection || shouldReconnect) && !address) {
-      attachAccountChangeHandler(injectedProvider);
-      attachChainChangedHandler(injectedProvider);
+    try {
+      const injectedProvider = getProvider(providerId);
+      if (
+        injectedProvider &&
+        (isNewConnection || shouldReconnect) &&
+        !address
+      ) {
+        attachAccountChangeHandler(injectedProvider);
+        attachChainChangedHandler(injectedProvider);
 
-      const accounts = await injectedProvider.request<string[]>({
-        method: EIPMethods.eth_requestAccounts,
-      });
-      const hexChainId = await injectedProvider.request<string>({
-        method: EIPMethods.eth_chainId,
-      });
+        const accounts = await injectedProvider.request<string[]>({
+          method: EIPMethods.eth_requestAccounts,
+        });
+        const hexChainId = await injectedProvider.request<string>({
+          method: EIPMethods.eth_chainId,
+        });
 
-      setAddress(accounts[0]);
-      setChainId(`${parseInt(hexChainId, 16)}`);
+        setAddress(accounts[0]);
+        setChainId(`${parseInt(hexChainId, 16)}`);
+      }
+      setIsLoading(false);
+    } catch (err) {
+      //if user cancels, set pref to disconnect
+      console.error(err);
+      setIsLoading(false);
+      saveUserAction(actionKey, "disconnect");
     }
-    setIsLoading(false);
   };
 
   function disconnect() {
