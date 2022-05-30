@@ -12,7 +12,7 @@ export function useApprovedVaultsRateState() {
     isFetching,
   } = registrar_api.endpoints.approvedVaultsRate.useQueryState(
     contract.vaultsRate,
-    { skip: wallet?.network.chainID === chainIDs.localterra }
+    { skip: wallet?.network.chainID === chainIDs.terra_local }
   );
 
   return {

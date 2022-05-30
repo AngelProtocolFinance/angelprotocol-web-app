@@ -18,7 +18,7 @@ const airdrop_api = aws.injectEndpoints({
         baseQuery
       ) {
         try {
-          const chainId = is_test ? chainIDs.testnet : chainIDs.mainnet;
+          const chainId = is_test ? chainIDs.terra_test : chainIDs.terra_main;
           const terra_endpoint = terra_lcds[chainId];
           const airdrop_addr = contracts[chainId][sc.airdrop];
 

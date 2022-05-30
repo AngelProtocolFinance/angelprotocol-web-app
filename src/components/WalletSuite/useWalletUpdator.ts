@@ -125,10 +125,10 @@ export default function useWalletUpdator(activeProvider: Providers) {
             address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
             chainId:
-              wallet.network.chainID === chainIDs.mainnet
-                ? chainIDs.gen_mainnet
-                : wallet.network.chainID === chainIDs.testnet
-                ? chainIDs.gen_testnet
+              wallet.network.chainID === chainIDs.terra_main
+                ? chainIDs.mainnet
+                : wallet.network.chainID === chainIDs.terra_test
+                ? chainIDs.testnet
                 : (`${network.chainId}` as chainIDs),
             supported_denoms,
           })

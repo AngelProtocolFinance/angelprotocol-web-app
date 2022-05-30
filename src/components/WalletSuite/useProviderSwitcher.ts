@@ -16,7 +16,7 @@ import { useSetter } from "store/accessors";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
-  const terra_chain_ref = useRef<string>(chainIDs.testnet);
+  const terra_chain_ref = useRef<string>(chainIDs.terra_test);
 
   //terra states
   const { status: terraStatus, wallet } = useWalletContext();
@@ -63,7 +63,7 @@ export default function useProviderSwitcher() {
 
   //update chain for terra
   useEffect(() => {
-    const chainID = wallet?.network.chainID || chainIDs.mainnet;
+    const chainID = wallet?.network.chainID || chainIDs.terra_main;
     dispatch(
       updateChainID({
         chain: chains.terra,

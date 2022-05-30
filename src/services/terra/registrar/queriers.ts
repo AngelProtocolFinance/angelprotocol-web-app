@@ -12,7 +12,7 @@ export function useApprovedVaultsRate() {
     isLoading,
     isFetching,
   } = useApprovedVaultsRateQuery(contract.vaultsRate, {
-    skip: wallet?.network.chainID === chainIDs.localterra,
+    skip: wallet?.network.chainID === chainIDs.terra_local,
   });
 
   return {
