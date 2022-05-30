@@ -1,7 +1,9 @@
+import { HaloStakingValues } from "./types";
+import useStakerBalance from "./useStakerBalance";
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { currency_text, denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -15,8 +17,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
-import { HaloStakingValues } from "./types";
-import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
   const {
@@ -27,7 +27,7 @@ export default function useEstimator() {
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: LUNA_balance } = useBalances(denoms.uluna);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -73,15 +73,17 @@ export default function useEstimator() {
         }
 
         const fee = await contract.estimateFee([govMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeAmount >= LUNA_balance) {
+          dispatch(
+            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -93,7 +95,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, balance, locked]);
+  }, [debounced_amount, wallet, LUNA_balance, balance, locked]);
 
   return { tx, wallet };
 }

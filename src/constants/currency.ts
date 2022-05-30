@@ -1,15 +1,14 @@
+import atom from "assets/icons/currencies/atom.png";
+import bnb from "assets/icons/currencies/bnb.png";
+import btc from "assets/icons/currencies/btc.png";
+import ether from "assets/icons/currencies/ether.png";
+import halo from "assets/icons/currencies/halo_outline.png";
 import krt from "assets/icons/currencies/krt.svg";
 import luna from "assets/icons/currencies/luna.svg";
 import mnt from "assets/icons/currencies/mnt.svg";
 import sdt from "assets/icons/currencies/sdt.svg";
-import token from "assets/icons/currencies/token.svg";
-import ust from "assets/icons/currencies/ust.svg";
-import ether from "assets/icons/currencies/ether.png";
-import btc from "assets/icons/currencies/btc.png";
 import sol from "assets/icons/currencies/sol.svg";
-import atom from "assets/icons/currencies/atom.png";
-import halo from "assets/icons/currencies/halo_outline.png";
-import bnb from "assets/icons/currencies/bnb.png";
+import token from "assets/icons/currencies/token.svg";
 
 export enum denoms {
   uluna = "uluna",
@@ -32,7 +31,6 @@ export enum denoms {
   usek = "usek",
   usgd = "usgd",
   uthb = "uthb",
-  uusd = "uusd",
   ether = "ether",
   bnb = "bnb",
   wei = "wei",
@@ -64,7 +62,6 @@ export const currency_text: { [key in denoms]: string } = {
   [denoms.usek]: "SEK",
   [denoms.usgd]: "SGD",
   [denoms.uthb]: "THB",
-  [denoms.uusd]: "UST",
   [denoms.coin]: "COIN",
   [denoms.btc]: "BTC",
   [denoms.ether]: "ETH",
@@ -96,7 +93,6 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.usek]: token,
   [denoms.usgd]: token,
   [denoms.uthb]: token,
-  [denoms.uusd]: ust,
   [denoms.coin]: token,
   [denoms.ether]: ether,
   [denoms.bnb]: bnb,

@@ -1,7 +1,9 @@
+import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
+import { CreatePollValues } from "./types";
 import { Fee } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { currency_text, denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
@@ -13,15 +15,13 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
-import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
-import { CreatePollValues } from "./types";
 
 export default function useCreatePollEstimate() {
   const {
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: LUNA_balance } = useBalances(denoms.uluna);
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
@@ -58,15 +58,17 @@ export default function useCreatePollEstimate() {
 
         //max fee estimate with extreme payload
         const fee = await contract.estimateFee(pollMsgs);
-        const feeNum = extractFeeNum(fee);
+        const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeAmount >= LUNA_balance) {
+          dispatch(
+            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setMaxFee(fee);
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -78,7 +80,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, UST_balance, isDirty, isValid]);
+  }, [wallet, haloBalance, LUNA_balance, isDirty, isValid]);
 
   return { wallet, maxFee };
 

@@ -1,7 +1,7 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { currency_text, denoms } from "constants/currency";
 import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
@@ -19,7 +19,7 @@ export default function useClaimEstimator() {
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
   const { wallet } = useWalletContext();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: LUNA_balance } = useBalances(denoms.uluna);
 
   useEffect(() => {
     (async () => {
@@ -47,15 +47,17 @@ export default function useClaimEstimator() {
         const contract = new Halo(wallet);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeAmount >= LUNA_balance) {
+          dispatch(
+            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ msgs: [claimMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -68,7 +70,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, UST_balance, gov_staker]);
+  }, [wallet, LUNA_balance, gov_staker]);
 
   return { wallet, tx };
 }

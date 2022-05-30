@@ -1,8 +1,9 @@
+import { VoteValues } from "./types";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { currency_text, denoms } from "constants/currency";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -16,7 +17,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
-import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
   const {
@@ -26,7 +26,7 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: LUNA_balance } = useBalances(denoms.uluna);
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
@@ -86,15 +86,17 @@ export default function useVoteEstimator() {
         );
 
         const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeAmount >= LUNA_balance) {
+          dispatch(
+            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeAmount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -110,7 +112,7 @@ export default function useVoteEstimator() {
     debounced_amount,
     debounced_vote,
     wallet,
-    UST_balance,
+    LUNA_balance,
     haloBalance,
     govStaker,
   ]);
