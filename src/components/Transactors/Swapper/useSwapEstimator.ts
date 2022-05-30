@@ -3,7 +3,7 @@ import {
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { currency_text, MAIN_DENOM } from "constants/currency";
 import LP from "contracts/LP";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -29,7 +29,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const { haloBalance } = useHaloBalance();
 
   const { wallet } = useWalletContext();
@@ -58,8 +58,10 @@ export default function useSwapEstimator() {
 
         // first balance check
         if (is_buy) {
-          if (amount > UST_balance) {
-            dispatch(setFormError("Not enough UST"));
+          if (amount > mainBalance.amount) {
+            dispatch(
+              setFormError(`Not enough ${currency_text[mainBalance.denom]}`)
+            );
             return;
           }
         } else {
@@ -102,15 +104,23 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount.get(MAIN_DENOM)!.mul(1e-6).amount.toNumber();
 
         //2nd balance check including fees
-        if (is_buy && feeNum + debounced_amount >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (is_buy && feeNum + debounced_amount >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${currency_text[mainBalance.denom]} to pay fees`
+            )
+          );
           return;
         }
-        if (!is_buy && feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (!is_buy && feeNum >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${currency_text[mainBalance.denom]} to pay fees`
+            )
+          );
           return;
         }
 
@@ -131,7 +141,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, is_buy, debounced_slippage]);
+  }, [debounced_amount, wallet, mainBalance, is_buy, debounced_slippage]);
 
   return { wallet, tx };
 }

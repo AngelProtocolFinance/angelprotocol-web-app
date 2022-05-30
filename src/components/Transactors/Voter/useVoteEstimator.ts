@@ -1,6 +1,5 @@
-import { VoteValues } from "./types";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { currency_text, denoms } from "constants/currency";
+import { currency_text, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";
 import extractFeeData from "helpers/extractFeeData";
@@ -17,6 +16,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
   const {
@@ -26,7 +26,7 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: LUNA_balance } = useBalances(denoms.uluna);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
@@ -89,7 +89,7 @@ export default function useVoteEstimator() {
         const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeAmount >= LUNA_balance) {
+        if (feeAmount >= mainBalance.amount) {
           dispatch(
             setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
           );
@@ -112,7 +112,7 @@ export default function useVoteEstimator() {
     debounced_amount,
     debounced_vote,
     wallet,
-    LUNA_balance,
+    mainBalance,
     haloBalance,
     govStaker,
   ]);

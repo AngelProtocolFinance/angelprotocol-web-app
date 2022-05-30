@@ -1,4 +1,9 @@
-import { currency_icons, denoms } from "constants/currency";
+import {
+  currency_icons,
+  currency_text,
+  denoms,
+  MAIN_DENOM,
+} from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 
@@ -7,7 +12,7 @@ export default function Output() {
 
   const return_amount = watch("return_amount");
   const is_buy = watch("is_buy");
-  const icon = currency_icons[is_buy ? denoms.uhalo : denoms.uusd];
+  const icon = currency_icons[is_buy ? denoms.uhalo : MAIN_DENOM];
 
   return (
     <div className="grid grid-cols-a1 bg-light-grey text-angel-grey p-3 rounded-md shadow-inner-white-grey mb-2">
@@ -21,7 +26,7 @@ export default function Output() {
           alt=""
         />
         <span className="block font-bold text-2xl">
-          {is_buy ? "HALO" : "UST"}
+          {is_buy ? currency_text[denoms.uhalo] : currency_text[MAIN_DENOM]}
         </span>
       </div>
 

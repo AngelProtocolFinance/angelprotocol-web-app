@@ -18,7 +18,7 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
-          denom={currency_text[denoms.uusd]}
+          denom={currency_text[denoms.uluna]}
           precision={6}
         />
         <Figure

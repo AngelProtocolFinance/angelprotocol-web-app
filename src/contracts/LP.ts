@@ -1,6 +1,6 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
+import { denoms, MAIN_DENOM } from "constants/currency";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { Simulation } from "services/terra/lp/types";
@@ -34,7 +34,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: MAIN_DENOM,
               },
             },
             amount: "1000000",
@@ -52,7 +52,7 @@ export default class LP extends Contract {
         pair: {
           asset_infos: [
             { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: denoms.uusd } },
+            { native_token: { denom: MAIN_DENOM } },
           ],
         },
       },

@@ -31,7 +31,6 @@ function Entry(props: { title: string; amount: number; currency: string }) {
 }
 
 const decimals: { [index: string]: number } = {
-  [denoms.uusd]: 2,
   [denoms.btc]: 6,
   [denoms.ether]: 6,
   [denoms.sol]: 6,

@@ -102,3 +102,5 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uatom]: atom,
   [denoms.uhalo]: halo,
 };
+
+export const MAIN_DENOM = denoms.uluna;

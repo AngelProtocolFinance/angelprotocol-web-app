@@ -15,7 +15,7 @@ export function useLatestBlock() {
   return data;
 }
 
-export function useBalances(main: denoms, others?: denoms[]) {
+export function useBalances(mainDenom: denoms, otherDenoms?: denoms[]) {
   const { wallet } = useWalletContext();
   const { useBalancesQuery } = terra;
   const {
@@ -32,15 +32,17 @@ export function useBalances(main: denoms, others?: denoms[]) {
     amount: new Dec(amount).mul(1e-6).toNumber(),
   }));
 
-  const found_main = coins.find((coin) => coin.denom === main);
-  const _main = new Dec(found_main?.amount || "0").toNumber();
-  const _others = coins.filter((coin) =>
-    others ? others.includes(coin.denom) : true
+  const main = coins.find((coin) => coin.denom === mainDenom) ?? {
+    amount: new Dec("0").toNumber(),
+    denom: mainDenom,
+  };
+  const others = coins.filter((coin) =>
+    otherDenoms ? otherDenoms.includes(coin.denom) : true
   );
 
   return {
-    main: _main,
-    others: _others,
+    main,
+    others,
     terraBalancesLoading: isLoading || isFetching,
   };
 }

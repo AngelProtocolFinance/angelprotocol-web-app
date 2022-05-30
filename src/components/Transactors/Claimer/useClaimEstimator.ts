@@ -1,5 +1,5 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { currency_text, denoms } from "constants/currency";
+import { currency_text, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -19,7 +19,7 @@ export default function useClaimEstimator() {
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
   const { wallet } = useWalletContext();
-  const { main: LUNA_balance } = useBalances(denoms.uluna);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
 
   useEffect(() => {
     (async () => {
@@ -50,7 +50,7 @@ export default function useClaimEstimator() {
         const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeAmount >= LUNA_balance) {
+        if (feeAmount >= mainBalance.amount) {
           dispatch(
             setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
           );
@@ -70,7 +70,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, LUNA_balance, gov_staker]);
+  }, [wallet, mainBalance, gov_staker]);
 
   return { wallet, tx };
 }

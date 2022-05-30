@@ -1,7 +1,5 @@
-import { HaloStakingValues } from "./types";
-import useStakerBalance from "./useStakerBalance";
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { currency_text, denoms } from "constants/currency";
+import { currency_text, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -17,6 +15,8 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
+import { HaloStakingValues } from "./types";
+import useStakerBalance from "./useStakerBalance";
 
 export default function useEstimator() {
   const {
@@ -27,7 +27,7 @@ export default function useEstimator() {
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: LUNA_balance } = useBalances(denoms.uluna);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -76,7 +76,7 @@ export default function useEstimator() {
         const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeAmount >= LUNA_balance) {
+        if (feeAmount >= mainBalance.amount) {
           dispatch(
             setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
           );
@@ -95,7 +95,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, LUNA_balance, balance, locked]);
+  }, [debounced_amount, wallet, mainBalance, balance, locked]);
 
   return { tx, wallet };
 }

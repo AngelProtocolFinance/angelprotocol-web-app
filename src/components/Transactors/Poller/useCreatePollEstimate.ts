@@ -1,7 +1,7 @@
 import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 import { Fee } from "@terra-money/terra.js";
-import { currency_text, denoms } from "constants/currency";
+import { currency_text, denoms, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -21,7 +21,7 @@ export default function useCreatePollEstimate() {
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { main: LUNA_balance } = useBalances(denoms.uluna);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const dispatch = useSetter();
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
@@ -61,7 +61,7 @@ export default function useCreatePollEstimate() {
         const { feeAmount, feeDenom } = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeAmount >= LUNA_balance) {
+        if (feeAmount >= mainBalance.amount) {
           dispatch(
             setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
           );
@@ -80,7 +80,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, LUNA_balance, isDirty, isValid]);
+  }, [wallet, haloBalance, mainBalance, isDirty, isValid]);
 
   return { wallet, maxFee };
 

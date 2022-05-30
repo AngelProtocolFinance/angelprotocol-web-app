@@ -14,7 +14,7 @@ function Misc(props: { title: string; value: string }) {
 
 export function Fee() {
   const { fee } = useGetter((state) => state.transaction);
-  return <Misc title="tx fee" value={`${toCurrency(fee, 3)} UST`} />;
+  return <Misc title="tx fee" value={`${toCurrency(fee, 3)} LUNA`} />;
 }
 
 export function Total() {
