@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { placeHolderToken } from "services/apes/tokens/constants";
+import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import { SchemaShape } from "schemas/types";
 import DonateForm from "./DonateForm/DonateForm";
@@ -30,15 +31,16 @@ export default function Donater(props: FundFlow) {
   });
   return (
     <FormProvider {...methods}>
-      <DonateForm />
+      <DonateFormLoader />
     </FormProvider>
   );
 }
 
-// const createUSTToken = (balance: number) => ({
-//   balance,
-//   min_denom: denoms.uusd,
-//   symbol: "UST",
-//   decimals: 6,
-//   logo: denomIcons.uusd,
-// });
+function DonateFormLoader() {
+  return (
+    <div className="bg-white-grey grid p-4 rounded-md w-full">
+      <ContentLoader className="opacity-30 h-10 w-full" />
+      <ContentLoader className="opacity-30 h-24 mt-4 w-full" />
+    </div>
+  );
+}
