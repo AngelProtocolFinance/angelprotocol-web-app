@@ -12,16 +12,6 @@ export const apes_endpoint =
 
 export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
-//ethereum
-export const eth_rpcs: URL_GROUP = {
-  [chainIDs.eth_main]:
-    "https://mainnet.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-  [chainIDs.eth_ropsten]:
-    "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-  [chainIDs.eth_kovan]:
-    "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
-};
-
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";
 
