@@ -2,6 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { placeHolderToken } from "services/apes/tokens/constants";
+import { useEthBalancesQuery } from "services/apes/tokens/tokens";
+import { TokenWithBalance } from "services/types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import { SchemaShape } from "schemas/types";
@@ -14,6 +17,17 @@ const shape: SchemaShape<DonateValues> = {
 const schema = Yup.object().shape(shape);
 
 export default function Donater(props: FundFlow) {
+  const { chainId, address } = useGetWallet();
+  const { data = [], isLoading } = useEthBalancesQuery(
+    { chainId, address },
+    { skip: !chainId && !address }
+  );
+
+  if (isLoading) return <DonateFormLoader />;
+  return <DonateContext {...props} tokens={data} />;
+}
+
+function DonateContext(props: FundFlow & { tokens: TokenWithBalance[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -21,7 +35,8 @@ export default function Donater(props: FundFlow) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: placeHolderToken,
+      token: props.tokens[0] || placeHolderToken,
+      tokens: props.tokens,
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,
@@ -31,7 +46,7 @@ export default function Donater(props: FundFlow) {
   });
   return (
     <FormProvider {...methods}>
-      <DonateFormLoader />
+      <DonateForm />
     </FormProvider>
   );
 }
@@ -39,8 +54,9 @@ export default function Donater(props: FundFlow) {
 function DonateFormLoader() {
   return (
     <div className="bg-white-grey grid p-4 rounded-md w-full">
-      <ContentLoader className="opacity-30 h-10 w-full" />
-      <ContentLoader className="opacity-30 h-24 mt-4 w-full" />
+      <ContentLoader className="opacity-30 h-12 w-full" />
+      <ContentLoader className="opacity-30 h-30 mt-4 w-full" />
+      <ContentLoader className="opacity-30 h-10 mt-4 w-full" />
     </div>
   );
 }

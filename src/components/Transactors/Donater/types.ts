@@ -5,6 +5,7 @@ export interface DonateValues {
   split_liq: string;
   //metadata;
   token: TokenWithBalance;
+  tokens: TokenWithBalance[];
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
