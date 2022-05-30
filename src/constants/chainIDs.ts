@@ -1,7 +1,5 @@
 export enum chainIDs {
   //for multi-chain wallets, generalize as either mainnet or testnet only
-  testnet = "testnet",
-  mainnet = "mainnet",
   terra_test = "pisco-1",
   terra_main = "phoenix-1",
   terra_classic = "columbus-5",
