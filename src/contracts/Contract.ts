@@ -41,12 +41,12 @@ export default class Contract {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[], denom: denoms = denoms.uluna): Promise<Fee> {
+  async estimateFee(msgs: Msg[], denom = denoms.uluna): Promise<Fee> {
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
-      { msgs, feeDenoms: [denoms.uluna] }
+      { msgs, feeDenoms: [denom] }
     );
   }
 
