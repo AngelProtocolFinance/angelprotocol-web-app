@@ -13,9 +13,9 @@ const env = isDevelopment ? "STAGING" : "PRODUCTION";
 let transak = new transakSDK({
   apiKey: apiKey,
   environment: env,
-  cryptoCurrencyCode: "UST",
-  network: "terra", //on staging environment, this will automatically be on bombay-12
-  walletAddress: ap_wallets["terra"],
+  cryptoCurrencyCode: "AVAX",
+  network: "AVAXCCHAIN",
+  walletAddress: ap_wallets.eth,
   hostURL: window.location.origin,
 
   //widget look
@@ -24,7 +24,7 @@ let transak = new transakSDK({
   hideMenu: true,
   isFeeCalculationHidden: true,
   disableWalletAddressForm: true,
-  isDisableCrypto: true, //don't show anything crypto related
+  // isDisableCrypto: true, //don't show anything crypto related
   exchangeScreenTitle: "Donate to Angel Protocol",
   themeColor: "#3FA9F5", //angel-blue
 });
@@ -70,7 +70,7 @@ export default function useTransak(receiver: Receiver) {
 interface EventPayload {
   status: {
     id: string; //order id "9af4c841-1702-4266-8d55-c822582435ec";
-    walletAddress: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx";
+    walletAddress: string;
     createdAt: string; //"2022-04-19T09:56:05.282Z";
     paymentOptionId: string; //"credit_debit_card";
     //ORDER STATUSES
