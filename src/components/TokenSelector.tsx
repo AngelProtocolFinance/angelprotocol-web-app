@@ -11,13 +11,19 @@ import Select, {
 } from "react-select";
 import { Token } from "types/server/aws";
 // import { useTokensQuery } from "services/apes/tokens";
-import { tokenList as tokens } from "services/apes/tokens/constants";
+import { useEthBalancesQuery } from "services/apes/tokens/tokens";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
 }) {
+  const { chainId, address } = useGetWallet();
   const { control } = useFormContext<T>();
+  const { data = [], isLoading } = useEthBalancesQuery(
+    { chainId, address },
+    { skip: !chainId || !address }
+  );
   // const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
 
   return (
@@ -30,7 +36,8 @@ export default function TokenSelector<T extends FieldValues>(props: {
             className={props.classes}
             value={value}
             onChange={onChange}
-            options={tokens}
+            isLoading={isLoading}
+            options={data}
             getOptionLabel={getOptionLabel}
             noOptionsMessage={(obj) => `${obj.inputValue} not found`}
             components={{

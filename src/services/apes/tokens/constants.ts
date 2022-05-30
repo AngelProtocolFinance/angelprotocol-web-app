@@ -41,8 +41,14 @@ const avalancheToken: Token = {
   blockExplorerUrl: "https://testnet.snowtrace.io/",
   erc20Tokens: [
     {
+      //Wrapped BNB
       logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=022",
       contractAddr: "0x1799aFD227E69e64D8fc55e2B5E62A27e21B33C6",
+    },
+    {
+      //USDC
+      logo: "https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=022",
+      contractAddr: "0x5A0d0B5f9aAD08EA771c783D45Ca20ca803da44B",
     },
   ],
 };

@@ -11,7 +11,7 @@ import {
 } from "slices/transaction/transactionSlice";
 import useDebouncer from "hooks/useDebouncer";
 import { getProvider } from "helpers/getProvider";
-import getTokenBalance from "helpers/getTokenBalance";
+import ERC20Abi from "abi/ERC20.json";
 import { ap_wallets } from "constants/ap_wallets";
 import { DonateValues } from "./types";
 
@@ -22,7 +22,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
-  const { providerId, coins, chainId } = useGetWallet();
+  const { providerId, chainId } = useGetWallet();
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
@@ -48,8 +48,7 @@ export default function useEstimator() {
           return;
         }
 
-        const tokenBalance = getTokenBalance(coins, selectedToken.min_denom);
-        if (debounced_amount > tokenBalance) {
+        if (debounced_amount > +selectedToken.balance) {
           setError("amount", { message: "not enough balance" });
           return;
         }
@@ -64,7 +63,6 @@ export default function useEstimator() {
         //no network request
         const signer = provider.getSigner();
         const sender = await signer.getAddress();
-
         const gasPrice = await signer.getGasPrice();
         const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
 
@@ -74,7 +72,18 @@ export default function useEstimator() {
           value: wei_amount,
         };
 
-        const gasLimit = await signer.estimateGas(tx);
+        let gasLimit: ethers.BigNumber;
+        if (selectedToken.contractAddr) {
+          const ER20Contract: any = new ethers.Contract(
+            selectedToken.contractAddr,
+            ERC20Abi,
+            signer
+          );
+          gasLimit = await ER20Contract.estimateGas.transfer(tx.to, wei_amount);
+        } else {
+          gasLimit = await signer.estimateGas(tx);
+        }
+
         const minFee = gasLimit.mul(gasPrice);
         const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
 
@@ -93,14 +102,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_split,
-    selectedToken,
-    coins,
-    providerId,
-    chainId,
-  ]);
+  }, [debounced_amount, debounced_split, selectedToken, providerId, chainId]);
 
   return { ethTx };
 }

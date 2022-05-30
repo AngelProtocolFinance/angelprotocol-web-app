@@ -105,11 +105,14 @@ export type Token = {
   chainName: string; //Avalanche
   blockExplorerUrl: string; //https://testnet.snowtrace.io
 
-  contractAddr?: string;
   erc20Tokens: {
     contractAddr: string;
     logo: string;
   }[];
+
+  //info if token is an ERC20 token
+  contractAddr?: string;
+  nativeSymbol?: string;
 };
 
 /** /endowments */

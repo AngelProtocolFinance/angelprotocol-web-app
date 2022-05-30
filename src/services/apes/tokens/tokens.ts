@@ -85,9 +85,11 @@ const tokens_api = apes.injectEndpoints({
                 symbol: token.symbol,
                 logo: erc20Tokens[i].logo,
                 decimals: token.decimals,
-
+                erc20Tokens: [],
                 balance: token.balance,
+
                 //for ERC20 txs
+                nativeSymbol: activeCoin.symbol,
                 contractAddr: erc20Tokens[i].contractAddr,
               })
             );
