@@ -103,4 +103,153 @@ export const currency_icons: { [key in denoms]: string } = {
   [denoms.uhalo]: halo,
 };
 
+type Currency = {
+  denom: denoms;
+  ticker: string;
+  icon: string;
+};
+
+export const CURRENCIES: Record<denoms, Currency> = {
+  [denoms.uluna]: {
+    denom: denoms.uluna,
+    ticker: "LUNA",
+    icon: luna,
+  },
+  [denoms.uaud]: {
+    denom: denoms.uaud,
+    ticker: "AUD",
+    icon: token,
+  },
+  [denoms.ucad]: {
+    denom: denoms.ucad,
+    ticker: "CAD",
+    icon: token,
+  },
+  [denoms.uchf]: {
+    denom: denoms.uchf,
+    ticker: "CHF",
+    icon: token,
+  },
+  [denoms.ucny]: {
+    denom: denoms.ucny,
+    ticker: "CNY",
+    icon: token,
+  },
+  [denoms.udkk]: {
+    denom: denoms.udkk,
+    ticker: "DKK",
+    icon: token,
+  },
+  [denoms.ueur]: {
+    denom: denoms.ueur,
+    ticker: "EUR",
+    icon: token,
+  },
+  [denoms.ugbp]: {
+    denom: denoms.ugbp,
+    ticker: "GBP",
+    icon: token,
+  },
+  [denoms.uhkd]: {
+    denom: denoms.uhkd,
+    ticker: "HKD",
+    icon: token,
+  },
+  [denoms.uidr]: {
+    denom: denoms.uidr,
+    ticker: "IDR",
+    icon: token,
+  },
+  [denoms.uinr]: {
+    denom: denoms.uinr,
+    ticker: "INR",
+    icon: token,
+  },
+  [denoms.ujpy]: {
+    denom: denoms.ujpy,
+    ticker: "JPY",
+    icon: token,
+  },
+  [denoms.ukrw]: {
+    denom: denoms.ukrw,
+    ticker: "KRT",
+    icon: krt,
+  },
+  [denoms.umnt]: {
+    denom: denoms.umnt,
+    ticker: "MNT",
+    icon: mnt,
+  },
+  [denoms.unok]: {
+    denom: denoms.unok,
+    ticker: "NOK",
+    icon: token,
+  },
+  [denoms.uphp]: {
+    denom: denoms.uphp,
+    ticker: "PHP",
+    icon: token,
+  },
+  [denoms.usdr]: {
+    denom: denoms.usdr,
+    ticker: "SDR",
+    icon: sdt,
+  },
+  [denoms.usek]: {
+    denom: denoms.usek,
+    ticker: "SEK",
+    icon: token,
+  },
+  [denoms.usgd]: {
+    denom: denoms.usgd,
+    ticker: "SGD",
+    icon: token,
+  },
+  [denoms.uthb]: {
+    denom: denoms.uthb,
+    ticker: "THB",
+    icon: token,
+  },
+  [denoms.coin]: {
+    denom: denoms.coin,
+    ticker: "COIN",
+    icon: token,
+  },
+  [denoms.btc]: {
+    denom: denoms.btc,
+    ticker: "BTC",
+    icon: btc,
+  },
+  [denoms.ether]: {
+    denom: denoms.ether,
+    ticker: "ETH",
+    icon: ether,
+  },
+  [denoms.bnb]: {
+    denom: denoms.bnb,
+    ticker: "BNB",
+    icon: bnb,
+  },
+  [denoms.wei]: {
+    denom: denoms.wei,
+    ticker: "WEI",
+    icon: token,
+  },
+  [denoms.sol]: {
+    denom: denoms.sol,
+    ticker: "SOL",
+    icon: sol,
+  },
+  [denoms.uatom]: {
+    denom: denoms.uatom,
+    ticker: "ATOM",
+    icon: atom,
+  },
+  [denoms.uhalo]: {
+    denom: denoms.uhalo,
+    ticker: "HALO",
+    icon: halo,
+  },
+};
+
 export const MAIN_DENOM = denoms.uluna;

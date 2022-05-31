@@ -65,7 +65,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: denoms.uusd,
+            denom: MAIN_DENOM,
           },
         }
       : {
@@ -101,7 +101,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: MAIN_DENOM,
               },
             },
             amount: uust_amount,
@@ -111,7 +111,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin(denoms.uusd, uust_amount)]
+      [new Coin(MAIN_DENOM, uust_amount)]
     );
   }
 
