@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
-import { createCharityWithStepOneData } from "./helpers";
-import routes from "./routes";
-import { updateCharity } from "./store";
-import useHandleError from "./useHandleError";
+import { createCharityWithStepOneData } from "../helpers";
+import routes from "../routes";
+import { updateCharity } from "../store";
+import useHandleError from "../useHandleError";
 
 export default function useResume() {
   const [checkData] = useCheckPreviousRegistrationMutation();

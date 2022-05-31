@@ -247,6 +247,7 @@ export type Metadata = {
   EndowmentContract: string;
   SK: "Metadata";
   TerraWallet: string;
+  KycDonorsOnly: boolean;
 };
 
 //*

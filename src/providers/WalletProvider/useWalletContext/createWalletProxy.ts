@@ -34,7 +34,6 @@ function convertToWalletProxy(
   connect: (loginProvider: string) => Promise<void>,
   disconnect: () => Promise<void>
 ): WalletProxy {
-  console.log(torusWallet);
   const network =
     torusWallet.lcd.config.chainID === chainIDs.testnet
       ? //"testnet" --> "bombay-12" : "columbus-5"
@@ -48,6 +47,7 @@ function convertToWalletProxy(
       chainID: network,
       lcd: torusWallet.lcd.config.URL,
       name: network,
+      walletconnectID: 0, //torus isn't used with walletConnect
     },
     connect,
     disconnect,

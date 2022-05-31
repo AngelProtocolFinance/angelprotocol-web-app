@@ -17,11 +17,12 @@ export default function TextInput<T extends FieldValues>(props: {
     register,
     formState: { errors },
   } = useFormContext();
+  const id = "__" + String(props.name);
   return (
     <div className="flex flex-col mb-6">
       <label
         className="mb-2 text-xs font-heading uppercase font-bold text-angel-grey"
-        htmlFor={`__${props.name}`}
+        htmlFor={id}
       >
         {props.title}
         {props.required && <span className="text-red-400 ml-1">*</span>}
@@ -29,7 +30,7 @@ export default function TextInput<T extends FieldValues>(props: {
 
       {React.createElement(props.wide ? "textarea" : "input", {
         ...register(props.name as string),
-        id: `__${props.name}`,
+        id: id,
         className: `${
           props.mono ? "font-mono text-sm" : ""
         } text-black disabled:text-grey-accent focus:outline-none ${
