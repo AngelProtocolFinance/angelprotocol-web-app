@@ -9,18 +9,21 @@ const localterra: NetworkInfo = {
   name: "localterra",
   chainID: chainIDs.terra_local,
   lcd: terra_lcds[chainIDs.terra_local],
+  walletconnectID: 2,
 };
 
 export const mainnet: NetworkInfo = {
   name: "mainnet",
   chainID: chainIDs.terra_main,
   lcd: terra_lcds[chainIDs.terra_main],
+  walletconnectID: 2,
 };
 
 export const testnet: NetworkInfo = {
   name: "testnet",
   chainID: chainIDs.terra_test,
   lcd: terra_lcds[chainIDs.terra_test],
+  walletconnectID: 0,
 };
 
 export const chainOptions: WalletControllerChainOptions = {
