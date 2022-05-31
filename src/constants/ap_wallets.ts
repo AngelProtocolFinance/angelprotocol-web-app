@@ -1,8 +1,8 @@
 import { denoms } from "./currency";
 
-type Wallets = {
-  [index: string]: string;
-};
+type Wallets = Partial<{
+  [index in denoms]: string;
+}>;
 
 export const ap_wallets: Wallets = {
   [denoms.ether]: "0x5a882Eb704EA153B117Ab2b1797bA46a1B09Da2c",

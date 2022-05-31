@@ -81,7 +81,7 @@ export default function useEstimator() {
           const receiver = ap_wallets[currency];
           const amount = new Dec(debounced_amount).mul(1e6);
 
-          const msg = new MsgSend(sender, receiver, [
+          const msg = new MsgSend(sender, receiver!, [
             new Coin(currency, amount.toNumber()),
           ]);
           const aminoFee = await contract.estimateFee([msg]);
