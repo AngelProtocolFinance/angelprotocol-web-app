@@ -91,15 +91,27 @@ export type TxLogPayload = Receiver &
   TxDataPermissions;
 
 /** apes/token-list */
+
 export type Token = {
-  min_denom: string;
-  symbol: string;
-  cw20_contract?: {
-    mainnet: string;
-    testnet?: string;
-  };
+  min_denom: string; //avax
+  symbol: string; //AVAX
   logo: string;
-  decimals: number;
+  decimals: number; //18
+  chainId: string; // "1"-mainnet "97"-binance-test "43017"-avax
+
+  //additional info for adding chain in wallet
+  rpcUrl: string;
+  chainName: string; //Avalanche
+  blockExplorerUrl: string; //https://testnet.snowtrace.io
+
+  tokens: {
+    contractAddr: string;
+    logo: string;
+  }[];
+
+  //info if token is an ERC20 token
+  contractAddr?: string;
+  nativeSymbol?: string;
 };
 
 /** /leaderboards */

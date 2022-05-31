@@ -15,7 +15,7 @@ import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
 import { multicallTags, terraTags } from "../tags";
 import { terra } from "../terra";
-import { tokens, vaultMap } from "./constants";
+import { vaultMap } from "./constants";
 
 type VaultsRateRes = {
   vaults_rate: VaultRateInfo[];
@@ -156,55 +156,55 @@ export const multicall_api = terra.injectEndpoints({
       },
     }),
     //terra native balances, and cw20 balances
-    terraBalances: builder.query<
-      TokenWithBalance[],
-      { wallet: WalletProxy; customAddr?: string }
-    >({
-      providesTags: [{ type: terraTags.multicall, id: multicallTags.airdrop }],
-      async queryFn(args, queryApi, extraOptions, baseQuery) {
-        try {
-          const queryAddr = args.customAddr || args.wallet.address;
-          // const isTestnet = args.wallet.network.chainID === chainIDs.terra_test;
+    // terraBalances: builder.query<
+    //   TokenWithBalance[],
+    //   { wallet: WalletProxy; customAddr?: string }
+    // >({
+    //   providesTags: [{ type: terraTags.multicall, id: multicallTags.airdrop }],
+    //   async queryFn(args, queryApi, extraOptions, baseQuery) {
+    //     try {
+    //       const queryAddr = args.customAddr || args.wallet.address;
+    //       // const isTestnet = args.wallet.network.chainID === chainIDs.terra_test;
 
-          //1st query
-          const bankBalancesRes = await baseQuery(
-            `/cosmos/bank/v1beta1/balances/${queryAddr}`
-          );
-          const bankBalances = (bankBalancesRes.data as BalanceRes).balances;
+    //       //1st query
+    //       const bankBalancesRes = await baseQuery(
+    //         `/cosmos/bank/v1beta1/balances/${queryAddr}`
+    //       );
+    //       const bankBalances = (bankBalancesRes.data as BalanceRes).balances;
 
-          //TODO: fetch tokens from server
-          const nativeBalances = tokens.reduce((result, token) => {
-            const tokenBankBalance = bankBalances.find(
-              (balance) => balance.denom === token.min_denom
-            );
-            //exclude from tokenListWithBalance if no entry (meaning 0)
-            if (!tokenBankBalance) {
-              return result;
-            } else {
-              result.push({
-                ...token,
-                balance: new Dec(tokenBankBalance.amount)
-                  .div(Dec.pow(10, token.decimals))
-                  .toNumber(),
-              });
-              return result;
-            }
-          }, [] as TokenWithBalance[]);
+    //       //TODO: fetch tokens from server
+    //       const nativeBalances = tokens.reduce((result, token) => {
+    //         const tokenBankBalance = bankBalances.find(
+    //           (balance) => balance.denom === token.min_denom
+    //         );
+    //         //exclude from tokenListWithBalance if no entry (meaning 0)
+    //         if (!tokenBankBalance) {
+    //           return result;
+    //         } else {
+    //           result.push({
+    //             ...token,
+    //             balance: new Dec(tokenBankBalance.amount)
+    //               .div(Dec.pow(10, token.decimals))
+    //               .toNumber(),
+    //           });
+    //           return result;
+    //         }
+    //       }, [] as TokenWithBalance[]);
 
-          //TODO: add back CW20Balances multicall
+    //       //TODO: add back CW20Balances multicall
 
-          return { data: nativeBalances };
-        } catch (err) {
-          return {
-            error: {
-              status: 500,
-              statusText: "Query error",
-              data: "Airdrop custom query encountered an error",
-            },
-          };
-        }
-      },
-    }),
+    //       return { data: nativeBalances };
+    //     } catch (err) {
+    //       return {
+    //         error: {
+    //           status: 500,
+    //           statusText: "Query error",
+    //           data: "Airdrop custom query encountered an error",
+    //         },
+    //       };
+    //     }
+    //   },
+    // }),
   }),
 });
 

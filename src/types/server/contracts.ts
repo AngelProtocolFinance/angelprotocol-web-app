@@ -1,6 +1,15 @@
 import { Coin } from "@terra-money/terra.js";
 import { EndowmentTierNum } from "types/shared/registration";
 
+/** _ethereum contract */
+export interface ERC20Token {
+  contractAddress: string;
+  decimals: number;
+  symbol: string;
+  name: string;
+  balance: string;
+}
+
 /** _wrapper */
 export interface QueryRes<T> {
   query_result: T;

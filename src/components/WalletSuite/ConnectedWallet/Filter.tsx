@@ -1,18 +1,18 @@
 export default function Filter(props: {
-  filtered: boolean;
-  handleFilter: () => void;
+  isSmallAmountShown: boolean;
+  toggleFilter: () => void;
 }) {
   return (
     <div
       className={`flex items-center justify-self-start mt-2 ml-2 rounded-sm ${
-        props.filtered
+        props.isSmallAmountShown
           ? "border border-angel-blue/80 bg-angel-blue/30"
           : "border border-grey-accent/80 bg-thin-grey/30"
       }`}
     >
       <input
-        checked={props.filtered}
-        onChange={props.handleFilter}
+        checked={props.isSmallAmountShown}
+        onChange={props.toggleFilter}
         id="filter"
         type="checkbox"
         className="ml-1"
