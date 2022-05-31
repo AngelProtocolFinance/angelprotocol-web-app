@@ -1,8 +1,15 @@
-import { LCDClient, MnemonicKey, Wallet } from "@terra-money/terra.js";
+import {
+  CreateTxOptions,
+  LCDClient,
+  MnemonicKey,
+  Wallet,
+} from "@terra-money/terra.js";
+import { TxResult } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
+import { WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 import { terra_lcds } from "constants/urls";
 import { providerIcons } from "./constants";
@@ -21,14 +28,13 @@ const lcdClient = new LCDClient({
   chainID: chainId,
 });
 
+const actionKey = `torus__pref`;
 export default function useTorusWallet() {
   const [isLoading, setIsLoading] = useState(true);
-  const actionKey = `torus__pref`;
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
   const shouldReconnect = lastAction === "connect";
-  const [address, setAddress] = useState<string>();
-  const [chainId, setChainId] = useState<string>();
+  const [wallet, setWallet] = useState<Wallet>();
 
   useEffect(() => {
     async () => {
@@ -43,9 +49,7 @@ export default function useTorusWallet() {
         // NOTE: to successfully read this value, it is necessary to call this hook in the component
         // that is Torus is set to redirect to, otherwise this value would be empty
         if (openLogin.privKey) {
-          const wallet = createWalletPrivateKey(openLogin.privKey);
-          setAddress(wallet.key.accAddress);
-          setChainId(wallet.lcd.config.chainID);
+          setWallet(createWalletPrivateKey(openLogin.privKey));
         }
       } catch (err) {
         console.log(err);
@@ -64,9 +68,7 @@ export default function useTorusWallet() {
         : await openLogin.login();
 
       if (loginResult?.privKey) {
-        const wallet = createWalletPrivateKey(loginResult.privKey);
-        setAddress(wallet.key.accAddress);
-        setChainId(wallet.lcd.config.chainID);
+        setWallet(createWalletPrivateKey(loginResult.privKey));
       }
     } catch (err) {
       console.log(err);
@@ -79,8 +81,7 @@ export default function useTorusWallet() {
     setIsLoading(true);
     try {
       await openLogin.logout();
-      setAddress(undefined);
-      setChainId(undefined);
+      setWallet(undefined);
     } catch (err) {
       console.log(err);
     } finally {
@@ -88,11 +89,26 @@ export default function useTorusWallet() {
     }
   }, []);
 
+  async function post(txOptions: CreateTxOptions): Promise<TxResult> {
+    if (!wallet) throw new WalletDisconnectError();
+    const tx = await wallet?.createAndSignTx(txOptions);
+    const res = await wallet.lcd.tx.broadcast(tx);
+    return {
+      ...txOptions,
+      result: {
+        height: res.height,
+        raw_log: res.raw_log,
+        txhash: res.txhash,
+      },
+      success: true,
+    };
+  }
+
   const providerInfo: ProviderInfo = {
     logo: providerIcons.torus,
     providerId: "torus",
-    chainId: chainId || "",
-    address: address || "",
+    chainId: wallet?.lcd.config.chainID || "",
+    address: wallet?.key.accAddress || "",
   };
 
   //connection object to render <Connector/>
@@ -106,7 +122,8 @@ export default function useTorusWallet() {
     torusConnection: connection,
     disconnectTorus: disconnect,
     isTorusLoading: isLoading,
-    torusInfo: (address && providerInfo) || undefined,
+    torusPost: post,
+    torusInfo: wallet ? providerInfo : undefined,
   };
 }
 
