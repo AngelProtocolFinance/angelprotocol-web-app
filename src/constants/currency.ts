@@ -11,7 +11,12 @@ import sol from "assets/icons/currencies/sol.svg";
 import token from "assets/icons/currencies/token.svg";
 
 export enum denoms {
-  uluna = "uluna",
+  bnb = "bnb",
+  btc = "btc",
+  coin = "coin",
+  ether = "ether",
+  sol = "sol",
+  uatom = "uatom",
   uaud = "uaud",
   ucad = "ucad",
   uchf = "uchf",
@@ -19,11 +24,13 @@ export enum denoms {
   udkk = "udkk",
   ueur = "ueur",
   ugbp = "ugbp",
+  uhalo = "uhalo",
   uhkd = "uhkd",
   uidr = "uidr",
   uinr = "uinr",
   ujpy = "ujpy",
   ukrw = "ukrw",
+  uluna = "uluna",
   umnt = "umnt",
   unok = "unok",
   uphp = "uphp",
@@ -31,14 +38,7 @@ export enum denoms {
   usek = "usek",
   usgd = "usgd",
   uthb = "uthb",
-  ether = "ether",
-  bnb = "bnb",
   wei = "wei",
-  btc = "btc",
-  sol = "sol",
-  uatom = "uatom",
-  coin = "coin",
-  uhalo = "uhalo",
 }
 
 type Currency = {
@@ -48,10 +48,35 @@ type Currency = {
 };
 
 export const CURRENCIES: Record<denoms, Currency> = {
-  [denoms.uluna]: {
-    denom: denoms.uluna,
-    ticker: "LUNA",
-    icon: luna,
+  [denoms.bnb]: {
+    denom: denoms.bnb,
+    ticker: "BNB",
+    icon: bnb,
+  },
+  [denoms.btc]: {
+    denom: denoms.btc,
+    ticker: "BTC",
+    icon: btc,
+  },
+  [denoms.coin]: {
+    denom: denoms.coin,
+    ticker: "COIN",
+    icon: token,
+  },
+  [denoms.ether]: {
+    denom: denoms.ether,
+    ticker: "ETH",
+    icon: ether,
+  },
+  [denoms.sol]: {
+    denom: denoms.sol,
+    ticker: "SOL",
+    icon: sol,
+  },
+  [denoms.uatom]: {
+    denom: denoms.uatom,
+    ticker: "ATOM",
+    icon: atom,
   },
   [denoms.uaud]: {
     denom: denoms.uaud,
@@ -88,6 +113,11 @@ export const CURRENCIES: Record<denoms, Currency> = {
     ticker: "GBP",
     icon: token,
   },
+  [denoms.uhalo]: {
+    denom: denoms.uhalo,
+    ticker: "HALO",
+    icon: halo,
+  },
   [denoms.uhkd]: {
     denom: denoms.uhkd,
     ticker: "HKD",
@@ -112,6 +142,11 @@ export const CURRENCIES: Record<denoms, Currency> = {
     denom: denoms.ukrw,
     ticker: "KRT",
     icon: krt,
+  },
+  [denoms.uluna]: {
+    denom: denoms.uluna,
+    ticker: "LUNA",
+    icon: luna,
   },
   [denoms.umnt]: {
     denom: denoms.umnt,
@@ -148,45 +183,10 @@ export const CURRENCIES: Record<denoms, Currency> = {
     ticker: "THB",
     icon: token,
   },
-  [denoms.coin]: {
-    denom: denoms.coin,
-    ticker: "COIN",
-    icon: token,
-  },
-  [denoms.btc]: {
-    denom: denoms.btc,
-    ticker: "BTC",
-    icon: btc,
-  },
-  [denoms.ether]: {
-    denom: denoms.ether,
-    ticker: "ETH",
-    icon: ether,
-  },
-  [denoms.bnb]: {
-    denom: denoms.bnb,
-    ticker: "BNB",
-    icon: bnb,
-  },
   [denoms.wei]: {
     denom: denoms.wei,
     ticker: "WEI",
     icon: token,
-  },
-  [denoms.sol]: {
-    denom: denoms.sol,
-    ticker: "SOL",
-    icon: sol,
-  },
-  [denoms.uatom]: {
-    denom: denoms.uatom,
-    ticker: "ATOM",
-    icon: atom,
-  },
-  [denoms.uhalo]: {
-    denom: denoms.uhalo,
-    ticker: "HALO",
-    icon: halo,
   },
 };
 
