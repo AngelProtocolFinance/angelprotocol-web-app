@@ -1,4 +1,4 @@
-import { currency_icons, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import { useStakingAPRQuery } from "services/aws/governance";
 import useSwapper from "components/Transactors/Swapper/useSwapper";
 import useStaker from "components/Transactors/Staker/useStaker";
@@ -17,7 +17,7 @@ export default function Portal() {
         <div className="relative">
           <div className="absolute w-full h-full border-4 border-white/80 rounded-full animate-pulse shadow-md"></div>
           <img
-            src={currency_icons[denoms.uhalo]}
+            src={CURRENCIES[denoms.uhalo].icon}
             alt=""
             className="w-14 h-14 m-2 opacity-90 shadow-lg rounded-full"
           />

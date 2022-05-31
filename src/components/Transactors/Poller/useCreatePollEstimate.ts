@@ -1,7 +1,7 @@
 import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 import { Fee } from "@terra-money/terra.js";
-import { currency_text, denoms, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -63,7 +63,9 @@ export default function useCreatePollEstimate() {
         //2nd balance check including fees
         if (feeAmount >= mainBalance.amount) {
           dispatch(
-            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+            setFormError(
+              `Not enough ${CURRENCIES[feeDenom].ticker} to pay fees`
+            )
           );
           return;
         }

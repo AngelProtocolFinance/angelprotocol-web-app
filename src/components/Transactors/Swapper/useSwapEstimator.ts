@@ -3,7 +3,7 @@ import {
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
-import { currency_text, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import LP from "contracts/LP";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -60,7 +60,7 @@ export default function useSwapEstimator() {
         if (is_buy) {
           if (amount > mainBalance.amount) {
             dispatch(
-              setFormError(`Not enough ${currency_text[mainBalance.denom]}`)
+              setFormError(`Not enough ${CURRENCIES[mainBalance.denom].ticker}`)
             );
             return;
           }
@@ -104,13 +104,16 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(MAIN_DENOM)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount
+          .get(mainBalance.denom)!
+          .mul(1e-6)
+          .amount.toNumber();
 
         //2nd balance check including fees
         if (is_buy && feeNum + debounced_amount >= mainBalance.amount) {
           dispatch(
             setFormError(
-              `Not enough ${currency_text[mainBalance.denom]} to pay fees`
+              `Not enough ${CURRENCIES[mainBalance.denom].ticker} to pay fees`
             )
           );
           return;
@@ -118,7 +121,7 @@ export default function useSwapEstimator() {
         if (!is_buy && feeNum >= mainBalance.amount) {
           dispatch(
             setFormError(
-              `Not enough ${currency_text[mainBalance.denom]} to pay fees`
+              `Not enough ${CURRENCIES[mainBalance.denom].ticker} to pay fees`
             )
           );
           return;

@@ -2,7 +2,7 @@ import { DonateValues } from "./types";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import { Coin, CreateTxOptions, Dec, MsgSend } from "@terra-money/terra.js";
 import { ap_wallets } from "constants/ap_wallets";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import Contract from "contracts/Contract";
 import { ethers } from "ethers";
 import extractFeeData from "helpers/extractFeeData";
@@ -91,7 +91,7 @@ export default function useEstimator() {
             if (debounced_amount + feeAmount >= balance) {
               dispatch(
                 setFormError(
-                  `Not enough ${currency_text[feeDenom]} balance to pay fees`
+                  `Not enough ${CURRENCIES[feeDenom].ticker} balance to pay fees`
                 )
               );
               return;

@@ -1,6 +1,6 @@
 import { Dec } from "@terra-money/terra.js";
 import { ErrorMessage } from "@hookform/error-message";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import Balance from "./Balance";
 import { HaloStakingValues } from "./types";
@@ -47,7 +47,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={currency_text[denoms.uhalo]}
+          placeholder={CURRENCIES[denoms.uhalo].ticker}
           className="flex-auto p-1 pl-0 focus:outline-none text-angel-grey bg-light-grey text-lg"
         />
         <div

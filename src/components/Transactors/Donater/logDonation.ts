@@ -1,5 +1,5 @@
 import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import { apes_endpoint } from "constants/urls";
 import createAuthToken from "helpers/createAuthToken";
 import { Receiver, TxLogPayload } from "services/apes/types";
@@ -23,7 +23,7 @@ const logDonation: DonationLogger = async (
     ...receiver,
     transactionDate: new Date().toISOString(),
     transactionId: txhash,
-    denomination: currency_text[denom],
+    denomination: CURRENCIES[denom].ticker,
     amount: parseFloat(amount),
     splitLiq,
     walletAddress,

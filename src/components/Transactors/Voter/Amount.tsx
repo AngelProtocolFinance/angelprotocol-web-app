@@ -1,4 +1,4 @@
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { VoteValues } from "./types";
@@ -39,7 +39,7 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
-          placeholder={currency_text[denoms.uhalo]}
+          placeholder={CURRENCIES[denoms.uhalo].ticker}
           className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div

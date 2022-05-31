@@ -1,4 +1,4 @@
-import { currency_text, denoms, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { useBalances, useHaloBalance } from "services/terra/queriers";
@@ -28,10 +28,7 @@ export default function Balance() {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(balance.amount, 3, true)}{" "}
-        {is_buy
-          ? currency_text[mainBalance.denom]
-          : currency_text[denoms.uhalo]}
+        {toCurrency(balance.amount, 3, true)} {CURRENCIES[balance.denom].ticker}
       </button>
     </p>
   );

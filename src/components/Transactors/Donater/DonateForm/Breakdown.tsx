@@ -1,5 +1,5 @@
 import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
@@ -18,19 +18,19 @@ export default function Breakdown() {
   );
 }
 
-function Entry(props: { title: string; amount: number; currency: string }) {
+function Entry(props: { title: string; amount: number; currency: denoms }) {
   return (
     <div className="flex justify-between items-center text-xs font-heading text-blue-accent mb-.5">
       <p className="uppercase">{props.title}</p>
       <p className="text-sm">
         {toCurrency(props.amount, decimals[props.currency])}{" "}
-        {currency_text[props.currency as denoms]}
+        {CURRENCIES[props.currency].ticker}
       </p>
     </div>
   );
 }
 
-const decimals: { [index: string]: number } = {
+const decimals: Partial<{ [index in denoms]: number }> = {
   [denoms.btc]: 6,
   [denoms.ether]: 6,
   [denoms.sol]: 6,

@@ -1,5 +1,5 @@
 import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
 
@@ -13,7 +13,7 @@ export default function usePortion(type: string) {
 
   //values
   const precision = decimals[currency];
-  const disp_amount = `${currency_text[currency]} ${toCurrency(
+  const disp_amount = `${CURRENCIES[currency].ticker} ${toCurrency(
     ((isLocked ? split_locked : split_liq) / 100) * amount,
     precision
   )}`;

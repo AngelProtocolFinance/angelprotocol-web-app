@@ -1,4 +1,4 @@
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
@@ -18,14 +18,14 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
-          denom={currency_text[denoms.uluna]}
+          denom={CURRENCIES[denoms.uluna].ticker}
           precision={6}
         />
         <Figure
           position="lg:row-start-2"
           title="total staked"
           value={staked}
-          denom={currency_text[denoms.uhalo]}
+          denom={CURRENCIES[denoms.uhalo].ticker}
           percent={percentStaked}
         />
         <Portal />

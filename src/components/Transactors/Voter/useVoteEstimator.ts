@@ -1,5 +1,5 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { currency_text, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";
 import extractFeeData from "helpers/extractFeeData";
@@ -91,7 +91,9 @@ export default function useVoteEstimator() {
         //2nd balance check including fees
         if (feeAmount >= mainBalance.amount) {
           dispatch(
-            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+            setFormError(
+              `Not enough ${CURRENCIES[feeDenom].ticker} to pay fees`
+            )
           );
           return;
         }

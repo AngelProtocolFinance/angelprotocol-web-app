@@ -4,7 +4,7 @@ import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import Contract from "contracts/Contract";
 import extractFeeData from "helpers/extractFeeData";
 import handleTerraError from "helpers/handleTerraError";
@@ -59,7 +59,7 @@ export const sendTerraTx = createAsyncThunk(
         if (feeAmount > walletBalanceForFee) {
           updateTx({
             step: Step.error,
-            message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
+            message: `Not enough ${CURRENCIES[feeDenom].ticker} to pay for fees`,
           });
           return;
         }

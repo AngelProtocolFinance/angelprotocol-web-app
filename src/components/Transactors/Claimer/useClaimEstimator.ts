@@ -1,5 +1,5 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { currency_text, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -52,7 +52,9 @@ export default function useClaimEstimator() {
         //2nd balance check including fees
         if (feeAmount >= mainBalance.amount) {
           dispatch(
-            setFormError(`Not enough ${currency_text[feeDenom]} to pay fees`)
+            setFormError(
+              `Not enough ${CURRENCIES[feeDenom].ticker} to pay fees`
+            )
           );
           return;
         }
