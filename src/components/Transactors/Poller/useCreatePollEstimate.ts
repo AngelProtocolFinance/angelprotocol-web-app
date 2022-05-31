@@ -1,7 +1,7 @@
 import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 import { Fee } from "@terra-money/terra.js";
-import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";

@@ -73,32 +73,30 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         //checks for uluna
-        if (currency === denoms.uluna) {
-          if (activeProvider === Providers.terra) {
-            //this block won't run if wallet is not connected
-            //activeProvider === Providers.none
-            const contract = new Contract(wallet);
-            const sender = wallet!.address;
-            const receiver = ap_wallets[denoms.uluna];
-            const amount = new Dec(debounced_amount).mul(1e6);
+        if (currency === denoms.uluna && activeProvider === Providers.terra) {
+          //this block won't run if wallet is not connected
+          //activeProvider === Providers.none
+          const contract = new Contract(wallet);
+          const sender = wallet!.address;
+          const receiver = ap_wallets[currency];
+          const amount = new Dec(debounced_amount).mul(1e6);
 
-            const msg = new MsgSend(sender, receiver, [
-              new Coin(denoms.uluna, amount.toNumber()),
-            ]);
-            const aminoFee = await contract.estimateFee([msg]);
-            const { feeAmount, feeDenom } = extractFeeData(aminoFee);
+          const msg = new MsgSend(sender, receiver, [
+            new Coin(currency, amount.toNumber()),
+          ]);
+          const aminoFee = await contract.estimateFee([msg]);
+          const { feeAmount, feeDenom } = extractFeeData(aminoFee);
 
-            if (debounced_amount + feeAmount >= balance) {
-              dispatch(
-                setFormError(
-                  `Not enough ${CURRENCIES[feeDenom].ticker} balance to pay fees`
-                )
-              );
-              return;
-            }
-            dispatch(setFee(feeAmount));
-            setTerraTx({ msgs: [msg], fee: aminoFee });
+          if (debounced_amount + feeAmount >= balance) {
+            dispatch(
+              setFormError(
+                `Not enough ${CURRENCIES[feeDenom].ticker} balance to pay fees`
+              )
+            );
+            return;
           }
+          dispatch(setFee(feeAmount));
+          setTerraTx({ msgs: [msg], fee: aminoFee });
         }
 
         //estimates for eth
@@ -123,7 +121,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets[currency],
             value: wei_amount,
           };
 
@@ -159,7 +157,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets[denoms.ether], // even though we're on Binance Chain, we use ether wallet to handle the tx
             value: wei_amount,
           };
 

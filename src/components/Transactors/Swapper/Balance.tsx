@@ -7,11 +7,9 @@ import { SwapValues } from "./types";
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();
   const { haloBalance } = useHaloBalance();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
+  const { main } = useBalances(MAIN_DENOM);
   const is_buy = watch("is_buy");
-  const balance = is_buy
-    ? mainBalance
-    : { amount: haloBalance, denom: denoms.uhalo };
+  const balance = is_buy ? main : { amount: haloBalance, denom: denoms.uhalo };
 
   function setAmount() {
     setValue("amount", `${balance}`, {
