@@ -49,17 +49,19 @@ export const sendTerraTx = createAsyncThunk(
         //run fee estimation for on-demand created tx
         const denom = args.feedDenom || denoms.uluna;
         const fee = await contract.estimateFee(args.msgs, denom);
-        const { feeAmount, feeDenom } = extractFeeData(fee, denom);
+        const feeData = extractFeeData(fee, denom);
 
         const state = getState() as RootState;
         const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
-          0;
+          state.wallet.coins.find((coin) => coin.denom === feeData.denom)
+            ?.amount || 0;
 
-        if (feeAmount > walletBalanceForFee) {
+        if (feeData.amount > walletBalanceForFee) {
           updateTx({
             step: Step.error,
-            message: `Not enough ${CURRENCIES[feeDenom].ticker} to pay for fees`,
+            message: `Not enough ${
+              CURRENCIES[feeData.denom].ticker
+            } to pay for fees`,
           });
           return;
         }

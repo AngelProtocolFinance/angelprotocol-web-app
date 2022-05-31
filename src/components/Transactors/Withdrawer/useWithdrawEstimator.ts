@@ -119,23 +119,23 @@ export default function useWithrawEstimator() {
         const account = new Account(account_addr, wallet);
         const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
         const fee = await account.estimateFee([withdrawMsg]);
-        const { feeAmount } = extractFeeData(fee);
+        const feeData = extractFeeData(fee);
 
         //get usd total of of sources
         const usdTotal = usdValues
           .reduce((result, val) => result.add(val), new Dec(0))
           .toNumber();
 
-        if (feeAmount > usdTotal) {
+        if (feeData.amount > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeAmount;
+        const receiveAmount = usdTotal - feeData.amount;
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeAmount));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [withdrawMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {

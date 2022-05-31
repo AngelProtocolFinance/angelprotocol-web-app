@@ -85,17 +85,19 @@ export default function useEstimator() {
             new Coin(currency, amount.toNumber()),
           ]);
           const aminoFee = await contract.estimateFee([msg]);
-          const { feeAmount, feeDenom } = extractFeeData(aminoFee);
+          const feeData = extractFeeData(aminoFee);
 
-          if (debounced_amount + feeAmount >= balance) {
+          if (debounced_amount + feeData.amount >= balance) {
             dispatch(
               setFormError(
-                `Not enough ${CURRENCIES[feeDenom].ticker} balance to pay fees`
+                `Not enough ${
+                  CURRENCIES[feeData.denom].ticker
+                } balance to pay fees`
               )
             );
             return;
           }
-          dispatch(setFee(feeAmount));
+          dispatch(setFee(feeData.amount));
           setTerraTx({ msgs: [msg], fee: aminoFee });
         }
 

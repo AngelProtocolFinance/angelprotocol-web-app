@@ -86,19 +86,19 @@ export default function useVoteEstimator() {
         );
 
         const fee = await contract.estimateFee([voteMsg]);
-        const { feeAmount, feeDenom } = extractFeeData(fee);
+        const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeAmount >= mainBalance.amount) {
+        if (feeData.amount >= mainBalance.amount) {
           dispatch(
             setFormError(
-              `Not enough ${CURRENCIES[feeDenom].ticker} to pay fees`
+              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
             )
           );
           return;
         }
 
-        dispatch(setFee(feeAmount));
+        dispatch(setFee(feeData.amount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
