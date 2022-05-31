@@ -1,8 +1,7 @@
 import { Coin, Dec } from "@terra-money/terra.js";
 import { MultiContractQueryArgs, TokenWithBalance } from "services/types";
-import { Airdrop, Airdrops, Token } from "types/server/aws";
+import { Airdrop, Airdrops } from "types/server/aws";
 import {
-  CW20Balance,
   ClaimInquiry,
   Holding,
   Holdings,
@@ -12,12 +11,11 @@ import {
 import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
 import { WalletProxy } from "providers/WalletProvider";
 import Multicall from "contracts/Multicall";
-import { chainIDs } from "constants/chainIDs";
-import { apes_endpoint, aws_endpoint } from "constants/urls";
+import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
 import { multicallTags, terraTags } from "../tags";
 import { terra } from "../terra";
-import { vaultMap } from "./constants";
+import { tokens, vaultMap } from "./constants";
 
 type VaultsRateRes = {
   vaults_rate: VaultRateInfo[];
@@ -166,21 +164,16 @@ export const multicall_api = terra.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const queryAddr = args.customAddr || args.wallet.address;
-          const isTestnet = args.wallet.network.chainID === chainIDs.terra_test;
+          // const isTestnet = args.wallet.network.chainID === chainIDs.terra_test;
 
           //1st query
           const bankBalancesRes = await baseQuery(
             `/cosmos/bank/v1beta1/balances/${queryAddr}`
           );
-
           const bankBalances = (bankBalancesRes.data as BalanceRes).balances;
 
-          //2nd query
-          const tokenListRes = await fetch(`${apes_endpoint}/token/list`);
-          const tokenList = (await tokenListRes.json()) as Token[];
-          //first pass to tokenList, get native token balances
-          //O(t * b) time; b = bankBalances which is finite since normal users doesn't hold too many coins
-          const nativeBalances = tokenList.reduce((result, token) => {
+          //TODO: fetch tokens from server
+          const nativeBalances = tokens.reduce((result, token) => {
             const tokenBankBalance = bankBalances.find(
               (balance) => balance.denom === token.min_denom
             );
@@ -198,35 +191,9 @@ export const multicall_api = terra.injectEndpoints({
             }
           }, [] as TokenWithBalance[]);
 
-          const multicallContract = new Multicall(args.wallet);
-          //2nd pass to token list
+          //TODO: add back CW20Balances multicall
 
-          const cw20Tokens = tokenList.filter(
-            (token) =>
-              !!token.cw20_contract?.[isTestnet ? "testnet" : "mainnet"]
-          );
-
-          const cw20BalancesRes = await baseQuery(
-            contract_querier(
-              //this query will not run, if !wallet or !customAddr
-              multicallContract.cw20Balances(queryAddr!, cw20Tokens)
-            )
-          );
-
-          const cw20MultiQueryRes = cw20BalancesRes.data as MultiQueryRes;
-
-          const cw20Balances: TokenWithBalance[] = decodeAggregatedResult<
-            CW20Balance[]
-          >(cw20MultiQueryRes.query_result).map((cw20Balance, i) => {
-            return {
-              ...cw20Tokens[i],
-              balance: new Dec(cw20Balance.balance)
-                .div(Dec.pow(10, cw20Tokens[i].decimals))
-                .toNumber(),
-            };
-          });
-
-          return { data: nativeBalances.concat(cw20Balances) };
+          return { data: nativeBalances };
         } catch (err) {
           return {
             error: {

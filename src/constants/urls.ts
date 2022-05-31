@@ -14,8 +14,8 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev/ ",
-  [chainIDs.terra_main]: "https://lcd.terra.dev/",
+  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
+  [chainIDs.terra_main]: "https://lcd.terra.dev",
   [chainIDs.terra_local]: "http://localhost:3060",
 };
 
