@@ -10,18 +10,18 @@ import { Profile } from "types/server/contracts";
 import FormError from "pages/Admin/components/FormError";
 import FormSkeleton from "pages/Admin/components/FormSkeleton";
 import { useEndowmentProfile } from "services/terra/account/queriers";
-import useWalletContext from "hooks/useWalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
-  const { wallet } = useWalletContext();
+  const { providerId } = useGetWallet();
   const { address: endowment_addr } = useParams<EndowmentAdminParams>();
   const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
     endowment_addr!
   );
 
-  if (!wallet)
+  if (!providerId)
     return <FormError errorMessage="Please connect wallet to view this page" />;
   if (isProfileLoading) return <FormSkeleton />;
   if (isProfileError || !profile)

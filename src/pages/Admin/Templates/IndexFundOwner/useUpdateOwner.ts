@@ -4,17 +4,17 @@ import { IndexFundOwnerValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateOwner() {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -30,7 +30,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(walletAddr);
     const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
@@ -40,7 +40,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -51,7 +51,6 @@ export default function useUpdateOwner() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

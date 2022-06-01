@@ -5,6 +5,7 @@ import { WithdrawResource, WithdrawValues } from "./types";
 import { EndowmentWithdrawMeta, SourcePreview } from "pages/Admin/types";
 import { AmountInfo } from "types/shared/withdraw";
 import { vaultMap } from "services/terra/multicall/constants";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
@@ -14,7 +15,6 @@ import {
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import processEstimateError from "helpers/processEstimateError";
 
@@ -34,10 +34,10 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
+  const { providerId, walletAddr, coins } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
 
   const anchor1_amount = watch("anchor1_amount") || "0";
   const anchor2_amount = watch("anchor2_amount") || "0";
@@ -55,7 +55,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -127,7 +127,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(resources.accountAddr, wallet);
+        const accountContract = new Account(resources.accountAddr, walletAddr);
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
@@ -143,7 +143,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 
-        const adminContract = new Admin(cwContracts, wallet);
+        const adminContract = new Admin(cwContracts, walletAddr);
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",
@@ -177,7 +177,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     };
     //eslint-disable-next-line
   }, [
-    wallet,
+    walletAddr,
     debAmounts,
     isDebouncing,
     isDirty,
@@ -186,5 +186,5 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     cwContracts,
   ]);
 
-  return { tx, wallet };
+  return { tx };
 }

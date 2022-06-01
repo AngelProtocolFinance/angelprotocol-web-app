@@ -28,7 +28,7 @@ type IWalletState = {
   walletIcon: string;
   displayCoin: TokenWithBalance;
   coins: TokenWithBalance[];
-  address: string;
+  walletAddr: string;
   chainId: string;
   providerId?: ProviderId;
 };
@@ -47,7 +47,7 @@ const initialWalletState: IWalletState = {
   walletIcon: unknownWalletIcon,
   displayCoin: placeHolderToken,
   coins: [],
-  address: "",
+  walletAddr: "",
   chainId: chainIDs.eth_main,
 };
 
@@ -72,13 +72,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: binanceWalletInfo,
   } = useInjectedWallet("binance-wallet");
 
-  const {
-    isTorusLoading,
-    torusInfo,
-    torusConnection,
-    disconnectTorus,
-    torusPost,
-  } = useTorusWallet();
+  const { isTorusLoading, torusInfo, torusConnection, disconnectTorus } =
+    useTorusWallet();
 
   const {
     availableConnections,
@@ -150,35 +145,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     walletIcon: logo,
     displayCoin: coinWithBalances[0],
     coins: coinWithBalances,
-    address,
+    walletAddr: address,
     chainId,
     providerId,
   };
-
-  //FUTURE: overload with other tx shapes
-  const postTerraTx = useCallback(
-    async (tx: CreateTxOptions): Promise<TxResult> => {
-      switch (providerId) {
-        case "torus":
-          return await torusPost(tx);
-        case "terra-station":
-        case "wallet-connect":
-        case "xdefi":
-          return await terraPost(tx);
-        default:
-          return {
-            ...tx,
-            result: {
-              height: 0,
-              raw_log: "",
-              txhash: "",
-            },
-            success: false,
-          };
-      }
-    },
-    []
-  );
 
   const disconnect = useCallback(() => {
     switch (providerId) {

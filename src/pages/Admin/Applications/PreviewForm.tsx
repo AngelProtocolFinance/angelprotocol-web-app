@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { CharityApplication } from "types/server/aws";
 import { useProposal } from "services/terra/admin/queriers";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import useWalletContext from "hooks/useWalletContext";
 import { adminRoutes } from "constants/routes";
 import useProposalDetails from "../Proposals/useProposalDetails";
 import useUpdateApplicationStatus from "./useUpdateApplication";
@@ -13,7 +13,7 @@ export default function PreviewForm({
 }: {
   application: CharityApplication;
 }) {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { closeModal } = useModalContext();
   const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
@@ -25,7 +25,7 @@ export default function PreviewForm({
   const getTitle = (status: string) =>
     `${status} ${ap.CharityName} Application`;
   const getDescription = (status: string) =>
-    `${status} ${ap.CharityName} by ${wallet?.address}`;
+    `${status} ${ap.CharityName} by ${walletAddr}`;
 
   const openPoll = () => {
     navigate(`admin/${adminRoutes.proposal}/${ap.poll_id}`);

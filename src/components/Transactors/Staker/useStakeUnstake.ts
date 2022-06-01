@@ -15,14 +15,13 @@ export default function useStakeUnstake() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<HaloStakingValues>();
 
-  const { wallet, tx } = useStakingEstimator();
+  const { tx } = useStakingEstimator();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function stakeOrUnstake() {
     dispatch(
       sendTerraTx({
-        wallet,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

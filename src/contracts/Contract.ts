@@ -1,23 +1,21 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { WalletProxy } from "providers/WalletProvider";
 import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
+import { IS_DEV } from "constants/env";
 import { terra_lcds } from "constants/urls";
 
 export default class Contract {
-  wallet?: WalletProxy;
   client: LCDClient;
   chainID: string;
   url: string;
   walletAddr?: string;
 
-  constructor(wallet?: WalletProxy) {
-    this.wallet = wallet;
-    this.chainID = wallet?.network.chainID || chainIDs.terra_main;
+  constructor(walletAddr?: string) {
+    this.chainID = IS_DEV ? chainIDs.terra_test : chainIDs.terra_main;
     this.url = terra_lcds[this.chainID];
-    this.walletAddr = wallet?.address;
+    this.walletAddr = walletAddr;
     this.client = new LCDClient({
       chainID: this.chainID,
       URL: this.url,

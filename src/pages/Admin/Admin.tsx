@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useMember } from "services/terra/admin/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import Loader from "components/Loader";
 import { useSetter } from "store/accessors";
 import { setCWContracts } from "slices/admin/cwContracts";
-import useWalletContext from "hooks/useWalletContext";
 import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Applications from "./Applications/Applications";
@@ -15,7 +15,7 @@ import Proposer from "./Proposer";
 
 export default function Admin() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { providerId } = useGetWallet();
 
   useEffect(() => {
     dispatch(setCWContracts("apTeam"));
@@ -23,7 +23,7 @@ export default function Admin() {
 
   const { member, isMemberLoading } = useMember("apTeam");
 
-  if (!wallet) {
+  if (!providerId) {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

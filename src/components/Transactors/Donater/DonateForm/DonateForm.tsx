@@ -6,7 +6,16 @@ import Breakdown from "./Breakdown";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
-  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
+  const {
+    donate,
+    to,
+    isFormLoading,
+    isSubmitDisabled,
+    isNetworkPromptShown,
+    correctNetworkInfo,
+    isSwitchingNetwork,
+    handleNetworkChange,
+  } = useDonate();
 
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
@@ -23,6 +32,26 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
+      {isNetworkPromptShown && (
+        <div className="grid bg-amber-400/5 border-2 rounded-md border-amber-400/20 p-1.5 mb-2">
+          <p className="text-xs font-mono text-amber-500">
+            To transact{" "}
+            <span className="font-semibold">{correctNetworkInfo.symbol}</span>,
+            kindly switch wallet network to{" "}
+            <span className="text-amber-500 font-semibold">
+              {correctNetworkInfo.name}
+            </span>
+          </p>
+          <button
+            disabled={isSwitchingNetwork}
+            onClick={handleNetworkChange}
+            className="justify-self-end text-xs font-bold text-angel-blue hover:text-bright-blue active:text-angel-orange uppercase font-heading"
+            type="button"
+          >
+            {isSwitchingNetwork ? "Switching..." : "Switch to Network"}
+          </button>
+        </div>
+      )}
       <Amount />
       <Breakdown />
 
@@ -57,9 +86,10 @@ export default function DonateForm() {
           .
         </label>
       </div>
+
       <button
         disabled={isSubmitDisabled || !isTermsAccepted}
-        className="w-full bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
+        className="w-full bg-orange hover:bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
         {isFormLoading ? "estimating fee.." : "proceed"}

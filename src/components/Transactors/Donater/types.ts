@@ -1,10 +1,11 @@
-import { Token } from "types/server/aws";
+import { TokenWithBalance } from "services/types";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: Token;
+  token: TokenWithBalance;
+  tokens: TokenWithBalance[];
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";

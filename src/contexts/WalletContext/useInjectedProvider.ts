@@ -160,6 +160,3 @@ function removeAllListeners(providerId: ProviderId) {
   const provider = getProvider(providerId);
   provider?.removeAllListeners && provider.removeAllListeners();
 }
-
-//notes: 1 accountChange handler run only on first connect [] --> [something]
-//and revocation of permission [something] --> []

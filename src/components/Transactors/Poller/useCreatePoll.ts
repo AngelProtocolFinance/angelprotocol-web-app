@@ -16,12 +16,12 @@ export default function useCreatePoll() {
   } = useFormContext<CreatePollValues>();
 
   const { form_error, form_loading } = useGetter((state) => state.transaction);
-  const { wallet, maxFee } = useCreatePollEstimate();
+  const { maxFee, walletAddr } = useCreatePollEstimate();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   async function createPoll(data: CreatePollValues) {
-    const contract = new Gov(wallet);
+    const contract = new Gov(walletAddr);
     const { amount, title, description, link } = data;
     const pollMsg = await contract.createPollMsgs(
       +amount,
@@ -32,7 +32,6 @@ export default function useCreatePoll() {
 
     dispatch(
       sendTerraTx({
-        wallet,
         tx: { msgs: [pollMsg], fee: maxFee },
         tagPayloads: [
           terra.util.invalidateTags([

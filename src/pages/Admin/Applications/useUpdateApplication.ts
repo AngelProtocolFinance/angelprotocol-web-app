@@ -7,17 +7,17 @@ import {
 import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { walletAddr, chainId } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
@@ -27,13 +27,13 @@ export default function useUpdateApplicationStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet);
+    const registrarContract = new Registrar(walletAddr);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
       );
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -42,8 +42,9 @@ export default function useUpdateApplicationStatus() {
 
     dispatch(
       sendEndowmentReviewTx({
+        walletAddr,
+        chainId,
         msgs: [proposalMsg],
-        wallet,
         applicationId: data.PK,
         tagPayloads: [
           aws.util.invalidateTags([

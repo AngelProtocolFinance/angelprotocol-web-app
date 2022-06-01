@@ -1,9 +1,7 @@
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
-import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class LP extends Contract {
@@ -12,11 +10,11 @@ export default class LP extends Contract {
   halo_address: string;
   simul: ContractQueryArgs;
 
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.pair_address = contracts[this.chainID][sc.loop_haloust_pair];
-    this.lp_address = contracts[this.chainID][sc.loop_haloust_lp];
-    this.halo_address = contracts[this.chainID][sc.halo_token];
+  constructor(walletAddr?: string) {
+    super(walletAddr);
+    this.pair_address = contracts.loop_haloust_pair;
+    this.lp_address = contracts.loop_haloust_lp;
+    this.halo_address = contracts.halo_token;
 
     //query args
     this.simul = {

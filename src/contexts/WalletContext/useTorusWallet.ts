@@ -1,28 +1,21 @@
-import {
-  CreateTxOptions,
-  LCDClient,
-  MnemonicKey,
-  Wallet,
-} from "@terra-money/terra.js";
-import { TxResult } from "@terra-money/wallet-provider";
+import { LCDClient, MnemonicKey, Wallet } from "@terra-money/terra.js";
 import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
-import { WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
+import { IS_DEV } from "constants/env";
 import { terra_lcds } from "constants/urls";
 import { providerIcons } from "./constants";
 import { retrieveUserAction } from "./helpers/prefActions";
 
-const isDevelopment = process.env.NODE_ENV === "development";
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
-  network: isDevelopment ? "testnet" : "mainnet",
+  network: IS_DEV ? "testnet" : "mainnet",
   uxMode: "popup",
 });
 
-const chainId = isDevelopment ? chainIDs.terra_test : chainIDs.terra_main;
+const chainId = IS_DEV ? chainIDs.terra_test : chainIDs.terra_main;
 const lcdClient = new LCDClient({
   URL: terra_lcds[chainId],
   chainID: chainId,
@@ -89,20 +82,20 @@ export default function useTorusWallet() {
     }
   }, []);
 
-  async function post(txOptions: CreateTxOptions): Promise<TxResult> {
-    if (!wallet) throw new WalletDisconnectError();
-    const tx = await wallet?.createAndSignTx(txOptions);
-    const res = await wallet.lcd.tx.broadcast(tx);
-    return {
-      ...txOptions,
-      result: {
-        height: res.height,
-        raw_log: res.raw_log,
-        txhash: res.txhash,
-      },
-      success: true,
-    };
-  }
+  // async function post(txOptions: CreateTxOptions): Promise<TxResult> {
+  //   if (!wallet) throw new WalletDisconnectError();
+  //   const tx = await wallet?.createAndSignTx(txOptions);
+  //   const res = await wallet.lcd.tx.broadcast(tx);
+  //   return {
+  //     ...txOptions,
+  //     result: {
+  //       height: res.height,
+  //       raw_log: res.raw_log,
+  //       txhash: res.txhash,
+  //     },
+  //     success: true,
+  //   };
+  // }
 
   const providerInfo: ProviderInfo = {
     logo: providerIcons.torus,
@@ -122,7 +115,6 @@ export default function useTorusWallet() {
     torusConnection: connection,
     disconnectTorus: disconnect,
     isTorusLoading: isLoading,
-    torusPost: post,
     torusInfo: wallet ? providerInfo : undefined,
   };
 }

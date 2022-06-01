@@ -6,18 +6,18 @@ import { FundDetails } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -49,7 +49,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(walletAddr);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -78,7 +78,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -89,7 +89,6 @@ export default function useCreateFund() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

@@ -5,11 +5,11 @@ import { registrar_api } from "./registrar";
 
 export function useEndowmentStatus(address: string, skip = false) {
   const { useEndowmentsQuery } = registrar_api;
-  const { wallet, contract } = useContract<R, T>(Registrar);
+  const { contract } = useContract<R, T>(Registrar);
   const { endowmentStatus, isEndowmentStatusLoading } = useEndowmentsQuery(
     contract.endowmentList({}),
     {
-      skip: skip || wallet?.network.chainID === chainIDs.terra_local,
+      skip,
       selectFromResult: ({ data, isLoading, isFetching }) => ({
         endowmentStatus: data?.find(
           (endowment) => endowment.address === address
@@ -24,12 +24,9 @@ export function useEndowmentStatus(address: string, skip = false) {
 
 export function useRegistrarConfig() {
   const { useConfigQuery } = registrar_api;
-  const { contract, wallet } = useContract<R, T>(Registrar);
+  const { contract } = useContract<R, T>(Registrar);
   const { data, isError, isLoading, isFetching } = useConfigQuery(
-    contract.config,
-    {
-      skip: wallet?.network.chainID === chainIDs.terra_local,
-    }
+    contract.config
   );
 
   return {

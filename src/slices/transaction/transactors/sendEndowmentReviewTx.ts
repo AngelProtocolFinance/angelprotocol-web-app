@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
+import { WalletController } from "@terra-money/wallet-provider";
 import {
   SenderArgs,
   StageUpdator,
@@ -11,10 +12,13 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
+import { chainOptions } from "constants/chainOptions";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SenderArgs & {
   applicationId: string;
+  chainId: string;
+  walletAddr: string;
 };
 
 export const sendEndowmentReviewTx = createAsyncThunk(
@@ -28,15 +32,10 @@ export const sendEndowmentReviewTx = createAsyncThunk(
     };
 
     try {
-      if (!args.wallet) {
-        updateTx({ step: "error", message: "Wallet is not connected" });
-        return;
-      }
-
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet);
+      const contract = new Contract(args.walletAddr);
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
@@ -61,7 +60,8 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await args.wallet.post(tx);
+      const { post } = new WalletController({ ...chainOptions });
+      const response = await post(tx);
       const chainId = contract.chainID;
 
       updateTx({
@@ -72,7 +72,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
       });
 
       if (response.success) {
-        const contract = new Contract(args.wallet);
+        const contract = new Contract();
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
@@ -98,7 +98,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.wallet.network.chainID,
+            chain_id: args.chainId,
             PK: args.applicationId,
           });
 

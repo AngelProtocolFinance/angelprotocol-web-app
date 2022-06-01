@@ -2,8 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { WithdrawResource, WithdrawValues, WithdrawerProps } from "./types";
 import { useWithdrawConstraints } from "services/terra/multicall/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
-import useWalletContext from "hooks/useWalletContext";
 import WithdrawForm from "./WithdrawForm";
 import { withdrawSchema } from "./withdrawSchema";
 
@@ -26,14 +26,14 @@ export default function Withdrawer(props: WithdrawerProps) {
 }
 
 function WithdrawContext(props: WithdrawResource) {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       total_ust: 0,
       total_receive: 0,
-      beneficiary: wallet?.address ?? "",
+      beneficiary: walletAddr,
     },
     resolver: yupResolver(withdrawSchema),
   });

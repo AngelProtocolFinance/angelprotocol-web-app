@@ -3,14 +3,14 @@ import { ProposalDetails } from "pages/Admin/types";
 import { Proposal, Vote } from "types/server/contracts";
 import { useVoteList } from "services/terra/admin/queriers";
 import { useLatestBlock } from "services/terra/queriers";
-import useWalletContext from "hooks/useWalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import idParamToNumber from "helpers/idParamToNum";
 
 export default function useProposalDetails(
   proposalInfo: Proposal
 ): ProposalDetails {
   const blockHeight = useLatestBlock();
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { votes = [] } = useVoteList(proposalInfo.id);
 
   const [numYes, numNo] = useMemo(
@@ -31,8 +31,8 @@ export default function useProposalDetails(
   );
 
   const userVote: Vote | undefined = useMemo(
-    () => votes.find((vote) => vote.voter === wallet?.address)?.vote,
-    [wallet, votes]
+    () => votes.find((vote) => vote.voter === walletAddr)?.vote,
+    [walletAddr, votes]
   );
 
   const totalWeight = +proposalInfo.threshold.absolute_percentage.total_weight;

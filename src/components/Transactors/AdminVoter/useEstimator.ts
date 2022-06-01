@@ -2,6 +2,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { AdminVoteValues } from "./types";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
@@ -10,7 +11,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Admin from "contracts/Admin";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
@@ -21,7 +21,7 @@ export default function useEstimator() {
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { providerId, walletAddr } = useGetWallet();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
 
@@ -29,7 +29,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -41,7 +41,7 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(cwContracts, wallet);
+        const contract = new Admin(cwContracts, walletAddr);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);

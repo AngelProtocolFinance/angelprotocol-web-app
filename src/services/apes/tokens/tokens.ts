@@ -36,7 +36,7 @@ const tokens_api = apes.injectEndpoints({
             return {
               data: [
                 unSupportedToken,
-                ...tokenList.map((token) => ({ ...token, balance: "0" })),
+                ...tokenList.map((token) => ({ ...token, balance: 0 })),
               ],
             };
           }
@@ -55,8 +55,8 @@ const tokens_api = apes.injectEndpoints({
               ...tokenList[i],
               balance:
                 result.status === "fulfilled"
-                  ? utils.formatUnits(result.value, tokenList[i].decimals)
-                  : "0",
+                  ? +utils.formatUnits(result.value, tokenList[i].decimals)
+                  : 0,
             };
             if (token.chainId === args.chainId) {
               //bring active coin to front
@@ -87,7 +87,7 @@ const tokens_api = apes.injectEndpoints({
                 logo: erc20Tokens[i].logo,
                 decimals: token.decimals,
                 erc20Tokens: [],
-                balance: token.balance,
+                balance: +token.balance,
 
                 //for ERC20 txs
                 nativeSymbol: activeCoin.symbol,

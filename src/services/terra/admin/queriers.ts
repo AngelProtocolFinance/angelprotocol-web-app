@@ -17,32 +17,28 @@ import useAdminContract from "./useAdminContract";
 
 export function useMembers() {
   const { useMembersQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,
     isLoading,
     isError,
   } = useMembersQuery(contract.members, {
-    skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
+    skip: isAdminSkip,
   });
   return { members: data, isMembersLoading: isFetching || isLoading, isError };
 }
 
 export function useMember(customCWs?: CWContracts, skip = false) {
   const { useMemberQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract(customCWs);
+  const { walletAddr, contract, isAdminSkip } = useAdminContract(customCWs);
   const {
     data = member,
     isFetching,
     isLoading,
     isError,
   } = useMemberQuery(contract.member, {
-    skip:
-      skip ||
-      isAdminSkip ||
-      !wallet ||
-      wallet.network.chainID === chainIDs.terra_local,
+    skip: skip || isAdminSkip || !walletAddr,
   });
   return {
     member: data,
@@ -58,11 +54,11 @@ export function useFilteredProposals(
   pageNum: number
 ) {
   const { useProposalsQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { contract, isAdminSkip } = useAdminContract();
   const { filteredProposals, isLoading, isError } = useProposalsQuery(
     contract.proposals(genPageOptions(pageNum, status, group)),
     {
-      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
+      skip: isAdminSkip,
       selectFromResult: ({ data = [], isLoading, isFetching, isError }) => {
         function proposalFilter(proposal: Proposal): boolean {
           const proposalMeta = JSON.parse(
@@ -128,7 +124,7 @@ function genVoteListPageOptions(
 
 export function useProposal(pollId?: string | number) {
   const { useProposalQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { contract, isAdminSkip } = useAdminContract();
 
   //process pollId path var which is not guaranteed to be a number castable string
   const numberPollId = idParamToNumber(pollId);
@@ -137,17 +133,14 @@ export function useProposal(pollId?: string | number) {
     isFetching,
     isLoading,
   } = useProposalQuery(contract.proposal(numberPollId), {
-    skip:
-      isAdminSkip ||
-      numberPollId === 0 ||
-      wallet?.network.chainID === chainIDs.terra_local,
+    skip: isAdminSkip || numberPollId === 0,
   });
   return { proposal: data, isProposalLoading: isFetching || isLoading };
 }
 
 export function useVoteList(pollId: number, pageNum?: number) {
   const { useVotesQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { contract, isAdminSkip } = useAdminContract();
   const {
     data = [],
     isFetching,
@@ -155,7 +148,7 @@ export function useVoteList(pollId: number, pageNum?: number) {
   } = useVotesQuery(
     contract.voteList(genVoteListPageOptions(pollId, pageNum)),
     {
-      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
+      skip: isAdminSkip,
     }
   );
   return { votes: data, isVoteListLoading: isFetching || isLoading };
@@ -163,11 +156,11 @@ export function useVoteList(pollId: number, pageNum?: number) {
 
 export function useCW3Config() {
   const { useCw3ConfigQuery } = admin_api;
-  const { wallet, contract, isAdminSkip } = useAdminContract();
+  const { contract, isAdminSkip } = useAdminContract();
   const { data, isFetching, isLoading, isError } = useCw3ConfigQuery(
     contract.cw3Config,
     {
-      skip: isAdminSkip || wallet?.network.chainID === chainIDs.terra_local,
+      skip: isAdminSkip,
     }
   );
   return {

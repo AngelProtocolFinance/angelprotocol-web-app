@@ -1,63 +1,64 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { resetFee } from "slices/transaction/transactionSlice";
+import { resetFee, setFormError } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
-import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import useWalletContext from "hooks/useWalletContext";
+import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
-type Sender = (data: DonateValues) => any;
-
 export default function useDonate() {
+  const { providerId, displayCoin, isWalletLoading } = useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
-  const { watch, handleSubmit, setValue, getValues } =
-    useFormContext<DonateValues>();
-  const { wallet } = useWalletContext();
+  const {
+    watch,
+    handleSubmit,
+    setValue,
+    getValues,
+    formState: { isValid, isDirty },
+  } = useFormContext<DonateValues>();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { terraTx, ethTx, bnbTx } = useEstimator();
+  const { ethTx } = useEstimator();
 
-  const terraSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendTerraDonation({ tx: terraTx!, wallet, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-
-    //eslint-disable-next-line
-    [terraTx, wallet]
-  );
-
-  const ethSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: ethTx!, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [ethTx]
-  );
-
-  const bnbSender = useCallback(
-    (data: DonateValues) => {
-      dispatch(sendEthDonation({ tx: bnbTx!, donateValues: data }));
-      showModal(TransactionPrompt, {});
-    },
-    //eslint-disable-next-line
-    [bnbTx]
-  );
-
-  // const btcSender = useBTCSender();
-  // const solSender = useSolSender();
-  // const atomSender = useAtomSender();
   const denomRef = useRef<string>(denoms.uusd);
   const token = watch("token");
-  const denom = token.min_denom;
 
+  const ethSender = (data: DonateValues) => {
+    dispatch(sendEthDonation({ tx: ethTx!, donateValues: data, providerId }));
+    showModal(TransactionPrompt, {});
+  };
+
+  async function handleNetworkChange() {
+    try {
+      if (!providerId) {
+        dispatch(setFormError("Wallet is not connected"));
+        return;
+      }
+      await addNetworkAndSwitch(token, providerId);
+    } catch (err) {
+      console.error(err);
+      dispatch(
+        setFormError(
+          /**generalize this error, since manifestation is different on wallets
+           * metamask: errs code -32603 if network is a default metamask network,
+           * but also errs -32603 on other type of error
+           *
+           * binance-wallet: error message
+           */
+          "Unknown error: Kindly switch your wallet network manually"
+        )
+      );
+    }
+  }
+
+  const denom = token.min_denom;
+  const isInCorrectNetwork = token.chainId === displayCoin.chainId;
   //reset amount when changing currency
   useEffect(() => {
     if (denomRef.current !== denom) {
@@ -68,15 +69,22 @@ export default function useDonate() {
     //eslint-disable-next-line
   }, [denom]);
 
-  const getSender = (denom: string): Sender => {
-    if (denom === denoms.wei) return ethSender;
-    if (denom === denoms.bnb) return bnbSender;
-    return terraSender;
-  };
-
   return {
-    donate: handleSubmit(getSender(denom)),
-    isSubmitDisabled: form_error !== null || form_loading,
+    donate: handleSubmit(ethSender),
+    correctNetworkInfo: {
+      name: token.chainName,
+      symbol: token.symbol,
+    },
+    isNetworkPromptShown: !isInCorrectNetwork && providerId,
+    isSwitchingNetwork: isWalletLoading,
+    handleNetworkChange,
+    isSubmitDisabled:
+      form_error !== null ||
+      form_loading ||
+      !isValid ||
+      !isDirty ||
+      isWalletLoading ||
+      !isInCorrectNetwork,
     isFormLoading: form_loading,
     to: getValues("to"),
   };

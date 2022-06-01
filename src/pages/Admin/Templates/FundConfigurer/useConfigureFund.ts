@@ -5,13 +5,13 @@ import { FundConfig } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
@@ -20,7 +20,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -48,7 +48,7 @@ export default function useConfigureFund() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(walletAddr);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({
@@ -59,7 +59,7 @@ export default function useConfigureFund() {
       })
     );
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -70,7 +70,6 @@ export default function useConfigureFund() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

@@ -3,15 +3,11 @@ import {
   useLeaderboardsQuery,
 } from "services/aws/leaderboard";
 import Loader from "components/Loader";
-import useWalletContext from "hooks/useWalletContext";
-import { chainIDs } from "constants/chainIDs";
 import TableView from "./TableView";
 
 export default function Board() {
-  const { wallet } = useWalletContext();
-  const is_test = wallet?.network.chainID === chainIDs.terra_test;
   const { data: update = leaderboard_update, isLoading } =
-    useLeaderboardsQuery(is_test);
+    useLeaderboardsQuery("");
   return (
     <div className="relative min-h-leader-table p-6 pt-10 my-5 mt-2 grid place-items-center overflow-hidden bg-white rounded-xl shadow-lg">
       <p className="flex absolute top-3 right-6 gap-2 text-sm font-body text-angel-grey/80 italic">

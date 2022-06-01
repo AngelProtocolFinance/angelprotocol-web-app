@@ -4,18 +4,18 @@ import { AllianceMember as AM, EmbeddedWasmMsg } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -38,7 +38,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new Indexfund(wallet);
+    const indexFundContract = new Indexfund(walletAddr);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -63,7 +63,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {
@@ -87,7 +87,6 @@ export default function useEditAlliance() {
 
     dispatch(
       sendTerraTx({
-        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

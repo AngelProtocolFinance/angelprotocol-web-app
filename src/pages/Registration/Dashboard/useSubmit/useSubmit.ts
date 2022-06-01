@@ -2,20 +2,19 @@ import { useCallback } from "react";
 import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Registrar from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
+  const { providerId, walletAddr } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
-
-  const { wallet } = useWalletContext();
   const { showModal } = useModalContext();
 
   // this will submit the endowment contract to AWS
@@ -25,7 +24,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(
             setStage({ step: "error", message: "Wallet is not connected" })
           );
@@ -34,10 +33,10 @@ export default function useSubmit() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new Registrar(wallet);
+        const contract = new Registrar(walletAddr);
         const msg = contract.createEndowmentCreationMsg(charity);
 
-        dispatch(sendTerraTx({ wallet, msgs: [msg] }));
+        dispatch(sendTerraTx({ msgs: [msg] }));
       } catch (err) {
         console.log(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
@@ -46,7 +45,7 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [wallet, dispatch, showModal]
+    [dispatch, showModal]
   );
 
   return { submit, isSubmitting: form_loading };

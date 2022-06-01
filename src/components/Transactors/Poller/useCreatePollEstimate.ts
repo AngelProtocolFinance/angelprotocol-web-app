@@ -2,14 +2,14 @@ import { Fee } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { CreatePollValues } from "./types";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -21,15 +21,14 @@ export default function useCreatePollEstimate() {
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
   const [maxFee, setMaxFee] = useState<Fee>();
+  const { providerId, coins, walletAddr } = useGetWallet();
 
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
@@ -46,7 +45,7 @@ export default function useCreatePollEstimate() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet);
+        const contract = new Gov(walletAddr);
         const pollMsgs = await contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
@@ -79,9 +78,9 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, coins, isDirty, isValid]);
+  }, [coins, isDirty, isValid]);
 
-  return { wallet, maxFee };
+  return { maxFee, walletAddr };
 
   //return estimated fee computed using max constraints
 }

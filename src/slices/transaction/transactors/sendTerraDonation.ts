@@ -1,20 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { WalletController } from "@terra-money/wallet-provider";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { WalletProxy } from "providers/WalletProvider";
 import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
+import { chainIDs } from "constants/chainIDs";
+import { chainOptions } from "constants/chainOptions";
+import { IS_DEV } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {
   donateValues: DonateValues;
   tx: CreateTxOptions;
-  wallet: WalletProxy | undefined;
+  walletAddr: string;
 };
 
 export const sendTerraDonation = createAsyncThunk(
@@ -24,19 +27,17 @@ export const sendTerraDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
-      if (!args.wallet) {
-        updateStage({ step: "error", message: "Wallet is not connected" });
-        return;
-      }
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const response = await args.wallet.post(args.tx!);
-      const chainId = args.wallet.network.chainID;
+      const { post } = new WalletController({
+        ...chainOptions,
+      });
+      const response = await post(args.tx!);
+      const chainId = IS_DEV ? chainIDs.terra_test : chainIDs.mainnet;
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
 
-        const walletAddress = args.wallet.address;
         const { receiver, token, amount, split_liq } = args.donateValues;
 
         const receipient: Receiver =
@@ -53,7 +54,7 @@ export const sendTerraDonation = createAsyncThunk(
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
-            walletAddress,
+            walletAddress: args.walletAddr,
           });
         }
 
@@ -64,7 +65,7 @@ export const sendTerraDonation = createAsyncThunk(
           chainId,
         });
 
-        const contract = new Contract(args.wallet);
+        const contract = new Contract(args.walletAddr);
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 

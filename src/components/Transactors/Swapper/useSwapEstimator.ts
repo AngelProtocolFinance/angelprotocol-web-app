@@ -6,7 +6,8 @@ import {
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -14,7 +15,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
@@ -30,10 +30,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { coins } = useGetter((state) => state.wallet);
-
-  const { wallet } = useWalletContext();
-
+  const { providerId, coins, walletAddr } = useGetWallet();
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
@@ -44,7 +41,7 @@ export default function useSwapEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -74,7 +71,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(wallet);
+        const contract = new LP(walletAddr);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -134,15 +131,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    wallet,
-    coins,
-    is_buy,
-    debounced_slippage,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, coins, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { wallet, tx };
+  return { tx };
 }

@@ -1,47 +1,57 @@
-import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
+import {
+  TransactionRequest,
+  TransactionResponse,
+} from "@ethersproject/abstract-provider/src.ts";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
+import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { DonateValues } from "components/Transactors/Donater";
-import { RootState } from "store/store";
-import { Dwindow } from "slices/providerSlice";
+import { getProvider } from "helpers/getProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
+  providerId?: ProviderId;
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
 
 export const sendEthDonation = createAsyncThunk(
   `${transactionSlice.name}/ethDonate`,
-  async (args: EthDonateArgs, { dispatch, getState }) => {
+  async (args: EthDonateArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
     try {
-      const dwindow = window as Dwindow;
-      const state = getState() as RootState;
-      const activeProvider = state.provider.active;
       updateTx({ step: "submit", message: "Submitting transaction.." });
-      let provider: ethers.providers.Web3Provider;
 
-      if (activeProvider === "ethereum") {
-        provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
-      } else if (activeProvider === "binance") {
-        provider = new ethers.providers.Web3Provider(dwindow.BinanceChain!);
-      } else {
-        provider = new ethers.providers.Web3Provider(dwindow.xfi?.ethereum!);
-      }
+      const provider = new ethers.providers.Web3Provider(
+        //wallet is connected to send this tx
+        getProvider(args.providerId!) as any
+      );
 
       const signer = provider.getSigner();
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
       const chainId = `${chainNum}`;
-      const response = await signer.sendTransaction(args.tx!);
+      const { contractAddr } = args.donateValues.token;
+
+      let response: TransactionResponse;
+      if (contractAddr) {
+        const ER20Contract: any = new ethers.Contract(
+          contractAddr,
+          ERC20Abi,
+          signer
+        );
+        response = await ER20Contract.transfer(args.tx.to, args.tx.value);
+      } else {
+        response = await signer.sendTransaction(args.tx);
+      }
 
       updateTx({ step: "submit", message: "Saving donation info.." });
       const { receiver, token, amount, split_liq } = args.donateValues;

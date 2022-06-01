@@ -1,9 +1,7 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { GovState, Vote } from "types/server/contracts";
-import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import CW20 from "./CW20";
 import Contract from "./Contract";
 
@@ -20,19 +18,19 @@ export default class Gov extends Contract {
   config: CQA;
   polls: CQA;
 
-  constructor(wallet?: WalletProxy) {
-    super(wallet);
-    this.govContractAddr = contracts[this.chainID][sc.gov];
-    this.haloContractAddr = contracts[this.chainID][sc.halo_token];
+  constructor(walletAddr?: string) {
+    super(walletAddr);
+    this.govContractAddr = contracts.gov;
+    this.haloContractAddr = contracts.halo_token;
 
-    this.haloInfo = new CW20(this.haloContractAddr, wallet).info;
-    this.haloBalance = new CW20(this.haloContractAddr, wallet).balance(
+    this.haloInfo = new CW20(this.haloContractAddr, walletAddr).info;
+    this.haloBalance = new CW20(this.haloContractAddr, walletAddr).balance(
       this.govContractAddr
     );
     //query args
     this.staker = {
       address: this.govContractAddr,
-      msg: { staker: { address: wallet?.address } },
+      msg: { staker: { address: this.walletAddr } },
     };
 
     this.gov_state = {
@@ -57,7 +55,7 @@ export default class Gov extends Contract {
 
   createGovStakeMsg(amount: number | string): MsgExecuteContract {
     this.checkWallet();
-    const cw20Contract = new CW20(this.haloContractAddr, this.wallet);
+    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
     return cw20Contract.createSendMsg(amount, this.govContractAddr, {
       stake_voting_tokens: {},
     });
@@ -70,7 +68,7 @@ export default class Gov extends Contract {
     link?: string
     // msgs?: PollExecuteMsg[]
   ) {
-    const cw20Contract = new CW20(this.haloContractAddr, this.wallet);
+    const cw20Contract = new CW20(this.haloContractAddr, this.walletAddr);
     return cw20Contract.createSendMsg(amount, this.govContractAddr, {
       create_poll: { title, description, link },
     });

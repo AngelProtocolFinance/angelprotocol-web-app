@@ -5,10 +5,11 @@ export type ProviderId =
   | "terra-station"
   | "wallet-connect"
   | "torus";
+
 export type Connection = {
   logo: string;
   name: string;
-  connect(): Promise<void>;
+  connect(arg?: string): Promise<void>;
 };
 export type ProviderInfo = {
   providerId: ProviderId;

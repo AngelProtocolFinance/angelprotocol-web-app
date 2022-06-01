@@ -10,15 +10,14 @@ import Select, {
   ValueContainerProps,
 } from "react-select";
 import { Token } from "types/server/aws";
-import { useTokensQuery } from "services/apes/tokens";
-import { createUSTToken } from "components/WalletSuite/useWalletUpdator";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
 }) {
+  const { coins } = useGetWallet();
   const { control } = useFormContext<T>();
-  const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
 
   return (
     <Controller
@@ -30,7 +29,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
             className={props.classes}
             value={value}
             onChange={onChange}
-            options={tokens}
+            options={coins}
             getOptionLabel={getOptionLabel}
             noOptionsMessage={(obj) => `${obj.inputValue} not found`}
             components={{

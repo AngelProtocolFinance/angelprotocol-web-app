@@ -9,12 +9,12 @@ import { EndowmentAdminParams } from "pages/EndowmentAdmin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import genDiffMeta from "../genDiffMeta";
 import genProposalsLink from "../genProposalsLink";
@@ -22,7 +22,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -46,7 +46,7 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(cwContracts, walletAddr);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       data.height,
       (data.threshold / 100).toFixed(3)
@@ -68,7 +68,6 @@ export default function useConfigureCW3() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

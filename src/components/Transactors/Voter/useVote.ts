@@ -15,14 +15,13 @@ export default function useVote() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<VoteValues>();
 
-  const { wallet, tx } = useVoteEstimator();
+  const { tx } = useVoteEstimator();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function vote() {
     dispatch(
       sendTerraTx({
-        wallet,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

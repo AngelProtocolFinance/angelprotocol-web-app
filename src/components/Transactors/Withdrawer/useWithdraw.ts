@@ -16,14 +16,13 @@ export default function useWithdraw(resources: WithdrawResource) {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<WithdrawValues>();
 
-  const { wallet, tx } = useWithrawEstimator(resources);
+  const { tx } = useWithrawEstimator(resources);
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function withdraw() {
     dispatch(
       sendTerraTx({
-        wallet,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

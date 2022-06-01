@@ -13,13 +13,13 @@ import { uploadToIpfs } from "pages/Registration/helpers";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import getPayloadDiff from "helpers/getPayloadDiff";
 import optimizeImage from "helpers/optimizeImage";
@@ -32,7 +32,7 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<UpdateProfileValues>();
-  const { wallet } = useWalletContext();
+  const { providerId, walletAddr } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -93,7 +93,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, wallet);
+    const accountContract = new Account(endowmentAddr!, walletAddr);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
@@ -104,7 +104,7 @@ export default function useEditProfile() {
       data: genDiffMeta(diffEntries, initialProfile),
     };
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(cwContracts, walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -115,7 +115,6 @@ export default function useEditProfile() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

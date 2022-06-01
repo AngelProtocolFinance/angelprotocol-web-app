@@ -9,9 +9,7 @@ import {
   Vote,
   VotesPageOptions,
 } from "types/server/contracts";
-import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { sc } from "constants/sc";
 import Contract from "./Contract";
 
 export default class Admin extends Contract {
@@ -29,13 +27,11 @@ export default class Admin extends Contract {
   voter: CQA;
   cw3Config: CQA;
 
-  constructor(cws: CWContracts, wallet?: WalletProxy) {
-    super(wallet);
+  constructor(cws: CWContracts, walletAddr?: string) {
+    super(walletAddr);
     //make sure to use query skips on empty addresses
-    this.cw4 =
-      cws === "apTeam" ? contracts[this.chainID][sc.apCW4] : cws.cw4 || "";
-    this.cw3 =
-      cws === "apTeam" ? contracts[this.chainID][sc.apCW3] : cws.cw3 || "";
+    this.cw4 = cws === "apTeam" ? contracts.apCW4 : cws.cw4 || "";
+    this.cw3 = cws === "apTeam" ? contracts.apCW3 : cws.cw3 || "";
 
     //query args CW4
     this.members = {

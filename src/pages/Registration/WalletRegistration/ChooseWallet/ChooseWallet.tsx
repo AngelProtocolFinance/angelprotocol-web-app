@@ -2,8 +2,8 @@ import { WalletStatus } from "@terra-money/wallet-provider";
 import { useCallback } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
+import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
-import useWalletContext from "hooks/useWalletContext";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { default as registerRoutes } from "../../routes";
 import routes from "../routes";
@@ -12,13 +12,11 @@ import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
-  const { status, availableWallets } = useWalletContext();
+  const { connections } = useSetWallet();
   const login = useCallback(
     (provider: string) =>
-      availableWallets
-        .find((x) => x.connection.type === "TORUS")
-        ?.connect(provider),
-    [availableWallets]
+      connections.find((x) => x.name === "Torus")?.connect(provider),
+    [connections]
   );
 
   if (status === WalletStatus.WALLET_CONNECTED) {

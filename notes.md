@@ -6,4 +6,6 @@ DONE:
 
 - watch here : [multicall repo](https://github.com/scb-10x/multicall)
 
-4.
+4. removed local_terra query skip
+5. removed dynamic testnet response, instead prod is always equal to mainnet, and development is testnet
+6. removed passing of `wallet.post` to thunks, use lower-level `WalletController` instead

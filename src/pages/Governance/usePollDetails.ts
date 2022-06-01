@@ -9,7 +9,7 @@ import {
   useGovStaker,
 } from "services/terra/gov/queriers";
 import { useLatestBlock } from "services/terra/queriers";
-import useWalletContext from "hooks/useWalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import toCurrency from "helpers/toCurrency";
 
 type ProcessedPollData = {
@@ -34,7 +34,7 @@ type ProcessedPollData = {
 
 export default function useDetails(poll_id: number): ProcessedPollData {
   const [data, setData] = useState<ProcessedPollData>(placeholder_data);
-  const { wallet } = useWalletContext();
+  const {} = useGetWallet();
   const gov_config = useGovConfig();
   const poll = useGovPoll(poll_id);
   const gov_staked = useGovHaloBalance();
@@ -105,7 +105,7 @@ export default function useDetails(poll_id: number): ProcessedPollData {
     };
 
     setData(processed);
-  }, [wallet, gov_config, poll, gov_staker, block_height, poll_id, gov_staked]);
+  }, [gov_config, poll, gov_staker, block_height, poll_id, gov_staked]);
 
   return data;
 

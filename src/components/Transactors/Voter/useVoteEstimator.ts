@@ -4,7 +4,8 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { Vote } from "types/server/contracts";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -12,7 +13,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -26,9 +26,9 @@ export default function useVoteEstimator() {
     formState: { isValid, isDirty },
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
-  const { coins } = useGetter((state) => state.wallet);
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { walletAddr, coins, providerId } = useGetWallet();
+
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
   const vote = watch("vote");
@@ -39,7 +39,7 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -78,7 +78,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet);
+        const contract = new Gov(walletAddr);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -110,12 +110,12 @@ export default function useVoteEstimator() {
   }, [
     debounced_amount,
     debounced_vote,
-    wallet,
+    walletAddr,
     coins,
     govStaker,
     isValid,
     isDirty,
   ]);
 
-  return { tx, wallet };
+  return { tx };
 }

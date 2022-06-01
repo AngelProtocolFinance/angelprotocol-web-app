@@ -1,8 +1,8 @@
 import { TokenWithBalance } from "services/types";
 import { Token } from "types/server/aws";
-import coinIcon from "assets/icons/currencies/coin.svg";
 import ethLogo from "assets/icons/currencies/ether.png";
 import lunaLogo from "assets/icons/currencies/luna.png";
+import coinIcon from "assets/icons/currencies/token.svg";
 import { chainIDs } from "constants/chainIDs";
 
 export const placeHolderToken: TokenWithBalance = {
@@ -15,7 +15,7 @@ export const placeHolderToken: TokenWithBalance = {
   chainName: "Ethereum mainnet",
   blockExplorerUrl: "https://etherscan.io/",
   tokens: [],
-  balance: "0",
+  balance: 0,
 };
 
 export const unSupportedToken: TokenWithBalance = {
@@ -28,7 +28,7 @@ export const unSupportedToken: TokenWithBalance = {
   chainName: "Unsuported Network",
   blockExplorerUrl: "",
   tokens: [],
-  balance: "0",
+  balance: 0,
 };
 
 const avalancheToken: Token = {

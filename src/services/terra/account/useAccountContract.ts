@@ -1,13 +1,13 @@
 import { useMemo } from "react";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Account from "contracts/Account";
-import useWalletContext from "hooks/useWalletContext";
 
 export default function useAccountContract(address: string) {
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const contract = useMemo(
-    () => new Account(address, wallet),
-    [wallet, address]
+    () => new Account(address, walletAddr),
+    [walletAddr, address]
   );
 
-  return { wallet, contract };
+  return { walletAddr, contract };
 }

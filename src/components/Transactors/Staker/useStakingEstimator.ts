@@ -2,7 +2,8 @@ import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { HaloStakingValues } from "./types";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { useSetter } from "store/accessors";
 // import useTerraBalance from "hooks/useTerraBalance";
 import {
   setFee,
@@ -11,7 +12,6 @@ import {
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
 import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -25,10 +25,9 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<HaloStakingValues>();
-  const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { coins } = useGetter((state) => state.wallet);
+  const { providerId, coins, walletAddr } = useGetWallet();
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -37,7 +36,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -67,7 +66,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let govMsg: MsgExecuteContract;
-        const contract = new Gov(wallet);
+        const contract = new Gov(walletAddr);
 
         if (is_stake) {
           govMsg = contract.createGovStakeMsg(debounced_amount);
@@ -99,7 +98,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, coins, balance, locked, isValid, isDirty]);
+  }, [debounced_amount, coins, balance, locked, isValid, isDirty]);
 
-  return { tx, wallet };
+  return { tx };
 }

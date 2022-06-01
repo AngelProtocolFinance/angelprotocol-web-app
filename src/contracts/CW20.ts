@@ -1,6 +1,5 @@
 import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/types";
-import { WalletProxy } from "providers/WalletProvider";
 import Contract from "./Contract";
 
 export default class CW20 extends Contract {
@@ -8,8 +7,8 @@ export default class CW20 extends Contract {
   balance: (address: string) => ContractQueryArgs;
   info: ContractQueryArgs;
 
-  constructor(cw20ContractAddr: string, wallet?: WalletProxy) {
-    super(wallet);
+  constructor(cw20ContractAddr: string, walletAddr?: string) {
+    super(walletAddr);
     this.cw20ContractAddr = cw20ContractAddr;
 
     this.info = {

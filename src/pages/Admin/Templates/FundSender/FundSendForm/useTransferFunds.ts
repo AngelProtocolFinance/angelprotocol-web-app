@@ -8,13 +8,13 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import CW20 from "contracts/CW20";
-import useWalletContext from "hooks/useWalletContext";
 import { contracts } from "constants/contracts";
 import { denoms } from "constants/currency";
 import genProposalsLink from "../../genProposalsLink";
@@ -25,8 +25,8 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
+  const { walletAddr } = useGetWallet();
   const { showModal } = useModalContext();
-  const { wallet } = useWalletContext();
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
 
@@ -43,8 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const haloContractAddr = contracts[wallet?.network.chainID!]["halo_token"];
-    const cw20Contract = new CW20(haloContractAddr, wallet);
+    const cw20Contract = new CW20(contracts.halo_token, walletAddr);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -62,7 +61,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const adminContract = new Admin(cwContracts, wallet);
+    const adminContract = new Admin(cwContracts, walletAddr);
     const fundTransferMeta: FundSendMeta = {
       type: "admin-group-fund-transfer",
       data: {
@@ -81,7 +80,6 @@ export default function useTransferFunds() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

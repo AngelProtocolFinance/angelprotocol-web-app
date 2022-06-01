@@ -5,13 +5,11 @@ import Icon from "components/Icon";
 import TransactionHint from "components/TransactionStatus/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite/WalletSuite";
-import useProviderSwitcher from "components/WalletSuite/useProviderSwitcher";
 import { siteRoutes } from "constants/routes";
 import DappMenu from "./DappMenu";
 import MobileDappNav from "./MobileDappNav";
 
 export default function DappHead() {
-  useProviderSwitcher();
   const [navShown, showNav] = useState(false);
   function toggleNav() {
     showNav((prevState) => !prevState);

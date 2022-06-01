@@ -1,6 +1,7 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFee,
@@ -8,7 +9,6 @@ import {
   setFormLoading,
 } from "slices/transaction/transactionSlice";
 import Gov from "contracts/Gov";
-import useWalletContext from "hooks/useWalletContext";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -17,14 +17,14 @@ import { denoms } from "constants/currency";
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
+  const { providerId, walletAddr } = useGetWallet();
   const { coins } = useGetter((state) => state.wallet);
   const gov_staker = useGovStaker();
-  const { wallet } = useWalletContext();
 
   useEffect(() => {
     (async () => {
       try {
-        if (!wallet) {
+        if (!providerId) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -44,7 +44,7 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(wallet);
+        const contract = new Gov(walletAddr);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);
@@ -69,7 +69,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, coins, gov_staker]);
+  }, [walletAddr, providerId, coins, gov_staker]);
 
-  return { wallet, tx };
+  return { tx };
 }

@@ -5,19 +5,19 @@ import { FundUpdateValues } from "pages/Admin/types";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Indexfund from "contracts/IndexFund";
-import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
+  const { walletAddr } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
-  const { wallet } = useWalletContext();
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
   const dispatch = useSetter();
@@ -54,7 +54,7 @@ export default function useUpdateFund() {
         showModal(Popup, { message: "No fund member changes" });
         return;
       }
-      const indexFundContract = new Indexfund(wallet);
+      const indexFundContract = new Indexfund(walletAddr);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -69,7 +69,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new Admin("apTeam", wallet);
+      const adminContract = new Admin("apTeam", walletAddr);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
@@ -82,7 +82,6 @@ export default function useUpdateFund() {
 
       dispatch(
         sendTerraTx({
-          wallet,
           msgs: [proposalMsg],
           tagPayloads: [
             terra.util.invalidateTags([

@@ -8,20 +8,20 @@ import {
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
 import Registrar from "contracts/Registrar";
-import useWalletContext from "hooks/useWalletContext";
 import cleanObject from "helpers/cleanObject";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
@@ -44,7 +44,7 @@ export default function useUpdateStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(wallet);
+    const registrarContract = new Registrar(walletAddr);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -60,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new Admin("apTeam", wallet);
+    const adminContract = new Admin("apTeam", walletAddr);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -71,7 +71,6 @@ export default function useUpdateStatus() {
     dispatch(
       sendTerraTx({
         msgs: [proposalMsg],
-        wallet,
         tagPayloads: [
           terra.util.invalidateTags([
             { type: terraTags.admin, id: adminTags.proposals },

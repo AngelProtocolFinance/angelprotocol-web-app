@@ -1,5 +1,4 @@
-import { WalletProxy } from "providers/WalletProvider";
-import useWalletContext from "providers/WalletProvider/useWalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Multicall, { M, MC } from "contracts/Multicall";
 import { useContract } from "../useContract";
 import { multicall_api } from "./multicall";
@@ -49,36 +48,18 @@ export function useEndowmentCWs(address: string) {
 
 export function useAirdrop() {
   const { useAirdropQuery } = multicall_api;
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const {
     data = [],
     isError,
     isLoading,
     isFetching,
-  } = useAirdropQuery(getSerializableWallet(wallet)!, {
-    skip: !wallet,
+  } = useAirdropQuery(walletAddr, {
+    skip: !walletAddr,
   });
   return {
     airdrops: data,
     isLoading: isLoading || isFetching,
     isError,
   };
-}
-//strip wallet Proxy of unserializable attr since
-
-type SerializableWalletProxy = Pick<
-  WalletProxy,
-  "address" | "connection" | "network"
->;
-function getSerializableWallet(wallet?: WalletProxy): WalletProxy | undefined {
-  if (!wallet) return;
-  const { address, connection, network } = wallet;
-  const serializableWalletProxy: SerializableWalletProxy = {
-    address,
-    connection,
-    network,
-  };
-  //cast back to WalletProxy
-  //contracts doesn't use wallet methods
-  return serializableWalletProxy as WalletProxy;
 }

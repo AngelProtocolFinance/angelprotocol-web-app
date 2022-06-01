@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
-import { useGetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
@@ -8,7 +8,7 @@ import { denoms } from "constants/currency";
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();
   const is_buy = watch("is_buy");
-  const { coins } = useGetter((state) => state.wallet);
+  const { coins } = useGetWallet();
   const ustBalance = getTokenBalance(coins, denoms.uusd);
   const haloBalance = getTokenBalance(coins, denoms.halo);
   const balance = is_buy ? ustBalance : haloBalance;

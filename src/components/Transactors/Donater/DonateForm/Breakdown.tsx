@@ -1,21 +1,21 @@
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
 import { useGetter } from "store/accessors";
 import toCurrency from "helpers/toCurrency";
+import { DonateValues } from "../types";
 
 export default function Breakdown() {
   const { fee } = useGetter((state) => state.transaction);
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isTokenNative = !token.cw20_contract;
-  const total = isTokenNative ? amount + fee : amount;
-  const feeSymbol = isTokenNative ? token.symbol : "UST"; //for CW20 tx, fee is in UST
+  const isERC20 = token.contractAddr !== undefined;
+  const totalAmount = isERC20 ? amount : fee + amount;
+  const feeSymbol = isERC20 ? token.nativeSymbol! : token.symbol;
 
   return (
     <div className="m-1">
       <Entry title="tx fee" amount={fee} symbol={feeSymbol} />
-      <Entry title="total amount" amount={total} symbol={token.symbol} />
+      <Entry title="total amount" amount={totalAmount} symbol={token.symbol} />
     </div>
   );
 }

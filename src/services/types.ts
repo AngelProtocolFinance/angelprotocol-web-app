@@ -23,4 +23,4 @@ export type TerraTags =
   | "registrar";
 
 /** multicall */
-export type TokenWithBalance = Token & { balance: string };
+export type TokenWithBalance = Token & { balance: number };

@@ -1,22 +1,21 @@
-import { WalletStatus } from "@terra-money/wallet-provider";
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetBinanceWallet } from "contexts/BinanceWalletContext/BinanceWalletContext";
-import { useGetMetamask } from "contexts/MetamaskContext/MetamaskContext";
+import { ProviderId } from "contexts/WalletContext/types";
+import isTerraWallet from "contexts/WalletContext/helpers/isTerraWallet";
 import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {
-  status: WalletStatus;
+  providerId?: ProviderId;
   walletAddress: string;
   isSubmitting: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function WalletSubmission(props: Props) {
-  const { status, walletAddress, isSubmitting, onClick } = props;
+  const { walletAddress, isSubmitting, onClick, providerId } = props;
   const navigate = useNavigate();
 
   return (
@@ -27,8 +26,7 @@ export default function WalletSubmission(props: Props) {
         able to create your Angel Protocol endowment account using that wallet
         address. We recommend using a new wallet.
       </p>
-      {/** only Terra wallet status can be passed (using useWalletProxy), other wallets handled separately */}
-      {status !== WalletStatus.WALLET_CONNECTED ? (
+      {providerId && !isTerraWallet(providerId) ? (
         <UnsupportedWalletConnected />
       ) : (
         <>
@@ -73,15 +71,16 @@ export default function WalletSubmission(props: Props) {
 }
 
 function UnsupportedWalletConnected() {
-  const { connected: isMetamaskConnected } = useGetMetamask();
-  const { connected: isBinanceConnected } = useGetBinanceWallet();
-
-  return isMetamaskConnected || isBinanceConnected ? (
+  return (
     <div className="flex flex-col gap-3">
       <p>Only Terra compatible wallets are allowed!</p>
       <p>Please connect your Terra wallet</p>
     </div>
-  ) : (
+  );
+}
+
+function WalletNotConnected() {
+  return (
     <p>
       Please connect your Terra wallet using the "Connect" button in the
       top-right of the page

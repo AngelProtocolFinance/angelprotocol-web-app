@@ -6,9 +6,9 @@ import Proposal from "pages/Admin/Proposals/Proposal";
 import Proposals from "pages/Admin/Proposals/Proposals";
 import { useEndowmentCWs } from "services/terra/account/queriers";
 import { useMember } from "services/terra/admin/queriers";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { setCWContracts } from "slices/admin/cwContracts";
-import useWalletContext from "hooks/useWalletContext";
 import { adminRoutes } from "constants/routes";
 import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard/Dashboard";
@@ -16,7 +16,7 @@ import Proposer from "./Proposer";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();
-  const { wallet } = useWalletContext();
+  const { providerId } = useGetWallet();
   const { address: endowmentAddress } = useParams<EndowmentAdminParams>();
   const { cwContracts, isCWContractsLoading } =
     useEndowmentCWs(endowmentAddress);
@@ -33,7 +33,7 @@ export default function EndowmentAdmin() {
     //eslint-disable-next-line
   }, [isCWContractsLoading, dispatch]);
 
-  if (!wallet) {
+  if (!providerId) {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading || isCWContractsLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

@@ -6,12 +6,12 @@ import { Member } from "types/server/contracts";
 import { adminTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPromp from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Admin from "contracts/Admin";
-import useWalletContext from "hooks/useWalletContext";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateMembers() {
@@ -19,7 +19,7 @@ export default function useUpdateMembers() {
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
-  const { wallet } = useWalletContext();
+  const { walletAddr } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -52,7 +52,7 @@ export default function useUpdateMembers() {
       showModal(Popup, { message: "No member changes" });
       return;
     }
-    const contract = new Admin(cwContracts, wallet);
+    const contract = new Admin(cwContracts, walletAddr);
     const embeddedExecuteMsg = contract.createEmbeddedUpdateMembersMsg(
       to_add,
       to_remove
@@ -79,7 +79,6 @@ export default function useUpdateMembers() {
 
     dispatch(
       sendTerraTx({
-        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

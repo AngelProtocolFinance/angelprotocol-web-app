@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
+import { WalletController } from "@terra-money/wallet-provider";
 import {
   SenderArgs,
   StageUpdator,
@@ -10,6 +11,7 @@ import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
+import { chainOptions } from "constants/chainOptions";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
@@ -23,15 +25,13 @@ export const sendTerraTx = createAsyncThunk(
     };
 
     try {
-      if (!args.wallet) {
-        updateTx({ step: "error", message: "Wallet is not connected" });
-        return;
-      }
-
       updateTx({ step: "submit", message: "Submitting transaction..." });
+      const { post } = new WalletController({
+        ...chainOptions,
+      });
 
       let tx: CreateTxOptions;
-      const contract = new Contract(args.wallet);
+      const contract = new Contract();
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
@@ -56,7 +56,7 @@ export const sendTerraTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await args.wallet.post(tx);
+      const response = await post(tx);
       const chainId = contract.chainID;
 
       updateTx({
@@ -67,7 +67,7 @@ export const sendTerraTx = createAsyncThunk(
       });
 
       if (response.success) {
-        const contract = new Contract(args.wallet);
+        const contract = new Contract();
         const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
