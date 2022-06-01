@@ -2,7 +2,6 @@ import { Coin, Dec } from "@terra-money/terra.js";
 import { MultiContractQueryArgs } from "services/types";
 import { Airdrop, Airdrops } from "types/server/aws";
 import {
-  CW20Balance,
   ClaimInquiry,
   Holding,
   Holdings,
@@ -11,8 +10,7 @@ import {
 } from "types/server/contracts";
 import { VaultField, VaultFieldLimits } from "types/shared/withdraw";
 import Multicall from "contracts/Multicall";
-import { chainIDs } from "constants/chainIDs";
-import { IS_DEV } from "constants/env";
+import { terraChainId } from "constants/env";
 import { aws_endpoint } from "constants/urls";
 import contract_querier from "../contract_querier";
 import { multicallTags, terraTags } from "../tags";
@@ -126,9 +124,7 @@ export const multicall_api = terra.injectEndpoints({
       async queryFn(walletAddr, queryApi, extraOptions, baseQuery) {
         try {
           const airDropsRes = await fetch(
-            `${aws_endpoint}/airdrop/${walletAddr}/${
-              IS_DEV ? chainIDs.terra_test : chainIDs.terra_main
-            }`
+            `${aws_endpoint}/airdrop/${walletAddr}/${terraChainId}`
           );
           const airDrops = (await airDropsRes.json()) as Airdrops;
           const multiCallContract = new Multicall(walletAddr);

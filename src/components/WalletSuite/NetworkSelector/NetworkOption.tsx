@@ -1,6 +1,6 @@
+import { ProviderId } from "contexts/WalletContext/types";
 import { Token } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { ProviderId } from "contexts/WalletContext/types";
 import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import WalletPrompt from "../WalletPrompt";
 

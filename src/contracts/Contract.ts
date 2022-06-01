@@ -3,7 +3,7 @@ import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
 import { TxResultFail, WalletDisconnectError } from "errors/errors";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
-import { IS_DEV } from "constants/env";
+import { IS_DEV, terraChainId } from "constants/env";
 import { terra_lcds } from "constants/urls";
 
 export default class Contract {
@@ -13,7 +13,7 @@ export default class Contract {
   walletAddr?: string;
 
   constructor(walletAddr?: string) {
-    this.chainID = IS_DEV ? chainIDs.terra_test : chainIDs.terra_main;
+    this.chainID = terraChainId;
     this.url = terra_lcds[this.chainID];
     this.walletAddr = walletAddr;
     this.client = new LCDClient({

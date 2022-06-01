@@ -3,8 +3,7 @@ import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
 import { sendDonationLog } from "slices/transaction/transactors/sendDonationLog";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIDs } from "constants/chainIDs";
-import { IS_DEV } from "constants/env";
+import { IS_DEV, terraChainId } from "constants/env";
 
 const apiKey = IS_DEV
   ? process.env.REACT_APP_TRANSAK_API_KEY_STAGING
@@ -51,7 +50,7 @@ export default function useTransak(receiver: Receiver) {
             ...receiver,
             transactionId: eventPayload.status.id,
             transactionDate: eventPayload.status.createdAt,
-            chainId: IS_DEV ? chainIDs.terra_main : chainIDs.terra_test,
+            chainId: terraChainId,
             amount: eventPayload.status.cryptoAmount,
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,

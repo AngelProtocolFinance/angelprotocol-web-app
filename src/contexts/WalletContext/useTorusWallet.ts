@@ -3,8 +3,7 @@ import OpenLogin from "@toruslabs/openlogin";
 import { entropyToMnemonic } from "bip39";
 import { useCallback, useEffect, useState } from "react";
 import { Connection, ProviderInfo } from "./types";
-import { chainIDs } from "constants/chainIDs";
-import { IS_DEV } from "constants/env";
+import { IS_DEV, terraChainId } from "constants/env";
 import { terra_lcds } from "constants/urls";
 import { providerIcons } from "./constants";
 import { retrieveUserAction } from "./helpers/prefActions";
@@ -15,10 +14,9 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
-const chainId = IS_DEV ? chainIDs.terra_test : chainIDs.terra_main;
 const lcdClient = new LCDClient({
-  URL: terra_lcds[chainId],
-  chainID: chainId,
+  URL: terra_lcds[terraChainId],
+  chainID: terraChainId,
 });
 
 const actionKey = `torus__pref`;
@@ -30,7 +28,7 @@ export default function useTorusWallet() {
   const [wallet, setWallet] = useState<Wallet>();
 
   useEffect(() => {
-    async () => {
+    (async () => {
       if (!shouldReconnect) {
         setIsLoading(false);
         return;
@@ -49,8 +47,8 @@ export default function useTorusWallet() {
       } finally {
         setIsLoading(false);
       }
-    };
-  }, []);
+    })();
+  }, [shouldReconnect]);
 
   const connect = useCallback(async (loginProvider?: string) => {
     setIsLoading(true);

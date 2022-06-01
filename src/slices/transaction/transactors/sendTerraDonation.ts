@@ -9,9 +9,8 @@ import { DonateValues } from "components/Transactors/Donater";
 import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
-import { chainIDs } from "constants/chainIDs";
 import { chainOptions } from "constants/chainOptions";
-import { IS_DEV } from "constants/env";
+import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {
@@ -33,7 +32,6 @@ export const sendTerraDonation = createAsyncThunk(
         ...chainOptions,
       });
       const response = await post(args.tx!);
-      const chainId = IS_DEV ? chainIDs.terra_test : chainIDs.mainnet;
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
@@ -50,7 +48,7 @@ export const sendTerraDonation = createAsyncThunk(
             ...receipient,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
-            chainId,
+            chainId: terraChainId,
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
@@ -62,7 +60,7 @@ export const sendTerraDonation = createAsyncThunk(
           step: "broadcast",
           message: "Waiting for transaction details",
           txHash: response.result.txhash,
-          chainId,
+          chainId: terraChainId,
         });
 
         const contract = new Contract(args.walletAddr);
@@ -75,7 +73,7 @@ export const sendTerraDonation = createAsyncThunk(
             message: "Thank you for your donation",
             txHash: txInfo.txhash,
             txInfo,
-            chainId,
+            chainId: terraChainId,
             isReceiptEnabled: typeof receiver !== "undefined",
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
@@ -93,7 +91,7 @@ export const sendTerraDonation = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId,
+            chainId: terraChainId,
           });
         }
       }
