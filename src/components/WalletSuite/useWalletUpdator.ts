@@ -124,12 +124,9 @@ export default function useWalletUpdator(activeProvider: Providers) {
             coins: coins_copy,
             address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet
-            chainId:
-              wallet.network.chainID === chainIDs.mainnet
-                ? chainIDs.gen_mainnet
-                : wallet.network.chainID === chainIDs.testnet
-                ? chainIDs.gen_testnet
-                : (`${network.chainId}` as chainIDs),
+            chainId: (isBinance
+              ? network.chainId
+              : wallet.network.chainID) as chainIDs,
             supported_denoms,
           })
         );

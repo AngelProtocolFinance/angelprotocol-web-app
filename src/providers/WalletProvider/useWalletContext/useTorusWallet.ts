@@ -16,6 +16,8 @@ import { ConnectionProxy, WalletProxy } from "../types";
 
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
+const chainId: chainIDs =
+  NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_main;
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
@@ -24,8 +26,8 @@ const openLogin = new OpenLogin({
 });
 
 const lcdClient = new LCDClient({
-  URL: terra_lcds[chainIDs[NETWORK]],
-  chainID: chainIDs[NETWORK],
+  URL: terra_lcds[chainId],
+  chainID: chainId,
 });
 
 const TORUS_CONNECTION: ConnectionProxy = {

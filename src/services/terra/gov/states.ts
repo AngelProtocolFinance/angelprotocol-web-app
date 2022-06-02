@@ -18,7 +18,7 @@ export function useGovStakerState() {
     contract.staker,
     {
       skip:
-        wallet === undefined || wallet.network.chainID === chainIDs.localterra,
+        wallet === undefined || wallet.network.chainID === chainIDs.terra_local,
     }
   );
   return data;
