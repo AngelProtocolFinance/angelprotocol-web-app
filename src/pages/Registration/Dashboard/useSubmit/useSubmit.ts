@@ -12,7 +12,7 @@ import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
-  const { providerId, walletAddr } = useGetWallet();
+  const { providerId, walletAddr, displayCoin } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -36,7 +36,7 @@ export default function useSubmit() {
         const contract = new Registrar(walletAddr);
         const msg = contract.createEndowmentCreationMsg(charity);
 
-        dispatch(sendTerraTx({ msgs: [msg] }));
+        dispatch(sendTerraTx({ msgs: [msg], feeBalance: displayCoin.balance }));
       } catch (err) {
         console.log(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));

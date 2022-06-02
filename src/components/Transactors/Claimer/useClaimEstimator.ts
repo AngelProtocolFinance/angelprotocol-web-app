@@ -2,7 +2,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import {
   setFee,
   setFormError,
@@ -15,10 +15,10 @@ import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
+  const { coins } = useGetWallet();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const { providerId, walletAddr } = useGetWallet();
-  const { coins } = useGetter((state) => state.wallet);
   const gov_staker = useGovStaker();
 
   useEffect(() => {

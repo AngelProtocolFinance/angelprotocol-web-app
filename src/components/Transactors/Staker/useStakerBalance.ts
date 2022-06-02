@@ -1,13 +1,13 @@
 import { Dec } from "@terra-money/terra.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useGetter } from "store/accessors";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();
-  const { coins } = useGetter((state) => state.wallet);
+  const { coins } = useGetWallet();
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
     const haloBalance = getTokenBalance(coins, denoms.halo);

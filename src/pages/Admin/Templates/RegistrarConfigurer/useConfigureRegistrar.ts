@@ -22,7 +22,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -72,6 +72,7 @@ export default function useConfigureRegistrar() {
 
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

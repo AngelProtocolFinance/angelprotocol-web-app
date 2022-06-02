@@ -25,9 +25,7 @@ export default function WalletSuite() {
 
   return (
     <div
-      className={`relative border ${
-        isNetworkSupported ? "border-white/40" : "border-red-200/80"
-      } hover:bg-white/10 rounded-md`}
+      className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
     >
       {!providerId && (
         <button

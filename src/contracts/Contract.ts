@@ -1,29 +1,22 @@
-import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
+import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "types/server/contracts";
-import { TxResultFail, WalletDisconnectError } from "errors/errors";
-import { chainIDs } from "constants/chainIDs";
+import { WalletDisconnectError } from "errors/errors";
 import { denoms } from "constants/currency";
-import { IS_DEV, terraChainId } from "constants/env";
-import { terra_lcds } from "constants/urls";
+import { terraChainId } from "constants/env";
+import { terraLcdUrl } from "constants/urls";
 
 export default class Contract {
   client: LCDClient;
-  chainID: string;
-  url: string;
   walletAddr?: string;
 
   constructor(walletAddr?: string) {
-    this.chainID = terraChainId;
-    this.url = terra_lcds[this.chainID];
     this.walletAddr = walletAddr;
     this.client = new LCDClient({
-      chainID: this.chainID,
-      URL: this.url,
+      chainID: terraChainId,
+      URL: terraLcdUrl,
       gasAdjustment: Contract.gasAdjustment, //use gas units 20% greater than estimate
       gasPrices: Contract.gasPrices,
     });
-
-    this.pollTxInfo = this.pollTxInfo.bind(this);
   }
 
   static gasAdjustment = 1.6; //use gas units 60% greater than estimate
@@ -43,30 +36,6 @@ export default class Contract {
       [{ sequenceNumber: account.getSequenceNumber() }],
       { msgs, feeDenoms: [denom] }
     );
-  }
-
-  async pollTxInfo(
-    txhash: string,
-    retries: number,
-    interval: number
-  ): Promise<TxInfo> {
-    const req = new Request(`${this.url}/txs/${txhash}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    await new Promise((r) => {
-      setTimeout(r, interval);
-    });
-    return fetch(req).then((res) => {
-      if (res.status === 200) {
-        return res.json() as unknown as TxInfo;
-      }
-      if (retries > 0 || res.status === 400) {
-        return this.pollTxInfo(txhash, retries - 1, interval);
-      }
-      throw new TxResultFail(this.chainID, txhash);
-    });
   }
 
   createdEmbeddedWasmMsg(

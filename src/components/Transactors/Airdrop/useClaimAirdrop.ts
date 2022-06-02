@@ -12,7 +12,7 @@ import Airdrop from "contracts/Airdrop";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useModalContext();
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
   const dispatch = useSetter();
 
   const totalClaimable = useMemo(
@@ -33,6 +33,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
 
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: claimAirdropMsgs,
         tagPayloads: [
           terra.util.invalidateTags([

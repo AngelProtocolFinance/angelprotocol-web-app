@@ -1,7 +1,7 @@
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProviderId } from "contexts/WalletContext/types";
-import isTerraWallet from "contexts/WalletContext/helpers/isTerraWallet";
+import isTerraWallet from "contexts/WalletContext/helpers/isTerraProvider";
 import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";

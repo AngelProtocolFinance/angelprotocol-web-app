@@ -4,15 +4,12 @@ import {
   fetchBaseQuery,
   retry,
 } from "@reduxjs/toolkit/query/react";
-import { RootState } from "store/store";
-import { terra_lcds } from "constants/urls";
+import { terraLcdUrl } from "constants/urls";
 import { terraTags } from "./tags";
 
 const customBaseQuery: BaseQueryFn = retry(
   async (args, api, extraOptions) => {
-    const chainID = (api.getState() as RootState).chain.terra;
-    const base_url = terra_lcds[chainID];
-    return fetchBaseQuery({ baseUrl: base_url })(args, api, extraOptions);
+    return fetchBaseQuery({ baseUrl: terraLcdUrl })(args, api, extraOptions);
   },
   { maxRetries: 1 }
 );

@@ -17,7 +17,7 @@ import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { coins } = useGetter((state) => state.wallet);
+  const { coins } = useGetWallet();
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();

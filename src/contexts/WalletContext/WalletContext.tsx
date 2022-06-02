@@ -1,9 +1,4 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import {
-  TxResult,
-  WalletStatus,
-  useWallet,
-} from "@terra-money/wallet-provider";
+import { WalletStatus, useWallet } from "@terra-money/wallet-provider";
 import {
   PropsWithChildren,
   createContext,
@@ -139,7 +134,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     data: coinWithBalances = [placeHolderToken],
     isLoading,
     isFetching,
-  } = useBalancesQuery({ address, chainId }, { skip: !address || !chainId });
+  } = useBalancesQuery(
+    { address, chainId, providerId },
+    { skip: !address || !chainId }
+  );
 
   const walletState: IWalletState = {
     walletIcon: logo,
@@ -151,6 +149,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   };
 
   const disconnect = useCallback(() => {
+    console.log(providerId);
     switch (providerId) {
       case "metamask":
         disconnectMetamask();
@@ -159,9 +158,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         disconnectBinanceWallet();
         break;
       case "torus":
-        disconnectTorus;
+        disconnectTorus();
         break;
-      case "terra-station":
+      case "station":
       case "wallet-connect":
       case "xdefi":
         disconnectTerra();

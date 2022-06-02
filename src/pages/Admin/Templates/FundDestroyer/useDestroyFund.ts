@@ -19,7 +19,7 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
@@ -48,6 +48,7 @@ export default function useDestroyFund() {
 
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

@@ -7,18 +7,19 @@ import {
   WithMsg,
   WithTx,
 } from "slices/transaction/types";
-import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
+import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { chainOptions } from "constants/chainOptions";
+import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
   `${transactionSlice.name}/sendTerraTx`,
   async (
     args: (SenderArgs & WithMsg) | (SenderArgs & WithTx),
-    { dispatch, getState }
+    { dispatch }
   ) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
@@ -40,16 +41,10 @@ export const sendTerraTx = createAsyncThunk(
         const fee = await contract.estimateFee(args.msgs);
         const feeNum = extractFeeNum(fee);
 
-        const state = getState() as RootState;
-        const feeSymbol = args.feeSymbol || "UST";
-        const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.symbol === feeSymbol)
-            ?.balance || 0;
-
-        if (feeNum > walletBalanceForFee) {
+        if (feeNum > args.feeBalance) {
           updateTx({
             step: "error",
-            message: `Not enough ${feeSymbol} to pay for fees`,
+            message: `Not enough balance to pay for fees`,
           });
           return;
         }
@@ -57,27 +52,23 @@ export const sendTerraTx = createAsyncThunk(
       }
 
       const response = await post(tx);
-      const chainId = contract.chainID;
 
       updateTx({
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
-        chainId,
+        chainId: terraChainId,
       });
 
       if (response.success) {
-        const contract = new Contract();
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
-        const txInfo = await getTxInfo;
-
+        const txInfo = await pollTerraTxInfo(response.result.txhash, 7, 1000);
         if (!txInfo.code) {
           updateTx({
             step: "success",
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
             txInfo: txInfo,
-            chainId,
+            chainId: terraChainId,
             successLink: args.successLink,
           });
 
@@ -90,7 +81,7 @@ export const sendTerraTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId,
+            chainId: terraChainId,
           });
         }
       } else {
@@ -98,7 +89,7 @@ export const sendTerraTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.result.txhash,
-          chainId,
+          chainId: terraChainId,
         });
       }
     } catch (err) {

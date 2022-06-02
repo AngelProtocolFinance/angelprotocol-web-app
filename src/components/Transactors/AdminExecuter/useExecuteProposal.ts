@@ -1,9 +1,6 @@
 import { AdmiExecuterProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import {
-  useGetWallet,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Popup from "components/Popup";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
@@ -12,7 +9,7 @@ import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(args: AdmiExecuterProps) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
@@ -25,6 +22,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,
       })

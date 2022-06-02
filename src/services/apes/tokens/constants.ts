@@ -4,6 +4,8 @@ import ethLogo from "assets/icons/currencies/ether.png";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import { chainIDs } from "constants/chainIDs";
+import { terraChainId } from "constants/env";
+import { terra_lcds } from "constants/urls";
 
 export const placeHolderToken: TokenWithBalance = {
   min_denom: "wei",
@@ -78,16 +80,30 @@ const ethereumToken: Token = {
   tokens: [],
 };
 
-const lunaToken: Token = {
+export const lunaToken: Token = {
   min_denom: "uluna",
   symbol: "LUNA",
   logo: lunaLogo,
-  decimals: 18,
-  chainId: "42",
+  decimals: 6,
+  chainId: "pisco-1",
   rpcUrl: "https://pisco-lcd.terra.dev",
   chainName: "Terra Testnet",
   blockExplorerUrl: "https://finder.terra.money/testnet/tx",
   tokens: [],
+};
+
+export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
+  uluna: {
+    min_denom: "uluna",
+    symbol: "LUNA",
+    logo: lunaLogo,
+    decimals: 6,
+    chainId: terraChainId,
+    rpcUrl: terra_lcds[terraChainId],
+    chainName: "Terra Testnet",
+    blockExplorerUrl: "https://finder.terra.money/testnet/tx",
+    tokens: [],
+  },
 };
 
 //TODO: get this from server

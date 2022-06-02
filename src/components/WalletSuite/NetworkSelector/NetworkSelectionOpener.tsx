@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import Icon from "components/Icon";
 import NetworkSelection from "./NetworkSelection";
 

@@ -1,5 +1,6 @@
 import { IconTypes } from "components/Icon";
 import { chainIDs } from "./chainIDs";
+import { IS_DEV } from "./env";
 
 type URL_GROUP = {
   [index: string]: string;
@@ -18,6 +19,10 @@ export const terra_lcds: URL_GROUP = {
   [chainIDs.terra_main]: "https://lcd.terra.dev",
   [chainIDs.terra_local]: "http://localhost:3060",
 };
+
+export const terraLcdUrl = IS_DEV
+  ? "https://pisco-lcd.terra.dev"
+  : "https://lcd.terra.dev";
 
 export const TERRA_FINDER = "https://terrascope.info/";
 

@@ -87,12 +87,11 @@ export type Stage =
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
 
-export type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
-export type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
+export type WithMsg = { msgs: Msg[]; tx?: never; feeBalance: number }; //tx created onflight
+export type WithTx = { msgs?: never; tx: CreateTxOptions; feeBalance?: never }; //pre-estimated tx
 
 export type SenderArgs = {
   tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
-  feeSymbol?: string;
 };

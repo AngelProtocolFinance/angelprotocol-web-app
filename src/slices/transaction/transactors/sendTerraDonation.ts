@@ -6,9 +6,9 @@ import { Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { DonateValues } from "components/Transactors/Donater";
-import Contract from "contracts/Contract";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
+import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { chainOptions } from "constants/chainOptions";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
@@ -63,8 +63,7 @@ export const sendTerraDonation = createAsyncThunk(
           chainId: terraChainId,
         });
 
-        const contract = new Contract(args.walletAddr);
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
+        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {

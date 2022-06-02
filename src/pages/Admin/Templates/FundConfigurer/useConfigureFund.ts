@@ -20,7 +20,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -69,6 +69,7 @@ export default function useConfigureFund() {
 
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

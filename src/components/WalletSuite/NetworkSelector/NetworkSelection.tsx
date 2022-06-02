@@ -1,11 +1,37 @@
 import ModalContext from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import {
+  useGetWallet,
+  useSetWallet,
+} from "contexts/WalletContext/WalletContext";
+import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
 import NetworkOption from "./NetworkOption";
 
 export default function NetworkSelection(props: { closeHandler: () => void }) {
   const { coins, providerId } = useGetWallet();
+  const { disconnect } = useSetWallet();
+
+  const isTerra = providerId && isTerraProvider(providerId);
+
+  if (isTerra) {
+    return (
+      <>
+        <Backdrop
+          classes="z-10 fixed inset-0"
+          customCloseHandler={props.closeHandler}
+        />
+        <div className="w-max z-50 grid content-start absolute top-full mt-2 bg-white w-full right-0 rounded-md overflow-hidden shadow-lg">
+          <button
+            onClick={disconnect}
+            className="uppercase text-xs bg-angel-orange hover:text-angel-grey p-2 text-white"
+          >
+            disconnect
+          </button>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -35,6 +61,12 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
               />
             ))}
         </ModalContext>
+        <button
+          onClick={disconnect}
+          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+        >
+          disconnect
+        </button>
       </div>
     </>
   );

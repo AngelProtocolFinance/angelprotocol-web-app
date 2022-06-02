@@ -8,11 +8,12 @@ import {
   WithTx,
 } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
-import { RootState } from "store/store";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
 import handleTerraError from "helpers/handleTerraError";
+import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
 import { chainOptions } from "constants/chainOptions";
+import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = SenderArgs & {
@@ -25,7 +26,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
   `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
   async (
     args: (_SenderArgs & WithMsg) | (_SenderArgs & WithTx),
-    { dispatch, getState }
+    { dispatch }
   ) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
@@ -44,16 +45,10 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         const fee = await contract.estimateFee(args.msgs);
         const feeNum = extractFeeNum(fee);
 
-        const state = getState() as RootState;
-        const feeSymbol = args.feeSymbol || "UST";
-        const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.symbol === feeSymbol)
-            ?.balance || 0;
-
-        if (feeNum > walletBalanceForFee) {
+        if (feeNum > args.feeBalance) {
           updateTx({
             step: "error",
-            message: `Not enough ${feeSymbol} to pay for fees`,
+            message: `Not enough balance to pay for fees`,
           });
           return;
         }
@@ -62,18 +57,16 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
       const { post } = new WalletController({ ...chainOptions });
       const response = await post(tx);
-      const chainId = contract.chainID;
 
       updateTx({
         step: "broadcast",
         message: "Waiting for transaction result",
         txHash: response.result.txhash,
-        chainId,
+        chainId: terraChainId,
       });
 
       if (response.success) {
-        const contract = new Contract();
-        const getTxInfo = contract.pollTxInfo(response.result.txhash, 7, 1000);
+        const getTxInfo = pollTerraTxInfo(response.result.txhash, 7, 1000);
         const txInfo = await getTxInfo;
 
         if (!txInfo.code) {
@@ -82,7 +75,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             message: args.successMessage || "Transaction successful!",
             txHash: txInfo.txhash,
             txInfo,
-            chainId,
+            chainId: terraChainId,
             successLink: args.successLink,
           });
 
@@ -111,7 +104,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
             step: "error",
             message: "Transaction failed",
             txHash: txInfo.txhash,
-            chainId,
+            chainId: terraChainId,
           });
         }
       } else {
@@ -119,7 +112,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
           step: "error",
           message: "Transaction failed",
           txHash: response.result.txhash,
-          chainId,
+          chainId: terraChainId,
         });
       }
     } catch (err) {

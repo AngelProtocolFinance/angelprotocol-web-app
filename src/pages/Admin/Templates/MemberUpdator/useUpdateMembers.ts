@@ -19,7 +19,7 @@ export default function useUpdateMembers() {
   const apCW4Members = useGetter((state) => state.admin.apCW4Members);
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
-  const { walletAddr } = useGetWallet();
+  const { walletAddr, displayCoin } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -79,6 +79,7 @@ export default function useUpdateMembers() {
 
     dispatch(
       sendTerraTx({
+        feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([
