@@ -1,7 +1,7 @@
-import { TokenWithBalance } from "services/types";
+import { WithBalance } from "services/types";
 import toCurrency from "helpers/toCurrency";
 
-export default function Holdings(props: { coins: TokenWithBalance[] }) {
+export default function Holdings(props: { coins: WithBalance[] }) {
   return (
     <ul className="p-4">
       {props.coins.map((coin) => {

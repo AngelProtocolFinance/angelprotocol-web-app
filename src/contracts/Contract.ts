@@ -22,19 +22,19 @@ export default class Contract {
   static gasAdjustment = 1.6; //use gas units 60% greater than estimate
 
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [new Coin("uusd", 0.15), new Coin("uluna", 0.01133)];
+  static gasPrices = [new Coin(denoms.uluna, 0.15)];
 
   //for on-demand query, use RTK where possible
   async query<T>(source: string, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[], denom: string = denoms.uusd): Promise<Fee> {
+  async estimateFee(msgs: Msg[]): Promise<Fee> {
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(
       [{ sequenceNumber: account.getSequenceNumber() }],
-      { msgs, feeDenoms: [denom] }
+      { msgs, feeDenoms: [denoms.uluna] }
     );
   }
 

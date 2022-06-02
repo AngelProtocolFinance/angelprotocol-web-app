@@ -11,7 +11,7 @@ import {
   ProviderInfo,
   ProviderStatuses,
 } from "./types";
-import { TokenWithBalance } from "services/types";
+import { WithBalance } from "services/types";
 import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
 import { placeHolderToken } from "services/apes/tokens/constants";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
@@ -21,8 +21,8 @@ import useTorusWallet from "./useTorusWallet";
 
 type IWalletState = {
   walletIcon: string;
-  displayCoin: TokenWithBalance;
-  coins: TokenWithBalance[];
+  displayCoin: WithBalance;
+  coins: WithBalance[];
   walletAddr: string;
   chainId: string;
   providerId?: ProviderId;

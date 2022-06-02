@@ -7,12 +7,13 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee, setFormError } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
+import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
-import { denoms } from "constants/currency";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
-  const { providerId, displayCoin, isWalletLoading } = useGetWallet();
+  const { providerId, displayCoin, isWalletLoading, walletAddr } =
+    useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const {
@@ -24,15 +25,29 @@ export default function useDonate() {
   } = useFormContext<DonateValues>();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
-  const { ethTx } = useEstimator();
-
-  const denomRef = useRef<string>(denoms.uusd);
+  const { evmTx, terraTx } = useEstimator();
+  const symbolRef = useRef<string>();
   const token = watch("token");
 
-  const ethSender = (data: DonateValues) => {
-    dispatch(sendEthDonation({ tx: ethTx!, donateValues: data, providerId }));
+  function sendTx(data: DonateValues) {
+    switch (token.type) {
+      case "evm-native":
+      case "erc20":
+        dispatch(
+          sendEthDonation({ tx: evmTx!, donateValues: data, providerId })
+        );
+        break;
+      case "terra-native":
+      case "cw20":
+        dispatch(
+          sendTerraDonation({ tx: terraTx!, donateValues: data, walletAddr })
+        );
+        break;
+      default:
+        return;
+    }
     showModal(TransactionPrompt, {});
-  };
+  }
 
   async function handleNetworkChange() {
     try {
@@ -40,7 +55,9 @@ export default function useDonate() {
         dispatch(setFormError("Wallet is not connected"));
         return;
       }
-      await addNetworkAndSwitch(token, providerId);
+      if (token.type === "evm-native") {
+        await addNetworkAndSwitch(token, providerId);
+      }
     } catch (err) {
       console.error(err);
       dispatch(
@@ -57,20 +74,20 @@ export default function useDonate() {
     }
   }
 
-  const denom = token.min_denom;
+  const symbol = token.symbol;
   const isInCorrectNetwork = token.chainId === displayCoin.chainId;
   //reset amount when changing currency
   useEffect(() => {
-    if (denomRef.current !== denom) {
+    if (symbolRef.current !== symbol) {
       setValue("amount", "", { shouldValidate: true });
       dispatch(resetFee());
     }
-    denomRef.current = denom;
+    symbolRef.current = symbol;
     //eslint-disable-next-line
-  }, [denom]);
+  }, [symbol]);
 
   return {
-    donate: handleSubmit(ethSender),
+    donate: handleSubmit(sendTx),
     correctNetworkInfo: {
       name: token.chainName,
       symbol: token.symbol,

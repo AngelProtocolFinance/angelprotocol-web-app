@@ -1,14 +1,17 @@
 import { useCategorizedEndowments } from "services/terra/registrar/queriers";
 import Loader from "components/Loader";
+import useDonater from "components/Transactors/Donater/useDonater";
 import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
   const { endowments, isEndowmentsLoading } = useCategorizedEndowments();
 
+  const showDonater = useDonater({ to: "charity", receiver: "123" });
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />
+      <button onClick={showDonater}>donate</button>
       {(isEndowmentsLoading && (
         <Loader
           bgColorClass="bg-white-grey/80"

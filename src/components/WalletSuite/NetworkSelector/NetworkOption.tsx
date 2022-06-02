@@ -11,7 +11,9 @@ export default function NetworkOption({
   const { showModal } = useModalContext();
   async function handleNetworkChange() {
     try {
-      await addNetworkAndSwitch(coin, providerId);
+      if (coin.type === "evm-native") {
+        await addNetworkAndSwitch(coin, providerId);
+      }
     } catch (err) {
       console.error(err);
       //render appropriate prompt

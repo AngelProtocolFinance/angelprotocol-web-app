@@ -1,12 +1,12 @@
-import { TokenWithBalance } from "services/types";
+import { WithBalance } from "services/types";
 
 export default function getTokenBalance(
-  tokenBalances: TokenWithBalance[],
-  denom: string
+  tokenBalances: WithBalance[],
+  symbol: string
 ): number {
-  return tokenBalances.find((token) => token.min_denom === denom)?.balance || 0;
+  return tokenBalances.find((token) => token.symbol === symbol)?.balance || 0;
 }
 
-export function getToken(tokenBalances: TokenWithBalance[], denom: string) {
-  return tokenBalances.find((token) => token.min_denom === denom) || {};
+export function getToken(tokenBalances: WithBalance[], symbol: string) {
+  return tokenBalances.find((token) => token.symbol === symbol) || {};
 }

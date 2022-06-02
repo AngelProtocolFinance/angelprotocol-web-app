@@ -1,11 +1,10 @@
 import { Coin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
-import { TokenWithBalance } from "services/types";
-import { Token } from "types/server/aws";
+import { WithBalance } from "services/types";
+import { ALT20, EVMNative, Token } from "types/server/aws";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
-import { terraChainId } from "constants/env";
 import { terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
@@ -26,7 +25,7 @@ const tokens_api = apes.injectEndpoints({
       },
     }),
     balances: builder.query<
-      TokenWithBalance[],
+      WithBalance<Token>[],
       { chainId: string; address: string; providerId?: ProviderId }
     >({
       providesTags: [],
@@ -34,11 +33,11 @@ const tokens_api = apes.injectEndpoints({
       //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
-          const coins: TokenWithBalance[] = [];
+          const coins: WithBalance<Token>[] = [];
           const isTerra = isTerraProvider(args.providerId!); //query is skipped when wallet is not connected
           const evmTokenList = tokenList.filter(
-            (token) => token.chainId !== terraChainId
-          );
+            (token) => token.type === "evm-native"
+          ) as EVMNative[];
 
           //TODO: get supported token list from server
           const isChainSupported =
@@ -72,7 +71,7 @@ const tokens_api = apes.injectEndpoints({
                 });
               }
               return _coins;
-            }, [] as TokenWithBalance[]);
+            }, [] as WithBalance<Token>[]);
 
             coins.push(...terraTokens);
             //if terra wallet is not xdefi return only terra balances
@@ -95,7 +94,7 @@ const tokens_api = apes.injectEndpoints({
 
           //map native balances with ordering
           const evmCoins = queryResults.reduce((_coins, result, i) => {
-            const token: TokenWithBalance = {
+            const token: WithBalance = {
               ...evmTokenList[i],
               balance:
                 result.status === "fulfilled"
@@ -109,7 +108,7 @@ const tokens_api = apes.injectEndpoints({
               _coins.push(token);
             }
             return _coins;
-          }, [] as TokenWithBalance[]);
+          }, [] as WithBalance<EVMNative>[]);
 
           //fetch erc20 balances of activeCoin
           if (evmCoins.length > 1) {
@@ -122,25 +121,26 @@ const tokens_api = apes.injectEndpoints({
             );
 
             //convert to NativeBalanceFormat
-            const transformedTokens: TokenWithBalance[] = erc20Holdings.map(
+            const transformedTokens: WithBalance<ALT20>[] = erc20Holdings.map(
               (token, i) => ({
-                ...activeCoin,
-                //overrides
-                min_denom: token.symbol.toLocaleLowerCase(),
+                type: "erc20",
                 symbol: token.symbol,
                 logo: erc20Tokens[i].logo,
                 decimals: token.decimals,
-                erc20Tokens: [],
-                balance: +token.balance,
+                chainId: activeCoin.chainId,
 
-                //for ERC20 txs
                 nativeSymbol: activeCoin.symbol,
-                contractAddr: erc20Tokens[i].contractAddr,
+                contractAddr: token.contractAddress,
+
+                balance: +token.balance,
               })
             );
             //insert ERC20 tokens with balances next to native token
-            console.log({ evmTokenList, evmCoins, queryResults });
-            evmCoins.splice(1, 0, ...transformedTokens);
+            (evmCoins as WithBalance<Token>[]).splice(
+              1,
+              0,
+              ...transformedTokens
+            );
           }
           return { data: coins.concat(evmCoins) };
         } catch (err) {

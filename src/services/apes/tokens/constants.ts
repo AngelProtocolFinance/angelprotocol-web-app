@@ -1,14 +1,13 @@
-import { TokenWithBalance } from "services/types";
-import { Token } from "types/server/aws";
+import { WithBalance } from "services/types";
+import { EVMNative, TerraNative, Token } from "types/server/aws";
 import ethLogo from "assets/icons/currencies/ether.png";
 import lunaLogo from "assets/icons/currencies/luna.png";
 import coinIcon from "assets/icons/currencies/token.svg";
 import { chainIDs } from "constants/chainIDs";
 import { terraChainId } from "constants/env";
-import { terra_lcds } from "constants/urls";
 
-export const placeHolderToken: TokenWithBalance = {
-  min_denom: "wei",
+export const placeHolderToken: WithBalance = {
+  type: "evm-native",
   symbol: "ETH",
   logo: ethLogo,
   decimals: 18,
@@ -20,8 +19,8 @@ export const placeHolderToken: TokenWithBalance = {
   balance: 0,
 };
 
-export const unSupportedToken: TokenWithBalance = {
-  min_denom: "xx",
+export const unSupportedToken: WithBalance = {
+  type: "evm-native",
   symbol: "XX",
   logo: coinIcon,
   decimals: 18,
@@ -33,8 +32,8 @@ export const unSupportedToken: TokenWithBalance = {
   balance: 0,
 };
 
-const avalancheToken: Token = {
-  min_denom: "avax",
+const avalancheToken: EVMNative = {
+  type: "evm-native",
   symbol: "AVAX",
   logo: "https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=022",
   decimals: 18,
@@ -56,8 +55,8 @@ const avalancheToken: Token = {
   ],
 };
 
-const binanceToken: Token = {
-  min_denom: "bnb",
+const binanceToken: EVMNative = {
+  type: "evm-native",
   symbol: "BNB",
   logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=022",
   decimals: 18,
@@ -68,8 +67,8 @@ const binanceToken: Token = {
   tokens: [],
 };
 
-const ethereumToken: Token = {
-  min_denom: "wei",
+const ethereumToken: EVMNative = {
+  type: "evm-native",
   symbol: "ETH",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",
   decimals: 18,
@@ -80,29 +79,28 @@ const ethereumToken: Token = {
   tokens: [],
 };
 
-export const lunaToken: Token = {
-  min_denom: "uluna",
+export const lunaToken: TerraNative = {
+  type: "terra-native",
   symbol: "LUNA",
   logo: lunaLogo,
   decimals: 6,
   chainId: "pisco-1",
-  rpcUrl: "https://pisco-lcd.terra.dev",
   chainName: "Terra Testnet",
-  blockExplorerUrl: "https://finder.terra.money/testnet/tx",
-  tokens: [],
+};
+
+export const placeHolderLunaToken: WithBalance<TerraNative> = {
+  ...lunaToken,
+  balance: 0,
 };
 
 export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
   uluna: {
-    min_denom: "uluna",
+    type: "terra-native",
     symbol: "LUNA",
     logo: lunaLogo,
     decimals: 6,
     chainId: terraChainId,
-    rpcUrl: terra_lcds[terraChainId],
     chainName: "Terra Testnet",
-    blockExplorerUrl: "https://finder.terra.money/testnet/tx",
-    tokens: [],
   },
 };
 

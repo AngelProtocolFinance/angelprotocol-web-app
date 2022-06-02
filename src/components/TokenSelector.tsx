@@ -30,6 +30,7 @@ export default function TokenSelector<T extends FieldValues>(props: {
             value={value}
             onChange={onChange}
             options={coins}
+            isDisabled={coins.length <= 1}
             getOptionLabel={getOptionLabel}
             noOptionsMessage={(obj) => `${obj.inputValue} not found`}
             components={{

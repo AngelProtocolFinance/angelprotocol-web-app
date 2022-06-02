@@ -19,6 +19,10 @@ type TerraDonateArgs = {
   walletAddr: string;
 };
 
+const { post } = new WalletController({
+  ...chainOptions,
+});
+
 export const sendTerraDonation = createAsyncThunk(
   `${transactionSlice.name}/terraDonate`,
   async (args: TerraDonateArgs, { dispatch }) => {
@@ -28,9 +32,6 @@ export const sendTerraDonation = createAsyncThunk(
     try {
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const { post } = new WalletController({
-        ...chainOptions,
-      });
       const response = await post(args.tx!);
 
       if (response.success) {
@@ -95,6 +96,7 @@ export const sendTerraDonation = createAsyncThunk(
         }
       }
     } catch (err) {
+      console.error(err);
       handleTerraError(err, updateStage);
     }
   }

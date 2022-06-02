@@ -3,9 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { DonateValues, FundFlow } from "./types";
 import { SchemaShape } from "schemas/types";
-import { TokenWithBalance } from "services/types";
-import { placeHolderToken } from "services/apes/tokens/constants";
-import { useBalancesQuery } from "services/apes/tokens/tokens";
+import { WithBalance } from "services/types";
+import { placeHolderLunaToken } from "services/apes/tokens/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
@@ -17,17 +16,13 @@ const shape: SchemaShape<DonateValues> = {
 const schema = Yup.object().shape(shape);
 
 export default function Donater(props: FundFlow) {
-  const { chainId, walletAddr } = useGetWallet();
-  const { data = [], isLoading } = useBalancesQuery(
-    { chainId, address: walletAddr },
-    { skip: !chainId && !walletAddr }
-  );
+  const { coins, isWalletLoading } = useGetWallet();
 
-  if (isLoading) return <DonateFormLoader />;
-  return <DonateContext {...props} tokens={data} />;
+  if (isWalletLoading) return <DonateFormLoader />;
+  return <DonateContext {...props} tokens={coins} />;
 }
 
-function DonateContext(props: FundFlow & { tokens: TokenWithBalance[] }) {
+function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -35,8 +30,7 @@ function DonateContext(props: FundFlow & { tokens: TokenWithBalance[] }) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: props.tokens[0] || placeHolderToken,
-      tokens: props.tokens,
+      token: props.tokens[0] || placeHolderLunaToken,
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

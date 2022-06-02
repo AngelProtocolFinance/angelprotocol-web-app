@@ -1,7 +1,10 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
+import { Coin, CreateTxOptions, Dec, MsgSend } from "@terra-money/terra.js";
+import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { DonateValues } from "./types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import {
@@ -9,11 +12,13 @@ import {
   setFormError,
   setFormLoading,
 } from "slices/transaction/transactionSlice";
+import CW20 from "contracts/CW20";
+import Contract from "contracts/Contract";
 import useDebouncer from "hooks/useDebouncer";
+import extractFeeNum from "helpers/extractFeeNum";
 import { getProvider } from "helpers/getProvider";
-import ERC20Abi from "abi/ERC20.json";
 import { ap_wallets } from "constants/ap_wallets";
-import { DonateValues } from "./types";
+import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const dispatch = useSetter();
@@ -22,13 +27,14 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
-  const { providerId, chainId } = useGetWallet();
+  const { providerId, chainId, walletAddr, displayCoin } = useGetWallet();
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
   const selectedToken = watch("token");
 
-  const [ethTx, setEthTx] = useState<TransactionRequest>();
+  const [evmTx, setEVMtx] = useState<TransactionRequest>();
+  const [terraTx, setTerraTx] = useState<CreateTxOptions>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -53,42 +59,97 @@ export default function useEstimator() {
           return;
         }
 
-        if (chainId !== selectedToken.chainId) return; //network selection prompt is shown to user
-
         dispatch(setFormLoading(true));
 
-        const provider = new ethers.providers.Web3Provider(
-          getProvider(providerId) as any
-        );
-        //no network request
-        const signer = provider.getSigner();
-        const sender = await signer.getAddress();
-        const gasPrice = await signer.getGasPrice();
-        const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+        /** terra native transaction, send or contract interaction */
+        if (selectedToken.type === "terra-native") {
+          const contract = new Contract(walletAddr);
+          const receiver = ap_wallets.terra;
+          const amount = new Dec(debounced_amount).mul(1e6);
 
-        const tx: TransactionRequest = {
-          from: sender,
-          to: ap_wallets.eth,
-          value: wei_amount,
-        };
+          const msg = new MsgSend(walletAddr, receiver, [
+            new Coin(denoms.uluna, amount.toNumber()),
+          ]);
+          const aminoFee = await contract.estimateFee([msg]);
+          const numFee = extractFeeNum(aminoFee);
 
-        let gasLimit: ethers.BigNumber;
-        if (selectedToken.contractAddr) {
-          const ER20Contract: any = new ethers.Contract(
-            selectedToken.contractAddr,
-            ERC20Abi,
-            signer
-          );
-          gasLimit = await ER20Contract.estimateGas.transfer(tx.to, wei_amount);
-        } else {
-          gasLimit = await signer.estimateGas(tx);
+          if (debounced_amount + numFee >= displayCoin.balance) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
+          dispatch(setFee(numFee));
+          setTerraTx({ msgs: [msg], fee: aminoFee });
         }
 
-        const minFee = gasLimit.mul(gasPrice);
-        const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
+        /** terra cw20 transaction */
+        if (selectedToken.type === "cw20") {
+          const contract = new CW20(selectedToken.contractAddr, walletAddr);
+          const msg = contract.createTransferMsg(
+            debounced_amount,
+            ap_wallets.terra
+          );
+          const aminoFee = await contract.estimateFee([msg]);
+          const numFee = extractFeeNum(aminoFee);
 
-        setEthTx(tx);
-        dispatch(setFee(parseFloat(fee)));
+          if (
+            numFee >=
+            displayCoin.balance /** displayCoin is native - for payment of fee */
+          ) {
+            setError("amount", {
+              message: "not enough balance to pay for fees",
+            });
+            return;
+          }
+          dispatch(setFee(numFee));
+          setTerraTx({ msgs: [msg], fee: aminoFee });
+        }
+
+        /** evm transactions */
+        if (
+          selectedToken.type === "evm-native" ||
+          selectedToken.type === "erc20"
+        ) {
+          if (chainId !== selectedToken.chainId) return; //network selection prompt is shown to user
+
+          const provider = new ethers.providers.Web3Provider(
+            getProvider(providerId) as any
+          );
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets.eth,
+            value: wei_amount,
+          };
+
+          let gasLimit: ethers.BigNumber;
+          if (selectedToken.type === "erc20") {
+            const ER20Contract: any = new ethers.Contract(
+              selectedToken.contractAddr,
+              ERC20Abi,
+              signer
+            );
+            gasLimit = await ER20Contract.estimateGas.transfer(
+              tx.to,
+              wei_amount
+            );
+          } else {
+            gasLimit = await signer.estimateGas(tx);
+          }
+
+          const minFee = gasLimit.mul(gasPrice);
+          const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
+
+          setEVMtx(tx);
+          dispatch(setFee(parseFloat(fee)));
+        }
+
         dispatch(setFormLoading(false));
 
         //CW20 token estimate
@@ -104,5 +165,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, selectedToken, providerId, chainId]);
 
-  return { ethTx };
+  return { evmTx, terraTx };
 }

@@ -91,28 +91,63 @@ export type TxLogPayload = Receiver &
   TxDataPermissions;
 
 /** apes/token-list */
+export type TerraNative = {
+  type: "terra-native"; //uluna
+  symbol: string; //LUNA
+  logo: string;
+  decimals: number; //6
+  chainId: string; // "pisco-1" | "phoenix-1"
 
-export type Token = {
-  min_denom: string; //avax
+  //additional info for adding chain in wallet
+  chainName: string; //Terra testnet
+  rpcUrl?: never;
+  blockExplorerUrl?: never; //https://testnet.snowtrace.io
+  tokens?: never;
+
+  contractAddr?: never;
+  nativeSymbol?: never;
+};
+
+export type ALT20 = {
+  type: "cw20" | "erc20";
+  symbol: string; //HALO
+  logo: string;
+  decimals: number; //6
+  chainId: string; // "pisco-1" | "phoenix-1"
+
+  //additional info for adding chain in wallet
+  chainName?: never; //Terra testnet
+  rpcUrl?: never;
+  blockExplorerUrl?: never; //https://testnet.snowtrace.io
+  tokens?: never;
+
+  //info if token is an ERC20 token
+  contractAddr: string;
+  nativeSymbol: string;
+};
+
+export type EVMNative = {
+  type: "evm-native"; //avax
   symbol: string; //AVAX
   logo: string;
   decimals: number; //18
   chainId: string; // "1"-mainnet "97"-binance-test "43017"-avax
 
   //additional info for adding chain in wallet
-  rpcUrl: string;
   chainName: string; //Avalanche
+  rpcUrl: string;
   blockExplorerUrl: string; //https://testnet.snowtrace.io
-
   tokens: {
     contractAddr: string;
     logo: string;
   }[];
 
   //info if token is an ERC20 token
-  contractAddr?: string;
-  nativeSymbol?: string;
+  contractAddr?: never;
+  nativeSymbol?: never;
 };
+
+export type Token = EVMNative | TerraNative | ALT20;
 
 /** /leaderboards */
 export interface Endowment {
