@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { WalletController } from "@terra-money/wallet-provider";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
@@ -9,7 +8,7 @@ import { DonateValues } from "components/Transactors/Donater";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import { chainOptions } from "constants/chainOptions";
+import { postTerraTx } from "helpers/postTerraTx";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
@@ -18,10 +17,6 @@ type TerraDonateArgs = {
   tx: CreateTxOptions;
   walletAddr: string;
 };
-
-const { post } = new WalletController({
-  ...chainOptions,
-});
 
 export const sendTerraDonation = createAsyncThunk(
   `${transactionSlice.name}/terraDonate`,
@@ -32,7 +27,7 @@ export const sendTerraDonation = createAsyncThunk(
     try {
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const response = await post(args.tx!);
+      const response = await postTerraTx(args.tx!);
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
