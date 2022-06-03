@@ -1,11 +1,11 @@
+import Contract from "./Contract";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
-import { denoms, MAIN_DENOM } from "constants/currency";
+import { MAIN_DENOM } from "constants/currency";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { Simulation } from "services/terra/lp/types";
 import { ContractQueryArgs } from "services/terra/types";
-import Contract from "./Contract";
 
 export default class LP extends Contract {
   factory_address: string;
