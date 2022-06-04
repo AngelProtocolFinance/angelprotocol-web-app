@@ -1,6 +1,6 @@
+import { Connection } from "contexts/WalletContext/types";
 import ModalContext, { useModalContext } from "contexts/ModalContext";
 import { useSetWallet } from "contexts/WalletContext/WalletContext";
-import { Connection } from "contexts/WalletContext/types";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
 import { EIP1193Error } from "errors/errors";

@@ -9,7 +9,7 @@ import xdefiIcon from "assets/icons/wallets/xdefi.jpg";
 export const providerIcons: { [key in ProviderId]: string } = {
   "binance-wallet": binanceWalletIcon,
   metamask: metamaskIcon,
-  xdefi: xdefiIcon,
+  "xdefi-wallet": xdefiIcon,
   station: terraStationIcon,
   "wallet-connect": walletConnectIcon,
   torus: torusIcon,

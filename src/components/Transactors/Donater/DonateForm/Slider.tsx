@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
 import { DonateValues } from "../types";
+import { useGetter } from "store/accessors";
 
 export default function Slider() {
   const { form_error } = useGetter((state) => state.transaction);

@@ -92,3 +92,7 @@ type ERC20 = {
 
 type Token = EVMToken | ERC20 | TerraNative | CW20;
 ```
+
+8. xdefi edge case
+
+- xdefi state from terra wallet provider, when chainId is mismatched, additional check if its evm chainId is correct

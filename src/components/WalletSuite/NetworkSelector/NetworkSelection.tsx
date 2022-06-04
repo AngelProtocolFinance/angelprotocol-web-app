@@ -63,7 +63,7 @@ export default function NetworkSelection(props: { closeHandler: () => void }) {
         </ModalContext>
         <button
           onClick={disconnect}
-          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 text-white"
+          className="uppercase text-sm bg-angel-orange hover:text-angel-grey p-2 mt-2 text-white"
         >
           disconnect
         </button>

@@ -77,7 +77,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     wallets,
     status,
     connect,
-    post: terraPost,
     disconnect: disconnectTerra,
   } = useWallet();
   const terraInfo: ProviderInfo | undefined = connection
@@ -95,7 +94,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       logo: connection.icon,
       name: connection.name,
       connect: async () => {
-        connect(connection.type);
+        connect(connection.type, connection.identifier);
       },
     })
   );
@@ -162,7 +161,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "station":
       case "wallet-connect":
-      case "xdefi":
+      case "xdefi-wallet":
         disconnectTerra();
         break;
       default:

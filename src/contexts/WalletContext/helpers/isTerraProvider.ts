@@ -4,7 +4,7 @@ export default function isTerraProvider(providerId: ProviderId) {
   switch (providerId) {
     //FUTURE: add other leap falcon etc
     case "station":
-    case "xdefi":
+    case "xdefi-wallet":
     case "wallet-connect":
       return true;
     default:

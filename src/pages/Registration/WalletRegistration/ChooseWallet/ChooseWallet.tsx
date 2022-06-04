@@ -1,8 +1,11 @@
-import { WalletStatus } from "@terra-money/wallet-provider";
 import { useCallback } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
-import { useSetWallet } from "contexts/WalletContext/WalletContext";
+import {
+  useGetWallet,
+  useSetWallet,
+} from "contexts/WalletContext/WalletContext";
+import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import Loader from "components/Loader";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { default as registerRoutes } from "../../routes";
@@ -12,6 +15,7 @@ import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
+  const { isWalletLoading, providerId } = useGetWallet();
   const { connections } = useSetWallet();
   const login = useCallback(
     (provider: string) =>
@@ -19,16 +23,16 @@ export default function ChooseWallet() {
     [connections]
   );
 
-  if (status === WalletStatus.WALLET_CONNECTED) {
+  if (isWalletLoading) {
+    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
+  }
+
+  if (!providerId || !isTerraProvider(providerId)) {
     return (
       <Navigate
         to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
       />
     );
-  }
-
-  if (status === WalletStatus.INITIALIZING) {
-    return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
   }
 
   return (

@@ -101,7 +101,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     try {
       const dwindow = window as Dwindow;
       //connecting xdefi
-      if (providerId === "xdefi") {
+      if (providerId === "xdefi-wallet") {
         if (!dwindow?.xfi) {
           throw new EIP1193Error("Xdefi is not installed", 0);
         }

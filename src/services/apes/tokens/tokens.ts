@@ -75,7 +75,7 @@ const tokens_api = apes.injectEndpoints({
 
             coins.push(...terraTokens);
             //if terra wallet is not xdefi return only terra balances
-            if (args.providerId !== "xdefi") {
+            if (args.providerId !== "xdefi-wallet") {
               return { data: coins };
             }
           }

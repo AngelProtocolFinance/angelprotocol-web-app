@@ -1,7 +1,7 @@
 export type ProviderId =
   | "binance-wallet"
   | "metamask"
-  | "xdefi"
+  | "xdefi-wallet"
   | "station"
   | "wallet-connect"
   | "torus";
