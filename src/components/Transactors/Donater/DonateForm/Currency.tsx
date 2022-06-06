@@ -1,8 +1,8 @@
 import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, currency_icons } from "constants/currency";
-import { useFormContext } from "react-hook-form";
-import { memo } from "react";
+import { CURRENCIES } from "constants/currency";
 import useTooltip from "hooks/useTooltip";
+import { memo } from "react";
+import { useFormContext } from "react-hook-form";
 
 type Props = {
   currency: DonateValues["currency"];
@@ -37,7 +37,7 @@ function Currency(props: Props) {
         className="uppercase flex items-center text-sm cursor-pointer"
       >
         <img
-          src={currency_icons[props.currency]}
+          src={CURRENCIES[props.currency].icon}
           alt=""
           className="w-4 h-4 object-contain"
         />
@@ -46,7 +46,7 @@ function Currency(props: Props) {
             props.withTooltip ? "text-grey-accent" : "text-angel-grey"
           } ml-0.5`}
         >
-          {currency_text[props.currency]}
+          {CURRENCIES[props.currency].ticker}
         </span>
       </label>
       {props.withTooltip && <Tooltip />}

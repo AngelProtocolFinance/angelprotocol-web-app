@@ -1,7 +1,7 @@
 import { useSetModal } from "components/Modal/Modal";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { DonateValues } from "components/Transactors/Donater/types";
-import { denoms } from "constants/currency";
+import { denoms, MAIN_DENOM } from "constants/currency";
 import useWalletContext from "hooks/useWalletContext";
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
@@ -53,7 +53,7 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
-  const denomRef = useRef<denoms>(denoms.uusd);
+  const denomRef = useRef<denoms>(MAIN_DENOM);
   const currency = watch("currency");
 
   //reset amount when changing currency
@@ -67,7 +67,6 @@ export default function useDonate() {
   }, [currency]);
 
   const senders: Senders = {
-    [denoms.uusd]: terraSender,
     [denoms.uluna]: terraSender,
     [denoms.ether]: ethSender,
     [denoms.bnb]: bnbSender,

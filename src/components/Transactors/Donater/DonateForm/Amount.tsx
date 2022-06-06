@@ -1,5 +1,5 @@
 import { DonateValues } from "components/Transactors/Donater/types";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Currency from "./Currency";
@@ -26,7 +26,7 @@ export default function Amount() {
         autoComplete="off"
         id="amount"
         type="text"
-        placeholder={currency_text[denom]}
+        placeholder={CURRENCIES[denom].ticker}
         className="shadow-inner-white-grey focus:outline-none p-3 rounded-md text-xl bg-light-grey/80 text-angel-grey"
       />
       <div className="flex items-start justify-between mt-1">

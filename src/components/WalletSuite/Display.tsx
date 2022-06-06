@@ -3,10 +3,10 @@ import toCurrency from "helpers/toCurrency";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Details from "./Details";
 import { useGetter } from "store/accessors";
-import { currency_text } from "constants/currency";
 import Icon from "components/Icons/Icons";
 import useKeyPress from "hooks/useKeyPress";
 import useBackdropDismiss from "./useBackdropDismiss";
+import { CURRENCIES } from "constants/currency";
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
@@ -59,7 +59,7 @@ export default function Display() {
           {isUpdating ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
-          {currency_text[displayCoin.denom]}{" "}
+          {CURRENCIES[displayCoin.denom].ticker}{" "}
           {toCurrency(displayCoin.amount, 3, true)}
         </span>
       </button>

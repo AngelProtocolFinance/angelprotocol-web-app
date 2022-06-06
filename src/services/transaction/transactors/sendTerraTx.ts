@@ -1,17 +1,17 @@
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
 import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import { chainIDs } from "constants/chainIDs";
-import { currency_text, denoms } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import handleTerraError from "helpers/handleTerraError";
 import { WalletProxy } from "providers/WalletProvider";
 import { tags as awsTags } from "services/aws/tags";
 import { tags as terraTags } from "services/terra/tags";
 import { RootState } from "store/store";
-import transactionSlice, { setStage } from "../transactionSlice";
-import { StageUpdator, Step } from "../types";
 
 type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
 type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
@@ -47,19 +47,21 @@ export const sendTerraTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const denom = args.feedDenom || denoms.uluna;
+        const fee = await contract.estimateFee(args.msgs, denom);
+        const feeData = extractFeeData(fee, denom);
 
         const state = getState() as RootState;
-        const feeDenom = args.feedDenom || denoms.uusd;
         const walletBalanceForFee =
-          state.wallet.coins.find((coin) => coin.denom === feeDenom)?.amount ||
-          0;
+          state.wallet.coins.find((coin) => coin.denom === feeData.denom)
+            ?.amount || 0;
 
-        if (feeNum > walletBalanceForFee) {
+        if (feeData.amount > walletBalanceForFee) {
           updateTx({
             step: Step.error,
-            message: `Not enough ${currency_text[feeDenom]} to pay for fees`,
+            message: `Not enough ${
+              CURRENCIES[feeData.denom].ticker
+            } to pay for fees`,
           });
           return;
         }

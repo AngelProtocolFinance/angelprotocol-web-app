@@ -2,7 +2,7 @@ import { Dec } from "@terra-money/terra.js";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import binanceIcon from "assets/icons/wallets/binance.png";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { denoms, MAIN_DENOM } from "constants/currency";
 import { ethers } from "ethers";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect } from "react";
@@ -15,7 +15,7 @@ import { useSetter } from "store/accessors";
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
-  const { main, others, terraBalancesLoading } = useBalances(denoms.uusd);
+  const { main, others, terraBalancesLoading } = useBalances(MAIN_DENOM);
   const { haloBalance, haloBalanceLoading } = useHaloBalance();
 
   //updator for terra-station and wallet connect
@@ -57,11 +57,11 @@ export default function useWalletUpdator(activeProvider: Providers) {
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
-        displayCoin: { amount: main, denom: denoms.uusd },
+        displayCoin: main,
         coins: haloBalance !== 0 ? coinsWithHalo : others,
         address: wallet.address,
         chainId: wallet.network.chainID as chainIDs,
-        supported_denoms: [denoms.uusd, denoms.uluna],
+        supported_denoms: [MAIN_DENOM],
       })
     );
     dispatch(setIsUpdating(false));
@@ -113,14 +113,14 @@ export default function useWalletUpdator(activeProvider: Providers) {
           denom: isBinance ? denoms.bnb : denoms.ether,
         });
 
-        const supported_denoms = [denoms.uusd, denoms.uluna];
+        const supported_denoms = [MAIN_DENOM];
         supported_denoms.push(isBinance ? denoms.bnb : denoms.ether);
 
         dispatch(
           setWalletDetails({
             id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
-            displayCoin: { amount: main, denom: denoms.uusd },
+            displayCoin: main,
             coins: coins_copy,
             address: wallet.address,
             //for multi-chain wallets, should just be testnet or mainnet

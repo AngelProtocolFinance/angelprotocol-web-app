@@ -1,14 +1,14 @@
-import icon from "assets/icons/wallets/unknown.svg";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { denoms } from "constants/currency";
+import icon from "assets/icons/wallets/unknown.svg";
 import { chainIDs } from "constants/chainIDs";
-import { WalletInfo, State } from "./types";
+import { MAIN_DENOM } from "constants/currency";
+import { State, WalletInfo } from "./types";
 
 const initialState: State = {
   isUpdating: false,
   displayCoin: {
     amount: 0,
-    denom: denoms.uusd,
+    denom: MAIN_DENOM,
   },
   coins: [],
   icon: icon,

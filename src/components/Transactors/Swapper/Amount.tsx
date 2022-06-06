@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { currency_icons, denoms } from "constants/currency";
+import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
 import { ErrorMessage } from "@hookform/error-message";
 import { SwapValues } from "./types";
 import Balance from "./Balance";
@@ -20,6 +20,9 @@ export default function Amount() {
   }
 
   const is_buy = watch("is_buy");
+
+  const currency = is_buy ? CURRENCIES[MAIN_DENOM] : CURRENCIES[denoms.uhalo];
+
   return (
     <div className="grid mt-2">
       <div className="grid grid-cols-1a mb-1">
@@ -48,12 +51,10 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
-            src={currency_icons[is_buy ? denoms.uusd : denoms.uhalo]}
+            src={currency.icon}
             alt=""
           />
-          <span className="block font-bold text-2xl">
-            {is_buy ? "UST" : "HALO"}
-          </span>
+          <span className="block font-bold text-2xl">{currency.ticker}</span>
         </label>
 
         <input

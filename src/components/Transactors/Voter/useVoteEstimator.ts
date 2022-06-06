@@ -1,8 +1,8 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -26,7 +26,7 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
@@ -86,15 +86,19 @@ export default function useVoteEstimator() {
         );
 
         const fee = await contract.estimateFee([voteMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeData.amount >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
+            )
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ fee, msgs: [voteMsg] });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -110,7 +114,7 @@ export default function useVoteEstimator() {
     debounced_amount,
     debounced_vote,
     wallet,
-    UST_balance,
+    mainBalance,
     haloBalance,
     govStaker,
   ]);

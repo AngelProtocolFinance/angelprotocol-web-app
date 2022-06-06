@@ -7,7 +7,7 @@ import {
   TxInfo,
 } from "@terra-money/terra.js";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM } from "constants/currency";
 import { terra_lcds } from "constants/urls";
 import { WalletProxy } from "providers/WalletProvider";
 import { Disconnected, TxResultFail } from "./Errors";
@@ -35,16 +35,13 @@ export default class Contract {
   static gasAdjustment = 1.6; //use gas units 60% greater than estimate
 
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [
-    new Coin(denoms.uusd, 0.15),
-    new Coin(denoms.uluna, 0.01133),
-  ];
+  static gasPrices = [new Coin(MAIN_DENOM, 0.01133)];
 
   async query<T>(source: AccAddress, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
-  async estimateFee(msgs: Msg[], denom = denoms.uusd): Promise<Fee> {
+  async estimateFee(msgs: Msg[], denom = MAIN_DENOM): Promise<Fee> {
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(

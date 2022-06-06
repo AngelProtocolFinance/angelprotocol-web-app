@@ -1,11 +1,11 @@
+import Contract from "./Contract";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { contracts } from "constants/contracts";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM } from "constants/currency";
 import { sc } from "constants/sc";
 import { WalletProxy } from "providers/WalletProvider";
 import { Simulation } from "services/terra/lp/types";
 import { ContractQueryArgs } from "services/terra/types";
-import Contract from "./Contract";
 
 export default class LP extends Contract {
   factory_address: string;
@@ -34,7 +34,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: MAIN_DENOM,
               },
             },
             amount: "1000000",
@@ -52,7 +52,7 @@ export default class LP extends Contract {
         pair: {
           asset_infos: [
             { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: denoms.uusd } },
+            { native_token: { denom: MAIN_DENOM } },
           ],
         },
       },
@@ -65,7 +65,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: denoms.uusd,
+            denom: MAIN_DENOM,
           },
         }
       : {
@@ -101,7 +101,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: denoms.uusd,
+                denom: MAIN_DENOM,
               },
             },
             amount: uust_amount,
@@ -111,7 +111,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin(denoms.uusd, uust_amount)]
+      [new Coin(MAIN_DENOM, uust_amount)]
     );
   }
 

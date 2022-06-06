@@ -1,18 +1,11 @@
+import { DonateValues } from "./types";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import {
-  Coin,
-  CreateTxOptions,
-  Dec,
-  MsgExecuteContract,
-  MsgSend,
-} from "@terra-money/terra.js";
+import { Coin, CreateTxOptions, Dec, MsgSend } from "@terra-money/terra.js";
 import { ap_wallets } from "constants/ap_wallets";
-import { denoms } from "constants/currency";
-import Account from "contracts/Account";
+import { CURRENCIES, denoms } from "constants/currency";
 import Contract from "contracts/Contract";
-import Indexfund from "contracts/IndexFund";
 import { ethers } from "ethers";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -25,14 +18,12 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-import { DonateValues } from "./types";
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
   const dispatch = useSetter();
   const {
     watch,
-    getValues,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
@@ -81,64 +72,33 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-        //checks for uusd
-        if (currency === denoms.uusd) {
-          if (activeProvider === Providers.terra) {
-            const receiver = getValues("receiver");
-            let depositMsg: MsgExecuteContract;
-            if (
-              typeof receiver === "undefined" ||
-              typeof receiver === "number"
-            ) {
-              const index_fund = new Indexfund(wallet, receiver);
-              depositMsg = await index_fund.createDepositMsg(
-                debounced_amount,
-                debounced_split
-              );
-            } else {
-              const account = new Account(receiver, wallet);
-              depositMsg = await account.createDepositMsg(
-                debounced_amount,
-                debounced_split
-              );
-            }
-            const contract = new Contract(wallet);
-            const fee = await contract.estimateFee([depositMsg]);
-            const feeNum = extractFeeNum(fee);
-
-            //2nd balance check including fees
-            if (debounced_amount + feeNum >= balance) {
-              dispatch(setFormError("Not enough balance to pay fees"));
-              return;
-            }
-            dispatch(setFee(feeNum));
-            setTerraTx({ msgs: [depositMsg], fee });
-          }
-        }
-
         //checks for uluna
-        if (currency === denoms.uluna) {
-          if (activeProvider === Providers.terra) {
-            //this block won't run if wallet is not connected
-            //activeProvider === Providers.none
-            const contract = new Contract(wallet);
-            const sender = wallet!.address;
-            const receiver = ap_wallets[denoms.uluna];
-            const amount = new Dec(debounced_amount).mul(1e6);
+        if (currency === denoms.uluna && activeProvider === Providers.terra) {
+          //this block won't run if wallet is not connected
+          //activeProvider === Providers.none
+          const contract = new Contract(wallet);
+          const sender = wallet!.address;
+          const receiver = ap_wallets[currency];
+          const amount = new Dec(debounced_amount).mul(1e6);
 
-            const msg = new MsgSend(sender, receiver, [
-              new Coin(denoms.uluna, amount.toNumber()),
-            ]);
-            const aminoFee = await contract.estimateFee([msg], denoms.uluna);
-            const numFee = extractFeeNum(aminoFee, denoms.uluna);
+          const msg = new MsgSend(sender, receiver!, [
+            new Coin(currency, amount.toNumber()),
+          ]);
+          const aminoFee = await contract.estimateFee([msg]);
+          const feeData = extractFeeData(aminoFee);
 
-            if (debounced_amount + numFee >= balance) {
-              dispatch(setFormError("Not enough balance to pay fees"));
-              return;
-            }
-            dispatch(setFee(numFee));
-            setTerraTx({ msgs: [msg], fee: aminoFee });
+          if (debounced_amount + feeData.amount >= balance) {
+            dispatch(
+              setFormError(
+                `Not enough ${
+                  CURRENCIES[feeData.denom].ticker
+                } balance to pay fees`
+              )
+            );
+            return;
           }
+          dispatch(setFee(feeData.amount));
+          setTerraTx({ msgs: [msg], fee: aminoFee });
         }
 
         //estimates for eth
@@ -163,7 +123,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets[currency],
             value: wei_amount,
           };
 
@@ -199,7 +159,7 @@ export default function useEstimator() {
 
           const tx: TransactionRequest = {
             from: sender,
-            to: ap_wallets[denoms.ether],
+            to: ap_wallets[denoms.ether], // even though we're on Binance Chain, we use ether wallet to handle the tx
             value: wei_amount,
           };
 

@@ -1,14 +1,15 @@
+import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
 import toCurrency from "helpers/toCurrency";
 import { useFormContext } from "react-hook-form";
-import { useHaloBalance, useBalances } from "services/terra/queriers";
-import { denoms } from "constants/currency";
+import { useBalances, useHaloBalance } from "services/terra/queriers";
 import { SwapValues } from "./types";
+
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();
   const { haloBalance } = useHaloBalance();
-  const { main: ust_balance } = useBalances(denoms.uusd);
+  const { main } = useBalances(MAIN_DENOM);
   const is_buy = watch("is_buy");
-  const balance = is_buy ? ust_balance : haloBalance;
+  const balance = is_buy ? main : { amount: haloBalance, denom: denoms.uhalo };
 
   function setAmount() {
     setValue("amount", `${balance}`, {
@@ -25,7 +26,7 @@ export default function Balance() {
         onClick={setAmount}
         className="inline hover:text-angel-blue"
       >
-        {toCurrency(balance, 3, true)} {is_buy ? "UST" : "HALO"}
+        {toCurrency(balance.amount, 3, true)} {CURRENCIES[balance.denom].ticker}
       </button>
     </p>
   );

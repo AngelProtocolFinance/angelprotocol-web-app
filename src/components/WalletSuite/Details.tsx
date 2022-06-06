@@ -1,6 +1,6 @@
 import Copier from "components/Copier/Copier";
 import Icon from "components/Icons/Icons";
-import { denoms } from "constants/currency";
+import { denoms, MAIN_DENOM } from "constants/currency";
 import { DeviceType, deviceType } from "helpers/deviceType";
 import maskAddress from "helpers/maskAddress";
 import useWalletContext from "hooks/useWalletContext";
@@ -29,7 +29,7 @@ export default function Details(props: { closeHandler: () => void }) {
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
-      coin.denom === denoms.uusd ||
+      coin.denom === MAIN_DENOM ||
       coin.denom === denoms.uhalo ||
       Number(coin.amount) > criterionAmount
   );

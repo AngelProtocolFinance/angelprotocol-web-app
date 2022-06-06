@@ -1,7 +1,7 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { denoms } from "constants/currency";
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
 import Halo from "contracts/Halo";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -27,7 +27,7 @@ export default function useEstimator() {
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: UST_balance } = useBalances(denoms.uusd);
+  const { main: mainBalance } = useBalances(MAIN_DENOM);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -73,15 +73,19 @@ export default function useEstimator() {
         }
 
         const fee = await contract.estimateFee([govMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeNum >= UST_balance) {
-          dispatch(setFormError("Not enough UST to pay fees"));
+        if (feeData.amount >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
+            )
+          );
           return;
         }
 
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
@@ -93,7 +97,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, UST_balance, balance, locked]);
+  }, [debounced_amount, wallet, mainBalance, balance, locked]);
 
   return { tx, wallet };
 }

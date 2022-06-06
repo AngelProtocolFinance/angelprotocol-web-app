@@ -1,7 +1,10 @@
+import { SEPARATOR } from "./constants";
+import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
+import useFieldsAndLimits from "./useFieldsAndLimits";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
 import Account from "contracts/Account";
 import { Source } from "contracts/types";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -13,10 +16,8 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useSetter } from "store/accessors";
-import { SEPARATOR } from "./constants";
-import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
-import useFieldsAndLimits from "./useFieldsAndLimits";
 
+// TODO: Figure out how to handle UST logic on new EVM chain
 export default function useWithrawEstimator() {
   const {
     watch,
@@ -118,23 +119,23 @@ export default function useWithrawEstimator() {
         const account = new Account(account_addr, wallet);
         const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
         const fee = await account.estimateFee([withdrawMsg]);
-        const feeNum = extractFeeNum(fee);
+        const feeData = extractFeeData(fee);
 
         //get usd total of of sources
         const usdTotal = usdValues
           .reduce((result, val) => result.add(val), new Dec(0))
           .toNumber();
 
-        if (feeNum > usdTotal) {
+        if (feeData.amount > usdTotal) {
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeNum;
+        const receiveAmount = usdTotal - feeData.amount;
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
-        dispatch(setFee(feeNum));
+        dispatch(setFee(feeData.amount));
         setTx({ msgs: [withdrawMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
