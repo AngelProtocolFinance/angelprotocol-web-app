@@ -11,10 +11,10 @@ export const placeHolderToken: WithBalance = {
   symbol: "ETH",
   logo: ethLogo,
   decimals: 18,
-  chainId: "1",
-  rpcUrl: "",
-  chainName: "Ethereum mainnet",
-  blockExplorerUrl: "https://etherscan.io/",
+  chain_id: "1",
+  rpc_url: "",
+  chain_name: "Ethereum mainnet",
+  block_explorer_url: "https://etherscan.io/",
   tokens: [],
   balance: 0,
 };
@@ -24,10 +24,10 @@ export const unSupportedToken: WithBalance = {
   symbol: "XX",
   logo: coinIcon,
   decimals: 18,
-  chainId: chainIDs.unsupported,
-  rpcUrl: "",
-  chainName: "Unsuported Network",
-  blockExplorerUrl: "",
+  chain_id: chainIDs.unsupported,
+  rpc_url: "",
+  chain_name: "Unsuported Network",
+  block_explorer_url: "",
   tokens: [],
   balance: 0,
 };
@@ -37,20 +37,20 @@ const avalancheToken: EVMNative = {
   symbol: "AVAX",
   logo: "https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=022",
   decimals: 18,
-  chainId: "43113",
-  rpcUrl: "https://api.avax-test.network/ext/bc/C/rpc",
-  chainName: "Avalanche Fuji Testnet",
-  blockExplorerUrl: "https://testnet.snowtrace.io/",
+  chain_id: "43113",
+  rpc_url: "https://api.avax-test.network/ext/bc/C/rpc",
+  chain_name: "Avalanche Fuji Testnet",
+  block_explorer_url: "https://testnet.snowtrace.io/",
   tokens: [
     {
       //Wrapped BNB
       logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=022",
-      contractAddr: "0x1799aFD227E69e64D8fc55e2B5E62A27e21B33C6",
+      contract_addr: "0x1799aFD227E69e64D8fc55e2B5E62A27e21B33C6",
     },
     {
       //USDC
       logo: "https://cryptologos.cc/logos/usd-coin-usdc-logo.svg?v=022",
-      contractAddr: "0x5A0d0B5f9aAD08EA771c783D45Ca20ca803da44B",
+      contract_addr: "0x5A0d0B5f9aAD08EA771c783D45Ca20ca803da44B",
     },
   ],
 };
@@ -60,10 +60,10 @@ const binanceToken: EVMNative = {
   symbol: "BNB",
   logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=022",
   decimals: 18,
-  chainId: "97",
-  rpcUrl: "https://data-seed-prebsc-1-s2.binance.org:8545",
-  chainName: "Binance Smart Chain Testnet",
-  blockExplorerUrl: "https://testnet.bscscan.com/",
+  chain_id: "97",
+  rpc_url: "https://data-seed-prebsc-1-s2.binance.org:8545",
+  chain_name: "Binance Smart Chain Testnet",
+  block_explorer_url: "https://testnet.bscscan.com/",
   tokens: [],
 };
 
@@ -72,10 +72,10 @@ export const ethereumToken: EVMNative = {
   symbol: "ETH",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",
   decimals: 18,
-  chainId: "42",
-  rpcUrl: "https://kovan.poa.network",
-  chainName: "Kovan Test Network",
-  blockExplorerUrl: "https://kovan.etherscan.io/",
+  chain_id: "42",
+  rpc_url: "https://kovan.poa.network",
+  chain_name: "Kovan Test Network",
+  block_explorer_url: "https://kovan.etherscan.io/",
   tokens: [],
 };
 
@@ -84,13 +84,8 @@ export const lunaToken: TerraNative = {
   symbol: "LUNA",
   logo: lunaLogo,
   decimals: 6,
-  chainId: "pisco-1",
-  chainName: "Terra Pisco Testnet",
-};
-
-export const placeHolderLunaToken: WithBalance<TerraNative> = {
-  ...lunaToken,
-  balance: 0,
+  chain_id: "pisco-1",
+  chain_name: "Terra Pisco Testnet",
 };
 
 export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
@@ -99,8 +94,8 @@ export const terraNativeAssets: { [min_denom: string]: Token | undefined } = {
     symbol: "LUNA",
     logo: lunaLogo,
     decimals: 6,
-    chainId: terraChainId,
-    chainName: "Terra Testnet",
+    chain_id: terraChainId,
+    chain_name: "Terra Testnet",
   },
 };
 

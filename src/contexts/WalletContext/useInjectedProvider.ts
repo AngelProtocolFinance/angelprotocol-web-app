@@ -80,8 +80,6 @@ export default function useInjectedProvider(
           method: EIPMethods.eth_chainId,
         });
 
-        console.log({ accounts, hexChainId });
-
         setAddress(accounts[0]);
         setChainId(`${parseInt(hexChainId, 16)}`);
       }

@@ -80,9 +80,8 @@ export default function useDonate() {
   }
 
   const symbol = token.symbol;
-  const isInCorrectNetwork = token.chainId === chainId;
+  const isInCorrectNetwork = token.chain_id === chainId;
 
-  console.log({ token, chainId });
   //reset amount when changing currency
   useEffect(() => {
     if (symbolRef.current !== symbol) {
@@ -96,7 +95,7 @@ export default function useDonate() {
   return {
     donate: handleSubmit(sendTx),
     correctNetworkInfo: {
-      name: token.chainName,
+      name: token.chain_name,
       symbol: token.symbol,
     },
     isNetworkPromptShown: !isInCorrectNetwork && providerId,

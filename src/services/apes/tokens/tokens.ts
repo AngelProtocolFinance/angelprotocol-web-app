@@ -2,14 +2,14 @@ import { Coin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
-import { Dwindow } from "types/ethereum";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
-import { terraLcdUrl } from "constants/urls";
+import { IS_DEV } from "constants/env";
+import { apes_endpoint, terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-import { terraNativeAssets, tokenList } from "./constants";
+import { terraNativeAssets } from "./constants";
 
 type TerraBalanceRes = { balances: Coin.Data[] };
 type CategorizedTokenList = { [key in Token["type"]]: Token[] };
@@ -35,6 +35,10 @@ const tokens_api = apes.injectEndpoints({
       //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
+          const tokensRes = await fetch(
+            `${apes_endpoint}/token/list${IS_DEV ? "/test" : ""}`
+          );
+          const tokenList: Token[] = await tokensRes.json();
           const coins: WithBalance<Token>[] = [];
           const categorizedTokenList = tokenList.reduce((tokens, token) => {
             const _t = token.type;
@@ -75,14 +79,13 @@ const tokens_api = apes.injectEndpoints({
           ] as EVMNative[];
           const balanceQueries = evmTokenList.map((token) => {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
-              token.rpcUrl,
-              { chainId: +token.chainId, name: token.chainName }
+              token.rpc_url,
+              { chainId: +token.chain_id, name: token.chain_name }
             );
             return jsonProvider.getBalance(args.address);
           });
 
           const queryResults = await Promise.allSettled(balanceQueries);
-
           //map native balances with ordering
           const evmCoins = queryResults.reduce((_coins, result, i) => {
             const token: WithBalance = {
@@ -92,7 +95,7 @@ const tokens_api = apes.injectEndpoints({
                   ? +utils.formatUnits(result.value, evmTokenList[i].decimals)
                   : 0,
             };
-            if (token.chainId === args.chainId) {
+            if (token.chain_id === args.chainId) {
               //bring active coin to front
               _coins.unshift(token);
             } else {
@@ -106,9 +109,9 @@ const tokens_api = apes.injectEndpoints({
             const activeCoin = evmCoins[0];
             const erc20Tokens = activeCoin.tokens;
             const erc20Holdings = await getERC20Holdings(
-              activeCoin.rpcUrl,
+              activeCoin.rpc_url,
               args.address,
-              erc20Tokens.map((token) => token.contractAddr)
+              erc20Tokens.map((token) => token.contract_addr)
             );
 
             //convert to NativeBalanceFormat
@@ -118,10 +121,10 @@ const tokens_api = apes.injectEndpoints({
                 symbol: token.symbol,
                 logo: erc20Tokens[i].logo,
                 decimals: token.decimals,
-                chainId: activeCoin.chainId,
+                chain_id: activeCoin.chain_id,
 
-                nativeSymbol: activeCoin.symbol,
-                contractAddr: token.contractAddress,
+                native_symbol: activeCoin.symbol,
+                contract_addr: token.contractAddress,
 
                 balance: +token.balance,
               })
@@ -135,7 +138,7 @@ const tokens_api = apes.injectEndpoints({
           }
           return { data: coins.concat(evmCoins) };
         } catch (err) {
-          console.error(err);
+          console.log(err);
           return {
             error: {
               status: 500,

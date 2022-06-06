@@ -154,6 +154,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     }
   }, [
     providerId,
+    disconnectEVMxdefi,
     disconnectBinanceWallet,
     disconnectMetamask,
     disconnectTorus,

@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Connection,
   MultiConnection,
   SingleConnection,
 } from "contexts/WalletContext/types";

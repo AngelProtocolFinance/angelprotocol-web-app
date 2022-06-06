@@ -8,9 +8,9 @@ export default function Breakdown() {
   const { watch } = useFormContext<DonateValues>();
   const amount = Number(watch("amount")) || 0;
   const token = watch("token");
-  const isERC20 = token.contractAddr !== undefined;
+  const isERC20 = token.contract_addr !== undefined;
   const totalAmount = isERC20 ? amount : fee + amount;
-  const feeSymbol = isERC20 ? token.nativeSymbol! : token.symbol;
+  const feeSymbol = isERC20 ? token.native_symbol! : token.symbol;
 
   return (
     <div className="m-1">

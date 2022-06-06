@@ -39,12 +39,12 @@ export const sendEthDonation = createAsyncThunk(
       const walletAddress = await signer.getAddress();
       const chainNum = await signer.getChainId();
       const chainId = `${chainNum}`;
-      const { contractAddr } = args.donateValues.token;
+      const { contract_addr } = args.donateValues.token;
 
       let response: TransactionResponse;
-      if (contractAddr) {
+      if (contract_addr) {
         const ER20Contract: any = new ethers.Contract(
-          contractAddr,
+          contract_addr,
           ERC20Abi,
           signer
         );

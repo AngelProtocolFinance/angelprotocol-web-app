@@ -85,7 +85,7 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new CW20(selectedToken.contractAddr, walletAddr);
+          const contract = new CW20(selectedToken.contract_addr, walletAddr);
           const msg = contract.createTransferMsg(
             debounced_amount,
             ap_wallets.terra
@@ -111,7 +111,7 @@ export default function useEstimator() {
           selectedToken.type === "evm-native" ||
           selectedToken.type === "erc20"
         ) {
-          if (chainId !== selectedToken.chainId) return; //network selection prompt is shown to user
+          if (chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
 
           const provider = new ethers.providers.Web3Provider(
             getProvider(providerId) as any
@@ -131,7 +131,7 @@ export default function useEstimator() {
           let gasLimit: ethers.BigNumber;
           if (selectedToken.type === "erc20") {
             const ER20Contract: any = new ethers.Contract(
-              selectedToken.contractAddr,
+              selectedToken.contract_addr,
               ERC20Abi,
               signer
             );

@@ -5,6 +5,5 @@ export function useLatestBlock(pollInterval = 0) {
   const { data = "0" } = useLatestBlockQuery("", {
     pollingInterval: pollInterval,
   });
-  console.log(data);
   return data;
 }

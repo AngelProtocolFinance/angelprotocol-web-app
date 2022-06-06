@@ -40,7 +40,7 @@ export default function WalletDetails(props: { closeHandler: () => void }) {
           </button>
         </div>
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
-          <p className="uppercase">network : {displayCoin.chainName}</p>
+          <p className="uppercase">network : {displayCoin.chain_name}</p>
         </div>
         {!isEmpty && (
           <Filter

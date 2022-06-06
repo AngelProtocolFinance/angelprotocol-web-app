@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import { DonateValues, FundFlow } from "./types";
 import { SchemaShape } from "schemas/types";
 import { WithBalance } from "services/types";
-import { placeHolderLunaToken } from "services/apes/tokens/constants";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
@@ -30,7 +29,7 @@ function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: props.tokens[0] || placeHolderLunaToken,
+      token: props.tokens[0], //will always be filled with at least one token
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

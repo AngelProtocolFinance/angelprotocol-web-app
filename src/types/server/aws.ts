@@ -96,50 +96,49 @@ type TokenBase = {
   symbol: string; //LUNA
   logo: string;
   decimals: number; //6
-  chainId: string;
+  chain_id: string;
 };
 
 export type TerraNative = TokenBase & {
   type: "terra-native"; //uluna
-  supportedBy?: string[];
   //additional info for adding chain in wallet
-  chainName: string; //Terra testnet
-  rpcUrl?: never;
-  blockExplorerUrl?: never; //https://testnet.snowtrace.io
+  chain_name: string; //Terra testnet
+  rpc_url?: never;
+  block_explorer_url?: never; //https://testnet.snowtrace.io
   tokens?: never;
 
-  contractAddr?: never;
-  nativeSymbol?: never;
+  contract_addr?: never;
+  native_symbol?: never;
 };
 
 export type ALT20 = TokenBase & {
   type: "cw20" | "erc20";
 
-  chainName?: never; //Terra testnet
-  rpcUrl?: never;
-  blockExplorerUrl?: never; //https://testnet.snowtrace.io
+  chain_name?: never; //Terra testnet
+  rpc_url?: never;
+  block_explorer_url?: never; //https://testnet.snowtrace.io
   tokens?: never;
 
   //info if token is an ERC20 token
-  contractAddr: string;
-  nativeSymbol: string;
+  contract_addr: string;
+  native_symbol: string;
 };
 
 export type EVMNative = TokenBase & {
   type: "evm-native"; //avax
 
   //additional info for adding chain in wallet
-  chainName: string; //Avalanche
-  rpcUrl: string;
-  blockExplorerUrl: string; //https://testnet.snowtrace.io
+  chain_name: string; //Avalanche
+  rpc_url: string;
+  block_explorer_url: string; //https://testnet.snowtrace.io
   tokens: {
-    contractAddr: string;
+    contract_addr: string;
     logo: string;
   }[];
 
   //info if token is an ERC20 token
-  contractAddr?: never;
-  nativeSymbol?: never;
+  contract_addr?: never;
+  native_symbol?: never;
 };
 
 export type Token = EVMNative | TerraNative | ALT20;

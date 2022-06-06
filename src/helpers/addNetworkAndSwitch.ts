@@ -1,4 +1,3 @@
-import { ethers } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { ChainParams } from "types/ethereum";
 import { EVMNative } from "types/server/aws";
@@ -19,16 +18,16 @@ export default async function addNetworkAndSwitch(
 
 function getChainParamsFromCoin(coin: EVMNative): ChainParams {
   return {
-    chainId: ethers.BigNumber.from(coin.chainId).toHexString(),
-    blockExplorerUrls: [coin.blockExplorerUrl],
-    chainName: coin.chainName,
+    chainId: toHexChainId(coin.chain_id),
+    blockExplorerUrls: [coin.block_explorer_url],
+    chainName: coin.chain_name,
     iconUrls: [coin.logo],
     nativeCurrency: {
       name: coin.symbol,
       symbol: coin.symbol,
       decimals: coin.decimals,
     },
-    rpcUrls: [coin.rpcUrl],
+    rpcUrls: [coin.rpc_url],
   };
 }
 
@@ -39,7 +38,12 @@ export async function switchToNetwork(
   const provider = getProvider(providerId);
   await provider?.request({
     method: EIPMethods.wallet_switchEthereumChain,
-    params: [{ chainId: "0x" + (+intStrChainId).toString(16) }],
+    params: [{ chainId: toHexChainId(intStrChainId) }],
   });
+
   //let caller handle error
+}
+
+function toHexChainId(strNumChainId: string) {
+  return "0x" + (+strNumChainId).toString(16);
 }
