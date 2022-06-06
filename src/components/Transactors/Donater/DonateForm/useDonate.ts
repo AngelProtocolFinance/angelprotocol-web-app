@@ -5,10 +5,9 @@ import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
-import { resetFee, setFormError } from "slices/transaction/transactionSlice";
+import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
-import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
@@ -48,37 +47,6 @@ export default function useDonate() {
     showModal(TransactionPrompt, {});
   }
 
-  async function handleNetworkChange() {
-    try {
-      if (!providerId) {
-        dispatch(setFormError("Wallet is not connected"));
-        return;
-      }
-      if (token.type === "evm-native") {
-        await addNetworkAndSwitch(token, providerId);
-      } else {
-        dispatch(
-          setFormError(
-            "Wallet doesn't support automatic network switching. Switch wallet network manually"
-          )
-        );
-      }
-    } catch (err) {
-      console.error(err);
-      dispatch(
-        setFormError(
-          /**generalize this error, since manifestation is different on wallets
-           * metamask: errs code -32603 if network is a default metamask network,
-           * but also errs -32603 on other type of error
-           *
-           * binance-wallet: error message
-           */
-          "Unknown error: Kindly switch your wallet network manually"
-        )
-      );
-    }
-  }
-
   const symbol = token.symbol;
   const isInCorrectNetwork = token.chain_id === chainId;
 
@@ -94,13 +62,6 @@ export default function useDonate() {
 
   return {
     donate: handleSubmit(sendTx),
-    correctNetworkInfo: {
-      name: token.chain_name,
-      symbol: token.symbol,
-    },
-    isNetworkPromptShown: !isInCorrectNetwork && providerId,
-    isSwitchingNetwork: isWalletLoading,
-    handleNetworkChange,
     isSubmitDisabled:
       form_error !== null ||
       form_loading ||

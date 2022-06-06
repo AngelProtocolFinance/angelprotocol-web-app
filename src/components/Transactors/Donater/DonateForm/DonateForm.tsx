@@ -3,19 +3,11 @@ import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
 import Breakdown from "./Breakdown";
+import NetworkPrompt from "./NetworkPrompt";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
-  const {
-    donate,
-    to,
-    isFormLoading,
-    isSubmitDisabled,
-    isNetworkPromptShown,
-    correctNetworkInfo,
-    isSwitchingNetwork,
-    handleNetworkChange,
-  } = useDonate();
+  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
 
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
@@ -32,26 +24,7 @@ export default function DonateForm() {
       autoComplete="off"
     >
       <Status />
-      {isNetworkPromptShown && (
-        <div className="grid bg-amber-400/5 border-2 rounded-md border-amber-400/20 p-1.5 mb-2">
-          <p className="text-xs font-mono text-amber-500">
-            To transact{" "}
-            <span className="font-semibold">{correctNetworkInfo.symbol}</span>,
-            kindly switch wallet network to{" "}
-            <span className="text-amber-500 font-semibold">
-              {correctNetworkInfo.name}
-            </span>
-          </p>
-          <button
-            disabled={isSwitchingNetwork}
-            onClick={handleNetworkChange}
-            className="justify-self-end text-xs font-bold text-angel-blue hover:text-bright-blue active:text-angel-orange uppercase font-heading"
-            type="button"
-          >
-            {isSwitchingNetwork ? "Switching..." : "Switch to Network"}
-          </button>
-        </div>
-      )}
+      <NetworkPrompt />
       <Amount />
       <Breakdown />
 
