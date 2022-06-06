@@ -53,5 +53,5 @@ function StatusDiv(props: { children: ReactNode }) {
   );
 }
 function StatusTitle(props: { text: string }) {
-  return <span className="font-mono text-sm ml-1">{props.text}</span>;
+  return <span className="font-mono text-xs ml-1">{props.text}</span>;
 }

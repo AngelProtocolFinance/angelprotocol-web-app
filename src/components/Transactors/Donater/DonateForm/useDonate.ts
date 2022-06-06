@@ -12,8 +12,7 @@ import addNetworkAndSwitch from "helpers/addNetworkAndSwitch";
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
-  const { providerId, displayCoin, isWalletLoading, walletAddr } =
-    useGetWallet();
+  const { providerId, isWalletLoading, walletAddr, chainId } = useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const {
@@ -57,6 +56,12 @@ export default function useDonate() {
       }
       if (token.type === "evm-native") {
         await addNetworkAndSwitch(token, providerId);
+      } else {
+        dispatch(
+          setFormError(
+            "Wallet doesn't support automatic network switching. Switch wallet network manually"
+          )
+        );
       }
     } catch (err) {
       console.error(err);
@@ -75,7 +80,9 @@ export default function useDonate() {
   }
 
   const symbol = token.symbol;
-  const isInCorrectNetwork = token.chainId === displayCoin.chainId;
+  const isInCorrectNetwork = token.chainId === chainId;
+
+  console.log({ token, chainId });
   //reset amount when changing currency
   useEffect(() => {
     if (symbolRef.current !== symbol) {

@@ -1,32 +1,20 @@
 import {
-  ConnectType,
-  WalletStatus,
-  useWallet,
-} from "@terra-money/wallet-provider";
-import {
   PropsWithChildren,
   createContext,
   useCallback,
   useContext,
 } from "react";
-import {
-  Connection,
-  MultiConnection,
-  ProviderId,
-  ProviderInfo,
-  ProviderStatuses,
-  SingleConnection,
-} from "./types";
+import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
-import evmIcon from "assets/icons/evm.webp";
-import terraIcon from "assets/icons/terra.png";
 import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
 import { placeHolderToken } from "services/apes/tokens/constants";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { chainIDs } from "constants/chainIDs";
-import { placeHolderDisplayToken, providerIcons } from "./constants";
+import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
+import useTerra from "./useTerrra";
 import useTorusWallet from "./useTorusWallet";
+import useXdefi from "./useXdefi";
 
 type IWalletState = {
   walletIcon: string;
@@ -76,80 +64,18 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: binanceWalletInfo,
   } = useInjectedWallet("binance-wallet");
 
-  const {
-    isLoading: isxdefiEVMLoading,
-    connection: xdefiEVMConnection,
-    disconnect: disconnectEVMxdefi,
-    providerInfo: xdefiEVMinfo,
-  } = useInjectedWallet("xdefi-evm", evmIcon, "Ethereum");
+  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
+    useTerra();
 
-  console.log({ isxdefiEVMLoading, xdefiEVMConnection, xdefiEVMinfo });
+  const {
+    isxdefiEVMLoading,
+    xdefiConnection,
+    disconnectEVMxdefi,
+    xdefiEVMinfo,
+  } = useXdefi();
 
   const { isTorusLoading, torusInfo, torusConnection, disconnectTorus } =
     useTorusWallet();
-
-  const {
-    availableConnections,
-    connection,
-    network,
-    wallets,
-    status,
-    connect,
-    disconnect: disconnectTerra,
-  } = useWallet();
-
-  const terraInfo: ProviderInfo | undefined = connection
-    ? {
-        providerId:
-          //use connect type as Id if no futher connections stems out of the type
-          (connection?.identifier as ProviderId) ||
-          connection.type.toLowerCase(),
-        logo: connection?.icon!,
-        chainId: network.chainID,
-        address: wallets[0].terraAddress,
-      }
-    : undefined;
-
-  const terraConnections: SingleConnection[] = availableConnections
-    .filter(
-      (connection) =>
-        !(
-          connection.identifier === "xdefi-wallet" ||
-          connection.type === ConnectType.READONLY
-        )
-    )
-    .map((connection) => ({
-      logo: connection.icon,
-      name: connection.name,
-      connect: async () => {
-        connect(connection.type, connection.identifier);
-      },
-    }));
-
-  const xDefiTerraConnection = ((): SingleConnection[] => {
-    const connection = availableConnections.find(
-      (connection) => connection.identifier === "xdefi-wallet"
-    );
-    if (connection) {
-      return [
-        {
-          logo: terraIcon, //this connector will appear on network selection
-          name: "Terra",
-          connect: async () => {
-            connect(connection.type, connection.identifier);
-          },
-        },
-      ];
-    } else {
-      return [];
-    }
-  })();
-
-  const xdefiConnection: MultiConnection = {
-    name: "xdefi",
-    logo: providerIcons["xdefi-wallet"],
-    connections: xDefiTerraConnection.concat([xdefiEVMConnection]),
-  };
 
   const providerStatuses: ProviderStatuses = [
     {
@@ -166,7 +92,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
     {
       providerInfo: terraInfo,
-      isLoading: status === WalletStatus.INITIALIZING,
+      isLoading: isTerraLoading,
     },
     {
       providerInfo: torusInfo,

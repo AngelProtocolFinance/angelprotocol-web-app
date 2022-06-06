@@ -85,7 +85,7 @@ export const lunaToken: TerraNative = {
   logo: lunaLogo,
   decimals: 6,
   chainId: "pisco-1",
-  chainName: "Terra Testnet",
+  chainName: "Terra Pisco Testnet",
 };
 
 export const placeHolderLunaToken: WithBalance<TerraNative> = {

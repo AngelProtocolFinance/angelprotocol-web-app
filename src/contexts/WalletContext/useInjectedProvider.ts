@@ -6,6 +6,7 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
+import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
 import { EIP1193Error } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
@@ -108,15 +109,7 @@ export default function useInjectedProvider(
       const dwindow = window as Dwindow;
       //connecting xdefi
       if (providerId === "xdefi-evm") {
-        if (!dwindow?.xfi) {
-          throw new EIP1193Error("Xdefi is not installed", 0);
-        }
-        if (!dwindow?.xfi?.ethereum?.isMetaMask) {
-          throw new EIP1193Error(
-            "Kindly prioritize Xdefi and reload the page",
-            0
-          );
-        }
+        checkXdefiPriority();
         //connecting other wallet
       } else {
         if (dwindow?.xfi?.ethereum?.isMetaMask) {
