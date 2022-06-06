@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import { chainIDs } from "constants/chainIDs";
 import ConnectOptions from "./ConnectOptions";
 import WalletOpener from "./ConnectedWallet/WalletOpener";
-import NetworkSelectionOpener from "./NetworkSelector/NetworkSelectionOpener";
 
 export default function WalletSuite() {
-  const { providerId, isProviderLoading, displayCoin } = useGetWallet();
+  const { providerId, isProviderLoading } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {
@@ -20,8 +18,6 @@ export default function WalletSuite() {
     providerId && setConnectOptionsShown(false);
     //eslint-disable-next-line
   }, [providerId]);
-
-  const isNetworkSupported = displayCoin.chainId !== chainIDs.unsupported;
 
   return (
     <div
@@ -37,8 +33,7 @@ export default function WalletSuite() {
           <span>{isProviderLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {providerId && isNetworkSupported && <WalletOpener />}
-      {providerId && !isNetworkSupported && <NetworkSelectionOpener />}
+      {providerId && <WalletOpener />}
       {connectOptionsShown && (
         <ConnectOptions closeHandler={hideConnectOptions} />
       )}

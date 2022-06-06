@@ -96,3 +96,5 @@ type Token = EVMToken | ERC20 | TerraNative | CW20;
 8. xdefi edge case
 
 - xdefi state from terra wallet provider, when chainId is mismatched, additional check if its evm chainId is correct
+- integrating xdefi using `@terra-money/wallet-provider` handles terra tx and balance seamlessly but lose functionality as evm wallet e.g (events)
+- integrating xdefi as injected provider handles evm setup seamlessly but lose terra functionality (unclear window.xfi.terra)

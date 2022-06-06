@@ -67,7 +67,7 @@ const binanceToken: EVMNative = {
   tokens: [],
 };
 
-const ethereumToken: EVMNative = {
+export const ethereumToken: EVMNative = {
   type: "evm-native",
   symbol: "ETH",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=022",

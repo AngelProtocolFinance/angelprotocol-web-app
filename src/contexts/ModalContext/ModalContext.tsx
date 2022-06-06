@@ -1,31 +1,33 @@
 import {
   PropsWithChildren,
   ReactNode,
+  cloneElement,
   createContext,
+  createElement,
   useCallback,
   useContext,
   useRef,
   useState,
 } from "react";
 import { FC } from "react";
+import { createPortal } from "react-dom";
 import Backdrop from "../../components/Backdrop";
 
 type Handler = () => void;
-type Opener = <T = {}>(
-  Content: FC<T>,
-  props: T & { isDismissDisabled?: false }
-) => void;
+type Opener = <T = {}>(Content: FC<T>, props: T, parentId?: string) => void;
 type Handlers = {
   showModal: Opener;
   closeModal: Handler;
 };
 export default function ModalContext(
-  props: PropsWithChildren<{ backdropClasses: string }>
+  props: PropsWithChildren<{ backdropClasses: string; id?: string }>
 ) {
+  const [parentId, setParentId] = useState<string>();
   const [Modal, setModal] = useState<ReactNode>();
   const lastActiveElRef = useRef<HTMLElement>();
 
-  const showModal: Opener = useCallback((Modal, props) => {
+  const showModal: Opener = useCallback((Modal, props, parentId) => {
+    if (parentId) setParentId(parentId);
     setModal(<Modal {...props} />);
     // track last active element
     lastActiveElRef.current = document.activeElement as HTMLElement;
@@ -33,9 +35,17 @@ export default function ModalContext(
 
   const closeModal = useCallback(() => {
     setModal(undefined);
+    setParentId(undefined);
     // pointer to last active dom element
     lastActiveElRef.current?.focus();
   }, []);
+
+  const Content = !!Modal && (
+    <>
+      <Backdrop classes={props.backdropClasses} />
+      {Modal}
+    </>
+  );
 
   return (
     <setContext.Provider
@@ -44,13 +54,9 @@ export default function ModalContext(
         closeModal,
       }}
     >
-      {!!Modal && (
-        <>
-          <Backdrop classes={props.backdropClasses} />
-          {Modal}
-        </>
-      )}
-
+      {parentId
+        ? createPortal(Content, document.getElementById(parentId)!)
+        : Content}
       {props.children}
     </setContext.Provider>
   );

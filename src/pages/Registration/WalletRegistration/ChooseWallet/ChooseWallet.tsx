@@ -19,7 +19,7 @@ export default function ChooseWallet() {
   const { connections } = useSetWallet();
   const login = useCallback(
     (provider: string) =>
-      connections.find((x) => x.name === "Torus")?.connect(provider),
+      connections.find((x) => x.name === "Torus")?.connect!(provider), //torus is single connection only atm
     [connections]
   );
 

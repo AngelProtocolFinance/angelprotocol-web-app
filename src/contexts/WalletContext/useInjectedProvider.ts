@@ -12,7 +12,11 @@ import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
-export default function useInjectedProvider(providerId: ProviderId) {
+export default function useInjectedProvider(
+  providerId: ProviderId,
+  connectorLogo?: string,
+  connectorName?: string
+) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
@@ -75,6 +79,8 @@ export default function useInjectedProvider(providerId: ProviderId) {
           method: EIPMethods.eth_chainId,
         });
 
+        console.log({ accounts, hexChainId });
+
         setAddress(accounts[0]);
         setChainId(`${parseInt(hexChainId, 16)}`);
       }
@@ -101,7 +107,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
     try {
       const dwindow = window as Dwindow;
       //connecting xdefi
-      if (providerId === "xdefi-wallet") {
+      if (providerId === "xdefi-evm") {
         if (!dwindow?.xfi) {
           throw new EIP1193Error("Xdefi is not installed", 0);
         }
@@ -143,8 +149,8 @@ export default function useInjectedProvider(providerId: ProviderId) {
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: providerId.replace("-", " "),
-    logo: providerIcons[providerId],
+    name: connectorName ?? providerId.replace("-", " "),
+    logo: connectorLogo ?? providerIcons[providerId],
     connect,
   };
 

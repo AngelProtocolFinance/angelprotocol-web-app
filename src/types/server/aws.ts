@@ -91,13 +91,17 @@ export type TxLogPayload = Receiver &
   TxDataPermissions;
 
 /** apes/token-list */
-export type TerraNative = {
-  type: "terra-native"; //uluna
+
+type TokenBase = {
   symbol: string; //LUNA
   logo: string;
   decimals: number; //6
-  chainId: string; // "pisco-1" | "phoenix-1"
+  chainId: string;
+};
 
+export type TerraNative = TokenBase & {
+  type: "terra-native"; //uluna
+  supportedBy?: string[];
   //additional info for adding chain in wallet
   chainName: string; //Terra testnet
   rpcUrl?: never;
@@ -108,14 +112,9 @@ export type TerraNative = {
   nativeSymbol?: never;
 };
 
-export type ALT20 = {
+export type ALT20 = TokenBase & {
   type: "cw20" | "erc20";
-  symbol: string; //HALO
-  logo: string;
-  decimals: number; //6
-  chainId: string; // "pisco-1" | "phoenix-1"
 
-  //additional info for adding chain in wallet
   chainName?: never; //Terra testnet
   rpcUrl?: never;
   blockExplorerUrl?: never; //https://testnet.snowtrace.io
@@ -126,12 +125,8 @@ export type ALT20 = {
   nativeSymbol: string;
 };
 
-export type EVMNative = {
+export type EVMNative = TokenBase & {
   type: "evm-native"; //avax
-  symbol: string; //AVAX
-  logo: string;
-  decimals: number; //18
-  chainId: string; // "1"-mainnet "97"-binance-test "43017"-avax
 
   //additional info for adding chain in wallet
   chainName: string; //Avalanche

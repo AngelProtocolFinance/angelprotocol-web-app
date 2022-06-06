@@ -2,15 +2,17 @@ import { Coin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
+import { Dwindow } from "types/ethereum";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import createAuthToken from "helpers/createAuthToken";
 import { terraLcdUrl } from "constants/urls";
 import { apes } from "../apes";
 import { getERC20Holdings } from "../helpers/getERC20Holdings";
-import { terraNativeAssets, tokenList, unSupportedToken } from "./constants";
+import { terraNativeAssets, tokenList } from "./constants";
 
 type TerraBalanceRes = { balances: Coin.Data[] };
+type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 
 const tokens_api = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,7 +28,7 @@ const tokens_api = apes.injectEndpoints({
     }),
     balances: builder.query<
       WithBalance<Token>[],
-      { chainId: string; address: string; providerId?: ProviderId }
+      { chainId: string; address: string; providerId: ProviderId }
     >({
       providesTags: [],
       //address
@@ -34,32 +36,21 @@ const tokens_api = apes.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const coins: WithBalance<Token>[] = [];
-          const isTerra = isTerraProvider(args.providerId!); //query is skipped when wallet is not connected
-          const evmTokenList = tokenList.filter(
-            (token) => token.type === "evm-native"
-          ) as EVMNative[];
-
-          //TODO: get supported token list from server
-          const isChainSupported =
-            tokenList.find((token) => token.chainId === args.chainId) !==
-            undefined;
-
-          if (!isChainSupported) {
-            coins.push(unSupportedToken);
-            return {
-              data: coins.concat(
-                isTerra
-                  ? [] //don't show any tokens for network selection in terra mismatch
-                  : evmTokenList.map((token) => ({ ...token, balance: 0 }))
-              ),
-            };
-          }
+          const categorizedTokenList = tokenList.reduce((tokens, token) => {
+            const _t = token.type;
+            if (!tokens[_t]) tokens[_t] = [];
+            tokens[_t].push(token);
+            return tokens;
+          }, {} as CategorizedTokenList);
 
           /**fetch balances for terra  */
+          const isTerra = isTerraProvider(args.providerId); //query is skipped when wallet is not connected
           if (isTerra) {
+            //fetch native terra coins
             const res = await fetch(
               terraLcdUrl + `/cosmos/bank/v1beta1/balances/${args.address}`
             );
+
             const jsonRes: TerraBalanceRes = await res.json();
             const terraTokens = jsonRes.balances.reduce((_coins, _coin) => {
               const coinAsset = terraNativeAssets[_coin.denom];
@@ -75,13 +66,13 @@ const tokens_api = apes.injectEndpoints({
 
             coins.push(...terraTokens);
             //if terra wallet is not xdefi return only terra balances
-            if (args.providerId !== "xdefi-wallet") {
-              return { data: coins };
-            }
+            return { data: coins };
           }
 
           /**fetch balances for ethereum */
-          //remove terra tokens for evm calls
+          const evmTokenList = categorizedTokenList[
+            "evm-native"
+          ] as EVMNative[];
           const balanceQueries = evmTokenList.map((token) => {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
               token.rpcUrl,

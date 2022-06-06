@@ -31,3 +31,15 @@ function getChainParamsFromCoin(coin: EVMNative): ChainParams {
     rpcUrls: [coin.rpcUrl],
   };
 }
+
+export async function switchToNetwork(
+  intStrChainId: string,
+  providerId: ProviderId
+) {
+  const provider = getProvider(providerId);
+  await provider?.request({
+    method: EIPMethods.wallet_switchEthereumChain,
+    params: [{ chainId: "0x" + (+intStrChainId).toString(16) }],
+  });
+  //let caller handle error
+}

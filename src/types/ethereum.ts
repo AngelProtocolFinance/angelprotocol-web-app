@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 export interface Dwindow extends Window {
   xfi?: {
     ethereum?: any;
+    terra?: any;
   };
   ethereum?: any;
   BinanceChain?: any;
