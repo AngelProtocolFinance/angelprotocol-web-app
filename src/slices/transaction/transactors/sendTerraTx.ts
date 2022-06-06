@@ -1,35 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { WalletController } from "@terra-money/wallet-provider";
-import {
-  SenderArgs,
-  StageUpdator,
-  WithMsg,
-  WithTx,
-} from "slices/transaction/types";
+import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
+import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import { chainOptions } from "constants/chainOptions";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 export const sendTerraTx = createAsyncThunk(
   `${transactionSlice.name}/sendTerraTx`,
-  async (
-    args: (SenderArgs & WithMsg) | (SenderArgs & WithTx),
-    { dispatch }
-  ) => {
+  async (args: TerraSendArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
 
     try {
       updateTx({ step: "submit", message: "Submitting transaction..." });
-      const { post } = new WalletController({
-        ...chainOptions,
-      });
 
       let tx: CreateTxOptions;
       const contract = new Contract();
@@ -51,7 +39,7 @@ export const sendTerraTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await post(tx);
+      const response = await getTerraPoster(args.providerId)(tx);
 
       updateTx({
         step: "broadcast",

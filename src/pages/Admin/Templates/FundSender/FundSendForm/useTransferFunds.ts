@@ -25,7 +25,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const { showModal } = useModalContext();
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
@@ -79,6 +79,7 @@ export default function useTransferFunds() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

@@ -22,7 +22,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -67,6 +67,7 @@ export default function useConfigureCW3() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

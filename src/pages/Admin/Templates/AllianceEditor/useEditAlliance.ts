@@ -15,7 +15,7 @@ import genProposalsLink from "../genProposalsLink";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -87,6 +87,7 @@ export default function useEditAlliance() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

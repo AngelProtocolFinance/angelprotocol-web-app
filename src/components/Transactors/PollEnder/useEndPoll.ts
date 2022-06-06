@@ -9,7 +9,7 @@ import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Gov from "contracts/Gov";
 
 export default function useEndPoll(pollId: number) {
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -24,6 +24,7 @@ export default function useEndPoll(pollId: number) {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [msg],
         tagPayloads: [

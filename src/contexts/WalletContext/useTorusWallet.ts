@@ -6,15 +6,15 @@ import { Connection, ProviderInfo } from "./types";
 import { IS_DEV, terraChainId } from "constants/env";
 import { terra_lcds } from "constants/urls";
 import { providerIcons } from "./constants";
-import { retrieveUserAction } from "./helpers/prefActions";
+import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
-const openLogin = new OpenLogin({
+export const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
   network: IS_DEV ? "testnet" : "mainnet",
   uxMode: "popup",
 });
 
-const lcdClient = new LCDClient({
+export const lcdClient = new LCDClient({
   URL: terra_lcds[terraChainId],
   chainID: terraChainId,
 });
@@ -29,13 +29,19 @@ export default function useTorusWallet() {
 
   useEffect(() => {
     (async () => {
+      await openLogin.init();
+      setIsLoading(false);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
       if (!shouldReconnect) {
         setIsLoading(false);
         return;
       }
+      await openLogin.init();
       try {
-        await openLogin.init();
-
         // when using 'redirect' uxMode, this field will contain the private key value after redirect
         // NOTE: to successfully read this value, it is necessary to call this hook in the component
         // that is Torus is set to redirect to, otherwise this value would be empty
@@ -52,7 +58,6 @@ export default function useTorusWallet() {
 
   const connect = useCallback(async (loginProvider?: string) => {
     setIsLoading(true);
-
     try {
       const loginResult = loginProvider
         ? await openLogin.login({ loginProvider })
@@ -60,6 +65,7 @@ export default function useTorusWallet() {
 
       if (loginResult?.privKey) {
         setWallet(createWalletPrivateKey(loginResult.privKey));
+        saveUserAction(actionKey, "connect");
       }
     } catch (err) {
       console.log(err);
@@ -79,21 +85,6 @@ export default function useTorusWallet() {
       setIsLoading(false);
     }
   }, []);
-
-  // async function post(txOptions: CreateTxOptions): Promise<TxResult> {
-  //   if (!wallet) throw new WalletDisconnectError();
-  //   const tx = await wallet?.createAndSignTx(txOptions);
-  //   const res = await wallet.lcd.tx.broadcast(tx);
-  //   return {
-  //     ...txOptions,
-  //     result: {
-  //       height: res.height,
-  //       raw_log: res.raw_log,
-  //       txhash: res.txhash,
-  //     },
-  //     success: true,
-  //   };
-  // }
 
   const providerInfo: ProviderInfo = {
     logo: providerIcons.torus,
@@ -117,7 +108,7 @@ export default function useTorusWallet() {
   };
 }
 
-function createWalletPrivateKey(privKey: string): Wallet {
+export function createWalletPrivateKey(privKey: string): Wallet {
   const mnemonic = entropyToMnemonic(privKey);
   const mnemonicKey = new MnemonicKey({ mnemonic });
   return lcdClient.wallet(mnemonicKey);

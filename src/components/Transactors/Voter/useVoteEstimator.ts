@@ -39,7 +39,7 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -117,5 +117,5 @@ export default function useVoteEstimator() {
     isDirty,
   ]);
 
-  return { tx };
+  return { tx, providerId };
 }

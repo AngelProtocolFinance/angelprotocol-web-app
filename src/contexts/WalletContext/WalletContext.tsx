@@ -1,9 +1,4 @@
-import {
-  PropsWithChildren,
-  createContext,
-  useCallback,
-  useContext,
-} from "react";
+import { PropsWithChildren, createContext, useContext } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
 import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
@@ -22,7 +17,7 @@ type IWalletState = {
   coins: WithBalance[];
   walletAddr: string;
   chainId: string;
-  providerId?: ProviderId;
+  providerId: ProviderId;
 };
 
 type IState = IWalletState & {
@@ -41,6 +36,7 @@ const initialWalletState: IWalletState = {
   coins: [],
   walletAddr: "",
   chainId: chainIDs.eth_main,
+  providerId: "unknown",
 };
 
 const initialState: IState = {
@@ -100,6 +96,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
   ];
 
+  const isProviderLoading =
+    isBinanceWalletLoading ||
+    isMetamaskLoading ||
+    isxdefiEVMLoading ||
+    isTerraLoading ||
+    isTorusLoading;
+
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
@@ -107,7 +110,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const {
     address = "",
     chainId = "",
-    providerId,
+    providerId = "unknown",
     logo = "",
   } = activeProviderInfo || {};
 
@@ -116,21 +119,20 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     isLoading,
     isFetching,
   } = useBalancesQuery(
-    { address, chainId, providerId: providerId! },
-    { skip: !address || !chainId || !providerId }
+    { address, chainId, providerId },
+    { skip: !address || !chainId || providerId === "unknown" }
   );
 
   const walletState: IWalletState = {
     walletIcon: logo,
-    displayCoin:
-      coinWithBalances[0] ?? placeHolderDisplayToken[providerId ?? "none"],
+    displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
     coins: coinWithBalances,
     walletAddr: address,
     chainId,
     providerId,
   };
 
-  const disconnect = useCallback(() => {
+  const disconnect = () => {
     switch (providerId) {
       case "metamask":
         disconnectMetamask();
@@ -152,21 +154,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       default:
         throw new Error("no wallet is connected");
     }
-  }, [
-    providerId,
-    disconnectEVMxdefi,
-    disconnectBinanceWallet,
-    disconnectMetamask,
-    disconnectTorus,
-    disconnectTerra,
-  ]);
+  };
 
   return (
     <getContext.Provider
       value={{
         ...walletState,
         isWalletLoading: isFetching || isLoading,
-        isProviderLoading: isBinanceWalletLoading || isMetamaskLoading,
+        isProviderLoading,
       }}
     >
       <setContext.Provider

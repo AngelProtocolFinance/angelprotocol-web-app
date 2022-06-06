@@ -1,7 +1,7 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
-import { Wallet } from "@terra-money/wallet-provider";
+import { ProviderId } from "contexts/WalletContext/types";
 
 export type Tag = TagDescription<string>;
 export type Tags = TagDescription<string>[];
@@ -87,11 +87,21 @@ export type Stage =
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
 
-export type WithMsg = { msgs: Msg[]; tx?: never; feeBalance: number }; //tx created onflight
-export type WithTx = { msgs?: never; tx: CreateTxOptions; feeBalance?: never }; //pre-estimated tx
-
-export type SenderArgs = {
+type BaseArgs = {
   tagPayloads?: TagPayloads;
   successMessage?: string;
   successLink?: SuccessLink;
+  providerId: ProviderId;
 };
+export type WithMsg = BaseArgs & {
+  msgs: Msg[];
+  tx?: never;
+  feeBalance: number;
+}; //tx created onflight
+export type WithTx = BaseArgs & {
+  msgs?: never;
+  tx: CreateTxOptions;
+  feeBalance?: never;
+}; //pre-estimated tx
+
+export type TerraSendArgs = WithMsg | WithTx;

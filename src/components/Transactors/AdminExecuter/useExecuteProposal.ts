@@ -9,7 +9,7 @@ import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(args: AdmiExecuterProps) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
@@ -22,6 +22,7 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,

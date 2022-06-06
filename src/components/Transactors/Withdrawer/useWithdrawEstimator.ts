@@ -34,7 +34,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
-  const { providerId, walletAddr, coins } = useGetWallet();
+  const { providerId, walletAddr } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -55,7 +55,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -186,5 +186,5 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     cwContracts,
   ]);
 
-  return { tx };
+  return { tx, providerId };
 }

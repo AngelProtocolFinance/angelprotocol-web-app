@@ -17,7 +17,7 @@ import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -88,6 +88,7 @@ export default function useCreateFund() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

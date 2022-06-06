@@ -15,7 +15,7 @@ import logDonation from "helpers/logDonation";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
-  providerId?: ProviderId;
+  providerId: ProviderId;
   tx: TransactionRequest;
   donateValues: DonateValues;
 };

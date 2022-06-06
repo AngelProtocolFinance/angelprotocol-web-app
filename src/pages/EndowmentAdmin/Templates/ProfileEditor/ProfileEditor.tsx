@@ -21,7 +21,7 @@ export default function ProfileEditor() {
     endowment_addr!
   );
 
-  if (!providerId)
+  if (providerId === "unknown")
     return <FormError errorMessage="Please connect wallet to view this page" />;
   if (isProfileLoading) return <FormSkeleton />;
   if (isProfileError || !profile)

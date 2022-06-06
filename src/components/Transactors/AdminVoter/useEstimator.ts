@@ -29,7 +29,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -66,5 +66,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, []);
 
-  return tx;
+  return { tx, providerId };
 }

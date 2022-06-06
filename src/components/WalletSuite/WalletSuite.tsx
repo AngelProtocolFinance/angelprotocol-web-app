@@ -13,17 +13,19 @@ export default function WalletSuite() {
       setConnectOptionsShown(false);
     }
   };
+
+  const isProviderConnected = providerId !== "unknown";
   //close modal after connecting
   useEffect(() => {
-    providerId && setConnectOptionsShown(false);
+    isProviderConnected && setConnectOptionsShown(false);
     //eslint-disable-next-line
-  }, [providerId]);
+  }, [isProviderConnected]);
 
   return (
     <div
       className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
     >
-      {!providerId && (
+      {!isProviderConnected && (
         <button
           className="flex py-2 px-3 items-center text-white  "
           disabled={isProviderLoading}
@@ -33,7 +35,7 @@ export default function WalletSuite() {
           <span>{isProviderLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {providerId && <WalletOpener />}
+      {isProviderConnected && <WalletOpener />}
       {connectOptionsShown && (
         <ConnectOptions closeHandler={hideConnectOptions} />
       )}

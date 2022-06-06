@@ -28,7 +28,7 @@ export default function useCreatePollEstimate() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
@@ -80,7 +80,7 @@ export default function useCreatePollEstimate() {
     //eslint-disable-next-line
   }, [coins, isDirty, isValid]);
 
-  return { maxFee, walletAddr };
+  return { maxFee, walletAddr, providerId };
 
   //return estimated fee computed using max constraints
 }

@@ -42,7 +42,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }

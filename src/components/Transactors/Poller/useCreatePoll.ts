@@ -16,7 +16,7 @@ export default function useCreatePoll() {
   } = useFormContext<CreatePollValues>();
 
   const { form_error, form_loading } = useGetter((state) => state.transaction);
-  const { maxFee, walletAddr } = useCreatePollEstimate();
+  const { maxFee, walletAddr, providerId } = useCreatePollEstimate();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -32,6 +32,7 @@ export default function useCreatePoll() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         tx: { msgs: [pollMsg], fee: maxFee },
         tagPayloads: [
           terra.util.invalidateTags([

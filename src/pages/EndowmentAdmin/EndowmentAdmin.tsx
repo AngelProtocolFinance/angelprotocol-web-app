@@ -33,7 +33,7 @@ export default function EndowmentAdmin() {
     //eslint-disable-next-line
   }, [isCWContractsLoading, dispatch]);
 
-  if (!providerId) {
+  if (providerId === "unknown") {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading || isCWContractsLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

@@ -27,7 +27,7 @@ export default function ChooseWallet() {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
   }
 
-  if (!providerId || !isTerraProvider(providerId)) {
+  if (providerId === "unknown" || !isTerraProvider(providerId)) {
     return (
       <Navigate
         to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}

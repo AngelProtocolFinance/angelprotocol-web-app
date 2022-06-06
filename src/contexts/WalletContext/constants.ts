@@ -16,12 +16,13 @@ export const providerIcons: { [key in ProviderId]: string } = {
   station: terraStationIcon,
   walletconnect: walletConnectIcon,
   torus: torusIcon,
+  unknown: "",
 };
 
 const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
 const lunaTokenWithBalance = { ...lunaToken, balance: 0 };
 export const placeHolderDisplayToken: {
-  [key in ProviderId | "none"]: WithBalance;
+  [key in ProviderId]: WithBalance;
 } = {
   "binance-wallet": ethTokenWithBalance,
   metamask: ethTokenWithBalance,
@@ -30,5 +31,5 @@ export const placeHolderDisplayToken: {
   station: lunaTokenWithBalance,
   walletconnect: lunaTokenWithBalance,
   torus: lunaTokenWithBalance,
-  none: ethTokenWithBalance,
+  unknown: ethTokenWithBalance,
 };

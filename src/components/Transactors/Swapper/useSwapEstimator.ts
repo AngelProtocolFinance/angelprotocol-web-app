@@ -41,7 +41,7 @@ export default function useSwapEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -133,5 +133,5 @@ export default function useSwapEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, coins, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { tx };
+  return { tx, providerId };
 }

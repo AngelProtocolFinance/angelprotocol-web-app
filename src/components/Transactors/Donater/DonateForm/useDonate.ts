@@ -38,7 +38,12 @@ export default function useDonate() {
       case "terra-native":
       case "cw20":
         dispatch(
-          sendTerraDonation({ tx: terraTx!, donateValues: data, walletAddr })
+          sendTerraDonation({
+            providerId,
+            tx: terraTx!,
+            donateValues: data,
+            walletAddr,
+          })
         );
         break;
       default:

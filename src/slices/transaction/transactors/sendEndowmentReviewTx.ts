@@ -1,22 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions, TxLog } from "@terra-money/terra.js";
-import { WalletController } from "@terra-money/wallet-provider";
-import {
-  SenderArgs,
-  StageUpdator,
-  WithMsg,
-  WithTx,
-} from "slices/transaction/types";
+import { StageUpdator, TerraSendArgs } from "slices/transaction/types";
 import logApplicationReview from "pages/Admin/Applications/logApplicationReview";
 import Contract from "contracts/Contract";
 import extractFeeNum from "helpers/extractFeeNum";
+import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
-import { chainOptions } from "constants/chainOptions";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
-type _SenderArgs = SenderArgs & {
+type _SenderArgs = TerraSendArgs & {
   applicationId: string;
   chainId: string;
   walletAddr: string;
@@ -24,10 +18,7 @@ type _SenderArgs = SenderArgs & {
 
 export const sendEndowmentReviewTx = createAsyncThunk(
   `${transactionSlice.name}/sendEndowmentReviewTerraTx`,
-  async (
-    args: (_SenderArgs & WithMsg) | (_SenderArgs & WithTx),
-    { dispatch }
-  ) => {
+  async (args: _SenderArgs, { dispatch }) => {
     const updateTx: StageUpdator = (update) => {
       dispatch(setStage(update));
     };
@@ -55,8 +46,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const { post } = new WalletController({ ...chainOptions });
-      const response = await post(tx);
+      const response = await getTerraPoster(args.providerId)(tx);
 
       updateTx({
         step: "broadcast",

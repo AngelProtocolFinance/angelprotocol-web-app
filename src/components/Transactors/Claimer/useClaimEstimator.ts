@@ -24,7 +24,7 @@ export default function useClaimEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -71,5 +71,5 @@ export default function useClaimEstimator() {
     //eslint-disable-next-line
   }, [walletAddr, providerId, coins, gov_staker]);
 
-  return { tx };
+  return { tx, providerId };
 }

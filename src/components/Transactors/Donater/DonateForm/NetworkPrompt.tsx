@@ -16,7 +16,7 @@ export default function NetworkPrompt() {
 
   async function handleNetworkChange() {
     try {
-      if (!providerId) {
+      if (providerId === "unknown") {
         dispatch(setFormError("Wallet is not connected"));
         return;
       }
@@ -52,7 +52,7 @@ export default function NetworkPrompt() {
     }
   }
 
-  if (isInCorrectNetwork || !providerId) {
+  if (isInCorrectNetwork || providerId === "unknown") {
     return null;
   }
 

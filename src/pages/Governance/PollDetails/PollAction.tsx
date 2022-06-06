@@ -10,7 +10,7 @@ export default function PollAction(props: { poll_id: number }) {
   const showPollEnder = usePollEnder(props.poll_id);
   const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const W = !!providerId;
+  const W = providerId !== "unknown";
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== "in_progress";

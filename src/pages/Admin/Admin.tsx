@@ -23,7 +23,7 @@ export default function Admin() {
 
   const { member, isMemberLoading } = useMember("apTeam");
 
-  if (!providerId) {
+  if (providerId === "unknown") {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

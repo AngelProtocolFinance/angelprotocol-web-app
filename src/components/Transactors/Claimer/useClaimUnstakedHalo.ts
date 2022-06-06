@@ -9,12 +9,13 @@ import useClaimEstimator from "./useClaimEstimator";
 export default function useClaimUnstakedHalo() {
   const { form_loading, form_error } = useGetter((state) => state.transaction);
   const { showModal } = useModalContext();
-  const { tx } = useClaimEstimator();
+  const { tx, providerId } = useClaimEstimator();
   const dispatch = useSetter();
 
   function claimUnstakedHalo() {
     dispatch(
       sendTerraTx({
+        providerId,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

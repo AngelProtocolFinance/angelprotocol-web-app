@@ -17,7 +17,7 @@ import cleanObject from "helpers/cleanObject";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
-  const { walletAddr, chainId, displayCoin } = useGetWallet();
+  const { walletAddr, chainId, displayCoin, providerId } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
@@ -42,6 +42,7 @@ export default function useUpdateApplicationStatus() {
 
     dispatch(
       sendEndowmentReviewTx({
+        providerId,
         walletAddr,
         chainId,
         feeBalance: displayCoin.balance,

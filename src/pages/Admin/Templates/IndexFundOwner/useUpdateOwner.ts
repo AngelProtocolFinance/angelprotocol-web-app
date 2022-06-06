@@ -14,7 +14,7 @@ import Indexfund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateOwner() {
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -50,6 +50,7 @@ export default function useUpdateOwner() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

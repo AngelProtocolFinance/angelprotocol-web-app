@@ -8,7 +8,7 @@ import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {
-  providerId?: ProviderId;
+  providerId: ProviderId;
   walletAddress: string;
   isSubmitting: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -79,11 +79,11 @@ function UnsupportedWalletConnected() {
   );
 }
 
-function WalletNotConnected() {
-  return (
-    <p>
-      Please connect your Terra wallet using the "Connect" button in the
-      top-right of the page
-    </p>
-  );
-}
+// function WalletNotConnected() {
+//   return (
+//     <p>
+//       Please connect your Terra wallet using the "Connect" button in the
+//       top-right of the page
+//     </p>
+//   );
+// }

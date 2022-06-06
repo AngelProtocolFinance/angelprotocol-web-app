@@ -8,11 +8,12 @@ import useEstimator from "./useEstimator";
 
 export default function useVote() {
   const dispatch = useSetter();
-  const tx = useEstimator();
+  const { tx, providerId } = useEstimator();
   const { showModal } = useModalContext();
   function vote() {
     dispatch(
       sendTerraTx({
+        providerId,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

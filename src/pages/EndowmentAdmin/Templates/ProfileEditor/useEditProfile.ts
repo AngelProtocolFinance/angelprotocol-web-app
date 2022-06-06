@@ -32,7 +32,7 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<UpdateProfileValues>();
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -114,6 +114,7 @@ export default function useEditProfile() {
 
     dispatch(
       sendTerraTx({
+        providerId,
         feeBalance: displayCoin.balance,
         msgs: [proposalMsg],
         tagPayloads: [

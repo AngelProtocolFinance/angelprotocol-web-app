@@ -16,7 +16,7 @@ import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { walletAddr, displayCoin } = useGetWallet();
+  const { walletAddr, displayCoin, providerId } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
@@ -82,6 +82,7 @@ export default function useUpdateFund() {
 
       dispatch(
         sendTerraTx({
+          providerId,
           feeBalance: displayCoin.balance,
           msgs: [proposalMsg],
           tagPayloads: [

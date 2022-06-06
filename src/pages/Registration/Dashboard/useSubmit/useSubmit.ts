@@ -24,7 +24,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(
             setStage({ step: "error", message: "Wallet is not connected" })
           );
@@ -36,7 +36,13 @@ export default function useSubmit() {
         const contract = new Registrar(walletAddr);
         const msg = contract.createEndowmentCreationMsg(charity);
 
-        dispatch(sendTerraTx({ msgs: [msg], feeBalance: displayCoin.balance }));
+        dispatch(
+          sendTerraTx({
+            providerId,
+            msgs: [msg],
+            feeBalance: displayCoin.balance,
+          })
+        );
       } catch (err) {
         console.log(processEstimateError(err));
         dispatch(setStage({ step: "error", message: FORM_ERROR }));
@@ -45,7 +51,7 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [dispatch, showModal]
+    [dispatch, showModal, displayCoin, walletAddr, providerId]
   );
 
   return { submit, isSubmitting: form_loading };

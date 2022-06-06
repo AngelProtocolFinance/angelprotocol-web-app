@@ -17,7 +17,7 @@ export default function useSwap() {
     formState: { isValid, isDirty, isSubmitting },
   } = useFormContext<SwapValues>();
 
-  const { tx } = useSwapEstimator();
+  const { tx, providerId } = useSwapEstimator();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
 
@@ -29,6 +29,7 @@ export default function useSwap() {
   function swap() {
     dispatch(
       sendTerraTx({
+        providerId,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([
