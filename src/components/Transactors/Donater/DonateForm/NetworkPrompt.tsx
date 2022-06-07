@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useSetter } from "store/accessors";
 import { setFormError } from "slices/transaction/transactionSlice";
 import addNetworkAndSwitch, {
   switchToNetwork,
 } from "helpers/addNetworkAndSwitch";
+import { DonateValues } from "../types";
 
 export default function NetworkPrompt() {
   const { chainId, isWalletLoading, providerId } = useGetWallet();
