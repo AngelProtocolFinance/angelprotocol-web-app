@@ -17,7 +17,7 @@ const schema = Yup.object().shape(shape);
 export default function Donater(props: FundFlow) {
   const { coins, isWalletLoading } = useGetWallet();
 
-  if (isWalletLoading) return <DonateFormLoader />;
+  if (isWalletLoading || isWalletLoading) return <DonateFormLoader />;
   return <DonateContext {...props} tokens={coins} />;
 }
 

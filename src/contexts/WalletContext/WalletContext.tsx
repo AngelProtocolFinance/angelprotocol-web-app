@@ -32,7 +32,7 @@ type Setters = {
 
 const initialWalletState: IWalletState = {
   walletIcon: unknownWalletIcon,
-  displayCoin: placeHolderToken,
+  displayCoin: placeHolderDisplayToken["unknown"],
   coins: [],
   walletAddr: "",
   chainId: chainIDs.eth_main,
@@ -126,7 +126,10 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const walletState: IWalletState = {
     walletIcon: logo,
     displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
-    coins: coinWithBalances,
+    coins:
+      coinWithBalances.length <= 0
+        ? [placeHolderDisplayToken[providerId]]
+        : coinWithBalances,
     walletAddr: address,
     chainId,
     providerId,
