@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../routes";
 
 /**
@@ -17,7 +17,7 @@ export function StepOneInitiatedGuard(props: any) {
     // if `!charity.ContactPerson.Email`, this means the charity hasn't even completed step 1
     // in both cases we navigate to dashboard and let its guard decide whether they should be allowed in
     if (charity.ContactPerson.EmailVerified || !charity.ContactPerson.Email) {
-      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
     }
   }, [navigate, charity]);
 

@@ -1,17 +1,12 @@
 import { chainIDs } from "constants/chainIDs";
-import { TERRA_FINDER } from "constants/urls";
 
 export default function getTxUrl(chainID: string, txhash: string) {
   switch (chainID) {
-    case chainIDs.mainnet:
-      return `${TERRA_FINDER}mainnet/tx/${txhash}`;
-    case chainIDs.testnet:
-      return `${TERRA_FINDER}testnet/tx/${txhash}`;
-    case chainIDs.terra_main:
-      return `${TERRA_FINDER}mainnet/tx/${txhash}`;
-    case chainIDs.terra_test:
-      return `${TERRA_FINDER}testnet/tx/${txhash}`;
-    case chainIDs.eth_ropsten:
+    case chainIDs.avax_test:
+      return `https://testnet.snowtrace.io/tx/${txhash}`;
+    case chainIDs.avax_main:
+      return `https://snowtrace.io/tx/${txhash}`;
+    case chainIDs.eth_kovan:
       return `https://ropsten.etherscan.io/tx/${txhash}`;
     case chainIDs.eth_main:
       return `https://etherscan.io/tx/${txhash}`;
@@ -20,6 +15,6 @@ export default function getTxUrl(chainID: string, txhash: string) {
     case chainIDs.bnb_main:
       return `https://bscscan.com/tx/${txhash}`;
     default:
-      return TERRA_FINDER;
+      return "https://etherscan.io";
   }
 }

@@ -1,11 +1,11 @@
 import { useFormContext } from "react-hook-form";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import RichTextEditor from "components/RichTextEditor";
-import { FormValues } from "./types";
 
 export default function OverviewInput() {
   const {
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<AdditionalInfoValues>();
 
   return (
     <div className="flex flex-col w-full text-left">
@@ -13,7 +13,7 @@ export default function OverviewInput() {
         Description of your organization
         <span className="ml-0.5 text-failed-red">*</span>
       </label>
-      <RichTextEditor<FormValues>
+      <RichTextEditor<AdditionalInfoValues>
         name="charityOverview"
         placeholder="Long text"
         disabled={isSubmitting}

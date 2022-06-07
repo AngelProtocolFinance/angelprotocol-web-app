@@ -1,6 +1,5 @@
-import { Step } from "services/transaction/types";
+import { useModalContext } from "contexts/ModalContext";
 import Icon, { IconTypes } from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import { useGetter } from "store/accessors";
 import TransactionPrompt from "./TransactionPrompt";
 
@@ -8,12 +7,12 @@ export default function TransactionHint() {
   const step = useGetter((state) => state.transaction.stage.step);
 
   switch (step) {
-    case Step.error:
+    case "error":
       return <StatusButton iconType="Exclamation" iconClass="text-red-300" />;
-    case Step.broadcast:
-    case Step.submit:
+    case "broadcast":
+    case "submit":
       return <StatusButton iconType="Loading" iconClass="animate-spin" />;
-    case Step.success:
+    case "success":
       return <StatusButton iconType="Check" iconClass="text-green-300" />;
     default:
       return null;

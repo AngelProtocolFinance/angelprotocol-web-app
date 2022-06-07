@@ -1,5 +1,5 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
 import Share from "./Share";
 
 export default function SharePrompt() {

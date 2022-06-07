@@ -1,10 +1,11 @@
-import { Token } from "services/apes/tokens";
+import { TokenWithBalance } from "services/types";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: Token;
+  token: TokenWithBalance;
+  tokens: TokenWithBalance[];
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";
@@ -34,4 +35,3 @@ interface ToCharity {
 }
 
 export type FundFlow = ToFund | ToCharity | FromTCA;
-export type Props = FundFlow;

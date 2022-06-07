@@ -1,13 +1,13 @@
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
-import Transactor, { TxProps } from "../Transactor";
+import { useModalContext } from "contexts/ModalContext";
+import Transactor, { TxProps } from "components/Transactors";
 import Donater from "./Donater";
-import { FundFlow, Props } from "./types";
+import { FundFlow } from "./types";
 
 export default function useDonater(args: FundFlow) {
   const { showModal } = useModalContext();
   const showDonater = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
+    showModal<TxProps<FundFlow>>(Transactor, {
       inModal: true,
       Content: Donater,
       contentProps: args,

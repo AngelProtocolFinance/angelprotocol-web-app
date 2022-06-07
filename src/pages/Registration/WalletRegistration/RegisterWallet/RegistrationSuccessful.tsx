@@ -1,7 +1,7 @@
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
 
 type Props = { walletAddress: string };
@@ -21,7 +21,7 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
         <p className="font-bold">{walletAddress}</p>
       </div>
       <Link
-        to={`${site.app}/${app.register}/${routes.dashboard}`}
+        to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}
         className="flex justify-center items-center w-80 h-10 mt-8 bg-green-400 rounded-xl uppercase font-bold text-white"
       >
         Back to registration dashboard

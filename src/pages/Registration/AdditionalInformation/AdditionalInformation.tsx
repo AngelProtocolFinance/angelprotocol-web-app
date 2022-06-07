@@ -4,13 +4,14 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Checkbox, { CheckboxProps } from "components/Checkbox";
 import { useGetter } from "store/accessors";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { InputRow } from "../common";
 import routes from "../routes";
+import { AdditionalInfoValues } from "../types";
 import ButtonSection from "./ButtonSection";
 import ImageInput from "./ImageInput";
 import OverviewInput from "./OverviewInput";
-import { FormValues, SCHEMA } from "./types";
+import { additionalInfoSchema } from "./additionalnfoSchema";
 import useSubmit from "./useSubmit";
 
 export default function AdditionalInformation() {
@@ -18,8 +19,8 @@ export default function AdditionalInformation() {
   const charity = useGetter((state) => state.charity);
   const { submit, isSuccess } = useSubmit();
 
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(SCHEMA),
+  const methods = useForm<AdditionalInfoValues>({
+    resolver: yupResolver(additionalInfoSchema),
     defaultValues: {
       banner: charity.Metadata.Banner,
       charityOverview: charity.Metadata.CharityOverview,
@@ -34,7 +35,7 @@ export default function AdditionalInformation() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
     }
   }, [isSuccess, navigate]);
 

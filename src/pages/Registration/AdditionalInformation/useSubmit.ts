@@ -1,12 +1,12 @@
 import { useCallback } from "react";
+import { AdditionalInfoValues } from "pages/Registration/types";
 import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { FileWrapper } from "components/FileDropzone/types";
+import { FileWrapper } from "components/FileDropzone";
 import { useGetter, useSetter } from "store/accessors";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
 import useHandleError from "../useHandleError";
-import { FormValues } from "./types";
 
 export default function useSubmit() {
   const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
@@ -15,7 +15,7 @@ export default function useSubmit() {
   const handleError = useHandleError();
 
   const submit = useCallback(
-    async (values: FormValues) => {
+    async (values: AdditionalInfoValues) => {
       try {
         const body = await getUploadBody(charity.ContactPerson.PK!, values);
 
@@ -48,7 +48,7 @@ export default function useSubmit() {
   return { submit, isSuccess };
 }
 
-async function getUploadBody(primaryKey: string, values: FormValues) {
+async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {
   const logoPromise = uploadIfNecessary(
     primaryKey,
     values.charityLogo,

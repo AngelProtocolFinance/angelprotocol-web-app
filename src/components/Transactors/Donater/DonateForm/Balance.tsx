@@ -1,21 +1,12 @@
-import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetter } from "store/accessors";
-import getTokenBalance from "helpers/getTokenBalance";
 import toCurrency from "helpers/toCurrency";
 import { DonateValues } from "../types";
 
 export default function Balance() {
   const { watch, setValue } = useFormContext<DonateValues>();
-  const { coins } = useGetter((state) => state.wallet);
   const token = watch("token");
-  const tokenBalance = useMemo(
-    () => getTokenBalance(coins, token.min_denom),
-    [token, coins]
-  );
-
   function setMaxVal() {
-    setValue("amount", `${tokenBalance}`, {
+    setValue("amount", toCurrency(+token.balance, 4), {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -26,7 +17,7 @@ export default function Balance() {
       onClick={setMaxVal}
       className="text-right text-angel-grey/80 hover:text-angel-blue text-xs font-semibold font-mono"
     >
-      BAL: {toCurrency(tokenBalance, 3)} {token.symbol}
+      BAL: {toCurrency(+token.balance, 3)} {token.symbol}
     </button>
   );
 }

@@ -1,13 +1,14 @@
-export enum tags {
-  cha = "charity",
+export enum awsTags {
+  airdrop = "airdrop",
   admin = "admin",
+  cha = "charity",
 }
 
-export enum cha {
+export enum chaTags {
   profile = "profile",
   profiles = "profiles",
 }
 
-export enum admin {
+export enum adminTags {
   applications = "applications",
 }

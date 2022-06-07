@@ -2,8 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { PropsWithChildren, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { DocumentationValues } from "pages/Registration/types";
 import { useGetter } from "store/accessors";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../routes";
 import ButtonSection from "./ButtonSection";
 import {
@@ -16,7 +17,7 @@ import {
   UnSdgSelector,
   WebsiteInput,
 } from "./Fields";
-import { FormValues, SCHEMA } from "./types";
+import { documentationSchema } from "./documentationSchema";
 import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
@@ -24,8 +25,8 @@ export default function Documentation() {
   const navigate = useNavigate();
   const charity = useGetter((state) => state.charity);
 
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(SCHEMA),
+  const methods = useForm<DocumentationValues>({
+    resolver: yupResolver(documentationSchema),
     mode: "onChange",
     defaultValues: {
       un_sdg: charity.Registration.UN_SDG,
@@ -41,7 +42,7 @@ export default function Documentation() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
     }
   }, [isSuccess, navigate]);
 

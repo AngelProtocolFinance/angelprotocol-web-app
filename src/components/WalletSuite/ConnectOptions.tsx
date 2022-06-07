@@ -1,15 +1,13 @@
-import Backdrop from "components/Backdrop/Backdrop";
+import ModalContext, { useModalContext } from "contexts/ModalContext";
+import { useSetWallet } from "contexts/WalletContext/WalletContext";
+import { Connection } from "contexts/WalletContext/types";
+import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
-import ModalContext from "components/ModalContext/ModalContext";
-import useWalletContext from "hooks/useWalletContext";
-import BnbConnector from "./Connectors/BnbConnector";
-import EthConnector from "./Connectors/EthConnector";
-import TerraConnector from "./Connectors/TerraConnector";
-import Installer from "./Installer";
+import { EIP1193Error } from "errors/errors";
+import WalletPrompt from "./WalletPrompt";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  const { availableWallets, availableInstallations } = useWalletContext();
-
+  const { connections } = useSetWallet();
   return (
     <>
       <Backdrop
@@ -24,36 +22,38 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
           <Icon type="Close" className="text-white-grey text-lg" />
         </button>
         <ModalContext backdropClasses="absolute bg-black/50 inset-0 z-10">
-          {availableWallets
-            .filter((wallet) => wallet.connection.type !== "READONLY")
-            .map((availableWallet) => {
-              return (
-                <TerraConnector
-                  key={availableWallet.connection.name}
-                  wallet={availableWallet}
-                />
-              );
-            })}
-          <EthConnector />
-          <BnbConnector />
+          {connections.map((connection) => (
+            <Connector key={connection.name} {...connection} />
+          ))}
         </ModalContext>
-        {availableInstallations.length > 0 && (
-          <>
-            <p className="uppercase font-heading text-angel-grey text-sm">
-              supported wallets
-            </p>
-            <div className="flex gap-2">
-              {availableInstallations.map((installer) => (
-                <Installer
-                  key={installer.name}
-                  icon={installer.icon}
-                  link={installer.url}
-                />
-              ))}
-            </div>
-          </>
-        )}
       </div>
     </>
+  );
+}
+
+function Connector(props: Connection) {
+  const { showModal } = useModalContext();
+  //wrapper with error handler
+  async function handleConnect() {
+    try {
+      await props.connect();
+    } catch (_err: any) {
+      const err: EIP1193Error = _err;
+      showModal(WalletPrompt, { message: err.message });
+    }
+  }
+
+  return (
+    <button
+      onClick={handleConnect}
+      className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
+    >
+      <img
+        src={props.logo}
+        className="w-8 h-8 p-1.5 bg-white-grey rounded-full shadow-md"
+        alt=""
+      />
+      <p className="uppercase text-sm text-white">{props.name}</p>
+    </button>
   );
 }

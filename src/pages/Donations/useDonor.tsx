@@ -1,8 +1,9 @@
 import { useCallback } from "react";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { useModalContext } from "contexts/ModalContext";
 import ReceiptForm from "components/Receipter/ReceiptForm";
 import Receipter from "components/Receipter/Receipter";
-import Transactor, { TxProps } from "components/Transactors/Transactor";
+import { TxProps } from "components/Transactors";
+import Transactor from "components/Transactors";
 
 export default function useDonor() {
   const { showModal } = useModalContext();
@@ -19,7 +20,6 @@ export default function useDonor() {
   return showDonor;
 }
 
-// export type DonorProps =
 const Donor = (props: { txHash: string }) => {
   return (
     <Receipter txHash={props.txHash}>

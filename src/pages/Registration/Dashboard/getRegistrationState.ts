@@ -1,5 +1,5 @@
-import { Charity, EndowmentTier } from "services/aws/types";
-import { RegistrationState } from "./types";
+import { Charity, EndowmentTierNum } from "types/server/aws";
+import { RegistrationState } from "pages/Registration/types";
 
 export default function getRegistrationState(
   charity: Charity
@@ -38,7 +38,7 @@ function getStepThree(charity: Charity) {
   const levelThreeDataExists =
     !!charity.Registration.AuditedFinancialReports.length;
 
-  const tier: EndowmentTier | undefined = levelOneDataExists
+  const tier: EndowmentTierNum | undefined = levelOneDataExists
     ? levelTwoDataExists
       ? levelThreeDataExists
         ? 3

@@ -1,6 +1,6 @@
+import { ReceiptPayload } from "types/server/aws";
 import createAuthToken from "helpers/createAuthToken";
 import { apes } from "./apes";
-import { ReceiptPayload } from "./types";
 
 const donations_api = apes.injectEndpoints({
   endpoints: (builder) => ({

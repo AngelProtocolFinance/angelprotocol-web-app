@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Charity } from "services/aws/types";
+import { Charity } from "types/server/aws";
 
 const getDefaultCharity = (): Charity => ({
   ContactPerson: {

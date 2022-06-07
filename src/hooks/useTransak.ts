@@ -1,9 +1,8 @@
 import transakSDK from "@transak/transak-sdk";
-import { Receiver, TxLogPayload } from "services/apes/types";
-import { sendDonationLog } from "services/transaction/transactors/sendDonationLog";
+import { Receiver, TxLogPayload } from "types/server/aws";
 import { useSetter } from "store/accessors";
+import { sendDonationLog } from "slices/transaction/transactors/sendDonationLog";
 import { ap_wallets } from "constants/ap_wallets";
-import { chainIDs } from "constants/chainIDs";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const apiKey = isDevelopment
@@ -14,9 +13,9 @@ const env = isDevelopment ? "STAGING" : "PRODUCTION";
 let transak = new transakSDK({
   apiKey: apiKey,
   environment: env,
-  cryptoCurrencyCode: "UST",
-  network: "terra", //on staging environment, this will automatically be on bombay-12
-  walletAddress: ap_wallets["terra"],
+  cryptoCurrencyCode: "AVAX",
+  network: "AVAXCCHAIN",
+  walletAddress: ap_wallets.eth,
   hostURL: window.location.origin,
 
   //widget look
@@ -25,7 +24,7 @@ let transak = new transakSDK({
   hideMenu: true,
   isFeeCalculationHidden: true,
   disableWalletAddressForm: true,
-  isDisableCrypto: true, //don't show anything crypto related
+  // isDisableCrypto: true, //don't show anything crypto related
   exchangeScreenTitle: "Donate to Angel Protocol",
   themeColor: "#3FA9F5", //angel-blue
 });
@@ -51,7 +50,7 @@ export default function useTransak(receiver: Receiver) {
             ...receiver,
             transactionId: eventPayload.status.id,
             transactionDate: eventPayload.status.createdAt,
-            chainId: isDevelopment ? chainIDs.testnet : chainIDs.mainnet,
+            chainId: isDevelopment ? "bombay-12" : "columbus-5",
             amount: eventPayload.status.cryptoAmount,
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,
@@ -71,7 +70,7 @@ export default function useTransak(receiver: Receiver) {
 interface EventPayload {
   status: {
     id: string; //order id "9af4c841-1702-4266-8d55-c822582435ec";
-    walletAddress: "terra1gmxefcqt8sfckw0w44tpkuaz0p27eddq76elzx";
+    walletAddress: string;
     createdAt: string; //"2022-04-19T09:56:05.282Z";
     paymentOptionId: string; //"credit_debit_card";
     //ORDER STATUSES

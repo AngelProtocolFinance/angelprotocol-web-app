@@ -1,4 +1,4 @@
-import { Charity, Metadata, Registration } from "services/aws/types";
+import { Charity, Metadata, Registration } from "types/server/aws";
 
 export default function createCharityWithStepOneData(
   charity: Charity

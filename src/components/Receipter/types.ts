@@ -1,3 +1,3 @@
-import { ReceiptPayload } from "services/apes/types";
+import { ReceiptPayload } from "types/server/aws";
 
-export type Values = ReceiptPayload;
+export type ReceipterValues = ReceiptPayload;

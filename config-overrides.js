@@ -7,7 +7,6 @@ module.exports = function override(config, env) {
     buffer: require.resolve("buffer"),
     util: require.resolve("util"),
   };
-
   config.plugins.push(
     new ProvidePlugin({
       Buffer: ["buffer", "Buffer"],

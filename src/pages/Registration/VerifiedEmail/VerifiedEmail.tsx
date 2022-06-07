@@ -1,9 +1,9 @@
 import jwtDecode from "jwt-decode";
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Charity } from "types/server/aws";
 import { useRequestEmailMutation } from "services/aws/registration";
-import { Charity } from "services/aws/types";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { createCharityWithStepOneData } from "../helpers";
 import routes from "../routes";
 import LinkExpired from "./LinkExpired";
@@ -25,7 +25,7 @@ export default function VerifiedEmail() {
   const jwtData = jwtDecode<JwtData>(jwtToken);
 
   const is_expired = Math.floor(Date.now() / 1000) >= jwtData.exp;
-  const charity = createCharityWithStepOneData(jwtData);
+  const charity = createCharityWithStepOneData(jwtData as any);
 
   const resendVerificationEmail = useCallback(async () => {
     if (!charity.ContactPerson.PK) {
@@ -54,7 +54,7 @@ export default function VerifiedEmail() {
       isLoading={isLoading}
       charity={charity}
       onClick={() =>
-        navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`)
       }
     />
   );

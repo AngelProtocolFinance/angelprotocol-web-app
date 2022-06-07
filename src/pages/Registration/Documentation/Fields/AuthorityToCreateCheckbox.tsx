@@ -1,13 +1,13 @@
 import { useFormContext } from "react-hook-form";
-import Checkbox from "components/Checkbox";
+import { DocumentationValues } from "pages/Registration/types";
+import Checkbox from "components/Checkbox/Checkbox";
 import { useGetter } from "store/accessors";
-import { FormValues } from "../types";
 
 export default function AuthorityToCreateCheckbox() {
   const {
     register,
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<DocumentationValues>();
 
   const charity = useGetter((state) => state.charity);
 

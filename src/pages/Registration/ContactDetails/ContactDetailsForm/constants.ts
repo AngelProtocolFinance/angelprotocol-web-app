@@ -1,6 +1,4 @@
-import { ContactRoles, ReferralMethods } from "services/aws/types";
-
-export type OptionType = { label: string; value: ContactRoles };
+import { OptionType, ReferralOptionType } from "pages/Registration/types";
 
 export const contactRoleOptions: OptionType[] = [
   { label: "Chairperson / President", value: "president" },
@@ -19,8 +17,6 @@ export const contactRoleOptions: OptionType[] = [
   { label: "Communications", value: "communications" },
   { label: "Other", value: "other" },
 ];
-
-export type ReferralOptionType = { label: string; value: ReferralMethods };
 
 export const referralMethodOptions: ReferralOptionType[] = [
   { label: "Angel Alliance", value: "angel-alliance" },

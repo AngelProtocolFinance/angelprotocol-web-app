@@ -1,19 +1,19 @@
 import { useParams } from "react-router-dom";
-import { Profile } from "services/terra/account/types";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { Profile } from "types/server/aws";
+import { useModalContext } from "contexts/ModalContext";
 import { unsdgs } from "constants/unsdgs";
-import { CharityParam } from "../types";
+import { CharityParams } from "../types";
 import CharityLinks from "./CharityLinks";
 import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
-  const { address: endowment_addr } = useParams<CharityParam>();
+  const { address: endowment_addr } = useParams<CharityParams>();
   const { showModal } = useModalContext();
   function showDonateSelection() {
     showModal(DonateSelection, { endowmentAddr: endowment_addr! });
   }
 
-  const sdg = unsdgs[props.un_sdg || 0];
+  const sdg = unsdgs[+props.un_sdg || 0];
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -25,7 +25,9 @@ export default function CharityHeader(props: Profile) {
         </p>
       )}
 
-      <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
+      <h3 className="text-3xl font-bold text-white uppercase">
+        {props.charity_name}
+      </h3>
 
       <div className="flex items-center gap-2 flex-wrap">
         <button

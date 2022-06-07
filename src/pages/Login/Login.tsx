@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import eyeSlashIcon from "assets/images/eye-slash.png";
 import eyeIcon from "assets/images/eye.png";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import useLogin from "./useLogin";
 
 const Login = () => {
@@ -15,7 +15,7 @@ const Login = () => {
   const { tcaToken, isSubmitting, errors, register, login } = useLogin();
 
   if (tcaToken) {
-    return <Navigate to={`${app.tca}`} />;
+    return <Navigate to={`${appRoutes.tca}`} />;
   }
 
   return (
@@ -66,7 +66,7 @@ const Login = () => {
         </form>
 
         <Link
-          to={site.home}
+          to={siteRoutes.home}
           className="block w-48 mx-auto my-10 text-center text-thin-blue font-bold text-md uppercase hover:text-thin-blue/75"
         >
           learn more about angel protocol

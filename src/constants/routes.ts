@@ -1,4 +1,8 @@
-export enum web {
+export enum siteRoutes {
+  home = "/",
+  app = "/app",
+}
+export enum webRoutes {
   index = "",
   charities = "for-charities",
   donors = "for-donors",
@@ -6,68 +10,38 @@ export enum web {
   contact = "contact",
 }
 
-export enum site {
-  home = "/",
-  app = "/app",
-}
-
-export enum app {
+export enum appRoutes {
   index = "/",
   dashboard = "dashboard",
   marketplace = "marketplace",
   leaderboard = "leaderboard",
-  admin = "admin",
   register = "register",
   login = "login",
   unsdgs = "unsdgs",
   charity = "charity",
+  charity_edit = "charity-edit",
   tca = "tca",
   fund = "fund",
-  govern = "govern",
-  endowment_admin = "endowment-admin",
   donations = "donations",
 }
 
-export enum govern {
+export enum governRoutes {
   index = "",
   pollDetails = "pollDetails",
 }
 
-export enum charity {
-  index = "",
+export enum charityRoutes {
+  overview = "overview",
   endowment = "endowment",
   programs = "programs",
   media = "media",
   governance = "governance",
 }
 
-export enum admin {
+export enum adminRoutes {
   index = "",
   charity_applications = "charity-applications",
   proposal = "proposal",
   proposals = "proposals",
   proposal_types = "proposal-types",
-}
-
-export const enum proposalTypes {
-  index = "",
-  //index fund
-  indexFund_allianceEdits = "indexfund-alliance-edit",
-  indexFund_createFund = "indexfund-create-fund",
-  indexFund_removeFund = "indexfund-remove-fund",
-  indexFund_updateFundMembers = "indexfund-update-fund-members",
-  indexFund_configUpdate = "indexfund-config-update",
-  indexFund_ownerUpdate = "indexfund-owner-update",
-  //admin group
-  adminGroup_updateMembers = "admin-group-update-members",
-  adminGroup_updateCW3Config = "admin-group-update-cw3-config",
-  adminGroup_fundTransfer = "admin-group-fund-transfer",
-  //endowment
-  endowment_updateStatus = "endowment-update-status",
-  endowment_withdraw = "endowment-withdraw",
-  endowment_updateProfile = "endowment-update-profile",
-
-  //registrar
-  registrar_updateConfig = "registrar-update-config",
-  registrar_updateOwner = "registrar-update-owner",
 }

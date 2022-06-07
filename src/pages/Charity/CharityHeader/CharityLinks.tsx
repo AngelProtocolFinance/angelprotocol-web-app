@@ -1,30 +1,30 @@
 import { useParams } from "react-router-dom";
-import { useEndowmentProfileState } from "services/terra/account/states";
+import { useProfileQueryState } from "services/aws/endowments";
 import Icon, { IconTypes } from "components/Icon";
-import { CharityParam } from "../types";
+import { CharityParams } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
-  const { address: charity_addr } = useParams<CharityParam>();
-  const { profileState } = useEndowmentProfileState(charity_addr!);
+  const { address: charity_addr } = useParams<CharityParams>();
+  const { data: profileState } = useProfileQueryState(charity_addr!);
 
   return (
     <div className={`${props.classes || ""} flex gap-2 items-center`}>
-      {profileState?.social_media_urls.twitter && (
+      {profileState?.twitter_handle && (
         <IconLink
           _iconType="Twitter"
-          href={formatUrl(profileState?.social_media_urls.twitter, "twitter")}
+          href={formatUrl(profileState?.twitter_handle, "twitter")}
         />
       )}
-      {profileState?.social_media_urls.linkedin && (
+      {profileState?.linkedin_page && (
         <IconLink
           _iconType="LinkedinIn"
-          href={formatUrl(profileState?.social_media_urls.linkedin, "linkedin")}
+          href={formatUrl(profileState?.linkedin_page, "linkedin")}
         />
       )}
-      {profileState?.social_media_urls.facebook && (
+      {profileState?.facebook_page && (
         <IconLink
           _iconType="Facebook"
-          href={formatUrl(profileState?.social_media_urls.facebook, "facebook")}
+          href={formatUrl(profileState?.facebook_page, "facebook")}
         />
       )}
       {profileState?.url && (

@@ -1,15 +1,12 @@
-import { WalletStatus } from "@terra-money/wallet-provider";
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetBinance } from "providers/BinanceWallet/BinanceWallet";
-import { useGetMetamask } from "providers/Metamask/Metamask";
 import FormInput from "components/FormInput";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {
-  status: WalletStatus;
+  status: "connected" | "not-connected";
   walletAddress: string;
   isSubmitting: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -28,7 +25,7 @@ export default function WalletSubmission(props: Props) {
         address. We recommend using a new wallet.
       </p>
       {/** only Terra wallet status can be passed (using useWalletProxy), other wallets handled separately */}
-      {status !== WalletStatus.WALLET_CONNECTED ? (
+      {status !== "not-connected" ? (
         <UnsupportedWalletConnected />
       ) : (
         <>
@@ -61,7 +58,9 @@ export default function WalletSubmission(props: Props) {
         className="bg-green-400 w-80 h-10"
         disabled={isSubmitting}
         onClick={() =>
-          navigate(`${site.app}/${app.register}/${routes.dashboard}`)
+          navigate(
+            `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+          )
         }
       >
         Back to registration dashboard
@@ -71,10 +70,7 @@ export default function WalletSubmission(props: Props) {
 }
 
 function UnsupportedWalletConnected() {
-  const { connected: isMetamaskConnected } = useGetMetamask();
-  const { connected: isBinanceConnected } = useGetBinance();
-
-  return isMetamaskConnected || isBinanceConnected ? (
+  return true ? (
     <div className="flex flex-col gap-3">
       <p>Only Terra compatible wallets are allowed!</p>
       <p>Please connect your Terra wallet</p>

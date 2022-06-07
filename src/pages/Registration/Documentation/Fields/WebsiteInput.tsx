@@ -1,12 +1,12 @@
 import { useFormContext } from "react-hook-form";
+import { DocumentationValues } from "pages/Registration/types";
 import { InputRow } from "../../common";
-import { FormValues } from "../types";
 
 export default function WebsiteInput() {
   const {
     register,
     formState: { errors, isSubmitting },
-  } = useFormContext<FormValues>();
+  } = useFormContext<DocumentationValues>();
 
   return (
     <InputRow htmlFor="website" label="Website of your organization" required>

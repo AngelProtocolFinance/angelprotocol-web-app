@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { app, site } from "constants/routes";
+import { RegistrationState } from "pages/Registration/types";
+import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
-import { RegistrationState } from "../types";
 import Step from "./Step";
 
 type Props = {
@@ -17,21 +17,27 @@ export default function Steps({ disabled, registrationState }: Props) {
       <Step
         title="Step #1: Contact Details"
         onClick={() =>
-          navigate(`${site.app}/${app.register}/${routes.contactDetails}`)
+          navigate(
+            `${siteRoutes.app}/${appRoutes.register}/${routes.contactDetails}`
+          )
         }
         disabled={disabled}
         completed
       />
       <Step
         title="Step #2: Wallet Address"
-        onClick={() => navigate(`${site.app}/${app.register}/${routes.wallet}`)}
+        onClick={() =>
+          navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.wallet}`)
+        }
         disabled={disabled}
         completed={registrationState.stepTwo.completed}
       />
       <Step
         title="Step #3: Documentation"
         onClick={() =>
-          navigate(`${site.app}/${app.register}/${routes.documentation}`)
+          navigate(
+            `${siteRoutes.app}/${appRoutes.register}/${routes.documentation}`
+          )
         }
         disabled={disabled}
         completed={registrationState.stepThree.completed}
@@ -44,7 +50,7 @@ export default function Steps({ disabled, registrationState }: Props) {
         title="Step #4: Additional Information"
         onClick={() =>
           navigate(
-            `${site.app}/${app.register}/${routes.additionalInformation}`
+            `${siteRoutes.app}/${appRoutes.register}/${routes.additionalInformation}`
           )
         }
         disabled={disabled}

@@ -1,5 +1,7 @@
-import { useMetricsListQuery } from "services/aws/business_metrics/business_metrics";
-import { dummyDonationsMetricList as metricsPlaceholder } from "services/aws/business_metrics/placeholders";
+import {
+  dummyDonationsMetricList as metricsPlaceholder,
+  useMetricsListQuery,
+} from "services/aws/business_metrics";
 
 export default function DonationMetrics() {
   // The parameter passed to the function is a list of attrs that we want to display

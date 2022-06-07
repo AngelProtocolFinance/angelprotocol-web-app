@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCheckPreviousRegistrationMutation } from "services/aws/registration";
 import { useSetter } from "store/accessors";
-import { app, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { createCharityWithStepOneData } from "../helpers";
 import routes from "../routes";
 import { updateCharity } from "../store";
@@ -29,9 +29,9 @@ export default function useResume() {
       dispatch(updateCharity(charity));
 
       if (charity.ContactPerson.EmailVerified) {
-        navigate(`${site.app}/${app.register}/${routes.dashboard}`);
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
       } else {
-        navigate(`${site.app}/${app.register}/${routes.confirm}`, {
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`, {
           state: { is_sent: true },
         });
       }

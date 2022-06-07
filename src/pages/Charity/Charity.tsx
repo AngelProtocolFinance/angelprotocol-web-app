@@ -1,65 +1,43 @@
 import { LinkProps, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useEndowmentCWs } from "services/terra/account/queriers";
-import { useEndowmentProfile } from "services/terra/account/queriers";
-import { useMember } from "services/terra/admin/queriers";
-import ContentLoader from "components/ContentLoader/ContentLoader";
+import { useProfileQuery } from "services/aws/endowments";
+import ContentLoader from "components/ContentLoader";
 import Icon, { IconTypes } from "components/Icon";
-import { admin, app, proposalTypes, site } from "constants/routes";
+import { appRoutes, siteRoutes } from "constants/routes";
 import CharityContent from "./CharityContent/CharityContent";
 import CharityHeader from "./CharityHeader/CharityHeader";
 import CharityStats from "./CharityStats";
-import { CharityParam } from "./types";
+import { CharityParams } from "./types";
 
 export default function Charity() {
-  const { address: endowment_addr } = useParams<CharityParam>();
-  const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
-    endowment_addr!
-  );
-  const { cwContracts, isCWContractsLoading } = useEndowmentCWs(
-    endowment_addr!
-  );
-  const { member, isMemberLoading, isMemberError } = useMember(
-    cwContracts,
-    isCWContractsLoading
-  );
+  const { address: endowment_addr } = useParams<CharityParams>();
+  const { data, isLoading, isError } = useProfileQuery(endowment_addr!);
 
-  const isResourcesError = isProfileError || isMemberError;
-  const isResourcesLoading =
-    isProfileLoading || isCWContractsLoading || isMemberLoading;
-
-  const isUserAdminMember = !!member.weight;
-
-  if (isResourcesLoading) return <CharitySkeleton />;
-  if (isResourcesError || !profile) return <PageError />;
+  if (isLoading) return <CharitySkeleton />;
+  if (isError || !data) return <PageError />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
       <div className="lg:col-span-2 flex gap-2">
-        <LinkIcon to={`${site.app}/${app.marketplace}`} _iconType="ArrowBack">
+        <LinkIcon
+          to={`${siteRoutes.app}/${appRoutes.marketplace}`}
+          _iconType="ArrowBack"
+        >
           back to marketplace
         </LinkIcon>
-        {isUserAdminMember && (
+        {false /**is charity owner */ && (
           <LinkIcon
-            to={`${site.app}/${app.endowment_admin}/${endowment_addr}/${admin.proposal_types}/${proposalTypes.endowment_updateProfile}`} //change to multisig edit
+            to={`${siteRoutes.app}/${appRoutes.charity_edit}/${endowment_addr}`} //change to multisig edit
             _iconType="Edit"
             className="ml-auto border-r border-white/30 pr-2"
           >
             edit profile
           </LinkIcon>
         )}
-        {isUserAdminMember && (
-          <LinkIcon
-            to={`${site.app}/${app.endowment_admin}/${endowment_addr}`} //change to updateProfile from RC-web-profile
-            _iconType="Admin"
-          >
-            admin
-          </LinkIcon>
-        )}
       </div>
 
-      <CharityHeader {...profile} />
-      <CharityContent {...profile} classes="row-span-2" />
-      <CharityStats {...profile} classes="hidden lg:block mt-4" />
+      <CharityHeader {...data} />
+      <CharityContent {...data} classes="row-span-2" />
+      <CharityStats {...data} classes="hidden lg:block mt-4" />
     </section>
   );
 }
@@ -105,7 +83,7 @@ function PageError() {
       <Icon type="Warning" size={30} className="text-red-400" />
       <p className="text-red-400 text-lg">Failed to load charity profile</p>
       <Link
-        to={`${site.app}/${app.marketplace}`}
+        to={`${siteRoutes.app}/${appRoutes.marketplace}`}
         className="text-white/80 hover:text-angel-blue text-sm"
       >
         back to Marketplace

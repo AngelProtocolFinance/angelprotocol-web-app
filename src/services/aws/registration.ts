@@ -1,13 +1,8 @@
 import {
-  ApplicationStatusOptions,
-  CharityApplication,
-} from "pages/Admin/Applications/types";
-import createAuthToken from "helpers/createAuthToken";
-import { aws } from "./aws";
-import { admin, tags } from "./tags";
-import {
   AWSQueryRes,
+  ApplicationStatusOptions,
   Charity,
+  CharityApplication,
   ContactDetailsRequest,
   ContactDetailsData as ContactDetailsResult,
   SubmitData,
@@ -16,7 +11,10 @@ import {
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
   UpdateDocumentationResult,
-} from "./types";
+} from "types/server/aws";
+import createAuthToken from "helpers/createAuthToken";
+import { aws } from "./aws";
+import { adminTags, awsTags } from "./tags";
 
 const headers = {
   authorization: createAuthToken("charity-owner"),
@@ -53,7 +51,7 @@ const registration_api = aws.injectEndpoints({
       }),
     }),
     getCharityApplications: builder.query<any, any>({
-      providesTags: [{ type: tags.admin, id: admin.applications }],
+      providesTags: [{ type: awsTags.admin, id: adminTags.applications }],
       query: (status: ApplicationStatusOptions) => {
         return {
           url: `registration/list${

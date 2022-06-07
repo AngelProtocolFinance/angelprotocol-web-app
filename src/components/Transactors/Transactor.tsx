@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { resetTxFormState } from "services/transaction/transactionSlice";
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useModalContext } from "components/ModalContext/ModalContext";
+import { TxProps } from "components/Transactors";
 import { useSetter } from "store/accessors";
+import { resetTxFormState } from "slices/transaction/transactionSlice";
 
 export default function Transactor<C>(props: TxProps<C>) {
   const dispatch = useSetter();
@@ -33,9 +33,3 @@ export default function Transactor<C>(props: TxProps<C>) {
     </div>
   );
 }
-
-export type TxProps<C> = {
-  Content: FC<C>;
-  contentProps: C;
-  inModal?: true;
-};

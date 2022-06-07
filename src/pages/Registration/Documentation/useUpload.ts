@@ -1,12 +1,12 @@
 import { useCallback } from "react";
+import { DocumentationValues } from "pages/Registration/types";
 import { useUpdateDocumentationMutation } from "services/aws/registration";
-import { FileWrapper } from "components/FileDropzone/types";
+import { FileWrapper } from "components/FileDropzone";
 import { useGetter, useSetter } from "store/accessors";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
 import { updateCharity } from "../store";
 import useHandleError from "../useHandleError";
-import { FormValues } from "./types";
 
 export default function useUpload() {
   const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
@@ -15,7 +15,7 @@ export default function useUpload() {
   const handleError = useHandleError();
 
   const upload = useCallback(
-    async (values: FormValues) => {
+    async (values: DocumentationValues) => {
       try {
         const body = await getUploadUrls(charity.ContactPerson.PK!, values);
         const result = await uploadDocumentation({
@@ -43,7 +43,7 @@ export default function useUpload() {
   return { upload, isSuccess };
 }
 
-async function getUploadUrls(primaryKey: string, values: FormValues) {
+async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
   const poiPromise = uploadIfNecessary(
     primaryKey,
     values.proofOfIdentity,
