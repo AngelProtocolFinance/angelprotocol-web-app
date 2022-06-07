@@ -133,3 +133,11 @@ const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
     </div>
   );
 };
+
+// const createUSTToken = (balance: number) => ({
+//   balance,
+//   min_denom: denoms.uusd,
+//   symbol: "UST",
+//   decimals: 6,
+//   logo: denomIcons.uusd,
+// });

@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { DonateValues, FundFlow } from "./types";
-import { SchemaShape } from "schemas/types";
 import { WithBalance } from "services/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
+import { SchemaShape } from "schemas/types";
 import DonateForm from "./DonateForm/DonateForm";
+import { DonateValues, FundFlow } from "./types";
 
 const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,

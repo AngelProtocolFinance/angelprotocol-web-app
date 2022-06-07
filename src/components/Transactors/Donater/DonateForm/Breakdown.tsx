@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
-import { DonateValues } from "../types";
 import { useGetter } from "store/accessors";
 import toCurrency from "helpers/toCurrency";
+import { DonateValues } from "../types";
 
 export default function Breakdown() {
   const { fee } = useGetter((state) => state.transaction);
