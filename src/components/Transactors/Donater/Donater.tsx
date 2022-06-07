@@ -1,15 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { placeHolderToken } from "services/apes/tokens/constants";
-import { useEthBalancesQuery } from "services/apes/tokens/tokens";
-import { TokenWithBalance } from "services/types";
+import { DonateValues, FundFlow } from "./types";
+import { SchemaShape } from "schemas/types";
+import { WithBalance } from "services/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
-import { SchemaShape } from "schemas/types";
 import DonateForm from "./DonateForm/DonateForm";
-import { DonateValues, FundFlow } from "./types";
 
 const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,
@@ -17,17 +15,13 @@ const shape: SchemaShape<DonateValues> = {
 const schema = Yup.object().shape(shape);
 
 export default function Donater(props: FundFlow) {
-  const { chainId, address } = useGetWallet();
-  const { data = [], isLoading } = useEthBalancesQuery(
-    { chainId, address },
-    { skip: !chainId && !address }
-  );
+  const { coins, isWalletLoading } = useGetWallet();
 
-  if (isLoading) return <DonateFormLoader />;
-  return <DonateContext {...props} tokens={data} />;
+  if (isWalletLoading || isWalletLoading) return <DonateFormLoader />;
+  return <DonateContext {...props} tokens={coins} />;
 }
 
-function DonateContext(props: FundFlow & { tokens: TokenWithBalance[] }) {
+function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
   const methods = useForm<DonateValues>({
     mode: "onChange",
     reValidateMode: "onChange",
@@ -35,8 +29,7 @@ function DonateContext(props: FundFlow & { tokens: TokenWithBalance[] }) {
       amount: "",
       split_liq: `${props.min_liq || 0}`,
       //metadata
-      token: props.tokens[0] || placeHolderToken,
-      tokens: props.tokens,
+      token: props.tokens[0], //will always be filled with at least one token
       min_liq: props.min_liq || 0,
       max_liq: props.max_liq || (props.max_liq === 0 ? 0 : 100),
       to: props.to,

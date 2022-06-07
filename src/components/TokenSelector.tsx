@@ -10,14 +10,14 @@ import Select, {
   ValueContainerProps,
 } from "react-select";
 import { Token } from "types/server/aws";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 
 export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
 }) {
-  const { control, getValues } = useFormContext<T>();
-
-  // const { data: tokens = [createUSTToken(0)] } = useTokensQuery(undefined);
+  const { coins } = useGetWallet();
+  const { control } = useFormContext<T>();
 
   return (
     <Controller
@@ -29,7 +29,8 @@ export default function TokenSelector<T extends FieldValues>(props: {
             className={props.classes}
             value={value}
             onChange={onChange}
-            options={getValues("tokens" as any)}
+            options={coins}
+            isDisabled={coins.length <= 1}
             getOptionLabel={getOptionLabel}
             noOptionsMessage={(obj) => `${obj.inputValue} not found`}
             components={{
@@ -132,11 +133,3 @@ const NoOptionsMessage: FC<NoticeProps<Token>> = ({ innerProps, children }) => {
     </div>
   );
 };
-
-// const createUSTToken = (balance: number) => ({
-//   balance,
-//   min_denom: denoms.uusd,
-//   symbol: "UST",
-//   decimals: 6,
-//   logo: denomIcons.uusd,
-// });

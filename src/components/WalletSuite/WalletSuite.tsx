@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
-import { chainIDs } from "constants/chainIDs";
 import ConnectOptions from "./ConnectOptions";
 import WalletOpener from "./ConnectedWallet/WalletOpener";
-import NetworkSelectionOpener from "./NetworkSelector/NetworkSelectionOpener";
 
 export default function WalletSuite() {
-  const { providerId, isProviderLoading, displayCoin } = useGetWallet();
+  const { providerId, isProviderLoading } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {
@@ -16,21 +14,18 @@ export default function WalletSuite() {
     }
   };
 
+  const isProviderConnected = providerId !== "unknown";
   //close modal after connecting
   useEffect(() => {
-    providerId && setConnectOptionsShown(false);
+    isProviderConnected && setConnectOptionsShown(false);
     //eslint-disable-next-line
-  }, [providerId]);
-
-  const isNetworkSupported = displayCoin.chainId !== chainIDs.unsupported;
+  }, [isProviderConnected]);
 
   return (
     <div
-      className={`relative border ${
-        isNetworkSupported ? "border-white/40" : "border-red-200/80"
-      } hover:bg-white/10 rounded-md`}
+      className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
     >
-      {!providerId && (
+      {!isProviderConnected && (
         <button
           className="flex py-2 px-3 items-center text-white  "
           disabled={isProviderLoading}
@@ -40,8 +35,7 @@ export default function WalletSuite() {
           <span>{isProviderLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {providerId && isNetworkSupported && <WalletOpener />}
-      {providerId && !isNetworkSupported && <NetworkSelectionOpener />}
+      {isProviderConnected && <WalletOpener />}
       {connectOptionsShown && (
         <ConnectOptions closeHandler={hideConnectOptions} />
       )}

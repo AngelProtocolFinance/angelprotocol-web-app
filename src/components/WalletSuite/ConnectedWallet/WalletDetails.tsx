@@ -13,13 +13,13 @@ import Portal from "./Portal";
 
 const criterionAmount = 0.001;
 export default function WalletDetails(props: { closeHandler: () => void }) {
-  const { coins, address, displayCoin } = useGetWallet();
+  const { coins, walletAddr, displayCoin } = useGetWallet();
   const { disconnect } = useSetWallet();
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
 
   const filteredCoins = coins.filter((coin) =>
     //show atleast eth
-    +coin.balance > 0 && isSmallAmountsShown
+    coin.balance > 0 && isSmallAmountsShown
       ? true
       : +coin.balance > criterionAmount
   );
@@ -40,7 +40,7 @@ export default function WalletDetails(props: { closeHandler: () => void }) {
           </button>
         </div>
         <div className="bg-angel-grey text-white-grey text-xs p-2 pt-0">
-          <p className="uppercase">network : {displayCoin.chainName}</p>
+          <p className="uppercase">network : {displayCoin.chain_name}</p>
         </div>
         {!isEmpty && (
           <Filter
@@ -49,10 +49,10 @@ export default function WalletDetails(props: { closeHandler: () => void }) {
           />
         )}
         <div className="flex gap-2 items-center p-2  pb-0">
-          <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
-          <Copier text={address} colorClass="text-angel-grey text-lg" />
+          <p className="text-xl text-angel-grey">{maskAddress(walletAddr)}</p>
+          <Copier text={walletAddr} colorClass="text-angel-grey text-lg" />
         </div>
-        <Portal address={address} />
+        <Portal address={walletAddr} />
         {(!isEmpty && <Holdings coins={filteredCoins} />) || (
           <span className="text-angel-grey p-10 text-center text-sm uppercase">
             Wallet is empty

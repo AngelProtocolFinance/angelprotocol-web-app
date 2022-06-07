@@ -1,11 +1,10 @@
-import { TokenWithBalance } from "services/types";
+import { WithBalance } from "services/types";
 
 export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
-  token: TokenWithBalance;
-  tokens: TokenWithBalance[];
+  token: WithBalance;
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";

@@ -1,10 +1,14 @@
 import { ethers, utils } from "ethers";
-import { TokenWithBalance } from "services/types";
+import { ALT20, EVMNative, Token } from "types/server/aws";
+import { WithBalance } from "services/types";
+import { ProviderId } from "contexts/WalletContext/types";
 import createAuthToken from "helpers/createAuthToken";
+import { IS_DEV } from "constants/env";
+import { apes_endpoint } from "constants/urls";
 import { apes } from "../apes";
-import { tokenList, unSupportedToken } from "./constants";
 import { getERC20Holdings } from "./helpers/getERC20Holdings";
 
+type CategorizedTokenList = { [key in Token["type"]]: Token[] };
 const tokens_api = apes.injectEndpoints({
   endpoints: (builder) => ({
     tokens: builder.query<any[], unknown>({
@@ -17,86 +21,91 @@ const tokens_api = apes.injectEndpoints({
         };
       },
     }),
-    ethBalances: builder.query<
-      TokenWithBalance[],
-      { chainId: string; address: string }
+    balances: builder.query<
+      WithBalance<Token>[],
+      { chainId: string; address: string; providerId: ProviderId }
     >({
       providesTags: [],
       //address
       //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
-          //TODO: get supported token list from server
-          const isChainSupported =
-            tokenList.find((token) => token.chainId === args.chainId) !==
-            undefined;
+          const tokensRes = await fetch(
+            `${apes_endpoint}/token/list${IS_DEV ? "/test" : ""}`
+          );
+          const tokenList: Token[] = await tokensRes.json();
+          const coins: WithBalance<Token>[] = [];
+          const categorizedTokenList = tokenList.reduce((tokens, token) => {
+            const _t = token.type;
+            if (!tokens[_t]) tokens[_t] = [];
+            tokens[_t].push(token);
+            return tokens;
+          }, {} as CategorizedTokenList);
 
-          if (!isChainSupported) {
-            return {
-              data: [
-                unSupportedToken,
-                ...tokenList.map((token) => ({ ...token, balance: "0" })),
-              ],
-            };
-          }
-
-          const balanceQueries = tokenList.map((token) => {
+          /**fetch balances for ethereum */
+          const evmTokenList = categorizedTokenList[
+            "evm-native"
+          ] as EVMNative[];
+          const balanceQueries = evmTokenList.map((token) => {
             const jsonProvider = new ethers.providers.JsonRpcProvider(
-              token.rpcUrl
+              token.rpc_url,
+              { chainId: +token.chain_id, name: token.chain_name }
             );
             return jsonProvider.getBalance(args.address);
           });
-          const queryResults = await Promise.allSettled(balanceQueries);
 
+          const queryResults = await Promise.allSettled(balanceQueries);
           //map native balances with ordering
-          const coins = queryResults.reduce((coins, result, i) => {
-            const token: TokenWithBalance = {
-              ...tokenList[i],
+          const evmCoins = queryResults.reduce((_coins, result, i) => {
+            const token: WithBalance = {
+              ...evmTokenList[i],
               balance:
                 result.status === "fulfilled"
-                  ? utils.formatUnits(result.value, tokenList[i].decimals)
-                  : "0",
+                  ? +utils.formatUnits(result.value, evmTokenList[i].decimals)
+                  : 0,
             };
-            if (token.chainId === args.chainId) {
+            if (token.chain_id === args.chainId) {
               //bring active coin to front
-              coins.unshift(token);
+              _coins.unshift(token);
             } else {
-              coins.push(token);
+              _coins.push(token);
             }
-            return coins;
-          }, [] as TokenWithBalance[]);
+            return _coins;
+          }, [] as WithBalance<EVMNative>[]);
 
           //fetch erc20 balances of activeCoin
-          if (coins.length > 1) {
-            const activeCoin = coins[0];
-            const erc20Tokens = activeCoin.erc20Tokens;
+          if (evmCoins.length > 1) {
+            const activeCoin = evmCoins[0];
+            const erc20Tokens = activeCoin.tokens;
             const erc20Holdings = await getERC20Holdings(
-              activeCoin.rpcUrl,
+              activeCoin.rpc_url,
               args.address,
-              erc20Tokens.map((token) => token.contractAddr)
+              erc20Tokens.map((token) => token.contract_addr)
             );
 
             //convert to NativeBalanceFormat
-            const transformedTokens: TokenWithBalance[] = erc20Holdings.map(
+            const transformedTokens: WithBalance<ALT20>[] = erc20Holdings.map(
               (token, i) => ({
-                ...activeCoin,
-                //overrides
-                min_denom: token.symbol.toLocaleLowerCase(),
+                type: "erc20",
                 symbol: token.symbol,
                 logo: erc20Tokens[i].logo,
                 decimals: token.decimals,
-                erc20Tokens: [],
-                balance: token.balance,
+                chain_id: activeCoin.chain_id,
 
-                //for ERC20 txs
-                nativeSymbol: activeCoin.symbol,
-                contractAddr: erc20Tokens[i].contractAddr,
+                native_symbol: activeCoin.symbol,
+                contract_addr: token.contractAddress,
+
+                balance: +token.balance,
               })
             );
             //insert ERC20 tokens with balances next to native token
-            coins.splice(1, 0, ...transformedTokens);
+            (evmCoins as WithBalance<Token>[]).splice(
+              1,
+              0,
+              ...transformedTokens
+            );
           }
-          return { data: coins };
+          return { data: coins.concat(evmCoins) };
         } catch (err) {
           console.error(err);
           return {
@@ -112,4 +121,4 @@ const tokens_api = apes.injectEndpoints({
   }),
 });
 
-export const { useTokensQuery, useEthBalancesQuery } = tokens_api;
+export const { useTokensQuery, useBalancesQuery } = tokens_api;

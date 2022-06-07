@@ -1,9 +1,15 @@
-export type ProviderId = "binance-wallet" | "metamask" | "xdefi";
+export type ProviderId =
+  | "binance-wallet"
+  | "metamask"
+  | "xdefi" //xdefi evm provider
+  | "unknown";
+
 export type Connection = {
   logo: string;
   name: string;
-  connect(): Promise<void>;
+  connect(arg?: string): Promise<void>;
 };
+
 export type ProviderInfo = {
   providerId: ProviderId;
   logo: string;

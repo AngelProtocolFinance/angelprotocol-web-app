@@ -5,13 +5,19 @@ import {
   Dwindow,
   InjectedProvider,
 } from "types/ethereum";
+import checkXdefiPriority from "helpers/checkXdefiPriority";
+import { getProvider } from "helpers/getProvider";
 import { EIP1193Error } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
-import { getProvider } from "../../helpers/getProvider";
 import { providerIcons } from "./constants";
+import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 import { Connection, ProviderId, ProviderInfo } from "./types";
 
-export default function useInjectedProvider(providerId: ProviderId) {
+export default function useInjectedProvider(
+  providerId: ProviderId,
+  connectorLogo?: string,
+  connectorName?: string
+) {
   const actionKey = `${providerId}__pref`;
   //connect only if there's no active wallet
   const lastAction = retrieveUserAction(actionKey);
@@ -101,15 +107,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
       const dwindow = window as Dwindow;
       //connecting xdefi
       if (providerId === "xdefi") {
-        if (!dwindow?.xfi) {
-          throw new EIP1193Error("Xdefi is not installed", 0);
-        }
-        if (!dwindow?.xfi?.ethereum?.isMetaMask) {
-          throw new EIP1193Error(
-            "Kindly prioritize Xdefi and reload the page",
-            0
-          );
-        }
+        checkXdefiPriority();
         //connecting other wallet
       } else {
         if (dwindow?.xfi?.ethereum?.isMetaMask) {
@@ -142,8 +140,8 @@ export default function useInjectedProvider(providerId: ProviderId) {
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: providerId.replace("-", " "),
-    logo: providerIcons[providerId],
+    name: connectorName ?? providerId.replace("-", " "),
+    logo: connectorLogo ?? providerIcons[providerId],
     connect,
   };
 
@@ -155,21 +153,7 @@ export default function useInjectedProvider(providerId: ProviderId) {
   };
 }
 
-/***** */
-
-type Action = "connect" | "disconnect";
-function saveUserAction(key: string, action: Action) {
-  localStorage.setItem(key, action);
-}
-
-function retrieveUserAction(key: string): Action {
-  return (localStorage.getItem(key) as Action) || "disconnect";
-}
-
 function removeAllListeners(providerId: ProviderId) {
   const provider = getProvider(providerId);
   provider?.removeAllListeners && provider.removeAllListeners();
 }
-
-//notes: 1 accountChange handler run only on first connect [] --> [something]
-//and revocation of permission [something] --> []

@@ -28,7 +28,7 @@ export default function useEstimator() {
   const split_liq = Number(watch("split_liq"));
   const selectedToken = watch("token");
 
-  const [ethTx, setEthTx] = useState<TransactionRequest>();
+  const [evmTx, setEVMtx] = useState<TransactionRequest>();
 
   const [debounced_amount] = useDebouncer(amount, 500);
   const [debounced_split] = useDebouncer(split_liq, 500);
@@ -36,7 +36,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (!providerId) {
+        if (providerId === "unknown") {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -53,42 +53,52 @@ export default function useEstimator() {
           return;
         }
 
-        if (chainId !== selectedToken.chainId) return; //network selection prompt is shown to user
-
         dispatch(setFormLoading(true));
 
-        const provider = new ethers.providers.Web3Provider(
-          getProvider(providerId) as any
-        );
-        //no network request
-        const signer = provider.getSigner();
-        const sender = await signer.getAddress();
-        const gasPrice = await signer.getGasPrice();
-        const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+        /** evm transactions */
+        if (
+          selectedToken.type === "evm-native" ||
+          selectedToken.type === "erc20"
+        ) {
+          if (chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
 
-        const tx: TransactionRequest = {
-          from: sender,
-          to: ap_wallets.eth,
-          value: wei_amount,
-        };
-
-        let gasLimit: ethers.BigNumber;
-        if (selectedToken.contractAddr) {
-          const ER20Contract: any = new ethers.Contract(
-            selectedToken.contractAddr,
-            ERC20Abi,
-            signer
+          const provider = new ethers.providers.Web3Provider(
+            getProvider(providerId) as any
           );
-          gasLimit = await ER20Contract.estimateGas.transfer(tx.to, wei_amount);
-        } else {
-          gasLimit = await signer.estimateGas(tx);
+          //no network request
+          const signer = provider.getSigner();
+          const sender = await signer.getAddress();
+          const gasPrice = await signer.getGasPrice();
+          const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
+
+          const tx: TransactionRequest = {
+            from: sender,
+            to: ap_wallets.eth,
+            value: wei_amount,
+          };
+
+          let gasLimit: ethers.BigNumber;
+          if (selectedToken.type === "erc20") {
+            const ER20Contract: any = new ethers.Contract(
+              selectedToken.contract_addr,
+              ERC20Abi,
+              signer
+            );
+            gasLimit = await ER20Contract.estimateGas.transfer(
+              tx.to,
+              wei_amount
+            );
+          } else {
+            gasLimit = await signer.estimateGas(tx);
+          }
+
+          const minFee = gasLimit.mul(gasPrice);
+          const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
+
+          setEVMtx(tx);
+          dispatch(setFee(parseFloat(fee)));
         }
 
-        const minFee = gasLimit.mul(gasPrice);
-        const fee = ethers.utils.formatUnits(minFee, selectedToken.decimals);
-
-        setEthTx(tx);
-        dispatch(setFee(parseFloat(fee)));
         dispatch(setFormLoading(false));
 
         //CW20 token estimate
@@ -104,5 +114,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, [debounced_amount, debounced_split, selectedToken, providerId, chainId]);
 
-  return { ethTx };
+  return { evmTx };
 }

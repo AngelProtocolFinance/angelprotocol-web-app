@@ -23,7 +23,7 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
         </button>
         <ModalContext backdropClasses="absolute bg-black/50 inset-0 z-10">
           {connections.map((connection) => (
-            <Connector key={connection.name} {...connection} />
+            <Connector {...connection} key={connection.name} />
           ))}
         </ModalContext>
       </div>
@@ -33,13 +33,17 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
 
 function Connector(props: Connection) {
   const { showModal } = useModalContext();
-  //wrapper with error handler
   async function handleConnect() {
     try {
       await props.connect();
     } catch (_err: any) {
-      const err: EIP1193Error = _err;
-      showModal(WalletPrompt, { message: err.message });
+      let errorMsg: string;
+      if (_err instanceof EIP1193Error) {
+        errorMsg = _err.message;
+      } else {
+        errorMsg = "Unknown error occured";
+      }
+      showModal(WalletPrompt, { message: errorMsg });
     }
   }
 
@@ -50,7 +54,7 @@ function Connector(props: Connection) {
     >
       <img
         src={props.logo}
-        className="w-8 h-8 p-1.5 bg-white-grey rounded-full shadow-md"
+        className="w-8 h-8 p-1.5 object-contain bg-white-grey rounded-full shadow-md"
         alt=""
       />
       <p className="uppercase text-sm text-white">{props.name}</p>

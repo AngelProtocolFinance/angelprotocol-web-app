@@ -92,28 +92,44 @@ export type TxLogPayload = Receiver &
   TxDataPermissions;
 
 /** apes/token-list */
-
-export type Token = {
-  min_denom: string; //avax
-  symbol: string; //AVAX
+type TokenBase = {
+  symbol: string; //LUNA
   logo: string;
-  decimals: number; //18
-  chainId: string; // "1"-mainnet "97"-binance-test "43017"-avax
+  decimals: number; //6
+  chain_id: string;
+};
+
+export type ALT20 = TokenBase & {
+  type: "erc20"; //"| cw20 "
+
+  chain_name?: never; //Terra testnet
+  rpc_url?: never;
+  block_explorer_url?: never; //https://testnet.snowtrace.io
+  tokens?: never;
+
+  //info if token is an ERC20 token
+  contract_addr: string;
+  native_symbol: string;
+};
+
+export type EVMNative = TokenBase & {
+  type: "evm-native"; //avax
 
   //additional info for adding chain in wallet
-  rpcUrl: string;
-  chainName: string; //Avalanche
-  blockExplorerUrl: string; //https://testnet.snowtrace.io
-
-  erc20Tokens: {
-    contractAddr: string;
+  chain_name: string; //Avalanche
+  rpc_url: string;
+  block_explorer_url: string; //https://testnet.snowtrace.io
+  tokens: {
+    contract_addr: string;
     logo: string;
   }[];
 
   //info if token is an ERC20 token
-  contractAddr?: string;
-  nativeSymbol?: string;
+  contract_addr?: never;
+  native_symbol?: never;
 };
+
+export type Token = EVMNative | ALT20;
 
 /** /endowments */
 export interface Profile {

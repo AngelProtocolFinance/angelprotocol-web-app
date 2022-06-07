@@ -14,3 +14,5 @@ export type Tag = TagDescription<string>;
 export type Tags = TagDescription<string>[];
 export type TagPayload = PayloadAction<TagDescription<string>[], string>;
 export type TagPayloads = TagPayload[];
+
+export type WithBalance<T = Token> = T & { balance: number };

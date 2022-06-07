@@ -7,9 +7,10 @@ import Details from "./WalletDetails";
 
 //this component won't be rendered if wallet is not connected
 export default function WalletOpener() {
-  const { address, displayCoin, walletIcon, isWalletLoading } = useGetWallet();
+  const { walletAddr, displayCoin, walletIcon, isWalletLoading } =
+    useGetWallet();
   const [detailsShown, setIsDetailsShown] = useState(false);
-  const maskedAddr = maskAddress(address);
+  const maskedAddr = maskAddress(walletAddr);
   const toggleDetails = () => setIsDetailsShown((p) => !p);
   const hideDetails = () => detailsShown && setIsDetailsShown(false);
 
