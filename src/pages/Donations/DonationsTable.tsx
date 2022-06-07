@@ -5,7 +5,6 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import getTxUrl from "helpers/getTxUrl";
 import toCurrency from "helpers/toCurrency";
-import { chainIDs } from "constants/chainIDs";
 import useDonor from "./useDonor";
 import useSortTransactions from "./useSortTransactions";
 

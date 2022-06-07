@@ -2,7 +2,6 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
 import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
-import { placeHolderToken } from "services/apes/tokens/constants";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";

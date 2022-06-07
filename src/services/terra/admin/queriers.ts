@@ -10,7 +10,6 @@ import {
   VotesPageOptions,
 } from "types/server/contracts";
 import idParamToNumber from "helpers/idParamToNum";
-import { chainIDs } from "constants/chainIDs";
 import { admin_api } from "./admin";
 import { member, proposal } from "./placeholders";
 import useAdminContract from "./useAdminContract";

@@ -1,4 +1,4 @@
-import { Coin, Dec } from "@terra-money/terra.js";
+import { Dec } from "@terra-money/terra.js";
 import { MultiContractQueryArgs } from "services/types";
 import { Airdrop, Airdrops } from "types/server/aws";
 import {
