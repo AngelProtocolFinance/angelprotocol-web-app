@@ -12,6 +12,7 @@
     "@toruslabs/openlogin": "^1.7.1",
     "@transak/transak-sdk": "1.0.31",
     "bip39": "^3.0.4",
+    "chart.js": "^3.8.0",
     "compress.js": "^1.2.2",
     "cropperjs": "^1.5.12",
     "draft-js": "^0.11.7",

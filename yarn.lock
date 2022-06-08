@@ -5240,6 +5240,7 @@ __metadata:
     autoprefixer: ^10.0.2
     bip39: ^3.0.4
     buffer: ^6.0.3
+    chart.js: ^3.8.0
     compress.js: ^1.2.2
     cropperjs: ^1.5.12
     crypto-browserify: ^3.12.0
@@ -6446,6 +6447,13 @@ __metadata:
   version: 0.2.0
   resolution: "charcodes@npm:0.2.0"
   checksum: 972443ed359d54382e721b9db0a298eb95c4c454386f7e98886586f433e1e6686225416114e6f6bb2e6ef3facc9ba3b4ab9946a56a180fe64ef67816a05d4fe4
+  languageName: node
+  linkType: hard
+
+"chart.js@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "chart.js@npm:3.8.0"
+  checksum: 0360212bf5d534effc8475a1aa705ba7257a315af368b5e8eecf476f0bd57a6bb80ad740e870d552f2d11e134dd1497ccef02950d7e626c21a400ff00ecf59af
   languageName: node
   linkType: hard
 

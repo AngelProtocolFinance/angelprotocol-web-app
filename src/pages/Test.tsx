@@ -1,4 +1,12 @@
-import React from "react";
+import {
+  ArcElement,
+  Chart,
+  ChartData,
+  Legend,
+  PieController,
+  Tooltip,
+} from "chart.js";
+import React, { useEffect, useRef } from "react";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import toCurrency from "helpers/toCurrency";
@@ -10,9 +18,9 @@ export default function TestPage() {
       <div className="mt-4 flex gap-2 items-baseline">
         <h4 className="text-xl font-extrabold uppercase">Donations Split</h4>
         <p className="text-5xl font-heading font-bold text-angel-orange">70%</p>
-        <PrimaryBtn className="uppercase font-heading text-xs justify-self-center px-2 py-1 rounded-sm self-center">
+        <Button className="uppercase font-heading text-xs justify-self-center px-2 py-1 rounded-sm self-center">
           update split
-        </PrimaryBtn>
+        </Button>
       </div>
       <input
         min={0}
@@ -60,21 +68,92 @@ export default function TestPage() {
               ))
               .concat(
                 <Cells type="td" cellClass="py-2" key="__add_vault">
-                  <PrimaryBtn className="px-2 py-1 text-xs uppercase flex items-center gap-1 rounded-sm">
+                  <Button className="px-2 py-1 text-xs uppercase flex items-center gap-1 rounded-sm">
                     <Icon type="Plus" />
                     <span>add vault</span>
-                  </PrimaryBtn>
+                  </Button>
                 </Cells>
               )}
           </TableSection>
         </table>
-        <div className="bg-sky-300">graph here</div>
+        <PieChart />
       </div>
     </div>
   );
 }
 
-function PrimaryBtn({
+function PieChart() {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  //initialize chart
+  useEffect(() => {
+    Chart.register(PieController, ArcElement, Legend, Tooltip);
+    const chartData: ChartData<"pie"> = {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          backgroundColor: [],
+        },
+      ],
+    };
+
+    for (const { name, value } of holdings) {
+      chartData.labels?.push(name);
+      chartData.datasets[0].data.push(value);
+    }
+    chartData.datasets[0].backgroundColor = holdings.map(
+      (_) => `hsla(198, 100%, ${Math.floor(Math.random() * 100)}%, 1)`
+    );
+
+    const chart = new Chart(
+      { canvas: canvasRef.current! },
+      {
+        type: "pie",
+        data: chartData,
+        // plugins: [plugin],
+        options: {
+          aspectRatio: 1,
+          plugins: {
+            legend: {
+              //do nothing when clicking
+              onClick: () => {},
+              labels: {
+                font: {
+                  size: 16,
+                  family: "Montserrat",
+                },
+                color: "white",
+                boxWidth: 10,
+                boxHeight: 10,
+              },
+              position: "right",
+            },
+          },
+          elements: {
+            arc: {
+              borderWidth: 0,
+            },
+          },
+        },
+      }
+    );
+
+    return () => {
+      chart.destroy();
+    };
+  }, []);
+
+  return (
+    <div className="max-w-sm">
+      <canvas ref={canvasRef} className="bg-transparent" />
+    </div>
+  );
+}
+
+function VaultSelection() {}
+
+function Button({
   className,
   ...restProps
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
@@ -129,3 +208,8 @@ type Vault = {
   riskLevel: "high" | "medium";
   prospectusUrl: string;
 };
+
+const vaults: Vault[] = [
+  { name: "Phoenix Dex", pctApy: 200, riskLevel: "high", prospectusUrl: "" },
+  { name: "Osmosis Dex", pctApy: 60, riskLevel: "medium", prospectusUrl: "" },
+];
