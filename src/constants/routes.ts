@@ -26,6 +26,7 @@ export enum appRoutes {
   govern = "govern",
   endowment_admin = "endowment-admin",
   donations = "donations",
+  test = "test",
 }
 
 export enum governRoutes {

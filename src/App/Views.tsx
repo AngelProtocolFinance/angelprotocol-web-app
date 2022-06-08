@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import TestPage from "pages/Test";
 import Loader from "components/Loader";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes, siteRoutes } from "constants/routes";
@@ -51,6 +52,7 @@ export default function Views() {
         <Route path={`${appRoutes.marketplace}`} element={<Market />} />
         <Route path={`${appRoutes.register}/*`} element={<Register />} />
         <Route path={`${appRoutes.tca}`} element={<TCA />} />
+        <Route path={`${appRoutes.test}`} element={<TestPage />} />
         <Route
           path="/:url*(/+)"
           element={<Navigate replace to={location.pathname.slice(0, -1)} />}
