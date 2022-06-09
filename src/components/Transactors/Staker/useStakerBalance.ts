@@ -25,7 +25,7 @@ export default function useStakerBalance(is_stake: boolean) {
       return [staked, vote_locked];
     }
     // is_stake ? haloBalance : new Dec(gov_staker.balance).div(1e6).toNumber();
-  }, [gov_staker, haloBalance, is_stake, coins]);
+  }, [gov_staker, haloBalance, is_stake]);
 
   return { balance, locked };
 }
