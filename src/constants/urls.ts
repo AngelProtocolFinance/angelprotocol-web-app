@@ -7,16 +7,14 @@ export const apes_endpoint =
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
-  [chainIDs.terra_bombay]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/test",
   [chainIDs.terra_classic]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
   //when wallet is not connected network === phoenix-1
   //query classis endpoint when wallet is not connected
   [chainIDs.terra_main]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
-  [chainIDs.terra_pisco]:
-    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/test",
+  //
+  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
 };
 
 export const TERRA_FINDER = "https://finder.terra.money/";

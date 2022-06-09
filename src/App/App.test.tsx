@@ -14,9 +14,9 @@ import { store } from "store/store";
 import App from "./App";
 
 const testnet = {
-  name: chainIDs.terra_bombay,
-  chainID: chainIDs.terra_bombay,
-  lcd: terra_lcds[chainIDs.terra_bombay],
+  name: chainIDs.terra_test,
+  chainID: chainIDs.terra_test,
+  lcd: terra_lcds[chainIDs.terra_test],
 };
 
 // define initial routes

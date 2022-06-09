@@ -19,7 +19,7 @@ const airdrop_api = aws.injectEndpoints({
       ) {
         try {
           const chainId = is_test
-            ? chainIDs.terra_bombay
+            ? chainIDs.terra_test
             : chainIDs.terra_classic;
           const terra_endpoint = terra_lcds[chainId];
           const airdrop_addr = contracts[chainId][sc.airdrop];

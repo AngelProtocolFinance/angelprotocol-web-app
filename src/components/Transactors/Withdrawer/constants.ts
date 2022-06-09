@@ -12,14 +12,4 @@ export const vaultMap: VaultMap = {
     name: "Anchor Vault",
     fieldId: VaultFieldIds.anchor1_amount,
   },
-
-  //testnet vaults
-  [contracts[chainIDs.terra_bombay][sc.anchor_vault1]]: {
-    name: "Anchor Vault",
-    fieldId: VaultFieldIds.anchor1_amount,
-  },
-  [contracts[chainIDs.terra_bombay][sc.anchor_vault2]]: {
-    name: "Anchor Vault",
-    fieldId: VaultFieldIds.anchor2_amount,
-  },
 };

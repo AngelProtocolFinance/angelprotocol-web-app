@@ -1,7 +1,6 @@
 export enum chainIDs {
   //for multi-chain wallets, generalize as either mainnet or testnet only
-  terra_pisco = "pisco-1",
-  terra_bombay = "bombay-12",
+  terra_test = "pisco-1",
   terra_main = "phoenix-1",
   terra_classic = "columbus-5",
   terra_local = "localterra",

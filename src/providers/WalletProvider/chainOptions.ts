@@ -19,8 +19,8 @@ export const mainnet: NetworkInfo = {
 
 const testnet: NetworkInfo = {
   name: "testnet",
-  chainID: chainIDs.terra_bombay,
-  lcd: terra_lcds[chainIDs.terra_bombay],
+  chainID: chainIDs.terra_test,
+  lcd: terra_lcds[chainIDs.terra_test],
 };
 
 export const chainOptions: WalletControllerChainOptions = {

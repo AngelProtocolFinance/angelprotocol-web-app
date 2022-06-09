@@ -37,7 +37,7 @@ const _CURRENCIES: Record<denoms, Currency> = {
   },
   [denoms.uusd]: {
     denom: denoms.uusd,
-    ticker: "USTC",
+    ticker: "UST",
     icon: ustc,
   },
   [denoms.uluna]: {
