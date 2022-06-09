@@ -1,5 +1,4 @@
 import Halo, { H, T } from "contracts/Halo";
-import { chainIDs } from "constants/chainIDs";
 import { gov_api } from "./gov";
 import { gov_config, gov_state, staker, poll } from "./placeholders";
 import { useContract } from "../useContract";
@@ -38,29 +37,22 @@ export function useGovPolls() {
 
 export function useGovPoll(poll_id: number) {
   const { useGovPollsQuery } = gov_api;
-  const { wallet, contract } = useContract<H, T>(Halo);
+  const { contract } = useContract<H, T>(Halo);
   const { data = poll } = useGovPollsQuery(contract.polls, {
     selectFromResult: ({ data }) => ({
       data: data?.find((poll) => poll.id === poll_id),
     }),
-    skip:
-      poll_id === 0 ||
-      (wallet && wallet.network.chainID === chainIDs.terra_local),
+    skip: poll_id === 0,
   });
   return data;
 }
 
 export function useGovConfig() {
   const { useGovConfigQuery } = gov_api;
-  const { wallet, contract } = useContract<H, T>(Halo);
-  const { data = gov_config } = useGovConfigQuery(
-    {
-      address: contract.gov_address,
-      msg: { config: {} },
-    },
-    {
-      skip: wallet && wallet.network.chainID === chainIDs.terra_local,
-    }
-  );
+  const { contract } = useContract<H, T>(Halo);
+  const { data = gov_config } = useGovConfigQuery({
+    address: contract.gov_address,
+    msg: { config: {} },
+  });
   return data;
 }
