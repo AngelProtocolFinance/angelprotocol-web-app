@@ -13,14 +13,14 @@ const localterra: NetworkInfo = {
 
 export const mainnet: NetworkInfo = {
   name: "mainnet",
-  chainID: chainIDs.terra_main,
-  lcd: terra_lcds[chainIDs.terra_main],
+  chainID: chainIDs.terra_classic,
+  lcd: terra_lcds[chainIDs.terra_classic],
 };
 
 const testnet: NetworkInfo = {
   name: "testnet",
-  chainID: chainIDs.terra_test,
-  lcd: terra_lcds[chainIDs.terra_test],
+  chainID: chainIDs.terra_bombay,
+  lcd: terra_lcds[chainIDs.terra_bombay],
 };
 
 export const chainOptions: WalletControllerChainOptions = {

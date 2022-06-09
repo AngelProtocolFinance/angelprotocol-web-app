@@ -1,29 +1,30 @@
 import { max_desc_bytes, max_link_bytes, max_title_bytes } from "./schema";
 import { CreatePollValues } from "./types";
 import { Fee } from "@terra-money/terra.js";
-import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import getTokenBalance from "helpers/getTokenBalance";
 
 export default function useCreatePollEstimate() {
   const {
     getValues,
     formState: { isDirty, isValid },
   } = useFormContext<CreatePollValues>();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
+  const { displayCoin: mainBalance, coins } = useGetter(
+    (state) => state.wallet
+  );
   const dispatch = useSetter();
-  const { haloBalance } = useHaloBalance();
   const { wallet } = useWalletContext();
 
   const [maxFee, setMaxFee] = useState<Fee>();
@@ -40,6 +41,7 @@ export default function useCreatePollEstimate() {
 
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
+        const haloBalance = getTokenBalance(coins, denoms.uhalo);
         if (amount >= haloBalance) {
           dispatch(setFormError("Not enough halo balance"));
           return;
@@ -82,7 +84,7 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [wallet, haloBalance, mainBalance, isDirty, isValid]);
+  }, [wallet, coins, mainBalance, isDirty, isValid]);
 
   return { wallet, maxFee };
 

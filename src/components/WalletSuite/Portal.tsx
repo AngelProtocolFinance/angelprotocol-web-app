@@ -6,7 +6,7 @@ import { useLookupQuery } from "services/aws/endowments/endowments";
 
 export default function Portal() {
   const { wallet } = useWalletContext();
-  const isTestNet = wallet?.network.chainID === chainIDs.terra_test;
+  const isTestNet = wallet?.network.chainID === chainIDs.terra_pisco;
   //on testnet --> url resolves to endpoint/endowments/testnet
   const { data, isLoading } = useLookupQuery(isTestNet);
 

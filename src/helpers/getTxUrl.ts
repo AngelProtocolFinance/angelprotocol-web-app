@@ -3,9 +3,9 @@ import { TERRA_FINDER } from "constants/urls";
 
 export default function getTxUrl(chainID: chainIDs, txhash: string) {
   switch (chainID) {
-    case chainIDs.terra_main:
-      return `${TERRA_FINDER}mainnet/tx/${txhash}`;
-    case chainIDs.terra_test:
+    case chainIDs.terra_classic:
+      return `${TERRA_FINDER}classic/tx/${txhash}`;
+    case chainIDs.terra_bombay:
       return `${TERRA_FINDER}testnet/tx/${txhash}`;
     case chainIDs.eth_ropsten:
       return `https://ropsten.etherscan.io/tx/${txhash}`;

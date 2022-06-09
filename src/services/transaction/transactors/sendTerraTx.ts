@@ -47,7 +47,7 @@ export const sendTerraTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const denom = args.feedDenom || denoms.uluna;
+        const denom = args.feedDenom || denoms.uusd;
         const fee = await contract.estimateFee(args.msgs, denom);
         const feeData = extractFeeData(fee, denom);
 
@@ -112,6 +112,7 @@ export const sendTerraTx = createAsyncThunk(
         });
       }
     } catch (err) {
+      console.error(err);
       handleTerraError(err, updateTx);
     }
   }

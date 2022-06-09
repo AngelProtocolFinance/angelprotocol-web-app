@@ -10,7 +10,7 @@ export default function useAirdrop() {
   const { wallet } = useWalletContext();
   const { showModal } = useSetModal();
 
-  const is_test = wallet?.network.chainID === chainIDs.terra_test;
+  const is_test = wallet?.network.chainID === chainIDs.terra_pisco;
   const { data = [] } = useAirdropQuery(
     {
       wallet_addr: wallet?.address!,

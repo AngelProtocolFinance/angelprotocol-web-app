@@ -16,7 +16,7 @@ import { useSetter } from "store/accessors";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
-  const terra_chain_ref = useRef<string>(chainIDs.terra_test);
+  const terra_chain_ref = useRef<string>(chainIDs.terra_pisco);
 
   //terra states
   const { status: terraStatus, wallet } = useWalletContext();

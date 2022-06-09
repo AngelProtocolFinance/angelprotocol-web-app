@@ -3,21 +3,21 @@ import {
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
-import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES, denoms } from "constants/currency";
 import LP from "contracts/LP";
+import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
@@ -29,8 +29,9 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
-  const { haloBalance } = useHaloBalance();
+  const { displayCoin: mainBalance, coins } = useGetter(
+    (state) => state.wallet
+  );
 
   const { wallet } = useWalletContext();
 
@@ -65,6 +66,7 @@ export default function useSwapEstimator() {
             return;
           }
         } else {
+          const haloBalance = getTokenBalance(coins, denoms.uhalo);
           if (amount > haloBalance) {
             dispatch(setFormError("Not enough HALO"));
             return;
@@ -144,7 +146,14 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, mainBalance, is_buy, debounced_slippage]);
+  }, [
+    debounced_amount,
+    wallet,
+    mainBalance,
+    coins,
+    is_buy,
+    debounced_slippage,
+  ]);
 
   return { wallet, tx };
 }

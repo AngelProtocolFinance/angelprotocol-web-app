@@ -27,6 +27,5 @@ export default function usePortion(type: string) {
 
 const decimals: { [index: string]: number } = {
   [denoms.uluna]: 6,
-  [denoms.btc]: 6,
   [denoms.ether]: 6,
 };

@@ -22,7 +22,7 @@ export function useProfile(charity_addr: string) {
 export function useCategorizedProfiles() {
   const { useUseCategorizedProfilesQuery } = endowments_api;
   const { wallet } = useWalletContext();
-  const isTest = wallet?.network.chainID === chainIDs.terra_test;
+  const isTest = wallet?.network.chainID === chainIDs.terra_bombay;
   const {
     data = {},
     isLoading,
@@ -37,7 +37,7 @@ export function useCategorizedProfiles() {
 export function useFundProfiles(fund_id: number) {
   const { useProfilesQuery } = endowments_api;
   const { wallet } = useWalletContext();
-  const isTest = wallet?.network.chainID === chainIDs.terra_test;
+  const isTest = wallet?.network.chainID === chainIDs.terra_bombay;
 
   const { profiles = [] } = useProfilesQuery(isTest, {
     selectFromResult: ({ data }) => ({
