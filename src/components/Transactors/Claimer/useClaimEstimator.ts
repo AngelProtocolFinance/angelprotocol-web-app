@@ -1,25 +1,24 @@
 import { CreateTxOptions } from "@terra-money/terra.js";
-import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
 import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 
 export default function useClaimEstimator() {
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
   const gov_staker = useGovStaker();
   const { wallet } = useWalletContext();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
+  const { displayCoin } = useGetter((state) => state.wallet);
 
   useEffect(() => {
     (async () => {
@@ -50,7 +49,7 @@ export default function useClaimEstimator() {
         const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeData.amount >= mainBalance.amount) {
+        if (feeData.amount >= displayCoin.amount) {
           dispatch(
             setFormError(
               `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
@@ -72,7 +71,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [wallet, mainBalance, gov_staker]);
+  }, [wallet, displayCoin, gov_staker]);
 
   return { wallet, tx };
 }

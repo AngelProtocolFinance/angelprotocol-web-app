@@ -1,5 +1,5 @@
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
-import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES } from "constants/currency";
 import Halo from "contracts/Halo";
 import { Vote } from "contracts/types";
 import extractFeeData from "helpers/extractFeeData";
@@ -9,13 +9,12 @@ import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useGovStaker } from "services/terra/gov/queriers";
-import { useBalances, useHaloBalance } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { VoteValues } from "./types";
 
 export default function useVoteEstimator() {
@@ -26,8 +25,9 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
-  const { haloBalance } = useHaloBalance();
+  const { displayCoin: mainBalance, coins } = useGetter(
+    (state) => state.wallet
+  );
   const { wallet } = useWalletContext();
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
@@ -68,7 +68,6 @@ export default function useVoteEstimator() {
           return;
         }
 
-        //check if voter has enough staked and not yet used to vote for other polls
         const staked_amount = new Dec(govStaker.balance);
         const vote_amount = new Dec(debounced_amount).mul(1e6);
 
@@ -110,14 +109,7 @@ export default function useVoteEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_vote,
-    wallet,
-    mainBalance,
-    haloBalance,
-    govStaker,
-  ]);
+  }, [debounced_amount, debounced_vote, wallet, mainBalance, govStaker, coins]);
 
   return { tx, wallet };
 }

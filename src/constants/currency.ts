@@ -1,44 +1,16 @@
-import atom from "assets/icons/currencies/atom.png";
 import bnb from "assets/icons/currencies/bnb.png";
-import btc from "assets/icons/currencies/btc.png";
 import ether from "assets/icons/currencies/ether.png";
 import halo from "assets/icons/currencies/halo_outline.png";
-import krt from "assets/icons/currencies/krt.svg";
 import luna from "assets/icons/currencies/luna.svg";
-import mnt from "assets/icons/currencies/mnt.svg";
-import sdt from "assets/icons/currencies/sdt.svg";
-import sol from "assets/icons/currencies/sol.svg";
-import token from "assets/icons/currencies/token.svg";
+import ustc from "assets/icons/currencies/ustc.png";
+import coin from "assets/icons/currencies/coin.png";
 
 export enum denoms {
   bnb = "bnb",
-  btc = "btc",
-  coin = "coin",
   ether = "ether",
-  sol = "sol",
-  uatom = "uatom",
-  uaud = "uaud",
-  ucad = "ucad",
-  uchf = "uchf",
-  ucny = "ucny",
-  udkk = "udkk",
-  ueur = "ueur",
-  ugbp = "ugbp",
+  uusd = "uusd",
   uhalo = "uhalo",
-  uhkd = "uhkd",
-  uidr = "uidr",
-  uinr = "uinr",
-  ujpy = "ujpy",
-  ukrw = "ukrw",
   uluna = "uluna",
-  umnt = "umnt",
-  unok = "unok",
-  uphp = "uphp",
-  usdr = "usdr",
-  usek = "usek",
-  usgd = "usgd",
-  uthb = "uthb",
-  wei = "wei",
 }
 
 type Currency = {
@@ -47,147 +19,40 @@ type Currency = {
   icon: string;
 };
 
-export const CURRENCIES: Record<denoms, Currency> = {
+const _CURRENCIES: Record<denoms, Currency> = {
   [denoms.bnb]: {
     denom: denoms.bnb,
     ticker: "BNB",
     icon: bnb,
-  },
-  [denoms.btc]: {
-    denom: denoms.btc,
-    ticker: "BTC",
-    icon: btc,
-  },
-  [denoms.coin]: {
-    denom: denoms.coin,
-    ticker: "COIN",
-    icon: token,
   },
   [denoms.ether]: {
     denom: denoms.ether,
     ticker: "ETH",
     icon: ether,
   },
-  [denoms.sol]: {
-    denom: denoms.sol,
-    ticker: "SOL",
-    icon: sol,
-  },
-  [denoms.uatom]: {
-    denom: denoms.uatom,
-    ticker: "ATOM",
-    icon: atom,
-  },
-  [denoms.uaud]: {
-    denom: denoms.uaud,
-    ticker: "AUD",
-    icon: token,
-  },
-  [denoms.ucad]: {
-    denom: denoms.ucad,
-    ticker: "CAD",
-    icon: token,
-  },
-  [denoms.uchf]: {
-    denom: denoms.uchf,
-    ticker: "CHF",
-    icon: token,
-  },
-  [denoms.ucny]: {
-    denom: denoms.ucny,
-    ticker: "CNY",
-    icon: token,
-  },
-  [denoms.udkk]: {
-    denom: denoms.udkk,
-    ticker: "DKK",
-    icon: token,
-  },
-  [denoms.ueur]: {
-    denom: denoms.ueur,
-    ticker: "EUR",
-    icon: token,
-  },
-  [denoms.ugbp]: {
-    denom: denoms.ugbp,
-    ticker: "GBP",
-    icon: token,
-  },
   [denoms.uhalo]: {
     denom: denoms.uhalo,
     ticker: "HALO",
     icon: halo,
   },
-  [denoms.uhkd]: {
-    denom: denoms.uhkd,
-    ticker: "HKD",
-    icon: token,
-  },
-  [denoms.uidr]: {
-    denom: denoms.uidr,
-    ticker: "IDR",
-    icon: token,
-  },
-  [denoms.uinr]: {
-    denom: denoms.uinr,
-    ticker: "INR",
-    icon: token,
-  },
-  [denoms.ujpy]: {
-    denom: denoms.ujpy,
-    ticker: "JPY",
-    icon: token,
-  },
-  [denoms.ukrw]: {
-    denom: denoms.ukrw,
-    ticker: "KRT",
-    icon: krt,
+  [denoms.uusd]: {
+    denom: denoms.uusd,
+    ticker: "UST",
+    icon: ustc,
   },
   [denoms.uluna]: {
     denom: denoms.uluna,
-    ticker: "LUNA",
+    ticker: "LUNC",
     icon: luna,
-  },
-  [denoms.umnt]: {
-    denom: denoms.umnt,
-    ticker: "MNT",
-    icon: mnt,
-  },
-  [denoms.unok]: {
-    denom: denoms.unok,
-    ticker: "NOK",
-    icon: token,
-  },
-  [denoms.uphp]: {
-    denom: denoms.uphp,
-    ticker: "PHP",
-    icon: token,
-  },
-  [denoms.usdr]: {
-    denom: denoms.usdr,
-    ticker: "SDR",
-    icon: sdt,
-  },
-  [denoms.usek]: {
-    denom: denoms.usek,
-    ticker: "SEK",
-    icon: token,
-  },
-  [denoms.usgd]: {
-    denom: denoms.usgd,
-    ticker: "SGD",
-    icon: token,
-  },
-  [denoms.uthb]: {
-    denom: denoms.uthb,
-    ticker: "THB",
-    icon: token,
-  },
-  [denoms.wei]: {
-    denom: denoms.wei,
-    ticker: "WEI",
-    icon: token,
   },
 };
 
-export const MAIN_DENOM = denoms.uluna;
+export const CURRENCIES = new Proxy(_CURRENCIES, {
+  get(currencies, denom: denoms) {
+    return (
+      currencies[denom] || { denom, ticket: denom.toUpperCase(), icon: coin }
+    );
+  },
+});
+
+export const MAIN_DENOM = denoms.uusd;

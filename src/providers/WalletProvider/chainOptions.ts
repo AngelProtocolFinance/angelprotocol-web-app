@@ -13,8 +13,8 @@ const localterra: NetworkInfo = {
 
 export const mainnet: NetworkInfo = {
   name: "mainnet",
-  chainID: chainIDs.terra_main,
-  lcd: terra_lcds[chainIDs.terra_main],
+  chainID: chainIDs.terra_classic,
+  lcd: terra_lcds[chainIDs.terra_classic],
 };
 
 const testnet: NetworkInfo = {

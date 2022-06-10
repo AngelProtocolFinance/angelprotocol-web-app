@@ -1,5 +1,5 @@
 import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
-import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+import { CURRENCIES } from "constants/currency";
 import Halo from "contracts/Halo";
 import extractFeeData from "helpers/extractFeeData";
 import processEstimateError from "helpers/processEstimateError";
@@ -8,13 +8,12 @@ import useWalletContext from "hooks/useWalletContext";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 // import useTerraBalance from "hooks/useTerraBalance";
-import { useBalances } from "services/terra/queriers";
 import {
   setFee,
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { HaloStakingValues } from "./types";
 import useStakerBalance from "./useStakerBalance";
 
@@ -27,7 +26,7 @@ export default function useEstimator() {
   const { wallet } = useWalletContext();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { main: mainBalance } = useBalances(MAIN_DENOM);
+  const { displayCoin } = useGetter((state) => state.wallet);
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -76,7 +75,7 @@ export default function useEstimator() {
         const feeData = extractFeeData(fee);
 
         //2nd balance check including fees
-        if (feeData.amount >= mainBalance.amount) {
+        if (feeData.amount >= displayCoin.amount) {
           dispatch(
             setFormError(
               `Not enough ${CURRENCIES[feeData.denom].ticker} to pay fees`
@@ -89,6 +88,7 @@ export default function useEstimator() {
         setTx({ msgs: [govMsg], fee });
         dispatch(setFormLoading(false));
       } catch (err) {
+        console.error(err);
         dispatch(setFormError(processEstimateError(err)));
       }
     })();
@@ -97,7 +97,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, wallet, mainBalance, balance, locked]);
+  }, [debounced_amount, wallet, displayCoin, balance, locked]);
 
   return { tx, wallet };
 }

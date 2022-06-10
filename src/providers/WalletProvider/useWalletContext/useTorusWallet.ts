@@ -17,7 +17,7 @@ import { ConnectionProxy, WalletProxy } from "../types";
 const NETWORK =
   process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
 const chainId: chainIDs =
-  NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_main;
+  NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_classic;
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",

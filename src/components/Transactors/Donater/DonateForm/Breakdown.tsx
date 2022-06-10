@@ -31,9 +31,7 @@ function Entry(props: { title: string; amount: number; currency: denoms }) {
 }
 
 const decimals: Partial<{ [index in denoms]: number }> = {
-  [denoms.btc]: 6,
   [denoms.ether]: 6,
-  [denoms.sol]: 6,
   [denoms.uluna]: 6,
   [denoms.bnb]: 6,
 };

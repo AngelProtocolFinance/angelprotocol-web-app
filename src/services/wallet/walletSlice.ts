@@ -15,7 +15,7 @@ const initialState: State = {
   address: "walletaddrs",
   supported_denoms: [],
   id: undefined,
-  chainId: chainIDs.terra_main,
+  chainId: chainIDs.terra_classic,
 };
 
 const walletSlice = createSlice({
