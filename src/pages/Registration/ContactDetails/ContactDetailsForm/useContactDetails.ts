@@ -109,8 +109,8 @@ export default function useSaveContactDetails() {
     },
     [
       charity,
-      dispatch,
       handleError,
+      dispatch,
       navigate,
       registerCharity,
       resendEmail,
