@@ -1,6 +1,4 @@
-import { DonateValues } from "./types";
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-<<<<<<< HEAD
 import {
   Coin,
   CreateTxOptions,
@@ -9,17 +7,6 @@ import {
   MsgSend,
 } from "@terra-money/terra.js";
 import { ethers } from "ethers";
-=======
-import { Coin, CreateTxOptions, Dec, MsgSend } from "@terra-money/terra.js";
-import { ap_wallets } from "constants/ap_wallets";
-import { CURRENCIES, denoms } from "constants/currency";
-import Contract from "contracts/Contract";
-import { ethers } from "ethers";
-import extractFeeData from "helpers/extractFeeData";
-import processEstimateError from "helpers/processEstimateError";
-import useDebouncer from "hooks/useDebouncer";
-import useWalletContext from "hooks/useWalletContext";
->>>>>>> master
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Dwindow, Providers } from "services/provider/types";
@@ -29,7 +16,6 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
-<<<<<<< HEAD
 import Account from "contracts/Account";
 import CW20 from "contracts/CW20";
 import Contract from "contracts/Contract";
@@ -43,8 +29,6 @@ import { ap_wallets } from "constants/ap_wallets";
 import { chainIDs } from "constants/chainIDs";
 import { denoms } from "constants/currency";
 import { DonateValues } from "./types";
-=======
->>>>>>> master
 
 export default function useEstimator() {
   const { wallet } = useWalletContext();
@@ -52,11 +36,8 @@ export default function useEstimator() {
   const dispatch = useSetter();
   const {
     watch,
-<<<<<<< HEAD
     getValues,
     setError,
-=======
->>>>>>> master
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
   const { active: activeProvider } = useGetter((state) => state.provider);
@@ -96,7 +77,6 @@ export default function useEstimator() {
 
         dispatch(setFormLoading(true));
 
-<<<<<<< HEAD
         //CW20 TOKENS
         if (token.cw20_contract) {
           const tokenContract =
@@ -167,42 +147,6 @@ export default function useEstimator() {
               setTerraTx({ msgs: [depositMsg], fee });
             }
           }
-=======
-        //checks for uluna
-        if (currency === denoms.uluna && activeProvider === Providers.terra) {
-          //this block won't run if wallet is not connected
-          //activeProvider === Providers.none
-          const contract = new Contract(wallet);
-          const sender = wallet!.address;
-          const receiver = ap_wallets[currency];
-          const amount = new Dec(debounced_amount).mul(1e6);
-
-          const msg = new MsgSend(sender, receiver!, [
-            new Coin(currency, amount.toNumber()),
-          ]);
-          const aminoFee = await contract.estimateFee([msg]);
-          const feeData = extractFeeData(aminoFee);
-
-          if (debounced_amount + feeData.amount >= balance) {
-            dispatch(
-              setFormError(
-                `Not enough ${
-                  CURRENCIES[feeData.denom].ticker
-                } balance to pay fees`
-              )
-            );
-            return;
-          }
-          dispatch(setFee(feeData.amount));
-          setTerraTx({ msgs: [msg], fee: aminoFee });
-        }
-
-        //estimates for eth
-        if (currency === denoms.ether) {
-          const dwindow = window as Dwindow;
-          //provider is present at this point
-          let provider: ethers.providers.Web3Provider;
->>>>>>> master
 
           //checks for uluna
           if (token.min_denom === denoms.uluna) {
@@ -237,7 +181,6 @@ export default function useEstimator() {
             //provider is present at this point
             let provider: ethers.providers.Web3Provider;
 
-<<<<<<< HEAD
             if (activeProvider === Providers.ethereum) {
               provider = new ethers.providers.Web3Provider(dwindow.ethereum!);
             } else {
@@ -248,13 +191,6 @@ export default function useEstimator() {
             //no network request
             const signer = provider.getSigner();
             const sender = await signer.getAddress();
-=======
-          const tx: TransactionRequest = {
-            from: sender,
-            to: ap_wallets[currency],
-            value: wei_amount,
-          };
->>>>>>> master
 
             const gasPrice = await signer.getGasPrice();
             const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
@@ -296,19 +232,11 @@ export default function useEstimator() {
             const gasPrice = await signer.getGasPrice();
             const wei_amount = ethers.utils.parseEther(`${debounced_amount}`);
 
-<<<<<<< HEAD
             const tx: TransactionRequest = {
               from: sender,
               to: ap_wallets.eth,
               value: wei_amount,
             };
-=======
-          const tx: TransactionRequest = {
-            from: sender,
-            to: ap_wallets[denoms.ether], // even though we're on Binance Chain, we use ether wallet to handle the tx
-            value: wei_amount,
-          };
->>>>>>> master
 
             const gasLimit = await signer.estimateGas(tx);
             const fee_wei = gasLimit.mul(gasPrice);
