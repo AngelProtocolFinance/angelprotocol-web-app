@@ -3,18 +3,9 @@ import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { mainnet } from "../chainOptions";
-<<<<<<< HEAD
 import { WalletProxy } from "../types";
 import createWalletProxy from "./createWalletProxy";
 import { NETWORK, TORUS_CONNECTION } from "./types";
-=======
-import { ConnectionProxy, WalletProxy } from "../types";
-
-const NETWORK =
-  process.env.REACT_APP_CHAIN_ID === "testnet" ? "testnet" : "mainnet";
-const chainId: chainIDs =
-  NETWORK === "testnet" ? chainIDs.terra_test : chainIDs.terra_classic;
->>>>>>> master
 
 const openLogin = new OpenLogin({
   clientId: process.env.REACT_APP_WEB_3_AUTH_CLIENT_ID || "",
@@ -22,21 +13,6 @@ const openLogin = new OpenLogin({
   uxMode: "popup",
 });
 
-<<<<<<< HEAD
-=======
-const lcdClient = new LCDClient({
-  URL: terra_lcds[chainId],
-  chainID: chainId,
-});
-
-const TORUS_CONNECTION: ConnectionProxy = {
-  identifier: "torus",
-  name: "Torus",
-  type: "TORUS",
-  icon: torusIcon,
-};
-
->>>>>>> master
 type Result = {
   availableWallets: WalletProxy[];
   wallet: WalletProxy | undefined;

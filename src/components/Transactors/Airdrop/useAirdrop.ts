@@ -5,22 +5,8 @@ import Transactor, { TxProps } from "../Transactor";
 import Catcher, { Props } from "./Catcher";
 
 export default function useAirdrop() {
-<<<<<<< HEAD
   const { showModal } = useModalContext();
   const { airdrops } = useAirdropQuery();
-=======
-  const { wallet } = useWalletContext();
-  const { showModal } = useSetModal();
-
-  const is_test = wallet?.network.chainID === chainIDs.terra_test;
-  const { data = [] } = useAirdropQuery(
-    {
-      wallet_addr: wallet?.address!,
-      is_test,
-    },
-    { skip: wallet?.address === undefined }
-  );
->>>>>>> master
 
   const showDetails = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {

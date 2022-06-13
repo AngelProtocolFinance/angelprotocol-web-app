@@ -1,5 +1,4 @@
 import Registrar, { R, T } from "contracts/Registrar";
-<<<<<<< HEAD
 import { chainIDs } from "constants/chainIDs";
 import { useContract } from "../useContract";
 import { registrar_api } from "./registrar";
@@ -42,28 +41,18 @@ export function useRegistrarConfig() {
 
 export function useCategorizedEndowments() {
   const { useCategorizedEndowmentsQuery } = registrar_api;
-=======
-import { registrar_api } from "./registrar";
-
-export function useApprovedVaultsRate() {
-  const { useApprovedVaultsRateQuery } = registrar_api;
->>>>>>> master
   const { contract } = useContract<R, T>(Registrar);
   const {
     data = {},
     isError,
     isLoading,
     isFetching,
-<<<<<<< HEAD
   } = useCategorizedEndowmentsQuery(
     contract.endowmentList({
       endow_type: "charity",
       status: "1",
     })
   );
-=======
-  } = useApprovedVaultsRateQuery(contract.vaultsRate);
->>>>>>> master
 
   return {
     endowments: data,
