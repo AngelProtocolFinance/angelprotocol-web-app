@@ -6,9 +6,8 @@ import getTokenBalance from "helpers/getTokenBalance";
 import { denoms } from "constants/currency";
 
 export default function useStakerBalance(is_stake: boolean) {
-  const { coins } = useGetter((state) => state.wallet);
-  const haloBalance = getTokenBalance(coins, denoms.halo);
   const gov_staker = useGovStaker();
+  const { coins } = useGetter((state) => state.wallet);
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
     const haloBalance = getTokenBalance(coins, denoms.halo);
