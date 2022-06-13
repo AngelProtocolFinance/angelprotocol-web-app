@@ -8,12 +8,8 @@ type Contracts = {
 };
 
 export const contracts: Contracts = {
-<<<<<<< HEAD
   //latest address here - https://github.com/AngelProtocolFinance/angelprotocol-test-suite/blob/main/src/config/constants.ts
   [chainIDs.terra_main]: {
-=======
-  [chainIDs.terra_classic]: {
->>>>>>> master
     //core
     [sc.anchor_vault1]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
     [sc.anchor_vault2]: "",
@@ -43,7 +39,6 @@ export const contracts: Contracts = {
 
     //multicall
   },
-<<<<<<< HEAD
   [chainIDs.terra_test]: {
     //core
     // WARNING: below sc.anchor address will not work
@@ -101,6 +96,4 @@ export const contracts: Contracts = {
     //multicall
     [sc.multicall]: "",
   },
-=======
->>>>>>> master
 };

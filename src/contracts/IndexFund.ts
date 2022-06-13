@@ -1,19 +1,10 @@
-<<<<<<< HEAD
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { AllianceMember } from "services/terra/indexFund/types";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
-=======
-import Contract from "./Contract";
->>>>>>> master
 import { contracts } from "constants/contracts";
 import { sc } from "constants/sc";
-<<<<<<< HEAD
 import Contract from "./Contract";
 import { FundConfig, FundDetails, IndexFundOwnerPayload } from "./types";
-=======
-import { WalletProxy } from "providers/WalletProvider";
->>>>>>> master
 
 export default class Indexfund extends Contract {
   fund_id?: number;

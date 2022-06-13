@@ -1,18 +1,11 @@
-import Contract from "./Contract";
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { Simulation } from "services/terra/lp";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { contracts } from "constants/contracts";
-import { MAIN_DENOM } from "constants/currency";
+import { denoms } from "constants/currency";
 import { sc } from "constants/sc";
-<<<<<<< HEAD
 import Contract from "./Contract";
-=======
-import { WalletProxy } from "providers/WalletProvider";
-import { Simulation } from "services/terra/lp/types";
-import { ContractQueryArgs } from "services/terra/types";
->>>>>>> master
 
 export default class LP extends Contract {
   pair_address: string;
@@ -34,7 +27,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: MAIN_DENOM,
+                denom: denoms.uusd,
               },
             },
             amount: "1000000",
@@ -43,23 +36,6 @@ export default class LP extends Contract {
         },
       },
     };
-<<<<<<< HEAD
-=======
-
-    this.pool = { address: this.pair_address, msg: { pool: {} } };
-
-    this.pairInfo = {
-      address: this.pair_address,
-      msg: {
-        pair: {
-          asset_infos: [
-            { token: { contract_addr: this.lp_address } },
-            { native_token: { denom: MAIN_DENOM } },
-          ],
-        },
-      },
-    };
->>>>>>> master
   }
 
   //simul on demand
@@ -68,7 +44,7 @@ export default class LP extends Contract {
     const offer_asset = from_native
       ? {
           native_token: {
-            denom: MAIN_DENOM,
+            denom: denoms.uusd,
           },
         }
       : {
@@ -104,7 +80,7 @@ export default class LP extends Contract {
           offer_asset: {
             info: {
               native_token: {
-                denom: MAIN_DENOM,
+                denom: denoms.uusd,
               },
             },
             amount: uust_amount,
@@ -114,7 +90,7 @@ export default class LP extends Contract {
           // to: Option<HumanAddr>
         },
       },
-      [new Coin(MAIN_DENOM, uust_amount)]
+      [new Coin(denoms.uusd, uust_amount)]
     );
   }
 
