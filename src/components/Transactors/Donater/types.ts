@@ -9,6 +9,7 @@ export interface DonateValues {
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
+  isKycDonorOnly?: boolean;
 }
 
 interface FromTCA {
@@ -33,4 +34,5 @@ interface ToCharity {
   min_liq?: number;
 }
 
-export type FundFlow = ToFund | ToCharity | FromTCA;
+type FundFlow = ToFund | ToCharity | FromTCA;
+export type DonaterProps = FundFlow & { isKycDonorOnly?: boolean };

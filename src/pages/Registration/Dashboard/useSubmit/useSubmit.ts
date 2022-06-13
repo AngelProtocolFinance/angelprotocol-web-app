@@ -3,7 +3,7 @@ import { Charity } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { setFormLoading, setStage } from "slices/transaction/transactionSlice";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";

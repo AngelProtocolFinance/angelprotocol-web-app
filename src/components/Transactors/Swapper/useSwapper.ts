@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor, { TxProps } from "components/Transactor";
 import Swapper from "./Swapper";
 
 export default function useSwapper() {

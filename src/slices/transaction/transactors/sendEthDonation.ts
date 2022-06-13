@@ -7,7 +7,7 @@ import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
-import { Receiver } from "types/server/aws";
+import { KYCData, Receiver } from "types/server/aws";
 import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers/getProvider";
 import handleEthError from "helpers/handleEthError";
@@ -18,6 +18,7 @@ type EthDonateArgs = {
   providerId: ProviderId;
   tx: TransactionRequest;
   donateValues: DonateValues;
+  kycData?: KYCData;
 };
 
 export const sendEthDonation = createAsyncThunk(
@@ -70,6 +71,7 @@ export const sendEthDonation = createAsyncThunk(
           denomination: token.symbol,
           splitLiq: split_liq,
           walletAddress,
+          kycData: args.kycData,
         });
       }
       updateTx({
@@ -77,7 +79,6 @@ export const sendEthDonation = createAsyncThunk(
         message: "Thank you for your donation!",
         txHash: response.hash,
         chainId,
-        isReceiptEnabled: typeof receiver !== "undefined",
         isShareEnabled: true,
       });
     } catch (error) {

@@ -12,7 +12,7 @@ const initialState: IState = {
   form_loading: false,
   form_error: null,
   fee: 0,
-  stage: { step: "form" },
+  stage: { step: "initial" },
 };
 
 const transactionSlice = createSlice({
@@ -41,11 +41,7 @@ const transactionSlice = createSlice({
     setStage: (state, { payload }: PayloadAction<Stage>) => {
       state.stage = payload;
     },
-    resetTxFormState: (state) => {
-      state.fee = 0;
-      state.form_error = "";
-      state.form_loading = false;
-    },
+    resetTxFormState: () => initialState,
   },
 });
 

@@ -5,7 +5,7 @@ import { govTags, multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Airdrop from "contracts/Airdrop";

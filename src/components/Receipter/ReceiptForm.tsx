@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useFormContext } from "react-hook-form";
 import countryList from "react-select-country-list";
 import { ReceipterValues } from "./types";
-import useReceiptForm from "components/Receipter/useReceiptForm";
+import useReceiptForm from "components/Receipter/useRequestReceipt";
 import Selector from "components/Selector";
 import maskAddress from "helpers/maskAddress";
 import TextInput from "./TextInput";
@@ -16,14 +16,15 @@ export default function ReceiptForm() {
     formState: { errors },
     control,
   } = useFormContext<ReceipterValues>();
-  const { submitHandler, processing } = useReceiptForm();
+  const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
   const countries = useMemo(() => countryList().getData(), []);
+  console.log(errors);
 
   const transactionId = getValues("transactionId");
 
   return (
     <form
-      onSubmit={handleSubmit(submitHandler)}
+      onSubmit={handleSubmit(requestReceipt)}
       className="bg-white-grey grid gap-2 p-4 rounded-md w-full max-w-lg max-h-75vh overflow-y-auto"
       autoComplete="off"
       autoSave="off"
@@ -105,11 +106,11 @@ export default function ReceiptForm() {
         </label>
       </div>
       <button
-        disabled={processing}
+        disabled={isSubmitDisabled}
         className="bg-angel-orange disabled:bg-grey-accent p-2 rounded-md mt-2 uppercase text-md text-white font-bold"
         type="submit"
       >
-        {processing ? "Processing..." : "Submit"}
+        {isSubmitting ? "Processing..." : "Proceed"}
       </button>
     </form>
   );

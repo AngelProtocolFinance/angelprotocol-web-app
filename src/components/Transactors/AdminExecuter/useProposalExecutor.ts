@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { AdmiExecuterProps } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor, { TxProps } from "components/Transactor";
 import ExecuteForm from "./ExecuteForm";
 
 export default function useProposalExecutor(args: AdmiExecuterProps) {

@@ -7,7 +7,11 @@ import Index from "./Index";
 export default function Market() {
   const { endowments, isEndowmentsLoading } = useCategorizedEndowments();
 
-  const showDonater = useDonater({ to: "charity", receiver: "123" });
+  const showDonater = useDonater({
+    to: "charity",
+    receiver: "123",
+    isKycDonorOnly: true, //TODO: get from useProfileState
+  });
   return (
     <div className="grid content-start padded-container pb-16">
       <Banner />

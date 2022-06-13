@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor, { TxProps } from "components/Transactor";
 import Poller from "./Poller";
 import PollerForm from "./PollerForm";
 

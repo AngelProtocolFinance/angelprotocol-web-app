@@ -7,8 +7,15 @@ import NetworkPrompt from "./NetworkPrompt";
 import useDonate from "./useDonate";
 
 export default function DonateForm() {
-  const { donate, to, isFormLoading, isSubmitDisabled } = useDonate();
-
+  const {
+    donate,
+    to,
+    isFormLoading,
+    isSubmitDisabled,
+    isKycCompleted,
+    isKycRequired,
+    showKycForm,
+  } = useDonate();
   const [isAdvancedOptionShown, setIsAdvancedOptionShown] = useState(false);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
 
@@ -56,9 +63,17 @@ export default function DonateForm() {
           >
             Donor Terms of Use
           </a>
-          .
         </label>
       </div>
+      {isKycRequired && (
+        <div>
+          <span>[{isKycCompleted ? "x" : " "}]</span>
+          <p>This charity only accepts donations with KYC data</p>
+          <button onClick={showKycForm} type="button">
+            kyc form
+          </button>
+        </div>
+      )}
 
       <button
         disabled={isSubmitDisabled || !isTermsAccepted}

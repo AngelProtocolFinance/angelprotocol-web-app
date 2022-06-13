@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import ReceiptForm from "components/Receipter/ReceiptForm";
-import Receipter from "components/Receipter/Receipter";
 import { useGetter, useSetter } from "store/accessors";
 import { setStage } from "slices/transaction/transactionSlice";
 import Broadcast from "./Broadcast";
@@ -25,24 +23,14 @@ export default function TransactionPrompt() {
         return <Success {...stage} />;
       case "error":
         return <ErrPop {...stage} />;
-      case "receipt":
-        return (
-          <Receipter {...stage}>
-            <ReceiptForm />
-          </Receipter>
-        );
       default:
         throw Error("wrong prompt");
     }
   }, [stage]);
 
   function closePrompt() {
-    if (
-      stage.step === "success" ||
-      stage.step === "receipt" ||
-      stage.step === "error"
-    ) {
-      dispatch(setStage({ step: "form" }));
+    if (stage.step === "success" || stage.step === "error") {
+      dispatch(setStage({ step: "initial" }));
     }
     closeModal();
   }

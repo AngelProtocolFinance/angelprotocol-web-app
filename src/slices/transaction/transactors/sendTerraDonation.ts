@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
-import { Receiver } from "types/server/aws";
+import { KYCData, Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
 import { DonateValues } from "components/Transactors/Donater";
@@ -18,6 +18,7 @@ type TerraDonateArgs = {
   tx: CreateTxOptions;
   walletAddr: string;
   providerId: ProviderId;
+  kycData?: KYCData;
 };
 
 export const sendTerraDonation = createAsyncThunk(
@@ -44,6 +45,7 @@ export const sendTerraDonation = createAsyncThunk(
         if (typeof receiver !== "undefined") {
           await logDonation({
             ...receipient,
+            ...args.kycData,
             transactionId: response.result.txhash,
             transactionDate: new Date().toISOString(),
             chainId: terraChainId,
@@ -71,7 +73,6 @@ export const sendTerraDonation = createAsyncThunk(
             txHash: txInfo.txhash,
             txInfo,
             chainId: terraChainId,
-            isReceiptEnabled: typeof receiver !== "undefined",
             //share is enabled for both individual and tca donations
             isShareEnabled: true,
           });

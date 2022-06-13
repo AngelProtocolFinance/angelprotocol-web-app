@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import betaWhiteLogo from "assets/images/angelprotocol-beta-horiz-wht.png";
 import Icon from "components/Icon";
-import TransactionHint from "components/TransactionStatus/TransactionHint";
+import TransactionHint from "components/Transactor/TransactionHint";
 import Airdrop from "components/Transactors/Airdrop/Airdrop";
 import WalletSuite from "components/WalletSuite/WalletSuite";
 import { siteRoutes } from "constants/routes";
