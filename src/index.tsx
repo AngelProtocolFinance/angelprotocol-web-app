@@ -2,15 +2,12 @@ import { StrictMode, Suspense, lazy } from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { WalletProvider } from "providers";
 import Loader from "components/Loader/Loader";
-<<<<<<< HEAD
 import { store } from "store/store";
 import { site } from "./constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-=======
-import { WalletProvider } from "providers";
->>>>>>> master
 
 const App = lazy(() => import("./App/App"));
 const Website = lazy(() => import("./Website/Website"));
