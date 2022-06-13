@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-=======
-import Copier from "components/Copier/Copier";
-import Icon from "components/Icons/Icons";
-import { denoms, MAIN_DENOM } from "constants/currency";
-import { DeviceType, deviceType } from "helpers/deviceType";
-import maskAddress from "helpers/maskAddress";
-import useWalletContext from "hooks/useWalletContext";
-import { useSetBinance } from "providers/BinanceWallet/BinanceWallet";
-import { useSetMetamask } from "providers/Metamask/Metamask";
->>>>>>> master
 import { useState } from "react";
 import { Dwindow, Providers } from "services/provider/types";
 import { TerraIdentifiers } from "services/wallet/types";
@@ -41,15 +30,9 @@ export default function Details(props: { closeHandler: () => void }) {
   const filtered_coins = coins.filter(
     (coin) =>
       filtered ||
-<<<<<<< HEAD
       coin.min_denom === denoms.uusd ||
       coin.min_denom === denoms.halo ||
       Number(coin.balance) > criterionAmount
-=======
-      coin.denom === MAIN_DENOM ||
-      coin.denom === denoms.uhalo ||
-      Number(coin.amount) > criterionAmount
->>>>>>> master
   );
   const handleFilter = () => setFilter((p) => !p);
 
