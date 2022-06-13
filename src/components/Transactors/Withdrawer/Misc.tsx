@@ -1,7 +1,11 @@
 import { useFormContext } from "react-hook-form";
 import { useGetter } from "store/accessors";
 import toCurrency from "helpers/toCurrency";
+<<<<<<< HEAD
 import { WithdrawValues } from "./types";
+=======
+import { CURRENCIES, MAIN_DENOM } from "constants/currency";
+>>>>>>> master
 
 function Misc(props: { title: string; value: string }) {
   return (
@@ -14,7 +18,12 @@ function Misc(props: { title: string; value: string }) {
 
 export function Fee() {
   const { fee } = useGetter((state) => state.transaction);
-  return <Misc title="tx fee" value={`${toCurrency(fee, 3)} UST`} />;
+  return (
+    <Misc
+      title="tx fee"
+      value={`${toCurrency(fee, 3)} ${CURRENCIES[MAIN_DENOM].ticker}`}
+    />
+  );
 }
 
 export function Total() {

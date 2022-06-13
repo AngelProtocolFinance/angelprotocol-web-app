@@ -16,7 +16,11 @@ import { chainIDs } from "constants/chainIDs";
 
 export default function useProviderSwitcher() {
   const dispatch = useSetter();
+<<<<<<< HEAD
   const terra_chain_ref = useRef<string>(chainIDs.terra_main);
+=======
+  const terra_chain_ref = useRef<string>(chainIDs.terra_classic);
+>>>>>>> master
 
   //terra states
   const { status: terraStatus, wallet } = useWalletContext();

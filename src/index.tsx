@@ -3,10 +3,14 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loader from "components/Loader/Loader";
+<<<<<<< HEAD
 import { store } from "store/store";
 import { site } from "./constants/routes";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+=======
+import { WalletProvider } from "providers";
+>>>>>>> master
 
 const App = lazy(() => import("./App/App"));
 const Website = lazy(() => import("./Website/Website"));
@@ -21,7 +25,14 @@ ReactDOM.render(
       <BrowserRouter>
         <Suspense fallback={<LoaderComponent />}>
           <Routes>
-            <Route path={`${site.app}/*`} element={<App />} />
+            <Route
+              path={`${site.app}/*`}
+              element={
+                <WalletProvider>
+                  <App />
+                </WalletProvider>
+              }
+            />
             <Route path={`${site.home}*`} element={<Website />} />
           </Routes>
         </Suspense>

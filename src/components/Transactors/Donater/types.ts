@@ -4,7 +4,11 @@ export interface DonateValues {
   amount: string;
   split_liq: string;
   //metadata;
+<<<<<<< HEAD
   token: Token;
+=======
+  currency: denoms.ether | denoms.uluna | denoms.bnb | denoms.uusd;
+>>>>>>> master
   min_liq: number;
   max_liq: number;
   to: "tca" | "fund" | "charity";

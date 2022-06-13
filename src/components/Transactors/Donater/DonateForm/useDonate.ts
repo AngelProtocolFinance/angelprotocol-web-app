@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+=======
+import { useSetModal } from "components/Modal/Modal";
+import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import { DonateValues } from "components/Transactors/Donater/types";
+import { denoms, MAIN_DENOM } from "constants/currency";
+import useWalletContext from "hooks/useWalletContext";
+>>>>>>> master
 import { useCallback, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { resetFee } from "services/transaction/transactionSlice";
@@ -54,9 +62,14 @@ export default function useDonate() {
   // const btcSender = useBTCSender();
   // const solSender = useSolSender();
   // const atomSender = useAtomSender();
+<<<<<<< HEAD
   const denomRef = useRef<string>(denoms.uusd);
   const token = watch("token");
   const denom = token.min_denom;
+=======
+  const denomRef = useRef<denoms>(MAIN_DENOM);
+  const currency = watch("currency");
+>>>>>>> master
 
   //reset amount when changing currency
   useEffect(() => {
@@ -68,10 +81,20 @@ export default function useDonate() {
     //eslint-disable-next-line
   }, [denom]);
 
+<<<<<<< HEAD
   const getSender = (denom: string): Sender => {
     if (denom === denoms.wei) return ethSender;
     if (denom === denoms.bnb) return bnbSender;
     return terraSender;
+=======
+  const senders: Senders = {
+    [denoms.uluna]: terraSender,
+    [denoms.ether]: ethSender,
+    [denoms.bnb]: bnbSender,
+    // [denoms.btc]: btcSender,
+    // [denoms.sol]: solSender,
+    // [denoms.uatom]: atomSender,
+>>>>>>> master
   };
 
   return {

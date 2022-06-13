@@ -20,6 +20,14 @@ export enum Providers {
   // keplr = "keplr",
 }
 
+<<<<<<< HEAD
+=======
+export type Coin = {
+  amount: number; // "1000"
+  denom: denoms; //"denoms.uluna"
+};
+
+>>>>>>> master
 export type WalletInfo = {
   icon: string;
   displayCoin: { amount: number; symbol: string };

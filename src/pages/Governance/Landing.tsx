@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 import { app, site } from "constants/routes";
+=======
+import { CURRENCIES, denoms } from "constants/currency";
+>>>>>>> master
 import Figure from "./Figure";
 import Polls from "./Polls/Polls";
 import Portal from "./Portal";
 import useGov from "./useGov";
+<<<<<<< HEAD
+=======
+// import { useNavigate } from "react-router-dom";
+// import { app, site } from "constants/routes";
+>>>>>>> master
 
 export default function Landing() {
   const { staked, percentStaked, spot_price } = useGov();
@@ -17,24 +26,33 @@ export default function Landing() {
         <Figure
           title="halo price"
           value={spot_price}
+<<<<<<< HEAD
           symbol="UST"
+=======
+          denom={CURRENCIES[denoms.uusd].ticker}
+>>>>>>> master
           precision={6}
         />
         <Figure
           position="lg:row-start-2"
           title="total staked"
           value={staked}
+<<<<<<< HEAD
           symbol="HALO"
+=======
+          denom={CURRENCIES[denoms.uhalo].ticker}
+>>>>>>> master
           percent={percentStaked}
         />
         <Portal />
-        <DonationAdvert />
+        {/* <DonationAdvert /> */}
       </div>
       <Polls />
     </div>
   );
 }
 
+<<<<<<< HEAD
 function DonationAdvert() {
   const navigate = useNavigate();
   return (
@@ -56,3 +74,26 @@ function DonationAdvert() {
     </div>
   );
 }
+=======
+// function DonationAdvert() {
+//   const navigate = useNavigate();
+//   return (
+//     <div className="mt-5 w-full col-span-2 border-white/10 bg-white/10 rounded-md p-3 text-white-grey shadow-xl cursor-pointer">
+//       <h4 className="text-white text-center font-normal text-lg mb-5 overflow-hidden p-3 pl-10 pr-10">
+//         The charity marketplace is now open!
+//         <br />
+//         Give directly to the endowment of your choice and 10% of your donation
+//         will be matched with $HALO tokens shared between you and the charity.
+//       </h4>
+//       <div className="w-full flex justify-center">
+//         <button
+//           onClick={() => navigate(`${site.app}/${app.marketplace}`)}
+//           className="w-120 px-10 py-3 font-heading text-sm text-white-grey bg-blue-accent hover:bg-angel-blue border-2 border-white/30 shadow-sm w-32 uppercase text-center mb-1 lg:mb-0 rounded-md"
+//         >
+//           Donate now
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }
+>>>>>>> master

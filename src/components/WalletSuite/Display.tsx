@@ -4,6 +4,14 @@ import { useGetter } from "store/accessors";
 import maskAddress from "helpers/maskAddress";
 import toCurrency from "helpers/toCurrency";
 import Details from "./Details";
+<<<<<<< HEAD
+=======
+import { useGetter } from "store/accessors";
+import Icon from "components/Icons/Icons";
+import useKeyPress from "hooks/useKeyPress";
+import useBackdropDismiss from "./useBackdropDismiss";
+import { CURRENCIES } from "constants/currency";
+>>>>>>> master
 
 //this component won't be rendered if wallet is not connected
 export default function Display() {
@@ -35,7 +43,12 @@ export default function Display() {
           {isUpdating ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
+<<<<<<< HEAD
           {displayCoin.symbol} {toCurrency(displayCoin.amount, 3, true)}
+=======
+          {CURRENCIES[displayCoin.denom].ticker}{" "}
+          {toCurrency(displayCoin.amount, 3, true)}
+>>>>>>> master
         </span>
       </button>
       {detailsShown && <Details closeHandler={hideDetails} />}

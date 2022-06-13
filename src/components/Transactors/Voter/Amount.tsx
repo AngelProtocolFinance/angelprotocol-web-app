@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import { CURRENCIES, denoms } from "constants/currency";
+import { useFormContext } from "react-hook-form";
+>>>>>>> master
 import { ErrorMessage } from "@hookform/error-message";
 import { Dec } from "@terra-money/terra.js";
 import { useFormContext } from "react-hook-form";
@@ -38,7 +43,11 @@ export default function Amount() {
           autoComplete="off"
           id="amount"
           type="text"
+<<<<<<< HEAD
           placeholder="HALO"
+=======
+          placeholder={CURRENCIES[denoms.uhalo].ticker}
+>>>>>>> master
           className="flex-auto p-1 pl-0 focus:outline-none bg-light-grey text-angel-grey text-lg"
         />
         <div

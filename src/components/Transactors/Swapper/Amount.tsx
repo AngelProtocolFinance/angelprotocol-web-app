@@ -1,8 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+<<<<<<< HEAD
 import Icon from "components/Icon";
 import { denomIcons } from "constants/currency";
+=======
+import { CURRENCIES, denoms, MAIN_DENOM } from "constants/currency";
+import { ErrorMessage } from "@hookform/error-message";
+import { SwapValues } from "./types";
+>>>>>>> master
 import Balance from "./Balance";
 import Slippage from "./Slippage";
 import { SwapValues } from "./types";
@@ -20,6 +26,9 @@ export default function Amount() {
   }
 
   const is_buy = watch("is_buy");
+
+  const currency = is_buy ? CURRENCIES[MAIN_DENOM] : CURRENCIES[denoms.uhalo];
+
   return (
     <div className="grid mt-2">
       <div className="grid grid-cols-1a mb-1">
@@ -48,12 +57,14 @@ export default function Amount() {
             className={`${
               is_buy ? "w-10 h-10" : "w-9 h-9"
             } mr-1 object-contain`}
+<<<<<<< HEAD
             src={is_buy ? denomIcons.uusd : denomIcons.halo}
+=======
+            src={currency.icon}
+>>>>>>> master
             alt=""
           />
-          <span className="block font-bold text-2xl">
-            {is_buy ? "UST" : "HALO"}
-          </span>
+          <span className="block font-bold text-2xl">{currency.ticker}</span>
         </label>
 
         <input

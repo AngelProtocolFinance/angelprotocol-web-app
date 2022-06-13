@@ -10,6 +10,7 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 
 //terra urls
 export const terra_lcds: URL_GROUP = {
+<<<<<<< HEAD
   [chainIDs.terra_test]:
     "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/test",
   [chainIDs.terra_main]:
@@ -47,9 +48,19 @@ export const eth_rpcs: URL_GROUP = {
     "https://ropsten.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
   [chainIDs.eth_kovan]:
     "https://kovan.infura.io/v3/f7ca16d6c4704dee939ca7557896cf07",
+=======
+  [chainIDs.terra_classic]:
+    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
+  //when wallet is not connected network === phoenix-1
+  //query classis endpoint when wallet is not connected
+  [chainIDs.terra_main]:
+    "https://59vigz9r91.execute-api.us-east-1.amazonaws.com/terra/lcd/main",
+  //
+  [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
+>>>>>>> master
 };
 
-export const TERRA_FINDER = "https://terrascope.info/";
+export const TERRA_FINDER = "https://finder.terra.money/";
 
 type URL_GROUP = {
   [index: string]: string;

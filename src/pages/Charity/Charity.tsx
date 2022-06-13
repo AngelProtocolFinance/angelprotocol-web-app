@@ -34,6 +34,7 @@ export default function Charity() {
   if (isResourcesError || !profile) return <PageError />;
   return (
     <section className="padded-container grid grid-cols-1 lg:grid-cols-[2fr_5fr] grid-rows-aa1 gap-4 pb-16 content-start">
+<<<<<<< HEAD
       <div className="lg:col-span-2 flex gap-2">
         <LinkIcon to={`${site.app}/${app.marketplace}`} _iconType="ArrowBack">
           back to marketplace
@@ -57,6 +58,14 @@ export default function Charity() {
         )}
       </div>
 
+=======
+      <Link
+        to={`${site.app}/${app.marketplace}`}
+        className="lg:col-span-2 flex items-center gap-1 font-heading uppercase font-bold text-sm text-white hover:text-angel-blue"
+      >
+        <Icon type="ArrowBack" size={15} /> back to marketplace
+      </Link>
+>>>>>>> master
       <CharityHeader {...profile} />
       <CharityContent {...profile} classes="row-span-2" />
       <CharityStats {...profile} classes="hidden lg:block mt-4" />

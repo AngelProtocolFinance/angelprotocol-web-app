@@ -1,5 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "components/Transactors/Donater/types";
+<<<<<<< HEAD
+=======
+import { CURRENCIES, denoms } from "constants/currency";
+>>>>>>> master
 import toCurrency from "helpers/toCurrency";
 
 export default function usePortion(type: string) {
@@ -11,7 +15,12 @@ export default function usePortion(type: string) {
   const token = watch("token");
 
   //values
+<<<<<<< HEAD
   const disp_amount = `${token.symbol} ${toCurrency(
+=======
+  const precision = decimals[currency];
+  const disp_amount = `${CURRENCIES[currency].ticker} ${toCurrency(
+>>>>>>> master
     ((isLocked ? split_locked : split_liq) / 100) * amount,
     6
   )}`;
@@ -21,3 +30,11 @@ export default function usePortion(type: string) {
     disp_split: isLocked ? split_locked : split_liq,
   };
 }
+<<<<<<< HEAD
+=======
+
+const decimals: { [index: string]: number } = {
+  [denoms.uluna]: 6,
+  [denoms.ether]: 6,
+};
+>>>>>>> master

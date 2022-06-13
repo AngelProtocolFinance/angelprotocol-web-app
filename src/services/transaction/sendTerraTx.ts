@@ -1,11 +1,37 @@
+<<<<<<< HEAD:src/services/transaction/sendTerraTx.ts
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { CreateTxOptions } from "@terra-money/terra.js";
 import { RootState } from "store/store";
+=======
+import transactionSlice, { setStage } from "../transactionSlice";
+import { StageUpdator, Step } from "../types";
+import { createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import { chainIDs } from "constants/chainIDs";
+import { CURRENCIES, denoms } from "constants/currency";
+>>>>>>> master:src/services/transaction/transactors/sendTerraTx.ts
 import Contract from "contracts/Contract";
-import extractFeeNum from "helpers/extractFeeNum";
+import extractFeeData from "helpers/extractFeeData";
 import handleTerraError from "helpers/handleTerraError";
+<<<<<<< HEAD:src/services/transaction/sendTerraTx.ts
 import transactionSlice, { setStage } from "./transactionSlice";
 import { SenderArgs, StageUpdator, Step, WithMsg, WithTx } from "./types";
+=======
+import { WalletProxy } from "providers/WalletProvider";
+import { tags as awsTags } from "services/aws/tags";
+import { tags as terraTags } from "services/terra/tags";
+import { RootState } from "store/store";
+
+type WithMsg = { msgs: Msg[]; tx?: never }; //tx created onflight
+type WithTx = { msgs?: never; tx: CreateTxOptions }; //pre-estimated tx
+
+type SenderArgs = {
+  wallet: WalletProxy | undefined;
+  tagPayloads?: PayloadAction<TagDescription<terraTags | awsTags>[], string>[];
+  feedDenom?: denoms;
+};
+>>>>>>> master:src/services/transaction/transactors/sendTerraTx.ts
 
 export const sendTerraTx = createAsyncThunk(
   `${transactionSlice.name}/sendTerraTx`,
@@ -32,19 +58,32 @@ export const sendTerraTx = createAsyncThunk(
         tx = args.tx;
       } else {
         //run fee estimation for on-demand created tx
-        const fee = await contract.estimateFee(args.msgs);
-        const feeNum = extractFeeNum(fee);
+        const denom = args.feedDenom || denoms.uusd;
+        const fee = await contract.estimateFee(args.msgs, denom);
+        const feeData = extractFeeData(fee, denom);
 
         const state = getState() as RootState;
+<<<<<<< HEAD:src/services/transaction/sendTerraTx.ts
         const feeSymbol = args.feeSymbol || "UST";
         const walletBalanceForFee =
           state.wallet.coins.find((coin) => coin.symbol === feeSymbol)
             ?.balance || 0;
+=======
+        const walletBalanceForFee =
+          state.wallet.coins.find((coin) => coin.denom === feeData.denom)
+            ?.amount || 0;
+>>>>>>> master:src/services/transaction/transactors/sendTerraTx.ts
 
-        if (feeNum > walletBalanceForFee) {
+        if (feeData.amount > walletBalanceForFee) {
           updateTx({
             step: Step.error,
+<<<<<<< HEAD:src/services/transaction/sendTerraTx.ts
             message: `Not enough ${feeSymbol} to pay for fees`,
+=======
+            message: `Not enough ${
+              CURRENCIES[feeData.denom].ticker
+            } to pay for fees`,
+>>>>>>> master:src/services/transaction/transactors/sendTerraTx.ts
           });
           return;
         }
@@ -97,6 +136,7 @@ export const sendTerraTx = createAsyncThunk(
         });
       }
     } catch (err) {
+      console.error(err);
       handleTerraError(err, updateTx);
     }
   }

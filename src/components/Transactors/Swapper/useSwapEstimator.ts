@@ -3,6 +3,16 @@ import {
   Dec,
   MsgExecuteContract,
 } from "@terra-money/terra.js";
+<<<<<<< HEAD
+=======
+import { CURRENCIES, denoms } from "constants/currency";
+import LP from "contracts/LP";
+import getTokenBalance from "helpers/getTokenBalance";
+import processEstimateError from "helpers/processEstimateError";
+import toCurrency from "helpers/toCurrency";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+>>>>>>> master
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
@@ -11,6 +21,7 @@ import {
   setFormLoading,
 } from "services/transaction/transactionSlice";
 import { useGetter, useSetter } from "store/accessors";
+<<<<<<< HEAD
 import LP from "contracts/LP";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
@@ -18,6 +29,8 @@ import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
 import toCurrency from "helpers/toCurrency";
 import { denoms } from "constants/currency";
+=======
+>>>>>>> master
 import { getSpotPrice } from "./getSpotPrice";
 import { SwapValues } from "./types";
 
@@ -30,7 +43,13 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
+<<<<<<< HEAD
   const { coins } = useGetter((state) => state.wallet);
+=======
+  const { displayCoin: mainBalance, coins } = useGetter(
+    (state) => state.wallet
+  );
+>>>>>>> master
 
   const { wallet } = useWalletContext();
 
@@ -61,11 +80,19 @@ export default function useSwapEstimator() {
         const haloBalance = getTokenBalance(coins, denoms.halo);
         // first balance check
         if (is_buy) {
+<<<<<<< HEAD
           if (amount > ustBalance) {
             setError("amount", { message: "not enough UST" });
+=======
+          if (amount > mainBalance.amount) {
+            dispatch(
+              setFormError(`Not enough ${CURRENCIES[mainBalance.denom].ticker}`)
+            );
+>>>>>>> master
             return;
           }
         } else {
+          const haloBalance = getTokenBalance(coins, denoms.uhalo);
           if (amount > haloBalance) {
             setError("amount", { message: "not enough HALO" });
             return;
@@ -105,15 +132,35 @@ export default function useSwapEstimator() {
         }
 
         const fee = await contract.estimateFee([swapMsg]);
-        const feeNum = fee.amount.get(denoms.uusd)!.mul(1e-6).amount.toNumber();
+        const feeNum = fee.amount
+          .get(mainBalance.denom)!
+          .mul(1e-6)
+          .amount.toNumber();
 
         //2nd balance check including fees
+<<<<<<< HEAD
         if (is_buy && feeNum + debounced_amount >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
         }
         if (!is_buy && feeNum >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
+=======
+        if (is_buy && feeNum + debounced_amount >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${CURRENCIES[mainBalance.denom].ticker} to pay fees`
+            )
+          );
+          return;
+        }
+        if (!is_buy && feeNum >= mainBalance.amount) {
+          dispatch(
+            setFormError(
+              `Not enough ${CURRENCIES[mainBalance.denom].ticker} to pay fees`
+            )
+          );
+>>>>>>> master
           return;
         }
 
@@ -137,11 +184,18 @@ export default function useSwapEstimator() {
   }, [
     debounced_amount,
     wallet,
+<<<<<<< HEAD
     coins,
     is_buy,
     debounced_slippage,
     isValid,
     isDirty,
+=======
+    mainBalance,
+    coins,
+    is_buy,
+    debounced_slippage,
+>>>>>>> master
   ]);
 
   return { wallet, tx };

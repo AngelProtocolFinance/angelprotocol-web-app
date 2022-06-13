@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
 import { ContractQueryArgs } from "services/terra/types";
 import { WalletProxy } from "providers/WalletProvider";
 import { denoms } from "constants/currency";
 import Contract from "./Contract";
 import { Source, UpdateProfilePayload } from "./types";
+=======
+import Contract from "./Contract";
+import { Source } from "./types";
+import { MsgExecuteContract } from "@terra-money/terra.js";
+import { WalletProxy } from "providers/WalletProvider";
+import { ContractQueryArgs } from "services/terra/types";
+>>>>>>> master
 
 export default class Account extends Contract {
   address: string;
@@ -31,24 +39,24 @@ export default class Account extends Contract {
     };
   }
 
-  async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
-    this.checkWallet();
-    const pctLiquid = new Dec(splitToLiquid).div(100);
-    const pctLocked = new Dec(1).sub(pctLiquid);
+  // async createDepositMsg(UST_amount: number | string, splitToLiquid: number) {
+  //   this.checkWallet();
+  //   const pctLiquid = new Dec(splitToLiquid).div(100);
+  //   const pctLocked = new Dec(1).sub(pctLiquid);
 
-    const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
-    return new MsgExecuteContract(
-      this.walletAddr!,
-      this.address,
-      {
-        deposit: {
-          locked_percentage: pctLocked.toFixed(2),
-          liquid_percentage: pctLiquid.toFixed(2),
-        },
-      },
-      [new Coin(denoms.uusd, micro_UST_Amount)]
-    );
-  }
+  //   const micro_UST_Amount = new Dec(UST_amount).mul(1e6).toNumber();
+  //   return new MsgExecuteContract(
+  //     this.walletAddr!,
+  //     this.address,
+  //     {
+  //       deposit: {
+  //         locked_percentage: pctLocked.toFixed(2),
+  //         liquid_percentage: pctLiquid.toFixed(2),
+  //       },
+  //     },
+  //     [new Coin(denoms.uusd, micro_UST_Amount)]
+  //   );
+  // }
 
   createEmbeddedWithdrawMsg({
     sources,

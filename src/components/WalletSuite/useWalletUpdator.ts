@@ -1,4 +1,11 @@
 import { Dec } from "@terra-money/terra.js";
+<<<<<<< HEAD
+=======
+import metamaskIcon from "assets/icons/wallets/metamask.png";
+import binanceIcon from "assets/icons/wallets/binance.png";
+import { chainIDs } from "constants/chainIDs";
+import { denoms, MAIN_DENOM } from "constants/currency";
+>>>>>>> master
 import { ethers } from "ethers";
 import { useEffect } from "react";
 import binanceIcon from "assets/icons/wallets/binance.png";
@@ -16,8 +23,13 @@ import { denomIcons, denoms } from "constants/currency";
 export default function useWalletUpdator(activeProvider: Providers) {
   const dispatch = useSetter();
   const { wallet } = useWalletContext();
+<<<<<<< HEAD
   const { terraBalances, isTerraBalancesLoading } = useTerraBalances();
   const ustBalance = getTokenBalance(terraBalances, denoms.uusd);
+=======
+  const { main, others, terraBalancesLoading } = useBalances(MAIN_DENOM);
+  const { haloBalance, haloBalanceLoading } = useHaloBalance();
+>>>>>>> master
 
   //updator for terra-station and wallet connect
   useEffect(() => {
@@ -53,10 +65,18 @@ export default function useWalletUpdator(activeProvider: Providers) {
       setWalletDetails({
         id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
         icon: wallet.connection.icon,
+<<<<<<< HEAD
         displayCoin: { amount: ustBalance, symbol: "UST" },
         coins: terraBalances,
         address: wallet.address,
         chainId: wallet.network.chainID,
+=======
+        displayCoin: main,
+        coins: haloBalance !== 0 ? coinsWithHalo : others,
+        address: wallet.address,
+        chainId: wallet.network.chainID as chainIDs,
+        supported_denoms: [MAIN_DENOM],
+>>>>>>> master
       })
     );
     dispatch(setIsUpdating(false));
@@ -103,14 +123,26 @@ export default function useWalletUpdator(activeProvider: Providers) {
         const isBinance = provider._network.name.includes("bnb");
         const coins_copy = [...terraBalances];
 
+<<<<<<< HEAD
         coins_copy.push(
           isBinance ? createBnbToken(eth_balance) : createEthToken(eth_balance)
         );
+=======
+        const coins_copy = [...others];
+        coins_copy.push({
+          amount: eth_balance,
+          denom: isBinance ? denoms.bnb : denoms.ether,
+        });
+
+        const supported_denoms = [MAIN_DENOM];
+        supported_denoms.push(isBinance ? denoms.bnb : denoms.ether);
+>>>>>>> master
 
         dispatch(
           setWalletDetails({
             id: wallet.connection.identifier || TerraIdentifiers.terra_wc,
             icon: wallet.connection.icon,
+<<<<<<< HEAD
             displayCoin: { amount: ustBalance, symbol: "UST" },
             coins: coins_copy,
             address: wallet.address,
@@ -121,6 +153,16 @@ export default function useWalletUpdator(activeProvider: Providers) {
                 : wallet.network.chainID === chainIDs.terra_test
                 ? chainIDs.testnet
                 : `${network.chainId}`,
+=======
+            displayCoin: main,
+            coins: coins_copy,
+            address: wallet.address,
+            //for multi-chain wallets, should just be testnet or mainnet
+            chainId: (isBinance
+              ? network.chainId
+              : wallet.network.chainID) as chainIDs,
+            supported_denoms,
+>>>>>>> master
           })
         );
         dispatch(setIsUpdating(false));

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import heart_icon from "assets/icons/broken_heart.svg";
 import ua_icon from "assets/icons/ukraine.svg";
 import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
@@ -8,9 +9,19 @@ import useScrollShadow from "hooks/useScrollShadow";
 import { app, site } from "constants/routes";
 import MobileNav from "./MobileNav";
 import WebMenu from "./WebMenu";
+=======
+import betaBlueLogo from "assets/images/angelprotocol-beta-horiz-blu.png";
+import { site, app } from "constants/routes";
+import MobileNav from "./MobileNav";
+import WebMenu from "./WebMenu";
+import Icon from "components/Icons/Icons";
+// import useScrollShadow from "hooks/useScrollShadow";
+// import heart_icon from "assets/icons/broken_heart.svg";
+// import ua_icon from "assets/icons/ukraine.svg";
+>>>>>>> master
 
 export default function WebHead() {
-  const shadowRef = useScrollShadow();
+  // const shadowRef = useScrollShadow();
   const [navShown, showNav] = useState(false);
   function toggleNav() {
     showNav((prevState) => !prevState);
@@ -28,7 +39,7 @@ export default function WebHead() {
           to={`${site.app}/${app.marketplace}`}
           className={`justify-self-end border border-angel-orange/40 rounded-md bg-angel-orange text-white uppercase transform hover:scale-105 hover:shadow-lg transition active:translate-x-1 active:shadow-md ml-0 md:ml-2 py-2 px-4 `}
         >
-          Donate
+          Web app
         </Link>
         <button
           className="text-angel-grey block sm:hidden ml-2 justify-self-end"
@@ -43,7 +54,7 @@ export default function WebHead() {
         {navShown && <MobileNav />}
       </div>
 
-      <a
+      {/*<a
         ref={shadowRef}
         href={`https://ukraine.angelprotocol.io/`}
         target="_blank"
@@ -56,16 +67,16 @@ export default function WebHead() {
         </span>
         <Word icon={ua_icon} title="" />
         <Icon type="ExternalLink" className="text-lg" />
-      </a>
+      </a>*/}
     </header>
   );
 }
 
-function Word(props: { icon: string; title: string }) {
-  return (
-    <div className="flex items-center mr-2">
-      <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
-      <span className="md:uppercase">{props.title}</span>
-    </div>
-  );
-}
+// function Word(props: { icon: string; title: string }) {
+//   return (
+//     <div className="flex items-center mr-2">
+//       <img src={props.icon} alt="" className="w-4 h-4 mr-1" />
+//       <span className="md:uppercase">{props.title}</span>
+//     </div>
+//   );
+// }

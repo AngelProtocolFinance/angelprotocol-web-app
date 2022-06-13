@@ -1,7 +1,7 @@
 import { Coin, Fee, LCDClient, Msg, TxInfo } from "@terra-money/terra.js";
 import { WalletProxy } from "providers/WalletProvider";
 import { chainIDs } from "constants/chainIDs";
-import { denoms } from "constants/currency";
+import { MAIN_DENOM } from "constants/currency";
 import { terra_lcds } from "constants/urls";
 import { Disconnected, TxResultFail } from "./Errors";
 import { EmbeddedBankMsg, EmbeddedWasmMsg } from "./types";
@@ -14,8 +14,12 @@ export default class Contract {
   walletAddr?: string;
 
   constructor(wallet?: WalletProxy) {
+<<<<<<< HEAD
     this.wallet = wallet;
     this.chainID = wallet?.network.chainID || chainIDs.terra_main;
+=======
+    this.chainID = wallet?.network.chainID || chainIDs.terra_classic;
+>>>>>>> master
     this.url = terra_lcds[this.chainID];
     this.walletAddr = wallet?.address;
     this.client = new LCDClient({
@@ -31,17 +35,18 @@ export default class Contract {
   static gasAdjustment = 1.6; //use gas units 60% greater than estimate
 
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
-  static gasPrices = [
-    new Coin(denoms.uusd, 0.15),
-    new Coin(denoms.uluna, 0.01133),
-  ];
+  static gasPrices = [new Coin(MAIN_DENOM, 0.01133)];
 
   //for on-demand query, use RTK where possible
   async query<T>(source: string, message: object) {
     return this.client.wasm.contractQuery<T>(source, message);
   }
 
+<<<<<<< HEAD
   async estimateFee(msgs: Msg[], denom: string = denoms.uusd): Promise<Fee> {
+=======
+  async estimateFee(msgs: Msg[], denom = MAIN_DENOM): Promise<Fee> {
+>>>>>>> master
     this.checkWallet();
     const account = await this.client.auth.accountInfo(this.walletAddr!);
     return this.client.tx.estimateFee(

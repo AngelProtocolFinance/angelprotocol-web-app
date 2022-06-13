@@ -1,6 +1,10 @@
 import AppMenu from "components/AppFoot/AppMenu";
+<<<<<<< HEAD
 import Icon from "components/Icon";
 import { LITEPAPER, SOCIAL_MEDIA_LINKS } from "constants/urls";
+=======
+import { getIcon } from "components/Icons/Icons";
+>>>>>>> master
 
 export default function AppFoot() {
   return (
@@ -30,7 +34,11 @@ export default function AppFoot() {
           </ul>
 
           <a
+<<<<<<< HEAD
             href={LITEPAPER}
+=======
+            href="https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/ap-litepaper.pdf"
+>>>>>>> master
             className="mt-2 mb-1 font-semibold text-xs uppercase text-white-grey text-center"
             target="_blank"
             rel="noreferrer"

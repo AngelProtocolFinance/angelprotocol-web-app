@@ -1,4 +1,16 @@
+import { SEPARATOR } from "./constants";
+import { AmountInfo, VaultFieldIds, WithdrawValues } from "./types";
+import useFieldsAndLimits from "./useFieldsAndLimits";
 import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+<<<<<<< HEAD
+=======
+import Account from "contracts/Account";
+import { Source } from "contracts/types";
+import extractFeeData from "helpers/extractFeeData";
+import processEstimateError from "helpers/processEstimateError";
+import useDebouncer from "hooks/useDebouncer";
+import useWalletContext from "hooks/useWalletContext";
+>>>>>>> master
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ProposalMeta, SourcePreview } from "pages/Admin/types";
@@ -9,6 +21,7 @@ import {
   setFormError,
   setFormLoading,
 } from "services/transaction/transactionSlice";
+<<<<<<< HEAD
 import { useGetter, useSetter } from "store/accessors";
 import Account from "contracts/Account";
 import Admin from "contracts/Admin";
@@ -22,6 +35,12 @@ import { WithdrawResource, WithdrawValues } from "./types";
 
 const SEPARATOR = ":";
 export default function useWithrawEstimator(resources: WithdrawResource) {
+=======
+import { useSetter } from "store/accessors";
+
+// TODO: Figure out how to handle UST logic on new EVM chain
+export default function useWithrawEstimator() {
+>>>>>>> master
   const {
     watch,
     setValue,
@@ -123,16 +142,24 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
+<<<<<<< HEAD
         const accountContract = new Account(resources.accountAddr, wallet);
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
         });
+=======
+        const account = new Account(account_addr, wallet);
+        const withdrawMsg = account.createWithdrawMsg({ sources, beneficiary });
+        const fee = await account.estimateFee([withdrawMsg]);
+        const feeData = extractFeeData(fee);
+>>>>>>> master
 
         const usdTotal = usdValues
           .reduce((result, val) => result.add(val), new Dec(0))
           .toNumber();
 
+<<<<<<< HEAD
         //create proposal meta for tx preview
         const proposalMeta: ProposalMeta = {
           type: proposalTypes.endowment_withdraw,
@@ -153,16 +180,24 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
         //get usd total of of sources
 
         if (feeNum > usdTotal) {
+=======
+        if (feeData.amount > usdTotal) {
+>>>>>>> master
           dispatch(setFormError("Withdraw amount is too low to pay for fees"));
           return;
         }
 
-        const receiveAmount = usdTotal - feeNum;
+        const receiveAmount = usdTotal - feeData.amount;
 
         setValue("total_ust", usdTotal);
         setValue("total_receive", receiveAmount);
+<<<<<<< HEAD
         dispatch(setFee({ fee: feeNum }));
         setTx({ msgs: [proposalMsg], fee });
+=======
+        dispatch(setFee(feeData.amount));
+        setTx({ msgs: [withdrawMsg], fee });
+>>>>>>> master
         dispatch(setFormLoading(false));
       } catch (err) {
         dispatch(setFormError(processEstimateError(err)));

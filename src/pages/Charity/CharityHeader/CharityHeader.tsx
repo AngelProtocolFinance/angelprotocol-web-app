@@ -1,12 +1,24 @@
+<<<<<<< HEAD
 import { useParams } from "react-router-dom";
 import { Profile } from "services/terra/account/types";
 import { useModalContext } from "components/ModalContext/ModalContext";
 import { unsdgs } from "constants/unsdgs";
 import { CharityParam } from "../types";
+=======
+import useDonater from "components/Transactors/Donater/useDonater";
+import { app, site } from "constants/routes";
+import { unsdgs } from "constants/unsdgs";
+import useWalletContext from "hooks/useWalletContext";
+import React from "react";
+import { Link } from "react-router-dom";
+import { LinkProps } from "react-router-dom";
+import { Profile } from "services/aws/endowments/types";
+>>>>>>> master
 import CharityLinks from "./CharityLinks";
 import DonateSelection from "./DonateSelection";
 
 export default function CharityHeader(props: Profile) {
+<<<<<<< HEAD
   const { address: endowment_addr } = useParams<CharityParam>();
   const { showModal } = useModalContext();
   function showDonateSelection() {
@@ -14,6 +26,15 @@ export default function CharityHeader(props: Profile) {
   }
 
   const sdg = unsdgs[props.un_sdg || 0];
+=======
+  const showDonater = useDonater({
+    to: "charity",
+    receiver: props.endowment_address!,
+  });
+  const { wallet } = useWalletContext();
+  const sdg = unsdgs[+props.un_sdg];
+  const isEndowmentOwner = wallet?.address === props.charity_owner;
+>>>>>>> master
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -28,6 +49,7 @@ export default function CharityHeader(props: Profile) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
+<<<<<<< HEAD
         <button
           className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
           onClick={showDonateSelection}
@@ -35,8 +57,30 @@ export default function CharityHeader(props: Profile) {
           DONATE NOW
         </button>
 
+=======
+        <Button disabled={true} /**disabled until v2 */ onClick={showDonater}>
+          DONATE NOW
+        </Button>
+        {isEndowmentOwner && (
+          <LinkButton
+            to={`${site.app}/${app.charity_edit}/${props.endowment_address}`}
+          >
+            EDIT PROFILE
+          </LinkButton>
+        )}
+>>>>>>> master
         <CharityLinks />
       </div>
     </div>
   );
+}
+
+const buttonStyle =
+  "disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3";
+
+function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return <button {...props} className={buttonStyle} />;
+}
+function LinkButton(props: LinkProps) {
+  return <Link {...props} className={buttonStyle} />;
 }

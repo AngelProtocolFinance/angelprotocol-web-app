@@ -3,9 +3,15 @@ import { TERRA_FINDER } from "constants/urls";
 
 export default function getTxUrl(chainID: string, txhash: string) {
   switch (chainID) {
+<<<<<<< HEAD
     case chainIDs.mainnet:
       return `${TERRA_FINDER}mainnet/tx/${txhash}`;
     case chainIDs.testnet:
+=======
+    case chainIDs.terra_classic:
+      return `${TERRA_FINDER}classic/tx/${txhash}`;
+    case chainIDs.terra_test:
+>>>>>>> master
       return `${TERRA_FINDER}testnet/tx/${txhash}`;
     case chainIDs.terra_main:
       return `${TERRA_FINDER}mainnet/tx/${txhash}`;
