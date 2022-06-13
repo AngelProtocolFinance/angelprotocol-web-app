@@ -1,21 +1,11 @@
-<<<<<<< HEAD
 import { useParams } from "react-router-dom";
 import { useEndowmentProfileState } from "services/terra/account/states";
 import Icon, { IconTypes } from "components/Icon";
-=======
-import Icon, { IconTypes } from "components/Icons/Icons";
-import { useParams } from "react-router-dom";
-import { useProfileState } from "services/aws/endowments/states";
->>>>>>> master
 import { CharityParam } from "../types";
 
 export default function CharityLinks(props: { classes?: string }) {
   const { address: charity_addr } = useParams<CharityParam>();
-<<<<<<< HEAD
   const { profileState } = useEndowmentProfileState(charity_addr!);
-=======
-  const { profileState } = useProfileState(charity_addr!);
->>>>>>> master
 
   return (
     <div className={`${props.classes || ""} flex gap-2 items-center`}>
