@@ -33,7 +33,7 @@ export default class Contract {
   // https://fcd.terra.dev/v1/txs/gas_prices - doesn't change too often
   static gasPrices = [
     new Coin(denoms.uusd, 0.15),
-    new Coin(denoms.uluna, 0.01133),
+    new Coin(denoms.uluna, 5.665),
   ];
 
   //for on-demand query, use RTK where possible
