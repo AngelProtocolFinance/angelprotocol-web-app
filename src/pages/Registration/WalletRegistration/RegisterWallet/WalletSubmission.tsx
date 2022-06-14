@@ -1,21 +1,20 @@
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProviderId } from "contexts/WalletContext/types";
-import { WalletState } from "contexts/WalletContext/WalletContext";
+import {
+  WalletState,
+  useGetWallet,
+} from "contexts/WalletContext/WalletContext";
 import isTerraWallet from "contexts/WalletContext/helpers/isTerraProvider";
 import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
 import { Button } from "../../common";
 import routes from "../../routes";
+import useRegisterWallet from "./useRegisterWallet";
 
-type Props = {
-  wallet?: WalletState;
-  isSubmitting: boolean;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-};
-
-export default function WalletSubmission(props: Props) {
-  const { wallet, isSubmitting, onClick } = props;
+export default function WalletSubmission() {
+  const { wallet } = useGetWallet();
+  const { isSubmitting, registerWallet } = useRegisterWallet();
   const navigate = useNavigate();
 
   return (
@@ -48,7 +47,7 @@ export default function WalletSubmission(props: Props) {
               submit
               className="bg-thin-blue w-48 h-10"
               isLoading={isSubmitting}
-              onClick={onClick}
+              onClick={() => registerWallet(wallet?.address!)}
             >
               Submit
             </Button>

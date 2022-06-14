@@ -1,12 +1,14 @@
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import Loader from "components/Loader";
+import { useGetter } from "store/accessors";
 import RegistrationSuccessful from "./RegistrationSuccessful";
 import WalletSubmission from "./WalletSubmission";
-import useRegisterWallet from "./useRegisterWallet";
 
 export default function RegisterWallet() {
-  const { wallet, isWalletLoading } = useGetWallet();
-  const { isSuccess, isSubmitting, registerWallet } = useRegisterWallet();
+  const charity = useGetter((state) => state.charity);
+  const { isWalletLoading } = useGetWallet();
+
+  const registeredTerraWalletAddr = charity.Metadata.TerraWallet;
 
   if (isWalletLoading) {
     return (
@@ -14,12 +16,9 @@ export default function RegisterWallet() {
     );
   }
 
-  return isSuccess ? (
-    <RegistrationSuccessful walletAddress={wallet?.address!} />
+  return registeredTerraWalletAddr !== "" ? (
+    <RegistrationSuccessful registeredWalletAddr={registeredTerraWalletAddr} />
   ) : (
-    <WalletSubmission
-      isSubmitting={isSubmitting}
-      onClick={() => registerWallet(wallet?.address!)}
-    />
+    <WalletSubmission />
   );
 }

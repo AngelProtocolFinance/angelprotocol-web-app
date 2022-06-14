@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
 
-type Props = { walletAddress: string };
-
-export default function RegistrationSuccessful({ walletAddress }: Props) {
+export default function RegistrationSuccessful(props: {
+  registeredWalletAddr: string;
+}) {
   return (
     <div className="flex flex-col h-full items-center">
       <div className="flex flex-col items-center gap-4 mb-10">
@@ -18,7 +18,7 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
       <div>
         <p>Thanks for registering your wallet:</p>
         <p>your address is</p>
-        <p className="font-bold">{walletAddress}</p>
+        <p className="font-bold">{props.registeredWalletAddr}</p>
       </div>
       <Link
         to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}

@@ -1,10 +1,7 @@
 import { useCallback } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Button } from "pages/Registration/common";
-import {
-  useGetWallet,
-  useSetWallet,
-} from "contexts/WalletContext/WalletContext";
+import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
 import Loader from "components/Loader";
 import { appRoutes, siteRoutes } from "constants/routes";
@@ -15,21 +12,35 @@ import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
-  const { isWalletLoading, wallet } = useGetWallet();
+  const { wallet, isProviderLoading } = useGetWallet();
 
-  if (isWalletLoading) {
+  if (
+    isProviderLoading /** providers are initializing, or some is trying to reconnect.
+    once done, wallet address is available and may not need to wait for balance fetching */
+  ) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
   }
 
-  //if wallet is connected and it's a terra-wallet
-  // if (wallet && isTerraProvider(wallet.providerId)) {
-  //   return (
-  //     <Navigate
-  //       to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
-  //     />
-  //   );
-  // }
+  //a terra wallet is connected
+  if (wallet && isTerraProvider(wallet.providerId)) {
+    return (
+      <Navigate
+        to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
+      />
+    );
+  }
 
+  //non terra wallet is connected
+  if (wallet && !isTerraProvider(wallet.providerId)) {
+    return (
+      <div className="flex flex-col gap-3">
+        <p>Only Terra compatible wallets are allowed!</p>
+        <p>Please connect your Terra wallet</p>
+      </div>
+    );
+  }
+
+  //wallet is not connected
   return (
     <div className="flex flex-col gap-5 items-center">
       <Title />

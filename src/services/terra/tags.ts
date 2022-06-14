@@ -10,6 +10,7 @@ export const terraTags: { [key in TerraTags]: string } = {
 };
 
 export enum adminTags {
+  registration = "registration",
   proposals = "proposals",
   proposal = "proposal",
   members = "members",

@@ -8,6 +8,7 @@ import routes from "../routes";
 import { updateCharity } from "../store";
 import useHandleError from "../useHandleError";
 
+const registrationIdKey = "__registration_id";
 export default function useResume() {
   const [checkData] = useCheckPreviousRegistrationMutation();
   const dispatch = useSetter();

@@ -253,14 +253,56 @@ export type Registration = {
   Website: string;
 };
 
-//*
+export type UnprocessedCharity = {
+  ContactPerson: {
+    Email: string;
+    EmailVerified?: boolean;
+    Goals: string;
+    FirstName: string;
+    LastName: string;
+    OtherRole?: string;
+    OtherReferralMethod?: string;
+    PhoneNumber: string;
+    PK?: string;
+    ReferralMethod: ReferralMethods;
+    Role: ContactRoles;
+    SK: "ContactPerson";
+  };
+  Registration: {
+    AuditedFinancialReports?: FileObject[];
+    AuditedFinancialReportsVerified?: boolean;
+    CharityName: string;
+    CharityName_ContactEmail?: string;
+    FinancialStatements?: FileObject[];
+    FinancialStatementsVerified?: boolean;
+    ProofOfIdentity?: FileObject;
+    ProofOfIdentityVerified?: boolean;
+    ProofOfRegistration?: FileObject;
+    ProofOfRegistrationVerified?: boolean;
+    RegistrationDate: string;
+    RegistrationStatus: RegistrationStatus;
+    SK: "Registration";
+    Tier?: EndowmentTierNum;
+    UN_SDG: number; //0 iniitally
+    Website?: string;
+  };
+  Metadata: {
+    Banner?: FileObject;
+    CharityLogo?: FileObject;
+    CharityOverview?: string;
+    EndowmentContract?: string;
+    SK: "Metadata";
+    TerraWallet?: string;
+    KycDonorsOnly?: boolean;
+  };
+};
+
 export type Charity = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
 };
 
-//*
 export type ContactDetailsData = {
   ContactPerson: ContactPerson;
   Registration: Pick<

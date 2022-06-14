@@ -1,3 +1,4 @@
+import { string } from "yup";
 import {
   AWSQueryRes,
   ApplicationStatusOptions,
@@ -7,6 +8,7 @@ import {
   ContactDetailsData as ContactDetailsResult,
   SubmitData,
   SubmitResult,
+  UnprocessedCharity,
   UpdateCharityMetadataData,
   UpdateCharityMetadataResult,
   UpdateDocumentationData,
@@ -23,6 +25,66 @@ const headers = {
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
+    registration: builder.query<Charity, string>({
+      providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
+      query: (uuid) => {
+        return {
+          url: "registration",
+          params: { uuid },
+          headers,
+        };
+      },
+      transformResponse: ({
+        ContactPerson: cp,
+        Registration: r,
+        Metadata: m,
+      }: UnprocessedCharity) => {
+        return {
+          ContactPerson: {
+            Email: cp.Email,
+            EmailVerified: cp.EmailVerified,
+            Goals: cp.Goals,
+            FirstName: cp.FirstName,
+            LastName: cp.LastName,
+            OtherRole: cp.OtherRole,
+            OtherReferralMethod: cp.OtherReferralMethod,
+            PhoneNumber: cp.PhoneNumber,
+            PK: cp.PK,
+            ReferralMethod: cp.ReferralMethod,
+            Role: cp.Role,
+            SK: "ContactPerson",
+          },
+          Registration: {
+            AuditedFinancialReports: r.AuditedFinancialReports || [],
+            AuditedFinancialReportsVerified:
+              r.AuditedFinancialReportsVerified || false,
+            CharityName: r.CharityName,
+            CharityName_ContactEmail: r.CharityName_ContactEmail || "",
+            FinancialStatements: r.FinancialStatements || [],
+            FinancialStatementsVerified: r.FinancialStatementsVerified || false,
+            ProofOfIdentity: r.ProofOfIdentity || { name: "" },
+            ProofOfIdentityVerified: r.ProofOfIdentityVerified || false,
+            ProofOfRegistration: r.ProofOfRegistration || { name: "" },
+            ProofOfRegistrationVerified: r.ProofOfRegistrationVerified || false,
+            RegistrationDate: r.RegistrationDate,
+            RegistrationStatus: r.RegistrationStatus,
+            SK: "Registration",
+            Tier: r.Tier,
+            UN_SDG: r.UN_SDG,
+            Website: r.Website || "",
+          },
+          Metadata: {
+            Banner: m.Banner || { name: "" },
+            CharityLogo: m.CharityLogo || { name: "" },
+            CharityOverview: m.CharityOverview || "",
+            EndowmentContract: m.EndowmentContract || "",
+            SK: "Metadata",
+            TerraWallet: m.TerraWallet || "",
+            KycDonorsOnly: m.KycDonorsOnly || false,
+          },
+        };
+      },
+    }),
     activateCharity: builder.mutation<any, string | undefined>({
       query: (PK) => ({
         url: `registration/${PK}/activate`,
@@ -131,6 +193,7 @@ const registration_api = aws.injectEndpoints({
   }),
 });
 export const {
+  useRegistrationQuery,
   useActivateCharityMutation,
   useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
