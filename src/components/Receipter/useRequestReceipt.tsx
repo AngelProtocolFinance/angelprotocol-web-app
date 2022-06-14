@@ -1,8 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { ReceipterValues as RV } from "./types";
 import { useRequestReceiptMutation } from "services/apes/donations";
-import { useModalContext } from "contexts/ModalContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import useTxUpdator from "slices/transaction/updators";
 
 export default function useRequestReceipt() {
@@ -12,7 +10,6 @@ export default function useRequestReceipt() {
     formState: { isSubmitting, isDirty, isValid },
   } = useFormContext<RV>();
   const [submitRequest] = useRequestReceiptMutation();
-  const { showModal } = useModalContext();
 
   const requestReceipt = async (data: RV) => {
     const { transactionId, ...kycData } = data;
@@ -23,7 +20,6 @@ export default function useRequestReceipt() {
     }
     const { chainId, txHash } = prevTxDetails;
     updateTx({ step: "submit", message: "Submitting receipt request" });
-    showModal(TransactionPrompt, {});
     const response = await submitRequest(data);
 
     if ("error" in response) {

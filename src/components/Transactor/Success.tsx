@@ -8,7 +8,6 @@ import { setStage } from "slices/transaction/transactionSlice";
 import getTxUrl from "helpers/getTxUrl";
 
 export default function Success(props: SuccessStage) {
-  if (props.step !== "success") throw new Error("wrong component rendered");
   const { closeModal, showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();

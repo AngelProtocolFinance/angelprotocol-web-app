@@ -8,7 +8,6 @@ export default function useVoter(poll_id: number) {
   const { showModal } = useModalContext();
   const showVoter = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {
-      inModal: true,
       Content: Voter,
       contentProps: { poll_id },
     });

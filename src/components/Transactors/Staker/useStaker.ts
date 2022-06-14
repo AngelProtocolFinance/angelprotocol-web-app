@@ -9,7 +9,6 @@ export default function useStaker() {
   const showStaker = useCallback(
     (is_stake: boolean) => () => {
       showModal<TxProps<Props>>(Transactor, {
-        inModal: true,
         Content: Staker,
         contentProps: { isStake: is_stake },
       });

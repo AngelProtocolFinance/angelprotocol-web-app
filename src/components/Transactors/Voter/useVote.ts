@@ -2,8 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useVoteEstimator from "./useVoteEstimator";
@@ -16,7 +14,6 @@ export default function useVote() {
   } = useFormContext<VoteValues>();
 
   const { tx, providerId } = useVoteEstimator();
-  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function vote() {
@@ -32,7 +29,6 @@ export default function useVote() {
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

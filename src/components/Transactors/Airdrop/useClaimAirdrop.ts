@@ -3,15 +3,12 @@ import { useMemo } from "react";
 import { Airdrops } from "types/server/aws";
 import { govTags, multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import Airdrop from "contracts/Airdrop";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
-  const { showModal } = useModalContext();
   const { walletAddr, displayCoin, providerId } = useGetWallet();
   const dispatch = useSetter();
 
@@ -46,7 +43,6 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   };
 
   return { totalClaimable: totalClaimable.toNumber(), claimAirdrop };

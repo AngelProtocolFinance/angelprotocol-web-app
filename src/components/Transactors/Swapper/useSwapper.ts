@@ -7,7 +7,6 @@ export default function useSwapper() {
   const { showModal } = useModalContext();
   const showSwapper = useCallback(() => {
     showModal<TxProps<{}>>(Transactor, {
-      inModal: true,
       Content: Swapper,
       contentProps: {},
     });

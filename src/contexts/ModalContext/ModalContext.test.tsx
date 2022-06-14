@@ -103,7 +103,7 @@ const Modal = () => {
 const ModalTrigger = () => {
   const { showModal } = useModalContext();
   const openModal = () => {
-    showModal(Modal, { inModal: true });
+    showModal(Modal, {});
   };
   return <button onClick={openModal}>show modal</button>;
 };

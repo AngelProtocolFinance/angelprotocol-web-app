@@ -8,7 +8,6 @@ export default function useDonater(args: DonaterProps) {
   const { showModal } = useModalContext();
   const showDonater = useCallback(() => {
     showModal<TxProps<DonaterProps>>(Transactor, {
-      inModal: true,
       Content: Donater,
       contentProps: args,
     });

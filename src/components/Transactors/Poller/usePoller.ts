@@ -9,7 +9,6 @@ export default function usePoller() {
   const { showModal } = useModalContext();
   const showPoller = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {
-      inModal: true,
       Content: Poller,
       contentProps: { Form: PollerForm },
     });

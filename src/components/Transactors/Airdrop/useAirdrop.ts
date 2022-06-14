@@ -10,7 +10,6 @@ export default function useAirdrop() {
 
   const showDetails = useCallback(() => {
     showModal<TxProps<{ airdrops: Airdrops }>>(Transactor, {
-      inModal: true,
       Content: Catcher,
       contentProps: { airdrops },
     });

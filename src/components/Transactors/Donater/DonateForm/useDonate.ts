@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { DonateValues } from "../types";
 import { InitialStage } from "slices/transaction/types";
-import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
 import { resetFee, setStage } from "slices/transaction/transactionSlice";

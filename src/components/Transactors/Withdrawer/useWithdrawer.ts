@@ -8,7 +8,6 @@ export default function useWithdrawer(account_addr: string) {
   const { showModal } = useModalContext();
   const showWithdrawer = useCallback(() => {
     showModal<TxProps<WithdrawerProps>>(Transactor, {
-      inModal: true,
       Content: Withdrawer,
       contentProps: { account_addr },
     });

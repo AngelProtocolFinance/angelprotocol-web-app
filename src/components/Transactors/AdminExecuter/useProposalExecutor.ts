@@ -8,7 +8,6 @@ export default function useProposalExecutor(args: AdmiExecuterProps) {
   const { showModal } = useModalContext();
   const showPollEnder = useCallback(() => {
     showModal<TxProps<AdmiExecuterProps>>(Transactor, {
-      inModal: true,
       Content: ExecuteForm,
       contentProps: args,
     });

@@ -2,8 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import { adminRoutes, appRoutes, siteRoutes } from "constants/routes";
@@ -17,7 +15,6 @@ export default function useWithdraw(resources: WithdrawResource) {
   } = useFormContext<WithdrawValues>();
 
   const { tx, providerId } = useWithrawEstimator(resources);
-  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   function withdraw() {
@@ -38,7 +35,6 @@ export default function useWithdraw(resources: WithdrawResource) {
         successMessage: "Withdraw proposal successfully created!",
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

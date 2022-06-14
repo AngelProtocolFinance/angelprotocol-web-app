@@ -8,7 +8,6 @@ export default function useAdminVoter(proposal_id: number) {
   const { showModal } = useModalContext();
   const showVoter = useCallback(() => {
     showModal<TxProps<Props>>(Transactor, {
-      inModal: true,
       Content: AdminVoter,
       contentProps: { proposal_id },
     });

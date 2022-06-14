@@ -7,7 +7,6 @@ export default function useClaimer() {
   const { showModal } = useModalContext();
   const showClaimer = useCallback(() => {
     showModal<TxProps<{}>>(Transactor, {
-      inModal: true,
       Content: ClaimForm,
       contentProps: {},
     });

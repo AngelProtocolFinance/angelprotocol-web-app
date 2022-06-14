@@ -2,8 +2,6 @@ import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
-import { useModalContext } from "contexts/ModalContext";
-import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useGetter, useSetter } from "store/accessors";
 import { sendTerraTx } from "slices/transaction/transactors/sendTerraTx";
 import useSwapEstimator from "./useSwapEstimator";
@@ -18,7 +16,6 @@ export default function useSwap() {
   } = useFormContext<SwapValues>();
 
   const { tx, providerId } = useSwapEstimator();
-  const { showModal } = useModalContext();
   const dispatch = useSetter();
 
   const isBuy = watch("is_buy");
@@ -38,7 +35,6 @@ export default function useSwap() {
         ],
       })
     );
-    showModal(TransactionPrompt, {});
   }
 
   return {

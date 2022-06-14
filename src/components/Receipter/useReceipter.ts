@@ -10,7 +10,6 @@ export default function useReceipter() {
 
   const showDonor = useCallback((prevTx?: PrevTxDetails) => {
     showModal<TxProps<{ prevTx?: PrevTxDetails }>>(Transactor, {
-      inModal: true,
       Content: Receipter,
       contentProps: { prevTx },
     });
