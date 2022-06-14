@@ -27,24 +27,15 @@ export default function useDonate() {
   const { evmTx, terraTx } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
+
   const isKycRequired = getValues("isKycDonorOnly") === true;
-  const isKycCompleted = kycData !== undefined;
+  const isKycCompleted = isKycRequired ? kycData !== undefined : true;
 
   function showKycForm() {
     dispatch(
       setStage({
         step: "kyc",
-        kycData: {
-          fullName: "string", // "John Doe"
-          email: "string", // "john@doe.email.com"
-          streetAddress: "string",
-          city: "string",
-          state: "string",
-          zipCode: "string", //2000
-          country: "string",
-          consent_tax: true,
-          consent_marketing: true,
-        },
+        kycData,
       })
     );
   }
@@ -104,8 +95,8 @@ export default function useDonate() {
       !isValid ||
       !isDirty ||
       isWalletLoading ||
-      !isInCorrectNetwork,
-    // !isKycCompleted,
+      !isInCorrectNetwork ||
+      !isKycCompleted,
     isFormLoading: form_loading,
     isKycCompleted,
     isKycRequired,

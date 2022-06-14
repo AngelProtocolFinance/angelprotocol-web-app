@@ -22,7 +22,7 @@ export default function TransactionPrompt({
       case "initial":
         return children;
       case "kyc":
-        return <Receipter />; //no prev tx details
+        return <Receipter prevKYC={stage.kycData} />; //no prev tx details
       case "submit":
         return <Submit {...stage} />;
       case "broadcast":

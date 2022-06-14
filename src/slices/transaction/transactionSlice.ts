@@ -12,7 +12,7 @@ const initialState: IState = {
   form_loading: false,
   form_error: null,
   fee: 0,
-  stage: { step: "initial" },
+  stage: { step: "initial", kycData: undefined },
 };
 
 const transactionSlice = createSlice({

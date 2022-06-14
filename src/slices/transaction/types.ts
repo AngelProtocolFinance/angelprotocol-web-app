@@ -29,7 +29,6 @@ export type FormError =
  * - message
  * - txhash
  * - chainId
- * - kycData
  */
 
 export type InitialStage = {
@@ -46,7 +45,6 @@ export type SubmitStage = {
   message: string;
   txHash?: never;
   chainId?: never;
-  kycData?: never;
 };
 
 export type BroadcastStage = {
@@ -62,7 +60,6 @@ export type SuccessStage = {
   message: string;
   txHash: string; //leave "" to not render tx link
   chainId: string; //leave "" to not render tx link
-  kycData?: never;
   txInfo?: TxInfo;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
@@ -73,7 +70,6 @@ export type ErrorStage = {
   message: string;
   txHash?: string;
   chainId?: string;
-  kycData?: never;
 };
 
 export type KYCStage = {
@@ -81,7 +77,7 @@ export type KYCStage = {
   message?: never;
   txHash?: never;
   chainId?: never;
-  kycData: KYCData;
+  kycData?: KYCData;
 };
 
 export type Stage =

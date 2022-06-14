@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Icon from "components/Icon";
 import Status from "../../Status";
 import AdvancedOptions from "./AdvancedOptions";
 import Amount from "./Amount";
@@ -67,11 +68,30 @@ export default function DonateForm() {
       </div>
       {isKycRequired && (
         <div>
-          <span>[{isKycCompleted ? "x" : " "}]</span>
-          <p>This charity only accepts donations with KYC data</p>
-          <button onClick={showKycForm} type="button">
-            kyc form
-          </button>
+          {isKycCompleted ? (
+            <button
+              onClick={showKycForm}
+              className="flex gap-1 items-center text-xs text-green-400 font-semibold"
+            >
+              <Icon type="CheckCircle" size={15} />
+              KYC completed
+            </button>
+          ) : (
+            <p className="flex gap-1 items-center text-xs text-angel-orange">
+              <Icon type="Info" size={14} />
+              This charity only accepts donations with KYC data
+            </p>
+          )}
+          {!isKycCompleted && (
+            <button
+              onClick={showKycForm}
+              type="button"
+              className="text-xs text-angel-grey flex gap-1 items-center p-1 border-2 border-orange/30 hover:bg-orange/30 active:bg-orange/60 active:text-white rounded-md font-heading uppercase mt-1"
+            >
+              <Icon type="User" size={14} />
+              KYC FORM
+            </button>
+          )}
         </div>
       )}
 

@@ -13,6 +13,7 @@ import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
   const { providerId, walletAddr, displayCoin } = useGetWallet();
+  console.log(providerId, walletAddr, displayCoin);
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { showModal } = useModalContext();

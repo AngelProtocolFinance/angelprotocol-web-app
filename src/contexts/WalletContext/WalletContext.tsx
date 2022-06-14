@@ -10,7 +10,7 @@ import useTerra from "./useTerrra";
 import useTorusWallet from "./useTorusWallet";
 import useXdefi from "./useXdefi";
 
-type IWalletState = {
+export type WalletState = {
   walletIcon: string;
   displayCoin: WithBalance;
   coins: WithBalance[];
@@ -19,7 +19,7 @@ type IWalletState = {
   providerId: ProviderId;
 };
 
-type IState = IWalletState & {
+type State = WalletState & {
   isWalletLoading: boolean;
   isProviderLoading: boolean;
 };
@@ -29,7 +29,7 @@ type Setters = {
   connections: Connection[];
 };
 
-const initialWalletState: IWalletState = {
+export const initialWalletState: WalletState = {
   walletIcon: unknownWalletIcon,
   displayCoin: placeHolderDisplayToken["unknown"],
   coins: [],
@@ -38,7 +38,7 @@ const initialWalletState: IWalletState = {
   providerId: "unknown",
 };
 
-const initialState: IState = {
+const initialState: State = {
   ...initialWalletState,
   isWalletLoading: true,
   isProviderLoading: true,
@@ -122,7 +122,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     { skip: !address || !chainId || providerId === "unknown" }
   );
 
-  const walletState: IWalletState = {
+  const walletState: WalletState = {
     walletIcon: logo,
     displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
     coins:
@@ -184,7 +184,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
-const getContext = createContext<IState>(initialState);
+const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},

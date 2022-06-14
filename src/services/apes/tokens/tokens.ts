@@ -36,7 +36,7 @@ const tokens_api = apes.injectEndpoints({
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
           const tokensRes = await fetch(
-            `${apes_endpoint}/token/list${IS_DEV ? "/test" : ""}`
+            `${apes_endpoint}/tokens/list${IS_DEV ? "/test" : ""}`
           );
           const tokenList: Token[] = await tokensRes.json();
           const coins: WithBalance<Token>[] = [];

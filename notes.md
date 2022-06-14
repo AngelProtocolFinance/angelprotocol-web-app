@@ -71,3 +71,22 @@ export type Token = EVMNative | TerraNative | ALT20;
 - xdefi state from terra wallet provider, when chainId is mismatched, additional check if its evm chainId is correct
 - integrating xdefi using `@terra-money/wallet-provider` handles terra tx and balance seamlessly but lose functionality as evm wallet e.g (events)
 - integrating xdefi as injected provider handles evm setup seamlessly but lose terra functionality (unclear window.xfi.terra)
+
+9. Transaction UI update
+
+- merge `<TransactionPrompt>` & `<Transactor>` and update forms with the new refactored Transactor.
+  benefits:
+  1.  forms with multi update flow doesn't need to call `showModal(TransactionPrompt)`
+  2.  removed duplicated logic in `<TransactionPrompt>` and `<Transactor>` component
+  3.  removed explicit generic type on inferred calls e.g
+  ```ts
+  //from
+  showModal<TxProps<TransactorContentProps>>(Transactor, {
+    Content,
+    contentProps: TransactorContentProps,
+  });
+  //to just
+  showModal(Transactor, { Content, props });
+  //types is coherent underneath and would still err even without specifying the generics
+  ```
+-
