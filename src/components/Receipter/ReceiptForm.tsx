@@ -18,9 +18,8 @@ export default function ReceiptForm() {
   } = useFormContext<ReceipterValues>();
   const { requestReceipt, isSubmitDisabled, isSubmitting } = useReceiptForm();
   const countries = useMemo(() => countryList().getData(), []);
-  console.log(errors);
-
   const transactionId = getValues("transactionId");
+  const isKYConly = transactionId === "";
 
   return (
     <form
@@ -29,17 +28,16 @@ export default function ReceiptForm() {
       autoComplete="off"
       autoSave="off"
     >
-      <h1 className="font-heading font-bold text-angel-grey uppercase">
-        Request Receipt
-      </h1>
-      <p>
-        <span className="text-angel-grey text-xs uppercase font-bold mb-1">
-          Transaction ID:
-        </span>
-        <span className="font-normal text-sm text-angel-grey ml-2">
-          {maskAddress(transactionId)}
-        </span>
-      </p>
+      {!isKYConly && (
+        <p>
+          <span className="text-angel-grey text-xs uppercase font-bold mb-1">
+            Transaction ID:
+          </span>
+          <span className="font-normal text-sm text-angel-grey ml-2">
+            {maskAddress(transactionId)}
+          </span>
+        </p>
+      )}
       <TextInput name="email" id="email" label="Email Address" />
       <TextInput name="fullName" id="fullName" label="Full Name" />
       <TextInput

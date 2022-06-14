@@ -1,13 +1,12 @@
 import { useCallback } from "react";
-import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactor";
+import Transactor from "components/Transactor";
 import Voter from "./Voter";
 
 export default function useVoter(poll_id: number) {
   const { showModal } = useModalContext();
   const showVoter = useCallback(() => {
-    showModal<TxProps<Props>>(Transactor, {
+    showModal(Transactor, {
       Content: Voter,
       contentProps: { poll_id },
     });
