@@ -5,7 +5,7 @@ import ConnectOptions from "./ConnectOptions";
 import WalletOpener from "./ConnectedWallet/WalletOpener";
 
 export default function WalletSuite() {
-  const { providerId, isProviderLoading } = useGetWallet();
+  const { wallet, isProviderLoading } = useGetWallet();
   const [connectOptionsShown, setConnectOptionsShown] = useState(false);
   const toggleConnectOptions = () => setConnectOptionsShown((p) => !p);
   const hideConnectOptions = () => {
@@ -13,19 +13,17 @@ export default function WalletSuite() {
       setConnectOptionsShown(false);
     }
   };
-
-  const isProviderConnected = providerId !== "unknown";
   //close modal after connecting
   useEffect(() => {
-    isProviderConnected && setConnectOptionsShown(false);
+    wallet && setConnectOptionsShown(false);
     //eslint-disable-next-line
-  }, [isProviderConnected]);
+  }, [wallet]);
 
   return (
     <div
       className={`relative border border-white/40 hover:bg-white/10 rounded-md`}
     >
-      {!isProviderConnected && (
+      {!wallet && (
         <button
           className="flex py-2 px-3 items-center text-white  "
           disabled={isProviderLoading}
@@ -35,7 +33,7 @@ export default function WalletSuite() {
           <span>{isProviderLoading ? "Loading" : "Connect"}</span>
         </button>
       )}
-      {isProviderConnected && <WalletOpener />}
+      {wallet && <WalletOpener />}
       {connectOptionsShown && (
         <ConnectOptions closeHandler={hideConnectOptions} />
       )}

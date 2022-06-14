@@ -6,6 +6,7 @@ import extractFeeNum from "helpers/extractFeeNum";
 import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
+import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
@@ -17,6 +18,10 @@ export const sendTerraTx = createAsyncThunk(
     };
 
     try {
+      if (!args.wallet) {
+        throw new WalletDisconnectError();
+      }
+
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
@@ -29,7 +34,7 @@ export const sendTerraTx = createAsyncThunk(
         const fee = await contract.estimateFee(args.msgs);
         const feeNum = extractFeeNum(fee);
 
-        if (feeNum > args.feeBalance) {
+        if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({
             step: "error",
             message: `Not enough balance to pay for fees`,
@@ -39,7 +44,7 @@ export const sendTerraTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await getTerraPoster(args.providerId)(tx);
+      const response = await getTerraPoster(args.wallet.providerId)(tx);
 
       updateTx({
         step: "broadcast",

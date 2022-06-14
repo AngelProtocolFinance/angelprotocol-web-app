@@ -5,8 +5,7 @@ export type ProviderId =
   | "xdefi-evm" //xdefi evm provider
   | "station"
   | "walletconnect"
-  | "torus"
-  | "unknown";
+  | "torus";
 
 export type SingleConnection = {
   logo: string;

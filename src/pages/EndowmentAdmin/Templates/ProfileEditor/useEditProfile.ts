@@ -32,7 +32,7 @@ export default function useEditProfile() {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<UpdateProfileValues>();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -93,7 +93,7 @@ export default function useEditProfile() {
       }
     }
 
-    const accountContract = new Account(endowmentAddr!, walletAddr);
+    const accountContract = new Account(endowmentAddr!, wallet?.address);
     const profileUpdateMsg = accountContract.createEmbeddedUpdateProfileMsg(
       //don't pass just diff here, old value should be included for null will be set if it's not present in payload
       cleanObject(data)
@@ -104,7 +104,7 @@ export default function useEditProfile() {
       data: genDiffMeta(diffEntries, initialProfile),
     };
 
-    const adminContract = new Admin(cwContracts, walletAddr);
+    const adminContract = new Admin(cwContracts, wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -114,8 +114,7 @@ export default function useEditProfile() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

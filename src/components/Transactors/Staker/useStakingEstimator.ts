@@ -27,7 +27,7 @@ export default function useEstimator() {
   } = useFormContext<HaloStakingValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { providerId, coins, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const is_stake = getValues("is_stake");
   const { balance, locked } = useStakerBalance(is_stake);
   const amount = Number(watch("amount")) || 0;
@@ -36,7 +36,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -66,7 +66,7 @@ export default function useEstimator() {
         dispatch(setFormLoading(true));
 
         let govMsg: MsgExecuteContract;
-        const contract = new Gov(walletAddr);
+        const contract = new Gov(wallet.address);
 
         if (is_stake) {
           govMsg = contract.createGovStakeMsg(debounced_amount);
@@ -78,7 +78,7 @@ export default function useEstimator() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeNum >= ustBalance) {
           setError("amount", {
             message: "not enough UST to pay for fees",
@@ -98,7 +98,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, coins, balance, locked, isValid, isDirty]);
+  }, [debounced_amount, wallet, balance, locked, isValid, isDirty]);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

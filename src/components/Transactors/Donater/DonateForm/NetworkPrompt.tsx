@@ -8,15 +8,15 @@ import addNetworkAndSwitch, {
 } from "helpers/addNetworkAndSwitch";
 
 export default function NetworkPrompt() {
-  const { chainId, isWalletLoading, providerId } = useGetWallet();
+  const { isWalletLoading, wallet } = useGetWallet();
   const { watch } = useFormContext<DonateValues>();
   const dispatch = useSetter();
   const token = watch("token");
-  const isInCorrectNetwork = token.chain_id === chainId;
+  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   async function handleNetworkChange() {
     try {
-      if (providerId === "unknown") {
+      if (!wallet) {
         dispatch(setFormError("Wallet is not connected"));
         return;
       }
@@ -25,11 +25,11 @@ export default function NetworkPrompt() {
           /**
            * NOTE: xdefi doesn't propagate error to this scope
            */
-          await addNetworkAndSwitch(token, providerId);
+          await addNetworkAndSwitch(token, wallet.providerId);
         } catch (err) {
           console.error("add and switch error", err);
           //edge case, network is already in wallet: switch only
-          await switchToNetwork(token.chain_id, providerId);
+          await switchToNetwork(token.chain_id, wallet.providerId);
         }
       } else {
         dispatch(
@@ -52,7 +52,7 @@ export default function NetworkPrompt() {
     }
   }
 
-  if (isInCorrectNetwork || providerId === "unknown") {
+  if (isInCorrectNetwork || !wallet) {
     return null;
   }
 

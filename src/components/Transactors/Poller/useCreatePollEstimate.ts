@@ -23,12 +23,12 @@ export default function useCreatePollEstimate() {
   } = useFormContext<CreatePollValues>();
   const dispatch = useSetter();
   const [maxFee, setMaxFee] = useState<Fee>();
-  const { providerId, coins, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Terra wallet is not connected"));
           return;
         }
@@ -38,14 +38,14 @@ export default function useCreatePollEstimate() {
         const amount = Number(getValues("amount"));
         //initial balance check to successfully run estimate
 
-        const haloBalance = getTokenBalance(coins, denoms.halo);
+        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         if (amount >= haloBalance) {
           setError("amount", { message: "not enough HALO balance" });
           return;
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(walletAddr);
+        const contract = new Gov(wallet.address);
         const pollMsgs = await contract.createPollMsgs(
           amount,
           //just set max contraints for estimates to avoid
@@ -60,7 +60,7 @@ export default function useCreatePollEstimate() {
         const feeNum = extractFeeNum(fee);
 
         //2nd balance check including fees
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         if (feeNum >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
           return;
@@ -78,9 +78,9 @@ export default function useCreatePollEstimate() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [coins, isDirty, isValid]);
+  }, [wallet, isDirty, isValid]);
 
-  return { maxFee, walletAddr, providerId };
+  return { maxFee, wallet };
 
   //return estimated fee computed using max constraints
 }

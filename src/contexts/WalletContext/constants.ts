@@ -16,7 +16,6 @@ export const providerIcons: { [key in ProviderId]: string } = {
   station: terraStationIcon,
   walletconnect: walletConnectIcon,
   torus: torusIcon,
-  unknown: "",
 };
 
 const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
@@ -31,5 +30,4 @@ export const placeHolderDisplayToken: {
   station: lunaTokenWithBalance,
   walletconnect: lunaTokenWithBalance,
   torus: lunaTokenWithBalance,
-  unknown: ethTokenWithBalance,
 };

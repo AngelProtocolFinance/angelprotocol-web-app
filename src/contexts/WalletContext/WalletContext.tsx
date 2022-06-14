@@ -1,25 +1,24 @@
-import { PropsWithChildren, createContext, useContext } from "react";
+import { PropsWithChildren, createContext, useContext, useMemo } from "react";
 import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
-import unknownWalletIcon from "assets/icons/wallets/unknown.svg";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
-import { chainIDs } from "constants/chainIDs";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useTerra from "./useTerrra";
 import useTorusWallet from "./useTorusWallet";
 import useXdefi from "./useXdefi";
 
-type IWalletState = {
+export type WalletState = {
   walletIcon: string;
   displayCoin: WithBalance;
   coins: WithBalance[];
-  walletAddr: string;
+  address: string;
   chainId: string;
   providerId: ProviderId;
 };
 
-type IState = IWalletState & {
+type State = {
+  wallet?: WalletState;
   isWalletLoading: boolean;
   isProviderLoading: boolean;
 };
@@ -29,17 +28,8 @@ type Setters = {
   connections: Connection[];
 };
 
-const initialWalletState: IWalletState = {
-  walletIcon: unknownWalletIcon,
-  displayCoin: placeHolderDisplayToken["unknown"],
-  coins: [],
-  walletAddr: "",
-  chainId: chainIDs.eth_main,
-  providerId: "unknown",
-};
-
-const initialState: IState = {
-  ...initialWalletState,
+const initialState: State = {
+  wallet: undefined,
   isWalletLoading: true,
   isProviderLoading: true,
 };
@@ -95,47 +85,42 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
   ];
 
-  const isProviderLoading =
-    isBinanceWalletLoading ||
-    isMetamaskLoading ||
-    isxdefiEVMLoading ||
-    isTerraLoading ||
-    isTorusLoading;
-
+  const isProviderLoading = providerStatuses.reduce(
+    (status, curr) => status || curr.isLoading,
+    false
+  );
   const activeProviderInfo = providerStatuses.find(
     ({ providerInfo, isLoading }) => !isLoading && providerInfo !== undefined
   )?.providerInfo;
-
-  const {
-    address = "",
-    chainId = "",
-    providerId = "unknown",
-    logo = "",
-  } = activeProviderInfo || {};
 
   const {
     data: coinWithBalances = [],
     isLoading,
     isFetching,
   } = useBalancesQuery(
-    { address, chainId, providerId },
-    { skip: !address || !chainId || providerId === "unknown" }
+    { providerInfo: activeProviderInfo! },
+    { skip: !activeProviderInfo }
   );
 
-  const walletState: IWalletState = {
-    walletIcon: logo,
-    displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
-    coins:
-      coinWithBalances.length <= 0
-        ? [placeHolderDisplayToken[providerId]]
-        : coinWithBalances,
-    walletAddr: address,
-    chainId,
-    providerId,
-  };
+  const walletState: WalletState | undefined = useMemo(() => {
+    if (activeProviderInfo) {
+      const { logo, providerId, address, chainId } = activeProviderInfo;
+      return {
+        walletIcon: logo,
+        displayCoin: coinWithBalances[0] ?? placeHolderDisplayToken[providerId],
+        coins:
+          coinWithBalances.length <= 0
+            ? [placeHolderDisplayToken[providerId]]
+            : coinWithBalances,
+        address,
+        chainId,
+        providerId,
+      };
+    }
+  }, [activeProviderInfo, coinWithBalances]);
 
   const disconnect = () => {
-    switch (providerId) {
+    switch (activeProviderInfo?.providerId) {
       case "metamask":
         disconnectMetamask();
         break;
@@ -161,7 +146,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   return (
     <getContext.Provider
       value={{
-        ...walletState,
+        wallet: walletState,
         isWalletLoading: isFetching || isLoading,
         isProviderLoading,
       }}
@@ -184,7 +169,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   );
 }
 
-const getContext = createContext<IState>(initialState);
+const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
   disconnect: async () => {},

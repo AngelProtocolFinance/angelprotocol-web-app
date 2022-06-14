@@ -48,14 +48,14 @@ export function useEndowmentCWs(address: string) {
 
 export function useAirdrop() {
   const { useAirdropQuery } = multicall_api;
-  const { walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const {
     data = [],
     isError,
     isLoading,
     isFetching,
-  } = useAirdropQuery(walletAddr, {
-    skip: !walletAddr,
+  } = useAirdropQuery(wallet?.address!, {
+    skip: !wallet,
   });
   return {
     airdrops: data,

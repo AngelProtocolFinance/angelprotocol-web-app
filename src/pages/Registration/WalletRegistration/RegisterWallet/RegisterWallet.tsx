@@ -5,7 +5,7 @@ import WalletSubmission from "./WalletSubmission";
 import useRegisterWallet from "./useRegisterWallet";
 
 export default function RegisterWallet() {
-  const { walletAddr, isWalletLoading, providerId } = useGetWallet();
+  const { wallet, isWalletLoading } = useGetWallet();
   const { isSuccess, isSubmitting, registerWallet } = useRegisterWallet();
 
   if (isWalletLoading) {
@@ -15,13 +15,11 @@ export default function RegisterWallet() {
   }
 
   return isSuccess ? (
-    <RegistrationSuccessful walletAddress={walletAddr} />
+    <RegistrationSuccessful walletAddress={wallet?.address!} />
   ) : (
     <WalletSubmission
-      providerId={providerId}
-      walletAddress={walletAddr}
       isSubmitting={isSubmitting}
-      onClick={() => registerWallet(walletAddr)}
+      onClick={() => registerWallet(wallet?.address!)}
     />
   );
 }

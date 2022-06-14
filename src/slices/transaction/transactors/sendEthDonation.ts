@@ -8,14 +8,16 @@ import { ethers } from "ethers";
 import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import { getProvider } from "helpers/getProvider";
 import handleEthError from "helpers/handleEthError";
 import logDonation from "helpers/logDonation";
+import { WalletDisconnectError } from "errors/errors";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type EthDonateArgs = {
-  providerId: ProviderId;
+  wallet?: WalletState;
   tx: TransactionRequest;
   donateValues: DonateValues;
 };
@@ -28,11 +30,12 @@ export const sendEthDonation = createAsyncThunk(
     };
 
     try {
+      if (!args.wallet) throw new WalletDisconnectError();
       updateTx({ step: "submit", message: "Submitting transaction.." });
 
       const provider = new ethers.providers.Web3Provider(
         //wallet is connected to send this tx
-        getProvider(args.providerId!) as any
+        getProvider(args.wallet.providerId) as any
       );
 
       const signer = provider.getSigner();

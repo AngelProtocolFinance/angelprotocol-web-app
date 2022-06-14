@@ -15,7 +15,7 @@ import genProposalsLink from "../genProposalsLink";
 
 export default function useEditAlliance() {
   const { trigger, reset, getValues } = useFormContext<AllianceEditValues>();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { members: allianceMembers, isEditingMember } = useGetter(
     (state) => state.admin.allianceMembers
   );
@@ -38,7 +38,7 @@ export default function useEditAlliance() {
       return;
     }
 
-    const indexFundContract = new Indexfund(walletAddr);
+    const indexFundContract = new Indexfund(wallet?.address);
 
     //actual message payload
     const updateMsgs: EmbeddedWasmMsg[] = [];
@@ -63,7 +63,7 @@ export default function useEditAlliance() {
       if (isDeleted) toRemoveMembers.push(restMemberData);
     }
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
 
     //construct proposal meta for preview
     const editAllianceMeta: AllianceEditMeta = {
@@ -87,8 +87,7 @@ export default function useEditAlliance() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

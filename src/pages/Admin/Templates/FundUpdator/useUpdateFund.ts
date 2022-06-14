@@ -16,7 +16,7 @@ import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateFund() {
   const { trigger, reset, getValues } = useFormContext<FundUpdateValues>();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const [isLoading, setIsLoading] = useState(false);
   const fundMembers = useGetter((state) => state.admin.fundMembers);
   const { showModal } = useModalContext();
@@ -54,7 +54,7 @@ export default function useUpdateFund() {
         showModal(Popup, { message: "No fund member changes" });
         return;
       }
-      const indexFundContract = new Indexfund(walletAddr);
+      const indexFundContract = new Indexfund(wallet?.address);
       const embeddedExecuteMsg =
         indexFundContract.createEmbeddedUpdateMembersMsg(
           +fundId,
@@ -69,7 +69,7 @@ export default function useUpdateFund() {
         data: { fundId: fundId, fundName: fundDetails.name, toRemove, toAdd },
       };
 
-      const adminContract = new Admin("apTeam", walletAddr);
+      const adminContract = new Admin("apTeam", wallet?.address);
       const proposalTitle = getValues("title");
       const proposalDescription = getValues("description");
 
@@ -82,8 +82,7 @@ export default function useUpdateFund() {
 
       dispatch(
         sendTerraTx({
-          providerId,
-          feeBalance: displayCoin.balance,
+          wallet,
           msgs: [proposalMsg],
           tagPayloads: [
             terra.util.invalidateTags([

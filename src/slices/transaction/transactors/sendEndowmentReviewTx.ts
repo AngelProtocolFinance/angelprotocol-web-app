@@ -7,13 +7,12 @@ import extractFeeNum from "helpers/extractFeeNum";
 import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
+import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type _SenderArgs = TerraSendArgs & {
   applicationId: string;
-  chainId: string;
-  walletAddr: string;
 };
 
 export const sendEndowmentReviewTx = createAsyncThunk(
@@ -24,10 +23,14 @@ export const sendEndowmentReviewTx = createAsyncThunk(
     };
 
     try {
+      if (!args.wallet) {
+        throw new WalletDisconnectError();
+      }
+
       updateTx({ step: "submit", message: "Submitting transaction..." });
 
       let tx: CreateTxOptions;
-      const contract = new Contract(args.walletAddr);
+      const contract = new Contract(args.wallet.address);
       if (args.tx) {
         //pre-estimated tx doesn't need additional checks
         tx = args.tx;
@@ -36,7 +39,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         const fee = await contract.estimateFee(args.msgs);
         const feeNum = extractFeeNum(fee);
 
-        if (feeNum > args.feeBalance) {
+        if (feeNum > args.wallet.displayCoin.balance) {
           updateTx({
             step: "error",
             message: `Not enough balance to pay for fees`,
@@ -46,7 +49,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
         tx = { msgs: args.msgs, fee };
       }
 
-      const response = await getTerraPoster(args.providerId)(tx);
+      const response = await getTerraPoster(args.wallet.providerId)(tx);
 
       updateTx({
         step: "broadcast",
@@ -81,7 +84,7 @@ export const sendEndowmentReviewTx = createAsyncThunk(
 
           await logApplicationReview({
             poll_id: proposal_id,
-            chain_id: args.chainId,
+            chain_id: args.wallet.chainId,
             PK: args.applicationId,
           });
 

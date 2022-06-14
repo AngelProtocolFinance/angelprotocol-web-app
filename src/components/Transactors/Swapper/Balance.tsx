@@ -8,7 +8,8 @@ import { denoms } from "constants/currency";
 export default function Balance() {
   const { watch, setValue } = useFormContext<SwapValues>();
   const is_buy = watch("is_buy");
-  const { coins } = useGetWallet();
+  const { wallet } = useGetWallet();
+  const coins = wallet?.coins || [];
   const ustBalance = getTokenBalance(coins, denoms.uusd);
   const haloBalance = getTokenBalance(coins, denoms.halo);
   const balance = is_buy ? ustBalance : haloBalance;

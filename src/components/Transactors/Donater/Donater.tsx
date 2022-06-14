@@ -15,10 +15,10 @@ const shape: SchemaShape<DonateValues> = {
 const schema = Yup.object().shape(shape);
 
 export default function Donater(props: FundFlow) {
-  const { coins, isWalletLoading } = useGetWallet();
+  const { wallet, isWalletLoading } = useGetWallet();
 
-  if (isWalletLoading || isWalletLoading) return <DonateFormLoader />;
-  return <DonateContext {...props} tokens={coins} />;
+  if (isWalletLoading) return <DonateFormLoader />;
+  return <DonateContext {...props} tokens={wallet?.coins || []} />;
 }
 
 function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {

@@ -19,14 +19,14 @@ export default function useDestroyFund() {
   } = useFormContext<FundDestroyValues>();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   async function destroyFund(data: FundDestroyValues) {
     if (data.fundId === "") {
       showModal(Popup, { message: "Please select fund to remove" });
       return;
     }
-    const indexFundContract = new Indexfund(walletAddr);
+    const indexFundContract = new Indexfund(wallet?.address);
     const embeddedRemoveFundMsg = indexFundContract.createEmbeddedRemoveFundMsg(
       +data.fundId
     );
@@ -38,7 +38,7 @@ export default function useDestroyFund() {
       data: fundDetails,
     };
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -48,8 +48,7 @@ export default function useDestroyFund() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

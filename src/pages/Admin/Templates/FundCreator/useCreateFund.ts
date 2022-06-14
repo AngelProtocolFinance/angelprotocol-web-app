@@ -17,7 +17,7 @@ import genProposalsLink from "../genProposalsLink";
 import { INIT_SPLIT } from "./FundCreator";
 
 export default function useCreateFund() {
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const dispatch = useSetter();
   const { trigger, getValues } = useFormContext<FundCreatorValues>();
@@ -49,7 +49,7 @@ export default function useCreateFund() {
     const isFundRotating = getValues("isFundRotating");
 
     //create embedded execute msg
-    const indexFundContract = new Indexfund(walletAddr);
+    const indexFundContract = new Indexfund(wallet?.address);
 
     const newFundDetails: Omit<FundDetails, "id"> = {
       name: fundName,
@@ -78,7 +78,7 @@ export default function useCreateFund() {
       data: newFundDetails,
     };
     //create proposal msg
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -88,8 +88,7 @@ export default function useCreateFund() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

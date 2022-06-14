@@ -11,7 +11,7 @@ import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonat
 import useEstimator from "../useEstimator";
 
 export default function useDonate() {
-  const { providerId, isWalletLoading, walletAddr, chainId } = useGetWallet();
+  const { wallet, isWalletLoading } = useGetWallet();
   const { form_loading, form_error } = useGetter((state) => state.transaction);
 
   const {
@@ -31,18 +31,15 @@ export default function useDonate() {
     switch (token.type) {
       case "evm-native":
       case "erc20":
-        dispatch(
-          sendEthDonation({ tx: evmTx!, donateValues: data, providerId })
-        );
+        dispatch(sendEthDonation({ wallet, tx: evmTx!, donateValues: data }));
         break;
       case "terra-native":
       case "cw20":
         dispatch(
           sendTerraDonation({
-            providerId,
+            wallet,
             tx: terraTx!,
             donateValues: data,
-            walletAddr,
           })
         );
         break;
@@ -53,7 +50,7 @@ export default function useDonate() {
   }
 
   const symbol = token.symbol;
-  const isInCorrectNetwork = token.chain_id === chainId;
+  const isInCorrectNetwork = token.chain_id === wallet?.chainId;
 
   //reset amount when changing currency
   useEffect(() => {

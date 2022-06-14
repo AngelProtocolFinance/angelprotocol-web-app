@@ -4,10 +4,10 @@ import { useGetWallet } from "contexts/WalletContext/WalletContext";
 export function useContract<U, T extends { new (walletAddr?: string): U }>(
   Contract: T
 ) {
-  const { walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const contract = useMemo(
-    () => new Contract(walletAddr),
-    [walletAddr, Contract]
+    () => new Contract(wallet?.address),
+    [wallet, Contract]
   );
-  return { walletAddr, contract };
+  return { walletAddr: wallet?.address, contract };
 }

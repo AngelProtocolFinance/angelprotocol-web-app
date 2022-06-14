@@ -22,7 +22,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof RegistrarConfigPayload;
 type Value = RegistrarConfigPayload[Key];
 export default function useConfigureRegistrar() {
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -52,7 +52,7 @@ export default function useConfigureRegistrar() {
       split_min: diff.split_min && `${+diff.split_min / 100}`,
     };
 
-    const registrarContract = new Registrar(walletAddr);
+    const registrarContract = new Registrar(wallet?.address);
     const configUpdateMsg = registrarContract.createEmbeddedConfigUpdateMsg(
       cleanObject(finalPayload)
     );
@@ -62,7 +62,7 @@ export default function useConfigureRegistrar() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -72,8 +72,7 @@ export default function useConfigureRegistrar() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

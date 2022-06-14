@@ -13,7 +13,7 @@ export default function PreviewForm({
 }: {
   application: CharityApplication;
 }) {
-  const { walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { closeModal } = useModalContext();
   const { updateStatus } = useUpdateApplicationStatus();
   const { proposal, isProposalLoading } = useProposal(ap.poll_id);
@@ -25,7 +25,7 @@ export default function PreviewForm({
   const getTitle = (status: string) =>
     `${status} ${ap.CharityName} Application`;
   const getDescription = (status: string) =>
-    `${status} ${ap.CharityName} by ${walletAddr}`;
+    `${status} ${ap.CharityName} by ${wallet?.address}`;
 
   const openPoll = () => {
     navigate(`admin/${adminRoutes.proposal}/${ap.poll_id}`);

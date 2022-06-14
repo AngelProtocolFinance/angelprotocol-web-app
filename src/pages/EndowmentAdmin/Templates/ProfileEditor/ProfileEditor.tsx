@@ -15,13 +15,13 @@ import EditForm from "./EditForm";
 import { profileEditSchema } from "./profileEditSchema";
 
 export default function ProfileEditor() {
-  const { providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { address: endowment_addr } = useParams<EndowmentAdminParams>();
   const { profile, isProfileLoading, isProfileError } = useEndowmentProfile(
     endowment_addr!
   );
 
-  if (providerId === "unknown")
+  if (!wallet)
     return <FormError errorMessage="Please connect wallet to view this page" />;
   if (isProfileLoading) return <FormSkeleton />;
   if (isProfileError || !profile)

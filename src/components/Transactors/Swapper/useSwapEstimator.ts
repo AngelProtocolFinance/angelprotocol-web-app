@@ -30,7 +30,7 @@ export default function useSwapEstimator() {
   } = useFormContext<SwapValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { providerId, coins, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const is_buy = watch("is_buy");
   const slippage = watch("slippage");
   const amount = Number(watch("amount")) || 0;
@@ -41,7 +41,7 @@ export default function useSwapEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -54,8 +54,8 @@ export default function useSwapEstimator() {
           return;
         }
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
-        const haloBalance = getTokenBalance(coins, denoms.halo);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
+        const haloBalance = getTokenBalance(wallet.coins, denoms.halo);
         // first balance check
         if (is_buy) {
           if (amount > ustBalance) {
@@ -71,7 +71,7 @@ export default function useSwapEstimator() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new LP(walletAddr);
+        const contract = new LP(wallet.address);
 
         //invasive simul
         const simul = await contract.pairSimul(debounced_amount, is_buy);
@@ -131,7 +131,7 @@ export default function useSwapEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, coins, is_buy, debounced_slippage, isValid, isDirty]);
+  }, [debounced_amount, wallet, is_buy, debounced_slippage, isValid, isDirty]);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

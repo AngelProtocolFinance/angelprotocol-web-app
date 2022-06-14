@@ -25,7 +25,7 @@ export default function useTransferFunds() {
     formState: { isSubmitting, isValid, isDirty },
   } = useFormContext<FundSendValues>();
   const dispatch = useSetter();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
   const { address: endowmentAddr } = useParams<EndowmentAdminParams>();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
@@ -43,7 +43,7 @@ export default function useTransferFunds() {
 
     let embeddedMsg: EmbeddedWasmMsg | EmbeddedBankMsg;
     //this wallet is not even rendered when wallet is disconnected
-    const cw20Contract = new CW20(contracts.halo_token, walletAddr);
+    const cw20Contract = new CW20(contracts.halo_token, wallet?.address);
     if (data.currency === denoms.halo) {
       embeddedMsg = cw20Contract.createEmbeddedTransferMsg(
         data.amount,
@@ -61,7 +61,7 @@ export default function useTransferFunds() {
       );
     }
 
-    const adminContract = new Admin(cwContracts, walletAddr);
+    const adminContract = new Admin(cwContracts, wallet?.address);
     const fundTransferMeta: FundSendMeta = {
       type: "admin-group-fund-transfer",
       data: {
@@ -79,8 +79,7 @@ export default function useTransferFunds() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

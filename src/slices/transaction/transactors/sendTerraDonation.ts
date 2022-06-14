@@ -5,19 +5,20 @@ import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { multicallTags, terraTags } from "services/terra/tags";
 import { terra } from "services/terra/terra";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import { DonateValues } from "components/Transactors/Donater";
 import { getTerraPoster } from "helpers/getTerraPoster";
 import handleTerraError from "helpers/handleTerraError";
 import logDonation from "helpers/logDonation";
 import { pollTerraTxInfo } from "helpers/pollTerraTxInfo";
+import { WalletDisconnectError } from "errors/errors";
 import { terraChainId } from "constants/env";
 import transactionSlice, { setStage } from "../transactionSlice";
 
 type TerraDonateArgs = {
+  wallet?: WalletState;
   donateValues: DonateValues;
   tx: CreateTxOptions;
-  walletAddr: string;
-  providerId: ProviderId;
 };
 
 export const sendTerraDonation = createAsyncThunk(
@@ -27,9 +28,10 @@ export const sendTerraDonation = createAsyncThunk(
       dispatch(setStage(update));
     };
     try {
+      if (!args.wallet) throw new WalletDisconnectError();
       updateStage({ step: "submit", message: "Submitting transaction.." });
 
-      const response = await getTerraPoster(args.providerId)(args.tx!);
+      const response = await getTerraPoster(args.wallet.providerId)(args.tx!);
 
       if (response.success) {
         updateStage({ step: "submit", message: "Saving donation details" });
@@ -50,7 +52,7 @@ export const sendTerraDonation = createAsyncThunk(
             amount: +amount,
             denomination: token.symbol,
             splitLiq: split_liq,
-            walletAddress: args.walletAddr,
+            walletAddress: args.wallet.address,
           });
         }
 

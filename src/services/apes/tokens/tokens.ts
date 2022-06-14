@@ -1,6 +1,6 @@
 import { Coin } from "@terra-money/terra.js";
 import { ethers, utils } from "ethers";
-import { ProviderId } from "contexts/WalletContext/types";
+import { ProviderInfo } from "contexts/WalletContext/types";
 import { WithBalance } from "services/types";
 import { ALT20, EVMNative, Token } from "types/server/aws";
 import isTerraProvider from "contexts/WalletContext/helpers/isTerraProvider";
@@ -28,15 +28,16 @@ const tokens_api = apes.injectEndpoints({
     }),
     balances: builder.query<
       WithBalance<Token>[],
-      { chainId: string; address: string; providerId: ProviderId }
+      { providerInfo: ProviderInfo }
     >({
       providesTags: [],
       //address
       //activeChainId
       async queryFn(args, queryApi, extraOptions, baseQuery) {
         try {
+          const { providerId, address, chainId } = args.providerInfo;
           const tokensRes = await fetch(
-            `${apes_endpoint}/token/list${IS_DEV ? "/test" : ""}`
+            `${apes_endpoint}/wallet/tokens${IS_DEV ? "/test" : ""}`
           );
           const tokenList: Token[] = await tokensRes.json();
           const coins: WithBalance<Token>[] = [];
@@ -48,11 +49,11 @@ const tokens_api = apes.injectEndpoints({
           }, {} as CategorizedTokenList);
 
           /**fetch balances for terra  */
-          const isTerra = isTerraProvider(args.providerId); //query is skipped when wallet is not connected
+          const isTerra = isTerraProvider(providerId); //query is skipped when wallet is not connected
           if (isTerra) {
             //fetch native terra coins
             const res = await fetch(
-              terraLcdUrl + `/cosmos/bank/v1beta1/balances/${args.address}`
+              terraLcdUrl + `/cosmos/bank/v1beta1/balances/${address}`
             );
 
             const jsonRes: TerraBalanceRes = await res.json();
@@ -82,7 +83,7 @@ const tokens_api = apes.injectEndpoints({
               token.rpc_url,
               { chainId: +token.chain_id, name: token.chain_name }
             );
-            return jsonProvider.getBalance(args.address);
+            return jsonProvider.getBalance(address);
           });
 
           const queryResults = await Promise.allSettled(balanceQueries);
@@ -95,7 +96,7 @@ const tokens_api = apes.injectEndpoints({
                   ? +utils.formatUnits(result.value, evmTokenList[i].decimals)
                   : 0,
             };
-            if (token.chain_id === args.chainId) {
+            if (token.chain_id === chainId) {
               //bring active coin to front
               _coins.unshift(token);
             } else {
@@ -110,7 +111,7 @@ const tokens_api = apes.injectEndpoints({
             const erc20Tokens = activeCoin.tokens;
             const erc20Holdings = await getERC20Holdings(
               activeCoin.rpc_url,
-              args.address,
+              address,
               erc20Tokens.map((token) => token.contract_addr)
             );
 

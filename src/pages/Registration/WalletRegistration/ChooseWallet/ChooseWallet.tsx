@@ -15,7 +15,7 @@ import Web3Auth from "./Web3Auth";
 
 export default function ChooseWallet() {
   const navigate = useNavigate();
-  const { isWalletLoading, providerId } = useGetWallet();
+  const { isWalletLoading, wallet } = useGetWallet();
   const { connections } = useSetWallet();
   const login = useCallback(
     (provider: string) =>
@@ -27,7 +27,7 @@ export default function ChooseWallet() {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
   }
 
-  if (providerId === "unknown" || !isTerraProvider(providerId)) {
+  if (!wallet || !isTerraProvider(wallet.providerId)) {
     return (
       <Navigate
         to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}

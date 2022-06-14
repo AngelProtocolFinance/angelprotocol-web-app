@@ -1,6 +1,7 @@
 import { MouseEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProviderId } from "contexts/WalletContext/types";
+import { WalletState } from "contexts/WalletContext/WalletContext";
 import isTerraWallet from "contexts/WalletContext/helpers/isTerraProvider";
 import FormInput from "components/FormInput";
 import { appRoutes, siteRoutes } from "constants/routes";
@@ -8,14 +9,13 @@ import { Button } from "../../common";
 import routes from "../../routes";
 
 type Props = {
-  providerId: ProviderId;
-  walletAddress: string;
+  wallet?: WalletState;
   isSubmitting: boolean;
   onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 export default function WalletSubmission(props: Props) {
-  const { walletAddress, isSubmitting, onClick, providerId } = props;
+  const { wallet, isSubmitting, onClick } = props;
   const navigate = useNavigate();
 
   return (
@@ -26,7 +26,7 @@ export default function WalletSubmission(props: Props) {
         able to create your Angel Protocol endowment account using that wallet
         address. We recommend using a new wallet.
       </p>
-      {providerId && !isTerraWallet(providerId) ? (
+      {wallet && !isTerraWallet(wallet.providerId) ? (
         <UnsupportedWalletConnected />
       ) : (
         <>
@@ -40,7 +40,7 @@ export default function WalletSubmission(props: Props) {
               id="walletAddress"
               label="Terra Wallet"
               placeholder="terra1..."
-              value={walletAddress}
+              value={wallet?.address}
               disabled
               required
             />
