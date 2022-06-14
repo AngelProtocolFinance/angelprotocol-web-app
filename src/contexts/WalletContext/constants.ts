@@ -14,6 +14,10 @@ export const providerIcons: { [key in ProviderId]: string } = {
   "xdefi-wallet": xdefiIcon,
   "xdefi-evm": xdefiIcon,
   station: terraStationIcon,
+  "leap-wallet": "https://leapwallet.io/icon.png",
+  "falcon-wallet": "https://api.falconwallet.app/assets/images/falcon-logo.png",
+  "bitkeep-wallet":
+    "https://cdn.bitkeep.vip/u_b_6151d430-ae42-11ec-9c39-b7ca284b7fe4.png",
   walletconnect: walletConnectIcon,
   torus: torusIcon,
 };
@@ -28,6 +32,9 @@ export const placeHolderDisplayToken: {
   "xdefi-wallet": lunaTokenWithBalance,
   "xdefi-evm": ethTokenWithBalance,
   station: lunaTokenWithBalance,
+  "leap-wallet": lunaTokenWithBalance,
+  "falcon-wallet": lunaTokenWithBalance,
+  "bitkeep-wallet": lunaTokenWithBalance,
   walletconnect: lunaTokenWithBalance,
   torus: lunaTokenWithBalance,
 };

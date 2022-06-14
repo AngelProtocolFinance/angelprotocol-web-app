@@ -16,29 +16,24 @@ import Web3Auth from "./Web3Auth";
 export default function ChooseWallet() {
   const navigate = useNavigate();
   const { isWalletLoading, wallet } = useGetWallet();
-  const { connections } = useSetWallet();
-  const login = useCallback(
-    (provider: string) =>
-      connections.find((x) => x.name === "Torus")?.connect!(provider), //torus is single connection only atm
-    [connections]
-  );
 
   if (isWalletLoading) {
     return <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />;
   }
 
-  if (!wallet || !isTerraProvider(wallet.providerId)) {
-    return (
-      <Navigate
-        to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
-      />
-    );
-  }
+  //if wallet is connected and it's a terra-wallet
+  // if (wallet && isTerraProvider(wallet.providerId)) {
+  //   return (
+  //     <Navigate
+  //       to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
+  //     />
+  //   );
+  // }
 
   return (
     <div className="flex flex-col gap-5 items-center">
       <Title />
-      <Web3Auth onLogin={login} />
+      <Web3Auth />
       <Link
         to={`${siteRoutes.app}/${appRoutes.register}/${registerRoutes.wallet}/${routes.submit}`}
         className="uppercase text-bright-blue text-sm hover:underline mb-5 lg:mb-0"
