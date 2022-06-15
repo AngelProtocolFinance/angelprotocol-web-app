@@ -8,13 +8,9 @@ import useHandleError from "pages/Registration/useHandleError";
 import {
   registrationRefKey,
   useCreateNewCharityMutation,
-  useRegistrationQueryLazyQuery,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
-import { useModalContext } from "contexts/ModalContext";
-import Popup from "components/Popup";
-import { useGetter, useSetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
 
@@ -22,10 +18,7 @@ export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
-  const { showModal } = useModalContext();
   const navigate = useNavigate();
-  const dispatch = useSetter();
-  const charity = useGetter((state) => state.charity);
   const [isError, setError] = useState(false);
   const handleError = useHandleError();
 
@@ -78,11 +71,10 @@ export default function useSaveContactDetails() {
         return;
       }
 
-      // don't navigate back to dashboard so user gets explicitly notified
-      // that their changes where succesful
       if (!is_create) {
-        showModal(Popup, { message: "Update successful" });
-        return;
+        return navigate(
+          `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
+        );
       }
 
       const { data } = result;
@@ -102,15 +94,7 @@ export default function useSaveContactDetails() {
 
       navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`);
     },
-    [
-      charity,
-      dispatch,
-      handleError,
-      navigate,
-      registerCharity,
-      resendEmail,
-      updateContactPerson,
-    ]
+    [handleError, navigate, registerCharity, resendEmail, updateContactPerson]
   );
 
   return {

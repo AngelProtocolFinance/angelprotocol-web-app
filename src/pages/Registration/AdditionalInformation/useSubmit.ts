@@ -1,18 +1,23 @@
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { AdditionalInfoValues } from "pages/Registration/types";
-import { useUpdateCharityMetadataMutation } from "services/aws/registration";
+import {
+  useRegistrationQuery,
+  useUpdateCharityMetadataMutation,
+} from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
-import { useGetter, useSetter } from "store/accessors";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
-import { updateCharity } from "../store";
+import routes from "../routes";
 import useHandleError from "../useHandleError";
 
 export default function useSubmit() {
-  const [updateMetadata, { isSuccess }] = useUpdateCharityMetadataMutation();
-  const charity = useGetter((state) => state.charity);
-  const dispatch = useSetter();
+  const [updateMetadata] = useUpdateCharityMetadataMutation();
+  const { data } = useRegistrationQuery("old");
+  const charity = data!; //ensured by guard
   const handleError = useHandleError();
+  const navigate = useNavigate();
 
   const submit = useCallback(
     async (values: AdditionalInfoValues) => {
@@ -26,26 +31,16 @@ export default function useSubmit() {
 
         if ("error" in result) {
           handleError(result.error, "Error updating profile ❌");
-        } else {
-          const { TerraWallet, ...resultMetadata } = result.data;
-          dispatch(
-            updateCharity({
-              ...charity,
-              Metadata: {
-                ...charity.Metadata,
-                ...resultMetadata,
-              },
-            })
-          );
         }
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, "Error updating profile ❌");
       }
     },
-    [charity, dispatch, handleError, updateMetadata]
+    [charity, handleError, updateMetadata, navigate]
   );
 
-  return { submit, isSuccess };
+  return { submit };
 }
 
 async function getUploadBody(primaryKey: string, values: AdditionalInfoValues) {

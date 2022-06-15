@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { Stage } from "slices/transaction/types";
-import { useSubmitMutation } from "services/aws/registration";
+import {
+  useRegistrationState,
+  useSubmitMutation,
+} from "services/aws/registration";
 import { useGetter, useSetter } from "store/accessors";
 import {
   setFormError,
@@ -8,11 +11,11 @@ import {
   setStage,
 } from "slices/transaction/transactionSlice";
 import { FORM_ERROR } from "../../constants";
-import { updateCharity } from "../../store";
 import useHandleError from "../../useHandleError";
 
 export default function useTransactionResultHandler() {
-  const charity = useGetter((state) => state.charity);
+  const { data } = useRegistrationState("old");
+  const charity = data!; //ensured by guard
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
 
@@ -29,20 +32,6 @@ export default function useTransactionResultHandler() {
 
         if ("error" in result) {
           handleError(result.error, FORM_ERROR);
-        } else {
-          dispatch(
-            updateCharity({
-              ...charity,
-              Registration: {
-                ...charity.Registration,
-                RegistrationStatus: result.data.RegistrationStatus,
-              },
-              Metadata: {
-                ...charity.Metadata,
-                EndowmentContract: result.data.EndowmentContract,
-              },
-            })
-          );
         }
       } catch (error) {
         console.log(error);

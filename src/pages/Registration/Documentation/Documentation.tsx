@@ -1,11 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { DocumentationValues } from "pages/Registration/types";
-import { useGetter } from "store/accessors";
-import { appRoutes, siteRoutes } from "constants/routes";
-import routes from "../routes";
+import { useRegistrationState } from "services/aws/registration";
+import { placeHolderCharity } from "../constants";
 import ButtonSection from "./ButtonSection";
 import {
   AuditedFinancialReports,
@@ -22,8 +20,7 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
-  const navigate = useNavigate();
-  const charity = useGetter((state) => state.charity);
+  const { data: charity = placeHolderCharity } = useRegistrationState("old");
 
   const methods = useForm<DocumentationValues>({
     resolver: yupResolver(documentationSchema),
@@ -38,13 +35,7 @@ export default function Documentation() {
     },
   });
   const currentLevel = useCurrentLevel(methods);
-  const { upload, isSuccess } = useUpload();
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
-    }
-  }, [isSuccess, navigate]);
+  const { upload } = useUpload();
 
   return (
     <Container>

@@ -25,7 +25,7 @@ const headers = {
 export const registrationRefKey = "__registration_ref";
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, "new" | "old">({
+    registration: builder.query<Charity, string | undefined>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (state) => {
         const ref = localStorage.getItem(registrationRefKey);
