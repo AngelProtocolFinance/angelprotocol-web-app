@@ -1,20 +1,23 @@
 import { useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import banner2 from "assets/images/banner-register-2.jpg";
-import { useRequestEmailMutation } from "services/aws/registration";
+import {
+  useRegistrationState,
+  useRequestEmailMutation,
+} from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { useGetter, useSetter } from "store/accessors";
-import { appRoutes } from "constants/routes";
+import { useSetter } from "store/accessors";
 import { Button } from "./common";
 import { FORM_ERROR } from "./constants";
-import { removeCharity } from "./store";
+import routes from "./routes";
 import useHandleError from "./useHandleError";
 
 export default function ConfirmEmail() {
+  const { data } = useRegistrationState("old");
+  const charity = data!; // data is checked on stepOneInitiated guard
   const navigate = useNavigate();
   const dispatch = useSetter();
-  const charity = useGetter((state) => state.charity);
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();
@@ -56,8 +59,7 @@ export default function ConfirmEmail() {
   );
 
   const handleClose = () => {
-    dispatch(removeCharity());
-    navigate(appRoutes.index);
+    navigate(routes.index);
   };
 
   return (

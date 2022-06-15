@@ -3,33 +3,59 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
+import {
+  invalidateRegistrationTags,
+  registrationRefKey,
+  updateRegQueryData,
+  useRegistrationQuery,
+} from "services/aws/registration";
+import { adminTags, awsTags } from "services/aws/tags";
 import { useSetter } from "store/accessors";
 import { Button } from "../common";
 import routes from "../routes";
-import { removeCharity } from "../store";
 import ButtonMailTo from "./ButtonMailTo";
-import useResume from "./useResume";
 
+type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
   refer: Yup.string().required("Please enter your registration reference."),
 });
 
 export default function Registration() {
-  const resume = useResume();
-  const navigate = useNavigate();
+  /** run initial query, so that other guards don't have to to wait for loading
+   *  this is the homebase, no programmatic redirection should be done from here
+   *  so we can always go back here, from dashboard
+   */
   const dispatch = useSetter();
+  const { refetch } = useRegistrationQuery("old");
+
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<{ refer: string }>({
+  } = useForm<ResumeValues>({
+    defaultValues: {
+      //pre-fill with old registartion reference
+      refer: localStorage.getItem(registrationRefKey) || "",
+    },
     resolver: yupResolver(FormInfoSchema),
   });
 
   const handleStart = () => {
-    dispatch(removeCharity());
-    navigate(routes.contactDetails);
+    localStorage.removeItem(registrationRefKey);
+    //clear cache data
+    navigate(routes.contactDetails, { state: { is_new: true } });
+  };
+
+  const onResume = (val: ResumeValues) => {
+    /**
+     * set querier params, and re-run the query
+     */
+    localStorage.setItem(registrationRefKey, val.refer);
+    refetch();
+    //go to dashboard and let guard handle further routing
+    navigate(routes.dashboard);
   };
 
   return (
@@ -47,7 +73,7 @@ export default function Registration() {
       </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
-        onSubmit={handleSubmit(resume)}
+        onSubmit={handleSubmit(onResume)}
         className="flex flex-col items-center gap-2 w-full mb-5"
       >
         <input

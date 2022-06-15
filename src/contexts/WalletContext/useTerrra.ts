@@ -50,8 +50,6 @@ export default function useTerra() {
       },
     }));
 
-  console.log(availableInstallations);
-
   const terraInstallations: Installation[] = availableInstallations
     .filter(
       (installer) =>

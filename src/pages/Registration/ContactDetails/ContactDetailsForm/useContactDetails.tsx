@@ -6,19 +6,23 @@ import { ContactDetailsRequest } from "types/server/aws";
 import { FORM_ERROR } from "pages/Registration/constants";
 import useHandleError from "pages/Registration/useHandleError";
 import {
+  registrationRefKey,
   useCreateNewCharityMutation,
+  useRegistrationQueryLazyQuery,
   useRequestEmailMutation,
   useUpdatePersonDataMutation,
 } from "services/aws/registration";
+import { useModalContext } from "contexts/ModalContext";
+import Popup from "components/Popup";
 import { useGetter, useSetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../../routes";
-import { updateCharity } from "../../store";
 
 export default function useSaveContactDetails() {
   const [registerCharity] = useCreateNewCharityMutation();
   const [resendEmail] = useRequestEmailMutation();
   const [updateContactPerson] = useUpdatePersonDataMutation();
+  const { showModal } = useModalContext();
   const navigate = useNavigate();
   const dispatch = useSetter();
   const charity = useGetter((state) => state.charity);
@@ -74,31 +78,19 @@ export default function useSaveContactDetails() {
         return;
       }
 
-      const { data } = result;
-
-      dispatch(
-        updateCharity({
-          ...charity,
-          ContactPerson: {
-            ...charity.ContactPerson,
-            ...data.ContactPerson,
-          },
-          Registration: {
-            ...charity.Registration,
-            ...data.Registration,
-          },
-        })
-      );
-
+      // don't navigate back to dashboard so user gets explicitly notified
+      // that their changes where succesful
       if (!is_create) {
-        return navigate(
-          `${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`
-        );
+        showModal(Popup, { message: "Update successful" });
+        return;
       }
 
+      const { data } = result;
       // Extracting SK, EmailVerified so that 'contactPerson' does not include them
       const { PK, SK, EmailVerified, ...contactPerson } = data.ContactPerson;
-
+      //save ref before invalidating empty cache to retrigger fetch
+      localStorage.setItem(registrationRefKey, PK || "");
+      //sending this email invalidated registration query cache
       await resendEmail({
         uuid: PK,
         type: "verify-email",
@@ -107,6 +99,7 @@ export default function useSaveContactDetails() {
           CharityName: data.Registration.CharityName,
         },
       });
+
       navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`);
     },
     [

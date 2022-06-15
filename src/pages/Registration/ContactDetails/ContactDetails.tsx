@@ -1,8 +1,16 @@
-import { useGetter } from "store/accessors";
+import { useLocation } from "react-router-dom";
+import { useRegistrationQuery } from "services/aws/registration";
+import { placeHolderCharity } from "../constants";
 import ContactDetailsForm from "./ContactDetailsForm";
 
 export default function ContactDetails() {
-  const charity = useGetter((state) => state.charity);
+  const location = useLocation();
+  const { data: charity = placeHolderCharity, isLoading } =
+    useRegistrationQuery((location.state as any)?.is_new ? "new" : "old");
+
+  if (isLoading) {
+    return <div>loading</div>;
+  }
 
   return (
     <div>

@@ -1,14 +1,15 @@
 import { useCallback } from "react";
 import useHandleError from "pages/Registration/useHandleError";
-import { useUpdateCharityMetadataMutation } from "services/aws/registration";
-import { useGetter, useSetter } from "store/accessors";
-import { updateCharity } from "../../store";
+import {
+  useRegistrationState,
+  useUpdateCharityMetadataMutation,
+} from "services/aws/registration";
 
 export default function useRegisterWallet() {
+  const { data } = useRegistrationState("old");
+  const charity = data!; //ensured by guard
   const [updateMetadata, { isSuccess, isLoading }] =
     useUpdateCharityMetadataMutation();
-  const dispatch = useSetter();
-  const charity = useGetter((state) => state.charity);
   const handleError = useHandleError();
 
   const registerWallet = useCallback(
@@ -19,20 +20,10 @@ export default function useRegisterWallet() {
       });
 
       if ("error" in result) {
-        handleError(result.error, "Error updating profile ❌");
-      } else {
-        dispatch(
-          updateCharity({
-            ...charity,
-            Metadata: {
-              ...charity.Metadata,
-              TerraWallet: result.data.TerraWallet,
-            },
-          })
-        );
+        handleError(result.error, "Error updating wallet ❌");
       }
     },
-    [charity, dispatch, handleError, updateMetadata]
+    [charity, handleError, updateMetadata]
   );
 
   return { registerWallet, isSuccess, isSubmitting: isLoading };

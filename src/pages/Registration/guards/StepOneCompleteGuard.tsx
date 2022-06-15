@@ -1,21 +1,33 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useRegistrationQuery } from "services/aws/registration";
 import { useGetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
+import routes from "../routes";
 
 /**
  * Checks if the charity contact person's email is verified and only if it is does it allow
  * them to access the component passed in "props.children", otherwise navigates to /app/register page
  */
 export function StepOneCompleteGuard(props: any) {
-  const charity = useGetter((state) => state.charity);
-  const navigate = useNavigate();
+  const { data: charity, isLoading, isFetching } = useRegistrationQuery("old");
 
-  useEffect(() => {
-    if (!charity.ContactPerson.EmailVerified) {
-      navigate(`${siteRoutes.app}/${appRoutes.register}`);
-    }
-  }, [navigate, charity]);
+  if (isLoading || isFetching) {
+    return <div>loading</div>;
+  }
+
+  if (!charity) {
+    return <Navigate to={`${siteRoutes.app}/${appRoutes.register}`} />;
+  }
+
+  if (!charity.ContactPerson.EmailVerified) {
+    return (
+      <Navigate
+        to={`${siteRoutes.app}/${appRoutes.register}/${routes.confirm}`}
+        state={{ is_sent: true }}
+      />
+    );
+  }
 
   return <>{props.children}</>;
 }

@@ -14,7 +14,8 @@ import {
   UpdateDocumentationData,
   UpdateDocumentationResult,
 } from "types/server/aws";
-import { adminTags } from "services/terra/tags";
+import { adminTags } from "services/aws/tags";
+import { registrar_api } from "services/terra/registrar/registrar";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { awsTags } from "./tags";
@@ -23,14 +24,16 @@ const headers = {
   authorization: createAuthToken("charity-owner"),
 };
 
+export const registrationRefKey = "__registration_ref";
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string>({
+    registration: builder.query<Charity, "new" | "old">({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: (uuid) => {
+      query: (state) => {
+        const ref = localStorage.getItem(registrationRefKey);
         return {
-          url: "registration",
-          params: { uuid },
+          url: `registration${state === "new" ? "/new" : ""}`,
+          params: { uuid: ref },
           headers,
         };
       },
@@ -86,6 +89,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     activateCharity: builder.mutation<any, string | undefined>({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (PK) => ({
         url: `registration/${PK}/activate`,
         method: "POST",
@@ -106,6 +110,7 @@ const registration_api = aws.injectEndpoints({
       ContactDetailsResult,
       ContactDetailsRequest
     >({
+      //no tags to invalidate since registration still has to be confirmed
       query: ({ body }) => ({
         url: "registration",
         method: "POST",
@@ -129,6 +134,7 @@ const registration_api = aws.injectEndpoints({
     }),
     //TODO:proper typings
     requestEmail: builder.mutation<any, any>({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ uuid, type, body }) => {
         return {
           url: "registration/build-email",
@@ -152,6 +158,7 @@ const registration_api = aws.injectEndpoints({
       UpdateCharityMetadataResult,
       UpdateCharityMetadataData
     >({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
           url: "registration",
@@ -166,6 +173,7 @@ const registration_api = aws.injectEndpoints({
       UpdateDocumentationResult,
       UpdateDocumentationData
     >({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
           url: "registration",
@@ -180,6 +188,7 @@ const registration_api = aws.injectEndpoints({
       ContactDetailsResult,
       ContactDetailsRequest
     >({
+      invalidatesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: ({ PK, body }) => {
         return {
           url: "registration",
@@ -203,4 +212,15 @@ export const {
   useUpdateCharityMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
+  util: {
+    invalidateTags: invalidateRegistrationTags,
+    updateQueryData: updateRegQueryData,
+  },
 } = registration_api;
+
+export const {
+  registration: {
+    useQueryState: useRegistrationState,
+    useLazyQuery: useRegistrationQueryLazyQuery,
+  },
+} = registration_api.endpoints;

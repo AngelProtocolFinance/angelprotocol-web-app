@@ -6,9 +6,7 @@ import Banner from "./Banner";
 import Index from "./Index";
 
 export default function Market() {
-  const { data } = useRegistrationQuery("f84004f4-9567-4971-ba83-3045889b987x");
   const { endowments, isEndowmentsLoading } = useCategorizedEndowments();
-  console.log(data);
 
   const showDonater = useDonater({ to: "charity", receiver: "123" });
   return (
