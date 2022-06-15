@@ -42,7 +42,6 @@ export default function useTransactionResultHandler() {
     }
 
     if (stage.step === "error") {
-      console.log(stage.message);
       dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
     } else if (stage.step === "success") {
       handle();

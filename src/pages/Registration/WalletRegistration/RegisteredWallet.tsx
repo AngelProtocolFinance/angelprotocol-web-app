@@ -46,7 +46,7 @@ export default function RegisteredWallet() {
         onClick={clearCachedWallet}
         className="uppercase font-heading text-xs bg-angel-orange px-2 py-1"
       >
-        reset wallet
+        change wallet
       </Button>
       <Link
         to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}

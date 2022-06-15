@@ -28,7 +28,6 @@ const registration_api = aws.injectEndpoints({
     registration: builder.query<Charity, string>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
       query: (explicitRef /** pass "" to use savedRef */) => {
-        console.log(explicitRef);
         const savedRef = localStorage.getItem(registrationRefKey) || "";
         return {
           url: "registration",
@@ -81,16 +80,6 @@ const registration_api = aws.injectEndpoints({
         method: "POST",
         headers,
       }),
-    }),
-    checkPreviousRegistration: builder.mutation<Charity, string | undefined>({
-      query: (uuid) => {
-        return {
-          url: "registration",
-          method: "GET",
-          params: { uuid },
-          headers,
-        };
-      },
     }),
     createNewCharity: builder.mutation<
       ContactDetailsResult,
@@ -190,7 +179,6 @@ const registration_api = aws.injectEndpoints({
 export const {
   useRegistrationQuery,
   useActivateCharityMutation,
-  useCheckPreviousRegistrationMutation,
   useCreateNewCharityMutation,
   useGetCharityApplicationsQuery,
   useRequestEmailMutation,

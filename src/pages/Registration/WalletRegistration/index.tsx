@@ -22,10 +22,4 @@ export default function WalletRegistration() {
   }
 
   return <WalletSubmission />;
-  // return (
-  //   <Routes>
-  //     <Route index element={<ChooseWallet />} />
-  //     <Route path={routes.submit} element={<RegisterWallet />} />
-  //   </Routes>
-  // );
 }
