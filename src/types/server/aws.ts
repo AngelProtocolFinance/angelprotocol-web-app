@@ -1,4 +1,5 @@
 import { EndowmentTierNum } from "types/shared/registration";
+import { Optional } from "types/utils";
 
 /**result wrapper */
 export interface AWSQueryRes<T> {
@@ -234,6 +235,18 @@ export type FileObject = {
   publicUrl?: string;
 };
 
+type InitialRegistration = Optional<
+  Registration,
+  | "AuditedFinancialReports"
+  | "AuditedFinancialReportsVerified"
+  | "FinancialStatements"
+  | "FinancialStatementsVerified"
+  | "ProofOfIdentity"
+  | "ProofOfIdentityVerified"
+  | "ProofOfRegistration"
+  | "ProofOfRegistrationVerified"
+  | "Website"
+>;
 export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
@@ -253,54 +266,35 @@ export type Registration = {
   Website: string;
 };
 
-export type UnprocessedCharity = {
-  ContactPerson: {
-    Email: string;
-    EmailVerified?: boolean;
-    Goals: string;
-    FirstName: string;
-    LastName: string;
-    OtherRole?: string;
-    OtherReferralMethod?: string;
-    PhoneNumber: string;
-    PK?: string;
-    ReferralMethod: ReferralMethods;
-    Role: ContactRoles;
-    SK: "ContactPerson";
-  };
-  Registration: {
-    AuditedFinancialReports?: FileObject[];
-    AuditedFinancialReportsVerified?: boolean;
-    CharityName: string;
-    CharityName_ContactEmail?: string;
-    FinancialStatements?: FileObject[];
-    FinancialStatementsVerified?: boolean;
-    ProofOfIdentity?: FileObject;
-    ProofOfIdentityVerified?: boolean;
-    ProofOfRegistration?: FileObject;
-    ProofOfRegistrationVerified?: boolean;
-    RegistrationDate: string;
-    RegistrationStatus: RegistrationStatus;
-    SK: "Registration";
-    Tier?: EndowmentTierNum;
-    UN_SDG: number; //0 iniitally
-    Website?: string;
-  };
-  Metadata: {
-    Banner?: FileObject;
-    CharityLogo?: FileObject;
-    CharityOverview?: string;
-    EndowmentContract?: string;
-    SK: "Metadata";
-    TerraWallet?: string;
-    KycDonorsOnly?: boolean;
-  };
+type InitialMetaData = Optional<
+  Metadata,
+  | "Banner"
+  | "CharityLogo"
+  | "CharityOverview"
+  | "EndowmentContract"
+  | "TerraWallet"
+  | "KycDonorsOnly"
+>;
+export type Metadata = {
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  EndowmentContract: string;
+  SK: "Metadata";
+  TerraWallet: string;
+  KycDonorsOnly: boolean;
 };
 
 export type Charity = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
+};
+
+export type UnprocessedCharity = {
+  ContactPerson: ContactPerson;
+  Registration: InitialRegistration;
+  Metadata: InitialMetaData;
 };
 
 export type ContactDetailsData = {
@@ -321,16 +315,6 @@ export type ContactDetailsRequest = {
     ContactPerson: Omit<ContactPerson, "EmailVerified" | "SK">;
     Registration: Pick<Registration, "CharityName">;
   };
-};
-
-export type Metadata = {
-  Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
-  EndowmentContract: string;
-  SK: "Metadata";
-  TerraWallet: string;
-  KycDonorsOnly: boolean;
 };
 
 //*

@@ -42,20 +42,7 @@ const registration_api = aws.injectEndpoints({
         Metadata: m,
       }: UnprocessedCharity) => {
         return {
-          ContactPerson: {
-            Email: cp.Email,
-            EmailVerified: cp.EmailVerified,
-            Goals: cp.Goals,
-            FirstName: cp.FirstName,
-            LastName: cp.LastName,
-            OtherRole: cp.OtherRole,
-            OtherReferralMethod: cp.OtherReferralMethod,
-            PhoneNumber: cp.PhoneNumber,
-            PK: cp.PK,
-            ReferralMethod: cp.ReferralMethod,
-            Role: cp.Role,
-            SK: "ContactPerson",
-          },
+          ContactPerson: cp,
           Registration: {
             AuditedFinancialReports: r.AuditedFinancialReports || [],
             AuditedFinancialReportsVerified:
