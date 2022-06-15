@@ -14,7 +14,7 @@ import useHandleError from "../useHandleError";
 
 export default function useSubmit() {
   const [updateMetadata] = useUpdateCharityMetadataMutation();
-  const { data } = useRegistrationQuery("old");
+  const { data } = useRegistrationQuery("");
   const charity = data!; //ensured by guard
   const handleError = useHandleError();
   const navigate = useNavigate();

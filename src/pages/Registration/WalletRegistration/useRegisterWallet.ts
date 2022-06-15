@@ -6,7 +6,7 @@ import {
 } from "services/aws/registration";
 
 export default function useRegisterWallet() {
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
   const [updateMetadata, { isSuccess, isLoading }] =
     useUpdateCharityMetadataMutation();

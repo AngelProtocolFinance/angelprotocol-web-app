@@ -5,10 +5,11 @@ import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
 import {
   registrationRefKey,
-  useRegistrationQuery,
+  useRegistrationQueryLazyQuery,
 } from "services/aws/registration";
 import { Button } from "../common";
 import routes from "../routes";
+import useHandleError from "../useHandleError";
 import ButtonMailTo from "./ButtonMailTo";
 
 type ResumeValues = { refer: string };
@@ -22,7 +23,8 @@ export default function Registration() {
    *  so we can always go back here, from dashboard
    */
 
-  const { refetch } = useRegistrationQuery("old");
+  const handleError = useHandleError();
+  const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
   const navigate = useNavigate();
 
   const {
@@ -39,16 +41,22 @@ export default function Registration() {
 
   const handleStart = () => {
     localStorage.removeItem(registrationRefKey);
-    //clear cache data
     navigate(routes.contactDetails, { state: { is_new: true } });
   };
 
-  const onResume = (val: ResumeValues) => {
+  const onResume = async (val: ResumeValues) => {
     /**
      * set querier params, and re-run the query
      */
+    const { isError, error } = await checkPrevRegistration(val.refer);
+    if (isError) {
+      handleError(
+        error,
+        "No active charity application found with this registration reference"
+      );
+      return;
+    }
     localStorage.setItem(registrationRefKey, val.refer);
-    refetch();
     //go to dashboard and let guard handle further routing
     navigate(routes.dashboard);
   };

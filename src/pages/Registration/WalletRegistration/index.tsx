@@ -5,7 +5,7 @@ import RegisteredWallet from "./RegisteredWallet";
 import WalletSubmission from "./WalletSubmission";
 
 export default function WalletRegistration() {
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //
   const { wallet, isProviderLoading } = useGetWallet();
 

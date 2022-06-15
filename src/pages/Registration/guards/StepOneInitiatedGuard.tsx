@@ -13,7 +13,7 @@ export function StepOneInitiatedGuard(props: any) {
     data: charity = placeHolderCharity,
     isLoading,
     isFetching,
-  } = useRegistrationQuery("old");
+  } = useRegistrationQuery("");
 
   if (isLoading || isFetching) {
     return <div>loading</div>;

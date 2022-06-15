@@ -6,7 +6,7 @@ import ContactDetailsForm from "./ContactDetailsForm";
 export default function ContactDetails() {
   const location = useLocation();
   const { data: charity = placeHolderCharity, isLoading } =
-    useRegistrationQuery((location.state as any)?.is_new ? "new" : "old");
+    useRegistrationQuery((location.state as any)?.is_new ? "new" : "");
 
   if (isLoading) {
     return <div>loading</div>;

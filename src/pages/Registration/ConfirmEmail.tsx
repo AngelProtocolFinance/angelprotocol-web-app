@@ -13,7 +13,7 @@ import routes from "./routes";
 import useHandleError from "./useHandleError";
 
 export default function ConfirmEmail() {
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; // data is checked on stepOneInitiated guard
   const navigate = useNavigate();
   const location: any = useLocation();

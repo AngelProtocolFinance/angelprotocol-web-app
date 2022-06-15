@@ -14,7 +14,7 @@ import { FORM_ERROR } from "../../constants";
 import useHandleError from "../../useHandleError";
 
 export default function useTransactionResultHandler() {
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
   const { stage } = useGetter((state) => state.transaction);
   const dispatch = useSetter();

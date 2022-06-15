@@ -14,7 +14,7 @@ import useHandleError from "../useHandleError";
 
 export default function useUpload() {
   const [uploadDocumentation] = useUpdateDocumentationMutation();
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
   const navigate = useNavigate();
 

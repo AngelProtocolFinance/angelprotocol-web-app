@@ -19,9 +19,7 @@ export default function TerraWalletSelection() {
 
   return (
     <div className="w-full max-w-sm">
-      <p className="text-left font-heading uppercase mb-1">
-        other terra wallets
-      </p>
+      <p className="text-left font-heading uppercase mb-1">other wallets</p>
       <div className="grid gap-2">
         {availableConnections
           .filter((connection) => connection.type !== "READONLY")

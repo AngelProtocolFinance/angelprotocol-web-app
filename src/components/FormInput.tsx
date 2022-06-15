@@ -18,6 +18,7 @@ export default function FormInput(props: Props) {
     className,
     errorClassName,
     type = "text",
+    mono,
     ...rest
   } = props;
   const id = registerReturn?.name || rest.id;

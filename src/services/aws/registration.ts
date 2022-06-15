@@ -25,13 +25,14 @@ const headers = {
 export const registrationRefKey = "__registration_ref";
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    registration: builder.query<Charity, string | undefined>({
+    registration: builder.query<Charity, string>({
       providesTags: [{ type: awsTags.admin, id: adminTags.registration }],
-      query: (state) => {
-        const ref = localStorage.getItem(registrationRefKey);
+      query: (explicitRef /** pass "" to use savedRef */) => {
+        console.log(explicitRef);
+        const savedRef = localStorage.getItem(registrationRefKey) || "";
         return {
-          url: `registration${state === "new" ? "/new" : ""}`,
-          params: { uuid: ref },
+          url: "registration",
+          params: { uuid: explicitRef || savedRef },
           headers,
         };
       },
@@ -210,10 +211,7 @@ export const {
   useUpdateCharityMetadataMutation,
   useUpdateDocumentationMutation,
   useUpdatePersonDataMutation,
-  util: {
-    invalidateTags: invalidateRegistrationTags,
-    updateQueryData: updateRegQueryData,
-  },
+  util: { updateQueryData: updateRegQueryData },
 } = registration_api;
 
 export const {

@@ -11,7 +11,7 @@ import { Button } from "../common";
 import routes from "../routes";
 
 export default function RegisteredWallet() {
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //handled by guard
 
   const dispatch = useSetter();
@@ -19,7 +19,7 @@ export default function RegisteredWallet() {
   function clearCachedWallet() {
     /**refreshing the page refetches registration and updates cache with wallet in db */
     dispatch(
-      updateRegQueryData("registration", "old", (charity) => {
+      updateRegQueryData("registration", "", (charity) => {
         charity.Metadata.TerraWallet = "";
       })
     );

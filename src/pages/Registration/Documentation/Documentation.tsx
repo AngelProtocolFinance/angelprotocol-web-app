@@ -20,7 +20,7 @@ import useCurrentLevel from "./useCurrentLevel";
 import useUpload from "./useUpload";
 
 export default function Documentation() {
-  const { data: charity = placeHolderCharity } = useRegistrationState("old");
+  const { data: charity = placeHolderCharity } = useRegistrationState("");
 
   const methods = useForm<DocumentationValues>({
     resolver: yupResolver(documentationSchema),

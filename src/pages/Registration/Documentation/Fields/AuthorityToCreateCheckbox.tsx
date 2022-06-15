@@ -9,7 +9,7 @@ export default function AuthorityToCreateCheckbox() {
     formState: { errors, isSubmitting },
   } = useFormContext<DocumentationValues>();
 
-  const { data } = useRegistrationState("old");
+  const { data } = useRegistrationState("");
   const charity = data!; //ensured by guard
 
   return (
