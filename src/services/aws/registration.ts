@@ -1,4 +1,3 @@
-import { string } from "yup";
 import {
   AWSQueryRes,
   ApplicationStatusOptions,
@@ -15,7 +14,6 @@ import {
   UpdateDocumentationResult,
 } from "types/server/aws";
 import { adminTags } from "services/aws/tags";
-import { registrar_api } from "services/terra/registrar/registrar";
 import createAuthToken from "helpers/createAuthToken";
 import { aws } from "./aws";
 import { awsTags } from "./tags";

@@ -7,7 +7,6 @@ import {
 } from "services/aws/registration";
 import { useModalContext } from "contexts/ModalContext";
 import Popup from "components/Popup";
-import { useSetter } from "store/accessors";
 import { Button } from "./common";
 import { FORM_ERROR } from "./constants";
 import routes from "./routes";
@@ -17,7 +16,6 @@ export default function ConfirmEmail() {
   const { data } = useRegistrationState("old");
   const charity = data!; // data is checked on stepOneInitiated guard
   const navigate = useNavigate();
-  const dispatch = useSetter();
   const location: any = useLocation();
   const is_sent = location.state?.is_sent;
   const [resendEmail, { isLoading }] = useRequestEmailMutation();

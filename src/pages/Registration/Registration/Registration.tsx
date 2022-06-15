@@ -4,13 +4,9 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
 import {
-  invalidateRegistrationTags,
   registrationRefKey,
-  updateRegQueryData,
   useRegistrationQuery,
 } from "services/aws/registration";
-import { adminTags, awsTags } from "services/aws/tags";
-import { useSetter } from "store/accessors";
 import { Button } from "../common";
 import routes from "../routes";
 import ButtonMailTo from "./ButtonMailTo";
@@ -25,9 +21,8 @@ export default function Registration() {
    *  this is the homebase, no programmatic redirection should be done from here
    *  so we can always go back here, from dashboard
    */
-  const dispatch = useSetter();
-  const { refetch } = useRegistrationQuery("old");
 
+  const { refetch } = useRegistrationQuery("old");
   const navigate = useNavigate();
 
   const {

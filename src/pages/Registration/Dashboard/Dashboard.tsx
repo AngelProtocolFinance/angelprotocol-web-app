@@ -1,8 +1,4 @@
-import { Navigate } from "react-router-dom";
-import {
-  useRegistrationQuery,
-  useRegistrationState,
-} from "services/aws/registration";
+import { useRegistrationState } from "services/aws/registration";
 import { Button } from "../common";
 import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";

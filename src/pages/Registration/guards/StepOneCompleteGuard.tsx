@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useRegistrationQuery } from "services/aws/registration";
-import { useGetter } from "store/accessors";
 import { appRoutes, siteRoutes } from "constants/routes";
 import routes from "../routes";
 
