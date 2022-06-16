@@ -61,7 +61,7 @@ export default function DonationsTable(props: {
             <>{tx.block_timestamp.substring(0, 10)}</>
             <span className="font-mono">{tx.name}</span>
             <a
-              href={getTxUrl(chainIDs.mainnet, tx.tx_id)}
+              href={getTxUrl(chainIDs.terra_main, tx.tx_id)}
               target="_blank"
               rel="noreferrer noopener"
               className="text-center text-angel-blue cursor-pointer mb-6 text-sm"

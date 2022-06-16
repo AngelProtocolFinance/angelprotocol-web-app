@@ -51,7 +51,9 @@ export default function useTransak(receiver: Receiver) {
             ...receiver,
             transactionId: eventPayload.status.id,
             transactionDate: eventPayload.status.createdAt,
-            chainId: isDevelopment ? chainIDs.testnet : chainIDs.mainnet,
+            chainId: isDevelopment
+              ? chainIDs.terra_test
+              : chainIDs.terra_classic,
             amount: eventPayload.status.cryptoAmount,
             fiatRamp: "transak",
             paymentMethod: eventPayload.status.paymentOptionId,

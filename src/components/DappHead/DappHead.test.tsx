@@ -38,7 +38,6 @@ describe("DappHead test", () => {
     const marketText2 = /displaced ukrainians/i;
 
     const leaderboardText1 = /total donations/i;
-    const leaderboardText2 = /daily donations total/i;
 
     /** user starts at marketplace */
     const loader = screen.getByTestId("loader");
@@ -80,11 +79,9 @@ describe("DappHead test", () => {
 
     //view is not yet rendered and being lazy loaded
     expect(screen.queryByText(leaderboardText1)).toBeNull();
-    expect(screen.queryByText(leaderboardText2)).toBeNull();
 
     //view is finally loaded,
     expect(await screen.findByText(leaderboardText1)).toBeInTheDocument();
-    expect(await screen.findByText(leaderboardText2)).toBeInTheDocument();
     expect(loader3).not.toBeInTheDocument();
 
     //user goes back to marketplace
