@@ -5,6 +5,7 @@ import { DonateValues, FundFlow } from "./types";
 import { SchemaShape } from "schemas/types";
 import { WithBalance } from "services/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
@@ -18,7 +19,12 @@ export default function Donater(props: FundFlow) {
   const { wallet, isWalletLoading } = useGetWallet();
 
   if (isWalletLoading) return <DonateFormLoader />;
-  return <DonateContext {...props} tokens={wallet?.coins || []} />;
+  return (
+    <DonateContext
+      {...props}
+      tokens={wallet?.coins || [placeHolderDisplayToken["station"]]}
+    />
+  );
 }
 
 function DonateContext(props: FundFlow & { tokens: WithBalance[] }) {
