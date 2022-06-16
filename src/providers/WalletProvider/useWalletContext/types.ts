@@ -1,4 +1,5 @@
 import torusIcon from "assets/icons/wallets/torus.jpg";
+import { chainIDs } from "constants/chainIDs";
 import { ConnectionProxy } from "../types";
 
 export const TORUS_CONNECTION: ConnectionProxy = {
@@ -10,3 +11,6 @@ export const TORUS_CONNECTION: ConnectionProxy = {
 
 const isDevelopment = process.env.NODE_ENV === "development";
 export const NETWORK = isDevelopment ? "testnet" : "mainnet";
+export const CHAIN_ID = isDevelopment
+  ? chainIDs.terra_test
+  : chainIDs.terra_main;

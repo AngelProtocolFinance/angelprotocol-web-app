@@ -2,7 +2,7 @@ import { CreateTxOptions } from "@terra-money/terra.js";
 import { WalletStatus } from "@terra-money/wallet-provider";
 import OpenLogin from "@toruslabs/openlogin";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { mainnet } from "../chainOptions";
+import { classic } from "../chainOptions";
 import { WalletProxy } from "../types";
 import createWalletProxy from "./createWalletProxy";
 import { NETWORK, TORUS_CONNECTION } from "./types";
@@ -121,7 +121,7 @@ function getAvailableWallets(
         {
           address: "",
           connection: TORUS_CONNECTION,
-          network: mainnet,
+          network: classic,
           post: (_: CreateTxOptions) => {
             throw Error("Not initialized");
           },

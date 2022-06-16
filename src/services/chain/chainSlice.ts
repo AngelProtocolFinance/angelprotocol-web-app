@@ -3,7 +3,7 @@ import { chainIDs } from "constants/chainIDs";
 import { State, chains } from "./types";
 
 const initialState: State = {
-  [chains.terra]: chainIDs.terra_main,
+  [chains.terra]: chainIDs.terra_classic,
   [chains.ethereum]: chainIDs.eth_main,
 };
 

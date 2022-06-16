@@ -10,7 +10,7 @@ import {
 } from "@terra-money/wallet-provider";
 import { useEffect, useMemo } from "react";
 import { TerraIdentifiers } from "services/wallet/types";
-import { mainnet } from "../chainOptions";
+import { classic } from "../chainOptions";
 import { WalletProxy } from "../types";
 
 type Connect = (type?: ConnectType, identifier?: string) => void;
@@ -99,7 +99,7 @@ function getAvailableWallets(
   return availableConnections.map((connection) => ({
     address: "",
     connection,
-    network: mainnet,
+    network: classic,
     post: (_: CreateTxOptions) => {
       throw Error("Not initialized");
     },

@@ -9,7 +9,7 @@ type Contracts = {
 
 export const contracts: Contracts = {
   //latest address here - https://github.com/AngelProtocolFinance/angelprotocol-test-suite/blob/main/src/config/constants.ts
-  [chainIDs.terra_main]: {
+  [chainIDs.terra_classic]: {
     //core
     [sc.anchor_vault1]: "terra172ue5d0zm7jlsj2d9af4vdff6wua7mnv6dq5vp",
     [sc.anchor_vault2]: "",
