@@ -60,6 +60,7 @@ export default function Register() {
             </StepOneCompleteGuard>
           }
         />
+        <Route index element={<Registration />} />
         <Route
           path="*"
           element={
@@ -68,7 +69,6 @@ export default function Register() {
             />
           }
         />
-        <Route index element={<Registration />} />
       </Routes>
     </Container>
   );

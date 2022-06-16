@@ -1,4 +1,3 @@
-import { useRegistrationQuery } from "services/aws/registration";
 import { useCategorizedEndowments } from "services/terra/registrar/queriers";
 import Loader from "components/Loader";
 import useDonater from "components/Transactors/Donater/useDonater";

@@ -18,11 +18,6 @@ const FormInfoSchema = Yup.object().shape({
 });
 
 export default function Registration() {
-  /** run initial query, so that other guards don't have to to wait for loading
-   *  this is the homebase, no programmatic redirection should be done from here
-   *  so we can always go back here, from dashboard
-   */
-
   const handleError = useHandleError();
   const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
   const navigate = useNavigate();
@@ -45,11 +40,7 @@ export default function Registration() {
   };
 
   const onResume = async (val: ResumeValues) => {
-    /**
-     * set querier params, and re-run the query
-     */
     const { isError, error, data } = await checkPrevRegistration(val.refer);
-
     if (isError || !data) {
       handleError(
         error,
@@ -57,7 +48,6 @@ export default function Registration() {
       );
       return;
     }
-
     localStorage.setItem(registrationRefKey, val.refer);
     //go to dashboard and let guard handle further routing
     navigate(routes.dashboard);

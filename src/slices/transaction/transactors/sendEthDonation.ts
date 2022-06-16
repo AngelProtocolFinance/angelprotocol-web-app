@@ -5,7 +5,6 @@ import {
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import ERC20Abi from "abi/ERC20.json";
 import { ethers } from "ethers";
-import { ProviderId } from "contexts/WalletContext/types";
 import { StageUpdator } from "slices/transaction/types";
 import { Receiver } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
