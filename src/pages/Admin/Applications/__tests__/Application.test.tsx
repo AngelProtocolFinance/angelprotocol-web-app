@@ -1,12 +1,13 @@
+import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { CharityApplication } from "types/server/aws";
 import ModalContext from "contexts/ModalContext";
-import StaticWalletContext from "test/StaticWalletContext";
-import { WALLET } from "test/constants";
+import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";
+import { testnet } from "constants/chainOptions";
 import Applications from "../Applications";
 
 const mockUseGetCharityApplicationsQuery = jest.fn();
@@ -21,110 +22,67 @@ const TestApp = (props: { routes?: string[]; initialRouteIndex?: number }) => (
     initialIndex={props.initialRouteIndex}
   >
     <Provider store={store}>
-      <StaticWalletContext
-        wallet={WALLET}
-        isProviderLoading={false}
-        isWalletLoading={false}
-      >
-        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-          <Applications />
-        </ModalContext>
-      </StaticWalletContext>
+      <StaticWalletProvider defaultNetwork={testnet}>
+        <WalletContext>
+          <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+            <Applications />
+          </ModalContext>
+        </WalletContext>
+      </StaticWalletProvider>
     </Provider>
   </MemoryRouter>
 );
 
-const mockUseGetWallet = jest.fn();
-
-jest.mock("contexts/WalletContext/WalletContext", () => ({
-  __esModule: true,
-  default: () => mockUseGetWallet(),
-}));
-
 describe("Charity applications review", () => {
-  // test("Renders Initial state", () => {
-  //   mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
-  //   render(<TestApp />);
-
-  //   expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
-  //   expect(screen.getByText(/No applications found/i)).toBeInTheDocument();
-  // });
-
-  // test("Renders loading state", () => {
-  //   mockUseGetCharityApplicationsQuery.mockReturnValue(loadingState);
-  //   render(<TestApp />);
-
-  //   expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
-  //   expect(screen.getByText(/Loading Applications/i)).toBeInTheDocument();
-  // });
-
-  // test("Application reviews rendered", () => {
-  //   mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
-  //   render(<Applications />);
-
-  //   expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
-  //   expect(
-  //     screen.getByRole("heading", { name: /Charity applications/i })
-  //   ).toBeInTheDocument();
-
-  //   // assert that both application names are rendered in table cells
-  //   expect(
-  //     screen.getByRole("cell", {
-  //       name: /123_company_chinadev20@outlook\.com/i,
-  //     })
-  //   ).toBeInTheDocument();
-  //   expect(
-  //     screen.getByRole("cell", {
-  //       name: /all4good_ms@mail\.com/i,
-  //     })
-  //   ).toBeInTheDocument();
-
-  //   // assert table has only 3 rows (heading + 2 charity applications)
-  //   const rows = screen.getAllByRole("row");
-  //   expect(rows.length).toBe(3);
-  // });
-
-  test("Application preview Modal renders 1st application", () => {
-    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+  test("Renders Initial state", () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
     render(<TestApp />);
-
-    screen.debug();
-
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(/No applications found/i)).toBeInTheDocument();
+  });
+  test("Renders loading state", () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadingState);
+    render(<TestApp />);
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(screen.getByText(/Loading Applications/i)).toBeInTheDocument();
+  });
+  test("Application reviews rendered", () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+    render(<Applications />);
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })
     ).toBeInTheDocument();
+    // assert that both application names are rendered in table cells
+    expect(
+      screen.getByRole("cell", {
+        name: /123_company_chinadev20@outlook\.com/i,
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("cell", {
+        name: /all4good_ms@mail\.com/i,
+      })
+    ).toBeInTheDocument();
+    // assert table has only 3 rows (heading + 2 charity applications)
+    const rows = screen.getAllByRole("row");
+    expect(rows.length).toBe(3);
+  });
 
-    const reviewButton = screen.getAllByRole("button", { name: /review/i })[0];
-    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
+  test("Application preview modal renders 2nd application", () => {
+    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
+    render(<TestApp />);
+    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
+    expect(
+      screen.getByRole("heading", { name: /Charity applications/i })
+    ).toBeInTheDocument();
+    const reviewButton = screen.getAllByRole("button", { name: /review/i })[1];
     userEvent.click(reviewButton);
-
     expect(
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
-
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
+    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
   });
-
-  // test("Application preview modal renders 2nd application", () => {
-  //   mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
-  //   render(<TestApp />);
-
-  //   expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
-  //   expect(
-  //     screen.getByRole("heading", { name: /Charity applications/i })
-  //   ).toBeInTheDocument();
-
-  //   const reviewButton = screen.getAllByRole("button", { name: /review/i })[1];
-  //   mockUseGetWallet.mockReturnValue({ wallet: WALLET });
-  //   userEvent.click(reviewButton);
-
-  //   expect(
-  //     screen.getByRole("heading", { name: /review application/i })
-  //   ).toBeInTheDocument();
-
-  //   expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
-  // });
 });
 
 const initialState = {

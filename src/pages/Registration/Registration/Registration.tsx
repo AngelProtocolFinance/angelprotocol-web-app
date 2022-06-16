@@ -48,14 +48,16 @@ export default function Registration() {
     /**
      * set querier params, and re-run the query
      */
-    const { isError, error } = await checkPrevRegistration(val.refer);
-    if (isError) {
+    const { isError, error, data } = await checkPrevRegistration(val.refer);
+
+    if (isError || !data) {
       handleError(
         error,
         "No active charity application found with this registration reference"
       );
       return;
     }
+
     localStorage.setItem(registrationRefKey, val.refer);
     //go to dashboard and let guard handle further routing
     navigate(routes.dashboard);
