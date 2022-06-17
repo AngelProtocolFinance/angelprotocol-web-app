@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { charityReducer } from "pages/Registration/store";
 import { apes } from "services/apes/apes";
 import { aws } from "services/aws/aws";
 import { flipside } from "services/flipslide/flipslide";
@@ -10,7 +9,6 @@ import transactionReducer from "slices/transaction/transactionSlice";
 
 export const store = configureStore({
   reducer: {
-    charity: charityReducer,
     transaction: transactionReducer,
     admin: adminReducer,
     auth: authReducer,

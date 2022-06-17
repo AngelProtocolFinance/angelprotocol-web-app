@@ -50,7 +50,7 @@ export default function Register() {
             </StepOneCompleteGuard>
           }
         />
-        <Route path={routes.index} element={<Registration />} />
+
         <Route path={routes.verify} element={<VerifiedEmail />} />
         <Route
           path={`${routes.wallet}/*`}
@@ -60,6 +60,7 @@ export default function Register() {
             </StepOneCompleteGuard>
           }
         />
+        <Route index element={<Registration />} />
         <Route
           path="*"
           element={

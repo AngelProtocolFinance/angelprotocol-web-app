@@ -41,6 +41,8 @@ export const getTerraPoster = (providerId: ProviderId) => {
   switch (providerId) {
     case "xdefi-wallet":
     case "station":
+    case "leap-wallet":
+    case "falcon-wallet":
     case "walletconnect":
       return terraPost;
     case "torus":

@@ -1,7 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
-import { ProviderId } from "contexts/WalletContext/types";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
 export type Tag = TagDescription<string>;
