@@ -28,7 +28,7 @@ export const account_api = terra.injectEndpoints({
           );
           const endowmentDetails = (
             endowmentQueryRes.data as QueryRes<EndowmentDetails>
-          ).query_result;
+          ).data;
 
           //get cw3Config
           const cw3ConfigQueryRes = await baseQuery(
@@ -39,7 +39,7 @@ export const account_api = terra.injectEndpoints({
           );
 
           const cw3Config = (cw3ConfigQueryRes.data as QueryRes<CW3Config>)
-            .query_result;
+            .data;
 
           return {
             data: { cw3: endowmentDetails.owner, cw4: cw3Config.group_addr },
@@ -60,7 +60,7 @@ export const account_api = terra.injectEndpoints({
       providesTags: [{ type: terraTags.endowment, id: endowmentTags.profile }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Profile>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
   }),

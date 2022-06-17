@@ -25,7 +25,7 @@ export const indexFund_api = terra.injectEndpoints({
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<FundListRes>) => {
-        return res.query_result.funds;
+        return res.data.funds;
       },
     }),
     allianceMembers: builder.query<AllianceMember[], ContractQueryArgs>({
@@ -34,14 +34,14 @@ export const indexFund_api = terra.injectEndpoints({
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<AllianceMembersRes>) => {
-        return res.query_result.alliance_members;
+        return res.data.alliance_members;
       },
     }),
     config: builder.query<IndexFundConfig, ContractQueryArgs>({
       providesTags: [{ type: terraTags.indexfund, id: indexfundTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<IndexFundConfig>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
   }),

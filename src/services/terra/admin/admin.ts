@@ -32,14 +32,14 @@ export const admin_api = terra.injectEndpoints({
       providesTags: [{ type: terraTags.admin, id: adminTags.members }],
       query: contract_querier,
       transformResponse: (res: QueryRes<MemberRes>) => {
-        return res.query_result.members;
+        return res.data.members;
       },
     }),
     member: builder.query<InquiredMember, ContractQueryArgs>({
       providesTags: [{ type: terraTags.admin, id: adminTags.member }],
       query: contract_querier,
       transformResponse: (res: QueryRes<InquiredMember>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
 
@@ -48,7 +48,7 @@ export const admin_api = terra.injectEndpoints({
       providesTags: [{ type: terraTags.admin, id: adminTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<CW3Config>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
 
@@ -56,21 +56,21 @@ export const admin_api = terra.injectEndpoints({
       providesTags: [{ type: terraTags.admin, id: adminTags.proposal }],
       query: contract_querier,
       transformResponse: (res: QueryRes<Proposal>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     proposals: builder.query<Proposal[], ContractQueryArgs>({
       providesTags: [{ type: terraTags.admin, id: adminTags.proposals }],
       query: contract_querier,
       transformResponse: (res: QueryRes<ProposalsRes>) => {
-        return res.query_result.proposals;
+        return res.data.proposals;
       },
     }),
     votes: builder.query<AdminVoteInfo[], ContractQueryArgs>({
       providesTags: [{ type: terraTags.admin, id: adminTags.votes }],
       query: contract_querier,
       transformResponse: (res: QueryRes<VoteListRes>) => {
-        return res.query_result.votes;
+        return res.data.votes;
       },
     }),
   }),

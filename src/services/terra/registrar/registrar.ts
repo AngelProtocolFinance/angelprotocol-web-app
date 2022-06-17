@@ -21,14 +21,14 @@ export const registrar_api = terra.injectEndpoints({
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
-        return res.query_result.endowments;
+        return res.data.endowments;
       },
     }),
     config: builder.query<RegistrarConfig, ContractQueryArgs>({
       providesTags: [{ type: terraTags.registrar, id: registrarTags.config }],
       query: contract_querier,
       transformResponse: (res: QueryRes<RegistrarConfig>) => {
-        return res.query_result;
+        return res.data;
       },
     }),
     categorizedEndowments: builder.query<
@@ -40,16 +40,15 @@ export const registrar_api = terra.injectEndpoints({
       ],
       query: contract_querier,
       transformResponse: (res: QueryRes<EndowmentListRes>) => {
-        return res.query_result.endowments.reduce((result, profile) => {
-          if (!profile.un_sdg || profile.tier === "Level1") {
-            return result;
-          } else {
-            if (!result[profile.un_sdg]) {
-              result[profile.un_sdg] = [];
-            }
-            result[+profile.un_sdg!].push(profile);
-            return result;
+        console.log(res.data);
+        return res.data.endowments.reduce((result, profile) => {
+          //TODO: filter out profiles with no un_sdg & with no tier and tier === "Level1"
+          const _n = profile.un_sdg || 0;
+          if (!result[_n]) {
+            result[_n] = [];
           }
+          result[_n].push(profile);
+          return result;
         }, {} as CategorizedEndowments);
       },
     }),

@@ -47,7 +47,7 @@ export const multicall_api = terra.injectEndpoints({
       transformResponse: (res: MultiQueryRes) => {
         const [holdings, ratesRes] = decodeAggregatedResult<
           [Holdings, VaultsRateRes]
-        >(res.query_result);
+        >(res.data);
 
         const ratesMap = ratesRes.vaults_rate.reduce((result, curr) => {
           result[curr.vault_addr] = curr.fx_rate;
@@ -76,7 +76,7 @@ export const multicall_api = terra.injectEndpoints({
       transformResponse: (res: MultiQueryRes) => {
         const [holdings, ratesRes] = decodeAggregatedResult<
           [Holdings, VaultsRateRes]
-        >(res.query_result);
+        >(res.data);
 
         const vaultLimits: VaultFieldLimits = {
           anchor1_amount: {
@@ -133,11 +133,11 @@ export const multicall_api = terra.injectEndpoints({
           );
           const claimInqs = claimInqRes.data as MultiQueryRes;
           const claimables: Airdrops = [];
-          decodeAggregatedResult<ClaimInquiry[]>(
-            claimInqs.query_result
-          ).forEach((inquiry, i) => {
-            if (!inquiry.is_claimed) claimables.push(airDrops[i]);
-          });
+          decodeAggregatedResult<ClaimInquiry[]>(claimInqs.data).forEach(
+            (inquiry, i) => {
+              if (!inquiry.is_claimed) claimables.push(airDrops[i]);
+            }
+          );
 
           return { data: claimables };
         } catch (err) {

@@ -45,8 +45,8 @@ export function useCategorizedEndowments() {
     isFetching,
   } = useCategorizedEndowmentsQuery(
     contract.endowmentList({
-      endow_type: "charity",
-      status: "1",
+      // endow_type: "charity",
+      // status: "1",
     })
   );
 

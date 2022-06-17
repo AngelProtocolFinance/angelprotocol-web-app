@@ -6,14 +6,12 @@ import Contract from "./Contract";
 
 export default class LP extends Contract {
   pair_address: string;
-  lp_address: string;
   halo_address: string;
   simul: ContractQueryArgs;
 
   constructor(walletAddr?: string) {
     super(walletAddr);
-    this.pair_address = contracts.loop_haloust_pair;
-    this.lp_address = contracts.loop_haloust_lp;
+    this.pair_address = contracts.loop_halo_uluna_pair;
     this.halo_address = contracts.halo_token;
 
     //query args
