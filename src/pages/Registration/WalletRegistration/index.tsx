@@ -1,25 +1,17 @@
-import { useRegistrationState } from "services/aws/registration";
-import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import ChooseWallet from "./ChooseWallet";
-import RegisteredWallet from "./RegisteredWallet";
-import WalletSubmission from "./WalletSubmission";
+import { lazy } from "react";
+import { Route, Routes } from "react-router-dom";
+import RegistrationSuccessful from "./RegistrationSuccessful";
+import routes from "./routes";
+
+const ChooseWallet = lazy(() => import("./ChooseWallet"));
+const RegisterWallet = lazy(() => import("./RegisterWallet"));
 
 export default function WalletRegistration() {
-  const { data } = useRegistrationState("");
-  const charity = data!; //
-  const { wallet, isProviderLoading } = useGetWallet();
-
-  if (charity.Metadata.TerraWallet) {
-    return <RegisteredWallet />;
-  }
-
-  if (isProviderLoading) {
-    return <div>loading</div>;
-  }
-
-  if (!wallet) {
-    return <ChooseWallet />;
-  }
-
-  return <WalletSubmission />;
+  return (
+    <Routes>
+      <Route path={routes.success} element={<RegistrationSuccessful />} />
+      <Route path={routes.submit} element={<RegisterWallet />} />
+      <Route index element={<ChooseWallet />} />
+    </Routes>
+  );
 }

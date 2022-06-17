@@ -35,7 +35,7 @@ export default function Documentation() {
     },
   });
   const currentLevel = useCurrentLevel(methods);
-  const { upload } = useUpload();
+  const upload = useUpload();
 
   return (
     <Container>

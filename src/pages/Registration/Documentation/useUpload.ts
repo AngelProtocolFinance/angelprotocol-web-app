@@ -41,7 +41,7 @@ export default function useUpload() {
     [charity, handleError, uploadDocumentation, navigate]
   );
 
-  return { upload };
+  return upload;
 }
 
 async function getUploadUrls(primaryKey: string, values: DocumentationValues) {
