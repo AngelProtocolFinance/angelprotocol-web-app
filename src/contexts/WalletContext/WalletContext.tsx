@@ -9,7 +9,8 @@ import { WithBalance } from "services/types";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
-import useTerra from "./useTerrra";
+import useKeplr from "./useKeplr";
+import useTerra from "./useTerra";
 import useTorusWallet from "./useTorusWallet";
 import useXdefi from "./useXdefi";
 
@@ -72,6 +73,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const { isTorusLoading, torusInfo, torusConnection, disconnectTorus } =
     useTorusWallet();
+
+  useKeplr();
 
   const providerStatuses: ProviderStatuses = [
     {
