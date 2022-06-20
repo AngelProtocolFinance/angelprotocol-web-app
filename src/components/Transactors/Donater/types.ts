@@ -9,6 +9,7 @@ export interface DonateValues {
   max_liq: number;
   to: "tca" | "fund" | "charity";
   receiver?: number | string;
+  isAgreedToTerms: boolean;
   isKycDonorOnly?: boolean;
 }
 

@@ -12,6 +12,7 @@ import DonateForm from "./DonateForm/DonateForm";
 
 const shape: SchemaShape<DonateValues> = {
   amount: requiredTokenAmount,
+  isAgreedToTerms: Yup.boolean().oneOf([true]),
 };
 const schema = Yup.object().shape(shape);
 

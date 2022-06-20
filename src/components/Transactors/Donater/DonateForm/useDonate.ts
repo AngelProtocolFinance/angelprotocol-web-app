@@ -4,7 +4,7 @@ import { DonateValues } from "../types";
 import { InitialStage } from "slices/transaction/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
 import { useGetter, useSetter } from "store/accessors";
-import { resetFee, setStage } from "slices/transaction/transactionSlice";
+import { resetFee } from "slices/transaction/transactionSlice";
 import { sendEthDonation } from "slices/transaction/transactors/sendEthDonation";
 import { sendTerraDonation } from "slices/transaction/transactors/sendTerraDonation";
 import useEstimator from "../useEstimator";
@@ -14,7 +14,6 @@ export default function useDonate() {
   const { form_loading, form_error, stage } = useGetter(
     (state) => state.transaction
   );
-  const { kycData } = stage as InitialStage;
 
   const {
     watch,
@@ -27,18 +26,6 @@ export default function useDonate() {
   const { evmTx, terraTx } = useEstimator();
   const symbolRef = useRef<string>();
   const token = watch("token");
-
-  const isKycRequired = getValues("isKycDonorOnly") === true;
-  const isKycCompleted = isKycRequired ? kycData !== undefined : true;
-
-  function showKycForm() {
-    dispatch(
-      setStage({
-        step: "kyc",
-        kycData,
-      })
-    );
-  }
 
   function sendTx(data: DonateValues) {
     // if (isKycRequired && !isKycCompleted) {
@@ -79,6 +66,10 @@ export default function useDonate() {
     //eslint-disable-next-line
   }, [symbol]);
 
+  const { kycData } = stage as InitialStage;
+  const isKycRequired = getValues("isKycDonorOnly") === true;
+  const isKycCompleted = isKycRequired ? kycData !== undefined : true;
+
   return {
     donate: handleSubmit(sendTx),
     isSubmitDisabled:
@@ -90,9 +81,6 @@ export default function useDonate() {
       !isInCorrectNetwork ||
       !isKycCompleted,
     isFormLoading: form_loading,
-    isKycCompleted,
-    isKycRequired,
-    showKycForm,
     to: getValues("to"),
   };
 }
