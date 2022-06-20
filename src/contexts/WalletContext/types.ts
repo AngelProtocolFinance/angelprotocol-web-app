@@ -25,11 +25,6 @@ export type MultiConnection = {
   connections: SingleConnection[];
 };
 
-export type Installation = {
-  logo: string;
-  url: string;
-};
-
 export type Connection = SingleConnection | MultiConnection;
 
 export type ProviderInfo = {

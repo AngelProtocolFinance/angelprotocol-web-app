@@ -3,17 +3,11 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import {
-  Installation,
-  ProviderId,
-  ProviderInfo,
-  SingleConnection,
-} from "./types";
+import { ProviderId, ProviderInfo, SingleConnection } from "./types";
 
 export default function useTerra() {
   const {
     availableConnections,
-    availableInstallations,
     connection,
     network,
     wallets,
@@ -50,24 +44,9 @@ export default function useTerra() {
       },
     }));
 
-  const terraInstallations: Installation[] = availableInstallations
-    .filter(
-      (installer) =>
-        ![
-          "bitkeep-wallet",
-          "xdefi-wallet" /**even installed, still shows here if not prioritized, 
-          a more generalized connected useXdefi is used */,
-        ].includes(installer.identifier)
-    )
-    .map((installer) => ({
-      logo: installer.icon,
-      url: installer.url,
-    }));
-
   return {
     isTerraLoading: status === WalletStatus.INITIALIZING,
     terraConnections,
-    terraInstallations,
     disconnectTerra: disconnect,
     terraInfo,
   };

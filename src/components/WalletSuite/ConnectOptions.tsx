@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Installation,
   MultiConnection,
   SingleConnection,
 } from "contexts/WalletContext/types";
@@ -12,7 +11,7 @@ import { WalletError } from "errors/errors";
 import WalletPrompt from "./WalletPrompt";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
-  const { connections, installations } = useSetWallet();
+  const { connections } = useSetWallet();
   return (
     <>
       <Backdrop
@@ -36,18 +35,6 @@ export default function ConnectOptions(props: { closeHandler: () => void }) {
             ) : (
               <Connector {...connection} key={connection.name} />
             )
-          )}
-          {installations.length > 0 && (
-            <>
-              <p className="uppercase font-heading text-angel-grey text-sm -mb-2">
-                supported wallets
-              </p>
-              <div className="flex gap-2">
-                {installations.map((installer) => (
-                  <Installer key={installer.url} {...installer} />
-                ))}
-              </div>
-            </>
           )}
         </ModalContext>
       </div>
@@ -123,13 +110,5 @@ function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
       {...props}
       className="transform active:translate-x-1 bg-thin-blue disabled:bg-grey-accent text-angel-grey hover:bg-angel-blue hover:text-white flex items-center gap-2 rounded-full items-center p-1 pr-4 shadow-md"
     />
-  );
-}
-
-export function Installer(props: Installation) {
-  return (
-    <a href={props.url} target="_blank" rel="noopenner noreferrer">
-      <img src={props.logo} className="w-5 h-5" alt="" />
-    </a>
   );
 }

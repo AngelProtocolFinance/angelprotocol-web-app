@@ -1,10 +1,5 @@
 import { PropsWithChildren, createContext, useContext, useMemo } from "react";
-import {
-  Connection,
-  Installation,
-  ProviderId,
-  ProviderStatuses,
-} from "./types";
+import { Connection, ProviderId, ProviderStatuses } from "./types";
 import { WithBalance } from "services/types";
 import { useBalancesQuery } from "services/apes/tokens/tokens";
 import { placeHolderDisplayToken } from "./constants";
@@ -32,7 +27,6 @@ type State = {
 type Setters = {
   disconnect(): void;
   connections: Connection[];
-  installations: Installation[];
 };
 
 const initialState: State = {
@@ -63,13 +57,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     providerInfo: keplrWalletInfo,
   } = useKeplr();
 
-  const {
-    isTerraLoading,
-    terraConnections,
-    terraInstallations,
-    disconnectTerra,
-    terraInfo,
-  } = useTerra();
+  const { isTerraLoading, terraConnections, disconnectTerra, terraInfo } =
+    useTerra();
 
   const {
     isxdefiEVMLoading,
@@ -189,7 +178,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             binanceWalletConnection,
             keplrConnection,
           ],
-          installations: [...terraInstallations],
           disconnect,
         }}
       >
@@ -202,7 +190,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 const getContext = createContext<State>(initialState);
 const setContext = createContext<Setters>({
   connections: [],
-  installations: [],
   disconnect: async () => {},
 });
 
