@@ -108,8 +108,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     },
   ];
 
-  console.log(providerStatuses);
-
   const isProviderLoading = providerStatuses.reduce(
     (status, curr) => status || curr.isLoading,
     false
