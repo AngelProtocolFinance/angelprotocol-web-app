@@ -18,6 +18,7 @@ export default function useKeplr() {
 
   useEffect(() => {
     (shouldReconnect && requestAccess()) || setIsLoading(false);
+    //eslint-disable-next-line
   }, []);
 
   const requestAccess = async (isNewConnection = false) => {
@@ -30,12 +31,14 @@ export default function useKeplr() {
       setAddress(address);
       setChainId(chainIDs.juno_main);
       setIsLoading(false);
-    } catch (err) {
+    } catch (err: any) {
       //if user cancels, set pref to disconnect
-      console.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
       if (isNewConnection) {
+        if (/key/.test(err?.message)) {
+          throw new WalletError("Your Keplr account is not logged in", 0);
+        }
         //if connection is made via "connect-button"
         throw err;
       }
