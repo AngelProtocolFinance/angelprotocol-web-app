@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cosmjs/cosmwasm-stargate": "^0.28.7",
     "@cosmjs/stargate": "^0.28.7",
     "@draft-js-plugins/counter": "^4.1.2",
     "@draft-js-plugins/editor": "^4.1.3",
