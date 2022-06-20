@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import { Decimal } from "@cosmjs/math";
 import { useMemo } from "react";
 import { Airdrops } from "services/terra/multicall/types";
 import { gov, multicall, tags } from "services/terra/tags";
@@ -18,8 +18,9 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) => new Dec(airdrop.haloTokens).div(1e6).add(result),
-        new Dec(0)
+        (result, airdrop) =>
+          Decimal.fromAtomics(airdrop.haloTokens, 6).plus(result),
+        Decimal.fromAtomics("0", 6)
       ),
     [airdrops]
   );
@@ -48,5 +49,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
     showModal(TransactionPrompt, {});
   };
 
-  return { totalClaimable: totalClaimable.toNumber(), claimAirdrop };
+  return {
+    totalClaimable: totalClaimable.toFloatApproximation(),
+    claimAirdrop,
+  };
 }
