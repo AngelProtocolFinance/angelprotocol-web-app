@@ -1,4 +1,5 @@
 import { EndowmentTierNum } from "types/shared/registration";
+import { Optional } from "types/utils";
 
 /**result wrapper */
 export interface AWSQueryRes<T> {
@@ -227,6 +228,18 @@ export type FileObject = {
   publicUrl?: string;
 };
 
+type InitialRegistration = Optional<
+  Registration,
+  | "AuditedFinancialReports"
+  | "AuditedFinancialReportsVerified"
+  | "FinancialStatements"
+  | "FinancialStatementsVerified"
+  | "ProofOfIdentity"
+  | "ProofOfIdentityVerified"
+  | "ProofOfRegistration"
+  | "ProofOfRegistrationVerified"
+  | "Website"
+>;
 export type Registration = {
   AuditedFinancialReports: FileObject[];
   AuditedFinancialReportsVerified: boolean;
@@ -246,14 +259,37 @@ export type Registration = {
   Website: string;
 };
 
-//*
+type InitialMetaData = Optional<
+  Metadata,
+  | "Banner"
+  | "CharityLogo"
+  | "CharityOverview"
+  | "EndowmentContract"
+  | "TerraWallet"
+  | "KycDonorsOnly"
+>;
+export type Metadata = {
+  Banner: FileObject;
+  CharityLogo: FileObject;
+  CharityOverview: string;
+  EndowmentContract: string;
+  SK: "Metadata";
+  TerraWallet: string;
+  KycDonorsOnly: boolean;
+};
+
 export type Charity = {
   ContactPerson: ContactPerson;
   Metadata: Metadata;
   Registration: Registration;
 };
 
-//*
+export type UnprocessedCharity = {
+  ContactPerson: ContactPerson;
+  Registration: InitialRegistration;
+  Metadata: InitialMetaData;
+};
+
 export type ContactDetailsData = {
   ContactPerson: ContactPerson;
   Registration: Pick<
@@ -272,16 +308,6 @@ export type ContactDetailsRequest = {
     ContactPerson: Omit<ContactPerson, "EmailVerified" | "SK">;
     Registration: Pick<Registration, "CharityName">;
   };
-};
-
-export type Metadata = {
-  Banner: FileObject;
-  CharityLogo: FileObject;
-  CharityOverview: string;
-  EndowmentContract: string;
-  SK: "Metadata";
-  TerraWallet: string;
-  KycDonorsOnly: boolean;
 };
 
 //*

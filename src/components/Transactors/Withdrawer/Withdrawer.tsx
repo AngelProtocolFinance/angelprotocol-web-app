@@ -26,14 +26,14 @@ export default function Withdrawer(props: WithdrawerProps) {
 }
 
 function WithdrawContext(props: WithdrawResource) {
-  const { walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const methods = useForm<WithdrawValues>({
     mode: "onChange",
     reValidateMode: "onChange",
     defaultValues: {
       total_ust: 0,
       total_receive: 0,
-      beneficiary: walletAddr,
+      beneficiary: wallet?.address,
     },
     resolver: yupResolver(withdrawSchema),
   });

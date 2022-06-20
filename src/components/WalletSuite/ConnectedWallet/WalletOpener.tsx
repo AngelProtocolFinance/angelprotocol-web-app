@@ -7,13 +7,14 @@ import Details from "./WalletDetails";
 
 //this component won't be rendered if wallet is not connected
 export default function WalletOpener() {
-  const { walletAddr, displayCoin, walletIcon, isWalletLoading } =
-    useGetWallet();
+  const { wallet, isWalletLoading } = useGetWallet();
   const [detailsShown, setIsDetailsShown] = useState(false);
-  const maskedAddr = maskAddress(walletAddr);
+  const maskedAddr = maskAddress(wallet?.address);
   const toggleDetails = () => setIsDetailsShown((p) => !p);
   const hideDetails = () => detailsShown && setIsDetailsShown(false);
 
+  const { walletIcon, displayCoin } =
+    wallet!; /**this component only opens when wallet is connected */
   return (
     <>
       <button
@@ -32,11 +33,11 @@ export default function WalletOpener() {
           {isWalletLoading ? "loading..." : maskedAddr}
         </span>
         <span className="pl-2 text-sm text-sm sm:border-l">
-          {displayCoin.symbol} {toCurrency(+displayCoin.balance, 3, true)}
+          {displayCoin.symbol} {toCurrency(displayCoin.balance, 3, true)}
         </span>
       </button>
       {detailsShown && !isWalletLoading && (
-        <Details closeHandler={hideDetails} />
+        <Details closeHandler={hideDetails} wallet={wallet!} />
       )}
     </>
   );

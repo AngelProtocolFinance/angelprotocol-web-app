@@ -15,16 +15,15 @@ import processEstimateError from "helpers/processEstimateError";
 import { denoms } from "constants/currency";
 
 export default function useClaimEstimator() {
-  const { coins } = useGetWallet();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { providerId, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const gov_staker = useGovStaker();
 
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -44,12 +43,12 @@ export default function useClaimEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(walletAddr);
+        const contract = new Gov(wallet.address);
         const claimMsg = contract.createGovClaimMsg();
         const fee = await contract.estimateFee([claimMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
@@ -69,7 +68,7 @@ export default function useClaimEstimator() {
     };
 
     //eslint-disable-next-line
-  }, [walletAddr, providerId, coins, gov_staker]);
+  }, [wallet, gov_staker]);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

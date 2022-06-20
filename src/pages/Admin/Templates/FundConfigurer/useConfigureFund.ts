@@ -20,7 +20,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof FundConfig;
 type Value = FundConfig[Key];
 export default function useConfigureFund() {
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -48,7 +48,7 @@ export default function useConfigureFund() {
       data: genDiffMeta(diffEntries, initialConfigPayload),
     };
 
-    const indexFundContract = new Indexfund(walletAddr);
+    const indexFundContract = new Indexfund(wallet?.address);
     const configUpdateMsg = indexFundContract.createEmbeddedFundConfigMsg(
       //don't send diff since unchanged val will be null, and null value will set an attribute to default
       cleanObject({
@@ -59,7 +59,7 @@ export default function useConfigureFund() {
       })
     );
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       title,
       description,
@@ -69,8 +69,7 @@ export default function useConfigureFund() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

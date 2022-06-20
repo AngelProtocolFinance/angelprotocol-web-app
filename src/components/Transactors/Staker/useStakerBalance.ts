@@ -7,10 +7,10 @@ import { denoms } from "constants/currency";
 
 export default function useStakerBalance(is_stake: boolean) {
   const gov_staker = useGovStaker();
-  const { coins } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   const [balance, locked] = useMemo((): [Dec, Dec] => {
-    const haloBalance = getTokenBalance(coins, denoms.halo);
+    const haloBalance = getTokenBalance(wallet?.coins || [], denoms.halo);
     const staked = new Dec(gov_staker.balance);
     if (is_stake) {
       return [new Dec(haloBalance).mul(1e6), new Dec(0)];
@@ -25,7 +25,7 @@ export default function useStakerBalance(is_stake: boolean) {
       return [staked, vote_locked];
     }
     // is_stake ? haloBalance : new Dec(gov_staker.balance).div(1e6).toNumber();
-  }, [gov_staker, coins, is_stake]);
+  }, [gov_staker, wallet, is_stake]);
 
   return { balance, locked };
 }

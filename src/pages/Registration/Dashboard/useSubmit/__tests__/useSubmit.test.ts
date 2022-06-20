@@ -2,17 +2,19 @@ import { MsgExecuteContract } from "@terra-money/terra.js";
 import { act } from "@testing-library/react";
 import { renderHook } from "@testing-library/react-hooks";
 import { Charity } from "types/server/aws";
-import {
-  WalletState,
-  initialWalletState,
-} from "contexts/WalletContext/WalletContext";
+import { WalletState } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import Registrar from "contracts/Registrar";
+import { chainIDs } from "constants/chainIDs";
 import useSubmit from "../useSubmit";
 
-const disconnectedWalletState = initialWalletState;
-const connectedWalletState: WalletState = {
-  ...disconnectedWalletState,
-  providerId: "torus",
+const WALLET: WalletState = {
+  walletIcon: "",
+  displayCoin: placeHolderDisplayToken["station"],
+  coins: [placeHolderDisplayToken["station"]],
+  address: "terra1w0fn5u7puxafp3g2mehe6xvt4w2x2eennm7tzf",
+  chainId: chainIDs.terra_test,
+  providerId: "station",
 };
 
 const mockShowModal = jest.fn();
@@ -55,7 +57,7 @@ jest.mock("../useTransactionResultHandler", () => ({
 describe("useSubmit tests", () => {
   it("initializes correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue(connectedWalletState);
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -65,14 +67,15 @@ describe("useSubmit tests", () => {
 
   it("assigns 'isSubmitting' value correctly", () => {
     mockUseGetter.mockReturnValue({ form_loading: true });
-    mockUseGetWallet.mockReturnValue(connectedWalletState);
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
+
     const { result } = renderHook(() => useSubmit());
     expect(result.current.isSubmitting).toBe(true);
   });
 
   it("sets the Stage to 'error' Step when wallet not connected", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue(disconnectedWalletState);
+    mockUseGetWallet.mockReturnValue({ wallet: undefined });
 
     const { result } = renderHook(() => useSubmit());
 
@@ -90,7 +93,7 @@ describe("useSubmit tests", () => {
 
   it("handles thrown errors", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue({ wallet: connectedWalletState });
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockImplementation((..._: any[]) => {
@@ -122,7 +125,7 @@ describe("useSubmit tests", () => {
 
   it("dispatches action sending a Terra Tx", async () => {
     mockUseGetter.mockReturnValue({ form_loading: false });
-    mockUseGetWallet.mockReturnValue(connectedWalletState);
+    mockUseGetWallet.mockReturnValue({ wallet: WALLET });
     jest
       .spyOn(Registrar.prototype, "createEndowmentCreationMsg")
       .mockReturnValue(MSG_EXECUTE_CONTRACT);
@@ -151,6 +154,7 @@ const CHARITY: Charity = {
     Role: "ceo",
     PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
     SK: "ContactPerson",
+    Goals: "i have some goals",
     ReferralMethod: "angel-alliance",
   },
   Registration: {
@@ -181,7 +185,7 @@ const CHARITY: Charity = {
     EndowmentContract: "",
     SK: "Metadata",
     TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
-    KycDonorsOnly: true,
+    KycDonorsOnly: false,
   },
 };
 

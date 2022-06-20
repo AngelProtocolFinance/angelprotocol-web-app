@@ -27,7 +27,7 @@ export default function useEstimator() {
     setError,
     formState: { isValid, isDirty },
   } = useFormContext<DonateValues>();
-  const { providerId, chainId, walletAddr, displayCoin } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   const amount = Number(watch("amount")) || 0;
   const split_liq = Number(watch("split_liq"));
@@ -42,7 +42,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -63,17 +63,17 @@ export default function useEstimator() {
 
         /** terra native transaction, send or contract interaction */
         if (selectedToken.type === "terra-native") {
-          const contract = new Contract(walletAddr);
+          const contract = new Contract(wallet.address);
           const receiver = ap_wallets.terra;
           const amount = new Dec(debounced_amount).mul(1e6);
 
-          const msg = new MsgSend(walletAddr, receiver, [
+          const msg = new MsgSend(wallet.address, receiver, [
             new Coin(denoms.uluna, amount.toNumber()),
           ]);
           const aminoFee = await contract.estimateFee([msg]);
           const numFee = extractFeeNum(aminoFee);
 
-          if (debounced_amount + numFee >= displayCoin.balance) {
+          if (debounced_amount + numFee >= wallet.displayCoin.balance) {
             setError("amount", {
               message: "not enough balance to pay for fees",
             });
@@ -85,7 +85,10 @@ export default function useEstimator() {
 
         /** terra cw20 transaction */
         if (selectedToken.type === "cw20") {
-          const contract = new CW20(selectedToken.contract_addr, walletAddr);
+          const contract = new CW20(
+            selectedToken.contract_addr,
+            wallet.address
+          );
           const msg = contract.createTransferMsg(
             debounced_amount,
             ap_wallets.terra
@@ -95,7 +98,8 @@ export default function useEstimator() {
 
           if (
             numFee >=
-            displayCoin.balance /** displayCoin is native - for payment of fee */
+            wallet.displayCoin
+              .balance /** displayCoin is native - for payment of fee */
           ) {
             setError("amount", {
               message: "not enough balance to pay for fees",
@@ -111,10 +115,10 @@ export default function useEstimator() {
           selectedToken.type === "evm-native" ||
           selectedToken.type === "erc20"
         ) {
-          if (chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
+          if (wallet.chainId !== selectedToken.chain_id) return; //network selection prompt is shown to user
 
           const provider = new ethers.providers.Web3Provider(
-            getProvider(providerId) as any
+            getProvider(wallet.providerId) as any
           );
           //no network request
           const signer = provider.getSigner();
@@ -163,7 +167,7 @@ export default function useEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [debounced_amount, debounced_split, selectedToken, providerId, chainId]);
+  }, [debounced_amount, debounced_split, selectedToken, wallet]);
 
   return { evmTx, terraTx };
 }

@@ -3,10 +3,12 @@ export type ProviderId =
   | "metamask"
   | "xdefi-wallet" //xdefi terra provider
   | "xdefi-evm" //xdefi evm provider
+  | "leap-wallet"
+  | "falcon-wallet"
+  | "bitkeep-wallet"
   | "station"
   | "walletconnect"
-  | "torus"
-  | "unknown";
+  | "torus";
 
 export type SingleConnection = {
   logo: string;
@@ -20,6 +22,11 @@ export type MultiConnection = {
   name: string;
   connect?: never;
   connections: SingleConnection[];
+};
+
+export type Installation = {
+  logo: string;
+  url: string;
 };
 
 export type Connection = SingleConnection | MultiConnection;

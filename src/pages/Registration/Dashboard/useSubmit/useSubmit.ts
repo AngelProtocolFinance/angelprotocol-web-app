@@ -12,8 +12,7 @@ import processEstimateError from "helpers/processEstimateError";
 import useTransactionResultHandler from "./useTransactionResultHandler";
 
 export default function useSubmit() {
-  const { providerId, walletAddr, displayCoin } = useGetWallet();
-  console.log(providerId, walletAddr, displayCoin);
+  const { wallet } = useGetWallet();
   const { form_loading } = useGetter((state) => state.transaction);
   const dispatch = useSetter();
   const { showModal } = useModalContext();
@@ -25,7 +24,7 @@ export default function useSubmit() {
   const submit = useCallback(
     async (charity: Charity) => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(
             setStage({ step: "error", message: "Wallet is not connected" })
           );
@@ -34,14 +33,13 @@ export default function useSubmit() {
 
         dispatch(setFormLoading(true));
 
-        const contract = new Registrar(walletAddr);
+        const contract = new Registrar(wallet.address);
         const msg = contract.createEndowmentCreationMsg(charity);
 
         dispatch(
           sendTerraTx({
-            providerId,
+            wallet,
             msgs: [msg],
-            feeBalance: displayCoin.balance,
           })
         );
       } catch (err) {
@@ -52,7 +50,7 @@ export default function useSubmit() {
         showModal(TransactionPrompt, {});
       }
     },
-    [dispatch, showModal, displayCoin, walletAddr, providerId]
+    [dispatch, showModal, wallet]
   );
 
   return { submit, isSubmitting: form_loading };

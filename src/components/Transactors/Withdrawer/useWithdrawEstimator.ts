@@ -34,7 +34,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     formState: { isValid, isDirty },
   } = useFormContext<WithdrawValues>();
 
-  const { providerId, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
@@ -55,7 +55,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is not connected"));
           return;
         }
@@ -127,7 +127,10 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
 
         dispatch(setFormLoading(true));
 
-        const accountContract = new Account(resources.accountAddr, walletAddr);
+        const accountContract = new Account(
+          resources.accountAddr,
+          wallet.address
+        );
         const embeddedWithdrawMsg = accountContract.createEmbeddedWithdrawMsg({
           sources,
           beneficiary,
@@ -143,7 +146,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
           data: { beneficiary, totalAmount: usdTotal, sourcesPreview },
         };
 
-        const adminContract = new Admin(cwContracts, walletAddr);
+        const adminContract = new Admin(cwContracts, wallet.address);
         const proposalMsg = adminContract.createProposalMsg(
           "withdraw funds",
           "withdraw funds proposal",
@@ -177,7 +180,7 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     };
     //eslint-disable-next-line
   }, [
-    walletAddr,
+    wallet,
     debAmounts,
     isDebouncing,
     isDirty,
@@ -186,5 +189,5 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
     cwContracts,
   ]);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

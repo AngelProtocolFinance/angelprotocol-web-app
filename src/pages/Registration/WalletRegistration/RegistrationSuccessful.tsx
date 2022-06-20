@@ -1,12 +1,18 @@
 import { IconContext } from "react-icons";
 import { BsCheck2 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useRegistrationState } from "services/aws/registration";
 import { appRoutes, siteRoutes } from "constants/routes";
-import routes from "../../routes";
+import routes from "../routes";
 
-type Props = { walletAddress: string };
+export default function RegistrationSuccessful() {
+  const { data } = useRegistrationState("");
+  const charity = data!; //ensured by guard
 
-export default function RegistrationSuccessful({ walletAddress }: Props) {
+  if (!charity.Metadata.TerraWallet) {
+    return <Navigate to={routes.index} />;
+  }
+
   return (
     <div className="flex flex-col h-full items-center">
       <div className="flex flex-col items-center gap-4 mb-10">
@@ -18,7 +24,7 @@ export default function RegistrationSuccessful({ walletAddress }: Props) {
       <div>
         <p>Thanks for registering your wallet:</p>
         <p>your address is</p>
-        <p className="font-bold">{walletAddress}</p>
+        <p className="font-bold">{charity.Metadata.TerraWallet}</p>
       </div>
       <Link
         to={`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`}

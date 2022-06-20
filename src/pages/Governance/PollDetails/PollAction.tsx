@@ -5,16 +5,16 @@ import useVoter from "components/Transactors/Voter/useVoter";
 import useDetails from "../usePollDetails";
 
 export default function PollAction(props: { poll_id: number }) {
-  const { providerId, walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const details = useDetails(props.poll_id);
   const showPollEnder = usePollEnder(props.poll_id);
   const showVoter = useVoter(props.poll_id);
   const is_voted = details.vote !== undefined;
-  const W = providerId !== "unknown";
+  const W = wallet !== undefined;
   const V = is_voted;
   const E = details.vote_ended;
   const P = details.status !== "in_progress";
-  const C = details.creator === walletAddr;
+  const C = details.creator === wallet?.address;
   let node: ReactNode = null;
 
   //poll has ended

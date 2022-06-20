@@ -1,4 +1,4 @@
-import { Charity, RegistrationStatus } from "services/aws/types";
+import { Charity, RegistrationStatus } from "types/server/aws";
 import getRegistrationState from "../getRegistrationState";
 
 describe("getRegistrationState tests", () => {
@@ -7,10 +7,12 @@ describe("getRegistrationState tests", () => {
       ContactPerson: {
         Email: "test@test.com",
         EmailVerified: true,
+        Goals: "i have a goal",
         FirstName: "first",
         LastName: "last",
         PhoneNumber: "+114323888",
         PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
+        ReferralMethod: "angel-alliance",
         Role: "ceo",
         SK: "ContactPerson",
       },
@@ -39,6 +41,7 @@ describe("getRegistrationState tests", () => {
         EndowmentContract: "",
         SK: "Metadata",
         TerraWallet: "",
+        KycDonorsOnly: false,
       },
     };
 
@@ -56,10 +59,12 @@ describe("getRegistrationState tests", () => {
       ContactPerson: {
         Email: "test@test.com",
         EmailVerified: true,
+        Goals: "I have a goal",
         FirstName: "first",
         LastName: "last",
         PhoneNumber: "+114323888",
         Role: "ceo",
+        ReferralMethod: "angel-alliance",
         PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
         SK: "ContactPerson",
       },
@@ -88,6 +93,7 @@ describe("getRegistrationState tests", () => {
         EndowmentContract: "",
         SK: "Metadata",
         TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        KycDonorsOnly: false,
       },
     };
 
@@ -105,10 +111,12 @@ describe("getRegistrationState tests", () => {
       ContactPerson: {
         Email: "test@test.com",
         EmailVerified: true,
+        Goals: "this is my goal",
         FirstName: "first",
         LastName: "last",
         PhoneNumber: "+114323888",
         Role: "ceo",
+        ReferralMethod: "angel-alliance",
         PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
         SK: "ContactPerson",
       },
@@ -143,6 +151,7 @@ describe("getRegistrationState tests", () => {
         EndowmentContract: "",
         SK: "Metadata",
         TerraWallet: "",
+        KycDonorsOnly: false,
       },
     };
 
@@ -161,9 +170,11 @@ describe("getRegistrationState tests", () => {
         Email: "test@test.com",
         EmailVerified: true,
         FirstName: "first",
+        Goals: "i have a goal",
         LastName: "last",
         PhoneNumber: "+114323888",
         Role: "ceo",
+        ReferralMethod: "angel-alliance",
         PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
         SK: "ContactPerson",
       },
@@ -198,6 +209,7 @@ describe("getRegistrationState tests", () => {
         EndowmentContract: "",
         SK: "Metadata",
         TerraWallet: "",
+        KycDonorsOnly: false,
       },
     };
 
@@ -233,7 +245,9 @@ describe("getRegistrationState tests", () => {
         EmailVerified: true,
         FirstName: "first",
         LastName: "last",
+        Goals: "hello world",
         PhoneNumber: "+114323888",
+        ReferralMethod: "angel-alliance",
         PK: "7fe792be-5132-4f2b-b37c-4bcd9445b773",
         Role: "ceo",
         SK: "ContactPerson",
@@ -275,6 +289,7 @@ describe("getRegistrationState tests", () => {
         EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
         SK: "Metadata",
         TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+        KycDonorsOnly: false,
       },
     };
 

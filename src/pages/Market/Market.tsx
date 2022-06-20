@@ -10,6 +10,7 @@ export default function Market() {
   const showDonater = useDonater({
     to: "charity",
     receiver: "terra1wpe8837ll4u5k94jtw28endp0lf5zff3jr3j2n",
+    isKycDonorOnly: true,
   });
   return (
     <div className="grid content-start padded-container pb-16">

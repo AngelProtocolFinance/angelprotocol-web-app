@@ -16,7 +16,7 @@ import Proposer from "./Proposer";
 
 export default function EndowmentAdmin() {
   const dispatch = useSetter();
-  const { providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { address: endowmentAddress } = useParams<EndowmentAdminParams>();
   const { cwContracts, isCWContractsLoading } =
     useEndowmentCWs(endowmentAddress);
@@ -33,7 +33,7 @@ export default function EndowmentAdmin() {
     //eslint-disable-next-line
   }, [isCWContractsLoading, dispatch]);
 
-  if (providerId === "unknown") {
+  if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading || isCWContractsLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

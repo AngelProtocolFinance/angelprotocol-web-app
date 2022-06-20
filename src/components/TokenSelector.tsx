@@ -16,8 +16,9 @@ export default function TokenSelector<T extends FieldValues>(props: {
   classes?: string;
   fieldName: Path<T>;
 }) {
-  const { coins } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { control } = useFormContext<T>();
+  const coins = wallet?.coins || [];
 
   return (
     <Controller

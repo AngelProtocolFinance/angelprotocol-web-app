@@ -17,11 +17,10 @@ import { denoms } from "constants/currency";
 
 export default function useEstimator() {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { coins } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { getValues, watch } = useFormContext<AdminVoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { providerId, walletAddr } = useGetWallet();
   const vote = watch("vote");
   const [debounced_vote] = useDebouncer(vote, 300);
 
@@ -29,7 +28,7 @@ export default function useEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -41,12 +40,12 @@ export default function useEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Admin(cwContracts, walletAddr);
+        const contract = new Admin(cwContracts, wallet.address);
         const voteMsg = contract.createVoteMsg(proposal_id, debounced_vote);
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //check if user has enough balance to pay for fees
         if (feeNum >= ustBalance) {
           dispatch(setFormError("Not enough UST to pay fees"));
@@ -66,5 +65,5 @@ export default function useEstimator() {
     //eslint-disable-next-line
   }, []);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

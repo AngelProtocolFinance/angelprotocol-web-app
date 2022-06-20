@@ -6,6 +6,7 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   errorMessage?: string;
   registerReturn?: UseFormRegisterReturn;
   errorClassName?: string;
+  mono?: true;
 };
 
 export default function FormInput(props: Props) {
@@ -17,6 +18,7 @@ export default function FormInput(props: Props) {
     className,
     errorClassName,
     type = "text",
+    mono,
     ...rest
   } = props;
   const id = registerReturn?.name || rest.id;
@@ -30,7 +32,9 @@ export default function FormInput(props: Props) {
       <input
         id={id}
         type={type}
-        className="rounded-md outline-none border-none w-full px-3 py-2 text-black"
+        className={`rounded-md outline-none border-none w-full px-3 py-2 text-black ${
+          props.mono ? "font-mono" : ""
+        }`}
         {...registerReturn}
         {...rest}
       />

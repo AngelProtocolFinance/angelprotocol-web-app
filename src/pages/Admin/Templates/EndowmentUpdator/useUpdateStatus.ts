@@ -21,7 +21,7 @@ import genProposalsLink from "../genProposalsLink";
 export default function useUpdateStatus() {
   const { handleSubmit } = useFormContext<EndowmentUpdateValues>();
   const dispatch = useSetter();
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues) {
@@ -44,7 +44,7 @@ export default function useUpdateStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(walletAddr);
+    const registrarContract = new Registrar(wallet?.address);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
@@ -60,7 +60,7 @@ export default function useUpdateStatus() {
       },
     };
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -70,8 +70,7 @@ export default function useUpdateStatus() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

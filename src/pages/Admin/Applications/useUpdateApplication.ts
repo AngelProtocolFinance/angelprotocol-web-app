@@ -17,7 +17,7 @@ import cleanObject from "helpers/cleanObject";
 
 export default function useUpdateApplicationStatus() {
   const dispatch = useSetter();
-  const { walletAddr, chainId, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { showModal } = useModalContext();
 
   function updateStatus(data: EndowmentUpdateValues & { PK: string }) {
@@ -27,13 +27,13 @@ export default function useUpdateApplicationStatus() {
       endowment_addr: data.endowmentAddr,
     };
 
-    const registrarContract = new Registrar(walletAddr);
+    const registrarContract = new Registrar(wallet?.address);
     const embeddedMsg =
       registrarContract.createEmbeddedChangeEndowmentStatusMsg(
         cleanObject(statusChangePayload)
       );
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -42,10 +42,7 @@ export default function useUpdateApplicationStatus() {
 
     dispatch(
       sendEndowmentReviewTx({
-        providerId,
-        walletAddr,
-        chainId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         applicationId: data.PK,
         tagPayloads: [

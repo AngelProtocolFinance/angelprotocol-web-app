@@ -14,7 +14,7 @@ import Indexfund from "contracts/IndexFund";
 import genProposalsLink from "../genProposalsLink";
 
 export default function useUpdateOwner() {
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -30,7 +30,7 @@ export default function useUpdateOwner() {
       return;
     }
 
-    const indexFundContract = new Indexfund(walletAddr);
+    const indexFundContract = new Indexfund(wallet?.address);
     const configUpdateMsg = indexFundContract.createEmbeddedOwnerUpdateMsg({
       new_owner: data.new_owner,
     });
@@ -40,7 +40,7 @@ export default function useUpdateOwner() {
       data: { owner: data.initialOwner, newOwner: data.new_owner },
     };
 
-    const adminContract = new Admin("apTeam", walletAddr);
+    const adminContract = new Admin("apTeam", wallet?.address);
     const proposalMsg = adminContract.createProposalMsg(
       data.title,
       data.description,
@@ -50,8 +50,7 @@ export default function useUpdateOwner() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

@@ -6,11 +6,11 @@ import useEstimator from "./useEstimator";
 
 export default function useVote() {
   const dispatch = useSetter();
-  const { tx, providerId } = useEstimator();
+  const { tx, wallet } = useEstimator();
   function vote() {
     dispatch(
       sendTerraTx({
-        providerId,
+        wallet,
         tx: tx!,
         tagPayloads: [
           terra.util.invalidateTags([

@@ -27,7 +27,7 @@ export default function useVoteEstimator() {
   } = useFormContext<VoteValues>();
   const [tx, setTx] = useState<CreateTxOptions>();
   const dispatch = useSetter();
-  const { walletAddr, coins, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   const govStaker = useGovStaker();
   const amount = Number(watch("amount")) || 0;
@@ -39,7 +39,7 @@ export default function useVoteEstimator() {
   useEffect(() => {
     (async () => {
       try {
-        if (providerId === "unknown") {
+        if (!wallet) {
           dispatch(setFormError("Wallet is disconnected"));
           return;
         }
@@ -78,7 +78,7 @@ export default function useVoteEstimator() {
         }
 
         dispatch(setFormLoading(true));
-        const contract = new Gov(walletAddr);
+        const contract = new Gov(wallet.address);
         const voteMsg = contract.createVoteMsg(
           poll_id,
           debounced_vote,
@@ -88,7 +88,7 @@ export default function useVoteEstimator() {
         const fee = await contract.estimateFee([voteMsg]);
         const feeNum = extractFeeNum(fee);
 
-        const ustBalance = getTokenBalance(coins, denoms.uusd);
+        const ustBalance = getTokenBalance(wallet.coins, denoms.uusd);
         //2nd balance check including fees
         if (feeNum >= ustBalance) {
           setError("amount", { message: "not enough UST to pay for fees" });
@@ -107,15 +107,7 @@ export default function useVoteEstimator() {
       dispatch(setFormError(null));
     };
     //eslint-disable-next-line
-  }, [
-    debounced_amount,
-    debounced_vote,
-    walletAddr,
-    coins,
-    govStaker,
-    isValid,
-    isDirty,
-  ]);
+  }, [debounced_amount, debounced_vote, wallet, govStaker, isValid, isDirty]);
 
-  return { tx, providerId };
+  return { tx, wallet };
 }

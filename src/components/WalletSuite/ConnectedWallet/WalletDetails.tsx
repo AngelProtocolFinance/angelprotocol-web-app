@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  useGetWallet,
+  WalletState,
   useSetWallet,
 } from "contexts/WalletContext/WalletContext";
 import Backdrop from "components/Backdrop";
@@ -12,8 +12,11 @@ import Holdings from "./Holdings";
 import Portal from "./Portal";
 
 const criterionAmount = 0.001;
-export default function WalletDetails(props: { closeHandler: () => void }) {
-  const { coins, walletAddr, displayCoin } = useGetWallet();
+export default function WalletDetails(props: {
+  wallet: WalletState;
+  closeHandler: () => void;
+}) {
+  const { coins, displayCoin, address } = props.wallet;
   const { disconnect } = useSetWallet();
   const [isSmallAmountsShown, setIsSmallAmountShown] = useState(false);
 
@@ -49,10 +52,10 @@ export default function WalletDetails(props: { closeHandler: () => void }) {
           />
         )}
         <div className="flex gap-2 items-center p-2  pb-0">
-          <p className="text-xl text-angel-grey">{maskAddress(walletAddr)}</p>
-          <Copier text={walletAddr} colorClass="text-angel-grey text-lg" />
+          <p className="text-xl text-angel-grey">{maskAddress(address)}</p>
+          <Copier text={address} colorClass="text-angel-grey text-lg" />
         </div>
-        <Portal address={walletAddr} />
+        <Portal address={address} />
         {(!isEmpty && <Holdings coins={filteredCoins} />) || (
           <span className="text-angel-grey p-10 text-center text-sm uppercase">
             Wallet is empty

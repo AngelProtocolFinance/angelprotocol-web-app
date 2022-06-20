@@ -5,6 +5,7 @@ import { DonateValues, DonaterProps } from "./types";
 import { SchemaShape } from "schemas/types";
 import { WithBalance } from "services/types";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
+import { placeHolderDisplayToken } from "contexts/WalletContext/constants";
 import ContentLoader from "components/ContentLoader";
 import { requiredTokenAmount } from "schemas/number";
 import DonateForm from "./DonateForm/DonateForm";
@@ -17,10 +18,15 @@ const schema = Yup.object().shape(shape);
 export default function Donater(
   props: DonaterProps /** set by opener context */
 ) {
-  const { coins, isWalletLoading } = useGetWallet();
+  const { wallet, isWalletLoading } = useGetWallet();
 
-  if (isWalletLoading || isWalletLoading) return <DonateFormLoader />;
-  return <DonateContext {...props} tokens={coins} />;
+  if (isWalletLoading) return <DonateFormLoader />;
+  return (
+    <DonateContext
+      {...props}
+      tokens={wallet?.coins || [placeHolderDisplayToken["station"]]}
+    />
+  );
 }
 
 function DonateContext(props: DonaterProps & { tokens: WithBalance[] }) {

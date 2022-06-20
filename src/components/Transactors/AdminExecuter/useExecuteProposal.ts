@@ -8,7 +8,7 @@ import Admin from "contracts/Admin";
 
 export default function useExecuteProposal(args: AdmiExecuterProps) {
   const { cwContracts } = useGetter((state) => state.admin.cwContracts);
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const dispatch = useSetter();
   const { showModal } = useModalContext();
 
@@ -17,12 +17,10 @@ export default function useExecuteProposal(args: AdmiExecuterProps) {
       showModal(Popup, { message: "Invalid poll id" });
       return;
     }
-    const contract = new Admin(cwContracts, walletAddr);
+    const contract = new Admin(cwContracts, wallet?.address);
     const execMsg = contract.createExecProposalMsg(args.proposal_id);
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
         msgs: [execMsg],
         tagPayloads: args.tagPayloads,
       })

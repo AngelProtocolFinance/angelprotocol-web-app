@@ -10,7 +10,7 @@ export default function useProposalDetails(
   proposalInfo: Proposal
 ): ProposalDetails {
   const blockHeight = useLatestBlock();
-  const { walletAddr } = useGetWallet();
+  const { wallet } = useGetWallet();
   const { votes = [] } = useVoteList(proposalInfo.id);
 
   const [numYes, numNo] = useMemo(
@@ -31,8 +31,8 @@ export default function useProposalDetails(
   );
 
   const userVote: Vote | undefined = useMemo(
-    () => votes.find((vote) => vote.voter === walletAddr)?.vote,
-    [walletAddr, votes]
+    () => votes.find((vote) => vote.voter === wallet?.address)?.vote,
+    [wallet, votes]
   );
 
   const totalWeight = +proposalInfo.threshold.absolute_percentage.total_weight;

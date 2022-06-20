@@ -90,3 +90,95 @@ export type Token = EVMNative | TerraNative | ALT20;
   //types is coherent underneath and would still err even without specifying the generics
   ```
 -
+
+9. registration bugs
+
+1. wallet address is missing, even MetaData.TerraAddress is populated in registration from aws
+
+```
+  const charity = useGetter((state) => state.charity);
+  const { submit, isSubmitting } = useSubmit();
+  const { activate, isSubmitting: isActivateSubmitting } = useActivate();
+
+  const state = getRegistrationState(charity);
+```
+
+```js
+const initRegData = {
+  /** 
+  Email: string;
+  EmailVerified?: boolean;
+  Goals: string;
+  FirstName: string;
+  LastName: string;
+  OtherRole?: string;
+  OtherReferralMethod?: string;
+  PhoneNumber: string;
+  PK?: string;
+  ReferralMethod: ReferralMethods;
+  Role: ContactRoles;
+  SK: "ContactPerson";
+   * 
+  */
+  ContactPerson: {
+    EmailVerified: true,
+    Role: "ceo",
+    PhoneNumber: "2131023",
+    SK: "ContactPerson",
+    ReferralMethod: "angel-alliance",
+    FirstName: "test naem",
+    PK: "6bd78454-8883-4aad-bd23-beccfe441177",
+    LastName: "test last",
+    Goals:
+      '{"blocks":[{"key":"6sgpr","text":"asdfasdfasdf","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+    Email: "xejom27225@runqx.com",
+  },
+  Registration: {
+    /** 
+  AuditedFinancialReports?: FileObject[];
+  AuditedFinancialReportsVerified?: boolean;
+  CharityName: string;
+  CharityName_ContactEmail?: string;
+  FinancialStatements?: FileObject[];
+  FinancialStatementsVerified?: boolean;
+  ProofOfIdentity?: FileObject;
+  ProofOfIdentityVerified?: boolean;
+  ProofOfRegistration?: FileObject;
+  ProofOfRegistrationVerified?: boolean;
+  RegistrationDate: string;
+  RegistrationStatus: RegistrationStatus;
+  SK: "Registration";
+  Tier?: EndowmentTierNum;
+  UN_SDG: number; //0 iniitally
+  Website?: string;
+     * 
+     * 
+    */
+    CharityName_ContactEmail: "TEST ORG_xejom27225@runqx.com",
+    RegistrationDate: "2022-06-14T10:36:29.401Z",
+    CharityName: "test org",
+    UN_SDG: 0,
+    SK: "Registration",
+    RegistrationStatus: "Inactive",
+    PK: "6bd78454-8883-4aad-bd23-beccfe441177",
+  },
+  Metadata: {
+    /** 
+     * 
+  Banner?: FileObject;
+  CharityLogo?: FileObject;
+  CharityOverview?: string;
+  EndowmentContract?: string;
+  SK: "Metadata";
+  TerraWallet?: string;
+  KycDonorsOnly?: boolean;
+    */
+    PK: "6bd78454-8883-4aad-bd23-beccfe441177",
+    SK: "Metadata",
+  },
+  authorization: "allow",
+  user: "charity-owner",
+  iat: 1655203016,
+  exp: 1655210216,
+};
+```

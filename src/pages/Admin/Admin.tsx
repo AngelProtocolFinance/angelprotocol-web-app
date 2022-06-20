@@ -15,7 +15,7 @@ import Proposer from "./Proposer";
 
 export default function Admin() {
   const dispatch = useSetter();
-  const { providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
 
   useEffect(() => {
     dispatch(setCWContracts("apTeam"));
@@ -23,7 +23,7 @@ export default function Admin() {
 
   const { member, isMemberLoading } = useMember("apTeam");
 
-  if (providerId === "unknown") {
+  if (!wallet) {
     return <GuardPrompt message="Your wallet is not connected" />;
   } else if (isMemberLoading) {
     return <GuardPrompt message="Checking wallet credential" showLoader />;

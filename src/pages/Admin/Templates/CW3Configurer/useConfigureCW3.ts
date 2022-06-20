@@ -22,7 +22,7 @@ import genProposalsLink from "../genProposalsLink";
 type Key = keyof CW3ConfigPayload;
 type Value = CW3ConfigPayload[Key];
 export default function useConfigureCW3() {
-  const { walletAddr, displayCoin, providerId } = useGetWallet();
+  const { wallet } = useGetWallet();
   const {
     handleSubmit,
     formState: { isSubmitting, isDirty, isValid },
@@ -46,7 +46,7 @@ export default function useConfigureCW3() {
       return;
     }
 
-    const adminContract = new Admin(cwContracts, walletAddr);
+    const adminContract = new Admin(cwContracts, wallet?.address);
     const configUpdateMsg = adminContract.createEmbeddedUpdateConfigMsg(
       data.height,
       (data.threshold / 100).toFixed(3)
@@ -67,8 +67,7 @@ export default function useConfigureCW3() {
 
     dispatch(
       sendTerraTx({
-        providerId,
-        feeBalance: displayCoin.balance,
+        wallet,
         msgs: [proposalMsg],
         tagPayloads: [
           terra.util.invalidateTags([

@@ -1,30 +1,38 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
+import { SingleConnection } from "contexts/WalletContext/types";
 import gmailIcon from "assets/images/gmail.webp";
 import web3AuthLogo from "assets/images/web3auth-logo.webp";
+import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Icon from "components/Icon";
 import ButtonSocial from "./ButtonSocial";
 import ContinueWithEmail from "./ContinueWithEmail";
 
-type Props = { onLogin: (provider: string) => void };
+export default function Web3Auth() {
+  const { connections } = useSetWallet();
+  const torusConnection = connections.find(
+    (connection) => connection.name === "Torus"
+  );
 
-export default function Web3Auth({ onLogin }: Props) {
+  const login = (torusConnection! as SingleConnection).connect;
+
   return (
-    <div className="flex flex-col justify-between bg-angel-blue h-96 max-w-sm p-4 rounded-sm">
-      <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.GOOGLE)}>
+    <div className="flex flex-col gap-2 justify-between bg-angel-blue max-w-sm p-4 rounded-sm">
+      <h3 className="uppercase text-lg font-extrabold">torus wallet</h3>
+      <ButtonSocial onClick={() => login(LOGIN_PROVIDER.GOOGLE)}>
         <img src={gmailIcon} alt="Google" width={30} />
         <span className="text-gray-500">Continue with Google</span>
       </ButtonSocial>
 
       <div className="flex justify-between gap-4">
-        <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.FACEBOOK)}>
+        <ButtonSocial onClick={() => login(LOGIN_PROVIDER.FACEBOOK)}>
           <Icon type="FacebookCircle" className="text-blue-accent" size={30} />
         </ButtonSocial>
 
-        <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.LINKEDIN)}>
+        <ButtonSocial onClick={() => login(LOGIN_PROVIDER.LINKEDIN)}>
           <Icon type="Linkedin" className="text-blue-500" size={30} />
         </ButtonSocial>
 
-        <ButtonSocial onClick={() => onLogin(LOGIN_PROVIDER.DISCORD)}>
+        <ButtonSocial onClick={() => login(LOGIN_PROVIDER.DISCORD)}>
           <Icon type="Discord" className="text-purple-600" size={30} />
         </ButtonSocial>
       </div>
@@ -32,7 +40,7 @@ export default function Web3Auth({ onLogin }: Props) {
       <Separator />
 
       <ContinueWithEmail
-        onClick={() => onLogin(LOGIN_PROVIDER.EMAIL_PASSWORDLESS)}
+        onClick={() => login(LOGIN_PROVIDER.EMAIL_PASSWORDLESS)}
       />
 
       <PartnerContent />
