@@ -1,17 +1,23 @@
 import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { DocumentationValues } from "pages/Registration/types";
-import { useUpdateDocumentationMutation } from "services/aws/registration";
+import {
+  useRegistrationState,
+  useUpdateDocumentationMutation,
+} from "services/aws/registration";
 import { FileWrapper } from "components/FileDropzone";
-import { useGetter, useSetter } from "store/accessors";
+import { appRoutes, siteRoutes } from "constants/routes";
 import { FORM_ERROR, Folders } from "../constants";
 import { uploadToIpfs } from "../helpers";
-import { updateCharity } from "../store";
+import routes from "../routes";
 import useHandleError from "../useHandleError";
 
 export default function useUpload() {
-  const [uploadDocumentation, { isSuccess }] = useUpdateDocumentationMutation();
-  const charity = useGetter((state) => state.charity);
-  const dispatch = useSetter();
+  const [uploadDocumentation] = useUpdateDocumentationMutation();
+  const { data } = useRegistrationState("");
+  const charity = data!; //ensured by guard
+  const navigate = useNavigate();
+
   const handleError = useHandleError();
 
   const upload = useCallback(
@@ -25,22 +31,17 @@ export default function useUpload() {
 
         if ("error" in result) {
           handleError(result.error, FORM_ERROR);
-        } else {
-          dispatch(
-            updateCharity({
-              ...charity,
-              Registration: { ...charity.Registration, ...result.data },
-            })
-          );
         }
+
+        navigate(`${siteRoutes.app}/${appRoutes.register}/${routes.dashboard}`);
       } catch (error) {
         handleError(error, FORM_ERROR);
       }
     },
-    [charity, dispatch, handleError, uploadDocumentation]
+    [charity, handleError, uploadDocumentation, navigate]
   );
 
-  return { upload, isSuccess };
+  return upload;
 }
 
 async function getUploadUrls(primaryKey: string, values: DocumentationValues) {

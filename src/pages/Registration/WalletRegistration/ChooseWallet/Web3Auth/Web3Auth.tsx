@@ -1,4 +1,5 @@
 import { LOGIN_PROVIDER } from "@toruslabs/openlogin";
+import { SingleConnection } from "contexts/WalletContext/types";
 import gmailIcon from "assets/images/gmail.webp";
 import web3AuthLogo from "assets/images/web3auth-logo.webp";
 import { useSetWallet } from "contexts/WalletContext/WalletContext";
@@ -8,9 +9,15 @@ import ContinueWithEmail from "./ContinueWithEmail";
 
 export default function Web3Auth() {
   const { connections } = useSetWallet();
-  const login = async (arg: string) => {};
+  const torusConnection = connections.find(
+    (connection) => connection.name === "Torus"
+  );
+
+  const login = (torusConnection! as SingleConnection).connect;
+
   return (
-    <div className="flex flex-col justify-between bg-angel-blue h-96 max-w-sm p-4 rounded-sm">
+    <div className="flex flex-col gap-2 justify-between bg-angel-blue max-w-sm p-4 rounded-sm">
+      <h3 className="uppercase text-lg font-extrabold">torus wallet</h3>
       <ButtonSocial onClick={() => login(LOGIN_PROVIDER.GOOGLE)}>
         <img src={gmailIcon} alt="Google" width={30} />
         <span className="text-gray-500">Continue with Google</span>

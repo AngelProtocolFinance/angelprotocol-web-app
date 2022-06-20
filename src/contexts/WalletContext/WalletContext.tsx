@@ -149,6 +149,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         break;
       case "xdefi-wallet":
       case "station":
+      case "falcon-wallet":
+      case "leap-wallet":
       case "walletconnect":
         disconnectTerra();
         break;

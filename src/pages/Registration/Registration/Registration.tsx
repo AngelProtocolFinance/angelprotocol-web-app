@@ -3,33 +3,54 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import banner1 from "assets/images/banner-register-1.jpg";
-import { useSetter } from "store/accessors";
+import {
+  registrationRefKey,
+  useRegistrationQueryLazyQuery,
+} from "services/aws/registration";
 import { Button } from "../common";
 import routes from "../routes";
-import { removeCharity } from "../store";
+import useHandleError from "../useHandleError";
 import ButtonMailTo from "./ButtonMailTo";
-import useResume from "./useResume";
 
+type ResumeValues = { refer: string };
 const FormInfoSchema = Yup.object().shape({
   refer: Yup.string().required("Please enter your registration reference."),
 });
 
 export default function Registration() {
-  const resume = useResume();
+  const handleError = useHandleError();
+  const [checkPrevRegistration] = useRegistrationQueryLazyQuery();
   const navigate = useNavigate();
-  const dispatch = useSetter();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<{ refer: string }>({
+  } = useForm<ResumeValues>({
+    defaultValues: {
+      //pre-fill with old registartion reference
+      refer: localStorage.getItem(registrationRefKey) || "",
+    },
     resolver: yupResolver(FormInfoSchema),
   });
 
   const handleStart = () => {
-    dispatch(removeCharity());
-    navigate(routes.contactDetails);
+    localStorage.removeItem(registrationRefKey);
+    navigate(routes.contactDetails, { state: { is_new: true } });
+  };
+
+  const onResume = async (val: ResumeValues) => {
+    const { isError, error, data } = await checkPrevRegistration(val.refer);
+    if (isError || !data) {
+      handleError(
+        error,
+        "No active charity application found with this registration reference"
+      );
+      return;
+    }
+    localStorage.setItem(registrationRefKey, val.refer);
+    //go to dashboard and let guard handle further routing
+    navigate(routes.dashboard);
   };
 
   return (
@@ -47,7 +68,7 @@ export default function Registration() {
       </Button>
       <p className="text-xl font-bold text-thin-blue">OR</p>
       <form
-        onSubmit={handleSubmit(resume)}
+        onSubmit={handleSubmit(onResume)}
         className="flex flex-col items-center gap-2 w-full mb-5"
       >
         <input

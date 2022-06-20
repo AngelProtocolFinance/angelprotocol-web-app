@@ -1,15 +1,13 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
 import { StaticWalletProvider } from "@terra-money/wallet-provider";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { TORUS_CONNECTION } from "providers/WalletProvider/useWalletContext/types";
 import { CharityApplication } from "types/server/aws";
-import { WalletProxy } from "providers/WalletProvider";
-import { chainOptions, testnet } from "providers/WalletProvider/chainOptions";
 import ModalContext from "contexts/ModalContext";
+import WalletContext from "contexts/WalletContext/WalletContext";
 import { store } from "store/store";
+import { testnet } from "constants/chainOptions";
 import Applications from "../Applications";
 
 const mockUseGetCharityApplicationsQuery = jest.fn();
@@ -25,47 +23,36 @@ const TestApp = (props: { routes?: string[]; initialRouteIndex?: number }) => (
   >
     <Provider store={store}>
       <StaticWalletProvider defaultNetwork={testnet}>
-        <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
-          <Applications />
-        </ModalContext>
+        <WalletContext>
+          <ModalContext backdropClasses="z-10 fixed inset-0 bg-black/50">
+            <Applications />
+          </ModalContext>
+        </WalletContext>
       </StaticWalletProvider>
     </Provider>
   </MemoryRouter>
 );
 
-const mockUseWalletContext = jest.fn();
-
-jest.mock("hooks/useWalletContext", () => ({
-  __esModule: true,
-  default: () => mockUseWalletContext(),
-}));
-
 describe("Charity applications review", () => {
   test("Renders Initial state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(initialState);
-    render(<Applications />);
-
+    render(<TestApp />);
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/No applications found/i)).toBeInTheDocument();
   });
-
   test("Renders loading state", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadingState);
-    render(<Applications />);
-
+    render(<TestApp />);
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(screen.getByText(/Loading Applications/i)).toBeInTheDocument();
   });
-
   test("Application reviews rendered", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
     render(<Applications />);
-
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })
     ).toBeInTheDocument();
-
     // assert that both application names are rendered in table cells
     expect(
       screen.getByRole("cell", {
@@ -77,49 +64,23 @@ describe("Charity applications review", () => {
         name: /all4good_ms@mail\.com/i,
       })
     ).toBeInTheDocument();
-
     // assert table has only 3 rows (heading + 2 charity applications)
     const rows = screen.getAllByRole("row");
     expect(rows.length).toBe(3);
   });
 
-  test("Application preview Modal renders 1st application", () => {
-    mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
-    render(<TestApp />);
-
-    expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
-    expect(
-      screen.getByRole("heading", { name: /Charity applications/i })
-    ).toBeInTheDocument();
-
-    const reviewButton = screen.getAllByRole("button", { name: /review/i })[0];
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
-    userEvent.click(reviewButton);
-
-    expect(
-      screen.getByRole("heading", { name: /review application/i })
-    ).toBeInTheDocument();
-
-    expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"All4Good"`);
-  });
-
   test("Application preview modal renders 2nd application", () => {
     mockUseGetCharityApplicationsQuery.mockReturnValue(loadedState);
     render(<TestApp />);
-
     expect(mockUseGetCharityApplicationsQuery).toHaveBeenCalledTimes(1);
     expect(
       screen.getByRole("heading", { name: /Charity applications/i })
     ).toBeInTheDocument();
-
     const reviewButton = screen.getAllByRole("button", { name: /review/i })[1];
-    mockUseWalletContext.mockReturnValue({ wallet: WALLET });
     userEvent.click(reviewButton);
-
     expect(
       screen.getByRole("heading", { name: /review application/i })
     ).toBeInTheDocument();
-
     expect(screen.getByTestId("preview-form")).toMatchSnapshot(`"123_Company"`);
   });
 });
@@ -179,21 +140,4 @@ const loadedState = {
   data: mockReviewsData,
   isLoading: false,
   isError: false,
-};
-
-const WALLET: WalletProxy = {
-  connection: TORUS_CONNECTION,
-  address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l",
-  network: chainOptions.walletConnectChainIds[0], // testnet
-  post: async (_: CreateTxOptions) => ({
-    result: {
-      height: 1,
-      raw_log: "",
-      txhash: "",
-    },
-    success: true,
-    msgs: [],
-  }),
-  connect: async (..._: any[]) => {},
-  disconnect: async () => {},
 };

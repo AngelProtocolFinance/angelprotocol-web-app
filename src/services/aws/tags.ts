@@ -11,4 +11,5 @@ export enum chaTags {
 
 export enum adminTags {
   applications = "applications",
+  registration = "registration",
 }

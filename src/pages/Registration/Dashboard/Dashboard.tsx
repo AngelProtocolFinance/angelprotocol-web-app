@@ -1,4 +1,4 @@
-import { useGetter } from "store/accessors";
+import { useRegistrationState } from "services/aws/registration";
 import { Button } from "../common";
 import EndowmentStatus from "./EndowmentStatus";
 import ProgressIndicator from "./ProgressIndicator";
@@ -8,14 +8,14 @@ import useActivate from "./useActivate";
 import useSubmit from "./useSubmit";
 
 export default function Dashboard() {
-  const charity = useGetter((state) => state.charity);
+  const { data } = useRegistrationState("");
+  const charity = data!; //charity is available as checked by guard
   const { submit, isSubmitting } = useSubmit();
   const { activate, isSubmitting: isActivateSubmitting } = useActivate();
 
-  const state = getRegistrationState(charity);
-
   const isDataSubmitted =
     charity.Registration.RegistrationStatus !== "Inactive";
+  const state = getRegistrationState(charity);
 
   return (
     <div className="flex flex-col gap-4 items-center w-full">
