@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cosmjs/stargate": "^0.28.7",
     "@fleekhq/fleek-storage-js": "^1.0.21",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "^2.9.0",
