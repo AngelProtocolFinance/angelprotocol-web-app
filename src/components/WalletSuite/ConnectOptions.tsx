@@ -8,7 +8,7 @@ import ModalContext, { useModalContext } from "contexts/ModalContext";
 import { useSetWallet } from "contexts/WalletContext/WalletContext";
 import Backdrop from "components/Backdrop";
 import Icon from "components/Icon";
-import { EIP1193Error } from "errors/errors";
+import { WalletError } from "errors/errors";
 import WalletPrompt from "./WalletPrompt";
 
 export default function ConnectOptions(props: { closeHandler: () => void }) {
@@ -96,7 +96,7 @@ function Connector(props: SingleConnection) {
       await props.connect();
     } catch (_err: any) {
       let errorMsg: string;
-      if (_err instanceof EIP1193Error) {
+      if (_err instanceof WalletError) {
         errorMsg = _err.message;
       } else {
         errorMsg = "Unknown error occured";

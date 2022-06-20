@@ -1,7 +1,10 @@
-import { StargateClient } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
+import { Connection, ProviderInfo } from "./types";
 import { Dwindow } from "types/ethereum";
-import { retrieveUserAction } from "./helpers/prefActions";
+import { WalletError } from "errors/errors";
+import { chainIDs } from "constants/chainIDs";
+import { providerIcons } from "./constants";
+import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
 
 const actionKey = `keplr__pref`;
 const dwindow: Dwindow = window;
@@ -14,22 +17,75 @@ export default function useKeplr() {
   const [chainId, setChainId] = useState<string>();
 
   useEffect(() => {
-    (async () => {
-      if (!dwindow.keplr) return;
-      const chainId = "cosmoshub-4";
-      await dwindow.keplr.enable(["cosmoshub-4", "juno-1"]);
-      const offlineSigner = dwindow.keplr.getOfflineSigner(chainId);
-
-      const accounts = await offlineSigner.getAccounts();
-      console.log(accounts);
-    })();
+    (shouldReconnect && requestAccess()) || setIsLoading(false);
   }, []);
-}
 
-export class KeplrNoAccount extends Error {
-  constructor() {
-    super();
-    this.message = "Kindly login to your Keplr account";
-    this.name = "KeplrNoAccount";
+  const requestAccess = async (isNewConnection = false) => {
+    try {
+      if (!dwindow.keplr) return;
+      await dwindow.keplr.enable(chainIDs.juno_main);
+      const key = await dwindow.keplr.getKey(chainIDs.juno_main);
+      const address = key.bech32Address;
+
+      setAddress(address);
+      setChainId(chainIDs.juno_main);
+      setIsLoading(false);
+    } catch (err) {
+      //if user cancels, set pref to disconnect
+      console.error(err);
+      setIsLoading(false);
+      saveUserAction(actionKey, "disconnect");
+      if (isNewConnection) {
+        //if connection is made via "connect-button"
+        throw err;
+      }
+    }
+  };
+
+  const connect = async () => {
+    try {
+      const dwindow = window as Dwindow;
+      if (!dwindow.keplr) {
+        throw new WalletError("Keplr is not installed", 0);
+      }
+      //connecting xdefi
+      setIsLoading(true);
+      await requestAccess(true);
+      saveUserAction(actionKey, "connect");
+    } catch (err: any) {
+      setIsLoading(false);
+      throw new WalletError(
+        err?.message || "Unknown error occured",
+        err?.code || 0
+      );
+    }
+  };
+
+  function disconnect() {
+    if (!address) return;
+    setAddress(undefined);
+    setChainId(undefined);
+    saveUserAction(actionKey, "disconnect");
   }
+
+  const providerInfo: ProviderInfo = {
+    logo: providerIcons.keplr,
+    providerId: "keplr",
+    chainId: chainId || chainIDs.juno_main,
+    address: address || "",
+  };
+
+  //connection object to render <Connector/>
+  const connection: Connection = {
+    name: "Keplr",
+    logo: providerIcons.keplr,
+    connect,
+  };
+
+  return {
+    connection,
+    disconnect,
+    isLoading,
+    providerInfo: (address && providerInfo) || undefined,
+  };
 }

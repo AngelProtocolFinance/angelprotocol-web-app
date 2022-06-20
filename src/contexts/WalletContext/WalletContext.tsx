@@ -57,6 +57,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   } = useInjectedWallet("binance-wallet");
 
   const {
+    isLoading: isKeplrLoading,
+    connection: keplrConnection,
+    disconnect: disconnectKeplr,
+    providerInfo: keplrWalletInfo,
+  } = useKeplr();
+
+  const {
     isTerraLoading,
     terraConnections,
     terraInstallations,
@@ -73,8 +80,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
   const { isTorusLoading, torusInfo, torusConnection, disconnectTorus } =
     useTorusWallet();
-
-  useKeplr();
 
   const providerStatuses: ProviderStatuses = [
     {
@@ -97,7 +102,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       providerInfo: torusInfo,
       isLoading: isTorusLoading,
     },
+    {
+      providerInfo: keplrWalletInfo,
+      isLoading: isKeplrLoading,
+    },
   ];
+
+  console.log(providerStatuses);
 
   const isProviderLoading = providerStatuses.reduce(
     (status, curr) => status || curr.isLoading,
@@ -147,6 +158,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "torus":
         disconnectTorus();
         break;
+      case "keplr":
+        disconnectKeplr();
+        break;
       case "xdefi-wallet":
       case "station":
       case "falcon-wallet":
@@ -175,6 +189,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
             torusConnection,
             metamaskConnection,
             binanceWalletConnection,
+            keplrConnection,
           ],
           installations: [...terraInstallations],
           disconnect,

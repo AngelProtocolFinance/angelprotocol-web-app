@@ -1,6 +1,7 @@
 import { ProviderId } from "./types";
 import { WithBalance } from "services/types";
 import binanceWalletIcon from "assets/icons/wallets/binance.png";
+import keplr from "assets/icons/wallets/keplr.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import terraStationIcon from "assets/icons/wallets/terra-extension.jpg";
 import torusIcon from "assets/icons/wallets/torus.jpg";
@@ -20,6 +21,7 @@ export const providerIcons: { [key in ProviderId]: string } = {
     "https://cdn.bitkeep.vip/u_b_6151d430-ae42-11ec-9c39-b7ca284b7fe4.png",
   walletconnect: walletConnectIcon,
   torus: torusIcon,
+  keplr,
 };
 
 const ethTokenWithBalance = { ...ethereumToken, balance: 0 };
@@ -35,6 +37,7 @@ export const placeHolderDisplayToken: {
   "leap-wallet": lunaTokenWithBalance,
   "falcon-wallet": lunaTokenWithBalance,
   "bitkeep-wallet": lunaTokenWithBalance,
+  keplr: lunaTokenWithBalance,
   walletconnect: lunaTokenWithBalance,
   torus: lunaTokenWithBalance,
 };
