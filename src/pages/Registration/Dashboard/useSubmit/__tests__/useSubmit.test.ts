@@ -146,7 +146,6 @@ describe("useSubmit tests", () => {
 const CHARITY: Charity = {
   ContactPerson: {
     Email: "test@test.com",
-    Goals: "",
     EmailVerified: true,
     FirstName: "first",
     LastName: "last",
