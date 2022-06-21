@@ -9,11 +9,11 @@ export default class Decimal {
   /**
    * Creates an instance of `Decimal` class
    *
-   * @param value Number to perform operations on
+   * @param atomic Number with the whole and fractional parts merged
    * @param fractionalDigits Number of fractional digits of the number, defaults to 0
    */
-  constructor(value: number | string, fractionalDigits = 0) {
-    this.value = CosmJsDecimal.fromAtomics(value.toString(), fractionalDigits);
+  constructor(atomic: number | string, fractionalDigits = 0) {
+    this.value = CosmJsDecimal.fromAtomics(atomic.toString(), fractionalDigits);
   }
 
   public plus(b: Decimal): Decimal {
