@@ -5,18 +5,18 @@ describe("Decimal", () => {
     const cases = [0, 1, "1", Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER];
 
     test.each(cases)(
-      "creates a class instance with default fractionalDigits",
+      "creates a class instance with default fractionalDigits: %s",
       (input) => {
         expect(() => new Decimal(input)).not.toThrow();
       }
     );
 
-    test.each(cases)("creates a class instance", (input) => {
+    test.each(cases)("creates a class instance: %s", (input) => {
       expect(() => new Decimal(input, 6)).not.toThrow();
     });
 
     test.each([100.1, "100.1"])(
-      "throws on fractional number passed",
+      "throws on fractional number passed: %s",
       (input) => {
         expect(() => new Decimal(input)).toThrow();
       }
@@ -42,9 +42,12 @@ describe("Decimal", () => {
         expected: new Decimal(0, 3),
       },
     ];
-    test.each(cases)("adds numbers correctly", ({ a, b, expected }) => {
-      expect(a.plus(b)).toEqual(expected);
-    });
+    test.each(cases)(
+      "$a.value.data.atomics .plus($b.value.data.atomics) === $expected.value.data.atomics",
+      ({ a, b, expected }) => {
+        expect(a.plus(b)).toEqual(expected);
+      }
+    );
 
     test("throws on different fractional digits", () => {
       const a = new Decimal(101, 1);
@@ -64,9 +67,12 @@ describe("Decimal", () => {
         expected: new Decimal(0, 3),
       },
     ];
-    test.each(cases)("subtracts numbers correctly", ({ a, b, expected }) => {
-      expect(a.minus(b)).toEqual(expected);
-    });
+    test.each(cases)(
+      "$a.value.data.atomics .minus($b.value.data.atomics) === $expected.value.data.atomics",
+      ({ a, b, expected }) => {
+        expect(a.minus(b)).toEqual(expected);
+      }
+    );
 
     test("throws on different fractional digits", () => {
       const a = new Decimal(1001, 2);
@@ -90,9 +96,12 @@ describe("Decimal", () => {
       { a: new Decimal(10001, 3), b: 2, expected: new Decimal(20002, 3) },
       { a: new Decimal(-10001, 3), b: 2, expected: new Decimal(-20002, 3) },
     ];
-    test.each(cases)("multiplies numbers correctly", ({ a, b, expected }) => {
-      expect(a.multiply(b)).toEqual(expected);
-    });
+    test.each(cases)(
+      "$a.value.data.atomics .multiply($b) === $expected.value.data.atomics",
+      ({ a, b, expected }) => {
+        expect(a.multiply(b)).toEqual(expected);
+      }
+    );
 
     it("throws on fractional multiplier", () => {
       const a = new Decimal(100);
