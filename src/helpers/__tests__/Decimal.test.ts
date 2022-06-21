@@ -26,4 +26,24 @@ describe("Decimal", () => {
       expect(() => new Decimal(1, 101)).toThrow();
     });
   });
+
+  describe("plus", () => {
+    const cases = [
+      [new Decimal(0), new Decimal(0), new Decimal(0)],
+      [new Decimal(1), new Decimal(1), new Decimal(2)],
+      [new Decimal(100001, 3), new Decimal(100001, 3), new Decimal(200002, 3)],
+      [new Decimal(-100001, 3), new Decimal(100001, 3), new Decimal(0, 3)],
+    ];
+
+    test.each(cases)("adds numbers correctly", (a, b, expected) => {
+      expect(a.plus(b)).toEqual(expected);
+    });
+
+    it("throws on different fractional digits", () => {
+      const a = new Decimal(101, 1);
+      const b = new Decimal(1001, 2);
+
+      expect(() => a.plus(b)).toThrow();
+    });
+  });
 });
