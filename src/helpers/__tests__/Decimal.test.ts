@@ -29,12 +29,20 @@ describe("Decimal", () => {
 
   describe("plus", () => {
     const cases = [
-      [new Decimal(0), new Decimal(0), new Decimal(0)],
-      [new Decimal(1), new Decimal(1), new Decimal(2)],
-      [new Decimal(100001, 3), new Decimal(100001, 3), new Decimal(200002, 3)],
-      [new Decimal(-100001, 3), new Decimal(100001, 3), new Decimal(0, 3)],
+      { a: new Decimal(0), b: new Decimal(0), expected: new Decimal(0) },
+      { a: new Decimal(1), b: new Decimal(1), expected: new Decimal(2) },
+      {
+        a: new Decimal(100001, 3),
+        b: new Decimal(100001, 3),
+        expected: new Decimal(200002, 3),
+      },
+      {
+        a: new Decimal(-100001, 3),
+        b: new Decimal(100001, 3),
+        expected: new Decimal(0, 3),
+      },
     ];
-    test.each(cases)("adds numbers correctly", (a, b, expected) => {
+    test.each(cases)("adds numbers correctly", ({ a, b, expected }) => {
       expect(a.plus(b)).toEqual(expected);
     });
 
@@ -48,11 +56,15 @@ describe("Decimal", () => {
 
   describe("minus", () => {
     const cases = [
-      [new Decimal(0), new Decimal(0), new Decimal(0)],
-      [new Decimal(2), new Decimal(1), new Decimal(1)],
-      [new Decimal(100001, 3), new Decimal(100001, 3), new Decimal(0, 3)],
+      { a: new Decimal(0), b: new Decimal(0), expected: new Decimal(0) },
+      { a: new Decimal(2), b: new Decimal(1), expected: new Decimal(1) },
+      {
+        a: new Decimal(100001, 3),
+        b: new Decimal(100001, 3),
+        expected: new Decimal(0, 3),
+      },
     ];
-    test.each(cases)("subtracts numbers correctly", (a, b, expected) => {
+    test.each(cases)("subtracts numbers correctly", ({ a, b, expected }) => {
       expect(a.minus(b)).toEqual(expected);
     });
 
