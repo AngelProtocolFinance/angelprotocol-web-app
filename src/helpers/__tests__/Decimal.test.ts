@@ -122,4 +122,30 @@ describe("Decimal", () => {
       expect(() => new Decimal(-1001, 2).toNumber()).toThrow();
     });
   });
+
+  describe("isGreaterThan", () => {
+    const cases = [
+      { a: new Decimal(0), b: new Decimal(0), expected: false },
+      { a: new Decimal(1), b: new Decimal(1), expected: false },
+      { a: new Decimal(2), b: new Decimal(1), expected: true },
+      {
+        a: new Decimal(Number.MAX_SAFE_INTEGER),
+        b: new Decimal(1),
+        expected: true,
+      },
+    ];
+    test.each(cases)(
+      "$a.value.data.atomics .isGreaterThan($b.value.data.atomics) === $expected.value.data.atomics",
+      ({ a, b, expected }) => {
+        expect(a.isGreaterThan(b)).toBe(expected);
+      }
+    );
+
+    test("throws on different fractional digits", () => {
+      const a = new Decimal(101, 1);
+      const b = new Decimal(1001, 2);
+
+      expect(() => a.isGreaterThan(b)).toThrow();
+    });
+  });
 });

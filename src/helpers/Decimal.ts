@@ -10,7 +10,7 @@ export default class Decimal {
   /**
    * Creates an instance of `Decimal` class
    *
-   * @param atomic Number with the whole and fractional parts merged
+   * @param atomic Non-negative number with the whole and fractional parts merged
    * @param fractionalDigits Number of fractional digits of the number, defaults to 0
    */
   constructor(atomic: number | string, fractionalDigits = 0) {
