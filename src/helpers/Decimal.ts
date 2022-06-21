@@ -1,10 +1,11 @@
 import { Decimal as CosmJsDecimal, Uint64 } from "@cosmjs/math";
 
 /**
- * Wrapper class to allow abstracting away the exact package used to implement decimal operations
+ * Wrapper class to allow abstracting away the exact package used
+ * to implement arbitrary precision non-negative decimal operations.
  */
 export default class Decimal {
-  private value: CosmJsDecimal;
+  public value: CosmJsDecimal;
 
   /**
    * Creates an instance of `Decimal` class

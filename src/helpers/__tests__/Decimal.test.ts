@@ -2,7 +2,7 @@ import Decimal from "../Decimal";
 
 describe("Decimal", () => {
   describe("constructor", () => {
-    const cases = [0, 1, "1", Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER];
+    const cases = [0, 1, "1", Number.MAX_SAFE_INTEGER];
 
     test.each(cases)(
       "creates a class instance with default fractionalDigits: %s",
@@ -35,11 +35,6 @@ describe("Decimal", () => {
         a: new Decimal(100001, 3),
         b: new Decimal(100001, 3),
         expected: new Decimal(200002, 3),
-      },
-      {
-        a: new Decimal(-100001, 3),
-        b: new Decimal(100001, 3),
-        expected: new Decimal(0, 3),
       },
     ];
     test.each(cases)(
@@ -94,7 +89,6 @@ describe("Decimal", () => {
       { a: new Decimal(0), b: 1, expected: new Decimal(0) },
       { a: new Decimal(1), b: 1, expected: new Decimal(1) },
       { a: new Decimal(10001, 3), b: 2, expected: new Decimal(20002, 3) },
-      { a: new Decimal(-10001, 3), b: 2, expected: new Decimal(-20002, 3) },
     ];
     test.each(cases)(
       "$a.value.data.atomics .multiply($b) === $expected.value.data.atomics",
