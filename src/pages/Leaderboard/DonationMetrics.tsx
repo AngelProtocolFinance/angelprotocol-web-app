@@ -18,7 +18,7 @@ export default function DonationMetrics() {
           metrics.donations_total_amount.toFixed(2)
         ).toLocaleString()}`}
       </h2>
-      <h3 className="text-xl font-semibold">
+      {/*<h3 className="text-xl font-semibold">
         Daily Donations Total: ${" "}
         {`${Number(
           metrics.donations_daily_amount.toFixed(2)
@@ -26,7 +26,7 @@ export default function DonationMetrics() {
       </h3>
       <h3 className="text-xl font-semibold">
         Daily Donations Count: {`${metrics.donations_daily_count}`}
-      </h3>
+      </h3>*/}
     </div>
   );
 }

@@ -7,37 +7,31 @@ import {
   convertToRaw,
   getDefaultKeyBinding,
 } from "draft-js";
+import "draft-js/dist/Draft.css";
 import React, { useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { UpdateProfileValues } from "pages/EndowmentAdmin/types";
+import { useController } from "react-hook-form";
 import useRichTextInit from "components/RichTextRenderer/useRichTextInit";
 
-export default function useEditor() {
+export default function useRichTextEditor(fieldName: string) {
   const {
-    setValue,
-    watch,
-    setError,
-    formState: { errors },
-  } = useFormContext<UpdateProfileValues>();
-  const overview = watch("overview") || "";
+    formState: { errors, isSubmitting },
+    field: { onChange, value },
+  } = useController({ name: fieldName });
+
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-
-  useRichTextInit(overview, setEditorState);
+  //init rich text editor
+  useRichTextInit(value, setEditorState);
 
   //everytime editorState changes, serialize it and set hook-form state
   useEffect(() => {
     const currentContent = editorState.getCurrentContent();
     if (!currentContent.hasText()) {
-      setError("overview", { message: "overview required" });
+      onChange("");
       return;
     }
-    const rawState = convertToRaw(currentContent);
-    setValue("overview", JSON.stringify(rawState), {
-      shouldDirty: true,
-      shouldValidate: true,
-    });
+    onChange(JSON.stringify(convertToRaw(currentContent)));
     //eslint-disable-next-line
   }, [editorState]);
 
@@ -62,11 +56,6 @@ export default function useEditor() {
     }
     return getDefaultKeyBinding(e);
   }
-  //for tabbing of lists only
-  function handleEditorTab(e: React.KeyboardEvent) {
-    const newState = RichUtils.onTab(e, editorState, 4);
-    setEditorState(newState);
-  }
 
   const applyInlineStyle = (inlineStyle: DraftInlineStyleType) => () => {
     const newState = RichUtils.toggleInlineStyle(editorState, inlineStyle);
@@ -79,13 +68,13 @@ export default function useEditor() {
   };
 
   return {
-    errors,
     editorState,
     setEditorState,
-    applyBlockStyle,
-    applyInlineStyle,
-    handleEditorTab,
-    handleKeyCommand,
     keyBinder,
+    handleKeyCommand,
+    applyInlineStyle,
+    applyBlockStyle,
+    errors,
+    isSubmitting,
   };
 }

@@ -28,15 +28,24 @@ export default function CharityHeader(props: Profile) {
       <h3 className="text-3xl font-bold text-white uppercase">{props.name}</h3>
 
       <div className="flex items-center gap-2 flex-wrap">
-        <button
-          className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+        <Button
+          disabled={true} /**disabled until v2 */
           onClick={showDonateSelection}
         >
           DONATE NOW
-        </button>
+        </Button>
 
         <CharityLinks />
       </div>
     </div>
+  );
+}
+
+function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      className="disabled:bg-grey-accent uppercase bg-orange hover:bg-angel-orange font-heading text-white font-semibold rounded-xl px-6 py-3"
+      {...props}
+    />
   );
 }

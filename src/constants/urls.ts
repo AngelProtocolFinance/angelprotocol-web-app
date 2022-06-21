@@ -1,6 +1,6 @@
 import { IconTypes } from "components/Icon";
 import { chainIDs } from "./chainIDs";
-import { IS_DEV } from "./env";
+import { IS_TEST } from "./env";
 
 type URL_GROUP = {
   [index: string]: string;
@@ -16,15 +16,15 @@ export const flipside_endpoint = "https://flipside.leslug.com/angel";
 //terra urls
 export const terra_lcds: URL_GROUP = {
   [chainIDs.terra_test]: "https://pisco-lcd.terra.dev",
-  [chainIDs.terra_main]: "https://lcd.terra.dev",
+  [chainIDs.terra_classic]: "https://fcd.terra.dev",
   [chainIDs.terra_local]: "http://localhost:3060",
 };
 
-export const terraLcdUrl = IS_DEV
+export const terraLcdUrl = IS_TEST
   ? "https://pisco-lcd.terra.dev"
-  : "https://lcd.terra.dev";
+  : "https://fcd.terra.dev";
 
-export const TERRA_FINDER = "https://terrascope.info/";
+export const TERRA_FINDER = "https://finder.terra.money/";
 
 export const PRIVACY_POLICY =
   "https://storageapi2.fleek.co/57b943eb-ed70-478a-8899-c7859400f77b-bucket/documents/Website and WebApp Privacy Policy (v.110121).docx";
