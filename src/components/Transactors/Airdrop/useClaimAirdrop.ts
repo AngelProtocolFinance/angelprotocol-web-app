@@ -1,4 +1,3 @@
-import { Decimal } from "@cosmjs/math";
 import { useMemo } from "react";
 import { Airdrops } from "services/terra/multicall/types";
 import { gov, multicall, tags } from "services/terra/tags";
@@ -9,6 +8,7 @@ import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import Airdrop from "contracts/Airdrop";
 import useWalletContext from "hooks/useWalletContext";
+import Decimal from "helpers/Decimal";
 
 export default function useClaimAirdrop(airdrops: Airdrops) {
   const { showModal } = useModalContext();
@@ -18,9 +18,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) =>
-          Decimal.fromAtomics(airdrop.haloTokens, 6).plus(result),
-        Decimal.zero(6)
+        (result, airdrop) => new Decimal(airdrop.haloTokens).plus(result),
+        new Decimal(0)
       ),
     [airdrops]
   );

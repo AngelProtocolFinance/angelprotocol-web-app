@@ -1,10 +1,10 @@
-import { Decimal } from "@cosmjs/math";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import Icon from "components/Icon";
+import Decimal from "helpers/Decimal";
 import toCurrency from "helpers/toCurrency";
 
-const ZERO = Decimal.zero(6);
+const ZERO = new Decimal(0);
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -13,10 +13,8 @@ export default function Claims() {
     () =>
       staker.claims
         ?.filter((claim) => +claim.release_at.at_time <= +Date.now() * 1e6)
-        .reduce(
-          (prev, curr) => prev.plus(Decimal.fromAtomics(curr.amount, 6)),
-          ZERO
-        ) || ZERO,
+        .reduce((prev, curr) => prev.plus(new Decimal(curr.amount)), ZERO) ||
+      ZERO,
     [staker]
   );
 
@@ -57,7 +55,7 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = Decimal.fromAtomics(props.amount, 6).toFloatApproximation();
+  const amount = new Decimal(props.amount).toFloatApproximation();
   return (
     <li className="flex justify-between">
       <p
