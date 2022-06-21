@@ -22,7 +22,7 @@ describe("Decimal", () => {
       }
     );
 
-    it("throws on too big a fractional digits", () => {
+    test("throws on too big a fractional digits", () => {
       expect(() => new Decimal(1, 101)).toThrow();
     });
   });
@@ -38,7 +38,7 @@ describe("Decimal", () => {
       expect(a.plus(b)).toEqual(expected);
     });
 
-    it("throws on different fractional digits", () => {
+    test("throws on different fractional digits", () => {
       const a = new Decimal(101, 1);
       const b = new Decimal(1001, 2);
 
@@ -56,14 +56,14 @@ describe("Decimal", () => {
       expect(a.minus(b)).toEqual(expected);
     });
 
-    it("throws on different fractional digits", () => {
+    test("throws on different fractional digits", () => {
       const a = new Decimal(1001, 2);
       const b = new Decimal(101, 1);
 
       expect(() => a.minus(b)).toThrow();
     });
 
-    it("throws on negative difference", () => {
+    test("throws on negative difference", () => {
       const a = new Decimal(1);
       const b = new Decimal(2);
 
