@@ -6,7 +6,6 @@ import { placeHolderDisplayToken } from "./constants";
 import useInjectedWallet from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
-import useTorusWallet from "./useTorusWallet";
 import useXdefi from "./useXdefi";
 
 export type WalletState = {
@@ -67,9 +66,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     xdefiEVMinfo,
   } = useXdefi();
 
-  const { isTorusLoading, torusInfo, torusConnection, disconnectTorus } =
-    useTorusWallet();
-
   const providerStatuses: ProviderStatuses = [
     {
       providerInfo: binanceWalletInfo,
@@ -86,10 +82,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       providerInfo: terraInfo,
       isLoading: isTerraLoading,
-    },
-    {
-      providerInfo: torusInfo,
-      isLoading: isTorusLoading,
     },
     {
       providerInfo: keplrWalletInfo,
@@ -142,9 +134,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       case "xdefi-evm":
         disconnectEVMxdefi();
         break;
-      case "torus":
-        disconnectTorus();
-        break;
       case "keplr":
         disconnectKeplr();
         break;
@@ -173,7 +162,6 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
           connections: [
             ...terraConnections,
             xdefiConnection,
-            torusConnection,
             metamaskConnection,
             binanceWalletConnection,
             keplrConnection,
