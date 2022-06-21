@@ -38,7 +38,8 @@ export class TxResultFail extends Error {
   }
 }
 
-export class EIP1193Error extends Error {
+export class WalletError extends Error {
+  //based on EIP1193 error spec
   code: number;
   message: string;
   data?: unknown;

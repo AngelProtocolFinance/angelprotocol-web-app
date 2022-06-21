@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { Keplr } from "@keplr-wallet/types";
 
 export interface Dwindow extends Window {
   xfi?: {
@@ -7,6 +8,7 @@ export interface Dwindow extends Window {
   };
   ethereum?: any;
   BinanceChain?: any;
+  keplr?: Keplr;
 }
 
 export interface Web3Provider extends ethers.providers.Web3Provider {}

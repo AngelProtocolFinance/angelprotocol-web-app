@@ -8,7 +8,8 @@ export type ProviderId =
   | "bitkeep-wallet"
   | "station"
   | "walletconnect"
-  | "torus";
+  | "torus"
+  | "keplr";
 
 export type SingleConnection = {
   logo: string;
@@ -22,11 +23,6 @@ export type MultiConnection = {
   name: string;
   connect?: never;
   connections: SingleConnection[];
-};
-
-export type Installation = {
-  logo: string;
-  url: string;
 };
 
 export type Connection = SingleConnection | MultiConnection;

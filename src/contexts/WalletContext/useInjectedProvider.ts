@@ -8,7 +8,7 @@ import {
 } from "types/ethereum";
 import checkXdefiPriority from "helpers/checkXdefiPriority";
 import { getProvider } from "helpers/getProvider";
-import { EIP1193Error } from "errors/errors";
+import { WalletError } from "errors/errors";
 import { EIPMethods } from "constants/ethereum";
 import { providerIcons } from "./constants";
 import { retrieveUserAction, saveUserAction } from "./helpers/prefActions";
@@ -89,6 +89,10 @@ export default function useInjectedProvider(
       console.error(err);
       setIsLoading(false);
       saveUserAction(actionKey, "disconnect");
+      if (isNewConnection) {
+        //if connection is made via "connect-button"
+        throw err;
+      }
     }
   };
 
@@ -105,13 +109,17 @@ export default function useInjectedProvider(
   const connect = async () => {
     try {
       const dwindow = window as Dwindow;
+
+      if (!getProvider(providerId)) {
+        throw new WalletError(`${prettifyId(providerId)} is not installed`, 0);
+      }
       //connecting xdefi
       if (providerId === "xdefi-evm") {
         checkXdefiPriority();
         //connecting other wallet
       } else {
         if (dwindow?.xfi?.ethereum?.isMetaMask) {
-          throw new EIP1193Error(
+          throw new WalletError(
             "Kindly remove priority to xdefi and reload the page",
             0
           );
@@ -123,7 +131,7 @@ export default function useInjectedProvider(
       saveUserAction(actionKey, "connect");
     } catch (err: any) {
       setIsLoading(false);
-      throw new EIP1193Error(
+      throw new WalletError(
         err?.message || "Unknown error occured",
         err?.code || 0
       );
@@ -140,7 +148,7 @@ export default function useInjectedProvider(
 
   //connection object to render <Connector/>
   const connection: Connection = {
-    name: connectorName ?? providerId.replace("-", " "),
+    name: connectorName ?? prettifyId(providerId),
     logo: connectorLogo ?? providerIcons[providerId],
     connect,
   };
@@ -156,4 +164,9 @@ export default function useInjectedProvider(
 function removeAllListeners(providerId: ProviderId) {
   const provider = getProvider(providerId);
   provider?.removeAllListeners && provider.removeAllListeners();
+}
+
+function prettifyId(providerId: ProviderId) {
+  //e.g xdefi-wallet,
+  return providerId.replace("-", " ");
 }
