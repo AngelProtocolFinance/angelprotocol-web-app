@@ -67,7 +67,7 @@ const registration_api = aws.injectEndpoints({
             CharityOverview: m.CharityOverview || "",
             EndowmentContract: m.EndowmentContract || "",
             SK: "Metadata",
-            TerraWallet: m.TerraWallet || "",
+            JunoWallet: m.JunoWallet || "",
             KycDonorsOnly: m.KycDonorsOnly || false,
           },
         };

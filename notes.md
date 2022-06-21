@@ -151,7 +151,7 @@ const initRegData = {
   CharityOverview?: string;
   EndowmentContract?: string;
   SK: "Metadata";
-  TerraWallet?: string;
+  JunoWallet?: string;
   KycDonorsOnly?: boolean;
     */
     PK: "6bd78454-8883-4aad-bd23-beccfe441177",

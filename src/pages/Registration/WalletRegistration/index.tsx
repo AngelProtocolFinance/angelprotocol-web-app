@@ -10,7 +10,7 @@ export default function WalletRegistration() {
   const charity = data!; //
   const { wallet, isProviderLoading } = useGetWallet();
 
-  if (charity.Metadata.TerraWallet) {
+  if (charity.Metadata.JunoWallet) {
     return <RegisteredWallet />;
   }
 

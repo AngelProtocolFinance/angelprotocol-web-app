@@ -20,7 +20,7 @@ export default function RegisteredWallet() {
     /**refreshing the page refetches registration and updates cache with wallet in db */
     dispatch(
       updateRegQueryData("registration", "", (charity) => {
-        charity.Metadata.TerraWallet = "";
+        charity.Metadata.JunoWallet = "";
       })
     );
   }
@@ -38,7 +38,7 @@ export default function RegisteredWallet() {
         </p>
         <p className="uppercase text-sm">your wallet address is</p>
         <p className="font-mono my-2 p-2 border-b border-white/20">
-          {charity.Metadata.TerraWallet}
+          {charity.Metadata.JunoWallet}
         </p>
       </div>
       {/**TODO: must be disabled at some registration point */}

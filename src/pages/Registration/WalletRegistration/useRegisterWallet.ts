@@ -15,7 +15,7 @@ export default function useRegisterWallet() {
   const registerWallet = useCallback(
     async (walletAddress: string) => {
       const result = await updateMetadata({
-        body: { TerraWallet: walletAddress },
+        body: { JunoWallet: walletAddress },
         PK: charity.ContactPerson.PK,
       });
 

@@ -124,7 +124,7 @@ const CHARITY: Charity = {
     CharityOverview: "some overview",
     EndowmentContract: "terra1ke4aktw6zvz2jxsyqx55ejsj7rmxdl9p5xywus",
     SK: "Metadata",
-    TerraWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
+    JunoWallet: "terra1wf89rf7xeuuk5td9gg2vd2uzytrqyw49l24rek",
     KycDonorsOnly: false,
   },
 };

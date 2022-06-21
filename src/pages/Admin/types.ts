@@ -261,5 +261,5 @@ export type SortKey = keyof Pick<
   | "RegistrationDate"
   | "RegistrationStatus"
   | "CharityName_ContactEmail"
-  | "TerraWallet"
+  | "JunoWallet"
 >;
