@@ -49,7 +49,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   };
 
   return {
-    totalClaimable: totalClaimable.toFloatApproximation(),
+    totalClaimable: totalClaimable.toNumber(),
     claimAirdrop,
   };
 }

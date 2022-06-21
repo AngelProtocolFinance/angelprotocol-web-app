@@ -32,10 +32,10 @@ export default class Decimal {
   }
 
   /**
-   * Returns an approximation as a float type. Only use this if no
+   * Returns an approximation as a number type. Only use this if no
    * exact calculation is required.
    */
-  public toFloatApproximation(): number {
+  public toNumber(): number {
     return this.value.toFloatApproximation();
   }
 

@@ -18,7 +18,7 @@ export default function Claims() {
     [staker]
   );
 
-  const amount = toCurrency(total_claims.toFloatApproximation(), 2, true);
+  const amount = toCurrency(total_claims.toNumber(), 2, true);
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
@@ -55,7 +55,7 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Decimal(props.amount).toFloatApproximation();
+  const amount = new Decimal(props.amount).toNumber();
   return (
     <li className="flex justify-between">
       <p
