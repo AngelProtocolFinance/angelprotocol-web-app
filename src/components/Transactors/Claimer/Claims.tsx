@@ -1,8 +1,10 @@
-import { Dec } from "@terra-money/terra.js";
+import { Decimal } from "@cosmjs/math";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import Icon from "components/Icon";
 import toCurrency from "helpers/toCurrency";
+
+const ZERO = Decimal.zero(6);
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -11,12 +13,14 @@ export default function Claims() {
     () =>
       staker.claims
         ?.filter((claim) => +claim.release_at.at_time <= +Date.now() * 1e6)
-        .reduce((prev, curr) => prev.add(new Dec(curr.amount)), new Dec(0)) ||
-      new Dec(0),
+        .reduce(
+          (prev, curr) => prev.plus(Decimal.fromAtomics(curr.amount, 6)),
+          ZERO
+        ) || ZERO,
     [staker]
   );
 
-  const amount = toCurrency(total_claims.div(1e6).toNumber(), 2, true);
+  const amount = toCurrency(total_claims.toFloatApproximation(), 2, true);
   const hasClaim = (staker.claims || []).length > 0;
 
   return (
@@ -37,7 +41,7 @@ export default function Claims() {
         </ul>
       )) ||
         null}
-      {total_claims.gt(0) && (
+      {total_claims.isGreaterThan(ZERO) && (
         <p className="uppercase mb-1.5 text-angel-blue">
           <span className="text-xs font-heading font-bold mr-1">
             {" "}
@@ -53,7 +57,7 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Dec(props.amount).div(1e6).toNumber();
+  const amount = Decimal.fromAtomics(props.amount, 6).toFloatApproximation();
   return (
     <li className="flex justify-between">
       <p

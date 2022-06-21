@@ -20,7 +20,7 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
       airdrops.reduce(
         (result, airdrop) =>
           Decimal.fromAtomics(airdrop.haloTokens, 6).plus(result),
-        Decimal.fromAtomics("0", 6)
+        Decimal.zero(6)
       ),
     [airdrops]
   );
