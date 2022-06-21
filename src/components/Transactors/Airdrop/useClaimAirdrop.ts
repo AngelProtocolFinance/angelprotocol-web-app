@@ -18,8 +18,8 @@ export default function useClaimAirdrop(airdrops: Airdrops) {
   const totalClaimable = useMemo(
     () =>
       airdrops.reduce(
-        (result, airdrop) => new Decimal(airdrop.haloTokens).plus(result),
-        new Decimal(0)
+        (result, airdrop) => new Decimal(airdrop.haloTokens, 6).plus(result),
+        new Decimal(0, 6)
       ),
     [airdrops]
   );

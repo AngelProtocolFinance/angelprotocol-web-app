@@ -10,9 +10,9 @@ export default class Decimal {
    * Creates an instance of `Decimal` class
    *
    * @param value Number to perform operations on
-   * @param fractionalDigits Number of fractional digits of the number, defaults to 6 (converts u{token_name} to {TOKEN_NAME}, e.g. uatom = ATOM*1e6)
+   * @param fractionalDigits Number of fractional digits of the number, defaults to 0
    */
-  constructor(value: number | string, fractionalDigits = 6) {
+  constructor(value: number | string, fractionalDigits = 0) {
     this.value = CosmJsDecimal.fromAtomics(value.toString(), fractionalDigits);
   }
 

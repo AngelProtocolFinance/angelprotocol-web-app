@@ -4,7 +4,7 @@ import Icon from "components/Icon";
 import Decimal from "helpers/Decimal";
 import toCurrency from "helpers/toCurrency";
 
-const ZERO = new Decimal(0);
+const ZERO = new Decimal(0, 6);
 
 export default function Claims() {
   const staker = useGovStaker();
@@ -13,7 +13,7 @@ export default function Claims() {
     () =>
       staker.claims
         ?.filter((claim) => +claim.release_at.at_time <= +Date.now() * 1e6)
-        .reduce((prev, curr) => prev.plus(new Decimal(curr.amount)), ZERO) ||
+        .reduce((prev, curr) => prev.plus(new Decimal(curr.amount, 6)), ZERO) ||
       ZERO,
     [staker]
   );
@@ -55,7 +55,7 @@ export default function Claims() {
 function Claim(props: { time: string; amount: string }) {
   const claimable = +props.time <= +Date.now() * 1e6;
   const claim_date = new Date(+props.time / 1e6).toLocaleString();
-  const amount = new Decimal(props.amount).toNumber();
+  const amount = new Decimal(props.amount, 6).toNumber();
   return (
     <li className="flex justify-between">
       <p
