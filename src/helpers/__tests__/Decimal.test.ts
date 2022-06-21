@@ -70,4 +70,23 @@ describe("Decimal", () => {
       expect(() => a.minus(b)).toThrow();
     });
   });
+
+  describe("multiply", () => {
+    const cases = [
+      { a: new Decimal(0), b: 1, expected: new Decimal(0) },
+      { a: new Decimal(1), b: 1, expected: new Decimal(1) },
+      { a: new Decimal(10001, 3), b: 2, expected: new Decimal(20002, 3) },
+      { a: new Decimal(-10001, 3), b: 2, expected: new Decimal(-20002, 3) },
+    ];
+    test.each(cases)("multiplies numbers correctly", ({ a, b, expected }) => {
+      expect(a.multiply(b)).toEqual(expected);
+    });
+
+    it("throws on fractional multiplier", () => {
+      const a = new Decimal(100);
+      const b = 2.2;
+
+      expect(() => a.multiply(b)).toThrow();
+    });
+  });
 });
