@@ -104,4 +104,22 @@ describe("Decimal", () => {
       expect(() => a.multiply(b)).toThrow();
     });
   });
+
+  describe("toNumber", () => {
+    const cases = [
+      { value: new Decimal(0), expected: 0 },
+      { value: new Decimal(1), expected: 1 },
+      { value: new Decimal(1001, 2), expected: 10.01 },
+    ];
+    test.each(cases)(
+      "$value.value.data.atomics .toNumber() === $expected",
+      ({ value, expected }) => {
+        expect(value.toNumber()).toBe(expected);
+      }
+    );
+
+    test("throws on negative number", () => {
+      expect(() => new Decimal(-1001, 2).toNumber()).toThrow();
+    });
+  });
 });
