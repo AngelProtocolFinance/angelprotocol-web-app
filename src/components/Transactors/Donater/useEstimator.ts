@@ -2,7 +2,6 @@ import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
 import {
   Coin,
   CreateTxOptions,
-  Dec,
   MsgExecuteContract,
   MsgSend,
 } from "@terra-money/terra.js";
@@ -22,6 +21,7 @@ import Contract from "contracts/Contract";
 import Indexfund from "contracts/IndexFund";
 import useDebouncer from "hooks/useDebouncer";
 import useWalletContext from "hooks/useWalletContext";
+import Decimal from "helpers/Decimal";
 import extractFeeNum from "helpers/extractFeeNum";
 import getTokenBalance from "helpers/getTokenBalance";
 import processEstimateError from "helpers/processEstimateError";
@@ -156,7 +156,7 @@ export default function useEstimator() {
               const contract = new Contract(wallet);
               const sender = wallet!.address;
               const receiver = ap_wallets.terra;
-              const amount = new Dec(debounced_amount).mul(1e6);
+              const amount = new Decimal(debounced_amount, 6).multiply(1e6);
 
               const msg = new MsgSend(sender, receiver, [
                 new Coin(denoms.uluna, amount.toNumber()),
