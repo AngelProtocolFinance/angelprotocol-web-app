@@ -148,4 +148,18 @@ describe("Decimal", () => {
       expect(() => a.isGreaterThan(b)).toThrow();
     });
   });
+
+  describe("floor", () => {
+    const cases = [
+      { value: new Decimal(0), expected: new Decimal(0) },
+      { value: new Decimal(1), expected: new Decimal(1) },
+      { value: new Decimal(1001, 2), expected: new Decimal(1000, 2) },
+    ];
+    test.each(cases)(
+      "$value.value.data.atomics .floor() === $expected.value.data.atomics",
+      ({ value, expected }) => {
+        expect(value.floor()).toEqual(expected);
+      }
+    );
+  });
 });

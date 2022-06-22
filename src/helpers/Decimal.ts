@@ -43,4 +43,9 @@ export default class Decimal {
   public isGreaterThan(b: Decimal): boolean {
     return this.value.isGreaterThan(b.value);
   }
+
+  public floor(): Decimal {
+    const result = this.value.floor();
+    return new Decimal(result.atomics, result.fractionalDigits);
+  }
 }
