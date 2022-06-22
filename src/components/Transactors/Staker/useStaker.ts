@@ -1,15 +1,13 @@
 import { useCallback } from "react";
-import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor from "components/Transactor";
 import Staker from "./Staker";
 
 export default function useStaker() {
   const { showModal } = useModalContext();
   const showStaker = useCallback(
     (is_stake: boolean) => () => {
-      showModal<TxProps<Props>>(Transactor, {
-        inModal: true,
+      showModal(Transactor, {
         Content: Staker,
         contentProps: { isStake: is_stake },
       });

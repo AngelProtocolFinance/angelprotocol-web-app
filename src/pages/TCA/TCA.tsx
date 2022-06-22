@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import Transactor from "components/Transactors";
-import Donater, { FundFlow } from "components/Transactors/Donater";
+import Transactor from "components/Transactor";
+import Donater, { DonaterProps } from "components/Transactors/Donater";
 import { useGetter } from "store/accessors";
 import { appRoutes } from "constants/routes";
 
@@ -12,7 +12,7 @@ export default function TCA() {
   } else {
     return (
       <div className="grid place-items-center pt-2">
-        <Transactor<FundFlow>
+        <Transactor<DonaterProps>
           Content={Donater}
           contentProps={{
             to: "tca",

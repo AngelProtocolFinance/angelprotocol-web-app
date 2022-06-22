@@ -35,7 +35,6 @@ jest.mock("contexts/WalletContext/WalletContext", () => ({
 }));
 
 const mockSendTerraTx = jest.fn();
-
 jest.mock("slices/transaction/transactors/sendTerraTx", () => ({
   __esModule: true,
   sendTerraTx: (..._: any[]) => mockSendTerraTx,

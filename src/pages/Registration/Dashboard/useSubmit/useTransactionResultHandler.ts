@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Stage } from "slices/transaction/types";
+import { SuccessStage } from "slices/transaction/types";
 import {
   useRegistrationState,
   useSubmitMutation,
@@ -23,7 +23,7 @@ export default function useTransactionResultHandler() {
   const [submit] = useSubmitMutation();
 
   useEffect(() => {
-    async function handle() {
+    async function handle(stage: SuccessStage) {
       try {
         const result = await submit({
           PK: charity.ContactPerson.PK!,
@@ -44,12 +44,13 @@ export default function useTransactionResultHandler() {
     if (stage.step === "error") {
       dispatch(setFormError(FORM_ERROR)); // also sets form_loading to 'false'
     } else if (stage.step === "success") {
-      handle();
+      //narrowed to SuccessStage
+      handle(stage);
     }
   }, [charity, stage, dispatch, handleError, submit]);
 }
 
-function getEndowmentContract(stage: Stage) {
+function getEndowmentContract(stage: SuccessStage) {
   return stage
     .txInfo!.logs![0].events.find(
       (event) => event.type === "instantiate_contract"

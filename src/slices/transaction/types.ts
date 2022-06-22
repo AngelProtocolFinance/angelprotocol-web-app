@@ -1,11 +1,12 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
 import { CreateTxOptions, Msg, TxInfo } from "@terra-money/terra.js";
+import { KYCData } from "types/server/aws";
 import { WalletState } from "contexts/WalletContext/WalletContext";
 
-export type Tag = TagDescription<string>;
-export type Tags = TagDescription<string>[];
-export type TagPayload = PayloadAction<TagDescription<string>[], string>;
+type Tag = TagDescription<string>;
+export type Tags = Tag[];
+export type TagPayload = PayloadAction<Tags, string>;
 export type TagPayloads = TagPayload[];
 export type Step =
   | "form"
@@ -22,31 +23,35 @@ export type FormError =
     }
   | string;
 
+/**
+ * BaseStage
+ * - step
+ * - message
+ * - txhash
+ * - chainId
+ */
+
 export type InitialStage = {
-  step: "form";
+  step: "initial";
   message?: never;
   txHash?: never;
-  txInfo?: never;
   chainId?: never;
-  details?: never;
+  //re-start form with KYC data from receipter
+  kycData?: KYCData;
 };
 
 export type SubmitStage = {
   step: "submit";
   message: string;
   txHash?: never;
-  txInfo?: never;
   chainId?: never;
-  details?: never;
 };
 
 export type BroadcastStage = {
   step: "broadcast";
   message: string;
   txHash: string;
-  txInfo?: never;
   chainId: string;
-  details?: never;
 };
 
 export type SuccessLink = { url: string; description: string };
@@ -54,36 +59,33 @@ export type SuccessStage = {
   step: "success";
   message: string;
   txHash: string; //leave "" to not render tx link
-  txInfo?: TxInfo;
   chainId: string; //leave "" to not render tx link
-  isReceiptEnabled?: boolean;
+  txInfo?: TxInfo;
   isShareEnabled?: boolean;
   successLink?: SuccessLink;
-};
-
-export type ReceiptStage = {
-  step: "receipt";
-  message?: never;
-  txHash: string;
-  txInfo?: never;
-  chainId: string;
 };
 
 export type ErrorStage = {
   step: "error";
   message: string;
   txHash?: string;
-  txInfo?: never;
   chainId?: string;
-  details?: never;
+};
+
+export type KYCStage = {
+  step: "kyc";
+  message?: never;
+  txHash?: never;
+  chainId?: never;
+  kycData?: KYCData;
 };
 
 export type Stage =
   | InitialStage
+  | KYCStage
   | SubmitStage
   | BroadcastStage
   | SuccessStage
-  | ReceiptStage
   | ErrorStage;
 export type StageUpdator = (update: Stage) => void;
 
@@ -93,11 +95,11 @@ type BaseArgs = {
   successLink?: SuccessLink;
   wallet?: WalletState;
 };
-export type WithMsg = BaseArgs & {
+type WithMsg = BaseArgs & {
   msgs: Msg[];
   tx?: never;
 }; //tx created onflight
-export type WithTx = BaseArgs & {
+type WithTx = BaseArgs & {
   msgs?: never;
   tx: CreateTxOptions;
 }; //pre-estimated tx

@@ -6,7 +6,7 @@ export default function getTxUrl(chainID: string, txhash: string) {
     case chainIDs.terra_classic:
       return `${TERRA_FINDER}classic/tx/${txhash}`;
     case chainIDs.terra_main:
-      return `${TERRA_FINDER}mainnet/tx/${txhash}`;
+      return `${TERRA_FINDER}/mainnet/tx/${txhash}`;
     case chainIDs.terra_test:
       return `${TERRA_FINDER}testnet/tx/${txhash}`;
     case chainIDs.eth_kovan:

@@ -8,7 +8,7 @@ import { aws } from "services/aws/aws";
 import { adminTags, awsTags } from "services/aws/tags";
 import { useModalContext } from "contexts/ModalContext";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";
-import TransactionPrompt from "components/TransactionStatus/TransactionPrompt";
+import TransactionPrompt from "components/Transactor/TransactionPrompt";
 import { useSetter } from "store/accessors";
 import { sendEndowmentReviewTx } from "slices/transaction/transactors/sendEndowmentReviewTx";
 import Admin from "contracts/Admin";

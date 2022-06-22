@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { Airdrops } from "types/server/aws";
 import { useModalContext } from "contexts/ModalContext";
-import Transactor, { TxProps } from "components/Transactors";
+import Transactor from "components/Transactor";
 import Catcher from "./Catcher";
 
 export default function useAirdrop() {
@@ -9,8 +9,7 @@ export default function useAirdrop() {
   const airdrops: Airdrops = []; //FUTURE: reenable when multicall for terra v2.0 is available
 
   const showDetails = useCallback(() => {
-    showModal<TxProps<{ airdrops: Airdrops }>>(Transactor, {
-      inModal: true,
+    showModal(Transactor, {
       Content: Catcher,
       contentProps: { airdrops },
     });
