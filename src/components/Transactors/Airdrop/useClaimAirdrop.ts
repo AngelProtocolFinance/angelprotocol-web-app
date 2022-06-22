@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useMemo } from "react";
 import { Airdrops } from "types/server/aws";
 import { govTags, multicallTags, terraTags } from "services/terra/tags";

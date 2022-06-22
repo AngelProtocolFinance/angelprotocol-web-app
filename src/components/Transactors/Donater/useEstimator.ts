@@ -1,6 +1,7 @@
 import { TransactionRequest } from "@ethersproject/abstract-provider/src.ts";
-import { Coin, CreateTxOptions, Dec, MsgSend } from "@terra-money/terra.js";
+import { Coin, CreateTxOptions, MsgSend } from "@terra-money/terra.js";
 import ERC20Abi from "abi/ERC20.json";
+import Dec from "decimal.js";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";

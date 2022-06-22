@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   CW20Balance,

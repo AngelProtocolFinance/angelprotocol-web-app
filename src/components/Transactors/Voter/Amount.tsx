@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { VoteValues } from "./types";
 import { useGovStakerState } from "services/terra/gov/states";

@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useFormContext } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { FundSendMeta } from "pages/Admin/types";

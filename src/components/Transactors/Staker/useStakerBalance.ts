@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useMemo } from "react";
 import { useGovStaker } from "services/terra/gov/queriers";
 import { useGetWallet } from "contexts/WalletContext/WalletContext";

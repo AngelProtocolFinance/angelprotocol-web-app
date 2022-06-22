@@ -1,4 +1,5 @@
-import { CreateTxOptions, Dec } from "@terra-money/terra.js";
+import { CreateTxOptions } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { WithdrawResource, WithdrawValues } from "./types";
@@ -112,12 +113,16 @@ export default function useWithrawEstimator(resources: WithdrawResource) {
             sources.push({
               vault: addr,
               locked: "0",
-              liquid: fieldInput.amount.mul(1e6).div(rate).toInt().toString(),
+              liquid: fieldInput.amount
+                .mul(1e6)
+                .div(rate)
+                .divToInt(1)
+                .toString(),
             });
 
             sourcesPreview.push({
               vaultName: vaultMap[addr].name,
-              usdAmount: fieldInput.amount.toInt().toNumber(),
+              usdAmount: fieldInput.amount.divToInt(1).toNumber(),
             });
           }
         }

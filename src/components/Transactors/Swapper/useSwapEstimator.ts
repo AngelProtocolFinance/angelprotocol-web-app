@@ -1,8 +1,5 @@
-import {
-  CreateTxOptions,
-  Dec,
-  MsgExecuteContract,
-} from "@terra-money/terra.js";
+import { CreateTxOptions, MsgExecuteContract } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { SwapValues } from "./types";

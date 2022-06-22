@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { Simulation } from "types/server/contracts";
 
 export function getSpotPrice(simul: Simulation, offer = 1) {

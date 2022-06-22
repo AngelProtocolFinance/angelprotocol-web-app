@@ -1,4 +1,5 @@
-import { Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { MsgExecuteContract } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { ContractQueryArgs as CQA } from "services/types";
 import { Airdrops } from "types/server/aws";
 import { contracts } from "constants/contracts";

@@ -1,4 +1,5 @@
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import {
   AllianceMember,

@@ -1,4 +1,4 @@
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { useEffect, useState } from "react";
 import { Vote } from "types/server/contracts";
 import { PollStatus } from "types/server/contracts";

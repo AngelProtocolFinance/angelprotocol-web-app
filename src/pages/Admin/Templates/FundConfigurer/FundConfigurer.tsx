@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Dec } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { FormProvider, useForm } from "react-hook-form";
 import { FundConfigValues } from "pages/Admin/types";
 import { FundConfig, IndexFundConfig } from "types/server/contracts";

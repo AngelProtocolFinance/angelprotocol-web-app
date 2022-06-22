@@ -1,4 +1,5 @@
-import { Coin, Dec, MsgExecuteContract } from "@terra-money/terra.js";
+import { Coin, MsgExecuteContract } from "@terra-money/terra.js";
+import Dec from "decimal.js";
 import { ContractQueryArgs } from "services/types";
 import { Simulation } from "types/server/contracts";
 import { contracts } from "constants/contracts";
@@ -37,7 +38,7 @@ export default class LP extends Contract {
 
   //simul on demand
   async pairSimul(offer_amount: number, from_native: boolean) {
-    const offer_uamount = new Dec(offer_amount).mul(1e6).toInt().toString();
+    const offer_uamount = new Dec(offer_amount).mul(1e6).divToInt(1).toString();
     const offer_asset = from_native
       ? {
           native_token: {
